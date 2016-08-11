@@ -7,6 +7,9 @@ STATIONNAME Space Station 13
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
 
+# Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
+ROUND_END_COUNTDOWN 90
+
 ## Add a # infront of this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
 ADMIN_LEGACY_SYSTEM
 
@@ -23,11 +26,14 @@ BAN_LEGACY_SYSTEM
 ## log OOC channel
 LOG_OOC
 
-## log client Say 
+## log client Say
 LOG_SAY
 
 ## log admin actions
 LOG_ADMIN
+
+## log admin chat
+LOG_ADMINCHAT
 
 ## log client access (logon/logoff)
 LOG_ACCESS
@@ -58,6 +64,9 @@ LOG_LAW
 
 ## log all Topic() calls (for use by coders in tracking down Topic issues)
 # LOG_HREFS
+
+## log all world.Topic() calls
+# LOG_WORLD_TOPIC
 
 ## disconnect players who did nothing during 10 minutes
 # KICK_INACTIVE
@@ -102,6 +111,27 @@ HOSTEDBY Yournamehere
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
+### IPINTEL:
+### This allows you to detect likely proxies by checking ips against getipintel.net
+## Rating to warn at: (0.90 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
+#IPINTEL_RATING_BAD 0.90
+## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
+#IPINTEL_EMAIL ch@nge.me
+## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours) (Your ip will get banned if you go over 500 a day too many times)
+#IPINTEL_SAVE_GOOD 12
+## How long to save bad matches (these numbers can change as ips change hands, best not to save these for too long in case somebody gets a new ip used by a spammer/proxy before.)
+#IPINTEL_SAVE_BAD 3
+## Domain name to query (leave commented out for the default, only needed if you pay getipintel.net for more querys)
+#IPINTEL_DOMAIN check.getipintel.net
+
+## Uncomment to allow web client connections
+#ALLOW_WEBCLIENT
+
+## Uncomment to restrict web client connections to byond members
+## This makes for a nice pay gate to cut down on ban evading, as the webclient's cid system isn't that great
+## byond membership starts at $10 for 3 months, so to use the webclient to evade, they would have sink 10 bucks in each evade.
+#WEBCLIENT_ONLY_BYOND_MEMBERS
+
 ## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
 # USEWHITELIST
@@ -132,7 +162,7 @@ GUEST_BAN
 ##Remove the # mark infront of this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM. 
+## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
@@ -143,16 +173,26 @@ ALLOW_HOLIDAYS
 #USEIRCBOT
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.9
-
-## Defines if Tick Compensation is used.  It results in a minor slowdown of movement of all mobs, but attempts to result in a level movement speed across all ticks.  Recommended if tickrate is lowered.
-TICKCOMP 0
+TICKLAG 0.5
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
 
 ## Communication key for receiving data through world/Topic(), you don't want to give this out
 #COMMS_KEY default_pwd
+
+## World address and port for server recieving cross server messages
+#CROSS_SERVER_ADDRESS byond:\\address:port
+
+## Name that the server calls itself in communications
+#CROSS_COMMS_NAME
+
+## Hub address for tracking stats
+## example: Hubmakerckey.Hubname
+#MEDAL_HUB_ADDRESS 
+
+## Password for the hub page
+#MEDAL_HUB_PASSWORD
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES
@@ -179,7 +219,7 @@ EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, f
 
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
 ##	Requres database
-NOTIFY_NEW_PLAYER_AGE 0 
+NOTIFY_NEW_PLAYER_AGE 0
 
 ## Notify the irc channel when a new player makes their first connection
 ##	Requres database
@@ -191,3 +231,43 @@ NOTIFY_NEW_PLAYER_AGE 0
 
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
+
+## Uncomment to have the game log runtimes to the log folder. (Note: this disables normal output in dd/ds, so it should be left off for testing.
+#LOG_RUNTIMES
+
+## Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
+AUTOCONVERT_NOTES
+
+## Comment this out to stop admin messages sent anytime an admin disconnects from a round in play, you can edit the messages in admin.dm
+ANNOUNCE_ADMIN_LOGOUT
+
+## Uncomment to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
+#ANNOUNCE_ADMIN_LOGIN
+
+## Map rotation
+## This feature requires you are running a Windows OS (or can other wise run .bat files) and that you are using the tgstation-server toolset in tools/
+## You should edit maps.txt to match your configuration when you enable this.
+#MAPROTATION
+
+## Map rotate chance delta
+## This is the chance of map rotation factored to the round length.
+## A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
+## A value of 0.5 would mean the map rotation chance is half of the round length in minutes (hour long round == 30% rotation chance)
+#MAPROTATIONCHANCEDELTA 0.75
+
+## AUTOADMIN
+## Uncomment to automatically give that admin rank to all players
+#AUTOADMIN Game Admin
+
+## GENERATE_MINIMAPS
+## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
+#GENERATE_MINIMAPS
+
+## CLIENT VERSION CONTROL
+## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
+## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
+## These messages will be followed by one stating the clients current version and the required version for clarity.
+#CLIENT_WARN_VERSION 510
+#CLIENT_WARN_MESSAGE Byond is really close to releasing 510 beta as the stable release, please take this time to try it out. Reports are that the client preforms better then the version you are using, and also handles network lag better. Shortly after it's release we will end up using 510 client features and you will be forced to update.
+#CLIENT_ERROR_VERSION 509
+#CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.

@@ -22,6 +22,7 @@
 #define FIRELOSS 2
 #define TOXLOSS 4
 #define OXYLOSS 8
+#define SHAME 16
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
@@ -38,23 +39,15 @@
 
 
 //Grab levels
-#define GRAB_PASSIVE	1
-#define GRAB_AGGRESSIVE	2
-#define GRAB_NECK		3
-#define GRAB_UPGRADING	4
-#define GRAB_KILL		5
+#define GRAB_PASSIVE				0
+#define GRAB_AGGRESSIVE				1
+#define GRAB_NECK					2
+#define GRAB_KILL					3
 
-
-//Hostile Mob Stances
-#define HOSTILE_STANCE_IDLE			1
-//#define HOSTILE_STANCE_ALERT		2 //Was only used by bears
-#define HOSTILE_STANCE_ATTACK		3
-#define HOSTILE_STANCE_ATTACKING	4
-//#define HOSTILE_STANCE_TIRED		5 //Was also only used by bears
 
 //Hostile Mob AI Status
 #define AI_ON		1
-#define AI_SLEEP	2
+#define AI_IDLE	2
 #define AI_OFF		3
 
 
@@ -68,3 +61,21 @@
 #define EMBED_THROWSPEED_THRESHOLD				4	//The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
 #define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
+
+
+//Attack types for checking shields/hit reactions
+
+#define MELEE_ATTACK 1
+#define UNARMED_ATTACK 2
+#define PROJECTILE_ATTACK 3
+#define THROWN_PROJECTILE_ATTACK 4
+#define LEAP_ATTACK 5
+
+
+//Gun Stuff
+ #define SAWN_INTACT  0
+ #define SAWN_OFF     1
+
+ #define WEAPON_LIGHT 0
+ #define WEAPON_MEDIUM 1
+ #define WEAPON_HEAVY 2

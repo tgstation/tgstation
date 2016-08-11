@@ -7,10 +7,10 @@
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 
-/obj/item/weapon/ore/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.remove_fuel(15))
+		if(W.remove_fuel(15) && refined_type)
 			new refined_type(get_turf(src.loc))
 			qdel(src)
 		else if(W.isOn())
@@ -21,7 +21,8 @@
 	name = "uranium ore"
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
-	points = 18
+	points = 30
+	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/weapon/ore/iron
@@ -29,6 +30,7 @@
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
 	points = 1
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/weapon/ore/glass
@@ -36,9 +38,11 @@
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
 	points = 1
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
+	w_class = 1
 
-/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob)
+/obj/item/weapon/ore/glass/attack_self(mob/living/user)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
 	var/sandAmt = 1
 	for(var/obj/item/weapon/ore/glass/G in user.loc) // The sand on the floor
@@ -57,18 +61,42 @@
 	qdel(src)
 	return
 
+/obj/item/weapon/ore/glass/throw_impact(atom/hit_atom)
+	if(..() || !ishuman(hit_atom))
+		return
+	var/mob/living/carbon/human/C = hit_atom
+	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
+		return
+	if(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s mask blocks the sand!</span>")
+		return
+	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
+		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
+		return
+	C.adjust_blurriness(6)
+	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
+	C.confused += 5
+	C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
+	qdel(src)
+
+/obj/item/weapon/ore/glass/basalt
+	name = "volcanic ash"
+	icon_state = "volcanic_sand"
+
 /obj/item/weapon/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
-	origin_tech = "materials=2"
-	points = 36
+	origin_tech = "plasmatech=2;materials=2"
+	points = 15
+	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
-/obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/ore/plasma/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding)
-			user << "<span class='info'>You can't hit a high enough temperature to smelt [src] properly.</span>"
+			user << "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>"
 	else
 		..()
 
@@ -77,7 +105,8 @@
 	name = "silver ore"
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
-	points = 18
+	points = 16
+	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/weapon/ore/gold
@@ -85,21 +114,32 @@
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
 	points = 18
+	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/weapon/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
-	points = 36
+	points = 50
+	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/weapon/ore/bananium
 	name = "bananium ore"
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
-	points = 27
+	points = 60
+	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
+
+/obj/item/weapon/ore/titanium
+	name = "titanium ore"
+	icon_state = "Titanium ore"
+	origin_tech = "materials=4"
+	points = 50
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/titanium
 
 /obj/item/weapon/ore/slag
 	name = "slag"
@@ -114,25 +154,28 @@
 	item_state = "Gibtonite ore"
 	w_class = 4
 	throw_range = 0
-	anchored = 1 //Forces people to carry it by hand, no pulling!
 	var/primed = 0
 	var/det_time = 100
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 	var/attacher = "UNKNOWN"
-	var/datum/wires/explosive/gibtonite/wires
+
+/obj/item/weapon/twohanded/required/gibtonite/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()
 
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
-		user.visible_message("<span class='warning'>[user] attaches [I] to [src]!</span>")
-		wires = new(src)
+		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
+		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
-		overlays += "Gibtonite_igniter"
+		add_overlay("Gibtonite_igniter")
 		return
 
 	if(wires && !primed)
-		if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
-			wires.Interact(user)
+		if(is_wire_tool(I))
+			wires.interact(user)
 			return
 
 	if(istype(I, /obj/item/weapon/pickaxe) || istype(I, /obj/item/weapon/resonator) || I.force >= 10)
@@ -141,7 +184,7 @@
 	if(primed)
 		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
 			primed = 0
-			user.visible_message("<span class='notice'>The chain reaction was stopped! ...The ore's quality went down.</span>")
+			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
 			icon_state = "Gibtonite ore"
 			quality = 1
 			return
@@ -149,11 +192,11 @@
 
 /obj/item/weapon/twohanded/required/gibtonite/attack_self(user)
 	if(wires)
-		wires.Interact(user)
+		wires.interact(user)
 	else
 		..()
 
-/obj/item/weapon/twohanded/required/gibtonite/bullet_act(var/obj/item/projectile/P)
+/obj/item/weapon/twohanded/required/gibtonite/bullet_act(obj/item/projectile/P)
 	GibtoniteReaction(P.firer)
 	..()
 
@@ -177,15 +220,15 @@
 			if(triggered_by == 1)
 				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			else if(triggered_by == 2)
-				message_admins("A signal has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [attacher]")
+				message_admins("A signal has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [key_name_admin(attacher)]<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)")
 			else
-				message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 		if(triggered_by == 1)
 			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		else if(triggered_by == 2)
-			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [attacher].")
+			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [key_name(attacher)].")
 		else
-			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>")
+			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 		spawn(det_time)
 		if(primed)
@@ -198,6 +241,7 @@
 			qdel(src)
 
 /obj/item/weapon/ore/New()
+	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
@@ -206,6 +250,9 @@
 
 /*****************************Coin********************************/
 
+// The coin's value is a value of it's materials.
+// Yes, the gold standard makes a come-back!
+// This is the only way to make coins that are possible to produce on station actually worth anything.
 /obj/item/weapon/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
@@ -213,14 +260,15 @@
 	flags = CONDUCT
 	force = 1
 	throwforce = 2
-	w_class = 1.0
+	w_class = 1
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null
 	var/cooldown = 0
-	var/value = 10
+	var/value = 1
 
 /obj/item/weapon/coin/New()
+	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
@@ -228,72 +276,95 @@
 	if(cmineral)
 		name = "[cmineral] coin"
 
+/obj/item/weapon/coin/examine(mob/user)
+	..()
+	if(value)
+		user << "<span class='info'>It's worth [value] credit\s.</span>"
+
 /obj/item/weapon/coin/gold
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
-	value = 160
+	value = 50
+	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/silver
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
-	value = 40
+	value = 20
+	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/diamond
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
-	value = 120
+	value = 500
+	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/iron
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
-	value = 20
+	value = 1
+	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/plasma
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
-	value = 80
+	value = 100
+	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/uranium
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
-	value = 160
+	value = 80
+	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/clown
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
-	value = 600 //makes the clown cri
+	value = 1000 //makes the clown cry
+	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/adamantine
 	cmineral = "adamantine"
 	icon_state = "coin_adamantine_heads"
-	value = 400
+	value = 1500
 
 /obj/item/weapon/coin/mythril
 	cmineral = "mythril"
 	icon_state = "coin_mythril_heads"
-	value = 400
+	value = 3000
 
 /obj/item/weapon/coin/twoheaded
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	desc = "Hey, this coin's the same on both sides!"
 	sideslist = list("heads")
-	value = 20
+	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
+	value = 1
 
+/obj/item/weapon/coin/antagtoken
+	name = "antag token"
+	icon_state = "coin_valid_valid"
+	cmineral = "valid"
+	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
+	sideslist = list("valid", "salad")
+	value = 0
 
-/obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/coin/antagtoken/New()
+	return
+
+/obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			user << "<span class='notice'>There already is a string attached to this coin.</span>"
+			user << "<span class='warning'>There already is a string attached to this coin!</span>"
 			return
 
 		if (CC.use(1))
-			overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
+			add_overlay(image('icons/obj/economy.dmi',"coin_string_overlay"))
 			string_attached = 1
 			user << "<span class='notice'>You attach a string to the coin.</span>"
 		else
-			user << "<span class='warning'>You need one length of cable to attach a string to the coin.</span>"
+			user << "<span class='warning'>You need one length of cable to attach a string to the coin!</span>"
 			return
 
 	else if(istype(W,/obj/item/weapon/wirecutters))
@@ -309,14 +380,19 @@
 		user << "<span class='notice'>You detach the string from the coin.</span>"
 	else ..()
 
-/obj/item/weapon/coin/attack_self(mob/user as mob)
+/obj/item/weapon/coin/attack_self(mob/user)
 	if(cooldown < world.time - 15)
+		if(string_attached) //does the coin have a wire attached
+			user << "<span class='warning'>The coin won't flip very well with something attached!</span>" //Tell user it will not flip
+			return //do not flip the coin
 		var/coinflip = pick(sideslist)
 		cooldown = world.time
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
-		if(do_after(user, 15))
-			user.visible_message("<span class='notice'>[user] has flipped [src]. It lands on [coinflip].</span>", \
-								 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-								 "<span class='notice'>You hear the clattering of loose change.</span>")
+		var/oldloc = loc
+		sleep(15)
+		if(loc == oldloc && user && !user.incapacitated())
+			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
+ 							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
+							 "<span class='italics'>You hear the clattering of loose change.</span>")

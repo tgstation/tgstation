@@ -1,8 +1,9 @@
 /obj/machinery/computer/teleporter
 	name = "Teleporter Control Console"
 	desc = "Used to control a linked teleportation Hub and Station."
-	icon_state = "teleport"
-	circuit = "/obj/item/weapon/circuitboard/teleporter"
+	icon_screen = "teleport"
+	icon_keyboard = "teleport_key"
+	circuit = /obj/item/weapon/circuitboard/computer/teleporter
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"
 	var/id = null
@@ -20,6 +21,12 @@
 /obj/machinery/computer/teleporter/initialize()
 	link_power_station()
 
+/obj/machinery/computer/teleporter/Destroy()
+	if (power_station)
+		power_station.teleporter_console = null
+		power_station = null
+	return ..()
+
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
@@ -29,19 +36,18 @@
 			break
 	return power_station
 
-/obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob, params)
+/obj/machinery/computer/teleporter/attackby(obj/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
 			if(!user.unEquip(L))
-				user << "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>"
+				user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return
 			L.loc = src
 			locked = L
-			user << "<span class = 'caution'>You insert the GPS device into the [name]'s slot.</span>"
+			user << "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>"
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/teleporter/attack_ai(mob/user)
 	src.attack_hand(user)
@@ -94,10 +100,10 @@
 		return
 
 	if(!check_hub_connection())
-		usr << "<span class='warning'>Error: Unable to detect hub.</span>"
+		say("<span class='warning'>Error: Unable to detect hub.</span>")
 		return
 	if(calibrating)
-		usr << "<span class='warning'>Error: Calibration in progress. Stand by.</span>"
+		say("<span class='warning'>Error: Calibration in progress. Stand by.</span>")
 		return
 
 	if(href_list["regimeset"])
@@ -117,21 +123,21 @@
 		target = get_turf(locked.locked_location)
 	if(href_list["calibrate"])
 		if(!target)
-			usr << "<span class='warning'>Error: No target set to calibrate to.</span>"
+			say("<span class='danger'>Error: No target set to calibrate to.</span>")
 			return
 		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
-			usr << "<span class='notice'>Hub is already calibrated.</span>"
+			say("<span class='warning'>Hub is already calibrated!</span>")
 			return
-		src.visible_message("<span class='notice'>Processing hub calibration to target...</span>")
+		say("<span class='notice'>Processing hub calibration to target...</span>")
 
 		calibrating = 1
 		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
-				src.visible_message("<span class='notice'>Calibration complete.</span>")
+				say("<span class='notice'>Calibration complete.</span>")
 			else
-				src.visible_message("<span class='warning'>Error: Unable to detect hub.</span>")
+				say("<span class='danger'>Error: Unable to detect hub.</span>")
 			updateDialog()
 
 	updateDialog()
@@ -173,7 +179,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in world)
+		for (var/obj/item/weapon/implant/tracking/I in tracked_implants)
 			if (!I.implanted || !ismob(I.loc))
 				continue
 			else
@@ -182,8 +188,10 @@
 					if (M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
-				if(!T)	continue
-				if(T.z == ZLEVEL_CENTCOM)	continue
+				if(!T)
+					continue
+				if(T.z == ZLEVEL_CENTCOM)
+					continue
 				var/tmpname = M.real_name
 				if(areaindex[tmpname])
 					tmpname = "[tmpname] ([++areaindex[tmpname]])"
@@ -229,9 +237,9 @@
 
 /obj/machinery/teleport
 	name = "teleport"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/teleporter.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"
@@ -247,16 +255,26 @@
 /obj/machinery/teleport/hub/New()
 	..()
 	link_power_station()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/teleporter_hub(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/teleporter_hub
+	name = "circuit board (Teleporter Hub)"
+	build_path = /obj/machinery/teleport/hub
+	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
+	req_components = list(
+							/obj/item/weapon/ore/bluespace_crystal = 3,
+							/obj/item/weapon/stock_parts/matter_bin = 1)
+	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /obj/machinery/teleport/hub/initialize()
 	link_power_station()
+
+/obj/machinery/teleport/hub/Destroy()
+	if (power_station)
+		power_station.teleporter_hub = null
+		power_station = null
+	return ..()
 
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
@@ -274,26 +292,31 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
-	if(power_station && power_station.engaged && !panel_open)
+	if(z == ZLEVEL_CENTCOM)
+		M << "You can't use this here."
+	if(is_ready())
 		teleport(M)
 		use_power(5000)
 	return
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
+		if(power_station && power_station.engaged)
+			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
+			update_icon()
 		return
-
 	if(exchange_parts(user, W))
 		return
-
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
+	return ..()
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
 	if (!com)
 		return
 	if (!com.target)
-		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
+		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
@@ -301,9 +324,9 @@
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
-						M  << "<span class='danger'>You hear a buzzing in your ears.</span>"
-						human.dna.species = new /datum/species/fly()
-						human.regenerate_icons()
+						M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
+						human.set_species(/datum/species/fly)
+
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 			calibrated = 0
 	return
@@ -311,10 +334,17 @@
 /obj/machinery/teleport/hub/update_icon()
 	if(panel_open)
 		icon_state = "tele-o"
-	else if(power_station && power_station.engaged)
+	else if(is_ready())
 		icon_state = "tele1"
 	else
 		icon_state = "tele0"
+
+/obj/machinery/teleport/hub/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/teleport/hub/proc/is_ready()
+	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
 /obj/machinery/teleport/hub/syndicate/New()
 	..()
@@ -337,15 +367,19 @@
 
 /obj/machinery/teleport/station/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/teleporter_station(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
+	B.apply_default_parts(src)
 	link_console_and_hub()
+
+/obj/item/weapon/circuitboard/machine/teleporter_station
+	name = "circuit board (Teleporter Station)"
+	build_path = /obj/machinery/teleport/station
+	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
+	req_components = list(
+							/obj/item/weapon/ore/bluespace_crystal = 2,
+							/obj/item/weapon/stock_parts/capacitor = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /obj/machinery/teleport/station/initialize()
 	link_console_and_hub()
@@ -372,38 +406,46 @@
 
 /obj/machinery/teleport/station/Destroy()
 	if(teleporter_hub)
+		teleporter_hub.power_station = null
 		teleporter_hub.update_icon()
-	..()
+		teleporter_hub = null
+	if (teleporter_console)
+		teleporter_console.power_station = null
+		teleporter_console = null
+	return ..()
 
-/obj/machinery/teleport/station/attackby(var/obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool) && !panel_open)
+/obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-			if(linked_stations.len < efficiency)
-				linked_stations.Add(M.buffer)
-				M.buffer = null
-				user << "<span class = 'caution'>You upload the data from the [W.name]'s buffer.</span>"
-			else
-				user << "<span class = 'alert'>This station cant hold more information, try to use better parts.</span>"
-	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+		if(panel_open)
+			M.buffer = src
+			user << "<span class='caution'>You download the data to the [W.name]'s buffer.</span>"
+		else
+			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
+				if(linked_stations.len < efficiency)
+					linked_stations.Add(M.buffer)
+					M.buffer = null
+					user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
+				else
+					user << "<span class='alert'>This station can't hold more information, try to use better parts.</span>"
+		return
+	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
 		return
 
-	if(exchange_parts(user, W))
+	else if(exchange_parts(user, W))
 		return
 
-	default_deconstruction_crowbar(W)
+	else if(default_deconstruction_crowbar(W))
+		return
 
-	if(panel_open)
-		if(istype(W, /obj/item/device/multitool))
-			var/obj/item/device/multitool/M = W
-			M.buffer = src
-			user << "<span class = 'caution'>You download the data to the [W.name]'s buffer.</span>"
-			return
-		if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(panel_open)
 			link_console_and_hub()
-			user << "<span class = 'caution'>You reconnect the station to nearby machinery.</span>"
+			user << "<span class='caution'>You reconnect the station to nearby machinery.</span>"
 			return
+	else
+		return ..()
 
 /obj/machinery/teleport/station/attack_paw()
 	src.attack_hand()
@@ -419,9 +461,12 @@
 	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
 	if (teleporter_console.target)
-		src.engaged = !src.engaged
-		use_power(5000)
-		visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
+		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
+			visible_message("<span class='alert'>The teleporter hub isn't responding.</span>")
+		else
+			src.engaged = !src.engaged
+			use_power(5000)
+			visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
 	else
 		visible_message("<span class='alert'>No target detected.</span>")
 		src.engaged = 0
@@ -438,7 +483,7 @@
 /obj/machinery/teleport/station/update_icon()
 	if(panel_open)
 		icon_state = "controller-o"
-	else if(stat & NOPOWER)
+	else if(stat & (BROKEN|NOPOWER))
 		icon_state = "controller-p"
 	else
 		icon_state = "controller"

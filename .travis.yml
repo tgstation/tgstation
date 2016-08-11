@@ -1,25 +1,47 @@
-#pretending we're C because otherwise ruby/rvm will initialize, even with "language: dm".
-language: c
+language: generic
+sudo: false
 
 env:
     global:
-    - BYOND_MAJOR="506"
-    - BYOND_MINOR="1247"
+    - BYOND_MAJOR="510"
+    - BYOND_MINOR="1332"
+    - NODE_VERSION="4"
+    - BUILD_TOOLS=false
+    - DM_MAPFILE=""
     matrix:
+    - BUILD_TOOLS=true
     - DM_MAPFILE="tgstation2"
     - DM_MAPFILE="metastation"
     - DM_MAPFILE="ministation"
+    - DM_MAPFILE="dreamstation"
+    - DM_MAPFILE="birdstation"
+    - DM_MAPFILE="efficiencystation"
+    - DM_MAPFILE="templates"
 
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install libc6:i386 libgcc1:i386 libstdc++6:i386 -qq
+
+cache:
+  directories:
+    - tgui/node_modules
+    - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+
+
+addons:
+  apt:
+    packages:
+      - libc6-i386
+      - libgcc1:i386
+      - libstdc++6:i386
+      - python
+      - python-pip
 
 install:
-  - curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
-  - unzip byond.zip
-  - cd byond
-  - sudo make install
-  - cd ..
+  - tools/travis/install_build_tools.sh
+
+before_script:
+  - tools/travis/before_build_tools.sh
+  - tools/travis/before_build_byond.sh
 
 script:
-  - bash dm.sh -M${DM_MAPFILE} tgstation.dme
+  - tools/travis/check_filedirs.sh tgstation.dme
+  - tools/travis/build_tools.sh
+  - tools/travis/build_byond.sh

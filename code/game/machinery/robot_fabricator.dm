@@ -11,28 +11,30 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 
-/obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/stack/sheet/metal))
-		if (src.metal_amount < 150000.0)
+		if (src.metal_amount < 150000)
 			var/count = 0
-			src.overlays += "fab-load-metal"
+			src.add_overlay("fab-load-metal")
 			spawn(15)
 				if(O)
 					if(!O:amount)
 						return
 					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:m_amt /*O:height * O:width * O:length * 100000.0*/
+						src.metal_amount += O:materials[MAT_METAL] /*O:height * O:width * O:length * 100000*/
 						O:amount--
 						count++
 
 					if (O:amount < 1)
 						qdel(O)
 
-					user << "You insert [count] metal sheet\s into \the [src]."
+					user << "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>"
 					src.overlays -= "fab-load-metal"
 					updateDialog()
 		else
 			user << "\The [src] is full."
+	else
+		return ..()
 
 /obj/machinery/robotic_fabricator/power_change()
 	if (powered())
@@ -40,10 +42,10 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/robotic_fabricator/attack_paw(user as mob)
+/obj/machinery/robotic_fabricator/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/robotic_fabricator/attack_hand(user as mob)
+/obj/machinery/robotic_fabricator/attack_hand(mob/user)
 	var/dat
 	if (..())
 		return
@@ -132,7 +134,7 @@ Please wait until completion...</TT><BR>
 
 					src.being_built = new building(src)
 
-					src.overlays += "fab-active"
+					src.add_overlay("fab-active")
 					src.updateUsrDialog()
 
 					spawn (build_time)

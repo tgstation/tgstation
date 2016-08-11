@@ -39,7 +39,7 @@
 		Where: 
 			<select name='object_where' style="width:320px">
 				<option value='onfloor'>On floor below own mob</option>
-				<!-- <option value='inhand'>In own mob's hand</option> -->
+				<option value='inhand'>In own mob's hand</option>
 				<option value='inmarked'>In marked object</option>
 			</select>
 		<br><br>
@@ -54,7 +54,6 @@
 		var objects = object_paths == null ? new Array() : object_paths.split(";");
 		
 		document.spawner.filter.focus();
-		populateList(objects);
 		
 		function populateList(from_list)
 		{
@@ -72,11 +71,6 @@
 		
 		function updateSearch()
 		{
-			if (old_search == document.spawner.filter.value)
-			{
-				return;
-			}
-			
 			old_search = document.spawner.filter.value;
 			
 			

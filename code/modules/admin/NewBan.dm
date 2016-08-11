@@ -2,7 +2,7 @@ var/CMinutes = null
 var/savefile/Banlist
 
 
-/proc/CheckBan(var/ckey, var/id, var/address)
+/proc/CheckBan(ckey, id, address)
 	if(!Banlist)		// if Banlist cannot be located for some reason
 		LoadBans()		// try to load the bans
 		if(!Banlist)	// uh oh, can't find bans!
@@ -117,9 +117,9 @@ var/savefile/Banlist
 		if (temp)
 			Banlist["minutes"] << bantimestamp
 		if(!temp)
-			notes_add(ckey, "Permanently banned - [reason]")
+			add_note(ckey, "Permanently banned - [reason]", null, bannedby, 0)
 		else
-			notes_add(ckey, "Banned for [minutes] minutes - [reason]")
+			add_note(ckey, "Banned for [minutes] minutes - [reason]", null, bannedby, 0)
 	return 1
 
 /proc/RemoveBan(foldername)
@@ -183,8 +183,10 @@ var/savefile/Banlist
 		var/expiry
 		if(Banlist["temp"])
 			expiry = GetExp(Banlist["minutes"])
-			if(!expiry)		expiry = "Removal Pending"
-		else				expiry = "Permaban"
+			if(!expiry)
+				expiry = "Removal Pending"
+		else
+			expiry = "Permaban"
 
 		dat += text("<tr><td><A href='?src=[ref];unbanf=[key][id]'>(U)</A><A href='?src=[ref];unbane=[key][id]'>(E)</A> Key: <B>[key]</B></td><td>ComputerID: <B>[id]</B></td><td>IP: <B>[ip]</B></td><td> [expiry]</td><td>(By: [by])</td><td>(Reason: [reason])</td></tr>")
 

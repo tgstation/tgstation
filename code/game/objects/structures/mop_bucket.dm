@@ -4,7 +4,6 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mopbucket"
 	density = 1
-	pressure_resistance = 5
 	flags = OPENCONTAINER
 	var/amount_per_transfer_from_this = 5	//shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 
@@ -20,3 +19,5 @@
 			reagents.trans_to(I, 5)
 			user << "<span class='notice'>You wet [I] in [src].</span>"
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+	else
+		return ..()

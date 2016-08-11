@@ -1,0 +1,11 @@
+html
+{
+	-ms-overflow-style: scrollbar;
+}
+
+body
+{
+	font-family: Arial;
+	overflow-y: scroll;
+	overflow-x: auto;
+}

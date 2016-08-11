@@ -8,10 +8,9 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
-	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
 	anchored = 1
-	layer = 2.6 // a bit above wires
+	layer = WIRE_TERMINAL_LAYER //a bit above wires
 
 
 /obj/machinery/power/terminal/New()
@@ -25,9 +24,9 @@
 		master.disconnect_terminal()
 	return ..()
 
-/obj/machinery/power/terminal/hide(var/i)
+/obj/machinery/power/terminal/hide(i)
 	if(i)
-		invisibility = 101
+		invisibility = INVISIBILITY_MAXIMUM
 		icon_state = "term-f"
 	else
 		invisibility = 0
@@ -48,22 +47,22 @@
 		. = 1
 
 
-/obj/machinery/power/terminal/proc/dismantle(var/mob/living/user)
-	if(istype(loc, /turf/simulated))
-		var/turf/simulated/T = loc
+/obj/machinery/power/terminal/proc/dismantle(mob/living/user)
+	if(istype(loc, /turf))
+		var/turf/T = loc
 		if(T.intact)
-			user << "<span class='alert'>You must first expose the power terminal!</span>"
+			user << "<span class='warning'>You must first expose the power terminal!</span>"
 			return
 
 		if(master && master.can_terminal_dismantle())
-			user.visible_message("<span class='warning'>[user.name] dismantles the power terminal from [master].</span>", \
-								"You begin to cut the cables...")
+			user.visible_message("[user.name] dismantles the power terminal from [master].", \
+								"<span class='notice'>You begin to cut the cables...</span>")
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			if(do_after(user, 50))
+			if(do_after(user, 50, target = src))
 				if(master && master.can_terminal_dismantle())
 					if(prob(50) && electrocute_mob(user, powernet, src))
-						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 						s.set_up(5, 1, master)
 						s.start()
 						return
@@ -75,6 +74,5 @@
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		dismantle(user)
-		return
-
-	..()
+	else
+		return ..()

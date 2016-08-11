@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/spider_infestation
 	weight = 5
 	max_occurrences = 1
+	min_players = 15
 
 /datum/round_event/spider_infestation
 	announceWhen	= 400
@@ -20,9 +21,10 @@
 
 /datum/round_event/spider_infestation/start()
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in world)
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
-			if(temp_vent.parent.other_atmosmch.len > 20)
+			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+			if(temp_vent_parent.other_atmosmch.len > 20)
 				vents += temp_vent
 
 	while((spawncount >= 1) && vents.len)

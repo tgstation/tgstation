@@ -2,11 +2,13 @@
 	set category = "Admin"
 	set name = "Permissions Panel"
 	set desc = "Edit admin permissions"
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_PERMISSIONS))
+		return
 	usr.client.holder.edit_admin_permissions()
 
 /datum/admins/proc/edit_admin_permissions()
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_PERMISSIONS))
+		return
 
 	var/output = {"<!DOCTYPE html>
 <html>
@@ -27,7 +29,8 @@
 
 	for(var/adm_ckey in admin_datums)
 		var/datum/admins/D = admin_datums[adm_ckey]
-		if(!D)	continue
+		if(!D)
+			continue
 
 		var/rights = rights2text(D.rank.rights," ")
 		if(!rights)	rights = "*none*"
@@ -47,8 +50,9 @@
 
 	usr << browse(output,"window=editrights;size=900x650")
 
-/datum/admins/proc/log_admin_rank_modification(var/adm_ckey, var/new_rank)
-	if(config.admin_legacy_system)	return
+/datum/admins/proc/log_admin_rank_modification(adm_ckey, new_rank)
+	if(config.admin_legacy_system)
+		return
 
 	if(!usr.client)
 		return
@@ -97,10 +101,13 @@
 			usr << "<span class='adminnnotice'>Admin rank changed.</span>"
 
 
-/datum/admins/proc/log_admin_permission_modification(var/adm_ckey, var/new_permission)
-	if(config.admin_legacy_system)	return
-	if(!usr.client)					return
-	if(check_rights(R_PERMISSIONS))	return
+/datum/admins/proc/log_admin_permission_modification(adm_ckey, new_permission)
+	if(config.admin_legacy_system)
+		return
+	if(!usr.client)
+		return
+	if(check_rights(R_PERMISSIONS))
+		return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
@@ -117,7 +124,8 @@
 	while(select_query.NextRow())
 		admin_id = text2num(select_query.item[1])
 
-	if(!admin_id)	return
+	if(!admin_id)
+		return
 
 	var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `[format_table_name("admin")]` SET flags = [new_permission] WHERE id = [admin_id]")
 	insert_query.Execute()

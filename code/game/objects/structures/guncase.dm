@@ -3,14 +3,18 @@
 	name = "gun locker"
 	desc = "A locker that holds guns."
 	icon = 'icons/obj/closet.dmi'
-	icon_state = "gcase-0-open"
+	icon_state = "shotguncase"
 	anchored = 0
 	density = 1
 	opacity = 0
-	var/case_type = "gcase"
+	var/case_type = null
 	var/gun_category = /obj/item/weapon/gun
 	var/open = 1
 	var/capacity = 4
+
+/obj/structure/guncase/New()
+	..()
+	update_icon()
 
 /obj/structure/guncase/initialize()
 	..()
@@ -22,24 +26,34 @@
 	update_icon()
 
 /obj/structure/guncase/update_icon()
-	icon_state = "[case_type]-[contents.len]-[open ? "open" : "closed"]"
+	cut_overlays()
+	for(var/i = contents.len, i >= 1, i--)
+		add_overlay(image(icon = src.icon, icon_state = "[case_type]", pixel_x = 4 * (i -1) ))
+	if(open)
+		add_overlay("[icon_state]_open")
+	else
+		add_overlay("[icon_state]_door")
 
 /obj/structure/guncase/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user) || isalien(user))
 		return
 	if(istype(I, gun_category))
 		if(contents.len < capacity && open)
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			contents += I
 			user << "<span class='notice'>You place [I] in [src].</span>"
 			update_icon()
 			return
 
-	open = !open
-	update_icon()
+	else if(user.a_intent != "harm")
+		open = !open
+		update_icon()
+	else
+		return ..()
 
 /obj/structure/guncase/attack_hand(mob/user)
-	if(isrobot(usr) || isalien(usr))
+	if(isrobot(user) || isalien(user))
 		return
 	if(contents.len && open)
 		ShowWindow(user)
@@ -75,12 +89,12 @@
 /obj/structure/guncase/shotgun
 	name = "shotgun locker"
 	desc = "A locker that holds shotguns."
-	case_type = "gcase"
+	case_type = "shotgun"
 	gun_category = /obj/item/weapon/gun/projectile/shotgun
 
 /obj/structure/guncase/ecase
 	name = "energy gun locker"
 	desc = "A locker that holds energy guns."
-	icon_state = "ecase-0-open"
-	case_type = "ecase"
+	icon_state = "ecase"
+	case_type = "egun"
 	gun_category = /obj/item/weapon/gun/energy/gun

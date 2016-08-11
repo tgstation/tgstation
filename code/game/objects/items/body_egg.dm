@@ -1,57 +1,52 @@
-/obj/item/body_egg
-	name = "generic egg"
+/obj/item/organ/body_egg
+	name = "body egg"
 	desc = "All slimy and yuck."
-	icon = 'icons/mob/alien.dmi'
-	icon_state = "larva0_dead"
-	var/mob/living/affected_mob
+	icon_state = "innards"
+	origin_tech = "biotech=5"
+	zone = "chest"
+	slot = "parasite_egg"
 
-/obj/item/body_egg/New()
-	if(istype(loc, /mob/living))
-		affected_mob = loc
-		affected_mob.status_flags |= XENO_HOST
-		SSobj.processing |= src
-		if(istype(affected_mob,/mob/living/carbon))
-			var/mob/living/carbon/H = affected_mob
-			H.med_hud_set_status()
-		spawn(0)
-			AddInfectionImages(affected_mob)
-	else
-		qdel(src)
+/obj/item/organ/body_egg/on_find(mob/living/finder)
+	..()
+	finder << "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>"
 
-/obj/item/body_egg/Destroy()
-	if(affected_mob)
-		affected_mob.status_flags &= ~(XENO_HOST)
-		if(istype(affected_mob,/mob/living/carbon))
-			var/mob/living/carbon/H = affected_mob
-			H.med_hud_set_status()
-		spawn(0)
-			RemoveInfectionImages(affected_mob)
+/obj/item/organ/body_egg/New(loc)
+	if(iscarbon(loc))
+		src.Insert(loc)
+	return ..()
+
+/obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
+	..()
+	owner.status_flags |= XENO_HOST
+	START_PROCESSING(SSobj, src)
+	owner.med_hud_set_status()
+	addtimer(src, "AddInfectionImages", 0, FALSE, owner)
+
+/obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
+	STOP_PROCESSING(SSobj, src)
+	if(owner)
+		owner.status_flags &= ~(XENO_HOST)
+		owner.med_hud_set_status()
+		addtimer(src, "RemoveInfectionImages", 0, FALSE, owner)
 	..()
 
-/obj/item/body_egg/process()
-	if(!affected_mob)	return
-	if(loc != affected_mob)
-		affected_mob.status_flags &= ~(XENO_HOST)
-		SSobj.processing.Remove(src)
-		if(istype(affected_mob,/mob/living/carbon))
-			var/mob/living/carbon/H = affected_mob
-			H.med_hud_set_status()
-		spawn(0)
-			RemoveInfectionImages(affected_mob)
-			affected_mob = null
+/obj/item/organ/body_egg/process()
+	if(!owner)
 		return
-
+	if(!(src in owner.internal_organs))
+		Remove(owner)
+		return
 	egg_process()
 
-/obj/item/body_egg/proc/egg_process()
+/obj/item/organ/body_egg/proc/egg_process()
 	return
 
-/obj/item/body_egg/proc/RefreshInfectionImage()
+/obj/item/organ/body_egg/proc/RefreshInfectionImage()
 	RemoveInfectionImages()
 	AddInfectionImages()
 
-/obj/item/body_egg/proc/AddInfectionImages()
+/obj/item/organ/body_egg/proc/AddInfectionImages()
 	return
 
-/obj/item/body_egg/proc/RemoveInfectionImages()
+/obj/item/organ/body_egg/proc/RemoveInfectionImages()
 	return

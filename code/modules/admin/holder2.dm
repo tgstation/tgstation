@@ -8,22 +8,25 @@ var/list/admin_datums = list()
 
 	var/datum/marked_datum
 
-	var/admincaster_screen = 0	//See newscaster.dm under machinery for a full description
-	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message   //These two will act as holders.
-	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
-	var/admincaster_signature	//What you'll sign the newsfeeds as
+	var/admincaster_screen = 0	//TODO: remove all these 5 variables, they are completly unacceptable
+	var/datum/newscaster/feed_message/admincaster_feed_message = new /datum/newscaster/feed_message
+	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
+	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
+	var/admin_signature
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
-		ERROR("Admin datum created without a ckey argument. Datum has been deleted")
-		del(src)
+		spawn(0)
+			del(src)
+		throw EXCEPTION("Admin datum created without a ckey")
 		return
 	if(!istype(R))
-		ERROR("Admin datum created without a rank. Datum has been deleted")
-		del(src)
+		spawn(0)
+			del(src)
+		throw EXCEPTION("Admin datum created without a rank")
 		return
 	rank = R
-	admincaster_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
+	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
@@ -83,13 +86,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 				return 1
 			return usr.client.holder.check_if_greater_rights_than_holder(other.holder)
 	return 0
-
-/client/proc/deadmin()
-	admin_datums -= ckey
-	if(holder)
-		holder.disassociate()
-		del(holder)
-	return 1
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)

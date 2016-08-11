@@ -9,31 +9,43 @@
 
 /**********************Miner Lockers**************************/
 
+/obj/structure/closet/wardrobe/miner
+	name = "mining wardrobe"
+	icon_door = "mixed"
+
+/obj/structure/closet/wardrobe/miner/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/storage/backpack/dufflebag(src)
+	new /obj/item/weapon/storage/backpack/explorer(src)
+	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
+
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
-	icon_state = "miningsec1"
-	icon_closed = "miningsec"
-	icon_locked = "miningsec1"
-	icon_opened = "miningsecopen"
-	icon_broken = "miningsecbroken"
-	icon_off = "miningsecoff"
+	icon_state = "mining"
 	req_access = list(access_mining)
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
-	if(prob(50))
-		new /obj/item/weapon/storage/backpack/industrial(src)
-	else
-		new /obj/item/weapon/storage/backpack/satchel_eng(src)
-	new /obj/item/device/radio/headset/headset_cargo(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/device/mining_scanner(src)
-	new /obj/item/weapon/storage/bag/ore(src)
+	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
+	new /obj/item/weapon/storage/box/emptysandbags(src)
 	new /obj/item/weapon/shovel(src)
-	new /obj/item/weapon/pickaxe(src)
+	new /obj/item/weapon/pickaxe/mini(src)
+	new /obj/item/device/radio/headset/headset_cargo/mining(src)
+	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/weapon/storage/bag/ore(src)
+	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/weapon/survivalcapsule(src)
 
 
 /**********************Shuttle Computer**************************/
@@ -41,10 +53,18 @@
 /obj/machinery/computer/shuttle/mining
 	name = "Mining Shuttle Console"
 	desc = "Used to call and send the mining shuttle."
-	req_access = list(access_mining)
-	circuit = /obj/item/weapon/circuitboard/mining_shuttle
+	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
-	possible_destinations = "mining_home;mining_away"
+	possible_destinations = "mining_home;mining_away;mining_base"
+	no_destination_swap = 1
+	var/global/list/dumb_rev_heads = list()
+
+/obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
+	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in ticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
+		user << "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>"
+		dumb_rev_heads += user.mind
+		return
+	..()
 
 /*********************Pickaxe & Drills**************************/
 
@@ -53,115 +73,85 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 15
-	throwforce = 10.0
+	throwforce = 10
 	item_state = "pickaxe"
-	w_class = 4.0
-	m_amt = 3750 //one sheet, but where can you make them?
+	w_class = 4
+	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
-	origin_tech = "materials=1;engineering=1"
+	origin_tech = "materials=2;engineering=3"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
+
+/obj/item/weapon/pickaxe/mini
+	name = "compact pickaxe"
+	desc = "A smaller, compact version of the standard pickaxe."
+	icon_state = "minipick"
+	force = 10
+	throwforce = 7
+	slot_flags = SLOT_BELT
+	w_class = 3
+	materials = list(MAT_METAL=1000)
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
+
+/obj/item/weapon/pickaxe/silver
+	name = "silver-plated pickaxe"
+	icon_state = "spickaxe"
+	item_state = "spickaxe"
+	digspeed = 20 //mines faster than a normal pickaxe, bought from mining vendor
+	origin_tech = "materials=3;engineering=4"
+	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
+	force = 17
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	digspeed = 20 //mines twice as fast as a normal pickaxe, bought from mining vendor
-	origin_tech = "materials=4;engineering=3"
+	digspeed = 14
+	origin_tech = "materials=5;engineering=4"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
+	force = 19
 
 /obj/item/weapon/pickaxe/drill
 	name = "mining drill"
 	icon_state = "handdrill"
 	item_state = "jackhammer"
-	digspeed = 25 //available from roundstart, faster than a pickaxe but needs recharging or cell replacements
+	slot_flags = SLOT_BELT
+	digspeed = 25 //available from roundstart, faster than a pickaxe.
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
-	origin_tech = "materials=2;powerstorage=3;engineering=2"
+	origin_tech = "materials=2;powerstorage=2;engineering=3"
 	desc = "An electric mining drill for the especially scrawny."
-	var/drillcost = 50 //80 mineral walls by default
-	var/obj/item/weapon/stock_parts/cell/high/bcell = null
-
-/obj/item/weapon/pickaxe/drill/New() //this one starts with a cell pre-installed.
-	..()
-	bcell = new(src)
-	return
-
-/obj/item/weapon/pickaxe/drill/update_icon()
-	if(!bcell)
-		icon_state = "[initial(icon_state)]-nocell"
-	else if(bcell.charge < drillcost)
-		icon_state = "[initial(icon_state)]-empty"
-	else
-		icon_state = "[initial(icon_state)]"
-
-/obj/item/weapon/pickaxe/drill/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
-		if(bcell)
-			user << "<span class='notice'>[src] already has a cell.</span>"
-		else
-			user.drop_item()
-			W.loc = src
-			bcell = W
-			user << "<span class='notice'>You install a cell in [src].</span>"
-			update_icon()
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		if(bcell)
-			bcell.updateicon()
-			bcell.loc = get_turf(src.loc)
-			bcell = null
-			user << "<span class='notice'>You remove the cell from [src].</span>"
-			update_icon()
-			return
-		..()
-	return
-
-/obj/item/weapon/pickaxe/drill/examine(mob/user)
-	..()
-	if(bcell)
-		user <<"<span class='notice'>The [src.name] is [round(bcell.percent())]% charged.</span>"
-	if(!bcell)
-		user <<"<span class='warning'>The [src.name] does not have a power source installed.</span>"
 
 /obj/item/weapon/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
 	desc = "An integrated electric mining drill."
-	var/warned = 0
-
-/obj/item/weapon/pickaxe/drill/cyborg/proc/use_robot_power(var/mob/living/silicon/robot/R)
-	if(!bcell.use(drillcost))
-		if(!warned)
-			usr << "<span class='danger'>Drill internal battery depleted, power will be drawn from user's power supply.</span>"
-			playsound(src, 'sound/weapons/smg_empty_alarm.ogg',50,1)
-			warned = 1
-		if(!R.cell.use(drillcost))
-			R << "<span class='notice'>You don't have enough charge to drill.</span>"
-			return 0
-	return 1
+	flags = NODROP
 
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
-	digspeed = 8 //it's a fast drill with a relatively low power cost. what more could you ask for?
-	origin_tech = "materials=6;powerstorage=4;engineering=5"
+	digspeed = 7
+	origin_tech = "materials=6;powerstorage=4;engineering=4"
 	desc = "Yours is the drill that will pierce the heavens!"
-	drillcost = 75 //66 mineral walls by default, but very quickly
+
+/obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
+	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP flag, and easier to change borg specific drill mechanics.
+	icon_state = "diamonddrill"
+	digspeed = 7
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	digspeed = 4 //the epitome of powertools. high power consumption, extremely fast mining, laughs at puny walls
-	origin_tech = "materials=3;powerstorage=2;engineering=2"
+	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
+	origin_tech = "materials=6;powerstorage=4;engineering=5;magnets=4"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
-	drillcost = 100
 
 /*****************************Shovel********************************/
 
@@ -172,31 +162,433 @@
 	icon_state = "shovel"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 8.0
-	throwforce = 4.0
+	force = 8
+	var/digspeed = 20
+	throwforce = 4
 	item_state = "shovel"
-	w_class = 3.0
-	m_amt = 50
-	origin_tech = "materials=1;engineering=1"
+	w_class = 3
+	materials = list(MAT_METAL=50)
+	origin_tech = "materials=2;engineering=2"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+	sharpness = IS_SHARP
 
 /obj/item/weapon/shovel/spade
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
 	item_state = "spade"
-	force = 5.0
-	throwforce = 7.0
-	w_class = 2.0
+	force = 5
+	throwforce = 7
+	w_class = 2
 
+/obj/item/weapon/emptysandbag
+	name = "empty sandbag"
+	desc = "A bag to be filled with sand."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "sandbag"
+	w_class = 1
+
+/obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
+	if(istype(W,/obj/item/weapon/ore/glass))
+		user << "<span class='notice'>You fill the sandbag.</span>"
+		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
+		user.unEquip(src)
+		user.put_in_hands(I)
+		qdel(W)
+		qdel(src)
+		return
+	else
+		return ..()
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
-	icon = 'icons/obj/storage.dmi'
 	icon_state = "miningcar"
+
+/*****************************Survival Pod********************************/
+
+
+/area/survivalpod
+	name = "\improper Emergency Shelter"
+	icon_state = "away"
+	requires_power = 0
+	has_gravity = 1
+
+/obj/item/weapon/survivalcapsule
+	name = "bluespace shelter capsule"
+	desc = "An emergency shelter stored within a pocket of bluespace."
+	icon_state = "capsule"
+	icon = 'icons/obj/mining.dmi'
+	w_class = 1
+	origin_tech = "engineering=3;bluespace=3"
+	var/template_id = "shelter_alpha"
+	var/datum/map_template/shelter/template
+	var/used = FALSE
+
+/obj/item/weapon/survivalcapsule/proc/get_template()
+	if(template)
+		return
+	template = shelter_templates[template_id]
+	if(!template)
+		throw EXCEPTION("Shelter template ([template_id]) not found!")
+		qdel(src)
+
+/obj/item/weapon/survivalcapsule/Destroy()
+	template = null // without this, capsules would be one use. per round.
+	. = ..()
+
+/obj/item/weapon/survivalcapsule/examine(mob/user)
+	. = ..()
+	get_template()
+	user << "This capsule has the [template.name] stored."
+	user << template.description
+
+/obj/item/weapon/survivalcapsule/attack_self()
+	// Can't grab when capsule is New() because templates aren't loaded then
+	get_template()
+	if(used == FALSE)
+		src.loc.visible_message("<span class='warning'>\The [src] begins \
+			to shake. Stand back!</span>")
+		used = TRUE
+		sleep(50)
+		var/turf/deploy_location = get_turf(src)
+		var/status = template.check_deploy(deploy_location)
+		switch(status)
+			if(SHELTER_DEPLOY_BAD_AREA)
+				src.loc.visible_message("<span class='warning'>\The [src] \
+				will not function in this area.</span>")
+			if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
+				var/width = template.width
+				var/height = template.height
+				src.loc.visible_message("<span class='warning'>\The [src] \
+				doesn't have room to deploy! You need to clear a \
+				[width]x[height] area!</span>")
+
+		if(status != SHELTER_DEPLOY_ALLOWED)
+			used = FALSE
+			return
+
+		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
+
+		var/turf/T = deploy_location
+		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
+			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
+			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
+		template.load(deploy_location, centered = TRUE)
+		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
+		qdel(src)
+
+//Pod turfs and objects
+
+
+//Floors
+/turf/open/floor/pod
+	name = "pod floor"
+	icon_state = "podfloor"
+	icon_regular_floor = "podfloor"
+	floor_tile = /obj/item/stack/tile/pod
+
+/turf/open/floor/pod/light
+	icon_state = "podfloor_light"
+	icon_regular_floor = "podfloor_light"
+	floor_tile = /obj/item/stack/tile/pod/light
+
+/turf/open/floor/pod/dark
+	icon_state = "podfloor_dark"
+	icon_regular_floor = "podfloor_dark"
+	floor_tile = /obj/item/stack/tile/pod/dark
+
+//Walls
+/turf/closed/wall/shuttle/survival
+	name = "pod wall"
+	desc = "An easily-compressable wall used for temporary shelter."
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "smooth"
+	walltype = "shuttle"
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
+
+/turf/closed/wall/shuttle/survival/nodiagonal
+	smooth = SMOOTH_MORE
+
+/turf/closed/wall/shuttle/survival/pod
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+
+//Window
+/obj/structure/window/shuttle/survival_pod
+	name = "pod window"
+	icon = 'icons/obj/smooth_structures/pod_window.dmi'
+	icon_state = "smooth"
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
+
+//Door
+/obj/machinery/door/airlock/survival_pod
+	name = "airlock"
+	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod
+	opacity = 0
+	glass = 1
+
+/obj/machinery/door/airlock/survival_pod/vertical
+	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
+
+/obj/structure/door_assembly/door_assembly_pod
+	name = "pod airlock assembly"
+	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+	airlock_type = /obj/machinery/door/airlock/survival_pod
+	anchored = 1
+	state = 1
+	mineral = "glass"
+	material = "glass"
+
+/obj/structure/door_assembly/door_assembly_pod/vertical
+	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
+	airlock_type = /obj/machinery/door/airlock/survival_pod/vertical
+
+//Table
+/obj/structure/table/survival_pod
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "table"
+	smooth = SMOOTH_FALSE
+
+//Sleeper
+/obj/machinery/sleeper/survival_pod
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "sleeper"
+
+/obj/machinery/sleeper/survival_pod/update_icon()
+	if(state_open)
+		cut_overlays()
+	else
+		add_overlay("sleeper_cover")
+
+//Computer
+/obj/item/device/gps/computer
+	name = "pod computer"
+	icon_state = "pod_computer"
+	icon = 'icons/obj/lavaland/pod_computer.dmi'
+	anchored = 1
 	density = 1
-	icon_opened = "miningcaropen"
-	icon_closed = "miningcar"
+	pixel_y = -32
+
+/obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
+						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
+		if(do_after(user, 20/W.toolspeed, target = src))
+			new /obj/item/device/gps(src.loc)
+			qdel(src)
+			return ..()
+
+/obj/item/device/gps/computer/attack_hand(mob/user)
+	attack_self(user)
+
+//Bed
+/obj/structure/bed/pod
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "bed"
+
+//Survival Storage Unit
+/obj/machinery/smartfridge/survival_pod
+	name = "survival pod storage"
+	desc = "A heated storage unit."
+	icon_state = "donkvendor"
+	icon = 'icons/obj/lavaland/donkvendor.dmi'
+	icon_on = "donkvendor"
+	icon_off = "donkvendor"
+	luminosity = 8
+	max_n_of_items = 10
+	pixel_y = -4
+
+/obj/machinery/smartfridge/survival_pod/empty
+	name = "dusty survival pod storage"
+	desc = "A heated storage unit. This one's seen better days."
+
+/obj/machinery/smartfridge/survival_pod/empty/New()
+	return()
+
+/obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
+	if(istype(O, /obj/item))
+		return 1
+	return 0
+
+/obj/machinery/smartfridge/survival_pod/New()
+	..()
+	for(var/i in 1 to 5)
+		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
+		load(W)
+	if(prob(50))
+		var/obj/item/weapon/storage/pill_bottle/dice/D = new(src)
+		load(D)
+	else
+		var/obj/item/device/instrument/guitar/G = new(src)
+		load(G)
+
+//Fans
+/obj/structure/fans
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "fans"
+	name = "environmental regulation system"
+	desc = "A large machine releasing a constant gust of air."
+	anchored = 1
+	density = 1
+	var/arbitraryatmosblockingvar = TRUE
+	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstackamount = 5
+
+/obj/structure/fans/deconstruct()
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	..()
+
+/obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
+						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
+		if(do_after(user, 20/W.toolspeed, target = src))
+			deconstruct()
+			return ..()
+
+/obj/structure/fans/tiny
+	name = "tiny fan"
+	desc = "A tiny fan, releasing a thin gust of air."
+	layer = ABOVE_NORMAL_TURF_LAYER
+	density = 0
+	icon_state = "fan_tiny"
+	buildstackamount = 2
+
+/obj/structure/fans/New(loc)
+	..()
+	air_update_turf(1)
+
+/obj/structure/fans/Destroy()
+	arbitraryatmosblockingvar = FALSE
+	air_update_turf(1)
+	return ..()
+
+/obj/structure/fans/CanAtmosPass(turf/T)
+	return !arbitraryatmosblockingvar
+
+//Signs
+/obj/structure/sign/mining
+	name = "nanotrasen mining corps sign"
+	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "ntpod"
+
+/obj/structure/sign/mining/survival
+	name = "shelter sign"
+	desc = "A high visibility sign designating a safe shelter."
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "survival"
+
+//Fluff
+/obj/structure/tubes
+	icon_state = "tubes"
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	name = "tubes"
+	anchored = 1
+	layer = BELOW_MOB_LAYER
+	density = 0
+
+///Mining Base////
+
+/area/shuttle/auxillary_base
+	name = "Auxillary Base"
+
+
+/obj/machinery/computer/shuttle/auxillary_base
+	name = "auxillary base launch control"
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "dorm_available"
+	shuttleId = "colony_drop"
+	req_access = list(access_heads)
+	possible_destinations = null
+	clockwork = TRUE
+
+/obj/machinery/computer/shuttle/auxillary_base/Topic(href, href_list)
+	if(href_list["move"])
+		if(z != ZLEVEL_STATION)
+			usr << "<span class='warning'>You can't move the base again!</span>"
+			return 0
+	..()
+
+/obj/item/device/assault_pod/mining
+	name = "Landing Field Designator"
+	icon_state = "gangtool-purple"
+	item_state = "electronic"
+	icon = 'icons/obj/device.dmi'
+	desc = "Deploy to designate the landing zone of the auxillary base."
+	shuttle_id = "colony_drop"
+	var/setting = FALSE
+	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
+	dwidth = 11 //These dimensions are to be set by the mappers for their respective maps.
+	dheight = 0
+	width = 23
+	height = 23
+	lz_dir = 1
+
+/obj/item/device/assault_pod/mining/attack_self(mob/living/user)
+	if(setting)
+		return
+	var/turf/T = get_turf(user)
+	if(!no_restrictions)
+		if(T.z != ZLEVEL_MINING)
+			user << "Wouldn't do much good dropping a mining base away from the mining area!"
+			return
+		var/colony_radius = max(width, height)/2
+		var/list/area_counter = get_areas_in_range(colony_radius, T)
+		if(area_counter.len > 1) //Avoid smashing ruins unless you are inside a really big one
+			user << "Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one."
+			return
+
+	user << "<span class='notice'>You begin setting the landing zone parameters...</span>"
+	setting = TRUE
+	if(!do_after(user, 50, target = src)) //You get a few seconds to cancel if you do not want to drop there.
+		setting = FALSE
+		return
+
+	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
+	landing_zone.id = "colony_drop(\ref[src])"
+	landing_zone.name = "Landing Zone"
+	landing_zone.dwidth = dwidth
+	landing_zone.dheight = dheight
+	landing_zone.width = width
+	landing_zone.height = height
+	landing_zone.setDir(lz_dir)
+
+	for(var/obj/machinery/computer/shuttle/S in machines)
+		if(S.shuttleId == shuttle_id)
+			S.possible_destinations = "[landing_zone.id]"
+
+//Serves as a nice mechanic to people get ready for the launch.
+	minor_announce("Auxiliary base landing zone coordinates locked in for [get_area(user)]. Launch command now available!")
+	user << "<span class='notice'>Landing zone set.</span>"
+
+	qdel(src)
+
+/obj/item/device/assault_pod/mining/unrestricted
+	name = "omni-locational landing field designator"
+	desc = "Allows the deployment of the mining base ANYWHERE. Use with caution."
+	no_restrictions = TRUE
+
+
+/area/shuttle/auxillary_base
+	name = "Auxillary Base"
+
+/obj/docking_port/mobile/auxillary_base
+	name = "auxillary base"
+	id = "colony_drop"
+	dwidth = 11
+	width = 23
+	height = 23

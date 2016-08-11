@@ -16,13 +16,13 @@
 	set category = "Drone"
 	set name = "Toggle drone light"
 	if(light_on)
-		AddLuminosity(-4)
+		AddLuminosity(-8)
 	else
-		AddLuminosity(4)
+		AddLuminosity(8)
 
 	light_on = !light_on
 
-	src << "<span class='notice'>Your light is now [light_on ? "on" : "off"]</span>"
+	src << "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>"
 
 /mob/living/simple_animal/drone/verb/drone_ping()
 	set category = "Drone"
@@ -43,7 +43,7 @@
 	set category = "Drone"
 
 	if(!seeStatic)
-		src << "<span class='notice'>You have no vision filter to change!</span>"
+		src << "<span class='warning'>You have no vision filter to change!</span>"
 		return
 
 	var/selectedStatic = input("Select a vision filter", "Vision Filter") as null|anything in staticChoices
@@ -51,3 +51,4 @@
 		staticChoice = selectedStatic
 
 	updateSeeStaticMobs()
+

@@ -2,7 +2,6 @@
 /obj/effect/spider
 	name = "web"
 	desc = "it's stringy and sticky"
-	icon = 'icons/effects/effects.dmi'
 	anchored = 1
 	density = 0
 	var/health = 15
@@ -10,47 +9,41 @@
 //similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(5))
 				qdel(src)
-	return
 
-/obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user, params)
-	if(W.attack_verb.len)
-		visible_message("<span class='danger'>[user] has [pick(W.attack_verb)] \the [src] with \the [W]!</span>")
-	else
-		visible_message("<span class='danger'>[user] has attacked \the [src] with \the [W]!</span>")
-
-	var/damage = W.force / 4.0
-
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-
-		if(WT.remove_fuel(0, user))
-			damage = 15
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-
-	health -= damage
-	healthcheck()
-
-/obj/effect/spider/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/spider/attacked_by(obj/item/I, mob/user)
 	..()
-	health -= Proj.damage
-	healthcheck()
+	var/damage = I.force
+	take_damage(damage, I.damtype, 1)
 
-/obj/effect/spider/proc/healthcheck()
+/obj/effect/spider/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
+
+/obj/effect/spider/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BURN)
+			damage *= 2
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		if(BRUTE)//the stickiness of the web mutes all attack sounds except fire damage type
+			damage *= 0.25
+		else
+			return
+	health -= damage
 	if(health <= 0)
 		qdel(src)
 
 /obj/effect/spider/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		health -= 5
-		healthcheck()
+		take_damage(5, BURN, 0)
 
 /obj/effect/spider/stickyweb
 	icon_state = "stickyweb1"
@@ -77,11 +70,14 @@
 	icon_state = "eggs"
 	var/amount_grown = 0
 	var/player_spiders = 0
+	var/poison_type = "toxin"
+	var/poison_per_bite = 5
+	var/list/faction = list("spiders")
 
 /obj/effect/spider/eggcluster/New()
 	pixel_x = rand(3,-3)
 	pixel_y = rand(3,-3)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
@@ -89,6 +85,9 @@
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
 			var/obj/effect/spider/spiderling/S = new /obj/effect/spider/spiderling(src.loc)
+			S.poison_type = poison_type
+			S.poison_per_bite = poison_per_bite
+			S.faction = faction.Copy()
 			if(player_spiders)
 				S.player_spiders = 1
 		qdel(src)
@@ -98,32 +97,27 @@
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
 	anchored = 0
-	layer = 2.75
+	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	health = 3
 	var/amount_grown = 0
 	var/grow_as = null
-	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
+	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	var/player_spiders = 0
+	var/poison_type = "toxin"
+	var/poison_per_bite = 5
+	var/list/faction = list("spiders")
 
 /obj/effect/spider/spiderling/New()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
 		src.loc = user.loc
 	else
 		..()
-
-/obj/effect/spider/spiderling/proc/die()
-	visible_message("<span class='alert'>[src] dies!</span>")
-	qdel(src)
-
-/obj/effect/spider/spiderling/healthcheck()
-	if(health <= 0)
-		die()
 
 /obj/effect/spider/spiderling/process()
 	if(travelling_in_vent)
@@ -133,15 +127,16 @@
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
-			for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in entry_vent.parent.other_atmosmch)
+			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
+			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
 				vents.Add(temp_vent)
 			if(!vents.len)
 				entry_vent = null
 				return
-			var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
+			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
 			if(prob(50))
 				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
-								"<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 
 			spawn(rand(20,60))
 				loc = exit_vent
@@ -154,7 +149,7 @@
 						return
 
 					if(prob(50))
-						audible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>")
+						audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
 					sleep(travel_time)
 
 					if(!exit_vent || exit_vent.welded)
@@ -177,7 +172,7 @@
 				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(10))
 		//ventcrawl!
-		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
 			if(!v.welded)
 				entry_vent = v
 				walk_to(src, entry_vent, 1)
@@ -188,14 +183,15 @@
 			if(!grow_as)
 				grow_as = pick(typesof(/mob/living/simple_animal/hostile/poison/giant_spider))
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
+			S.poison_per_bite = poison_per_bite
+			S.poison_type = poison_type
+			S.faction = faction.Copy()
 			if(player_spiders)
-				var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
-				var/client/C = null
-
-				if(candidates.len)
-					C = pick(candidates)
-					S.key = C.key
+				S.playable_spider = TRUE
+				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=\ref[S];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK)
 			qdel(src)
+
+
 
 /obj/effect/spider/cocoon
 	name = "cocoon"
@@ -211,9 +207,9 @@
 	var/breakout_time = 2
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>"
+	user << "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>"
 	visible_message("You see something struggling and writhing in \the [src]!")
-	if(do_after(user,(breakout_time*60*10)))
+	if(do_after(user,(breakout_time*60*10), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return
 		qdel(src)
@@ -221,7 +217,7 @@
 
 
 /obj/effect/spider/cocoon/Destroy()
-	src.visible_message("<span class='danger'>\The [src] splits open.</span>")
+	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
-	..()
+	return ..()

@@ -6,6 +6,7 @@
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
 	desc = "Looks like it's been here a while.  Eew."
+	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/old/New()
 	..()
@@ -14,12 +15,13 @@
 
 /obj/effect/decal/cleanable/blood/gibs/old
 	name = "old rotting gibs"
-	desc = "Oh god, why didn't anyone clean this up?  It smells terrible."
+	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
+	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/gibs/old/New()
 	..()
 	icon_state += "-old"
-	dir = pick(1,2,4,8)
+	setDir(pick(1,2,4,8))
 	blood_DNA["Non-human DNA"] = "A+"
 
 /obj/effect/decal/cleanable/vomit/old
@@ -37,12 +39,12 @@
 
 //Making the station dirty, one tile at a time. Called by master controller's setup_objects
 
-/turf/simulated/floor/proc/MakeDirty()
+/turf/open/floor/proc/MakeDirty()
 	if(prob(66))	//fastest possible exit 2/3 of the time
 		return
 
 	// These look weird if you make them dirty
-	if(istype(src, /turf/simulated/floor/fancy/carpet) || istype(src, /turf/simulated/floor/fancy/grass) || istype(src, /turf/simulated/floor/beach) || istype(src, /turf/simulated/floor/holofloor) || istype(src, /turf/simulated/floor/plating/snow) || istype(src, /turf/simulated/floor/plating/ironsand))
+	if(istype(src, /turf/open/floor/carpet) || istype(src, /turf/open/floor/grass) || istype(src, /turf/open/floor/plating/beach) || istype(src, /turf/open/floor/holofloor)|| istype(src, /turf/open/floor/plating/ironsand))
 		return
 
 	if(locate(/obj/structure/grille) in contents)
@@ -76,7 +78,7 @@
 				new /obj/effect/decal/cleanable/dirt(src)
 		return
 
-	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/locker/locker_toilet) || istype(A, /area/crew_quarters/bar))
+	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/locker/locker_toilet))
 		if(prob(40))
 			if(prob(90))
 				new /obj/effect/decal/cleanable/vomit/old(src)
@@ -127,5 +129,3 @@
 		if(prob(20))
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return
-
-	return

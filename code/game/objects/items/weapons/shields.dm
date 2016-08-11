@@ -1,5 +1,6 @@
 /obj/item/weapon/shield
 	name = "shield"
+	block_chance = 50
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -7,34 +8,48 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	slot_flags = SLOT_BACK
-	force = 8
+	force = 10
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
 	w_class = 4
-	g_amt = 7500
-	m_amt = 1000
-	origin_tech = "materials=2"
+	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
+	origin_tech = "materials=3;combat=4"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-/obj/item/weapon/shield/riot/IsShield()
-	return 1
 
-/obj/item/weapon/shield/riot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/shield/riot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/melee/baton))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
 	else
-		..()
+		return ..()
+
+/obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == THROWN_PROJECTILE_ATTACK)
+		final_block_chance += 30
+	if(attack_type == LEAP_ATTACK)
+		final_block_chance = 100
+	return ..()
 
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
+
+/obj/item/weapon/shield/riot/buckler
+	name = "wooden buckler"
+	desc = "A medieval wooden buckler."
+	icon_state = "buckler"
+	item_state = "buckler"
+	materials = list()
+	origin_tech = "materials=1;combat=3;biotech=2"
+	burn_state = FLAMMABLE
+	block_chance = 30
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
@@ -46,12 +61,12 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 1
-	origin_tech = "materials=4;magnets=3;syndicate=4"
+	origin_tech = "materials=4;magnets=5;syndicate=6"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
-/obj/item/weapon/shield/energy/IsShield()
-	return (active)
+/obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	return 0
 
 /obj/item/weapon/shield/energy/IsReflect()
 	return (active)
@@ -84,6 +99,7 @@
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "teleriot0"
+	origin_tech = "materials=3;combat=4;engineering=4"
 	slot_flags = null
 	force = 3
 	throwforce = 3
@@ -92,8 +108,10 @@
 	w_class = 3
 	var/active = 0
 
-/obj/item/weapon/shield/riot/tele/IsShield()
-	return (active)
+/obj/item/weapon/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(active)
+		return ..()
+	return 0
 
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active

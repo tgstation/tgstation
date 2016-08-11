@@ -18,11 +18,10 @@
 #   imagedel
 #   spellcheck (typo fixes)
 #   experiment
-#   tgs (TG-ported fixes?)
 #################################
 
 # Your name.  
-author: N3X15
+author: "
 
 # Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
 delete-after: True

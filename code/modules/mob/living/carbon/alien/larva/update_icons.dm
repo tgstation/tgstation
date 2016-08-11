@@ -5,7 +5,7 @@
 
 /mob/living/carbon/alien/larva/update_icons()
 	var/state = 0
-	if(amount_grown > 150)
+	if(amount_grown > 80)
 		state = 2
 	else if(amount_grown > 50)
 		state = 1
@@ -22,4 +22,10 @@
 		icon_state = "larva[state]"
 
 /mob/living/carbon/alien/larva/update_transform() //All this is handled in update_icons()
+	..()
 	return update_icons()
+
+/mob/living/carbon/alien/larva/update_inv_handcuffed()
+	update_icons() //larva icon_state changes if cuffed/uncuffed.
+
+

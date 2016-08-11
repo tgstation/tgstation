@@ -3,21 +3,31 @@
 	name = "projectile gun"
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
-	w_class = 3.0
-	m_amt = 1000
+	w_class = 3
+	var/spawnwithmagazine = 1
 
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 
 /obj/item/weapon/gun/projectile/New()
 	..()
+	if(!spawnwithmagazine)
+		update_icon()
+		return
 	if (!magazine)
 		magazine = new mag_type(src)
 	chamber_round()
 	update_icon()
-	return
 
-/obj/item/weapon/gun/projectile/process_chamber(var/eject_casing = 1, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/update_icon()
+	..()
+	if(current_skin)
+		icon_state = "[current_skin][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+	else
+		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+
+
+/obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1)
 //	if(in_chamber)
 //		return 1
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
@@ -46,7 +56,7 @@
 		return 0
 	return 1
 
-/obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user, params)
 	..()
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
@@ -65,10 +75,8 @@
 		var/obj/item/weapon/suppressor/S = A
 		if(can_suppress)
 			if(!suppressed)
-				if(user.l_hand != src && user.r_hand != src)
-					user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
+				if(!user.unEquip(A))
 					return
-				user.drop_item()
 				user << "<span class='notice'>You screw [S] onto [src].</span>"
 				suppressed = A
 				S.oldsound = fire_sound
@@ -79,16 +87,16 @@
 				update_icon()
 				return
 			else
-				user << "<span class='warning'>[src] already has a suppressor.</span>"
+				user << "<span class='warning'>[src] already has a suppressor!</span>"
 				return
 		else
-			user << "<span class='warning'>You can't seem to figure out how to fit [S] on [src].</span>"
+			user << "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>"
 			return
 	return 0
 
-/obj/item/weapon/gun/projectile/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/projectile/attack_hand(mob/user)
 	if(loc == user)
-		if(suppressed)
+		if(suppressed && can_unsuppress)
 			var/obj/item/weapon/suppressor/S = suppressed
 			if(user.l_hand != src && user.r_hand != src)
 				..()
@@ -102,7 +110,7 @@
 			return
 	..()
 
-/obj/item/weapon/gun/projectile/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(magazine)
 		magazine.loc = get_turf(src.loc)
@@ -125,7 +133,7 @@
 	..()
 	user << "Has [get_ammo()] round\s remaining."
 
-/obj/item/weapon/gun/projectile/proc/get_ammo(var/countchambered = 1)
+/obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
@@ -138,7 +146,7 @@
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of the [src.name] in \his mouth.  It looks like \he's trying to commit suicide.</span>")
 		sleep(25)
 		if(user.l_hand == src || user.r_hand == src)
-			process_fire(user, user, 0)
+			process_fire(user, user, 0, zone_override = "head")
 			user.visible_message("<span class='suicide'>[user] blows \his brains out with the [src.name]!</span>")
 			return(BRUTELOSS)
 		else
@@ -149,6 +157,43 @@
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
 
+
+
+/obj/item/weapon/gun/projectile/proc/sawoff(mob/user)
+	if(sawn_state == SAWN_OFF)
+		user << "<span class='warning'>\The [src] is already shortened!</span>"
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
+
+	//if there's any live ammo inside the gun, makes it go off
+	if(blow_up(user))
+		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
+		return
+
+	if(do_after(user, 30, target = src))
+		if(sawn_state == SAWN_OFF)
+			return
+		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
+		name = "sawn-off [src.name]"
+		desc = sawn_desc
+		w_class = 3
+		item_state = "gun"//phil235 is it different with different skin?
+		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
+		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+		sawn_state = SAWN_OFF
+		update_icon()
+		return 1
+
+// Sawing guns related proc
+/obj/item/weapon/gun/projectile/proc/blow_up(mob/user)
+	. = 0
+	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
+		if(AC.BB)
+			process_fire(user, user,0)
+			. = 1
+
+
 /obj/item/weapon/suppressor
 	name = "suppressor"
 	desc = "A universal syndicate small-arms suppressor for maximum espionage."
@@ -157,3 +202,11 @@
 	w_class = 2
 	var/oldsound = null
 	var/initial_w_class = null
+
+
+/obj/item/weapon/suppressor/specialoffer
+	name = "cheap suppressor"
+	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits all weapons."
+	icon = 'icons/obj/guns/projectile.dmi'
+	icon_state = "suppressor"
+

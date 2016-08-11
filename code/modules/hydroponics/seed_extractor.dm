@@ -1,46 +1,40 @@
-/proc/seedify(var/obj/item/O as obj, var/t_max)
+/proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
 	var/t_amount = 0
 	if(t_max == -1)
-		t_max = rand(1,4)
+		if(extractor)
+			t_max = rand(1,4) * extractor.seed_multiplier
+		else
+			t_max = rand(1,4)
+
+	var/seedloc = O.loc
+	if(extractor)
+		seedloc = extractor.loc
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
-		while(t_amount < t_max)
-			var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
-			t_prod.lifespan = F.lifespan
-			t_prod.endurance = F.endurance
-			t_prod.maturation = F.maturation
-			t_prod.production = F.production
-			t_prod.yield = F.yield
-			t_prod.potency = F.potency
-			t_amount++
-		qdel(O)
-		return 1
-
-	else if(istype(O, /obj/item/weapon/grown/))
-		var/obj/item/weapon/grown/F = O
 		if(F.seed)
+			if(user && !user.drop_item()) //couldn't drop the item
+				return
 			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = new F.seed(O.loc, O)
-				t_prod.lifespan = F.lifespan
-				t_prod.endurance = F.endurance
-				t_prod.maturation = F.maturation
-				t_prod.production = F.production
-				t_prod.yield = F.yield
-				t_prod.potency = F.potency
+				var/obj/item/seeds/t_prod = F.seed.Copy()
+				t_prod.loc = seedloc
 				t_amount++
 			qdel(O)
 			return 1
-		else return 0
 
-	/*else if(istype(O, /obj/item/stack/tile/grass))
-		var/obj/item/stack/tile/grass/S = O
-		new /obj/item/seeds/grassseed(O.loc)
-		S.use(1)
-		return 1*/
+	else if(istype(O, /obj/item/weapon/grown))
+		var/obj/item/weapon/grown/F = O
+		if(F.seed)
+			if(user && !user.drop_item())
+				return
+			while(t_amount < t_max)
+				var/obj/item/seeds/t_prod = F.seed.Copy()
+				t_prod.loc = seedloc
+				t_amount++
+			qdel(O)
+		return 1
 
-	else
-		return 0
+	return 0
 
 
 /obj/machinery/seed_extractor
@@ -51,44 +45,73 @@
 	density = 1
 	anchored = 1
 	var/piles = list()
+	var/max_seeds = 1000
+	var/seed_multiplier = 1
 
-obj/machinery/seed_extractor/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
-	if(isrobot(user))
+/obj/machinery/seed_extractor/New()
+	..()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/seed_extractor(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/seed_extractor
+	name = "circuit board (Seed Extractor)"
+	build_path = /obj/machinery/seed_extractor
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/machinery/seed_extractor/RefreshParts()
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		max_seeds = 1000 * B.rating
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		seed_multiplier = M.rating
+
+/obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
+
+	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_pry_open(O))
+		return
+
+	if(default_unfasten_wrench(user, O))
+		return
+
+	if(default_deconstruction_crowbar(O))
 		return
 
 	if (istype(O,/obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/P = O
 		var/loaded = 0
 		for(var/obj/item/seeds/G in P.contents)
-			if(contents.len >= 999)
+			if(contents.len >= max_seeds)
 				break
 			++loaded
-			add(G)
+			add_seed(G)
 		if (loaded)
 			user << "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>"
 		else
 			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
 		return
 
-	if(!user.drop_item()) //couldn't drop the item
-		user << "<span class='notice'>\The [O] is stuck to your hand, you cannot put it in the seed extractor!</span>"
-		return
-
-	if(O && O.loc)
-		O.loc = src.loc
-
-	if(seedify(O,-1))
+	else if(seedify(O,-1, src, user))
 		user << "<span class='notice'>You extract some seeds.</span>"
 		return
 	else if (istype(O,/obj/item/seeds))
-		add(O)
-		user << "<span class='notice'>You add [O] to [src.name].</span>"
-		updateUsrDialog()
+		if(add_seed(O))
+			user << "<span class='notice'>You add [O] to [src.name].</span>"
+			updateUsrDialog()
 		return
+	else if(user.a_intent != "harm")
+		user << "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>"
 	else
-		user << "<span class='notice'>You can't extract any seeds from \the [O.name].</span>"
+		return ..()
 
-datum/seed_pile
+/datum/seed_pile
 	var/name = ""
 	var/lifespan = 0	//Saved stats
 	var/endurance = 0
@@ -98,7 +121,7 @@ datum/seed_pile
 	var/potency = 0
 	var/amount = 0
 
-datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie, var/poten, var/am = 1)
+/datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie, var/poten, var/am = 1)
 	src.name = name
 	src.lifespan = life
 	src.endurance = endur
@@ -108,11 +131,11 @@ datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie,
 	src.potency = poten
 	src.amount = am
 
-/obj/machinery/seed_extractor/attack_hand(mob/user as mob)
+/obj/machinery/seed_extractor/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-obj/machinery/seed_extractor/interact(mob/user as mob)
+/obj/machinery/seed_extractor/interact(mob/user)
 	if (stat)
 		return 0
 
@@ -132,7 +155,7 @@ obj/machinery/seed_extractor/interact(mob/user as mob)
 	popup.open()
 	return
 
-obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
+/obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 	if(..())
 		return
 	usr.set_machine(src)
@@ -151,7 +174,7 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 			N.amount = max(N.amount - 1, 0)
 			if (N.amount <= 0)
 				piles -= N
-				del(N)
+				qdel(N)
 			break
 
 	for (var/obj/T in contents)//Now we find the seed we need to vend
@@ -163,22 +186,21 @@ obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
 	src.updateUsrDialog()
 	return
 
-obj/machinery/seed_extractor/proc/add(var/obj/item/seeds/O as obj)
+/obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
 		usr << "<span class='notice'>\The [src] is full.</span>"
 		return 0
 
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
-		if(!M.unEquip(O))
-			usr << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
-			return
+		if(!M.drop_item())
+			return 0
 	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
 		S.remove_from_storage(O,src)
 
 	O.loc = src
-
+	. = 1
 	for (var/datum/seed_pile/N in piles)
 		if (O.plantname == N.name && O.lifespan == N.lifespan && O.endurance == N.endurance && O.maturation == N.maturation && O.production == N.production && O.yield == N.yield && O.potency == N.potency)
 			++N.amount

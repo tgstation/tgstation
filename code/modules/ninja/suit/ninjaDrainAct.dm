@@ -18,7 +18,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //APC//
-/obj/machinery/power/apc/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/power/apc/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -28,7 +28,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = 0
 
 	if(cell && cell.charge)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
 		while(G.candrain && cell.charge> 0 && !maxcapacity)
@@ -41,7 +41,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				drain = S.cell.maxcharge - S.cell.charge
 				maxcapacity = 1//Reached maximum battery capacity.
 
-			if (do_after(H,10))
+			if (do_after(H,10, target = src))
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
 				cell.charge -= drain
@@ -61,7 +61,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //SMES//
-/obj/machinery/power/smes/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/power/smes/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -71,7 +71,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	. = 0
 
 	if(charge)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 
 		while(G.candrain && charge > 0 && !maxcapacity)
@@ -84,7 +84,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				drain = S.cell.maxcharge - S.cell.charge
 				maxcapacity = 1
 
-			if (do_after(H,10))
+			if (do_after(H,10, target = src))
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
 				charge -= drain
@@ -96,14 +96,14 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //CELL//
-/obj/item/weapon/stock_parts/cell/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/item/weapon/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
 	. = 0
 
 	if(charge)
-		if(G.candrain && do_after(H,30))
+		if(G.candrain && do_after(H,30, target = src))
 			. = charge
 			if(S.cell.charge + charge > S.cell.maxcharge)
 				S.cell.charge = S.cell.maxcharge
@@ -115,7 +115,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //RDCONSOLE//
-/obj/machinery/computer/rdconsole/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/computer/rdconsole/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -130,7 +130,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(files && files.known_tech.len)
 		for(var/datum/tech/current_data in S.stored_research)
 			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
-			if(do_after(H, S.s_delay) && G.candrain && src)
+			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
 				for(var/datum/tech/analyzing_data in files.known_tech)
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
@@ -146,7 +146,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 //RD SERVER//
 //Shamelessly copypasted from above, since these two used to be the same proc, but with MANY colon operators
-/obj/machinery/r_n_d/server/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/r_n_d/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -161,7 +161,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(files && files.known_tech.len)
 		for(var/datum/tech/current_data in S.stored_research)
 			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
-			if(do_after(H, S.s_delay) && G.candrain && src)
+			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
 				for(var/datum/tech/analyzing_data in files.known_tech)
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
@@ -176,7 +176,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //WIRE//
-/obj/structure/cable/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/structure/cable/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -189,7 +189,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	while(G.candrain && !maxcapacity && src)
 		drain = (round((rand(G.mindrain, G.maxdrain))/2))
 		var/drained = 0
-		if(PN && do_after(H,10))
+		if(PN && do_after(H,10, target = src))
 			drained = min(drain, PN.avail)
 			PN.load += drained
 			if(drained < drain)//if no power on net, drain apcs
@@ -212,7 +212,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		S.spark_system.start()
 
 //MECH//
-/obj/mecha/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/obj/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -229,7 +229,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			if(S.cell.charge + drain > S.cell.maxcharge)
 				drain = S.cell.maxcharge - S.cell.charge
 				maxcapacity = 1
-			if (do_after(H,10))
+			if (do_after(H,10, target = src))
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
 				cell.use(drain)
@@ -239,7 +239,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				break
 
 //BORG//
-/mob/living/silicon/robot/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/mob/living/silicon/robot/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -268,7 +268,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //CARBON MOBS//
-/mob/living/carbon/ninjadrain_act(var/obj/item/clothing/suit/space/space_ninja/S, var/mob/living/carbon/human/H, var/obj/item/clothing/gloves/space_ninja/G)
+/mob/living/carbon/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -278,7 +278,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	if(S.cell && S.cell.charge && S.cell.use(1000))
 		. = DRAIN_MOB_SHOCK
 		//Got that electric touch
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		playsound(src, "sparks", 50, 1)
 		visible_message("<span class='danger'>[H] electrocutes [src] with their touch!</span>", "<span class='userdanger'>[H] electrocutes you with their touch!</span>")

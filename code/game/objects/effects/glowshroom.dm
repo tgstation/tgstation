@@ -1,13 +1,18 @@
 //separate dm since hydro is getting bloated already
 
+var/list/blacklisted_glowshroom_turfs = typecacheof(list(
+	/turf/open/floor/plating/lava,
+	/turf/open/floor/plating/beach/water))
+
 /obj/effect/glowshroom
 	name = "glowshroom"
+	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
 	anchored = 1
 	opacity = 0
 	density = 0
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "glowshroomf"
-	layer = 2.1
+	icon_state = "glowshroom" //replaced in New
+	layer = ABOVE_NORMAL_TURF_LAYER
 	var/endurance = 30
 	var/potency = 30
 	var/delay = 1200
@@ -16,13 +21,22 @@
 	var/generation = 1
 	var/spreadIntoAdjacentChance = 60
 
+obj/effect/glowshroom/glowcap
+	name = "glowcap"
+	icon_state = "glowcap"
+
 /obj/effect/glowshroom/single
 	yield = 0
+
+/obj/effect/glowshroom/examine(mob/user)
+	. = ..()
+	user << "This is a [generation]\th generation [name]!"
 
 /obj/effect/glowshroom/New()
 	..()
 	SetLuminosity(round(potency/10))
-	dir = CalcDir()
+	setDir(CalcDir())
+	var/base_icon_state = initial(icon_state)
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor
 			if(NORTH)
@@ -33,27 +47,27 @@
 				pixel_x = 32
 			if(WEST)
 				pixel_x = -32
-		icon_state = "glowshroom[rand(1,3)]"
+		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
-		icon_state = "glowshroomf"
+		icon_state = "[base_icon_state]f"
 
-	spawn(delay)
-		Spread()
+	addtimer(src, "Spread", delay)
 
 /obj/effect/glowshroom/proc/Spread()
-	set background = BACKGROUND_ENABLED
-
-	for(var/i=1,i<=yield,i++)
+	for(var/i = 1 to yield)
 		if(prob(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 			var/list/possibleLocs = list()
-			var/spreadsIntoAdjacent = 0
+			var/spreadsIntoAdjacent = FALSE
 
 			if(prob(spreadIntoAdjacentChance))
-				spreadsIntoAdjacent = 1
+				spreadsIntoAdjacent = TRUE
 
-			for(var/turf/simulated/floor/earth in view(3,src))
+			for(var/turf/open/floor/earth in view(3,src))
+				if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
+					continue
 				if(spreadsIntoAdjacent || !locate(/obj/effect/glowshroom) in view(1,earth))
 					possibleLocs += earth
+				CHECK_TICK
 
 			if(!possibleLocs.len)
 				break
@@ -71,16 +85,16 @@
 			if(shroomCount >= placeCount)
 				continue
 
-			var/obj/effect/glowshroom/child = new /obj/effect/glowshroom(newLoc)//The baby mushrooms have different stats :3
-			child.potency = max(potency+rand(-3,6), 0)
-			child.yield = max(yield+rand(-1,2), 0)
-			child.delay = max(delay+rand(-30,60), 0)
-			child.endurance = max(endurance+rand(-3,6), 1)
-			child.generation = generation+1
-			child.desc = "This is a [child.generation]\th generation glowshroom!"//I added this for testing, but I figure I'll leave it in.
+			var/obj/effect/glowshroom/child = new type(newLoc)//The baby mushrooms have different stats :3
+			child.potency = max(potency + rand(-3,6), 0)
+			child.yield = max(yield + rand(-1,2), 0)
+			child.delay = max(delay + rand(-30,60), 0)
+			child.endurance = max(endurance + rand(-3,6), 1)
+			child.generation = generation + 1
+
+			CHECK_TICK
 
 /obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
-	set background = BACKGROUND_ENABLED
 	var/direction = 16
 
 	for(var/wallDir in cardinal)
@@ -112,26 +126,22 @@
 	floor = 1
 	return 1
 
-/obj/effect/glowshroom/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/effect/glowshroom/attacked_by(obj/item/I, mob/user)
 	..()
-	endurance -= W.force
-	CheckEndurance()
+	if(I.damtype != STAMINA)
+		endurance -= I.force
+		CheckEndurance()
 
 /obj/effect/glowshroom/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
+		if(2)
+			if(prob(50))
 				qdel(src)
-				return
-		if(3.0)
-			if (prob(5))
+		if(3)
+			if(prob(5))
 				qdel(src)
-				return
-		else
-	return
 
 /obj/effect/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -142,7 +152,7 @@
 	if(endurance <= 0)
 		qdel(src)
 
-/obj/effect/glowshroom/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/obj/effect/glowshroom/acid_act(acidpwr, toxpwr, acid_volume)
 	visible_message("<span class='danger'>[src] melts away!</span>")
 	var/obj/effect/decal/cleanable/molten_item/I = new (get_turf(src))
 	I.desc = "Looks like this was \an [src] some time ago."

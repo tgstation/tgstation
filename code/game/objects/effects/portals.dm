@@ -1,3 +1,7 @@
+
+/obj/effect
+	icon = 'icons/effects/effects.dmi'
+
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
@@ -7,23 +11,35 @@
 	unacidable = 1//Can't destroy energy portals.
 	var/obj/item/target = null
 	var/creator = null
-	anchored = 1.0
+	anchored = 1
 	var/precision = 1 // how close to the portal you will teleport. 0 = on the portal, 1 = adjacent
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
-	src.teleport(M)
+	teleport(M)
 
-/obj/effect/portal/New(loc, turf/target, creator, lifespan=300)
+/obj/effect/portal/attack_hand(mob/user)
+	if(Adjacent(user))
+		teleport(user)
+
+/obj/effect/portal/attackby(obj/item/weapon/W, mob/user, params)
+	if(user && Adjacent(user))
+		teleport(user)
+
+
+
+/obj/effect/portal/New(loc, turf/target, creator=null, lifespan=300)
+	..()
 	portals += src
-	src.loc = loc
 	src.target = target
 	src.creator = creator
-	for(var/mob/M in src.loc)
-		src.teleport(M)
+
+	var/area/A = get_area(target)
+	if(A && A.noteleport) // No point in persisting if the target is unreachable.
+		qdel(src)
+		return
 	if(lifespan > 0)
 		spawn(lifespan)
 			qdel(src)
-	return
 
 /obj/effect/portal/Destroy()
 	portals -= src
@@ -33,6 +49,7 @@
 	else if(istype(creator, /obj/item/weapon/gun/energy/wormhole_projector))
 		var/obj/item/weapon/gun/energy/wormhole_projector/P = creator
 		P.portal_destroyed(src)
+	creator = null
 	return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
@@ -44,6 +61,8 @@
 		qdel(src)
 		return
 	if (istype(M, /atom/movable))
+		if(istype(M, /mob/living/simple_animal/hostile/megafauna))
+			message_admins("[M] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) has teleported through [src].")
 		do_teleport(M, target, precision) ///You will appear adjacent to the beacon
 
 

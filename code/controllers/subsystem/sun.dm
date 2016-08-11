@@ -3,8 +3,8 @@ var/datum/subsystem/sun/SSsun
 /datum/subsystem/sun
 	name = "Sun"
 	wait = 600
-	priority = 2
-
+	init_order = 2
+	flags = SS_NO_TICK_CHECK|SS_NO_INIT
 	var/angle
 	var/dx
 	var/dy
@@ -18,6 +18,9 @@ var/datum/subsystem/sun/SSsun
 	rate = rand(50,200)/100			// 50% - 200% of standard rotation
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
+
+/datum/subsystem/sun/stat_entry(msg)
+	..("P:[solars.len]")
 
 /datum/subsystem/sun/fire()
 	angle = (360 + angle + rate * 6) % 360	 // increase/decrease the angle to the sun, adjusted by the rate

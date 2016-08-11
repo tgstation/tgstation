@@ -21,7 +21,7 @@
 
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
-	if(U.mind && U.mind.assigned_role=="MODE" && !s_initialized && !s_busy)//Shouldn't be busy... but anything is possible I guess.
+	if(U.mind && U.mind.assigned_role==U.mind.special_role && !s_initialized && !s_busy)//Shouldn't be busy... but anything is possible I guess.
 		s_busy = 1
 		for(var/i,i<7,i++)
 			switch(i)
@@ -40,7 +40,7 @@
 						break
 					lock_suit(U,1)//Check for icons.
 					U.regenerate_icons()
-					U << "<span class='notice'> Linking neural-net interface...\nPattern</span>\green <B>GREEN</B><span class='notice'>, continuing operation.</span>"
+					U << "<span class='notice'>Linking neural-net interface...\nPattern</span>\green <B>GREEN</B><span class='notice'>, continuing operation.</span>"
 				if(4)
 					U << "<span class='notice'>VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.</span>"
 				if(5)
@@ -53,7 +53,7 @@
 			sleep(delay)
 		s_busy = 0
 	else
-		if(!U.mind||U.mind.assigned_role!="MODE")//Your run of the mill persons shouldn't know what it is. Or how to turn it on.
+		if(!U.mind||U.mind.assigned_role!=U.mind.special_role)//Your run of the mill persons shouldn't know what it is. Or how to turn it on.
 			U << "You do not understand how this suit functions. Where the heck did it even come from?"
 		else if(s_initialized)
 			U << "<span class='danger'>The suit is already functioning.</span> Please report this bug."

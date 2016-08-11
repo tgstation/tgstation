@@ -14,26 +14,26 @@
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."
 	..()
 
-/obj/structure/spirit_board/attack_hand(mob/user as mob)
+/obj/structure/spirit_board/attack_hand(mob/user)
 	if(..())
 		return
 	spirit_board_pick_letter(user)
 
 
-/obj/structure/spirit_board/attack_ghost(mob/dead/observer/user as mob)
+/obj/structure/spirit_board/attack_ghost(mob/dead/observer/user)
 	spirit_board_pick_letter(user)
 
 
-/obj/structure/spirit_board/proc/spirit_board_pick_letter(var/mob/M)
+/obj/structure/spirit_board/proc/spirit_board_pick_letter(mob/M)
 	if(!spirit_board_checks(M))
 		return 0
 
 	if(virgin)
 		virgin = 0
-		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!")
+		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src)
 
 	planchette = input("Choose the letter.", "Seance!") in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
-	add_logs(M, src, "picked a letter on", addition="which was \"[planchette]\".")
+	add_logs(M, src, "picked a letter on", " which was \"[planchette]\".")
 	cooldown = world.time
 	lastuser = M.ckey
 
@@ -43,7 +43,7 @@
 		visible_message("<span class='notice'>The planchette slowly moves... and stops at the letter \"[planchette]\".</span>")
 
 
-/obj/structure/spirit_board/proc/spirit_board_checks(var/mob/M)
+/obj/structure/spirit_board/proc/spirit_board_checks(mob/M)
 	//cooldown
 	var/bonus = 0
 	if(M.ckey == lastuser)
@@ -55,13 +55,8 @@
 	//lighting check
 	var/light_amount = 0
 	var/turf/T = get_turf(src)
-	var/area/A = T.loc
+	light_amount = T.get_lumcount()
 
-	if(A)
-		if(A.lighting_use_dynamic)
-			light_amount = T.lighting_lumcount
-		else
-			light_amount =  10
 
 	if(light_amount > 2)
 		M << "<span class='warning'>It's too bright here to use [src.name]!</span>"

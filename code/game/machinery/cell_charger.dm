@@ -20,11 +20,11 @@
 		if(chargelevel != newlevel)
 			chargelevel = newlevel
 
-			overlays.Cut()
-			overlays += "ccharger-o[newlevel]"
+			cut_overlays()
+			add_overlay("ccharger-o[newlevel]")
 
 	else
-		overlays.Cut()
+		cut_overlays()
 
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
@@ -33,35 +33,42 @@
 		user << "Current charge: [round(charging.percent(), 1)]%"
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user, params)
-	if(stat & BROKEN)
-		return
-
-	if(istype(W, /obj/item/weapon/stock_parts/cell) && anchored)
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
+		if(stat & BROKEN)
+			user << "<span class='warning'>[src] is broken!</span>"
+			return
+		if(!anchored)
+			user << "<span class='warning'>[src] isn't attached to the ground!</span>"
+			return
 		if(charging)
-			user << "<span class='danger'>There is already a cell in the charger.</span>"
+			user << "<span class='warning'>There is already a cell in the charger!</span>"
 			return
 		else
 			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "<span class='danger'>The [name] blinks red as you try to insert the cell!</span>"
+				user << "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>"
+				return
+			if(!user.drop_item())
 				return
 
-			user.drop_item()
 			W.loc = src
 			charging = W
-			user.visible_message("<span class='notice'>[user] inserts a cell into the charger.</span>", "<span class='notice'>You insert a cell into the charger.</span>")
+			user.visible_message("[user] inserts a cell into the charger.", "<span class='notice'>You insert a cell into the charger.</span>")
 			chargelevel = -1
 			updateicon()
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(charging)
-			user << "<span class='danger'>Remove the cell first!</span>"
+			user << "<span class='warning'>Remove the cell first!</span>"
 			return
 
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+	else
+		return ..()
+
 
 /obj/machinery/cell_charger/proc/removecell()
 	charging.updateicon()
@@ -76,7 +83,7 @@
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
 
-	user.visible_message("<span class='notice'>[user] removes the cell from the charger.</span>", "<span class='notice'>You remove the cell from the charger.</span>")
+	user.visible_message("[user] removes the cell from the charger.", "<span class='notice'>You remove the cell from the charger.</span>")
 
 	removecell()
 

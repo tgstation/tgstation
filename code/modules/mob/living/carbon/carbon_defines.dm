@@ -1,8 +1,9 @@
-/mob/living/carbon/
+/mob/living/carbon
 	gender = MALE
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
-	var/list/stomach_contents	= list()
-	var/list/internal_organs	= list()	//List of /obj/item/organ in the mob. they don't go in the contents.
+	pressure_resistance = 15
+	var/list/stomach_contents		= list()
+	var/list/internal_organs		= list()	//List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.
+	var/list/internal_organs_slot	= list()	//Same as above, but stores "slot ID" - "organ" pairs for easy access.
 
 	var/silent = 0 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
 
@@ -16,11 +17,19 @@
 	var/obj/item/head = null
 
 	var/datum/dna/dna = null//Carbon
-	var/heart_attack = 0
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
+	has_limbs = 1
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/
 
-	lying_pixel_offset = -6 //offset for pixel_y when lying down.
+	var/list/obj/effect/proc_holder/alien/abilities = list()
+	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
+
+	var/rotate_on_lying = 1
+
+	var/tinttotal = 0	// Total level of visualy impairing items
+
+	var/list/bodyparts = list() //Gets filled up in the constructor (New() proc in human.dm and monkey.dm)

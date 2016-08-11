@@ -1,4 +1,3 @@
-
 /obj/item/weapon/katana/energy
 	name = "energy katana"
 	desc = "A katana infused with strong energy."
@@ -6,7 +5,8 @@
 	item_state = "energy_katana"
 	force = 40
 	throwforce = 20
-	var/datum/effect/effect/system/spark_spread/spark_system
+	armour_penetration = 50
+	var/datum/effect_system/spark_spread/spark_system
 
 /obj/item/weapon/katana/energy/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!user || !target)
@@ -34,7 +34,7 @@
 
 	..()
 
-/obj/item/weapon/katana/energy/proc/returnToOwner(var/mob/living/carbon/human/user, var/doSpark = 1, var/caught = 0)
+/obj/item/weapon/katana/energy/proc/returnToOwner(mob/living/carbon/human/user, doSpark = 1, caught = 0)
 	if(!istype(user))
 		return
 	loc = get_turf(src)
@@ -64,15 +64,9 @@
 
 /obj/item/weapon/katana/energy/New()
 	..()
-	spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-
-
-/obj/item/weapon/katana/energy/Del()
-	qdel(spark_system)
-	spark_system = null
-	..()
 
 /obj/item/weapon/katana/energy/Destroy()
 	qdel(spark_system)

@@ -1,0 +1,75 @@
+"aa" = (/turf/open/space,/area/space)
+"ab" = (/turf/closed/mineral/ash_rock,/area/space)
+"ac" = (/obj/item/trash/sosjerky,/turf/open/space,/area/space)
+"ad" = (/turf/open/floor/plating/asteroid/airless,/area/space)
+"ae" = (/mob/living/simple_animal/hostile/lizard,/turf/open/floor/plating/asteroid/airless,/area/space)
+"af" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plating/asteroid/airless,/area/space)
+"ag" = (/obj/item/stack/rods{amount = 50},/obj/item/weapon/stock_parts/manipulator/femto,/turf/open/floor/plating/asteroid/airless,/area/space)
+"ah" = (/obj/item/stack/cable_coil{amount = 5},/obj/item/weapon/shard{icon_state = "small"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"ai" = (/obj/item/weapon/book/random,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aj" = (/obj/structure/fluff/bus/dense,/turf/open/floor/plating/asteroid/airless,/area/space)
+"ak" = (/obj/structure/fluff/bus/passable{tag = "icon-wheredahoodat"; icon_state = "wheredahoodat"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"al" = (/obj/effect/decal/cleanable/salt,/obj/item/weapon/reagent_containers/food/condiment/saltshaker,/turf/open/floor/plating/asteroid/airless,/area/space)
+"am" = (/obj/structure/fluff/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"an" = (/obj/structure/fluff/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"ao" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"ap" = (/obj/structure/fluff/bus/passable/seat{icon_state = "backseat"; pixel_y = 15; tag = "icon-backseat"},/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aq" = (/obj/structure/fluff/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/item/weapon/reagent_containers/food/snacks/faggot,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"ar" = (/obj/structure/fluff/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"as" = (/obj/structure/fluff/bus/passable/seat/driver{icon_state = "driverseat"; pixel_y = 17; tag = "icon-driverseat"},/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"at" = (/obj/structure/fluff/bus/dense{tag = "icon-hoodtop"; icon_state = "hoodtop"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"au" = (/obj/item/clothing/head/cone,/turf/open/floor/plating/asteroid/airless,/area/space)
+"av" = (/obj/structure/table,/obj/item/device/paicard,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aw" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/asteroid/airless,/area/space)
+"ax" = (/obj/structure/fluff/bus/passable,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"ay" = (/obj/structure/fluff/bus/passable,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"az" = (/obj/structure/fluff/bus/passable,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aA" = (/obj/structure/fluff/bus/passable,/obj/structure/closet/crate/freezer,/obj/item/weapon/reagent_containers/food/snacks/faggot,/obj/item/weapon/reagent_containers/food/snacks/faggot,/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aB" = (/obj/structure/fluff/bus/passable,/obj/effect/mine/sound/bwoink,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aC" = (/obj/structure/fluff/bus/passable,/obj/item/weapon/reagent_containers/food/condiment/saltshaker,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aD" = (/obj/structure/fluff/bus/passable,/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aE" = (/obj/structure/fluff/bus/passable{tag = "icon-topdoor"; icon_state = "topdoor"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aF" = (/obj/structure/fluff/bus/dense{tag = "icon-hoodbottom"; icon_state = "hoodbottom"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"aG" = (/obj/structure/fluff/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"aH" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/coffee,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aI" = (/obj/structure/fluff/bus/dense{tag = "icon-frontwallbottomrear"; icon_state = "frontwallbottomrear"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"aJ" = (/obj/structure/fluff/bus/dense{tag = "icon-frontwallbottom"; icon_state = "frontwallbottom"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"aK" = (/obj/structure/fluff/bus/dense{tag = "icon-reartire"; icon_state = "reartire"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"aL" = (/obj/structure/fluff/bus/dense{tag = "icon-frontwallbottom"; icon_state = "frontwallbottom"},/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aM" = (/obj/structure/fluff/bus/passable{icon_state = "bottomdoor"; layer = 3; tag = "icon-bottomdoor"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"aN" = (/obj/structure/fluff/bus/dense{tag = "icon-fronttire"; icon_state = "fronttire"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"aO" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aP" = (/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aQ" = (/obj/item/weapon/reagent_containers/glass/rag,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aR" = (/obj/item/weapon/storage/toolbox/mechanical,/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aS" = (/obj/item/clothing/head/helmet/space,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aT" = (/obj/effect/decal/remains/human,/obj/item/clothing/head/helmet/space,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aU" = (/obj/structure/fluff/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/effect/decal/cleanable/dirt,/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aV" = (/obj/structure/fluff/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/effect/decal/remains/human,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aW" = (/obj/structure/fluff/bus/passable/seat/driver{icon_state = "driverseat"; pixel_y = 17; tag = "icon-driverseat"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"aX" = (/obj/effect/decal/cleanable/shreds,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aY" = (/obj/effect/decal/remains/human,/obj/item/clothing/suit/space,/turf/open/floor/plating/asteroid/airless,/area/space)
+"aZ" = (/obj/structure/fluff/bus/passable,/obj/effect/decal/cleanable/dirt,/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"ba" = (/obj/structure/fluff/bus/passable,/obj/item/weapon/banhammer,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"bb" = (/obj/item/stack/sheet/metal{amount = 50},/turf/open/floor/plating/asteroid/airless,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaabababaaabababaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaababababababababababaaaaaaaaacaa
+aaaaaaaaaaabababababababababababababaaaaaaaaaa
+aaaaaaababababababababababababababababaaaaaaaa
+aaaaababababababababababababababababababaaaaaa
+aaabababababadadaeabababafagahababababababaaaa
+aaababababadadadadadadadadadadaiabababababaaaa
+aaabababadadajajajajajajajajajakadababababadaa
+aaadadadaladamanamaoapaqaramasatauadababadavaa
+aaadadawadadaxayazaAaBaCaxaDaEaFadadadabaGaHaa
+aaadawadadawaIaJaKaJaJaLaJaJaMaNadaOadadadadaa
+aaauadaPadadadadadaQadadadadadadauadadadadadaa
+aaaaadajajajajajakadaRadaSaOadadadadaTadadaaaa
+aaadadaUamaVaUaWataXadaYadadaPadadadadadadaaaa
+aaadadazaZbaazaEaFadadadbbadadadadadadaaaaaaaa
+aaadadaIaKaLaJaMaNadauadadadaaaaaaaaaaaaaaaaaa
+aaaaadadadadadadadadadaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaadadadadadadaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

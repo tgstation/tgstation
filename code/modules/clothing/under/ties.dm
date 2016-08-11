@@ -6,7 +6,49 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	slot_flags = 0
-	w_class = 2.0
+	w_class = 2
+	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
+
+/obj/item/clothing/tie/proc/attach(obj/item/clothing/under/U, user)
+	if(pockets) // Attach storage to jumpsuit
+		if(U.pockets) // storage items conflict
+			return 0
+
+		pockets.loc = U
+		U.pockets = pockets
+
+	U.hastie = src
+	loc = U
+	layer = FLOAT_LAYER
+	if(minimize_when_attached)
+		transform *= 0.5	//halve the size so it doesn't overpower the under
+		pixel_x += 8
+		pixel_y -= 8
+	U.add_overlay(src)
+
+	for(var/armor_type in armor)
+		U.armor[armor_type] += armor[armor_type]
+
+	return 1
+
+
+/obj/item/clothing/tie/proc/detach(obj/item/clothing/under/U, user)
+	if(pockets && pockets == U.pockets)
+		pockets.loc = src
+		U.pockets = null
+
+	for(var/armor_type in armor)
+		U.armor[armor_type] -= armor[armor_type]
+
+	if(minimize_when_attached)
+		transform *= 2
+		pixel_x -= 8
+		pixel_y += 8
+	layer = initial(layer)
+	U.cut_overlays()
+	U.hastie = null
+
+
 
 /obj/item/clothing/tie/blue
 	name = "blue tie"
@@ -35,6 +77,7 @@
 	icon_state = "waistcoat"
 	item_state = "waistcoat"
 	item_color = "waistcoat"
+	minimize_when_attached = FALSE
 
 /obj/item/clothing/tie/stethoscope
 	name = "stethoscope"
@@ -45,12 +88,14 @@
 /obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == "help")
-			var/body_part = parse_zone(user.zone_sel.selecting)
+			var/body_part = parse_zone(user.zone_selected)
 			if(body_part)
 				var/their = "their"
 				switch(M.gender)
-					if(MALE)	their = "his"
-					if(FEMALE)	their = "her"
+					if(MALE)
+						their = "his"
+					if(FEMALE)
+						their = "her"
 
 				var/sound = "pulse"
 				var/sound_strength
@@ -84,6 +129,8 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	item_color = "bronze"
+	materials = list(MAT_METAL=1000)
+	burn_state = FIRE_PROOF
 
 //Pinning medals on people
 /obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)
@@ -96,19 +143,26 @@
 
 		if(M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform
-			if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
-				if(user == M)
-					user << "<span class='notice'>You attach [src] to [U].</span>"
-				else
-					user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
-										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
+			var/delay = 20
+			if(user == M)
+				delay = 0
+			else
+				user.visible_message("[user] is trying to pin [src] on [M]'s chest.", \
+									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
+			if(do_after(user, delay, target = M))
+				if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
+					if(user == M)
+						user << "<span class='notice'>You attach [src] to [U].</span>"
+					else
+						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
+											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 
-		else user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
+		else user << "<span class='warning'>Medals can only be pinned on jumpsuits!</span>"
 	else ..()
 
 /obj/item/clothing/tie/medal/conduct
 	name = "distinguished conduct medal"
-	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
+	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is the most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
 
 /obj/item/clothing/tie/medal/bronze_heart
 	name = "bronze heart medal"
@@ -124,6 +178,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	item_color = "silver"
+	materials = list(MAT_SILVER=1000)
 
 /obj/item/clothing/tie/medal/silver/valor
 	name = "medal of valor"
@@ -138,6 +193,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	item_color = "gold"
+	materials = list(MAT_GOLD=1000)
 
 /obj/item/clothing/tie/medal/gold/captain
 	name = "medal of captaincy"
@@ -201,54 +257,55 @@
 //SCARVES//
 ///////////
 
-/obj/item/clothing/tie/scarf
-	name = "scarf"
-	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
-
-/obj/item/clothing/tie/scarf/red
-	name = "red scarf"
-	icon_state = "redscarf"
-	item_color = "redscarf"
-
-/obj/item/clothing/tie/scarf/green
-	name = "green scarf"
-	icon_state = "greenscarf"
-	item_color = "greenscarf"
-
-/obj/item/clothing/tie/scarf/darkblue
-	name = "dark blue scarf"
-	icon_state = "darkbluescarf"
-	item_color = "darkbluescarf"
-
-/obj/item/clothing/tie/scarf/purple
-	name = "purple scarf"
-	icon_state = "purplescarf"
-	item_color = "purplescarf"
-
-/obj/item/clothing/tie/scarf/yellow
-	name = "yellow scarf"
-	icon_state = "yellowscarf"
-	item_color = "yellowscarf"
-
-/obj/item/clothing/tie/scarf/orange
-	name = "orange scarf"
-	icon_state = "orangescarf"
-	item_color = "orangescarf"
-
-/obj/item/clothing/tie/scarf/lightblue
-	name = "light blue scarf"
-	icon_state = "lightbluescarf"
-	item_color = "lightbluescarf"
-
-/obj/item/clothing/tie/scarf/white
+/obj/item/clothing/tie/scarf //Default white color, same functionality as beanies.
 	name = "white scarf"
-	icon_state = "whitescarf"
-	item_color = "whitescarf"
+	icon_state = "scarf"
+	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+	item_color = "scarf"
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/tie/scarf/black
 	name = "black scarf"
-	icon_state = "blackscarf"
-	item_color = "blackscarf"
+	icon_state = "scarf"
+	color = "#4A4A4B" //Grey but it looks black
+
+/obj/item/clothing/tie/scarf/red
+	name = "red scarf"
+	icon_state = "scarf"
+	color = "#D91414" //Red
+
+/obj/item/clothing/tie/scarf/green
+	name = "green scarf"
+	icon_state = "scarf"
+	color = "#5C9E54" //Green
+
+/obj/item/clothing/tie/scarf/darkblue
+	name = "dark blue scarf"
+	icon_state = "scarf"
+	color = "#1E85BC" //Blue
+
+/obj/item/clothing/tie/scarf/purple
+	name = "purple scarf"
+	icon_state = "scarf"
+	color = "#9557C5" //purple
+
+/obj/item/clothing/tie/scarf/yellow
+	name = "yellow scarf"
+	icon_state = "scarf"
+	color = "#E0C14F" //Yellow
+
+/obj/item/clothing/tie/scarf/orange
+	name = "orange scarf"
+	icon_state = "scarf"
+	color = "#C67A4B" //orange
+
+/obj/item/clothing/tie/scarf/cyan
+	name = "cyan scarf"
+	icon_state = "scarf"
+	color = "#54A3CE" //Cyan
+
+
+//Striped scarves get their own icons
 
 /obj/item/clothing/tie/scarf/zebra
 	name = "zebra scarf"
@@ -280,10 +337,33 @@
 
 /obj/item/clothing/tie/petcollar //don't really wear this though please c'mon seriously guys
 	name = "pet collar"
+	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
 	icon_state = "petcollar"
 	item_color = "petcollar"
 	var/tagname = null
 
-/obj/item/clothing/tie/petcollar/attack_self(mob/user as mob)
+/obj/item/clothing/tie/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
+
+//////////////
+//DOPE BLING//
+//////////////
+
+/obj/item/clothing/tie/dope_necklace
+	name = "gold necklace"
+	desc = "Damn, it feels good to be a gangster."
+	icon = 'icons/obj/clothing/ties.dmi'
+	icon_state = "bling"
+	item_color = "bling"
+
+////////////////
+//OONGA BOONGA//
+////////////////
+
+/obj/item/clothing/tie/talisman
+	name = "bone talisman"
+	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
+	icon_state = "talisman"
+	item_color = "talisman"
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5) //Faith is the best armor.

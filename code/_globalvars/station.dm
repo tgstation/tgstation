@@ -7,8 +7,4 @@ var/CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-ti
 
 var/list/powernets = list()
 
-// this is not strictly unused although the whole modules datum thing is unused
-// To remove this you need to remove that
-var/datum/moduletypes/mods = new()
-
 var/map_name = "Unknown"	//The name of the map that is loaded. Assigned in world/New()

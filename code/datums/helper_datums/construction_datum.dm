@@ -23,10 +23,10 @@
 		set_desc(steps.len)
 	return
 
-/datum/construction/proc/action(atom/used_atom,mob/user as mob)
+/datum/construction/proc/action(atom/used_atom,mob/user)
 	return
 
-/datum/construction/proc/check_step(atom/used_atom,mob/user as mob) //check last step only
+/datum/construction/proc/check_step(atom/used_atom,mob/user) //check last step only
 	var/valid_step = is_right_key(used_atom)
 	if(valid_step)
 		if(custom_action(valid_step, used_atom, user))
@@ -43,7 +43,7 @@
 /datum/construction/proc/custom_action(step, used_atom, user)
 	return 1
 
-/datum/construction/proc/check_all_steps(atom/used_atom,mob/user as mob) //check all steps, remove matching one.
+/datum/construction/proc/check_all_steps(atom/used_atom,mob/user) //check all steps, remove matching one.
 	for(var/i=1;i<=steps.len;i++)
 		var/list/L = steps[i];
 		if(istype(used_atom, L["key"]))
@@ -91,7 +91,7 @@
 		return BACKWARD //to the last step -> backwards
 	return 0
 
-/datum/construction/reversible/check_step(atom/used_atom,mob/user as mob)
+/datum/construction/reversible/check_step(atom/used_atom,mob/user)
 	var/diff = is_right_key(used_atom)
 	if(diff)
 		if(custom_action(index, diff, used_atom, user))
