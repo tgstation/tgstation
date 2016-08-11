@@ -565,7 +565,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			var/mob/living/carbon/human/H = M
 			H.bleed_rate = (piercing * .1) // Because reasons
 
-/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
+/obj/item/proc/get_decapitation_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
 		if(dismemberment_chance > 0)
 			. = dismemberment_chance
