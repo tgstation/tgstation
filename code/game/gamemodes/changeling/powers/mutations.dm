@@ -186,7 +186,7 @@
 		if(A.welded)
 			user.visible_message("<span class='warning'>[user] starts breaking the weld on the airlock with [src]!</span>", "<span class='warning'>We start breaking the weld on the airlock.</span>", \
 			"<span class='italics'>You hear a ferocious clanging.</span>")
-			if(!do_after(user, 100, target = A))
+			if(!do_after(user, 600, target = A))
 				return
 			A.welded = FALSE
 			A.update_icon()
