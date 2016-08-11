@@ -1,0 +1,9 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Sigils of Transgression now glow brightly when stunning a target."
+  - rscadd: "The Global Records alert now shows the location and countdown time of the Gateway to the Celestial Derelict."
+  - tweak: "Clockcult tooltips now all have the clockcult tooltip style."
+  - rscdel: "You can no longer become a Reclaimer when clicking on Ratvar. You can still become a Cogscarab, however."
+  - bugfix: "You can no longer invoke Vanguard while under its effects."
+  - bugfix: "Servants of Ratvar should now always get an announcement when scripture states change."
