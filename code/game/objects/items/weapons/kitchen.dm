@@ -92,6 +92,7 @@
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
 	flags = CONDUCT
 	force = 15
+	dismemberment_chance = 60 // It's job is to fuck up meat and bones
 	throwforce = 10
 	materials = list(MAT_METAL=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
