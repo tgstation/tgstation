@@ -140,6 +140,8 @@ The console is located at computer/gulag_teleporter.dm
 				continue
 			if(istype(W, /obj/item/weapon/tank/internals/plasmaman))
 				continue
+			if(istype(W, /obj/item/clothing/under/plasmaman))
+				continue
 			if(linked_reclaimer)
 				linked_reclaimer.stored_items[occupant] += W
 				linked_reclaimer.contents += W
