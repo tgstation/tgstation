@@ -302,6 +302,7 @@
 /mob/camera/blob/proc/set_chemical()
 	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob) - blob_reagent_datum.type))
 	blob_reagent_datum = new BC
+	color = blob_reagent_datum.complementary_color
 	for(var/BL in blobs)
 		var/obj/effect/blob/B = BL
 		B.update_icon()

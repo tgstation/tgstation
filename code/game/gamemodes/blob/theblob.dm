@@ -105,11 +105,14 @@
 		expanded = TRUE
 	for(var/obj/effect/blob/B in urange(claim_range, src, 1))
 		var/distance = get_dist(get_turf(src), get_turf(B))
+		var/expand_probablity = max(20 - distance * 8, 1)
+		if(B.Adjacent(src))
+			expand_probablity = 85
 		if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
 			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 			B.update_icon()
 		if(B.pulse_timestamp <= world.time && distance <= expand_range)
-			if(prob(max(20 - distance * 8, 1))) //expand falls off with range but is faster near the blob causing the expansion
+			if(prob(expand_probablity)) //expand falls off with range but is faster near the blob causing the expansion
 				var/obj/effect/blob/newB = B.expand()
 				if(newB)
 					if(expanded)

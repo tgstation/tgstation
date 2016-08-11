@@ -180,7 +180,7 @@
 	description = "will do low toxin damage, hallucinations, and cause targets to believe they are fully healed."
 	analyzerdescdamage = "Does low toxin damage and injects a toxin that causes the target to believe they are fully healed."
 	color = "#C8A5DC"
-	complementary_color = "#B9DCA5"
+	complementary_color = "#CD7794"
 	message_living = ", and you feel <i>alive</i>"
 
 /datum/reagent/blob/regenerative_materia/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
@@ -208,8 +208,8 @@
 /datum/reagent/blob/zombifying_feelers
 	name = "Zombifying Feelers"
 	id = "zombifying_feelers"
-	description = "will do low toxin damage and harvest sleeping targets, gaining additional resources and a blob zombie."
-	shortdesc = "will do low toxin damage and harvest sleeping targets, gaining additional resources for your overmind and a blob zombie."
+	description = "will do low toxin damage and harvest sleeping targets for additional resources and a blob zombie."
+	shortdesc = "will do low toxin damage and harvest sleeping targets for additional resources(for your overmind) and a blob zombie."
 	analyzerdescdamage = "Does low toxin damage and kills unconscious humans, turning them into blob zombies."
 	color = "#828264"
 	complementary_color = "#4A64C0"

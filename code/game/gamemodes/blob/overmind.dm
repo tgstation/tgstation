@@ -3,10 +3,12 @@
 	real_name = "Blob Overmind"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
-
+	mouse_opacity = 1
+	move_on_shuttle = 1
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	invisibility = INVISIBILITY_OBSERVER
+	layer = FLY_LAYER
 
 	pass_flags = PASSBLOB
 	faction = list("blob")
@@ -46,6 +48,7 @@
 	for(var/type in (subtypesof(/datum/reagent/blob)))
 		possible_reagents.Add(new type)
 	blob_reagent_datum = pick(possible_reagents)
+	color = blob_reagent_datum.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
 
