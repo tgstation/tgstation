@@ -873,8 +873,8 @@
 		L.Stun(6)
 		L.Weaken(6)
 	else
-		L.Stun(3)
-		L.Weaken(3)
+		L.Stun(2)
+		L.Weaken(2)
 	break_spear(T)
 
 /obj/item/clockwork/ratvarian_spear/proc/break_spear(turf/T)
