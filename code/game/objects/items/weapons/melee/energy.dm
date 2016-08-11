@@ -18,7 +18,7 @@
 	return 0
 
 /obj/item/weapon/melee/energy/dismemberment_chance()
- +	return active * dismemberment_chance_on
+	return active * dismemberment_chance_on
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
