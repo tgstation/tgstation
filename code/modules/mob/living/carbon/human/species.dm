@@ -1050,7 +1050,7 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	var/probability = I.get_dismemberment_chance(affecting)
+	var/probability = I.get_decapitation_chance(affecting)
 	if(prob(probability) || ((EASYDISMEMBER in specflags) && prob(2*probability)))
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
