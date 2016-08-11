@@ -268,18 +268,9 @@
 	if (!istype(T2, /turf))
 		return BORDER_BETWEEN
 
-	for (var/obj/structure/window/W in T2)
-		if(turn(dir,180) == W.dir)
-			return BORDER_BETWEEN
-		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
+	for(var/atom/movable/AM in T2)
+		if(!AM.CanAtmosPass(T2))
 			return BORDER_2NDTILE
-	for(var/obj/machinery/door/window/D in T2)
-		if(turn(dir,180) == D.dir)
-			return BORDER_BETWEEN
-	if (locate(/obj/machinery/door) in T2)
-		return BORDER_2NDTILE
-	if (locate(/obj/structure/falsewall) in T2)
-		return BORDER_2NDTILE
 
 	return BORDER_NONE
 
