@@ -551,6 +551,7 @@
 	var/ghost_counter = ghost_check()
 
 	force = Clamp((ghost_counter * 4), 0, 75)
+	dismemberment_chance = Clamp((ghost_counter * 4), 0, 75)
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
 	..()
 
