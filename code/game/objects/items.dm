@@ -563,7 +563,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(piercing > 0|| damtype == BURN) //Because a pocket knife can make you bleed but a e-sword should cauterize the wound
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.bleed_rate = (piercing * .1) // Because reasons
+			H.bleed_rate = (piercing * 0.1) // Because reasons
 
 /obj/item/proc/get_decapitation_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
