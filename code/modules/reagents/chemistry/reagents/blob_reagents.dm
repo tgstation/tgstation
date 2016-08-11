@@ -143,7 +143,7 @@
 /datum/reagent/blob/blazing_oil
 	name = "Blazing Oil"
 	id = "blazing_oil"
-	description = "will do medium burn damage, set targets on fire."
+	description = "will do medium burn damage and set targets on fire."
 	effectdesc = "will also release bursts of flame when burnt, but takes damage from water."
 	analyzerdescdamage = "Does medium burn damage and sets targets on fire."
 	analyzerdesceffect = "Releases fire when burnt, but takes damage from water and other extinguishing liquids."
@@ -426,7 +426,7 @@
 /datum/reagent/blob/reactive_spines/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(damage && damage_type == BRUTE && original_health - damage > 0) //is there any damage, is it brute, and will we be alive
 		if(isliving(cause))
-			B.visible_message("<span class='warning'><b>The blob retaliates, lashing out!</b></span>")
+			B.visible_message("<span class='boldwarning'>The blob retaliates, lashing out!</span>")
 		for(var/atom/A in range(1, B))
 			A.blob_act(B)
 	return ..()
@@ -464,7 +464,7 @@
 
 /datum/reagent/blob/pressurized_slime/death_reaction(obj/effect/blob/B, cause)
 	if(!isnull(cause))
-		B.visible_message("<span class='warning'><b>The blob ruptures, spraying the area with liquid!</b></span>")
+		B.visible_message("<span class='boldwarning'>The blob ruptures, spraying the area with liquid!</span>")
 	extinguisharea(B, 50)
 
 /datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/effect/blob/B, probchance)
