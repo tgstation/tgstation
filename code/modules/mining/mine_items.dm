@@ -170,7 +170,6 @@
 	materials = list(MAT_METAL=50)
 	origin_tech = "materials=2;engineering=2"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
-	sharpness = IS_SHARP
 
 /obj/item/weapon/shovel/spade
 	name = "spade"
