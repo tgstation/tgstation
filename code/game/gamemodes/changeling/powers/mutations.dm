@@ -184,7 +184,7 @@
 			return
 
 		if(A.welded)
-			user.visible_message("<span class='warning'>[user] starts breaking the weld on the airlock with [src]!</span>", "<span class='warning'>We start weld on the airlock.</span>", \
+			user.visible_message("<span class='warning'>[user] starts breaking the weld on the airlock with [src]!</span>", "<span class='warning'>We start breaking the weld on the airlock.</span>", \
 			"<span class='italics'>You hear a ferocious clanging.</span>")
 			if(!do_after(user, 100, target = A))
 				return
@@ -194,7 +194,7 @@
 		if(A.hasPower())
 			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the airlock open.</span>", \
 			"<span class='italics'>You hear a metal screeching sound.</span>")
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 			if(!do_after(user, 100, target = A))
 				return
 		//user.say("Heeeeeeeeeerrre's Johnny!")
