@@ -62,7 +62,8 @@
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharpness = IS_SHARP_ACCURATE
+	dismemberment_chance = 2 // It takes a lot of stabs to actually take someone's limb off
+	piercing = 7
 
 /obj/item/weapon/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
