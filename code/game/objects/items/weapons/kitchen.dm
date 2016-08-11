@@ -55,6 +55,8 @@
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
 	flags = CONDUCT
 	force = 10
+	dismemberment_chance = 2 //Takes a lot of stabbing, so get going
+	piercing = 7
 	w_class = 2
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -91,6 +93,8 @@
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
 	flags = CONDUCT
 	force = 15
+	dismemberment_chance = 60 //It's a fucking butcher knife, it's job is to cut flesh and bones
+	piercing = 0 
 	throwforce = 10
 	materials = list(MAT_METAL=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
