@@ -568,7 +568,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(piercing >= 1|| damtype == BURN) //Because a pocket knife can make you bleed
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.bleed_rate = (piercing chance * .1) // Because reasons
+			H.bleed_rate = (piercing * .1) // Because reasons
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
