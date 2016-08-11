@@ -1,25 +1,24 @@
+#define AREA_ERRNONE 0
+#define AREA_STATION 1
+#define AREA_SPACE 2
+#define AREA_SPECIAL 3
+
+#define BORDER_ERROR 0
+#define BORDER_NONE 1
+#define BORDER_BETWEEN 2
+#define BORDER_2NDTILE 3
+#define BORDER_SPACE 4
+
+#define ROOM_ERR_LOLWAT 0
+#define ROOM_ERR_SPACE 1
+#define ROOM_ERR_TOOLARGE 2
+
 /obj/item/areaeditor
 	name = "area modification item"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"
-
-	var/const/AREA_ERRNONE = 0
-	var/const/AREA_STATION = 1
-	var/const/AREA_SPACE =   2
-	var/const/AREA_SPECIAL = 3
-
-	var/const/BORDER_ERROR = 0
-	var/const/BORDER_NONE = 1
-	var/const/BORDER_BETWEEN =   2
-	var/const/BORDER_2NDTILE = 3
-	var/const/BORDER_SPACE = 4
-
-	var/const/ROOM_ERR_LOLWAT = 0
-	var/const/ROOM_ERR_SPACE = -1
-	var/const/ROOM_ERR_TOOLARGE = -2
-
 
 /obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
@@ -43,36 +42,8 @@
 		return
 	if(href_list["create_area"])
 		if(get_area_type()==AREA_SPACE)
-			create_area()
+			create_area(usr)
 	updateUsrDialog()
-
-
-//One-use area creation permits.
-/obj/item/areaeditor/permit
-	name = "construction permit"
-	icon_state = "permit"
-	desc = "This is a one-use permit that allows the user to offically declare a built room as new addition to the station."
-	fluffnotice = "Nanotrasen Engineering requires all on-station construction projects to be approved by a head of staff, as detailed in Nanotrasen Company Regulation 512-C (Mid-Shift Modifications to Company Property). \
-						By submitting this form, you accept any fines, fees, or personal injury/death that may occur during construction."
-	w_class = 1
-
-
-/obj/item/areaeditor/permit/attack_self(mob/user)
-	. = ..()
-	var/area/A = get_area()
-	if(get_area_type() == AREA_STATION)
-		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
-	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
-	popup.set_content(.)
-	popup.open()
-	onclose(usr, "blueprints")
-
-
-/obj/item/areaeditor/permit/create_area()
-	var/success = ..()
-	if(success)
-		qdel(src)
-
 
 //Station blueprints!!!
 /obj/item/areaeditor/blueprints
@@ -87,7 +58,6 @@
 
 /obj/item/areaeditor/blueprints/Destroy()
 	clear_viewer()
-
 	return ..()
 
 
@@ -179,8 +149,7 @@
 			return AREA_SPECIAL
 	return AREA_STATION
 
-
-/obj/item/areaeditor/proc/create_area()
+/proc/create_area(mob/living/usr)
 	var/res = detect_room(get_turf(usr))
 	if(!istype(res,/list))
 		switch(res)
@@ -201,7 +170,7 @@
 	if(length(str) > 50)
 		usr << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
 		return
-	var/area/old = get_area(get_turf(src))
+	var/area/old = get_area(get_turf(usr))
 	var/old_gravity = old.has_gravity
 
 	var/area/A
@@ -220,7 +189,6 @@
 		A.contents += turfs
 		A.SetDynamicLighting()
 	A.has_gravity = old_gravity
-	interact()
 	return 1
 
 
@@ -258,24 +226,26 @@
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 
-/obj/item/areaeditor/proc/check_tile_is_border(turf/T2,dir)
-	if (istype(T2, /turf/open/space))
-		return BORDER_SPACE //omg hull breach we all going to die here
-	if (get_area_type(T2.loc)!=AREA_SPACE)
-		return BORDER_BETWEEN
-	if (istype(T2, /turf/closed/wall))
-		return BORDER_2NDTILE
-	if (!istype(T2, /turf))
-		return BORDER_BETWEEN
+/turf/proc/check_tile_is_border()
+	return BORDER_NONE
 
-	for(var/atom/movable/AM in T2)
-		if(!AM.CanAtmosPass(T2))
+/turf/open/space/check_tile_is_border()
+	return BORDER_SPACE
+
+/turf/closed/check_tile_is_border()
+	return BORDER_2NDTILE
+
+/turf/open/check_tile_is_border()
+	for(var/atom/movable/AM in src)
+		if(!AM.CanAtmosPass(src))
 			return BORDER_2NDTILE
 
 	return BORDER_NONE
 
+/turf/closed/mineral/check_tile_is_border()
+	return BORDER_NONE
 
-/obj/item/areaeditor/proc/detect_room(turf/first)
+/proc/detect_room(turf/first)
 	var/list/turf/found = new
 	var/list/turf/pending = list(first)
 	var/list/border = list()
@@ -303,7 +273,7 @@
 			if (!isturf(NT) || (NT in found) || (NT in pending))
 				continue
 
-			switch(check_tile_is_border(NT,dir))
+			switch(NT.check_tile_is_border())
 				if(BORDER_NONE)
 					pending+=NT
 				if(BORDER_BETWEEN)
@@ -324,7 +294,7 @@
 			var/turf/U = get_step(F, direction)
 			if((U in border) || (U in found))
 				continue
-			if(check_tile_is_border(U, direction) == BORDER_2NDTILE)
+			if(U.check_tile_is_border() == BORDER_2NDTILE)
 				found += U
 		found |= F
 	return found

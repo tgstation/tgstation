@@ -58,6 +58,21 @@
 		return
 	M.OpenCraftingMenu()
 
+/obj/screen/inventory/area_creator
+	name = "create new area"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "area_edit"
+	screen_loc = ui_building
+
+/obj/screen/inventory/area_creator/Click()
+	if(usr.incapacitated())
+		return 1
+	var/area/A = get_area(usr)
+	if(!A.outdoors)
+		usr << "<span class='warning'>There is already a defined structure here.</span>"
+		return 1
+	create_area(usr)
+
 /obj/screen/inventory
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
 	var/icon_empty // Icon when empty. For now used only by humans.
