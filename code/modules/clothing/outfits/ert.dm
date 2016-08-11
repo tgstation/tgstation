@@ -95,9 +95,9 @@
 	name = "ERT Medic"
 
 	id = /obj/item/weapon/card/id/ert/Medical
-	back = /obj/item/weapon/storage/backpack/satchel/med
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
 	glasses = /obj/item/clothing/glasses/hud/health
-	back = /obj/item/weapon/storage/backpack/medic
+	back = /obj/item/weapon/storage/backpack/satchel/med
 	belt = /obj/item/weapon/storage/belt/medical
 	r_hand = /obj/item/weapon/storage/firstaid/regular
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
