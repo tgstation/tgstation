@@ -60,6 +60,26 @@
 		return
 	usr.drop_item()
 
+/client/verb/moveup()
+	set name = ".moveup"
+	set instant = 1
+	Move(get_step(mob, NORTH), NORTH)
+
+/client/verb/movedown()
+	set name = ".movedown"
+	set instant = 1
+	Move(get_step(mob, SOUTH), SOUTH)
+
+/client/verb/moveright()
+	set name = ".moveright"
+	set instant = 1
+	Move(get_step(mob, EAST), EAST)
+
+/client/verb/moveleft()
+	set name = ".moveleft"
+	set instant = 1
+	Move(get_step(mob, WEST), WEST)
+
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1
@@ -182,8 +202,6 @@
 	moving = 0
 	if(mob && .)
 		mob.throwing = 0
-
-	return .
 
 /atom/movable/proc/reset_glide()
 	glide_size = 0
