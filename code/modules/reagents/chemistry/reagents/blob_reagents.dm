@@ -255,7 +255,7 @@
 	message = "The blob blasts you"
 
 /datum/reagent/blob/explosive_lattice/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	var/aoe_volume = reac_volume
+	var/initial_volume = reac_volume
 	reac_volume = ..()
 	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
 		var/obj/effect/overlay/temp/explosion/E = PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
@@ -264,6 +264,7 @@
 			if("blob" in L.faction) //no friendly fire
 				continue
 			var/mob_protection = L.get_permeability_protection()
+			var/aoe_volume = initial_volume
 			aoe_volume = round(aoe_volume * min(1.5 - mob_protection, 1), 0.1)
 			L.apply_damage(0.6*aoe_volume, BRUTE)
 		if(M)
@@ -284,7 +285,7 @@
 	name = "Cryogenic Poison"
 	id = "cryogenic_poison"
 	description = "will inject targets with a freezing poison that does high damage over time."
-	analyzerdescdamage = "Injects targets with a freezing poison that will gradually liquify the target's internal organs."
+	analyzerdescdamage = "Injects targets with a freezing poison that will gradually solidify the target's internal organs."
 	color = "#8BA6E9"
 	complementary_color = "#7D6EB4"
 	blobbernaut_message = "splashes"
@@ -425,9 +426,9 @@
 		M.ExtinguishMob()
 	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M)
-		M.apply_damage(0.3*reac_volume, OXY)
+		M.apply_damage(0.4*reac_volume, OXY)
 	if(M)
-		M.adjustStaminaLoss(0.3*reac_volume)
+		M.adjustStaminaLoss(0.2*reac_volume)
 
 /datum/reagent/blob/pressurized_slime/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	extinguisharea(B, damage)
