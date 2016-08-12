@@ -101,16 +101,21 @@
 /obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	src.Be_Pulsed()
 	var/expanded = FALSE
-	if(prob(85) && expand())
+	if(prob(70) && expand())
 		expanded = TRUE
+	var/list/blobs_to_affect = list()
 	for(var/obj/effect/blob/B in urange(claim_range, src, 1))
-		var/distance = get_dist(get_turf(src), get_turf(B))
-		var/expand_probablity = max(20 - distance * 8, 1)
-		if(B.Adjacent(src))
-			expand_probablity = 85
+		blobs_to_affect += B
+	shuffle(blobs_to_affect)
+	for(var/L in blobs_to_affect)
+		var/obj/effect/blob/B = L
 		if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
 			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 			B.update_icon()
+		var/distance = get_dist(get_turf(src), get_turf(B))
+		var/expand_probablity = max(20 - distance * 8, 1)
+		if(B.Adjacent(src))
+			expand_probablity = 20
 		if(B.pulse_timestamp <= world.time && distance <= expand_range)
 			if(prob(expand_probablity)) //expand falls off with range but is faster near the blob causing the expansion
 				var/obj/effect/blob/newB = B.expand()

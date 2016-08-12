@@ -110,12 +110,12 @@
 
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
-	set name = "Create Shield Blob (10)"
+	set name = "Create Shield Blob (15)"
 	set desc = "Create a shield blob, which will block fire and is hard to kill."
 	create_shield()
 
 /mob/camera/blob/proc/create_shield(turf/T)
-	createSpecial(10, /obj/effect/blob/shield, 0, 0, T)
+	createSpecial(15, /obj/effect/blob/shield, 0, 0, T)
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"

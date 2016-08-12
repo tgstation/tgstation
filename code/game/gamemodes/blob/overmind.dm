@@ -1,6 +1,7 @@
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
+	desc = "The overmind. It controls the blob."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
 	mouse_opacity = 1
