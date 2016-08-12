@@ -56,7 +56,7 @@
 
 /datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.6*reac_volume, BRUTE)
+	M.apply_damage(0.7*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	var/effectivedamage = damage
@@ -87,7 +87,7 @@
 
 /datum/reagent/blob/shifting_fragments/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.6*reac_volume, BRUTE)
+	M.apply_damage(0.7*reac_volume, BRUTE)
 
 /datum/reagent/blob/shifting_fragments/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
 	if(istype(B, /obj/effect/blob/normal) || (istype(B, /obj/effect/blob/shield) && prob(25)))
@@ -126,7 +126,7 @@
 	M.adjust_fire_stacks(round(reac_volume/10))
 	M.IgniteMob()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BURN)
+		M.apply_damage(0.7*reac_volume, BURN)
 	if(iscarbon(M))
 		M.emote("scream")
 
@@ -180,12 +180,14 @@
 	effectdesc = "will also produce fragile spores when killed and on expanding."
 	shortdesc = "will do very low toxin damage and harvest sleeping targets for additional resources(for your overmind) and a blob zombie."
 	analyzerdescdamage = "Does very low toxin damage and kills unconscious humans, turning them into blob zombies."
+	analyzerdesceffect = "Produces spores when expanding and when killed."
 	color = "#E88D5D"
 	complementary_color = "#823ABB"
 	message_living = ", and you feel tired"
 
 /datum/reagent/blob/zombifying_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
+	M.apply_damage(0.4*reac_volume, TOX)
 	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
 		M.death() //sleeping in a fight? bad plan.
 		var/points = rand(5, 10)
@@ -196,11 +198,9 @@
 		BS.Zombify(M)
 		O.add_points(points)
 		O << "<span class='notice'>Gained [points] resources from the zombification of [M].</span>"
-	if(M)
-		M.apply_damage(0.2*reac_volume, TOX)
 
 /datum/reagent/blob/zombifying_pods/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(20)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
+	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
 		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
 		BS.overmind = B.overmind
@@ -271,11 +271,10 @@
 			if("blob" in L.faction) //no friendly fire
 				continue
 			var/mob_protection = L.get_permeability_protection()
-			var/aoe_volume = initial_volume
-			aoe_volume = round(aoe_volume * min(1.5 - mob_protection, 1), 0.1)
+			var/aoe_volume = round(initial_volume * min(1.5 - mob_protection, 1), 0.1)
 			L.apply_damage(0.6*aoe_volume, BRUTE)
 		if(M)
-			M.apply_damage(0.6*reac_volume, BRUTE)
+			M.apply_damage(0.7*reac_volume, BRUTE)
 	else
 		M.apply_damage(0.8*reac_volume, BRUTE)
 
