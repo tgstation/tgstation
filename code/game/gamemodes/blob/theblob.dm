@@ -116,8 +116,13 @@
 		var/expand_probablity = max(20 - distance * 8, 1)
 		if(B.Adjacent(src))
 			expand_probablity = 20
-		if(B.pulse_timestamp <= world.time && distance <= expand_range)
-			if(prob(expand_probablity)) //expand falls off with range but is faster near the blob causing the expansion
+		if(distance <= expand_range)
+			var/can_expand = TRUE
+			if(blobs_to_affect.len >= 30 && B.heal_timestamp > world.time)
+				can_expand = FALSE
+			if(B.pulse_timestamp > world.time)
+				can_expand = FALSE
+			if(can_expand && prob(expand_probablity)) //expand falls off with range but is faster near the blob causing the expansion
 				var/obj/effect/blob/newB = B.expand()
 				if(newB)
 					if(expanded)
@@ -350,13 +355,13 @@
 	brute_resist = 0.25
 
 /obj/effect/blob/normal/scannerreport()
-	if(health <= 10)
+	if(health <= 15)
 		return "Currently weak to brute damage."
 	return "N/A"
 
 /obj/effect/blob/normal/update_icon()
 	..()
-	if(health <= 10)
+	if(health <= 15)
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
