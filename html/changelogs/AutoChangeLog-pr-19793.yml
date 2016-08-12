@@ -1,0 +1,4 @@
+author: "Gun Hog"
+delete-after: True
+changes: 
+  - tweak: "The AI's Crew Manifest button now uses the updated styling."
