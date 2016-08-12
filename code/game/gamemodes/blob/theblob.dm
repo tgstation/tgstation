@@ -118,12 +118,10 @@
 			expand_probablity = 20
 		if(distance <= expand_range)
 			var/can_expand = TRUE
-			if(blobs_to_affect.len >= 50 && B.heal_timestamp > world.time)
+			if(blobs_to_affect.len >= 120 && B.heal_timestamp > world.time)
 				can_expand = FALSE
-			if(B.pulse_timestamp > world.time)
-				can_expand = FALSE
-			if(can_expand && prob(expand_probablity)) //expand falls off with range but is faster near the blob causing the expansion
-				var/obj/effect/blob/newB = B.expand()
+			if(can_expand && B.pulse_timestamp <= world.time && prob(expand_probablity))
+				var/obj/effect/blob/newB = B.expand() //expansion falls off with range but is faster near the blob causing the expansion
 				if(newB)
 					if(expanded)
 						qdel(newB)
