@@ -1164,7 +1164,7 @@
 	/obj/item/stack/spacecash/c1000,
 	/obj/item/stack/spacecash/c1000)
 	crate_name = "Space Credit Credit"
-
+	crate_type = /obj/structure/closet/crate
 /datum/supply_pack/misc/mule
 	name = "MULEbot Crate"
 	cost = 2000
