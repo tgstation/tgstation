@@ -607,7 +607,7 @@ var/next_mob_id = 0
 			if(istype(ticker.mode, /datum/game_mode/blob) && !isovermind(src))
 				var/datum/game_mode/blob/B = ticker.mode
 				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]"
+					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
 
 
 	if(client && client.holder)

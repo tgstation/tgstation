@@ -74,6 +74,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	for(var/datum/mind/blob in blob_overminds)
 		var/mob/camera/blob/B = blob.current.become_overmind(1)
+		B.mind.name = B.name
 		var/turf/T = pick(blobstart)
 		B.loc = T
 		B.base_point_rate = blob_point_rate
