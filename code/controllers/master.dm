@@ -11,6 +11,9 @@ var/MC_restart_clear = 0
 var/MC_restart_timeout = 0
 var/MC_restart_count = 0
 
+var/global/procedural_generation_mobs
+var/global/procedural_generation_floors
+var/global/procedural_generation_walls
 
 //current tick limit, assigned by the queue controller before running a subsystem.
 //used by check_tick as well so that the procs subsystems call can obey that SS's tick limits
@@ -59,6 +62,15 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		else
 			init_subtypes(/datum/subsystem, subsystems)
 		Master = src
+
+	procedural_generation_mobs = color2hex(randomColor(1))
+	world << "<span class='boldannounce'>[procedural_generation_mobs]</span>"
+	procedural_generation_floors = color2hex(randomColor(1))
+	world << "<span class='boldannounce'>[procedural_generation_floors]</span>"
+	procedural_generation_walls = color2hex(randomColor(1))
+	world << "<span class='boldannounce'>[procedural_generation_walls]</span>"
+
+
 
 /datum/controller/master/Destroy()
 	..()
@@ -113,6 +125,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 // Please don't stuff random bullshit here,
 // 	Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
 /datum/controller/master/proc/Setup()
+	var/random_bullshit = null
+
 	check_for_cleanbot_bug()
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
@@ -146,6 +160,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 // Notify the MC that the round has started.
 /datum/controller/master/proc/RoundStart()
 	round_started = 1
+
 	var/timer = world.time
 	for (var/datum/subsystem/SS in subsystems)
 		if (SS.flags & SS_FIRE_IN_LOBBY || SS.flags & SS_TICKER)
