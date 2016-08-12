@@ -118,7 +118,7 @@
 			expand_probablity = 20
 		if(distance <= expand_range)
 			var/can_expand = TRUE
-			if(blobs_to_affect.len >= 30 && B.heal_timestamp > world.time)
+			if(blobs_to_affect.len >= 50 && B.heal_timestamp > world.time)
 				can_expand = FALSE
 			if(B.pulse_timestamp > world.time)
 				can_expand = FALSE
