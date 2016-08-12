@@ -177,7 +177,7 @@
 	icon_state = "cycler"
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
-	w_class = 5
+	w_class = 3
 	var/toggled = 0
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 
