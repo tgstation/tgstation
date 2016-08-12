@@ -42,38 +42,6 @@
 /datum/reagent/blob/proc/emp_reaction(obj/effect/blob/B, severity) //when the blob is hit with an emp, do this
 	return
 
-//does low toxin damage, but creates fragile spores when expanding or killed by weak attacks
-/datum/reagent/blob/sporing_pods
-	name = "Sporing Pods"
-	id = "sporing_pods"
-	description = "will do low toxin damage and produce fragile spores when killed or on expanding."
-	shortdesc = "will do low toxin damage."
-	analyzerdescdamage = "Does low toxin damage."
-	analyzerdesceffect = "Produces spores when expanding and when killed."
-	color = "#E88D5D"
-	complementary_color = "#5DB8E8"
-	message_living = ", and you feel sick"
-
-/datum/reagent/blob/sporing_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
-	M.apply_damage(0.4*reac_volume, TOX)
-
-/datum/reagent/blob/sporing_pods/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(20)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
-		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
-		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
-		BS.overmind = B.overmind
-		BS.update_icons()
-		B.overmind.blob_mobs.Add(BS)
-	return ..()
-
-/datum/reagent/blob/sporing_pods/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
-	if(prob(10))
-		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
-		BS.overmind = B.overmind
-		BS.update_icons()
-		newB.overmind.blob_mobs.Add(BS)
-
 //does brute damage but can replicate when damaged and has a chance of expanding again
 /datum/reagent/blob/replicating_foam
 	name = "Replicating Foam"
@@ -204,18 +172,19 @@
 		N.hal_screwyhud = 0
 	..()
 
-//kills sleeping targets and turns them into blob zombies
-/datum/reagent/blob/zombifying_feelers
-	name = "Zombifying Feelers"
-	id = "zombifying_feelers"
-	description = "will do low toxin damage and harvest sleeping targets for additional resources and a blob zombie."
-	shortdesc = "will do low toxin damage and harvest sleeping targets for additional resources(for your overmind) and a blob zombie."
-	analyzerdescdamage = "Does low toxin damage and kills unconscious humans, turning them into blob zombies."
-	color = "#828264"
+//kills sleeping targets and turns them into blob zombies, produces fragile spores when killed or on expanding
+/datum/reagent/blob/zombifying_pods
+	name = "Zombifying Pods"
+	id = "zombifying_pods"
+	description = "will do very low toxin damage and harvest sleeping targets for additional resources and a blob zombie."
+	effectdesc = "will also produce fragile spores when killed and on expanding."
+	shortdesc = "will do very low toxin damage and harvest sleeping targets for additional resources(for your overmind) and a blob zombie."
+	analyzerdescdamage = "Does very low toxin damage and kills unconscious humans, turning them into blob zombies."
+	color = "#E88D5D"
 	complementary_color = "#823ABB"
 	message_living = ", and you feel tired"
 
-/datum/reagent/blob/zombifying_feelers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/zombifying_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
 		M.death() //sleeping in a fight? bad plan.
@@ -228,29 +197,23 @@
 		O.add_points(points)
 		O << "<span class='notice'>Gained [points] resources from the zombification of [M].</span>"
 	if(M)
-		M.apply_damage(0.5*reac_volume, TOX)
+		M.apply_damage(0.2*reac_volume, TOX)
 
-//does brute, fire, and toxin over a few seconds
-/datum/reagent/blob/poisonous_strands
-	name = "Poisonous Strands"
-	id = "poisonous_strands"
-	description = "will inject targets with poison."
-	analyzerdescdamage = "Injects a highly lethal poison that will gradually liquify the target's internal organs."
-	color = "#9BCD9B"
-	complementary_color = "#CD9BCD"
-	blobbernaut_message = "injects"
-	message_living = ", and you feel like your insides are melting"
+/datum/reagent/blob/zombifying_pods/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(20)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
+		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
+		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
+		BS.overmind = B.overmind
+		BS.update_icons()
+		B.overmind.blob_mobs.Add(BS)
+	return ..()
 
-/datum/reagent/blob/poisonous_strands/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
-	if(M.reagents)
-		M.reagents.add_reagent("poisonous_strands", 0.12*reac_volume)
-
-/datum/reagent/blob/poisonous_strands/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(1.5*REM)
-	M.adjustFireLoss(1.5*REM)
-	M.adjustToxLoss(1.5*REM)
-	..()
+/datum/reagent/blob/zombifying_pods/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
+	if(prob(10))
+		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(T)
+		BS.overmind = B.overmind
+		BS.update_icons()
+		newB.overmind.blob_mobs.Add(BS)
 
 //does tons of oxygen damage and a little stamina, immune to tesla bolts, weak to EMP
 /datum/reagent/blob/energized_jelly
@@ -316,26 +279,31 @@
 			return damage * 1.5 //take more from fire, tesla, and flashbangs
 	return ..()
 
-//does low burn damage and stamina damage and cools targets down
-/datum/reagent/blob/cryogenic_liquid
-	name = "Cryogenic Liquid"
-	id = "cryogenic_liquid"
-	description = "will do low burn and stamina damage, and cause targets to freeze."
-	analyzerdescdamage = "Does low burn damage, drains stamina, and injects targets with a freezing liquid."
+//does brute, burn, and toxin damage, and cools targets down
+/datum/reagent/blob/cryogenic_poison
+	name = "Cryogenic Poison"
+	id = "cryogenic_poison"
+	description = "will inject targets with a freezing poison that does high damage over time."
+	analyzerdescdamage = "Injects targets with a freezing poison that will gradually liquify the target's internal organs."
 	color = "#8BA6E9"
-	complementary_color = "#E9CE8B"
+	complementary_color = "#7D6EB4"
 	blobbernaut_message = "splashes"
 	message = "The blob splashes you with an icy liquid"
-	message_living = ", and you feel cold and tired"
+	message_living = ", and you feel like your insides are solidifying"
 
-/datum/reagent/blob/cryogenic_liquid/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/cryogenic_poison/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	if(M.reagents)
-		M.reagents.add_reagent("frostoil", 0.3*reac_volume)
-		M.reagents.add_reagent("ice", 0.3*reac_volume)
-	M.apply_damage(0.4*reac_volume, BURN)
-	if(M)
-		M.adjustStaminaLoss(0.4*reac_volume)
+		M.reagents.add_reagent("frostoil", 0.24*reac_volume)
+		M.reagents.add_reagent("ice", 0.24*reac_volume)
+		M.reagents.add_reagent("cryogenic_poison", 0.24*reac_volume)
+
+/datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(0.75*REM, 0)
+	M.adjustFireLoss(0.75*REM, 0)
+	M.adjustToxLoss(0.75*REM, 0)
+	. = 1
+	..()
 
 //does burn damage and EMPs, slightly fragile
 /datum/reagent/blob/electromagnetic_web
