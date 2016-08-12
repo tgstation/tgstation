@@ -45,10 +45,8 @@
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
-	var/list/possible_reagents = list()
-	for(var/type in (subtypesof(/datum/reagent/blob)))
-		possible_reagents.Add(new type)
-	blob_reagent_datum = pick(possible_reagents)
+	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob)))
+	blob_reagent_datum = new BC
 	color = blob_reagent_datum.complementary_color
 	if(blob_core)
 		blob_core.update_icon()

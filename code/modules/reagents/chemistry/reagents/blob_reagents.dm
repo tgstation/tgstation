@@ -225,7 +225,8 @@
 	analyzerdesceffect = "Is immune to electricity and will easily conduct it, but is weak to EMPs."
 	color = "#EFD65A"
 	complementary_color = "#00E5B1"
-	message_living = ", and your lungs feel heavy and weak"
+	message_living = ", and you feel a horrible tingling sensation"
+	var/datum/effect_system/spark_spread/spark_system = new/datum/effect_system/spark_spread()
 
 /datum/reagent/blob/energized_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
@@ -233,6 +234,12 @@
 	M.adjustStaminaLoss(0.4*reac_volume)
 	if(M)
 		M.apply_damage(0.6*reac_volume, OXY)
+
+/datum/reagent/blob/energized_jelly/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	if(!isnull(cause) && original_health - damage <= 0 && prob(10))
+		spark_system.set_up(rand(2, 4), 0, B)
+		spark_system.start()
+	return ..()
 
 /datum/reagent/blob/energized_jelly/tesla_reaction(obj/effect/blob/B, power)
 	return 0
@@ -431,13 +438,14 @@
 		M.adjustStaminaLoss(0.2*reac_volume)
 
 /datum/reagent/blob/pressurized_slime/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	extinguisharea(B, damage)
+	if(cause || damage_type != BURN)
+		extinguisharea(B, damage)
 	return ..()
 
 /datum/reagent/blob/pressurized_slime/death_reaction(obj/effect/blob/B, cause)
 	if(!isnull(cause))
 		B.visible_message("<span class='boldwarning'>The blob ruptures, spraying the area with liquid!</span>")
-	extinguisharea(B, 50)
+		extinguisharea(B, 50)
 
 /datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/effect/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
