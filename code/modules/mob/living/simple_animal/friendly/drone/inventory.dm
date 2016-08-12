@@ -60,7 +60,6 @@
 
 	I.screen_loc = null // will get moved if inventory is visible
 	I.loc = src
-	I.equipped(src, slot)
 	I.layer = ABOVE_HUD_LAYER
 
 	switch(slot)
@@ -74,6 +73,8 @@
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
 
+	//Call back for item being equipped to drone
+	I.equipped(src, slot)
 
 /mob/living/simple_animal/drone/getBackSlot()
 	return slot_generic_dextrous_storage

@@ -41,9 +41,8 @@
 			if(observe.client)
 				observe.client.screen -= I
 	I.loc = src
-	I.equipped(src, slot)
 	I.layer = ABOVE_HUD_LAYER
-
+	var/not_handled = FALSE
 	switch(slot)
 		if(slot_back)
 			back = I
@@ -71,8 +70,15 @@
 				unEquip(I)
 			I.loc = back
 		else
-			return 1
-
+			not_handled = TRUE
+	
+	//Item has been handled at this point and equipped callback can be safely called
+	//We cannot call it for items that have not been handled as they are not yet correctly
+	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
+	if(!not_handled)
+		I.equipped(src, slot)
+	
+	return not_handled
 
 /mob/living/carbon/unEquip(obj/item/I)
 	. = ..() //Sets the default return value to what the parent returns.
