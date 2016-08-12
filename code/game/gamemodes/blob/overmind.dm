@@ -15,7 +15,7 @@
 	faction = list("blob")
 
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
-	var/blob_points = 0
+	var/blob_points = 60
 	var/max_blob_points = 100
 	var/last_attack = 0
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
