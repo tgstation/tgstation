@@ -1,0 +1,4 @@
+author: "Jordie0608"
+delete-after: True
+changes: 
+  - rscdel: "Removed clicking clown mask to morph it's shape, use action button instead."
