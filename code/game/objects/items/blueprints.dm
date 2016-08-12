@@ -149,28 +149,28 @@
 			return AREA_SPECIAL
 	return AREA_STATION
 
-/proc/create_area(mob/living/usr)
-	var/res = detect_room(get_turf(usr))
+/proc/create_area(mob/living/creator)
+	var/res = detect_room(get_turf(creator))
 	if(!istype(res,/list))
 		switch(res)
 			if(ROOM_ERR_SPACE)
-				usr << "<span class='warning'>The new area must be completely airtight.</span>"
+				creator << "<span class='warning'>The new area must be completely airtight.</span>"
 				return
 			if(ROOM_ERR_TOOLARGE)
-				usr << "<span class='warning'>The new area is too large.</span>"
+				creator << "<span class='warning'>The new area is too large.</span>"
 				return
 			else
-				usr << "<span class='warning'>Error! Please notify administration.</span>"
+				creator << "<span class='warning'>Error! Please notify administration.</span>"
 				return
 
 	var/list/turfs = res
-	var/str = trim(stripped_input(usr,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
+	var/str = trim(stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
-		usr << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
+		creator << "<span class='warning'>The given name is too long.  The area remains undefined.</span>"
 		return
-	var/area/old = get_area(get_turf(usr))
+	var/area/old = get_area(get_turf(creator))
 	var/old_gravity = old.has_gravity
 
 	var/area/A
@@ -189,13 +189,14 @@
 		A.contents += turfs
 		A.SetDynamicLighting()
 	A.has_gravity = old_gravity
+	creator << "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be powered.</span>"
 	return 1
 
 
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
 	var/prevname = "[A.name]"
-	var/str = trim(stripped_input(usr,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
+	var/str = trim(stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN))
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
