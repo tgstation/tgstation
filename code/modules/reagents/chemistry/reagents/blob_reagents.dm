@@ -59,7 +59,7 @@
 	M.apply_damage(0.4*reac_volume, TOX)
 
 /datum/reagent/blob/sporing_pods/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(25)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 25% chance of a shitty spore.
+	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(20)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
 		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
 		BS.overmind = B.overmind
@@ -122,15 +122,15 @@
 	M.apply_damage(0.6*reac_volume, BRUTE)
 
 /datum/reagent/blob/shifting_fragments/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
-	if(istype(B, /obj/effect/blob/normal) || (istype(B, /obj/effect/blob/shield) && prob(20)))
+	if(istype(B, /obj/effect/blob/normal) || (istype(B, /obj/effect/blob/shield) && prob(25)))
 		newB.forceMove(get_turf(B))
 		B.forceMove(T)
 
 /datum/reagent/blob/shifting_fragments/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(cause && damage > 0 && original_health - damage > 0 && prob(50-damage))
+	if(cause && damage > 0 && original_health - damage > 0 && prob(60-damage))
 		var/list/blobstopick = list()
 		for(var/obj/effect/blob/OB in orange(1, B))
-			if((istype(OB, /obj/effect/blob/normal) || istype(OB, /obj/effect/blob/shield)) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
+			if((istype(OB, /obj/effect/blob/normal) || (istype(OB, /obj/effect/blob/shield) && prob(25))) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
 				blobstopick += OB //as long as the blob picked is valid; ie, a normal or shield blob that has the same chemical as we do, we can swap with it
 		if(blobstopick.len)
 			var/obj/effect/blob/targeted = pick(blobstopick) //randomize the blob chosen, because otherwise it'd tend to the lower left
@@ -212,7 +212,7 @@
 	shortdesc = "will do low toxin damage and harvest sleeping targets for additional resources(for your overmind) and a blob zombie."
 	analyzerdescdamage = "Does low toxin damage and kills unconscious humans, turning them into blob zombies."
 	color = "#828264"
-	complementary_color = "#4A64C0"
+	complementary_color = "#823ABB"
 	message_living = ", and you feel tired"
 
 /datum/reagent/blob/zombifying_feelers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
@@ -267,7 +267,7 @@
 /datum/reagent/blob/energized_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.losebreath += round(0.2*reac_volume)
-	M.adjustStaminaLoss(0.3*reac_volume)
+	M.adjustStaminaLoss(0.4*reac_volume)
 	if(M)
 		M.apply_damage(0.6*reac_volume, OXY)
 
@@ -292,14 +292,17 @@
 	message = "The blob blasts you"
 
 /datum/reagent/blob/explosive_lattice/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+	var/aoe_volume = reac_volume
 	reac_volume = ..()
 	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
 		var/obj/effect/overlay/temp/explosion/E = PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
 		E.alpha = 150
-		for(var/mob/living/L in orange(M, 1))
+		for(var/mob/living/L in orange(get_turf(M), 1))
 			if("blob" in L.faction) //no friendly fire
 				continue
-			L.apply_damage(0.6*reac_volume, BRUTE)
+			var/mob_protection = L.get_permeability_protection()
+			aoe_volume = round(aoe_volume * min(1.5 - mob_protection, 1), 0.1)
+			L.apply_damage(0.6*aoe_volume, BRUTE)
 		if(M)
 			M.apply_damage(0.6*reac_volume, BRUTE)
 	else
