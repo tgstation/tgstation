@@ -154,6 +154,11 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		if(ticker && istype(ticker.mode, /datum/game_mode/blob))
+			var/datum/game_mode/blob/B = ticker.mode
+			stat(null, "Blobs to Win: [blobs_legit.len]/[B.blobwincount]"
+		else
+			stat(null, "Total Blobs: [blobs.len]"
 		if(free_chem_rerolls)
 			stat(null, "You have [free_chem_rerolls] Free Chemical Reroll\s Remaining")
 		if(!placed)

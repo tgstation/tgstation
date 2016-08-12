@@ -4,6 +4,7 @@
 	if(overminds.len)
 		return 0
 	if(!blob_cores.len) //blob is dead
+		message_sent = FALSE //disable the win count at this point
 		if(config.continuous["blob"])
 			continuous_sanity_checked = 1 //Nonstandard definition of "alive" gets past the check otherwise
 			SSshuttle.clearHostileEnvironment(src)

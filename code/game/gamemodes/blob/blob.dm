@@ -25,7 +25,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	<span class='green'>Blobs</span>: Consume the station and spread as far as you can.\n\
 	<span class='notice'>Crew</span>: Fight back the blobs and minimize station damage."
 
-	var/burst = 0
+	var/message_sent = FALSE
 
 	var/cores_to_spawn = 1
 	var/players_per_core = 25
@@ -91,6 +91,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 		sleep(message_delay)
 
 		send_intercept(1)
+		message_sent = TRUE
 
 		sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 8)
 

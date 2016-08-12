@@ -665,6 +665,7 @@ var/list/teleportlocs = list()
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
+	blob_allowed = FALSE
 
 /area/solar/auxport
 		name = "Fore Port Solar Array"

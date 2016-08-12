@@ -951,15 +951,6 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/get_standard_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
 
-/mob/living/Stat()
-	..()
-	if(statpanel("Status"))
-		if(ticker)
-			if(ticker.mode)
-				for(var/datum/gang/G in ticker.mode.gangs)
-					if(G.is_dominating)
-						stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
-
 /mob/living/cancel_camera()
 	..()
 	cameraFollow = null
