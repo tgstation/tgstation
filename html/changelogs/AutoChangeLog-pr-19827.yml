@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Belligerent now does minor damage to the legs on each invocation, up to a maximum of 30 damage per recital."
