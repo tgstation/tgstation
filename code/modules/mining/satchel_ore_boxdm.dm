@@ -43,9 +43,12 @@
 
 /obj/structure/ore_box/proc/show_contents(mob/user)
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
-	var/list/oretypes = uniqueList(contents)
-	for(var/obj/item/weapon/ore/O in oretypes)
-		dat += "[capitalize(O.name)]: [count_by_type(contents, O.type)]<br>"
+	var/list/oretypes = list()
+	for(var/obj/item/weapon/ore/O in contents)
+		oretypes |= O.type
+	for(var/i in oretypes)
+		var/obj/item/weapon/ore/T = locate(i) in contents
+		dat += "[capitalize(T.name)]: [count_by_type(contents, T.type)]<br>"
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse("[dat]", "window=orebox")
 
