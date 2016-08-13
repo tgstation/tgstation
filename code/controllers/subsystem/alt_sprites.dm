@@ -18,7 +18,7 @@ var/datum/subsystem/altsprites/SSaltsprites
 
 
 /datum/sprite_theme
-	var/name = "redtube"
+	var/name = "Sprite Theme"
 	var/list/overrides = list()
 
 /datum/sprite_override
@@ -51,7 +51,7 @@ var/datum/subsystem/altsprites/SSaltsprites
 	A.update_icon()
 
 /datum/sprite_alt
-	var/name = "http://www."
-	var/icon_state = "porn"
-	var/item_state = "hub"
-	var/item_color = ".com"
+	var/name = "Sprite Alt"
+	var/icon_state
+	var/item_state
+	var/item_color
