@@ -257,7 +257,7 @@
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
 /turf/closed/wall/ratvar_act(force)
-	var/converted = (prob(30) || force)
+	var/converted = (prob(40) || force)
 	if(converted)
 		ChangeTurf(/turf/closed/wall/clockwork)
 	for(var/I in src)
