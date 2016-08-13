@@ -44,7 +44,7 @@
 
 	titled_hierophant_message(owner, input, span_for_name, span_for_message, title)
 
-//Function Call action: Calls forth a Ratvarian spear once every 5 minutes
+//Function Call action: Calls forth a Ratvarian spear once every 3 minutes
 /datum/action/innate/function_call
 	name = "Function Call"
 	desc = "Allows you to summon a Ratvarian spear to fight enemies."
@@ -53,7 +53,7 @@
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
-	var/base_cooldown = 3000
+	var/base_cooldown = 1800
 
 /datum/action/innate/function_call/IsAvailable()
 	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
@@ -69,7 +69,7 @@
 	owner.put_in_hands(R)
 	if(!ratvar_awakens)
 		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		addtimer(R, "break_spear", 3000, FALSE)
+		addtimer(R, "break_spear", base_cooldown, FALSE)
 	cooldown = base_cooldown + world.time
 	owner.update_action_buttons_icon()
 	addtimer(src, "update_actions", base_cooldown, FALSE)
