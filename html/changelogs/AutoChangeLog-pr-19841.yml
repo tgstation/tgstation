@@ -1,0 +1,4 @@
+author: "optional name here"
+delete-after: True
+changes: 
+  - bugfix: "The syndicate uplink ui has been refactored to majorly reduce lag"
