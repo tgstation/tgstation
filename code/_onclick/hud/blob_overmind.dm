@@ -51,7 +51,7 @@
 /obj/screen/blob/Blobbernaut
 	icon_state = "ui_blobbernaut"
 	name = "Produce Blobbernaut (40)"
-	desc = "Produces a strong, smart blobbernaut from a factory blob for 40 points.<br>The factory blob used will become fragile and unable to produce spores."
+	desc = "Produces a strong, smart blobbernaut from a factory blob for 40 resources.<br>The factory blob used will become fragile and unable to produce spores."
 
 /obj/screen/blob/Blobbernaut/Click()
 	if(isovermind(usr))
@@ -61,7 +61,7 @@
 /obj/screen/blob/ResourceBlob
 	icon_state = "ui_resource"
 	name = "Produce Resource Blob (40)"
-	desc = "Produces a resource blob for 40 points.<br>Resource blobs will give you points every few seconds."
+	desc = "Produces a resource blob for 40 resources.<br>Resource blobs will give you resources every few seconds."
 
 /obj/screen/blob/ResourceBlob/Click()
 	if(isovermind(usr))
@@ -70,8 +70,8 @@
 
 /obj/screen/blob/NodeBlob
 	icon_state = "ui_node"
-	name = "Produce Node Blob (60)"
-	desc = "Produces a node blob for 60 points.<br>Node blobs will expand and activate nearby resource and factory blobs."
+	name = "Produce Node Blob (50)"
+	desc = "Produces a node blob for 50 resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
 /obj/screen/blob/NodeBlob/Click()
 	if(isovermind(usr))
@@ -81,7 +81,7 @@
 /obj/screen/blob/FactoryBlob
 	icon_state = "ui_factory"
 	name = "Produce Factory Blob (60)"
-	desc = "Produces a factory blob for 60 points.<br>Factory blobs will produce spores every few seconds."
+	desc = "Produces a factory blob for 60 resources.<br>Factory blobs will produce spores every few seconds."
 
 /obj/screen/blob/FactoryBlob/Click()
 	if(isovermind(usr))
@@ -91,7 +91,7 @@
 /obj/screen/blob/ReadaptChemical
 	icon_state = "ui_chemswap"
 	name = "Readapt Chemical (40)"
-	desc = "Randomly rerolls your chemical for 40 points."
+	desc = "Randomly rerolls your chemical for 40 resources."
 
 /obj/screen/blob/ReadaptChemical/MouseEntered(location,control,params)
 	if(isovermind(usr))
@@ -109,7 +109,7 @@
 /obj/screen/blob/RelocateCore
 	icon_state = "ui_swap"
 	name = "Relocate Core (80)"
-	desc = "Swaps a node and your core for 80 points."
+	desc = "Swaps a node and your core for 80 resources."
 
 /obj/screen/blob/RelocateCore/Click()
 	if(isovermind(usr))
