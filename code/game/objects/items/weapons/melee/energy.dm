@@ -17,8 +17,11 @@
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
 	return 0
 
-/obj/item/weapon/melee/energy/decapitation_chance()
-	return active * dismemberment_chance_on
+/obj/item/weapon/melee/energy/IS_SHARP()
+	return active * sharpness
+
+/obj/item/weapon/melee/energy/get_decapitation_chance(obj/item/bodypart/affecting)
+	return active * dismemberment_chance
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
