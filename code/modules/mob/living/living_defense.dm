@@ -77,6 +77,8 @@
 			apply_damage(I.throwforce, dtype, zone, armor, I)
 			if(I.thrownby)
 				add_logs(I.thrownby, src, "hit", I)
+		else
+			return 1
 	else
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	..()
