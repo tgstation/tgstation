@@ -77,7 +77,10 @@
 	chameleon_blacklist += target.type
 	var/list/temp_list = typesof(chameleon_type)
 	for(var/V in temp_list - (chameleon_blacklist))
-		chameleon_list += V
+		if(initial(V.flags) & ABSTRACT)
+			continue
+		else
+			chameleon_list += V
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/list/item_names = list()
