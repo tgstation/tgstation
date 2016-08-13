@@ -185,7 +185,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/channeled/belligerent //Belligerent: Channeled for up to fiteen times over thirty seconds. Forces non-servants that can hear the chant to walk. Nar-Sian cultists are burned.
 	descname = "Channeled, Area Slowdown"
 	name = "Belligerent"
-	desc = "Forces all nearby non-servants to walk rather than run. Chanted every two seconds for up to thirty seconds."
+	desc = "Forces all nearby non-servants to walk rather than run, doing minor damage. Chanted every two seconds for up to thirty seconds."
 	chant_invocations = list("Punish their blindness!", "Take time, make slow!")
 	chant_amount = 15
 	chant_interval = 20
@@ -194,15 +194,18 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
-	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_servant_of_ratvar(L) && L.m_intent != "walk" && !L.null_rod_check())
-			if(!iscultist(L))
-				L << "<span class='warning'>Your legs feel heavy and weak!</span>"
-			else //Cultists take extra burn damage
-				L << "<span class='warning'>Your legs burn with pain!</span>"
-				L.apply_damage(5, BURN, "l_leg")
-				L.apply_damage(5, BURN, "r_leg")
-			L.m_intent = "walk"
+	for(var/mob/living/carbon/C in hearers(7, invoker))
+		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && C.get_num_legs()) //you have legs right
+			C.apply_damage(1, BURN, "l_leg")
+			C.apply_damage(1, BURN, "r_leg")
+			if(C.m_intent != "walk")
+				if(!iscultist(C))
+					C << "<span class='warning'>Your legs shiver with pain!</span>"
+				else //Cultists take extra burn damage
+					C << "<span class='warning'>Your legs burn with pain!</span>"
+					C.apply_damage(4, BURN, "l_leg")
+					C.apply_damage(4, BURN, "r_leg")
+				C.m_intent = "walk"
 
 
 
