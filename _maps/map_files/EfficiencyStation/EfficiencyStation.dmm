@@ -41922,6 +41922,8 @@
 	pixel_x = -2;
 	pixel_y = -2
 	},
+/obj/item/weapon/gun/energy/gun/dragnet,
+/obj/item/weapon/gun/energy/gun/dragnet,
 /turf/open/floor/plasteel/black,
 /area/security/warden)
 "bFG" = (
