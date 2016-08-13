@@ -617,7 +617,7 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	force_unwielded = 11
-	force_wielded = 20 //I have no idea how to balance
+	force_wielded = 20
 	sharpness = IS_SHARP
 	piercing_unwielded = 6
 	piercing_wielded = 13
