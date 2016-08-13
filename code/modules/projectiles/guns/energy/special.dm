@@ -374,6 +374,11 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 	pin = null
 
+/obj/item/weapon/gun/energy/temperature/security
+	name = "security temperature gun"
+	desc = "A weapon that can only be used to its full potential by the truly robust."
+	origin_tech = "combat=2;materials=2;powerstorage=1;magnets=1"
+
 /obj/item/weapon/gun/energy/laser/instakill
 	name = "instakill rifle"
 	icon_state = "instagib"

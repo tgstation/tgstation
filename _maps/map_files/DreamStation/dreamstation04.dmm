@@ -45356,6 +45356,7 @@
 /obj/item/weapon/gun/energy/ionrifle{
 	pin = /obj/item/device/firing_pin
 	},
+/obj/item/weapon/gun/energy/temperature/security,
 /obj/item/clothing/suit/armor/laserproof,
 /obj/item/key/security,
 /turf/open/floor/plasteel/vault{
@@ -49018,6 +49019,8 @@
 	pixel_y = -24
 	},
 /obj/machinery/light,
+/obj/item/weapon/gun/energy/gun/dragnet,
+/obj/item/weapon/gun/energy/gun/dragnet,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},

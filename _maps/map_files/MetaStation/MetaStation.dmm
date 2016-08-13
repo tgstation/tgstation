@@ -2370,10 +2370,11 @@
 /obj/item/weapon/gun/energy/ionrifle{
 	pin = /obj/item/device/firing_pin
 	},
-/obj/item/clothing/suit/armor/laserproof,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/weapon/gun/energy/temperature/security,
+/obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
