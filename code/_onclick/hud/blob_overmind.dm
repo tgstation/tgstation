@@ -152,11 +152,11 @@
 	static_inventory += using
 
 	using = new /obj/screen/blob/NodeBlob()
-	using.screen_loc = ui_lhand
+	using.screen_loc = ui_rhand
 	static_inventory += using
 
 	using = new /obj/screen/blob/FactoryBlob()
-	using.screen_loc = ui_rhand
+	using.screen_loc = ui_lhand
 	static_inventory += using
 
 	using = new /obj/screen/blob/ReadaptChemical()

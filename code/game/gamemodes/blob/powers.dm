@@ -67,12 +67,13 @@
 	set desc = "Move your camera to a selected node."
 	if(blob_nodes.len)
 		var/list/nodes = list()
-		for(var/i = 1; i <= blob_nodes.len; i++)
-			nodes["Blob Node #[i]"] = blob_nodes[i]
+		for(var/i in 1 to blob_nodes.len)
+			var/obj/effect/blob/node/B = blob_nodes[i]
+			nodes["Blob Node #[i] ([B.overmind ? "B.overmind.blob_reagent_datum.name":"No Chemical"]"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/effect/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
-			src.loc = chosen_node.loc
+			loc = chosen_node.loc
 
 /mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, needsNode, turf/T)
 	if(!T)
@@ -125,9 +126,9 @@
 
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
-	set name = "Create Node Blob (60)"
+	set name = "Create Node Blob (50)"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
-	createSpecial(60, /obj/effect/blob/node, 5, 0)
+	createSpecial(50, /obj/effect/blob/node, 5, 0)
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
@@ -166,9 +167,8 @@
 	blobber.adjustHealth(blobber.maxHealth * 0.5)
 	blob_mobs += blobber
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
-	var/client/C = null
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
-		C = pick(candidates)
+		var/client/C = pick(candidates)
 		blobber.notransform = 0
 		blobber.key = C.key
 		blobber << 'sound/effects/blobattack.ogg'
@@ -190,13 +190,16 @@
 	if(!B)
 		src << "<span class='warning'>You must be on a blob node!</span>"
 		return
+	if(!blob_core)
+		src << "<span class='userdanger'>You have no core and are about to die! May you rest in peace.</span>"
+		return
 	var/area/A = get_area(T)
 	if(istype(T, /turf/open/space) || A && !A.blob_allowed)
 		src << "<span class='warning'>You cannot relocate your core here!</span>"
 		return
 	if(!can_buy(80))
 		return
-	var/turf/old_turf = blob_core.loc
+	var/turf/old_turf = get_turf(blob_core)
 	blob_core.forceMove(T)
 	B.forceMove(old_turf)
 
@@ -225,7 +228,7 @@
 
 /mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"
-	set name = "Expand/Attack Blob (5)"
+	set name = "Expand/Attack Blob (4)"
 	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear, instead attacks it, damaging mobs and objects."
 	var/turf/T = get_turf(src)
 	expand_blob(T)
@@ -237,7 +240,7 @@
 	if(!OB)
 		src << "<span class='warning'>There is no blob adjacent to the target tile!</span>"
 		return
-	if(can_buy(5))
+	if(can_buy(4))
 		var/attacksuccess = FALSE
 		last_attack = world.time
 		for(var/mob/living/L in T)
@@ -254,8 +257,7 @@
 				B.blob_attack_animation(T, src)
 			else
 				src << "<span class='warning'>There is a blob there!</span>"
-				add_points(5) //otherwise, refund all of the cost
-			return
+				add_points(4) //otherwise, refund all of the cost
 		else
 			OB.expand(T, src)
 
@@ -338,4 +340,4 @@
 	src << "Attempting to talk will send a message to all other overminds, allowing you to coordinate with them."
 	if(!placed && autoplace_max_time <= world.time)
 		src << "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [round((autoplace_max_time - world.time)/600, 0.5)] minutes.</font></span>"
-		src << "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the button in the bottom right corner of the screen.</font></span>"
+		src << "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font></span>"

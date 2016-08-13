@@ -50,6 +50,7 @@
 	color = blob_reagent_datum.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
+	add_points(0)
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
@@ -83,7 +84,7 @@
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
-		ghostimage = null;
+		ghostimage = null
 		updateallghostimages()
 	return ..()
 
@@ -107,9 +108,8 @@
 				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.health)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
-	if(points != 0)
-		blob_points = Clamp(blob_points + points, 0, max_blob_points)
-		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
+	blob_points = Clamp(blob_points + points, 0, max_blob_points)
+	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_points)]</font></div>"
 
 /mob/camera/blob/say(message)
 	if (!message)
