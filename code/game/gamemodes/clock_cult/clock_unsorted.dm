@@ -140,8 +140,8 @@
 			unconverted_ai_exists = TRUE
 	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 	//Drivers: always unlocked
-	.[SCRIPTURE_SCRIPT] = (servants >= 5 && clockwork_caches)
-	//Script: 5 or more non-brain servants and any number of clockwork caches
+	.[SCRIPTURE_SCRIPT] = (servants >= 5 && clockwork_caches >= 1)
+	//Script: 5 or more non-brain servants and 1+ clockwork caches
 	.[SCRIPTURE_APPLICATION] = (servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
 	//Application: 8 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
 	.[SCRIPTURE_REVENANT] = (servants >= 10 && clockwork_caches >= 4 && clockwork_construction_value >= 200)
