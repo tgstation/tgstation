@@ -131,11 +131,12 @@
 				if(ratvar_portal)
 					new/obj/structure/clockwork/massive/ratvar(startpoint)
 				else
-					world << "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>"
-					world << "<span class='inathneq_large'>\"[text2ratvar("Behold")]!\"</span>"
-					world << "<span class='sevtug_large'>\"[text2ratvar("Behold")]!\"</span>"
-					world << "<span class='nezbere_large'>\"[text2ratvar("Behold")]!\"</span>"
-					world << "<span class='nzcrentr_large'>\"[text2ratvar("Behold")]!\"</span>"
+					var/message = text2ratvar("Behold")
+					world << "<span class='ratvar'>\"[message]!\"</span>"
+					world << "<span class='inathneq_large'>\"[message]!\"</span>"
+					world << "<span class='sevtug_large'>\"[message]!\"</span>"
+					world << "<span class='nezbere_large'>\"[message]!\"</span>"
+					world << "<span class='nzcrentr_large'>\"[message]!\"</span>"
 					world << 'sound/magic/clockwork/invoke_general.ogg'
 					var/x0 = startpoint.x
 					var/y0 = startpoint.y
