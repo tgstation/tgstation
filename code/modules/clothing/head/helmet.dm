@@ -1,3 +1,5 @@
+var/list/helmet_list = list()
+
 /obj/item/clothing/head/helmet
 	name = "helmet"
 	desc = "Standard Security gear. Protects the head from impacts."
@@ -18,6 +20,11 @@
 
 
 /obj/item/clothing/head/helmet/New()
+	..()
+	helmet_list += src
+
+/obj/item/clothing/head/helmet/Destroy()
+	helmet_list -= src
 	..()
 
 /obj/item/clothing/head/helmet/emp_act(severity)
