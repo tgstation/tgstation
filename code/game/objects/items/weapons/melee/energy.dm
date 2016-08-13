@@ -20,9 +20,6 @@
 /obj/item/weapon/melee/energy/IS_SHARP()
 	return active * sharpness
 
-/obj/item/weapon/melee/energy/get_decapitation_chance(obj/item/bodypart/affecting)
-	return active * dismemberment_chance
-
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
 	desc = "An energised battle axe."
