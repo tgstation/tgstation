@@ -159,7 +159,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
-/datum/design/modkit
+/*/datum/design/modkit
 	name = "Modification Kit"
 	desc = "A device which allows kinetic accelerators to be wielded with one hand, and by any organism."
 	id = "modkit"
@@ -188,7 +188,7 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
 	category = list("Mining Designs")
-
+*/
 /datum/design/superresonator
 	name = "Upgraded Resonator"
 	desc = "An upgraded version of the resonator that allows more fields to be active at once."
