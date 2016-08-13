@@ -415,8 +415,8 @@
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
 
-/obj/item/weapon/storage/belt/rapier
-	name = "rapier sheath"
+/obj/item/weapon/storage/belt/sabre
+	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath-rapier"
 	item_state = "sheath-rapier"
