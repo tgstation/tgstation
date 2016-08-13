@@ -1,8 +1,6 @@
 /obj/item/modkit
 	name = "modification kit"
-	desc = "A one-use kit, which enables kinetic accelerators to retain their \
-		charge when away from a bioelectric source, renders them immune to \
-		interference with other accelerators, as well as allowing less \
+	desc = "A one-use kit, which allows less \
 		dextrous races to use the tool."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "modkit"
@@ -19,16 +17,13 @@
 			accelerators!</span>"
 		return ..()
 	// RIP the 'improved improved improved improved kinetic accelerator
-	if(C.holds_charge && C.unique_frequency)
+	if(C.trigger_guard == TRIGGER_GUARD_ALLOW_ALL)
 		user << "<span class='warning'>This kinetic accelerator already has \
-			these upgrades.</span>"
+			been modified.</span>"
 		return ..()
-
 	user <<"<span class='notice'>You modify the [C], adjusting the trigger \
-		guard and internal capacitor.</span>"
-	C.name = "improved [C.name]"
-	C.holds_charge = TRUE
-	C.unique_frequency = TRUE
+		guard.</span>"
+	C.name = "modified [C.name]"
 	C.trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	uses--
 	if(!uses)
