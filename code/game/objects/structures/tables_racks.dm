@@ -62,8 +62,7 @@
 		new /obj/structure/table/wood(src.loc)
 
 /obj/structure/table/ratvar_act()
-	if(prob(20))
-		new /obj/structure/table/reinforced/brass(src.loc)
+	new /obj/structure/table/reinforced/brass(src.loc)
 
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)

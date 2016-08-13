@@ -6,6 +6,7 @@ var/global/list/all_clockwork_objects = list() //All clockwork items, structures
 var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatures) in existence
 var/global/list/clockwork_component_cache = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //The pool of components that caches draw from
 var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
+var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial derelict has ever been successfully activated
 
 #define SCRIPTURE_PERIPHERAL "Peripheral" //Scripture tiers; peripherals should never be used
 #define SCRIPTURE_DRIVER "Driver"
@@ -47,3 +48,11 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 #define GATEWAY_RATVAR_COMING 250 //when progress is at or above this, ratvar has entered and is coming through the gateway
 
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
+
+//Objective defines
+
+#define CLOCKCULT_GATEWAY "gateway"
+
+#define CLOCKCULT_ESCAPE "escape"
+
+#define CLOCKCULT_SILICONS "silicons"
