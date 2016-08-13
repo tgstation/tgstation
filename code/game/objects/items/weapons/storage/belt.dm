@@ -423,7 +423,7 @@
 	storage_slots = 1
 	max_w_class = 4
 	can_hold = list(
-		/obj/item/weapon/melee/rapier
+		/obj/item/weapon/melee/sabre
 		)
 
 /obj/item/weapon/storage/belt/sabre/update_icon()
@@ -437,6 +437,6 @@
 		L.regenerate_icons()
 	..()
 
-/obj/item/weapon/storage/belt/rapier/New()
+/obj/item/weapon/storage/belt/sabre/New()
 	..()
-	new /obj/item/weapon/melee/rapier(src)
+	new /obj/item/weapon/melee/sabre(src)
