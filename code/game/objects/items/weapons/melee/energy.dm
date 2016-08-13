@@ -1,7 +1,7 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
 	var/force_on = 30 //force when active
-	var/dismemberment_chance_on = 0 //dismemberment chance when active
+	var/dismemberment_chance_on = 30 //dismemberment chance when active
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -58,7 +58,6 @@
 	throw_speed = 3
 	throw_range = 5
 	dismemberment_chance = 0
-	dismemberment_chance_on = 30
 	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
 	armour_penetration = 35
@@ -92,6 +91,7 @@
 	active = !active
 	if (active)
 		force = force_on
+		dismemberment_chance = dismemberment_chance_on
 		throwforce = throwforce_on
 		hitsound = 'sound/weapons/blade1.ogg'
 		throw_speed = 4
