@@ -1256,14 +1256,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			invoker << "<span class='userdanger'>There is already a gateway at [gate_area.map_name]!</span>"
 			return 0
 		var/area/A = get_area(invoker)
-		if(invoker.z != ZLEVEL_STATION || istype(A, /area/shuttle))
+		var/turf/T = get_turf(invoker)
+		if(!T || T.z != ZLEVEL_STATION || istype(A, /area/shuttle))
 			invoker << "<span class='warning'>You must be on the station to activate the Ark!</span>"
 			return 0
 		if(clockwork_gateway_activated)
 			if(ticker && ticker.mode && ticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
 				invoker << "<span class='nezbere'>\"Look upon his works. Is it not glorious?\"</span>"
 			else
-				invoker << "<span class='warning'>Ratvar's recent banishment renders him too weak to be wrung forth from Reebe! </span>"
+				invoker << "<span class='warning'>Ratvar's recent banishment renders him too weak to be wrung forth from Reebe!</span>"
 			return 0
 	return 1
 
