@@ -146,7 +146,7 @@
 
 /obj/item/weapon/melee/arm_blade
 	name = "arm blade"
-	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter"
+	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
@@ -182,14 +182,6 @@
 		if(A.locked)
 			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
 			return
-
-		if(A.welded)
-			user.visible_message("<span class='warning'>[user] starts breaking the weld on the airlock with [src]!</span>", "<span class='warning'>We start breaking the weld on the airlock.</span>", \
-			"<span class='italics'>You hear a ferocious clanging.</span>")
-			if(!do_after(user, 600, target = A))
-				return
-			A.welded = FALSE
-			A.update_icon()
 
 		if(A.hasPower())
 			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the airlock open.</span>", \
