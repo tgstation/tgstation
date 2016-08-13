@@ -17,7 +17,7 @@
 	icon_state = "cycler"
 	origin_tech = "combat=5;materials=4"
 	w_class = 3
-	mag_type = /obj/item/ammo_box/magazine/white_only/traumatic
+	mag_type = /obj/item/ammo_box/magazine/white_only/enhanced_traumatic
 	fire_delay = 4
 	burst_size = 5
 	actions_types = list(/datum/action/item_action/toggle_firemode)
