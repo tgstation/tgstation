@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Ratvarian Spears will now stun any mob they're thrown at instead of just enemy cultists and silicons, though the stun is still longer on enemy cultists and silicons."
