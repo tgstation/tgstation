@@ -1,0 +1,6 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Players created by sentience potions, mining drone upgrades, or Guardian/Holoparsite summoners will now automatically join the users antagonist team, if any."
+  - rscadd: "Mobs created in this manner will no longer be convertable/deconvertable unless their creator is first converted/deconverted."
+  - rscadd: "Cayenne will now officially become an operative when given a sentience potion."
