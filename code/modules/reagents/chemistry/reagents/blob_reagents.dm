@@ -56,7 +56,7 @@
 
 /datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.7*reac_volume, BRUTE)
+	M.apply_damage(0.8*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	var/effectivedamage = damage
@@ -87,7 +87,7 @@
 
 /datum/reagent/blob/shifting_fragments/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.7*reac_volume, BRUTE)
+	M.apply_damage(0.8*reac_volume, BRUTE)
 
 /datum/reagent/blob/shifting_fragments/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
 	if(istype(B, /obj/effect/blob/normal) || (istype(B, /obj/effect/blob/shield) && prob(25)))
@@ -126,7 +126,7 @@
 	M.adjust_fire_stacks(round(reac_volume/10))
 	M.IgniteMob()
 	if(M)
-		M.apply_damage(0.7*reac_volume, BURN)
+		M.apply_damage(0.8*reac_volume, BURN)
 	if(iscarbon(M))
 		M.emote("scream")
 
@@ -157,7 +157,7 @@
 	if(M.reagents)
 		M.reagents.add_reagent("regenerative_materia", 0.2*reac_volume)
 		M.reagents.add_reagent("spore", 0.2*reac_volume)
-	M.apply_damage(0.6*reac_volume, TOX)
+	M.apply_damage(0.7*reac_volume, TOX)
 
 /datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/M)
 	M.adjustToxLoss(1*REM)
@@ -187,7 +187,7 @@
 
 /datum/reagent/blob/zombifying_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.4*reac_volume, TOX)
+	M.apply_damage(0.6*reac_volume, TOX)
 	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
 		M.death() //sleeping in a fight? bad plan.
 		var/points = rand(5, 10)
@@ -272,9 +272,9 @@
 				continue
 			var/mob_protection = L.get_permeability_protection()
 			var/aoe_volume = round(initial_volume * min(1.5 - mob_protection, 1), 0.1)
-			L.apply_damage(0.6*aoe_volume, BRUTE)
+			L.apply_damage(0.8*aoe_volume, BRUTE)
 		if(M)
-			M.apply_damage(0.7*reac_volume, BRUTE)
+			M.apply_damage(0.8*reac_volume, BRUTE)
 	else
 		M.apply_damage(0.8*reac_volume, BRUTE)
 
@@ -294,16 +294,17 @@
 	analyzerdescdamage = "Injects targets with a freezing poison that will gradually solidify the target's internal organs."
 	color = "#8BA6E9"
 	complementary_color = "#7D6EB4"
-	blobbernaut_message = "splashes"
-	message = "The blob splashes you with an icy liquid"
+	blobbernaut_message = "injects"
+	message = "The blob stabs you"
 	message_living = ", and you feel like your insides are solidifying"
 
 /datum/reagent/blob/cryogenic_poison/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	if(M.reagents)
-		M.reagents.add_reagent("frostoil", 0.24*reac_volume)
-		M.reagents.add_reagent("ice", 0.24*reac_volume)
-		M.reagents.add_reagent("cryogenic_poison", 0.24*reac_volume)
+		M.reagents.add_reagent("frostoil", 0.3*reac_volume)
+		M.reagents.add_reagent("ice", 0.3*reac_volume)
+		M.reagents.add_reagent("cryogenic_poison", 0.3*reac_volume)
+	M.apply_damage(0.2*reac_volume, BRUTE)
 
 /datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(0.75*REM, 0)
@@ -331,7 +332,7 @@
 	if(prob(reac_volume*2))
 		M.emp_act(2)
 	if(M)
-		M.apply_damage(0.8*reac_volume, BURN)
+		M.apply_damage(reac_volume, BURN)
 
 /datum/reagent/blob/electromagnetic_web/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(damage_type == BRUTE) //take full brute
@@ -399,7 +400,7 @@
 /datum/reagent/blob/reactive_spines/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
 		return 0 //the dead, and blob mobs, don't cause reactions
-	M.adjustBruteLoss(0.7*reac_volume)
+	M.adjustBruteLoss(0.8*reac_volume)
 
 /datum/reagent/blob/reactive_spines/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(damage && damage_type == BRUTE && original_health - damage > 0) //is there any damage, is it brute, and will we be alive
@@ -430,7 +431,7 @@
 		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
-	M.apply_damage(0.2*reac_volume, BRUTE)
+	M.apply_damage(0.4*reac_volume, BRUTE)
 	if(M)
 		M.apply_damage(0.4*reac_volume, OXY)
 	if(M)
