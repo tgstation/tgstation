@@ -15,7 +15,7 @@
 	faction = list("blob")
 
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
-	var/blob_points = 60
+	var/blob_points = 0
 	var/max_blob_points = 100
 	var/last_attack = 0
 	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
@@ -29,7 +29,8 @@
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 
-/mob/camera/blob/New(loc, pre_placed = 0, mode_made = 0)
+/mob/camera/blob/New(loc, pre_placed = 0, mode_made = 0, starting_points = 60)
+	blob_points = starting_points
 	if(pre_placed) //we already have a core!
 		manualplace_min_time = 0
 		autoplace_max_time = 0
@@ -84,7 +85,7 @@
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
-		ghostimage = null;
+		ghostimage = null
 		updateallghostimages()
 	return ..()
 

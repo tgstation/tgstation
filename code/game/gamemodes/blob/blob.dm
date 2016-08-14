@@ -30,6 +30,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	var/cores_to_spawn = 1
 	var/players_per_core = 25
 	var/blob_point_rate = 3
+	var/blob_base_starting_points = 80
 
 	var/blobwincount = 350
 
@@ -73,7 +74,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 /datum/game_mode/blob/post_setup()
 
 	for(var/datum/mind/blob in blob_overminds)
-		var/mob/camera/blob/B = blob.current.become_overmind(1)
+		var/mob/camera/blob/B = blob.current.become_overmind(TRUE, round(blob_base_starting_points/blob_overminds.len))
 		B.mind.name = B.name
 		var/turf/T = pick(blobstart)
 		B.loc = T
