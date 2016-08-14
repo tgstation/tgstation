@@ -70,7 +70,7 @@
 
 /obj/item/weapon/storage/box/survival_mining/New()
 	..()
-	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
