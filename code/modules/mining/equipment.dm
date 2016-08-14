@@ -502,10 +502,10 @@
 	if(hammer_synced)
 		if(hammer_synced.mark == target)
 			return ..()
-		if(hammer_synced.marked_image)
-			qdel(hammer_synced.marked_image)
-			hammer_synced.marked_image = null
 		if(isliving(target))
+			if(hammer_synced.mark && hammer_synced.marked_image)
+				hammer_synced.mark.underlays -= hammer_synced.marked_image
+				hammer_synced.marked_image = null
 			var/mob/living/L = target
 			if(L.mob_size >= MOB_SIZE_LARGE)
 				hammer_synced.mark = L
@@ -546,22 +546,9 @@
 			L.underlays -= marked_image
 			qdel(marked_image)
 			marked_image = null
-			var/backstab = 0
-			switch(user.dir)//There has to be a better way of doing this? Byond handles this with cardinal sprites, but there doesn't appear to be a var other than dir to work with.
-				if(NORTH)
-					if(L.dir == NORTH || L.dir == NORTHEAST || L.dir == NORTHWEST)
-						backstab = 1
-				if(SOUTH)
-					if(L.dir == SOUTH || L.dir == SOUTHEAST || L.dir == SOUTHWEST)
-						backstab = 1
-				if(WEST)
-					if(L.dir == WEST || L.dir == NORTHWEST || L.dir == SOUTHWEST)
-						backstab = 1
-				if(EAST)
-					if(L.dir == EAST || L.dir == NORTHEAST || L.dir == SOUTHEAST)
-						backstab = 1
+			var/backstab = check_target_facings(user, L)
 			var/def_check = L.getarmor(type = "bomb")
-			if(backstab)
+			if(backstab == FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR || backstab == FACING_SAME_DIR)
 				L.apply_damage(80, BRUTE, blocked = def_check)
 				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else

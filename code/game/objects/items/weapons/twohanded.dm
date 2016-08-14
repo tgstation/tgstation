@@ -83,13 +83,6 @@
 	user.put_in_inactive_hand(O)
 	return
 
-/obj/item/weapon/twohanded/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
-	//Cannot equip wielded items.
-/*	if(wielded)
-		M << "<span class='warning'>Unwield the [name] first!</span>"
-		return 0*/
-	return ..()
-
 /obj/item/weapon/twohanded/dropped(mob/user)
 	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
@@ -119,7 +112,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = 5
-	flags = ABSTRACT|NODROP
+	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
 	qdel(src)
