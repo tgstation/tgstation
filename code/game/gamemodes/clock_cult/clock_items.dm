@@ -776,7 +776,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>"
-		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target if it's an enemy cultist or silicon.</span>"
+		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>"
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE
@@ -856,6 +856,9 @@
 	if(issilicon(L) || iscultist(L))
 		L.Stun(6)
 		L.Weaken(6)
+	else
+		L.Stun(2)
+		L.Weaken(2)
 	break_spear(T)
 
 /obj/item/clockwork/ratvarian_spear/proc/break_spear(turf/T)
