@@ -8633,7 +8633,7 @@
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "asI" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
@@ -8853,7 +8853,7 @@
 	},
 /area/crew_quarters/sleep)
 "atk" = (
-/obj/structure/closet/toolcloset,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -10491,6 +10491,9 @@
 /obj/machinery/camera{
 	c_tag = "Auxillary Base Construction";
 	dir = 8
+	},
+/obj/structure/mining_shuttle_beacon{
+	dir = 2
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
