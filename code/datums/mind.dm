@@ -211,6 +211,38 @@
 	gang_datum.remove_gang_hud(src)
 
 
+//Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
+
+/datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
+	if(iscultist(creator))
+		ticker.mode.add_cultist(src)
+
+	else if(is_gangster(creator))
+		ticker.mode.add_gangster(src, creator.mind.gang_datum, TRUE)
+
+	else if(is_handofgod_redcultist(creator) || is_handofgod_redprophet(creator))
+		ticker.mode.add_hog_follower(src, "Red")
+
+	else if(is_handofgod_bluecultist(creator) || is_handofgod_blueprophet(creator))
+		ticker.mode.add_hog_follower(src, "Blue")
+
+	else if(is_revolutionary_in_general(creator))
+		ticker.mode.add_revolutionary(src)
+
+	else if(is_servant_of_ratvar(creator))
+		add_servant_of_ratvar(src)
+
+	else if(is_nuclear_operative(creator))
+		make_Nuke(null, null, 0, FALSE)
+
+	enslaved_to = creator
+
+	current.faction = creator.faction
+
+	if(special_role)
+		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
+		current << "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>"
+
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
 		recipient = current
@@ -1356,7 +1388,7 @@
 		ticker.mode.finalize_traitor(src)
 		ticker.mode.greet_traitor(src)
 
-/datum/mind/proc/make_Nuke(turf/spawnloc,nuke_code,leader=0, telecrystals = TRUE)
+/datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
@@ -1364,24 +1396,33 @@
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
 
-		current.loc = spawnloc
+		if(spawnloc)
+			current.loc = spawnloc
 
-		var/mob/living/carbon/human/H = current
-		qdel(H.belt)
-		qdel(H.back)
-		qdel(H.ears)
-		qdel(H.gloves)
-		qdel(H.head)
-		qdel(H.shoes)
-		qdel(H.wear_id)
-		qdel(H.wear_suit)
-		qdel(H.w_uniform)
+		if(istype(current, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = current
+			qdel(H.belt)
+			qdel(H.back)
+			qdel(H.ears)
+			qdel(H.gloves)
+			qdel(H.head)
+			qdel(H.shoes)
+			qdel(H.wear_id)
+			qdel(H.wear_suit)
+			qdel(H.w_uniform)
 
-		ticker.mode.equip_syndicate(current, telecrystals)
+			ticker.mode.equip_syndicate(current, telecrystals)
 
 		if (nuke_code)
 			store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 			current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+		else
+			var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+			if(nuke)
+				store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke.r_code]", 0, 0)
+				current << "The nuclear authorization code is: <B>nuke.r_code</B>"
+			else
+				current << "You were not provided with a nuclear code. Trying asking your team leader or contacting syndicate command.</B>"
 
 		if (leader)
 			ticker.mode.prepare_syndicate_leader(src,nuke_code)

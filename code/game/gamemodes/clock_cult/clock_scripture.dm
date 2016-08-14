@@ -185,7 +185,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/channeled/belligerent //Belligerent: Channeled for up to fiteen times over thirty seconds. Forces non-servants that can hear the chant to walk. Nar-Sian cultists are burned.
 	descname = "Channeled, Area Slowdown"
 	name = "Belligerent"
-	desc = "Forces all nearby non-servants to walk rather than run. Chanted every two seconds for up to thirty seconds."
+	desc = "Forces all nearby non-servants to walk rather than run, doing minor damage. Chanted every two seconds for up to thirty seconds."
 	chant_invocations = list("Punish their blindness!", "Take time, make slow!")
 	chant_amount = 15
 	chant_interval = 20
@@ -194,15 +194,18 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
-	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_servant_of_ratvar(L) && L.m_intent != "walk" && !L.null_rod_check())
-			if(!iscultist(L))
-				L << "<span class='warning'>Your legs feel heavy and weak!</span>"
-			else //Cultists take extra burn damage
-				L << "<span class='warning'>Your legs burn with pain!</span>"
-				L.apply_damage(5, BURN, "l_leg")
-				L.apply_damage(5, BURN, "r_leg")
-			L.m_intent = "walk"
+	for(var/mob/living/carbon/C in hearers(7, invoker))
+		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && C.get_num_legs()) //you have legs right
+			C.apply_damage(1, BURN, "l_leg")
+			C.apply_damage(1, BURN, "r_leg")
+			if(C.m_intent != "walk")
+				if(!iscultist(C))
+					C << "<span class='warning'>Your legs shiver with pain!</span>"
+				else //Cultists take extra burn damage
+					C << "<span class='warning'>Your legs burn with pain!</span>"
+					C.apply_damage(4, BURN, "l_leg")
+					C.apply_damage(4, BURN, "r_leg")
+				C.m_intent = "walk"
 
 
 
@@ -236,13 +239,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/total_duration = 200
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
-	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["duration"] > world.time)
+	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
 		invoker << "<span class='warning'>You are already shielded by a Vanguard!</span>"
 		return 0
 	return 1
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	invoker.add_stun_absorption("vanguard", world.time + total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
+	invoker.add_stun_absorption("vanguard", total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
 	invoker.visible_message("<span class='warning'>[invoker] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	spawn(total_duration)
 		if(!invoker)
@@ -630,14 +633,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/function_call //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
 	descname = "Summonable Spear"
 	name = "Function Call"
-	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every five minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
-	vanish five minutes after being summoned."
+	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
+	vanish three minutes after being summoned."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
 	required_components = list("replicant_alloy" = 2, "hierophant_ansible" = 1)
 	consumed_components = list("replicant_alloy" = 1, "hierophant_ansible" = 1)
 	whispered = TRUE
-	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage, but break the spear."
+	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
 	tier = SCRIPTURE_SCRIPT
 
 /datum/clockwork_scripture/function_call/check_special_requirements()

@@ -674,7 +674,7 @@
 
 /obj/structure/closet/crate/necropolis/bubblegum/New()
 	..()
-	var/loot = rand(1,3)
+	var/loot = rand(1,4)
 	switch(loot)
 		if(1)
 			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
@@ -682,6 +682,8 @@
 			new /obj/item/mayhem(src)
 		if(3)
 			new /obj/item/blood_contract(src)
+		if(4)
+			new /obj/item/weapon/gun/magic/staff/spellblade(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -695,7 +697,7 @@
 	if(used)
 		return
 	used = TRUE
-	var/choice = input(user,"Who do you want dead?","Pick Reinforcement") as null|anything in player_list
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in player_list
 
 	if(!(isliving(choice)))
 		user << "[choice] is already dead!"

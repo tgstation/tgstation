@@ -95,6 +95,10 @@
 	using.icon = ui_style
 	static_inventory += using
 
+	using = new /obj/screen/inventory/area_creator
+	using.icon = ui_style
+	static_inventory += using
+
 	using = new /obj/screen/act_intent()
 	using.icon_state = mymob.a_intent
 	static_inventory += using

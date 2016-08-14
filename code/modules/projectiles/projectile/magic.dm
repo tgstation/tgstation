@@ -349,3 +349,11 @@
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
 
+/obj/item/projectile/magic/spellblade
+	name = "blade energy"
+	icon_state = "lavastaff"
+	damage = 15
+	damage_type = BURN
+	flag = "magic"
+	dismemberment = 50
+	nodamage = 0

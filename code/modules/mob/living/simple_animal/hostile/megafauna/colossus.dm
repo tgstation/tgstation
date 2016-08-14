@@ -284,6 +284,7 @@ Difficulty: Very Hard
 	name = "black box"
 	desc = "A completely indestructible chunk of crystal, rumoured to predate the start of this universe. It looks like you could store things inside it."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "blackbox"
 	icon_on = "blackbox"
 	icon_off = "blackbox"
 	luminosity = 8
@@ -294,6 +295,9 @@ Difficulty: Very Hard
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
 	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
+
+/obj/machinery/smartfridge/black_box/update_icon()
+	return
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))

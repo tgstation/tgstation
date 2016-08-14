@@ -500,8 +500,11 @@
 
 /obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0, hit_zone)
 	if(hammer_synced)
+		if(hammer_synced.mark == target)
+			return ..()
 		if(hammer_synced.marked_image)
 			qdel(hammer_synced.marked_image)
+			hammer_synced.marked_image = null
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.mob_size >= MOB_SIZE_LARGE)

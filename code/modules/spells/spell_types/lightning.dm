@@ -32,15 +32,18 @@
 		if(ready && cast_check(skipcharge=1))
 			choose_targets()
 		else
-			Reset(user)
+			revert_cast(user, 0)
+	else
+		revert_cast(user, 0)
 
 /obj/effect/proc_holder/spell/targeted/lightning/proc/Reset(mob/user = usr)
 	ready = 0
 	if(halo)
 		user.overlays.Remove(halo)
 
-/obj/effect/proc_holder/spell/targeted/lightning/revert_cast(mob/user = usr)
-	user << "<span class='notice'>No target found in range.</span>"
+/obj/effect/proc_holder/spell/targeted/lightning/revert_cast(mob/user = usr, message = 1)
+	if(message)
+		user << "<span class='notice'>No target found in range.</span>"
 	Reset(user)
 	..()
 

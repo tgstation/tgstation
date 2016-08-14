@@ -187,6 +187,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=Gas Scan'><img src=pda_reagent.png> [scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
 					if (cartridge.access_remote_door)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
+					if (cartridge.access_dronephone)
+						dat += "<li><a href='byond://?src=\ref[src];choice=Drone Phone'><img src=pda_dronephone.png> Drone Phone</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
@@ -274,7 +276,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
-
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
 
@@ -381,6 +382,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					scanmode = 0
 				else if((!isnull(cartridge)) && (cartridge.access_atmos))
 					scanmode = 5
+			if("Drone Phone")
+				var/area/A = get_area(U)
+				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
+				if(A && alert_s)
+					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
+					_alert_drones(msg, 1)
+					U << msg
+
 
 //NOTEKEEPER FUNCTIONS===================================
 
@@ -463,6 +472,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								M.open()
 							else
 								M.close()
+
 
 			if("Detonate")//Detonate PDA
 				if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))

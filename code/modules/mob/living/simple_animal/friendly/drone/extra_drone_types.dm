@@ -28,6 +28,7 @@
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	seeStatic = 0 //Our programming is superior.
+	hacked = TRUE
 
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
@@ -100,8 +101,8 @@
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
-	hacked = 1
 	density = TRUE
+	speed = 1
 	ventcrawler = 0
 	faction = list("ratvar")
 	speak_emote = list("clinks", "clunks")
@@ -110,6 +111,7 @@
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
 	seeStatic = 0
+	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
