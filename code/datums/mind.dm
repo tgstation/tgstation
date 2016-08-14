@@ -208,7 +208,8 @@
 	ticker.mode.update_wiz_icons_removed(src)
 	ticker.mode.update_cult_icons_removed(src)
 	ticker.mode.update_rev_icons_removed(src)
-	gang_datum.remove_gang_hud(src)
+	if(gang_datum)
+		gang_datum.remove_gang_hud(src)
 
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
