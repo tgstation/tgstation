@@ -4,6 +4,7 @@
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1
+	pixel_y=8
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
@@ -23,11 +24,10 @@
 	var/obj/item/seeds/myseed = null	//The currently planted seed
 	var/rating = 1
 	var/unwrenchable = 1
-	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpolinate one plant
+	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpollinate one plant
 	var/using_irrigation = FALSE //If the tray is connected to other trays via irrigation hoses
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
 
-	pixel_y=8
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
@@ -121,11 +121,11 @@
 		myseed.loc = src
 
 	if(self_sustaining)
-		adjustNutri(2 * rating)
-		adjustWater(rand(8, 10) * rating)
-		adjustWeeds(-5 * rating)
-		adjustPests(-5 * rating)
-		adjustToxic(-5 * rating)
+		adjustNutri(1)
+		adjustWater(rand(3,5))
+		adjustWeeds(-2)
+		adjustPests(-2)
+		adjustToxic(-2)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -457,7 +457,8 @@
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
 		switch(rand(100))
 			if(91 to 100)
-				plantdies()
+				adjustHealth(-10)
+				usr << "<span class='warning'>The plant shrivels and burns.</span>"
 			if(81 to 90)
 				mutatespecie()
 			if(66 to 80)
@@ -465,13 +466,13 @@
 			if(41 to 65)
 				mutate()
 			if(21 to 41)
-				usr << "<span class='warning'>The plants don't seem to react...</span>"
+				usr << "<span class='notice'>The plants don't seem to react...</span>"
 			if(11 to 20)
 				mutateweed()
 			if(1 to 10)
 				mutatepest()
 			else
-				usr << "<span class='warning'>Nothing happens...</span>"
+				usr << "<span class='notice'>Nothing happens...</span>"
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
 	else if(S.has_reagent("mutagen", 2) || S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
@@ -489,18 +490,18 @@
 
 	// Nutriments
 	if(S.has_reagent("eznutriment", 1))
-		yieldmod = 1 * rating
-		mutmod = 1 * rating
+		yieldmod = 1
+		mutmod = 1
 		adjustNutri(round(S.get_reagent_amount("eznutriment") * 1))
 
 	if(S.has_reagent("left4zednutriment", 1))
-		yieldmod = 0 * rating
-		mutmod = 2 * rating
+		yieldmod = 0
+		mutmod = 2
 		adjustNutri(round(S.get_reagent_amount("left4zednutriment") * 1))
 
 	if(S.has_reagent("robustharvestnutriment", 1))
-		yieldmod = 2 * rating
-		mutmod = 0 * rating
+		yieldmod = 1.3
+		mutmod = 0
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
