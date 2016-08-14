@@ -56,7 +56,7 @@
 
 /datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.8*reac_volume, BRUTE)
+	M.apply_damage(0.7*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	var/effectivedamage = damage
@@ -87,7 +87,7 @@
 
 /datum/reagent/blob/shifting_fragments/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.8*reac_volume, BRUTE)
+	M.apply_damage(0.7*reac_volume, BRUTE)
 
 /datum/reagent/blob/shifting_fragments/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
 	if(istype(B, /obj/effect/blob/normal) || (istype(B, /obj/effect/blob/shield) && prob(25)))
@@ -272,11 +272,11 @@
 				continue
 			var/mob_protection = L.get_permeability_protection()
 			var/aoe_volume = round(initial_volume * min(1.5 - mob_protection, 1), 0.1)
-			L.apply_damage(0.8*aoe_volume, BRUTE)
+			L.apply_damage(0.7*aoe_volume, BRUTE)
 		if(M)
-			M.apply_damage(0.8*reac_volume, BRUTE)
+			M.apply_damage(0.7*reac_volume, BRUTE)
 	else
-		M.apply_damage(0.8*reac_volume, BRUTE)
+		M.apply_damage(0.7*reac_volume, BRUTE)
 
 /datum/reagent/blob/explosive_lattice/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(isnull(cause))
