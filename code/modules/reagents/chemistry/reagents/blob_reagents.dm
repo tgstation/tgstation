@@ -270,8 +270,7 @@
 		for(var/mob/living/L in orange(get_turf(M), 1))
 			if("blob" in L.faction) //no friendly fire
 				continue
-			var/mob_protection = L.get_permeability_protection()
-			var/aoe_volume = round(initial_volume * min(1.5 - mob_protection, 1), 0.1)
+			var/aoe_volume = ..(L, TOUCH, initial_volume, 0, L.get_permeability_protection(), O)
 			L.apply_damage(0.7*aoe_volume, BRUTE)
 		if(M)
 			M.apply_damage(0.7*reac_volume, BRUTE)
