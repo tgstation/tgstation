@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Function Call can be used to summon a Ratvarian Spear once every 3 minutes, from 5, but the spear summoned will now only last 3 minutes."

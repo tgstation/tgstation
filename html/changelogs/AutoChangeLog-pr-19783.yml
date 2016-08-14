@@ -1,6 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Added support for projectiles which can dismember"
-  - rscadd: "Added a new wizard sword, the spellblade, which fires dismembering projectiles. Sprites from Lexorion."
-  - rscadd: "Plasmacutter blasts can now take limbs off, but they still do pitiful damage in a pressurized environment."
