@@ -3,10 +3,6 @@
 //These medals are mundane or hold no real significance.
 #define TEST_MEDAL "Hello World!" //Unachieveable.
 
-#define MEDAL_NEW_PLAYER "Fresh Meat" //Log in for the first time.
-#define MEDAL_FIRST_DEATH "Remember This Moment" //Die for the first time.
-#define MEDAL_FAILED_MARTYR "One Job..." //Fail your objective to die a glorious death.
-
 //These medals are feats of strength, awarded through difficult tasks or incredible endurance.
 #define MEDAL_WATCHER_CLEANER "You'll Shoot Your Eye Out" //Kill every watcher on the map.
 #define MEDAL_GOLIATH_CLEANER "David" //Kill every goliath on the map.
@@ -18,11 +14,6 @@
 #define MEDAL_BUBBLEGUM "All out of Bubblegum" //Kill Bubblegum.
 #define MEDAL_COLOSSUS "Bullet Hell" //Kill a colossus.
 #define MEDAL_ASH_DRAKE "Science Fiction" //Kill an ash drake.
-
-#define MEDAL_HIJACK "Crashing This Station..." //Hijack the emergency shuttle.
-#define MEDAL_SUMMON_RATVAR "Dawn Rising" //As a clockwork cultist, summon Ratvar.
-#define MEDAL_SUMMON_NARSIE "Darkness Falling" //As a cultist, summon Nar-Sie.
-#define MEDAL_NUCLEAR "Radioactive, Radioactive" //As a nuclear operative, survive from start to finish and nuke the station.
 
 #define MEDAL_CLOWN_IN_HONKER "For the Honkmother" //Enter a HONK mech as a clown..
 
