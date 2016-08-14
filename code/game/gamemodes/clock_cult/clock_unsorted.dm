@@ -140,8 +140,8 @@
 			unconverted_ai_exists = TRUE
 	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 	//Drivers: always unlocked
-	.[SCRIPTURE_SCRIPT] = (servants >= 5 && clockwork_caches)
-	//Script: 5 or more non-brain servants and any number of clockwork caches
+	.[SCRIPTURE_SCRIPT] = (servants >= 5 && clockwork_caches >= 1)
+	//Script: 5 or more non-brain servants and 1+ clockwork caches
 	.[SCRIPTURE_APPLICATION] = (servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
 	//Application: 8 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
 	.[SCRIPTURE_REVENANT] = (servants >= 10 && clockwork_caches >= 4 && clockwork_construction_value >= 200)
@@ -211,18 +211,18 @@
 		clockwork_component_cache[component_to_generate]++
 
 /proc/get_weighted_component_id(obj/item/clockwork/slab/storage_slab) //returns a chosen component id based on the lowest amount of that component
+	. = list()
 	if(storage_slab)
-		return pickweight(list("belligerent_eye" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["belligerent_eye"] + storage_slab.stored_components["belligerent_eye"]), 1), \
-			"vanguard_cogwheel" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["vanguard_cogwheel"] + storage_slab.stored_components["vanguard_cogwheel"]), 1), \
-			"guvax_capacitor" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["guvax_capacitor"] + storage_slab.stored_components["guvax_capacitor"]), 1), \
-			"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["replicant_alloy"] + storage_slab.stored_components["replicant_alloy"]), 1), \
-			"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["hierophant_ansible"] + storage_slab.stored_components["hierophant_ansible"]), 1)))
-
-	return pickweight(list("belligerent_eye" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["belligerent_eye"], 1), \
-		"vanguard_cogwheel" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["vanguard_cogwheel"], 1), \
-		"guvax_capacitor" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["guvax_capacitor"], 1), \
-		"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["replicant_alloy"], 1), \
-		"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["hierophant_ansible"], 1)))
+		if(clockwork_caches)
+			for(var/i in clockwork_component_cache)
+				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache[i] + storage_slab.stored_components[i]), 1)
+		else
+			for(var/i in clockwork_component_cache)
+				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*storage_slab.stored_components[i], 1)
+	else
+		for(var/i in clockwork_component_cache)
+			.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache[i], 1)
+	. = pickweight(.)
 
 /proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
 	// When servants invoke ratvar's power, they speak in ways that non

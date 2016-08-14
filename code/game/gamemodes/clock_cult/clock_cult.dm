@@ -102,20 +102,26 @@ This file's folder contains:
 			var/mob/living/silicon/robot/R = S
 			R.UnlinkSelf()
 			R.emagged = 1
-			R << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
+			if(!silent)
+				R << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
 			for(var/C in A.connected_robots)
 				var/mob/living/silicon/robot/R = C
 				if(R.connected_ai == A)
-					add_servant_of_ratvar(R)
+					R.visible_message("<span class='heavy_brass'>[R]'s eyes glow a blazing yellow!</span>", \
+					"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
+					whim without hesitation.</span>")
+					R << "<span class='boldwarning'>Your onboard camera is no longer active and your safeties have been disabled.</span>"
+					add_servant_of_ratvar(R, TRUE)
 		S.laws = new/datum/ai_laws/ratvar
 		S.laws.associate(S)
 		S.update_icons()
 		S.show_laws()
 		var/datum/action/innate/hierophant/H = new()
 		H.Grant(S)
-		H.title = null //so it's just the borg's name
+		H.title = "Silicon"
+		H.span_for_name = "nezbere"
 		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	else if(isbrain(M))
 		var/datum/action/innate/hierophant/H = new()
