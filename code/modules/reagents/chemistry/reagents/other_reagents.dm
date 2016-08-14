@@ -1175,7 +1175,6 @@
 /datum/reagent/toxin/mutagen/mutagenvirusfood
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
-	description = "mutates blood"
 	color = "#A3C00F" // rgb: 163,192,15
 
 /datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
@@ -1186,25 +1185,21 @@
 /datum/reagent/medicine/synaptizine/synaptizinevirusfood
 	name = "virus rations"
 	id = "synaptizinevirusfood"
-	description = "mutates blood"
 	color = "#D18AA5" // rgb: 209,138,165
 
 /datum/reagent/toxin/plasma/plasmavirusfood
 	name = "virus plasma"
 	id = "plasmavirusfood"
-	description = "mutates blood"
 	color = "#A69DA9" // rgb: 166,157,169
 
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
-	id = "mutates blood"
 	color = "#CEC3C6" // rgb: 206,195,198
 
 /datum/reagent/uranium/uraniumvirusfood
 	name = "decaying uranium gel"
 	id = "uraniumvirusfood"
-	description = "mutates blood"
 	color = "#67ADBA" // rgb: 103,173,186
 
 /datum/reagent/uranium/uraniumvirusfood/unstable
