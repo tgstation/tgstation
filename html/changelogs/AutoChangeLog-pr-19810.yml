@@ -1,0 +1,5 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Humans and drones now have a UI button that allows them to create new areas, in the same manner as blueprints. Unlike blueprints, this button does not allow you to edit existing areas."
+  - rscadd: "You can now use mineral doors (or any other object that blocks atmos) to complete rooms with blueprints"
