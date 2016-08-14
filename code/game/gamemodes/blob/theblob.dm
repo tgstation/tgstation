@@ -121,7 +121,7 @@
 			if(blobs_to_affect.len >= 120 && B.heal_timestamp > world.time)
 				can_expand = FALSE
 			if(can_expand && B.pulse_timestamp <= world.time && prob(expand_probablity))
-				var/obj/effect/blob/newB = B.expand() //expansion falls off with range but is faster near the blob causing the expansion
+				var/obj/effect/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
 				if(newB)
 					if(expanded)
 						qdel(newB)
