@@ -193,14 +193,14 @@
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_gold"
 	result = "uraniumplasmavirusfood_stable"
-	required_reagents = list("uranium" = 10, "gold" = 10, "plasmavirusfood" = 1)
+	required_reagents = list("uranium" = 10, "gold" = 10, "plasma" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/virus_food_uranium_plasma_silver
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_silver"
 	result = "uraniumplasmavirusfood_stable"
-	required_reagents = list("uranium" = 10, "silver" = 10, "plasmavirusfood" = 1)
+	required_reagents = list("uranium" = 10, "silver" = 10, "plasma" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/mix_virus
