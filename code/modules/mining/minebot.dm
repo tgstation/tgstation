@@ -26,6 +26,7 @@
 	melee_damage_upper = 15
 	environment_smash = 0
 	check_friendly_fire = 1
+	stop_automated_movement_when_pulled = 1
 	attacktext = "drills"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	ranged = 1
