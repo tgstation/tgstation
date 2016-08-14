@@ -49,7 +49,7 @@
 	return ..()
 
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	exposed_temperature *= 0.75
+	exposed_temperature *= 0.5
 	..()
 
 /obj/effect/blob/core/ex_act(severity, target)

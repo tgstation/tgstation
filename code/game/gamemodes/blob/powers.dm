@@ -200,8 +200,11 @@
 	if(!can_buy(80))
 		return
 	var/turf/old_turf = get_turf(blob_core)
+	var/olddir = blob_core.dir
 	blob_core.forceMove(T)
+	blob_core.setDir(B.dir)
 	B.forceMove(old_turf)
+	B.setDir(olddir)
 
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
@@ -236,8 +239,10 @@
 /mob/camera/blob/proc/expand_blob(turf/T)
 	if(!can_attack())
 		return
-	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
-	if(!OB)
+	var/list/possibleblobs = list()
+	for(var/obj/effect/blob/AB in range(T, 1))
+		possibleblobs += AB
+	if(!possibleblobs.len)
 		src << "<span class='warning'>There is no blob adjacent to the target tile!</span>"
 		return
 	if(can_buy(4))
@@ -259,7 +264,25 @@
 				src << "<span class='warning'>There is a blob there!</span>"
 				add_points(4) //otherwise, refund all of the cost
 		else
-			OB.expand(T, src)
+			var/list/cardinalblobs = list()
+			var/list/diagonalblobs = list()
+			for(var/I in possibleblobs)
+				var/obj/effect/blob/IB = I
+				if(get_dir(IB, T) in cardinal)
+					cardinalblobs += IB
+				else
+					diagonalblobs += IB
+			var/obj/effect/blob/OB
+			if(cardinalblobs.len)
+				OB = pick(cardinalblobs)
+				OB.expand(T, src)
+			else
+				OB = pick(diagonalblobs)
+				if(attacksuccess)
+					OB.blob_attack_animation(T, src)
+					playsound(OB, 'sound/effects/splat.ogg', 50, 1)
+				else
+					add_points(4) //if we're attacking diagonally and didn't hit anything, refund
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"

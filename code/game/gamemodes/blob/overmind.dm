@@ -50,7 +50,6 @@
 	color = blob_reagent_datum.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
-	add_points(0)
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
@@ -94,6 +93,7 @@
 	src << "<span class='notice'>You are the overmind!</span>"
 	blob_help()
 	update_health_hud()
+	add_points(0)
 
 /mob/camera/blob/examine(mob/user)
 	..()

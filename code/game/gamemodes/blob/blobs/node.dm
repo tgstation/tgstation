@@ -9,10 +9,10 @@
 	point_return = 25
 
 
-/obj/effect/blob/node/New(loc, var/h = 100)
+/obj/effect/blob/node/New(loc)
 	blob_nodes += src
 	START_PROCESSING(SSobj, src)
-	..(loc, h)
+	..(loc)
 
 /obj/effect/blob/node/scannerreport()
 	return "Gradually expands and sustains nearby blob spores and blobbernauts."
@@ -31,6 +31,10 @@
 	blob_nodes -= src
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/effect/blob/node/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	exposed_temperature *= 0.75
+	..()
 
 /obj/effect/blob/node/Life()
 	Pulse_Area(overmind, 10, 3, 2)

@@ -25,8 +25,8 @@
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		blobs_legit += src
 	blobs += src //Keep track of the blob in the normal list either way
-	src.setDir(pick(1, 2, 4, 8))
-	src.update_icon()
+	setDir(pick(cardinal))
+	update_icon()
 	..(loc)
 	ConsumeTile()
 	if(atmosblock)
@@ -148,6 +148,7 @@
 
 /obj/effect/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
 	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
+	O.setDir(dir)
 	if(controller)
 		var/mob/camera/blob/BO = controller
 		O.color = BO.blob_reagent_datum.color
@@ -322,6 +323,7 @@
 		B.overmind = controller
 	B.creation_action()
 	B.update_icon()
+	B.setDir(dir)
 	qdel(src)
 	return B
 
