@@ -1,0 +1,6 @@
+author: "Cheridan"
+delete-after: True
+changes: 
+  - tweak: "Greatly reduced amount of Hydroponics yield multipliers"
+  - tweak: "Somewhat reduced gaia'd tray sustainability."
+  - tweak: "Mutagen will no longer potentially cause plant instadeath based on RNG."
