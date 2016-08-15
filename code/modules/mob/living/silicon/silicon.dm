@@ -29,6 +29,7 @@
 
 	var/lawcheck[1]
 	var/ioncheck[1]
+	var/devillawcheck[5]
 
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
@@ -217,18 +218,30 @@
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawc"])
 		switch(lawcheck[L+1])
-			if ("Yes") lawcheck[L+1] = "No"
-			if ("No") lawcheck[L+1] = "Yes"
-//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+			if ("Yes")
+				lawcheck[L+1] = "No"
+			if ("No")
+				lawcheck[L+1] = "Yes"
 		checklaws()
 
 	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawi"])
 		switch(ioncheck[L])
-			if ("Yes") ioncheck[L] = "No"
-			if ("No") ioncheck[L] = "Yes"
-//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+			if ("Yes")
+				ioncheck[L] = "No"
+			if ("No")
+				ioncheck[L] = "Yes"
 		checklaws()
+
+	if (href_list["lawdevil"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawdevil"])
+		switch(devillawcheck[L])
+			if ("Yes")
+				devillawcheck[L] = "No"
+			if ("No")
+				devillawcheck[L] = "Yes"
+		checklaws()
+
 
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
@@ -245,6 +258,11 @@
 	var/number = 1
 	sleep(10)
 
+	if (src.laws.devillaws && src.laws.devillaws.len)
+		for(var/index = 1, index <= src.laws.devillaws.len, index++)
+			if (src.devillawcheck[index] == "Yes")
+				src.say("[radiomod] 666. [src.laws.devillaws[index]]")
+				sleep(10)
 
 
 	if (src.laws.zeroth)
@@ -284,6 +302,12 @@
 /mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
+
+	if (src.laws.devillaws && src.laws.devillaws.len)
+		for(var/index = 1, index <= src.laws.devillaws.len, index++)
+			if (!src.devillawcheck[index])
+				src.devillawcheck[index] = "No"
+			list += {"<A href='byond://?src=\ref[src];lawdevil=[index]'>[src.devillawcheck[index]] 666:</A> [src.laws.devillaws[index]]<BR>"}
 
 	if (src.laws.zeroth)
 		if (!src.lawcheck[1])
@@ -492,3 +516,6 @@
 
 /mob/living/silicon/is_literate()
 	return 1
+
+/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+	return 0

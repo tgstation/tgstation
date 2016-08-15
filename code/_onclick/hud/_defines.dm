@@ -25,6 +25,7 @@
 #define ui_lingstingdisplay "WEST:12,CENTER-3:22"
 #define ui_crafting	"12:-20,1:10"
 #define ui_devilsouldisplay "WEST:12,CENTER-1:30"
+#define ui_building "12:-10,1:42"
 
 //Lower center, persistant menu
 #define ui_sstore1 "CENTER-5:20,SOUTH:10"

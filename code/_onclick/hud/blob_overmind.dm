@@ -34,12 +34,15 @@
 	desc = "Moves your camera to your blob core."
 
 /obj/screen/blob/JumpToCore/MouseEntered(location,control,params)
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
+	if(hud && hud.mymob && isovermind(hud.mymob))
+		var/mob/camera/blob/B = hud.mymob
 		if(!B.placed)
-			openToolTip(usr,src,params,title = "Place Blob Core",content = "Attempt to place your blob core at this location.", theme = "blob")
+			name = "Place Blob Core"
+			desc = "Attempt to place your blob core at this location."
 		else
-			..()
+			name = initial(name)
+			desc = initial(desc)
+	..()
 
 /obj/screen/blob/JumpToCore/Click()
 	if(isovermind(usr))
@@ -94,12 +97,15 @@
 	desc = "Randomly rerolls your chemical for 40 points."
 
 /obj/screen/blob/ReadaptChemical/MouseEntered(location,control,params)
-	if(isovermind(usr))
-		var/mob/camera/blob/B = usr
+	if(hud && hud.mymob && isovermind(hud.mymob))
+		var/mob/camera/blob/B = hud.mymob
 		if(B.free_chem_rerolls)
-			openToolTip(usr,src,params,title = "Readapt Chemical (FREE)",content = "Randomly rerolls your chemical for free.", theme = "blob")
+			name = "Readapt Chemical (FREE)"
+			desc = "Randomly rerolls your chemical for free."
 		else
-			..()
+			name = initial(name)
+			desc = initial(desc)
+	..()
 
 /obj/screen/blob/ReadaptChemical/Click()
 	if(isovermind(usr))
@@ -141,6 +147,7 @@
 
 	using = new /obj/screen/blob/JumpToCore()
 	using.screen_loc = ui_zonesel
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/blob/Blobbernaut()
@@ -161,6 +168,7 @@
 
 	using = new /obj/screen/blob/ReadaptChemical()
 	using.screen_loc = ui_storage1
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/blob/RelocateCore()

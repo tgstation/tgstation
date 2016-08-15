@@ -9,7 +9,7 @@
 /obj/item/weapon/deck
 	name = "deck of cards"
 	desc = "A simple deck of playing cards."
-	icon = 'playing_cards.dmi'
+	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "deck"
 	w_class = 2
 	flags = NOBLUDGEON
@@ -117,7 +117,7 @@
 /obj/item/weapon/hand
 	name           = "hand of cards"
 	desc           = "Some playing cards."
-	icon           = 'playing_cards.dmi'
+	icon = 'icons/obj/playing_cards.dmi'
 	icon_state     = "empty"
 	w_class        = 1
 

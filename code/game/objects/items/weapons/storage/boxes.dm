@@ -343,18 +343,6 @@
 	for(var/i = 1; i <= 5; i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src)
 
-
-/obj/item/weapon/storage/box/permits
-	name = "box of construction permits"
-	desc = "A box for containing construction permits, used to officially declare built rooms as additions to the station."
-	icon_state = "id"
-
-/obj/item/weapon/storage/box/permits/New() //There's only a few, so blueprints are still useful beyond setting every room's name to PRIMARY FART STORAGE
-	..()
-	for(var/i in 1 to 3)
-		new /obj/item/areaeditor/permit(src)
-
-
 /obj/item/weapon/storage/box/ids
 	name = "box of spare IDs"
 	desc = "Has so many empty IDs."

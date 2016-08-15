@@ -46,7 +46,7 @@ Difficulty: Hard
 	ranged = 1
 	flying = 1
 	mob_size = MOB_SIZE_LARGE
-	pixel_x = -64
+	pixel_x = -32
 	del_on_death = 1
 	aggro_vision_range = 18
 	idle_vision_range = 5
@@ -63,37 +63,28 @@ Difficulty: Hard
 	desc = "You're not quite sure how a signal can be bloody."
 	invisibility = 100
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
-	..()
-	if(isliving(target))
-		var/mob/living/L = target
-		devour(L)
-
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
 	move_to_delay = Clamp(round((health/maxHealth) * 10), 5, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
+	if(charging)
+		return
 	ranged_cooldown = world.time + ranged_cooldown_time
 
-	if(!charging)
-		blood_warp()
+	blood_warp()
 
 	if(prob(25))
-		blood_spray()
+		addtimer(src, "blood_spray", 0)
 
 	else if(prob(5+anger_modifier/2))
 		slaughterlings()
-	else if(!charging)
+	else
 		if(health > maxHealth/2 && !client)
-			charge()
+			addtimer(src, "charge", 0)
 		else
-			charge()
-			sleep(10)
-			charge()
-			sleep(10)
-			charge()
+			addtimer(src, "triple_charge", 0)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/New()
@@ -133,6 +124,13 @@ Difficulty: Hard
 	if(charging)
 		DestroySurroundings()
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/triple_charge()
+	charge()
+	sleep(10)
+	charge()
+	sleep(10)
+	charge()
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_step_away(target, src)
 	charging = 1
@@ -169,31 +167,43 @@ Difficulty: Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
-	var/found_bloodpool = FALSE
+	var/obj/effect/decal/cleanable/blood/found_bloodpool
+	var/list/pools = list()
+	var/can_jaunt = FALSE
 	for(var/obj/effect/decal/cleanable/blood/nearby in view(src,2))
-		found_bloodpool = TRUE
+		can_jaunt = TRUE
+		break
+	if(!can_jaunt)
+		return
+	for(var/obj/effect/decal/cleanable/blood/nearby in view(get_turf(target),2))
+		pools += nearby
+	if(pools.len)
+		shuffle(pools)
+		found_bloodpool = pick(pools)
 	if(found_bloodpool)
-		for(var/obj/effect/decal/cleanable/blood/H in view(target,2))
-			visible_message("<span class='danger'>[src] sinks into the blood...</span>")
-			playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-			forceMove(get_turf(H))
-			playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-			visible_message("<span class='danger'>And springs back out!</span>")
-			break
+		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
+		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+		forceMove(get_turf(found_bloodpool))
+		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+		visible_message("<span class='danger'>And springs back out!</span>")
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray()
 	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
-	spawn(0)
-		var/turf/E = get_edge_target_turf(src, src.dir)
-		var/range = 10
-		for(var/turf/J in getline(src,E))
-			if(!range || J.density)
-				break
-			playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
-			new /obj/effect/decal/cleanable/blood(J)
-			range--
-			sleep(1)
+	var/turf/E = get_edge_target_turf(src, src.dir)
+	var/range = 10
+	var/turf/previousturf = get_turf(src)
+	for(var/turf/J in getline(src,E))
+		if(!range)
+			break
+		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(previousturf, get_dir(previousturf, J)))
+		if(!previousturf.CanAtmosPass(J))
+			break
+		playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
+		new /obj/effect/decal/cleanable/blood(J)
+		range--
+		previousturf = J
+		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/slaughterlings()
 	visible_message("<span class='danger'>[src] summons a shoal of slaughterlings!</span>")

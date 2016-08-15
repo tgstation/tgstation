@@ -309,6 +309,11 @@
 	if(usr)
 		if(usr.client && usr.s_active != src)
 			usr.client.screen -= W
+		if(usr.observers && usr.observers.len)
+			for(var/M in usr.observers)
+				var/mob/dead/observe = M
+				if(observe.client && observe.s_active != src)
+					observe.client.screen -= W
 
 		add_fingerprint(usr)
 

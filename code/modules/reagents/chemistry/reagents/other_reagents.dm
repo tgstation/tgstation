@@ -188,9 +188,6 @@
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds
-		if (!M.confused)
-			M.confused = 1
-		M.confused += 3
 		if(iscultist(M) || is_handofgod_cultist(M) || is_handofgod_prophet(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
 				ticker.mode.remove_cultist(M.mind, 1, 1)
@@ -198,12 +195,11 @@
 				ticker.mode.remove_hog_follower(M.mind)
 			else if(is_servant_of_ratvar(M))
 				remove_servant_of_ratvar(M)
-			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
+			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
-			M.confused = 0
 			return
-	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
+	holder.remove_reagent(id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
@@ -1179,7 +1175,6 @@
 /datum/reagent/toxin/mutagen/mutagenvirusfood
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
-	description = "mutates blood"
 	color = "#A3C00F" // rgb: 163,192,15
 
 /datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
@@ -1190,19 +1185,34 @@
 /datum/reagent/medicine/synaptizine/synaptizinevirusfood
 	name = "virus rations"
 	id = "synaptizinevirusfood"
-	description = "mutates blood"
 	color = "#D18AA5" // rgb: 209,138,165
 
 /datum/reagent/toxin/plasma/plasmavirusfood
 	name = "virus plasma"
 	id = "plasmavirusfood"
-	description = "mutates blood"
 	color = "#A69DA9" // rgb: 166,157,169
 
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
+
+/datum/reagent/uranium/uraniumvirusfood
+	name = "decaying uranium gel"
+	id = "uraniumvirusfood"
+	color = "#67ADBA" // rgb: 103,173,186
+
+/datum/reagent/uranium/uraniumvirusfood/unstable
+	name = "unstable uranium gel"
+	id = "uraniumplasmavirusfood_unstable"
+	color = "#2FF2CB" // rgb: 47,242,203
+
+/datum/reagent/uranium/uraniumvirusfood/stable
+	name = "stable uranium gel"
+	id = "uraniumplasmavirusfood_stable"
+	color = "#04506C" // rgb: 4,80,108
+
+// Bee chemicals
 
 /datum/reagent/royal_bee_jelly
 	name = "royal bee jelly"
@@ -1214,6 +1224,8 @@
 	if(prob(2))
 		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
 	..()
+
+//Misc reagents
 
 datum/reagent/romerol
 	name = "romerol"
@@ -1230,4 +1242,27 @@ datum/reagent/romerol
 /datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
 	// Silently add the zombie infection organ to be activated upon death
 	new /obj/item/organ/body_egg/zombie_infection(H)
+	..()
+
+/datum/reagent/growthserum
+	name = "Growth serum"
+	id = "growthserum"
+	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
+	color = "#ff0000"//strong red. rgb 255, 0, 0
+	var/current_size = 1
+
+/datum/reagent/growthserum/on_mob_life(mob/living/carbon/H)
+	if(volume >= 20 && current_size != 2)
+		H.resize = 2/current_size
+		current_size = 2
+		H.update_transform()
+	else if (current_size != 1.5)
+		H.resize = 1.5/current_size
+		current_size = 1.5
+		H.update_transform()
+	..()
+
+/datum/reagent/growthserum/on_mob_delete(mob/living/M)
+	M.resize = 1/current_size
+	M.update_transform()
 	..()

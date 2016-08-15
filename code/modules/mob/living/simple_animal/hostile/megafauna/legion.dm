@@ -39,28 +39,30 @@ Difficulty: Medium
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
-	var/size = 10
+	var/size = 5
 	var/charging = 0
 	medal_type = MEDAL_PREFIX
 	score_type = LEGION_SCORE
-	pixel_y = -180
-	pixel_x = -150
+	pixel_y = -90
+	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	elimination = 1
 	aggro_vision_range = 18
 	idle_vision_range = 13
+	appearance_flags = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
 	new/obj/item/device/gps/internal/legion(src)
 
-/mob/living/simple_animal/hostile/megafauna/legion/devour(mob/living/L)
-	if(ishuman(L))
-		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-		A.infest(L)
-	else
-		..()
+/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
+	..()
+	if(ishuman(target))
+		var/mob/living/L = target
+		if(L.stat == UNCONSCIOUS)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
+			A.infest(L)
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
@@ -78,37 +80,39 @@ Difficulty: Medium
 			minimum_distance = 0
 			speed = 0
 			charging = 1
-			spawn(50)
-				ranged = 1
-				retreat_distance = 5
-				minimum_distance = 5
-				speed = 2
-				charging = 0
+			addtimer(src, "reset_charge", 50)
+
+/mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
+	ranged = 1
+	retreat_distance = 5
+	minimum_distance = 5
+	speed = 2
+	charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	if(health > 0)
 		return
-	if(size > 2)
+	if(size > 1)
 		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
-		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
+		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 
 		L.maxHealth = maxHealth * 0.6
 		maxHealth = L.maxHealth
 
 		L.health = L.maxHealth
-		health = L.health
+		health = maxHealth
 
-		L.size = size - 2
-		size = L.size
+		size--
+		L.size = size
 
-		var/size_multiplier = L.size * 0.08
-		L.resize = size_multiplier
-		resize = L.resize
+		L.resize = L.size * 0.2
+		transform = initial(transform)
+		resize = size * 0.2
 
 		L.update_transform()
 		update_transform()
 
-		L.target = target
+		L.GiveTarget(target)
 
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
@@ -118,10 +122,10 @@ Difficulty: Medium
 				last_legion = FALSE
 				break
 		if(last_legion)
-			src.loot = list(/obj/item/weapon/staff/storm)
+			loot = list(/obj/item/weapon/staff/storm)
 			elimination = 0
 		else if(prob(5))
-			src.loot = list(/obj/structure/closet/crate/necropolis/tendril)
+			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)

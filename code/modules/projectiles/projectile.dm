@@ -49,6 +49,7 @@
 	var/stamina = 0
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
+	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 
 /obj/item/projectile/New()
 	permutated = list()

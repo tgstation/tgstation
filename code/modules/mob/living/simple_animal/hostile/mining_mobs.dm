@@ -91,7 +91,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
-		if(isliving(target))
+		if(isliving(target) && !target.Adjacent(targets_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)

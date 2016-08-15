@@ -294,8 +294,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/ai_roster()
 	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
 
-	for(var/datum/data/record/t in sortRecord(data_core.general))
-		dat += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
+	dat += data_core.get_manifest()
 	dat += "</body></html>"
 
 	src << browse(dat, "window=airoster")

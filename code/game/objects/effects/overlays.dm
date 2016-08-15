@@ -96,6 +96,13 @@
 	if(colour)
 		color = colour
 
+/obj/effect/overlay/temp/kinetic_blast
+	name = "kinetic explosion"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "kinetic_blast"
+	layer = ABOVE_ALL_MOB_LAYER
+	duration = 4
+
 /obj/effect/overlay/temp/explosion
 	name = "explosion"
 	icon = 'icons/effects/96x96.dmi'
@@ -103,6 +110,10 @@
 	pixel_x = -64
 	pixel_y = -64
 	duration = 8
+
+/obj/effect/overlay/temp/explosion/fast
+	icon_state = "explosionfast"
+	duration = 4
 
 /obj/effect/overlay/temp/blob
 	name = "blob"
@@ -133,6 +144,24 @@
 		appearance = mimiced_atom.appearance
 		setDir(mimiced_atom.dir)
 	animate(src, alpha = 0, time = duration)
+
+/obj/effect/overlay/cult
+	mouse_opacity = 0
+	var/atom/linked
+
+/obj/effect/overlay/cult/ex_act()
+	return FALSE
+
+/obj/effect/overlay/cult/Destroy()
+	if(linked)
+		linked = null
+	..()
+	return QDEL_HINT_PUTINPOOL
+
+/obj/effect/overlay/cult/floor
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "cult"
+	layer = TURF_LAYER
 
 /obj/effect/overlay/temp/cult
 	randomdir = 0
@@ -239,6 +268,7 @@
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
 	duration = 70
+	luminosity = 6
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()
@@ -249,7 +279,7 @@
 /obj/effect/overlay/temp/ratvar/sigil/vitality
 	color = "#1E8CE1"
 	icon_state = "sigilactivepulse"
-	layer = BELOW_MOB_LAYER
+	layer = ABOVE_MOB_LAYER
 
 /obj/effect/overlay/temp/ratvar/sigil/accession
 	color = "#AF0AAF"

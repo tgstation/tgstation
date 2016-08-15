@@ -161,17 +161,13 @@
 /obj/structure/clockwork/cache/New()
 	..()
 	START_PROCESSING(SSobj, src)
-	var/list/scripture_states = get_scripture_states()
 	clockwork_caches++
-	scripture_unlock_alert(scripture_states)
 	SetLuminosity(2,1)
 	for(var/i in all_clockwork_mobs)
 		cache_check(i)
 
 /obj/structure/clockwork/cache/Destroy()
-	var/list/scripture_states = get_scripture_states()
 	clockwork_caches--
-	scripture_unlock_alert(scripture_states)
 	STOP_PROCESSING(SSobj, src)
 	if(linkedwall)
 		linkedwall.linkedcache = null
@@ -243,24 +239,13 @@
 /obj/structure/clockwork/cache/attack_hand(mob/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/list/possible_components = list()
-	for(var/i in clockwork_component_cache)
-		if(clockwork_component_cache[i])
-			possible_components += get_component_name(i)
-	if(!possible_components.len)
-		user << "<span class='warning'>[src] is empty!</span>"
+	if(!clockwork_component_cache["replicant_alloy"])
+		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
 		return 0
-	var/componentid = get_component_id(input(user, "Choose a component to withdraw.", name) as null|anything in possible_components)
-	if(!user || !user.canUseTopic(src) || !componentid)
-		return 0
-	var/obj/item/clockwork/component/the_component
-	var/component_path = text2path("/obj/item/clockwork/component/[componentid]")
-	if(clockwork_component_cache[componentid])
-		the_component = new component_path(get_turf(src))
-		clockwork_component_cache[componentid]--
-	if(the_component)
-		user.visible_message("<span class='notice'>[user] withdraws [the_component] from [src].</span>", "<span class='notice'>You withdraw [the_component] from [src].</span>")
-		user.put_in_hands(the_component)
+	clockwork_component_cache["replicant_alloy"]--
+	var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
+	user.visible_message("<span class='notice'>[user] withdraws [A] from [src].</span>", "<span class='notice'>You withdraw [A] from [src].</span>")
+	user.put_in_hands(A)
 	return 1
 
 /obj/structure/clockwork/cache/examine(mob/user)
@@ -270,7 +255,7 @@
 			user << "<span class='brass'>It is linked and will generate components!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
-			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> [clockwork_component_cache[i]]</span>"
+			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[clockwork_component_cache[i]]</b></span>"
 
 
 /obj/structure/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
@@ -393,6 +378,7 @@
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
 		A.visible_message("<span class='brass'>[src][spawn_message]</span>")
+		remove_servant_of_ratvar(S.brainmob, TRUE)
 		S.brainmob.mind.transfer_to(A)
 		add_servant_of_ratvar(A, TRUE)
 		user.drop_item()
@@ -933,7 +919,7 @@
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing [power_charge]W of power.</span>"
+		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[power_charge]W</b> of power.</span>"
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(power_charge)
@@ -970,23 +956,35 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>"
-		user << "<span class='inathneq_small'>It requires at least [base_revive_cost] units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
+		user << "<span class='inathneq_small'>It requires at least <b>[base_revive_cost]</b> units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
-	if(L.suiciding || sigil_active || !is_servant_of_ratvar(L) && L.stat == DEAD)
+	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
 		return 0
 	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
 	animate(src, alpha = 255, time = 10)
 	sleep(10)
 	sigil_active = TRUE
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
-	while(L && (!is_servant_of_ratvar(L) && L.stat != DEAD || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
+	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
 		if(animation_number >= 4)
 			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 			animation_number = 0
 		animation_number++
 		if(!is_servant_of_ratvar(L))
-			var/vitality_drained = L.adjustToxLoss(1.5)
+			var/vitality_drained = 0
+			if(L.stat == DEAD)
+				vitality_drained = L.maxHealth
+				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+				animate(V, alpha = 0, transform = matrix()*2, time = 8)
+				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
+				L.visible_message("<span class='warning'>[L] collapses in on themself as [src] flares bright blue!</span>")
+				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
+				for(var/obj/item/W in L)
+					L.unEquip(W)
+				L.dust()
+			else
+				vitality_drained = L.adjustToxLoss(1.5)
 			if(vitality_drained)
 				vitality += vitality_drained
 			else

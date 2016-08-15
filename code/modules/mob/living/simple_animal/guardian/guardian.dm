@@ -62,6 +62,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/med_hud_set_status()
 	if(summoner)
 		var/image/holder = hud_list[STATUS_HUD]
+		var/icon/I = icon(icon, icon_state, dir)
+		holder.pixel_y = I.Height() - world.icon_size
 		if(summoner.stat == DEAD)
 			holder.icon_state = "huddead"
 		else
@@ -552,7 +554,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.summoner = user
 	G.key = key
-	G.faction |= user.faction
+	G.mind.enslave_mind_to_creator(user)
 	switch(theme)
 		if("tech")
 			user << "[G.tech_fluff_string]"

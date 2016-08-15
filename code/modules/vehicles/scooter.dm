@@ -44,7 +44,7 @@
 	if(M.get_num_legs() < 2)
 		vehicle_move_delay ++
 		if(M.get_num_arms() <= 0)
-			if(buckled_mobs.len)//to prevent the message displaying twice due to unbuckling
+			if(has_buckled_mobs())//to prevent the message displaying twice due to unbuckling
 				M << "<span class='warning'>Your limbless body flops off \the [src].</span>"
 			unbuckle_mob(M)
 

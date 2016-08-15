@@ -14,7 +14,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
-		user << "<span class='[powered ? "brass":"alloy"]'>It has access to [powered == INFINITY ? "INFINITY":"[powered]"]W of power.</span>"
+		user << "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power.</span>"
 
 /obj/structure/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -173,8 +173,8 @@
 /obj/structure/clockwork/powered/mending_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='alloy'>It contains [stored_alloy*0.04]/[max_alloy*0.04] units of liquified alloy, which is equivalent to [stored_alloy]W/[max_alloy]W of power.</span>"
-		user << "<span class='inathneq_small'>It requires [mob_cost]W to heal clockwork mobs, [structure_cost]W for clockwork structures, and [cyborg_cost]W for cyborgs.</span>"
+		user << "<span class='alloy'>It contains <b>[stored_alloy*0.04]/[max_alloy*0.04]</b> units of liquified alloy, which is equivalent to <b>[stored_alloy]W/[max_alloy]W</b> of power.</span>"
+		user << "<span class='inathneq_small'>It requires <b>[mob_cost]W</b> to heal clockwork mobs, <b>[structure_cost]W</b> for clockwork structures, and <b>[cyborg_cost]W</b> for cyborgs.</span>"
 
 /obj/structure/clockwork/powered/mending_motor/process()
 	if(..() < mob_cost)
@@ -268,7 +268,7 @@
 /obj/structure/clockwork/powered/mania_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='sevtug_small'>It requires [mania_cost]W to run, and [convert_attempt_cost + convert_cost]W to convert humans adjecent to it.</span>"
+		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and <b>[convert_attempt_cost + convert_cost]W</b> to convert humans adjecent to it.</span>"
 
 /obj/structure/clockwork/powered/mania_motor/process()
 	var/turf/T = get_turf(src)
@@ -399,8 +399,8 @@
 	user << "<span class='[recharging > world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
 	: "vibrates in place and thrums with power"].</span>"
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='nezbere_small'>It requires [disrupt_cost]W of power for each nearby disruptable electronic.</span>"
-		user << "<span class='nezbere_small'>If it fails to both drain any power and disrupt any electronics, it will disable itself for [round(recharge_time/600, 1)] minutes.</span>"
+		user << "<span class='nezbere_small'>It requires <b>[disrupt_cost]W</b> of power for each nearby disruptable electronic.</span>"
+		user << "<span class='nezbere_small'>If it fails to both drain any power and disrupt any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
 
 /obj/structure/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	..()
@@ -553,7 +553,7 @@
 /obj/structure/clockwork/powered/clockwork_obelisk/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='nzcrentr_small'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>"
+		user << "<span class='nzcrentr_small'>It requires <b>[hierophant_cost]W</b> to broadcast over the Hierophant Network, and <b>[gateway_cost]W</b> to open a Spatial Gateway.</span>"
 
 /obj/structure/clockwork/powered/clockwork_obelisk/process()
 	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)

@@ -48,7 +48,7 @@
 
 /mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
 	. = ..()
-	. += 5
+	. += 3
 
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg
