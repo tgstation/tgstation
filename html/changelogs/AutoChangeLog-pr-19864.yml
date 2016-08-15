@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "The Ark of the Clockwork Justicar can now be constructed even if Ratvar's rise is not the objective."
-  - experiment: "Accordingly, its behavior is different; instead of summoning Ratvar, it will convert a massive amount of the station, and should effectively instantly complete the clockwork cult's objectives."
