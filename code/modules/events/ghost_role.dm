@@ -12,7 +12,7 @@
 	// The event does not run until the spawning has been attempted
 	// to prevent us from getting gc'd halfway through
 	processing = FALSE
-	world << "doing something?"
+
 	var/status = spawn_role()
 	if(status == WAITING_FOR_SOMETHING)
 		message_admins("The event will not spawn a [role_name] until certain \
