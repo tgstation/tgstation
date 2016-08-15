@@ -554,7 +554,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.summoner = user
 	G.key = key
-	G.faction |= user.faction
+	G.mind.enslave_mind_to_creator(user)
 	switch(theme)
 		if("tech")
 			user << "[G.tech_fluff_string]"

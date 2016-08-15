@@ -18751,18 +18751,11 @@
 /area/security/warden)
 "aUf" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/temperature{
-	name = "security temperature gun";
-	origin_tech = "combat=2;materials=2;powerstorage=1;magnets=1";
-	pin = /obj/item/device/firing_pin;
+/obj/item/weapon/gun/energy/temperature/security{
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/weapon/gun/energy/temperature{
-	name = "security temperature gun";
-	origin_tech = "combat=2;materials=2;powerstorage=1;magnets=1";
-	pin = /obj/item/device/firing_pin
-	},
+/obj/item/weapon/gun/energy/temperature/security,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},

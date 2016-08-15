@@ -42,7 +42,7 @@
 		if(metal_to_alloy)
 			user << "<span class='alloy'>It can convert rods, metal, and plasteel to liquified replicant alloy at a low rate.</span>"
 		if(uses_alloy)
-			user << "<span class='alloy'>It has [stored_alloy]/[max_alloy] units of liquified alloy stored.</span>"
+			user << "<span class='alloy'>It has <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
 			user << "<span class='alloy'>Use it in-hand to remove stored liquified alloy.</span>"
 
@@ -64,7 +64,7 @@
 			return 0
 		modify_stored_alloy(REPLICANT_ALLOY_UNIT)
 		playsound(user, 'sound/machines/click.ogg', 50, 1)
-		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>"
+		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy.</span>"
 		user.drop_item()
 		qdel(I)
 		return 1
@@ -113,7 +113,7 @@
 
 	if(!can_use_alloy(proselytize_values["alloy_cost"]))
 		if(stored_alloy - proselytize_values["alloy_cost"] < 0)
-			user << "<span class='warning'>You need [proselytize_values["alloy_cost"]] liquified alloy to proselytize [target]!</span>"
+			user << "<span class='warning'>You need <b>[proselytize_values["alloy_cost"]]</b> liquified alloy to proselytize [target]!</span>"
 		else if(stored_alloy - proselytize_values["alloy_cost"] > max_alloy)
 			user << "<span class='warning'>You have too much liquified alloy stored to proselytize [target]!</span>"
 		return 0
@@ -315,7 +315,7 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 	if(proselytizer && user)
 		user.visible_message("<span class='notice'>[user] removes [proselytizer] from the hole in [src], apparently satisfied.</span>", \
-		"<span class='brass'>You finish filling [proselytizer] with liquified alloy. It now contains [proselytizer.stored_alloy]/[proselytizer.max_alloy] units of liquified alloy.</span>")
+		"<span class='brass'>You finish filling [proselytizer] with liquified alloy. It now contains <b>[proselytizer.stored_alloy]/[proselytizer.max_alloy]</b> units of liquified alloy.</span>")
 	return
 
 /obj/structure/clockwork/wall_gear/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)

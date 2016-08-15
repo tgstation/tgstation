@@ -161,17 +161,13 @@
 /obj/structure/clockwork/cache/New()
 	..()
 	START_PROCESSING(SSobj, src)
-	var/list/scripture_states = get_scripture_states()
 	clockwork_caches++
-	scripture_unlock_alert(scripture_states)
 	SetLuminosity(2,1)
 	for(var/i in all_clockwork_mobs)
 		cache_check(i)
 
 /obj/structure/clockwork/cache/Destroy()
-	var/list/scripture_states = get_scripture_states()
 	clockwork_caches--
-	scripture_unlock_alert(scripture_states)
 	STOP_PROCESSING(SSobj, src)
 	if(linkedwall)
 		linkedwall.linkedcache = null
@@ -246,6 +242,7 @@
 	if(!clockwork_component_cache["replicant_alloy"])
 		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
 		return 0
+	clockwork_component_cache["replicant_alloy"]--
 	var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
 	user.visible_message("<span class='notice'>[user] withdraws [A] from [src].</span>", "<span class='notice'>You withdraw [A] from [src].</span>")
 	user.put_in_hands(A)
@@ -258,7 +255,7 @@
 			user << "<span class='brass'>It is linked and will generate components!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
-			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> [clockwork_component_cache[i]]</span>"
+			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[clockwork_component_cache[i]]</b></span>"
 
 
 /obj/structure/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
@@ -922,7 +919,7 @@
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing [power_charge]W of power.</span>"
+		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[power_charge]W</b> of power.</span>"
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(power_charge)
@@ -959,7 +956,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>"
-		user << "<span class='inathneq_small'>It requires at least [base_revive_cost] units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
+		user << "<span class='inathneq_small'>It requires at least <b>[base_revive_cost]</b> units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)

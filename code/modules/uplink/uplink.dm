@@ -13,7 +13,7 @@ var/global/list/uplinks = list()
 	var/active = FALSE
 	var/lockable = TRUE
 	var/telecrystals = 20
-
+	var/selected_cat = null
 	var/owner = null
 	var/datum/game_mode/gamemode = null
 	var/spent_telecrystals = 0
@@ -68,21 +68,23 @@ var/global/list/uplinks = list()
 	data["lockable"] = lockable
 
 	var/list/uplink_items = get_uplink_items(gamemode)
+
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
 			"name" = category,
-			"items" = list(),
-		)
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
-			cat["items"] += list(list(
-				"name" = I.name,
-				"cost" = I.cost,
-				"desc" = I.desc,
-			))
+			"items" = (category == selected_cat ? list() : null))
+		if(category == selected_cat)
+			for(var/item in uplink_items[category])
+				var/datum/uplink_item/I = uplink_items[category][item]
+				cat["items"] += list(list(
+					"name" = I.name,
+					"cost" = I.cost,
+					"desc" = I.desc,
+				))
 		data["categories"] += list(cat)
 	return data
+
 
 /obj/item/device/uplink/ui_act(action, params)
 	if(!active)
@@ -104,6 +106,9 @@ var/global/list/uplinks = list()
 		if("lock")
 			active = FALSE
 			SStgui.close_uis(src)
+		if("select")
+			selected_cat = params["category"]
+	return 1
 
 
 /obj/item/device/uplink/ui_host()

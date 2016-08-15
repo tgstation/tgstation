@@ -33050,6 +33050,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHEAST)";
 	dir = 5
@@ -39228,6 +39231,9 @@
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (EAST)";
 	dir = 4
@@ -39270,6 +39276,9 @@
 	icon_state = "4-8";
 	pixel_x = 0;
 	tag = ""
+	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
 	},
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
@@ -41906,6 +41915,9 @@
 	pixel_x = 0;
 	tag = ""
 	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/open/floor/plasteel/black,
 /area/security/main)
 "bFQ" = (
@@ -43441,6 +43453,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
 	},
 /turf/open/floor/plasteel/black,
 /area/security/main)
@@ -45341,6 +45356,7 @@
 /obj/item/weapon/gun/energy/ionrifle{
 	pin = /obj/item/device/firing_pin
 	},
+/obj/item/weapon/gun/energy/temperature/security,
 /obj/item/clothing/suit/armor/laserproof,
 /obj/item/key/security,
 /turf/open/floor/plasteel/vault{
@@ -49003,6 +49019,8 @@
 	pixel_y = -24
 	},
 /obj/machinery/light,
+/obj/item/weapon/gun/energy/gun/dragnet,
+/obj/item/weapon/gun/energy/gun/dragnet,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},

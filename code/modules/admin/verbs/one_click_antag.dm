@@ -134,7 +134,7 @@
 
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", "wizard", null)
 
-	var/mob/dead/observer/selected = popleft(candidates)
+	var/mob/dead/observer/selected = pick_n_take(candidates)
 
 	var/mob/living/carbon/human/new_character = makeBody(selected)
 	new_character.mind.make_Wizard()
@@ -552,5 +552,5 @@
 	return 1
 
 /datum/admins/proc/makeRevenant()
-	new /datum/round_event/ghost_role/revenant
+	new /datum/round_event/ghost_role/revenant(TRUE, TRUE)
 	return 1

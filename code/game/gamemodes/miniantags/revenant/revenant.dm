@@ -60,6 +60,7 @@
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/image/ghostimage = null //Visible to ghost with darkness off
+	var/generated_objectives_and_spells = FALSE
 
 /mob/living/simple_animal/revenant/New()
 	..()
@@ -68,35 +69,37 @@
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
-	spawn(5)
-		if(src.mind)
-			src.mind.remove_all_antag()
-			src.mind.wipe_memory()
-			src << 'sound/effects/ghost.ogg'
-			src << "<br>"
-			src << "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>"
-			src << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
-			src << "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
-			src << "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>"
-			src << "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>"
-			src << "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
-			src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
-			var/datum/objective/revenant/objective = new
-			objective.owner = src.mind
-			src.mind.objectives += objective
-			src << "<b>Objective #1</b>: [objective.explanation_text]"
-			var/datum/objective/revenantFluff/objective2 = new
-			objective2.owner = src.mind
-			src.mind.objectives += objective2
-			src << "<b>Objective #2</b>: [objective2.explanation_text]"
-			ticker.mode.traitors |= src.mind //Necessary for announcing
+/mob/living/simple_animal/revenant/Login()
+	..()
+	src << "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>"
+	src << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
+	src << "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
+	src << "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>"
+	src << "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>"
+	src << "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
+	src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
+	if(!generated_objectives_and_spells)
+		generated_objectives_and_spells = TRUE
+		mind.remove_all_antag()
+		mind.wipe_memory()
+		src << 'sound/effects/ghost.ogg'
+		var/datum/objective/revenant/objective = new
+		objective.owner = mind
+		mind.objectives += objective
+		src << "<b>Objective #1</b>: [objective.explanation_text]"
+		var/datum/objective/revenantFluff/objective2 = new
+		objective2.owner = mind
+		mind.objectives += objective2
+		src << "<b>Objective #2</b>: [objective2.explanation_text]"
+		mind.assigned_role = "revenant"
+		mind.special_role = "Revenant"
+		ticker.mode.traitors |= mind //Necessary for announcing
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
-
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/simple_animal/revenant/Life()

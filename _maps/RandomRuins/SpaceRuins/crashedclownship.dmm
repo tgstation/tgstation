@@ -1,29 +1,29 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/turf/closed/mineral/random,/area/space)
-"c" = (/turf/open/floor/plating/asteroid/airless,/area/space)
+"b" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
+"c" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
 "d" = (/turf/closed/wall/mineral/clown,/area/ruin/unpowered)
 "e" = (/obj/machinery/door/airlock/clown,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"f" = (/obj/effect/mob_spawn/human/clown,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"g" = (/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"h" = (/obj/structure/closet/crate,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"i" = (/obj/structure/closet/crate{icon_state = "crateopen";opened = 1},/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"j" = (/obj/structure/closet/secure_closet{name = "clown locker";req_access_txt = "46"},/obj/item/clothing/shoes/clown_shoes/banana_shoes,/obj/effect/spawner/lootdrop/maintenance{lootcount = 2;name = "2maintenance loot spawner"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"k" = (/obj/structure/shuttle/engine/heater{color = "#FFFF00";dir = 4;icon_state = "heater"},/obj/structure/window/reinforced{color = "#FFFF00";dir = 8},/turf/open/floor/plating/airless{color = "#FFFF00"},/area/ruin/unpowered)
-"l" = (/obj/structure/shuttle/engine/propulsion{color = "#FFFF00";dir = 8;icon_state = "propulsion_l"},/turf/open/space,/area/ruin/unpowered)
-"m" = (/obj/item/weapon/shard{icon_state = "small"},/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
-"n" = (/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"o" = (/obj/item/weapon/shard{icon_state = "medium"},/obj/structure/chair{dir = 8},/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
-"p" = (/obj/effect/mob_spawn/human/clown{name = "Clown Pilot"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"q" = (/obj/item/weapon/paper{info = "The call has gone out! Our ancestral home has been rediscovered! Not a small patch of land, but a true clown nation, a true Clown Planet! We're on our way home at last!"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"r" = (/obj/structure/grille{color = "#FFFF00"},/obj/structure/window/reinforced{color = "#FFFF00"},/obj/structure/window/reinforced{color = "#FFFF00";dir = 4},/obj/structure/window/reinforced{color = "#FFFF00";dir = 8},/turf/open/floor/plating/airless{color = "#FFFF00"},/area/ruin/unpowered)
-"s" = (/obj/item/weapon/shard,/obj/structure/chair{dir = 8},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"t" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"u" = (/obj/item/weapon/storage/bag/ore,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"v" = (/obj/item/weapon/pickaxe,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"w" = (/obj/structure/closet/crate,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"x" = (/obj/item/weapon/shovel,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
-"y" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
-"z" = (/turf/closed/mineral/random,/area/ruin/unpowered)
+"f" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
+"g" = (/obj/effect/mob_spawn/human/clown,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"h" = (/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"i" = (/obj/structure/closet/crate,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"j" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"k" = (/obj/structure/closet/secure_closet{name = "clown locker"; req_access_txt = "46"},/obj/item/clothing/shoes/clown_shoes/banana_shoes,/obj/effect/spawner/lootdrop/maintenance{lootcount = 2; name = "2maintenance loot spawner"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"l" = (/obj/structure/shuttle/engine/heater{color = "#FFFF00"; dir = 4; icon_state = "heater"},/obj/structure/window/reinforced{color = "#FFFF00"; dir = 8},/turf/open/floor/plating/airless{color = "#FFFF00"},/area/ruin/unpowered)
+"m" = (/obj/structure/shuttle/engine/propulsion{color = "#FFFF00"; dir = 8; icon_state = "propulsion_l"},/turf/open/space,/area/ruin/unpowered)
+"n" = (/turf/closed/mineral/random,/area/ruin/unpowered)
+"o" = (/obj/item/weapon/shard{icon_state = "small"},/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
+"p" = (/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"q" = (/obj/item/weapon/shard{icon_state = "medium"},/obj/structure/chair{dir = 8},/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
+"r" = (/obj/effect/mob_spawn/human/clown{name = "Clown Pilot"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"s" = (/obj/item/weapon/paper{info = "The call has gone out! Our ancestral home has been rediscovered! Not a small patch of land, but a true clown nation, a true Clown Planet! We're on our way home at last!"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"t" = (/obj/structure/grille{color = "#FFFF00"},/obj/structure/window/reinforced{color = "#FFFF00"},/obj/structure/window/reinforced{color = "#FFFF00"; dir = 4},/obj/structure/window/reinforced{color = "#FFFF00"; dir = 8},/turf/open/floor/plating/airless{color = "#FFFF00"},/area/ruin/unpowered)
+"u" = (/obj/item/weapon/shard,/obj/structure/chair{dir = 8},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"v" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"w" = (/obj/item/weapon/storage/bag/ore,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"x" = (/obj/item/weapon/pickaxe,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"y" = (/obj/structure/closet/crate,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
+"z" = (/obj/item/weapon/shovel,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered)
 
 (1,1,1) = {"
 abbaaaaccccccaaaaaaaaaaaaaaa
@@ -31,11 +31,11 @@ bbbbaabbbbbccbbbaaaaaaaaaaaa
 bbbbbbbbbbbccbbaaaaaaaaaaaaa
 abbbbbbbbbbbbbbaaaaaaaaaaaaa
 abbbbbbbbbbbbccaadddeeddddda
-aabbbbbbbbbbbbcdddyfgghhijkl
-aaabbbbbbbbbbbbzzzmgggggngkl
-aabbbbbbbbbbbbbzzopgqngngnkl
-aabbbbbbbbbbbbbrgsgtgfgggnkl
-aabbbbbbbbbbbbbddduvggwwhxkl
+aabbbbbbbbbbbbcdddfghhiijklm
+aaabbbbbbbbbbbbnnnohhhhhphlm
+aabbbbbbbbbbbbbnnqrhsphphplm
+aabbbbbbbbbbbbbthuhvhghhhplm
+aabbbbbbbbbbbbbdddwxhhyyizlm
 aabbbbbbbbbbbbbbbdddeeddddda
 abbbbbbbbbbbbbbbbbbbbbbbbaaa
 abbabbbbbccbbbbbbbbbbbaaaaaa

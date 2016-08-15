@@ -28,9 +28,10 @@ var/datum/subsystem/stickyban/SSstickyban
 		ban -= "IP"
 		ban -= "computer_id"
 
-		world.SetConfig("ban", ckey, list2stickyban(ban))
-
 		ban["matches_this_round"] = list()
 		ban["existing_user_matches_this_round"] = list()
 		ban["admin_matches_this_round"] = list()
 		cache[ckey] = ban
+	
+	for (var/bannedckey in cache)
+		world.SetConfig("ban", bannedckey, list2stickyban(cache[bannedckey]))

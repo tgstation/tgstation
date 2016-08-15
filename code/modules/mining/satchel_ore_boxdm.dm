@@ -42,64 +42,15 @@
 		show_contents(user)
 
 /obj/structure/ore_box/proc/show_contents(mob/user)
-	var/amt_gold = 0
-	var/amt_silver = 0
-	var/amt_diamond = 0
-	var/amt_glass = 0
-	var/amt_iron = 0
-	var/amt_plasma = 0
-	var/amt_uranium = 0
-	var/amt_titanium = 0
-	var/amt_clown = 0
-	var/amt_bluespace = 0
-
-	for (var/obj/item/weapon/ore/C in contents)
-		if (istype(C,/obj/item/weapon/ore/diamond))
-			amt_diamond++
-		if (istype(C,/obj/item/weapon/ore/glass))
-			amt_glass++
-		if (istype(C,/obj/item/weapon/ore/plasma))
-			amt_plasma++
-		if (istype(C,/obj/item/weapon/ore/iron))
-			amt_iron++
-		if (istype(C,/obj/item/weapon/ore/silver))
-			amt_silver++
-		if (istype(C,/obj/item/weapon/ore/gold))
-			amt_gold++
-		if (istype(C,/obj/item/weapon/ore/uranium))
-			amt_uranium++
-		if (istype(C,/obj/item/weapon/ore/bananium))
-			amt_clown++
-		if (istype(C,/obj/item/weapon/ore/titanium))
-			amt_titanium++
-		if (istype(C,/obj/item/weapon/ore/bluespace_crystal))
-			amt_bluespace++
-
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
-	if (amt_gold)
-		dat += text("Gold ore: [amt_gold]<br>")
-	if (amt_silver)
-		dat += text("Silver ore: [amt_silver]<br>")
-	if (amt_iron)
-		dat += text("Metal ore: [amt_iron]<br>")
-	if (amt_glass)
-		dat += text("Sand: [amt_glass]<br>")
-	if (amt_diamond)
-		dat += text("Diamond ore: [amt_diamond]<br>")
-	if (amt_plasma)
-		dat += text("Plasma ore: [amt_plasma]<br>")
-	if (amt_uranium)
-		dat += text("Uranium ore: [amt_uranium]<br>")
-	if (amt_clown)
-		dat += text("Titanium ore: [amt_titanium]<br>")
-	if (amt_titanium)
-		dat += text("Bananium ore: [amt_clown]<br>")
-	if (amt_bluespace)
-		dat += text("Bluespace crystals: [amt_bluespace]<br>")
-
+	var/list/oretypes = list()
+	for(var/obj/item/weapon/ore/O in contents)
+		oretypes |= O.type
+	for(var/i in oretypes)
+		var/obj/item/weapon/ore/T = locate(i) in contents
+		dat += "[capitalize(T.name)]: [count_by_type(contents, T.type)]<br>"
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse("[dat]", "window=orebox")
-	return
 
 /obj/structure/ore_box/proc/dump_contents()
 	for (var/obj/item/weapon/ore/O in contents)
