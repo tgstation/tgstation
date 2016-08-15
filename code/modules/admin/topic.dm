@@ -92,10 +92,10 @@
 					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create a death squad.")
 			if("blob")
-				var/strength = input("Set Blob Strength (1=Weak, 2=Strong, 3=Full)","Set Strength",1) as num
-				message_admins("[key_name(usr)] spawned a blob with strength [strength].")
-				log_admin("[key_name(usr)] spawned a blob with strength [strength].")
-				new/datum/round_event/blob(strength)
+				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1) as num
+				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
+				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
+				new/datum/round_event/ghost_role/blob(TRUE, strength)
 			if("gangs")
 				if(src.makeGangsters())
 					message_admins("[key_name(usr)] created gangs.")

@@ -1,6 +1,6 @@
 /datum/round_event_control/blob
 	name = "Blob"
-	typepath = /datum/round_event/blob
+	typepath = /datum/round_event/ghost_role/blob
 	weight = 5
 	max_occurrences = 1
 
@@ -9,21 +9,20 @@
 
 	gamemode_blacklist = list("blob") //Just in case a blob survives that long
 
-/datum/round_event/blob
+/datum/round_event/ghost_role/blob
 	announceWhen	= 12
-	endWhen			= 120
 	var/new_rate = 2
 
-/datum/round_event/blob/New(my_processing = TRUE, set_point_rate)
+/datum/round_event/ghost_role/blob/New(my_processing = TRUE, set_point_rate)
 	..()
 	if(set_point_rate)
 		new_rate = set_point_rate
 
-/datum/round_event/blob/announce()
+/datum/round_event/ghost_role/blob/announce()
 	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 
 
-/datum/round_event/blob/spawn_role()
+/datum/round_event/ghost_role/blob/spawn_role()
 	if(!blobstart.len)
 		return MAP_ERROR
 	var/list/candidates = get_candidates("blob", null, ROLE_BLOB)
