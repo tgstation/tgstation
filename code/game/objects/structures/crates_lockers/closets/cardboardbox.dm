@@ -52,7 +52,7 @@
 			viewing |= M.client
 	flick_overlay(I,viewing,8)
 	I.alpha = 0
-	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
+	animate(I, pixel_z = 64, alpha = 255, time = 5, easing = ELASTIC_EASING)
 
 
 /obj/structure/closet/cardboard/metal

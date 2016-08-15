@@ -409,7 +409,7 @@
 
 		if(health <= 0)
 			head_icon = DF.get_image(dir = EAST)
-			head_icon.pixel_y = -8
+			head_icon.pixel_y = -16
 			head_icon.transform = turn(head_icon.transform, 180)
 		else
 			head_icon = DF.get_image()
@@ -429,7 +429,7 @@
 
 		if(health <= 0)
 			back_icon = DF.get_image(dir = EAST)
-			back_icon.pixel_y = -11
+			back_icon.pixel_y = -22
 			back_icon.transform = turn(back_icon.transform, 180)
 		else
 			back_icon = DF.get_image()

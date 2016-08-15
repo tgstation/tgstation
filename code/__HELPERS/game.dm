@@ -310,7 +310,7 @@
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
 
-/proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
+/proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=960, maptext_width=960)
 	if(!isobj(O))
 		O = new /obj/screen/text()
 	O.maptext = maptext

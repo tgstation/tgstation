@@ -58,19 +58,19 @@
 		if(pizza)
 			icon_state = "pizzabox_messy"
 			var/image/pizzaimg = image(pizza.icon, icon_state = pizza.icon_state)
-			pizzaimg.pixel_y = -3
+			pizzaimg.pixel_y = -6
 			add_overlay(pizzaimg)
 		if(bomb)
 			bomb.icon_state = "pizzabomb_[bomb_active ? "active" : "inactive"]"
 			var/image/bombimg = image(bomb.icon, icon_state = bomb.icon_state)
-			bombimg.pixel_y = 5
+			bombimg.pixel_y = 10
 			add_overlay(bombimg)
 	else
 		icon_state = "pizzabox[boxes.len + 1]"
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(box.boxtag != "")
 			var/image/tagimg = image(icon, icon_state = "pizzabox_tag")
-			tagimg.pixel_y = boxes.len * 3
+			tagimg.pixel_y = boxes.len * 6
 			add_overlay(tagimg)
 
 /obj/item/pizzabox/attack_self(mob/user)

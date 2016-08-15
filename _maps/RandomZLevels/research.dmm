@@ -124,7 +124,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-20";
 	layer = 4.1;
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/whiteyellow/corner{
 	tag = "icon-whiteyellowcorner (WEST)";
@@ -296,7 +296,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	icon_state = "alarm0";
-	pixel_x = -32;
+	pixel_x = -64;
 	tag = "icon-alarm0 (EAST)"
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
@@ -390,8 +390,8 @@
 	cell_type = 9000;
 	dir = 4;
 	name = "Engineering APC";
-	pixel_x = 27;
-	pixel_y = 2
+	pixel_x = 54;
+	pixel_y = 4
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
@@ -590,7 +590,7 @@
 /area/awaymission/research/interior/engineering)
 "bO" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/whiteyellow/corner{
@@ -600,7 +600,7 @@
 /area/awaymission/research/interior/engineering)
 "bP" = (
 /obj/structure/sign/vacuum{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -639,7 +639,7 @@
 /area/awaymission/research/interior/gateway)
 "bV" = (
 /obj/structure/sign/nosmoking_1{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	tag = "icon-whiteyellow (EAST)";
@@ -695,12 +695,12 @@
 	cell_type = 12000;
 	dir = 4;
 	name = "Gateway APC";
-	pixel_x = 24;
+	pixel_x = 48;
 	pixel_y = 0
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plasteel/black,
@@ -855,7 +855,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	icon_state = "alarm0";
-	pixel_x = -32;
+	pixel_x = -64;
 	tag = "icon-alarm0 (EAST)"
 	},
 /turf/open/floor/plasteel/black,
@@ -950,7 +950,7 @@
 /area/awaymission/research/interior/gateway)
 "cG" = (
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
@@ -962,7 +962,7 @@
 	name = "panic lockdown button"
 	},
 /obj/machinery/airalarm{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
@@ -1042,12 +1042,12 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Genetics APC";
-	pixel_x = 24;
+	pixel_x = 48;
 	pixel_y = 0
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plating,
@@ -1529,7 +1529,7 @@
 /area/awaymission/research/interior)
 "ej" = (
 /obj/machinery/airalarm{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/whiteyellow/side,
 /area/awaymission/research/interior)
@@ -1608,7 +1608,7 @@
 /area/awaymission/research/interior/cryo)
 "ew" = (
 /obj/machinery/airalarm{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (NORTH)";
@@ -1639,7 +1639,7 @@
 /area/awaymission/research/interior/cryo)
 "eA" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (NORTH)";
@@ -1769,7 +1769,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	icon_state = "alarm0";
-	pixel_x = -32;
+	pixel_x = -64;
 	tag = "icon-alarm0 (EAST)"
 	},
 /turf/open/floor/plasteel/black,
@@ -1808,7 +1808,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Cryostatis APC";
-	pixel_x = 24;
+	pixel_x = 48;
 	pixel_y = 0
 	},
 /obj/structure/cable,
@@ -1836,24 +1836,24 @@
 "fd" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = -7;
-	pixel_y = 1
+	pixel_x = -14;
+	pixel_y = 2
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = -7;
-	pixel_y = 1
+	pixel_x = -14;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
 "fe" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 7;
-	pixel_y = 1
+	pixel_x = 14;
+	pixel_y = 2
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 7;
-	pixel_y = 1
+	pixel_x = 14;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/cryo)
@@ -1955,13 +1955,13 @@
 /area/awaymission/research/interior/security)
 "fu" = (
 /obj/machinery/airalarm{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/whitered/side,
 /area/awaymission/research/interior/security)
 "fv" = (
 /obj/structure/sign/goldenplaque{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plasteel/whitered/corner{
 	tag = "icon-whiteredcorner (WEST)";
@@ -1991,7 +1991,7 @@
 	cell_type = 12000;
 	dir = 4;
 	name = "Vault APC";
-	pixel_x = 24;
+	pixel_x = 48;
 	pixel_y = 0
 	},
 /obj/structure/cable{
@@ -2178,7 +2178,7 @@
 /area/awaymission/research/interior/security)
 "gc" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -2929,12 +2929,12 @@
 /area/awaymission/research/interior)
 "hP" = (
 /obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = -32
+	pixel_x = 64;
+	pixel_y = -64
 	},
 /obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -24
+	pixel_x = 64;
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (NORTHWEST)";
@@ -3153,19 +3153,19 @@
 /area/awaymission/research/interior/genetics)
 "io" = (
 /obj/structure/mirror{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
 "ip" = (
 /obj/structure/urinal{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/research/interior/bathroom)
@@ -3244,12 +3244,12 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Genetics APC";
-	pixel_x = 24;
+	pixel_x = 48;
 	pixel_y = 0
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /obj/structure/cable{
@@ -3310,7 +3310,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Security APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -3338,14 +3338,14 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
-	pixel_y = -32;
+	pixel_y = -64;
 	tag = "icon-alarm0 (NORTH)"
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
 "iI" = (
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
@@ -3445,7 +3445,7 @@
 /area/awaymission/research/interior/dorm)
 "iZ" = (
 /obj/machinery/airalarm{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/awaymission/research/interior/medbay)
@@ -3482,8 +3482,8 @@
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/awaymission/research/interior/medbay)
@@ -3550,21 +3550,21 @@
 /obj/structure/sign/directions/security{
 	dir = 1;
 	icon_state = "direction_sec";
-	pixel_x = 32;
-	pixel_y = 40
+	pixel_x = 64;
+	pixel_y = 80
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
 	icon_state = "direction_eng";
-	pixel_x = 32;
-	pixel_y = 33;
+	pixel_x = 64;
+	pixel_y = 66;
 	tag = "icon-direction_eng (NORTH)"
 	},
 /obj/structure/sign/directions/science{
 	dir = 1;
 	icon_state = "direction_sci";
-	pixel_x = 32;
-	pixel_y = 26;
+	pixel_x = 64;
+	pixel_y = 52;
 	tag = "icon-direction_sci (NORTH)"
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged,
@@ -3725,7 +3725,7 @@
 /obj/machinery/button/door{
 	id = "Dorm1";
 	name = "Privacy Button";
-	pixel_y = -28
+	pixel_y = -56
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -3742,7 +3742,7 @@
 /obj/machinery/button/door{
 	id = "Dorm2";
 	name = "Privacy Button";
-	pixel_y = -28
+	pixel_y = -56
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -3756,7 +3756,7 @@
 /obj/machinery/button/door{
 	id = "Dorm3";
 	name = "Privacy Button";
-	pixel_y = -28
+	pixel_y = -56
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -3879,7 +3879,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Dorms APC";
-	pixel_x = 24;
+	pixel_x = 48;
 	pixel_y = 0
 	},
 /obj/structure/cable{
@@ -3889,7 +3889,7 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plating,
@@ -4428,7 +4428,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
-	pixel_x = 32;
+	pixel_x = 64;
 	tag = "icon-alarm0 (WEST)"
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -4440,7 +4440,7 @@
 /obj/machinery/button/door{
 	id = "Dorm6";
 	name = "Privacy Button";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -4454,7 +4454,7 @@
 /obj/machinery/button/door{
 	id = "Dorm5";
 	name = "Privacy Button";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -4468,7 +4468,7 @@
 /obj/machinery/button/door{
 	id = "Dorm4";
 	name = "Privacy Button";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -4508,7 +4508,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Medbay APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
@@ -4534,7 +4534,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Escape APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -4571,13 +4571,13 @@
 "mg" = (
 /obj/structure/closet/emcloset,
 /obj/structure/sign/vacuum{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "mh" = (
 /obj/structure/sign/pods{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plasteel/whitegreen/corner,
 /area/awaymission/research/interior/escapepods)
@@ -4753,7 +4753,7 @@
 /area/awaymission/research/interior/escapepods)
 "mI" = (
 /obj/structure/sign/pods{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (EAST)";
@@ -4848,7 +4848,7 @@
 /area/awaymission/research/interior/escapepods)
 "mU" = (
 /obj/structure/sign/vacuum{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/whitegreen/side{
@@ -4865,7 +4865,7 @@
 /area/awaymission/research/interior/escapepods)
 "mW" = (
 /obj/structure/sign/vacuum{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (NORTH)";
@@ -4876,7 +4876,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
-	pixel_x = 32;
+	pixel_x = 64;
 	tag = "icon-alarm0 (WEST)"
 	},
 /turf/open/floor/plasteel/whitegreen/corner{

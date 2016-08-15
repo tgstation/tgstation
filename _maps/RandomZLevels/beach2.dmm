@@ -87,7 +87,7 @@
 /obj/structure/dresser{
 	density = 0;
 	pixel_x = 0;
-	pixel_y = 18
+	pixel_y = 36
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/beach/sand
@@ -100,7 +100,7 @@
 /area/awaymission/beach)
 "au" = (
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/beach/sand
@@ -108,7 +108,7 @@
 /area/awaymission/beach)
 "av" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel/sandy,
 /area/awaymission/beach)
@@ -125,7 +125,7 @@
 	id = "loveshack";
 	name = "love shack lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
+	pixel_x = 48;
 	specialfunctions = 4
 	},
 /turf/open/floor/wood{
@@ -168,7 +168,7 @@
 /area/awaymission/beach)
 "aE" = (
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/beach/sand
@@ -179,7 +179,7 @@
 	id = "changing1";
 	name = "changing room lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
+	pixel_x = 48;
 	specialfunctions = 4
 	},
 /turf/open/floor/wood{
@@ -191,7 +191,7 @@
 	id = "changing2";
 	name = "changing room lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
+	pixel_x = 48;
 	specialfunctions = 4
 	},
 /turf/open/floor/wood{
@@ -214,7 +214,7 @@
 /area/awaymission/beach)
 "aJ" = (
 /obj/structure/bedsheetbin{
-	pixel_y = -6
+	pixel_y = -12
 	},
 /turf/open/floor/plasteel/sandy,
 /area/awaymission/beach)
@@ -352,7 +352,7 @@
 /obj/item/clothing/under/color/rainbow,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/head/collectable/petehat{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
@@ -362,7 +362,7 @@
 /area/awaymission/beach)
 "bg" = (
 /obj/structure/sign/barsign{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/sandy,
 /area/awaymission/beach)

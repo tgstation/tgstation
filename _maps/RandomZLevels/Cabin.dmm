@@ -81,11 +81,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
@@ -93,11 +93,11 @@
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
@@ -270,7 +270,7 @@
 /area/awaymission/cabin)
 "aS" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -495,7 +495,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/freezer,
@@ -804,7 +804,7 @@
 "cL" = (
 /obj/structure/sign/barsign{
 	pixel_x = 0;
-	pixel_y = 32;
+	pixel_y = 64;
 	req_access = null
 	},
 /turf/open/floor/wood,
@@ -845,7 +845,7 @@
 "cS" = (
 /obj/machinery/button/door{
 	id = 42;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)

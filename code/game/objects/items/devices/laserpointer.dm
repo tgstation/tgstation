@@ -138,12 +138,12 @@
 	var/list/click_params = params2list(params)
 	if(click_params)
 		if(click_params["icon-x"])
-			I.pixel_x = (text2num(click_params["icon-x"]) - 16)
+			I.pixel_x = (text2num(click_params["icon-x"]) - 32)
 		if(click_params["icon-y"])
-			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+			I.pixel_y = (text2num(click_params["icon-y"]) - 32)
 	else
-		I.pixel_x = target.pixel_x + rand(-5,5)
-		I.pixel_y = target.pixel_y + rand(-5,5)
+		I.pixel_x = target.pixel_x + rand(-10,10)
+		I.pixel_y = target.pixel_y + rand(-10,10)
 
 	if(outmsg)
 		user << outmsg

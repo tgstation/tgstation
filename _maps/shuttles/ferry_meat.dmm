@@ -76,7 +76,7 @@
 "k" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
-	pixel_y = 30;
+	pixel_y = 60;
 	tag = "n"
 	},
 /turf/open/floor/plasteel/freezer,
@@ -89,7 +89,7 @@
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)

@@ -5,6 +5,7 @@
 	view = "15x15"
 	cache_lifespan = 7
 	fps = 20
+	icon_size = 64
 
 var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 

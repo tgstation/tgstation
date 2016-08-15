@@ -117,7 +117,7 @@
 		icon_state = "screwdriver_[param_color]"
 
 	if (prob(75))
-		src.pixel_y = rand(0, 16)
+		src.pixel_y = rand(0, 32)
 	return
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)

@@ -184,7 +184,7 @@
 
 /obj/structure/alien/weeds/New(pos, node)
 	pixel_x = -4
-	pixel_y = -4 //so the sprites line up right in the map editor
+	pixel_y = -8 //so the sprites line up right in the map editor
 	..()
 	if(!luminosity) //weed nodes have luminosity, but normal weeds don't!
 		switch(rand(1,3))

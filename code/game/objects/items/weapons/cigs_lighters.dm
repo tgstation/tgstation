@@ -269,8 +269,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie/New()
 	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/clothing/mask/cigarette/rollie/trippy/New()
 	..()
@@ -285,8 +285,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/cigbutt/roach/New()
 	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 
 ////////////

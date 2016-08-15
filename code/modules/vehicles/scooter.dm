@@ -28,15 +28,15 @@
 				if(NORTH)
 					buckled_mob.pixel_x = 0
 				if(EAST)
-					buckled_mob.pixel_x = -2
+					buckled_mob.pixel_x = -4
 				if(SOUTH)
 					buckled_mob.pixel_x = 0
 				if(WEST)
-					buckled_mob.pixel_x = 2
+					buckled_mob.pixel_x = 4
 			if(buckled_mob.get_num_legs() > 0)
-				buckled_mob.pixel_y = 5
+				buckled_mob.pixel_y = 10
 			else
-				buckled_mob.pixel_y = -4
+				buckled_mob.pixel_y = -8
 
 /obj/vehicle/scooter/post_buckle_mob(mob/living/M)
 	vehicle_move_delay = initial(vehicle_move_delay)

@@ -61,7 +61,7 @@
 /area/ruin/powered)
 "al" = (
 /obj/structure/urinal{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -69,7 +69,7 @@
 /area/ruin/powered)
 "am" = (
 /obj/structure/urinal{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/effect/decal/sandeffect,
 /turf/open/floor/plating{
@@ -86,12 +86,12 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/effect/decal/sandeffect,
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth

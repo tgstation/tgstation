@@ -170,12 +170,12 @@
 /obj/item/weapon/storage/proc/standard_orient_objs(rows, cols, list/obj/item/display_contents)
 	var/cx = 4
 	var/cy = 2+rows
-	boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
+	boxes.screen_loc = "4:32,2:32 to [4+cols]:32,[2+rows]:32"
 
 	if(display_contents_with_number)
 		for(var/datum/numbered_display/ND in display_contents)
 			ND.sample_object.mouse_opacity = 2
-			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
+			ND.sample_object.screen_loc = "[cx]:32,[cy]:32"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = ABOVE_HUD_LAYER
 			cx++
@@ -185,14 +185,14 @@
 	else
 		for(var/obj/O in contents)
 			O.mouse_opacity = 2 //This is here so storage items that spawn with contents correctly have the "click around item to equip"
-			O.screen_loc = "[cx]:16,[cy]:16"
+			O.screen_loc = "[cx]:32,[cy]:32"
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
 			cx++
 			if(cx > (4+cols))
 				cx = 4
 				cy--
-	closer.screen_loc = "[4+cols+1]:16,2:16"
+	closer.screen_loc = "[4+cols+1]:32,2:32"
 
 
 /datum/numbered_display

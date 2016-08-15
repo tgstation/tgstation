@@ -32,8 +32,8 @@
 
 /obj/item/weapon/paper/New()
 	..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_y = rand(-16, 16)
+	pixel_x = rand(-18, 18)
 	update_icon()
 	updateinfolinks()
 
@@ -307,8 +307,8 @@
 
 		stamps += "<img src=large_[P.icon_state].png>"
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		stampoverlay.pixel_x = rand(-2, 2)
-		stampoverlay.pixel_y = rand(-3, 2)
+		stampoverlay.pixel_x = rand(-4, 4)
+		stampoverlay.pixel_y = rand(-6, 4)
 
 		stampoverlay.icon_state = "paper_[P.icon_state]"
 

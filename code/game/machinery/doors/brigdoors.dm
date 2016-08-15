@@ -35,8 +35,8 @@
 	var/list/obj/machinery/targets = list()
 	var/obj/item/device/radio/Radio //needed to send messages to sec radio
 
-	maptext_height = 26
-	maptext_width = 32
+	maptext_height = 52
+	maptext_width = 64
 
 /obj/machinery/door_timer/New()
 	..()

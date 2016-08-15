@@ -7,9 +7,9 @@
 	anchored = 1
 	density = 1
 	opacity = 1
-	bound_width = 96
-	bound_height = 96
-	pixel_x = -32
+	bound_width = 192
+	bound_height = 192
+	pixel_x = -64
 	burn_state = LAVA_PROOF
 	luminosity = 1
 	var/boss = FALSE

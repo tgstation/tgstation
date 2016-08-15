@@ -28,7 +28,7 @@
 /obj/structure/guncase/update_icon()
 	cut_overlays()
 	for(var/i = contents.len, i >= 1, i--)
-		add_overlay(image(icon = src.icon, icon_state = "[case_type]", pixel_x = 4 * (i -1) ))
+		add_overlay(image(icon = src.icon, icon_state = "[case_type]", pixel_x = 8 * (i -1) ))
 	if(open)
 		add_overlay("[icon_state]_open")
 	else

@@ -4,7 +4,7 @@
 	status_flags = 0
 	ventcrawler = 0 //pull over that ass too fat
 	unique_name = 0
-	pixel_x = -16
+	pixel_x = -32
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles

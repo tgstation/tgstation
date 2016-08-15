@@ -476,7 +476,7 @@
 /mob/living/simple_animal/hostile/alien/queen/large{
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
-	pixel_x = -16;
+	pixel_x = -32;
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

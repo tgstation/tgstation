@@ -10,11 +10,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
 	//eg: 32x32 sprite, 64x64 sprite, etc.
 	//allows inhands/worn sprites to be of any size, but still centered on a mob properly
-	var/worn_x_dimension = 32
-	var/worn_y_dimension = 32
+	var/worn_x_dimension = 64
+	var/worn_y_dimension = 64
 	//Same as above but for inhands, uses the lefthand_ and righthand_ file vars
-	var/inhand_x_dimension = 32
-	var/inhand_y_dimension = 32
+	var/inhand_x_dimension = 64
+	var/inhand_y_dimension = 64
 
 	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
@@ -517,8 +517,8 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		var/turf/T = get_turf(src)
 		if(T)
 			var/obj/effect/decal/cleanable/molten_item/I = new (T)
-			I.pixel_x = rand(-16,16)
-			I.pixel_y = rand(-16,16)
+			I.pixel_x = rand(-32,32)
+			I.pixel_y = rand(-32,32)
 			I.desc = "Looks like this was \an [src] some time ago."
 		if(istype(src,/obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = src

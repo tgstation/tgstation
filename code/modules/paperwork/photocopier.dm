@@ -117,8 +117,8 @@
 					p.name = photocopy.name
 					p.desc = photocopy.desc
 					p.scribble = photocopy.scribble
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
+					p.pixel_x = rand(-20, 20)
+					p.pixel_y = rand(-20, 20)
 					p.blueprints = photocopy.blueprints //a copy of a picture is still good enough for the syndicate
 					busy = 1
 					sleep(15)
@@ -158,8 +158,8 @@
 						break
 					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 					p.desc = "You see [ass]'s ass on the photo."
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
+					p.pixel_x = rand(-20, 20)
+					p.pixel_y = rand(-20, 20)
 					p.img = temp_img
 					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
 					var/icon/ic = icon('icons/obj/items.dmi',"photo")
@@ -218,8 +218,8 @@
 			p.img = img
 			p.desc = selection.fields["desc"]
 			p.blueprints = selection.fields["blueprints"]
-			p.pixel_x = rand(-10, 10)
-			p.pixel_y = rand(-10, 10)
+			p.pixel_x = rand(-20, 20)
+			p.pixel_y = rand(-20, 20)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
 			busy = 1
 			sleep(15)

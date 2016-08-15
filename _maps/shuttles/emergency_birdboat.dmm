@@ -18,7 +18,7 @@
 /obj/item/weapon/scalpel,
 /obj/item/weapon/retractor{
 	pixel_x = 0;
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/hemostat,
 /turf/open/floor/plasteel/white,
@@ -28,7 +28,7 @@
 /obj/item/weapon/cautery,
 /obj/item/weapon/surgicaldrill,
 /obj/item/weapon/circular_saw{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
@@ -103,7 +103,7 @@
 /area/shuttle/escape)
 "u" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -112,7 +112,7 @@
 /obj/machinery/recharger{
 	active_power_usage = 0;
 	idle_power_usage = 0;
-	pixel_y = 4;
+	pixel_y = 8;
 	use_power = 0
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -170,8 +170,8 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti{
 	name = "pasghetti";
-	pixel_x = 4;
-	pixel_y = 7
+	pixel_x = 8;
+	pixel_y = 14
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
@@ -205,21 +205,21 @@
 /obj/structure/chair,
 /obj/structure/window/reinforced{
 	dir = 1;
-	pixel_y = 2
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "L" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "M" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
@@ -233,15 +233,15 @@
 "O" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/brute{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/firstaid/brute,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "P" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

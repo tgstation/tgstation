@@ -515,8 +515,8 @@
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "time"
 	layer = FLY_LAYER
-	pixel_x = -64
-	pixel_y = -64
+	pixel_x = -128
+	pixel_y = -128
 	unacidable = 1
 	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune

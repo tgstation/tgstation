@@ -28,7 +28,7 @@
 	remove_overlay(LEGCUFF_LAYER)
 	if(legcuffed)
 		var/image/standing = image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
-		standing.pixel_y = 8
+		standing.pixel_y = 16
 		overlays_standing[LEGCUFF_LAYER] = standing
 	apply_overlay(LEGCUFF_LAYER)
 

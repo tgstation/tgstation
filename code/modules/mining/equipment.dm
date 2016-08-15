@@ -430,8 +430,8 @@
 	anchored = 1
 	mouse_opacity = 0
 	duration = 30
-	pixel_x = -4
-	pixel_y = -4
+	pixel_x = -8
+	pixel_y = -8
 
 
 /**********************Xeno Warning Sign**********************/

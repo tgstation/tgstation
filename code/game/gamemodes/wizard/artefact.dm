@@ -91,8 +91,8 @@
 	icon_state = "singularity_s1"
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "reality"
-	pixel_x = -96
-	pixel_y = -96
+	pixel_x = -192
+	pixel_y = -192
 	grav_pull = 6
 	consume_range = 3
 	current_size = STAGE_FOUR

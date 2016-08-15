@@ -63,7 +63,7 @@
 /area/shuttle/transport)
 "ao" = (
 /obj/structure/mirror/magic/badmin{
-	pixel_x = 30
+	pixel_x = 60
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
@@ -154,7 +154,7 @@
 /area/shuttle/transport)
 "aH" = (
 /obj/machinery/newscaster{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)

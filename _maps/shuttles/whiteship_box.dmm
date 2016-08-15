@@ -326,8 +326,8 @@
 "bg" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 6;
-	pixel_y = -5
+	pixel_x = 12;
+	pixel_y = -10
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)

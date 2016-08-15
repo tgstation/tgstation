@@ -462,8 +462,8 @@
 	desc = "You get the feeling that you shouldn't be standing here."
 	clockwork_desc = "A sigil that will soon erupt and smite any unenlightened nearby."
 	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -64
+	pixel_y = -64
 	layer = BELOW_MOB_LAYER
 	var/mob/user
 
@@ -703,8 +703,8 @@
 	clockwork_desc = "One of Ratvar's four generals. Nezbere is responsible for the design, testing, and creation of everything in Ratvar's domain."
 	icon = 'icons/effects/340x428.dmi'
 	icon_state = "nezbere"
-	pixel_x = -154
-	pixel_y = -198
+	pixel_x = -308
+	pixel_y = -396
 
 /obj/effect/clockwork/general_marker/sevtug
 	name = "Sevtug, the Formless Pariah"
@@ -712,8 +712,8 @@
 	clockwork_desc = "One of Ratvar's four generals. Sevtug taught him how to manipulate minds and is one of his oldest allies."
 	icon = 'icons/effects/211x247.dmi'
 	icon_state = "sevtug"
-	pixel_x = -89
-	pixel_y = -107
+	pixel_x = -178
+	pixel_y = -214
 
 /obj/effect/clockwork/general_marker/nzcrentr
 	name = "Nzcrentr, the Eternal Thunderbolt"
@@ -723,8 +723,8 @@
 	Nzcrentr now serves loyally, though even one of Nezbere's finest creations was not enough to totally eliminate its will."
 	icon = 'icons/effects/254x361.dmi'
 	icon_state = "nzcrentr"
-	pixel_x = -111
-	pixel_y = -164
+	pixel_x = -222
+	pixel_y = -328
 
 /obj/effect/clockwork/general_marker/inathneq
 	name = "Inath-neq, the Resonant Cogwheel"
@@ -735,8 +735,8 @@
 	merged her soul with those of the Cogs slain with her on the battlefield."
 	icon = 'icons/effects/187x381.dmi'
 	icon_state = "inath-neq"
-	pixel_x = -77
-	pixel_y = -174
+	pixel_x = -154
+	pixel_y = -348
 
 
 /obj/effect/clockwork/sigil //Sigils: Rune-like markings on the ground with various effects.

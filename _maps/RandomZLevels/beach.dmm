@@ -66,13 +66,13 @@
 /area/awaymission/beach)
 "an" = (
 /obj/structure/sink{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/beach)
 "ao" = (
 /obj/structure/sink{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
@@ -80,14 +80,14 @@
 "ap" = (
 /turf/open/floor/plasteel/white,
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/sandeffect,
 /area/awaymission/beach)
 "aq" = (
 /turf/open/floor/plasteel/white,
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -56
 	},
 /turf/open/floor/plasteel/sandeffect,
 /area/awaymission/beach)

@@ -132,9 +132,9 @@ mob
 		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -32)
 
 		// Testing image overlays
-		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32))
-		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32))
-		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -64))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 64))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -64))
 
 		// Testing icon file overlays (defaults to mob's state)
 		add_overlay('_flat_demoIcons2.dmi')
@@ -202,8 +202,8 @@ mob
 obj/effect/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
-	pixel_x = -24
-	pixel_y = 24
+	pixel_x = -48
+	pixel_y = 48
 	layer = TURF_LAYER // Should appear below the rest of the overlays
 
 world
@@ -867,8 +867,8 @@ The _flatIcons list is a cache for generated icon files.
 	var/image/text_image = new(loc = A)
 	text_image.maptext = "<font size = 4>[letter]</font>"
 	text_image.color = AverageColour(atom_icon)
-	text_image.pixel_x = 7
-	text_image.pixel_y = 5
+	text_image.pixel_x = 14
+	text_image.pixel_y = 10
 	del(atom_icon)
 	return text_image
 

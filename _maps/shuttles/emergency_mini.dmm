@@ -38,12 +38,12 @@
 /area/shuttle/escape)
 "h" = (
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 6
+	pixel_x = 4;
+	pixel_y = 12
 	},
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -75,7 +75,7 @@
 "n" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 28;
+	pixel_x = 56;
 	req_access_txt = "0"
 	},
 /turf/open/floor/mineral/titanium,
@@ -150,7 +150,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-	pixel_x = 25
+	pixel_x = 50
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -176,8 +176,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/weapon/crowbar,
 /obj/item/weapon/extinguisher,
@@ -225,7 +225,7 @@
 "L" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -277,8 +277,8 @@
 "V" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/weapon/crowbar,
 /turf/open/floor/mineral/titanium,

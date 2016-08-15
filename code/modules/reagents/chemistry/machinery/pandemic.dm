@@ -73,8 +73,8 @@
 		if(!src.wait)
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			if(B)
-				B.pixel_x = rand(-3, 3)
-				B.pixel_y = rand(-3, 3)
+				B.pixel_x = rand(-6, 6)
+				B.pixel_y = rand(-6, 6)
 				var/path = GetResistancesByIndex(text2num(href_list["create_vaccine"]))
 				var/vaccine_type = path
 				var/vaccine_name = "Unknown"
@@ -118,8 +118,8 @@
 				return
 			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 			B.icon_state = "bottle3"
-			B.pixel_x = rand(-3, 3)
-			B.pixel_y = rand(-3, 3)
+			B.pixel_x = rand(-6, 6)
+			B.pixel_y = rand(-6, 6)
 			replicator_cooldown(50)
 			var/list/data = list("viruses"=list(D))
 			B.name = "[name] culture bottle"

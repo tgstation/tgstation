@@ -107,7 +107,7 @@
 /obj/machinery/button/door{
 	id = "goonwizship1";
 	name = "Strange Ship Door Button";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/shuttle/purple,
 /area/ruin/powered/authorship)

@@ -323,13 +323,13 @@
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
-		if(A.pixel_y > 16)
+		if(A.pixel_y > 32)
 			setDir(NORTH)
-		else if(A.pixel_y < -16)
+		else if(A.pixel_y < -32)
 			setDir(SOUTH)
-		else if(A.pixel_x > 16)
+		else if(A.pixel_x > 32)
 			setDir(EAST)
-		else if(A.pixel_x < -16)
+		else if(A.pixel_x < -32)
 			setDir(WEST)
 		return
 
