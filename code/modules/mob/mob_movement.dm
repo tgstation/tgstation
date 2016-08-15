@@ -60,6 +60,7 @@
 		return
 	usr.drop_item()
 
+//there are bugs with byond's default versions of these verbs
 /client/verb/moveup()
 	set name = ".moveup"
 	set instant = 1
@@ -137,7 +138,7 @@
 	if(!mob || !mob.loc)
 		return 0
 	if(mob.notransform)
-		return 0	//This is sota the goto stop mobs from moving var
+		return 0	//This is sorta the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
