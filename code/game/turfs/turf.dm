@@ -21,17 +21,25 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
+	var/cliff_icon_state = "" //icon state for this turf's "cliff" in cliffs.dmi, displayed on the turf below this one (y-1)
+	var/static/list/cliff_images //cliff_icon_state = /image instance
+	var/draw_cliff = FALSE
+
 
 /turf/New()
 	..()
 
 	levelupdate()
+	update_cliff()
 	if(smooth)
 		smooth_icon(src)
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
 		Entered(AM)
+
+/turf/initialize()
+	update_cliff()
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
@@ -157,6 +165,10 @@
 		for(var/obj/structure/cable/C in contents)
 			C.Deconstruct()
 
+	update_cliff()
+	var/turf/T = locate(x,y-1,z)
+	if(T)
+		T.update_cliff()
 	queue_smooth_neighbors(src)
 
 /turf/open/AfterChange(ignore_air)
@@ -320,3 +332,21 @@
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
+
+
+/turf/proc/update_cliff()
+	if(cliff_images) //Not cut_overlays() because turf smoothing gets royally fugged.
+		var/list/L = list()
+		for(var/k in cliff_images)
+			L += cliff_images[k]
+		overlays -= L
+	if(draw_cliff)
+		var/turf/T = locate(x,y+1,z)
+		if(T && T.cliff_icon_state)
+			if(!cliff_images)
+				cliff_images = list()
+			var/image/I = cliff_images[T.cliff_icon_state]
+			if(!I)
+				I = image(icon = 'icons/turf/cliffs.dmi', icon_state = T.cliff_icon_state)
+				cliff_images[T.cliff_icon_state] = I
+			add_overlay(I)
