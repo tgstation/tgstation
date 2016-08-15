@@ -154,18 +154,18 @@ Difficulty: Insane
 	sleep(20)
 
 
-/mob/living/simple_animal/hostile/megafauna/adamant/proc/telefrag(mob/living/target)
+/mob/living/simple_animal/hostile/megafauna/adamant/proc/telefrag(mob/living/victim)
 	var/matrix/ntransform = matrix(transform)
 	animate(src, transform=ntransform.Scale(10), alpha=0, 10)
 	density = 0
 	sleep(50)
-	forceMove(get_turf(target))
+	freeze()
+	forceMove(get_turf(victim))
 	animate(src, transform=ntransform.Scale(0.1), alpha=255, 10)
 	sleep(10)
 	density = 1
 	for(var/mob/living/M in get_turf(src))
 		M.gib()
-	freeze()
 
 
 /mob/living/simple_animal/hostile/megafauna/adamant/proc/freeze()
