@@ -69,6 +69,17 @@ Difficulty: Very Hard
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
+	if(enrage(target))
+		if(move_to_delay == initial(move_to_delay))
+			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
+		ranged_cooldown = world.time + 30
+		telegraph()
+		dir_shots(alldirs)
+		move_to_delay = 3
+		return
+	else
+		move_to_delay = initial(move_to_delay)
+
 	if(prob(20+anger_modifier)) //Major attack
 		telegraph()
 
@@ -76,7 +87,7 @@ Difficulty: Very Hard
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			spiral_shoot(rand(0, 1))
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -87,13 +98,7 @@ Difficulty: Very Hard
 			blast()
 		else
 			ranged_cooldown = world.time + 40
-			dir_shots(diagonals)
-			sleep(10)
-			dir_shots(cardinal)
-			sleep(10)
-			dir_shots(diagonals)
-			sleep(10)
-			dir_shots(cardinal)
+			addtimer(src, "alternating_dir_shots", 0)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -129,6 +134,23 @@ Difficulty: Very Hard
 		AT.pixel_y += random_y
 	..()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
+	var/enraged = FALSE
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.martial_art && prob(H.martial_art.deflection_chance))
+			enraged = TRUE
+
+	return enraged
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
+	dir_shots(diagonals)
+	sleep(10)
+	dir_shots(cardinal)
+	sleep(10)
+	dir_shots(diagonals)
+	sleep(10)
+	dir_shots(cardinal)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
@@ -204,10 +226,11 @@ Difficulty: Very Hard
 	P.fire()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
-	for(var/turf/turf in range(12,get_turf(src)))
+	var/turf/U = get_turf(src)
+	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+	for(var/T in RANGE_TURFS(12, U) - U)
 		if(prob(5))
-			shoot_projectile(turf)
+			shoot_projectile(T)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
@@ -261,15 +284,20 @@ Difficulty: Very Hard
 	name = "black box"
 	desc = "A completely indestructible chunk of crystal, rumoured to predate the start of this universe. It looks like you could store things inside it."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "blackbox"
 	icon_on = "blackbox"
 	icon_off = "blackbox"
 	luminosity = 8
-	max_n_of_items = 200
+	max_n_of_items = INFINITY
+	burn_state = LAVA_PROOF
 	pixel_y = -4
 	use_power = 0
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
 	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
+
+/obj/machinery/smartfridge/black_box/update_icon()
+	return
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
@@ -297,7 +325,7 @@ Difficulty: Very Hard
 
 	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
-	
+
 	S["stored_items"]				<< stored_items
 	memory_saved = TRUE
 
@@ -312,7 +340,7 @@ Difficulty: Very Hard
 		create_item(item)
 
 //in it's own proc to avoid issues with items that nolonger exist in the code base.
-//try catch doesn't always prevent byond runtimes from halting a proc, 
+//try catch doesn't always prevent byond runtimes from halting a proc,
 /obj/machinery/smartfridge/black_box/proc/create_item(item_type)
 	new item_type(src)
 

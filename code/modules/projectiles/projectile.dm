@@ -49,6 +49,7 @@
 	var/stamina = 0
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
+	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -146,7 +147,7 @@
 				next_run = world.time
 				sleep(1)
 				continue
-			
+
 			if((!( current ) || loc == current))
 				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 
@@ -199,7 +200,7 @@
 			Range()
 			if (delay > 0)
 				sleep(delay)
-			
+
 	else //old projectile system
 		set waitfor = 0
 		while(loc)

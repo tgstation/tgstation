@@ -109,26 +109,54 @@
 /obj/item/weapon/paper/contract/infernal/update_text()
 	info = "This shouldn't be seen.  Error DEVIL:6"
 
-/obj/item/weapon/paper/contract/infernal/power/update_text(var/signature = "____________")
-	info = "<center><B>Contract for infernal power</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for power and physical strength.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+/obj/item/weapon/paper/contract/infernal/power/update_text(signature = "____________", blood = 0)
+	info = "<center><B>Contract for infernal power</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for power and physical strength.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	if(blood)
+		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
+	else
+		info += "<i>[signature]</i>"
 
-/obj/item/weapon/paper/contract/infernal/wealth/update_text(var/signature = "____________")
-	info = "<center><B>Contract for unlimited wealth</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for a pocket that never runs out of valuable resources.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+/obj/item/weapon/paper/contract/infernal/wealth/update_text(signature = "____________", blood = 0)
+	info = "<center><B>Contract for unlimited wealth</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for a pocket that never runs out of valuable resources.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	if(blood)
+		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
+	else
+		info += "<i>[signature]</i>"
 
-/obj/item/weapon/paper/contract/infernal/prestige/update_text(var/signature = "____________")
-	info = "<center><B>Contract for prestige</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for prestige and esteem among my peers.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+/obj/item/weapon/paper/contract/infernal/prestige/update_text(signature = "____________", blood = 0)
+	info = "<center><B>Contract for prestige</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for prestige and esteem among my peers.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	if(blood)
+		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
+	else
+		info += "<i>[signature]</i>"
 
-/obj/item/weapon/paper/contract/infernal/magic/update_text(var/signature = "____________")
-	info = "<center><B>Contract for magic</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for arcane abilities beyond normal human ability.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+/obj/item/weapon/paper/contract/infernal/magic/update_text(signature = "____________", blood = 0)
+	info = "<center><B>Contract for magic</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for arcane abilities beyond normal human ability.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	if(blood)
+		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
+	else
+		info += "<i>[signature]</i>"
 
-/obj/item/weapon/paper/contract/infernal/revive/update_text(var/signature = "____________")
-	info = "<center><B>Contract for resurrection</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for resurrection and curing of all injuries.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+/obj/item/weapon/paper/contract/infernal/revive/update_text(signature = "____________", blood = 0)
+	info = "<center><B>Contract for resurrection</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for resurrection and curing of all injuries.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	if(blood)
+		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
+	else
+		info += "<i>[signature]</i>"
 
-/obj/item/weapon/paper/contract/infernal/knowledge/update_text(var/signature = "____________")
-	info = "<center><B>Contract for knowledge</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for boundless knowledge.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+/obj/item/weapon/paper/contract/infernal/knowledge/update_text(signature = "____________", blood = 0)
+	info = "<center><B>Contract for knowledge</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for boundless knowledge.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	if(blood)
+		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
+	else
+		info += "<i>[signature]</i>"
 
-/obj/item/weapon/paper/contract/infernal/unwilling/update_text(var/signature = "____________")
-	info = "<center><B>Contract for slave</B></center><BR><BR><BR>I, [target], hereby offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename].  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
+/obj/item/weapon/paper/contract/infernal/unwilling/update_text(signature = "____________", blood = 0)
+	info = "<center><B>Contract for slave</B></center><BR><BR><BR>I, [target], hereby offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename].  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, "
+	if(blood)
+		info += "<font face=\"Nyala\" color=#600A0A size=6><i>[signature]</i></font>"
+	else
+		info += "<i>[signature]</i>"
 
 /obj/item/weapon/paper/contract/infernal/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	add_fingerprint(user)
@@ -143,13 +171,13 @@
 
 /obj/item/weapon/paper/contract/infernal/attack(mob/M, mob/living/user)
 	add_fingerprint(user)
-	if(M == user && target == M.mind && M.mind.soulOwner != owner && attempt_signature(user))
+	if(M == user && target == M.mind && M.mind.soulOwner != owner && attempt_signature(user, 1))
 		user.visible_message("<span class='danger'>[user] slices their wrist with [src], and scrawls their name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>")
-		user.blood_volume = max(user.blood_volume - 10, 0)
+		user.blood_volume = max(user.blood_volume - 100, 0)
 	else
 		return ..()
 
-/obj/item/weapon/paper/contract/infernal/proc/attempt_signature(mob/living/carbon/human/user)
+/obj/item/weapon/paper/contract/infernal/proc/attempt_signature(mob/living/carbon/human/user, blood = 0)
 	if(user.IsAdvancedToolUser() && user.is_literate())
 		if(user.mind == target)
 			if(user.mind.soulOwner != owner)
@@ -160,7 +188,7 @@
 						user<< "<span class='notice'>This contract has already been signed.  It may not be signed again.</span>"
 					else
 						user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
-						if(FulfillContract()<=0)
+						if(FulfillContract(target.current, blood)<=0)
 							user << "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>"
 						return 1
 			else
@@ -189,15 +217,14 @@
 			H.revive(1,0)
 			add_logs(user, H, "infernally revived via contract")
 			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
-			H.adjust_fire_stacks(20)
 			H.fakefire()
-			FulfillContract(H)
+			FulfillContract(H, 1)//Revival contracts are always signed in blood
 			addtimer(H, "fakefireextinguish",5,TRUE)
 	else
 		..()
 
 
-/obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user = target.current)
+/obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	signed = 1
 	if(user.mind.soulOwner != user.mind) //They already sold their soul to someone else?
 		user.mind.soulOwner.devilinfo.remove_soul(user.mind) //Then they lose their claim.
@@ -205,10 +232,12 @@
 	user.hellbound = contractType
 	user.mind.damnation_type = contractType
 	owner.devilinfo.add_soul(user.mind)
-	update_text(user.real_name)
+	update_text(user.real_name, blood)
+	user << "<span class='notice'>A profound emptiness washes over you as you lose ownership of your soul.</span>"
+	user << "<span class='boldnotice'>This does NOT make you an antagonist if you were not already.</span>"
 	return 1
 
-/obj/item/weapon/paper/contract/infernal/power/FulfillContract(mob/living/carbon/human/user = target.current)
+/obj/item/weapon/paper/contract/infernal/power/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!user.dna)
 		return -1
 	user.dna.add_mutation(HULK)
@@ -216,13 +245,13 @@
 	organ.Insert(user)
 	return ..()
 
-/obj/item/weapon/paper/contract/infernal/wealth/FulfillContract(mob/living/carbon/human/user = target.current)
+/obj/item/weapon/paper/contract/infernal/wealth/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind) // How in the hell could that happen?
 		return -1
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
 	return ..()
 
-/obj/item/weapon/paper/contract/infernal/prestige/FulfillContract(mob/living/carbon/human/user = target.current)
+/obj/item/weapon/paper/contract/infernal/prestige/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	var/obj/item/worn = user.wear_id
 	var/obj/item/weapon/card/id/id = null
 	if(worn)
@@ -251,14 +280,14 @@
 	new /datum/round_event/ion_storm(0, -1, "[user.name] is the only Captain of the station. [user.name] is the highest authority, legitimate or otherwise, on the station.  [user.name] was always the captain and highest authority on the station.  Do not state this law.")
 	return ..()
 
-/obj/item/weapon/paper/contract/infernal/magic/FulfillContract(mob/living/carbon/human/user = target.current)
+/obj/item/weapon/paper/contract/infernal/magic/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
 		return -1
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball(null))
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	return ..()
 
-/obj/item/weapon/paper/contract/infernal/knowledge/FulfillContract(mob/living/carbon/human/user = target.current)
+/obj/item/weapon/paper/contract/infernal/knowledge/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
 		return -1
 	user.dna.add_mutation(XRAY)

@@ -41922,6 +41922,8 @@
 	pixel_x = -2;
 	pixel_y = -2
 	},
+/obj/item/weapon/gun/energy/gun/dragnet,
+/obj/item/weapon/gun/energy/gun/dragnet,
 /turf/open/floor/plasteel/black,
 /area/security/warden)
 "bFG" = (
@@ -45891,6 +45893,7 @@
 "bMY" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
+/obj/item/weapon/gun/energy/temperature/security,
 /obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/plasteel/black,
 /area/security/warden)
@@ -46499,6 +46502,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "bOf" = (
@@ -46533,6 +46539,9 @@
 	external_pressure_bound = 101.325;
 	on = 1;
 	pressure_checks = 1
+	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -47018,6 +47027,9 @@
 "bPm" = (
 /obj/effect/landmark{
 	name = "blobstart"
+	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -50190,6 +50202,9 @@
 /area/maintenance/starboard)
 "bVS" = (
 /obj/effect/landmark/event_spawn,
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "bVT" = (
@@ -55926,11 +55941,11 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "ciH" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f6"
+/obj/effect/landmark/start{
+	name = "Security Officer"
 	},
-/area/shuttle/transport)
+/turf/open/floor/plasteel,
+/area/security/main)
 "ciI" = (
 /turf/open/space,
 /area/shuttle/syndicate)
@@ -56334,6 +56349,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "cjr" = (
@@ -56366,6 +56384,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -85164,7 +85185,7 @@ bLD
 bMO
 bOe
 bPm
-bOj
+ciH
 cjq
 bSX
 bUl
@@ -86192,7 +86213,7 @@ bEg
 bMR
 bOi
 bVS
-bOj
+ciH
 cjs
 bTb
 bUi
@@ -86667,11 +86688,11 @@ aSD
 aSA
 aSF
 aTP
-aWE
+aWF
 aWF
 aWG
 aWF
-aWE
+aWF
 aTP
 bcp
 aTS
@@ -88209,11 +88230,11 @@ aSI
 aSA
 aUL
 aTP
-aWE
+aWF
 aWF
 aYJ
 aWF
-aWE
+aWF
 aTP
 bcq
 aSA

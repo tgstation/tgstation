@@ -7,7 +7,7 @@
 	name = "alien"
 	voice_name = "alien"
 	icon = 'icons/mob/alien.dmi'
-	gender = NEUTER
+	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2

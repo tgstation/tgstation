@@ -80,12 +80,14 @@ Difficulty: Medium
 			minimum_distance = 0
 			speed = 0
 			charging = 1
-			spawn(50)
-				ranged = 1
-				retreat_distance = 5
-				minimum_distance = 5
-				speed = 2
-				charging = 0
+			addtimer(src, "reset_charge", 50)
+
+/mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
+	ranged = 1
+	retreat_distance = 5
+	minimum_distance = 5
+	speed = 2
+	charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	if(health > 0)

@@ -522,8 +522,6 @@
 				B.explode_now = TRUE
 				detonated++
 			existant++
-			var/turf/T = get_turf(B)
-			world << "[COORD(T)]"
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
 		user << "<span class='notice'>[existant] found, [detonated] triggered.</span>"
 		if(detonated)

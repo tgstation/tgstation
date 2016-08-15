@@ -320,11 +320,58 @@
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
 	w_class = 5
+	var/homerun_ready = 0
+	var/homerun_able = 0
+
+/obj/item/weapon/melee/baseball_bat/homerun
+	name = "home run bat"
+	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
+	homerun_able = 1
+
+/obj/item/weapon/melee/baseball_bat/attack_self(mob/user)
+	if(!homerun_able)
+		..()
+		return
+	if(homerun_ready)
+		user << "<span class='notice'>You're already ready to do a home run!</span>"
+		..()
+		return
+	user << "<span class='warning'>You begin gathering strength...</span>"
+	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, 1)
+	if(do_after(user, 90, target = src))
+		user << "<span class='userdanger'>You gather power! Time for a home run!</span>"
+		homerun_ready = 1
+	..()
 
 /obj/item/weapon/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	. = ..()
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
-	target.throw_at(throw_target, rand(1,2), 7, user)
+	if(homerun_ready)
+		user.visible_message("<span class='userdanger'>It's a home run!</span>")
+		target.throw_at(throw_target, rand(8,10), 14, user)
+		target.ex_act(2)
+		playsound(get_turf(src), 'sound/weapons/HOMERUN.ogg', 100, 1)
+		homerun_ready = 0
+		return
+	else
+		target.throw_at(throw_target, rand(1,2), 7, user)
+
+/obj/item/weapon/melee/baseball_bat/ablative
+	name = "metal baseball bat"
+	desc = "This bat is made of highly reflective, highly armored material."
+	icon_state = "baseball_bat_metal"
+	item_state = "baseball_bat_metal"
+	force = 12
+	throwforce = 15
+
+/obj/item/weapon/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
+	var/picksound = rand(1,2)
+	var/turf = get_turf(src)
+	if(picksound == 1)
+		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, 1)
+	if(picksound == 2)
+		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
+	return 1
 
 /obj/item/weapon/melee/flyswatter
 	name = "Flyswatter"

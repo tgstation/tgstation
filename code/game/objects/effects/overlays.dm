@@ -111,6 +111,10 @@
 	pixel_y = -32
 	duration = 8
 
+/obj/effect/overlay/temp/explosion/fast
+	icon_state = "explosionfast"
+	duration = 4
+
 /obj/effect/overlay/temp/blob
 	name = "blob"
 	icon_state = "blob_attack"
@@ -264,6 +268,7 @@
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
 	duration = 70
+	luminosity = 6
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()
@@ -274,7 +279,7 @@
 /obj/effect/overlay/temp/ratvar/sigil/vitality
 	color = "#1E8CE1"
 	icon_state = "sigilactivepulse"
-	layer = BELOW_MOB_LAYER
+	layer = ABOVE_MOB_LAYER
 
 /obj/effect/overlay/temp/ratvar/sigil/accession
 	color = "#AF0AAF"

@@ -151,17 +151,15 @@ Difficulty: Medium
 
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth/2)
-			swoop_attack(1)
+			addtimer(src, "swoop_attack", 0, FALSE, 1)
 		else
 			fire_rain()
 
 	else if(prob(10+anger_modifier) && !client && !swooping)
 		if(health > maxHealth/2)
-			swoop_attack()
+			addtimer(src, "swoop_attack", 0)
 		else
-			swoop_attack()
-			swoop_attack()
-			swoop_attack()
+			addtimer(src, "triple_swoop", 0)
 	else
 		fire_walls()
 
@@ -180,8 +178,9 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
 	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
+	var/turf/previousturf = get_turf(src)
 	for(var/turf/J in getline(src,E))
-		if(!range || J.density)
+		if(!range || !previousturf.CanAtmosPass(J))
 			break
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)
@@ -190,7 +189,13 @@ Difficulty: Medium
 			if(L != src)
 				L.adjustFireLoss(20)
 				L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+		previousturf = J
 		sleep(1)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
+	swoop_attack()
+	swoop_attack()
+	swoop_attack()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
 	if(stat || swooping)

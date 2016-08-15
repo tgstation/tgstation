@@ -165,7 +165,7 @@
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		target_turf = get_turf(src)
-	PoolOrNew(/obj/effect/overlay/temp/explosion, target_turf)
+	PoolOrNew(/obj/effect/overlay/temp/explosion/fast, target_turf)
 	for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
 		if(istype(T, /turf/closed/mineral))
 			var/turf/closed/mineral/M = T
@@ -223,6 +223,7 @@
 	damage_type = BRUTE
 	damage = 5
 	range = 3.5 //works as 4, but doubles to 7
+	dismemberment = 20
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
