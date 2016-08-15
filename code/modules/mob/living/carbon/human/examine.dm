@@ -345,7 +345,8 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
-
+	if(!get_bodypart(ARM_LEFT) && !get_bodypart(LEG_LEFT))
+		msg += "[t_He] looks all right now.\n"
 	msg += "*---------*</span>"
 
 	user << msg
