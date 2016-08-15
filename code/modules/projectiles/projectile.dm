@@ -146,7 +146,7 @@
 				next_run = world.time
 				sleep(1)
 				continue
-			
+
 			if((!( current ) || loc == current))
 				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 
@@ -158,29 +158,29 @@
 			M.Turn(Angle)
 			transform = M
 
-			var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
-			var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
+			var/Pixel_x=round(sin(Angle)+32*sin(Angle)*2)
+			var/Pixel_y=round(cos(Angle)+32*cos(Angle)*2)
 			var/pixel_x_offset = pixel_x + Pixel_x
 			var/pixel_y_offset = pixel_y + Pixel_y
 			var/new_x = x
 			var/new_y = y
 
-			while(pixel_x_offset > 16)
-				pixel_x_offset -= 32
-				pixel_x -= 32
+			while(pixel_x_offset > 32)
+				pixel_x_offset -= 64
+				pixel_x -= 64
 				new_x++// x++
-			while(pixel_x_offset < -16)
-				pixel_x_offset += 32
-				pixel_x += 32
+			while(pixel_x_offset < -32)
+				pixel_x_offset += 64
+				pixel_x += 64
 				new_x--
 
-			while(pixel_y_offset > 16)
-				pixel_y_offset -= 32
-				pixel_y -= 32
+			while(pixel_y_offset > 32)
+				pixel_y_offset -= 64
+				pixel_y -= 64
 				new_y++
-			while(pixel_y_offset < -16)
-				pixel_y_offset += 32
-				pixel_y += 32
+			while(pixel_y_offset < -32)
+				pixel_y_offset += 64
+				pixel_y += 64
 				new_y--
 
 			step_towards(src, locate(new_x, new_y, z))
@@ -199,7 +199,7 @@
 			Range()
 			if (delay > 0)
 				sleep(delay)
-			
+
 	else //old projectile system
 		set waitfor = 0
 		while(loc)

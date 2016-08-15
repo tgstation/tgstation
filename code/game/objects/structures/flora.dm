@@ -7,7 +7,7 @@
 /obj/structure/flora/tree
 	name = "tree"
 	density = 1
-	pixel_x = -16
+	pixel_x = -32
 	layer = FLY_LAYER
 	var/cut = FALSE
 	var/log_amount = 10
@@ -228,6 +228,7 @@
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
+	layer = ABOVE_MOB_LAYER
 	w_class = 5
 	force = 10
 	throwforce = 13

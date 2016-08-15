@@ -778,6 +778,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
 		user << "<span class='notice'>You scan \the [C].</span>"
+	else if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.attackby(C, user, params)
 	else
 		return ..()
 

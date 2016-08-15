@@ -437,7 +437,13 @@ Sorry Giacom. Please don't be mad :(
 
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
-	  return 0 //only carbon liveforms have this proc
+	adjustFireLoss(shock_damage)
+	visible_message(
+		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
+		"<span class='italics'>You hear a heavy electrical crack.</span>" \
+	)
+	return shock_damage
 
 /mob/living/emp_act(severity)
 	var/list/L = src.get_contents()
@@ -747,7 +753,7 @@ Sorry Giacom. Please don't be mad :(
 	if(anchored || (buckled && buckled.anchored))
 		fixed = 1
 	if(on && !floating && !fixed)
-		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
+		animate(src, pixel_y = pixel_y + 4, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
 		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
@@ -844,14 +850,14 @@ Sorry Giacom. Please don't be mad :(
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
-		pixel_y_diff = 8
+		pixel_y_diff = 16
 	else if(direction & SOUTH)
-		pixel_y_diff = -8
+		pixel_y_diff = -16
 
 	if(direction & EAST)
-		pixel_x_diff = 8
+		pixel_x_diff = 16
 	else if(direction & WEST)
-		pixel_x_diff = -8
+		pixel_x_diff = -16
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
@@ -886,17 +892,17 @@ Sorry Giacom. Please don't be mad :(
 	// Set the direction of the icon animation.
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
-		I.pixel_y = -16
+		I.pixel_y = -32
 	else if(direction & SOUTH)
-		I.pixel_y = 16
+		I.pixel_y = 32
 
 	if(direction & EAST)
-		I.pixel_x = -16
+		I.pixel_x = -32
 	else if(direction & WEST)
-		I.pixel_x = 16
+		I.pixel_x = 32
 
 	if(!direction) // Attacked self?!
-		I.pixel_z = 16
+		I.pixel_z = 32
 
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
@@ -1030,7 +1036,10 @@ Sorry Giacom. Please don't be mad :(
 	return 1
 
 /mob/living/proc/return_soul()
+	hellbound = 0
 	if(mind)
+		if(mind.soulOwner.devilinfo)//Not sure how this could happen, but whatever.
+			mind.soulOwner.devilinfo.remove_soul(mind)
 		mind.soulOwner = mind
 
 /mob/living/proc/has_bane(banetype)

@@ -122,17 +122,17 @@
 
 	switch(ingredients_placement)
 		if(INGREDIENTS_SCATTER)
-			I.pixel_x = rand(-1,1)
-			I.pixel_y = rand(-1,1)
+			I.pixel_x = rand(-2,2)
+			I.pixel_y = rand(-2,2)
 		if(INGREDIENTS_STACK)
-			I.pixel_x = rand(-1,1)
-			I.pixel_y = 2 * ingredients.len - 1
+			I.pixel_x = rand(-2,2)
+			I.pixel_y = 4 * ingredients.len - 2
 		if(INGREDIENTS_STACKPLUSTOP)
-			I.pixel_x = rand(-1,1)
-			I.pixel_y = 2 * ingredients.len - 1
+			I.pixel_x = rand(-2,2)
+			I.pixel_y = 4 * ingredients.len - 2
 			overlays.Cut(ingredients.len)
 			var/image/TOP = new(icon, "[icon_state]_top")
-			TOP.pixel_y = 2 * ingredients.len + 3
+			TOP.pixel_y = 4 * ingredients.len + 6
 			add_overlay(I)
 			add_overlay(TOP)
 			return
@@ -140,7 +140,7 @@
 			cut_overlays()
 			I.color = filling_color
 		if(INGREDIENTS_LINE)
-			I.pixel_y = rand(-8,3)
+			I.pixel_y = rand(-16,6)
 			I.pixel_x = I.pixel_y
 
 	add_overlay(I)
@@ -261,12 +261,12 @@
 		BS.reagents.trans_to(src, BS.reagents.total_volume)
 		ingMax = ingredients.len //can't add more ingredients after that
 		var/image/TOP = new(icon, "[BS.icon_state]")
-		TOP.pixel_y = 2 * ingredients.len + 3
+		TOP.pixel_y = 4 * ingredients.len + 6
 		add_overlay(TOP)
 		if(istype(BS, /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom))
 			var/image/O = new(icon, "[initial(BS.icon_state)]_filling")
 			O.color = BS.filling_color
-			O.pixel_y = 2 * ingredients.len + 3
+			O.pixel_y = 4 * ingredients.len + 6
 			add_overlay(O)
 		qdel(BS)
 		return

@@ -148,6 +148,22 @@ research holder datum.
 		return
 	..()
 
+//Biogenerator files
+/datum/research/biogenerator/New()
+	for(var/T in (subtypesof(/datum/tech)))
+		possible_tech += new T(src)
+	for(var/path in subtypesof(/datum/design))
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & BIOGENERATOR) && ("initial" in D.category))
+			AddDesign2Known(D)
+
+/datum/research/biogenerator/AddDesign2Known(datum/design/D)
+	if(!(D.build_type & BIOGENERATOR))
+		return
+	..()
+
+
 /***************************************************************
 **						Technology Datums					  **
 **	Includes all the various technoliges and what they make.  **
@@ -280,5 +296,5 @@ research holder datum.
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/New()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)

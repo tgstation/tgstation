@@ -133,8 +133,8 @@
 	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	flags = 0
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50) //religion protects you from disease and radiation, honk.
-	worn_x_dimension = 64
-	worn_y_dimension = 64
+	worn_x_dimension = 128
+	worn_y_dimension = 128
 	var/side = "neither"
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/equipped(mob/living/carbon/user, slot)

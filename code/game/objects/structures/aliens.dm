@@ -150,10 +150,13 @@
 /obj/structure/alien/resin/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(!M.melee_damage_upper)
+	if(!M.melee_damage_upper && !M.obj_damage)
 		return
 	visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-	take_damage(M.melee_damage_upper, M.melee_damage_type)
+	if(M.obj_damage)
+		take_damage(M.obj_damage, M.melee_damage_type)
+	else
+		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type)
 
 /obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
 	return !density
@@ -181,7 +184,7 @@
 
 /obj/structure/alien/weeds/New(pos, node)
 	pixel_x = -4
-	pixel_y = -4 //so the sprites line up right in the map editor
+	pixel_y = -8 //so the sprites line up right in the map editor
 	..()
 	if(!luminosity) //weed nodes have luminosity, but normal weeds don't!
 		switch(rand(1,3))

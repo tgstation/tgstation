@@ -81,8 +81,10 @@
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	if(user.melee_damage_upper)
+	if(user.melee_damage_upper || user.obj_damage)
 		var/dmg_dealt = user.melee_damage_upper
+		if(user.obj_damage)
+			dmg_dealt = user.obj_damage
 		if(user.environment_smash)
 			dmg_dealt = 100
 		visible_message("<span class='warning'>[user] smashes [src]!</span>")
@@ -179,8 +181,8 @@
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 32, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 32, -(world.icon_size/2), world.icon_size/2)
 			return 1
 	else
 		return ..()
@@ -536,13 +538,16 @@
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	if(user.melee_damage_upper)
+	if(user.melee_damage_upper || user.obj_damage)
+		var/dmg_dealt = user.melee_damage_upper
+		if(user.obj_damage)
+			dmg_dealt = user.obj_damage
 		if(user.environment_smash)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			visible_message("<span class='warning'>[user] smashes [src] apart.</span>")
 			rack_destroy()
 		else
-			take_damage(user.melee_damage_upper, user.melee_damage_type)
+			take_damage(dmg_dealt, user.melee_damage_type)
 
 
 /obj/structure/rack/attack_tk() // no telehulk sorry

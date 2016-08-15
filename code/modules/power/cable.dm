@@ -498,8 +498,8 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	src.amount = amount
 	if(param_color)
 		item_color = param_color
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)
 	update_icon()
 	recipes = cable_coil_recipes
 
@@ -746,8 +746,8 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 /obj/item/stack/cable_coil/cut/New(loc)
 	..()
 	src.amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)
 	update_icon()
 
 /obj/item/stack/cable_coil/yellow

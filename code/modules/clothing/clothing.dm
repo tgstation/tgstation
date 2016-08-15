@@ -23,7 +23,6 @@
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
 	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
-
 	var/obj/item/weapon/storage/internal/pocket/pockets = null
 
 /obj/item/clothing/New()
@@ -419,8 +418,8 @@ BLIND     // can't see anything
 			if(user && notifyAttach)
 				user << "<span class='notice'>You attach [I] to [src].</span>"
 			I.transform *= 0.5	//halve the size so it doesn't overpower the under
-			I.pixel_x += 8
-			I.pixel_y -= 8
+			I.pixel_x += 16
+			I.pixel_y -= 16
 			I.layer = FLOAT_LAYER
 			add_overlay(I)
 
@@ -552,8 +551,8 @@ BLIND     // can't see anything
 
 	if(hastie)
 		hastie.transform *= 2
-		hastie.pixel_x -= 8
-		hastie.pixel_y += 8
+		hastie.pixel_x -= 16
+		hastie.pixel_y += 16
 		hastie.layer = initial(hastie.layer)
 		overlays = null
 		if(user.put_in_hands(hastie))

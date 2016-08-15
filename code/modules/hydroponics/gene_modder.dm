@@ -389,8 +389,8 @@
 /obj/item/weapon/disk/plantgene/New()
 	..()
 	add_overlay("datadisk_gene")
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/weapon/disk/plantgene/attackby(obj/item/weapon/W, mob/user, params)
 	..()

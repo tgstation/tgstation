@@ -42,8 +42,8 @@
 
 /obj/item/seeds/New(loc, nogenes = 0)
 	..()
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-8, 8)
+	pixel_x = rand(-16, 16)
+	pixel_y = rand(-16, 16)
 
 	if(!icon_grow)
 		icon_grow = "[species]-grow"

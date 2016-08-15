@@ -130,7 +130,7 @@ var/global/mulebot_count = 0
 		icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
 	cut_overlays()
 	if(load && !ismob(load))//buckling handles the mob offsets
-		load.pixel_y = initial(load.pixel_y) + 9
+		load.pixel_y = initial(load.pixel_y) + 18
 		if(load.layer < layer)
 			load.layer = layer + 0.01
 		add_overlay(load)
@@ -382,7 +382,7 @@ var/global/mulebot_count = 0
 
 /mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
 	if(M in buckled_mobs) //post buckling
-		M.pixel_y = initial(M.pixel_y) + 9
+		M.pixel_y = initial(M.pixel_y) + 18
 		if(M.layer < layer)
 			M.layer = layer + 0.01
 

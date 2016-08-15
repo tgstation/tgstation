@@ -43,8 +43,8 @@ Difficulty: Medium
 	var/charging = 0
 	medal_type = MEDAL_PREFIX
 	score_type = LEGION_SCORE
-	pixel_y = -90
-	pixel_x = -75
+	pixel_y = -180
+	pixel_x = -150
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	elimination = 1
@@ -55,10 +55,17 @@ Difficulty: Medium
 	..()
 	new/obj/item/device/gps/internal/legion(src)
 
+/mob/living/simple_animal/hostile/megafauna/legion/devour(mob/living/L)
+	if(ishuman(L))
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
+		A.infest(L)
+	else
+		..()
+
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
 		if(prob(75))
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(src.loc)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 			A.GiveTarget(target)
 			A.friends = friends
 			A.faction = faction

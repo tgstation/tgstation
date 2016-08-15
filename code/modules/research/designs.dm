@@ -34,7 +34,8 @@ other types of metals and chemistry for reagents).
 	var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
-	var/build_path = ""					//The file path of the object that gets created
+	var/build_path = null				//The file path of the object that gets created
+	var/list/make_reagents = list()			//Reagents produced. Format: "id" = amount. Currently only supported by the biogenerator.
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
 	var/maxstack = 1
@@ -52,8 +53,8 @@ other types of metals and chemistry for reagents).
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/New()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////

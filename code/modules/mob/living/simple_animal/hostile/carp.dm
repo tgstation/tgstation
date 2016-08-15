@@ -60,7 +60,7 @@
 	icon_gib = "megacarp_gib"
 	maxHealth = 65
 	health = 65
-	pixel_x = -16
+	pixel_x = -32
 	mob_size = MOB_SIZE_LARGE
 
 	melee_damage_lower = 20

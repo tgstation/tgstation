@@ -47,7 +47,7 @@ Difficulty: Very Hard
 	ranged = 1
 	flying = 1
 	mob_size = MOB_SIZE_LARGE
-	pixel_x = -32
+	pixel_x = -64
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	del_on_death = 1
@@ -67,9 +67,12 @@ Difficulty: Very Hard
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.stat == DEAD)
-			src.visible_message("<span class='danger'>[src] disintegrates [L]!</span>")
-			L.dust()
+		devour(L)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
+	if(L.stat == DEAD)
+		visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+		L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
@@ -81,7 +84,7 @@ Difficulty: Very Hard
 		if(health < maxHealth/3)
 			double_spiral()
 		else
-			visible_message("<span class='cult'><font size=5>\"<b>Judgement.</b>\"</font></span>")
+			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
 			if(prob(50))
 				spiral_shoot()
 			else
@@ -140,7 +143,7 @@ Difficulty: Very Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message("<span class='cult'><font size=5>\"<b>Die.</b>\"</font></span>")
+	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
 	sleep(10)
 	addtimer(src, "spiral_shoot", 0)
@@ -193,12 +196,12 @@ Difficulty: Very Hard
 		if(counter < 0)
 			counter = 16
 		shoot_projectile(marker)
+		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
 		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 100, 1)
 	P.current = startloc
 	P.starting = startloc
 	P.firer = src
@@ -208,15 +211,18 @@ Difficulty: Very Hard
 	P.fire()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(5))
 			shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	for(var/turf/turf in range(1, target))
 		shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/diagonals()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	var/turf/T = locate(x + 2, y + 2, z)
 	shoot_projectile(T)
 	T = locate(x + 2, y  -2, z)
@@ -228,6 +234,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/cardinals()
 	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	for(var/d in attack_dirs)
 		var/turf/E = get_edge_target_turf(src, d)
 		shoot_projectile(E)
@@ -253,7 +260,7 @@ Difficulty: Very Hard
 
 /obj/item/projectile/colossus/on_hit(atom/target, blocked = 0)
 	. = ..()
-	if(istype(target,/turf/)||istype(target,/obj/structure/))
+	if(isturf(target) || isobj(target))
 		target.ex_act(2)
 
 
@@ -275,7 +282,7 @@ Difficulty: Very Hard
 	icon_off = "blackbox"
 	luminosity = 8
 	max_n_of_items = 200
-	pixel_y = -4
+	pixel_y = -8
 	use_power = 0
 	var/duplicate = FALSE
 	var/memory_saved = FALSE

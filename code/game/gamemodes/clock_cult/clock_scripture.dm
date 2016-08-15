@@ -223,10 +223,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/vanguard //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 50% of all stuns absorbed are applied to the invoker.
+/datum/clockwork_scripture/vanguard //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is stunned for the equivalent of 50% of all stuns they absorbed. \
+	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is stunned for the equivalent of 25% of all stuns they absorbed. \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
@@ -251,7 +251,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		var/vanguard = invoker.stun_absorption["vanguard"]
 		var/stuns_blocked = 0
 		if(vanguard)
-			stuns_blocked = min(vanguard["stuns_absorbed"] * 0.5, 20)
+			stuns_blocked = min(vanguard["stuns_absorbed"] * 0.25, 20)
 		if(invoker.stat != DEAD)
 			var/message_to_invoker = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
 			var/otheractiveabsorptions = FALSE
@@ -707,8 +707,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	consumed_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1)
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
-	creator_message = "<span class='brass'>You form a soul vessel, which immediately begins drawing in the damned.</span>"
-	usage_tip = "The vessel functions as a servant for tier unlocking but not for invocation."
+	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
+	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell."
 	tier = SCRIPTURE_SCRIPT
 
 

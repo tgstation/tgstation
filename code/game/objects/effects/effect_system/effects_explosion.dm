@@ -28,8 +28,8 @@
 	opacity = 1
 	anchored = 1
 	mouse_opacity = 0
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -64
+	pixel_y = -64
 
 /obj/effect/explosion/New()
 	..()

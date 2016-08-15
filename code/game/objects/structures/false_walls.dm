@@ -304,7 +304,7 @@
 	canSmoothWith = list(/obj/structure/falsewall/abductor, /turf/closed/wall/mineral/abductor)
 
 /obj/structure/falsewall/titanium
-	name = "titanium wall"
+	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle"
@@ -313,7 +313,7 @@
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine, /obj/structure/shuttle/engine/heater, )
 
 /obj/structure/falsewall/plastitanium
-	name = "plastitanium wall"
+	name = "wall"
 	desc = "An evil wall of plasma and titanium."
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall3"

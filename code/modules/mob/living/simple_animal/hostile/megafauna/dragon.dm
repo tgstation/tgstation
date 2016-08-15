@@ -48,7 +48,7 @@ Difficulty: Medium
 	ranged = 1
 	flying = 1
 	mob_size = MOB_SIZE_LARGE
-	pixel_x = -16
+	pixel_x = -32
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
@@ -90,6 +90,14 @@ Difficulty: Medium
 			var/mob/living/L = target
 			devour(L)
 
+/mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
+	if(!swooping)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
+	if(!swooping)
+		..()
+
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1
 
@@ -101,7 +109,7 @@ Difficulty: Medium
 	layer = FLY_LAYER
 	randomdir = 0
 	duration = 12
-	pixel_z = 500
+	pixel_z = 1000
 
 /obj/effect/overlay/temp/fireball/New(loc)
 	..()
@@ -120,8 +128,8 @@ Difficulty: Medium
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "landing"
 	layer = BELOW_MOB_LAYER
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -64
+	pixel_y = -64
 	color = "#FF0000"
 	duration = 10
 
@@ -166,19 +174,16 @@ Difficulty: Medium
 			PoolOrNew(/obj/effect/overlay/temp/target, turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
-	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
-	if(prob(50))
-		attack_dirs = list(NORTH,WEST,SOUTH,EAST)
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
-	for(var/d in attack_dirs)
+	for(var/d in cardinal)
 		addtimer(src, "fire_wall", 0, FALSE, d)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(d)
-	var/turf/E = get_edge_target_turf(src, d)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
+	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
-	for(var/turf/open/J in getline(src,E))
-		if(!range)
+	for(var/turf/J in getline(src,E))
+		if(!range || J.density)
 			break
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)
@@ -204,9 +209,9 @@ Difficulty: Medium
 	icon_state = "swoop"
 	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
 	if(prob(50))
-		animate(src, pixel_x = 500, pixel_z = 500, time = 10)
+		animate(src, pixel_x = 1000, pixel_z = 1000, time = 10)
 	else
-		animate(src, pixel_x = -500, pixel_z = 500, time = 10)
+		animate(src, pixel_x = -1000, pixel_z = 1000, time = 10)
 	sleep(30)
 
 	var/turf/tturf

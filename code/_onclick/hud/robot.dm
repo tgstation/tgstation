@@ -184,7 +184,7 @@
 			return
 
 		var/display_rows = Ceiling(length(r.module.get_inactive_modules()) / 8)
-		r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+		r.robot_modules_background.screen_loc = "CENTER-4:32,SOUTH+1:14 to CENTER+3:32,SOUTH+[display_rows]:14"
 		r.client.screen += r.robot_modules_background
 
 		var/x = -4	//Start at CENTER-4,SOUTH+1
@@ -194,9 +194,9 @@
 			//Module is not currently active
 			r.client.screen += A
 			if(x < 0)
-				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+				A.screen_loc = "CENTER[x]:32,SOUTH+[y]:14"
 			else
-				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+				A.screen_loc = "CENTER+[x]:32,SOUTH+[y]:14"
 			A.layer = ABOVE_HUD_LAYER
 
 			x++

@@ -84,28 +84,28 @@ var/list/total_extraction_beacons = list()
 			holder_obj.appearance = A.appearance
 			A.loc = holder_obj
 			balloon2 = image('icons/obj/fulton_balloon.dmi',"fulton_expand")
-			balloon2.pixel_y = 10
+			balloon2.pixel_y = 20
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.overlays += balloon2
 			sleep(4)
 			balloon = image('icons/obj/fulton_balloon.dmi',"fulton_balloon")
-			balloon.pixel_y = 10
+			balloon.pixel_y = 20
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.overlays -= balloon2
 			holder_obj.overlays += balloon
 			playsound(holder_obj.loc, 'sound/items/fulext_deploy.wav', 50, 1, -3)
-			animate(holder_obj, pixel_z = 10, time = 20)
+			animate(holder_obj, pixel_z = 20, time = 20)
 			sleep(20)
-			animate(holder_obj, pixel_z = 15, time = 10)
+			animate(holder_obj, pixel_z = 30, time = 10)
 			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
+			animate(holder_obj, pixel_z = 20, time = 10)
 			sleep(10)
-			animate(holder_obj, pixel_z = 15, time = 10)
+			animate(holder_obj, pixel_z = 30, time = 10)
 			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
+			animate(holder_obj, pixel_z = 20, time = 10)
 			sleep(10)
 			playsound(holder_obj.loc, 'sound/items/fultext_launch.wav', 50, 1, -3)
-			animate(holder_obj, pixel_z = 1000, time = 30)
+			animate(holder_obj, pixel_z = 2000, time = 30)
 			if(istype(A, /mob/living/carbon/human))
 				var/mob/living/carbon/human/L = A
 				L.SetParalysis(0)
@@ -116,14 +116,14 @@ var/list/total_extraction_beacons = list()
 			for(var/turf/open/floor in orange(1, beacon))
 				flooring_near_beacon += floor
 			holder_obj.loc = pick(flooring_near_beacon)
-			animate(holder_obj, pixel_z = 10, time = 50)
+			animate(holder_obj, pixel_z = 20, time = 50)
 			sleep(50)
-			animate(holder_obj, pixel_z = 15, time = 10)
+			animate(holder_obj, pixel_z = 30, time = 10)
 			sleep(10)
-			animate(holder_obj, pixel_z = 10, time = 10)
+			animate(holder_obj, pixel_z = 20, time = 10)
 			sleep(10)
 			balloon3 = image('icons/obj/fulton_balloon.dmi',"fulton_retract")
-			balloon3.pixel_y = 10
+			balloon3.pixel_y = 20
 			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.overlays -= balloon
 			holder_obj.overlays += balloon3

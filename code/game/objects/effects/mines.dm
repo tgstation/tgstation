@@ -99,7 +99,7 @@
 
 /obj/effect/mine/pickup/New()
 	..()
-	animate(src, pixel_y = 4, time = 20, loop = -1)
+	animate(src, pixel_y = 8, time = 20, loop = -1)
 
 /obj/effect/mine/pickup/triggermine(mob/victim)
 	if(triggered)

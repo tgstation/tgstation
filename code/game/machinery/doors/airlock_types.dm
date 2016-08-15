@@ -521,7 +521,7 @@
 	opacity = 0
 	assemblytype = null
 	glass = 1
-	bound_width = 64 // 2x1
+	bound_width = 128 // 2x1
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
 	return

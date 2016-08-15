@@ -15,8 +15,8 @@
 
 /obj/item/weapon/paperplane/New(loc, obj/item/weapon/paper/newPaper)
 	..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_y = rand(-16, 16)
+	pixel_x = rand(-18, 18)
 	if(newPaper)
 		internalPaper = newPaper
 		src.flags = newPaper.flags

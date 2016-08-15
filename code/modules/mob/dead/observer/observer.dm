@@ -110,7 +110,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		verbs -= /mob/dead/observer/verb/boo
 		verbs -= /mob/dead/observer/verb/possess
 
-	animate(src, pixel_y = 2, time = 10, loop = -1)
+	animate(src, pixel_y = 4, time = 10, loop = -1)
 	..()
 
 /mob/dead/observer/narsie_act()
@@ -411,7 +411,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
 	if (!orbiting) //make sure another orbit hasn't started
 		pixel_y = 0
-		animate(src, pixel_y = 2, time = 10, loop = -1)
+		animate(src, pixel_y = 4, time = 10, loop = -1)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"

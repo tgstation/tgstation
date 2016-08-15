@@ -157,9 +157,12 @@
 	attack_generic(user, 15)
 
 /obj/structure/window/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper)
+	if(!M.melee_damage_upper && !M.obj_damage)
 		return
-	attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
+	if(M.obj_damage)
+		attack_generic(M, M.obj_damage, M.melee_damage_type)
+	else
+		attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
 
 
 /obj/structure/window/attack_slime(mob/living/simple_animal/slime/user)
