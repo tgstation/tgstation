@@ -166,7 +166,7 @@
 	if(efficiency > 2)
 		for(var/A in bad_se_blocks)
 			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
-	if(efficiency > 5 && prob(20))
+	if(efficiency > 3 && prob(20))
 		randmutg(H)
 	if(efficiency < 3 && prob(50))
 		var/mob/M = randmutb(H)
