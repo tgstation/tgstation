@@ -234,7 +234,6 @@
 					var/location = get_turf(player.mind.current)
 					if(!player.mind.special_role && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
-	UnlockMedal(MEDAL_HIJACK, owner.current.client, ANNOUNCE_TO_EVERYONE)
 	return 1
 
 /datum/objective/hijackclone
@@ -431,7 +430,6 @@
 		return 1
 	if(owner.current && owner.current.stat == DEAD) //You're dead! Yay!
 		return 1
-	UnlockMedal(MEDAL_FAILED_MARTYR, owner.current.client, ANNOUNCE_TO_EVERYONE) //ONE JOB.
 	return 0
 
 

@@ -34,11 +34,6 @@
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 
 	narsie_spawn_animation()
-	for(var/datum/mind/M in ticker.mode.cult)
-		var/mob/living/L = M.current
-		if(!admin_spawned)
-			if(!L.stat && L.z == z && L.client)
-				UnlockMedal(MEDAL_SUMMON_NARSIE, L.client)
 
 	sleep(70)
 	SSshuttle.emergency.request(null, 0.1) // Cannot recall

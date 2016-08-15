@@ -196,9 +196,6 @@
 	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
 
 	if      (!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
-		for(var/datum/mind/S in syndicates)
-			if(S.current)
-				UnlockMedal(MEDAL_NUCLEAR, S.current.client, ANNOUNCE_TO_EVERYONE)
 		feedback_set_details("round_end_result","win - syndicate nuke")
 		world << "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
