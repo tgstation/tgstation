@@ -242,8 +242,7 @@
 	if(assess_patient(H))
 		last_found = world.time
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
-			var/message = pick("Hey, [H.name]! Hold on, I'm coming.","Wait [H.name]! I want to help!","[H.name], you appear to be injured!")
-			speak(message)
+			playsound(loc, pick('sound/voice/mcoming.ogg', 'sound/voice/mhelp.ogg', 'sound/voice/minjured.ogg'), 50, 0)
 			last_newpatient_speak = world.time
 		return H
 	else
@@ -275,8 +274,7 @@
 
 	if(!patient)
 		if(!shut_up && prob(1))
-			var/message = pick("Radar, put a mask on!","There's always a catch, and it's the best there is.","I knew it, I should've been a plastic surgeon.","What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
-			speak(message)
+			playsound(loc, pick('sound/voice/mradar.ogg', 'sound/voice/mcatch.ogg', 'sound/voice/msurgeon.ogg', 'sound/voice/mflies.ogg', 'sound/voice/mdelicious.ogg'), 50, 0)
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
 		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
 		oldpatient = patient
@@ -398,8 +396,7 @@
 		return
 
 	if(C.stat == 2)
-		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
-		speak(death_message)
+		playsound(loc, pick('sound/voice/mno.ogg', 'sound/voice/mlive.ogg', 'sound/voice/mlost.ogg'), 50, 0)
 		oldpatient = patient
 		soft_reset()
 		return
@@ -447,8 +444,7 @@
 					break
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
-		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
-		speak(message)
+		playsound(loc, pick('sound/voice/mpatchedup.ogg', 'sound/voice/mapple.ogg', 'sound/voice/mfeelbetter.ogg'), 50, 0)
 		bot_reset()
 		return
 	else
@@ -507,6 +503,9 @@
 
 	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
+
+	if(emagged && prob(25))
+		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)
 
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
