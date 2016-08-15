@@ -111,6 +111,7 @@
 /client/Move(n, direct)
 	if(world.time < move_delay)
 		return 0
+	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
 		return 0
 	if(mob.notransform)
