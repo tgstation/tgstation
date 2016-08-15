@@ -313,6 +313,7 @@ Difficulty: Very Hard
 		return
 	current = src
 	ReadMemory()
+	. = ..()
 
 /obj/machinery/smartfridge/black_box/process()
 	..()
