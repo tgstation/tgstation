@@ -94,7 +94,8 @@
 	return ..()
 
 /turf/closed/wall/clockwork/ratvar_act()
-	return 0
+	for(var/mob/M in src)
+		M.ratvar_act()
 
 /turf/closed/wall/clockwork/narsie_act()
 	..()

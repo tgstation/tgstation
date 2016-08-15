@@ -196,9 +196,8 @@
 	color = "#7D1919"
 
 /obj/machinery/door/window/ratvar_act()
-	if(prob(20))
-		new/obj/machinery/door/window/clockwork(src.loc, dir)
-		qdel(src)
+	new/obj/machinery/door/window/clockwork(src.loc, dir)
+	qdel(src)
 
 /obj/machinery/door/window/bullet_act(obj/item/projectile/P)
 	. = ..()

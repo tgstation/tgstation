@@ -2,6 +2,7 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	all_clockwork_mobs -= src
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M

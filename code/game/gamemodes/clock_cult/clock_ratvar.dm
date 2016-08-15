@@ -13,6 +13,9 @@
 	poi_list -= src
 	return ..()
 
+/obj/structure/clockwork/massive/singularity_pull(S, current_size)
+	return
+
 /obj/structure/clockwork/massive/celestial_gateway //The gateway to Reebe, from which Ratvar emerges
 	name = "Gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
@@ -29,6 +32,7 @@
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
+	var/ratvar_portal = TRUE //if the gateway actually summons ratvar or just produces a hugeass conversion burst
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
 
@@ -120,23 +124,48 @@
 				sleep(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
-				sleep(5)
-				new/obj/structure/clockwork/massive/ratvar(get_turf(src))
-				qdel(src)
+				var/turf/startpoint = get_turf(src)
+				sleep(3)
+				QDEL_IN(src, 3)
+				clockwork_gateway_activated = TRUE
+				if(ratvar_portal)
+					new/obj/structure/clockwork/massive/ratvar(startpoint)
+				else
+					world << "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
+					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
+					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>"
+					world << 'sound/magic/clockwork/invoke_general.ogg'
+					var/x0 = startpoint.x
+					var/y0 = startpoint.y
+					for(var/I in spiral_range_turfs(255, startpoint))
+						var/turf/T = I
+						if(!T)
+							continue
+						var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+						if(dist < 60)
+							dist = TRUE
+						else
+							dist = FALSE
+						T.ratvar_act(dist)
+						CHECK_TICK
+					for(var/I in all_clockwork_mobs)
+						var/mob/M = I
+						if(M.stat == CONSCIOUS)
+							clockwork_say(M, text2ratvar(pick("Purge all untruths and honor Engine!", "All glory to Engine's light!", "Engine's power is unmatched!")))
 
 /obj/structure/clockwork/massive/celestial_gateway/examine(mob/user)
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon
 	..()
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>"
+		user << "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>"
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
 				user << "<span class='heavy_brass'>It's still opening.</span>"
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 				user << "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>"
 			if(GATEWAY_RATVAR_COMING to INFINITY)
-				user << "<span class='heavy_brass'>Ratvar is coming through the gateway!</span>"
+				user << "<span class='heavy_brass'>[ratvar_portal ? "Ratvar is coming through the gateway":"The gateway is glowing with massed power"]!</span>"
 	else
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
@@ -144,7 +173,7 @@
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 				user << "<span class='warning'>It seems to be leading somewhere.</span>"
 			if(GATEWAY_RATVAR_COMING to INFINITY)
-				user << "<span class='warning'><b>Something is coming through!</b></span>"
+				user << "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's glowing brightly"]!</span>"
 
 /obj/effect/clockwork/overlay/gateway_glow //the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
 	icon = 'icons/effects/96x96.dmi'
@@ -170,11 +199,11 @@
 
 /obj/structure/clockwork/massive/ratvar/New()
 	..()
-	ratvar_awakens = TRUE
+	ratvar_awakens++
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
 	START_PROCESSING(SSobj, src)
-	world << "<span class='heavy_brass'><font size=6>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</font></span>"
+	world << "<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
@@ -183,7 +212,7 @@
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()
-	ratvar_awakens = FALSE
+	ratvar_awakens--
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
 	STOP_PROCESSING(SSobj, src)
@@ -201,8 +230,9 @@
 
 
 /obj/structure/clockwork/massive/ratvar/Bump(atom/A)
-	forceMove(get_turf(A))
-	A.ratvar_act()
+	var/turf/T = get_turf(A)
+	forceMove(T)
+	T.ratvar_act()
 
 
 /obj/structure/clockwork/massive/ratvar/Process_Spacemove()
@@ -212,8 +242,12 @@
 /obj/structure/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
 		return
-	for(var/atom/A in range(proselytize_range, src))
-		A.ratvar_act()
+	for(var/I in circlerangeturfs(src, proselytize_range))
+		var/turf/T = I
+		T.ratvar_act()
+	for(var/I in circleviewturfs(src, round(proselytize_range * 0.5)))
+		var/turf/T = I
+		T.ratvar_act(1)
 	var/dir_to_step_in = pick(cardinal)
 	if(!prey)
 		for(var/obj/singularity/narsie/N in poi_list)
