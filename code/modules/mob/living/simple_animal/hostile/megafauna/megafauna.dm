@@ -23,9 +23,11 @@
 	/obj/structure/closet,
 	/obj/structure/table,
 	/obj/structure/grille,
+	/obj/structure/girder,
 	/obj/structure/rack,
 	/obj/structure/barricade,
-	/obj/machinery/field)
+	/obj/machinery/field,
+	/obj/machinery/power/emitter)
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
