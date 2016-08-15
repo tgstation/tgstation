@@ -173,8 +173,8 @@
 "az" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/syringes{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/beakers,
 /obj/machinery/light{
@@ -373,7 +373,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
+	pixel_x = -48;
 	pixel_y = 0
 	},
 /obj/structure/cable{
@@ -433,15 +433,15 @@
 "aX" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/grenade/chem_grenade/antiweed{
-	pixel_x = 3;
-	pixel_y = 5
+	pixel_x = 6;
+	pixel_y = 10
 	},
 /obj/item/weapon/grenade/chem_grenade/antiweed{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /obj/item/weapon/grenade/chem_grenade/antiweed{
-	pixel_x = -3;
-	pixel_y = -1
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /obj/machinery/light{
 	dir = 1
@@ -621,8 +621,8 @@
 "bq" = (
 /obj/item/stack/cable_coil/cut,
 /obj/item/stack/tile/plasteel{
-	pixel_x = 3;
-	pixel_y = -4
+	pixel_x = 6;
+	pixel_y = -8
 	},
 /obj/item/weapon/wirecutters,
 /turf/open/floor/plating,

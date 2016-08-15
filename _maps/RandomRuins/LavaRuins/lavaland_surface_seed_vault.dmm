@@ -109,8 +109,8 @@
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -130,7 +130,7 @@
 /area/ruin/powered)
 "s" = (
 /obj/machinery/reagentgrinder{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace,
@@ -145,7 +145,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/freezer{

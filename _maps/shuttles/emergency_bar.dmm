@@ -38,8 +38,8 @@
 /obj/structure/table/wood,
 /obj/item/weapon/storage/fancy/cigarettes/cigars/havana,
 /obj/item/weapon/lighter{
-	pixel_x = -4;
-	pixel_y = 6
+	pixel_x = -8;
+	pixel_y = 12
 	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
@@ -52,7 +52,7 @@
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
@@ -86,7 +86,7 @@
 "ar" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -60
 	},
 /obj/structure/chair/comfy/brown{
 	dir = 8
@@ -97,15 +97,15 @@
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 0;
-	pixel_y = -29
+	pixel_y = -58
 	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "at" = (
 /obj/machinery/button/flasher{
 	id = "cockpit_flasher";
-	pixel_x = 6;
-	pixel_y = -24
+	pixel_x = 12;
+	pixel_y = -48
 	},
 /obj/structure/table/wood/poker,
 /obj/item/weapon/storage/box/drinkingglasses,
@@ -165,14 +165,14 @@
 "aD" = (
 /obj/machinery/flasher{
 	id = "cockpit_flasher";
-	pixel_x = 6;
-	pixel_y = 24
+	pixel_x = 12;
+	pixel_y = 48
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
@@ -196,13 +196,13 @@
 "aH" = (
 /obj/machinery/flasher{
 	id = "shuttle_flasher";
-	pixel_x = -24;
-	pixel_y = 6
+	pixel_x = -48;
+	pixel_y = 12
 	},
 /obj/machinery/button/flasher{
 	id = "shuttle_flasher";
-	pixel_x = -24;
-	pixel_y = -6
+	pixel_x = -48;
+	pixel_y = -12
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
@@ -226,7 +226,7 @@
 "aL" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
@@ -267,7 +267,7 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 54;
 	pixel_y = 0
 	},
 /obj/structure/table,
@@ -326,8 +326,8 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
@@ -368,8 +368,8 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 4;
-	pixel_y = 4
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
@@ -499,8 +499,8 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
@@ -549,7 +549,7 @@
 /obj/structure/table/wood/bar,
 /obj/item/toy/cards/deck/cas,
 /obj/item/toy/cards/deck/cas/black{
-	pixel_y = 6
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
@@ -562,7 +562,7 @@
 "bR" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
@@ -570,8 +570,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 4;
-	pixel_y = 4
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -586,8 +586,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/brute{
-	pixel_x = 4;
-	pixel_y = 4
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

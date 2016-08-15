@@ -22,7 +22,7 @@
 "v" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/airless,/area/AIsattele)
 "w" = (/obj/item/weapon/shard,/obj/item/weapon/electronics/apc,/turf/open/floor/plating/airless,/area/AIsattele)
 "x" = (/obj/structure/closet,/turf/open/floor/plating/airless,/area/AIsattele)
-"y" = (/obj/item/weapon/storage/toolbox/electrical{pixel_x = 1;pixel_y = -1},/turf/open/floor/plating/airless,/area/AIsattele)
+"y" = (/obj/item/weapon/storage/toolbox/electrical{pixel_x = 2;pixel_y = -2},/turf/open/floor/plating/airless,/area/AIsattele)
 "z" = (/obj/structure/closet/crate,/obj/item/device/aicard,/obj/item/device/multitool,/obj/item/weapon/weldingtool,/obj/item/weapon/wrench,/obj/item/weapon/circuitboard/computer/teleporter,/turf/open/floor/plating/airless,/area/AIsattele)
 "A" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plating/airless,/area/AIsattele)
 "B" = (/obj/structure/girder,/turf/open/floor/plating/airless,/area/AIsattele)

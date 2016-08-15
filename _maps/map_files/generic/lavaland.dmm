@@ -22,7 +22,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/purple/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -177,7 +177,7 @@
 	dir = 2;
 	name = "Prison Intercom (General)";
 	pixel_x = 0;
-	pixel_y = 24;
+	pixel_y = 48;
 	prison_radio = 1
 	},
 /turf/open/floor/plasteel{
@@ -234,7 +234,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
-	pixel_x = -28
+	pixel_x = -56
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -307,7 +307,7 @@
 	id = "Labor";
 	name = "Labor Camp Lockdown";
 	pixel_x = 0;
-	pixel_y = 28;
+	pixel_y = 56;
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel{
@@ -407,7 +407,7 @@
 	density = 0;
 	layer = 4;
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -459,7 +459,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Labor Camp APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -581,7 +581,7 @@
 "bq" = (
 /obj/machinery/airalarm{
 	frequency = 1439;
-	pixel_y = 23
+	pixel_y = 46
 	},
 /obj/machinery/computer/shuttle/mining{
 	req_access = "0"
@@ -730,14 +730,14 @@
 "bD" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /obj/item/weapon/pen,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Labor Camp Security APC";
-	pixel_x = 24;
+	pixel_x = 48;
 	pixel_y = 0
 	},
 /obj/machinery/camera{
@@ -888,7 +888,7 @@
 /area/mine/production)
 "bT" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 30;
+	pixel_x = 60;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/brown{
@@ -1216,8 +1216,8 @@
 /area/mine/production)
 "cx" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1236,7 +1236,7 @@
 "cz" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	pixel_y = -22
+	pixel_y = -44
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
@@ -1338,7 +1338,7 @@
 "cJ" = (
 /obj/machinery/airalarm{
 	frequency = 1439;
-	pixel_y = 23
+	pixel_y = 46
 	},
 /turf/open/floor/plasteel/purple/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -1350,7 +1350,7 @@
 /obj/item/weapon/bedsheet/brown,
 /obj/machinery/airalarm{
 	frequency = 1439;
-	pixel_y = 23
+	pixel_y = 46
 	},
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1415,7 +1415,7 @@
 "cS" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1424,7 +1424,7 @@
 "cT" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_y = 6
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1460,7 +1460,7 @@
 	id = "miningdorm1";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 25;
+	pixel_x = 50;
 	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -1562,7 +1562,7 @@
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 0;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/bar{
@@ -1572,7 +1572,7 @@
 "dj" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	pixel_y = -22
+	pixel_y = -44
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1593,7 +1593,7 @@
 	id = "miningdorm2";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 25;
+	pixel_x = 50;
 	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -1637,7 +1637,7 @@
 	id = "miningdorm3";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 25;
+	pixel_x = 50;
 	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -1708,7 +1708,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -23;
+	pixel_x = -46;
 	pixel_y = 0
 	},
 /obj/machinery/light{
@@ -1717,8 +1717,8 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -1732,7 +1732,7 @@
 /area/mine/eva)
 "dA" = (
 /obj/machinery/light_switch{
-	pixel_x = 27
+	pixel_x = 54
 	},
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -1777,8 +1777,8 @@
 /area/mine/eva)
 "dG" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel/purple/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1923,8 +1923,8 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Mining EVA APC";
-	pixel_x = 1;
-	pixel_y = -23
+	pixel_x = 2;
+	pixel_y = -46
 	},
 /obj/structure/cable,
 /obj/machinery/recharge_station,
@@ -2012,7 +2012,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
-	pixel_x = -28
+	pixel_x = -56
 	},
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -2082,8 +2082,8 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Mining Station Starboard Wing APC";
-	pixel_x = -27;
-	pixel_y = 2
+	pixel_x = -54;
+	pixel_y = 4
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -2143,7 +2143,7 @@
 /obj/structure/closet/crate,
 /obj/machinery/airalarm{
 	frequency = 1439;
-	pixel_y = 23
+	pixel_y = 46
 	},
 /turf/open/floor/plasteel/bot{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2151,8 +2151,8 @@
 /area/mine/production)
 "eu" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /obj/structure/table,
 /obj/item/weapon/paper{
@@ -2178,14 +2178,14 @@
 "ex" = (
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Communications APC";
-	pixel_x = 1;
-	pixel_y = 25
+	pixel_x = 2;
+	pixel_y = 50
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2216,7 +2216,7 @@
 	},
 /obj/machinery/airalarm{
 	frequency = 1439;
-	pixel_y = 23
+	pixel_y = 46
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/whiteblue/side{
@@ -2235,8 +2235,8 @@
 "eC" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -2338,7 +2338,7 @@
 /area/mine/maintenance)
 "eO" = (
 /obj/machinery/light_switch{
-	pixel_y = -25
+	pixel_y = -50
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -2361,22 +2361,22 @@
 /obj/structure/closet/crate/freezer,
 /obj/item/weapon/reagent_containers/blood/empty,
 /obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /obj/item/weapon/reagent_containers/blood/AMinus,
 /obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 1;
-	pixel_y = 2
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /obj/item/weapon/reagent_containers/blood/OMinus,
 /obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
@@ -2428,8 +2428,8 @@
 	network = list("MINE")
 	},
 /obj/machinery/newscaster{
-	pixel_x = 30;
-	pixel_y = 1
+	pixel_x = 60;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -2463,7 +2463,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -2599,7 +2599,7 @@
 "fn" = (
 /obj/machinery/airalarm{
 	frequency = 1439;
-	pixel_y = 23
+	pixel_y = 46
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2617,12 +2617,12 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Station Port Wing APC";
-	pixel_x = 1;
-	pixel_y = 25
+	pixel_x = 2;
+	pixel_y = 50
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plasteel{
@@ -2728,7 +2728,7 @@
 /area/mine/living_quarters)
 "fC" = (
 /obj/machinery/airalarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/bluegrid{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface

@@ -32,8 +32,8 @@
 "h" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/weapon/crowbar,
 /turf/open/floor/noslip,
@@ -72,7 +72,7 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
@@ -80,7 +80,7 @@
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 0;
-	pixel_y = -29
+	pixel_y = -58
 	},
 /obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
@@ -115,8 +115,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/weapon/crowbar,
 /turf/open/floor/noslip,
@@ -169,15 +169,15 @@
 /area/shuttle/escape)
 "F" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "G" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 54;
 	pixel_y = 0
 	},
 /obj/item/toy/snappop/phoenix,
@@ -221,7 +221,7 @@
 "M" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -60
 	},
 /obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
@@ -243,7 +243,7 @@
 /area/shuttle/escape)
 "Q" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 54;
 	pixel_y = 0
 	},
 /turf/open/floor/mineral/bananium,
@@ -259,12 +259,12 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/weapon/crowbar,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 54;
 	pixel_y = 0
 	},
 /turf/open/floor/noslip,

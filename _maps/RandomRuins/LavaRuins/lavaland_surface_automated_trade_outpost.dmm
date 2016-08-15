@@ -47,8 +47,8 @@
 	icon = 'icons/mob/robots.dmi';
 	icon_state = "robot_old";
 	name = "Cyborg Statue";
-	pixel_x = -9;
-	pixel_y = 2
+	pixel_x = -18;
+	pixel_y = 4
 	},
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -62,8 +62,8 @@
 	icon = 'icons/mob/robots.dmi';
 	icon_state = "robot_old";
 	name = "Cyborg Statue";
-	pixel_x = 9;
-	pixel_y = 2
+	pixel_x = 18;
+	pixel_y = 4
 	},
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth

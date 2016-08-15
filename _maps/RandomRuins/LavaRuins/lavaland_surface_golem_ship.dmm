@@ -140,7 +140,7 @@
 /area/ruin/powered/golem_ship)
 "t" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -152,13 +152,13 @@
 	desc = "Majestic.";
 	layer = 3;
 	name = "Royal Cape of the Liberator";
-	pixel_x = 5;
-	pixel_y = 9
+	pixel_x = 10;
+	pixel_y = 18
 	},
 /obj/item/weapon/book/manual/research_and_development{
 	name = "Sacred Text of the Liberator";
-	pixel_x = -4;
-	pixel_y = 3
+	pixel_x = -8;
+	pixel_y = 6
 	},
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -196,7 +196,7 @@
 /area/ruin/powered/golem_ship)
 "z" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -205,7 +205,7 @@
 "A" = (
 /obj/structure/table/wood,
 /obj/item/weapon/surgical_drapes{
-	pixel_x = 15
+	pixel_x = 30
 	},
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire,

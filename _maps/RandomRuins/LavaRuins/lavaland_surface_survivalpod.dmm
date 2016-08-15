@@ -7,7 +7,7 @@
 /area/lavaland/surface/outdoors)
 "c" = (
 /obj/structure/sign/mining/survival{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -20,7 +20,7 @@
 /obj/structure/sign/mining/survival{
 	dir = 4;
 	icon_state = "survival";
-	pixel_x = 32;
+	pixel_x = 64;
 	tag = "icon-survival (EAST)"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -48,7 +48,7 @@
 /obj/structure/sign/mining/survival{
 	dir = 8;
 	icon_state = "survival";
-	pixel_x = -32;
+	pixel_x = -64;
 	tag = "icon-survival (WEST)"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -162,7 +162,7 @@
 /area/lavaland/surface/outdoors)
 "w" = (
 /obj/structure/sign/mining/survival{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -177,7 +177,7 @@
 /area/lavaland/surface/outdoors)
 "y" = (
 /obj/structure/sign/mining{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/effect/decal/cleanable/blood/footprints{
 	tag = "icon-blood1 (WEST)";

@@ -73,7 +73,7 @@
 "bu" = (/obj/item/stack/sheet/metal,/obj/effect/decal/cleanable/dirt,/obj/item/stack/rods,/turf/open/floor/plating/airless{icon_plating = "platingdmg3"; icon_state = "platingdmg3"},/area/ruin/unpowered)
 "bv" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
 "bw" = (/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
-"bx" = (/obj/machinery/button/door{pixel_x = 24},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
+"bx" = (/obj/machinery/button/door{pixel_x = 48},/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
 "by" = (/obj/structure/bed,/obj/item/weapon/bedsheet/black,/turf/open/floor/mineral/titanium/blue,/area/ruin/unpowered)
 "bz" = (/turf/open/floor/mineral/titanium/blue,/turf/closed/wall/mineral/titanium/interior,/area/ruin/unpowered)
 "bA" = (/obj/structure/fluff/broken_flooring{tag = "icon-pile"; icon_state = "pile"},/turf/open/space,/area/space)
