@@ -208,7 +208,8 @@
 	ticker.mode.update_wiz_icons_removed(src)
 	ticker.mode.update_cult_icons_removed(src)
 	ticker.mode.update_rev_icons_removed(src)
-	gang_datum.remove_gang_hud(src)
+	if(gang_datum)
+		gang_datum.remove_gang_hud(src)
 
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
