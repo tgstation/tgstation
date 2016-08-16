@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - rscdel: "The server will no longer wait until the next tick to process movement key presses. Movements should now be ~25-50ms more responsive."
