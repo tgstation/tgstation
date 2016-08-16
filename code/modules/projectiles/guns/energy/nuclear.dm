@@ -81,7 +81,7 @@
 	selfcharge = 1
 
 /obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
-	var/gun = src.loc
-	gun.visible_message("<span class='userdanger'>\The [src]'s nuclear reactor overloads!</span>")
-	explosion(src.loc,1,2,4,flame_range = 2)
+	var/gunloc = src.loc
+	gunloc.visible_message("<span class='userdanger'>\The [src]'s nuclear reactor overloads!</span>")
+	explosion(gunloc,1,2,4,flame_range = 2)
 	..()
