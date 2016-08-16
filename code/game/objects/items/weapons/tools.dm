@@ -218,7 +218,6 @@
 	w_class = 2
 
 
-
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
