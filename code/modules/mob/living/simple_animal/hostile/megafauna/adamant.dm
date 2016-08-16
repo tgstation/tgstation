@@ -69,11 +69,17 @@ Difficulty: Insane
 	var/struck = 0
 
 
-/obj/item/device/gps/internal/colossus
+/obj/item/device/gps/internal/adamant
 	icon_state = null
 	gpstag = "Hardened Signal"
 	desc = "It's a signal, how can it be hard?"
 	invisibility = 100
+
+
+/mob/living/simple_animal/hostile/megafauna/adamant/New()
+	..()
+	new/obj/item/device/gps/internal/adamant(src)
+
 
 /mob/living/simple_animal/hostile/megafauna/adamant/AttackingTarget()
 	if(state == STATE_FREEZE)
@@ -159,7 +165,7 @@ Difficulty: Insane
 	animate(src, transform=ntransform.Scale(10), alpha=0, 10)
 	density = 0
 	sleep(50)
-	freeze()
+	addtimer(src, "freeze", 0)
 	forceMove(get_turf(victim))
 	animate(src, transform=ntransform.Scale(0.1), alpha=255, 10)
 	sleep(10)
@@ -171,7 +177,7 @@ Difficulty: Insane
 /mob/living/simple_animal/hostile/megafauna/adamant/proc/freeze()
 	state = STATE_FREEZE
 	animate(src, icon_state="adamant_freeze", 5)
-	sleep(50)
+	sleep(60)
 	animate(src, icon_state="adamant", 5)
 	struck = 0
 	state = STATE_NORMAL
