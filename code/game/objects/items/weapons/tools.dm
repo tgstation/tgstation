@@ -332,8 +332,6 @@
 	if(welding)
 		SetLuminosity(0)
 		user.AddLuminosity(light_intensity)
-	else
-		user.AddLuminosity(-light_intensity)
 	update_icon()
 
 
