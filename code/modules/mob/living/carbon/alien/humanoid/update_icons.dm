@@ -20,8 +20,12 @@
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
+		if(drooling)
+			add_overlay("alienspit_[caste]")
 	else
 		icon_state = "alien[caste]_s"
+		if(drooling)
+			add_overlay("alienspit_s")
 
 	if(leaping)
 		if(alt_icon == initial(alt_icon))
