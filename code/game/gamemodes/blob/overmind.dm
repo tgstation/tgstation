@@ -184,6 +184,3 @@
 			return 0
 		loc = NewLoc
 		return 1
-
-/mob/camera/blob/proc/can_attack()
-	return (world.time > (last_attack + CLICK_CD_RANGE))

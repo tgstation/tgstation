@@ -27,6 +27,6 @@
 	flick("blob_resource_glow", src)
 	if(overmind)
 		overmind.add_points(1)
-		resource_delay = world.time + 30 + overmind.resource_blobs.len * 2.5 //3 seconds plus a quarter second for each resource blob the overmind has
+		resource_delay = world.time + 40 + overmind.resource_blobs.len * 2.5 //4 seconds plus a quarter second for each resource blob the overmind has
 	else
-		resource_delay = world.time + 30
+		resource_delay = world.time + 40

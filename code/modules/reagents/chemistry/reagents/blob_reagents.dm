@@ -62,7 +62,7 @@
 	var/effectivedamage = damage
 	if(damage_type == BRUTE)
 		effectivedamage = damage * 2
-	if(damage_type == BURN && effectivedamage > 0 && original_health - effectivedamage > 0 && prob(75))
+	if(damage_type == BURN && effectivedamage > 0 && original_health - effectivedamage > 0 && prob(60))
 		var/obj/effect/blob/newB = B.expand(null, null, 0)
 		if(newB)
 			newB.health = original_health - effectivedamage
@@ -72,7 +72,7 @@
 
 /datum/reagent/blob/replicating_foam/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
 	if(prob(30))
-		newB.expand() //do it again!
+		newB.expand(null, null, 0) //do it again!
 
 //does brute damage, shifts away when damaged
 /datum/reagent/blob/shifting_fragments

@@ -37,7 +37,7 @@
 				H.color = overmind.blob_reagent_datum.complementary_color
 			else
 				H.color = "#000000"
-		adjustHealth(-maxHealth*0.025)
+		adjustHealth(-maxHealth*0.0125)
 
 /mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
@@ -168,13 +168,16 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
-	..()
+	if(overmind)
+		color = overmind.blob_reagent_datum.complementary_color
+	else
+		color = initial(color)
 	if(is_zombie)
 		cut_overlays()
 		overlays = human_overlays
 		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
 		if(overmind)
-			I.color = overmind.blob_reagent_datum.color
+			I.color = overmind.blob_reagent_datum.complementary_color
 		color = initial(color)//looks better.
 		add_overlay(I)
 

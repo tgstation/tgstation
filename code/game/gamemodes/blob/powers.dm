@@ -237,7 +237,7 @@
 	expand_blob(T)
 
 /mob/camera/blob/proc/expand_blob(turf/T)
-	if(!can_attack())
+	if(world.time > last_attack)
 		return
 	var/list/possibleblobs = list()
 	for(var/obj/effect/blob/AB in range(T, 1))
@@ -247,7 +247,6 @@
 		return
 	if(can_buy(4))
 		var/attacksuccess = FALSE
-		last_attack = world.time
 		for(var/mob/living/L in T)
 			if("blob" in L.faction) //no friendly/dead fire
 				continue
@@ -283,6 +282,10 @@
 					playsound(OB, 'sound/effects/splat.ogg', 50, 1)
 				else
 					add_points(4) //if we're attacking diagonally and didn't hit anything, refund
+		if(attacksuccess)
+			last_attack = world.time + CLICK_CD_MELEE
+		else
+			last_attack = world.time + CLICK_CD_RAPID
 
 /mob/camera/blob/verb/rally_spores_power()
 	set category = "Blob"
