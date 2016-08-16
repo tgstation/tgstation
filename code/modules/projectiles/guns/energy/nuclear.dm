@@ -79,3 +79,9 @@
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
+
+/obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
+	var/gun = src.loc
+	gun.visible_message("<span class='userdanger'>\The [src]'s nuclear reactor overloads!</span>")
+	explosion(src.loc,1,2,4,flame_range = 2)
+	..()
