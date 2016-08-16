@@ -1,0 +1,91 @@
+"aa" = (/turf/template_noop,/area/space)
+"ab" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/space)
+"ac" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/space)
+"ad" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/space)
+"ae" = (/turf/closed/wall{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"af" = (/obj/machinery/power/terminal,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"ag" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/machinery/power/port_gen/pacman,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"ah" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"ai" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aj" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"ak" = (/obj/machinery/door/airlock/glass_external,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"al" = (/obj/machinery/power/smes/engineering,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"am" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"an" = (/obj/structure/table,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"ao" = (/obj/structure/closet/emcloset,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"ap" = (/turf/open/space,/area/space)
+"aq" = (/obj/structure/frame/computer,/obj/item/stack/cable_coil{amount = 2; icon_state = "coil_red2"},/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"ar" = (/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"as" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"at" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"au" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"av" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aw" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"ax" = (/obj/structure/frame/computer,/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"ay" = (/obj/item/chair,/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"az" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aA" = (/obj/machinery/door/airlock/highsecurity{name = "communications control"; req_access_txt = "61"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aB" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aC" = (/obj/structure/table,/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aD" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plasteel{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aE" = (/obj/structure/window/reinforced{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/structure/grille,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aF" = (/obj/structure/window/reinforced{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/grille,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aG" = (/obj/machinery/door/airlock/hatch{cyclelinkeddir = 2; name = "communications cooling"; req_access_txt = "61"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aH" = (/obj/structure/window/reinforced{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/structure/grille,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aI" = (/obj/structure/window/reinforced{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/grille,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aJ" = (/obj/machinery/door/airlock/glass_maintenance{name = "walk-way"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aK" = (/obj/structure/frame/machine,/obj/item/stack/cable_coil{amount = 2; icon_state = "coil_red2"},/obj/item/weapon/stock_parts/subspace/crystal,/turf/open/floor/bluegrid{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface; initial_gas_mix = "o2=22;n2=82;TEMP=100"; temperature = 100},/area/space)
+"aL" = (/obj/structure/grille,/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aM" = (/obj/structure/frame/machine,/obj/item/weapon/stock_parts/subspace/transmitter,/turf/open/floor/bluegrid{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface; initial_gas_mix = "o2=22;n2=82;TEMP=100"; temperature = 100},/area/space)
+"aN" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/lattice,/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/space)
+"aO" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/engine{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/space)
+"aP" = (/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/structure/lattice,/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/space)
+"aQ" = (/turf/open/floor/bluegrid{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface; initial_gas_mix = "o2=22;n2=82;TEMP=100"; temperature = 100},/area/space)
+"aR" = (/obj/structure/grille,/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/window/reinforced,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aS" = (/obj/machinery/door/airlock/hatch{cyclelinkeddir = 1; name = "communications cooling"; req_access_txt = "61"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aT" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/bluegrid{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface; initial_gas_mix = "o2=22;n2=82;TEMP=100"; temperature = 100},/area/space)
+"aU" = (/obj/structure/frame/machine,/obj/item/stack/cable_coil{amount = 1; icon_state = "coil_red1"},/turf/open/floor/bluegrid{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface; initial_gas_mix = "o2=22;n2=82;TEMP=100"; temperature = 100},/area/space)
+"aV" = (/obj/structure/frame/machine,/turf/open/floor/bluegrid{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface; initial_gas_mix = "o2=22;n2=82;TEMP=100"; temperature = 100},/area/space)
+"aW" = (/obj/structure/cable,/turf/open/floor/bluegrid{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface; initial_gas_mix = "o2=22;n2=82;TEMP=100"; temperature = 100},/area/space)
+"aX" = (/obj/structure/frame/machine,/obj/item/stack/cable_coil{amount = 2; icon_state = "coil_red2"},/turf/open/floor/bluegrid{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface; initial_gas_mix = "o2=22;n2=82;TEMP=100"; temperature = 100},/area/space)
+"aY" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+"aZ" = (/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/space)
+"ba" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plating{baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface},/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaabababababababababababababababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaababababababababababababababababababababaaaaaaaaaaaaaaaaaaaa
+aaaaabababababababababacadadadadadadadadadadacabababababababababaaaaaa
+aaaaababababababacacabadaeaeaeaeaeaeaeaeaeaeacacacacabacababababaaaaaa
+aaababababababacadadacadaeafagahaiaeajajajakacacacacababababababaaaaaa
+aaabababababadadadadadadaealajamanaeajajaoaeacacacacababababababaaaaaa
+aaababababapadaeaeaeaeaeaeaeaeamaeaeakaeaeaeadacacacababababababaaaaaa
+aaababababadadaeaqararararaearasatauavawaeadacacacabababababababaaaaaa
+aaababababacadaeaxayazatataAataBaraeajamaeadacacababacabababababaaaaaa
+aaababababadadaeaCaraDararaearararaeajamaeadacacababababababababaaaaaa
+aaababababadadaeaEaFaGaHaIaeaCaCaeaeaeaJaeacacabababababababaaaaaaaaaa
+aaababababacadaeaKaLamaLaMaeaeaeaeacaNaOaPababababababababaaaaaaaaaaaa
+aaababababacadaeaQaRaSaRaQaeaeacacabaNaOaPababababababaaaaaaaaababaaaa
+aaababababacadaeaQaQaTaQaQaeacacababaNaOaPababababababaaaaababababaaaa
+aaabababababadaeaUaVaWaVaXaeacacababaNaOaPababababababababababababaaaa
+aaababababacadaeaeaeaeaeaeaeababababaNaOaPababababababadadacacacabaaaa
+aaabababababadacadadadadababababababaNaOaPababababadadadadadadadabaaaa
+aaababababababababacacabababababababaNaOaPababababadaeaeaeaeaeadabaaaa
+aaabababababababababababababababababaNaOaPababacacacaeaYaYaYaeadabaaaa
+aaababababababababadababababababababaNaOaPadacacacacaeaYaYaYaeadabaaaa
+aaabababababadabababababababababababaNaOaZacacacadadaeaYaYaYaeadababaa
+aaaaabababababababadabababababababaeaeaJaeaeaeaeaeaeaeaeaeaYaeadababaa
+aaaaabababadababacacababababababadaeaoamaearararaearararararaeadababaa
+aaaaababababababacababababababadadaeajamaearararaearararararaeadababaa
+aaaaababababadacacababababababacadaeaebaaearararaearararararaeadababaa
+aaabababababadacacababababababacadaeararararararaearararararaeadacabab
+aaabababababacadadabababababababadaeararararararararararararaeadacabab
+aaabababababababababababababababadaeaeaeararararaearararararaeadacabab
+aaaaababababababababababababababadadadaeararararaearararararaeadababab
+aaaaabababababababababababababababadadaeaeaeaeaeaeaeaeaeaeaeaeacababab
+aaaaabababababababaaabababababababadadadadadadadadadadadadadadababaaaa
+aaaaabababababaaaaaaaaababababababababababacacacacacabababababababaaaa
+aaaaaaabababaaaaaaaaaaabababababababababababababababababababababaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

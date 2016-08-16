@@ -560,6 +560,13 @@
 	chattering = TRUE
 	phomeme = "griffin"
 
+/obj/item/toy/talking/liberty
+	name = "patriotic action figure"
+	desc = "An action figure modeled after an old-earth statue."
+	icon_state = "liberty"
+	messages = list("Give me liberty or give me death!", "USA! USA! USA! USA!", "..with liberty and justice for all.", "You will never catch me!")
+	chattering = TRUE
+
 /obj/item/toy/talking/skeleton
 	name = "skeleton action figure"
 	desc = "An action figure modeled after 'Oh-cee', the original content \

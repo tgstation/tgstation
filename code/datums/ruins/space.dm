@@ -112,6 +112,12 @@
 	description = "The hush-hush of Nanotrasen when it comes to stations seemingly vanishing off the radar is an interesting topic, \
 		theories of nuclear destruction float about while Nanotrasen flat-out denies said stations ever existing."
 
+/datum/map_template/ruin/space/derelict7
+	id = "derelict6"
+	suffix = "thingstocome.dmm"
+	name = "Derelict 7"
+	description = "An idle post, no longer inhabitated by any crew. Maybe they've left some loot behind before shipping out?"
+
 /datum/map_template/ruin/space/empty_shell
 	id = "empty-shell"
 	suffix = "emptyshell.dmm"
