@@ -18,3 +18,14 @@
 	if(holder && (holder.tesla_link == src))
 		holder.tesla_link = null
 	..()
+
+/obj/item/weapon/computer_hardware/tesla_link/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(istype(M, /obj/item/modular_computer/processor))
+		var/obj/item/modular_computer/processor/P = M
+		if(P.machinery_computer.tesla_link)
+			user << "This computer's tesla link slot is already occupied by \the [P.machinery_computer.tesla_link]."
+			return
+		holder = P.machinery_computer
+		P.machinery_computer.tesla_link = src
+		found = 1
+	..(user, M, found)

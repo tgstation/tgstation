@@ -89,3 +89,11 @@
 	damage += round(amount) 					// We want nice rounded numbers here.
 	damage = max(0, min(damage, max_damage))		// Clamp the value.
 
+// Attempts to install the hardware into apropriate slot.
+/obj/item/weapon/computer_hardware/proc/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(found)
+		user << "You install \the [src] into \the [M]"
+		holder2 = M
+		if(!user.drop_item(src))
+			return
+		forceMove(M)

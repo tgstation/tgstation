@@ -69,3 +69,11 @@
 /obj/item/weapon/computer_hardware/battery_module/proc/charge_to_full()
 	if(battery)
 		battery.charge = battery.maxcharge
+
+/obj/item/weapon/computer_hardware/battery_module/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(M.battery_module)
+		user << "This computer's battery slot is already occupied by \the [M.battery_module]."
+		return
+	found = 1
+	M.battery_module = src
+	..(user, M, found)

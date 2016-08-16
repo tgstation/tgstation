@@ -39,3 +39,11 @@
 	power_usage = 75
 	max_idle_programs = 2
 	origin_tech = list("programming" = 4, "engineering" = 3)
+
+/obj/item/weapon/computer_hardware/processor_unit/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(M.processor_unit)
+		user << "This computer's processor slot is already occupied by \the [M.processor_unit]."
+		return
+	found = 1
+	M.processor_unit = src
+	..(user, M, found)

@@ -94,3 +94,11 @@ var/global/ntnet_card_uid = 1
 	if(holder2 && (holder2.network_card == src))
 		holder2.network_card = null
 	..()
+
+/obj/item/weapon/computer_hardware/network_card/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(M.network_card)
+		user << "This computer's network card slot is already occupied by \the [M.network_card]."
+		return
+	found = 1
+	M.network_card = src
+	..(user, M, found)

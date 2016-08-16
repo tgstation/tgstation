@@ -525,7 +525,7 @@
 	if(istype(W, /obj/item/weapon/computer_hardware))
 		var/obj/item/weapon/computer_hardware/C = W
 		if(C.hardware_size <= max_hardware_size)
-			try_install_component(user, C)
+			C.try_install_component(user, src)
 		else
 			user << "This component is too large for \the [src]."
 	if(istype(W, /obj/item/weapon/wrench))
@@ -585,58 +585,6 @@
 // Used by processor to relay qdel() to machinery type.
 /obj/item/modular_computer/proc/relay_qdel()
 	return
-
-// Attempts to install the hardware into apropriate slot.
-/obj/item/modular_computer/proc/try_install_component(mob/living/user, obj/item/weapon/computer_hardware/H, found = 0)
-	// "USB" flash drive.
-	if(istype(H, /obj/item/weapon/computer_hardware/hard_drive/portable))
-		if(portable_drive)
-			user << "This computer's portable drive slot is already occupied by \the [portable_drive]."
-			return
-		found = 1
-		portable_drive = H
-	else if(istype(H, /obj/item/weapon/computer_hardware/hard_drive))
-		if(hard_drive)
-			user << "This computer's hard drive slot is already occupied by \the [hard_drive]."
-			return
-		found = 1
-		hard_drive = H
-	else if(istype(H, /obj/item/weapon/computer_hardware/network_card))
-		if(network_card)
-			user << "This computer's network card slot is already occupied by \the [network_card]."
-			return
-		found = 1
-		network_card = H
-	else if(istype(H, /obj/item/weapon/computer_hardware/nano_printer))
-		if(nano_printer)
-			user << "This computer's nano printer slot is already occupied by \the [nano_printer]."
-			return
-		found = 1
-		nano_printer = H
-	else if(istype(H, /obj/item/weapon/computer_hardware/card_slot))
-		if(card_slot)
-			user << "This computer's card slot is already occupied by \the [card_slot]."
-			return
-		found = 1
-		card_slot = H
-	else if(istype(H, /obj/item/weapon/computer_hardware/battery_module))
-		if(battery_module)
-			user << "This computer's battery slot is already occupied by \the [battery_module]."
-			return
-		found = 1
-		battery_module = H
-	else if(istype(H, /obj/item/weapon/computer_hardware/processor_unit))
-		if(processor_unit)
-			user << "This computer's processor slot is already occupied by \the [processor_unit]."
-			return
-		found = 1
-		processor_unit = H
-	if(found)
-		user << "You install \the [H] into \the [src]"
-		H.holder2 = src
-		if(!user.drop_item(H))
-			return
-		H.forceMove(src)
 
 // Uninstalls component. Found and Critical vars may be passed by parent types, if they have additional hardware.
 /obj/item/modular_computer/proc/uninstall_component(mob/living/user, obj/item/weapon/computer_hardware/H, found = 0, critical = 0)

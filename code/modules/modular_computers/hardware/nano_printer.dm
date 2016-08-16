@@ -50,3 +50,11 @@
 		holder2.nano_printer = null
 	holder2 = null
 	..()
+
+/obj/item/weapon/computer_hardware/nano_printer/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(M.nano_printer)
+		user << "This computer's nano printer slot is already occupied by \the [M.nano_printer]."
+		return
+	found = 1
+	M.nano_printer = src
+	..(user, M, found)

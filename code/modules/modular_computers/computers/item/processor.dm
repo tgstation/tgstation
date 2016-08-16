@@ -92,18 +92,6 @@
 	machinery_computer.use_power = 0
 	return
 
-// Tesla links only work on machinery types, so we'll override the default try_install_component() proc
-/obj/item/modular_computer/processor/try_install_component(mob/living/user, obj/item/weapon/computer_hardware/H, found = 0)
-	if(istype(H, /obj/item/weapon/computer_hardware/tesla_link))
-		if(machinery_computer.tesla_link)
-			user << "This computer's tesla link slot is already occupied by \the [machinery_computer.tesla_link]."
-			return
-		var/obj/item/weapon/computer_hardware/tesla_link/L = H
-		L.holder = machinery_computer
-		machinery_computer.tesla_link = L
-		found = 1
-	..(user, H, found)
-
 /obj/item/modular_computer/processor/uninstall_component(mob/living/user, obj/item/weapon/computer_hardware/H, found = 0, critical = 0)
 	if(machinery_computer.tesla_link == H)
 		machinery_computer.tesla_link = null
