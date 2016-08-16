@@ -1497,6 +1497,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\wizard.dm"
 #include "code\modules\mob\living\simple_animal\hostile\bosses\boss.dm"
 #include "code\modules\mob\living\simple_animal\hostile\bosses\paperwizard.dm"
+#include "code\modules\mob\living\simple_animal\hostile\megafauna\adamant.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\dragon.dm"
