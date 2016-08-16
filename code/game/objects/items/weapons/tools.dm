@@ -332,8 +332,6 @@
 	if(welding)
 		SetLuminosity(0)
 		user.AddLuminosity(light_intensity)
-	else
-		user.AddLuminosity(-light_intensity)
 	update_icon()
 
 
@@ -396,9 +394,8 @@ obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 //Switches the welder off
 obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	welding = 0
-	var/mob/Player = loc
-	if(ismob(loc)) //If player is holding the welder
-		Player.AddLuminosity(-light_intensity)
+	if(user == loc) //If player is holding the welder
+		user.AddLuminosity(-light_intensity)
 		SetLuminosity(0)
 	else
 		SetLuminosity(0)
