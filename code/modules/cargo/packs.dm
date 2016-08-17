@@ -498,7 +498,7 @@
 	
 /datum/supply_pack/engineering/engine/spacesuitupgrade
 	name = "Hardsuit Integrated Jetpack upgrade"
-	cost = 3000
+	cost = 4000
 	access = access_eva
 	contains = list(/obj/item/weapon/tank/jetpack/suit)
 	crate_name = "integrated jetpack crate"
