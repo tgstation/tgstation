@@ -55,6 +55,8 @@ Difficulty: Hard
 	var/major_attack_cooldown = 50
 	var/doing_major_attack = FALSE
 	var/blinking = FALSE
+	var/obj/effect/hierophant/original_loc
+	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our original location
 	var/obj/item/device/gps/internal
 	medal_type = MEDAL_PREFIX
 	score_type = BIRD_SCORE
@@ -66,6 +68,21 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/New()
 	..()
 	internal = new/obj/item/device/gps/internal/hierophant(src)
+	original_loc = new(loc)
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/Life()
+	. = ..()
+	if(.)
+		if(target || loc == original_loc.loc)
+			timeout_time = initial(timeout_time)
+		else
+			timeout_time = max(timeout_time--, 0)
+		if(!timeout_time)
+			if(get_dist(src, original_loc) > 2)
+				blink(original_loc)
+			else
+				GoTo(original_loc, move_to_delay, 0)
+			wander = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
 	if(health > 0)
@@ -96,7 +113,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
 	if(!blinking)
 		if(target)
-			melee_blast(target)
+			addtimer(src, "melee_blast", 0, FALSE, get_turf(target))
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/DestroySurroundings()
@@ -367,6 +384,15 @@ Difficulty: Hard
 				L.apply_damage(damage, BRUTE)
 		sleep(0.1)
 
+/obj/effect/hierophant
+	icon_state = null
+	invisibility = 100
+	anchored = TRUE
+
+/obj/effect/hierophant/Destroy(force)
+	if(!force)
+		return QDEL_HINT_LETMELIVE
+	. = ..()
 
 /obj/item/device/gps/internal/hierophant
 	icon_state = null
