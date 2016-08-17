@@ -279,18 +279,22 @@ Difficulty: Hard
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(source, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	playsound(source,'sound/magic/blink.ogg', 200, 1)
-	blinking = TRUE
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, src))
 		B.damage = 30
 	for(var/t in RANGE_TURFS(1, source))
 		var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, src))
 		B.damage = 30
+	blinking = TRUE
 	animate(src, alpha = 0, color = "660099", time = 2, easing = EASE_OUT)
-	sleep(4)
+	sleep(1)
+	density = TRUE
+	sleep(3)
 	forceMove(T)
 	animate(src, alpha = 255, color = initial(color), time = 2, easing = EASE_IN)
-	sleep(2)
+	sleep(1)
+	density = FALSE
+	sleep(1)
 	blinking = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/melee_blast(mob/victim)
