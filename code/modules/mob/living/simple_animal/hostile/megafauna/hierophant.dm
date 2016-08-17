@@ -152,7 +152,7 @@ Difficulty: Hard
 		if(get_dist(src, target) > 2)
 			possibilities += "blink"
 		if(chaser_cooldown < world.time)
-			possibilities += "chaser_swarm"
+			possibilities = list("chaser_swarm")
 		switch(pick(possibilities))
 			if("blink")
 				blink(target)
