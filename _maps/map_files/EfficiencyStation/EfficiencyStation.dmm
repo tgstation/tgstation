@@ -55719,6 +55719,7 @@
 /area/tcommsat/server)
 "cib" = (
 /obj/machinery/power/terminal,
+/obj/machinery/ntnet_relay,
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
