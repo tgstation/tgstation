@@ -242,7 +242,10 @@
 	if(assess_patient(H))
 		last_found = world.time
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
-			playsound(loc, pick('sound/voice/mcoming.ogg', 'sound/voice/mhelp.ogg', 'sound/voice/minjured.ogg'), 50, 0)
+			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/mcoming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/mhelp.ogg',"[H.name], you appear to be injured!" = 'sound/voice/minjured.ogg')
+			var/message = pick(messagevoice)
+			speak(message)
+			playsound(loc, messagevoice[message], 50, 0)
 			last_newpatient_speak = world.time
 		return H
 	else
@@ -274,7 +277,10 @@
 
 	if(!patient)
 		if(!shut_up && prob(1))
-			playsound(loc, pick('sound/voice/mradar.ogg', 'sound/voice/mcatch.ogg', 'sound/voice/msurgeon.ogg', 'sound/voice/mflies.ogg', 'sound/voice/mdelicious.ogg'), 50, 0)
+			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/mradar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/mcatch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/msurgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/mflies.ogg',"Delicious!" = 'sound/voice/mdelicious.ogg')
+			var/message = pick(messagevoice)
+			speak(message)
+			playsound(loc, messagevoice[message], 50, 0)
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
 		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
 		oldpatient = patient
@@ -396,7 +402,10 @@
 		return
 
 	if(C.stat == 2)
-		playsound(loc, pick('sound/voice/mno.ogg', 'sound/voice/mlive.ogg', 'sound/voice/mlost.ogg'), 50, 0)
+		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/mno.ogg',"Live, damnit! LIVE!" = 'sound/voice/mlive.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/mlost.ogg')
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(loc, messagevoice[message], 50, 0)
 		oldpatient = patient
 		soft_reset()
 		return
@@ -444,7 +453,10 @@
 					break
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
-		playsound(loc, pick('sound/voice/mpatchedup.ogg', 'sound/voice/mapple.ogg', 'sound/voice/mfeelbetter.ogg'), 50, 0)
+		var/list/messagevoice = list("All patched up!" = 'sound/voice/mpatchedup.ogg',"An apple a day keeps me away." = 'sound/voice/mapple.ogg',"Feel better soon!" = 'sound/voice/mfeelbetter.ogg')
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(loc, messagevoice[message], 50, 0)
 		bot_reset()
 		return
 	else
