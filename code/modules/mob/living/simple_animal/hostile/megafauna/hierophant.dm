@@ -191,7 +191,7 @@ Difficulty: Hard
 	for(var/mob/living/L in T.contents)
 		if(L != caster)
 			L << "<span class='userdanger'>You're struck by a hierophant blast!</span>"
-			L.apply_damage(damage, BURN)
+			L.apply_damage(damage, BRUTE)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage()
 	anger_modifier = Clamp(((maxHealth - health)/40),0,60)
@@ -253,7 +253,7 @@ Difficulty: Hard
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	sleep(3)
-	if(prob(anger_modifier) || victim.Adjacent(src)) && victim != src)
+	if((prob(anger_modifier) || victim.Adjacent(src)) && victim != src)
 		addtimer(src, "diagonal_blasts", 0, FALSE, target)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src))
 	for(var/d in cardinal)
