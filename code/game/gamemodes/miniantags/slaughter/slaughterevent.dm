@@ -17,7 +17,7 @@
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected = popleft(candidates)
+	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = 1

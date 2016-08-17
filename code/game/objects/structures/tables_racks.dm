@@ -54,16 +54,14 @@
 			take_damage(rand(40,80), BRUTE, 0)
 
 /obj/structure/table/blob_act(obj/effect/blob/B)
-	if(prob(75))
-		qdel(src)
+	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/table/narsie_act()
 	if(prob(20))
 		new /obj/structure/table/wood(src.loc)
 
 /obj/structure/table/ratvar_act()
-	if(prob(20))
-		new /obj/structure/table/reinforced/brass(src.loc)
+	new /obj/structure/table/reinforced/brass(src.loc)
 
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
@@ -463,10 +461,7 @@
 			take_damage(rand(5,25), BRUTE, 0)
 
 /obj/structure/rack/blob_act(obj/effect/blob/B)
-	if(prob(75))
-		qdel(src)
-	else
-		rack_destroy()
+	rack_destroy()
 
 
 /obj/structure/rack/mech_melee_attack(obj/mecha/M)

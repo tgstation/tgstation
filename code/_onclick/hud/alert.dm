@@ -287,7 +287,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
-			desc += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+			if(G.ratvar_portal)
+				desc += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+			else
+				desc += "Seconds until Proselytization: <b>[G.get_arrival_text(TRUE)]</b><br>"
 		if(unconverted_ai_exists)
 			desc += "<b>An unconverted AI exists!</b><br>"
 		if(scripture_states[SCRIPTURE_REVENANT])

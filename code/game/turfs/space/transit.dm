@@ -22,7 +22,7 @@
 	throw_atom(AM)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
-	if(!AM)
+	if(!AM || istype(AM, /obj/docking_port))
 		return
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE

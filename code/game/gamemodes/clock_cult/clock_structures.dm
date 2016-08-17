@@ -653,6 +653,9 @@
 /obj/effect/clockwork/overlay/ex_act()
 	return FALSE
 
+/obj/effect/clockwork/overlay/singularity_pull(S, current_size)
+	return
+
 /obj/effect/clockwork/overlay/Destroy()
 	if(linked)
 		linked = null

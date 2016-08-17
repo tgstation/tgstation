@@ -25,11 +25,12 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	<span class='green'>Blobs</span>: Consume the station and spread as far as you can.\n\
 	<span class='notice'>Crew</span>: Fight back the blobs and minimize station damage."
 
-	var/burst = 0
+	var/message_sent = FALSE
 
 	var/cores_to_spawn = 1
 	var/players_per_core = 25
 	var/blob_point_rate = 3
+	var/blob_base_starting_points = 80
 
 	var/blobwincount = 350
 
@@ -73,7 +74,8 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 /datum/game_mode/blob/post_setup()
 
 	for(var/datum/mind/blob in blob_overminds)
-		var/mob/camera/blob/B = blob.current.become_overmind(1)
+		var/mob/camera/blob/B = blob.current.become_overmind(TRUE, round(blob_base_starting_points/blob_overminds.len))
+		B.mind.name = B.name
 		var/turf/T = pick(blobstart)
 		B.loc = T
 		B.base_point_rate = blob_point_rate
@@ -91,6 +93,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 		sleep(message_delay)
 
 		send_intercept(1)
+		message_sent = TRUE
 
 		sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 8)
 
