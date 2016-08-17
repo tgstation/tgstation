@@ -494,6 +494,32 @@
 	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 
+	//Clown
+/obj/item/clothing/head/helmet/space/hardsuit/clown
+	name = "cosmohonk hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low-humor environment. Has radiation shielding."
+	icon_state = "hardsuit0-clown"
+	item_state = "hardsuit0-clown"
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
+	item_color = "clown"
+
+/obj/item/clothing/suit/space/hardsuit/clown
+	name = "cosmohonk hardsuit"
+	desc = "A special suit that protects against hazardous, low humor environments. Has radiation shielding. Only a true clown can wear it."
+	icon_state = "hardsuit-clown"
+	item_state = "clown_hardsuit"
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/clown
+	pockets = /obj/item/weapon/storage/internal/pocket
+
+/obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, slot)
+	if(!..() || !ishuman(M))
+		return FALSE
+	var/mob/living/carbon/human/H = M
+	if(H.mind.assigned_role == "Clown")
+		return TRUE
+	else
+		return FALSE
 
 
 /////////////SHIELDED//////////////////////////////////
