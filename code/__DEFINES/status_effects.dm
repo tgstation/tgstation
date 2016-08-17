@@ -6,7 +6,7 @@
 // BUFFS //
 ///////////
 
-#define STATUS_EFFECT_RENEW //Renewing light knits shut the target's wounds, healing 5 brute/burn per second. Lasts for 5 seconds.
+#define STATUS_EFFECT_RENEW /datum/status_effect/renew //Renewing light knits shut the target's wounds, healing 5 brute/burn per second. Lasts for 5 seconds.
 
 /////////////
 // DEBUFFS //
