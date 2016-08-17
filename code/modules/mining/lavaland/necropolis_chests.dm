@@ -679,7 +679,7 @@
 		addtimer(src, "aoe_burst", 0, FALSE, T, user)
 	else
 		timer = world.time + cooldown_time
-		if(target in view(user.client.view, get_turf(user)))
+		if(target in view(user.client.view, user))
 			if(isliving(target) && chaser_timer <= world.time)
 				chaser_timer = world.time + chaser_cooldown
 				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target))
@@ -704,7 +704,6 @@
 		range--
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(J, user))
 		previousturf = J
-		sleep(0.3)
 
 /obj/item/weapon/hierophant_staff/proc/aoe_burst(turf/T, mob/living/user)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))

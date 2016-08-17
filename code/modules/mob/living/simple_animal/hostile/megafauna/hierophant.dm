@@ -116,7 +116,7 @@ Difficulty: Hard
 	caster = new_caster
 
 /obj/effect/overlay/temp/hierophant/chaser
-	duration = 100
+	duration = 98
 	var/mob/living/target
 	var/moving_dir
 	var/previous_moving_dir
@@ -124,14 +124,16 @@ Difficulty: Hard
 	var/moving = 0
 	var/speed = 3
 
-/obj/effect/overlay/temp/hierophant/chaser/New(loc, new_caster, new_target)
+/obj/effect/overlay/temp/hierophant/chaser/New(loc, new_caster, new_target, new_speed)
 	..()
 	target = new_target
+	if(new_speed)
+		speed = new_speed
 	addtimer(src, "seek_target", 1)
 
 /obj/effect/overlay/temp/hierophant/chaser/proc/get_target_dir()
 	. = get_dir(get_cardinal_step_away(src, target), src)
-	if(previous_moving_dir != . && more_previouser_moving_dir == . )
+	if(. != previous_moving_dir && . == more_previouser_moving_dir)
 		var/list/cardinal_copy = cardinal.Copy()
 		cardinal_copy -= more_previouser_moving_dir
 		. = pick(cardinal_copy)
@@ -142,7 +144,8 @@ Difficulty: Hard
 			more_previouser_moving_dir = previous_moving_dir
 			previous_moving_dir = moving_dir
 			moving_dir = get_target_dir()
-			if(previous_moving_dir != moving_dir && moving_dir == more_previouser_moving_dir)
+			var/standard_target_dir = get_dir(get_cardinal_step_away(src, target), src)
+			if(. != previous_moving_dir && standard_target_dir == more_previouser_moving_dir)
 				moving = 1
 			else
 				moving = 4
@@ -172,14 +175,16 @@ Difficulty: Hard
 
 /obj/effect/overlay/temp/hierophant/blast
 	icon_state = "hierophant_blast"
-	name = "blast"
+	name = "vortex blast"
 	luminosity = 1
 	desc = "Get out of the way!"
 	duration = 9
-	var/damage = 15
+	var/damage = 10
+	var/list/hurt_mobs = list()
 
 /obj/effect/overlay/temp/hierophant/blast/New(loc, new_caster)
 	..()
+	hurt_mobs += new_caster
 	if(istype(loc, /turf/closed/mineral))
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
@@ -189,10 +194,14 @@ Difficulty: Hard
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
 	sleep(6)
-	for(var/mob/living/L in T.contents)
-		if(L != caster)
-			L << "<span class='userdanger'>You're struck by a hierophant blast!</span>"
+	var/timing = 15
+	while(src && timing)
+		timing--
+		for(var/mob/living/L in T.contents - hurt_mobs)
+			hurt_mobs += L
+			L << "<span class='userdanger'>You're struck by a [name]!</span>"
 			L.apply_damage(damage, BRUTE)
+		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,50)
@@ -214,12 +223,10 @@ Difficulty: Hard
 			addtimer(src, "diagonal_blasts", 0, FALSE, target)
 	else
 		if(chaser_cooldown < world.time)
-			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target))
-			C.speed = max(1.5, speed - anger_modifier*0.1)
+			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, speed - anger_modifier*0.1)))
 			chaser_cooldown = world.time + initial(chaser_cooldown)
-			if(prob(anger_modifier) || (target.Adjacent(src) && target != src))
+			if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
 				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target))
-				OC.speed = max(1.5, speed*2 - anger_modifier*0.1)
 				OC.moving = 4
 				OC.moving_dir = pick(cardinal - C.moving_dir)
 		else
@@ -247,7 +254,6 @@ Difficulty: Hard
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(J, src))
 		previousturf = J
 		J = get_step(previousturf, dir)
-		sleep(0.3)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cardinal_blasts(mob/victim)
 	var/turf/T = get_turf(victim)
@@ -270,10 +276,9 @@ Difficulty: Hard
 		range--
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(J, src))
 		previousturf = J
-		sleep(0.3)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blink(mob/victim)
-	if(blinking || !victim || get_dist(victim, src) > 2)
+	if(blinking || !victim || get_dist(victim, src) <= 2)
 		return
 	var/turf/T = get_turf(victim)
 	var/turf/source = get_turf(src)
@@ -317,7 +322,7 @@ Difficulty: Hard
 		var/dist = get_dist(original, T)
 		if(dist > last_dist)
 			last_dist = dist
-			sleep(1)
+			sleep(rand(1, 2))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A)
