@@ -194,13 +194,13 @@ Difficulty: Hard
 			L.apply_damage(damage, BRUTE)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage()
-	anger_modifier = Clamp(((maxHealth - health)/40),0,60)
+	anger_modifier = Clamp(((maxHealth - health)/50),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.1)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.1)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	calculate_rage()
-	ranged_cooldown = world.time + ranged_cooldown_time - anger_modifier
+	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier)
 
 	if(prob(anger_modifier) && get_dist(src, target) > burst_range)
 		blink(target)
