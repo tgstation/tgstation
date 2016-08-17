@@ -297,6 +297,11 @@
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle
 
+/obj/machinery/door/airlock/shuttle/dark
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle_dark.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle/dark
+
+
 /obj/machinery/door/airlock/abductor
 	name = "alien airlock"
 	desc = "With humanity's current technological level, it could take years to hack this advanced airlock... or maybe we should give a screwdriver a try?"

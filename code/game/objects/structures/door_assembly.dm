@@ -292,6 +292,12 @@
 	anchored = 1
 	state = 1
 
+/obj/structure/door_assembly/door_assembly_shuttle/dark
+	name = "dark shuttle airlock assembly"
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle_dark.dmi'
+	airlock_type = /obj/machinery/door/airlock/shuttle/dark
+
+
 /obj/structure/door_assembly/door_assembly_cult
 	name = "cult airlock assembly"
 	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'

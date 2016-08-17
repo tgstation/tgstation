@@ -21,6 +21,12 @@
 	icon_state = "propulsion"
 	opacity = 1
 
+/obj/structure/shuttle/engine/propulsion/pod
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "shuttle_engine"
+	pixel_x = -32
+	pixel_y = -32
+
 /obj/structure/shuttle/engine/propulsion/burst
 	name = "burst"
 
