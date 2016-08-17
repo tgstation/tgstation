@@ -47,7 +47,6 @@ Difficulty: Hard
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	loot = list(/obj/item/weapon/hierophant_staff)
-	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	var/anger_modifier = 0
 	var/burst_range = 2
 	var/beam_range = 3
