@@ -23,9 +23,18 @@
 /datum/objective/proc/get_target()
 	return target
 
+
+/datum/objective/proc/get_crewmember_minds()
+	. = list()
+	for(var/V in data_core.locked)
+		var/datum/data/record/R = V
+		var/mob/M = R.fields["reference"]
+		if(M && M.mind)
+			. += M
+
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
@@ -34,7 +43,7 @@
 	return target
 
 /datum/objective/proc/find_target_by_role(role, role_type=0, invert=0)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if((possible_target != owner) && ishuman(possible_target.current))
 			var/is_role = 0
 			if(role_type)
