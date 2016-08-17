@@ -9,6 +9,7 @@
 	active_power_usage = 60
 	power_channel = EQUIP
 	var/obj/item/weapon/stock_parts/cell/charging = null
+	var/obj/item/weapon/computer_hardware/battery_module/B = null
 	var/chargelevel = -1
 
 /obj/machinery/cell_charger/proc/updateicon()
@@ -33,7 +34,7 @@
 		user << "Current charge: [round(charging.percent(), 1)]%"
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+	if(istype(W, /obj/item/weapon/stock_parts/cell) || istype(W, /obj/item/weapon/computer_hardware/battery_module))
 		if(stat & BROKEN)
 			user << "<span class='warning'>[src] is broken!</span>"
 			return
@@ -52,9 +53,14 @@
 				return
 			if(!user.drop_item())
 				return
-
+			if(istype(W,/obj/item/weapon/computer_hardware/battery_module))
+				B = W
 			W.loc = src
-			charging = W
+
+			if(B)
+				charging = B.battery
+			else
+				charging = W
 			user.visible_message("[user] inserts a cell into the charger.", "<span class='notice'>You insert a cell into the charger.</span>")
 			chargelevel = -1
 			updateicon()
@@ -80,8 +86,12 @@
 	if(!charging)
 		return
 
-	user.put_in_hands(charging)
-	charging.add_fingerprint(user)
+	if(B)
+		user.put_in_hands(B)
+		B.add_fingerprint(user)
+	else
+		user.put_in_hands(charging)
+		charging.add_fingerprint(user)
 
 	user.visible_message("[user] removes the cell from the charger.", "<span class='notice'>You remove the cell from the charger.</span>")
 
@@ -91,8 +101,11 @@
 	if(!charging)
 		return
 
-	charging.loc = loc
-	user << "<span class='notice'>You telekinetically remove [charging] from [src].</span>"
+	if(B)
+		B.loc = loc
+	else
+		charging.loc = loc
+	user << "<span class='notice'>You telekinetically remove [B ? B : charging] from [src].</span>"
 
 	removecell()
 
