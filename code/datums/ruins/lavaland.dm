@@ -126,6 +126,14 @@
 	cost = 0
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/hierophant
+	name = "Hierophant's Arena"
+	id = "hierophant"
+	description = "A huge fucking bird priest awaits you in this arena."
+	suffix = "lavaland_surface_hierophant.dmm"
+	cost = 5
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/ato
 	name = "Automated Trade Outpost"
 	id = "ato"

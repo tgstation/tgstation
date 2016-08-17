@@ -13,8 +13,8 @@ The Hierophant's attacks are as follows, and INTENSIFY at a random chance based 
 - Creates an expanding AoE burst.
 - INTENSE ATTACKS:
 	Blinks to the target after a very brief delay, damaging everything near the start and end points.
-	Rapidly creates squares of 3x3 blasts under the target.
-	Rapidly creates Cross Blasts of either type under the target.
+	Rapidly creates Cross Blasts and squares of 3x3 blasts under the target.
+	Creates four high-speed chasers.
 - IF TARGET WAS STRUCK IN MELEE: Creates a 3x3 square of blasts under the target.
 
 Cross Blasts and the AoE burst gain additional range as the Hierophant loses health, while Chasers gain additional speed.
@@ -49,7 +49,7 @@ Difficulty: Hard
 	mob_size = MOB_SIZE_LARGE
 	pixel_x = -16
 	ranged_cooldown_time = 40
-	aggro_vision_range = 18
+	aggro_vision_range = 23
 	idle_vision_range = 5
 	loot = list(/obj/item/weapon/hierophant_staff)
 	wander = FALSE
@@ -148,41 +148,49 @@ Difficulty: Hard
 
 	if(prob(anger_modifier*0.75)) //major ranged attack
 		ranged_cooldown = world.time + max(5, major_attack_cooldown - round(anger_modifier*0.75))
-		var/list/possibilities = list("blast_spam", "cross_blast_spam")
+		var/list/possibilities = list("blast_spam")
 		if(get_dist(src, target) > 2)
 			possibilities += "blink"
+		if(chaser_cooldown < world.time)
+			possibilities += "chaser_swarm"
 		switch(pick(possibilities))
 			if("blink")
 				blink(target)
 			if("blast_spam")
-				blinking = TRUE
-				animate(src, color = "#660099", time = 4)
-				melee_blast(target)
-				var/counter = max(rand(1, round(anger_modifier * 0.2)), 1)
-				sleep(4)
-				while(target && counter)
-					counter--
-					melee_blast(target)
-					sleep(4)
-				animate(src, color = initial(color), time = 4)
-				blinking = FALSE
-			if("cross_blast_spam")
 				blinking = TRUE
 				animate(src, color = "#660099", time = 8)
 				if(prob(60))
 					cardinal_blasts(target)
 				else
 					diagonal_blasts(target)
-				var/counter = max(rand(1, round(anger_modifier * 0.1)), 1)
-				sleep(8)
+				var/counter = 2 + round(anger_modifier*0.08)
+				sleep(3)
+				if(target)
+					melee_blast(target)
+				sleep(3)
 				while(target && counter)
 					counter--
 					if(prob(60))
 						cardinal_blasts(target)
 					else
 						diagonal_blasts(target)
-					sleep(8)
+					sleep(3)
+					if(target)
+						melee_blast(target)
+					sleep(3)
 				animate(src, color = initial(color), time = 8)
+				blinking = FALSE
+			if("chaser_swarm")
+				chaser_cooldown = world.time + initial(chaser_cooldown)
+				blinking = TRUE
+				animate(src, color = "#660099", time = 5)
+				var/list/cardinal_copy = cardinal.Copy()
+				while(target && cardinal_copy.len)
+					var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1.5, 4 - anger_modifier*0.05)))
+					C.moving = 4
+					C.moving_dir = pick_n_take(cardinal_copy)
+					sleep(10)
+				animate(src, color = initial(color), time = 5)
 				blinking = FALSE
 		return
 
@@ -392,7 +400,6 @@ Difficulty: Hard
 			if(L.stat != DEAD)
 				if(L.client)
 					flash_color(L.client, "#660099", 1)
-					shake_camera(L, 4, 1)
 				L << "<span class='userdanger'>You're struck by a [name]!</span>"
 				L.apply_damage(damage, BRUTE)
 		sleep(0.1)
@@ -412,5 +419,21 @@ Difficulty: Hard
 	gpstag = "Zealous Signal"
 	desc = "Heed its words."
 	invisibility = 100
+
+/turf/open/indestructible/hierophant
+	icon_state = "hierophant1"
+	desc = "A floor with a square pattern. It's faintly cool to the touch."
+
+/turf/open/indestructible/hierophant/New()
+	..()
+	if(prob(50))
+		icon_state = "hierophant2"
+
+/turf/closed/indestructible/riveted/hierophant
+	name = "wall"
+	desc = "A wall made out of smooth, cold stone."
+	icon = 'icons/turf/walls/hierophant_wall.dmi'
+	icon_state = "hierophant"
+	smooth = SMOOTH_TRUE
 
 #undef MEDAL_PREFIX
