@@ -54567,6 +54567,7 @@
 	network = list("SS13","tcomm")
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/ntnet_relay,
 /turf/open/floor/plasteel/black{
 	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"

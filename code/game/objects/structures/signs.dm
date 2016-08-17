@@ -15,7 +15,6 @@
 
 /obj/structure/sign/blob_act(obj/effect/blob/B)
 	qdel(src)
-	return
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench))

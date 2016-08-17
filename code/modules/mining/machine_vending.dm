@@ -27,6 +27,7 @@
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600),
 		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,                              600),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,										750),
+		new /datum/data/mining_equipment("Kinetic Crusher", 	/obj/item/weapon/twohanded/required/mining_hammer,               	   	750),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
 		new /datum/data/mining_equipment("Medivac Balloon",     /obj/item/weapon/extraction_pack/medivac,                               800),
@@ -38,7 +39,6 @@
 		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,				            2000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  		2000),
 		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              		2500),
-		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  		3000),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   		500),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                   		800),
 		new /datum/data/mining_equipment("Drone Melee Upgrade", /obj/item/device/mine_bot_ugprade,      			   			   		400),
@@ -159,7 +159,7 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Medivac Kit", "Extraction Kit")
+	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Medivac Kit", "Extraction Kit", "Crusher Kit")
 
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
@@ -182,6 +182,10 @@
 			new /obj/item/stack/sheet/metal/five(loc)
 			new /obj/item/weapon/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)
+		if("Crusher Kit")
+			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
+			new /obj/item/weapon/storage/belt/mining/alt(loc)
+			new /obj/item/weapon/extinguisher/mini(loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)

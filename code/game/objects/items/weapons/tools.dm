@@ -218,7 +218,6 @@
 	w_class = 2
 
 
-
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
@@ -332,8 +331,6 @@
 	if(welding)
 		SetLuminosity(0)
 		user.AddLuminosity(light_intensity)
-	else
-		user.AddLuminosity(-light_intensity)
 	update_icon()
 
 
@@ -396,9 +393,8 @@ obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 //Switches the welder off
 obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	welding = 0
-	var/mob/Player = loc
-	if(ismob(loc)) //If player is holding the welder
-		Player.AddLuminosity(-light_intensity)
+	if(user == loc) //If player is holding the welder
+		user.AddLuminosity(-light_intensity)
 		SetLuminosity(0)
 	else
 		SetLuminosity(0)

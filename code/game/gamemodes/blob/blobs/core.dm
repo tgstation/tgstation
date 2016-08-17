@@ -7,7 +7,6 @@
 	maxhealth = 400
 	explosion_block = 6
 	point_return = -1
-	atmosblock = 1
 	health_regen = 0 //we regen in Life() instead of when pulsed
 	var/core_regen = 2
 	var/overmind_get_delay = 0 //we don't want to constantly try to find an overmind, this var tracks when we'll try to get an overmind again
@@ -50,7 +49,8 @@
 	return ..()
 
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
+	exposed_temperature *= 0.5
+	..()
 
 /obj/effect/blob/core/ex_act(severity, target)
 	var/damage = 50 - 10 * severity //remember, the core takes half brute damage, so this is 20/15/10 damage based on severity

@@ -66,7 +66,7 @@
 			take_damage(rand(25,75), BRUTE, 0)
 
 /obj/structure/window/blob_act(obj/effect/blob/B)
-	shatter()
+	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/window/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
@@ -74,12 +74,11 @@
 		shard.color = NARSIE_WINDOW_COLOUR
 
 /obj/structure/window/ratvar_act()
-	if(prob(20))
-		if(!fulltile)
-			new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
-		else
-			new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
-		qdel(src)
+	if(!fulltile)
+		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+	else
+		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+	qdel(src)
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

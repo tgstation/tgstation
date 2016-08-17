@@ -19381,7 +19381,7 @@
 	},
 /area/bridge)
 "aRo" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/command,
 /turf/open/floor/plasteel/green/side{
 	dir = 10
 	},
@@ -35121,6 +35121,7 @@
 	},
 /area/crew_quarters/hor)
 "bzN" = (
+/obj/machinery/modular_computer/console/preset/research,
 /turf/open/floor/plasteel/warnwhite{
 	dir = 6
 	},
@@ -47453,6 +47454,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/machinery/ntnet_relay,
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -49048,13 +49050,11 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cdk" = (
-/obj/machinery/computer/monitor{
-	name = "primary power monitoring console"
-	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
 	},
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cdl" = (

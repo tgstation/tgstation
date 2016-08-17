@@ -156,12 +156,11 @@ var/list/airlock_overlays = list()
 		qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
-	if(prob(20))
-		if(glass)
-			new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
-		else
-			new/obj/machinery/door/airlock/clockwork(get_turf(src))
-		qdel(src)
+	if(glass)
+		new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
+	else
+		new/obj/machinery/door/airlock/clockwork(get_turf(src))
+	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
