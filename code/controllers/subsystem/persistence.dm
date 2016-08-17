@@ -5,8 +5,9 @@ var/datum/subsystem/persistence/SSpersistence
 	init_order = -100
 	flags = SS_NO_FIRE
 	var/savefile/secret_satchels
-	var/list/new_secret_satchels = list() //these are objects
-	var/list/old_secret_satchels = list() //these are associate
+	var/list/satchel_blacklist 		= list() //these are typecaches
+	var/list/new_secret_satchels 	= list() //these are objects
+	var/list/old_secret_satchels 	= list() //these are just vars
 
 /datum/subsystem/persistence/New()
 	NEW_SS_GLOBAL(SSpersistence)
@@ -20,41 +21,46 @@ var/datum/subsystem/persistence/SSpersistence
 
 /datum/subsystem/persistence/proc/PlaceSecretSatchel()
 	var/list/satchels = list()
-	var/list/invalid_satchels = list()
-	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
-	while(!secret_satchels.eof)
-		var/list/potential_satchel = list()
-		secret_satchels >> potential_satchel
-		if(potential_satchel["map"] != MAP_NAME)
-			invalid_satchels += potential_satchel
-			continue
-		satchels += potential_satchel
-	if(satchels.len < 1)
+	secret_satchels = new /savefile("data/npc_saves/SecretSatchels_[MAP_NAME].sav")
+	satchel_blacklist = typecacheof(/obj/item/stack/tile/plasteel) + typecacheof(/obj/item/weapon/crowbar)
+
+	secret_satchels >> satchels
+	if(!satchels.len || satchels.len < 20) //guards against low drop pools assuring that one player can reliably find his own gear.
 		return
+
 	var/list/chosen_satchel = pick_n_take(satchels)
-	old_secret_satchels = satchels + invalid_satchels
+	old_secret_satchels = satchels
 	secret_satchels << old_secret_satchels
-	var/path = text2path(chosen_satchel["object"])
-	var/obj/item/weapon/storage/backpack/satchel/flat/secret/F = new(chosen_satchel["loc"])
-	new path(F) //runtimes intentionally if satchel item has had its path changed/removed
+	if(chosen_satchel.len != 3) //Malformed
+		return
+
+	var/path = text2path(chosen_satchel[3]) //If the item no longer exist, this returns null
+	if(!path)
+		return
+
+	var/obj/item/weapon/storage/backpack/satchel/flat/F = new()
+	F.x = chosen_satchel[1]
+	F.y = chosen_satchel[2]
+	F.z = ZLEVEL_STATION
+	if(istype(F.loc,/turf/open/floor) && !istype(F.loc,/turf/open/floor/plating/))
+		F.hide(1)
+	new path(F)
 
 /datum/subsystem/persistence/proc/CollectSecretSatchels()
-	world << "<span class='boldannounce'>Here we go</span>"
-	var/list/saved_satchels = list()
 	for(var/A in new_secret_satchels)
-		world << "<span class='boldannounce'>we got satch!</span>"
 		var/obj/item/weapon/storage/backpack/satchel/flat/F = A
 		if(qdeleted(F) || F.z != ZLEVEL_STATION || F.invisibility != INVISIBILITY_MAXIMUM)
 			continue
 		var/list/savable_obj = list()
 		for(var/obj/O in F)
-			if(ispath(O,/obj/item/stack/tile/plasteel) || ispath(O,/obj/item/weapon/crowbar) || O.admin_spawned)
+			if(is_type_in_typecache(O, satchel_blacklist) || O.admin_spawned)
 				continue
-			savable_obj += O.type
+			if(O.persistence_replacement)
+				savable_obj += O.persistence_replacement
+			else
+				savable_obj += O.type
 		if(savable_obj.len < 1)
 			continue
-		world << "<span class='boldannounce'>and it's valid!</span>"
-		saved_satchels += list("map" = MAP_NAME, "loc" = F.loc, "object" = pick(savable_obj))
-	world << "<span class='boldannounce'>AAAAAAA HERE COMES PAIN</span>"
-	secret_satchels << old_secret_satchels + saved_satchels
-	world << "<span class='boldannounce'>we did it reddit</span>"
+		old_secret_satchels.len += 1
+		old_secret_satchels[old_secret_satchels.len] = list(F.x, F.y, "[pick(savable_obj)]")
+	secret_satchels << old_secret_satchels
