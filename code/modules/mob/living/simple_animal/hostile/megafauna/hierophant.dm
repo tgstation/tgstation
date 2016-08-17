@@ -163,7 +163,7 @@ Difficulty: Hard
 					cardinal_blasts(target)
 				else
 					diagonal_blasts(target)
-				var/counter = 2 + round(anger_modifier*0.08)
+				var/counter = round(anger_modifier*0.08)
 				sleep(3)
 				if(target)
 					melee_blast(target)
