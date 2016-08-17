@@ -505,7 +505,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/clown
 	name = "cosmohonk hardsuit"
-	desc = "A special suit that protects against hazardous, low humor environments. Has radiation shielding. Requires you to wear clown shoes to put on."
+	desc = "A special suit that protects against hazardous, low humor environments. Has radiation shielding. Only a true clown can wear it."
 	icon_state = "hardsuit-clown"
 	item_state = "clown_hardsuit"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
