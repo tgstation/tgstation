@@ -28,6 +28,7 @@
 
 	var/area_type = /area/space //Types of area to affect
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
+	var/list/protected_areas = list()//Areas that are protected and excluded from the affected areas.
 	var/target_z = ZLEVEL_STATION //The z-level to affect
 
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
@@ -50,7 +51,12 @@
 	if(stage == STARTUP_STAGE)
 		return
 	stage = STARTUP_STAGE
+	var/list/affectareas = list()
 	for(var/V in get_areas(area_type))
+		affectareas += V
+	for(var/V in protected_areas)
+		affectareas -= get_areas(V)
+	for(var/V in affectareas)
 		var/area/A = V
 		if(A.z == target_z)
 			impacted_areas |= A
@@ -97,7 +103,7 @@
 
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
-		return
+		return 1
 	stage = END_STAGE
 	update_areas()
 
