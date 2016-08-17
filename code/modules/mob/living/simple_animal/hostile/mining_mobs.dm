@@ -91,7 +91,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
-		if(isliving(target))
+		if(isliving(target) && !target.Adjacent(targets_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
@@ -219,6 +219,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
 		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
+		A.admin_spawned = admin_spawned
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction
@@ -264,7 +265,7 @@
 	else
 		feedback_add_details("hivelord_core", "[type]|stabilizer")
 
-		
+
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
@@ -454,7 +455,7 @@
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
-	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = ABOVE_MOB_LAYER})
+	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -486,7 +487,6 @@
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
 		pre_attack = 0
-	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(damage)
 	ranged_cooldown -= 10
@@ -498,7 +498,6 @@
 	handle_preattack()
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
-	return
 
 /obj/effect/goliath_tentacle/
 	name = "Goliath tentacle"
@@ -818,18 +817,21 @@
 	robust_searching = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
-	if(isturf(src.loc))
+	if(isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == UNCONSCIOUS)
-				visible_message("<span class='warning'>[src.name] burrows into the flesh of [H]!</span>")
-				var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
-				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
-				H.death()
-				H.adjustBruteLoss(1000)
-				L.stored_mob = H
-				H.forceMove(L)
-				qdel(src)
+				infest(H)
 	..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
+	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
+	visible_message("<span class='warning'>[L] staggers to their feet!</span>")
+	H.death()
+	H.adjustBruteLoss(1000)
+	L.stored_mob = H
+	H.forceMove(L)
+	qdel(src)
 
 /obj/item/organ/hivelord_core/legion
 	name = "legion's soul"
@@ -1012,6 +1014,27 @@
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	qdel(gps)
 	. = ..()
+
+#define MEDAL_PREFIX "Tendril"
+/mob/living/simple_animal/hostile/spawner/lavaland/death()
+	var/last_tendril = TRUE
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in mob_list)
+		if(other != src)
+			last_tendril = FALSE
+			break
+	if(last_tendril && !admin_spawned)
+		if(global.medal_hub && global.medal_pass && global.medals_enabled)
+			for(var/mob/living/L in view(7,src))
+				if(L.stat)
+					continue
+				if(L.client)
+					var/client/C = L.client
+					var/suffixm = ALL_KILL_MEDAL
+					var/prefix = MEDAL_PREFIX
+					UnlockMedal("[prefix] [suffixm]",C)
+					SetScore(TENDRIL_CLEAR_SCORE,C,1)
+	..()
+#undef MEDAL_PREFIX
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"

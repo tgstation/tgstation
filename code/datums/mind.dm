@@ -208,8 +208,41 @@
 	ticker.mode.update_wiz_icons_removed(src)
 	ticker.mode.update_cult_icons_removed(src)
 	ticker.mode.update_rev_icons_removed(src)
-	gang_datum.remove_gang_hud(src)
+	if(gang_datum)
+		gang_datum.remove_gang_hud(src)
 
+
+//Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
+
+/datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
+	if(iscultist(creator))
+		ticker.mode.add_cultist(src)
+
+	else if(is_gangster(creator))
+		ticker.mode.add_gangster(src, creator.mind.gang_datum, TRUE)
+
+	else if(is_handofgod_redcultist(creator) || is_handofgod_redprophet(creator))
+		ticker.mode.add_hog_follower(src, "Red")
+
+	else if(is_handofgod_bluecultist(creator) || is_handofgod_blueprophet(creator))
+		ticker.mode.add_hog_follower(src, "Blue")
+
+	else if(is_revolutionary_in_general(creator))
+		ticker.mode.add_revolutionary(src)
+
+	else if(is_servant_of_ratvar(creator))
+		add_servant_of_ratvar(src)
+
+	else if(is_nuclear_operative(creator))
+		make_Nuke(null, null, 0, FALSE)
+
+	enslaved_to = creator
+
+	current.faction = creator.faction
+
+	if(special_role)
+		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
+		current << "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>"
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -495,17 +528,17 @@
 	if (src in ticker.mode.red_deities)
 		text += "<b>RED GOD</b>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if(src in ticker.mode.red_deity_prophets)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<b>RED PROPHET</b>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<b>RED PROPHET</b>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if (src in ticker.mode.red_deity_followers)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<b>RED FOLLOWER</b>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<b>RED FOLLOWER</b>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if (src in ticker.mode.blue_deities)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<b>BLUE GOD</b>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<b>BLUE GOD</b>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if (src in ticker.mode.blue_deity_prophets)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<b>BLUE PROPHET</b>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<b>BLUE PROPHET</b>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if (src in ticker.mode.blue_deity_followers)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<b>BLUE FOLLOWER</b>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<b>BLUE FOLLOWER</b>"
 	else
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<B>EMPLOYEE</b>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<B>EMPLOYEE</b>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 
 	if(current && current.client && (ROLE_HOG_GOD in current.client.prefs.be_special))
 		text += "|HOG God Enabled in Prefs"
@@ -1179,24 +1212,29 @@
 						special_role = null
 						current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-						RemoveSpell(/obj/effect/proc_holder/spell/dumbfire/fireball/hellish)
+						RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
 						message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
 						devilinfo = null
+						if(issilicon(current))
+							var/mob/living/silicon/S = current
+							S.clear_law_sixsixsix(current)
 						log_admin("[key_name(usr)] has de-devil'ed [current].")
 				else if(src in ticker.mode.sintouched)
 					ticker.mode.sintouched -= src
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
 					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
 			if("devil")
-				if(!ishuman(current))
+				if(!ishuman(current) && !iscyborg(current))
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				ticker.mode.devils += src
 				special_role = "devil"
 				ticker.mode.finalize_devil(src)
+				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
+				announce_objectives()
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src
@@ -1318,13 +1356,17 @@
 				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
 
 	else if (href_list["obj_announce"])
-		var/obj_count = 1
-		current << "<span class='notice'>Your current objectives:</span>"
-		for(var/datum/objective/objective in objectives)
-			current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+		announce_objectives()
 
 	edit_memory()
+
+/datum/mind/proc/announce_objectives()
+	var/obj_count = 1
+	current << "<span class='notice'>Your current objectives:</span>"
+	for(var/objective in objectives)
+		var/datum/objective/O = objective
+		current << "<B>Objective #[obj_count]</B>: [O.explanation_text]"
+		obj_count++
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.get_contents()
@@ -1346,7 +1388,7 @@
 		ticker.mode.finalize_traitor(src)
 		ticker.mode.greet_traitor(src)
 
-/datum/mind/proc/make_Nuke(turf/spawnloc,nuke_code,leader=0, telecrystals = TRUE)
+/datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
@@ -1354,24 +1396,33 @@
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
 
-		current.loc = spawnloc
+		if(spawnloc)
+			current.loc = spawnloc
 
-		var/mob/living/carbon/human/H = current
-		qdel(H.belt)
-		qdel(H.back)
-		qdel(H.ears)
-		qdel(H.gloves)
-		qdel(H.head)
-		qdel(H.shoes)
-		qdel(H.wear_id)
-		qdel(H.wear_suit)
-		qdel(H.w_uniform)
+		if(istype(current, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = current
+			qdel(H.belt)
+			qdel(H.back)
+			qdel(H.ears)
+			qdel(H.gloves)
+			qdel(H.head)
+			qdel(H.shoes)
+			qdel(H.wear_id)
+			qdel(H.wear_suit)
+			qdel(H.w_uniform)
 
-		ticker.mode.equip_syndicate(current, telecrystals)
+			ticker.mode.equip_syndicate(current, telecrystals)
 
 		if (nuke_code)
 			store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 			current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+		else
+			var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+			if(nuke)
+				store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke.r_code]", 0, 0)
+				current << "The nuclear authorization code is: <B>nuke.r_code</B>"
+			else
+				current << "You were not provided with a nuclear code. Trying asking your team leader or contacting syndicate command.</B>"
 
 		if (leader)
 			ticker.mode.prepare_syndicate_leader(src,nuke_code)

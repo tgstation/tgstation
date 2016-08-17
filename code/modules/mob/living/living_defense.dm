@@ -31,7 +31,12 @@
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
+		if(P.dismemberment)
+			check_projectile_dismemberment(P, def_zone)
 	return P.on_hit(src, armor, def_zone)
+
+/mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
+	return 0
 
 /proc/vol_by_throwforce_and_or_w_class(obj/item/I)
 		if(!I)
@@ -72,6 +77,8 @@
 			apply_damage(I.throwforce, dtype, zone, armor, I)
 			if(I.thrownby)
 				add_logs(I.thrownby, src, "hit", I)
+		else
+			return 1
 	else
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	..()
@@ -172,41 +179,6 @@
 		IgniteMob()
 
 //Mobs on Fire end
-
-/mob/living/proc/dominate_mind(mob/living/target, duration = 100, silent) //Allows one mob to assume control of another while imprisoning the old consciousness for a time
-	if(!target)
-		return 0
-	if(target.mental_dominator)
-		src << "<span class='warning'>[target] is already being controlled by someone else!</span>"
-		return 0
-	if(!target.mind)
-		src << "<span class='warning'>[target] is mindless and would make you permanently catatonic!</span>"
-		return 0
-	if(!silent)
-		src << "<span class='userdanger'>You pounce upon [target]'s mind and seize control of their body!</span>"
-		target << "<span class='userdanger'>Your control over your body is wrenched away from you!</span>"
-	target.mind_control_holder = new/mob/living/mind_control_holder(target)
-	target.mind_control_holder.real_name = "imprisoned mind of [target.real_name]"
-	target.mind.transfer_to(target.mind_control_holder)
-	mind.transfer_to(target)
-	target.mental_dominator = src
-	spawn(duration)
-		if(!src)
-			if(!silent)
-				target << "<span class='userdanger'>You try to return to your own body, but sense nothing! You're being forced out!</span>"
-			target.ghostize(1)
-			target.mind_control_holder.mind.transfer_to(target)
-			if(!silent)
-				target << "<span class='userdanger'>You take control of your own body again!</span>"
-			return 0
-		if(!silent)
-			target << "<span class='userdanger'>You're forced out! You return to your own body.</span>"
-		target.mind.transfer_to(src)
-		target.mind_control_holder.mind.transfer_to(target)
-		qdel(mind_control_holder)
-		if(!silent)
-			target << "<span class='userdanger'>You take control of your own body again!</span>"
-		return 1
 
 /mob/living/acid_act(acidpwr, toxpwr, acid_volume)
 	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
@@ -366,16 +338,54 @@
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
+/mob/living/proc/add_stun_absorption(key, duration, priority, message, self_message, examine_message)
+//adds a stun absorption with a key, a duration in deciseconds, its priority, and the messages it makes when you're stunned/examined, if any
+	if(!islist(stun_absorption))
+		stun_absorption = list()
+	if(stun_absorption[key])
+		stun_absorption[key]["end_time"] = world.time + duration
+		stun_absorption[key]["priority"] = priority
+		stun_absorption[key]["stuns_absorbed"] = 0
+	else
+		stun_absorption[key] = list("end_time" = world.time + duration, "priority" = priority, "stuns_absorbed" = 0, \
+		"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
+
 /mob/living/Stun(amount, updating = 1, ignore_canstun = 0)
-	if(stun_absorption && !stat)
-		visible_message("<span class='warning'>[src]'s yellow aura momentarily intensifies!</span>", "<span class='userdanger'>Your ward absorbs the stun!</span>")
-		stun_absorption_count += amount
-		return 0
+	if(!stat && islist(stun_absorption))
+		var/priority_absorb_key
+		var/highest_priority
+		for(var/i in stun_absorption)
+			if(stun_absorption[i]["end_time"] > world.time && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
+				priority_absorb_key = stun_absorption[i]
+				highest_priority = stun_absorption[i]["priority"]
+		if(priority_absorb_key)
+			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
+				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+				else if(priority_absorb_key["visible_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
+				else if(priority_absorb_key["self_message"])
+					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
+			priority_absorb_key["stuns_absorbed"] += amount
+			return 0
 	..()
 
 /mob/living/Weaken(amount, updating = 1, ignore_canweaken = 0)
-	if(stun_absorption && !stat)
-		visible_message("<span class='warning'>[src]'s yellow aura momentarily intensifies!</span>", "<span class='userdanger'>Your ward absorbs the stun!</span>")
-		stun_absorption_count += amount
-		return 0
+	if(!stat && islist(stun_absorption))
+		var/priority_absorb_key
+		var/highest_priority
+		for(var/i in stun_absorption)
+			if(stun_absorption[i]["end_time"] > world.time && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
+				priority_absorb_key = stun_absorption[i]
+				highest_priority = priority_absorb_key["priority"]
+		if(priority_absorb_key)
+			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
+				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+				else if(priority_absorb_key["visible_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
+				else if(priority_absorb_key["self_message"])
+					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
+			priority_absorb_key["stuns_absorbed"] += amount
+			return 0
 	..()

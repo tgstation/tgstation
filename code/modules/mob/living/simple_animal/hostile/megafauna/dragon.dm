@@ -1,3 +1,29 @@
+#define MEDAL_PREFIX "Drake"
+/*
+
+ASH DRAKE
+
+Ash drakes spawn randomly wherever a lavaland creature is able to spawn. They are the draconic guardians of the Necropolis.
+
+It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
+
+Whenever possible, the drake will breathe fire in the four cardinal directions, igniting and heavily damaging anything caught in the blast.
+It also often causes fire to rain from the sky - many nearby turfs will flash red as a fireball crashes into them, dealing damage to anything on the turfs.
+The drake also utilizes its wings to fly into the sky and crash down onto a specified point. Anything on this point takes tremendous damage.
+ - Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
+
+When an ash drake dies, it leaves behind a chest that can contain four things:
+ 1. A spectral blade that allows its wielder to call ghosts to it, enhancing its power
+ 2. A lava staff that allows its wielder to create lava
+ 3. A spellbook and wand of fireballs
+ 4. A bottle of dragon's blood with several effects, including turning its imbiber into a drake themselves.
+
+When butchered, they leave behind diamonds, sinew, bone, and ash drake hide. Ash drake hide can be used to create a hooded cloak that protects its wearer from ash storms.
+
+Difficulty: Medium
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"
 	desc = "Guardians of the necropolis."
@@ -13,7 +39,6 @@
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
-	luminosity = 3
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
@@ -31,6 +56,8 @@
 	var/obj/item/device/gps/internal
 	var/swooping = 0
 	var/swoop_cooldown = 0
+	medal_type = MEDAL_PREFIX
+	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -54,13 +81,20 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
-	if(swooping)
-		return
-	else
+	if(!swooping)
 		..()
-		if(isliving(target))
-			var/mob/living/L = target
-			devour(L)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
+	if(!swooping)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Move()
+	if(!swooping)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
+	if(!swooping)
+		..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -117,17 +151,15 @@
 
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth/2)
-			swoop_attack(1)
+			addtimer(src, "swoop_attack", 0, FALSE, 1)
 		else
 			fire_rain()
 
 	else if(prob(10+anger_modifier) && !client && !swooping)
 		if(health > maxHealth/2)
-			swoop_attack()
+			addtimer(src, "swoop_attack", 0)
 		else
-			swoop_attack()
-			swoop_attack()
-			swoop_attack()
+			addtimer(src, "triple_swoop", 0)
 	else
 		fire_walls()
 
@@ -138,19 +170,17 @@
 			PoolOrNew(/obj/effect/overlay/temp/target, turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
-	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
-	if(prob(50))
-		attack_dirs = list(NORTH,WEST,SOUTH,EAST)
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
-	for(var/d in attack_dirs)
+	for(var/d in cardinal)
 		addtimer(src, "fire_wall", 0, FALSE, d)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(d)
-	var/turf/E = get_edge_target_turf(src, d)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
+	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
-	for(var/turf/open/J in getline(src,E))
-		if(!range)
+	var/turf/previousturf = get_turf(src)
+	for(var/turf/J in getline(src,E))
+		if(!range || !previousturf.CanAtmosPass(J))
 			break
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)
@@ -159,7 +189,13 @@
 			if(L != src)
 				L.adjustFireLoss(20)
 				L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+		previousturf = J
 		sleep(1)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
+	swoop_attack()
+	swoop_attack()
+	swoop_attack()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
 	if(stat || swooping)
@@ -192,7 +228,7 @@
 		tturf = get_turf(src)
 	forceMove(tturf)
 	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, tturf)
-	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
+	animate(src, pixel_x = initial(pixel_x), pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
@@ -236,3 +272,4 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
 
+#undef MEDAL_PREFIX

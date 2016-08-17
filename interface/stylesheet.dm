@@ -70,6 +70,7 @@ h1.alert, h2.alert		{color: #000000;}
 .cultitalic				{color: #960000;	font-style: italic;}
 .cultlarge				{color: #960000; font-weight: bold; font-size: 3;}
 .narsie					{color: #960000; font-weight: bold; font-size: 15;}
+.colossus				{color: #7F282A; font-size: 5;}
 .purple					{color: #5e2d79;}
 .holoparasite			{color: #35333a;}
 .holoparasitebold		{color: #35333a;	font-weight: bold;}
@@ -90,17 +91,23 @@ h1.alert, h2.alert		{color: #000000;}
 .heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
 .large_brass			{color: #BE8700; font-size: 3;}
 .big_brass				{color: #BE8700; font-size: 3; font-weight: bold; font-style: italic;}
+.ratvar					{color: #BE8700; font-size: 6; font-weight: bold; font-style: italic;}
 .alloy					{color: #42474D;}
 .heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
 .large_alloy			{color: #42474D; font-size: 3;}
+.nezbere_large			{color: #42474D; font-size: 3; font-weight: bold; font-style: italic;}
 .nezbere				{color: #42474D; font-weight: bold; font-style: italic;}
 .nezbere_small			{color: #42474D;}
+.sevtug_large			{color: #AF0AAF; font-size: 3; font-weight: bold; font-style: italic;}
 .sevtug					{color: #AF0AAF; font-weight: bold; font-style: italic;}
 .sevtug_small			{color: #AF0AAF;}
+.inathneq_large			{color: #1E8CE1; font-size: 3; font-weight: bold; font-style: italic;}
 .inathneq				{color: #1E8CE1; font-weight: bold; font-style: italic;}
 .inathneq_small			{color: #1E8CE1;}
-.nzcrentr				{color: #BE8700; font-weight: bold; font-style: italic;}
-.nzcrentr_small			{color: #BE8700;}
+.nzcrentr_large			{color: #DAAA18; font-size: 3; font-weight: bold; font-style: italic;}
+.nzcrentr				{color: #DAAA18; font-weight: bold; font-style: italic;}
+.nzcrentr_small			{color: #DAAA18;}
+.neovgre_large			{color: #6E001A; font-size: 3; font-weight: bold; font-style: italic;}
 .neovgre				{color: #6E001A; font-weight: bold; font-style: italic;}
 .neovgre_small			{color: #6E001A;}
 

@@ -23,27 +23,24 @@
 	icon_state = "nothing"
 	anchored = 1
 	layer = ABOVE_MOB_LAYER
+	burn_state = LAVA_PROOF
 	mouse_opacity = 0
 	var/duration = 10 //in deciseconds
 	var/randomdir = TRUE
+	var/timerid
 
 /obj/effect/overlay/temp/Destroy()
 	..()
+	deltimer(timerid)
 	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/overlay/temp/New()
+	..()
 	if(randomdir)
 		setDir(pick(cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 
-	// Because some people are sticklers for animation accuracy, we use
-	// spawn() if it's not a multiple of 2 deciseconds, which is the timer
-	// ss accuracy
-	if(duration % 2) //ODD
-		spawn(duration)
-			qdel(src)
-	else //EVEN
-		QDEL_IN(src, duration)
+	timerid = QDEL_IN(src, duration)
 
 /obj/effect/overlay/temp/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
@@ -99,6 +96,13 @@
 	if(colour)
 		color = colour
 
+/obj/effect/overlay/temp/kinetic_blast
+	name = "kinetic explosion"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "kinetic_blast"
+	layer = ABOVE_ALL_MOB_LAYER
+	duration = 4
+
 /obj/effect/overlay/temp/explosion
 	name = "explosion"
 	icon = 'icons/effects/96x96.dmi'
@@ -106,6 +110,10 @@
 	pixel_x = -32
 	pixel_y = -32
 	duration = 8
+
+/obj/effect/overlay/temp/explosion/fast
+	icon_state = "explosionfast"
+	duration = 4
 
 /obj/effect/overlay/temp/blob
 	name = "blob"
@@ -136,6 +144,24 @@
 		appearance = mimiced_atom.appearance
 		setDir(mimiced_atom.dir)
 	animate(src, alpha = 0, time = duration)
+
+/obj/effect/overlay/cult
+	mouse_opacity = 0
+	var/atom/linked
+
+/obj/effect/overlay/cult/ex_act()
+	return FALSE
+
+/obj/effect/overlay/cult/Destroy()
+	if(linked)
+		linked = null
+	..()
+	return QDEL_HINT_PUTINPOOL
+
+/obj/effect/overlay/cult/floor
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "cult"
+	layer = TURF_LAYER
 
 /obj/effect/overlay/temp/cult
 	randomdir = 0
@@ -241,29 +267,37 @@
 /obj/effect/overlay/temp/ratvar/sigil/transgression
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
-	duration = 50
+	duration = 70
+	luminosity = 6
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
-	animate(transform = oldtransform, alpha = 0, time = 45)
+	animate(transform = oldtransform, alpha = 0, time = 65)
 
 /obj/effect/overlay/temp/ratvar/sigil/vitality
 	color = "#1E8CE1"
 	icon_state = "sigilactivepulse"
-	layer = BELOW_MOB_LAYER
+	layer = ABOVE_MOB_LAYER
 
 /obj/effect/overlay/temp/ratvar/sigil/accession
 	color = "#AF0AAF"
 	layer = ABOVE_MOB_LAYER
-	duration = 50
+	duration = 70
 	icon_state = "sigilactiveoverlay"
 	alpha = 0
 
-/obj/effect/overlay/temp/purple_sparkles
+
+/obj/effect/overlay/temp/revenant
 	name = "spooky lights"
 	icon_state = "purplesparkles"
+
+/obj/effect/overlay/temp/revenant/cracks
+	name = "glowing cracks"
+	icon_state = "purplecrack"
+	duration = 6
+
 
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"

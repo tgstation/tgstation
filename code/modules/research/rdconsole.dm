@@ -341,6 +341,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/datum/design/being_built = files.known_designs[href_list["build"]]
 		var/amount = text2num(href_list["amount"])
 
+		if(being_built.make_reagents.len)
+			return 0
+
 		if(!linked_lathe || !being_built || !amount)
 			updateUsrDialog()
 			return
@@ -682,6 +685,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					if(b_type & PROTOLATHE) dat += "Protolathe<BR>"
 					if(b_type & AUTOLATHE) dat += "Autolathe<BR>"
 					if(b_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
+					if(b_type & BIOGENERATOR) dat += "Biogenerator<BR>"
 				dat += "Required Materials:<BR>"
 				var/all_mats = d_disk.blueprint.materials + d_disk.blueprint.reagents
 				for(var/M in all_mats)

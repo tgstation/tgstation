@@ -63,6 +63,8 @@
 
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
+#define iscyborg(A) (istype(A, /mob/living/silicon/robot))
+
 #define isliving(A) (istype(A, /mob/living))
 
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -77,7 +79,7 @@
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
-#define isumbra(A) (istype(A, /mob/living/simple_animal/umbra))
+#define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
 #define islimb(A) (istype(A, /obj/item/bodypart))
 

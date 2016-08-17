@@ -129,6 +129,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 50, one_per_turf = 1, on_floor = 1),\
+	new/datum/stack_recipe("baseball bat", /obj/item/weapon/melee/baseball_bat, 5, time = 15),\
 	)
 
 /obj/item/stack/sheet/mineral/wood
@@ -223,12 +224,12 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
  */
 
 var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
-	new/datum/stack_recipe("runed door", /obj/machinery/door/airlock/cult, 3, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("runed door", /obj/machinery/door/airlock/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("runed girder", /obj/structure/girder/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 3, time = 40, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 5, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 4, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("archives", /obj/structure/cult/tome, 2, time = 40, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("altar", /obj/structure/cult/talisman, 5, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("altar", /obj/structure/cult/talisman, 4, time = 40, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/runed_metal

@@ -261,8 +261,10 @@
 	if(reagents.has_reagent("teslium"))
 		msg += "[t_He] is emitting a gentle blue glow!\n"
 
-	if(stun_absorption)
-		msg += "[t_He] is radiating with a soft yellow light!\n" //Used by Vanguard
+	if(islist(stun_absorption))
+		for(var/i in stun_absorption)
+			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
+				msg += "[t_He][stun_absorption[i]["examine_message"]]\n"
 
 	if(drunkenness && !skipface && stat != DEAD) //Drunkenness
 		switch(drunkenness)
@@ -289,7 +291,9 @@
 
 		if(getorgan(/obj/item/organ/brain))
 			if(istype(src,/mob/living/carbon/human/interactive))
-				msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
+				var/mob/living/carbon/human/interactive/auto = src
+				if(auto.showexaminetext)
+					msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
 			else if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
@@ -341,7 +345,8 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
-
+	if(!get_bodypart(ARM_LEFT) && !get_bodypart(LEG_LEFT))
+		msg += "[t_He] looks all right now.\n"
 	msg += "*---------*</span>"
 
 	user << msg

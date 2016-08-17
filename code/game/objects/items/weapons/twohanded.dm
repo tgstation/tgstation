@@ -83,7 +83,7 @@
 	user.put_in_inactive_hand(O)
 	return
 
-/obj/item/weapon/twohanded/mob_can_equip(mob/M, slot)
+/obj/item/weapon/twohanded/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	//Cannot equip wielded items.
 	if(wielded)
 		M << "<span class='warning'>Unwield the [name] first!</span>"
@@ -130,7 +130,7 @@
 /obj/item/weapon/twohanded/required/attack_self()
 	return
 
-/obj/item/weapon/twohanded/required/mob_can_equip(mob/M, slot)
+/obj/item/weapon/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(wielded)
 		M << "<span class='warning'>\The [src] is too cumbersome to carry with anything but your hands!</span>"
 		return 0
@@ -211,7 +211,12 @@
 	var/hacked = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
+	..()
 	item_color = pick("red", "blue", "green", "purple")
+
+/obj/item/weapon/twohanded/dualsaber/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
@@ -219,7 +224,6 @@
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
-	return
 
 /obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -232,12 +236,14 @@
 		impale(user)
 		return
 	if((wielded) && prob(50))
-		spawn(0)
-			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
-				user.setDir(i)
-				if(i == 8)
-					user.emote("flip")
-				sleep(1)
+		addtimer(src, "jedi_spin", 0, TRUE, user)
+
+/obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
+	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
+		user.setDir(i)
+		if(i == 8)
+			user.emote("flip")
+		sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
 	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on \the [src].</span>"
@@ -265,16 +271,40 @@
 	w_class = w_class_on
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
 	w_class = initial(w_class)
 	..()
 	hitsound = "swing_hit"
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/weapon/twohanded/dualsaber/process()
+	if(wielded)
+		open_flame()
+	else
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect()
 	if(wielded)
 		return 1
+
+/obj/item/weapon/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
+	// same as /obj/item/weapon/melee/energy, mostly
+	if(!wielded)
+		return ""
+	var/in_mouth = ""
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.wear_mask == src)
+			in_mouth = ", barely missing their nose"
+	. = "<span class='warning'>[user] swings their \
+		[src][in_mouth]. They light [A] in the process.</span>"
+	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+	add_fingerprint(user)
+	// Light your candles while spinning around the room
+	addtimer(src, "jedi_spin", 0, TRUE, user)
 
 /obj/item/weapon/twohanded/dualsaber/green/New()
 	item_color = "green"
@@ -370,6 +400,7 @@
 	icon_state = "chainsaw_off"
 	flags = CONDUCT
 	force = 13
+	var/force_on = 21
 	w_class = 5
 	throwforce = 13
 	throw_speed = 2
@@ -385,8 +416,8 @@
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
 	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
-	force = on ? 21 : 13
-	throwforce = on ? 21 : 13
+	force = on ? force_on : initial(force)
+	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 
 	if(hitsound == "swing_hit")
@@ -405,11 +436,18 @@
 	if(wielded)
 		. = ..()
 
-
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer
 	name = "OOOH BABY"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	armour_penetration = 100
+	force_on = 30
+
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == PROJECTILE_ATTACK)
+		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
+		playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+		return 1
+	return 0
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide
@@ -480,7 +518,7 @@
 /obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
 	if(istype(user, /mob/living))
 		var/mob/living/U = user
-		if(U.mind && (!U.mind.devilinfo || (U.mind.soulOwner == U.mind))) //Burn hands unless they are a devil or have sold their soul
+		if(U.mind && !U.mind.devilinfo && (U.mind.soulOwner == U.mind)) //Burn hands unless they are a devil or have sold their soul
 			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
 				"<span class='warning'>\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\"</span>")
 			if(ishuman(U))
@@ -490,7 +528,7 @@
 				U.adjustFireLoss(rand(force/2,force))
 
 /obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
-	if(user.mind && (!user.mind.devilinfo || (user.mind.soulOwner == user.mind)))
+	if(user.mind && !user.mind.devilinfo && (user.mind.soulOwner != user.mind))
 		user << "<span class ='warning'>The [src] burns in your hands.</span>"
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()

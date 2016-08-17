@@ -11,11 +11,14 @@
 
 		update_gravity(mob_has_gravity())
 
-		if(malfhack)
-			if(malfhack.aidisabled)
-				src << "<span class='danger'>ERROR: APC access disabled, hack attempt canceled.</span>"
-				malfhacking = 0
-				malfhack = null
+		if(malfhack && malfhack.aidisabled)
+			deltimer(malfhacking)
+			// This proc handles cleanup of screen notifications and
+			// messenging the client
+			malfhacked(malfhack)
+
+		if(!eyeobj || qdeleted(eyeobj) || !eyeobj.loc)
+			view_core()
 
 		if(machine)
 			machine.check_eye(src)
@@ -49,9 +52,7 @@
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss()
-	if(!fire_res_on_core)
-		health -= getFireLoss()
+	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss()
 	update_stat()
 	diag_hud_set_health()
 
@@ -158,8 +159,7 @@
 	blind_eyes(1)
 	update_sight()
 	src << "You've lost power!"
-	spawn(20)
-		start_RestorePowerRoutine()
+	addtimer(src, "start_RestorePowerRoutine", 20)
 
 #undef POWER_RESTORATION_OFF
 #undef POWER_RESTORATION_START

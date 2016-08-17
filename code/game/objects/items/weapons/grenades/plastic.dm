@@ -162,9 +162,9 @@
 	else
 		location = get_turf(src)
 	if(location)
-		if(istype(loc, /obj/item/weapon/twohanded/spear))
+		if(istype(loc, /obj/item/weapon/twohanded/spear) || !target)
 			explosion(location, 0, 2, 3)
-		else if(target.density)
+		else if(target && target.density)
 			var/turf/T = get_step(location, aim_dir)
 			explosion(get_step(T, aim_dir),0,0,3)
 			explosion(T,0,2,0)

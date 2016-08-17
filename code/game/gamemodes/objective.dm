@@ -231,7 +231,8 @@
 				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == A)
-					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
+					var/location = get_turf(player.mind.current)
+					if(!player.mind.special_role && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
 	return 1
 
@@ -258,7 +259,8 @@
 				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == A)
-					if(player.real_name != owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
+					var/location = get_turf(player.mind.current)
+					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
 
 	for(var/mob/living/player in player_list) //Make sure at least one of you is onboard
@@ -271,7 +273,8 @@
 				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == A)
-					if(player.real_name == owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
+					var/location = get_turf(player.mind.current)
+					if(player.real_name == owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 1
 	return 0
 
@@ -360,7 +363,7 @@
 	if(!location)
 		return 0
 
-	if(istype(location, /turf/open/floor/plasteel/shuttle/red)) // Fails traitors if they are in the shuttle brig -- Polymorph
+	if(istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
 	if(location.onCentcom() || location.onSyndieBase())

@@ -28,6 +28,7 @@
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	seeStatic = 0 //Our programming is superior.
+	hacked = TRUE
 
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
@@ -97,10 +98,11 @@
 	picked = TRUE
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
-	health = 60
-	maxHealth = 60
-	hacked = 1
+	pass_flags = PASSTABLE
+	health = 50
+	maxHealth = 50
 	density = TRUE
+	speed = 1
 	ventcrawler = 0
 	faction = list("ratvar")
 	speak_emote = list("clinks", "clunks")
@@ -109,6 +111,7 @@
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
 	seeStatic = 0
+	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
@@ -134,8 +137,11 @@
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
 	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>"
 
+/mob/living/simple_animal/drone/cogscarab/binarycheck()
+	return FALSE
+
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
 	return //we don't get hacked or give a shit about it
 
 /mob/living/simple_animal/drone/cogscarab/drone_chat(msg)
-	send_hierophant_message(src, msg) //HIEROPHANT DRONES
+	titled_hierophant_message(src, msg, "heavy_alloy") //HIEROPHANT DRONES

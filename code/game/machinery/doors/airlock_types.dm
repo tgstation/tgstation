@@ -352,13 +352,6 @@
 /obj/machinery/door/airlock/cult/narsie_act()
 	return
 
-/obj/machinery/door/airlock/cult/ratvar_act()
-	..()
-	if(src)
-		var/previouscolor = color
-		color = "#FAE48C"
-		animate(src, color = previouscolor, time = 8)
-
 /obj/machinery/door/airlock/cult/friendly
 	friendly = TRUE
 
@@ -408,6 +401,11 @@
 	var/turf/T = get_turf(src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/door, T)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/door, T)
+	change_construction_value(3)
+
+/obj/machinery/door/airlock/clockwork/Destroy()
+	change_construction_value(-3)
+	return ..()
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
 	return (is_servant_of_ratvar(user) && !isAllPowerCut())

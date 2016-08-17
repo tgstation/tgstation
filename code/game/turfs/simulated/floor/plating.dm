@@ -150,7 +150,27 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
-	icon_state = "cult"
+	icon_state = "plating"
+	var/obj/effect/clockwork/overlay/floor/realappearence
+
+/turf/open/floor/engine/cult/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
+	realappearence = PoolOrNew(/obj/effect/overlay/cult/floor, src)
+	realappearence.linked = src
+
+/turf/open/floor/engine/cult/Destroy()
+	be_removed()
+	return ..()
+
+/turf/open/floor/engine/cult/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		be_removed()
+	return ..()
+
+/turf/open/floor/engine/cult/proc/be_removed()
+	qdel(realappearence)
+	realappearence = null
 
 /turf/open/floor/engine/cult/New()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
@@ -168,9 +188,9 @@
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		if(builtin_tile)
+		if(floor_tile)
 			if(prob(30))
-				builtin_tile.loc = src
+				PoolOrNew(floor_tile, src)
 				make_plating()
 		else if(prob(30))
 			ReplaceWithLattice()
@@ -214,7 +234,6 @@
 	icon_state = "lava"
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
-	var/processing = 0
 	luminosity = 1
 
 /turf/open/floor/plating/lava/airless
@@ -222,13 +241,10 @@
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()
-	if(!processing)
-		processing = 1
-		START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
-		processing = 0
 		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/make_plating()
@@ -245,8 +261,10 @@
 /turf/open/floor/plating/lava/proc/burn_stuff()
 	. = 0
 	for(var/thing in contents)
-		if(istype(thing, /obj))
+		if(isobj(thing))
 			var/obj/O = thing
+			if(O.burn_state == LAVA_PROOF || O.throwing)
+				continue
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				continue
@@ -257,7 +275,7 @@
 			O.fire_act()
 
 
-		else if (istype(thing, /mob/living))
+		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
 			if("lava" in L.weather_immunities)

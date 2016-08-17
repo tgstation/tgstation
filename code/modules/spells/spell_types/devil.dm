@@ -23,9 +23,11 @@
 				pitchfork = new pitchfork_type
 				C.put_in_hands(pitchfork)
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/Del()
+/obj/effect/proc_holder/spell/targeted/summon_pitchfork/Destroy()
 	if(pitchfork)
 		qdel(pitchfork)
+		pitchfork = null
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater
 	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
@@ -75,7 +77,7 @@
 			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
 
 
-/obj/effect/proc_holder/spell/dumbfire/fireball/hellish
+/obj/effect/proc_holder/spell/fireball/hellish
 	name = "Hellfire"
 	desc = "This spell launches hellfire at the target."
 
@@ -86,22 +88,14 @@
 	invocation_type = "shout"
 	range = 2
 
-	proj_icon_state = "fireball"
-	proj_name = "a fireball"
-	proj_type = /obj/effect/proc_holder/spell/turf/fireball/infernal
-
-	proj_lifespan = 200
-	proj_step_delay = 1
+	fireball_type = /obj/item/projectile/magic/fireball/infernal
 
 	action_background_icon_state = "bg_demon"
-
-/obj/effect/proc_holder/spell/turf/fireball/infernal/cast(turf/T,mob/user = usr)
-	explosion(T, -1, -1, 1, 4, 0, flame_range = 5)
 
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt
 	name = "Infernal Jaunt"
 	desc = "Use hellfire to phase out of existence."
-	charge_max = 10
+	charge_max = 200
 	clothes_req = 0
 	selection_type = "range"
 	range = -1
@@ -116,12 +110,17 @@
 	if(istype(user))
 		if(istype(user.loc, /obj/effect/dummy/slaughter/))
 			var/continuing = 0
-			for(var/mob/living/C in orange(2, get_turf(user.loc)))
-				if (C.mind && C.mind.soulOwner == C.mind)
-					continuing = 1
-					break
+			if(istype(get_area(user), /area/shuttle/)) // Can always phase in in a shuttle.
+				continuing = 1
+			else
+				for(var/mob/living/C in orange(2, get_turf(user.loc))) //Can also phase in when nearby a potential buyer.
+					if (C.mind && C.mind.soulOwner == C.mind)
+						continuing = 1
+						break
 			if(continuing)
-				addtimer(user,"infernalphasein",150,TRUE)
+				user << "<span class='warning'>You are now phasing in.</span>"
+				if(do_mob(user,user,150))
+					user.infernalphasein()
 			else
 				user << "<span class='warning'>You can only re-appear near a potential signer."
 				revert_cast()
@@ -129,21 +128,23 @@
 		else
 			user.notransform = 1
 			user.fakefire()
-			addtimer(user, "infernalphaseout",150,TRUE,get_turf(user))
+			src << "<span class='warning'>You begin to phase back into sinful flames.</span>"
+			if(do_mob(user,user,150))
+				user.infernalphaseout()
+			else
+				user << "<span class='warning'>You must remain still while exiting.</span>"
+				user.ExtinguishMob()
 		start_recharge()
 		return
 	revert_cast()
 
 
-/mob/living/proc/infernalphaseout(var/turf/mobloc)
-	if(get_turf(src) != mobloc)
-		src << "<span class='warning'>You must remain still while exiting."
-		return
+/mob/living/proc/infernalphaseout()
 	dust_animation()
 	spawn_dust()
 	src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
+	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,loc)
 	src.ExtinguishMob()
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
@@ -167,20 +168,7 @@
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-	addtimer(src, "fakefireextinguish" ,15,TRUE,get_turf(src))
-
-/mob/living/proc/fakefire()
-	return
-
-/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
-	apply_overlay(FIRE_LAYER)
-
-/mob/living/proc/fakefireextinguish()
-	return
-
-/mob/living/carbon/fakefireextinguish()
-	remove_overlay(FIRE_LAYER)
+	addtimer(src, "fakefireextinguish", 15,TRUE)
 
 /obj/effect/proc_holder/spell/targeted/sintouch
 	name = "Sin Touch"

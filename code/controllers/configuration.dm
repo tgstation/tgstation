@@ -376,6 +376,10 @@
 						global.cross_allowed = 1
 				if("cross_comms_name")
 					cross_name = value
+				if("medal_hub_address")
+					global.medal_hub = value
+				if("medal_hub_password")
+					global.medal_pass = value
 				if("see_own_notes")
 					config.see_own_notes = 1
 				if("soft_popcap")

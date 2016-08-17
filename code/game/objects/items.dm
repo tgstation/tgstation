@@ -25,7 +25,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/w_class = 3
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 3
+	pressure_resistance = 4
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
@@ -378,9 +378,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	return 1
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
+//if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(mob/M, slot, disable_warning = 0)
+/obj/item/proc/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(!M)
 		return 0
 
@@ -567,11 +568,24 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	else
 		. = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
 
-/obj/item/proc/open_flame()
+/obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
 	if(ismob(location))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		var/success = FALSE
+		if(src == M.get_item_by_slot(slot_l_hand))
+			success = TRUE
+		else if(src == M.get_item_by_slot(slot_r_hand))
+			success = TRUE
+		else if(src == M.get_item_by_slot(slot_wear_mask))
+			success = TRUE
+		if(success)
 			location = get_turf(M)
 	if(isturf(location))
-		location.hotspot_expose(700, 5)
+		location.hotspot_expose(flame_heat, 5)
+
+/obj/item/proc/ignition_effect(atom/A, mob/user)
+	if(is_hot())
+		. = "<span class='notice'>[user] lights [A] with [src].</span>"
+	else
+		. = ""

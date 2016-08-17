@@ -7,7 +7,7 @@
 	name = "alien"
 	voice_name = "alien"
 	icon = 'icons/mob/alien.dmi'
-	gender = NEUTER
+	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
@@ -228,3 +228,5 @@ Des: Removes all infected images from the alien.
 	if(see_override)
 		see_invisible = see_override
 
+/mob/living/carbon/alien/can_hold_items()
+	return has_fine_manipulation

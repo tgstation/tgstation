@@ -290,9 +290,11 @@
 
 /turf/open/floor/plasteel/shuttle
 	icon_state = "shuttlefloor"
+	floor_tile = /obj/item/stack/tile/mineral/titanium //old shuttle floors so i don't have to change the map paths in this pr
 /turf/open/floor/plasteel/shuttle/red
 	name = "Brig floor"
 	icon_state = "shuttlefloor4"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 /turf/open/floor/plasteel/shuttle/yellow
 	icon_state = "shuttlefloor2"
 /turf/open/floor/plasteel/shuttle/white
@@ -349,10 +351,16 @@
 /turf/open/floor/plasteel/bar
 	icon_state = "bar"
 
+/turf/open/floor/plasteel/airless/bar
+	icon_state = "bar"
+
 /turf/open/floor/plasteel/grimy
 	icon_state = "grimy"
 
 /turf/open/floor/plasteel/cafeteria
+	icon_state = "cafeteria"
+
+/turf/open/floor/plasteel/airless/cafeteria
 	icon_state = "cafeteria"
 
 /turf/open/floor/plasteel/vault
@@ -361,6 +369,9 @@
 /turf/open/floor/plasteel/cult
 	icon_state = "cult"
 	name = "engraved floor"
+
+/turf/open/floor/plasteel/vaporwave
+	icon_state = "pinkblack"
 
 /turf/open/floor/plasteel/goonplaque
 	icon_state = "plaque"

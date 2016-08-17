@@ -76,7 +76,7 @@
 
 	//user.unset_machine() //Uncomment this if it causes problems.
 	//user.lightNearbyCamera()
-	if (user.camera_light_on)
+	if(user.camera_light_on)
 		user.light_cameras()
 
 // Return to the Core.
@@ -86,13 +86,11 @@
 	cameraFollow = null
 	unset_machine()
 
-	if(src.eyeobj && src.loc)
-		src.eyeobj.loc = src.loc
-	else
+	if(!eyeobj || !eyeobj.loc || qdeleted(eyeobj))
 		src << "ERROR: Eyeobj not found. Creating new eye..."
-		src.eyeobj = new(src.loc)
-		src.eyeobj.ai = src
-		src.eyeobj.name = "[src.name] (AI Eye)" // Give it a name
+		eyeobj = new(loc)
+		eyeobj.ai = src
+		eyeobj.name = "[src.name] (AI Eye)" // Give it a name
 
 	eyeobj.setLoc(loc)
 

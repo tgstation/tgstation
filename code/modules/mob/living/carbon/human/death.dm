@@ -33,8 +33,7 @@
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	. = ..(gibbed)
 	if(mind && mind.devilinfo)
-		spawn(0)
-			mind.devilinfo.beginResurrectionCheck(src)
+		addtimer(mind.devilinfo, "beginResurrectionCheck", 0, FALSE, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

@@ -120,6 +120,8 @@
 	var/b_loss = null
 	var/f_loss = null
 	var/bomb_armor = getarmor(null, "bomb")
+	if(istype(ex_target, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 
 	switch (severity)
 		if (1)
@@ -359,7 +361,7 @@
 				if(pocket_item.flags & NODROP)
 					usr << "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
 				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
-			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1) && !(place_item.flags&ABSTRACT))
+			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.flags&ABSTRACT))
 				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
 				delay_denominator = 4
 			else
@@ -1060,12 +1062,7 @@
 			O = new /datum/objective/sintouched/pride
 	ticker.mode.sintouched += src.mind
 	src.mind.objectives += O
-	var/obj_count = 1
-	src << "<span class='notice'>Your current objectives:</span>"
-	for(O in src.mind.objectives)
-		var/datum/objective/objective = O
-		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	src.mind.announce_objectives()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
@@ -1075,6 +1072,20 @@
 /mob/living/carbon/human/is_literate()
 	return 1
 
+/mob/living/carbon/human/can_hold_items()
+	return TRUE
+
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float
+	..()
+
+
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
+	if(blood && (NOBLOOD in dna.species.specflags))
+		if(message)
+			visible_message("<span class='warning'>[src] dry heaves!</span>", \
+							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		if(stun)
+			Weaken(10)
+		return 1
 	..()

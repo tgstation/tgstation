@@ -196,9 +196,8 @@
 	color = "#7D1919"
 
 /obj/machinery/door/window/ratvar_act()
-	if(prob(20))
-		new/obj/machinery/door/window/clockwork(src.loc, dir)
-		qdel(src)
+	new/obj/machinery/door/window/clockwork(src.loc, dir)
+	qdel(src)
 
 /obj/machinery/door/window/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -349,7 +348,14 @@
 	var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
 	if(set_dir)
 		E.setDir(set_dir)
+	else
+		E.setDir(dir)
 	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+	change_construction_value(2)
+
+/obj/machinery/door/window/clockwork/Destroy()
+	change_construction_value(-2)
+	return ..()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
 	health = initial(health)

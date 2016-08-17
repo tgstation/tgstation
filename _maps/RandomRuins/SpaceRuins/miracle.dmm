@@ -1,0 +1,5 @@
+"a" = (/obj/item/weapon/storage/backpack/satchel/flat/secret{reward_all_of_these = list(/obj/item/weapon/gun/energy/pulse/prize)},/turf/open/floor/fakespace,/area/ruin/fakespace)
+
+(1,1,1) = {"
+a
+"}

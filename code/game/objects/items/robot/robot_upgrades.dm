@@ -49,7 +49,6 @@
 	R.speed = 0 // Remove upgrades.
 	R.ionpulse = FALSE
 	R.magpulse = FALSE
-	R.weather_immunities = initial(R.weather_immunities)
 
 	R.status_flags |= CANPUSH
 
@@ -237,6 +236,7 @@
 	name = "mining cyborg lavaproof tracks"
 	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to mining cyborg tracks, enabling them to withstand exposure to molten rock."
 	icon_state = "ash_plating"
+	burn_state = LAVA_PROOF
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
 	origin_tech = "engineering=4;materials=4;plasmatech=4"

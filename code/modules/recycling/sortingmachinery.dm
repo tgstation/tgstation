@@ -54,7 +54,7 @@
 		return
 	user << "<span class='notice'>You lean on the back of [O] and start pushing to rip the wrapping around it.</span>"
 	if(do_after(user, 50, target = O))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
+		if(!user || user.stat != CONSCIOUS || user.loc != O || O.loc != src )
 			return
 		user << "<span class='notice'>You successfully removed [O]'s wrapping !</span>"
 		O.loc = loc

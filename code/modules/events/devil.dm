@@ -24,7 +24,7 @@
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected_candidate = popleft(candidates)
+	var/mob/dead/selected_candidate = pick_n_take(candidates)
 	var/key = selected_candidate.key
 
 	var/datum/mind/Mind = create_devil_mind(key)
@@ -33,7 +33,9 @@
 	var/mob/living/carbon/human/devil = create_event_devil(spawn_loc)
 	Mind.transfer_to(devil)
 	ticker.mode.finalize_devil(Mind)
+	ticker.mode.add_devil_objectives(src, 2)
 	Mind.announceDevilLaws()
+	Mind.announce_objectives()
 
 
 	spawned_mobs += devil

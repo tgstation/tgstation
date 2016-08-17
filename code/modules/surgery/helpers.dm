@@ -1,93 +1,90 @@
 /proc/attempt_initiate_surgery(obj/item/I, mob/living/M, mob/user)
-	if(istype(M))
-		var/mob/living/carbon/human/H
-		var/obj/item/bodypart/affecting
-		var/selected_zone = user.zone_selected
+	if(!istype(M))
+		return
 
-		if(istype(M, /mob/living/carbon/human))
-			H = M
-			affecting = H.get_bodypart(check_zone(selected_zone))
+	var/mob/living/carbon/human/H
+	var/obj/item/bodypart/affecting
+	var/selected_zone = user.zone_selected
 
-		if(M.lying || isslime(M))	//if they're prone or a slime
-			var/datum/surgery/current_surgery
+	if(istype(M, /mob/living/carbon/human))
+		H = M
+		affecting = H.get_bodypart(check_zone(selected_zone))
 
-			for(var/datum/surgery/S in M.surgeries)
-				if(S.location == selected_zone)
-					current_surgery = S
+	if(!M.lying && !isslime(M))	//if they're prone or a slime
+		return
 
-			if(!current_surgery)
-				var/list/all_surgeries = surgeries_list.Copy()
-				var/list/available_surgeries = list()
+	var/datum/surgery/current_surgery
 
-				for(var/datum/surgery/S in all_surgeries)
-					if(!S.possible_locs.Find(selected_zone))
-						continue
-					if(affecting)
-						if(!S.requires_bodypart)
-							continue
-						if(S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
-							continue
-					else if(H && S.requires_bodypart) //human with no limb in surgery zone when we need a limb
-						continue
-					if(!S.can_start(user, M))
-						continue
-					for(var/path in S.species)
-						if(istype(M, path))
-							available_surgeries[S.name] = S
-							break
+	for(var/datum/surgery/S in M.surgeries)
+		if(S.location == selected_zone)
+			current_surgery = S
 
-				var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
-				if(P && user && user.Adjacent(M) && (I in user))
-					var/datum/surgery/S = available_surgeries[P]
+	if(!current_surgery)
+		var/list/all_surgeries = surgeries_list.Copy()
+		var/list/available_surgeries = list()
 
-					for(var/datum/surgery/other in M.surgeries)
-						if(other.location == S.location)
-							return //during the input() another surgery was started at the same location.
+		for(var/datum/surgery/S in all_surgeries)
+			if(!S.possible_locs.Find(selected_zone))
+				continue
+			if(affecting)
+				if(!S.requires_bodypart)
+					continue
+				if(S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+					continue
+			else if(H && S.requires_bodypart) //human with no limb in surgery zone when we need a limb
+				continue
+			if(!S.can_start(user, M))
+				continue
+			for(var/path in S.species)
+				if(istype(M, path))
+					available_surgeries[S.name] = S
+					break
 
-					var/datum/surgery/procedure = new S.type
-					if(procedure)
-						procedure.location = selected_zone
+		var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
+		if(P && user && user.Adjacent(M) && (I in user))
+			var/datum/surgery/S = available_surgeries[P]
 
-						//we check that the surgery is still doable after the input() wait.
-						if(H)
-							affecting = H.get_bodypart(check_zone(selected_zone))
-						if(affecting)
-							if(!procedure.requires_bodypart)
-								return
-							if(procedure.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
-								return
-						else if(H && procedure.requires_bodypart)
-							return
-						if(!procedure.can_start(user, M))
-							return
+			for(var/datum/surgery/other in M.surgeries)
+				if(other.location == S.location)
+					return //during the input() another surgery was started at the same location.
 
-						if(procedure.ignore_clothes || get_location_accessible(M, selected_zone))
-							M.surgeries += procedure
-							procedure.organ = affecting
-							user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
-								"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
+			//we check that the surgery is still doable after the input() wait.
+			if(H)
+				affecting = H.get_bodypart(check_zone(selected_zone))
+			if(affecting)
+				if(!S.requires_bodypart)
+					return
+				if(S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+					return
+			else if(H && S.requires_bodypart)
+				return
+			if(!S.can_start(user, M))
+				return
 
-							add_logs(user, M, "operated", addition="Operation type: [procedure.name], location: [selected_zone]")
-						else
-							user << "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>"
+			if(S.ignore_clothes || get_location_accessible(M, selected_zone))
+				var/datum/surgery/procedure = new S.type(M, selected_zone, affecting)
+				user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
+					"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
 
-			else if(!current_surgery.step_in_progress)
-				if(current_surgery.status == 1)
-					M.surgeries -= current_surgery
-					user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
-						"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
-					qdel(current_surgery)
-				else if(istype(user.get_inactive_hand(), /obj/item/weapon/cautery) && current_surgery.can_cancel)
-					M.surgeries -= current_surgery
-					user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
-						"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
-					qdel(current_surgery)
-				else if(current_surgery.can_cancel)
-					user << "<span class='warning'>You need to hold a cautery in inactive hand to stop [M]'s surgery!</span>"
+				add_logs(user, M, "operated", addition="Operation type: [procedure.name], location: [selected_zone]")
+			else
+				user << "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>"
 
+	else if(!current_surgery.step_in_progress)
+		if(current_surgery.status == 1)
+			M.surgeries -= current_surgery
+			user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
+				"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+			qdel(current_surgery)
+		else if(istype(user.get_inactive_hand(), /obj/item/weapon/cautery) && current_surgery.can_cancel)
+			M.surgeries -= current_surgery
+			user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
+				"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+			qdel(current_surgery)
+		else if(current_surgery.can_cancel)
+			user << "<span class='warning'>You need to hold a cautery in inactive hand to stop [M]'s surgery!</span>"
 
-			return 1
-	return 0
+	return 1
 
 
 

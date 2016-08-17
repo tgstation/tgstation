@@ -2,7 +2,7 @@
 
 
 /obj/structure/statue
-	name = "Statue"
+	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = ""
@@ -153,7 +153,7 @@
 	var/active = null
 
 /obj/structure/statue/uranium/nuke
-	name = "Statue of a Nuclear Fission Explosive"
+	name = "statue of a nuclear fission explosive"
 	desc = "This is a grand statue of a Nuclear Explosive. It has a sickening green colour."
 	icon_state = "nuke"
 
@@ -196,7 +196,7 @@
 	desc = "This statue is suitably made from plasma."
 
 /obj/structure/statue/plasma/scientist
-	name = "Statue of a Scientist"
+	name = "statue of a scientist"
 	icon_state = "sci"
 
 /obj/structure/statue/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -245,23 +245,23 @@
 	desc = "This is a highly valuable statue made from gold."
 
 /obj/structure/statue/gold/hos
-	name = "Statue of the Head of Security"
+	name = "statue of the head of security"
 	icon_state = "hos"
 
 /obj/structure/statue/gold/hop
-	name = "Statue of the Head of Personnel"
+	name = "statue of the head of personnel"
 	icon_state = "hop"
 
 /obj/structure/statue/gold/cmo
-	name = "Statue of the Chief Medical Officer"
+	name = "statue of the chief medical officer"
 	icon_state = "cmo"
 
 /obj/structure/statue/gold/ce
-	name = "Statue of the Chief Engineer"
+	name = "statue of the chief engineer"
 	icon_state = "ce"
 
 /obj/structure/statue/gold/rd
-	name = "Statue of the Research Director"
+	name = "statue of the research director"
 	icon_state = "rd"
 
 //////////////////////////silver///////////////////////////////////////
@@ -272,23 +272,23 @@
 	desc = "This is a valuable statue made from silver."
 
 /obj/structure/statue/silver/md
-	name = "Statue of a Medical Officer"
+	name = "statue of a medical officer"
 	icon_state = "md"
 
 /obj/structure/statue/silver/janitor
-	name = "Statue of a Janitor"
+	name = "statue of a janitor"
 	icon_state = "jani"
 
 /obj/structure/statue/silver/sec
-	name = "Statue of a Security Officer"
+	name = "statue of a security officer"
 	icon_state = "sec"
 
 /obj/structure/statue/silver/secborg
-	name = "Statue of a Security Cyborg"
+	name = "statue of a security cyborg"
 	icon_state = "secborg"
 
 /obj/structure/statue/silver/medborg
-	name = "Statue of a Medical Cyborg"
+	name = "statue of a medical cyborg"
 	icon_state = "medborg"
 
 /////////////////////////diamond/////////////////////////////////////////
@@ -299,15 +299,15 @@
 	desc = "This is a very expensive diamond statue"
 
 /obj/structure/statue/diamond/captain
-	name = "Statue of THE Captain."
+	name = "statue of THE captain."
 	icon_state = "cap"
 
 /obj/structure/statue/diamond/ai1
-	name = "Statue of the AI hologram."
+	name = "statue of the AI hologram."
 	icon_state = "ai1"
 
 /obj/structure/statue/diamond/ai2
-	name = "Statue of the AI core."
+	name = "statue of the AI core."
 	icon_state = "ai2"
 
 ////////////////////////bananium///////////////////////////////////////
@@ -319,7 +319,7 @@
 	var/spam_flag = 0
 
 /obj/structure/statue/bananium/clown
-	name = "Statue of a clown"
+	name = "statue of a clown"
 	icon_state = "clown"
 
 /obj/structure/statue/bananium/Bumped(atom/user)
@@ -352,9 +352,16 @@
 	mineralType = "sandstone"
 
 /obj/structure/statue/sandstone/assistant
-	name = "Statue of an assistant"
+	name = "statue of an assistant"
 	desc = "A cheap statue of sandstone for a greyshirt."
 	icon_state = "assist"
+
+
+/obj/structure/statue/sandstone/venus //call me when we add marble i guess
+	name = "statue of a pure maiden"
+	desc = "An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a toolbox. By Jove, it's easily the most gorgeous depiction of a woman you've ever seen. The artist must truly be a master of his craft. Shame about the broken arm, though."
+	icon = 'icons/obj/statuelarge.dmi'
+	icon_state = "venus"
 
 /////////////////////snow/////////////////////////////////////////
 

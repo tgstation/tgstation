@@ -128,6 +128,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				send2otherserver("[station_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
+				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
 
 		if("callshuttle")

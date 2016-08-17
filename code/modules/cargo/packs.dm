@@ -1036,7 +1036,8 @@
 					/obj/item/honey_frame,
 					/obj/item/queen_bee/bought,
 					/obj/item/clothing/head/beekeeper_head,
-					/obj/item/clothing/suit/beekeeper_suit)
+					/obj/item/clothing/suit/beekeeper_suit,
+					/obj/item/weapon/melee/flyswatter)
 	crate_name = "beekeeping starter crate"
 
 /datum/supply_pack/organic/hydroponics/beekeeping_suits

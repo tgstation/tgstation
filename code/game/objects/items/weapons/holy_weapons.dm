@@ -180,7 +180,15 @@
 	name = "high frequency blade"
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
+
+
+/obj/item/weapon/nullrod/scythe/spellblade
+	icon_state = "spellblade"
+	item_state = "spellblade"
+	name = "dormant spellblade"
+	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
+	hitsound = 'sound/weapons/rapierhit.ogg'
 
 /obj/item/weapon/nullrod/scythe/talking
 	icon_state = "talking_sword"
@@ -188,7 +196,7 @@
 	name = "possessed blade"
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
 	attack_verb = list("chopped", "sliced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
 
 /obj/item/weapon/nullrod/scythe/talking/attack_self(mob/living/user)
@@ -262,10 +270,11 @@
 	item_state = "chain"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed")
+	hitsound = 'sound/weapons/chainhit.ogg'
 /*
 /obj/item/weapon/nullrod/fedora
 	name = "atheist's fedora"
-	desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
+	desc = "The brim of the hat is as sharp as your wit. The edge would hurt almost as much as disproving the existence of God."
 	icon_state = "fedora"
 	item_state = "fedora"
 	slot_flags = SLOT_HEAD
@@ -273,7 +282,9 @@
 	force = 0
 	throw_speed = 4
 	throw_range = 7
-	throwforce = 20
+	throwforce = 30
+	sharpness = IS_SHARP
+	attack_verb = list("enlightened", "redpilled")
 
 /obj/item/weapon/nullrod/armblade
 	name = "dark blessing"

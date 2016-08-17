@@ -45,6 +45,20 @@
 	take_damage(P.damage, P.damage_type)
 
 /*
+ * Generic alien stuff, not related to the purple lizards but still alien-like
+ */
+
+/obj/structure/alien/gelpod
+	name = "gelatinous mound"
+	desc = "A mound of jelly-like substance incasing something inside."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "gelmound"
+
+/obj/structure/alien/gelpod/Break()
+	new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+	qdel(src)
+
+/*
  * Resin
  */
 /obj/structure/alien/resin
@@ -136,10 +150,13 @@
 /obj/structure/alien/resin/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(!M.melee_damage_upper)
+	if(!M.melee_damage_upper && !M.obj_damage)
 		return
 	visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
-	take_damage(M.melee_damage_upper, M.melee_damage_type)
+	if(M.obj_damage)
+		take_damage(M.obj_damage, M.melee_damage_type)
+	else
+		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type)
 
 /obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
 	return !density

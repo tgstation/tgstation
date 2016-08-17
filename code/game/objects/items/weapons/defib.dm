@@ -197,11 +197,10 @@
 	if(slot == user.getBackSlot())
 		return 1
 
-/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user)
-	var/mob/living/carbon/human/M = user
-	if(paddles in get_both_hands(M))
+/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
+	if(ismob(paddles.loc))
+		var/mob/M = paddles.loc
 		M.unEquip(paddles,1)
-	update_icon()
 	return
 
 /obj/item/weapon/defibrillator/Destroy()
@@ -556,6 +555,11 @@
 				H.heart_attack = 0
 				user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
+
+			else if (!H.getorgan(/obj/item/organ/heart))
+				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted.</span>")
+				playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+
 			else
 				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)

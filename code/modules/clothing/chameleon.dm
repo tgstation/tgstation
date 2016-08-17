@@ -291,7 +291,7 @@
 	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
 	randomise_action.UpdateButtonIcon()
 
-/obj/item/clothing/mask/chameleon/attack_self(mob/user)
+/obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
 	user << "<span class='notice'>The [src] does not have a voice changer.</span>"
 
 /obj/item/clothing/shoes/chameleon
@@ -303,7 +303,7 @@
 	flags = NOSLIP
 	origin_tech = "syndicate=2"
 	burn_state = FIRE_PROOF
-	can_hold_items = 1
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/shoes/chameleon/New()

@@ -130,7 +130,7 @@
 	// Drop the items the new species can't wear
 	for(var/slot_id in no_equip)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
-		if(thing)
+		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
 			C.unEquip(thing)
 	if(NODISMEMBER in specflags)
 		C.regenerate_limbs() //if we don't handle dismemberment, we grow our missing limbs back
@@ -362,11 +362,11 @@
 			bodyparts_to_add -= "ears"
 
 	if("wings" in mutant_bodyparts)
-		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
+		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))
 			bodyparts_to_add -= "wings"
 
 	if("wings_open" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)))
 			bodyparts_to_add -= "wings_open"
 		else if ("wings" in mutant_bodyparts)
 			bodyparts_to_add -= "wings_open"
@@ -817,11 +817,9 @@
 						H.emote("collapse")
 					if(prob(15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
-							H << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
-							spawn(50)
-								H.facial_hair_style = "Shaved"
-								H.hair_style = "Bald"
-								H.update_hair()
+							H << "<span class='danger'>Your hair starts to \
+								fall out in clumps...<span>"
+							addtimer(src, "go_bald", 50, TRUE, H)
 
 				if(75 to 100)
 					if(prob(1))
@@ -831,6 +829,11 @@
 						H.domutcheck()
 		return 0
 	return 1
+
+/datum/species/proc/go_bald(mob/living/carbon/human/H)
+	H.facial_hair_style = "Shaved"
+	H.hair_style = "Bald"
+	H.update_hair()
 
 ////////////////
 // MOVE SPEED //
@@ -901,7 +904,8 @@
 //////////////////
 
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
-
+	if(!istype(M))
+		return
 	CHECK_DNA_AND_SPECIES(M)
 	CHECK_DNA_AND_SPECIES(H)
 
@@ -966,6 +970,8 @@
 				H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
 								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
 
+				if(M.limb_destroyer)
+					H.dismembering_strike(M, affecting.body_zone)
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, "punched")
 				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
@@ -1026,10 +1032,7 @@
 
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
-		H.visible_message("<span class='danger'>[user] has attempted to attack [H] with [I]!</span>", \
-						"<span class='userdanger'>[user] has attempted to attack [H] with [I]!</span>")
-		playsound(H, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-		return 0
+		affecting = H.bodyparts[1]
 
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone

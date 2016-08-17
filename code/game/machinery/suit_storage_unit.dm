@@ -358,7 +358,8 @@
 			else if(!helmet && !mask && !suit && !storage && !occupant)
 				return
 			else
-				occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
+				if(occupant)
+					occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
 				cook()
 				. = TRUE
 		if("dispense")

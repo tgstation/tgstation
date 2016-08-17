@@ -1,6 +1,7 @@
 
 /obj/screen/movable/action_button
 	var/datum/action/linked_action
+	var/actiontooltipstyle = ""
 	screen_loc = null
 
 /obj/screen/movable/action_button/Click(location,control,params)
@@ -43,17 +44,15 @@
 	else
 		icon_state = "bg_default"
 	UpdateIcon()
-	return
 
 /obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
 	cut_overlays()
 	var/image/img = image(icon, src, hidden ? "show" : "hide")
 	add_overlay(img)
-	return
 
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc)
+	openToolTip(usr,src,params,title = name,content = desc,theme = actiontooltipstyle)
 
 
 /obj/screen/movable/action_button/MouseExited()

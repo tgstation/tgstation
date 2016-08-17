@@ -95,7 +95,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-	spell_type = /obj/effect/proc_holder/spell/dumbfire/fireball
+	spell_type = /obj/effect/proc_holder/spell/fireball
 	log_name = "FB"
 
 /datum/spellbook_entry/magicm
@@ -278,6 +278,12 @@
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/weapon/gun/magic/staff/chaos
 	log_name = "SC"
+
+/datum/spellbook_entry/item/spellblade
+	name = "Spellblade"
+	desc = "A sword capable of firing blasts of energy which rip targets limb from limb."
+	item_path = /obj/item/weapon/gun/magic/staff/spellblade
+	log_name = "SB"
 
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
@@ -738,7 +744,7 @@
 	return
 
 /obj/item/weapon/spellbook/oneuse/fireball
-	spell = /obj/effect/proc_holder/spell/dumbfire/fireball
+	spell = /obj/effect/proc_holder/spell/fireball
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."

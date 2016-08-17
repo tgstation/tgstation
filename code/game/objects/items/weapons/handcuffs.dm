@@ -168,11 +168,13 @@
 			return
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
-		if(M.amount < 6)
+		if(M.get_amount() < 6)
 			user << "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>"
 			return
 		user << "<span class='notice'>You begin to apply [I] to [src]...</span>"
 		if(do_after(user, 35, target = src))
+			if(M.get_amount() < 6 || !M)
+				return
 			var/obj/item/weapon/restraints/legcuffs/bola/S = new /obj/item/weapon/restraints/legcuffs/bola
 			M.use(6)
 			user.put_in_hands(S)
@@ -318,6 +320,11 @@
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 0
 
+/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin)
+	if(!..())
+		return
+	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
+
 /obj/item/weapon/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
@@ -338,3 +345,18 @@
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
 	weaken = 1
+
+/obj/item/weapon/restraints/legcuffs/bola/energy //For Security
+	name = "energy bola"
+	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
+	icon_state = "ebola"
+	hitsound = 'sound/weapons/taserhit.ogg'
+	w_class = 2
+	breakouttime = 60
+
+/obj/item/weapon/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)
+	if(iscarbon(hit_atom))
+		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
+		B.Crossed(hit_atom)
+		qdel(src)
+	..()

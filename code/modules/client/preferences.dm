@@ -78,7 +78,7 @@ var/list/preferences_datums = list()
 	var/job_engsec_low = 0
 
 		// Want randomjob if preferences already filled - Donkie
-	var/userandomjob = 1 //defaults to 1 for fewer assistants
+	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
 
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
@@ -551,7 +551,12 @@ var/list/preferences_datums = list()
 
 	HTML += "</center></table>"
 
-	HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[userandomjob ? "Get random job if preferences unavailable" : "Be an Assistant if preference unavailable"]</a></center>"
+	var/message = "Be an Assistant if preferences unavailable"
+	if(joblessrole == BERANDOMJOB)
+		message = "Get random job if preferences unavailable"
+	else if(joblessrole == RETURNTOLOBBY)
+		message = "Return to lobby if preferences unavailable"
+	HTML += "<center><br><a href='?_src_=prefs;preference=job;task=random'>[message]</a></center>"
 	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset Preferences</a></center>"
 
 	user << browse(null, "window=preferences")
@@ -726,10 +731,16 @@ var/list/preferences_datums = list()
 				ResetJobs()
 				SetChoices(user)
 			if("random")
-				if(jobban_isbanned(user, "Assistant"))
-					userandomjob = 1
-				else
-					userandomjob = !userandomjob
+				switch(joblessrole)
+					if(RETURNTOLOBBY)
+						if(jobban_isbanned(user, "Assistant"))
+							joblessrole = BERANDOMJOB
+						else
+							joblessrole = BEASSISTANT
+					if(BEASSISTANT)
+						joblessrole = BERANDOMJOB
+					if(BERANDOMJOB)
+						joblessrole = RETURNTOLOBBY
 				SetChoices(user)
 			if("setJobLevel")
 				UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))

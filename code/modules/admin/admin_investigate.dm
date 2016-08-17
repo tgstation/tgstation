@@ -36,18 +36,15 @@
 			if(!F)
 				src << "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>"
 				return
-			src << browse(sanitize_russian(F, 1),"window=investigate[subject];size=800x300")
-
-
+			src << browse(F,"window=investigate[subject];size=800x300")
 		if("hrefs")				//persistant logs and stuff
-			if(config && config.log_hrefs)
-				if(href_logfile)
-					src << browse(sanitize_russian(href_logfile, 1),"window=investigate[subject];size=800x300")
-				else
-					src << "<font color='red'>Error: admin_investigate: No href logfile found.</font>"
-					return
+			if(href_logfile)
+				src << browse(sanitize_russian(href_logfile, 1),"window=investigate[subject];size=800x300")
+			else if(!config.log_hrefs)
+				src << "<span class='danger'>Href logging is off and no logfile was found.</span>"
+				return
 			else
-				src << "<font color='red'>Error: admin_investigate: Href Logging is not on.</font>"
+				src << "<span class='danger'>No href logfile was found.</span>"
 				return
 		if("notes")
 			show_note()

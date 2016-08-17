@@ -21,14 +21,16 @@
 	var/obj/item/bodypart/L = null // L because "limb"
 
 
-
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	var/obj/item/robot_parts/aug = tool
+	if(istype(aug) && aug.body_zone != target_zone)
+		user << "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>"
+		return -1
 	L = surgery.organ
 	if(L)
 		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
 	else
 		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
-
 
 
 //ACTUAL SURGERIES
@@ -38,7 +40,6 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/saw, /datum/surgery_step/add_limb)
 	species = list(/mob/living/carbon/human)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
-
 
 //SURGERY STEP SUCCESSES
 

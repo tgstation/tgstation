@@ -162,6 +162,8 @@
 
 		else if(istype(W, /obj/item/device/analyzer))
 			if(!isXRay())
+				if(!user.drop_item(W))
+					return
 				upgradeXRay()
 				qdel(W)
 				user << "[msg]"

@@ -215,7 +215,7 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
+	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50)
 	slowdown = -1
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/berserkerhood
@@ -227,7 +227,7 @@
 	body_parts_covered = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
+	armor = list(melee = -50, bullet = -50, laser = -50,energy = -50, bomb = -50, bio = -50, rad = -50)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
@@ -286,7 +286,7 @@
 		user << "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>"
 		return
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
-		var/cursetime = 1500
+		var/cursetime = 1800
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
 		SSshuttle.emergency.setTimer(timer)
 		user << "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>"
@@ -295,12 +295,12 @@
 		sleep(20)
 		var/global/list/curses
 		if(!curses)
-			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by two minutes.",
-			"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by two minutes.",
-			"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by two minutes.",
-			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by two minutes.",
-			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by two minutes.",
-			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by two minutes.")
+			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
+			"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by three minutes.",
+			"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by three minutes.",
+			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by three minutes.",
+			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by three minutes.",
+			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by three minutes.")
 		var/message = pick_n_take(curses)
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
 		curselimit++
@@ -310,7 +310,7 @@
 	desc = "This relic teleports you forward a medium distance."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shifter"
-	var/uses = 2
+	var/uses = 4
 
 /obj/item/device/cult_shift/examine(mob/user)
 	..()
@@ -333,7 +333,7 @@
 	if(!iscultist(user))
 		user.unEquip(src, 1)
 		step(src, pick(alldirs))
-		user << "<span class='warning'>\The [src] flickers out of your hands, too eager to move!</span>"
+		user << "<span class='warning'>\The [src] flickers out of your hands, your connection to this dimension is too strong!</span>"
 		return
 
 	var/mob/living/carbon/C = user
@@ -358,3 +358,54 @@
 
 	else
 		C << "<span class='danger'>The veil cannot be torn here!</span>"
+
+/obj/item/device/flashlight/flare/culttorch
+	name = "void torch"
+	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
+	w_class = 2
+	brightness_on = 1
+	icon_state = "torch-on"
+	item_state = "torch-on"
+	color = "#ff0000"
+	on_damage = 15
+	slot_flags = null
+	on = 1
+	var/charges = 3
+
+/obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
+	if(!proximity)
+		return
+
+	if(istype(A, /obj/item))
+
+		var/list/cultists = list()
+		for(var/datum/mind/M in ticker.mode.cult)
+			if(!(user) && M.current && M.current.stat != DEAD)
+				cultists |= M.current
+		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
+		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+			return
+		if(!cultist_to_receive)
+			user << "<span class='cultitalic'>You require a destination!</span>"
+			log_game("Void torch failed - no target")
+			return
+		if(cultist_to_receive.stat == DEAD)
+			user << "<span class='cultitalic'>[cultist_to_receive] has died!</span>"
+			log_game("Void torch failed  - target died")
+			return
+		if(!iscultist(cultist_to_receive))
+			user << "<span class='cultitalic'>[cultist_to_receive] is not a follower of the Geometer!</span>"
+			log_game("Void torch failed - target was deconverted")
+			return
+		user << "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!"
+		user << "\The [src] now has [charges] charge\s."
+		cultist_to_receive.put_in_hands(A)
+		charges--
+		if(charges == 0)
+			qdel(src)
+
+	else
+		..()
+		user << "<span class='warning'>\The [src] can only transport items!</span>"
+		return
+

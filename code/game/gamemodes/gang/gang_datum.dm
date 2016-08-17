@@ -15,7 +15,7 @@
 	var/list/territory_lost = list()
 	var/dom_attempts = 2
 	var/points = 15
-	var/datum/atom_hud/antag/ganghud
+	var/datum/atom_hud/antag/gang/ganghud
 
 	var/domination_timer
 	var/is_dominating
@@ -46,6 +46,7 @@
 	gang_name_pool -= name
 
 	ganghud = new()
+	ganghud.color = color_hex
 	log_game("The [name] Gang has been created. Their gang color is [color].")
 
 /datum/gang/proc/add_gang_hud(datum/mind/recruit_mind)
@@ -60,7 +61,6 @@
 	set_domination_time(determine_domination_time(src) * modifier)
 	is_dominating = TRUE
 	set_security_level("delta")
-	SSshuttle.emergencyNoEscape = 1
 
 /datum/gang/proc/set_domination_time(d)
 	domination_timer = world.time + (10 * d)

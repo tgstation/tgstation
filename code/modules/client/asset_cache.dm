@@ -208,7 +208,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"pda_refresh.png"		= 'icons/pda_icons/pda_refresh.png',
 		"pda_scanner.png"		= 'icons/pda_icons/pda_scanner.png',
 		"pda_signaler.png"		= 'icons/pda_icons/pda_signaler.png',
-		"pda_status.png"		= 'icons/pda_icons/pda_status.png'
+		"pda_status.png"		= 'icons/pda_icons/pda_status.png',
+		"pda_dronephone.png"	= 'icons/pda_icons/pda_dronephone.png'
 	)
 
 /datum/asset/simple/paper
@@ -226,6 +227,11 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
 	)
 
+/datum/asset/simple/IRV
+	assets = list(
+		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
+		"jquery-1.10.2.min.js" = 'html/IRV/jquery-1.10.2.min.js'
+	)
 
 //Registers HTML Interface assets.
 /datum/asset/HTML_interface/register()
