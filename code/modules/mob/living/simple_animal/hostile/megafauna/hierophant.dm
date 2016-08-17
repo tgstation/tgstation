@@ -6,13 +6,18 @@ The Hierophant
 The Hierophant spawns somewhere who knows
 
 The Hierophant's attacks are as follows, and INTENSIFY at a random chance based on Hierophant's health or if the target is adjacent to Hierophant;
-- Creates a cardinal or diagonal blast under its target, exploding after a short time.
-	INTENSITY EFFECT: Creates whichever blast type was not picked under itself.
+- Creates a cardinal or diagonal blast(Cross Blast) under its target, exploding after a short time.
+	INTENSITY EFFECT: Creates one of the cross blast types under itself instead of under the target.
 - If no chasers exist, creates a chaser that will seek its target, leaving a trail of blasts.
 	INTENSITY EFFECT: Creates a second, slower chaser.
 - Creates an expanding AoE burst.
-- INTENSE ONLY: Blinks to the target after a very brief delay, damaging everything near the start and end points.
-- IF TARGET WAS STRUCK IN MELEE AND TRIGGERED A RANGED ATTACK: Creates a 3x3 square of blasts under the target.
+- INTENSE ATTACKS:
+	Blinks to the target after a very brief delay, damaging everything near the start and end points.
+	Rapidly creates squares of 3x3 blasts under the target.
+	Rapidly creates Cross Blasts of either type under the target.
+- IF TARGET WAS STRUCK IN MELEE: Creates a 3x3 square of blasts under the target.
+
+Cross Blasts and the AoE burst gain additional range as the Hierophant loses health, while Chasers gain additional speed.
 
 When The Hierophant dies, it leaves behind its staff, which, while much weaker than when wielded by The Hierophant itself, is still quite effective:
 
@@ -52,7 +57,7 @@ Difficulty: Hard
 	var/burst_range = 2
 	var/beam_range = 3
 	var/chaser_cooldown = 101
-	var/major_attack_cooldown = 50
+	var/major_attack_cooldown = 60
 	var/doing_major_attack = FALSE
 	var/blinking = FALSE
 	var/obj/effect/hierophant/original_loc
@@ -72,7 +77,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Life()
 	. = ..()
-	if(.)
+	if(. && original_loc)
 		if(target || loc == original_loc.loc)
 			timeout_time = initial(timeout_time)
 		else
@@ -151,29 +156,33 @@ Difficulty: Hard
 				blink(target)
 			if("blast_spam")
 				blinking = TRUE
+				animate(src, color = "#660099", time = 4)
 				melee_blast(target)
 				var/counter = max(rand(1, round(anger_modifier * 0.2)), 1)
-				sleep(6)
+				sleep(4)
 				while(target && counter)
 					counter--
 					melee_blast(target)
-					sleep(6)
+					sleep(4)
+				animate(src, color = initial(color), time = 4)
 				blinking = FALSE
 			if("cross_blast_spam")
 				blinking = TRUE
+				animate(src, color = "#660099", time = 8)
 				if(prob(60))
 					cardinal_blasts(target)
 				else
 					diagonal_blasts(target)
 				var/counter = max(rand(1, round(anger_modifier * 0.1)), 1)
-				sleep(10)
+				sleep(8)
 				while(target && counter)
 					counter--
 					if(prob(60))
 						cardinal_blasts(target)
 					else
 						diagonal_blasts(target)
-					sleep(10)
+					sleep(8)
+				animate(src, color = initial(color), time = 8)
 				blinking = FALSE
 		return
 
@@ -381,6 +390,9 @@ Difficulty: Hard
 		for(var/mob/living/L in T.contents - hurt_mobs)
 			hurt_mobs += L
 			if(L.stat != DEAD)
+				if(L.client)
+					flash_color(L.client, "#660099", 1)
+					shake_camera(L, 4, 1)
 				L << "<span class='userdanger'>You're struck by a [name]!</span>"
 				L.apply_damage(damage, BRUTE)
 		sleep(0.1)
