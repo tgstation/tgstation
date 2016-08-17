@@ -223,7 +223,7 @@ Difficulty: Hard
 		return
 
 	if(prob(70-anger_modifier))
-		if(prob(anger_modifier)
+		if(prob(anger_modifier))
 			if(prob(60))
 				addtimer(src, "cardinal_blasts", 0, FALSE, src)
 			else
