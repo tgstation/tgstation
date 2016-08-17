@@ -138,6 +138,11 @@
 			squeak = 0
 	return result
 
+/obj/mecha/combat/honker/moved_inside(mob/living/carbon/human/H)
+	..()
+	if(H.mind && H.mind.assigned_role == "Clown")
+		UnlockMedal(MEDAL_CLOWN_IN_HONKER, H.client)
+
 /obj/mecha/combat/honker/Topic(href, href_list)
 	..()
 	if (href_list["play_sound"])

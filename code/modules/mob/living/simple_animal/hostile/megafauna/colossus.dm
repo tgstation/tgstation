@@ -1,5 +1,3 @@
-
-#define MEDAL_PREFIX "Colossus"
 /*
 
 COLOSSUS
@@ -50,7 +48,7 @@ Difficulty: Very Hard
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	del_on_death = 1
-	medal_type = MEDAL_PREFIX
+	medal_type = MEDAL_COLOSSUS
 	score_type = COLOSSUS_SCORE
 	loot = list(/obj/machinery/smartfridge/black_box)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
@@ -372,5 +370,3 @@ Difficulty: Very Hard
 
 /obj/machinery/smartfridge/black_box/default_deconstruction_crowbar()
 	return
-
-#undef MEDAL_PREFIX

@@ -68,5 +68,6 @@
 				var/datum/alternate_appearance/AA = aa
 				AA.display_to(list(src))
 
+
 	update_client_colour()
 	client.click_intercept = null

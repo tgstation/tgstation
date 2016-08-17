@@ -283,6 +283,10 @@
 		if(N.clashing)
 			continue
 		N.clashing = TRUE
+		if(!admin_spawned)
+			for(var/mob/living/L in player_list)
+				if(L.z == z)
+					UnlockMedal(MEDAL_GOD_CLASH, L.client)
 		clash_of_the_titans(N) //IT'S TIME FOR THE BATTLE OF THE AGES
 		break
 	return 1

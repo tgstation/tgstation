@@ -1,4 +1,3 @@
-#define MEDAL_PREFIX "Legion"
 /*
 
 LEGION
@@ -41,13 +40,13 @@ Difficulty: Medium
 	ranged_cooldown_time = 20
 	var/size = 5
 	var/charging = 0
-	medal_type = MEDAL_PREFIX
+	medal_type = MEDAL_LEGION
 	score_type = LEGION_SCORE
 	pixel_y = -90
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
-	elimination = 1
+	var/elimination = 1
 	aggro_vision_range = 18
 	idle_vision_range = 13
 	appearance_flags = 0
@@ -128,6 +127,10 @@ Difficulty: Medium
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/legion/grant_achievement()
+	if(!elimination)
+		..()
+
 /mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
 	return 1
 
@@ -191,5 +194,3 @@ Difficulty: Medium
 	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
-
-#undef MEDAL_PREFIX
