@@ -652,6 +652,65 @@
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 		timer = world.time + cooldown
 
+//Hierophant Staff
+
+/obj/item/weapon/hierophant_staff
+	name = "Hierophant's staff"
+	desc = "A large club with intense magic power infused into it."
+	icon_state = "staffofstorms"
+	item_state = "staffofstorms"
+	icon = 'icons/obj/guns/magic.dmi'
+	slot_flags = SLOT_BACK
+	w_class = 4
+	force = 20
+	hitsound = "swing_hit"
+	var/cooldown_time = 60
+	var/chaser_cooldown = 120
+	var/timer = 0
+
+/obj/item/weapon/hierophant_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	..()
+	var/turf/T = get_turf(target)
+	if(timer > world.time)
+		return
+	timer = world.time + cooldown_time
+	if(proximity_flag)
+		addtimer(src, "aoe_burst", 0, FALSE, T, user)
+	else
+		if(target in view(user.client.view, get_turf(user)))
+			if(isliving(target) && prob(50))
+				timer = world.time + chaser_cooldown
+				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target))
+			else
+				addtimer(src, "cardinal_blasts", 0, FALSE, T, user)
+
+/obj/item/weapon/hierophant_staff/proc/cardinal_blasts(turf/T, mob/living/user)
+	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, user))
+	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	sleep(3)
+	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, user))
+	for(var/d in cardinal)
+		addtimer(src, "cardinal_blast", 0, FALSE, T, d, user)
+
+/obj/item/weapon/hierophant_staff/proc/cardinal_blast(turf/T, dir, mob/living/user)
+	var/turf/E = get_edge_target_turf(T, dir)
+	var/range = 2
+	var/turf/previousturf = T
+	for(var/turf/J in getline(previousturf,E) - previousturf)
+		if(!range || !user)
+			break
+		range--
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(J, user))
+		previousturf = J
+		sleep(1)
+
+/obj/item/weapon/hierophant_staff/proc/aoe_burst(turf/T, mob/living/user)
+	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
+	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	sleep(3)
+	for(var/t in RANGE_TURFS(1, T))
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user))
+
 ///Bubblegum
 
 /obj/item/mayhem
