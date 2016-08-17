@@ -81,7 +81,7 @@ Difficulty: Hard
 			if(get_dist(src, original_loc) > 2)
 				blink(original_loc)
 			else
-				GoTo(original_loc, move_to_delay, 0)
+				Goto(original_loc, move_to_delay, 0)
 			wander = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
@@ -95,6 +95,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	qdel(internal)
+	qdel(original_loc, TRUE)
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/attackby(obj/item/weapon/W, mob/user, params)
