@@ -32,7 +32,8 @@
 	qdel(src)
 
 /obj/structure/grille/blob_act(obj/effect/blob/B)
-	qdel(src)
+	if(!destroyed)
+		Break()
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user))

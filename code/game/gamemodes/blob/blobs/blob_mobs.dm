@@ -168,20 +168,23 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
-	..()
+	if(overmind)
+		color = overmind.blob_reagent_datum.complementary_color
+	else
+		color = initial(color)
 	if(is_zombie)
 		cut_overlays()
 		overlays = human_overlays
 		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
 		if(overmind)
-			I.color = overmind.blob_reagent_datum.color
+			I.color = overmind.blob_reagent_datum.complementary_color
 		color = initial(color)//looks better.
 		add_overlay(I)
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"
-	health = 20
-	maxHealth = 20
+	health = 15
+	maxHealth = 15
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	death_cloud_size = 0
@@ -199,7 +202,6 @@
 	health = 200
 	maxHealth = 200
 	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	next_move_modifier = 1.5 //slow-ass attack speed, 3 times higher than how fast the blob can attack
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	obj_damage = 20

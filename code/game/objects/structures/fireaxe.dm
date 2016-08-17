@@ -84,7 +84,7 @@
 
 /obj/structure/fireaxecabinet/blob_act(obj/effect/blob/B)
 	if(fireaxe)
-		fireaxe.loc = src.loc
+		fireaxe.forceMove(loc)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
