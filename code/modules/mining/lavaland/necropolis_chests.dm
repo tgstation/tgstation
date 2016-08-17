@@ -664,8 +664,9 @@
 	w_class = 4
 	force = 20
 	hitsound = "swing_hit"
-	var/cooldown_time = 60
-	var/chaser_cooldown = 120
+	var/cooldown_time = 30
+	var/chaser_cooldown = 101
+	var/chaser_timer = 0
 	var/timer = 0
 
 /obj/item/weapon/hierophant_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -673,13 +674,14 @@
 	var/turf/T = get_turf(target)
 	if(timer > world.time)
 		return
-	timer = world.time + cooldown_time
+	timer = world.time + CLICK_CD_MELEE
 	if(proximity_flag)
 		addtimer(src, "aoe_burst", 0, FALSE, T, user)
 	else
+		timer = world.time + cooldown_time
 		if(target in view(user.client.view, get_turf(user)))
-			if(isliving(target) && prob(50))
-				timer = world.time + chaser_cooldown
+			if(isliving(target) && chaser_timer <= world.time)
+				chaser_timer = world.time + chaser_cooldown
 				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target))
 			else
 				addtimer(src, "cardinal_blasts", 0, FALSE, T, user)
@@ -694,7 +696,7 @@
 
 /obj/item/weapon/hierophant_staff/proc/cardinal_blast(turf/T, dir, mob/living/user)
 	var/turf/E = get_edge_target_turf(T, dir)
-	var/range = 2
+	var/range = 4
 	var/turf/previousturf = T
 	for(var/turf/J in getline(previousturf,E) - previousturf)
 		if(!range || !user)
@@ -702,7 +704,7 @@
 		range--
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(J, user))
 		previousturf = J
-		sleep(1)
+		sleep(0.3)
 
 /obj/item/weapon/hierophant_staff/proc/aoe_burst(turf/T, mob/living/user)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
