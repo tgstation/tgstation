@@ -81,8 +81,8 @@ Difficulty: Hard
 		if(target || loc == original_loc.loc)
 			timeout_time = initial(timeout_time)
 		else
-			timeout_time = max(timeout_time--, 0)
-		if(!timeout_time)
+			timeout_time--
+		if(timeout_time <= 0)
 			if(get_dist(src, original_loc) > 2)
 				blink(original_loc)
 			else
