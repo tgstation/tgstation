@@ -451,9 +451,9 @@
 /proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs)
 	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time)
 	var/i=1
-	for(var/v in L)
+	for(var/v in mobs)
 		if(!v || qdeleted(v))
-			L.Cut(i,i+1)
+			mobs.Cut(i,i+1)
 		else
 			++i
 	return L
