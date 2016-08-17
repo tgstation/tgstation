@@ -1,0 +1,4 @@
+author: "Basilman"
+delete-after: True
+changes: 
+  - rscadd: "Added an admin-spawnable only \"Cosmohonk\" hardsuit that has the same protection values of an engineering hardsuit. Comes with built-in lights and requires clown roundstart role to be equipped."
