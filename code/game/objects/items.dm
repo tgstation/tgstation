@@ -108,6 +108,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	..()
 	for(var/path in actions_types)
 		new path(src)
+	if(SSaltsprites)
+		for(var/datum/sprite_override/O in SSaltsprites.sprite_overrides)
+			if(istype(src, O.item_type))
+				O.adjust_a_sprite(src)
 
 /obj/item/Destroy()
 	if(ismob(loc))

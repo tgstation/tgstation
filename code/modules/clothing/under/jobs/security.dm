@@ -5,6 +5,10 @@
  *		Navy uniforms
  */
 
+var/list/sec_outfits = list()
+var/list/warden_outfits = list()
+var/list/hos_outfits = list()
+
 /*
  * Security
  */
@@ -12,12 +16,21 @@
 /obj/item/clothing/under/rank/security
 	name = "security jumpsuit"
 	desc = "A tactical security jumpsuit for officers complete with nanotrasen belt buckle."
-	icon_state = "rsecurity"
-	item_state = "r_suit"
-	item_color = "rsecurity"
+	icon_state = "sec_alt1"
+	item_state = "sec_alt1"
+	item_color = "sec_alt1"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 	alt_covers_chest = 1
+
+/obj/item/clothing/under/rank/security/New()
+	..()
+	sec_outfits += src
+
+/obj/item/clothing/under/rank/security/Destroy()
+	sec_outfits -= src
+	..()
+
 
 /obj/item/clothing/under/rank/security/grey
 	icon_state = "security"
@@ -27,12 +40,21 @@
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
 	desc = "A formal security suit for officers complete with nanotrasen belt buckle."
-	icon_state = "rwarden"
-	item_state = "r_suit"
-	item_color = "rwarden"
+	icon_state = "warden_alt1"
+	item_state = "warden_alt1"
+	item_color = "warden_alt1"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 	alt_covers_chest = 1
+
+/obj/item/clothing/under/rank/warden/New()
+	..()
+	warden_outfits += src
+
+/obj/item/clothing/under/rank/warden/Destroy()
+	warden_outfits -= src
+	..()
+
 
 /obj/item/clothing/under/rank/warden/grey
 	icon_state = "warden"
@@ -66,12 +88,21 @@
 /obj/item/clothing/under/rank/head_of_security
 	name = "head of security's jumpsuit"
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
-	icon_state = "rhos"
-	item_state = "r_suit"
-	item_color = "rhos"
+	icon_state = "hos_alt1"
+	item_state = "hos_alt1"
+	item_color = "hos_alt1"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 60
 	alt_covers_chest = 1
+
+/obj/item/clothing/under/rank/head_of_security/New()
+	..()
+	hos_outfits += src
+
+/obj/item/clothing/under/rank/head_of_security/Destroy()
+	hos_outfits -= src
+	..()
+
 
 /obj/item/clothing/under/rank/head_of_security/grey
 	icon_state = "hos"
