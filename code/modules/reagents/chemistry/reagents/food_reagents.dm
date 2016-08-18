@@ -253,7 +253,7 @@
 
 
 /datum/reagent/consumable/sodiumchloride/overdose_process(mob/living/M)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustToxLoss(4*REM, 0)
 	..()
 
 /datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
