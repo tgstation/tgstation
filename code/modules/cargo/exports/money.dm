@@ -21,4 +21,4 @@
 	var/obj/item/weapon/coin/C = O
 	if(C.materials && C.materials.len)
 		return 0 // Sold as raw material instead.
-	return ..() * C.value
+	return ..() * C.value / 4
