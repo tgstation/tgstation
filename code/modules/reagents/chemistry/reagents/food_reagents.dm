@@ -243,7 +243,7 @@
 /datum/reagent/consumable/sodiumchloride
 	name = "Table Salt"
 	id = "sodiumchloride"
-	description = "Sodium, atomic number 11, was first isolated by Peter Dager in 1807. A chemical component of salt, he named it Na in honor of the saltiest region on [Current station name],  [Current department]."
+	description = "Sodium, atomic number 11, was first isolated by Peter Dager in 1807. A chemical component of salt, he named it Na in honor of the saltiest station in space, [Current station name]."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 	overdose_threshold = 30
