@@ -80,7 +80,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
 	var/fail_tick = 0
-	var/fail_chance = 80
+	var/fail_chance = 0
 
 /obj/item/weapon/gun/energy/gun/nuclear/process()
 	if(fail_tick > 0)
@@ -93,11 +93,11 @@
 	..()
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
-	if(!prob(fail_chance) && istype(loc, /mob/living))
+	if(prob(fail_chance) && istype(loc, /mob/living))
 		var/mob/living/M = loc
 		switch(fail_tick)
 			if(0 to 200)
-				fail_tick += (2*(100-fail_chance))
+				fail_tick += (2*(fail_chance))
 				M.rad_act(40)
 				M << "<span class='userdanger'>Your [name] feels warmer.</span>"
 			if(201 to INFINITY)
@@ -108,17 +108,17 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
 	..()
-	fail_chance = max(fail_chance - round(15/severity), 0)
+	fail_chance = min(fail_chance + round(15/severity), 100)
 
 /obj/item/weapon/gun/energy/gun/nuclear/update_icon()
 	..()
 	if(crit_fail)
-		overlays += "[icon_state]_fail_3"
+		add_overlay("[icon_state]_fail_3")
 	else
 		switch(fail_tick)
 			if(0)
-				overlays += "[icon_state]_fail_0"
+				add_overlay("[icon_state]_fail_0")
 			if(1 to 150)
-				overlays += "[icon_state]_fail_1"
+				add_overlay("[icon_state]_fail_1")
 			if(151 to INFINITY)
-				overlays += "[icon_state]_fail_2"
+				add_overlay("[icon_state]_fail_2")
