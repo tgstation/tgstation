@@ -738,11 +738,14 @@
 	w_class = 4
 	force = 20
 	hitsound = "swing_hit"
-	var/cooldown_time = 40
+	actions_types = list(/datum/action/item_action/vortex_recall)
+	var/cooldown_time = 20
 	var/chaser_cooldown = 101
 	var/chaser_timer = 0
 	var/timer = 0
 	var/cardinal_range = 3
+	var/obj/effect/hierophant/rune
+	var/teleporting = FALSE
 
 /obj/item/weapon/hierophant_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()
@@ -760,11 +763,58 @@
 			timer = world.time + cooldown_time
 			if(isliving(target) && chaser_timer <= world.time)
 				chaser_timer = world.time + chaser_cooldown
-				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target))
+				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, 2.5))
 			else
 				addtimer(src, "cardinal_blasts", 0, FALSE, T, user)
 		else
 			user << "<span class='warning'>That target is out of range!</span>"
+
+/obj/item/weapon/hierophant_staff/ui_action_click(mob/user, actiontype)
+	if(src != user.l_hand && src != user.r_hand)
+		user << "<span class='warning'>You need to hold the staff in your hands to teleport with it!</span>"
+		return
+	teleporting = TRUE
+	user.update_action_buttons_icon()
+	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
+	if(do_after(user, 25, target = user) && rune)
+		var/turf/T = get_turf(rune)
+		var/turf/source = get_turf(user)
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, user))
+		playsound(T,'sound/magic/blink.ogg', 200, 1)
+		playsound(source,'sound/magic/blink.ogg', 200, 1)
+		sleep(3)
+		if(!user)
+			return
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, user))
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(source, user))
+		for(var/t in RANGE_TURFS(1, T))
+			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user))
+		for(var/t in RANGE_TURFS(1, source))
+			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user))
+		var/previous_color = user.color
+		animate(user, alpha = 0, color = "660099", time = 2, easing = EASE_OUT)
+		sleep(1)
+		if(!user)
+			return
+		user.visible_message("<span class='hierophant_warning'>[user] fades out!</span>")
+		var/previous_density = user.density
+		user.density = FALSE
+		sleep(3)
+		if(!user)
+			return
+		user.forceMove(T)
+		animate(user, alpha = 255, color = previous_color, time = 2, easing = EASE_IN)
+		sleep(1)
+		if(!user)
+			return
+		user.density = previous_density
+		user.visible_message("<span class='hierophant_warning'>[user] fades in!</span>")
+		sleep(1)
+	if(!user)
+		return
+	teleporting = FALSE
+	user.update_action_buttons_icon()
 
 /obj/item/weapon/hierophant_staff/proc/cardinal_blasts(turf/T, mob/living/user)
 	if(!T)

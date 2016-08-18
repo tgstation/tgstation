@@ -154,6 +154,8 @@ Difficulty: Hard
 		var/list/possibilities = list("cardinal_blast_spam", "blast_spam")
 		if(get_dist(src, target) > 2)
 			possibilities += "blink"
+			if(prob(anger_modifier*0.5))
+				possibilities += "blink_spam"
 		if(chaser_cooldown < world.time)
 			if(prob(anger_modifier*2))
 				possibilities = list("chaser_swarm")
@@ -162,6 +164,15 @@ Difficulty: Hard
 		switch(pick(possibilities))
 			if("blink")
 				blink(target)
+			if("blink_spam")
+				blink(target)
+				var/counter = round(anger_modifier*0.08)
+				sleep(5)
+				while(target && counter)
+					counter--
+					blink(target)
+					sleep(5)
+				sleep(15)
 			if("blast_spam")
 				blinking = TRUE
 				animate(src, color = "#660099", time = 3)
@@ -172,40 +183,40 @@ Difficulty: Hard
 					counter--
 					melee_blast(target)
 					sleep(3)
-				sleep(5)
+				sleep(9)
 				animate(src, color = initial(color), time = 3)
 				blinking = FALSE
 			if("cardinal_blast_spam")
 				blinking = TRUE
-				animate(src, color = "#660099", time = 6)
+				animate(src, color = "#660099", time = 5)
 				if(prob(60))
 					cardinal_blasts(target)
 				else
 					diagonal_blasts(target)
 				var/counter = round(anger_modifier*0.08)
-				sleep(6)
+				sleep(5)
 				while(target && counter)
 					counter--
 					if(prob(60))
 						cardinal_blasts(target)
 					else
 						diagonal_blasts(target)
-					sleep(6)
-				sleep(7)
-				animate(src, color = initial(color), time = 6)
+					sleep(5)
+				sleep(15)
+				animate(src, color = initial(color), time = 5)
 				blinking = FALSE
 			if("chaser_swarm")
 				chaser_cooldown = world.time + initial(chaser_cooldown)
 				blinking = TRUE
-				animate(src, color = "#660099", time = 5)
+				animate(src, color = "#660099", time = 10)
 				var/list/cardinal_copy = cardinal.Copy()
 				while(target && cardinal_copy.len)
 					var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1.5, 4 - anger_modifier*0.05)))
 					C.moving = 4
 					C.moving_dir = pick_n_take(cardinal_copy)
 					sleep(10)
-				sleep(10)
-				animate(src, color = initial(color), time = 5)
+				sleep(30)
+				animate(src, color = initial(color), time = 10)
 				blinking = FALSE
 		return
 
@@ -308,7 +319,7 @@ Difficulty: Hard
 		var/dist = get_dist(original, T)
 		if(dist > last_dist)
 			last_dist = dist
-			sleep(rand(1, last_dist))
+			sleep(last_dist)
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A)
@@ -376,6 +387,13 @@ Difficulty: Hard
 	pixel_y = -32
 	duration = 2
 
+/obj/effect/overlay/temp/hierophant/telegraph/New()
+	..()
+	for(var/t in RANGE_TURFS(1, src))
+		if(istype(t, /turf/closed/mineral))
+			var/turf/closed/mineral/M = loc
+			M.gets_drilled(caster)
+
 /obj/effect/overlay/temp/hierophant/telegraph/diagonal
 	icon_state = "hierophant_telegraph_diagonal"
 
@@ -397,7 +415,8 @@ Difficulty: Hard
 
 /obj/effect/overlay/temp/hierophant/blast/New(loc, new_caster)
 	..()
-	hurt_mobs += new_caster
+	if(new_caster)
+		hurt_mobs += new_caster
 	if(istype(loc, /turf/closed/mineral))
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
@@ -426,85 +445,31 @@ Difficulty: Hard
 	desc = "A powerful magic mark allowing whomever attunes themself to it to return to it at will."
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "hierophant"
+	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 	color = "#CC00FF"
 	var/mob/living/active_boss
 
-/obj/effect/hierophant/attack_hand(mob/user)
-	for(var/datum/action/innate/vortex_recall/V in user.actions)
-		user << "<span class='hierophant_warning'>You touch the rune, but nothing happens.</span>"
-		return
-	if(active_boss)
-		user << "<span class='hierophant_warning'>You touch the rune, but nothing happens.</span>"
+/obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/hierophant_staff))
+		if(active_boss)
+			user << "<span class='hierophant_warning'>You touch the rune with the staff, but nothing happens.</span>"
+			return
+		var/obj/item/weapon/hierophant_staff/H = I
+		if(H.rune == src)
+			user << "<span class='hierophant_warning'>You touch the rune with the staff, but nothing happens.</span>"
+		else
+			H.rune = src
+			user << "<span class='hierophant'>You touch the rune with the staff, attuning it!</span>\n\
+			<span class='notice'>Return to the rune at any time by using the Vortex Recall action button granted by the staff.</span>"
+			user.update_action_buttons_icon()
 	else
-		user << "<span class='hierophant'>You touch the rune, and a burst of energy pervades your body!</span>\n\
-		<span class='notice'>Return to the rune at any time by using the Vortex Recall action button.</span>"
-		var/datum/action/innate/vortex_recall/V = new()
-		V.rune = src
-		V.Grant(user)
+		..()
 
 /obj/effect/hierophant/Destroy(force)
 	if(!force)
 		return QDEL_HINT_LETMELIVE
 	. = ..()
-
-/datum/action/innate/vortex_recall
-	name = "Vortex Recall"
-	desc = "Allows you to return to the hierophant's arena."
-	button_icon_state = "vortex_recall"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
-	var/obj/effect/hierophant/rune
-	var/teleporting = FALSE
-
-/datum/action/innate/vortex_recall/IsAvailable()
-	if(teleporting)
-		return 0
-	return ..()
-
-/datum/action/innate/vortex_recall/Activate()
-	if(!rune)
-		qdel(src)
-		return
-	teleporting = TRUE
-	owner.update_action_buttons_icon()
-	owner.visible_message("<span class='hierophant_warning'>[owner] starts to glow faintly...</span>")
-	if(do_after(owner, 80, target = owner) && rune)
-		var/turf/T = get_turf(rune)
-		var/turf/source = get_turf(owner)
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, owner))
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, owner))
-		playsound(T,'sound/magic/blink.ogg', 200, 1)
-		playsound(source,'sound/magic/blink.ogg', 200, 1)
-		sleep(3)
-		if(!owner)
-			return
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, owner))
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(source, owner))
-		for(var/t in RANGE_TURFS(1, T))
-			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, owner))
-		for(var/t in RANGE_TURFS(1, source))
-			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, owner))
-		animate(owner, alpha = 0, color = "660099", time = 2, easing = EASE_OUT)
-		sleep(1)
-		if(!owner)
-			return
-		owner.visible_message("<span class='hierophant_warning'>[owner] fades out!</span>")
-		owner.density = FALSE
-		sleep(3)
-		if(!owner)
-			return
-		owner.forceMove(T)
-		animate(owner, alpha = 255, color = initial(owner.color), time = 2, easing = EASE_IN)
-		sleep(1)
-		if(!owner)
-			return
-		owner.density = TRUE
-		owner.visible_message("<span class='hierophant_warning'>[owner] fades in!</span>")
-		sleep(1)
-		if(!owner)
-			return
-	teleporting = FALSE
-	owner.update_action_buttons_icon()
 
 /obj/item/device/gps/internal/hierophant
 	icon_state = null

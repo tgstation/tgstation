@@ -189,6 +189,18 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/vortex_recall
+	name = "Vortex Recall"
+	desc = "Recall to an attuned hierophant rune at any time."
+	button_icon_state = "vortex_recall"
+
+/datum/action/item_action/vortex_recall/IsAvailable()
+	if(istype(target, /obj/item/weapon/hierophant_staff))
+		var/obj/item/weapon/hierophant_staff/H = target
+		if(H.teleporting || !H.rune)
+			return 0
+	return ..()
+
 /datum/action/item_action/clock
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
