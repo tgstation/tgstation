@@ -60,9 +60,8 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg
-	holds_charge = TRUE
-	unique_frequency = TRUE
+/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/hyper
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/New()
 	. = ..()
