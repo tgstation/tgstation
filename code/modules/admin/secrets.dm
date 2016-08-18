@@ -62,6 +62,7 @@
 			<A href='?src=\ref[src];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<A href='?src=\ref[src];secrets=damagebuff'>All weapons 100 Force</A><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=\ref[src];secrets=masspurrbation'>Mass Purrbation</A><BR>
@@ -428,6 +429,10 @@
 
 		if("floorlava")
 			SSweather.run_weather("the floor is lava")
+
+		if("damagebuff")
+			var/duration = input("Duration of damage buff in seconds", "Damage buff") as num
+			damage_buff(duration*10, usr.client)
 
 		if("virus")
 			if(!check_rights(R_FUN))

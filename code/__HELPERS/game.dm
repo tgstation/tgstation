@@ -454,3 +454,11 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+/proc/damage_buff(duration, client/C)
+	if(duration <= 0 || !istype(C))
+		return
+	C.SDQL2_query("UPDATE /obj/item/weapon IN world SET force = 100, throwforce = 100")
+	sleep(duration)
+	C.SDQL2_query("CALL call_initial('force') ON /obj/item/weapon IN world")
+	C.SDQL2_query("CALL call_initial('throwforce') ON /obj/item/weapon IN world")
