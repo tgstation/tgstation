@@ -237,7 +237,7 @@
 	expand_blob(T)
 
 /mob/camera/blob/proc/expand_blob(turf/T)
-	if(world.time > last_attack)
+	if(world.time < last_attack)
 		return
 	var/list/possibleblobs = list()
 	for(var/obj/effect/blob/AB in range(T, 1))
