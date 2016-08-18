@@ -30,8 +30,9 @@
 	if(istype(A, /obj/item/weapon/crowbar))
 		if(modkits.len)
 			user << "<span class='notice'>You pry the modifications out.</span>"
+			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			for(var/obj/item/modkit/M in modkits)
-				M.uninstall()
+				M.uninstall(src)
 		else
 			user << "<span class='notice'>There are no modifications currently installed.</span>"
 	else if(istype(A, /obj/item/modkit))
@@ -44,6 +45,7 @@
 			return
 		else
 			user << "<span class='notice'>You install the modkit.</span>"
+			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			user.unEquip(MK)
 			MK.install(src)
 	else
@@ -233,9 +235,11 @@
 
 /obj/item/modkit/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	forceMove(KA)
+	KA.modkits += src
 
 /obj/item/modkit/proc/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	forceMove(get_turf(KA))
+	KA.modkits -= src
 
 /obj/item/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 
@@ -282,14 +286,16 @@
 /obj/item/modkit/projectile_mod
 	name = "hyper shot"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE. Occupies two mod slots."
-	var/projectile_type = /obj/item/ammo_casing/energy/kinetic
+	var/projectile_type = /obj/item/ammo_casing/energy/kinetic/hyper
 
 /obj/item/modkit/projectile_mod/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.ammo_type = list(projectile_type)
+	KA.update_ammo_types()
 	..()
 
 /obj/item/modkit/projectile_mod/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
+	KA.update_ammo_types()
 	..()
 
 //Indoors
