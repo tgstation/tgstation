@@ -17,7 +17,7 @@
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
 	return 0
 
-/obj/item/weapon/melee/energy/IS_SHARP()
+/obj/item/weapon/melee/energy/is_sharp()
 	return active * sharpness
 
 /obj/item/weapon/melee/energy/axe
