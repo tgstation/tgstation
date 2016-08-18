@@ -45,7 +45,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	piercing = 15
-	dismemberment_chance = 40
+	dismemberment_chance = 80
 	throwforce = 10
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -65,7 +65,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	dismemberment_chance = 35
+	dismemberment_chance = 80
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -259,9 +259,9 @@
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
 	flags = NODROP | ABSTRACT
-	w_class = 5.0
+	w_class = 5
 	force = 21
-	dismemberment_chance = 20
+	dismemberment_chance = 84
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
