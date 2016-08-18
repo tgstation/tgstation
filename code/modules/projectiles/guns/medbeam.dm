@@ -28,9 +28,6 @@
 	..()
 	LoseTarget()
 
-/obj/item/weapon/gun/medbeam/pickup(mob/living/user)
-	user << "<span class='userdanger'>Using this medical beamgun in close proximity with other medical beamguns is highly discouraged, as spontaneous explosions will occur if the beams ever come into contact.</span>"
-
 /obj/item/weapon/gun/medbeam/proc/LoseTarget()
 	if(active)
 		qdel(current_beam)
