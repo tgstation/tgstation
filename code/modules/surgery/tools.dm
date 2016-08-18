@@ -17,6 +17,7 @@
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
 	flags = CONDUCT
 	w_class = 1
+	attack_verb = list("attacked", "pinched")
 	origin_tech = "materials=1;biotech=1"
 
 
