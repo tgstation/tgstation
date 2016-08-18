@@ -173,8 +173,8 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
-	dismemberment_chance_unwielded = 5
-	dismemberment_chance_wielded = 24
+	dismemberment_chance_unwielded = 15
+	dismemberment_chance_wielded = 72
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -210,7 +210,7 @@
 	var/w_class_on = 4
 	force_unwielded = 3
 	force_wielded = 34
-	dismemberment_chance_unwielded = 0 //The sword is fucking off to somewhere, meaning you can't cut people with it
+	dismemberment_chance_unwielded = 0 //The sword is fucking off to somewhere, meaning you can't cut people's head off with it
 	dismemberment_chance_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
@@ -345,8 +345,8 @@
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
-	piercing_unwielded = 5
-	piercing_wielded = 12
+	dismemberment_chance_unwielded = 30
+	dismemberment_chance_wielded = 54
 	sharpness = IS_SHARP
 	throwforce = 20
 	throw_speed = 4
@@ -414,7 +414,8 @@
 	flags = CONDUCT
 	force = 13
 	var/force_on = 21
-	dismemberment_chance = 21
+	var/dismemberment_chance_on = 84
+	dismemberment_chance = 52
 	sharpness = IS_SHARP
 	w_class = 5
 	throwforce = 13
@@ -431,6 +432,7 @@
 	on = !on
 	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
 	force = on ? force_on : initial(force)
+	dismemberment_chance = on ? dismemberment_chance_on
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 
@@ -471,8 +473,8 @@
 	force_unwielded = 15
 	force_wielded = 25
 	sharpness = IS_SHARP
-	piercing_unwielded = 10
-	piercing_wielded = 18
+	dismemberment_chance_unwielded = 45
+	dismemberment_chance_wielded = 75
 	throwforce = 20
 	throw_speed = 4
 	attack_verb = list("gored")
@@ -502,8 +504,8 @@
 	w_class = 4
 	force_unwielded = 7
 	force_wielded = 15
-	piercing_unwielded = 4
-	piercing_wielded = 10
+	dismemberment_chance_unwielded = 21
+	dismemberment_chance_wielded = 45
 	attack_verb = list("attacked", "impaled", "pierced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -511,28 +513,28 @@
 	name = "demonic pitchfork"
 	desc = "A red pitchfork, it looks like the work of the devil."
 	force = 19
+	dismemberment_chance_unwielded = 57
+	dismemberment_chance_wielded = 75
 	sharpness = IS_SHARP
 	throwforce = 24
 	force_unwielded = 19
 	force_wielded = 25
-	piercing_unwielded = 5
-	piercing_wielded = 12
 
 /obj/item/weapon/twohanded/pitchfork/demonic/greater
 	force = 24
 	throwforce = 50
 	force_unwielded = 24
 	force_wielded = 34
-	piercing_unwielded = 16
-	piercing_wielded = 21
+	dismemberment_chance_unwielded = 72
+	dismemberment_chance_wielded = 100
 
 /obj/item/weapon/twohanded/pitchfork/demonic/ascended
 	force = 100
 	throwforce = 100
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
-	piercing_unwielded = 33
-	piercing_wielded = 300000
+	dismemberment_chance_unwielded = 100
+	dismemberment_chance_wielded = 100
 
 /obj/item/weapon/twohanded/pitchfork/update_icon()
 	icon_state = "pitchfork[wielded]"
@@ -569,6 +571,8 @@
 	force_wielded = 40
 	armour_penetration = 100
 	sharpness = IS_SHARP
+	dismemberment_chance_unwielded = 60
+	dismemberment_chance_wielded = 100
 	block_chance = 40
 	throwforce = 20
 	throw_speed = 4
@@ -602,6 +606,8 @@
 	name = "bone axe"
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 	force_wielded = 23
+	dismemberment_chance_unwielded = 15
+	dismemberment_chance_wielded = 69
 
 /obj/item/weapon/twohanded/fireaxe/boneaxe/update_icon()
 	icon_state = "bone_axe[wielded]"
@@ -619,8 +625,8 @@
 	force_unwielded = 11
 	force_wielded = 20
 	sharpness = IS_SHARP
-	piercing_unwielded = 6
-	piercing_wielded = 13
+	dismemberment_chance_unwielded = 33
+	dismemberment_chance_wielded = 60
 	throwforce = 22
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3
