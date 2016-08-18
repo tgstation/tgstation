@@ -5,7 +5,7 @@ var/datum/subsystem/persistence/SSpersistence
 	init_order = -100
 	flags = SS_NO_FIRE
 	var/savefile/secret_satchels
-	var/list/satchel_blacklist 		= list() //these are typecaches
+	var/list/satchel_blacklist 		= list() //this is a typecache
 	var/list/new_secret_satchels 	= list() //these are objects
 	var/list/old_secret_satchels 	= list() //these are just vars
 
@@ -22,7 +22,7 @@ var/datum/subsystem/persistence/SSpersistence
 /datum/subsystem/persistence/proc/PlaceSecretSatchel()
 	var/list/satchels = list()
 	secret_satchels = new /savefile("data/npc_saves/SecretSatchels_[MAP_NAME].sav")
-	satchel_blacklist = typecacheof(/obj/item/stack/tile/plasteel) + typecacheof(/obj/item/weapon/crowbar)
+	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
 
 	secret_satchels >> satchels
 	if(!satchels.len || satchels.len < 20) //guards against low drop pools assuring that one player can reliably find his own gear.
