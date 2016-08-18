@@ -172,11 +172,11 @@
 				return
 
 	if(irc)
-		sanitize_russian(log_admin("PM: [key_name(src)]->IRC: [rawmsg]"))
+		log_admin("PM: [key_name(src)]->IRC: [rawmsg]")
 		for(var/client/X in admins)
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" //inform X
 	else
-		sanitize_russian(log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]"))
+		log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
 		for(var/client/X in admins)
 			if(X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
