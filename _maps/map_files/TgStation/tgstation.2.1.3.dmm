@@ -8840,6 +8840,14 @@
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "atl" = (
+/obj/docking_port/mobile/auxillary_base{
+	dheight = 4;
+	dir = 4;
+	dwidth = 4;
+	height = 9;
+	width = 9
+	},
+/obj/machinery/bluespace_beacon,
 /obj/machinery/computer/shuttle/auxillary_base{
 	pixel_y = 0
 	},
@@ -14384,6 +14392,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aFD" = (
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/warnplate{
 	dir = 6
 	},
