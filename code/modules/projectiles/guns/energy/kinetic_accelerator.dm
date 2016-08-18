@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
-	desc = "A self recharging, "
+	desc = "A self recharging, ranged mining tool that does increased damage in low pressure. Capable of holding up to six slots worth of mod kits."
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
@@ -20,6 +20,11 @@
 	var/list/max_mod_capacity = 6
 	var/list/modkits = list()
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/examine(mob/user)
+	..()
+	for(var/A in modkits)
+		var/obj/item/modkit/M = A
+		user <<"<span class='notice'>There is a [M.name] mod installed.</span>"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/weapon/crowbar))
@@ -219,7 +224,7 @@
 
 /obj/item/modkit
 	name = "modification kit"
-	desc = "An upgrade for kinetic accelerators.."
+	desc = "An upgrade for kinetic accelerators."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "modkit"
 	origin_tech = "programming=2;materials=2;magnets=4"
@@ -241,7 +246,7 @@
 
 /obj/item/modkit/range
 	name = "range increase"
-	desc = "Increases the range of a kinetic accelerator when installed."
+	desc = "Increases the range of a kinetic accelerator when installed. Occupies two mod slots."
 	modifier = 1
 
 /obj/item/modkit/range/modify_projectile(obj/item/projectile/kinetic/K)
@@ -252,7 +257,7 @@
 
 /obj/item/modkit/damage
 	name = "damage increase"
-	desc = "Increases the damage of kinetic accelerator when installed."
+	desc = "Increases the damage of kinetic accelerator when installed. Occupies two mod slots."
 	modifier = 10
 
 /obj/item/modkit/damage/modify_projectile(obj/item/projectile/kinetic/K)
@@ -262,8 +267,8 @@
 
 /obj/item/modkit/cooldown
 	name = "coolodown decrease"
-	desc = "Decreases the cooldown of a kinetic accelerator."
-	modifier = 4
+	desc = "Decreases the cooldown of a kinetic accelerator. Occupies two mod slots."
+	modifier = 3.2
 
 /obj/item/modkit/cooldown/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.overheat_time -= modifier
@@ -278,7 +283,7 @@
 
 /obj/item/modkit/projectile_mod
 	name = "hyper shot"
-	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
+	desc = "Causes the kinetic accelerator to destroy rock in an AoE. Occupies two mod slots."
 	var/projectile_type = /obj/item/ammo_casing/energy/kinetic
 
 /obj/item/modkit/projectile_mod/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
@@ -292,7 +297,7 @@
 //Indoors
 /obj/item/modkit/indoors
 	name = "decrease pressure penalty"
-	desc = "Increases the damage a kinetic accelerator does in a high pressure environment."
+	desc = "Increases the damage a kinetic accelerator does in a high pressure environment. Occupies three mod slots."
 	modifier = 2
 	cost = 3
 
@@ -302,7 +307,7 @@
 //Trigger Guard
 /obj/item/modkit/trigger_guard
 	name = "modified trigger guard"
-	desc = "Allows creatures normally incapable of firing guns to operate the weapon when installed."
+	desc = "Allows creatures normally incapable of firing guns to operate the weapon when installed. Occupies two mod slots."
 
 /obj/item/modkit/trigger_guard/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.trigger_guard = TRIGGER_GUARD_ALLOW_ALL
