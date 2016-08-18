@@ -238,7 +238,6 @@
 	forceMove(get_turf(KA))
 
 /obj/item/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
-	return
 
 
 
@@ -251,7 +250,6 @@
 
 /obj/item/modkit/range/modify_projectile(obj/item/projectile/kinetic/K)
 	K.range += modifier
-	return
 
 //Damage
 
