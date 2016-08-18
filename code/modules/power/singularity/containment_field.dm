@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/field/containment
-	name = "Containment Field"
+	name = "containment field"
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
@@ -34,6 +34,16 @@
 /obj/machinery/field/containment/ex_act(severity, target)
 	return 0
 
+/obj/machinery/field/containment/attack_animal(mob/living/simple_animal/M)
+	if(!FG1 || !FG2)
+		qdel(src)
+		return
+	if(ismegafauna(M))
+		M.visible_message("<span class='warning'>[M] glows fiercely as the containment field flickers out!</span>")
+		FG1.calc_power(INFINITY) //rip that 'containment' field
+		M.adjustHealth(-M.obj_damage)
+	else
+		..()
 
 /obj/machinery/field/containment/Crossed(mob/mover)
 	if(isliving(mover))
