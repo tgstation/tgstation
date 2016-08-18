@@ -354,6 +354,7 @@
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	dismemberment_chance = 36
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()
