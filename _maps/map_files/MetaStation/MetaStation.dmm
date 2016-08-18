@@ -90949,6 +90949,14 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "daa" = (
+/obj/docking_port/mobile/auxillary_base{
+	dheight = 4;
+	dir = 2;
+	dwidth = 4;
+	height = 9;
+	width = 9
+	},
+/obj/machinery/bluespace_beacon,
 /obj/machinery/computer/shuttle/auxillary_base{
 	pixel_y = 0
 	},
@@ -91226,6 +91234,7 @@
 /turf/open/floor/plasteel/bot,
 /area/shuttle/abandoned)
 "daz" = (
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/warnplate{
 	dir = 10
 	},
