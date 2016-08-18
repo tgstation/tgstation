@@ -44,7 +44,6 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
-	piercing = 15
 	dismemberment_chance = 80
 	throwforce = 10
 	w_class = 3
@@ -156,7 +155,7 @@
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 20
-		piercing = 20
+		dismemberment_chance = 40
 		w_class = 3
 		throwforce = 23
 		icon_state = "switchblade_ext"
@@ -165,7 +164,7 @@
 		sharpness = IS_SHARP
 	else
 		force = 3
-		piercing = 0
+		dismemberment_chance = 0
 		w_class = 2
 		throwforce = 5
 		icon_state = "switchblade"
