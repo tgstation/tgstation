@@ -19,7 +19,8 @@ The Hierophant's attacks are as follows, and INTENSIFY at a random chance based 
 
 Cross Blasts and the AoE burst gain additional range as the Hierophant loses health, while Chasers gain additional speed.
 
-When The Hierophant dies, it leaves behind its staff, which, while much weaker than when wielded by The Hierophant itself, is still quite effective:
+When The Hierophant dies, it leaves behind its staff, which, while much weaker than when wielded by The Hierophant itself, is still quite effective.
+- The rune it teleports back to also becomes avalible for use, allowing you, too, to teleport to it at will.
 
 Difficulty: Hard
 
@@ -74,6 +75,7 @@ Difficulty: Hard
 	..()
 	internal = new/obj/item/device/gps/internal/hierophant(src)
 	original_loc = new(loc)
+	original_loc.active_boss = src
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Life()
 	. = ..()
@@ -100,7 +102,8 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	qdel(internal)
-	qdel(original_loc, TRUE)
+	if(original_loc)
+		original_loc.active_boss = null
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/attackby(obj/item/weapon/W, mob/user, params)
@@ -111,7 +114,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/devour(mob/living/L)
 	visible_message(
-		"<span class='hierophant'>\"Caw.\"</span>\n<span class='danger'>[src] annihilates [L]!</span>",
+		"<span class='hierophant'>\"Caw.\"</span>\n<span class='hierophant_warning'>[src] annihilates [L]!</span>",
 		"<span class='userdanger'>You annihilate [L], restoring your health!</span>")
 	adjustHealth(-L.maxHealth)
 	L.dust()
@@ -148,37 +151,48 @@ Difficulty: Hard
 
 	if(prob(anger_modifier*0.75)) //major ranged attack
 		ranged_cooldown = world.time + max(5, major_attack_cooldown - round(anger_modifier*0.75))
-		var/list/possibilities = list("blast_spam")
+		var/list/possibilities = list("cardinal_blast_spam", "blast_spam")
 		if(get_dist(src, target) > 2)
 			possibilities += "blink"
 		if(chaser_cooldown < world.time)
-			possibilities = list("chaser_swarm")
+			if(prob(anger_modifier*2))
+				possibilities = list("chaser_swarm")
+			else
+				possibilities += "chaser_swarm"
 		switch(pick(possibilities))
 			if("blink")
 				blink(target)
 			if("blast_spam")
 				blinking = TRUE
-				animate(src, color = "#660099", time = 8)
+				animate(src, color = "#660099", time = 3)
+				melee_blast(target)
+				var/counter = round(anger_modifier*0.12)
+				sleep(3)
+				while(target && counter)
+					counter--
+					melee_blast(target)
+					sleep(3)
+				sleep(5)
+				animate(src, color = initial(color), time = 3)
+				blinking = FALSE
+			if("cardinal_blast_spam")
+				blinking = TRUE
+				animate(src, color = "#660099", time = 6)
 				if(prob(60))
 					cardinal_blasts(target)
 				else
 					diagonal_blasts(target)
 				var/counter = round(anger_modifier*0.08)
-				sleep(3)
-				if(target)
-					melee_blast(target)
-				sleep(3)
+				sleep(6)
 				while(target && counter)
 					counter--
 					if(prob(60))
 						cardinal_blasts(target)
 					else
 						diagonal_blasts(target)
-					sleep(3)
-					if(target)
-						melee_blast(target)
-					sleep(3)
-				animate(src, color = initial(color), time = 8)
+					sleep(6)
+				sleep(7)
+				animate(src, color = initial(color), time = 6)
 				blinking = FALSE
 			if("chaser_swarm")
 				chaser_cooldown = world.time + initial(chaser_cooldown)
@@ -190,6 +204,7 @@ Difficulty: Hard
 					C.moving = 4
 					C.moving_dir = pick_n_take(cardinal_copy)
 					sleep(10)
+				sleep(10)
 				animate(src, color = initial(color), time = 5)
 				blinking = FALSE
 		return
@@ -252,6 +267,7 @@ Difficulty: Hard
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	playsound(source,'sound/magic/blink.ogg', 200, 1)
+	blinking = TRUE
 	sleep(3)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, src))
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(source, src))
@@ -261,15 +277,16 @@ Difficulty: Hard
 	for(var/t in RANGE_TURFS(1, source))
 		var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, src))
 		B.damage = 30
-	blinking = TRUE
 	animate(src, alpha = 0, color = "660099", time = 2, easing = EASE_OUT)
 	sleep(1)
+	visible_message("<span class='hierophant_warning'>[src] fades out!</span>")
 	density = FALSE
 	sleep(3)
 	forceMove(T)
 	animate(src, alpha = 255, color = initial(color), time = 2, easing = EASE_IN)
 	sleep(1)
 	density = TRUE
+	visible_message("<span class='hierophant_warning'>[src] fades in!</span>")
 	sleep(1)
 	blinking = FALSE
 
@@ -405,14 +422,89 @@ Difficulty: Hard
 		sleep(0.1)
 
 /obj/effect/hierophant
-	icon_state = null
-	invisibility = 100
+	name = "hierophant rune"
+	desc = "A powerful magic mark allowing whomever attunes themself to it to return to it at will."
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "hierophant"
 	anchored = TRUE
+	color = "#CC00FF"
+	var/mob/living/active_boss
+
+/obj/effect/hierophant/attack_hand(mob/user)
+	for(var/datum/action/innate/vortex_recall/V in user.actions)
+		user << "<span class='hierophant_warning'>You touch the rune, but nothing happens.</span>"
+		return
+	if(active_boss)
+		user << "<span class='hierophant_warning'>You touch the rune, but nothing happens.</span>"
+	else
+		user << "<span class='hierophant'>You touch the rune, and a burst of energy pervades your body!</span>\n\
+		<span class='notice'>Return to the rune at any time by using the Vortex Recall action button.</span>"
+		var/datum/action/innate/vortex_recall/V = new()
+		V.rune = src
+		V.Grant(user)
 
 /obj/effect/hierophant/Destroy(force)
 	if(!force)
 		return QDEL_HINT_LETMELIVE
 	. = ..()
+
+/datum/action/innate/vortex_recall
+	name = "Vortex Recall"
+	desc = "Allows you to return to the hierophant's arena."
+	button_icon_state = "vortex_recall"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	var/obj/effect/hierophant/rune
+	var/teleporting = FALSE
+
+/datum/action/innate/vortex_recall/IsAvailable()
+	if(teleporting)
+		return 0
+	return ..()
+
+/datum/action/innate/vortex_recall/Activate()
+	if(!rune)
+		qdel(src)
+		return
+	teleporting = TRUE
+	owner.update_action_buttons_icon()
+	owner.visible_message("<span class='hierophant_warning'>[owner] starts to glow faintly...</span>")
+	if(do_after(owner, 80, target = owner) && rune)
+		var/turf/T = get_turf(rune)
+		var/turf/source = get_turf(owner)
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, owner))
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, owner))
+		playsound(T,'sound/magic/blink.ogg', 200, 1)
+		playsound(source,'sound/magic/blink.ogg', 200, 1)
+		sleep(3)
+		if(!owner)
+			return
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, owner))
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(source, owner))
+		for(var/t in RANGE_TURFS(1, T))
+			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, owner))
+		for(var/t in RANGE_TURFS(1, source))
+			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, owner))
+		animate(owner, alpha = 0, color = "660099", time = 2, easing = EASE_OUT)
+		sleep(1)
+		if(!owner)
+			return
+		owner.visible_message("<span class='hierophant_warning'>[owner] fades out!</span>")
+		owner.density = FALSE
+		sleep(3)
+		if(!owner)
+			return
+		owner.forceMove(T)
+		animate(owner, alpha = 255, color = initial(owner.color), time = 2, easing = EASE_IN)
+		sleep(1)
+		if(!owner)
+			return
+		owner.density = TRUE
+		owner.visible_message("<span class='hierophant_warning'>[owner] fades in!</span>")
+		sleep(1)
+		if(!owner)
+			return
+	teleporting = FALSE
+	owner.update_action_buttons_icon()
 
 /obj/item/device/gps/internal/hierophant
 	icon_state = null
@@ -422,6 +514,7 @@ Difficulty: Hard
 
 /turf/open/indestructible/hierophant
 	icon_state = "hierophant1"
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	desc = "A floor with a square pattern. It's faintly cool to the touch."
 
 /turf/open/indestructible/hierophant/New()

@@ -767,6 +767,8 @@
 			user << "<span class='warning'>That target is out of range!</span>"
 
 /obj/item/weapon/hierophant_staff/proc/cardinal_blasts(turf/T, mob/living/user)
+	if(!T)
+		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, user))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	sleep(3)
@@ -775,17 +777,21 @@
 		addtimer(src, "cardinal_blast", 0, FALSE, T, d, user)
 
 /obj/item/weapon/hierophant_staff/proc/cardinal_blast(turf/T, dir, mob/living/user)
-	var/turf/E = get_edge_target_turf(T, dir)
+	if(!T)
+		return
 	var/range = cardinal_range
 	var/turf/previousturf = T
-	for(var/turf/J in getline(previousturf,E) - previousturf)
-		if(!range || !user)
-			break
-		range--
+	var/turf/J = get_step(previousturf, dir)
+	for(var/i in 1 to range)
+		if(!J)
+			return
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(J, user))
 		previousturf = J
+		J = get_step(previousturf, dir)
 
 /obj/item/weapon/hierophant_staff/proc/aoe_burst(turf/T, mob/living/user)
+	if(!T)
+		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	sleep(3)

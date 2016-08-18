@@ -3,31 +3,28 @@
 "c" = (/turf/closed/mineral/random/high_chance/volcanic,/area/lavaland/surface/outdoors)
 "d" = (/turf/closed/mineral/random/volcanic,/area/lavaland/surface/outdoors)
 "e" = (/turf/closed/indestructible/riveted/hierophant,/area/ruin/unpowered/hierophant)
-"f" = (/obj/structure/fans/tiny/invisible,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"f" = (/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
 "g" = (/obj/effect/decal/cleanable/blood/tracks,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
 "h" = (/obj/effect/decal/cleanable/cobweb,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"i" = (/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"j" = (/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"k" = (/obj/effect/gibspawner/human,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"l" = (/obj/effect/decal/cleanable/blood/old,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"m" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"n" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHWEST)"; icon_state = "tracks"; dir = 10},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"o" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (EAST)"; icon_state = "tracks"; dir = 4},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"p" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTHEAST)"; icon_state = "tracks"; dir = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"q" = (/obj/effect/gibspawner/generic,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"r" = (/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"s" = (/obj/effect/light_emitter,/turf/closed/indestructible/riveted/hierophant,/area/ruin/unpowered/hierophant)
-"t" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"u" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTHWEST)"; icon_state = "tracks"; dir = 9},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"v" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (WEST)"; icon_state = "tracks"; dir = 8},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"w" = (/obj/effect/gibspawner/generic,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"x" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (WEST)"; icon_state = "tracks"; dir = 8},/obj/structure/fans/tiny/invisible,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"y" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHEAST)"; icon_state = "tracks"; dir = 6},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"z" = (/mob/living/simple_animal/hostile/megafauna/hierophant,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"A" = (/obj/effect/rune{color = "#CC00FF"; cultist_desc = "a rune used to sacrifice people to the Hierophant."; cultist_name = "Hierophant's Rune"; icon_state = "hierophant"; invocation = "Craw, har-awrk!"; req_cultists = 2},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"B" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"C" = (/obj/effect/gibspawner/human,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
-"D" = (/obj/effect/decal/cleanable/cobweb2,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"i" = (/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"j" = (/obj/effect/gibspawner/human,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"k" = (/obj/effect/decal/cleanable/blood/old,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"l" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"m" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHWEST)"; icon_state = "tracks"; dir = 10},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"n" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (EAST)"; icon_state = "tracks"; dir = 4},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"o" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTHEAST)"; icon_state = "tracks"; dir = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"p" = (/obj/effect/gibspawner/generic,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"q" = (/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"r" = (/obj/effect/light_emitter,/turf/closed/indestructible/riveted/hierophant,/area/ruin/unpowered/hierophant)
+"s" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"t" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (NORTHWEST)"; icon_state = "tracks"; dir = 9},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"u" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (WEST)"; icon_state = "tracks"; dir = 8},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"v" = (/obj/effect/gibspawner/generic,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"w" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHEAST)"; icon_state = "tracks"; dir = 6},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"x" = (/mob/living/simple_animal/hostile/megafauna/hierophant,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"y" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"z" = (/obj/effect/gibspawner/human,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"A" = (/obj/effect/decal/cleanable/cobweb2,/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaabbaaaaaaaaaaaaaaa
@@ -35,29 +32,29 @@ abbaabbbbbbbbaabbaaabbbbbaaaaaaaa
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaa
 abbcccbbbbbddccefebbbbbddddcccbaa
 aabceeeeeeeeeeeegeeeeeeeeeeeecbba
-aabcehiiiiiiiijeiejiiiiiiiiiecbba
-aabbeikiiiiiiiieieiiiiiiliiiebbba
-aabbeiimeiiiiiiegeiiiiiiejiiebbba
-aabbeiieeiiiiliinoooooopeeiiebbba
-abbbeiiiiqoioipiiiiiiiiqiiriedbba
-abbbeiiiiijiiiiiiiiiiijiiiiiedbba
-abbbeiiiiiieeiiisiiieeiiiiiiedbba
-abbceiliiiieiigiiiiiieiiiiiiedbba
-aabceiiiiiiiiigiiiiiiiiiiiiiebbba
-aabcejiiiiiiiiniooitiookpiijebbba
-bbbeeeeeiiuvvwiiiiiiiiiiieeeeebbb
-babxvvvvvvysiiiiziiiisiinvvvrfbbb
-aabeeeeeiiiiiiiiAiiiiiiiieeeeebbb
-aabbejiiiiiiiitiiiiiiiiiiiijebbba
-aabbeiiiiiiiiiiiriiiiiliiiiiebbba
-aabbeiliiiieiiiiiiiiieiiiiriebbba
-aabbeiiikiieeiiisiiieeiiiiiiedbaa
-abbbeiiiiijiiiikiiiiiijBiiiiecbaa
-abaceiiiiqiiiiirikoiivvCiiiiecbaa
-abbbeiieeiiiiiiiuiiiiiiieeiiecbaa
-aabceiiDeiiiiiiegeiiiiiieCiiedbaa
-aabceiiiiiiiiiieieiiliiiiiiiebbba
-abbbeiriiiiiiBjegejiiiiiriiiebbba
+aabcehffffffffiefeifffffffffecbba
+aabbefjffffffffefeffffffkfffebbba
+aabbeffleffffffegeffffffeiffebbba
+aabbeffeeffffkffmnnnnnnoeeffebbba
+abbbeffffpnfnfoffffffffpffqfedbba
+abbbefffffifffffffffffifffffedbba
+abbbeffffffeefffrfffeeffffffedbba
+abbcefkffffeffgffffffeffffffedbba
+aabcefffffffffgfffffffffffffebbba
+aabceiffffffffmfnnfsfnnjoffiebbba
+bbbeeeeefftuuvfffffffffffeeeeebbb
+babuuuuuuuwrffffxffffrffmuuuqfbbb
+aabeeeeefffffffffffffffffeeeeebbb
+aabbeiffffffffsffffffffffffiebbba
+aabbefffffffffffqfffffkfffffebbba
+aabbefkffffefffffffffeffffqfebbba
+aabbefffjffeefffrfffeeffffffedbaa
+abbbefffffiffffjffffffiyffffecbaa
+abaceffffpfffffqfjnffuuzffffecbaa
+abbbeffeeffffffftfffffffeeffecbaa
+aabceffAeffffffegeffffffezffedbaa
+aabceffffffffffefeffkfffffffebbba
+abbbefqffffffyiegeifffffqfffebbba
 ababeeeeeeeeeeeegeeeeeeeeeeeebbba
 abaddddccbbbbbcefeddddbbbbbbbbbba
 abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
