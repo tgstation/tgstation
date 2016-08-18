@@ -19,3 +19,30 @@
 	network_card = new/obj/item/weapon/computer_hardware/network_card(src)
 	nano_printer = new/obj/item/weapon/computer_hardware/nano_printer(src)
 	card_slot = new/obj/item/weapon/computer_hardware/card_slot(src)
+
+//For the network administrator!
+/obj/item/modular_computer/tablet/preset/netmin
+	name = "Command Tablet"
+	desc = "The special tablet of the network administrator."
+	acidproof = 1
+	icon_state = "rdtablet"
+	icon_state_unpowered = "rdtablet"
+	surgeprotected = 1
+
+/obj/item/modular/computer/tablet/preset/netmin/New()
+	. = ..()
+	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
+	battery_module = new/obj/item/weapon/computer_hardware/battery_module/super(src)
+	battery_module.charge_to_full()
+	hard_drive = new/obj/item/weapon/computer_hardware/hard_drive/super(src)
+	network_card = new/obj/item/weapon/computer_hardware/network_card/advanced(src)
+	nano_printer = new/obj/item/weapon/computer_hardware/nano_printer(src)
+	card_slot = new/obj/item/weapon/computer_hardware/card_slot(src)
+	install_programs()
+
+//Should give all network-related programs to this.
+/obj/item/modular/computer/tablet/preset/netmin/install_programs()
+	cpu.hard_drive.store_file(new/datum/computer_file/program/nttransfer())
+	cpu.hard_drive.store_file(new/datum/computer_file/program/ntnrc_client())
+	cpu.hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
+
