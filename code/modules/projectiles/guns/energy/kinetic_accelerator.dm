@@ -17,7 +17,7 @@
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
 
-	var/list/max_mod_capacity = 2
+	var/list/max_mod_capacity = 6
 	var/list/modkits = list()
 
 
@@ -26,7 +26,7 @@
 		if(modkits.len)
 			user << "<span class='notice'>You pry the modifications out.</span>"
 			for(var/obj/item/modkit/M in modkits)
-				M.forceMove(get_turf(user))
+				M.uninstall()
 		else
 			user << "<span class='notice'>There are no modifications currently installed.</span>"
 	else if(istype(A, /obj/item/modkit))
@@ -39,6 +39,7 @@
 			return
 		else
 			user << "<span class='notice'>You install the modkit.</span>"
+			user.unEquip(MK)
 			MK.install(src)
 	else
 		..()
@@ -148,6 +149,16 @@
 		var/obj/item/weapon/gun/energy/kinetic_accelerator/KA = loc
 		KA.modify_projectile(BB)
 
+		var/turf/proj_turf = get_turf(BB)
+		if(!istype(proj_turf, /turf))
+			return
+		var/datum/gas_mixture/environment = proj_turf.return_air()
+		var/pressure = environment.return_pressure()
+		if(pressure > 50)
+			BB.name = "weakened [BB.name]"
+			var/obj/item/projectile/kinetic/K = BB
+			K.damage /= K.damage_divisor
+
 /obj/item/ammo_casing/energy/kinetic/hyper
 	projectile_type = /obj/item/projectile/kinetic/hyper
 
@@ -158,26 +169,11 @@
 /obj/item/projectile/kinetic
 	name = "kinetic force"
 	icon_state = null
-	damage = 10
+	damage = 40
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3
-	var/damage_multiplier = 4
-
-/obj/item/projectile/kinetic/super
-	damage = 11
-	range = 4
-
-/obj/item/projectile/kinetic/New()
-	var/turf/proj_turf = get_turf(src)
-	if(!istype(proj_turf, /turf))
-		return
-	var/datum/gas_mixture/environment = proj_turf.return_air()
-	var/pressure = environment.return_pressure()
-	if(pressure < 50)
-		name = "full strength [name]"
-		damage *= damage_multiplier
-	..()
+	var/damage_divisor = 4
 
 /obj/item/projectile/kinetic/on_range()
 	PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, loc)
@@ -196,8 +192,6 @@
 
 /obj/item/projectile/kinetic/hyper
 	name = "kinetic explosion"
-	damage = 10
-	range = 3
 
 /obj/item/projectile/kinetic/hyper/proc/aoe_blast(atom/target)
 	var/turf/target_turf = get_turf(target)
@@ -230,9 +224,90 @@
 	icon_state = "modkit"
 	origin_tech = "programming=2;materials=2;magnets=4"
 	var/cost = 2
+	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 
 /obj/item/modkit/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	forceMove(KA)
+
+/obj/item/modkit/proc/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	forceMove(get_turf(KA))
+
+/obj/item/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 	return
 
-/obj/item/modkit/proc/modify_projectile(/obj/item/projectile/kinetic/K)
+
+
+//Types
+
+/obj/item/modkit/range
+	name = "range increase"
+	desc = "Increases the range of a kinetic accelerator when installed."
+	modifier = 1
+
+/obj/item/modkit/range/modify_projectile(obj/item/projectile/kinetic/K)
+	K.range += modifier
 	return
+
+//Damage
+
+/obj/item/modkit/damage
+	name = "damage increase"
+	desc = "Increases the damage of kinetic accelerator when installed."
+	modifier = 10
+
+/obj/item/modkit/damage/modify_projectile(obj/item/projectile/kinetic/K)
+	K.damage += modifier
+
+//Cooldown
+
+/obj/item/modkit/cooldown
+	name = "coolodown decrease"
+	desc = "Decreases the cooldown of a kinetic accelerator."
+	modifier = 4
+
+/obj/item/modkit/cooldown/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.overheat_time -= modifier
+	..()
+
+/obj/item/modkit/cooldown/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.overheat_time += modifier
+	..()
+
+
+//Projectile Type
+
+/obj/item/modkit/projectile_mod
+	name = "hyper shot"
+	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
+	var/projectile_type = /obj/item/ammo_casing/energy/kinetic
+
+/obj/item/modkit/projectile_mod/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.ammo_type = list(projectile_type)
+	..()
+
+/obj/item/modkit/projectile_mod/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
+	..()
+
+//Indoors
+/obj/item/modkit/indoors
+	name = "decrease pressure penalty"
+	desc = "Increases the damage a kinetic accelerator does in a high pressure environment."
+	modifier = 2
+	cost = 3
+
+/obj/item/modkit/indoors/modify_projectile(obj/item/projectile/kinetic/K)
+	K.damage_divisor = Clamp(K.damage_divisor - modifier, 0, INFINITY)
+
+//Trigger Guard
+/obj/item/modkit/trigger_guard
+	name = "modified trigger guard"
+	desc = "Allows creatures normally incapable of firing guns to operate the weapon when installed."
+
+/obj/item/modkit/trigger_guard/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	..()
+
+/obj/item/modkit/trigger_guard/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	KA.trigger_guard = TRIGGER_GUARD_NORMAL
+	..()
