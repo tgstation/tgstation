@@ -17,7 +17,7 @@
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
 
-	var/list/max_mod_capacity = 6
+	var/max_mod_capacity = 6
 	var/list/modkits = list()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/examine(mob/user)
