@@ -984,7 +984,6 @@
 #include "code\modules\cargo\exports\large_objects.dm"
 #include "code\modules\cargo\exports\manifest.dm"
 #include "code\modules\cargo\exports\materials.dm"
-#include "code\modules\cargo\exports\money.dm"
 #include "code\modules\cargo\exports\organs.dm"
 #include "code\modules\cargo\exports\parts.dm"
 #include "code\modules\cargo\exports\research.dm"
