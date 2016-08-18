@@ -28,7 +28,7 @@ Owl Mask:/obj/item/clothing/mask/gas/owl_mask:180
 Personal Stuff
 Eye patch:/obj/item/clothing/glasses/eyepatch:130
 Cane:/obj/item/weapon/cane:130
-Zippo:/obj/item/weapon/lighter/zippo:130
+Zippo:/obj/item/weapon/lighter:130
 Cigarette packet:/obj/item/weapon/storage/fancy/cigarettes:20
 DromedaryCo packet:/obj/item/weapon/storage/fancy/cigarettes/dromedaryco:50
 Premium Havanian Cigar:/obj/item/clothing/mask/cigarette/cigar/havana:130

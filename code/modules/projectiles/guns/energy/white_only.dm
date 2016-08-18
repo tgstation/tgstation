@@ -6,9 +6,10 @@
 	item_state = "heatgun"
 	lefthand_file = 'icons/mob/inhands/white_only_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/white_only_righthand.dmi'
+	fire_sound = 'sound/weapons/laser3.ogg'
 	w_class = 3
-	materials = list(MAT_METAL=2000)
+	materials = list(MAT_METAL=5000)
 	origin_tech = "combat=6;magnets=6;syndicate=5"
-	ammo_type = list(/obj/item/ammo_casing/white_only/heatgun)
+	ammo_type = list(/obj/item/ammo_casing/white_only/energy/heatgun)
 	selfcharge = 1
 	charge_delay = 2
