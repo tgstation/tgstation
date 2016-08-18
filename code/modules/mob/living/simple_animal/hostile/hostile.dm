@@ -20,6 +20,7 @@
 	/obj/structure/closet,
 	/obj/structure/table,
 	/obj/structure/grille,
+	/obj/structure/girder,
 	/obj/structure/rack,
 	/obj/structure/barricade) //turned into a typecache in New()
 

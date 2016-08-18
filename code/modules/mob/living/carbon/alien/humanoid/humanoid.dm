@@ -14,6 +14,7 @@
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
+	var/drooling = 0 //For Neruotoxic spit overlays
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
@@ -36,7 +37,6 @@
 		adjustBruteLoss(15)
 		var/hitverb = "punched"
 		if(mob_size < MOB_SIZE_LARGE)
-			Paralyse(1)
 			step_away(src,user,15)
 			sleep(1)
 			step_away(src,user,15)

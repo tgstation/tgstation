@@ -17,6 +17,17 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
+	environment_target_typecache = list(
+	/obj/machinery/door/window,
+	/obj/structure/window,
+	/obj/structure/closet,
+	/obj/structure/table,
+	/obj/structure/grille,
+	/obj/structure/girder,
+	/obj/structure/rack,
+	/obj/structure/barricade,
+	/obj/machinery/field,
+	/obj/machinery/power/emitter)
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
