@@ -28,7 +28,7 @@
 	item_state = "rapier"
 	flags = CONDUCT
 	force = 15
-	piercing = 10
+	dismemberment = 45
 	throwforce = 10
 	w_class = 4
 	block_chance = 50
