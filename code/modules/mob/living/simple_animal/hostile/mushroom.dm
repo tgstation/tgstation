@@ -27,6 +27,7 @@
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
+	deathmessage = "fainted."
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
@@ -58,15 +59,16 @@
 	cap_dead.color = cap_color
 	UpdateMushroomCap()
 	health = maxHealth
-	deathmessage = "[src] fainted."
 	..()
 
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
-		spawn(30)
-			retreat_distance = null
+		addtimer(src, "stop_retreat", 30)
 	. = ..()
+
+/mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
+	retreat_distance = null
 
 /mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
@@ -96,11 +98,11 @@
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
-	overlays.Cut()
+	cut_overlays()
 	if(health == 0)
-		overlays += cap_dead
+		add_overlay(cap_dead)
 	else
-		overlays += cap_living
+		add_overlay(cap_living)
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("[src] slowly begins to recover.")
@@ -108,8 +110,10 @@
 	revive(full_heal = 1)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
-	spawn(300)
-		recovery_cooldown = 0
+	addtimer(src, "recovery_recharge", 300)
+
+/mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
+	recovery_cooldown = 0
 
 /mob/living/simple_animal/hostile/mushroom/proc/LevelUp(level_gain)
 	if(powerlevel <= 9)

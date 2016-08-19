@@ -7,7 +7,7 @@
 	helptext = "Grants us thermal vision or flash protection. We will become a lot more vulnerable to flash-based devices while thermal vision is active."
 	chemical_cost = 0
 	dna_cost = 2 //Would be 1 without thermal vision
-	var/active = 0 //Whether or not vision is enhanced
+	active = 0 //Whether or not vision is enhanced
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(mob/living/carbon/human/user)
 	if(!istype(user))
@@ -37,7 +37,6 @@
 	icon_state = "ling_eyeshield"
 	eye_color = null
 	implant_overlay = null
-	origin_tech = "biotech=4"
 	slot = "eye_ling"
 	status = ORGAN_ORGANIC
 
@@ -58,7 +57,6 @@
 	icon_state = "ling_thermal"
 	eye_color = null
 	implant_overlay = null
-	origin_tech = "biotech=5;magnets=5"
 	slot = "eye_ling"
 	status = ORGAN_ORGANIC
 	aug_message = "You feel a minute twitch in our eyes, and darkness creeps away."

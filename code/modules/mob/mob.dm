@@ -2,6 +2,11 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	all_clockwork_mobs -= src
+	if(observers && observers.len)
+		for(var/M in observers)
+			var/mob/dead/observe = M
+			observe.reset_perspective(null)
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
@@ -25,9 +30,10 @@ var/next_mob_id = 0
 	..()
 
 /atom/proc/prepare_huds()
+	hud_list = list()
 	for(var/hud in hud_possible)
 		var/image/I = image('icons/mob/hud.dmi', src, "")
-		I.appearance_flags = RESET_COLOR
+		I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 		hud_list[hud] = I
 
 /mob/proc/Cell()
@@ -179,44 +185,10 @@ var/next_mob_id = 0
 			return r_hand
 	return null
 
-/mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
-	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
-		if (!( L ))
-			return null
-		else
-			return L.container
-	else
-		if (!( L ))
-			L = new /obj/effect/list_container/mobl( null )
-			L.container += src
-			L.master = src
-		if (istype(l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = l_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (istype(r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = r_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (!( flag ))
-			if (L.master == src)
-				var/list/temp = list(  )
-				temp += L.container
-				//L = null
-				qdel(L)
-				return temp
-			else
-				return L.container
+/mob/proc/restrained(ignore_grab)
 	return
 
-/mob/proc/restrained()
-	return
-
-/mob/proc/incapacitated()
+/mob/proc/incapacitated(ignore_restraints, ignore_grab)
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
@@ -241,7 +213,7 @@ var/next_mob_id = 0
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
-	if(!W.mob_can_equip(src, slot, disable_warning))
+	if(!W.mob_can_equip(src, null, slot, disable_warning))
 		if(qdel_on_fail)
 			qdel(W)
 		else
@@ -264,9 +236,22 @@ var/next_mob_id = 0
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
 	if(!istype(W)) return 0
+	var/slot_priority = W.slot_equipment_priority
 
-	for(var/slot in W.slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 0; redraw_mob = 1
+	if(!slot_priority)
+		slot_priority = list( \
+			slot_back, slot_wear_id,\
+			slot_w_uniform, slot_wear_suit,\
+			slot_wear_mask, slot_head,\
+			slot_shoes, slot_gloves,\
+			slot_ears, slot_glasses,\
+			slot_belt, slot_s_store,\
+			slot_l_store, slot_r_store,\
+			slot_generic_dextrous_storage\
+		)
+
+	for(var/slot in slot_priority)
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
 			return 1
 
 	return 0
@@ -295,6 +280,19 @@ var/next_mob_id = 0
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
 
+/mob/dead/reset_perspective(atom/A)
+	if(client)
+		if(ismob(client.eye) && (client.eye != src))
+			var/mob/target = client.eye
+			if(target.observers)
+				target.observers -= src
+				var/list/L = target.observers
+				if(!L.len)
+					target.observers = null
+	if(..())
+		if(hud_used)
+			client.screen = list()
+			hud_used.show_hud(hud_used.hud_version)
 
 /mob/proc/show_inv(mob/user)
 	return
@@ -333,12 +331,14 @@ var/next_mob_id = 0
 	return 1
 
 //this and stop_pulling really ought to be /mob/living procs
-/mob/proc/start_pulling(atom/movable/AM)
+/mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
 	if(!AM || !src)
 		return
 	if(AM == src || !isturf(AM.loc))
 		return
-	if(AM.anchored)
+	if(AM.anchored || AM.throwing)
+		return
+	if(throwing || incapacitated())
 		return
 
 	AM.add_fingerprint(src)
@@ -350,13 +350,21 @@ var/next_mob_id = 0
 			return
 		stop_pulling()
 
+	changeNext_move(CLICK_CD_GRABBING)
+
+	if(AM.pulledby)
+		visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
+
 	pulling = AM
 	AM.pulledby = src
-
+	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))
 		var/mob/M = AM
+		if(!supress_message)
+			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
@@ -368,11 +376,15 @@ var/next_mob_id = 0
 
 	if(pulling)
 		pulling.pulledby = null
+		if(ismob(pulling))
+			var/mob/M = pulling
+			M.update_canmove()// mob gets up if it was lyng down in a chokehold
 		pulling = null
+		grab_state = 0
 		update_pull_hud_icon()
 
 /mob/proc/update_pull_hud_icon()
-	if(client && hud_used)
+	if(hud_used)
 		if(hud_used.pull_icon)
 			hud_used.pull_icon.update_icon(src)
 
@@ -479,25 +491,18 @@ var/next_mob_id = 0
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
-	var/is_admin = 0
 
-	if(check_rights_for(client,R_ADMIN))
-		is_admin = 1
-	else if(stat != DEAD || istype(src, /mob/new_player))
+	if(stat != DEAD || istype(src, /mob/new_player))
 		usr << "<span class='notice'>You must be observing to use this!</span>"
 		return
 
-	if(is_admin && stat == DEAD)
-		is_admin = 0
-
 	var/list/creatures = getpois()
 
-	client.perspective = EYE_PERSPECTIVE
+	reset_perspective(null)
 
 	var/eye_name = null
 
-	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
+	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
 
 	if (!eye_name)
 		return
@@ -506,6 +511,13 @@ var/next_mob_id = 0
 
 	if(client && mob_eye)
 		client.eye = mob_eye
+		if(isobserver(src))
+			src.client.screen = list()
+			if(mob_eye.hud_used)
+				if(!mob_eye.observers)
+					mob_eye.observers = list()
+				mob_eye.observers |= src
+				mob_eye.hud_used.show_hud(1,src)
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -582,7 +594,7 @@ var/next_mob_id = 0
 
 	if(statpanel("Status"))
 		stat(null, "Map: [MAP_NAME]")
-		if (nextmap && istype(nextmap))
+		if(nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(SSshuttle.emergency)
@@ -607,7 +619,6 @@ var/next_mob_id = 0
 			else
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
-				stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 				stat(null)
 				for(var/datum/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
@@ -677,30 +688,34 @@ var/next_mob_id = 0
 //Robots, animals and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
-	if(ko || resting || stunned)
+	var/ignore_legs = get_leg_ignore()
+	if(ko || resting || stunned || chokehold)
 		drop_r_hand()
 		drop_l_hand()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
-	else if(has_legs)
+	else if(has_legs || ignore_legs)
 		lying = 0
 
 	if(buckled)
 		lying = 90*buckle_lying
-	else
-		if((ko || resting || !has_legs) && !lying)
-			fall(ko)
-	canmove = !(ko || resting || stunned || buckled || (!has_legs && !has_arms))
+	else if(!lying)
+		if(resting)
+			fall()
+		else if(ko || (!has_legs && !ignore_legs) || chokehold)
+			fall(forced = 1)
+	canmove = !(ko || resting || stunned || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
-			layer = MOB_LAYER - 0.2 //so mob lying always appear behind standing mobs
+			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
 	else
-		if(layer == MOB_LAYER - 0.2)
+		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
 	update_action_buttons_icon()
@@ -716,7 +731,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = EAST
+	setDir(EAST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -725,7 +740,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = WEST
+	setDir(WEST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -734,7 +749,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = NORTH
+	setDir(NORTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -743,7 +758,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = SOUTH
+	setDir(SOUTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -764,6 +779,10 @@ var/next_mob_id = 0
 	if(mind)
 		return mind.get_ghost(even_if_they_cant_reenter)
 
+/mob/proc/grab_ghost(force)
+	if(mind)
+		return mind.grab_ghost(force = force)
+
 /mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
@@ -776,7 +795,7 @@ var/next_mob_id = 0
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
-	dir = angle2dir(rotation+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = 0)
@@ -936,3 +955,9 @@ var/next_mob_id = 0
 
 /mob/proc/is_literate()
 	return 0
+
+/mob/proc/can_hold_items()
+	return FALSE
+
+/mob/proc/get_idcard()
+	return

@@ -79,6 +79,9 @@
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 
+/turf/open/floor/engine/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/engine/break_tile()
 	return //unbreakable
 
@@ -147,7 +150,27 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
-	icon_state = "cult"
+	icon_state = "plating"
+	var/obj/effect/clockwork/overlay/floor/realappearence
+
+/turf/open/floor/engine/cult/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
+	realappearence = PoolOrNew(/obj/effect/overlay/cult/floor, src)
+	realappearence.linked = src
+
+/turf/open/floor/engine/cult/Destroy()
+	be_removed()
+	return ..()
+
+/turf/open/floor/engine/cult/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		be_removed()
+	return ..()
+
+/turf/open/floor/engine/cult/proc/be_removed()
+	qdel(realappearence)
+	realappearence = null
 
 /turf/open/floor/engine/cult/New()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
@@ -156,14 +179,24 @@
 /turf/open/floor/engine/cult/narsie_act()
 	return
 
+/turf/open/floor/engine/cult/ratvar_act()
+	..()
+	if(istype(src, /turf/open/floor/engine/cult)) //if we haven't changed type
+		var/previouscolor = color
+		color = "#FAE48C"
+		animate(src, color = previouscolor, time = 8)
+
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		if(builtin_tile)
+		if(floor_tile)
 			if(prob(30))
-				builtin_tile.loc = src
+				PoolOrNew(floor_tile, src)
 				make_plating()
 		else if(prob(30))
 			ReplaceWithLattice()
+
+/turf/open/floor/engine/cult/airless
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
@@ -172,6 +205,19 @@
 
 /turf/open/floor/plasteel/airless
 	initial_gas_mix = "TEMP=2.7"
+
+// ONE DAY WE WILL HAVE SUBTYPES
+/turf/open/floor/plasteel/airless/shuttle
+	icon_state = "shuttlefloor"
+/turf/open/floor/plasteel/airless/shuttle/red
+	name = "Brig floor"
+	icon_state = "shuttlefloor4"
+/turf/open/floor/plasteel/airless/shuttle/yellow
+	icon_state = "shuttlefloor2"
+/turf/open/floor/plasteel/airless/shuttle/white
+	icon_state = "shuttlefloor3"
+/turf/open/floor/plasteel/airless/shuttle/purple
+	icon_state = "shuttlefloor5"
 
 /turf/open/floor/plating/abductor
 	name = "alien floor"
@@ -188,7 +234,6 @@
 	icon_state = "lava"
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
-	var/processing = 0
 	luminosity = 1
 
 /turf/open/floor/plating/lava/airless
@@ -196,14 +241,14 @@
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()
-	if(!processing)
-		processing = 1
-		SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
-		processing = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
+
+/turf/open/floor/plating/lava/make_plating()
+	return
 
 /turf/open/floor/plating/lava/GetHeatCapacity()
 	. = 700000
@@ -216,8 +261,10 @@
 /turf/open/floor/plating/lava/proc/burn_stuff()
 	. = 0
 	for(var/thing in contents)
-		if(istype(thing, /obj))
+		if(isobj(thing))
 			var/obj/O = thing
+			if(O.burn_state == LAVA_PROOF || O.throwing)
+				continue
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				continue
@@ -228,10 +275,10 @@
 			O.fire_act()
 
 
-		else if (istype(thing, /mob/living))
+		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
-			if("mining" in L.faction)
+			if("lava" in L.weather_immunities)
 				continue
 			if(L.buckled)
 				if(isobj(L.buckled))
@@ -239,8 +286,8 @@
 					if(O.burn_state == LAVA_PROOF)
 						continue
 				if(isliving(L.buckled)) //Goliath riding
-					var/mob/living/liv = L.buckled
-					if("mining" in liv.faction)
+					var/mob/living/live = L.buckled
+					if("lava" in live.weather_immunities)
 						continue
 
 			L.adjustFireLoss(20)
@@ -266,7 +313,13 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "unsmooth"
-	canSmoothWith = list(/turf/closed/wall, /turf/closed/mineral, /turf/open/floor/plating/lava/smooth, /turf/open/floor/plating/lava/smooth/lava_land_surface
-	)
+	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	canSmoothWith = list(/turf/closed/mineral, /turf/open/floor/plating/lava/smooth)
+
 /turf/open/floor/plating/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"
+
+/turf/open/floor/plating/astplate
+	icon_state = "asteroidplating"
+/turf/open/floor/plating/airless/astplate
+	icon_state = "asteroidplating"

@@ -32,7 +32,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-stage1"
 	anchored = 1
-	layer = 5
+	layer = WALL_OBJ_LAYER
 	var/stage = 1
 	var/fixture_type = "tube"
 	var/sheets_refunded = 2
@@ -41,7 +41,7 @@
 /obj/machinery/light_construct/New(loc, ndir, building)
 	..()
 	if(building)
-		dir = ndir
+		setDir(ndir)
 
 /obj/machinery/light_construct/examine(mob/user)
 	..()
@@ -110,11 +110,15 @@
 						newlight = new /obj/machinery/light/built(loc)
 					if ("bulb")
 						newlight = new /obj/machinery/light/small/built(loc)
-				newlight.dir = dir
+				newlight.setDir(dir)
 				transfer_fingerprints_to(newlight)
 				qdel(src)
 				return
 	return ..()
+
+/obj/machinery/light_construct/blob_act(obj/effect/blob/B)
+	if(B && B.loc == loc)
+		qdel(src)
 
 
 /obj/machinery/light_construct/small
@@ -131,7 +135,7 @@
 	icon_state = "tube1"
 	desc = "A lighting fixture."
 	anchored = 1
-	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
+	layer = WALL_OBJ_LAYER
 	use_power = 2
 	idle_power_usage = 2
 	active_power_usage = 20
@@ -320,7 +324,7 @@
 				if("bulb")
 					newlight = new /obj/machinery/light_construct/small(src.loc)
 					newlight.icon_state = "bulb-construct-stage2"
-			newlight.dir = src.dir
+			newlight.setDir(src.dir)
 			newlight.stage = 2
 			transfer_fingerprints_to(newlight)
 			qdel(src)
@@ -521,6 +525,15 @@
 			if(3)
 				if(prob(25))
 					broken()
+
+/obj/machinery/light/blob_act(obj/effect/blob/B)
+	if(B && B.loc == loc)
+		broken()
+		qdel(src)
+	else if(prob(50))
+		broken()
+	else
+		flicker()
 
 // called when area power state changes
 /obj/machinery/light/power_change()

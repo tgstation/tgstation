@@ -1,4 +1,7 @@
 /mob/living/carbon/human/emote(act,m_type=1,message = null)
+	if(stat == DEAD && (act != "deathgasp") || (status_flags & FAKEDEATH)) //if we're faking, don't emote at all
+		return
+
 	var/param = null
 
 	if (findtext(act, "-", 1, null))
@@ -18,8 +21,6 @@
 	if(mind)
 		miming=mind.miming
 
-	if(src.stat == 2 && (act != "deathgasp"))
-		return
 	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
 		if ("aflap") //Any emote on human that uses miming must be left in, oh well.
 			if (!src.restrained())
@@ -129,6 +130,20 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
+				if(((dna.features["wings"] != "None") && !("wings" in dna.species.mutant_bodyparts)))
+					OpenWings()
+					addtimer(src, "CloseWings", 20)
+
+		if ("wings")
+			if (!src.restrained())
+				if(dna && dna.species &&((dna.features["wings"] != "None") && ("wings" in dna.species.mutant_bodyparts)))
+					message = "<B>[src]</B> opens \his wings."
+					OpenWings()
+				else if(dna && dna.species &&((dna.features["wings"] != "None") && ("wingsopen" in dna.species.mutant_bodyparts)))
+					message = "<B>[src]</B> closes \his wings."
+					CloseWings()
+				else
+					src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if ("gasp","gasps")
 			if (miming)
@@ -327,7 +342,7 @@
 				src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wag, yawn"
+			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wings, wag, yawn"
 
 		else
 			..(act)
@@ -383,4 +398,20 @@
 	if("waggingtail_human" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "waggingtail_human"
 		dna.species.mutant_bodyparts |= "tail_human"
+	update_body()
+
+/mob/living/carbon/human/proc/OpenWings()
+	if(!dna || !dna.species)
+		return
+	if("wings" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "wings"
+		dna.species.mutant_bodyparts |= "wingsopen"
+	update_body()
+
+/mob/living/carbon/human/proc/CloseWings()
+	if(!dna || !dna.species)
+		return
+	if("wingsopen" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "wingsopen"
+		dna.species.mutant_bodyparts |= "wings"
 	update_body()

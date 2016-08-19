@@ -18,7 +18,7 @@
 	return 0 //we're immutable.
 
 /datum/gas_mixture/space/heat_capacity()
-	. = 700000
+	. = 7000
 
 /datum/gas_mixture/space/heat_capacity_archived()
 	. = heat_capacity()
@@ -57,5 +57,5 @@
 	return 0 //we're immutable.
 
 /datum/gas_mixture/space/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
-	. = ..(sharer, 1, sharer_temperature, sharer_heat_capacity)
+	. = ..()
 	temperature = TCMB

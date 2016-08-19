@@ -4,11 +4,11 @@
 	icon_state = "brain"
 	throw_speed = 3
 	throw_range = 5
-	layer = 4.1
+	layer = ABOVE_MOB_LAYER
 	zone = "head"
 	slot = "brain"
 	vital = 1
-	origin_tech = "biotech=4"
+	origin_tech = "biotech=5"
 	attack_verb = list("attacked", "slapped", "whacked")
 	var/mob/living/carbon/brain/brainmob = null
 	var/damaged_brain = 0 //whether the brain organ is damaged.
@@ -124,4 +124,4 @@
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
-	origin_tech = "biotech=7"
+	origin_tech = "biotech=6"

@@ -53,14 +53,14 @@
 	return
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_health()
-	if(morphed)
+	if(morphed && !isliving(form))
 		var/image/holder = hud_list[HEALTH_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
 	..()
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_status()
-	if(morphed)
+	if(morphed && !isliving(form))
 		var/image/holder = hud_list[STATUS_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
@@ -128,7 +128,7 @@
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
-	overlays.Cut()
+	cut_overlays()
 
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
@@ -144,14 +144,18 @@
 		visible_message("<span class='warning'>[src] twists and dissolves into a pile of green flesh!</span>", \
 						"<span class='userdanger'>Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--</span>")
 		restore()
+	barf_contents()
 	..()
 
-/mob/living/simple_animal/hostile/morph/Destroy()
+/mob/living/simple_animal/hostile/morph/proc/barf_contents()
 	for(var/atom/movable/AM in src)
 		AM.loc = loc
 		if(prob(90))
 			step(AM, pick(alldirs))
-	return ..()
+
+/mob/living/simple_animal/hostile/morph/wabbajack_act(mob/living/new_mob)
+	barf_contents()
+	. = ..()
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()
@@ -176,17 +180,17 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/morph/AttackingTarget()
-	if(isliving(target)) // Eat Corpses to regen health
+	if(isliving(target)) //Eat Corpses to regen health
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			if(do_after(src, 30, target = L))
 				if(eat(L))
 					adjustHealth(-50)
 			return
-	else if(istype(target,/obj/item)) // Eat items just to be annoying
+	else if(istype(target,/obj/item)) //Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
-			if(do_after(src,20, target = I))
+			if(do_after(src, 20, target = I))
 				eat(I)
 			return
 	target.attack_animal(src)
@@ -208,7 +212,7 @@
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected = popleft(candidates)
+	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = 1

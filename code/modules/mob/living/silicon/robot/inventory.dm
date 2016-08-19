@@ -21,6 +21,7 @@
 		T.do_quick_empty()
 	if(client)
 		client.screen -= O
+	observer_screen_update(O,FALSE)
 	contents -= O
 	if(module)
 		O.loc = module	//Return item to module so it appears in its contents, so it can be taken out again.
@@ -48,8 +49,9 @@
 	if(!module_state_1)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_1 = O
-		O.layer = 20
+		O.layer = ABOVE_HUD_LAYER
 		O.screen_loc = inv1.screen_loc
+		observer_screen_update(O,TRUE)
 		contents += O
 		if(istype(module_state_1,/obj/item/borg/sight))
 			var/obj/item/borg/sight/S = module_state_1
@@ -58,8 +60,9 @@
 	else if(!module_state_2)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_2 = O
-		O.layer = 20
+		O.layer = ABOVE_HUD_LAYER
 		O.screen_loc = inv2.screen_loc
+		observer_screen_update(O,TRUE)
 		contents += O
 		if(istype(module_state_2,/obj/item/borg/sight))
 			var/obj/item/borg/sight/S = module_state_2
@@ -68,8 +71,9 @@
 	else if(!module_state_3)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_3 = O
-		O.layer = 20
+		O.layer = ABOVE_HUD_LAYER
 		O.screen_loc = inv3.screen_loc
+		observer_screen_update(O,TRUE)
 		contents += O
 		if(istype(module_state_3,/obj/item/borg/sight))
 			var/obj/item/borg/sight/S = module_state_3
@@ -77,6 +81,22 @@
 			update_sight()
 	else
 		src << "<span class='warning'>You need to disable a module first!</span>"
+
+
+/mob/living/silicon/robot/proc/observer_screen_update(obj/item/I,add = TRUE)
+	if(observers && observers.len)
+		for(var/M in observers)
+			var/mob/dead/observe = M
+			if(observe.client && observe.client.eye == src)
+				if(add)
+					observe.client.screen += I
+				else
+					observe.client.screen -= I
+			else
+				observers -= observe
+				if(!observers.len)
+					observers = null
+					break
 
 /mob/living/silicon/robot/proc/uneq_active()
 	uneq_module(module_active)

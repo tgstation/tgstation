@@ -2,20 +2,19 @@ var/global/list/possiblethemes = list("organharvest","cult","wizden","cavein","x
 
 var/global/max_secret_rooms = 6
 
-/proc/spawn_room(atom/start_loc, x_size, y_size, list/walltypes, floor, name)
+/proc/spawn_room(atom/start_loc, x_size, y_size, list/walltypes, floor, name, oldarea)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
+
+	var/area/asteroid/artifactroom/A = new
+	if(name)
+		A.name = name
+	else
+		A.name = "Artifact Room #[start_loc.x]-[start_loc.y]-[start_loc.z]"
 
 	for(var/x = 0, x < x_size, x++)		//sets the size of the room on the x axis
 		for(var/y = 0, y < y_size, y++) //sets it on y axis.
 			var/turf/T
 			var/cur_loc = locate(start_loc.x + x, start_loc.y + y, start_loc.z)
-
-
-			var/area/asteroid/artifactroom/A = new
-			if(name)
-				A.name = name
-			else
-				A.name = "Artifact Room #[start_loc.x]-[start_loc.y]-[start_loc.z]"
 
 
 			if(x == 0 || x == x_size-1 || y == 0 || y == y_size-1)
@@ -30,7 +29,8 @@ var/global/max_secret_rooms = 6
 				T.ChangeTurf(floor)
 				room_turfs["floors"] += T
 
-			A.contents += T
+			if(!oldarea)
+				A.contents += T
 
 	return room_turfs
 
@@ -71,7 +71,7 @@ var/global/max_secret_rooms = 6
 
 		if("cult")
 			theme = "cult"
-			walltypes = list(/turf/closed/wall/cult=3,/turf/closed/mineral/random/high_chance=1)
+			walltypes = list(/turf/closed/wall/mineral/cult=3,/turf/closed/mineral/random/high_chance=1)
 			floortypes = list(/turf/open/floor/plasteel/cult)
 			treasureitems = list(/obj/item/device/soulstone/anybody=1, /obj/item/clothing/suit/space/hardsuit/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
@@ -117,7 +117,7 @@ var/global/max_secret_rooms = 6
 		if("speakeasy")
 			theme = "speakeasy"
 			floortypes = list(/turf/open/floor/plasteel,/turf/open/floor/wood)
-			treasureitems = list(/obj/item/weapon/melee/energy/sword/pirate=1,/obj/item/weapon/gun/projectile/revolver/doublebarrel=1,/obj/item/weapon/storage/backpack/satchel_flat=1,
+			treasureitems = list(/obj/item/weapon/melee/energy/sword/pirate=1,/obj/item/weapon/gun/projectile/revolver/doublebarrel=1,/obj/item/weapon/storage/backpack/satchel/flat=1,
 			/obj/machinery/reagentgrinder=2, /obj/machinery/computer/security/wooden_tv=4, /obj/machinery/vending/coffee=3)
 			fluffitems = list(/obj/structure/table/wood=2,/obj/structure/reagent_dispensers/beerkeg=1,/obj/item/stack/spacecash/c500=4,
 							  /obj/item/weapon/reagent_containers/food/drinks/shaker=1,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=3,
@@ -127,7 +127,7 @@ var/global/max_secret_rooms = 6
 			theme = "plantlab"
 			treasureitems = list(/obj/item/weapon/gun/energy/floragun=1,/obj/item/seeds/sunflower/novaflower=2,/obj/item/seeds/tomato/blue/bluespace=2,/obj/item/seeds/tomato/blue=2,
 			/obj/item/seeds/coffee/robusta=2, /obj/item/seeds/cash=2)
-			fluffitems = list(/obj/structure/flora/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics/constructable=1,
+			fluffitems = list(/obj/item/weapon/twohanded/required/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics/constructable=1,
 							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/charcoal=2,
 							  /obj/item/weapon/reagent_containers/glass/bottle/diethylamine=3,/obj/item/weapon/reagent_containers/glass/bottle/ammonia=3)
 

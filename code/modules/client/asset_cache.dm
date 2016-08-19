@@ -179,6 +179,36 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"tgui.js"	= 'tgui/assets/tgui.js'
 	)
 
+/datum/asset/simple/headers
+	assets = list(
+		"alarm_green.gif" 			= 'icons/program_icons/alarm_green.gif',
+		"alarm_red.gif" 			= 'icons/program_icons/alarm_red.gif',
+		"batt_5.gif" 				= 'icons/program_icons/batt_5.gif',
+		"batt_20.gif" 				= 'icons/program_icons/batt_20.gif',
+		"batt_40.gif" 				= 'icons/program_icons/batt_40.gif',
+		"batt_60.gif" 				= 'icons/program_icons/batt_60.gif',
+		"batt_80.gif" 				= 'icons/program_icons/batt_80.gif',
+		"batt_100.gif" 				= 'icons/program_icons/batt_100.gif',
+		"charging.gif" 				= 'icons/program_icons/charging.gif',
+		"downloader_finished.gif" 	= 'icons/program_icons/downloader_finished.gif',
+		"downloader_running.gif" 	= 'icons/program_icons/downloader_running.gif',
+		"ntnrc_idle.gif"			= 'icons/program_icons/ntnrc_idle.gif',
+		"ntnrc_new.gif"				= 'icons/program_icons/ntnrc_new.gif',
+		"power_norm.gif"			= 'icons/program_icons/power_norm.gif',
+		"power_warn.gif"			= 'icons/program_icons/power_warn.gif',
+		"sig_high.gif" 				= 'icons/program_icons/sig_high.gif',
+		"sig_low.gif" 				= 'icons/program_icons/sig_low.gif',
+		"sig_lan.gif" 				= 'icons/program_icons/sig_lan.gif',
+		"sig_none.gif" 				= 'icons/program_icons/sig_none.gif',
+	)
+
+
+
+
+
+
+
+
 /datum/asset/simple/pda
 	assets = list(
 		"pda_atmos.png"			= 'icons/pda_icons/pda_atmos.png',
@@ -206,7 +236,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"pda_refresh.png"		= 'icons/pda_icons/pda_refresh.png',
 		"pda_scanner.png"		= 'icons/pda_icons/pda_scanner.png',
 		"pda_signaler.png"		= 'icons/pda_icons/pda_signaler.png',
-		"pda_status.png"		= 'icons/pda_icons/pda_status.png'
+		"pda_status.png"		= 'icons/pda_icons/pda_status.png',
+		"pda_dronephone.png"	= 'icons/pda_icons/pda_dronephone.png'
 	)
 
 /datum/asset/simple/paper
@@ -224,6 +255,11 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
 	)
 
+/datum/asset/simple/IRV
+	assets = list(
+		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
+		"jquery-1.10.2.min.js" = 'html/IRV/jquery-1.10.2.min.js'
+	)
 
 //Registers HTML Interface assets.
 /datum/asset/HTML_interface/register()

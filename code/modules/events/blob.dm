@@ -1,6 +1,6 @@
 /datum/round_event_control/blob
 	name = "Blob"
-	typepath = /datum/round_event/blob
+	typepath = /datum/round_event/ghost_role/blob
 	weight = 5
 	max_occurrences = 1
 
@@ -9,22 +9,30 @@
 
 	gamemode_blacklist = list("blob") //Just in case a blob survives that long
 
-/datum/round_event/blob
+/datum/round_event/ghost_role/blob
 	announceWhen	= 12
-	endWhen			= 120
+	role_name = "blob_overmind"
 	var/new_rate = 2
 
-/datum/round_event/blob/New(var/strength)
+/datum/round_event/ghost_role/blob/New(my_processing = TRUE, set_point_rate)
 	..()
-	if(strength)
-		new_rate = strength
+	if(set_point_rate)
+		new_rate = set_point_rate
 
-/datum/round_event/blob/announce()
+/datum/round_event/ghost_role/blob/announce()
 	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 
 
-/datum/round_event/blob/start()
-	var/turf/T = pick(blobstart)
-	if(!T)
-		return kill()
-	new/obj/effect/blob/core(T, null, new_rate)
+/datum/round_event/ghost_role/blob/spawn_role()
+	if(!blobstart.len)
+		return MAP_ERROR
+	var/list/candidates = get_candidates("blob", null, ROLE_BLOB)
+	if(!candidates.len)
+		return NOT_ENOUGH_PLAYERS
+	var/mob/dead/observer/new_blob = pick(candidates)
+	var/obj/effect/blob/core/BC = new/obj/effect/blob/core(pick(blobstart), new_blob.client, new_rate)
+	BC.overmind.blob_points = min(20 + player_list.len, BC.overmind.max_blob_points)
+	spawned_mobs += BC.overmind
+	message_admins("[BC.overmind.key] has been made into a blob overmind by an event.")
+	log_game("[BC.overmind.key] was spawned as a blob overmind by an event.")
+	return SUCCESSFUL_SPAWN

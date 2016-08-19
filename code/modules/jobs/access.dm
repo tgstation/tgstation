@@ -64,6 +64,7 @@
 /var/const/access_mineral_storeroom = 64
 /var/const/access_minisat = 65
 /var/const/access_weapons = 66 //Weapon authorization for secbots
+/var/const/access_network = 67
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -76,10 +77,24 @@
 /var/const/access_cent_storage = 106//Generic storage areas.
 /var/const/access_cent_teleporter = 107//Teleporter.
 /var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
+/var/const/access_cent_bar = 110 // The non-existent Centcom Bar
 
 	//The Syndicate
 /var/const/access_syndicate = 150//General Syndicate Access
 /var/const/access_syndicate_leader = 151//Nuke Op Leader Access
+
+	//Away Missions or Ruins
+	/*For generic away-mission/ruin access. Why would normal crew have access to a long-abandoned derelict
+	or a 2000 year-old temple? */
+/var/const/access_away_general = 200//General facilities.
+/var/const/access_away_maint = 201//Away maintenance
+/var/const/access_away_med = 202//Away medical
+/var/const/access_away_sec = 203//Away security
+/var/const/access_away_engine = 204//Away engineering
+/var/const/access_away_generic1 = 205//Away generic access
+/var/const/access_away_generic2 = 206
+/var/const/access_away_generic3 = 207
+/var/const/access_away_generic4 = 208
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
@@ -100,16 +115,16 @@
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(src.check_access(H.get_active_hand()) || src.check_access(H.wear_id))
+		if(check_access(H.get_active_hand()) || src.check_access(H.wear_id))
 			return 1
 	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/alien/humanoid))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
-		if(src.check_access(george.get_active_hand()))
+		if(check_access(george.get_active_hand()))
 			return 1
 	else if(isanimal(M))
 		var/mob/living/simple_animal/A = M
-		if(check_access(A.access_card))
+		if(check_access(A.get_active_hand()) || check_access(A.access_card))
 			return 1
 	return 0
 
@@ -209,6 +224,8 @@
 			return get_ert_access("eng")
 		if("Medical Response Officer")
 			return get_ert_access("med")
+		if("Centcom Bartender")
+			return list(access_cent_general, access_cent_living, access_cent_bar)
 
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
@@ -221,7 +238,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_network)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -251,7 +268,7 @@
 		if(3) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(4) //research
-			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd)
+			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd, access_network)
 		if(5) //engineering and maintenance
 			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_minisat, access_ce)
 		if(6) //supply
@@ -408,6 +425,8 @@
 			return "AI Satellite"
 		if(access_weapons)
 			return "Weapon Permit"
+		if(access_network)
+			return "Network Access"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
@@ -427,6 +446,8 @@
 			return "Code Black"
 		if(access_cent_captain)
 			return "Code Gold"
+		if(access_cent_bar)
+			return "Code Scotch"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
@@ -438,7 +459,7 @@
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer")
+	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/weapon/card/id/I = GetID()

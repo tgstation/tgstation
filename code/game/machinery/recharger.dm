@@ -8,6 +8,7 @@
 	idle_power_usage = 4
 	active_power_usage = 250
 	var/obj/item/weapon/charging = null
+	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/weapon/computer_hardware/battery_module,/obj/item/laptop,/obj/item/modular_computer/)
 	var/recharge_coeff = 1
 
 /obj/machinery/recharger/New()
@@ -18,7 +19,7 @@
 /obj/item/weapon/circuitboard/machine/recharger
 	name = "circuit board (Weapon Recharger)"
 	build_path = /obj/machinery/recharger
-	origin_tech = "powerstorage=3;engineering=3;materials=4"
+	origin_tech = "powerstorage=4;engineering=3;materials=4"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/machinery/recharger/RefreshParts()
@@ -36,7 +37,11 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 		return
 
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/ammo_box/magazine/recharge))
+	var/allowed = 0
+	for (var/allowed_type in allowed_devices)
+		if (istype(G, allowed_type)) allowed = 1
+
+	if(allowed)
 		if(anchored)
 			if(charging || panel_open)
 				return 1
@@ -126,6 +131,34 @@
 				R.stored_ammo += new R.ammo_type(R)
 				use_power(200 * recharge_coeff)
 				using_power = 1
+
+		if(istype(charging, /obj/item/laptop))
+			var/obj/item/laptop/L = charging
+			if(L.stored_computer.cpu.battery_module)
+				var/obj/item/weapon/computer_hardware/battery_module/B = L.stored_computer.cpu.battery_module
+				if(B.battery)
+					if(B.battery.charge < B.battery.maxcharge)
+						B.battery.give(B.battery.chargerate * recharge_coeff)
+						use_power(200 * recharge_coeff)
+						using_power = 1
+
+		if(istype(charging, /obj/item/weapon/computer_hardware/battery_module))
+			var/obj/item/weapon/computer_hardware/battery_module/B = charging
+			if(B.battery)
+				if(B.battery.charge < B.battery.maxcharge)
+					B.battery.give(B.battery.chargerate * recharge_coeff)
+					use_power(200 * recharge_coeff)
+					using_power = 1
+
+		if(istype(charging, /obj/item/modular_computer))
+			var/obj/item/modular_computer/C = charging
+			if(C.battery_module)
+				var/obj/item/weapon/computer_hardware/battery_module/B = C.battery_module
+				if(B.battery)
+					if(B.battery.charge < B.battery.maxcharge)
+						B.battery.give(B.battery.chargerate * recharge_coeff)
+						use_power(200 * recharge_coeff)
+						using_power = 1
 
 	update_icon(using_power)
 

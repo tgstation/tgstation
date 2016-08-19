@@ -13,6 +13,7 @@
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/computer_health = 25
+	var/clockwork = FALSE
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
 	..(location)
@@ -53,21 +54,36 @@
 		if(3)
 			take_damage(rand(10,30), BRUTE, 0)
 
+/obj/machinery/computer/ratvar_act()
+	if(!clockwork)
+		clockwork = TRUE
+		icon_screen = "ratvar[rand(1, 4)]"
+		icon_keyboard = "ratvar_key[rand(1, 6)]"
+		icon_state = "ratvarcomputer[rand(1, 4)]"
+		update_icon()
+
+/obj/machinery/computer/narsie_act()
+	if(clockwork && clockwork != initial(clockwork) && prob(20)) //if it's clockwork but isn't normally clockwork
+		clockwork = FALSE
+		icon_screen = initial(icon_screen)
+		icon_keyboard = initial(icon_keyboard)
+		icon_state = initial(icon_state)
+		update_icon()
 
 /obj/machinery/computer/bullet_act(obj/item/projectile/P)
 	take_damage(P.damage, P.damage_type, 0)
 	..()
 
 /obj/machinery/computer/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & NOPOWER)
-		overlays += "[icon_keyboard]_off"
+		add_overlay("[icon_keyboard]_off")
 		return
-	overlays += icon_keyboard
+	add_overlay(icon_keyboard)
 	if(stat & BROKEN)
-		overlays += "[icon_state]_broken"
+		add_overlay("[icon_state]_broken")
 	else
-		overlays += icon_screen
+		add_overlay(icon_screen)
 
 /obj/machinery/computer/power_change()
 	..()
@@ -84,7 +100,7 @@
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
 		if(do_after(user, 20/I.toolspeed, target = src))
 			deconstruction()
-			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
+			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null

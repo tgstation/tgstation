@@ -68,9 +68,9 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage(icon, "scrub_cap", initialize_directions)
+		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()

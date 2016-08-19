@@ -79,6 +79,14 @@
 	item_color = "sexyclown"
 	can_adjust = 0
 
+/obj/item/clothing/under/jabroni
+	name = "Jabroni Outfit"
+	desc = "The leather club is two sectors down."
+	icon_state = "darkholme"
+	item_state = "darkholme"
+	item_color = "darkholme"
+	can_adjust = 0
+
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
@@ -566,6 +574,7 @@
 	name = "Plasma-man jumpsuit refill pack"
 	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
 	icon_state = "plasmarefill"
+	origin_tech = "materials=2;plasmatech=3;biotech=1"
 
 /obj/item/clothing/under/rank/security/navyblue/russian
 	name = "russian officer's uniform"
@@ -573,33 +582,3 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
-
-/*
--!WARNING!-
--POTENTIAL TRIGGER-INDUCING ITEMS AHEAD-
--TREAD WITH CAUTION-
-*/
-
-/obj/item/clothing/under/wwii
-	name = "dusty uniform"
-	desc = "A dusty old uniform, a relic from a time before."
-	icon_state = "soldieruniform"
-	item_state = "soldieruniform"
-	item_color = "soldieruniform"
-	armor = list(melee = 10, bullet = 5, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 50
-
-
-/obj/item/clothing/under/wwii/officer
-	name = "dusty uniform"
-	desc = "A dusty old uniform, a relic from a time before. This one looks more official."
-	icon_state = "officeruniform"
-	item_state = "officeruniform"
-	item_color = "officeruniform"
-	armor = list(melee = 15, bullet = 10, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 60
-
-/*
--YOU HAVE SAFETLY PASSED THE POTENTIALLY-TRIGGERING CONTENT-
--PLEASE RESUME NORMAL, POLITICALLY CORRECT ACTIVITY-
-*/

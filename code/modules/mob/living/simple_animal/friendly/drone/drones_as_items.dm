@@ -20,7 +20,7 @@
 	..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, attack_not_jump = 1)
+		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK)
 
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"drone"))
@@ -38,6 +38,7 @@
 	if(be_drone == "No" || qdeleted(src))
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
+	D.admin_spawned = admin_spawned
 	D.key = user.key
 	qdel(src)
 
@@ -64,7 +65,7 @@
 	contents -= drone
 	drone.loc = get_turf(src)
 	drone.reset_perspective()
-	drone.dir = SOUTH //Looks better
+	drone.setDir(SOUTH )//Looks better
 	drone.visible_message("<span class='warning'>[drone] uncurls!</span>")
 	drone = null
 	qdel(src)

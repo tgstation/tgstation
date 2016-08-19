@@ -1,8 +1,8 @@
 
 /mob/living/carbon/alien/humanoid/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 	if(stat == DEAD)
 		//If we mostly took damage from fire
@@ -20,8 +20,12 @@
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
+		if(drooling)
+			add_overlay("alienspit_[caste]")
 	else
 		icon_state = "alien[caste]_s"
+		if(drooling)
+			add_overlay("alienspit_s")
 
 	if(leaping)
 		if(alt_icon == initial(alt_icon))
@@ -49,6 +53,19 @@
 		lying = 90 //Anything else looks retarded
 	..()
 	update_icons()
+
+/mob/living/carbon/alien/humanoid/update_inv_handcuffed()
+	remove_overlay(HANDCUFF_LAYER)
+	var/cuff_icon = "aliencuff_s"
+	var/dmi_file = 'icons/mob/alien.dmi'
+
+	if(mob_size == MOB_SIZE_LARGE)
+		cuff_icon = "aliencuff_[caste]"
+		dmi_file = 'icons/mob/alienqueen.dmi'
+
+	if(handcuffed)
+		overlays_standing[HANDCUFF_LAYER] = image(dmi_file,icon_state= cuff_icon, layer =-HANDCUFF_LAYER)
+		apply_overlay(HANDCUFF_LAYER)
 
 //Royals have bigger sprites, so inhand things must be handled differently.
 /mob/living/carbon/alien/humanoid/royal/update_inv_r_hand()

@@ -26,19 +26,17 @@ Note: Must be placed west/left of and R&D console to function.
 								"Electronics",
 								"Weapons",
 								"Ammo",
-								"Firing Pins"
+								"Firing Pins",
+								"Computer Parts"
 								)
-
-	reagents = new()
 
 
 /obj/machinery/r_n_d/protolathe/New()
 	..()
-	materials = new(src, list(MAT_METAL=1, MAT_GLASS=1, MAT_SILVER=1, MAT_GOLD=1, MAT_DIAMOND=1, MAT_PLASMA=1, MAT_URANIUM=1, MAT_BANANIUM=1))
+	create_reagents(0)
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/protolathe(null)
 	B.apply_default_parts(src)
-
-	reagents.my_atom = src
 
 /obj/item/weapon/circuitboard/machine/protolathe
 	name = "circuit board (Protolathe)"
@@ -54,25 +52,28 @@ Note: Must be placed west/left of and R&D console to function.
 	return ..()
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
-	var/T = 0
+	reagents.maximum_volume = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
+
+	materials.max_amount = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	materials.max_amount = T * 75000
-	T = 0
+		materials.max_amount += M.rating * 75000
+
+	var/T = 1.2
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		T += (M.rating/3)
-	efficiency_coeff = max(T, 1)
+		T -= M.rating/10
+	efficiency_coeff = min(max(0, T), 1)
 
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+	var/list/all_materials = being_built.reagents + being_built.materials
+
 	var/A = materials.amount(M)
 	if(!A)
 		A = reagents.get_reagent_amount(M)
-		A = A / max(1, (being_built.reagents[M]))
-	else
-		A = A / max(1, (being_built.materials[M]))
-	return A
+
+	return round(A / max(1, (all_materials[M]*efficiency_coeff)))
 
 //we eject the materials upon deconstruction.
 /obj/machinery/r_n_d/protolathe/deconstruction()
@@ -88,11 +89,15 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/machinery/r_n_d/protolathe/Insert_Item(obj/item/O, mob/user)
 
-	if(istype(O,/obj/item/stack/sheet))
+	if(istype(O, /obj/item/stack/sheet))
 		. = 1
 		if(!is_insertion_ready(user))
 			return
-		if(!materials.has_space( materials.get_item_material_amount(O) ))
+		var/sheet_material = materials.get_item_material_amount(O)
+		if(!sheet_material)
+			return
+
+		if(!materials.has_space(sheet_material))
 			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
 			return 1
 
@@ -108,7 +113,7 @@ Note: Must be placed west/left of and R&D console to function.
 			busy = 1
 			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
 			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
-			overlays += "protolathe_[stack_name]"
+			add_overlay("protolathe_[stack_name]")
 			sleep(10)
 			overlays -= "protolathe_[stack_name]"
 			busy = 0
@@ -116,5 +121,6 @@ Note: Must be placed west/left of and R&D console to function.
 
 	else if(user.a_intent != "harm")
 		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
+		return 1
 	else
 		return 0

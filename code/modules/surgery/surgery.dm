@@ -1,16 +1,37 @@
 /datum/surgery
 	var/name = "surgery"
 	var/status = 1
-	var/list/steps = list()										//Steps in a surgery
-	var/step_in_progress = 0									//Actively performing a Surgery
-	var/can_cancel = 1											//Can cancel this surgery after step 1 with cautery
-	var/list/species = list(/mob/living/carbon/human)			//Acceptable Species
-	var/location = "chest"										//Surgery location
-	var/requires_organic_bodypart = 1							//Prevents you from performing an operation on robotic limbs
-	var/list/possible_locs = list() 							//Multiple locations -- c0
-	var/ignore_clothes = 0										//This surgery ignores clothes
-	var/obj/item/organ/organ									//Operable body part
-	var/requires_bodypart = TRUE								//Surgery available only when a bodypart is present, or only when it is missing.
+	var/list/steps = list()									//Steps in a surgery
+	var/step_in_progress = 0								//Actively performing a Surgery
+	var/can_cancel = 1										//Can cancel this surgery after step 1 with cautery
+	var/list/species = list(/mob/living/carbon/human)		//Acceptable Species
+	var/location = "chest"									//Surgery location
+	var/requires_organic_bodypart = 1						//Prevents you from performing an operation on robotic limbs
+	var/list/possible_locs = list() 						//Multiple locations
+	var/ignore_clothes = 0									//This surgery ignores clothes
+	var/mob/living/carbon/target							//Operation target mob
+	var/obj/item/organ/organ								//Operable body part
+	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
+	var/success_multiplier = 0								//Step success propability multiplier
+
+
+/datum/surgery/New(surgery_target, surgery_location, surgery_organ)
+	..()
+	if(surgery_target)
+		target = surgery_target
+		target.surgeries += src
+		if(surgery_location)
+			location = surgery_location
+		if(surgery_organ)
+			organ = surgery_organ
+
+/datum/surgery/Destroy()
+	if(target)
+		target.surgeries -= src
+	target = null
+	organ = null
+	return ..()
+
 
 /datum/surgery/proc/can_start(mob/user, mob/living/carbon/target)
 	// if 0 surgery wont show up in list
@@ -18,9 +39,9 @@
 	return 1
 
 
-/datum/surgery/proc/next_step(mob/user, mob/living/carbon/target)
+/datum/surgery/proc/next_step(mob/user)
 	if(step_in_progress)
-		return
+		return 1
 
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
@@ -32,10 +53,23 @@
 	var/step_type = steps[status]
 	return new step_type
 
+/datum/surgery/proc/complete()
+	qdel(src)
 
-/datum/surgery/proc/complete(mob/living/carbon/human/target)
-	target.surgeries -= src
-	src = null
+
+/datum/surgery/proc/get_propability_multiplier()
+	var/propability = 0.5
+	var/turf/T = get_turf(target)
+
+	if(locate(/obj/structure/table/optable, T))
+		propability = 1
+	else if(locate(/obj/structure/table, T))
+		propability = 0.8
+	else if(locate(/obj/structure/bed, T))
+		propability = 0.7
+
+	return propability + success_multiplier
+
 
 
 
@@ -45,7 +79,6 @@
 //Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon)
 // var/list/bodyparts (/mob/living/carbon/human) is the LIMBS of a Mob.
 //Surgical procedures are initiated by attempt_initiate_surgery(), which is called by surgical drapes and bedsheets.
-// /code/modules/surgery/multiple_location_example.dm contains steps to setup a multiple location operation.
 
 
 //TODO
@@ -60,4 +93,4 @@
 
 //RESOLVED ISSUES //"Todo" jobs that have been completed
 //combine hands/feet into the arms - Hands/feet were removed - RR
-//surgeries (not steps) that can be initiated on any body part (corresponding with damage locations) - Call this one done, see multiple_location_example.dm - RR
+//surgeries (not steps) that can be initiated on any body part (corresponding with damage locations) - Call this one done, see possible_locs var - c0

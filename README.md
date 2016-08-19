@@ -1,10 +1,10 @@
 ##/tg/station v1.0.1
 
-[![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
+[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation)
 
 
 **Website:** http://www.tgstation13.org <BR>
-**Code:** https://github.com/tgstation/-tg-station <BR>
+**Code:** https://github.com/tgstation/tgstation <BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page <BR>
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
 
@@ -19,11 +19,11 @@ Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 Option 2:
 Install GitHub::windows from http://windows.github.com/
 It handles most of the setup and configuraton of Git for you.
-Then you simply search for the -tg-station repository and click the big clone
+Then you simply search for the tgstation repository and click the big clone
 button.
 
 Option 3: Download the source code as a zip by clicking the ZIP button in the
-code tab of https://github.com/tgstation/-tg-station
+code tab of https://github.com/tgstation/tgstation
 (note: this will use a lot of bandwidth if you wish to update and is a lot of
 hassle if you want to make any changes at all, so it's not recommended.)
 
@@ -131,9 +131,9 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ##LICENSE
 
-All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
+All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
 
-All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
+All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
 (Including tools unless their readme specifies otherwise.)
 
 See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.

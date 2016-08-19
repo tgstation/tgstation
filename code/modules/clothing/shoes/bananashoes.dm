@@ -10,7 +10,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
 	..()
-	bananium = new/datum/material_container(src,list(MAT_BANANIUM=1),200000)
+	bananium = new/datum/material_container(src,list(MAT_BANANIUM),200000)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	if(on)

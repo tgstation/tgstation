@@ -27,7 +27,7 @@ var/hsboxspawn = 1
 	var/hsbinfo = null
 	//items that shouldn't spawn on the floor because they would bug or act weird
 	var/global/list/spawn_forbidden = list(
-		/obj/item/weapon/grab, /obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
+		/obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly,/obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
 		/obj/item/device/uplink, /obj/item/smallDelivery, /obj/item/missile,/obj/item/projectile,
 		/obj/item/borg/sight,/obj/item/borg/stun,/obj/item/weapon/robot_module)
@@ -145,28 +145,28 @@ var/hsboxspawn = 1
 					P.wear_suit.layer = initial(P.wear_suit.layer)
 					P.wear_suit = null
 				P.wear_suit = new/obj/item/clothing/suit/space(P)
-				P.wear_suit.layer = 20
+				P.wear_suit.layer = ABOVE_HUD_LAYER
 				P.update_inv_wear_suit()
 				if(P.head)
 					P.head.loc = P.loc
 					P.head.layer = initial(P.head.layer)
 					P.head = null
 				P.head = new/obj/item/clothing/head/helmet/space(P)
-				P.head.layer = 20
+				P.head.layer = ABOVE_HUD_LAYER
 				P.update_inv_head()
 				if(P.wear_mask)
 					P.wear_mask.loc = P.loc
 					P.wear_mask.layer = initial(P.wear_mask.layer)
 					P.wear_mask = null
 				P.wear_mask = new/obj/item/clothing/mask/gas(P)
-				P.wear_mask.layer = 20
+				P.wear_mask.layer = ABOVE_HUD_LAYER
 				P.update_inv_wear_mask()
 				if(P.back)
 					P.back.loc = P.loc
 					P.back.layer = initial(P.back.layer)
 					P.back = null
 				P.back = new/obj/item/weapon/tank/jetpack/oxygen(P)
-				P.back.layer = 20
+				P.back.layer = ABOVE_HUD_LAYER
 				P.update_inv_back()
 				P.internal = P.back
 				P.update_internals_hud_icon(1)

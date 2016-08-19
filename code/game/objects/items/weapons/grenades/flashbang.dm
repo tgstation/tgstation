@@ -2,7 +2,7 @@
 	name = "flashbang"
 	icon_state = "flashbang"
 	item_state = "flashbang"
-	origin_tech = "materials=2;combat=1"
+	origin_tech = "materials=2;combat=3"
 
 /obj/item/weapon/grenade/flashbang/prime()
 	update_mob()
@@ -13,7 +13,8 @@
 		bang(get_turf(M), M)
 
 	for(var/obj/effect/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
-		var/damage = round(40/(get_dist(B,get_turf(src))+1))
+		var/distance = get_dist(B, get_turf(src))
+		var/damage = round(100/(distance*distance)+1)
 		B.take_damage(damage, BURN)
 	qdel(src)
 
@@ -36,7 +37,6 @@
 	if(M.flash_eyes(affect_silicon = 1))
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
-
 
 //Bang
 	if((loc == M) || loc == M.loc)//Holding on person or being exactly where lies is significantly more dangerous and voids protection

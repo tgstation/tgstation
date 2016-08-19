@@ -49,10 +49,7 @@
 		showpiece = null
 
 /obj/structure/displaycase/blob_act(obj/effect/blob/B)
-	if (prob(75))
-		new /obj/item/weapon/shard( src.loc )
-		dump()
-		qdel(src)
+	take_damage(30)
 
 /obj/structure/displaycase/hitby(atom/movable/AM)
 	..()
@@ -99,9 +96,9 @@
 		I = getFlatIcon(A)
 	else
 		var/old_dir = A.dir
-		A.dir = 2
+		A.setDir(2)
 		I = getFlatIcon(A)
-		A.dir = old_dir
+		A.setDir(old_dir)
 	return I
 
 /obj/structure/displaycase/update_icon()
@@ -177,10 +174,14 @@
 /obj/structure/displaycase/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper > 0)
+	if(M.melee_damage_upper || M.obj_damage)
 		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
 		"<span class='danger'>You smash against the [src.name].</span>")
-		take_damage(M.melee_damage_upper, M.melee_damage_type, 1)
+		if(M.obj_damage)
+			take_damage(M.obj_damage, M.melee_damage_type, 1)
+		else
+			take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
+
 
 /obj/structure/displaycase/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -191,6 +192,9 @@
 		update_icon()
 		return
 	else
+	    //prevents remote "kicks" with TK
+		if (!Adjacent(user))
+			return
 		user.do_attack_animation(src)
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", \
 						 "<span class='notice'>You kick the display case.</span>")

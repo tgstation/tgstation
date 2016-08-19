@@ -15,7 +15,7 @@
 	icon_state = "shield"
 	anchored = 1
 	density = 1
-	dir = 1
+	dir = NORTH
 	use_power = 0//Living things generally dont use power
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -91,20 +91,6 @@
 /obj/machinery/am_shielding/emp_act()//Immune due to not really much in the way of electronics.
 	return 0
 
-
-/obj/machinery/am_shielding/blob_act()
-	stability -= 20
-	if(prob(100-stability))
-		if(prob(10))//Might create a node
-			new /obj/effect/blob/node(src.loc,150)
-		else
-			new /obj/effect/blob(src.loc,60)
-		qdel(src)
-		return
-	check_stability()
-	return
-
-
 /obj/machinery/am_shielding/ex_act(severity, target)
 	stability -= (80 - (severity * 20))
 	check_stability()
@@ -119,14 +105,14 @@
 
 
 /obj/machinery/am_shielding/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/direction in alldirs)
 		var/machine = locate(/obj/machinery, get_step(loc, direction))
 		if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit)||(istype(machine, /obj/machinery/power/am_control_unit) && machine == control_unit))
-			overlays += "shield_[direction]"
+			add_overlay("shield_[direction]")
 
 	if(core_check())
-		overlays += "core"
+		add_overlay("core")
 		if(!processing)
 			setup_core()
 	else if(processing)
@@ -176,7 +162,7 @@
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = 1
 	machines |= src
-	SSmachine.processing |= src
+	START_PROCESSING(SSmachine, src)
 	if(!control_unit)
 		return
 	control_unit.linked_cores.Add(src)

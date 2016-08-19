@@ -180,7 +180,7 @@
 						if(prob(25))
 							step_rand(item_to_add)
 						for(var/i in list(1,2,4,8,4,8,4,dir))
-							dir = i
+							setDir(i)
 							sleep(1)
 						return
 
@@ -240,7 +240,7 @@
 		if(prob(25))
 			step_rand(item_to_add)
 		for(var/i in list(1,2,4,8,4,8,4,dir))
-			dir = i
+			setDir(i)
 			sleep(1)
 
 	return valid
@@ -366,15 +366,15 @@
 
 				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
-						dir = WEST
+						setDir(WEST)
 					else if (movement_target.loc.x > src.x)
-						dir = EAST
+						setDir(EAST)
 					else if (movement_target.loc.y < src.y)
-						dir = SOUTH
+						setDir(SOUTH)
 					else if (movement_target.loc.y > src.y)
-						dir = NORTH
+						setDir(NORTH)
 					else
-						dir = SOUTH
+						setDir(SOUTH)
 
 					if(!Adjacent(movement_target)) //can't reach food through windows.
 						return
@@ -389,19 +389,23 @@
 			emote("me", 1, pick("dances around.","chases its tail!"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
 
-		if(!DF.icon_state)
-			DF.icon_state = inventory_head.icon_state
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_head.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_head.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_head.color
 
 		if(health <= 0)
 			head_icon = DF.get_image(dir = EAST)
@@ -410,14 +414,18 @@
 		else
 			head_icon = DF.get_image()
 
-		overlays += head_icon
+		add_overlay(head_icon)
 
 	if(inventory_back)
 		var/image/back_icon
 		var/datum/dog_fashion.DF = new inventory_back.dog_fashion(src)
 
-		if(!DF.icon_state)
-			DF.icon_state = inventory_back.icon_state
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_back.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_back.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_back.color
 
 		if(health <= 0)
 			back_icon = DF.get_image(dir = EAST)
@@ -425,16 +433,16 @@
 			back_icon.transform = turn(back_icon.transform, 180)
 		else
 			back_icon = DF.get_image()
-		overlays += back_icon
+		add_overlay(back_icon)
 
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgipuppy"))
 		else
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
 	if(pcollar)
-		overlays += collar
-		overlays += pettag
+		add_overlay(collar)
+		add_overlay(pettag)
 
 	return
 
@@ -508,7 +516,7 @@
 			emote("me", 1, pick("dances around.","chases her tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 
 /mob/living/simple_animal/pet/dog/pug/Life()
@@ -519,7 +527,7 @@
 			emote("me", 1, pick("chases its tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 
 /mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
@@ -534,7 +542,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
-				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
+				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",ABOVE_MOB_LAYER), list(M.client), 20)
 				emote("me", 1, "yaps happily!")
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)

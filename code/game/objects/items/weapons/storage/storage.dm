@@ -27,7 +27,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop(atom/over_object)
-	if(iscarbon(usr) || isdrone(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
+	if(ismob(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
 		if(!over_object)
@@ -36,8 +36,9 @@
 		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 			return
 
-		if(over_object == M && Adjacent(M)) // this must come before the screen objects only block
-			orient2hud(M)					// dunno why it wasn't before
+		// this must come before the screen objects only block, dunno why it wasn't before
+		if(over_object == M && (src.ClickAccessible(M, depth=STORAGE_VIEW_DEPTH) || Adjacent(M)))
+			orient2hud(M)
 			if(M.s_active)
 				M.s_active.close(M)
 			show_to(M)
@@ -157,7 +158,7 @@
 	boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
 	for(var/obj/O in contents)
 		O.screen_loc = "[cx],[cy]"
-		O.layer = 20
+		O.layer = ABOVE_HUD_LAYER
 		cx++
 		if(cx > mx)
 			cx = tx
@@ -176,7 +177,7 @@
 			ND.sample_object.mouse_opacity = 2
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
-			ND.sample_object.layer = 20
+			ND.sample_object.layer = ABOVE_HUD_LAYER
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -186,7 +187,7 @@
 			O.mouse_opacity = 2 //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
-			O.layer = 20
+			O.layer = ABOVE_HUD_LAYER
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -205,7 +206,7 @@
 	number = 1
 
 
-//This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
+//This proc determines the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /obj/item/weapon/storage/proc/orient2hud(mob/user)
 	var/adjusted_contents = contents.len
 
@@ -301,11 +302,18 @@
 			return 0
 	if(silent)
 		prevent_warning = 1
+	if(W.pulledby)
+		W.pulledby.stop_pulling()
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
 		if(usr.client && usr.s_active != src)
 			usr.client.screen -= W
+		if(usr.observers && usr.observers.len)
+			for(var/M in usr.observers)
+				var/mob/dead/observe = M
+				if(observe.client && observe.s_active != src)
+					observe.client.screen -= W
 
 		add_fingerprint(usr)
 
@@ -366,6 +374,10 @@
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
 	..()
+	if(istype(W, /obj/item/weapon/hand_labeler))
+		var/obj/item/weapon/hand_labeler/labeler = W
+		if(labeler.mode)
+			return 0
 	. = 1 //no afterattack
 	if(isrobot(user))
 		return	//Robots can't interact with storage items.
@@ -462,11 +474,11 @@
 	boxes.master = src
 	boxes.icon_state = "block"
 	boxes.screen_loc = "7,7 to 10,8"
-	boxes.layer = 19
+	boxes.layer = HUD_LAYER
 	closer = new /obj/screen/close()
 	closer.master = src
 	closer.icon_state = "backpack_close"
-	closer.layer = 20
+	closer.layer = ABOVE_HUD_LAYER
 	orient2hud()
 
 

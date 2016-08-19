@@ -240,6 +240,76 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
 
+// CLOCKCULT
+/obj/screen/alert/clockwork
+	alerttooltipstyle = "clockcult"
+
+/obj/screen/alert/clockwork/nocache
+	name = "No Tinkerer's Cache"
+	desc = "In order to share components and unlock higher tier \
+		scripture, a tinkerer's cache must be constructed somewhere \
+		in the world. Try to place it somewhere accessible, yet hidden."
+	icon_state = "nocache"
+
+/obj/screen/alert/clockwork/infodump
+	name = "Global Records"
+	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
+	icon_state = "clockinfo"
+
+/obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
+	if(ratvar_awakens)
+		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
+	else
+		var/servants = 0
+		var/validservants = 0
+		var/unconverted_ai_exists = FALSE
+		var/list/scripture_states = scripture_unlock_check()
+		for(var/mob/living/L in living_mob_list)
+			if(is_servant_of_ratvar(L))
+				servants++
+				if(ishuman(L) || issilicon(L))
+					validservants++
+			else if(isAI(L))
+				unconverted_ai_exists = TRUE
+		if(servants > 1)
+			if(validservants > 1)
+				desc = "<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>"
+			else
+				desc = "<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>"
+		else
+			desc = "<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>"
+		desc += "<b>[clockwork_caches ? "[clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
+		<b>[clockwork_construction_value]</b> Construction Value.<br>"
+		if(clockwork_daemons)
+			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
+		else
+			desc += "No Tinkerer's Daemons.<br>"
+		for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+			var/area/gate_area = get_area(G)
+			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
+			if(G.ratvar_portal)
+				desc += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+			else
+				desc += "Seconds until Proselytization: <b>[G.get_arrival_text(TRUE)]</b><br>"
+		if(unconverted_ai_exists)
+			desc += "<b>An unconverted AI exists!</b><br>"
+		if(scripture_states[SCRIPTURE_REVENANT])
+			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
+			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
+			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
+			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
+			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
+				desc += "Generals available:<br><b>[inathneq_available ? "<font color=#1E8CE1>INATH-NEQ</font><br>":""][sevtug_available ? "<font color=#AF0AAF>SEVTUG</font><br>":""]\
+				[nezbere_available ? "<font color=#5A6068>NEZBERE</font><br>":""][nezcrentr_available ? "<font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
+			else
+				desc += "Generals available: <b>NONE</b><br>"
+		else
+			desc += "Generals available: <b>NONE</b><br>"
+		for(var/i in scripture_states)
+			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
+				desc += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+	..()
+
 //GUARDIANS
 
 /obj/screen/alert/cancharge
@@ -297,6 +367,23 @@ so as to remain in compliance with the most up-to-date laws."
 	icon_state = "newlaw"
 	timeout = 300
 
+/obj/screen/alert/hackingapc
+	name = "Hacking APC"
+	desc = "An Area Power Controller is being hacked. When the process is \
+		complete, you will have exclusive control of it, and you will gain \
+		additional processing time to unlock more malfunction abilities."
+	icon_state = "hackingapc"
+	timeout = 600
+	var/atom/target = null
+
+/obj/screen/alert/hackingapc/Click()
+	if(!usr || !usr.client) return
+	if(!target) return
+	var/mob/living/silicon/ai/AI = usr
+	var/turf/T = get_turf(target)
+	if(T)
+		AI.eyeobj.setLoc(T)
+
 //MECHS
 
 /obj/screen/alert/low_mech_integrity
@@ -318,25 +405,28 @@ so as to remain in compliance with the most up-to-date laws."
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
-/obj/screen/alert/notify_jump
+/obj/screen/alert/notify_action
 	name = "Body created"
 	desc = "A body was created. You can enter it."
 	icon_state = "template"
 	timeout = 300
-	var/atom/jump_target = null
-	var/attack_not_jump = null
+	var/atom/target = null
+	var/action = NOTIFY_JUMP
 
-/obj/screen/alert/notify_jump/Click()
+/obj/screen/alert/notify_action/Click()
 	if(!usr || !usr.client) return
-	if(!jump_target) return
+	if(!target) return
 	var/mob/dead/observer/G = usr
 	if(!istype(G)) return
-	if(attack_not_jump)
-		jump_target.attack_ghost(G)
-	else
-		var/turf/T = get_turf(jump_target)
-		if(T && isturf(T))
-			G.loc = T
+	switch(action)
+		if(NOTIFY_ATTACK)
+			target.attack_ghost(G)
+		if(NOTIFY_JUMP)
+			var/turf/T = get_turf(target)
+			if(T && isturf(T))
+				G.loc = T
+		if(NOTIFY_ORBIT)
+			G.ManualFollow(target)
 
 //OBJECT-BASED
 

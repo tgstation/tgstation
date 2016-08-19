@@ -31,7 +31,12 @@
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
+		if(P.dismemberment)
+			check_projectile_dismemberment(P, def_zone)
 	return P.on_hit(src, armor, def_zone)
+
+/mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
+	return 0
 
 /proc/vol_by_throwforce_and_or_w_class(obj/item/I)
 		if(!I)
@@ -72,6 +77,8 @@
 			apply_damage(I.throwforce, dtype, zone, armor, I)
 			if(I.thrownby)
 				add_logs(I.thrownby, src, "hit", I)
+		else
+			return 1
 	else
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	..()
@@ -112,6 +119,8 @@
 		src.AddLuminosity(3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
+		return TRUE
+	return FALSE
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
@@ -161,7 +170,8 @@
 	if(on_fire) //Only spread fire stacks if we're on fire
 		fire_stacks /= 2
 		L.fire_stacks += fire_stacks
-		L.IgniteMob()
+		if(L.IgniteMob())
+			log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
 	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
 		L.fire_stacks /= 2
@@ -170,32 +180,58 @@
 
 //Mobs on Fire end
 
-
 /mob/living/acid_act(acidpwr, toxpwr, acid_volume)
 	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
 
-/mob/living/proc/grabbedby(mob/living/carbon/user,supress_message = 0)
+/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
 	if(user == src || anchored)
 		return 0
+	if(!user.pulling || user.pulling != src)
+		user.start_pulling(src, supress_message)
+		return
+
 	if(!(status_flags & CANPUSH))
+		user << "<span class='warning'>[src] can't be grabbed more aggressively!</span>"
 		return 0
+	grippedby(user)
 
-	add_logs(user, src, "grabbed", addition="passively")
+//proc to upgrade a simple pull into a more aggressive grab.
+/mob/living/proc/grippedby(mob/living/carbon/user)
+	if(user.grab_state < GRAB_KILL)
+		user.changeNext_move(CLICK_CD_GRABBING)
+		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-	if(anchored || !Adjacent(user))
-		return 0
-	if(buckled)
-		user << "<span class='warning'>You cannot grab [src], \he is buckled in!</span>"
-		return 0
-	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
-	if(!user.put_in_active_hand(G)) //if we can't put the grab in our hand for some reason, we delete it.
-		qdel(G)
-	G.synch()
-	LAssailant = user
-
-	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-	if(!supress_message)
-		visible_message("<span class='danger'>[user] has grabbed [src] passively!</span>")
+		if(user.grab_state) //only the first upgrade is instantaneous
+			var/old_grab_state = user.grab_state
+			var/grab_upgrade_time = 30
+			visible_message("<span class='danger'>[user] starts to tighten \his grip on [src]!</span>", \
+				"<span class='userdanger'>[user] starts to tighten \his grip on you!</span>")
+			if(!do_mob(user, src, grab_upgrade_time))
+				return 0
+			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != "grab")
+				return 0
+		user.grab_state++
+		switch(user.grab_state)
+			if(GRAB_AGGRESSIVE)
+				add_logs(user, src, "grabbed", addition="aggressively")
+				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
+								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
+				drop_r_hand()
+				drop_l_hand()
+				stop_pulling()
+			if(GRAB_NECK)
+				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
+								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
+				update_canmove() //we fall down
+				if(!buckled && !density)
+					Move(user.loc)
+			if(GRAB_KILL)
+				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
+								"<span class='userdanger'>[user] is strangling you!</span>")
+				update_canmove() //we fall down
+				if(!buckled && !density)
+					Move(user.loc)
+		return 1
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
@@ -216,6 +252,7 @@
 		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
+	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return 0
@@ -295,8 +332,60 @@
 			M.do_attack_animation(src)
 			return 1
 
-/mob/living/incapacitated()
-	if(stat || paralysis || stunned || weakened || restrained())
+/mob/living/incapacitated(ignore_restraints, ignore_grab)
+	if(stat || paralysis || stunned || weakened || (!ignore_restraints && restrained(ignore_grab)))
 		return 1
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
+
+/mob/living/proc/add_stun_absorption(key, duration, priority, message, self_message, examine_message)
+//adds a stun absorption with a key, a duration in deciseconds, its priority, and the messages it makes when you're stunned/examined, if any
+	if(!islist(stun_absorption))
+		stun_absorption = list()
+	if(stun_absorption[key])
+		stun_absorption[key]["end_time"] = world.time + duration
+		stun_absorption[key]["priority"] = priority
+		stun_absorption[key]["stuns_absorbed"] = 0
+	else
+		stun_absorption[key] = list("end_time" = world.time + duration, "priority" = priority, "stuns_absorbed" = 0, \
+		"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
+
+/mob/living/Stun(amount, updating = 1, ignore_canstun = 0)
+	if(!stat && islist(stun_absorption))
+		var/priority_absorb_key
+		var/highest_priority
+		for(var/i in stun_absorption)
+			if(stun_absorption[i]["end_time"] > world.time && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
+				priority_absorb_key = stun_absorption[i]
+				highest_priority = stun_absorption[i]["priority"]
+		if(priority_absorb_key)
+			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
+				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+				else if(priority_absorb_key["visible_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
+				else if(priority_absorb_key["self_message"])
+					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
+			priority_absorb_key["stuns_absorbed"] += amount
+			return 0
+	..()
+
+/mob/living/Weaken(amount, updating = 1, ignore_canweaken = 0)
+	if(!stat && islist(stun_absorption))
+		var/priority_absorb_key
+		var/highest_priority
+		for(var/i in stun_absorption)
+			if(stun_absorption[i]["end_time"] > world.time && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
+				priority_absorb_key = stun_absorption[i]
+				highest_priority = priority_absorb_key["priority"]
+		if(priority_absorb_key)
+			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
+				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+				else if(priority_absorb_key["visible_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
+				else if(priority_absorb_key["self_message"])
+					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
+			priority_absorb_key["stuns_absorbed"] += amount
+			return 0
+	..()

@@ -13,6 +13,7 @@
 	potency = 50
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	icon_dead = "towercap-dead"
 	plant_type = PLANT_MUSHROOM
 	mutatelist = list(/obj/item/seeds/tower/steel)
@@ -90,3 +91,106 @@
 	accepted = list()
 	plank_type = /obj/item/stack/rods
 	plank_name = "rods"
+
+
+/////////BONFIRES//////////
+
+/obj/structure/bonfire
+	name = "bonfire"
+	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "bonfire"
+	density = FALSE
+	anchored = TRUE
+	buckle_lying = 0
+	var/burning = 0
+	var/flame_strength = FLAMMABLE
+	var/fire_stack_strength = 5
+
+/obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stack/rods) && !can_buckle)
+		var/obj/item/stack/rods/R = W
+		R.use(1)
+		can_buckle = 1
+		buckle_requires_restraints = 1
+		user << "<span class='italics'>You add a rod to [src]."
+		var/image/U = image(icon='icons/obj/hydroponics/equipment.dmi',icon_state="bonfire_rod",pixel_y=16)
+		underlays += U
+	if(W.is_hot())
+		StartBurning()
+
+
+/obj/structure/bonfire/attack_hand(mob/user)
+	if(burning)
+		user << "<span class='warning'>You need to extinguish [src] before removing the logs!"
+		return
+	if(!has_buckled_mobs() && do_after(user, 50, target = src))
+		for(var/I in 1 to 5)
+			var/obj/item/weapon/grown/log/L = new /obj/item/weapon/grown/log(src.loc)
+			L.pixel_x += rand(1,4)
+			L.pixel_y += rand(1,4)
+		qdel(src)
+		return
+	..()
+
+
+/obj/structure/bonfire/proc/CheckOxygen()
+	if(istype(loc,/turf/open))
+		var/turf/open/O = loc
+		if(O.air)
+			var/G = O.air.gases
+			if(G["o2"][MOLES] > 16)
+				return 1
+	return 0
+
+/obj/structure/bonfire/proc/StartBurning()
+	if(!burning && CheckOxygen())
+		icon_state = "bonfire_on_fire"
+		burning = 1
+		SetLuminosity(6)
+		Burn()
+		START_PROCESSING(SSobj, src)
+
+/obj/structure/bonfire/fire_act()
+	StartBurning()
+
+/obj/structure/bonfire/Crossed(atom/movable/AM)
+	if(burning)
+		Burn()
+
+/obj/structure/bonfire/proc/Burn()
+	var/turf/current_location = get_turf(src)
+	current_location.hotspot_expose(1000,500,1)
+	for(var/A in current_location)
+		if(A == src)
+			continue
+		if(isobj(A))
+			var/obj/O = A
+			if(O.burn_state < flame_strength)
+				continue
+			O.fire_act()
+		else if(isliving(A))
+			var/mob/living/L = A
+			L.adjust_fire_stacks(fire_stack_strength)
+			L.IgniteMob()
+
+/obj/structure/bonfire/process()
+	if(!CheckOxygen())
+		extinguish()
+		return
+	Burn()
+
+/obj/structure/bonfire/extinguish()
+	if(burning)
+		icon_state = "bonfire"
+		burning = 0
+		SetLuminosity(0)
+		STOP_PROCESSING(SSobj, src)
+
+/obj/structure/bonfire/buckle_mob(mob/living/M, force = 0)
+	if(..())
+		M.pixel_y += 13
+
+/obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force=0)
+	if(..())
+		buckled_mob.pixel_y -= 13

@@ -10,11 +10,13 @@ Mineral Sheets
 		- Gold
 		- Silver
 		- Clown
+		- Titanium
+		- Plastitanium
 	Others:
 		- Adamantine
 		- Mythril
 		- Enriched Uranium
-		- Bones
+		- Abductor
 */
 
 /obj/item/stack/sheet/mineral
@@ -62,12 +64,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	icon = 'icons/obj/items.dmi'
 	icon_state = "sandbags"
 	singular_name = "sandbag"
-	force = 5
-	layer = 2.95
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
+	layer = LOW_ITEM_LAYER
 	origin_tech = "materials=2"
 
 var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
@@ -87,10 +84,6 @@ var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
 	name = "diamond"
 	icon_state = "sheet-diamond"
 	singular_name = "diamond"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_range = 3
 	origin_tech = "materials=6"
 	sheettype = "diamond"
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
@@ -116,11 +109,6 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	name = "uranium"
 	icon_state = "sheet-uranium"
 	singular_name = "uranium sheet"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
 	origin_tech = "materials=5"
 	sheettype = "uranium"
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -145,11 +133,6 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
 	singular_name = "plasma sheet"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
 	origin_tech = "plasmatech=2;materials=2"
 	sheettype = "plasma"
 	burn_state = FLAMMABLE
@@ -187,11 +170,6 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	name = "gold"
 	icon_state = "sheet-gold"
 	singular_name = "gold bar"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
 	origin_tech = "materials=4"
 	sheettype = "gold"
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
@@ -203,6 +181,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("HoP Statue", /obj/structure/statue/gold/hop, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("CE Statue", /obj/structure/statue/gold/ce, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("RD Statue", /obj/structure/statue/gold/rd, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Simple Crown", /obj/item/clothing/head/crown, 5), \
 	new/datum/stack_recipe("CMO Statue", /obj/structure/statue/gold/cmo, 5, one_per_turf = 1, on_floor = 1), \
 	)
 
@@ -219,12 +198,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	name = "silver"
 	icon_state = "sheet-silver"
 	singular_name = "silver bar"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
-	origin_tech = "materials=3"
+	origin_tech = "materials=4"
 	sheettype = "silver"
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 
@@ -251,11 +225,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	name = "bananium"
 	icon_state = "sheet-clown"
 	singular_name = "bananium sheet"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
 	origin_tech = "materials=4"
 	sheettype = "clown"
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -272,6 +241,60 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	..()
 
 /*
+ * Titanium
+ */
+/obj/item/stack/sheet/mineral/titanium
+	name = "titanium"
+	icon_state = "sheet-titanium"
+	singular_name = "titanium sheet"
+	force = 5
+	throwforce = 5
+	w_class = 3
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=4"
+	sheettype = "titanium"
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
+
+var/global/list/datum/stack_recipe/titanium_recipes = list ( \
+	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
+	)
+
+/obj/item/stack/sheet/mineral/titanium/New(var/loc, var/amount=null)
+	recipes = titanium_recipes
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
+	..()
+
+
+/*
+ * Plastitanium
+ */
+/obj/item/stack/sheet/mineral/plastitanium
+	name = "plastitanium"
+	icon_state = "sheet-plastitanium"
+	singular_name = "plastitanium sheet"
+	force = 5
+	throwforce = 5
+	w_class = 3
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=4"
+	sheettype = "plastitanium"
+	materials = list(MAT_TITANIUM=6000, MAT_PLASMA=6000)
+
+var/global/list/datum/stack_recipe/plastitanium_recipes = list ( \
+	new/datum/stack_recipe("plas-titanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
+	)
+
+/obj/item/stack/sheet/mineral/plastitanium/New(var/loc, var/amount=null)
+	recipes = plastitanium_recipes
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
+	..()
+
+
+/*
  * Snow
  */
 /obj/item/stack/sheet/mineral/snow
@@ -280,9 +303,6 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	singular_name = "snow block"
 	force = 1
 	throwforce = 2
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
 	origin_tech = "materials=1"
 	sheettype = "snow"
 
@@ -307,11 +327,6 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	name = "enriched uranium"
 	icon_state = "sheet-enruranium"
 	singular_name = "enriched uranium sheet"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
 	origin_tech = "materials=6"
 	materials = list(MAT_URANIUM=3000)
 
@@ -322,11 +337,6 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
 	origin_tech = "materials=4"
 
 /*
@@ -336,11 +346,6 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	name = "mythril"
 	icon_state = "sheet-mythril"
 	singular_name = "mythril sheet"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
 	origin_tech = "materials=4"
 
 /*
@@ -351,11 +356,6 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "sheet-abductor"
 	singular_name = "alien alloy sheet"
-	force = 5
-	throwforce = 5
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
 	origin_tech = "materials=6;abductor=1"
 	sheettype = "abductor"
 
@@ -375,6 +375,3 @@ var/global/list/datum/stack_recipe/abductor_recipes = list ( \
 /obj/item/stack/sheet/mineral/abductor/New(var/loc, var/amount=null)
 	recipes = abductor_recipes
 	..()
-
-
-

@@ -4,6 +4,8 @@
 	desc = "why is it detached..."
 	force = 3
 	throwforce = 3
+	icon_state = ""
+	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	var/mob/living/carbon/human/owner = null
 	var/status = ORGAN_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
@@ -37,12 +39,30 @@
 	if(burn_dam > 0)
 		user << "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>"
 
+/obj/item/bodypart/blob_act()
+	take_damage(max_damage)
 
 /obj/item/bodypart/Destroy()
 	if(owner)
 		owner.bodyparts -= src
 		owner = null
 	return ..()
+
+/obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(EASYLIMBATTACHMENT in H.dna.species.specflags)
+			if(!H.get_bodypart(body_zone))
+				if(H == user)
+					H.visible_message("<span class='warning'>[H] jams [src] into \his empty socket!</span>",\
+					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
+				else
+					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
+					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
+				user.unEquip(src,1)
+				attach_limb(C)
+				return
+	..()
 
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness)
@@ -61,6 +81,8 @@
 /obj/item/bodypart/throw_impact(atom/hit_atom)
 	..()
 	playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
+	pixel_x = rand(-3, 3)
+	pixel_y = rand(-3, 3)
 
 /obj/item/bodypart/proc/drop_organs(mob/user)
 	var/turf/T = get_turf(src)
@@ -113,13 +135,11 @@
 //Cannot remove negative damage (i.e. apply damage)
 /obj/item/bodypart/proc/heal_damage(brute, burn, robotic)
 
-	if(robotic && status != ORGAN_ROBOTIC) // This makes organic limbs not heal when the proc is in Robotic mode.
-		brute = max(0, brute - 3)
-		burn = max(0, burn - 3)
+	if(robotic && status != ORGAN_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
+		return
 
-	if(!robotic && status == ORGAN_ROBOTIC) // This makes robolimbs not healable by chems.
-		brute = max(0, brute - 3)
-		burn = max(0, burn - 3)
+	if(!robotic && status == ORGAN_ROBOTIC) //This makes robolimbs not healable by chems.
+		return
 
 	brute_dam	= max(brute_dam - brute, 0)
 	burn_dam	= max(burn_dam - burn, 0)
@@ -174,7 +194,7 @@
 	should_draw_greyscale = FALSE
 
 	var/datum/species/S = H.dna.species
-	species_id = S.id
+	species_id = S.limbs_id
 
 	if(S.use_skintones)
 		skin_tone = H.skin_tone
@@ -186,7 +206,10 @@
 	should_draw_gender = S.sexes
 
 	if(MUTCOLORS in S.specflags)
-		species_color = H.dna.features["mcolor"]
+		if(S.fixed_mut_color)
+			species_color = S.fixed_mut_color
+		else
+			species_color = H.dna.features["mcolor"]
 		should_draw_greyscale = TRUE
 	else
 		species_color = ""
@@ -206,12 +229,12 @@
 
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
-	overlays.Cut()
+	cut_overlays()
 	var/image/I = get_limb_icon(1)
 	if(I)
 		I.pixel_x = px_x
 		I.pixel_y = px_y
-		overlays += I
+		add_overlay(I)
 
 //Gives you a proper icon appearance for the dismembered limb
 /obj/item/bodypart/proc/get_limb_icon(dropped)
@@ -268,7 +291,6 @@
 /obj/item/bodypart/chest
 	name = "chest"
 	desc = "It's impolite to stare at a person's chest."
-	icon_state = "chest"
 	max_damage = 200
 	body_zone = "chest"
 	body_part = CHEST
@@ -283,7 +305,11 @@
 
 /obj/item/bodypart/l_arm
 	name = "left arm"
-	icon_state = "l_arm"
+	desc = "Did you know that the word 'sinister' stems originally from the \
+		Latin 'sinestra' (left hand), because the left hand was supposed to \
+		be possessed by the devil? This arm appears to be possessed by no \
+		one though."
+	attack_verb = list("slapped", "punched")
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
@@ -292,7 +318,9 @@
 
 /obj/item/bodypart/r_arm
 	name = "right arm"
-	icon_state = "r_arm"
+	desc = "Over 87% of humans are right handed. That figure is much lower \
+		among humans missing their right arm."
+	attack_verb = list("slapped", "punched")
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
@@ -301,7 +329,9 @@
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
-	icon_state = "l_leg"
+	desc = "Some athletes prefer to tie their left shoelaces first for good \
+		luck. In this instance, it probably would not have helped."
+	attack_verb = list("kicked", "stomped")
 	max_damage = 50
 	body_zone = "l_leg"
 	body_part = LEG_LEFT
@@ -310,7 +340,11 @@
 
 /obj/item/bodypart/r_leg
 	name = "right leg"
-	icon_state = "r_leg"
+	desc = "You put your right leg in, your right leg out. In, out, in, out, \
+		shake it all about. And apparently then it detaches.\n\
+		The hokey pokey has certainly changed a lot since space colonisation."
+	// alternative spellings of 'pokey' are availible
+	attack_verb = list("kicked", "stomped")
 	max_damage = 50
 	body_zone = "r_leg"
 	body_part = LEG_RIGHT
@@ -322,15 +356,9 @@
 
 /obj/item/severedtail
 	name = "tail"
-	desc = "A severed tail."
+	desc = "A severed tail. Somewhere, no doubt, a lizard hater is very \
+		pleased with themselves."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "severedtail"
 	color = "#161"
 	var/markings = "Smooth"
-
-
-
-
-
-
-

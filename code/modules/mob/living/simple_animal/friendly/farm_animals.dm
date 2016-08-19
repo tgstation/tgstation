@@ -26,6 +26,7 @@
 	melee_damage_upper = 2
 	environment_smash = 0
 	stop_automated_movement_when_pulled = 1
+	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/New()
@@ -102,6 +103,7 @@
 	maxHealth = 50
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = 2
+	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/cow/New()
 	udder = new()
@@ -126,17 +128,27 @@
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == "disarm" && icon_state != icon_dead)
-		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
+		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
+			"<span class='notice'>You tip over [src].</span>")
+		src << "<span class='userdanger'>You are tipped over by [M]!</span>"
 		Weaken(30)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)
 				icon_state = icon_living
-				var/list/responses = list(	"[src] looks at you imploringly.",
-											"[src] looks at you pleadingly",
-											"[src] looks at you with a resigned expression.",
-											"[src] seems resigned to its fate.")
-				M << pick(responses)
+				var/external
+				var/internal
+				switch(pick(1,2,3,4))
+					if(1,2,3)
+						var/text = pick("imploringly.", "pleadingly.",
+							"with a resigned expression.")
+						external = "[src] looks at [M] [text]"
+						internal = "You look at [M] [text]"
+					if(4)
+						external = "[src] seems resigned to its fate."
+						internal = "You resign yourself to your fate."
+				visible_message("<span class='notice'>[external]</span>",
+					"<span class='revennotice'>[internal]</span>")
 	else
 		..()
 
@@ -264,7 +276,7 @@ var/global/chicken_count = 0
 		E.pixel_y = rand(-6,6)
 		if(eggsFertile)
 			if(chicken_count < MAX_CHICKENS && prob(25))
-				SSobj.processing |= E
+				START_PROCESSING(SSobj, E)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
@@ -273,10 +285,10 @@ var/global/chicken_count = 0
 		if(amount_grown >= 100)
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			qdel(src)
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 
 /obj/item/udder

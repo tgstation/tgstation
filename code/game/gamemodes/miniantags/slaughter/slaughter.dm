@@ -35,7 +35,7 @@
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/playstyle_string = "<B><font size=3 color='red'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
-							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and dissaapearing from the station at will. \
+							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and disappearing from the station at will. \
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
 							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
 
@@ -43,11 +43,10 @@
 				/obj/effect/decal/cleanable/blood/innards, \
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
-	deathmessage = "<span class='danger'>The generic slaughter demon screams in anger because this is the default death message!</span>"
+	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
 
 /mob/living/simple_animal/slaughter/New()
 	..()
-	deathmessage = "<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera.</span>"
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
@@ -77,8 +76,8 @@
 	name = "demon heart"
 	desc = "Still it beats furiously, emanating an aura of utter hate."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "demon_heart"
-	origin_tech = "combat=5;biotech=8"
+	icon_state = "demon_heart-on"
+	origin_tech = "combat=5;biotech=7"
 
 /obj/item/organ/heart/demon/update_icon()
 	return //always beating visually
@@ -129,38 +128,56 @@
 
 	icon_state = "bowmon"
 	icon_living = "bowmon"
-
+	deathmessage = "fades out, as all of its friends are released from its \
+		prison of hugs."
 	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})
 
 	// Keep the people we hug!
 	var/list/consumed_mobs = list()
 
-	// HOT. PINK.
-	//color = "#FF69B4"
+	playstyle_string = "<B><font size=3 color='red'>You are a laughter \
+	demon,</font> a wonderful creature from another realm. You have a single \
+	desire: <span class='clown'>To hug and tickle.</span><BR>\
+	You may use the \"Blood Crawl\" ability near blood pools to travel \
+	through them, appearing and disappearing from the station at will. \
+	Pulling a dead or unconscious mob while you enter a pool will pull \
+	them in with you, allowing you to hug them and regain your health.<BR> \
+	You move quickly upon leaving a pool of blood, but the material world \
+	will soon sap your strength and leave you sluggish.<BR>\
+	What makes you a little sad is that people seem to die when you tickle \
+	them; but don't worry! When you die, everyone you hugged will be \
+	released and fully healed, because in the end it's just a jape, \
+	sibling!</B>"
 
+/mob/living/simple_animal/slaughter/laughter/Destroy()
+	release_friends()
+	. = ..()
 
-/mob/living/simple_animal/slaughter/laughter/New()
-	..()
+/mob/living/simple_animal/slaughter/laughter/ex_act(severity)
+	switch(severity)
+		if(1)
+			death()
+		if(2)
+			adjustBruteLoss(60)
+		if(3)
+			adjustBruteLoss(30)
 
-	deathmessage = "<span class='warning'>[src] fades out, as all of its friends are released from its prison of hugs.</span>"
-
-/mob/living/simple_animal/slaughter/laughter/death()
+/mob/living/simple_animal/slaughter/laughter/proc/release_friends()
 	if(!consumed_mobs)
-		return ..()
+		return
 
 	for(var/mob/living/M in consumed_mobs)
-		M.loc = get_turf(src)
-		if(M.revive(full_heal = 1))
-			// Feel there should be a better way of FORCING a mob's ghost
-			// back into the body
-			if(!M.ckey)
-				for(var/mob/dead/observer/ghost in player_list)
-					if(M.real_name == ghost.real_name)
-						ghost.reenter_corpse()
-						break
-			M << "<span class='clown'>You leave the [src]'s warm embrace, and feel ready to take on the world.</span>"
-
-	return ..()
+		if(!M)
+			continue
+		var/turf/T = find_safe_turf()
+		if(!T)
+			T = get_turf(src)
+		M.forceMove(T)
+		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
+			M.grab_ghost(force = TRUE)
+			playsound(T, feast_sound, 50, 1, -1)
+			M << "<span class='clown'>You leave [src]'s warm embrace, \
+				and feel ready to take on the world.</span>"
 
 /mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
 	if(consumed_mobs)

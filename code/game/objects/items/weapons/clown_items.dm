@@ -135,6 +135,7 @@
 	icon_state = "air_horn"
 	honksound = 'sound/items/AirHorn2.ogg'
 	cooldowntime = 50
+	origin_tech = "materials=4;engineering=4"
 
 /obj/item/weapon/bikehorn/golden
 	name = "golden bike horn"
@@ -143,13 +144,12 @@
 	item_state = "gold_horn"
 
 /obj/item/weapon/bikehorn/golden/attack()
-	..()
 	flip_mobs()
+	return ..()
 
 /obj/item/weapon/bikehorn/golden/attack_self(mob/user)
-	..()
 	flip_mobs()
-
+	..()
 
 /obj/item/weapon/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
 	if (!spam_flag)
@@ -160,3 +160,9 @@
 				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
 					continue
 			M.emote("flip")
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter
+	name = "Canned Laughter"
+	desc = "Just looking at this makes you want to giggle."
+	icon_state = "laughter"
+	list_reagents = list("laughter" = 50)

@@ -12,5 +12,4 @@
 /datum/round_event/wizard/lava/start()
 	if(!started)
 		started = TRUE
-		var/datum/weather/floor_is_lava/LAVA = new /datum/weather/floor_is_lava
-		LAVA.weather_start_up()
+		SSweather.run_weather("the floor is lava")

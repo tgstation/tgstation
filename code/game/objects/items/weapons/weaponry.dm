@@ -1,5 +1,3 @@
-
-
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -145,7 +143,7 @@
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
-	origin_tech = "materials=1"
+	origin_tech = "engineering=3;combat=2"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	var/extended = 0
@@ -270,6 +268,17 @@
 	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
 	qdel(src)
 
+/obj/item/weapon/statuebust
+	name = "bust"
+	desc = "A priceless ancient marble bust, the kind that belongs in a museum." //or you can hit people with it
+	icon = 'icons/obj/statue.dmi'
+	icon_state = "bust"
+	force = 15
+	throwforce = 10
+	throw_speed = 5
+	throw_range = 2
+	attack_verb = list("busted")
+
 /obj/item/weapon/tailclub
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."
@@ -284,6 +293,115 @@
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
-	origin_tech = "combat=1"
+	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
 
+/obj/item/weapon/melee/skateboard
+	name = "skateboard"
+	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
+	icon_state = "skateboard"
+	item_state = "skateboard"
+	force = 12
+	throwforce = 4
+	w_class = 5.0
+	attack_verb = list("smacked", "whacked", "slammed", "smashed")
+
+/obj/item/weapon/melee/skateboard/attack_self(mob/user)
+	new /obj/vehicle/scooter/skateboard(get_turf(user))
+	qdel(src)
+
+/obj/item/weapon/melee/baseball_bat
+	name = "baseball bat"
+	desc = "There ain't a skull in the league that can withstand a swatter."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "baseball_bat"
+	item_state = "baseball_bat"
+	force = 10
+	throwforce = 12
+	attack_verb = list("beat", "smacked")
+	w_class = 5
+	var/homerun_ready = 0
+	var/homerun_able = 0
+
+/obj/item/weapon/melee/baseball_bat/homerun
+	name = "home run bat"
+	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
+	homerun_able = 1
+
+/obj/item/weapon/melee/baseball_bat/attack_self(mob/user)
+	if(!homerun_able)
+		..()
+		return
+	if(homerun_ready)
+		user << "<span class='notice'>You're already ready to do a home run!</span>"
+		..()
+		return
+	user << "<span class='warning'>You begin gathering strength...</span>"
+	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, 1)
+	if(do_after(user, 90, target = src))
+		user << "<span class='userdanger'>You gather power! Time for a home run!</span>"
+		homerun_ready = 1
+	..()
+
+/obj/item/weapon/melee/baseball_bat/attack(mob/living/target, mob/living/user)
+	. = ..()
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
+	if(homerun_ready)
+		user.visible_message("<span class='userdanger'>It's a home run!</span>")
+		target.throw_at(throw_target, rand(8,10), 14, user)
+		target.ex_act(2)
+		playsound(get_turf(src), 'sound/weapons/HOMERUN.ogg', 100, 1)
+		homerun_ready = 0
+		return
+	else
+		target.throw_at(throw_target, rand(1,2), 7, user)
+
+/obj/item/weapon/melee/baseball_bat/ablative
+	name = "metal baseball bat"
+	desc = "This bat is made of highly reflective, highly armored material."
+	icon_state = "baseball_bat_metal"
+	item_state = "baseball_bat_metal"
+	force = 12
+	throwforce = 15
+
+/obj/item/weapon/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
+	var/picksound = rand(1,2)
+	var/turf = get_turf(src)
+	if(picksound == 1)
+		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, 1)
+	if(picksound == 2)
+		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
+	return 1
+
+/obj/item/weapon/melee/flyswatter
+	name = "Flyswatter"
+	desc = "Useful for killing insects of all sizes."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "flyswatter"
+	item_state = "flyswatter"
+	force = 1
+	throwforce = 1
+	attack_verb = list("swatted", "smacked")
+	hitsound = 'sound/effects/snap.ogg'
+	w_class = 2
+	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
+	var/list/strong_against
+
+/obj/item/weapon/melee/flyswatter/New()
+	strong_against = typecacheof(list(
+					/mob/living/simple_animal/hostile/poison/bees/,
+					/mob/living/simple_animal/butterfly,
+					/mob/living/simple_animal/cockroach,
+					/obj/item/queen_bee/
+	))
+
+/obj/item/weapon/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
+	if(proximity_flag)
+		if(is_type_in_typecache(target, strong_against))
+			new /obj/effect/decal/cleanable/deadcockroach(get_turf(target))
+			user << "<span class='warning'>You easily splat the [target].</span>"
+			if(istype(target, /mob/living/))
+				var/mob/living/bug = target
+				bug.death(1)
+			else
+				qdel(target)

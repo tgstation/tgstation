@@ -27,7 +27,7 @@
 			animation.density = 0
 			animation.anchored = 1
 			animation.icon = 'icons/mob/mob.dmi'
-			animation.layer = 5
+			animation.layer = FLY_LAYER
 			animation.master = holder
 			target.ExtinguishMob()
 			if(target.buckled)
@@ -35,7 +35,7 @@
 			if(target.pulledby)
 				target.pulledby.stop_pulling()
 			target.stop_pulling()
-			if(target.buckled_mobs.len)
+			if(target.has_buckled_mobs())
 				target.unbuckle_all_mobs(force=1)
 			jaunt_disappear(animation, target)
 			target.loc = holder

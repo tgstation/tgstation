@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'Ã©rable</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -116,12 +116,9 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-
 	dog_fashion = /datum/dog_fashion/head/pirate
 
-/obj/item/clothing/head/hgpiratecap
-	name = "pirate hat"
-	desc = "Yarr."
+/obj/item/clothing/head/pirate/captain
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 
@@ -136,6 +133,7 @@
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
 	item_state = "bowler"
+	pockets = /obj/item/weapon/storage/internal/pocket/small
 
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"
@@ -176,6 +174,7 @@
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	pockets = /obj/item/weapon/storage/internal/pocket/small
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -262,35 +261,13 @@
 	icon_state = "papersack_smile"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
-/*
--!WARNING!-
--POTENTIAL TRIGGER-INDUCING ITEMS AHEAD-
--TREAD WITH CAUTION-
-*/
+/obj/item/clothing/head/crown
+	name = "crown"
+	desc = "A crown fit for a king, a petty king maybe."
+	icon_state = "crown"
+	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0) //for a warrior king //energy cause gold is reflective //worse than sec helm overall
 
-/obj/item/clothing/head/helmet/stahlhelm
-	name = "stahlhelm"
-	desc = "A hard military helmet, seems dusty."
-	icon_state = "stalhelm"
-	item_state = "stalhelm"
-	armor = list(melee = 15, bullet = 10, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 30
-
-/obj/item/clothing/head/helmet/panzer
-	name = "Panzer Cap"
-	desc = "A fancy-looking military cap."
-	icon_state = "panzercap"
-	item_state = "panzercap"
-
-/obj/item/clothing/head/helmet/naziofficer
-	name = "Officer Cap"
-	desc = "A cap fit for a commanding officer."
-	icon_state = "officercap"
-	item_state = "officercap"
-	armor = list(melee = 20, bullet = 15, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	strip_delay = 60
-
-/*
--YOU HAVE SAFETLY PASSED THE POTENTIALLY-TRIGGERING CONTENT-
--PLEASE RESUME NORMAL, POLITICALLY CORRECT ACTIVITY-
-*/
+/obj/item/clothing/head/crown/fancy
+	name = "magnificent crown"
+	desc = "A crown worn by only the highest emperors of the land."
+	icon_state = "fancycrown"

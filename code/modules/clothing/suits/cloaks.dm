@@ -18,7 +18,7 @@
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEEARS
 
-/obj/item/clothing/cloak/suicide_act(mob/user)
+/obj/item/clothing/suit/cloak/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling themself with [src]! It looks like they're trying to commit suicide.</span>")
 	return(OXYLOSS)
 

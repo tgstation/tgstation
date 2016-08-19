@@ -29,6 +29,7 @@
 	var/mob/living/new_holder
 	var/list/color_altered_mobs = list()
 	burn_state = FIRE_PROOF
+	var/quiet = FALSE
 
 /obj/item/weapon/greentext/New()
 	..()
@@ -44,7 +45,7 @@
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
 	user.color = "#00FF00"
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
@@ -53,7 +54,7 @@
 		user.color = "#FF0000" //ya blew it
 	last_holder 	= null
 	new_holder 		= null
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/greentext/process()
@@ -76,9 +77,11 @@
 		last_holder.color = "#FF0000"
 		last_holder = new_holder //long live the king
 
-/obj/item/weapon/greentext/Destroy()
-	if(burn_state != ON_FIRE)
+/obj/item/weapon/greentext/Destroy(force)
+	if((burn_state != ON_FIRE) && (!force))
 		return QDEL_HINT_LETMELIVE
+
+	. = ..()
 	poi_list.Remove(src)
 	for(var/mob/M in mob_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
@@ -86,5 +89,9 @@
 			message += " and you're finally able to forgive yourself"
 			M.color = initial(M.color)
 		message += "...</span>"
-		M << message
-	return ..()
+		// can't skip the mob check as it also does the decolouring
+		if(!quiet)
+			M << message
+
+/obj/item/weapon/greentext/quiet
+	quiet = TRUE

@@ -133,7 +133,7 @@
 	name = "docility potion"
 	desc = "A potent chemical mix that nullifies a slime's hunger, causing it to become docile and tame."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle19"
+	icon_state = "potsilver"
 
 /obj/item/slimepotion/docility/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
@@ -159,8 +159,8 @@
 	name = "sentience potion"
 	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle19"
-	origin_tech = "biotech=5"
+	icon_state = "potpink"
+	origin_tech = "biotech=6"
 	var/list/not_interested = list()
 	var/being_used = 0
 	var/sentience_type = SENTIENCE_ORGANIC
@@ -184,13 +184,14 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
-		SM.languages |= HUMAN
-		SM.faction = user.faction
+		SM.languages_spoken |= HUMAN
+		SM.languages_understood |= HUMAN
+		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
 		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
@@ -205,7 +206,7 @@
 	name = "consciousness transference potion"
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle6"
+	icon_state = "potorange"
 	origin_tech = "biotech=6"
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
@@ -236,7 +237,8 @@
 
 
 	user.mind.transfer_to(SM)
-	SM.languages = user.languages
+	SM.languages_spoken = user.languages_spoken
+	SM.languages_understood = user.languages_understood
 	SM.faction = user.faction
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
@@ -249,7 +251,7 @@
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
+	icon_state = "potred"
 
 /obj/item/slimepotion/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
@@ -273,13 +275,13 @@
 	name = "extract enhancer"
 	desc = "A potent chemical mix that will give a slime extract an additional use."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "potpurple"
 
 /obj/item/slimepotion/stabilizer
 	name = "slime stabilizer"
 	desc = "A potent chemical mix that will reduce the chance of a slime mutating."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle15"
+	icon_state = "potcyan"
 
 /obj/item/slimepotion/stabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
@@ -300,7 +302,7 @@
 	name = "slime mutator"
 	desc = "A potent chemical mix that will increase the chance of a slime mutating."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon_state = "potgreen"
 
 /obj/item/slimepotion/mutator/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
@@ -325,7 +327,8 @@
 	name = "slime speed potion"
 	desc = "A potent chemical mix that will remove the slowdown from any item."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon_state = "potyellow"
+	origin_tech = "biotech=5"
 
 /obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
 	..()
@@ -355,7 +358,8 @@
 	name = "slime chill potion"
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "potblue"
+	origin_tech = "biotech=5"
 	var/uses = 3
 
 /obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user)
@@ -451,7 +455,7 @@
 
 /obj/effect/golemrune/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
@@ -494,8 +498,9 @@
 	G.key = ghost.key
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
-	if(user.mind.special_role)
-		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
+
+	G.mind.enslave_mind_to_creator(user)
+
 	log_game("[key_name(G)] was made a golem by [key_name(user)].")
 	log_admin("[key_name(G)] was made a golem by [key_name(user)].")
 	qdel(src)
@@ -568,7 +573,7 @@
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
 	M.AdjustStunned(-10, 1, 1)
 	M.anchored = 0
-	if(istype(M, /mob/living/simple_animal/hostile))
+	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M
 		H.AIStatus = initial(H.AIStatus)
 
@@ -635,4 +640,3 @@
 		for(var/turf/T in A)
 			T.color = "#2956B2"
 		qdel(src)
-

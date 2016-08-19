@@ -1,13 +1,13 @@
 
-/mob/living/carbon/human/restrained()
-	if (handcuffed)
-		return 1
-	if (wear_suit && wear_suit.breakouttime)
-		return 1
-	return 0
+/mob/living/carbon/human/restrained(ignore_grab)
+	. = ((wear_suit && wear_suit.breakouttime) || ..())
+
 
 /mob/living/carbon/human/canBeHandcuffed()
-	return 1
+	if(get_num_arms() >= 2)
+		return TRUE
+	else
+		return FALSE
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
@@ -77,7 +77,7 @@
 	return
 
 //gets ID card object from special clothes slot or null.
-/mob/living/carbon/human/proc/get_idcard()
+/mob/living/carbon/human/get_idcard()
 	if(wear_id)
 		return wear_id.GetID()
 
@@ -101,10 +101,10 @@
 		return 1
 
 /mob/living/carbon/human/abiotic(full_body = 0)
-	if(full_body && ((l_hand && !( src.l_hand.flags&ABSTRACT )) || (r_hand && !( src.r_hand.flags&ABSTRACT )) || (back && !(back.flags&ABSTRACT)) || (wear_mask && !(wear_mask.flags&ABSTRACT)) || (head && !(head.flags&ABSTRACT)) || (shoes && !(shoes.flags&ABSTRACT)) || (w_uniform && !(w_uniform.flags&ABSTRACT)) || (wear_suit && !(wear_suit.flags&ABSTRACT)) || (glasses && !(glasses.flags&ABSTRACT)) || (ears && !(ears.flags&ABSTRACT)) || (gloves && !(gloves.flags&ABSTRACT)) ) )
+	if(full_body && ((l_hand && !( src.l_hand.flags&NODROP )) || (r_hand && !( src.r_hand.flags&NODROP )) || (back && !(back.flags&NODROP)) || (wear_mask && !(wear_mask.flags&NODROP)) || (head && !(head.flags&NODROP)) || (shoes && !(shoes.flags&NODROP)) || (w_uniform && !(w_uniform.flags&NODROP)) || (wear_suit && !(wear_suit.flags&NODROP)) || (glasses && !(glasses.flags&NODROP)) || (ears && !(ears.flags&NODROP)) || (gloves && !(gloves.flags&NODROP)) ) )
 		return 1
 
-	if( (src.l_hand && !(src.l_hand.flags&ABSTRACT)) || (src.r_hand && !(src.r_hand.flags&ABSTRACT)) )
+	if( (src.l_hand && !(src.l_hand.flags&NODROP)) || (src.r_hand && !(src.r_hand.flags&NODROP)) )
 		return 1
 
 	return 0

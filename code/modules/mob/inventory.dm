@@ -26,13 +26,15 @@
 /mob/proc/put_in_l_hand(obj/item/W)
 	if(!put_in_hand_check(W))
 		return 0
+	if(!has_left_hand())
+		return 0
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
-		W.layer = 20	//TODO: move to equipped?
+		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.equipped(src,slot_l_hand)
-		if(pulling == W)
-			stop_pulling()
+		if(W.pulledby)
+			W.pulledby.stop_pulling()
 		update_inv_l_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
@@ -44,13 +46,15 @@
 /mob/proc/put_in_r_hand(obj/item/W)
 	if(!put_in_hand_check(W))
 		return 0
+	if(!has_right_hand())
+		return 0
 	if(!r_hand)
 		W.loc = src
 		r_hand = W
-		W.layer = 20
+		W.layer = ABOVE_HUD_LAYER
 		W.equipped(src,slot_r_hand)
-		if(pulling == W)
-			stop_pulling()
+		if(W.pulledby)
+			W.pulledby.stop_pulling()
 		update_inv_r_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
@@ -105,14 +109,14 @@
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand()
-	if(!loc.allow_drop())
+	if(!loc || !loc.allow_drop())
 		return
 	return unEquip(l_hand) //All needed checks are in unEquip
 
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand()
-	if(!loc.allow_drop())
+	if(!loc || !loc.allow_drop())
 		return
 	return unEquip(r_hand)
 
@@ -243,7 +247,7 @@
 		S.handle_item_insertion(src)
 		return 1
 
-	S = M.get_item_by_slot(slot_drone_storage)	//else we put in whatever is in drone storage
+	S = M.get_item_by_slot(slot_generic_dextrous_storage)	//else we put in whatever is in drone storage
 	if(istype(S) && S.can_be_inserted(src,1))
 		S.handle_item_insertion(src)
 

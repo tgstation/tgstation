@@ -9,7 +9,7 @@
 	icon_state = "girder"
 	anchored = 1
 	density = 1
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
@@ -99,12 +99,12 @@
 		if(istype(W,/obj/item/stack/rods))
 			var/obj/item/stack/rods/S = W
 			if(state == GIRDER_DISPLACED)
-				if(S.amount < 2)
+				if(S.get_amount() < 2)
 					user << "<span class='warning'>You need at least two rods to create a false wall!</span>"
 					return
 				user << "<span class='notice'>You start building a reinforced false wall...</span>"
 				if(do_after(user, 20, target = src))
-					if(!src.loc || !S || S.amount < 2)
+					if(!src.loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
@@ -112,12 +112,12 @@
 					transfer_fingerprints_to(FW)
 					qdel(src)
 			else
-				if(S.amount < 5)
+				if(S.get_amount() < 5)
 					user << "<span class='warning'>You need at least five rods to add plating!</span>"
 					return
 				user << "<span class='notice'>You start adding plating...</span>"
 				if (do_after(user, 40, target = src))
-					if(!src.loc || !S || S.amount < 5)
+					if(!src.loc || !S || S.get_amount() < 5)
 						return
 					S.use(5)
 					user << "<span class='notice'>You add the plating.</span>"
@@ -163,12 +163,12 @@
 
 		if(istype(S,/obj/item/stack/sheet/plasteel))
 			if(state == GIRDER_DISPLACED)
-				if(S.amount < 2)
+				if(S.get_amount() < 2)
 					user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"
 					return
 				user << "<span class='notice'>You start building a reinforced false wall...</span>"
 				if(do_after(user, 20, target = src))
-					if(!src.loc || !S || S.amount < 2)
+					if(!src.loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					user << "<span class='notice'>You create a reinforced false wall. Push on it to open or close the passage.</span>"
@@ -177,11 +177,11 @@
 					qdel(src)
 			else
 				if(state == GIRDER_REINF)
-					if(S.amount < 1)
+					if(S.get_amount() < 1)
 						return
 					user << "<span class='notice'>You start finalizing the reinforced wall...</span>"
 					if(do_after(user, 50, target = src))
-						if(!src.loc || !S || S.amount < 1)
+						if(!src.loc || !S || S.get_amount() < 1)
 							return
 						S.use(1)
 						user << "<span class='notice'>You fully reinforce the wall.</span>"
@@ -191,11 +191,11 @@
 						qdel(src)
 					return
 				else
-					if(S.amount < 1)
+					if(S.get_amount() < 1)
 						return
 					user << "<span class='notice'>You start reinforcing the girder...</span>"
 					if (do_after(user, 60, target = src))
-						if(!src.loc || !S || S.amount < 1)
+						if(!src.loc || !S || S.get_amount() < 1)
 							return
 						S.use(1)
 						user << "<span class='notice'>You reinforce the girder.</span>"
@@ -207,22 +207,25 @@
 		if(S.sheettype)
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
-				if(S.amount < 2)
+				if(S.get_amount() < 2)
 					user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"
 					return
-				S.use(2)
-				user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
-				var/F = text2path("/obj/structure/falsewall/[M]")
-				var/obj/structure/FW = new F (loc)
-				transfer_fingerprints_to(FW)
-				qdel(src)
+				if(do_after(user, 20, target = src))
+					if(!src.loc || !S || S.get_amount() < 2)
+						return
+					S.use(2)
+					user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
+					var/F = text2path("/obj/structure/falsewall/[M]")
+					var/obj/structure/FW = new F (loc)
+					transfer_fingerprints_to(FW)
+					qdel(src)
 			else
-				if(S.amount < 2)
+				if(S.get_amount() < 2)
 					user << "<span class='warning'>You need at least two sheets to add plating!</span>"
 					return
 				user << "<span class='notice'>You start adding plating...</span>"
 				if (do_after(user, 40, target = src))
-					if(!src.loc || !S || S.amount < 2)
+					if(!src.loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					user << "<span class='notice'>You add the plating.</span>"
@@ -261,6 +264,14 @@
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSGRILLE)
 
+/obj/structure/girder/attack_animal(mob/living/simple_animal/M)
+	if(M.environment_smash)
+		if(state != GIRDER_DISPLACED)
+			var/obj/structure/girder/displaced/D = new (loc)
+			transfer_fingerprints_to(D)
+		qdel(src)
+
+
 /obj/structure/girder/blob_act(obj/effect/blob/B)
 	if(prob(40))
 		qdel(src)
@@ -291,7 +302,6 @@
 	anchored = 0
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
-	layer = 2.45
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
@@ -367,17 +377,18 @@
 
 	else if(istype(W, /obj/item/stack/sheet/runed_metal))
 		var/obj/item/stack/sheet/runed_metal/R = W
-		if(R.amount < 1)
+		if(R.get_amount() < 1)
 			user << "<span class='warning'>You need at least one sheet of runed metal to construct a runed wall!</span>"
 			return 0
 		user.visible_message("<span class='notice'>[user] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>")
-		if(!do_after(user, 50, target = src))
-			return 0
-		user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
-		R.use(1)
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/closed/wall/cult)
-		qdel(src)
+		if(do_after(user, 50, target = src))
+			if(R.get_amount() < 1 || !R)
+				return
+			user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
+			R.use(1)
+			var/turf/T = get_turf(src)
+			T.ChangeTurf(/turf/closed/wall/mineral/cult)
+			qdel(src)
 
 	else
 		return ..()

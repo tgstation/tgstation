@@ -21,6 +21,7 @@
 
 /datum/species
 	var/id = null		// if the game needs to manually check your race to do something not included in a proc here, it will use this
+	var/limbs_id = null	//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
 	var/name = null		// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
 	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
@@ -31,6 +32,7 @@
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
+	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/skinned_type = /obj/item/stack/sheet/animalhide/generic
 	var/list/no_equip = list()	// slots the race can't equip stuff to
@@ -47,10 +49,13 @@
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
+	var/stunmod = 1		// multiplier for stun duration
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
+	var/exotic_damage_overlay = ""
+	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -83,16 +88,18 @@
 	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
 	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
 
+	//Flight and floating
+	var/override_float = 0
+
 	///////////
 	// PROCS //
 	///////////
 
 
-
-//Called when admins use the Set Species verb, let's species
-//do some init stuff on the mob that got SS'd if necessary
-/datum/species/proc/admin_set_species(mob/living/carbon/human/H, datum/species/old_species)
-	return
+/datum/species/New()
+	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
+		limbs_id = id
+	..()
 
 
 /datum/species/proc/random_name(gender,unique,lastname)
@@ -119,73 +126,51 @@
 		return 0
 	return 1
 
-/datum/species/proc/on_species_gain(mob/living/carbon/C)
+/datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	// Drop the items the new species can't wear
 	for(var/slot_id in no_equip)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
-		if(thing)
+		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
 			C.unEquip(thing)
 	if(NODISMEMBER in specflags)
 		C.regenerate_limbs() //if we don't handle dismemberment, we grow our missing limbs back
-	if(exotic_blood)
-		C.reagents.add_reagent(exotic_blood, 80)
+
+	var/obj/item/organ/heart/heart = C.getorganslot("heart")
+	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
+	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
+
+	if((NOBLOOD in specflags) && heart)
+		heart.Remove(C)
+		qdel(heart)
+	else if((!(NOBLOOD in specflags)) && (!heart))
+		heart = new()
+		heart.Insert(C)
+
+	if((NOBREATH in specflags) && lungs)
+		lungs.Remove(C)
+		qdel(lungs)
+	else if((!(NOBREATH in specflags)) && (!lungs))
+		lungs = new()
+		lungs.Insert(C)
+
+	if((NOHUNGER in specflags) && appendix)
+		appendix.Remove(C)
+		qdel(appendix)
+	else if((!(NOHUNGER in specflags)) && (!appendix))
+		appendix = new()
+		appendix.Insert(C)
+
 	for(var/path in mutant_organs)
 		var/obj/item/organ/I = new path()
 		I.Insert(C)
 
+	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
+		C.dna.blood_type = exotic_bloodtype
+
+
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
-	if(C.dna.species && C.dna.species.exotic_blood)
-		C.reagents.del_reagent(C.dna.species.exotic_blood)
-
-/datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
-	if(H.disabilities & HUSK)
-		H.remove_overlay(SPECIES_LAYER) // races lose their color
-		return "husk"
-	else if(sexes)
-		if(use_skintones)
-			return "[H.skin_tone]_[(H.gender == FEMALE) ? "f" : "m"]"
-		else
-			return "[id]_[(H.gender == FEMALE) ? "f" : "m"]"
-	else
-		return "[id]"
-
-/datum/species/proc/update_color(mob/living/carbon/human/H, forced_colour)
-	if(!(NODISMEMBER in specflags)) //only species without dismemberment still use base icon states.
-		return
-	H.remove_overlay(SPECIES_LAYER)
-
-	var/image/standing
-
-	var/g = (H.gender == FEMALE) ? "f" : "m"
-
-	if((MUTCOLORS in specflags) || use_skintones)
-		var/image/spec_base
-		var/icon_state_string = "[id]_"
-
-		if(use_skintones)
-			if(sexes)
-				icon_state_string = "[H.skin_tone]_[g]_s"
-			else
-				icon_state_string = "[H.skin_tone]_s"
-		else
-			if(sexes)
-				icon_state_string += "[g]_s"
-			else
-				icon_state_string += "_s"
-
-		spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = icon_state_string, "layer" = -SPECIES_LAYER)
-
-		if(!forced_colour && !use_skintones)
-			spec_base.color = "#[H.dna.features["mcolor"]]"
-		else
-			spec_base.color = forced_colour
-
-		standing = spec_base
-
-	if(standing)
-		H.overlays_standing[SPECIES_LAYER]	+= standing
-
-	H.apply_overlay(SPECIES_LAYER)
+	if(C.dna.species.exotic_bloodtype)
+		C.dna.blood_type = random_blood_type()
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
@@ -274,12 +259,6 @@
 
 	var/list/standing	= list()
 
-	if(NODISMEMBER in specflags) //Legacy support
-		H.update_base_icon_state()
-		if(!(H.disabilities & HUSK))
-			update_color(H)
-
-
 	handle_mutant_bodyparts(H)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
@@ -320,7 +299,6 @@
 
 	H.apply_overlay(BODY_LAYER)
 
-	return
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
@@ -383,6 +361,17 @@
 		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
 			bodyparts_to_add -= "ears"
 
+	if("wings" in mutant_bodyparts)
+		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))
+			bodyparts_to_add -= "wings"
+
+	if("wings_open" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)))
+			bodyparts_to_add -= "wings_open"
+		else if ("wings" in mutant_bodyparts)
+			bodyparts_to_add -= "wings_open"
+
+
 	if(!bodyparts_to_add)
 		return
 
@@ -416,6 +405,10 @@
 					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
+				if("wings")
+					S = wings_list[H.dna.features["wings"]]
+				if("wingsopen")
+					S = wings_open_list[H.dna.features["wings"]]
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -434,13 +427,19 @@
 			else
 				icon_string = "m_[bodypart]_[S.icon_state]_[layer]"
 
-			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
+			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+
+			if(S.center)
+				I = center_image(I,S.dimension_x,S.dimension_y)
 
 			if(!(H.disabilities & HUSK))
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
-							I.color = "#[H.dna.features["mcolor"]]"
+							if(fixed_mut_color)
+								I.color = "#[fixed_mut_color]"
+							else
+								I.color = "#[H.dna.features["mcolor"]]"
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								I.color = "#[H.dna.features["mcolor"]]"
@@ -460,7 +459,10 @@
 				else
 					icon_string = "m_[bodypart]inner_[S.icon_state]_[layer]"
 
-				I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
+				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+
+				if(S.center)
+					I = center_image(I,S.dimension_x,S.dimension_y)
 
 				standing += I
 
@@ -472,7 +474,13 @@
 	H.apply_overlay(BODY_FRONT_LAYER)
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
-	return
+	if(NOBREATH in specflags)
+		H.setOxyLoss(0)
+		H.losebreath = 0
+
+		var/takes_crit_damage = (!(NOCRITDAMAGE in specflags))
+		if((H.health < config.health_threshold_crit) && takes_crit_damage)
+			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -483,7 +491,7 @@
 
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H)
 	if(slot in no_equip)
-		if(!(type in I.species_exception))
+		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return 0
 
 	var/R = H.has_right_hand()
@@ -668,6 +676,10 @@
 	return
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == exotic_blood)
+		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		H.reagents.remove_reagent(chem.id)
+		return 1
 	return 0
 
 /datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
@@ -805,11 +817,9 @@
 						H.emote("collapse")
 					if(prob(15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
-							H << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
-							spawn(50)
-								H.facial_hair_style = "Shaved"
-								H.hair_style = "Bald"
-								H.update_hair()
+							H << "<span class='danger'>Your hair starts to \
+								fall out in clumps...<span>"
+							addtimer(src, "go_bald", 50, TRUE, H)
 
 				if(75 to 100)
 					if(prob(1))
@@ -819,6 +829,11 @@
 						H.domutcheck()
 		return 0
 	return 1
+
+/datum/species/proc/go_bald(mob/living/carbon/human/H)
+	H.facial_hair_style = "Shaved"
+	H.hair_style = "Bald"
+	H.update_hair()
 
 ////////////////
 // MOVE SPEED //
@@ -834,6 +849,9 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
+			if(FLYING in specflags)
+				. += speedmod
+				return
 			// If there's no gravity we have the sanic speed of jetpack.
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
@@ -872,10 +890,11 @@
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-			var/leg_amount = H.get_num_legs()
-			. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
-			if(!leg_amount)
-				. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
+			if(!(FLYING in specflags))
+				var/leg_amount = H.get_num_legs()
+				. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
+				if(!leg_amount)
+					. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
 
 
 			. += speedmod
@@ -885,6 +904,11 @@
 //////////////////
 
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
+	if(!istype(M))
+		return
+	CHECK_DNA_AND_SPECIES(M)
+	CHECK_DNA_AND_SPECIES(H)
+
 	if(!istype(M)) //sanity check for drones.
 		return
 	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
@@ -896,13 +920,21 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(H.health >= 0)
+			if(H.health >= 0 && !(H.status_flags & FAKEDEATH))
 				H.help_shake_act(M)
 				if(H != M)
 					add_logs(M, H, "shaked")
 				return 1
 			else
-				M.do_cpr(H)
+				var/we_breathe = (!(NOBREATH in M.dna.species.specflags))
+				var/we_lung = M.getorganslot("lungs")
+
+				if(we_breathe && we_lung)
+					M.do_cpr(H)
+				else if(we_breathe && !we_lung)
+					M << "<span class='warning'>You have no lungs to breathe with, so you cannot peform CPR.</span>"
+				else
+					M << "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>"
 
 		if("grab")
 			if(attacker_style && attacker_style.grab_act(M,H))
@@ -938,6 +970,8 @@
 				H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
 								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
 
+				if(M.limb_destroyer)
+					H.dismembering_strike(M, affecting.body_zone)
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, "punched")
 				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
@@ -974,22 +1008,6 @@
 						H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [H.pulling]!</span>")
 						talked = 1
 						H.stop_pulling()
-
-					//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
-					if(istype(H.l_hand, /obj/item/weapon/grab))
-						var/obj/item/weapon/grab/lgrab = H.l_hand
-						if(lgrab.affecting)
-							H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [lgrab.affecting]!</span>")
-							talked = 1
-						spawn(1)
-							qdel(lgrab)
-					if(istype(H.r_hand, /obj/item/weapon/grab))
-						var/obj/item/weapon/grab/rgrab = H.r_hand
-						if(rgrab.affecting)
-							H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [rgrab.affecting]!</span>")
-							talked = 1
-						spawn(1)
-							qdel(rgrab)
 					//End BubbleWrap
 
 					if(!talked)	//BubbleWrap
@@ -1014,10 +1032,7 @@
 
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
-		H.visible_message("<span class='danger'>[user] has attempted to attack [H] with [I]!</span>", \
-						"<span class='userdanger'>[user] has attempted to attack [H] with [I]!</span>")
-		playsound(H, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-		return 0
+		affecting = H.bodyparts[1]
 
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone
@@ -1035,36 +1050,23 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	if(prob(I.get_dismemberment_chance(affecting)))
+	var/probability = I.get_dismemberment_chance(affecting)
+	if(prob(probability) || ((EASYDISMEMBER in specflags) && prob(2*probability)))
 		if(affecting.dismember(I.damtype))
-			I.add_blood(H)
+			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 		if(affecting.status == ORGAN_ORGANIC)
-			I.add_blood(H)	//Make the weapon bloody, not the person.
+			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!
 				bloody = 1
 				var/turf/location = H.loc
-				if(istype(location, /turf))
-					location.add_blood(H)
-				if(ishuman(user))
-					var/mob/living/carbon/human/M = user
-					if(get_dist(M, H) <= 1)	//people with TK won't get smeared with blood
-						if(M.wear_suit)
-							M.wear_suit.add_blood(H)
-							M.update_inv_wear_suit()	//updates mob overlays to show the new blood (no refresh)
-						else if(M.w_uniform)
-							M.w_uniform.add_blood(H)
-							M.update_inv_w_uniform()	//updates mob overlays to show the new blood (no refresh)
-						if (M.gloves)
-							var/obj/item/clothing/gloves/G = M.gloves
-							G.add_blood(H)
-						else
-							M.add_blood(H)
-							M.update_inv_gloves()	//updates on-mob overlays for bloody hands and/or bloody gloves
-
+				if(istype(location))
+					H.add_splatter_floor(location)
+				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
+					user.add_mob_blood(H)
 
 		switch(hit_area)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer
@@ -1078,13 +1080,13 @@
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
-						H.wear_mask.add_blood(H)
+						H.wear_mask.add_mob_blood(H)
 						H.update_inv_wear_mask()
 					if(H.head)
-						H.head.add_blood(H)
+						H.head.add_mob_blood(H)
 						H.update_inv_head()
 					if(H.glasses && prob(33))
-						H.glasses.add_blood(H)
+						H.glasses.add_mob_blood(H)
 						H.update_inv_glasses()
 
 			if("chest")	//Easier to score a stun but lasts less time
@@ -1095,15 +1097,15 @@
 
 				if(bloody)
 					if(H.wear_suit)
-						H.wear_suit.add_blood(H)
+						H.wear_suit.add_mob_blood(H)
 						H.update_inv_wear_suit()
 					if(H.w_uniform)
-						H.w_uniform.add_blood(H)
+						H.w_uniform.add_mob_blood(H)
 						H.update_inv_w_uniform()
 
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			H.forcesay(hit_appends)	//forcesay checks stat already.
-		return
+	return TRUE
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
@@ -1155,7 +1157,8 @@
 /////////////
 
 /datum/species/proc/breathe(mob/living/carbon/human/H)
-	return
+	if(NOBREATH in specflags)
+		return TRUE
 
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
@@ -1167,18 +1170,19 @@
 		if(H.reagents.has_reagent("epinephrine") && lungs)
 			return
 		if(H.health >= config.health_threshold_crit)
-			if(NOBREATH in specflags)
-				return 1
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			if(!lungs)
 				H.adjustOxyLoss(1)
-			H.failed_last_breath = 1
-		else
+		else if(!(NOCRITDAMAGE in specflags))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
-			H.failed_last_breath = 1
 
-		H.throw_alert("oxy", /obj/screen/alert/oxy)
-
+		H.failed_last_breath = 1
+		if(safe_oxygen_min)
+			H.throw_alert("oxy", /obj/screen/alert/oxy)
+		else if(safe_toxins_min)
+			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+		else if(safe_co2_min)
+			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		return 0
 
 	var/gas_breathed = 0
@@ -1450,12 +1454,32 @@
 	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
 		return 1
 
-/datum/species/proc/IgniteMob(mob/living/carbon/human/H)
+/datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
-		return 1
+		return FALSE
+	return TRUE
 
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return
+
+
+////////
+//Stun//
+////////
+
+/datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+	. = stunmod * amount
+
+//////////////
+//Space Move//
+//////////////
+
+/datum/species/proc/space_move()
+	return 0
+
+/datum/species/proc/negates_gravity()
+	return 0
+
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

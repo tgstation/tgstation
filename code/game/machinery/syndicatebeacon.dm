@@ -55,7 +55,7 @@
 			if(1)
 				temptext = "<font color=red><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
 				src.updateUsrDialog()
-				spawn(rand(50,200)) selfdestruct()
+				addtimer(src, "selfdestruct", rand(50, 200))
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
@@ -87,13 +87,9 @@
 
 			M << "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>"
 
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in M.mind.objectives)
-				M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-				obj_count++
+			M.mind.announce_objectives()
 
 	src.updateUsrDialog()
-	return
 
 
 /obj/machinery/syndicate_beacon/proc/selfdestruct()
@@ -111,7 +107,7 @@
 
 	anchored = 0
 	density = 1
-	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
+	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
 
 	var/active = 0
@@ -201,7 +197,7 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
 	desc = "A label on it reads: <i>Warning: Activating this device will send a special beacon to your location</i>."
-	origin_tech = "bluespace=1;syndicate=7"
+	origin_tech = "bluespace=6;syndicate=5"
 	w_class = 2
 	var/droptype = /obj/machinery/power/singularity_beacon/syndicate
 
@@ -217,7 +213,9 @@
 /obj/item/device/sbeacondrop/bomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb
+	origin_tech = "bluespace=5;syndicate=5"
 
 /obj/item/device/sbeacondrop/powersink
 	desc = "A label on it reads: <i>Warning: Activating this device will send a power draining device to your location</i>."
 	droptype = /obj/item/device/powersink
+	origin_tech = "bluespace=4;syndicate=5"

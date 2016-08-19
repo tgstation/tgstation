@@ -23,6 +23,10 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	recommended_enemies = 4
 	reroll_friendly = 1
 
+	announce_span = "green"
+	announce_text = "Alien changelings have infiltrated the crew!\n\
+	<span class='green'>Changelings</span>: Accomplish the objectives assigned to you.\n\
+	<span class='notice'>Crew</span>: Root out and eliminate the changeling menace."
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
 	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -44,10 +48,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 
 	var/changeling_team_objective_type = null //If this is not null, we hand our this objective to all lings
-
-/datum/game_mode/changeling/announce()
-	world << "<b>The current game mode is - Changeling!</b>"
-	world << "<b>There are alien changelings on the station. Do not let the changelings succeed!</b>"
 
 /datum/game_mode/changeling/pre_setup()
 
@@ -71,13 +71,12 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			antag_candidates -= changeling
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
-			modePlayer += changelings
 		return 1
 	else
 		return 0
 
 /datum/game_mode/changeling/post_setup()
-
+	modePlayer += changelings
 	//Decide if it's ok for the lings to have a team objective
 	//And then set it up to be handed out in forge_changeling_objectives
 	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
@@ -99,7 +98,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		greet_changeling(changeling)
 		ticker.mode.update_changeling_icons_added(changeling)
 	..()
-	return
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(joined_player_list.len/config.changeling_scaling_coeff) )
@@ -298,6 +296,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/changeling_speak = 0
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
+	var/datum/cellular_emporium/cellular_emporium
+	var/datum/action/innate/cellular_emporium/emporium_action
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -313,9 +313,17 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	else
 		changelingID = "[honorific] [rand(1,999)]"
 
+	cellular_emporium = new(src)
+	emporium_action = new(cellular_emporium)
+
+/datum/changeling/Destroy()
+	qdel(cellular_emporium)
+	cellular_emporium = null
+	. = ..()
 
 /datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
 	if(istype(the_ling))
+		emporium_action.Grant(the_ling)
 		if(the_ling.stat == DEAD)
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
@@ -486,7 +494,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
-	return ..()
+	. = ..()
 
 /datum/changelingprofile/proc/copy_profile(datum/changelingprofile/newprofile)
 	newprofile.name = name

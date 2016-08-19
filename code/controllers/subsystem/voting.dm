@@ -2,9 +2,9 @@ var/datum/subsystem/vote/SSvote
 
 /datum/subsystem/vote
 	name = "Vote"
-	can_fire = 1
 	wait = 10
-	priority = -1
+
+	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING|SS_NO_INIT
 
 	var/initiator = null
 	var/started_time = null
@@ -14,6 +14,7 @@ var/datum/subsystem/vote/SSvote
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
+	var/list/generated_actions = list()
 
 /datum/subsystem/vote/New()
 	NEW_SS_GLOBAL(SSvote)
@@ -44,6 +45,7 @@ var/datum/subsystem/vote/SSvote
 	choices.Cut()
 	voted.Cut()
 	voting.Cut()
+	remove_action_buttons()
 
 /datum/subsystem/vote/proc/get_result()
 	//get the highest number of votes
@@ -100,6 +102,7 @@ var/datum/subsystem/vote/SSvote
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
+	remove_action_buttons()
 	world << "\n<font color='purple'>[text]</font>"
 	return .
 
@@ -150,12 +153,12 @@ var/datum/subsystem/vote/SSvote
 			if(mode)
 				usr << "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>"
 				return 0
-	
+
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
 			if((admin_datums[ckey]) || (ckey in deadmins))
 				admin = TRUE
-			
+
 			if(next_allowed_time > world.time && !admin)
 				usr << "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>"
 				return 0
@@ -186,6 +189,13 @@ var/datum/subsystem/vote/SSvote
 		log_vote(text)
 		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
 		time_remaining = round(config.vote_period/10)
+		for(var/c in clients)
+			var/client/C = c
+			var/datum/action/vote/V = new
+			if(question)
+				V.name = "Vote: [question]"
+			V.Grant(C.mob)
+			generated_actions += V
 		return 1
 	return 0
 
@@ -271,6 +281,12 @@ var/datum/subsystem/vote/SSvote
 			submit_vote(round(text2num(href_list["vote"])))
 	usr.vote()
 
+/datum/subsystem/vote/proc/remove_action_buttons()
+	for(var/v in generated_actions)
+		var/datum/action/vote/V = v
+		if(!qdeleted(V))
+			V.Remove(V.owner)
+	generated_actions = list()
 
 /mob/verb/vote()
 	set category = "OOC"
@@ -281,3 +297,14 @@ var/datum/subsystem/vote/SSvote
 	popup.set_content(SSvote.interface(client))
 	popup.open(0)
 
+/datum/action/vote
+	name = "Vote!"
+	button_icon_state = "vote"
+
+/datum/action/vote/Trigger()
+	if(owner)
+		owner.vote()
+		Remove(owner)
+
+/datum/action/vote/IsAvailable()
+	return 1

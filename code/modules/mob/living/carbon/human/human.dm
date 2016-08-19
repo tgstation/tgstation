@@ -33,17 +33,21 @@
 		set_species(dna.species.type)
 
 	//initialise organs
-	internal_organs += new /obj/item/organ/appendix
-	internal_organs += new /obj/item/organ/lungs
-	internal_organs += new /obj/item/organ/heart
+	if(!(NOHUNGER in dna.species.specflags))
+		internal_organs += new /obj/item/organ/appendix
+
+	if(!(NOBREATH in dna.species.specflags))
+		internal_organs += new /obj/item/organ/lungs
+
+	if(!(NOBLOOD in dna.species.specflags))
+		internal_organs += new /obj/item/organ/heart
+
 	internal_organs += new /obj/item/organ/brain
 
 	//Note: Additional organs are generated/replaced on the dna.species level
 
 	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
-
-	make_blood()
 
 	martial_art = default_martial_art
 
@@ -52,7 +56,7 @@
 	..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
-	handcrafting.craft(src)
+	handcrafting.ui_interact(src)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -116,6 +120,8 @@
 	var/b_loss = null
 	var/f_loss = null
 	var/bomb_armor = getarmor(null, "bomb")
+	if(istype(ex_target, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 
 	switch (severity)
 		if (1)
@@ -160,6 +166,7 @@
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
+				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--
 				if(!max_limb_loss)
@@ -299,13 +306,10 @@
 		siemens_coeff = total_coeff
 	else if(!safety)
 		var/gloves_siemens_coeff = 1
-		var/species_siemens_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
 			gloves_siemens_coeff = G.siemens_coefficient
-		if(dna && dna.species)
-			species_siemens_coeff = dna.species.siemens_coeff
-		siemens_coeff = gloves_siemens_coeff * species_siemens_coeff
+		siemens_coeff = gloves_siemens_coeff
 	if(heart_attack)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			heart_attack = 0
@@ -357,7 +361,7 @@
 				if(pocket_item.flags & NODROP)
 					usr << "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
 				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
-			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1) && !(place_item.flags&ABSTRACT))
+			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.flags&ABSTRACT))
 				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
 				delay_denominator = 4
 			else
@@ -700,7 +704,7 @@
 	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
-	//Loyalty implants imply trustworthyness
+	//mindshield implants imply trustworthyness
 	if(isloyal(src))
 		threatcount -= 1
 
@@ -794,7 +798,7 @@
 			for(var/t in missing)
 				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
 
-			if(blood_max)
+			if(bleed_rate)
 				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
@@ -811,7 +815,9 @@
 
 
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
-	if(C.stat == DEAD)
+	CHECK_DNA_AND_SPECIES(C)
+
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
 	if(is_mouth_covered())
@@ -828,14 +834,27 @@
 			src << "<span class='warning'>You fail to perform CPR on [C]!</span>"
 			return 0
 
-		if(C.health <= config.health_threshold_crit)
-			C.cpr_time = world.time
+		var/they_breathe = (!(NOBREATH in C.dna.species.specflags))
+		var/they_lung = C.getorganslot("lungs")
+
+		if(C.health > config.health_threshold_crit)
+			return
+
+		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		C.cpr_time = world.time
+		add_logs(src, C, "CPRed")
+
+		if(they_breathe && they_lung)
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
-			src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
 			C << "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>"
-		add_logs(src, C, "CPRed")
+		else if(they_breathe && !they_lung)
+			C << "<span class='unconscious'>You feel a breath of fresh air... \
+				but you don't feel any better...</span>"
+		else
+			C << "<span class='unconscious'>You feel a breath of fresh air... \
+				which is a sensation you don't recognise...</span>"
 
 /mob/living/carbon/human/generateStaticOverlay()
 	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
@@ -857,7 +876,7 @@
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		if(..(I, cuff_break = 1))
+		if(..(I, cuff_break = FAST_CUFFBREAK))
 			unEquip(I)
 	else
 		if(..())
@@ -872,7 +891,6 @@
 		..() // Clear the Blood_DNA list
 		if(H.bloody_hands)
 			H.bloody_hands = 0
-			H.bloody_hands_mob = null
 			H.update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
 
@@ -888,7 +906,7 @@
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
 	if(dna && dna.species)
-		overlays += "electrocuted_base"
+		add_overlay("electrocuted_base")
 		spawn(anim_duration)
 			if(src)
 				overlays -= "electrocuted_base"
@@ -898,7 +916,7 @@
 		for(var/mob/M in viewers(src))
 			if(M.client)
 				viewing += M.client
-		flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+		flick_overlay(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), viewing, anim_duration)
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )
@@ -957,7 +975,7 @@
 					if(5)
 						hud_used.healths.icon_state = "health0"
 		if(hud_used.healthdoll)
-			hud_used.healthdoll.overlays.Cut()
+			hud_used.healthdoll.cut_overlays()
 			if(stat != DEAD)
 				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
 				for(var/X in bodyparts)
@@ -978,22 +996,39 @@
 					if(hal_screwyhud == 5)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
+						hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[t]6")
+					hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[t]6"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
+	CHECK_DNA_AND_SPECIES(src)
+
 	if(admin_revive)
 		regenerate_limbs()
-	if(!getorganslot("lungs"))
-		var/obj/item/organ/lungs/L = new()
-		L.Insert(src)
-	if(!getorganslot("tongue"))
-		var/obj/item/organ/tongue/T = new()
-		T.Insert(src)
-	restore_blood()
+
+		if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
+			var/obj/item/organ/lungs/L = new()
+			L.Insert(src)
+
+		if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
+			var/obj/item/organ/heart/H = new()
+			H.Insert(src)
+
+		if(!getorganslot("tongue"))
+			var/obj/item/organ/tongue/T
+
+			for(var/tongue_type in dna.species.mutant_organs)
+				if(ispath(tongue_type, /obj/item/organ/tongue))
+					T = new tongue_type()
+					T.Insert(src)
+
+			// if they have no mutant tongues, give them a regular one
+			if(!T)
+				T = new()
+				T.Insert(src)
+
 	remove_all_embedded_objects()
 	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)
@@ -1027,12 +1062,7 @@
 			O = new /datum/objective/sintouched/pride
 	ticker.mode.sintouched += src.mind
 	src.mind.objectives += O
-	var/obj_count = 1
-	src << "<span class='notice'>Your current objectives:</span>"
-	for(O in src.mind.objectives)
-		var/datum/objective/objective = O
-		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	src.mind.announce_objectives()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
@@ -1041,3 +1071,21 @@
 
 /mob/living/carbon/human/is_literate()
 	return 1
+
+/mob/living/carbon/human/can_hold_items()
+	return TRUE
+
+/mob/living/carbon/human/update_gravity(has_gravity,override = 0)
+	override = dna.species.override_float
+	..()
+
+
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
+	if(blood && (NOBLOOD in dna.species.specflags))
+		if(message)
+			visible_message("<span class='warning'>[src] dry heaves!</span>", \
+							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		if(stun)
+			Weaken(10)
+		return 1
+	..()

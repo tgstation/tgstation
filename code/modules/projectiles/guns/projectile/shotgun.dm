@@ -41,6 +41,11 @@
 		recentpump = 0
 	return
 
+/obj/item/weapon/gun/projectile/shotgun/blow_up(mob/user)
+	. = 0
+	if(chambered && chambered.BB)
+		process_fire(user, user,0)
+		. = 1
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
@@ -150,154 +155,6 @@
 	src.throw_at_fast(pick(oview(7,get_turf(user))),1,1)
 	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
 
-
-/obj/item/ammo_box/magazine/internal/boltaction/enchanted
-	max_ammo =1
-	ammo_type = /obj/item/ammo_casing/a762/enchanted
-
-
-
-/////////////////////////////
-// DOUBLE BARRELED SHOTGUN //
-/////////////////////////////
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel
-	name = "double-barreled shotgun"
-	desc = "A true classic."
-	icon_state = "dshotgun"
-	item_state = "shotgun"
-	w_class = 4
-	force = 10
-	flags = CONDUCT
-	slot_flags = SLOT_BACK
-	origin_tech = "combat=3;materials=1"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
-	sawn_desc = "Omar's coming!"
-	unique_rename = 1
-	unique_reskin = 1
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/New()
-	..()
-	options["Default"] = "dshotgun"
-	options["Dark Red Finish"] = "dshotgun-d"
-	options["Ash"] = "dshotgun-f"
-	options["Faded Grey"] = "dshotgun-g"
-	options["Maple"] = "dshotgun-l"
-	options["Rosewood"] = "dshotgun-p"
-	options["Cancel"] = null
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
-		chamber_round()
-	if(istype(A, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/W = A
-		if(W.active)
-			sawoff(user)
-	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/gun/energy/plasmacutter))
-		sawoff(user)
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
-	var/num_unloaded = 0
-	while (get_ammo() > 0)
-		var/obj/item/ammo_casing/CB
-		CB = magazine.get_round(0)
-		chambered = null
-		CB.loc = get_turf(src.loc)
-		CB.update_icon()
-		num_unloaded++
-	if (num_unloaded)
-		user << "<span class='notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
-	else
-		user << "<span class='warning'>[src] is empty!</span>"
-
-
-// IMPROVISED SHOTGUN //
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
-	name = "improvised shotgun"
-	desc = "Essentially a tube that aims shotgun shells."
-	icon_state = "ishotgun"
-	item_state = "shotgun"
-	w_class = 4
-	force = 10
-	slot_flags = null
-	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
-	sawn_desc = "I'm just here for the gasoline."
-	unique_rename = 0
-	unique_reskin = 0
-	var/slung = 0
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/stack/cable_coil) && !sawn_state)
-		var/obj/item/stack/cable_coil/C = A
-		if(C.use(10))
-			slot_flags = SLOT_BACK
-			icon_state = "ishotgunsling"
-			user << "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>"
-			slung = 1
-			update_icon()
-		else
-			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>"
-			return
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/update_icon()
-	..()
-	if (slung && (slot_flags & SLOT_BELT) )
-		slung = 0
-		icon_state = "ishotgun-sawn"
-
-// Sawing guns related procs //
-
-/obj/item/weapon/gun/projectile/proc/blow_up(mob/user)
-	. = 0
-	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
-		if(AC.BB)
-			process_fire(user, user,0)
-			. = 1
-
-/obj/item/weapon/gun/projectile/shotgun/blow_up(mob/user)
-	. = 0
-	if(chambered && chambered.BB)
-		process_fire(user, user,0)
-		. = 1
-
-/obj/item/weapon/gun/projectile/proc/sawoff(mob/user)
-	if(sawn_state == SAWN_OFF)
-		user << "<span class='warning'>\The [src] is already shortened!</span>"
-		return
-
-	if(sawn_state == SAWN_SAWING)
-		return
-
-	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
-
-	//if there's any live ammo inside the gun, makes it go off
-	if(blow_up(user))
-		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
-		return
-
-	sawn_state = SAWN_SAWING
-
-	if(do_after(user, 30, target = src))
-		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
-		name = "sawn-off [src.name]"
-		desc = sawn_desc
-		icon_state = "[icon_state]-sawn"
-		if(current_skin)
-			current_skin = "[current_skin]-sawn"
-		w_class = 3
-		item_state = "gun"
-		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
-		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-		sawn_state = SAWN_OFF
-		update_icon()
-		return
-	else
-		sawn_state = SAWN_INTACT
-
 // Automatic Shotguns//
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
@@ -308,7 +165,7 @@
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
-	origin_tech = "combat=5;materials=2"
+	origin_tech = "combat=6"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = 5
 
@@ -346,13 +203,10 @@
 	else
 		user << "You switch to tube A."
 
-
 /obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/AltClick(mob/living/user)
 	if(user.incapacitated() || !Adjacent(user) || !istype(user))
 		return
 	pump()
 
-/obj/item/ammo_box/magazine/internal/shot/tube
-	name = "dual feed shotgun internal tube"
-	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
-	max_ammo = 4
+
+// DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm

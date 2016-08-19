@@ -39,24 +39,14 @@ There are several things that need to be remembered:
 
 >	There are also these special cases:
 		update_damage_overlays()	//handles damage overlays for brute/burn damage
-		update_base_icon_state()	//Handles updating var/base_icon_state (WIP) This is used to update the
-									mob's icon_state easily e.g. "[base_icon_state]_s" is the standing icon_state
-		update_body()				//Handles updating your mob's icon_state (using update_base_icon_state())
+		update_body()				//Handles updating your mob's body layer and mutant bodyparts
 									as well as sprite-accessories that didn't really fit elsewhere (underwear, undershirts, socks, lips, eyes)
 									//NOTE: update_mutantrace() is now merged into this!
 		update_hair()				//Handles updating your hair overlay (used to be update_face, but mouth and
 									eyes were merged into update_body())
 
-If you have any questions/constructive-comments/bugs-to-report
-Please contact me on #coderbus IRC. ~Carnie x
-//Carn can sometimes be hard to reach now. However IRC is still your best bet for getting help.
 
 */
-
-/mob/living/carbon/human/proc/update_base_icon_state()
-	base_icon_state = dna.species.update_base_icon_state(src)
-	icon_state = "[base_icon_state]_s"
-
 
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
@@ -66,12 +56,16 @@ Please contact me on #coderbus IRC. ~Carnie x
 	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER]	= standing
 
+	var/dmgoverlaytype = ""
+	if(dna.species.exotic_damage_overlay)
+		dmgoverlaytype = dna.species.exotic_damage_overlay + "_"
+
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(BP.brutestate)
-			standing.overlays	+= "[BP.icon_state]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
+			standing.overlays	+= "[dmgoverlaytype][BP.body_zone]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
 		if(BP.burnstate)
-			standing.overlays	+= "[BP.icon_state]_0[BP.burnstate]"
+			standing.overlays	+= "[dmgoverlaytype][BP.body_zone]_0[BP.burnstate]"
 
 	apply_overlay(DAMAGE_LAYER)
 
@@ -94,14 +88,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 	..("Standing")
 
 /mob/living/carbon/human/proc/update_body_parts()
-	if(NODISMEMBER in dna.species.specflags) //Species don't have no dismemberment going for 'em!
-		remove_overlay(BODYPARTS_LAYER)
-		return
-
-	icon_state = ""//Reset here as apposed to having a null one due to some getFlatIcon calls at roundstart.
-
-	remove_overlay(SPECIES_LAYER)//if we switch from a species w/o dismemberment to one with it, we must clear that layer.
-
 	//CHECK FOR UPDATE
 	var/oldkey = icon_render_key
 	icon_render_key = generate_icon_render_key()
@@ -173,10 +159,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	if(istype(w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/U = w_uniform
+		U.screen_loc = ui_iclothing
 		if(client && hud_used && hud_used.hud_shown)
-			if(hud_used.inventory_shown)			//if the inventory is open ...
-				U.screen_loc = ui_iclothing //...draw the item in the inventory screen
-			client.screen += w_uniform				//Either way, add the item to the HUD
+			if(hud_used.inventory_shown)
+				client.screen += w_uniform
+		update_observer_view(w_uniform,1)
 
 		if(wear_suit && (wear_suit.flags_inv & HIDEJUMPSUIT))
 			return
@@ -216,9 +203,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 		inv.update_icon()
 
 	if(wear_id)
+		wear_id.screen_loc = ui_id
 		if(client && hud_used && hud_used.hud_shown)
-			wear_id.screen_loc = ui_id
 			client.screen += wear_id
+		update_observer_view(wear_id)
 
 		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
 		var/image/standing = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = 'icons/mob/mob.dmi')
@@ -238,11 +226,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 		inv.update_icon()
 
 	if(gloves)
+		gloves.screen_loc = ui_gloves
 		if(client && hud_used && hud_used.hud_shown)
-			if(hud_used.inventory_shown)			//if the inventory is open ...
-				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
-			client.screen += gloves					//Either way, add the item to the HUD
-
+			if(hud_used.inventory_shown)
+				client.screen += gloves
+		update_observer_view(gloves,1)
 		var/t_state = gloves.item_state
 		if(!t_state)
 			t_state = gloves.icon_state
@@ -270,11 +258,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 		inv.update_icon()
 
 	if(glasses)
+		glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
-				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
-			client.screen += glasses				//Either way, add the item to the HUD
-
+				client.screen += glasses				//Either way, add the item to the HUD
+		update_observer_view(glasses,1)
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
 
 			var/image/standing = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
@@ -294,10 +282,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 		inv.update_icon()
 
 	if(ears)
+		ears.screen_loc = ui_ears	//move the item to the appropriate screen loc
 		if(client && hud_used && hud_used.hud_shown)
-			if(hud_used.inventory_shown)			//if the inventory is open ...
-				ears.screen_loc = ui_ears			//...draw the item in the inventory screen
-			client.screen += ears					//Either way, add the item to the HUD
+			if(hud_used.inventory_shown)			//if the inventory is open
+				client.screen += ears					//add it to the client's screen
+		update_observer_view(ears,1)
 
 		var/image/standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
 		overlays_standing[EARS_LAYER] = standing
@@ -316,11 +305,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 		inv.update_icon()
 
 	if(shoes)
+		shoes.screen_loc = ui_shoes					//move the item to the appropriate screen loc
 		if(client && hud_used && hud_used.hud_shown)
-			if(hud_used.inventory_shown)			//if the inventory is open ...
-				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
-			client.screen += shoes					//Either way, add the item to the HUD
-
+			if(hud_used.inventory_shown)			//if the inventory is open
+				client.screen += shoes					//add it to client's screen
+		update_observer_view(shoes,1)
 		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
 		overlays_standing[SHOES_LAYER]	= standing
 
@@ -335,10 +324,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 		inv.update_icon()
 
 	if(s_store)
+		s_store.screen_loc = ui_sstore1
 		if(client && hud_used && hud_used.hud_shown)
-			s_store.screen_loc = ui_sstore1
 			client.screen += s_store
-
+		update_observer_view(s_store)
 		var/t_state = s_store.item_state
 		if(!t_state)
 			t_state = s_store.icon_state
@@ -367,11 +356,12 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_belt]
 		inv.update_icon()
 
-		if(hud_used.hud_shown && belt)
-			client.screen += belt
-			belt.screen_loc = ui_belt
-
 	if(belt)
+		belt.screen_loc = ui_belt
+		if(client && hud_used && hud_used.hud_shown)
+			client.screen += belt
+		update_observer_view(belt)
+
 		var/t_state = belt.item_state
 		if(!t_state)
 			t_state = belt.icon_state
@@ -392,10 +382,11 @@ Please contact me on #coderbus IRC. ~Carnie x
 		inv.update_icon()
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
+		wear_suit.screen_loc = ui_oclothing	//TODO //Todo what?
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)					//if the inventory is open ...
-				wear_suit.screen_loc = ui_oclothing	//TODO	//...draw the item in the inventory screen
-			client.screen += wear_suit						//Either way, add the item to the HUD
+				client.screen += wear_suit						//Either way, add the item to the HUD
+		update_observer_view(wear_suit,1)
 
 		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
 		overlays_standing[SUIT_LAYER]	= standing
@@ -420,14 +411,18 @@ Please contact me on #coderbus IRC. ~Carnie x
 		inv = hud_used.inv_slots[slot_r_store]
 		inv.update_icon()
 
-		if(hud_used.hud_shown)
-			if(l_store)
+		if(l_store)
+			l_store.screen_loc = ui_storage1
+			if(hud_used.hud_shown)
 				client.screen += l_store
-				l_store.screen_loc = ui_storage1
+			update_observer_view(l_store)
 
-			if(r_store)
+		if(r_store)
+			r_store.screen_loc = ui_storage2
+			if(hud_used.hud_shown)
 				client.screen += r_store
-				r_store.screen_loc = ui_storage2
+			update_observer_view(r_store)
+
 
 
 /mob/living/carbon/human/update_inv_wear_mask()
@@ -476,23 +471,26 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 //update whether our head item appears on our hud.
 /mob/living/carbon/human/update_hud_head(obj/item/I)
+	I.screen_loc = ui_head
 	if(client && hud_used && hud_used.hud_shown)
 		if(hud_used.inventory_shown)
-			I.screen_loc = ui_head
-		client.screen += I
+			client.screen += I
+	update_observer_view(I,1)
 
 //update whether our mask item appears on our hud.
 /mob/living/carbon/human/update_hud_wear_mask(obj/item/I)
+	I.screen_loc = ui_mask
 	if(client && hud_used && hud_used.hud_shown)
 		if(hud_used.inventory_shown)
-			I.screen_loc = ui_mask
-		client.screen += I
+			client.screen += I
+	update_observer_view(I,1)
 
 //update whether our back item appears on our hud.
 /mob/living/carbon/human/update_hud_back(obj/item/I)
+	I.screen_loc = ui_back
 	if(client && hud_used && hud_used.hud_shown)
-		I.screen_loc = ui_back
 		client.screen += I
+	update_observer_view(I)
 
 
 /*
@@ -585,12 +583,14 @@ var/global/list/limb_icon_cache = list()
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/proc/generate_icon_render_key()
-	. = "[dna.species.id]"
+	. = "[dna.species.limbs_id]"
 
 	if(dna.check_mutation(HULK))
 		. += "-coloured-hulk"
 	else if(dna.species.use_skintones)
 		. += "-coloured-[skin_tone]"
+	else if(dna.species.fixed_mut_color)
+		. += "-coloured-[dna.species.fixed_mut_color]"
 	else if(dna.features["mcolor"])
 		. += "-coloured-[dna.features["mcolor"]]"
 	else
@@ -616,3 +616,19 @@ var/global/list/limb_icon_cache = list()
 		remove_overlay(BODYPARTS_LAYER)
 		overlays_standing[BODYPARTS_LAYER] = limb_icon_cache[icon_render_key]
 		apply_overlay(BODYPARTS_LAYER)
+
+
+/mob/living/carbon/human/proc/update_observer_view(var/obj/item/I,var/inventory)
+	if(observers && observers.len)
+		for(var/M in observers)
+			var/mob/dead/observe = M
+			if(observe.client && observe.client.eye == src)
+				if(observe.hud_used)
+					if(inventory && !observe.hud_used.inventory_shown)
+						continue
+					observe.client.screen += I
+			else
+				observers -= observe
+				if(!observers.len)
+					observers = null
+					break

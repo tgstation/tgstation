@@ -10,7 +10,7 @@
 	use_power = 2
 	idle_power_usage = 5
 	active_power_usage = 10
-	layer = 5
+	layer = WALL_OBJ_LAYER
 
 	var/health = 50
 	var/list/network = list("SS13")
@@ -78,27 +78,26 @@
 		return
 	if(!isEmpProof())
 		if(prob(150/severity))
-			icon_state = "[initial(icon_state)]emp"
+			update_icon()
 			var/list/previous_network = network
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
 			SetLuminosity(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
+			update_icon()
 			var/thisemp = emped //Take note of which EMP this proc is for
 			spawn(900)
 				if(loc) //qdel limbo
 					triggerCameraAlarm() //camera alarm triggers even if multiple EMPs are in effect.
 					if(emped == thisemp) //Only fix it if the camera hasn't been EMP'd again
 						network = previous_network
-						icon_state = initial(icon_state)
 						stat &= ~EMPED
+						update_icon()
 						if(can_use())
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
-						spawn(100)
-							if(!qdeleted(src))
-								cancelCameraAlarm()
+						addtimer(src, "cancelCameraAlarm", 100)
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
@@ -106,6 +105,10 @@
 					O << "The screen bursts into static."
 			..()
 
+
+/obj/machinery/camera/blob_act(obj/effect/blob/B)
+	if(B && B.loc == loc)
+		take_damage(health, BRUTE, 0)
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(src.invuln)
@@ -156,13 +159,15 @@
 					assembly = new()
 				assembly.loc = src.loc
 				assembly.state = 1
-				assembly.dir = src.dir
+				assembly.setDir(src.dir)
 				assembly = null
 				qdel(src)
 			return
 
 		else if(istype(W, /obj/item/device/analyzer))
 			if(!isXRay())
+				if(!user.drop_item(W))
+					return
 				upgradeXRay()
 				qdel(W)
 				user << "[msg]"
@@ -262,6 +267,14 @@
 		triggerCameraAlarm()
 		toggle_cam(null, 0)
 
+/obj/machinery/camera/update_icon()
+	if(!status)
+		icon_state = "[initial(icon_state)]1"
+	else if (stat & EMPED)
+		icon_state = "[initial(icon_state)]emp"
+	else
+		icon_state = "[initial(icon_state)]"
+
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status
 	if(can_use())
@@ -271,15 +284,10 @@
 		cameranet.removeCamera(src)
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
-	if(!status)
-		icon_state = "[initial(icon_state)]1"
-	else
-		icon_state = initial(icon_state)
+	if(status)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
-		spawn(100)
-			if(!qdeleted(src))
-				cancelCameraAlarm()
+		addtimer(src, "cancelCameraAlarm", 100)
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")
@@ -288,6 +296,7 @@
 			visible_message("<span class='danger'>\The [src] [change_msg]!</span>")
 
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+	update_icon()
 
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
@@ -333,13 +342,13 @@
 			//If someone knows a better way to do this, let me know. -Giacom
 			switch(i)
 				if(NORTH)
-					src.dir = SOUTH
+					src.setDir(SOUTH)
 				if(SOUTH)
-					src.dir = NORTH
+					src.setDir(NORTH)
 				if(WEST)
-					src.dir = EAST
+					src.setDir(EAST)
 				if(EAST)
-					src.dir = WEST
+					src.setDir(WEST)
 			break
 
 //Return a working camera that can see a given mob

@@ -5,7 +5,7 @@
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
 	gender = PLURAL
 	density = 0
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
@@ -44,7 +44,7 @@
 	desc = "It's black and greasy. Looks like Beepsky made another mess."
 	gender = PLURAL
 	density = 0
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "floor1"
 	var/viruses = list()

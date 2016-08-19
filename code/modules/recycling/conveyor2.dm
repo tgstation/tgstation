@@ -46,7 +46,7 @@
 /obj/machinery/conveyor/New(loc, newdir)
 	..(loc)
 	if(newdir)
-		dir = newdir
+		setDir(newdir)
 	update_move_direction()
 
 /obj/machinery/conveyor/proc/update_move_direction()
@@ -126,7 +126,7 @@
 	else if(istype(I, /obj/item/weapon/wrench))
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			dir = turn(dir,-45)
+			setDir(turn(dir,-45))
 			update_move_direction()
 			user << "<span class='notice'>You rotate [src].</span>"
 

@@ -25,11 +25,11 @@ Head of Security
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
+			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway)
+			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
@@ -49,7 +49,7 @@ Head of Security
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+	satchel = /obj/item/weapon/storage/backpack/satchel/sec
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
 	box = /obj/item/weapon/storage/box/security
 
@@ -59,7 +59,7 @@ Head of Security
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -97,9 +97,9 @@ Warden
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/warden
 	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/armor/vest/warden
+	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/beret/sec/navywarden
+	head = /obj/item/clothing/head/warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
@@ -107,7 +107,7 @@ Warden
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+	satchel = /obj/item/weapon/storage/backpack/satchel/sec
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
 	box = /obj/item/weapon/storage/box/security
 
@@ -118,7 +118,7 @@ Warden
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -158,7 +158,7 @@ Detective
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
 		/obj/item/weapon/melee/classic_baton=1,\
-		/obj/item/weapon/reagent_containers/food/drinks/flask/det)
+		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1)
 	mask = /obj/item/clothing/mask/cigarette
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -169,7 +169,7 @@ Detective
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -209,7 +209,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	uniform = /obj/item/clothing/under/rank/security
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
-	suit = /obj/item/clothing/suit/armor/vest
+	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	r_pocket = /obj/item/device/assembly/flash/handheld
@@ -217,7 +217,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+	satchel = /obj/item/weapon/storage/backpack/satchel/sec
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
 	box = /obj/item/weapon/storage/box/security
 
@@ -270,7 +270,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()

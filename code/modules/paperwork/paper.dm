@@ -14,7 +14,6 @@
 	w_class = 1
 	throw_range = 1
 	throw_speed = 1
-	layer = 3
 	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
@@ -167,7 +166,7 @@
 	info = null
 	stamps = null
 	stamped = list()
-	overlays.Cut()
+	cut_overlays()
 	updateinfolinks()
 	update_icon()
 
@@ -316,7 +315,7 @@
 		if(!stamped)
 			stamped = new
 		stamped += P.type
-		overlays += stampoverlay
+		add_overlay(stampoverlay)
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 

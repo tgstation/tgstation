@@ -29,13 +29,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	recommended_enemies = 2
 	enemy_minimum_age = 14
 
-///////////////////////////
-//Announces the game type//
-///////////////////////////
-/datum/game_mode/gang/announce()
-	world << "<B>The current game mode is - Gang War!</B>"
-	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by activating and defending a Dominator! <BR>Crew - The gangs will try to keep you on the station. Successfully evacuate the station to win!</B>"
-
+	announce_span = "danger"
+	announce_text = "A violent turf war has erupted on the station!\n\
+	<span class='danger'>Gangsters</span>: Take over the station with a dominator.\n\
+	<span class='notice'>Crew</span>: Prevent the gangs from expanding and initiating takeover."
 
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
@@ -94,12 +91,9 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	boss_mind.objectives += rival_obj
 
 /datum/game_mode/proc/greet_gang(datum/mind/boss_mind, you_are=1)
-	var/obj_count = 1
 	if (you_are)
 		boss_mind.current << "<FONT size=3 color=red><B>You are the Boss of the [boss_mind.gang_datum.name] Gang!</B></FONT>"
-	for(var/datum/objective/objective in boss_mind.objectives)
-		boss_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	boss_mind.announce_objectives()
 
 ///////////////////////////////////////////////////////////////////////////
 //This equips the bosses with their gear, and makes the clown not clumsy//
@@ -156,7 +150,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a chameleon security HUD."
 		. += 1
 	else
-		mob << "The <b>chameleon security HUD</b> in your [where4] will help you keep track of who is loyalty-implanted, and unable to be recruited."
+		mob << "The <b>chameleon security HUD</b> in your [where4] will help you keep track of who is mindshield-implanted, and unable to be recruited."
 	mob.update_icons()
 	return .
 
@@ -165,7 +159,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 //Deals with converting players to a gang//
 ///////////////////////////////////////////
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
-	if(!G || (gangster_mind in get_all_gangsters()))
+	if(!G || (gangster_mind in get_all_gangsters()) || (gangster_mind.enslaved_to && !is_gangster(gangster_mind.enslaved_to)))
 		return 0
 	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
 		return 1
@@ -180,7 +174,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [G.name] Gang!</B></FONT>"
 	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>"
 	gangster_mind.current << "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>"
-	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>red \[G\] icon</b>.</font>"
+	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>large, bright [G.color] \[G\] icon</b>.</font>"
 	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [G.name] Gang!</font>"
 	gangster_mind.special_role = "[G.name] Gangster"
 	gangster_mind.store_memory("You are a member of the [G.name] Gang!")
@@ -219,7 +213,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 			if(!silent)
 				gangster_mind.current.visible_message("The frame beeps contentedly from the MMI before initalizing it.")
 			gangster_mind.current << "<FONT size=3 color=red><B>The frame's firmware detects and deletes your criminal behavior! You are no longer a gangster!</B></FONT>"
-			message_admins("[key_name_admin(gangster_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[gangster_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[gangster_mind.current]'>FLW</A>) has been borged while being a member of the [gang.name] Gang. They are no longer a gangster.")
+			message_admins("[ADMIN_LOOKUPFLW(gangster_mind.current)] has been borged while being a member of the [gang.name] Gang. They are no longer a gangster.")
 		else
 			if(!silent)
 				gangster_mind.current.Paralyse(5)
@@ -252,7 +246,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		gang_bosses += G.bosses
 	return gang_bosses
 
-/proc/get_domination_time(var/datum/gang/G)
+/proc/determine_domination_time(var/datum/gang/G)
 	return max(180,900 - (round((G.territory.len/start_state.num_territories)*100, 1) * 12))
 
 //////////////////////////////////////////////////////////////////////
@@ -263,10 +257,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(gangs.len)
 		if(!winner)
 			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
-			feedback_set_details("round_end_result","win - gang domination complete")
+			feedback_set_details("round_end_result","loss - gangs failed takeover")
 		else
 			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
-			feedback_set_details("round_end_result","loss - gangs failed takeover")
+			feedback_set_details("round_end_result","win - gang domination complete")
 
 	for(var/datum/gang/G in gangs)
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
@@ -289,7 +283,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 /datum/gang_points/New()
 	next_point_time = world.time + next_point_interval
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /datum/gang_points/process(seconds)
 	var/list/winners = list() //stores the winners if there are any
@@ -298,9 +292,8 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		if(world.time > next_point_time)
 			G.income()
 
-		if(isnum(G.dom_timer))
-			G.dom_timer -= seconds/10
-			if(G.dom_timer < 0)
+		if(G.is_dominating)
+			if(G.domination_time_remaining() < 0)
 				winners += G
 
 	if(world.time > next_point_time)

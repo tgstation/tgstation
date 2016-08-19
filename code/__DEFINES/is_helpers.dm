@@ -15,6 +15,9 @@
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
 #define ispodperson(A) (is_species(A, /datum/species/podperson))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
+#define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
+#define iszombie(A) (is_species(A, /datum/species/zombie))
+#define ishumanbasic(A) (is_species(A, /datum/species/human))
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
@@ -42,6 +45,12 @@
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
 
+#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
+
+#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
+
+#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
@@ -55,6 +64,8 @@
 #define iscarbon(A) (istype(A, /mob/living/carbon))
 
 #define issilicon(A) (istype(A, /mob/living/silicon))
+
+#define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 
 #define isliving(A) (istype(A, /mob/living))
 
@@ -70,11 +81,15 @@
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
+#define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
+
 #define islimb(A) (istype(A, /obj/item/bodypart))
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
 #define ismovableatom(A) (istype(A, /atom/movable))
+
+#define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
 // ASSEMBLY HELPERS
 

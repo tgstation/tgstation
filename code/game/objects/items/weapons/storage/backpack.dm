@@ -33,7 +33,7 @@
 /obj/item/weapon/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
-	origin_tech = "bluespace=4"
+	origin_tech = "bluespace=5;materials=4;engineering=4;plasmatech=5"
 	icon_state = "holdingpack"
 	max_w_class = 6
 	max_combined_w_class = 35
@@ -50,12 +50,6 @@
 	qdel(user)
 	return
 
-/obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	if(crit_fail)
-		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
-		return
-	return ..()
-
 /obj/item/weapon/storage/backpack/holding/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user))
 		if(get_dist(user, dest_object) < 8)
@@ -71,7 +65,7 @@
 	return 0
 
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	if((istype(W, /obj/item/weapon/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/weapon/storage/backpack/holding)) && !W.crit_fail)
+	if((istype(W, /obj/item/weapon/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/weapon/storage/backpack/holding)))
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
@@ -85,18 +79,7 @@
 		qdel(src)
 		singulo.process()
 		return
-	..()
-
-/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
-	if (prob(src.reliability)) return 1 //No failure
-	if (prob(src.reliability))
-		user << "<span class='danger'>The Bluespace portal resists your attempt to add another item.</span>" //light failure
-	else
-		user << "<span class='danger'>The Bluespace generator malfunctions!</span>"
-		for (var/obj/O in src.contents) //it broke, delete what was in it
-			qdel(O)
-		crit_fail = 1
-		icon_state = "brokenpack"
+	. = ..()
 
 /obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)
@@ -204,93 +187,94 @@
  */
 
 /obj/item/weapon/storage/backpack/satchel
+	name = "satchel"
+	desc = "A trendy looking satchel."
+	icon_state = "satchel-norm"
+	species_exception = list(/datum/species/angel) //satchels can be equipped since they are on the side, not back
+
+/obj/item/weapon/storage/backpack/satchel/leather
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
 	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/satchel/withwallet/New()
+/obj/item/weapon/storage/backpack/satchel/leather/withwallet/New()
 	..()
 	new /obj/item/weapon/storage/wallet/random( src )
 
-/obj/item/weapon/storage/backpack/satchel_norm
-	name = "satchel"
-	desc = "A trendy looking satchel."
-	icon_state = "satchel-norm"
-
-/obj/item/weapon/storage/backpack/satchel_eng
+/obj/item/weapon/storage/backpack/satchel/eng
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
 	item_state = "engiepack"
 	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/satchel_med
+/obj/item/weapon/storage/backpack/satchel/med
 	name = "medical satchel"
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-med"
 	item_state = "medicalpack"
 
-/obj/item/weapon/storage/backpack/satchel_vir
+/obj/item/weapon/storage/backpack/satchel/vir
 	name = "virologist satchel"
 	desc = "A sterile satchel with virologist colours."
 	icon_state = "satchel-vir"
 	item_state = "satchel-vir"
 
-/obj/item/weapon/storage/backpack/satchel_chem
+/obj/item/weapon/storage/backpack/satchel/chem
 	name = "chemist satchel"
 	desc = "A sterile satchel with chemist colours."
 	icon_state = "satchel-chem"
 	item_state = "satchel-chem"
 
-/obj/item/weapon/storage/backpack/satchel_gen
+/obj/item/weapon/storage/backpack/satchel/gen
 	name = "geneticist satchel"
 	desc = "A sterile satchel with geneticist colours."
 	icon_state = "satchel-gen"
 	item_state = "satchel-gen"
 
-/obj/item/weapon/storage/backpack/satchel_tox
+/obj/item/weapon/storage/backpack/satchel/tox
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-tox"
 	item_state = "satchel-tox"
 	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/satchel_hyd
+/obj/item/weapon/storage/backpack/satchel/hyd
 	name = "botanist satchel"
 	desc = "A satchel made of all natural fibers."
 	icon_state = "satchel-hyd"
 	item_state = "satchel-hyd"
 
-/obj/item/weapon/storage/backpack/satchel_sec
+/obj/item/weapon/storage/backpack/satchel/sec
 	name = "security satchel"
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
 
-/obj/item/weapon/storage/backpack/satchel_explorer
+/obj/item/weapon/storage/backpack/satchel/explorer
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
 	icon_state = "satchel-explorer"
 	item_state = "securitypack"
 
-/obj/item/weapon/storage/backpack/satchel_cap
+/obj/item/weapon/storage/backpack/satchel/cap
 	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
 	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/satchel_flat
+/obj/item/weapon/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	w_class = 3 //Can fit in backpacks itself.
 	max_combined_w_class = 15
 	level = 1
-	cant_hold = list(/obj/item/weapon/storage/backpack/satchel_flat) //muh recursive backpacks
+	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
 
-/obj/item/weapon/storage/backpack/satchel_flat/hide(var/intact)
+/obj/item/weapon/storage/backpack/satchel/flat/hide(var/intact)
 	if(intact)
 		invisibility = INVISIBILITY_MAXIMUM
 		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
@@ -300,10 +284,31 @@
 		anchored = 0
 		icon_state = initial(icon_state)
 
-/obj/item/weapon/storage/backpack/satchel_flat/New()
+/obj/item/weapon/storage/backpack/satchel/flat/New()
 	..()
-	new /obj/item/stack/tile/plasteel(src)
+	PoolOrNew(/obj/item/stack/tile/plasteel, src)
 	new /obj/item/weapon/crowbar(src)
+
+/obj/item/weapon/storage/backpack/satchel/flat/secret/
+	var/list/reward_one_of_these = list() //Intended for map editing
+	var/list/reward_all_of_these = list() //use paths!
+	var/revealed = 0
+
+/obj/item/weapon/storage/backpack/satchel/flat/secret/New()
+	..()
+
+	if(istype(loc,/turf/open/floor) && !istype(loc,/turf/open/floor/plating/))
+		hide(1)
+
+/obj/item/weapon/storage/backpack/satchel/flat/secret/hide(intact)
+	..()
+	if(!intact && !revealed)
+		if(reward_one_of_these.len > 0)
+			var/reward = pick(reward_one_of_these)
+			new reward(src)
+		for(var/R in reward_all_of_these)
+			new R(src)
+		revealed = 1
 
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "dufflebag"

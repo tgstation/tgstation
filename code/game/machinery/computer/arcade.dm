@@ -4,6 +4,7 @@
 	icon_state = "arcade"
 	icon_keyboard = null
 	icon_screen = "invaders"
+	clockwork = TRUE //it'd look weird
 	var/list/prizes = list(
 		/obj/item/weapon/storage/box/snappops					= 2,
 		/obj/item/toy/talking/AI								= 2,
@@ -49,9 +50,12 @@
 		new CB.build_path(loc, CB)
 		qdel(src)
 
+#define PULSE_MEDAL "Jackpot"
+
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(prob(0.0001)) //1 in a million
-		new /obj/item/weapon/gun/energy/pulse(src)
+		new /obj/item/weapon/gun/energy/pulse/prize(src)
+		UnlockMedal(PULSE_MEDAL,usr.client)
 
 	if(!contents.len)
 		var/prizeselect = pickweight(prizes)
@@ -63,7 +67,7 @@
 		"<span class='notice'>You hear a chime and a clunk.</span>")
 
 	prize.loc = src.loc
-
+#undef PULSE_MEDAL
 /obj/machinery/computer/arcade/emp_act(severity)
 	..(severity)
 

@@ -9,6 +9,7 @@
 #define MAINTDRONE	"drone_maint"
 #define REPAIRDRONE	"drone_repair"
 #define SCOUTDRONE	"drone_scout"
+#define CLOCKDRONE	"drone_clock"
 
 #define MAINTDRONE_HACKED "drone_maint_red"
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
@@ -37,13 +38,17 @@
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
 	bubble_icon = "machine"
-	languages = DRONE
+	languages_spoken = DRONE
+	languages_understood = DRONE|HUMAN
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
+	faction = list("silicon")
+	dextrous = TRUE
+	dextrous_hud_type = /datum/hud/dextrous/drone
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
@@ -62,7 +67,6 @@
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
-	var/datum/personal_crafting/handcrafting
 
 /mob/living/simple_animal/drone/New()
 	. = ..()
@@ -73,7 +77,7 @@
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, slot_drone_storage)
+		equip_to_slot_or_del(I, slot_generic_dextrous_storage)
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
@@ -82,29 +86,32 @@
 
 	alert_drones(DRONE_NET_CONNECT)
 
-	var/datum/action/generic/drone/select_filter/SF = new(src)
-	SF.Grant(src)
+	if(seeStatic)
+		var/datum/action/generic/drone/select_filter/SF = new(src)
+		SF.Grant(src)
+	else
+		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
 
-	handcrafting = new()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/simple_animal/drone/med_hud_set_status()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
 	if(stat == DEAD)
 		holder.icon_state = "huddead2"
 	else if(incapacitated())
 		holder.icon_state = "hudoffline"
 	else
 		holder.icon_state = "hudstat"
-
-/mob/living/simple_animal/drone/OpenCraftingMenu()
-	handcrafting.craft(src)
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!
@@ -122,8 +129,6 @@
 
 /mob/living/simple_animal/drone/death(gibbed)
 	..(gibbed)
-	drop_l_hand()
-	drop_r_hand()
 	if(internal_storage)
 		unEquip(internal_storage)
 	if(head)
@@ -190,15 +195,6 @@
 			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>\n"
 	msg += "*---------*</span>"
 	user << msg
-
-/mob/living/simple_animal/drone/IsAdvancedToolUser()
-	return 1
-
-
-/mob/living/simple_animal/drone/canUseTopic()
-	if(stat)
-		return
-	return 1
 
 
 /mob/living/simple_animal/drone/assess_threat() //Secbots won't hunt maintenance drones.
@@ -267,3 +263,6 @@
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?
 	return 1
+
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+	return 0 //So they don't die trying to fix wiring

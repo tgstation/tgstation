@@ -21,11 +21,12 @@
 	flash_protect = 2
 	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	origin_tech = "materials=2;engineering=2"
+	origin_tech = "materials=2;engineering=3"
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
+	visor_flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/welding/attack_self()
 	toggle()
@@ -63,11 +64,9 @@
 	burn_state = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
+	pockets = /obj/item/weapon/storage/internal/pocket/tiny // Honk!
 
-/obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
-	AltClick(user)
-
-/obj/item/clothing/mask/gas/clown_hat/AltClick(mob/living/user)
+/obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
 		return
 

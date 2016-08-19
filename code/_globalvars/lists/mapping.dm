@@ -47,6 +47,7 @@ var/list/blobstart = list()
 var/list/secequipment = list()
 var/list/deathsquadspawn = list()
 var/list/emergencyresponseteamspawn = list()
+var/list/ruin_landmarks = list()
 
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
@@ -62,3 +63,6 @@ var/list/datum/map_template/space_ruins_templates = list()
 var/list/datum/map_template/lava_ruins_templates = list()
 
 var/list/datum/map_template/shuttle_templates = list()
+var/list/datum/map_template/shelter_templates = list()
+
+var/list/transit_markers = list()

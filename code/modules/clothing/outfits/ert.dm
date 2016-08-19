@@ -10,7 +10,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -28,7 +28,7 @@
 
 	id = /obj/item/weapon/card/id/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert
-	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	back = /obj/item/weapon/storage/backpack/captain
 	belt = /obj/item/weapon/storage/belt/security/full
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
@@ -42,7 +42,6 @@
 
 	if(visualsOnly)
 		return
-
 	var/obj/item/device/radio/R = H.ears
 	R.keyslot = new /obj/item/device/encryptionkey/heads/captain
 	R.recalculateChannels()
@@ -50,6 +49,7 @@
 /datum/outfit/ert/commander/alert
 	name = "ERT Commander - High Alert"
 
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
@@ -97,7 +97,7 @@
 	id = /obj/item/weapon/card/id/ert/Medical
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
 	glasses = /obj/item/clothing/glasses/hud/health
-	back = /obj/item/weapon/storage/backpack/medic
+	back = /obj/item/weapon/storage/backpack/satchel/med
 	belt = /obj/item/weapon/storage/belt/medical
 	r_hand = /obj/item/weapon/storage/firstaid/regular
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
@@ -124,7 +124,8 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1,\
-		/obj/item/weapon/reagent_containers/hypospray/combat/nanites=1)
+		/obj/item/weapon/reagent_containers/hypospray/combat/nanites=1,\
+		/obj/item/weapon/gun/medbeam=1)
 
 /datum/outfit/ert/engineer
 	name = "ERT Engineer"
@@ -172,7 +173,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/weapon/gun/energy/gun
 	l_pocket = /obj/item/weapon/pen
-	back = /obj/item/weapon/storage/backpack/satchel_norm
+	back = /obj/item/weapon/storage/backpack/satchel
 	r_pocket = /obj/item/device/pda/heads
 	l_hand = /obj/item/weapon/clipboard
 	id = /obj/item/weapon/card/id

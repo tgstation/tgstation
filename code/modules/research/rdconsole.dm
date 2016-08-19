@@ -45,6 +45,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/screen = 1.0	//Which screen is currently showing.
 	var/id = 0			//ID of the computer (for server restrictions).
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
+	var/first_use = 1	//If first_use = 1, it will try to auto-connect with nearby devices
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 
@@ -53,37 +54,20 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
-	for(var/T in subtypesof(/datum/tech))
-		var/datum/tech/tt = T
-		if(initial(tt.id) == ID)
-			return initial(tt.name)
+	if(tech_list[ID])
+		var/datum/tech/tech = tech_list[ID]
+		return tech.name
+	return "ERROR: Report This"
 
-proc/CallMaterialName(ID)
-	if (copytext(ID, 1, 2) == "$")
-		var/return_name = copytext(ID, 2)
-		switch(return_name)
-			if("metal")
-				return_name = "Metal"
-			if("glass")
-				return_name = "Glass"
-			if("gold")
-				return_name = "Gold"
-			if("silver")
-				return_name = "Silver"
-			if("plasma")
-				return_name = "Solid Plasma"
-			if("uranium")
-				return_name = "Uranium"
-			if("diamond")
-				return_name = "Diamond"
-			if("clown")
-				return_name = "Bananium"
-		return return_name
-	else
-		for(var/R in subtypesof(/datum/reagent))
-			var/datum/reagent/rr = R
-			if(initial(rr.id) == ID)
-				return initial(rr.name)
+/proc/CallMaterialName(ID)
+	if (copytext(ID, 1, 2) == "$" && materials_list[ID])
+		var/datum/material/material = materials_list[ID]
+		return material.name
+
+	else if(chemical_reagents_list[ID])
+		var/datum/reagent/reagent = chemical_reagents_list[ID]
+		return reagent.name
+	return "ERROR: Report This"
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in oview(3,src))
@@ -101,7 +85,7 @@ proc/CallMaterialName(ID)
 			if(linked_imprinter == null)
 				linked_imprinter = D
 				D.linked_console = src
-	return
+	first_use = 0
 
 //Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
@@ -123,9 +107,6 @@ proc/CallMaterialName(ID)
 		for(var/obj/machinery/r_n_d/server/centcom/S in machines)
 			S.initialize()
 			break
-
-/obj/machinery/computer/rdconsole/initialize()
-	SyncRDevices()
 
 /*	Instead of calling this every tick, it is only being called when needed
 /obj/machinery/computer/rdconsole/process()
@@ -231,10 +212,15 @@ proc/CallMaterialName(ID)
 		var/datum/design/D = files.known_designs[href_list["copy_design_ID"]]
 		if(D)
 			var/autolathe_friendly = 1
-			for(var/x in D.materials)
-				if( !(x in list(MAT_METAL, MAT_GLASS)))
-					autolathe_friendly = 0
-					D.category -= "Imported"
+			if(D.reagents.len)
+				autolathe_friendly = 0
+				D.category -= "Imported"
+			else
+				for(var/x in D.materials)
+					if( !(x in list(MAT_METAL, MAT_GLASS)))
+						autolathe_friendly = 0
+						D.category -= "Imported"
+
 			if(D.build_type & (AUTOLATHE|PROTOLATHE|CRAFTLATHE)) // Specifically excludes circuit imprinter and mechfab
 				D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
 				D.category |= "Imported"
@@ -250,60 +236,62 @@ proc/CallMaterialName(ID)
 				linked_destroy.loaded_item.loc = linked_destroy.loc
 				linked_destroy.loaded_item = null
 				linked_destroy.icon_state = "d_analyzer"
-				screen = 2.1
+				screen = 1.0
 
 	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
-		if(linked_destroy)
-			if(linked_destroy.busy)
-				usr << "<span class='danger'>The destructive analyzer is busy at the moment.</span>"
-			else
-				var/choice = input("Proceeding will destroy loaded item.") in list("Proceed", "Cancel")
-				if(choice == "Cancel" || !linked_destroy) return
-				linked_destroy.busy = 1
-				screen = 0.1
-				updateUsrDialog()
-				flick("d_analyzer_process", linked_destroy)
-				spawn(24)
-					if(linked_destroy)
-						linked_destroy.busy = 0
-						if(!linked_destroy.hacked)
-							if(!linked_destroy.loaded_item)
-								usr <<"<span class='danger'>The destructive analyzer appears to be empty.</span>"
-								screen = 1.0
-								return
-							if((linked_destroy.loaded_item.reliability >= 99 - (linked_destroy.decon_mod * 3)) || linked_destroy.loaded_item.crit_fail)
-								var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
-								for(var/T in temp_tech)
-									if(prob(linked_destroy.loaded_item.reliability))               //If deconstructed item is not reliable enough its just being wasted, else it is pocessed
-										files.UpdateTech(T, temp_tech[T])                          //Check if deconstructed item has research levels higher/same/one less than current ones
-								files.UpdateDesigns(linked_destroy.loaded_item, temp_tech, src)    //If if such reseach type found all the known designs are checked for having this research type in them
-								screen = 1.0                                                       //If design have it it gains some reliability
-							else                                                                   //Same design always gain quality
-								screen = 2.3                                                       //Crit fail gives the same design a lot of reliability, like really a lot
-							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-								for(var/material in linked_destroy.loaded_item.materials)
-									linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
-								feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
-							linked_destroy.loaded_item = null
+		if(!linked_destroy || linked_destroy.busy || !linked_destroy.loaded_item)
+			updateUsrDialog()
+			return
+
+		var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
+		var/cancontinue = FALSE
+		for(var/T in temp_tech)
+			if(files.IsTechHigher(T, temp_tech[T]))
+				cancontinue = TRUE
+				break
+		if(!cancontinue)
+			var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
+			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item) return
+		linked_destroy.busy = 1
+		screen = 0.1
+		updateUsrDialog()
+		flick("d_analyzer_process", linked_destroy)
+		spawn(24)
+			if(linked_destroy)
+				linked_destroy.busy = 0
+				if(!linked_destroy.loaded_item)
+					screen = 1.0
+					return
+
+				for(var/T in temp_tech)
+					var/datum/tech/KT = files.known_tech[T] //For stat logging of high levels
+					if(files.IsTechHigher(T, temp_tech[T]) && KT.level >= 5) //For stat logging of high levels
+						feedback_add_details("high_research_level","[KT][KT.level + 1]") //+1 to show the level which we're about to get
+					files.UpdateTech(T, temp_tech[T])
+
+				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
+					for(var/material in linked_destroy.loaded_item.materials)
+						linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
+					feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
+				linked_destroy.loaded_item = null
+				for(var/obj/I in linked_destroy.contents)
+					for(var/mob/M in I.contents)
+						M.death()
+					if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
+						var/obj/item/stack/sheet/S = I
+						if(S.amount > 1)
+							S.amount--
+							linked_destroy.loaded_item = S
 						else
-							screen = 1.0
-						for(var/obj/I in linked_destroy.contents)
-							for(var/mob/M in I.contents)
-								M.death()
-							if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
-								var/obj/item/stack/sheet/S = I
-								if(S.amount > 1)
-									S.amount--
-									linked_destroy.loaded_item = S
-								else
-									qdel(S)
-									linked_destroy.icon_state = "d_analyzer"
-							else
-								if(!(I in linked_destroy.component_parts))
-									qdel(I)
-									linked_destroy.icon_state = "d_analyzer"
-						use_power(250)
-						updateUsrDialog()
+							qdel(S)
+							linked_destroy.icon_state = "d_analyzer"
+					else
+						if(!(I in linked_destroy.component_parts))
+							qdel(I)
+							linked_destroy.icon_state = "d_analyzer"
+			screen = 1.0
+			use_power(250)
+			updateUsrDialog()
 
 	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
 		if(src.allowed(usr))
@@ -350,186 +338,169 @@ proc/CallMaterialName(ID)
 		sync = !sync
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
-		var/coeff
+		var/datum/design/being_built = files.known_designs[href_list["build"]]
+		var/amount = text2num(href_list["amount"])
 
-		if(linked_lathe)
-			coeff = linked_lathe.efficiency_coeff
-		else
-			coeff = 1
+		if(being_built.make_reagents.len)
+			return 0
+
+		if(!linked_lathe || !being_built || !amount)
+			updateUsrDialog()
+			return
+
+		if(linked_lathe.busy)
+			usr << "<span class='danger'>Protolathe is busy at the moment.</span>"
+			return
+
+		var/coeff = linked_lathe.efficiency_coeff
+		var/power = 1000
+		var/old_screen = screen
+
+		amount = max(1, min(10, amount))
+		for(var/M in being_built.materials)
+			power += round(being_built.materials[M] * amount / 5)
+		power = max(3000, power)
+		screen = 0.3
+		var/key = usr.key	//so we don't lose the info during the spawn delay
+		if (!(being_built.build_type & PROTOLATHE))
+			message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
+			updateUsrDialog()
+			return
 
 		var/g2g = 1
-		if(linked_lathe)
-			var/datum/design/being_built = files.known_designs[href_list["build"]]
-			if(being_built)
-				var/power = 2000
-				var/amount=text2num(href_list["amount"])
-				var/old_screen = screen
-				amount = max(1, min(10, amount))
-				for(var/M in being_built.materials)
-					power += round(being_built.materials[M] * amount / 5)
-				power = max(2000, power)
-				screen = 0.3
-				if(linked_lathe.busy)
+		var/enough_materials = 1
+		linked_lathe.busy = 1
+		flick("protolathe_n",linked_lathe)
+		use_power(power)
+
+		var/list/efficient_mats = list()
+		for(var/MAT in being_built.materials)
+			efficient_mats[MAT] = being_built.materials[MAT]*coeff
+
+		if(!linked_lathe.materials.has_materials(efficient_mats, amount))
+			linked_lathe.say("Not enough materials to complete prototype.")
+			enough_materials = 0
+			g2g = 0
+		else
+			for(var/R in being_built.reagents)
+				if(!linked_lathe.reagents.has_reagent(R, being_built.reagents[R]*coeff))
+					linked_lathe.say("Not enough reagents to complete prototype.")
+					enough_materials = 0
 					g2g = 0
-				var/key = usr.key	//so we don't lose the info during the spawn delay
-				if (!(being_built.build_type & PROTOLATHE))
-					g2g = 0
-					message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
 
+		if(enough_materials)
+			linked_lathe.materials.use_amount(efficient_mats, amount)
+			for(var/R in being_built.reagents)
+				linked_lathe.reagents.remove_reagent(R, being_built.reagents[R]*coeff)
 
-
-				if (g2g) //If input is incorrect, nothing happens
-					var/enough_materials = 1
-					linked_lathe.busy = 1
-					flick("protolathe_n",linked_lathe)
-					use_power(power)
-
-					var/list/efficient_mats = list()
-					for(var/MAT in being_built.materials)
-						efficient_mats[MAT] = being_built.materials[MAT]
-
-					if(!linked_lathe.materials.has_materials(efficient_mats, amount))
-						src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</span>")
-						enough_materials = 0
-						g2g = 0
-					else
-						for(var/R in being_built.reagents)
-							if(!linked_lathe.reagents.has_reagent(R, being_built.reagents[R]))
-								src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough reagents to complete prototype.\"</span>")
-								enough_materials = 0
-								g2g = 0
-
-					if(enough_materials)
-						linked_lathe.materials.use_amount(efficient_mats, amount)
-						for(var/R in being_built.reagents)
-							linked_lathe.reagents.remove_reagent(R, being_built.reagents[R])
-
-					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
-					var/R = being_built.reliability
-					spawn(32*amount/coeff)
-						if(g2g) //And if we only fail the material requirements, we still spend time and power
-							var/already_logged = 0
-							for(var/i = 0, i<amount, i++)
-								var/obj/item/new_item = new P(src)
-								if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-									new_item.investigate_log("built by [key]","singulo")
-								new_item.reliability = R
-								if(!istype(new_item, /obj/item/stack/sheet)) // To avoid materials dupe glitches
-									new_item.materials = efficient_mats.Copy()
-								if(linked_lathe.hacked)
-									R = max((new_item.reliability/2), 0)
-								new_item.loc = linked_lathe.loc
-								if(!already_logged)
-									feedback_add_details("item_printed","[new_item.type]|[amount]")
-									already_logged = 1
-						linked_lathe.busy = 0
-						screen = old_screen
-						updateUsrDialog()
+		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+		spawn(32*coeff*amount**0.8)
+			if(linked_lathe)
+				if(g2g) //And if we only fail the material requirements, we still spend time and power
+					var/already_logged = 0
+					for(var/i = 0, i<amount, i++)
+						var/obj/item/new_item = new P(src)
+						if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+							new_item.investigate_log("built by [key]","singulo")
+						if(!istype(new_item, /obj/item/stack/sheet)) // To avoid materials dupe glitches
+							new_item.materials = efficient_mats.Copy()
+						new_item.loc = linked_lathe.loc
+						if(!already_logged)
+							feedback_add_details("item_printed","[new_item.type]|[amount]")
+							already_logged = 1
+				screen = old_screen
+				linked_lathe.busy = 0
+			else
+				say("Protolathe connection failed. Production halted.")
+				screen = 1.0
+			updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
+		var/datum/design/being_built = files.known_designs[href_list["imprint"]]
+
+		if(!linked_imprinter || !being_built)
+			updateUsrDialog()
+			return
+
+		if(linked_imprinter.busy)
+			usr << "<span class='danger'>Circuit Imprinter is busy at the moment.</span>"
+			updateUsrDialog()
+			return
+
+		var/coeff = linked_imprinter.efficiency_coeff
+
+		var/power = 1000
+		var/old_screen = screen
+		for(var/M in being_built.materials)
+			power += round(being_built.materials[M] / 5)
+		power = max(4000, power)
+		screen = 0.4
+		if (!(being_built.build_type & IMPRINTER))
+			message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]!")
+			updateUsrDialog()
+			return
+
 		var/g2g = 1
-		if(linked_imprinter)
-			var/datum/design/being_built = files.known_designs[href_list["imprint"]]
-			if(being_built)
-				var/power = 2000
-				var/old_screen = screen
-				for(var/M in being_built.materials)
-					power += round(being_built.materials[M] / 5)
-				power = max(2000, power)
-				screen = 0.4
-				if (linked_imprinter.busy)
+		var/enough_materials = 1
+		linked_imprinter.busy = 1
+		flick("circuit_imprinter_ani", linked_imprinter)
+		use_power(power)
+
+		var/list/efficient_mats = list()
+		for(var/MAT in being_built.materials)
+			efficient_mats[MAT] = being_built.materials[MAT]/coeff
+
+		if(!linked_imprinter.materials.has_materials(efficient_mats))
+			linked_imprinter.say("Not enough materials to complete prototype.")
+			enough_materials = 0
+			g2g = 0
+		else
+			for(var/R in being_built.reagents)
+				if(!linked_imprinter.reagents.has_reagent(R, being_built.reagents[R]/coeff))
+					linked_imprinter.say("Not enough reagents to complete prototype.")
+					enough_materials = 0
 					g2g = 0
-				if (!(being_built.build_type & IMPRINTER))
-					g2g = 0
-					message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]!")
 
-				if (g2g) //Again, if input is wrong, do nothing
-					linked_imprinter.busy = 1
-					flick("circuit_imprinter_ani",linked_imprinter)
-					use_power(power)
+		if(enough_materials)
+			linked_imprinter.materials.use_amount(efficient_mats)
+			for(var/R in being_built.reagents)
+				linked_imprinter.reagents.remove_reagent(R, being_built.reagents[R]/coeff)
 
-					for(var/M in being_built.materials)
-						if(!linked_imprinter.check_mat(being_built, M))
-							src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</span>")
-							g2g = 0
-							break
-						switch(M)
-							if(MAT_GLASS)
-								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]))
-							if(MAT_GOLD)
-								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]))
-							if(MAT_DIAMOND)
-								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]))
-							else
-								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M])
+		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+		spawn(16)
+			if(linked_imprinter)
+				if(g2g)
+					var/obj/item/new_item = new P(src)
+					new_item.loc = linked_imprinter.loc
+					new_item.materials = efficient_mats.Copy()
+					feedback_add_details("circuit_printed","[new_item.type]")
+				screen = old_screen
+				linked_imprinter.busy = 0
+			else
+				say("Circuit Imprinter connection failed. Production halted.")
+				screen = 1.0
+			updateUsrDialog()
 
-					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
-					var/R = being_built.reliability
-					spawn(16)
-						if(g2g)
-							var/obj/item/new_item = new P(src)
-							new_item.reliability = R
-							new_item.loc = linked_imprinter.loc
-							feedback_add_details("circuit_printed","[new_item.type]")
-						linked_imprinter.busy = 0
-						screen = old_screen
-						updateUsrDialog()
-
-	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
-		linked_imprinter.reagents.del_reagent(href_list["disposeI"])
-
-	else if(href_list["disposeallI"] && linked_imprinter) //Causes the circuit imprinter to dispose of all it's reagents.
-		linked_imprinter.reagents.clear_reagents()
-
+	//Protolathe Materials
 	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
 		linked_lathe.reagents.del_reagent(href_list["disposeP"])
 
 	else if(href_list["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
 		linked_lathe.reagents.clear_reagents()
 
-	else if(href_list["lathe_ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
-		var/desired_num_sheets = text2num(href_list["lathe_ejectsheet_amt"])
-		var/MAT
-		switch(href_list["lathe_ejectsheet"])
-			if("metal")
-				MAT = MAT_METAL
-			if("glass")
-				MAT = MAT_GLASS
-			if("gold")
-				MAT = MAT_GOLD
-			if("silver")
-				MAT = MAT_SILVER
-			if("plasma")
-				MAT = MAT_PLASMA
-			if("uranium")
-				MAT = MAT_URANIUM
-			if("diamond")
-				MAT = MAT_DIAMOND
-			if("clown")
-				MAT = MAT_BANANIUM
-		linked_lathe.materials.retrieve_sheets(desired_num_sheets, MAT)
+	else if(href_list["ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
+		linked_lathe.materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["ejectsheet"])
 
-	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
-		var/desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
-		var/res_amount, type
-		switch(href_list["imprinter_ejectsheet"])
-			if("glass")
-				type = /obj/item/stack/sheet/glass
-				res_amount = "g_amount"
-			if("gold")
-				type = /obj/item/stack/sheet/mineral/gold
-				res_amount = "gold_amount"
-			if("diamond")
-				type = /obj/item/stack/sheet/mineral/diamond
-				res_amount = "diamond_amount"
-		if(ispath(type) && hasvar(linked_imprinter, res_amount))
-			var/obj/item/stack/sheet/sheet = new type(linked_imprinter.loc)
-			var/available_num_sheets = round(linked_imprinter.vars[res_amount]/sheet.perunit)
-			if(available_num_sheets>0)
-				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.amount * sheet.perunit))
-			else
-				qdel(sheet)
+	//Circuit Imprinter Materials
+	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
+		linked_imprinter.reagents.del_reagent(href_list["disposeI"])
+
+	else if(href_list["disposeallI"] && linked_imprinter) //Causes the circuit imprinter to dispose of all it's reagents.
+		linked_imprinter.reagents.clear_reagents()
+
+	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the imprinter to eject a sheet of material
+		linked_imprinter.materials.retrieve_sheets(text2num(href_list["eject_amt"]), href_list["imprinter_ejectsheet"])
+
 
 	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
 		screen = 0.0
@@ -554,6 +525,8 @@ proc/CallMaterialName(ID)
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
+			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
+			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
 			screen = 0.0
 			qdel(files)
 			files = new /datum/research(src)
@@ -591,6 +564,10 @@ proc/CallMaterialName(ID)
 
 /obj/machinery/computer/rdconsole/interact(mob/user)
 	user.set_machine(src)
+
+	if(first_use)
+		SyncRDevices()
+
 	var/dat = ""
 	files.RefreshResearch()
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
@@ -701,18 +678,18 @@ proc/CallMaterialName(ID)
 				dat += "<A href='?src=\ref[src];menu=1.5'>Load Design to Disk</A>"
 			else
 				dat += "Name: [d_disk.blueprint.name]<BR>"
-				dat += "Level: [d_disk.blueprint.reliability]<BR>"
 				var/b_type = d_disk.blueprint.build_type
 				if(b_type)
 					dat += "Lathe Types:<BR>"
 					if(b_type & IMPRINTER) dat += "Circuit Imprinter<BR>"
-					if(b_type & PROTOLATHE) dat += "Proto-lathe<BR>"
-					if(b_type & AUTOLATHE) dat += "Auto-lathe<BR>"
-					if(b_type & MECHFAB) dat += "Mech Fabricator<BR>"
+					if(b_type & PROTOLATHE) dat += "Protolathe<BR>"
+					if(b_type & AUTOLATHE) dat += "Autolathe<BR>"
+					if(b_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
+					if(b_type & BIOGENERATOR) dat += "Biogenerator<BR>"
 				dat += "Required Materials:<BR>"
-				for(var/M in d_disk.blueprint.materials)
-					if(copytext(M, 1, 2) == "$") dat += "* [copytext(M, 2)] x [d_disk.blueprint.materials[M]]<BR>"
-					else dat += "* [M] x [d_disk.blueprint.materials[M]]<BR>"
+				var/all_mats = d_disk.blueprint.materials + d_disk.blueprint.reagents
+				for(var/M in all_mats)
+					dat += "* [CallMaterialName(M)] x [all_mats[M]]<BR>"
 				dat += "</div>Operations: "
 				dat += "<A href='?src=\ref[src];updt_design=1'>Upload to Database</A>"
 				dat += "<A href='?src=\ref[src];clear_design=1'>Clear Disk</A>"
@@ -776,16 +753,14 @@ proc/CallMaterialName(ID)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Deconstruction Menu</h3><BR>"
 			dat += "Name: [linked_destroy.loaded_item.name]<BR>"
-			dat += "Reliability: [linked_destroy.loaded_item.reliability]<BR>"
 			dat += "Origin Tech:<BR>"
 			var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 			for(var/T in temp_tech)
 				dat += "* [CallTechName(T)] [temp_tech[T]]"
-				for(var/v in files.known_tech)
-					var/datum/tech/F = files.known_tech[v]
-					if(F.name == CallTechName(T))
-						dat += " (Current: [F.level])"
-						break
+				var/datum/tech/F = files.known_tech[T]
+				if(F)
+					dat += " (Current: [F.level])"
+
 				dat += "<BR>"
 			dat += "</div>Options: "
 			dat += "<A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A>"
@@ -825,6 +800,7 @@ proc/CallMaterialName(ID)
 			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
 
+			var/coeff = linked_lathe.efficiency_coeff
 			for(var/v in files.known_designs)
 				var/datum/design/D = files.known_designs[v]
 				if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
@@ -832,22 +808,15 @@ proc/CallMaterialName(ID)
 				var/temp_material
 				var/c = 50
 				var/t
-				for(var/M in D.materials)
+
+				var/all_materials = D.materials + D.reagents
+				for(var/M in all_materials)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
 					if (t < 1)
-						temp_material += "<span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
+						temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_material += " [D.materials[M]] [CallMaterialName(M)]"
-					c = min(c,t)
-
-				for(var/R in D.reagents)
-					t = linked_lathe.check_mat(D, R)
-					temp_material += " | "
-					if (t < 1)
-						temp_material += "<span class='bad'>[D.reagents[R]] [CallMaterialName(R)]</span>"
-					else
-						temp_material += " [D.reagents[R]] [CallMaterialName(R)]"
+						temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
 					c = min(c,t)
 
 				if (c >= 1)
@@ -869,6 +838,7 @@ proc/CallMaterialName(ID)
 			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
 
+			var/coeff = linked_lathe.efficiency_coeff
 			for(var/datum/design/D in matching_designs)
 				var/temp_material
 				var/c = 50
@@ -877,9 +847,9 @@ proc/CallMaterialName(ID)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
 					if (t < 1)
-						temp_material += "<span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
+						temp_material += "<span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_material += " [D.materials[M]] [CallMaterialName(M)]"
+						temp_material += " [D.materials[M]*coeff] [CallMaterialName(M)]"
 					c = min(c,t)
 
 				if (c >= 1)
@@ -898,61 +868,16 @@ proc/CallMaterialName(ID)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Material Storage:</h3><BR><HR>"
-			//Metal
-			var/m_amount = linked_lathe.materials.amount(MAT_METAL)
-			dat += "* [m_amount] of Metal: "
-			if(m_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=1'>Eject</A> "
-			if(m_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=5'>5x</A> "
-			if(m_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=50'>All</A>"
-			dat += "<BR>"
-			//Glass
-			var/g_amount = linked_lathe.materials.amount(MAT_GLASS)
-			dat += "* [g_amount] of Glass: "
-			if(g_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=1'>Eject</A> "
-			if(g_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=5'>5x</A> "
-			if(g_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=50'>All</A>"
-			dat += "<BR>"
-			//Gold
-			var/gold_amount = linked_lathe.materials.amount(MAT_GOLD)
-			dat += "* [gold_amount] of Gold: "
-			if(gold_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=1'>Eject</A> "
-			if(gold_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=5'>5x</A> "
-			if(gold_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=50'>All</A>"
-			dat += "<BR>"
-			//Silver
-			var/silver_amount = linked_lathe.materials.amount(MAT_SILVER)
-			dat += "* [silver_amount] of Silver: "
-			if(silver_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=silver;lathe_ejectsheet_amt=1'>Eject</A> "
-			if(silver_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=silver;lathe_ejectsheet_amt=5'>5x</A> "
-			if(silver_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=silver;lathe_ejectsheet_amt=50'>All</A>"
-			dat += "<BR>"
-			//Plasma
-			var/plasma_amount = linked_lathe.materials.amount(MAT_PLASMA)
-			dat += "* [plasma_amount] of Solid Plasma: "
-			if(plasma_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasma;lathe_ejectsheet_amt=1'>Eject</A> "
-			if(plasma_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasma;lathe_ejectsheet_amt=5'>5x</A> "
-			if(plasma_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasmalathe_ejectsheet_amt=50'>All</A>"
-			dat += "<BR>"
-			//Uranium
-			var/uranium_amount = linked_lathe.materials.amount(MAT_URANIUM)
-			dat += "* [uranium_amount] of Uranium: "
-			if(uranium_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=uranium;lathe_ejectsheet_amt=1'>Eject</A> "
-			if(uranium_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=uranium;lathe_ejectsheet_amt=5'>5x</A> "
-			if(uranium_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=uranium;lathe_ejectsheet_amt=50'>All</A>"
-			dat += "<BR>"
-			//Diamond
-			var/diamond_amount = linked_lathe.materials.amount(MAT_DIAMOND)
-			dat += "* [diamond_amount] of Diamond: "
-			if(diamond_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=1'>Eject</A> "
-			if(diamond_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=5'>5x</A> "
-			if(diamond_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=50'>All</A>"
-			dat += "<BR>"
-			//Bananium
-			var/bananium_amount = linked_lathe.materials.amount(MAT_BANANIUM)
-			dat += "* [bananium_amount] of Bananium: "
-			if(bananium_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=1'>Eject</A> "
-			if(bananium_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=5'>5x</A> "
-			if(bananium_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];lathe_ejectsheet=clown;lathe_ejectsheet_amt=50'>All</A>"
+			if(!linked_lathe)
+				dat += "ERROR: Protolathe connection failed."
+			else
+				for(var/mat_id in linked_lathe.materials.materials)
+					var/datum/material/M = linked_lathe.materials.materials[mat_id]
+					dat += "* [M.amount] of [M.name]: "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=1'>Eject</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=5'>5x</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=50'>All</A>"
+					dat += "<BR>"
 			dat += "</div>"
 
 		if(3.3)
@@ -974,7 +899,7 @@ proc/CallMaterialName(ID)
 			dat += "<A href='?src=\ref[src];menu=4.3'>Material Storage</A>"
 			dat += "<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Circuit Imprinter Menu:</h3><BR>"
-			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
+			dat += "Material Amount: [linked_imprinter.materials.total_amount]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
 			dat += "<form name='search' action='?src=\ref[src]'>\
@@ -991,22 +916,26 @@ proc/CallMaterialName(ID)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><BR>"
-			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
+			dat += "Material Amount: [linked_imprinter.materials.total_amount]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
+			var/coeff = linked_imprinter.efficiency_coeff
 			for(var/v in files.known_designs)
 				var/datum/design/D = files.known_designs[v]
 				if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 					continue
 				var/temp_materials
 				var/check_materials = 1
-				for(var/M in D.materials)
+
+				var/all_materials = D.materials + D.reagents
+
+				for(var/M in all_materials)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))
 						check_materials = 0
-						temp_materials += " <span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
+						temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_materials += " [D.materials[M]] [CallMaterialName(M)]"
+						temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
 				if (check_materials)
 					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
 				else
@@ -1017,9 +946,10 @@ proc/CallMaterialName(ID)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Search results:</h3><BR>"
-			dat += "Material Amount: [linked_imprinter.TotalMaterials()]<BR>"
+			dat += "Material Amount: [linked_imprinter.materials.total_amount]<BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
+			var/coeff = linked_imprinter.efficiency_coeff
 			for(var/datum/design/D in matching_designs)
 				var/temp_materials
 				var/check_materials = 1
@@ -1027,18 +957,18 @@ proc/CallMaterialName(ID)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))
 						check_materials = 0
-						temp_materials += " <span class='bad'>[D.materials[M]] [CallMaterialName(M)]</span>"
+						temp_materials += " <span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_materials += " [D.materials[M]] [CallMaterialName(M)]"
+						temp_materials += " [D.materials[M]/coeff] [CallMaterialName(M)]"
 				if (check_materials)
 					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
 				else
 					dat += "<span class='linkOff'>[D.name]</span>[temp_materials]<BR>"
 			dat += "</div>"
 
-		if(4.2)
+		if(4.2) //Circuit Imprinter Material Storage Sub-menu
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
-			dat += "<A href='?src=\ref[src];menu=4.1'>Imprinter Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
 			dat += "<A href='?src=\ref[src];disposeallI=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Chemical Storage:</h3><BR><HR>"
 			for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
@@ -1049,23 +979,16 @@ proc/CallMaterialName(ID)
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Material Storage:</h3><BR><HR>"
-			//Glass
-			dat += "* [linked_imprinter.g_amount]  glass: "
-			if(linked_imprinter.g_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=1'>Eject</A> "
-			if(linked_imprinter.g_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=5'>5x</A> "
-			if(linked_imprinter.g_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=50'>All</A>"
-			dat += "<BR>"
-			//Gold
-			dat += "* [linked_imprinter.gold_amount] gold: "
-			if(linked_imprinter.gold_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=1'>Eject</A> "
-			if(linked_imprinter.gold_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=5'>5x</A> "
-			if(linked_imprinter.gold_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=50'>All</A>"
-			dat += "<BR>"
-			//Diamond
-			dat += "* [linked_imprinter.diamond_amount] diamond: "
-			if(linked_imprinter.diamond_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=1'>Eject</A> "
-			if(linked_imprinter.diamond_amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=5'>5x</A> "
-			if(linked_imprinter.diamond_amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=50'>All</A>"
+			if(!linked_imprinter)
+				dat += "ERROR: Protolathe connection failed."
+			else
+				for(var/mat_id in linked_imprinter.materials.materials)
+					var/datum/material/M = linked_imprinter.materials.materials[mat_id]
+					dat += "* [M.amount] of [M.name]: "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=50'>All</A>"
+					dat += "<BR>"
 			dat += "</div>"
 
 	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)

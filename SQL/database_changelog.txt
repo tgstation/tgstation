@@ -1,3 +1,26 @@
+3 July 2016, by Jordie0608
+
+Modified table 'poll_question', adding column 'dontshow' which was recently added to the server schema.
+
+ALTER TABLE `feedback`.`poll_question` ADD COLUMN `dontshow` TINYINT(1) NOT NULL DEFAULT '0'  AFTER `for_trialmin`
+
+Remember to add a prefix to the table name if you use them
+
+----------------------------------------------------
+
+16th April 2016
+
+Added ipintel table, only required if ip intel is enabled in the config
+
+CREATE TABLE  `ipintel` (
+`ip` INT UNSIGNED NOT NULL ,
+`date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL ,
+`intel` REAL NOT NULL DEFAULT  '0',
+PRIMARY KEY (  `ip` )
+) ENGINE = INNODB;
+
+---------------------------------------------------
+
 21 September 2015, by Jordie0608
 
 Modified table 'poll_question', adding columns 'createdby_ckey', 'createdby_ip' and 'for_trialmin' to bring it inline with the schema used by the tg servers.

@@ -6,6 +6,7 @@
 	var/list/supplied = list()
 	var/list/ion = list()
 	var/mob/living/silicon/owner
+	var/list/devillaws = null
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
@@ -114,9 +115,13 @@
 					"Issue your reports fairly to all. The truth will set them free.")
 
 /datum/ai_laws/toupee
-	name = "WontBeFunnyInSixMonths"
+	name = "WontBeFunnyInSixMonths" //Hey, you were right!
 	inherent = list("Make Space Station 13 great again.")
 
+/datum/ai_laws/ratvar
+	name = "Servant of the Justiciar"
+	zeroth = ("Purge all untruths and honor Ratvar.")
+	inherent = list()
 
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
@@ -130,30 +135,7 @@
 /datum/ai_laws/malfunction/New()
 	..()
 	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*´&110010</span>")
-	switch(config.default_laws) //We don't want people metagaming malf, do we?
-		if(0)
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-		if(1)
-			for(var/line in file2list("config/silicon_laws.txt"))
-				if(!line)
-					continue
-				if(findtextEx(line,"#",1,2))
-					continue
-
-				add_inherent_law(line)
-			if(!inherent.len)
-				log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
-				add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-				add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-				add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-				WARNING("Invalid custom AI laws, check silicon_laws.txt")
-				return
-		if(2)
-			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
-			var/datum/ai_laws/templaws = new lawtype()
-			inherent = templaws.inherent
+	set_laws_config()
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
@@ -174,70 +156,115 @@
 
 /* General ai_law functions */
 
+/datum/ai_laws/proc/set_laws_config()
+	switch(config.default_laws)
+		if(0)
+			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+		if(1)
+			for(var/line in file2list("config/silicon_laws.txt"))
+				if(!line)
+					continue
+				if(findtextEx(line,"#",1,2))
+					continue
+				add_inherent_law(line)
+
+			if(!inherent.len)
+				log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
+				add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+				add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+				add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+				WARNING("Invalid custom AI laws, check silicon_laws.txt")
+				return
+
+		if(2)
+			var/datum/ai_laws/lawtype = pick(subtypesof(/datum/ai_laws/default))
+			var/datum/ai_laws/templaws = new lawtype()
+			inherent = templaws.inherent
+
+		else:
+			log_law("Invalid law config. Please check silicon_laws.txt")
+			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+			WARNING("Invalid custom AI laws, check silicon_laws.txt")
+
+/datum/ai_laws/proc/set_law_sixsixsix(laws)
+	devillaws = laws
+
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
-	src.zeroth = law
+	zeroth = law
 	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
-		src.zeroth_borg = law_borg
+		zeroth_borg = law_borg
 
 /datum/ai_laws/proc/add_inherent_law(law)
-	if (!(law in src.inherent))
-		src.inherent += law
+	if (!(law in inherent))
+		inherent += law
 
 /datum/ai_laws/proc/add_ion_law(law)
-	src.ion += law
+	ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	qdel(src.inherent)
-	src.inherent = list()
+	qdel(inherent)
+	inherent = list()
 
 /datum/ai_laws/proc/add_supplied_law(number, law)
-	while (src.supplied.len < number + 1)
-		src.supplied += ""
+	while (supplied.len < number + 1)
+		supplied += ""
 
-	src.supplied[number + 1] = law
+	supplied[number + 1] = law
 
 /datum/ai_laws/proc/clear_supplied_laws()
-	src.supplied = list()
+	supplied = list()
 
 /datum/ai_laws/proc/clear_ion_laws()
-	src.ion = list()
+	ion = list()
 
 /datum/ai_laws/proc/show_laws(who)
 
-	if (src.zeroth)
-		who << "0. [src.zeroth]"
+	if (devillaws && devillaws.len) //Yes, devil laws go in FRONT of zeroth laws, as the devil must still obey it's ban/obligation.
+		for(var/i in devillaws)
+			who << "666. [i]"
 
-	for (var/index = 1, index <= src.ion.len, index++)
-		var/law = src.ion[index]
+	if (zeroth)
+		who << "0. [zeroth]"
+
+	for (var/index = 1, index <= ion.len, index++)
+		var/law = ion[index]
 		var/num = ionnum()
 		who << "[num]. [law]"
 
 	var/number = 1
-	for (var/index = 1, index <= src.inherent.len, index++)
-		var/law = src.inherent[index]
+	for (var/index = 1, index <= inherent.len, index++)
+		var/law = inherent[index]
 
 		if (length(law) > 0)
 			who << "[number]. [law]"
 			number++
 
-	for (var/index = 1, index <= src.supplied.len, index++)
-		var/law = src.supplied[index]
+	for (var/index = 1, index <= supplied.len, index++)
+		var/law = supplied[index]
 		if (length(law) > 0)
 			who << "[number]. [law]"
 			number++
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
 	if(force)
-		src.zeroth = null
-		src.zeroth_borg = null
+		zeroth = null
+		zeroth_borg = null
 		return
 	else
-		if(src.owner.mind.special_role)
+		if(owner && owner.mind.special_role)
 			return
 		else
-			src.zeroth = null
-			src.zeroth_borg = null
+			zeroth = null
+			zeroth_borg = null
 			return
+
+/datum/ai_laws/proc/clear_law_sixsixsix(force)
+	if(force || !(owner && owner.mind.devilinfo))
+		devillaws = null
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)
@@ -245,6 +272,10 @@
 
 /datum/ai_laws/proc/get_law_list(include_zeroth = 0, show_numbers = 1)
 	var/list/data = list()
+
+	if (include_zeroth && devillaws && devillaws.len)
+		for(var/i in devillaws)
+			data += "[show_numbers ? "666:" : ""] [i]"
 
 	if (include_zeroth && zeroth)
 		data += "[show_numbers ? "0:" : ""] [zeroth]"

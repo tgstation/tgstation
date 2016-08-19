@@ -14,7 +14,7 @@ Contents:
 	typepath = /datum/round_event/ghost_role/ninja
 	max_occurrences = 1
 	earliest_start = 30000 // 1 hour
-
+	min_players = 15
 
 /datum/round_event/ghost_role/ninja
 	var/success_spawn = 0
@@ -55,7 +55,7 @@ Contents:
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected_candidate = popleft(candidates)
+	var/mob/dead/selected_candidate = pick_n_take(candidates)
 	var/key = selected_candidate.key
 
 	//Prepare ninja player mind
@@ -155,7 +155,7 @@ Contents:
 		return
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
-	ticker.mode.update_ninja_icons_added(Mind)
+	ticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja
 	message_admins("[key] has been made into a ninja by an event.")
 	log_game("[key] was spawned as a ninja by an event.")

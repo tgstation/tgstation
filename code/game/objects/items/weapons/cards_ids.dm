@@ -130,7 +130,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
-	origin_tech = "syndicate=3"
+	origin_tech = "syndicate=1"
 
 /obj/item/weapon/card/id/syndicate/New()
 	..()
@@ -276,3 +276,17 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/mining
 	name = "mining ID"
 	access = list(access_mining, access_mining_station, access_mineral_storeroom)
+
+/obj/item/weapon/card/id/away
+	name = "a perfectly generic identification card"
+	desc = "A perfectly generic identification card. Looks like it could use some flavor."
+	access = list(access_away_general)
+
+/obj/item/weapon/card/id/away/hotel
+	name = "Staff ID"
+	desc = "A staff ID used to access the hotel's doors."
+	access = list(access_away_general, access_away_maint)
+
+/obj/item/weapon/card/id/away/hotel/securty
+	name = "Officer ID"
+	access = list(access_away_general, access_away_maint, access_away_sec)

@@ -1,6 +1,6 @@
 /turf/closed
 	var/thermite = 0
-
+	layer = CLOSED_TURF_LAYER
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -9,7 +9,17 @@
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
-	layer = TURF_LAYER + 0.05
+
+/turf/closed/indestructible/oldshuttle
+	name = "strange shuttle wall"
+	icon = 'icons/turf/shuttleold.dmi'
+	icon_state = "block"
+
+/turf/closed/indestructible/oldshuttle/corner
+	icon_state = "corner"
+
+
+
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
@@ -70,3 +80,9 @@
 	desc = "Extremely densely-packed sheets of ice and rock, forged over the years of the harsh cold."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "icerock"
+
+/turf/closed/indestructible/paper
+	name = "thick paper wall"
+	desc = "A wall layered with impenetrable sheets of paper."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "paperwall"

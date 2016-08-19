@@ -19,38 +19,64 @@ var/bomb_set
 	icon_state = "nuclearbomb_base"
 	density = 1
 
-	var/timeleft = 60
-	var/timing = 0
+	var/timer_set = 60
+	var/default_timer_set = 60
+	var/minimum_timer_set = 60
+	var/maximum_timer_set = 3600
+	var/ui_style = "nanotrasen"
+
+	var/numeric_input = ""
+	var/timing = FALSE
+	var/exploding = FALSE
+	var/detonation_timer = null
 	var/r_code = "ADMIN"
-	var/code = ""
-	var/yes_code = 0
-	var/safety = 1
+	var/yes_code = FALSE
+	var/safety = TRUE
 	var/obj/item/weapon/disk/nuclear/auth = null
 	use_power = 0
 	var/previous_level = ""
-	var/lastentered = ""
 	var/obj/item/nuke_core/core = null
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/image/lights = null
 	var/image/interior = null
+	var/obj/effect/countdown/nuclearbomb/countdown
 
 /obj/machinery/nuclearbomb/New()
 	..()
+	countdown = new(src)
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
-	SSobj.processing -= core
+	STOP_PROCESSING(SSobj, core)
 	update_icon()
+	poi_list |= src
 	previous_level = get_security_level()
+
+/obj/machinery/nuclearbomb/Destroy()
+	poi_list -= src
+	nuke_list -= src
+	if(countdown)
+		qdel(countdown)
+	countdown = null
+	. = ..()
+
+/obj/machinery/nuclearbomb/examine(mob/user)
+	. = ..()
+	if(exploding)
+		user << "It is in the process of exploding. Perhaps reviewing your \
+			affairs is in order."
+	if(timing)
+		user << "There are [get_time_left()] seconds until \
+			detonation."
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
 	desc = "For when it all gets too much to bear. Do not taunt."
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
-	anchored = 1 //stops it being moved
-	layer = 4
+	anchored = TRUE //stops it being moved
 
 /obj/machinery/nuclearbomb/syndicate
+	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
 /obj/machinery/nuclearbomb/syndicate/New()
 	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
@@ -108,7 +134,7 @@ var/bomb_set
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
-					SSobj.processing += core
+					START_PROCESSING(SSobj, core)
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -131,19 +157,19 @@ var/bomb_set
 						if(M.use(20))
 							user << "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>"
 							deconstruction_state = NUKESTATE_PANEL_REMOVED
-							SSobj.processing -= core
+							STOP_PROCESSING(SSobj, core)
 							update_icon()
 						else
 							user << "<span class='warning'>You need more metal to do that!</span>"
 				else
 					user << "<span class='warning'>You need more metal to do that!</span>"
 				return
-	return ..()
+	. = ..()
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()
-	if(timing < 0)
+	if(exploding)
 		return NUKE_ON_EXPLODING
-	if(timing > 0)
+	if(timing)
 		return NUKE_ON_TIMING
 	if(safety)
 		return NUKE_OFF_LOCKED
@@ -158,10 +184,10 @@ var/bomb_set
 				update_icon_interior()
 				update_icon_lights()
 			if(NUKE_ON_TIMING)
-				overlays.Cut()
+				cut_overlays()
 				icon_state = "nuclearbomb_timing"
 			if(NUKE_ON_EXPLODING)
-				overlays.Cut()
+				cut_overlays()
 				icon_state = "nuclearbomb_exploding"
 	else
 		icon_state = "nuclearbomb_base"
@@ -183,7 +209,7 @@ var/bomb_set
 			interior = image(icon,"core-removed")
 		if(NUKESTATE_INTACT)
 			interior = null
-	overlays += interior
+	add_overlay(interior)
 
 /obj/machinery/nuclearbomb/proc/update_icon_lights()
 	overlays -= lights
@@ -196,104 +222,130 @@ var/bomb_set
 			lights = image(icon,"lights-timing")
 		if(NUKE_ON_EXPLODING)
 			lights = image(icon,"lights-exploding")
-	overlays += lights
+	add_overlay(lights)
 
 /obj/machinery/nuclearbomb/process()
-	if (timing > 0)
-		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
-		timeleft--
-		if (timeleft <= 0)
+	if(timing && !exploding)
+		bomb_set = TRUE
+		if(detonation_timer < world.time)
 			explode()
 		else
-			var/volume = (timeleft <= 20 ? 30 : 5)
+			var/volume = (get_time_left() <= 20 ? 30 : 5)
 			playsound(loc, 'sound/items/timer.ogg', volume, 0)
-		for(var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
-				attack_hand(M)
-	return
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/nuclearbomb/attack_ai(mob/user)
-	return
+/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "nuclear_bomb", name, 500, 600, master_ui, state)
+		ui.set_style(ui_style)
+		ui.open()
 
-/obj/machinery/nuclearbomb/attack_hand(mob/user)
-	user.set_machine(src)
-	var/dat = text("<TT>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (auth ? "++++++++++" : "----------"))
-	if (auth)
-		if (yes_code)
-			dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-10'>-</A> <A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A> <A href='?src=\ref[];time=10'>+</A><BR>\n<BR>\nSafety: [] <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (timing ? "Func/Set" : "Functional"), (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), src, src, src, timeleft, src, src, (safety ? "On" : "Off"), src, (anchored ? "Engaged" : "Off"), src)
+/obj/machinery/nuclearbomb/ui_data(mob/user)
+	var/list/data = list()
+	data["disk_present"] = auth
+	data["code_approved"] = yes_code
+	var/first_status
+	if(auth)
+		if(yes_code)
+			first_status = timing ? "Func/Set" : "Functional"
 		else
-			dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"))
+			first_status = "Auth S2."
 	else
-		if (timing)
-			dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"))
+		if(timing)
+			first_status = "Set"
 		else
-			dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"))
-	var/message = "AUTH"
-	if (auth)
-		message = text("[]", code)
-		if (yes_code)
-			message = "*****"
-	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A><A href='?src=\ref[];type=2'>2</A><A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A><A href='?src=\ref[];type=5'>5</A><A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A><A href='?src=\ref[];type=8'>8</A><A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A><A href='?src=\ref[];type=0'>0</A><A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
-	var/datum/browser/popup = new(user, "nuclearbomb", name, 300, 400)
-	popup.set_content(dat)
-	popup.open()
-	return
+			first_status = "Auth S1."
+	var/second_status = safety ? "Safe" : "Engaged"
+	data["status1"] = first_status
+	data["status2"] = second_status
+	data["anchored"] = anchored
+	data["safety"] = safety
+	data["timing"] = timing
+	data["time_left"] = get_time_left()
 
-/obj/machinery/nuclearbomb/Topic(href, href_list)
+	data["timer_set"] = timer_set
+	data["timer_is_not_default"] = timer_set != default_timer_set
+	data["timer_is_not_min"] = timer_set != minimum_timer_set
+	data["timer_is_not_max"] = timer_set != maximum_timer_set
+
+	var/message = "AUTH"
+	if(auth)
+		message = "[numeric_input]"
+		if(yes_code)
+			message = "*****"
+	data["message"] = message
+
+	return data
+
+/obj/machinery/nuclearbomb/ui_act(action, params)
 	if(..())
 		return
-	usr.set_machine(src)
-	if (href_list["auth"])
-		if (auth)
-			auth.loc = loc
-			yes_code = 0
-			auth = null
-		else
-			var/obj/item/I = usr.get_active_hand()
-			if (istype(I, /obj/item/weapon/disk/nuclear))
-				usr.drop_item()
-				I.loc = src
-				auth = I
-	if (auth)
-		if (href_list["type"])
-			if (href_list["type"] == "E")
-				if (code == r_code)
-					yes_code = 1
-					code = null
-				else
-					code = "ERROR"
-			else
-				if (href_list["type"] == "R")
-					yes_code = 0
-					code = null
-				else
-					lastentered = text("[]", href_list["type"])
-					if (text2num(lastentered) == null)
-						var/turf/LOC = get_turf(usr)
-						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) tried to exploit a nuclear bomb by entering non-numerical codes: <a href='?_src_=vars;Vars=\ref[src]'>[lastentered]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
-						log_admin("EXPLOIT : [key_name(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: [lastentered] !")
-					else
-						code += lastentered
-						if (length(code) > 5)
-							code = "ERROR"
-		if (yes_code)
-			if (href_list["time"])
-				var/time = text2num(href_list["time"])
-				timeleft += time
-				timeleft = min(max(round(timeleft), 60), 600)
-			if (href_list["timer"])
-				set_active()
-			if (href_list["safety"])
+	switch(action)
+		if("eject_disk")
+			if(auth && auth.loc == src)
+				auth.forceMove(get_turf(src))
+				auth = null
+				. = TRUE
+		if("insert_disk")
+			if(!auth)
+				var/obj/item/I = usr.get_active_hand()
+				if(istype(I, /obj/item/weapon/disk/nuclear))
+					usr.drop_item()
+					I.forceMove(src)
+					auth = I
+					. = TRUE
+		if("keypad")
+			if(auth)
+				var/digit = params["digit"]
+				switch(digit)
+					if("R")
+						numeric_input = ""
+						yes_code = FALSE
+						. = TRUE
+					if("E")
+						if(numeric_input == r_code)
+							numeric_input = ""
+							yes_code = TRUE
+							. = TRUE
+						else
+							numeric_input = "ERROR"
+					if("0","1","2","3","4","5","6","7","8","9")
+						if(numeric_input != "ERROR")
+							numeric_input += digit
+							if(length(numeric_input) > 5)
+								numeric_input = "ERROR"
+							. = TRUE
+		if("timer")
+			if(auth && yes_code)
+				var/change = params["change"]
+				if(change == "reset")
+					timer_set = default_timer_set
+				else if(change == "decrease")
+					timer_set = max(minimum_timer_set, timer_set - 10)
+				else if(change == "increase")
+					timer_set = min(maximum_timer_set, timer_set + 10)
+				else if(change == "input")
+					var/user_input = input(usr, "Set time to detonation.", name) as null|num
+					if(!user_input)
+						return
+					var/N = text2num(user_input)
+					if(!N)
+						return
+					timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
+				. = TRUE
+		if("safety")
+			if(auth && yes_code)
 				set_safety()
-			if (href_list["anchor"])
+		if("anchor")
+			if(auth && yes_code)
 				set_anchor()
-	add_fingerprint(usr)
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			attack_hand(M)
+		if("toggle_timer")
+			if(auth && yes_code && !safety)
+				set_active()
+
 
 /obj/machinery/nuclearbomb/proc/set_anchor()
 	if(!isinspace())
@@ -304,49 +356,65 @@ var/bomb_set
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
 	if(safety)
-		timing = 0
-		bomb_set = 0
-		set_security_level(previous_level)
+		if(timing)
+			set_security_level(previous_level)
+			for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+				S.switch_mode_to(initial(S.mode))
+				S.nuke_warning = FALSE
+		timing = FALSE
+		bomb_set = TRUE
+		detonation_timer = null
+		countdown.stop()
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/set_active()
-	if(safety)
+	if(safety && !bomb_set)
 		usr << "<span class='danger'>The safety is still on.</span>"
 		return
 	timing = !timing
-	previous_level = get_security_level()
 	if(timing)
-		bomb_set = 1
+		previous_level = get_security_level()
+		bomb_set = TRUE
 		set_security_level("delta")
+		detonation_timer = world.time + (timer_set * 10)
+		for(var/obj/item/weapon/pinpointer/syndicate/S in pinpointer_list)
+			S.switch_mode_to(TRACK_INFILTRATOR)
+		countdown.start()
 	else
-		bomb_set = 0
+		bomb_set = FALSE
+		detonation_timer = null
 		set_security_level(previous_level)
+		countdown.stop()
 	update_icon()
+
+/obj/machinery/nuclearbomb/proc/get_time_left()
+	if(timing)
+		. = round(max(0, detonation_timer - world.time) / 10, 1)
+	else
+		. = timer_set
 
 /obj/machinery/nuclearbomb/ex_act(severity, target)
 	return
 
 /obj/machinery/nuclearbomb/blob_act(obj/effect/blob/B)
-	if (timing == -1)
+	if(exploding)
 		return
-	else
-		return ..()
-	return
+	. = ..()
 
 
-#define NUKERANGE 80
+#define NUKERANGE 127
 /obj/machinery/nuclearbomb/proc/explode()
-	if (safety)
-		timing = 0
+	if(safety)
+		timing = FALSE
 		return
 
-	timing = -1
-	yes_code = 0
-	safety = 1
+	exploding = TRUE
+	yes_code = FALSE
+	safety = TRUE
 	update_icon()
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
-	if (ticker && ticker.mode)
+	if(ticker && ticker.mode)
 		ticker.mode.explosion_in_progress = 1
 	sleep(100)
 
@@ -359,8 +427,11 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
-	if( bomb_location && (bomb_location.z == ZLEVEL_STATION) )
-		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
+	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
+		var/area/A = get_area(bomb_location)
+		if(istype(A, /area/space))
+			off_station = 1
+		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
 			off_station = 1
 	else
 		off_station = 2
@@ -381,8 +452,6 @@ var/bomb_set
 		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
 			spawn()
 				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
-			return
-	return
 
 
 /*
@@ -421,27 +490,69 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/New()
 	..()
 	poi_list |= src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/disk/nuclear/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is \
+		going delta! It looks like they're comitting suicide.</span>")
+	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
+	var/end_time = world.time + 100
+	var/orig_color = user.color
+	while(world.time < end_time)
+		if(!user)
+			return
+		user.color = RANDOM_COLOUR
+		sleep(1)
+	user.color = orig_color
+	user.visible_message("<span class='suicide'>[user] was destroyed \
+		by the nuclear blast!</span>")
+	return OXYLOSS
 
 /obj/item/weapon/disk/nuclear/process()
-	var/turf/disk_loc = get_turf(src)
-	if(!disk_loc || disk_loc.z > ZLEVEL_CENTCOM)
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
-		qdel(src)
-
-/obj/item/weapon/disk/nuclear/Destroy()
-	if(blobstart.len > 0)
-		var/turf/targetturf = get_turf(pick(blobstart))
-		var/turf/diskturf = get_turf(src)
-		if(ismob(loc))
-			var/mob/M = loc
-			M.remove_from_mob(src)
-		if(istype(loc, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = loc
-			S.remove_from_storage(src, targetturf)
-		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
-		message_admins("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
-		log_game("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
+	var/turf/diskturf = get_turf(src)
+	if(diskturf && (diskturf.z == ZLEVEL_CENTCOM || diskturf.z == ZLEVEL_STATION))
+		return
 	else
-		throw EXCEPTION("Unable to find a blobstart landmark")
-	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
+		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		var/turf/targetturf = relocate()
+		message_admins("[src] has been moved out of bounds in \
+			[ADMIN_COORDJMP(diskturf)]. Moving it to \
+			[ADMIN_COORDJMP(targetturf)].")
+		log_game("[src] has been moved out of bounds in [COORD(diskturf)]. \
+			Moving it to [COORD(targetturf)].")
+
+/obj/item/weapon/disk/nuclear/proc/relocate()
+	var/targetturf = find_safe_turf(ZLEVEL_STATION)
+	if(!targetturf)
+		if(blobstart.len > 0)
+			targetturf = get_turf(pick(blobstart))
+		else
+			throw EXCEPTION("Unable to find a blobstart landmark")
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.remove_from_mob(src)
+	if(istype(loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src, targetturf)
+	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
+	forceMove(targetturf)
+	return targetturf
+
+/obj/item/weapon/disk/nuclear/Destroy(force)
+	var/turf/diskturf = get_turf(src)
+
+	if(force)
+		message_admins("[src] has been !!force deleted!! in \
+			[ADMIN_COORDJMP(diskturf)].")
+		log_game("[src] has been !!force deleted!! in [COORD(diskturf)].")
+		poi_list -= src
+		STOP_PROCESSING(SSobj, src)
+		return ..()
+
+	var/turf/targetturf = relocate()
+	message_admins("[src] has been destroyed in [ADMIN_COORDJMP(diskturf)]. \
+		Moving it to [ADMIN_COORDJMP(targetturf)].")
+	log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to \
+		[COORD(targetturf)].")
+	return QDEL_HINT_LETMELIVE //Cancel destruction unless forced

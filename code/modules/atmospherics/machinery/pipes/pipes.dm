@@ -3,7 +3,6 @@
 	var/volume = 0
 
 	level = 1
-	layer = 2.4 //under wires with their 2.44
 
 	use_power = 0
 	can_unwrench = 1

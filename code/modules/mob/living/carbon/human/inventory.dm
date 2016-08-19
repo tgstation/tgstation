@@ -57,6 +57,8 @@
 /mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
 	if(!..()) //a check failed or the item has already found its slot
 		return
+
+	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
 		if(slot_belt)
 			belt = I
@@ -89,6 +91,7 @@
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
 			if(wear_suit.breakouttime) //when equipping a straightjacket
+				stop_pulling() //can't pull if restrained
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
 		if(slot_w_uniform)
@@ -106,6 +109,12 @@
 			update_inv_s_store()
 		else
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+
+	//Item is handled and in slot, valid to call callback, for this proc should always be true
+	if(!not_handled)
+		I.equipped(src, slot)
+	
+	return not_handled //For future deeper overrides
 
 /mob/living/carbon/human/unEquip(obj/item/I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.

@@ -44,7 +44,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/category = "item category"
 	var/desc = "item description"
 	var/item = null // Path to the item to spawn.
+	var/refund_path = null // Alternative path for refunds, in case the item purchased isn't what is actually refunded (ie: holoparasites).
 	var/cost = 0
+	var/refund_amount = 0 // specified refund amount in case there needs to be a TC penalty for refunds.
 	var/refundable = FALSE
 	var/surplus = 100 // Chance of being included in the surplus crate.
 	var/list/include_modes = list() // Game modes to allow this item in.
@@ -190,7 +192,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
-	item = /obj/item/weapon/gun/projectile/sniper_rifle/syndicate
+	item = /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
@@ -231,6 +233,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			energy swords to create a double energy sword, which must be wielded in two hands but is more robust \
 			and deflects all energy projectiles."
 	item = /obj/item/weapon/melee/energy/sword/saber
+	cost = 8
+
+/datum/uplink_item/dangerous/powerfist
+	name = "Power Fist"
+	desc = "The power-fist is a metal gauntlet with a built-in piston-ram powered by an external gas supply.\
+		 Upon hitting a target, the piston-ram will extend foward to make contact for some serious damage. \
+		 Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
+		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
+	item = /obj/item/weapon/melee/powerfist
 	cost = 8
 
 /datum/uplink_item/dangerous/emp
@@ -302,15 +313,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 12
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/guardian
-	name = "Holoparasites"
-	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
-			organic host as a home base and source of fuel."
-	item = /obj/item/weapon/storage/box/syndie_kit/guardian
-	cost = 12
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-	player_minimum = 25
 
 // Ammunition
 /datum/uplink_item/ammo
@@ -633,6 +635,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 4
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/stealthy_tools/chameleon/nuke
+	cost = 6
+	exclude_modes = list()
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
@@ -682,7 +690,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Smuggler's Satchel"
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
 			your stolen goods. Comes with a crowbar and a floor tile inside."
-	item = /obj/item/weapon/storage/backpack/satchel_flat
+	item = /obj/item/weapon/storage/backpack/satchel/flat
 	cost = 2
 	surplus = 30
 
@@ -710,6 +718,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/device/flashlight/emp
 	cost = 2
 	surplus = 30
+
+/datum/uplink_item/stealthy_tools/cutouts
+	name = "Adaptive Cardboard Cutouts"
+	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. This pack contains three as well as a \
+	crayon for changing their appearances."
+	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
+	cost = 1
+	surplus = 20
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
@@ -909,7 +925,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			powerful burst of radiation, which, after a short delay, can incapitate all but the most protected \
 			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls how long the radiation delay is."
-	item = /obj/item/device/rad_laser
+	item = /obj/item/device/healthanalyzer/rad_laser
 	cost = 3
 
 /datum/uplink_item/device_tools/assault_pod

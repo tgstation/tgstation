@@ -75,7 +75,7 @@
 	switch(type)
 		if("destruction")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball(null))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball."
 		if("bluespace")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
@@ -162,14 +162,10 @@
 		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T)
-	var/new_op_code = "Ask your leader!"
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
-	if(nuke)
-		new_op_code = nuke.r_code
-	M.mind.make_Nuke(T, new_op_code, 0, FALSE)
+	M.mind.make_Nuke(T, nuke_code = null, 0, FALSE)
 	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname
@@ -213,12 +209,7 @@
 	R.mmi.brainmob.name = brainopsname
 
 	R.key = C.key
-	ticker.mode.syndicates += R.mind
-	ticker.mode.update_synd_icons_added(R.mind)
-	R.mind.special_role = "syndicate"
-	R.faction = list("syndicate")
-
-
+	R.mind.make_Nuke(T, nuke_code = null,leader=0, telecrystals = TRUE)
 
 ///////////SLAUGHTER DEMON
 
@@ -227,6 +218,13 @@
 	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
+
+	var/shatter_msg = "<span class='notice'>You shatter the bottle, no \
+		turning back now!</span>"
+	var/veil_msg = "<span class='warning'>You sense a dark presence lurking \
+		just beyond the veil...</span>"
+	var/objective_verb = "Kill"
+	var/mob/living/demon_type = /mob/living/simple_animal/slaughter
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
@@ -237,9 +235,9 @@
 	if(demon_candidates.len > 0)
 		used = 1
 		var/client/C = pick(demon_candidates)
-		spawn_antag(C, get_turf(src.loc), "Slaughter Demon")
-		user << "<span class='notice'>You shatter the bottle, no turning back now!</span>"
-		user << "<span class='notice'>You sense a dark presence lurking just beyond the veil...</span>"
+		spawn_antag(C, get_turf(src.loc), initial(demon_type.name))
+		user << shatter_msg
+		user << veil_msg
 		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
 		qdel(src)
 	else
@@ -249,22 +247,39 @@
 /obj/item/weapon/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
 
 	var /obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,T)
-	var/mob/living/simple_animal/slaughter/S = new /mob/living/simple_animal/slaughter/(holder)
+	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
 	S.holder = holder
 	S.key = C.key
-	S.mind.assigned_role = "Slaughter Demon"
-	S.mind.special_role = "Slaughter Demon"
+	S.mind.assigned_role = S.name
+	S.mind.special_role = S.name
 	ticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective = new /datum/objective/assassinate
 	new_objective.owner = S.mind
 	new_objective.target = usr.mind
-	new_objective.explanation_text = "Kill [usr.real_name], the one who summoned you."
+	new_objective.explanation_text = "[objective_verb] [usr.real_name], \
+		the one who summoned you."
 	S.mind.objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
 	new_objective2.owner = S.mind
-	new_objective2.explanation_text = "Kill everyone else while you're at it."
+	new_objective2.explanation_text = "[objective_verb] everyone else \
+		while you're at it."
 	S.mind.objectives += new_objective2
 	S << S.playstyle_string
-	S << "<B>You are currently not currently in the same plane of existence as the station. Ctrl+Click a blood pool to manifest.</B>"
+	S << "<B>You are currently not currently in the same plane of \
+		existence as the station. Ctrl+Click a blood pool to manifest.</B>"
 	S << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 	S << "<B>Objective #[2]</B>: [new_objective2.explanation_text]"
+
+/obj/item/weapon/antag_spawner/slaughter_demon/laughter
+	name = "vial of tickles"
+	desc = "A magically infused bottle of clown love, distilled from \
+		countless hugging attacks. Used in funny rituals to attract \
+		adorable creatures."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+	color = "#FF69B4" // HOT PINK
+
+	veil_msg = "<span class='warning'>You sense an adorable presence \
+		lurking just beyond the veil...</span>"
+	objective_verb = "Hug and Tickle"
+	demon_type = /mob/living/simple_animal/slaughter/laughter

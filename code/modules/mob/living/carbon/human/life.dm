@@ -118,8 +118,11 @@
 	return thermal_protection
 
 /mob/living/carbon/human/IgniteMob()
-	if(!dna || !dna.species.IgniteMob(src))
-		..()
+	//If have no DNA or can be Ignited, call parent handling to light user
+	//If firestacks are high enough
+	if(!dna || dna.species.CanIgniteMob(src))
+		return ..()
+	. = FALSE //No ignition
 
 /mob/living/carbon/human/ExtinguishMob()
 	if(!dna || !dna.species.ExtinguishMob(src))
@@ -253,27 +256,16 @@
 		reagents.metabolize(src, can_overdose=1)
 	dna.species.handle_chemicals_in_body(src)
 
+
 /mob/living/carbon/human/handle_random_events()
-	// Puke if toxloss is too high
+	//Puke if toxloss is too high
 	if(!stat)
-		if (getToxLoss() >= 45 && nutrition > 20)
+		if(getToxLoss() >= 45 && nutrition > 20)
 			lastpuke ++
 			if(lastpuke >= 25) // about 25 second delay I guess
-				Stun(5)
-
-				visible_message("<span class='danger'>[src] throws up!</span>", \
-						"<span class='userdanger'>[src] throws up!</span>")
-				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-				var/turf/location = loc
-				if (istype(location, /turf))
-					location.add_vomit_floor(src, 1)
-
-				nutrition -= 20
-				adjustToxLoss(-3)
-
-				// make it so you can only puke so fast
+				vomit(20, 0, 1, 0, 1, 1)
 				lastpuke = 0
+
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
@@ -288,6 +280,8 @@
 	if(NOBREATH in dna.species.specflags)
 		. = 1
 	return .
+
+
 /mob/living/carbon/human/proc/handle_embedded_objects()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
@@ -304,14 +298,27 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
+
 /mob/living/carbon/human/proc/handle_heart()
-	if(!heart_attack)
-		return
-	else
-		if(losebreath < 3)
-			losebreath += 2
-		adjustOxyLoss(5)
-		adjustBruteLoss(1)
+	CHECK_DNA_AND_SPECIES(src)
+	var/needs_heart = (!(NOBLOOD in dna.species.specflags))
+	var/we_breath = (!(NOBREATH in dna.species.specflags))
+
+	if(heart_attack)
+		if(!needs_heart)
+			heart_attack = FALSE
+		else if(we_breath)
+			if(losebreath < 3)
+				losebreath += 2
+			adjustOxyLoss(5)
+			adjustBruteLoss(1)
+		else
+			// even though we don't require oxygen, our blood still needs
+			// circulation, and without it, our tissues die and start
+			// gaining toxins
+			adjustBruteLoss(3)
+			if(src.reagents)
+				src.reagents.add_reagent("toxin", 2)
 
 /*
 Alcohol Poisoning Chart
@@ -336,9 +343,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 	if(drunkenness)
 		if(sleeping)
-			drunkenness = max(drunkenness - 1.5, 0)
+			drunkenness = max(drunkenness - (drunkenness / 10), 0)
 		else
-			drunkenness = max(drunkenness - 0.2, 0)
+			drunkenness = max(drunkenness - (drunkenness / 25), 0)
 
 		if(drunkenness >= 6)
 			if(prob(25))

@@ -108,6 +108,6 @@
 			seed_count++
 		for(var/i=0,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
-			harvestseeds.loc = user.loc
+			harvestseeds.forceMove(parent.loc)
 
 	parent.update_tray()
