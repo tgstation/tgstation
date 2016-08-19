@@ -116,12 +116,6 @@ Difficulty: Hard
 		spawned_rune = null
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/attackby(obj/item/weapon/W, mob/user, params)
-	if(W)
-		W.force *= 2
-		..()
-		W.force *= 0.5
-
 /mob/living/simple_animal/hostile/megafauna/hierophant/devour(mob/living/L)
 	for(var/obj/item/W in L)
 		if(!L.unEquip(W))
