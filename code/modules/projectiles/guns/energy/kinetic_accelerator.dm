@@ -269,7 +269,7 @@
 /obj/item/modkit/cooldown
 	name = "coolodown decrease"
 	desc = "Decreases the cooldown of a kinetic accelerator. Occupies two mod slots."
-	modifier = 3.2
+	modifier = 2.5
 
 /obj/item/modkit/cooldown/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.overheat_time -= modifier
