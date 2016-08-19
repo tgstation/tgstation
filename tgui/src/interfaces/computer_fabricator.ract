@@ -29,16 +29,7 @@
 			<td><ui-button action='hw_netcard' params='{"netcard" : "0"}' state='{{data.hw_netcard == 0 ? "selected" : null}}'>None</ui-button>
 			<td><ui-button action='hw_netcard' params='{"netcard" : "1"}' state='{{data.hw_netcard == 1 ? "selected" : null}}'>Standard</ui-button>
 			<td><ui-button action='hw_netcard' params='{"netcard" : "2"}' state='{{data.hw_netcard == 2 ? "selected" : null}}'>Advanced</ui-button>
-		{{#if data.devtype != 2}} <!-- No tablets -->
-			<tr>
-				<td><b>Processor Unit:</b>
-				<td><ui-button action='hw_cpu' params='{"cpu" : "1"}' state='{{data.hw_cpu == 1 ? "selected" : null}}'>Standard</ui-button>
-				<td><ui-button action='hw_cpu' params='{"cpu" : "2"}' state='{{data.hw_cpu == 2 ? "selected" : null}}'>Advanced</ui-button>
-			<tr>
-				<td><b>Tesla Relay:</b>
-				<td><ui-button action='hw_tesla' params='{"tesla" : "0"}' state='{{data.hw_tesla == 0 ? "selected" : null}}'>None</ui-button>
-				<td><ui-button action='hw_tesla' params='{"tesla" : "1"}' state='{{data.hw_tesla == 1 ? "selected" : null}}'>Standard</ui-button>
-		{{/if}}
+		
 		<tr>
 			<td><b>Nano Printer:</b>
 			<td><ui-button action='hw_nanoprint' params='{"print" : "0"}' state='{{data.hw_nanoprint == 0 ? "selected" : null}}'>None</ui-button>
@@ -48,6 +39,16 @@
 			<td><ui-button action='hw_card' params='{"card" : "0"}' state='{{data.hw_card == 0 ? "selected" : null}}'>None</ui-button>
 			<td><ui-button action='hw_card' params='{"card" : "1"}' state='{{data.hw_card == 1 ? "selected" : null}}'>Standard</ui-button>
 		<tr>
+		{{#if data.devtype != 2}} <!-- No tablets -->
+			<td><b>Processor Unit:</b>
+			<td><ui-button action='hw_cpu' params='{"cpu" : "1"}' state='{{data.hw_cpu == 1 ? "selected" : null}}'>Standard</ui-button>
+			<td><ui-button action='hw_cpu' params='{"cpu" : "2"}' state='{{data.hw_cpu == 2 ? "selected" : null}}'>Advanced</ui-button>
+		<tr>
+			<td><b>Tesla Relay:</b>
+			<td><ui-button action='hw_tesla' params='{"tesla" : "0"}' state='{{data.hw_tesla == 0 ? "selected" : null}}'>None</ui-button>
+			<td><ui-button action='hw_tesla' params='{"tesla" : "1"}' state='{{data.hw_tesla == 1 ? "selected" : null}}'>Standard</ui-button>
+		<tr>
+		{{/if}}
 			<td><b>Confirm Order:</b>
 			<td><ui-button action='confirm_order'>CONFIRM</ui-button>
 	</table>
@@ -64,8 +65,11 @@
 	<h2>Step 3: Payment</h2>
 	<b>Your device is now ready for fabrication..</b><br>
 	<i>Please swipe your identification card to finish purchase.</i><br>
-	<i>Total price: <b>{{data.totalprice}}C</b></i>
+	<i>Current credits: <b>{{data.credits}}C</b></i><br>
+	<i>Total price: <b>{{data.totalprice}}C</b></i><br><br>
+	<ui-button action='purchase' state='{{data.credits >= data.totalprice ? null : "disabled"}}'>PURCHASE</ui-button>
+	
 {{elseif data.state == 3}}
-	<h2>Step 4: Thank you for your purchase</h2>
+	<h2>Step 4: Thank you for your purchase</h2><br>
 	<b>Should you experience any issues with your new device, contact your local network admin for assistance.</b>
 {{/if}}
