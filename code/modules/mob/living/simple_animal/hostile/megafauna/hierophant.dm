@@ -87,7 +87,7 @@ Difficulty: Hard
 			timeout_time = initial(timeout_time)
 		else
 			timeout_time--
-		if(timeout_time <= 0 && did_reset)
+		if(timeout_time <= 0 && !did_reset)
 			did_reset = TRUE
 			adjustHealth((health - maxHealth)*0.25) //heal for 25% of our missing health
 			if(get_dist(src, spawned_rune) > 2)
