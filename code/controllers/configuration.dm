@@ -213,6 +213,7 @@
 	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
 	var/cross_name = "Other server"
+	var/showircname = 0
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -380,6 +381,8 @@
 					global.medal_hub = value
 				if("medal_hub_password")
 					global.medal_pass = value
+				if("show_irc_name")
+					config.showircname = 1
 				if("see_own_notes")
 					config.see_own_notes = 1
 				if("soft_popcap")
