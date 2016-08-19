@@ -28,7 +28,7 @@
 		var/turf/location = get_turf(src.holder)
 		qdel(computer.hard_drive)
 		computer.take_damage(25, 10, 1, 1)
-		if(computer.battery_module && prob(25))
+		if(computer.battery_module && prob(75))
 			explosivepower += (computer.battery_module.battery.charge / 750)
 			qdel(computer.battery_module)
 			computer.visible_message("<span class='notice'>\The [computer]'s battery explodes in rain of sparks.</span>")
@@ -36,7 +36,7 @@
 			spark_system.start()
 		if(istype(computer, /obj/item/modular_computer/processor))
 			var/obj/item/modular_computer/processor/P = computer
-			if(P.machinery_computer.tesla_link && prob(50))
+			if(P.machinery_computer.tesla_link && prob(75))
 				qdel(P.machinery_computer.tesla_link)
 				computer.visible_message("<span class='notice'>\The [computer]'s tesla link explodes in rain of sparks.</span>")
 				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
