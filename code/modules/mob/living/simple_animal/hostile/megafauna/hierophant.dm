@@ -13,11 +13,12 @@ The Hierophant's attacks are as follows, and INTENSIFY at a random chance based 
 	INTENSITY EFFECT: Creates a second, slower chaser.
 - Creates an expanding AoE burst.
 - INTENSE ATTACKS:
-	Blinks to the target after a very brief delay, damaging everything near the start and end points.
-	As above, but does so multiple times if below half health.
-	Rapidly creates non-omnidirectional Cross Blasts under the target.
-	Rapidly creates squares of 3x3 blasts under the target.
-	Creates four high-speed chasers.
+	If target is at least 2 tiles away; Blinks to the target after a very brief delay, damaging everything near the start and end points.
+		As above, but does so multiple times if below half health.
+	Rapidly creates a type of blast under the target;
+		Non-omnidirectional Cross Blasts.
+		Squares of 3x3 blasts.
+	If chasers are off cooldown;  Creates four high-speed chasers.
 - IF TARGET WAS STRUCK IN MELEE: Creates a 3x3 square of blasts under the target.
 
 Cross Blasts and the AoE burst gain additional range as the Hierophant loses health, while Chasers gain additional speed.
@@ -65,11 +66,11 @@ Difficulty: Hard
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
 	var/obj/effect/hierophant/spawned_rune //the rune we teleport back to/attune our dropped staff to
 	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our original location
+	var/did_reset //if we timed out, returned to our original location, and healed some
 	var/obj/item/device/gps/internal
 	medal_type = MEDAL_PREFIX
 	score_type = BIRD_SCORE
 	del_on_death = TRUE
-	deathmessage = "disappears in a massive burst of magic, leaving only its staff."
 	death_sound = 'sound/magic/Repulse.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 
@@ -86,7 +87,9 @@ Difficulty: Hard
 			timeout_time = initial(timeout_time)
 		else
 			timeout_time--
-		if(timeout_time <= 0)
+		if(timeout_time <= 0 && did_reset)
+			did_reset = TRUE
+			adjusthealth(health - maxHealth)*0.25) //heal for 25% of our missing health
 			if(get_dist(src, spawned_rune) > 2)
 				blink(spawned_rune)
 			else
@@ -100,6 +103,7 @@ Difficulty: Hard
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		animate(src, alpha = 0, color = "660099", time = 20, easing = EASE_OUT)
 		burst_range = 7
+		visible_message("[src] disappears in a massive burst of magic, leaving only its staff.")
 		burst(get_turf(src))
 		var/obj/item/weapon/hierophant_staff/H = new /obj/item/weapon/hierophant_staff(loc)
 		H.rune = spawned_rune
@@ -119,6 +123,9 @@ Difficulty: Hard
 		W.force *= 0.5
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/devour(mob/living/L)
+	for(var/obj/item/W in L)
+		if(!L.unEquip(W))
+			qdel(W)
 	visible_message(
 		"<span class='hierophant'>\"Caw.\"</span>\n<span class='hierophant_warning'>[src] annihilates [L]!</span>",
 		"<span class='userdanger'>You annihilate [L], restoring your health!</span>")
@@ -145,6 +152,7 @@ Difficulty: Hard
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
+	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
 	anger_modifier = Clamp(((maxHealth - health)/50),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.1)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.16)
@@ -153,11 +161,16 @@ Difficulty: Hard
 	calculate_rage()
 	if(blinking)
 		return
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat == DEAD && get_dist(src, L) > 2)
+			blink(L)
+			return
 	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier*0.75) //scale cooldown lower with high anger.
 
 	if(prob(anger_modifier*0.75)) //major ranged attack
 		ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier*0.5) //scale cooldown lower with high anger.
-		var/list/possibilities = list("cross_blast_spam", "blast_spam")
+		var/list/possibilities = list("blast_spam")
 		if(get_dist(src, target) > 2)
 			possibilities += "blink_spam"
 		if(chaser_cooldown < world.time)
@@ -182,28 +195,25 @@ Difficulty: Hard
 					blinking = FALSE
 				else
 					blink(target)
-			if("blast_spam") //fire a lot of 3x3 blasts at a target.
+			if("blast_spam") //fire a lot of some type of blast at a target
 				blinking = TRUE
-				animate(src, color = "#660099", time = 2)
-				var/counter = 1 + round(anger_modifier*0.18)
-				while(health && target && counter)
-					counter--
-					melee_blast(target)
-					sleep(2)
-				animate(src, color = initial(color), time = 12)
-				sleep(12)
-				blinking = FALSE
-			if("cross_blast_spam") //fire a lot of cross blasts at a target.
-				blinking = TRUE
-				animate(src, color = "#660099", time = 6)
-				var/counter = 1 + round(anger_modifier*0.08)
-				while(health && target && counter)
-					counter--
-					if(prob(60))
-						addtimer(src, "cardinal_blasts", 0, FALSE, target)
-					else
-						addtimer(src, "diagonal_blasts", 0, FALSE, target)
-					sleep(6)
+				if(prob(50)) //fire a lot of 3x3 blasts at a target.
+					animate(src, color = "#660099", time = 2)
+					var/counter = 1 + round(anger_modifier*0.18)
+					while(health && target && counter)
+						counter--
+						melee_blast(target)
+						sleep(2)
+				else //fire a lot of cross blasts at a target.
+					animate(src, color = "#660099", time = 6)
+					var/counter = 1 + round(anger_modifier*0.08)
+					while(health && target && counter)
+						counter--
+						if(prob(60))
+							addtimer(src, "cardinal_blasts", 0, FALSE, target)
+						else
+							addtimer(src, "diagonal_blasts", 0, FALSE, target)
+						sleep(6)
 				animate(src, color = initial(color), time = 12)
 				sleep(12)
 				blinking = FALSE
