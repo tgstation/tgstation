@@ -706,7 +706,11 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/steal_five_of_type
 	explanation_text = "Steal at least five items!"
-	var/list/wanted_items = list()
+	var/list/wanted_items = list(/obj/item)
+
+/datum/objective/steal_five_of_type/New()
+	..()
+	wanted_items = typecacheof(wanted_items)
 
 /datum/objective/steal_five_of_type/summon_guns
 	explanation_text = "Steal at least five guns!"
@@ -729,7 +733,6 @@ var/global/list/possible_items_special = list()
 	else
 		return 0
 	return 0
-
 
 
 ////////////////////////////////
