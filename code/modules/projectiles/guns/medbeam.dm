@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/medbeam
 	name = "Medical Beamgun"
-	desc = "Delivers medical nanites in a focused beam."
+	desc = "Don't cross the beams!"
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
