@@ -26,6 +26,12 @@
 //For the network administrator!
 /obj/item/modular_computer/tablet/preset/netmin/New()
 	. = ..()
+	name = "Command Tablet"
+	desc = "The special tablet of the network administrator."
+	unacidable = 1
+	icon_state = "rdtablet"
+	icon_state_unpowered = "rdtablet"
+	surgeprotected = 1
 	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
 	battery_module = new/obj/item/weapon/computer_hardware/battery_module/super(src)
 	battery_module.charge_to_full()
