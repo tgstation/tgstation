@@ -15,7 +15,7 @@
 /datum/round_event/slaughter/proc/get_slaughter(end_if_fail = 0)
 	key_of_slaughter = null
 	if(!key_of_slaughter)
-		var/list/candidates = get_candidates(BE_ALIEN)
+		var/list/candidates = get_candidates(ROLE_ALIEN)
 		if(!candidates.len)
 			if(end_if_fail)
 				return 0
@@ -44,9 +44,10 @@
 	player_mind.special_role = "Slaughter Demon"
 	ticker.mode.traitors |= player_mind
 	S << S.playstyle_string
-	S << "<B>You are currently not currently in the same plane of existence as the station. Ctrl+Click a blood pool to manifest.</B>"
-	message_admins("[key_of_slaughter] has been made into a Slaughter Demon by an event.")
-	log_game("[key_of_slaughter] was spawned as a Slaughter Demon by an event.")
+	S << "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>"
+	S << 'sound/magic/demon_dies.ogg'
+	message_admins("[key_of_slaughter] has been made into a slaughter demon by an event.")
+	log_game("[key_of_slaughter] was spawned as a slaughter demon by an event.")
 	return 1
 
 
@@ -57,11 +58,11 @@
 
 
 /datum/round_event/slaughter/proc/find_slaughter()
-	message_admins("Attempted to spawn a Slaughter Demon but there was no players available. Will try again momentarily.")
+	message_admins("Attempted to spawn a slaughter demon but there was no players available. Will try again momentarily.")
 	spawn(50)
 		if(get_slaughter(1))
-			message_admins("Situation has been resolved, [key_of_slaughter] has been spawned as a Slaughter Demon.")
-			log_game("[key_of_slaughter] was spawned as a Slaughter Demon by an event.")
+			message_admins("Situation has been resolved, [key_of_slaughter] has been spawned as a slaughter demon.")
+			log_game("[key_of_slaughter] was spawned as a slaughter demon by an event.")
 			return 0
-		message_admins("Unfortunately, no candidates were available for becoming a Slaugter Demon. Shutting down.")
+		message_admins("Unfortunately, no candidates were available for becoming a slaughter demon. Shutting down.")
 	return kill()

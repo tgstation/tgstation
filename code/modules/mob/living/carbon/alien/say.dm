@@ -14,7 +14,7 @@
 		if((!S.stat && S.hivecheck()) || (S in dead_mob_list))
 			S << rendered
 
-/mob/living/carbon/alien/humanoid/queen/alien_talk(message, shown_name = name)
+/mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = name)
 	shown_name = "<FONT size = 3>[shown_name]</FONT>"
 	..(message, shown_name)
 

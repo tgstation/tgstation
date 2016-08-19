@@ -15,7 +15,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
-	antag_flag = BE_CHANGELING
+	antag_flag = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
@@ -105,8 +105,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
 	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
-		if(character.client.prefs.be_special & BE_CHANGELING)
-			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
+		if(ROLE_CHANGELING in character.client.prefs.be_special)
+			if(!jobban_isbanned(character.client, ROLE_CHANGELING) && !jobban_isbanned(character.client, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
@@ -331,23 +331,30 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			return 1
 	return 0
 
-/datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/human/target)
-	var/datum/changelingprofile/prof = stored_profiles[1]
-	if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
-		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
-		return
+/datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/human/target, var/verbose=1)
+	if(stored_profiles.len)
+		var/datum/changelingprofile/prof = stored_profiles[1]
+		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
+			if(verbose)
+				user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
+			return
 	if(!target)
 		return
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
-		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
+		if(verbose)
+			user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
-		user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
+		if(verbose)
+			user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
 		return
 	if(has_dna(target.dna))
-		user << "<span class='warning'>We already have this DNA in storage!</span>"
-	if(!check_dna_integrity(target))
-		user << "<span class='warning'>[target] is not compatible with our biology.</span>"
+		if(verbose)
+			user << "<span class='warning'>We already have this DNA in storage!</span>"
+		return
+	if(!target.has_dna())
+		if(verbose)
+			user << "<span class='warning'>[target] is not compatible with our biology.</span>"
 		return
 	return 1
 
@@ -365,17 +372,24 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	prof.name = H.real_name
 	prof.protected = protect
 
+	prof.underwear = H.underwear
+	prof.undershirt = H.undershirt
+	prof.socks = H.socks
+
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
-		var/obj/item/I = H.vars[slot]
-		if(!I)
+		if(slot in H.vars)
+			var/obj/item/I = H.vars[slot]
+			if(!I)
+				continue
+			prof.name_list[slot] = I.name
+			prof.appearance_list[slot] = I.appearance
+			prof.flags_cover_list[slot] = I.flags_cover
+			prof.item_color_list[slot] = I.item_color
+			prof.item_state_list[slot] = I.item_state
+			prof.exists_list[slot] = 1
+		else
 			continue
-		prof.name_list[slot] = I.name
-		prof.appearance_list[slot] = I.appearance
-		prof.flags_cover_list[slot] = I.flags_cover
-		prof.item_color_list[slot] = I.item_color
-		prof.item_state_list[slot] = I.item_state
-		prof.exists_list[slot] = 1
 
 	stored_profiles += prof
 	absorbedcount++
@@ -405,10 +419,14 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 /proc/changeling_transform(var/mob/living/carbon/human/user, var/datum/changelingprofile/chosen_prof)
 	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name
-	user.dna = chosen_dna
-	hardset_dna(user, null, null, null, null, chosen_dna.species.type, chosen_dna.features)
-	domutcheck(user)
-	updateappearance(user)
+	user.underwear = chosen_prof.underwear
+	user.undershirt = chosen_prof.undershirt
+	user.socks = chosen_prof.socks
+
+	chosen_dna.transfer_identity(user, 1)
+	user.updateappearance(mutcolor_update=1)
+	user.update_body()
+	user.domutcheck()
 
 	//vars hackery. not pretty, but better than the alternative.
 	for(var/slot in slots)
@@ -451,6 +469,10 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/list/exists_list = list()
 	var/list/item_color_list = list()
 	var/list/item_state_list = list()
+
+	var/underwear
+	var/undershirt
+	var/socks
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)

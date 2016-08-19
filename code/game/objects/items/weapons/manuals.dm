@@ -739,6 +739,7 @@
 				</html>
 			"}
 
+
 /obj/item/weapon/book/manual/barman_recipes
 	name = "Barman Recipes"
 	icon_state = "barbook"
@@ -905,6 +906,13 @@
 			</html>
 
 			"}
+
+/obj/item/weapon/book/manual/wiki/chemistry
+	name = "Chemistry Textbook"
+	icon_state ="chemistrybook"
+	author = "Nanotrasen"
+	title = "Chemistry Textbook"
+	page_link = "Guide_to_chemistry"
 
 /obj/item/weapon/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"

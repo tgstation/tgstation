@@ -111,6 +111,7 @@ Bartender
 /datum/outfit/job/bartender
 	name = "Bartender"
 
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	belt = /obj/item/device/pda/bar
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/bartender

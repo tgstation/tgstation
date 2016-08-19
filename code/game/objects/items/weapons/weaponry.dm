@@ -121,7 +121,7 @@
 		qdel(I)
 		qdel(src)
 
-	else if(istype(I, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/weapon/wirecutters) && !(I.flags & NODROP))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
 		if(!remove_item_from_storage(user))
@@ -146,6 +146,7 @@
 	w_class = 2
 	embed_chance = 100
 	embedded_fall_chance = 0 //Hahaha!
+	sharpness = IS_SHARP
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -165,16 +166,16 @@
 	icon_state = "switchblade"
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
-	force = 20
+	force = 3
 	w_class = 2
-	throwforce = 15
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
-	var/extended
+	var/extended = 0
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended
@@ -182,12 +183,12 @@
 	if(extended)
 		force = 20
 		w_class = 3
-		throwforce = 15
+		throwforce = 23
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
 	else
-		force = 1
+		force = 3
 		w_class = 2
 		throwforce = 5
 		icon_state = "switchblade"
@@ -212,7 +213,7 @@
 	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/phone/suicide_act(mob/user)
-	if(locate(/obj/structure/stool) in user.loc)
+	if(locate(/obj/structure/bed/stool) in user.loc)
 		user.visible_message("<span class='notice'>[user] begins to tie a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
 	else
 		user.visible_message("<span class='notice'>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
@@ -220,7 +221,7 @@
 
 /obj/item/weapon/cane
 	name = "cane"
-	desc = "A cane used by a true gentlemen. Or a clown."
+	desc = "A cane used by a true gentleman. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "stick"
@@ -231,7 +232,7 @@
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/weapon/staff
-	name = "wizards staff"
+	name = "wizard staff"
 	desc = "Apparently a staff used by the wizard."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
@@ -273,3 +274,17 @@
 /obj/item/weapon/ectoplasm/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is inhaling the [src.name]! It looks like \he's trying to visit the astral plane.</span>")
 	return (OXYLOSS)
+
+/obj/item/weapon/mounted_chainsaw
+        name = "mounted chainsaw"
+        desc = "A chainsaw that has replaced your arm."
+        icon_state = "chainsaw_on"
+        flags = ABSTRACT | NODROP
+        w_class = 5.0
+        force = 21
+        throwforce = 0
+        throw_range = 0
+        throw_speed = 0
+        sharpness = IS_SHARP
+        attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+        hitsound = "sound/weapons/chainsawhit.ogg"

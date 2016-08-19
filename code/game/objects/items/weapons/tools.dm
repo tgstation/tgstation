@@ -164,6 +164,7 @@
 	var/change_icons = 1
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
+	heat = 3800
 
 /obj/item/weapon/weldingtool/New()
 	..()
@@ -349,6 +350,9 @@
 		damtype = "brute"
 		hitsound = "swing_hit"
 		update_icon()
+
+/obj/item/weapon/weldingtool/is_hot()
+	return welding * heat
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)

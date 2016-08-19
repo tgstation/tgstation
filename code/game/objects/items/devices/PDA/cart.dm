@@ -140,6 +140,7 @@
 	name = "space parts & space vendors cartridge"
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
+	access_quartermaster = 1
 	bot_access_flags = MULE_BOT
 
 /obj/item/weapon/cartridge/head
@@ -317,7 +318,7 @@ Code:
 
 
 
-			for(var/obj/machinery/computer/monitor/pMon in world)
+			for(var/obj/machinery/computer/monitor/pMon in machines)
 				if(!(pMon.stat & (NOPOWER|BROKEN)) )
 					powercount++
 					powermonitors += pMon
@@ -655,6 +656,10 @@ Code:
 			powmonitor = powermonitors[pnum]
 			loc:mode = 433
 			mode = 433
+
+		if("Supply Orders")
+			pda.mode =47
+			mode = 47
 
 		if("Newscaster Access")
 			mode = 53

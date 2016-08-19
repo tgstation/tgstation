@@ -252,25 +252,42 @@
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
-	new /obj/item/asteroid/hivelord_core(src.loc)
+	new /obj/item/organ/internal/hivelord_core(src.loc)
 	mouse_opacity = 1
 	..(gibbed)
 
-/obj/item/asteroid/hivelord_core
+/obj/item/organ/internal/hivelord_core
 	name = "hivelord remains"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "boiledrorocore"
+	icon_state = "roro core 2"
+	flags = NOBLUDGEON
+	slot = "hivecore"
+	force = 0
 	var/inert = 0
 
-/obj/item/asteroid/hivelord_core/New()
-	spawn(1200)
-		inert = 1
-		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+/obj/item/organ/internal/hivelord_core/New()
+	..()
+	spawn(2400)
+		if(!owner)
+			inert = 1
+			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
-/obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
+/obj/item/organ/internal/hivelord_core/on_life()
+	..()
+
+	owner.adjustBruteLoss(-1)
+	owner.adjustFireLoss(-1)
+	owner.adjustOxyLoss(-2)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
+		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
+		if(B && blood_volume < 560 && blood_volume)
+			B.volume += 2 // Fast blood regen
+
+/obj/item/organ/internal/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
+	if(proximity_flag && ishuman(target))
+		var/mob/living/carbon/human/H = target
 		if(inert)
 			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
 			return
@@ -285,6 +302,9 @@
 			H.revive()
 			qdel(src)
 	..()
+
+/obj/item/organ/internal/hivelord_core/prepare_eat()
+	return null
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
@@ -591,7 +611,7 @@
 /obj/item/asteroid/fugu_gland
 	name = "wumborian fugu gland"
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
 	flags = NOBLUDGEON
 	w_class = 3

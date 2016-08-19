@@ -15,7 +15,7 @@
 	var/dwait_upper = 20	//longest wait can be under dynamic_wait
 	var/dwait_lower = 5		//shortest wait can be under dynamic_wait
 	var/dwait_delta = 7		//How much should processing time effect dwait. or basically: wait = cost*dwait_delta
-	var/dwait_buffer = 1.5	//This number is subtracted from the processing time before calculating its new wait
+	var/dwait_buffer = 0.7	//This number is subtracted from the processing time before calculating its new wait
 
 	//things you will probably want to leave alone
 	var/can_fire = 0		//prevent fire() calls

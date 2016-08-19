@@ -78,7 +78,7 @@
 					var/obj/item/weapon/gun/energy/gun/nuclear/gat  = new(get_turf(H))
 					gat.pin = new /obj/item/device/firing_pin
 				if("sabr")
-					var/obj/item/weapon/gun/projectile/automatic/gat  = new(get_turf(H))
+					var/obj/item/weapon/gun/projectile/automatic/proto/gat  = new(get_turf(H))
 					gat.pin = new /obj/item/device/firing_pin
 				if("bulldog")
 					var/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/gat  = new(get_turf(H))

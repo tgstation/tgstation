@@ -1,5 +1,8 @@
 /mob/living/silicon/ai/death(gibbed)
-	if(stat == DEAD)	return
+	if(stat == DEAD)
+		return
+	if(!gibbed)
+		emote("me", 1, "sparks and its screen flickers, its systems slowly coming to a halt.")
 	stat = DEAD
 
 

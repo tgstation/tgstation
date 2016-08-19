@@ -150,7 +150,6 @@ field_generator power level display
 					return
 	else
 		..()
-		return
 
 
 /obj/machinery/field/generator/emp_act()

@@ -436,18 +436,18 @@ Auto Patrol[]"},
 			if(lasercolor == "r")
 				new /obj/item/clothing/suit/redtag(Tsec)
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
-	qdel(src)
+	..()
 
 /obj/machinery/bot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'
 	if(emagged == 2)
 		if(lasercolor)
-			projectile = /obj/item/projectile/lasertag
+			projectile = /obj/item/projectile/beam/lasertag
 		else
 			projectile = /obj/item/projectile/beam
 	else
@@ -455,9 +455,9 @@ Auto Patrol[]"},
 			shoot_sound = 'sound/weapons/Taser.ogg'
 			projectile = /obj/item/projectile/energy/electrode
 		else if(lasercolor == "b")
-			projectile = /obj/item/projectile/lasertag/bluetag
+			projectile = /obj/item/projectile/beam/lasertag/bluetag
 		else if(lasercolor == "r")
-			projectile = /obj/item/projectile/lasertag/redtag
+			projectile = /obj/item/projectile/beam/lasertag/redtag
 
 /obj/machinery/bot/ed209/proc/shootAt(mob/target)
 	if(lastfired && world.time - lastfired < shot_delay)
@@ -685,10 +685,10 @@ Auto Patrol[]"},
 	if(!disabled)
 		var/lasertag_check = 0
 		if((lasercolor == "b"))
-			if(istype(Proj, /obj/item/projectile/lasertag/redtag))
+			if(istype(Proj, /obj/item/projectile/beam/lasertag/redtag))
 				lasertag_check++
 		else if((lasercolor == "r"))
-			if(istype(Proj, /obj/item/projectile/lasertag/bluetag))
+			if(istype(Proj, /obj/item/projectile/beam/lasertag/bluetag))
 				lasertag_check++
 		if(lasertag_check)
 			icon_state = "[lasercolor]ed2090"

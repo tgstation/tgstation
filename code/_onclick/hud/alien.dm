@@ -76,7 +76,7 @@
 	using = new /obj/screen/act_intent()
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.icon_state = mymob.a_intent
-	using.screen_loc = ui_acti
+	using.screen_loc = ui_movi
 	adding += using
 	action_intent = using
 
@@ -84,13 +84,6 @@
 		mymob.leap_icon = new /obj/screen/alien/leap()
 		mymob.leap_icon.screen_loc = ui_alien_storage_r
 		adding += mymob.leap_icon
-
-	using = new /obj/screen/mov_intent()
-	using.icon = 'icons/mob/screen_alien.dmi'
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	adding += using
-	move_intent = using
 
 	using = new /obj/screen/drop()
 	using.icon = 'icons/mob/screen_alien.dmi'

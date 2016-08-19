@@ -19,6 +19,7 @@ Rite of Disorientation
 	var/cultist_desc = "A basic talisman. It serves no purpose."
 	var/invocation = "Naise meam!"
 	var/uses = 1
+	var/health_cost = 0 //The amount of health taken from the user when invoking the talisman
 
 /obj/item/weapon/paper/talisman/examine(mob/user)
 	..()
@@ -40,7 +41,9 @@ Rite of Disorientation
 		qdel(src)
 
 /obj/item/weapon/paper/talisman/proc/invoke(mob/living/user)
-
+	if(health_cost && iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
 
 //Malformed Talisman: If something goes wrong.
 /obj/item/weapon/paper/talisman/malformed
@@ -124,9 +127,10 @@ Rite of Disorientation
 
 //Rite of Translocation: Same as rune
 /obj/item/weapon/paper/talisman/teleport
-	cultist_name = "Rite of Translocation"
+	cultist_name = "Talisman of Teleportation"
 	cultist_desc = "A single-use talisman that will teleport a user to a random rune of the same keyword."
 	invocation = "Sas'so c'arta forbici!"
+	health_cost = 5
 	var/keyword = "ire"
 
 /obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user)
@@ -135,7 +139,7 @@ Rite of Disorientation
 		if(R.keyword == src.keyword)
 			possible_runes.Add(R)
 	if(!possible_runes.len)
-		user << "<span class='warning'>There are no Rites of Translocation with the same keyword!</span>"
+		user << "<span class='warning'>There are no Teleport runes with the same keyword!</span>"
 		log_game("Teleportation talisman failed - no teleport runes of the same keyword")
 		uses++ //To prevent deletion
 		return
@@ -151,12 +155,18 @@ Rite of Disorientation
 	spawn(1) //To give the keyword time to change from the imbue rune
 		info += keyword
 
+/obj/item/weapon/paper/talisman/teleport/examine(mob/user)
+	..()
+	if(iscultist(user) && keyword)
+		user << "<b>Keyword:</b> [keyword]"
+
 
 //Rite of Knowledge: Same as rune, but has two uses
 /obj/item/weapon/paper/talisman/summon_tome
-	cultist_name = "Rite of Knowledge"
+	cultist_name = "Talisman of Tome Summoning"
 	cultist_desc = "A two-use talisman that will call untranslated tomes from the archives of the Geometer."
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
+	health_cost = 1
 
 /obj/item/weapon/paper/talisman/summon_tome/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand for a moment.</span>", \
@@ -171,9 +181,10 @@ Rite of Disorientation
 
 //Rite of Obscurity: Same as rune, but less range
 /obj/item/weapon/paper/talisman/hide_runes
-	cultist_name = "Rite of Obscurity"
+	cultist_name = "Talisman of Veiling"
 	cultist_desc = "A talisman that will make all runes within a small radius invisible."
 	invocation = "Kla'atu barada nikt'o!"
+	health_cost = 1
 
 /obj/item/weapon/paper/talisman/hide_runes/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand.</span>", \
@@ -185,9 +196,10 @@ Rite of Disorientation
 
 //Rite of True Sight: Same as rune, but doesn't work on ghosts
 /obj/item/weapon/paper/talisman/true_sight
-	cultist_name = "Rite of True Sight"
+	cultist_name = "Talisman of Revealing"
 	cultist_desc = "A talisman that reveals nearby invisible runes."
 	invocation = "Nikt'o barada kla'atu!"
+	health_cost = 1
 
 /obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
@@ -198,9 +210,10 @@ Rite of Disorientation
 
 //Rite of False Truths: Same as rune
 /obj/item/weapon/paper/talisman/make_runes_fake
-	cultist_name = "Rite of False Truths"
+	cultist_name = "Talisman of Disguising"
 	cultist_desc = "A talisman that will make nearby runes appear fake."
 	invocation = "By'o isit!"
+	health_cost = 3
 
 /obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user)
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
@@ -211,21 +224,23 @@ Rite of Disorientation
 
 //Rite of Disruption: Same as rune, halved radius
 /obj/item/weapon/paper/talisman/emp
-	cultist_name = "Rite of Disruption"
+	cultist_name = "Talisman of Electromagnets"
 	cultist_desc = "A talisman that will cause a moderately-sized electromagnetic pulse."
 	invocation = "Ta'gh fara'qha fel d'amar det!"
+	health_cost = 5
 
 /obj/item/weapon/paper/talisman/emp/invoke(mob/living/user)
-	user.visible_message("<span class='warning'>[user]'s hand glows a bright blue!</span>", \
+	user.visible_message("<span class='warning'>[user]'s hand flashes a bright blue!</span>", \
 						 "<span class='warning'>You speak the words of the talisman, emitting an EMP blast.</span>")
-	empulse(src, 2, 4)
+	empulse(src, 4, 8)
 
 
 //Rite of Disorientation: Stuns and mutes a single target for quite some time
 /obj/item/weapon/paper/talisman/stun
-	cultist_name = "Rite of Disorientation"
+	cultist_name = "Talisman of Stunning"
 	cultist_desc = "A talisman that will stun and mute a single target. To use, attack target directly."
 	invocation = "Fuu ma'jin!"
+	health_cost = 10 //A lot of health because of how powerful this is
 
 /obj/item/weapon/paper/talisman/stun/attack_self(mob/living/user)
 	user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
@@ -254,3 +269,20 @@ Rite of Disorientation
 		qdel(src)
 		return
 	..()
+
+
+//Rite of Arming: Equips cultist armor on the user, where available
+/obj/item/weapon/paper/talisman/armor
+	cultist_name = "Talisman of Arming"
+	cultist_desc = "A talisman that will equip the invoker with cultist equipment where available."
+	invocation = "N'ath reth sh'yro eth draggathnor!"
+	health_cost = 3
+
+/obj/item/weapon/paper/talisman/armor/invoke(mob/living/user)
+	user.visible_message("<span class='warning'>Otherworldy objects suddenly appear on [user]!</span>", \
+						 "<span class='warning'>You speak the words of the talisman, arming yourself!</span>")
+	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
+	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
+	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), slot_shoes)
+	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))

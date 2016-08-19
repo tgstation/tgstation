@@ -46,7 +46,8 @@
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, TOX)
 	M.hallucination += 0.6*reac_volume
-	M.reagents.add_reagent("spore", 0.4*reac_volume)
+	if(M.reagents)
+		M.reagents.add_reagent("spore", 0.4*reac_volume)
 
 /datum/reagent/blob/lexorin_jelly //does tons of oxygen damage and a little brute
 	name = "Lexorin Jelly"
@@ -82,7 +83,8 @@
 	reac_volume = ..()
 	M.apply_damage(0.4*reac_volume, BURN)
 	M.adjustStaminaLoss(0.4*reac_volume)
-	M.reagents.add_reagent("frostoil", 0.4*reac_volume)
+	if(M.reagents)
+		M.reagents.add_reagent("frostoil", 0.4*reac_volume)
 
 /datum/reagent/blob/dark_matter //does brute damage and throws or pulls nearby objects at the target
 	name = "Dark Matter"

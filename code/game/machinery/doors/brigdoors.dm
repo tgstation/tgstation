@@ -39,15 +39,15 @@
 	Radio.listening = 0
 
 	spawn(20)
-		for(var/obj/machinery/door/window/brigdoor/M in range(20, src))
+		for(var/obj/machinery/door/window/brigdoor/M in ultra_range(20, src))
 			if (M.id == src.id)
 				targets += M
 
-		for(var/obj/machinery/flasher/F in range(20, src))
+		for(var/obj/machinery/flasher/F in ultra_range(20, src))
 			if(F.id == src.id)
 				targets += F
 
-		for(var/obj/structure/closet/secure_closet/brig/C in range(20, src))
+		for(var/obj/structure/closet/secure_closet/brig/C in ultra_range(20, src))
 			if(C.id == src.id)
 				targets += C
 

@@ -55,7 +55,7 @@
 	name = "Wine"
 	id = "wine"
 	result = "wine"
-	required_reagents = list("berryjuice" = 10)
+	required_reagents = list("grapejuice" = 10)
 	required_catalysts = list("enzyme" = 5)
 	result_amount = 10
 
@@ -178,7 +178,7 @@
 	name = "The Doctor's Delight"
 	id = "doctordelight"
 	result = "doctorsdelight"
-	required_reagents = list("limejuice" = 1, "tomatojuice" = 1, "orangejuice" = 1, "cream" = 1, "omnizine" = 1)
+	required_reagents = list("limejuice" = 1, "tomatojuice" = 1, "orangejuice" = 1, "cream" = 1, "cryoxadone" = 1)
 	result_amount = 5
 
 /datum/chemical_reaction/irish_cream
@@ -544,7 +544,7 @@
 	result_amount = 4
 
 /datum/chemical_reaction/pumpkin_latte
-	name = "Pumpkin latte"
+	name = "Pumpkin space latte"
 	id = "pumpkin_latte"
 	result = "pumpkin_latte"
 	required_reagents = list("pumpkinjuice" = 5, "coffee" = 5, "cream" = 5)
@@ -563,3 +563,18 @@
 	result = "triple_citrus"
 	required_reagents = list("lemonjuice" = 1, "limejuice" = 1, "orangejuice" = 1)
 	result_amount = 5
+
+/datum/chemical_reaction/grape_soda
+	name = "grape soda"
+	id = "grapesoda"
+	result = "grape_soda"
+	required_reagents = list("grapejuice" = 1, "sodawater" = 1)
+	result_amount = 2
+
+/datum/chemical_reaction/grappa
+	name = "grappa"
+	id = "grappa"
+	result = "grappa"
+	required_reagents = list ("wine" = 10)
+	required_catalysts = list ("enzyme" = 5)
+	result_amount = 10

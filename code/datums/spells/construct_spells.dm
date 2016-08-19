@@ -134,4 +134,4 @@
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 3
-	smoke_amt = 10
+	smoke_amt = 4

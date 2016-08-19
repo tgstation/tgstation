@@ -7,10 +7,14 @@
 /datum/round_event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
+	var/obj/effect/spacevine/SV = new()
+
 	for(var/area/hallway/A in world)
 		for(var/turf/simulated/F in A)
-			if(!F.density && !F.contents.len)
+			if(F.Enter(SV))
 				turfs += F
+
+	qdel(SV)
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/simulated/T = pick(turfs)
@@ -357,12 +361,12 @@
 		return
 
 	if(istype(W, /obj/item/weapon/scythe))
-		for(var/obj/effect/spacevine/B in orange(src,1))
+		for(var/obj/effect/spacevine/B in orange(1,src))
 			if(prob(80))
 				qdel(B)
 		qdel(src)
 
-	else if(is_sharp(W))
+	else if(W.is_sharp())
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
@@ -473,7 +477,7 @@
 			if(prob(20))
 				SV.grow()
 		else //If tile is fully grown
-			SV.buckle_mob()
+			SV.entangle_mob()
 
 		//if(prob(25))
 		SV.spread()
@@ -497,14 +501,14 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_grow(src)
 
-/obj/effect/spacevine/buckle_mob()
+/obj/effect/spacevine/proc/entangle_mob()
 	if(!buckled_mob && prob(25))
 		for(var/mob/living/carbon/V in src.loc)
 			for(var/datum/spacevine_mutation/SM in mutations)
 				SM.on_buckle(src, V)
 			if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
 				V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
-				..(V)
+				buckle_mob(V)
 				break //only capture one mob at a time
 
 /obj/effect/spacevine/proc/spread()

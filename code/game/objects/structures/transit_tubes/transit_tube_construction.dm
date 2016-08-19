@@ -9,6 +9,10 @@
 	layer = 3.1 //same as the built tube
 	anchored = 0
 
+/obj/structure/c_transit_tube/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+
 //wrapper for turn that changes the transit tube formatted icon_state instead of the dir
 /obj/structure/c_transit_tube/proc/tube_turn(angle)
 	var/list/badtubes = list("W-E", "W-E-Pass", "S-N", "S-N-Pass", "SW-NE", "SE-NW")
@@ -45,17 +49,27 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_turn(-90)
+
+/obj/structure/c_transit_tube/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
 
 /obj/structure/c_transit_tube/verb/rotate_ccw()
 	set name = "Rotate Tube CCW"
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_turn(90)
@@ -65,7 +79,7 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src))
+	if(usr.incapacitated())
 		return
 
 	tube_flip()

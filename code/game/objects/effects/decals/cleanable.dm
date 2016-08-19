@@ -23,10 +23,10 @@
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
 				return
-	if(is_hot(W)) //todo: make heating a reagent holder proc
+	if(W.is_hot()) //todo: make heating a reagent holder proc
 		if(istype(W, /obj/item/clothing/mask/cigarette)) return
 		else
-			var/hotness = is_hot(W)
+			var/hotness = W.is_hot()
 			var/added_heat = (hotness / 100)
 			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
 			src.reagents.handle_reactions()
@@ -66,6 +66,7 @@
 
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
-	return bloodiness
-
-
+	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
+		return bloodiness
+	else
+		return 0

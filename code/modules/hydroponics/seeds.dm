@@ -234,6 +234,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 10
 
 /obj/item/seeds/eggplantseed
 	name = "pack of eggplant seeds"
@@ -389,6 +390,7 @@
 	oneharvest = 1
 	potency = 20
 	growthstages = 3
+	rarity = 10
 
 /obj/item/seeds/poppyseed
 	name = "pack of poppy seeds"
@@ -736,6 +738,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+	rarity = 20
 
 /obj/item/seeds/glowshroom
 	name = "pack of glowshroom mycelium"
@@ -912,6 +915,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 0
+	rarity = 20
 
 /obj/item/seeds/appleseed
 	name = "pack of apple seeds"
@@ -1081,6 +1085,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 6
+	rarity = 20
 
 /obj/item/seeds/pumpkinseed
 	name = "pack of pumpkin seeds"
@@ -1114,6 +1119,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 3
+	rarity = 20
 
 /obj/item/seeds/limeseed
 	name = "pack of lime seeds"
@@ -1250,6 +1256,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 2
+	rarity = 10
 
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"
@@ -1315,6 +1322,7 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 5
+	rarity = 10
 
 /obj/item/seeds/kudzuseed
 	name = "pack of kudzu seeds"

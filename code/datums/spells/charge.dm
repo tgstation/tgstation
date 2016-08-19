@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/charge
 	name = "Charge"
-	desc = "This spell can be used to charge up spent magical artifacts, among other things."
+	desc = "This spell can be used to recharge a variety of things in your hands, from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
 
 	school = "transmutation"
 	charge_max = 600
@@ -34,15 +34,20 @@
 						burnt_out = 1
 					charged_item = M
 					break
-			else if(istype(item, /obj/item/weapon/spellbook/oneuse))
-				var/obj/item/weapon/spellbook/oneuse/I = item
-				if(prob(80))
-					user.visible_message("<span class='warning'>[I] catches fire!</span>")
-					qdel(I)
+			else if(istype(item, /obj/item/weapon/spellbook))
+				if(istype(item, /obj/item/weapon/spellbook/oneuse))
+					var/obj/item/weapon/spellbook/oneuse/I = item
+					if(prob(80))
+						user.visible_message("<span class='warning'>[I] catches fire!</span>")
+						qdel(I)
+					else
+						I.used = 0
+						charged_item = I
+						break
 				else
-					I.used = 0
-					charged_item = I
-					break
+					user << "<span class='caution'>Glowing red letters appear on the front cover...</span>"
+					user << "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>"
+					burnt_out = 1
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item
 				if(prob(80) && !I.can_charge)

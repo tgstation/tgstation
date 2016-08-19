@@ -121,6 +121,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				blood_max += 2
 		if(bleedsuppress)
 			blood_max = 0
+		if(reagents.has_reagent("heparin") && getBruteLoss()) //Heparin is a powerful toxin that causes bleeding
+			blood_max += 3
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob
@@ -272,10 +274,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		source = M.get_blood(M.vessel)
 	else if(istype(source,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/donor = source
-		if(donor.dna)
-			source = new()
-			source.data["blood_DNA"] = donor.dna.unique_enzymes
-			source.data["blood_type"] = donor.dna.blood_type
+		source = new()
+		source.data["blood_DNA"] = donor.dna.unique_enzymes
+		source.data["blood_type"] = donor.dna.blood_type
 
 	// Are we dripping or splattering?
 	var/list/drips = list()

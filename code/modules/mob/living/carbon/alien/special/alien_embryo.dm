@@ -57,43 +57,52 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			RefreshInfectionImage()
 
 	if(stage == 5 && prob(50))
+		for(var/datum/surgery/S in owner.surgeries)
+			if(S.location == "chest" && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
+				AttemptGrow(0)
+				return
 		AttemptGrow()
 
 
 
 /obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
 	if(!owner) return
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+	var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET, "alien candidate")
 	var/client/C = null
 
 	// To stop clientless larva, we will check that our host has a client
 	// if we find no ghosts to become the alien. If the host has a client
 	// he will become the alien but if he doesn't then we will set the stage
-	// to 2, so we don't do a process heavy check everytime.
+	// to 4, so we don't do a process heavy check everytime.
 
 	if(candidates.len)
 		C = pick(candidates)
-	else if(owner.client)
+	else if(owner.client && !(jobban_isbanned(owner, "alien candidate") || jobban_isbanned(owner, "Syndicate")))
 		C = owner.client
 	else
 		stage = 4 // Let's try again later.
 		return
 
-	if(owner.lying)
-		owner.overlays += image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
-	else
-		owner.overlays += image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_stand")
-	spawn(6)
-		var/atom/xeno_loc = owner
-		if(!gib_on_success)
-			xeno_loc = get_turf(xeno_loc)
+	var/overlay = image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
+	owner.overlays += overlay
 
-		var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
-		new_xeno.key = C.key
-		new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
+	var/atom/xeno_loc = get_turf(owner)
+	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
+	new_xeno.key = C.key
+	new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
+	new_xeno.canmove = 0 //so we don't move during the bursting animation
+	new_xeno.notransform = 1
+	new_xeno.invisibility = INVISIBILITY_MAXIMUM
+	spawn(6)
+		if(new_xeno)
+			new_xeno.canmove = 1
+			new_xeno.notransform = 0
+			new_xeno.invisibility = 0
 		if(gib_on_success)
-			owner.stomach_contents += new_xeno
 			owner.gib()
+		else
+			owner.adjustBruteLoss(40)
+			owner.overlays -= overlay
 		qdel(src)
 
 

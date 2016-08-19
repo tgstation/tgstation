@@ -73,7 +73,7 @@ It is possible to destroy the net by the occupant or someone else.
 		M << "<span class='danger'>You appear in a strange place!</span>"
 
 		spawn(0)
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 			spark_system.set_up(5, 0, M.loc)
 			spark_system.start()
 			playsound(M.loc, 'sound/effects/phasein.ogg', 25, 1)

@@ -4,7 +4,7 @@
 
 	var/list/potentialRandomZlevels = list()
 	world << "<span class='boldannounce'>Searching for away missions...</span>"
-	var/list/Lines = file2list("_maps/RandomZLevels/fileList.txt")
+	var/list/Lines = file2list("config/awaymissionconfig.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
 		if (!t)
@@ -40,6 +40,8 @@
 		if(isfile(file))
 			maploader.load_map(file)
 			world.log << "away mission loaded: [map]"
+
+		map_transition_config.Add(AWAY_MISSION_LIST)
 
 		for(var/obj/effect/landmark/L in landmarks_list)
 			if (L.name != "awaystart")

@@ -21,7 +21,7 @@
 			user << "<span class='warning'>You need at least four tiles to do this!</span>"
 			return
 
-		if(is_hot(WT) && !mineralType)
+		if(WT.is_hot() && !mineralType)
 			user << "<span class='warning'>You can not reform this!</span>"
 			return
 
@@ -112,7 +112,7 @@
 	desc = "A high-traction floor tile. It feels rubbery in your hand."
 	icon_state = "tile_noslip"
 	turf_type = /turf/simulated/floor/noslip
-	origin_tech = "material=3"
+	origin_tech = "materials=3"
 
 
 //Plasteel (normal)

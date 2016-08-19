@@ -4,8 +4,6 @@
 	name = "pipe"
 	desc = "A one meter section of heat-exchanging pipe"
 
-	volume = 70
-
 	dir = SOUTH
 	initialize_directions_he = SOUTH|NORTH
 

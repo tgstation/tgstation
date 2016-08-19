@@ -107,5 +107,4 @@
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sian cult. It can withstand hard vacuum."
 	w_class = 3
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
-	slowdown = 1
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)

@@ -9,11 +9,3 @@
 /obj/machinery/computer/shuttle/syndicate/recall
 	name = "syndicate shuttle recall terminal"
 	possible_destinations = "syndicate_away"
-
-/obj/machinery/computer/shuttle/syndicate/whiteship
-	name = "ship control terminal"
-	icon_screen = "shuttle"
-	icon_keyboard = "tech_key"
-	shuttleId = "whiteship"
-	req_access = list( )
-	possible_destinations = "whiteship_ss13;whiteship_home;whiteship_z4"

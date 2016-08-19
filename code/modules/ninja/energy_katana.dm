@@ -7,7 +7,7 @@
 	force = 40
 	throwforce = 20
 	armour_penetration = 15
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect_system/spark_spread/spark_system
 
 /obj/item/weapon/katana/energy/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!user || !target)
@@ -65,15 +65,9 @@
 
 /obj/item/weapon/katana/energy/New()
 	..()
-	spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-
-
-/obj/item/weapon/katana/energy/Del()
-	qdel(spark_system)
-	spark_system = null
-	..()
 
 /obj/item/weapon/katana/energy/Destroy()
 	qdel(spark_system)

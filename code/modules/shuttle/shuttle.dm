@@ -21,7 +21,10 @@
 	//these objects are indestructable
 /obj/docking_port/Destroy()
 	return QDEL_HINT_LETMELIVE
-
+/obj/docking_port/singularity_pull()
+	return
+/obj/docking_port/singularity_act()
+	return 0
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
 //returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
@@ -167,7 +170,7 @@
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/mode = SHUTTLE_IDLE			//current shuttle mode (see global defines)
 	var/callTime = 50				//time spent in transit (deciseconds)
-
+	var/roundstart_move				//id of port to send shuttle to at roundstart
 	var/travelDir = 0			//direction the shuttle would travel in
 
 	var/obj/docking_port/stationary/destination
@@ -608,7 +611,7 @@
 			return
 		cooldown = 1
 		usr << "<span class='notice'>Your request has been recieved by Centcom.</span>"
-		admins << "<b>FERRY: <font color='blue'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) (<A HREF='?_src_=holder;secretsadmin=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>"
+		admins << "<b>FERRY: <font color='blue'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) (<A HREF='?_src_=holder;secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>"
 		spawn(600) //One minute cooldown
 			cooldown = 0
 

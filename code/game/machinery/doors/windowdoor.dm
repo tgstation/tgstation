@@ -102,7 +102,7 @@
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		return 0
 	if(!forced)
 		if(!hasPower())
@@ -251,10 +251,11 @@
 	return src.attackby(user, user)
 
 /obj/machinery/door/window/emag_act(mob/user)
-	if(density && !emagged)
-		operating = 0
+	if(!operating && density && !emagged)
+		operating = 1
 		flick("[src.base_state]spark", src)
 		sleep(6)
+		operating = 0
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
 		open()
 		emagged = 1
@@ -263,6 +264,9 @@
 
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating)
+		return
+
+	if(istype(I, /obj/item/weapon/card/emag))
 		return
 
 	add_fingerprint(user)

@@ -570,3 +570,11 @@
 	materials = list(MAT_METAL = 150, MAT_GLASS = 125)
 	build_path = /obj/item/weapon/hand_labeler
 	category = list("initial", "Electronics")
+
+/datum/design/geiger
+	name = "Geiger counter"
+	id = "geigercounter"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
+	build_path = /obj/item/device/geiger_counter
+	category = list("initial", "Tools")

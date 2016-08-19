@@ -14,12 +14,11 @@ mob/living/carbon/getorgan(typepath)
 mob/living/carbon/getorganszone(zone, var/subzones = 0)
 	var/list/returnorg = list()
 	if(subzones)
+		// Include subzones - groin for chest, eyes and mouth for head
 		if(zone == "head")
 			returnorg = getorganszone("eyes") + getorganszone("mouth")
-			// We don't have mouth organs now, but who knows?
 		if(zone == "chest")
 			returnorg = getorganszone("groin")
-
 
 	for(var/obj/item/organ/internal/O in internal_organs)
 		if(zone == O.zone)

@@ -695,6 +695,16 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_selfrepair
+	name = "Cyborg Upgrade (Self-repair)"
+	id = "borg_upgrade_selfrepair"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/selfrepair
+	req_tech = list("materials" = 4, "engineering" = 4)
+	materials = list(MAT_METAL=15000, MAT_GLASS=15000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"

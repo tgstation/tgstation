@@ -109,7 +109,10 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
+		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
+						"<span class='userdanger'>You're set on fire!</span>")
 		src.AddLuminosity(3)
+		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -117,13 +120,14 @@
 		on_fire = 0
 		fire_stacks = 0
 		src.AddLuminosity(-3)
+		clear_alert("fire")
 		update_fire()
 
 /mob/living/proc/update_fire()
 	return
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = Clamp(fire_stacks + add_fire_stacks, min = -20, max = 20)
+	fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
@@ -195,11 +199,13 @@
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return
 
-	if(M.Victim)
+	if(M.buckled)
+		if(M == buckled_mob)
+			M.Feedstop()
 		return // can't attack while eating!
 
 	if (stat != DEAD)
@@ -224,7 +230,7 @@
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return 0
 
@@ -269,7 +275,7 @@
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return 0
 
@@ -293,7 +299,4 @@
 	if(stat || paralysis || stunned || weakened || restrained())
 		return 1
 
-/mob/living/proc/irradiate(amount)
-	if(amount)
-		var/blocked = run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm")
-		apply_effect(amount, IRRADIATE, blocked)
+//Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.

@@ -41,7 +41,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest spray"
 	icon_state = "pestspray"
-	item_state = "spray"
+	item_state = "plantbgone"
 	volume = 100
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
@@ -87,6 +87,7 @@
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/weapon/hatchet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is chopping at \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")

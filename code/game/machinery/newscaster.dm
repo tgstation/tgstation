@@ -877,8 +877,15 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/creationTime
 
 /obj/item/weapon/newspaper/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku.</span>")
-	return(OXYLOSS)
+	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like they're trying to commit sudoku... until their eyes light up with realization!</span>")
+	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
+	var/mob/living/carbon/human/H = user
+	var/obj/W = new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(H.loc)
+	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), 1)
+	W.reagents.trans_to(H, W.reagents.total_volume)
+	user.visible_message("<span class='suicide'>[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!</span>")
+
+	return(TOXLOSS)
 
 /obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))

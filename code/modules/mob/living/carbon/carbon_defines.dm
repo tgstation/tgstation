@@ -9,9 +9,6 @@
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
 	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
 
-	var/list/features = list("mcolor" = "FFF", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
-
-
 //inventory slots
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
@@ -27,6 +24,7 @@
 	has_limbs = 1
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/
 
-	var/remote_view = 0
 	var/list/obj/effect/proc_holder/alien/abilities = list()
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
+
+	var/rotate_on_lying = 1

@@ -159,7 +159,7 @@
 
 
 //old style PIMP-CART
-/obj/structure/stool/bed/chair/janicart
+/obj/structure/bed/chair/janicart
 	name = "janicart"
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon = 'icons/obj/vehicles.dmi'
@@ -172,10 +172,10 @@
 	var/floorbuffer = 0
 	var/keytype = /obj/item/key/janitor
 
-/obj/structure/stool/bed/chair/janicart/New()
+/obj/structure/bed/chair/janicart/New()
 	handle_rotation()
 
-/obj/structure/stool/bed/chair/janicart/Move(a, b, flag)
+/obj/structure/bed/chair/janicart/Move(a, b, flag)
 	..()
 	if(floorbuffer)
 		var/turf/tile = loc
@@ -186,13 +186,13 @@
 					if(is_cleanable(A))
 						qdel(A)
 
-/obj/structure/stool/bed/chair/janicart/examine(mob/user)
+/obj/structure/bed/chair/janicart/examine(mob/user)
 	..()
 	if(floorbuffer)
 		user << "It has been upgraded with a floor buffer."
 
 
-/obj/structure/stool/bed/chair/janicart/attackby(obj/item/I, mob/user, params)
+/obj/structure/bed/chair/janicart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, keytype))
 		user << "Hold [I] in one of your hands while you drive this [callme]."
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))
@@ -209,24 +209,24 @@
 			user << "<span class='notice'>You upgrade the [callme] with the floor buffer.</span>"
 	update_icon()
 
-/obj/structure/stool/bed/chair/janicart/update_icon()
+/obj/structure/bed/chair/janicart/update_icon()
 	overlays.Cut()
 	if(mybag)
 		overlays += "cart_garbage"
 	if(floorbuffer)
 		overlays += "cart_buffer"
 
-/obj/structure/stool/bed/chair/janicart/attack_hand(mob/user)
-	if(mybag)
+/obj/structure/bed/chair/janicart/attack_hand(mob/user)
+	if(..())
+		return 1
+	else if(mybag)
 		mybag.loc = get_turf(user)
 		user.put_in_hands(mybag)
 		mybag = null
 		update_icon()
-	else
-		..()
 
 
-/obj/structure/stool/bed/chair/janicart/relaymove(mob/user, direction)
+/obj/structure/bed/chair/janicart/relaymove(mob/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis)
 		unbuckle_mob()
 	if(istype(user.l_hand, keytype) || istype(user.r_hand, keytype))
@@ -241,7 +241,7 @@
 	else
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive this [callme].</span>"
 
-/obj/structure/stool/bed/chair/janicart/user_buckle_mob(mob/living/M, mob/user)
+/obj/structure/bed/chair/janicart/user_buckle_mob(mob/living/M, mob/user)
 	if(user.incapacitated()) //user can't move the mob on the janicart's turf if incapacitated
 		return
 	for(var/atom/movable/A in get_turf(src)) //we check for obstacles on the turf.
@@ -252,13 +252,13 @@
 	..()
 	update_mob()
 
-/obj/structure/stool/bed/chair/janicart/unbuckle_mob()
+/obj/structure/bed/chair/janicart/unbuckle_mob(force = 0)
 	if(buckled_mob)
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
-	..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/janicart/handle_rotation()
+/obj/structure/bed/chair/janicart/handle_rotation()
 	if((dir == SOUTH) || (dir == WEST) || (dir == EAST))
 		layer = FLY_LAYER
 	else
@@ -271,8 +271,12 @@
 
 	update_mob()
 
+/obj/structure/bed/chair/janicart/Bump(atom/movable/M)
+	. = ..()
+	if(istype(M, /obj/machinery/door) && buckled_mob)
+		M.Bumped(buckled_mob)
 
-/obj/structure/stool/bed/chair/janicart/proc/update_mob()
+/obj/structure/bed/chair/janicart/proc/update_mob()
 	if(buckled_mob)
 		buckled_mob.dir = dir
 		switch(dir)
@@ -310,7 +314,7 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "upgrade"
 
-/obj/structure/stool/bed/chair/janicart/secway
+/obj/structure/bed/chair/janicart/secway
 	name = "secway"
 	desc = "A brave security cyborg gave its life to help you look like a complete tool."
 	icon = 'icons/obj/vehicles.dmi'
@@ -318,7 +322,7 @@
 	callme = "secway"
 	keytype = /obj/item/key/security
 
-/obj/structure/stool/bed/chair/janicart/secway/update_mob()
+/obj/structure/bed/chair/janicart/secway/update_mob()
 	if(buckled_mob)
 		buckled_mob.dir = dir
 		buckled_mob.pixel_y = 4

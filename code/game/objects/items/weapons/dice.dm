@@ -1,3 +1,23 @@
+/obj/item/weapon/storage/pill_bottle/dice
+	name = "bag of dice"
+	desc = "Contains all the luck you'll ever need."
+	icon = 'icons/obj/dice.dmi'
+	icon_state = "dicebag"
+
+/obj/item/weapon/storage/pill_bottle/dice/New()
+	..()
+	var/special_die = pick("1","2","00","100")
+	if(special_die == "1")		new /obj/item/weapon/dice/d1(src)
+	if(special_die == "2")		new /obj/item/weapon/dice/d2(src)
+	new /obj/item/weapon/dice/d4(src)
+	new /obj/item/weapon/dice(src)
+	new /obj/item/weapon/dice/d8(src)
+	new /obj/item/weapon/dice/d10(src)
+	if(special_die == "00")		new /obj/item/weapon/dice/d00(src)
+	new /obj/item/weapon/dice/d12(src)
+	new /obj/item/weapon/dice/d20(src)
+	if(special_die == "100")	new /obj/item/weapon/dice/d100(src)
+
 /obj/item/weapon/dice
 	name = "d6"
 	desc = "A die with six sides. Basic and servicable."
@@ -10,6 +30,12 @@
 /obj/item/weapon/dice/New()
 	result = rand(1, sides)
 	update_icon()
+
+/obj/item/weapon/dice/d1
+	name = "d1"
+	desc = "A die with one side. Deterministic!"
+	icon_state = "d1"
+	sides = 1
 
 /obj/item/weapon/dice/d2
 	name = "d2"
@@ -53,6 +79,12 @@
 	icon_state = "d20"
 	sides = 20
 
+/obj/item/weapon/dice/d100
+	name = "d100"
+	desc = "A die with one hundred sides! Probably not fairly weighted..."
+	icon_state = "d100"
+	sides = 100
+
 /obj/item/weapon/dice/attack_self(mob/user)
 	diceroll(user)
 
@@ -88,4 +120,6 @@
 
 /obj/item/weapon/dice/update_icon()
 	overlays.Cut()
+	if(sides == 100)
+		return
 	overlays += "[src.icon_state][src.result]"

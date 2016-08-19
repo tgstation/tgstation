@@ -73,7 +73,7 @@
   */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(stat & (BROKEN)) return
-	if(user.stat || user.restrained()) return
+	if(user.incapacitated()) return
 
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "chem_dispenser.tmpl", "[uiname]", 490, 710, 0)
 
@@ -100,7 +100,7 @@
 		data["beakerMaxVolume"] = null
 
 	var chemicals[0]
-	for (var/re in dispensable_reagents)
+	for(var/re in dispensable_reagents)
 		var/datum/reagent/temp = chemical_reagents_list[re]
 		if(temp)
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
@@ -215,7 +215,8 @@
 	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
-			dispensable_reagents = sortList(dispensable_reagents | special_reagents[i])
+			dispensable_reagents |= special_reagents[i]
+	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user, params)
 	..()

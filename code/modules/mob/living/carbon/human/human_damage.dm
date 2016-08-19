@@ -160,38 +160,5 @@
 
 
 /mob/living/carbon/human/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
-	if(dna)	// if you have a species, it will run the apply_damage code there instead
-		dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)
-	else
-		if((damagetype != BRUTE) && (damagetype != BURN))
-			..(damage, damagetype, def_zone, blocked)
-			return 1
-
-		else
-			blocked = (100-blocked)/100
-			if(blocked <= 0)	return 0
-
-			var/obj/item/organ/limb/organ = null
-			if(islimb(def_zone))
-				organ = def_zone
-			else
-				if(!def_zone)	def_zone = ran_zone(def_zone)
-				organ = get_organ(check_zone(def_zone))
-			if(!organ)	return 0
-
-			damage = (damage * blocked)
-
-			switch(damagetype)
-				if(BRUTE)
-					damageoverlaytemp = 20
-					if(organ.take_damage(damage, 0))
-						update_damage_overlays(0)
-				if(BURN)
-					damageoverlaytemp = 20
-					if(organ.take_damage(0, damage))
-						update_damage_overlays(0)
-
-		// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
-
-		updatehealth()
-	return 1
+	// depending on the species, it will run the corresponding apply_damage code there
+	return dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)

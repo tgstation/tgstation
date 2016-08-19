@@ -47,6 +47,15 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
+	if(jobban_isbanned(M, "OOC"))
+		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'><font color=red>OOCBan</font></A> | "
+	else
+		body+= "<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'>OOCBan</A> | "
+	if(jobban_isbanned(M, "emote"))
+		body+= "<A href='?_src_=holder;jobban3=emote;jobban4=\ref[M]'><font color=red>EmoteBan</font></A> | "
+	else
+		body+= "<A href='?_src_=holder;jobban3=emote;jobban4=\ref[M]'>Emoteban</A> | "
+
 	body += "<A href='?_src_=holder;shownoteckey=[M.ckey]'>Notes</A> | "
 	if(M.client)
 		if(M.client.check_watchlist(M.client.ckey))
@@ -121,8 +130,9 @@ var/global/floorIsLava = 0
 			body += "<A href='?_src_=holder;simplemake=observer;mob=\ref[M]'>Observer</A> | "
 			body += "\[ Alien: <A href='?_src_=holder;simplemake=drone;mob=\ref[M]'>Drone</A>, "
 			body += "<A href='?_src_=holder;simplemake=hunter;mob=\ref[M]'>Hunter</A>, "
-			body += "<A href='?_src_=holder;simplemake=queen;mob=\ref[M]'>Queen</A>, "
 			body += "<A href='?_src_=holder;simplemake=sentinel;mob=\ref[M]'>Sentinel</A>, "
+			body += "<A href='?_src_=holder;simplemake=praetorian;mob=\ref[M]'>Praetorian</A>, "
+			body += "<A href='?_src_=holder;simplemake=queen;mob=\ref[M]'>Queen</A>, "
 			body += "<A href='?_src_=holder;simplemake=larva;mob=\ref[M]'>Larva</A> \] "
 			body += "<A href='?_src_=holder;simplemake=human;mob=\ref[M]'>Human</A> "
 			body += "\[ slime: <A href='?_src_=holder;simplemake=slime;mob=\ref[M]'>Baby</A>, "
@@ -516,7 +526,7 @@ var/global/floorIsLava = 0
 		usr << "<font color='red'>Error: Start Now: Game is in startup, please wait until it has finished.</font>"
 	else
 		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
-		
+
 	return 0
 
 /datum/admins/proc/toggleenter()

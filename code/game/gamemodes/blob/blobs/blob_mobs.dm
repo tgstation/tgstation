@@ -64,6 +64,8 @@
 			if(H.stat == DEAD)
 				Zombify(H)
 				break
+	if(factory && z != factory.z)
+		death()
 	..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
@@ -91,7 +93,7 @@
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	..(1)
 	// On death, create a small smoke of harmful gas (s-Acid)
-	var/datum/effect/effect/system/smoke_spread/chem/S = new
+	var/datum/effect_system/smoke_spread/chem/S = new
 	var/turf/location = get_turf(src)
 
 	// Create the reagents to put into the air
@@ -104,7 +106,7 @@
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
-	S.set_up(reagents, 1, 1, location, 15, 1) // only 1 smoke cloud
+	S.set_up(reagents, 0, location, silent=1)
 	S.start()
 
 	ghostize()

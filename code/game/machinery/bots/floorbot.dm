@@ -260,9 +260,9 @@
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(loc, TL, src, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, TL, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = 0)
 			else
-				path = get_path_to(loc, target, src, /turf/proc/Distance, 0, 30, id=botcard)
+				path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = 0)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -455,11 +455,10 @@ obj/machinery/bot/floorbot/process_scan(scan_target)
 			T.amount = amount
 			amount = 0
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	qdel(src)
-	return
+	..()
 
 
 /obj/item/weapon/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)

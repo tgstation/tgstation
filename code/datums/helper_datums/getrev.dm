@@ -21,6 +21,7 @@ var/global/datum/getrev/revdata = new()
 	world.log << "Running /tg/ revision:"
 	world.log << date
 	world.log << revision
+	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it
 	return
 
 /client/verb/showrevinfo()

@@ -144,6 +144,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
+	sharpness = IS_SHARP
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
@@ -298,7 +299,7 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(is_hot(I) && !active)
+	if(I.is_hot() && !active)
 		active = 1
 		var/turf/bombturf = get_turf(src)
 		var/area/bombarea = get_area(bombturf)

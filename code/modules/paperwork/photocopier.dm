@@ -11,7 +11,7 @@
 	name = "photocopier"
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/library.dmi'
-	icon_state = "bigscanner"
+	icon_state = "photocopier"
 	anchored = 1
 	density = 1
 	use_power = 1
@@ -228,7 +228,7 @@
 			copy = O
 			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
-			flick("bigscanner1", src)
+			flick("photocopier1", src)
 			updateUsrDialog()
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
@@ -240,7 +240,7 @@
 			photocopy = O
 			O.loc = src
 			user << "<span class='notice'>You insert [O] into [src].</span>"
-			flick("bigscanner1", src)
+			flick("photocopier1", src)
 			updateUsrDialog()
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"

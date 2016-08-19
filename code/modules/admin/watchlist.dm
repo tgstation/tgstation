@@ -10,10 +10,9 @@
 			log_game("SQL ERROR obtaining ckey from player table. Error : \[[err]\]\n")
 			return
 		if(!query_watchfind.NextRow())
-			usr << "<span class='redtext'>[new_ckey] has not been seen before, you can only add known players.</span>"
-			return
-		else
-			target_ckey = new_ckey
+			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to add them to the watchlist?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+				return
+		target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(check_watchlist(target_sql_ckey))
 		usr << "<span class='redtext'>[target_sql_ckey] is already on the watchlist.</span>"

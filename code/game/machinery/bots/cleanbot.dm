@@ -148,7 +148,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 
 			if(prob(5)) //Spawns foam!
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
-				PoolOrNew(/obj/effect/effect/foam, loc)
+				PoolOrNew(/obj/effect/particle_effect/foam, loc)
 
 	else if (prob(5))
 		audible_message("[src] makes an excited beeping booping sound!")
@@ -166,7 +166,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	if(target)
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(loc, target.loc, src, /turf/proc/Distance, 0, 30, id=botcard)
+			path = get_path_to(loc, target.loc, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
 			if (!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -234,11 +234,10 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	qdel(src)
-	return
+	..()
 
 /obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user as mob, params)
 	..()

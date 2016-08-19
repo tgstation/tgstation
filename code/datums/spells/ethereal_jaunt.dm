@@ -32,6 +32,11 @@
 			target.ExtinguishMob()
 			if(target.buckled)
 				target.buckled.unbuckle_mob()
+			if(target.pulledby)
+				target.pulledby.stop_pulling()
+			target.stop_pulling()
+			if(target.buckled_mob)
+				target.unbuckle_mob(force=1)
 			jaunt_disappear(animation, target)
 			target.loc = holder
 			target.notransform=0 //mob is safely inside holder now, no need for protection.
@@ -70,7 +75,7 @@
 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
-	var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 	steam.set_up(10, 0, mobloc)
 	steam.start()
 

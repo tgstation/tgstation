@@ -128,11 +128,9 @@
 	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)
 
 /mob/living/carbon/human/reagent_check(datum/reagent/R)
-	if(dna)
-		var/bypass = dna.species.handle_chemicals(R,src)
-		return bypass	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
-	else
-		return 0
+	return dna.species.handle_chemicals(R,src)
+	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
+
 
 /mob/living/carbon/human/can_track(mob/living/user)
 	if(wear_id && istype(wear_id.GetID(), /obj/item/weapon/card/id/syndicate))

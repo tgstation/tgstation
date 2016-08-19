@@ -231,32 +231,16 @@
 		pump_direction = text2num(signal.data["direction"])
 
 	if("set_internal_pressure" in signal.data)
-		internal_pressure_bound = Clamp(
-			text2num(signal.data["set_internal_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		internal_pressure_bound = Clamp(text2num(signal.data["set_internal_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_external_pressure" in signal.data)
-		external_pressure_bound = Clamp(
-			text2num(signal.data["set_external_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		external_pressure_bound = Clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("adjust_internal_pressure" in signal.data)
-		internal_pressure_bound = Clamp(
-			internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		internal_pressure_bound = Clamp(internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("adjust_external_pressure" in signal.data)
-		external_pressure_bound = Clamp(
-			external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),
-			0,
-			ONE_ATMOSPHERE*50
-		)
+		external_pressure_bound = Clamp(external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("init" in signal.data)
 		name = signal.data["init"]
@@ -308,13 +292,6 @@
 	else
 		stat |= NOPOWER
 	update_icon_nopipes()
-
-/obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
-	if(initial_loc)
-		initial_loc.air_vent_info -= id_tag
-		initial_loc.air_vent_names -= id_tag
-	..()
-
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
 	return !welded

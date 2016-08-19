@@ -41,6 +41,12 @@
 /obj/structure/bodycontainer/alter_health()
 	return src.loc
 
+/obj/structure/bodycontainer/relaymove(mob/user)
+	if(user.stat || !isturf(loc))
+		return
+	if(!open())
+		open()
+
 /obj/structure/bodycontainer/attack_paw(mob/user)
 	return src.attack_hand(user)
 

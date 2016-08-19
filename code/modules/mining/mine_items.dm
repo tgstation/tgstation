@@ -136,6 +136,7 @@
 	materials = list(MAT_METAL=50)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+	sharpness = IS_SHARP
 
 /obj/item/weapon/shovel/spade
 	name = "spade"
@@ -177,7 +178,7 @@
 		used = TRUE
 		sleep(50)
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
-		PoolOrNew(/obj/effect/effect/smoke, src.loc)
+		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
 		load()
 		qdel(src)
 
@@ -206,11 +207,11 @@
 	new /obj/item/weapon/storage/pill_bottle/dice(cur_turf)
 
 	cur_turf = locate(start_turf.x+1, start_turf.y-1, start_turf.z)
-	var/obj/structure/stool/bed/chair/comfy/C = new /obj/structure/stool/bed/chair/comfy(cur_turf)
+	var/obj/structure/bed/chair/comfy/C = new /obj/structure/bed/chair/comfy(cur_turf)
 	C.dir = 1
 
 	cur_turf = locate(start_turf.x+1, start_turf.y+1, start_turf.z)
-	new /obj/structure/stool/bed/chair/comfy(cur_turf)
+	new /obj/structure/bed/chair/comfy(cur_turf)
 
 	cur_turf = locate(start_turf.x-1, start_turf.y-1, start_turf.z)
 	var/obj/machinery/sleeper/S = new /obj/machinery/sleeper(cur_turf)

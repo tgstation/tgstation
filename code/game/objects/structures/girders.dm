@@ -84,7 +84,7 @@
 			transfer_fingerprints_to(G)
 			qdel(src)
 
-	else if(istype(W, /obj/item/stack/sheet))
+	else if(istype(W, /obj/item/stack))
 		if (istype(src.loc, /turf/simulated/wall))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
@@ -93,6 +93,40 @@
 			return
 		if (locate(/obj/structure/falsewall) in src.loc.contents)
 			user << "<span class='warning'>There is already a false wall present!</span>"
+			return
+
+		if(istype(W,/obj/item/stack/rods))
+			var/obj/item/stack/rods/S = W
+			if(state == GIRDER_DISPLACED)
+				if(S.amount < 2)
+					user << "<span class='warning'>You need at least two rods to create a false wall!</span>"
+					return
+				user << "<span class='notice'>You start building a reinforced false wall...</span>"
+				if(do_after(user, 20, target = src))
+					if(!src.loc || !S || S.amount < 2)
+						return
+					S.use(2)
+					user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
+					var/obj/structure/falsewall/iron/FW = new (loc)
+					transfer_fingerprints_to(FW)
+					qdel(src)
+			else
+				if(S.amount < 5)
+					user << "<span class='warning'>You need at least five rods to add plating!</span>"
+					return
+				user << "<span class='notice'>You start adding plating...</span>"
+				if (do_after(user, 40, target = src))
+					if(!src.loc || !S || S.amount < 5)
+						return
+					S.use(5)
+					user << "<span class='notice'>You add the plating.</span>"
+					var/turf/T = get_turf(src)
+					T.ChangeTurf(/turf/simulated/wall/mineral/iron)
+					transfer_fingerprints_to(T)
+					qdel(src)
+				return
+		
+		if(!istype(W,/obj/item/stack/sheet))
 			return
 
 		var/obj/item/stack/sheet/S = W

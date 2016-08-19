@@ -16,6 +16,10 @@
 	var/dpdir = 0	// directions as disposalpipe
 	var/base_state = "pipe-s"
 
+/obj/structure/disposalconstruct/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+
 /obj/structure/disposalconstruct/New(var/loc, var/pipe_type, var/direction = 1)
 	..(loc)
 	if(pipe_type)
@@ -103,6 +107,16 @@
 
 	dir = turn(dir, -90)
 	update()
+
+/obj/structure/disposalconstruct/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
 
 /obj/structure/disposalconstruct/verb/flip()
 	set name = "Flip Pipe"

@@ -268,6 +268,7 @@
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/cooldown = 0
+	sharpness = IS_SHARP
 
 /obj/item/weapon/shard/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
@@ -325,7 +326,7 @@
 	..()
 
 /obj/item/weapon/shard/Crossed(mob/AM)
-	if(istype(AM))
+	if(istype(AM) && has_gravity(loc))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM

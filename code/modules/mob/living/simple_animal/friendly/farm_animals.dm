@@ -33,7 +33,7 @@
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
 	qdel(udder)
 	udder = null
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
@@ -107,7 +107,7 @@
 /mob/living/simple_animal/cow/Destroy()
 	qdel(udder)
 	udder = null
-	..()
+	return ..()
 
 /mob/living/simple_animal/cow/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
@@ -176,6 +176,10 @@
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
+
+/mob/living/simple_animal/chick/holo/Life()
+	..()
+	amount_grown = 0
 
 var/const/MAX_CHICKENS = 50
 var/global/chicken_count = 0
@@ -292,4 +296,4 @@ var/global/chicken_count = 0
 
 /obj/udder/Destroy()
 	qdel(reagents)
-	..()
+	return ..()

@@ -126,13 +126,10 @@
 
 
 /obj/machinery/am_shielding/attackby(obj/item/W, mob/user, params)
-	if(!istype(W) || !user) return
 	if(W.force > 10)
 		stability -= W.force/2
 		check_stability()
 	..()
-	return
-
 
 
 //Call this to link a detected shilding unit to the controller

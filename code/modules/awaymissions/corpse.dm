@@ -8,6 +8,7 @@
 	name = "Unknown"
 	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
 	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
+	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -27,17 +28,31 @@
 	var/corpsehusk = null
 	var/corpsebrute = null //set brute damage on the corpse
 	var/corpseoxy = null //set suffocation damage on the corpse
+	var/roundstart = TRUE
+	var/death = TRUE
+	var/flavour_text = "The mapper forgot to set this!"
+	density = 1
 
 /obj/effect/landmark/corpse/initialize()
-	createCorpse()
+	if(roundstart)
+		createCorpse(death = src.death)
+	else
+		return
 
-/obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
+/obj/effect/landmark/corpse/New()
+	..()
+	invisibility = 0
+
+/obj/effect/landmark/corpse/proc/createCorpse(death, ckey) //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	M.real_name = src.name
 	M.gender = src.mobgender
-	M.death(1) //Kills the new mob
-	if(src.corpsehusk)
-		M.Drain()
+	if(mob_species)
+		M.set_species(mob_species)
+	if(death)
+		M.death(1) //Kills the new mob
+		if(src.corpsehusk)
+			M.Drain()
 	M.adjustBruteLoss(src.corpsebrute)
 	M.adjustOxyLoss(src.corpseoxy)
 	if(src.corpseuniform)
@@ -84,6 +99,9 @@
 		W.registered_name = M.real_name
 		W.update_label()
 		M.equip_to_slot_or_del(W, slot_wear_id)
+	if(ckey)
+		M.ckey = ckey
+		M << "[flavour_text]"
 	qdel(src)
 
 /obj/effect/landmark/corpse/AICorpse/createCorpse() //Creates a corrupted AI
@@ -237,6 +255,15 @@
 	corpsemask = /obj/item/clothing/mask/breath
 
 
+/obj/effect/landmark/corpse/plasmaman
+	mob_species = "plasmaman"
+	corpsehelmet = /obj/item/clothing/head/helmet/plasmaman
+	corpseuniform = /obj/item/clothing/under/plasmaman
+	corpseback = /obj/item/weapon/tank/internals/plasmaman/full
+	corpsemask = /obj/item/clothing/mask/breath
+
+
+
 /////////////////Officers//////////////////////
 
 /obj/effect/landmark/corpse/bridgeofficer
@@ -264,3 +291,17 @@
 	corpseid = 1
 	corpseidjob = "Commander"
 	corpseidaccess = "Captain"
+
+/obj/effect/landmark/corpse/commander/alive
+	death = FALSE
+	roundstart = FALSE
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	flavour_text = "You are a Nanotrasen Commander!"
+
+/obj/effect/landmark/corpse/attack_ghost(mob/user)
+	var/ghost_role = alert("Become [mobname]? (Warning, You can no longer be cloned!)",,"Yes","No")
+	if(ghost_role == "No")
+		return
+	createCorpse(death = src.death, ckey = user.ckey)

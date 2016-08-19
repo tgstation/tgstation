@@ -26,6 +26,8 @@ Buildable meters
 		PIPE_MANIFOLD, \
 		PIPE_4WAYMANIFOLD, \
 		PIPE_HE, \
+		PIPE_HE_MANIFOLD, \
+		PIPE_HE_4WAYMANIFOLD, \
 		PIPE_JUNCTION, \
 		\
 		PIPE_CONNECTOR, \
@@ -42,6 +44,10 @@ Buildable meters
 		PIPE_GAS_FILTER, \
 		PIPE_GAS_MIXER, \
 	)
+
+/obj/item/pipe/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
 /obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	..()
@@ -79,6 +85,8 @@ var/global/list/pipeID2State = list(
 	"[PIPE_MANIFOLD]"		 = "manifold", \
 	"[PIPE_4WAYMANIFOLD]"	 = "manifold4w", \
 	"[PIPE_HE]"				 = "he", \
+	"[PIPE_HE_MANIFOLD]"	 = "he_manifold", \
+	"[PIPE_HE_4WAYMANIFOLD]" = "he_manifold4w", \
 	"[PIPE_JUNCTION]"		 = "junction", \
 	\
 	"[PIPE_CONNECTOR]"		 = "connector", \
@@ -104,6 +112,8 @@ var/global/list/pipeID2State = list(
 		"[PIPE_4WAYMANIFOLD]" 	= "4-way manifold", \
 		"[PIPE_HE]" 			= "h/e pipe", \
 		"[PIPE_HE]_b" 			= "bent h/e pipe", \
+		"[PIPE_HE_MANIFOLD]"	= "h/e manifold", \
+		"[PIPE_HE_4WAYMANIFOLD]"= "h/e 4-way manifold", \
 		"[PIPE_JUNCTION]" 		= "junction", \
 		\
 		"[PIPE_CONNECTOR]" 		= "connector", \
@@ -158,6 +168,16 @@ var/global/list/pipeID2State = list(
 	fixdir()
 
 	return
+
+/obj/item/pipe/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
 
 /obj/item/pipe/Move()
 	..()

@@ -104,15 +104,6 @@
 		src << "You will no longer prayer sounds."
 	feedback_add_details("admin_verb", "PSounds")
 
-/client/verb/togglePRs()
-	set name = "Show/Hide Pull Request Announcements"
-	set category = "Preferences"
-	set desc = "Toggles receiving a notification when new pull requests are created."
-	prefs.chat_toggles ^= CHAT_PULLR
-	prefs.save_preferences()
-	src << "You will [(prefs.chat_toggles & CHAT_PULLR) ? "now" : "no longer"] see new pull request announcements."
-	feedback_add_details("admin_verb","TPullR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/togglemidroundantag()
 	set name = "Toggle Midround Antagonist"
 	set category = "Preferences"
@@ -155,6 +146,13 @@
 			src << admin_sound
 			admin_sound.status ^= SOUND_PAUSED
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/stop_client_sounds()
+	set name = "Stop Sounds"
+	set category = "Preferences"
+	set desc = "Kills all currently playing sounds, use if admin taste in midis a shite"
+	src << sound(null)
+	feedback_add_details("admin_verb","SAPS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/listen_ooc()
 	set name = "Show/Hide OOC"
@@ -207,26 +205,6 @@
 		src.ambience_playing = 0
 	feedback_add_details("admin_verb", "SAmbi") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
 
-//be special
-/client/verb/toggle_be_special(role in be_special_flags)
-	set name = "Toggle SpecialRole Candidacy"
-	set category = "Preferences"
-	set desc = "Toggles which special roles you would like to be a candidate for, during events."
-	var/role_flag = be_special_flags[role]
-	if(!role_flag)	return
-	prefs.be_special ^= role_flag
-	prefs.save_preferences()
-	src << "You will [(prefs.be_special & role_flag) ? "now" : "no longer"] be considered for [role] events (where possible)."
-	feedback_add_details("admin_verb","TBeSpecial") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/verb/toggle_member_publicity()
-	set name = "Toggle Membership Publicity"
-	set category = "Preferences"
-	set desc = "Toggles whether other players can see that you are a BYOND member (OOC blag icon/colours)."
-	prefs.toggles ^= MEMBER_PUBLIC
-	prefs.save_preferences()
-	src << "Others can[(prefs.toggles & MEMBER_PUBLIC) ? "" : "not"] see whether you are a byond member."
-
 var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
 							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
@@ -252,3 +230,10 @@ var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_
 	src << "[(prefs.toggles & INTENT_STYLE) ? "Clicking directly on intents selects them." : "Clicking on intents rotates selection clockwise."]"
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","ITENTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/setup_character()
+	set name = "Game Preferences"
+	set category = "Preferences"
+	set desc = "Allows you to access the Setup Character screen. Changes to your character won't take effect until next round, but other changes will."
+	prefs.current_tab = 1
+	prefs.ShowChoices(usr)

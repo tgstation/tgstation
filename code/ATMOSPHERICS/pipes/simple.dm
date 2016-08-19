@@ -10,8 +10,6 @@ The regular pipe you see everywhere, including bent ones.
 	name = "pipe"
 	desc = "A one meter section of regular pipe"
 
-	volume = 70
-
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
 

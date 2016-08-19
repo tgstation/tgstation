@@ -8,6 +8,7 @@
 	w_class = 1
 	var/wax = 200
 	var/lit = 0
+	heat = 1000
 	proc
 		light(var/flavor_text = "<span class='danger'>[usr] lights the [name].</span>")
 
@@ -94,5 +95,8 @@
 	if(lit)
 		user.AddLuminosity(-CANDLE_LUMINOSITY)
 		SetLuminosity(CANDLE_LUMINOSITY)
+
+/obj/item/candle/is_hot()
+	return lit * heat
 
 #undef CANDLE_LUMINOSITY

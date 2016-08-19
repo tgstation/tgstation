@@ -14,7 +14,7 @@
 	var/spray_currentrange = 3 //the range of tiles the sprayer will reach when in fixed mode.
 	amount_per_transfer_from_this = 5
 	volume = 250
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
@@ -34,7 +34,7 @@
 			user << "<span class='notice'>\The [src] is full.</span>"
 			return
 
-		var/trans = A.reagents.trans_to(src, A:amount_per_transfer_from_this)
+		var/trans = A.reagents.trans_to(src, 50) //transfer 50u , using the spray's transfer amount would take too long to refill
 		user << "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>"
 		return
 
@@ -103,7 +103,7 @@
 	set name = "Empty Spray Bottle"
 	set category = "Object"
 	set src in usr
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
 		return

@@ -52,7 +52,7 @@ var/sound/admin_sound
 
 /client/proc/stop_sounds()
 	set category = "Debug"
-	set name = "Stop Sounds"
+	set name = "Stop All Playing Sounds"
 	if(!src.holder) return
 
 	log_admin("[key_name(src)] stopped all currently playing sounds.")

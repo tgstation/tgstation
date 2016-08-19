@@ -56,7 +56,7 @@
 
 
 /obj/effect/accelerated_particle/proc/toxmob(mob/living/M)
-	M.irradiate(energy*6)
+	M.rad_act(energy*6)
 	M.updatehealth()
 	return
 

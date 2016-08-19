@@ -74,7 +74,7 @@
 
 	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
-		throw_alert("alien_fire")
+		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
@@ -128,7 +128,6 @@
 
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
@@ -139,8 +138,10 @@
 	return
 
 /mob/living/carbon/alien/getTrail()
-	return "xltrails"
-
+	if(getBruteLoss() < 200)
+		return pick (list("xltrails_1", "xltrails2"))
+	else
+		return pick (list("xttrails_1", "xttrails2"))
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.

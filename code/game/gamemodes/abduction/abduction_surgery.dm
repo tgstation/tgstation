@@ -8,7 +8,7 @@
 	if(!ishuman(user))
 		return 0
 	var/mob/living/carbon/human/H = user
-	if(H.dna && istype(H.dna.species, /datum/species/abductor))
+	if(H.dna.species.id == "abductor")
 		return 1
 	if((locate(/obj/item/weapon/implant/abductor) in H))
 		return 1

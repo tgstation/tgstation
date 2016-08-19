@@ -28,19 +28,19 @@ BONUS
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		M << "<span class='notice'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>"
+		M << "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>"
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			switch(A.stage)
 				if(3, 4)
 					if(!(H.hair_style == "Bald") && !(H.hair_style == "Balding Hair"))
-						H << "<span class='danger'>Your hair starts to fall out in clumps...</span>"
+						H << "<span class='warning'>Your hair starts to fall out in clumps...</span>"
 						spawn(50)
 							H.hair_style = "Balding Hair"
 							H.update_hair()
 				if(5)
 					if(!(H.facial_hair_style == "Shaved") || !(H.hair_style == "Bald"))
-						H << "<span class='danger'>Your hair starts to fall out in clumps...</span>"
+						H << "<span class='warning'>Your hair starts to fall out in clumps...</span>"
 						spawn(50)
 							H.facial_hair_style = "Shaved"
 							H.hair_style = "Bald"

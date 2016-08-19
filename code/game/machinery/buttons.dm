@@ -207,7 +207,7 @@
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/device/assembly/control/crematorium
-	req_access = list(access_crematorium)
+	req_access = list()
 	id = 1
 
 /obj/item/wallframe/button

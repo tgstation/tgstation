@@ -15,10 +15,14 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/lastbang
+	var/can_weld_shut = 1
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
-	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
-							  //then open it in a populated area to crash clients.
+	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
+	var/cutting_tool = /obj/item/weapon/weldingtool
+	var/open_sound = 'sound/machines/click.ogg'
+	var/cutting_sound = 'sound/items/Welder.ogg'
+	var/material_drop = /obj/item/stack/sheet/metal
 
 /obj/structure/closet/New()
 	..()
@@ -102,15 +106,10 @@
 			break
 
 /obj/structure/closet/proc/open()
-	if(opened)
-		return 0
-	if(!can_open())
+	if(opened || !can_open())
 		return 0
 	opened = 1
-	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(loc, 'sound/items/zip.ogg', 15, 1, -3)
-	else
-		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(loc, open_sound, 15, 1, -3)
 	density = 0
 	dump_contents()
 	update_icon()
@@ -123,7 +122,7 @@
 
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
-		if(L.buckled || L.mob_size > max_mob_size) //buckled mobs and mobs too big for the container don't get inside closets.
+		if(L.buckled || L.buckled_mob || L.mob_size > max_mob_size) //buckled mobs, mobs with another mob attached, and mobs too big for the container don't get inside closets.
 			return 0
 		if(L.mob_size > MOB_SIZE_TINY) //decently sized mobs take more space than objects.
 			var/mobs_stored = 0
@@ -134,6 +133,7 @@
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
 			L.client.eye = src
+		L.stop_pulling()
 	else if(!istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
 		return 0
 	else if(AM.density || AM.anchored)
@@ -141,6 +141,8 @@
 	else if(AM.flags & NODROP)
 		return 0
 	AM.loc = src
+	if(AM.pulledby)
+		AM.pulledby.stop_pulling()
 	return 1
 
 /obj/structure/closet/proc/close()
@@ -151,10 +153,7 @@
 	take_contents()
 
 	opened = 0
-	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(loc, 'sound/items/zip.ogg', 15, 1, -3)
-	else
-		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(loc, open_sound, 15, 1, -3)
 	density = 1
 	update_icon()
 	return 1
@@ -166,7 +165,7 @@
 
 /obj/structure/closet/ex_act(severity, target)
 	contents_explosion(severity, target)
-	new /obj/item/stack/sheet/metal(loc)
+	new material_drop(loc)
 	dump_contents()
 	qdel(src)
 	..()
@@ -207,16 +206,18 @@
 			return
 		if(istype(W,/obj/item/tk_grab))
 			return 0
-		if(istype(W, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.remove_fuel(0,user))
+		if(istype(W, cutting_tool))
+			if(istype(cutting_tool, /obj/item/weapon/weldingtool))
+				var/obj/item/weapon/weldingtool/WT = W
+				if(!WT.remove_fuel(0,user))
+					return
 				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+				playsound(loc, cutting_sound, 40, 1)
 				if(do_after(user,40,5,1, target = src))
 					if( !opened || !istype(src, /obj/structure/closet) || !user || !WT || !WT.isOn() || !user.loc )
 						return
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-					new /obj/item/stack/sheet/metal(loc)
+					playsound(loc, cutting_sound, 50, 1)
+					new material_drop(loc)
 					visible_message("[user] has cut \the [src] apart with \the [WT].", "<span class='italics'>You hear welding.</span>")
 					qdel(src)
 				return
@@ -227,7 +228,7 @@
 	else
 		if(istype(W, /obj/item/stack/packageWrap))
 			return
-		if(istype(W, /obj/item/weapon/weldingtool))
+		if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
@@ -279,7 +280,7 @@
 	if(user.stat || !isturf(loc))
 		return
 	if(!open())
-		user << "<span class='notice'>It won't budge!</span>"
+		container_resist()
 		if(world.time > lastbang+5)
 			lastbang = world.time
 			for(var/mob/M in get_hearers_in_view(src, null))
@@ -401,8 +402,8 @@
 		locked = 0
 		desc += " It appears to be broken."
 		update_icon()
-		for(var/mob/O in viewers(user, 3))
-			O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
+		if(user)
+			visible_message("<span class='warning'>The [name] has been broken by [user] with an electromagnetic card!</span>", "<span class='italics'>You hear a faint electrical spark.</span>")
 		overlays += "sparking"
 		spawn(4) //overlays don't support flick so we have to cheat
 		update_icon()

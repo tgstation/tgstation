@@ -54,7 +54,7 @@
 		iconname += "-[gang.color]"
 		SetLuminosity(3)
 
-	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 
 	health -= damage
 

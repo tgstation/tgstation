@@ -58,7 +58,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/datum/supply_packs/P = new typepath()
 		if(P.name == "HEADER") continue		// To filter out group headers
 		supply_packs["[P.type]"] = P
-
+	initial_move()
 	..()
 
 
@@ -201,6 +201,18 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 2
 	return 0	//dock successful
 
+/datum/subsystem/shuttle/proc/initial_move()
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(!M.roundstart_move)
+			continue
+		for(var/obj/docking_port/stationary/S in stationary)
+			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
+				S.width = M.width
+				S.height = M.height
+				S.dwidth = M.dwidth
+				S.dheight = M.dheight
+		moveShuttle(M.id, "[M.roundstart_move]", 0)
+
 /datum/supply_order
 	var/ordernum
 	var/datum/supply_packs/object = null
@@ -220,7 +232,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	reqform.info += "RANK: [orderedbyRank]<br>"
 	reqform.info += "REASON: [comment]<br>"
 	reqform.info += "SUPPLY CRATE TYPE: [object.name]<br>"
-	reqform.info += "ACCESS RESTRICTION: [replacetext(get_access_desc(object.access))]<br>"
+	reqform.info += "ACCESS RESTRICTION: [get_access_desc(object.access)]<br>"
 	reqform.info += "CONTENTS:<br>"
 	reqform.info += object.manifest
 	reqform.info += "<hr>"

@@ -28,13 +28,14 @@ Captain
 
 	id = /obj/item/weapon/card/id/gold
 	belt = /obj/item/device/pda/captain
-	ears = /obj/item/device/radio/headset/heads/captain
+	glasses = /obj/item/clothing/glasses/sunglasses
+	ears = /obj/item/device/radio/headset/heads/captain/alt
+	gloves = /obj/item/clothing/gloves/color/captain
 	uniform =  /obj/item/clothing/under/rank/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/caphat
-	backpack_contents = list(/obj/item/weapon/storage/box/silver_ids=1,\
-		/obj/item/weapon/melee/classic_baton/telescopic=1)
+	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/weapon/storage/backpack/captain
 	satchel = /obj/item/weapon/storage/backpack/satchel_cap
@@ -98,5 +99,5 @@ Head of Personnel
 
 /datum/outfit/job/hop/post_equip(mob/living/carbon/human/H)
 	..()
-	
+
 	announce_head(H, list("Supply", "Service"))

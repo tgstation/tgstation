@@ -15,7 +15,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list(5)
+	possible_transfer_amounts = list()
 	volume = 5
 	spillable = 0
 

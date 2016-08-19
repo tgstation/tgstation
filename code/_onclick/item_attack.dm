@@ -14,6 +14,14 @@
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(butcher_results && stat == DEAD) //can we butcher it?
+		var/sharpness = I.is_sharp()
+		if(sharpness)
+			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+			if(do_mob(user, src, 80/sharpness))
+				harvest(user)
+			return
 	I.attack(src, user)
 
 /mob/living/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
