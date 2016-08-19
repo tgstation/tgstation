@@ -17,7 +17,7 @@
 /datum/computer_file/program/revelation/proc/activate()
 	var/explosivepower = 0
 	if(computer)
-		if(computer.surgeprotected = 1)
+		if(computer.surgeprotected == 1)
 			computer.visible_message("<span class='notice'>\The [computer] emits an intense buzzing before falling silent!</span>")
 			computer.battery_module.battery.charge = 0
 			return
@@ -25,7 +25,7 @@
 		spawn(20)
 		computer.enabled = 0
 		computer.update_icon()
-		var/turf/location = getTurf(src.holder)
+		var/turf/location = get_turf(src.holder)
 		qdel(computer.hard_drive)
 		computer.take_damage(25, 10, 1, 1)
 		if(computer.battery_module && prob(25))

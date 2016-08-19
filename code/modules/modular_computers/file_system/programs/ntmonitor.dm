@@ -57,7 +57,7 @@
 		if("purgelogs")
 			var/mob/user = usr
 			if(computer.computer_emagged == 0)
-				usr << "<span class='notice'>Warning: Access Denied. The Network Security Firewall has blocked the purge command!</span>"
+				user << "<span class='notice'>Warning: Access Denied. The Network Security Firewall has blocked the purge command!</span>"
 			. = 1
 			if(ntnet_global)
 				ntnet_global.purge_logs()
