@@ -1,4 +1,4 @@
-/obj/machinery/modular_computer/console/preset/
+/obj/machinery/modular_computer/console/preset
 	// Can be changed to give devices specific hardware
 	var/_has_id_slot = 0
 	var/_has_printer = 0
@@ -8,13 +8,14 @@
 	. = ..()
 	if(!cpu)
 		return
-	cpu.processor_unit = new/obj/item/weapon/computer_hardware/processor_unit(cpu)
+	cpu.install_component(new /obj/item/weapon/computer_hardware/processor_unit)
+
 	if(_has_id_slot)
-		cpu.card_slot = new/obj/item/weapon/computer_hardware/card_slot(cpu)
+		cpu.install_component(new /obj/item/weapon/computer_hardware/card_slot)
 	if(_has_printer)
-		cpu.nano_printer = new/obj/item/weapon/computer_hardware/nano_printer(cpu)
+		cpu.install_component(new /obj/item/weapon/computer_hardware/printer)
 	if(_has_battery)
-		cpu.battery_module = new/obj/item/weapon/computer_hardware/battery_module/super(cpu)
+		cpu.install_component(new /obj/item/weapon/computer_hardware/battery(cpu, /obj/item/weapon/stock_parts/cell/computer/super))
 	install_programs()
 
 // Override in child types to install preset-specific programs.

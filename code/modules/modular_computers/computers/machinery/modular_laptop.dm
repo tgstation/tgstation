@@ -67,7 +67,7 @@
 /obj/machinery/modular_computer/laptop/buildable/New()
 	..()
 	// User-built consoles start as empty frames.
-	qdel(tesla_link)
+	qdel(cpu.recharger)
 	qdel(cpu.network_card)
 	qdel(cpu.hard_drive)
 

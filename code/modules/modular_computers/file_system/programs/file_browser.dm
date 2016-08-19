@@ -110,10 +110,10 @@
 			var/datum/computer_file/data/F = HDD.find_file_by_name(open_file)
 			if(!F || !istype(F))
 				return 1
-			if(!computer.nano_printer)
+			if(!computer.printer)
 				error = "Missing Hardware: Your computer does not have required hardware to complete this operation."
 				return 1
-			if(!computer.nano_printer.print_text(parse_tags(F.stored_data)))
+			if(!computer.printer.print_text(parse_tags(F.stored_data)))
 				error = "Hardware error: Printer was unable to print the file. It may be out of paper."
 				return 1
 		if("PRG_copytousb")

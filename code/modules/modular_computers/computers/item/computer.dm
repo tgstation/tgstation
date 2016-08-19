@@ -2,7 +2,7 @@
 // Other types expand it - tablets use a direct subtypes, and
 // consoles and laptops use "procssor" item that is held inside machinery piece
 /obj/item/modular_computer
-	name = "Modular Microcomputer"
+	name = "modular microcomputer"
 	desc = "A small portable microcomputer."
 
 	var/enabled = 0											// Whether the computer is turned on.
@@ -13,7 +13,7 @@
 	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
 	var/list/last_header_icons
-	var/computer_emagged = 0								// Whether the computer is emagged.
+	var/emagged = 0											// Whether the computer is emagged.
 
 	var/base_active_power_usage = 50						// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
 	var/base_idle_power_usage = 5							// Power usage when the computer is idle and screen is off (currently only applies to laptops)
@@ -26,7 +26,7 @@
 	icon_state = "laptop-open"
 	var/icon_state_unpowered = null							// Icon state when the computer is turned off
 	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
-	var/max_hardware_size = 0								// Maximal hardware size. Currently, tablets have 1, laptops 2 and consoles 3. Limits what hardware types can be installed.
+	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
 	// Damage of the chassis. If the chassis takes too much damage it will break apart.
@@ -36,17 +36,22 @@
 
 	// Important hardware (must be installed for computer to work)
 	var/obj/item/weapon/computer_hardware/processor_unit/processor_unit				// CPU. Without it the computer won't run. Better CPUs can run more programs at once.
-	var/obj/item/weapon/computer_hardware/network_card/network_card					// Network Card component of this computer. Allows connection to NTNet
 	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive						// Hard Drive component of this computer. Stores programs and files.
-	var/obj/item/weapon/computer_hardware/battery_module/battery_module				// An internal power source for this computer. Can be recharged.
+
+	var/obj/item/weapon/computer_hardware/battery/battery_module					// Power cell connector. Power cell can be recharged.
+																					// OR
+	var/obj/item/weapon/computer_hardware/recharger/recharger 						// Recharger. Can be used to recharge power cell or power the PC without it.
+
 	// Optional hardware (improves functionality, but is not critical for computer to work)
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot						// ID Card slot component of this computer. Mostly for HoP modification console that needs ID slot for modification.
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot2						// second slot. popular demand requested the hop need to insert 2 ids.
-	var/obj/item/weapon/computer_hardware/nano_printer/nano_printer					// Nano Printer component of this computer, for your everyday paperwork needs.
+	var/obj/item/weapon/computer_hardware/network_card/network_card					// Network Card component of this computer. Allows connection to NTNet.
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot						// ID Card slot component of this computer.
+	var/obj/item/weapon/computer_hardware/printer/printer							// Printer component of this computer, for your everyday paperwork needs.
 	var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive		// Portable data storage
 
+	var/list/all_components = list()
+
 	var/list/idle_threads = list()							// Idle programs on background. They still receive process calls but can't be interacted with.
-	var/obj/physical = null
+	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
 
 
 
@@ -57,66 +62,58 @@
 	set src in view(1)
 
 	if(usr.incapacitated() || !istype(usr, /mob/living))
-		usr << "<span class='warning'>You can't do that.</span>"
 		return
 
 	if(!Adjacent(usr))
-		usr << "<span class='warning'>You can't reach it.</span>"
 		return
 
 	proc_eject_id(usr)
 
 // Eject ID card from computer, if it has ID slot with card inside.
-/obj/item/modular_computer/verb/eject_usb()
-	set name = "Eject Portable Device"
+/obj/item/modular_computer/verb/eject_disk()
+	set name = "Eject Data Disk"
 	set category = "Object"
 	set src in view(1)
 
 	if(usr.incapacitated() || !istype(usr, /mob/living))
-		usr << "<span class='warning'>You can't do that.</span>"
 		return
 
 	if(!Adjacent(usr))
-		usr << "<span class='warning'>You can't reach it.</span>"
 		return
 
-	proc_eject_usb(usr)
+	proc_eject_disk(usr)
 
 /obj/item/modular_computer/proc/proc_eject_id(mob/user, slot)
 	if(!user)
 		user = usr
 
 	if(!card_slot)
-		user << "\The [src] does not have an ID card slot"
+		user << "<span class='warning'>\The [src] does not have an ID card slot!</span>"
 		return
 
-	if(!card_slot.stored_card && !card_slot.stored_card2)
-		user << "There is no card in \the [src]"
-		return
+	card_slot.try_eject(slot, user)
 
-	if(active_program)
-		active_program.event_idremoved(0, slot)
-
-	for(var/I in idle_threads)
-		var/datum/computer_file/program/P = I
-		P.event_idremoved(1, slot)
-	if(card_slot.stored_card && (!slot || slot == 1))
-		card_slot.stored_card.forceMove(get_turf(src))
-		card_slot.stored_card = null
-	if(card_slot.stored_card2 && (!slot || slot == 2))
-		card_slot.stored_card2.forceMove(get_turf(src))
-		card_slot.stored_card2 = null
-	user << "You remove the card[card_slot.stored_card && card_slot.stored_card2 && !slot ? "s" : ""] from \the [src]"
-
-/obj/item/modular_computer/proc/proc_eject_usb(mob/user)
+/obj/item/modular_computer/proc/proc_eject_disk(mob/user)
 	if(!user)
 		user = usr
 
 	if(!portable_drive)
-		user << "There is no portable device connected to \the [src]."
+		user << "<span class='warning'>There is no data disk in \the [src]!</span>"
 		return
 
-	uninstall_component(user, portable_drive)
+	uninstall_component(portable_drive, user)
+
+
+// Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
+/obj/item/modular_computer/GetAccess()
+	if(card_slot)
+		return card_slot.GetAccess()
+	return ..()
+
+/obj/item/modular_computer/GetID()
+	if(card_slot)
+		return card_slot.GetID()
+	return ..()
 
 /obj/item/modular_computer/attack_ghost(mob/dead/observer/user)
 	if(enabled)
@@ -127,12 +124,12 @@
 			turn_on(user)
 
 /obj/item/modular_computer/emag_act(mob/user)
-	if(computer_emagged)
-		user << "\The [src] was already emagged."
+	if(emagged)
+		user << "<span class='warning'>\The [src] was already emagged.</span>"
 		return 0
 	else
-		computer_emagged = 1
-		user << "You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message."
+		emagged = 1
+		user << "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>"
 		return 1
 
 /obj/item/modular_computer/examine(mob/user)
@@ -140,7 +137,7 @@
 	if(damage > broken_damage)
 		user << "<span class='danger'>It is heavily damaged!</span>"
 	else if(damage)
-		user << "It is damaged."
+		user << "<span class='warning'>It is damaged.</span>"
 
 /obj/item/modular_computer/New()
 	START_PROCESSING(SSmachine, src)
@@ -152,10 +149,8 @@
 /obj/item/modular_computer/Destroy()
 	kill_program(1)
 	STOP_PROCESSING(SSmachine, src)
-	for(var/H in get_all_components())
-		var/obj/item/weapon/computer_hardware/CH = H
-		uninstall_component(null, CH)
-		qdel(CH)
+	for(var/H in all_components)
+		qdel(H)
 	return ..()
 
 /obj/item/modular_computer/update_icon()
@@ -168,19 +163,13 @@
 	else
 		add_overlay(icon_state_menu)
 
-// Used by child types if they have other power source than battery
-/obj/item/modular_computer/proc/check_power_override()
-	return 0
-
-// Operates NanoUI
+// Operates TGUI
 /obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-
-
 	if(!screen_on || !enabled)
 		if(ui)
 			ui.close()
 		return 0
-	if((!battery_module || !battery_module.battery.charge) && !check_power_override())
+	if(!use_power())
 		if(ui)
 			ui.close()
 		return 0
@@ -195,12 +184,11 @@
 	// We are still here, that means there is no program loaded. Load the BIOS/ROM/OS/whatever you want to call it.
 	// This screen simply lists available programs and user may select them.
 	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
-		physical.visible_message("\The [src] beeps three times, it's screen displaying \"DISK ERROR\" warning.")
+		physical.visible_message("<span class='danger'>\The [src] beeps three times, it's screen displaying \"DISK ERROR\" warning.</span>")
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
 
@@ -210,7 +198,6 @@
 
 
 /obj/item/modular_computer/ui_data(mob/user)
-
 	var/list/data = get_header_data()
 	data["programs"] = list()
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
@@ -230,40 +217,32 @@
 	else
 		turn_on(user)
 
-/obj/item/modular_computer/proc/break_apart()
-	physical.visible_message("\The [src] breaks apart!")
-	var/turf/newloc = get_turf(src)
-	new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))
-	for(var/C in get_all_components())
-		var/obj/item/weapon/computer_hardware/H = C
-		uninstall_component(null, H)
-		H.forceMove(newloc)
-		if(prob(25))
-			H.take_damage(rand(10,30))
-	relay_qdel()
-	qdel()
-
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(damage > broken_damage)
 		if(issynth)
-			user << "You send an activation signal to \the [src], but it responds with an error code. It must be damaged."
+			user << "<span class='warning'>You send an activation signal to \the [src], but it responds with an error code. It must be damaged.</span>"
 		else
-			user << "You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."
+			user << "<span class='warning'>You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again.</span>"
 		return
-	if(processor_unit && ((battery_module && battery_module.battery.charge && battery_module.check_functionality()) || check_power_override())) // Battery-run and charged or non-battery but powered by APC.
+
+	// If we have a recharger, enable it automatically. Lets computer without a battery work.
+	if(recharger)
+		recharger.enabled = 1
+
+	if(processor_unit && use_power()) // use_power() checks if the PC is powered
 		if(issynth)
-			user << "You send an activation signal to \the [src], turning it on"
+			user << "<span class='notice'>You send an activation signal to \the [src], turning it on.</span>"
 		else
-			user << "You press the power button and start up \the [src]"
+			user << "<span class='notice'>You press the power button and start up \the [src].</span>"
 		enabled = 1
 		update_icon()
 		ui_interact(user)
 	else // Unpowered
 		if(issynth)
-			user << "You send an activation signal to \the [src] but it does not respond"
+			user << "<span class='warning'>You send an activation signal to \the [src] but it does not respond.</span>"
 		else
-			user << "You press the power button but \the [src] does not respond"
+			user << "<span class='warning'>You press the power button but \the [src] does not respond.</span>"
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
 /obj/item/modular_computer/process()
@@ -275,8 +254,8 @@
 		shutdown_computer()
 		return 0
 
-	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature)) // Active program requires NTNet to run but we've just lost connection. Crash.
-		active_program.event_networkfailure(0)
+	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
+		active_program.event_networkfailure(0) // Active program requires NTNet to run but we've just lost connection. Crash.
 
 	for(var/I in idle_threads)
 		var/datum/computer_file/program/P = I
@@ -287,7 +266,7 @@
 		if(active_program.program_state != PROGRAM_STATE_KILLED)
 			active_program.process_tick()
 			active_program.ntnet_status = get_ntnet_status()
-			active_program.computer_emagged = computer_emagged
+			active_program.emagged = emagged
 		else
 			active_program = null
 
@@ -296,7 +275,7 @@
 		if(P.program_state != PROGRAM_STATE_KILLED)
 			P.process_tick()
 			P.ntnet_status = get_ntnet_status()
-			P.computer_emagged = computer_emagged
+			P.emagged = emagged
 		else
 			idle_threads.Remove(P)
 
@@ -307,7 +286,7 @@
 /obj/item/modular_computer/proc/get_header_data()
 	var/list/data = list()
 
-	if(battery_module)
+	if(battery_module && battery_module.battery)
 		switch(battery_module.battery.percent())
 			if(80 to 200) // 100 should be maximal but just in case..
 				data["PC_batteryicon"] = "batt_100.gif"
@@ -327,6 +306,9 @@
 		data["PC_batteryicon"] = "batt_5.gif"
 		data["PC_batterypercent"] = "N/C"
 		data["PC_showbatteryicon"] = battery_module ? 1 : 0
+
+	if(recharger && recharger.enabled && recharger.check_functionality() && recharger.use_power(0))
+		data["PC_apclinkicon"] = "charging.gif"
 
 	switch(get_ntnet_status())
 		if(0)
@@ -383,7 +365,7 @@
 		P.kill_program(1)
 		idle_threads.Remove(P)
 	if(loud)
-		physical.visible_message("\The [src] shuts down.")
+		physical.visible_message("<span class='danger'>\The [src] shuts down.</span>")
 	enabled = 0
 	update_icon()
 	return
@@ -450,13 +432,13 @@
 				return
 
 			if(idle_threads.len >= processor_unit.max_idle_programs+1)
-				user << "<span class='notice'>\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error</span>"
+				user << "<span class='notice'>\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error.</span>"
 				return
 
 			if(P.requires_ntnet && !get_ntnet_status(P.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
-				user << "<span class='danger'>\The [src]'s screen shows \"NETWORK ERROR - Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning.</span>"
+				user << "<span class='danger'>\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning.</span>"
 				return
-			P.computer_emagged = computer_emagged
+			P.emagged = emagged
 			if(P.run_program(user))
 				active_program = P
 				update_icon()
@@ -464,100 +446,48 @@
 		else
 			return
 
-// Used in following function to reduce copypaste
-/obj/item/modular_computer/proc/power_failure(malfunction = 0)
-	if(enabled) // Shut down the computer
-		physical.visible_message("<span class='danger'>\The [src]'s screen flickers \"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\" warning as it shuts down unexpectedly.</span>")
-		if(active_program)
-			active_program.event_powerfailure(0)
-		for(var/I in idle_threads)
-			var/datum/computer_file/program/PRG = I
-			PRG.event_powerfailure(1)
-		shutdown_computer(0)
-
-// Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
-/obj/item/modular_computer/proc/handle_power()
-	if(!battery_module || battery_module.battery.charge <= 0) // Battery-run but battery is depleted.
-		power_failure()
-		return 0
-
-	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
-
-	for(var/obj/item/weapon/computer_hardware/H in get_all_components())
-		if(H.enabled)
-			power_usage += H.power_usage
-
-	if(battery_module)
-		if(!battery_module.check_functionality())
-			power_failure(1)
-			return
-		if(!battery_module.battery.use(power_usage * CELLRATE))
-			battery_module.battery.charge = 0
-			power_failure()
-			return 0
-
-	last_power_usage = power_usage
 
 /obj/item/modular_computer/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/id)) // ID Card, try to insert it.
-		var/obj/item/weapon/card/id/I = W
-		if(!card_slot)
-			user << "You try to insert \the [I] into \the [src], but it does not have an ID card slot installed."
+	// Insert items into the components
+	for(var/h in all_components)
+		var/obj/item/weapon/computer_hardware/H = h
+		if(H.try_insert(W, user))
 			return
 
-		if(card_slot.stored_card && card_slot.stored_card2)
-			user << "You try to insert \the [I] into \the [src], but it's ID card slots are occupied."
-			return
-		if(!user.drop_item(I))
-			return
-		if(!card_slot.stored_card)
-			card_slot.stored_card = I
-		else
-			card_slot.stored_card2 = I
-		I.forceMove(src)
-//		update_uis()
-		user << "You insert \the [I] into \the [src]."
-		return
-	if(istype(W, /obj/item/weapon/paper))
-		if(!nano_printer)
-			return
-		nano_printer.attackby(W, user)
+	// Insert new hardware
 	if(istype(W, /obj/item/weapon/computer_hardware))
-		var/obj/item/weapon/computer_hardware/C = W
-		if(C.hardware_size <= max_hardware_size)
-			C.try_install_component(user, src)
-		else
-			user << "This component is too large for \the [src]."
+		if(install_component(W, user))
+			return
+
 	if(istype(W, /obj/item/weapon/wrench))
-		var/list/components = get_all_components()
-		if(components.len)
-			user << "Remove all components from \the [src] before disassembling it."
+		if(all_components.len)
+			user << "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>"
 			return
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), steel_sheet_cost )
 		physical.visible_message("\The [src] has been disassembled by [user].")
 		relay_qdel()
 		qdel(src)
 		return
+
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.isOn())
-			user << "\The [W] is off."
+			user << "<span class='warning'>\The [W] is off.</span>"
 			return
 
 		if(!damage)
-			user << "\The [src] does not require repairs."
+			user << "<span class='warning'>\The [src] does not require repairs.</span>"
 			return
 
-		user << "You begin repairing damage to \the [src]..."
+		user << "<span class='notice'>You begin repairing damage to \the [src]...</span>"
 		if(WT.remove_fuel(round(damage/75)) && do_after(usr, damage/10))
 			damage = 0
-			user << "You repair \the [src]."
+			user << "<span class='notice'>You repair \the [src].</span>"
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
-		var/list/all_components = get_all_components()
 		if(!all_components.len)
-			user << "This device doesn't have any components installed."
+			user << "<span class='warning'>This device doesn't have any components installed.</span>"
 			return
 		var/list/component_names = list()
 		for(var/obj/item/weapon/computer_hardware/H in all_components)
@@ -576,8 +506,7 @@
 		if(!H)
 			return
 
-		uninstall_component(user, H)
-
+		uninstall_component(H, user)
 		return
 
 	..()
@@ -586,116 +515,11 @@
 /obj/item/modular_computer/proc/relay_qdel()
 	return
 
-// Uninstalls component. Found and Critical vars may be passed by parent types, if they have additional hardware.
-/obj/item/modular_computer/proc/uninstall_component(mob/living/user, obj/item/weapon/computer_hardware/H, found = 0, critical = 0)
-	if(portable_drive == H)
-		portable_drive = null
-		found = 1
-	if(hard_drive == H)
-		hard_drive = null
-		found = 1
-		critical = 1
-	if(network_card == H)
-		network_card = null
-		found = 1
-	if(nano_printer == H)
-		nano_printer = null
-		found = 1
-	if(card_slot == H)
-		card_slot = null
-		found = 1
-	if(battery_module == H)
-		battery_module = null
-		found = 1
-	if(processor_unit == H)
-		processor_unit = null
-		found = 1
-		critical = 1
-	if(found)
-		if(user)
-			user << "You remove \the [H] from \the [src]."
-		H.forceMove(get_turf(src))
-		H.holder2 = null
-	if(critical && enabled)
-		if(user)
-			user << "<span class='danger'>\The [src]'s screen freezes for few seconds and then displays an \"HARDWARE ERROR: Critical component disconnected. Please verify component connection and reboot the device. If the problem persists contact technical support for assistance.\" warning.</span>"
-		shutdown_computer()
-		update_icon()
-
-
-// Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
-/obj/item/modular_computer/proc/find_hardware_by_name(name)
-	if(portable_drive && (portable_drive.name == name))
-		return portable_drive
-	if(hard_drive && (hard_drive.name == name))
-		return hard_drive
-	if(network_card && (network_card.name == name))
-		return network_card
-	if(nano_printer && (nano_printer.name == name))
-		return nano_printer
-	if(card_slot && (card_slot.name == name))
-		return card_slot
-	if(battery_module && (battery_module.name == name))
-		return battery_module
-	if(processor_unit && (processor_unit.name == name))
-		return processor_unit
-	return null
-
-// Returns list of all components
-/obj/item/modular_computer/proc/get_all_components()
-	var/list/all_components = list()
-	if(hard_drive)
-		all_components.Add(hard_drive)
-	if(network_card)
-		all_components.Add(network_card)
-	if(portable_drive)
-		all_components.Add(portable_drive)
-	if(nano_printer)
-		all_components.Add(nano_printer)
-	if(card_slot)
-		all_components.Add(card_slot)
-	if(battery_module)
-		all_components.Add(battery_module)
-	if(processor_unit)
-		all_components.Add(processor_unit)
-	return all_components
-
-/obj/item/modular_computer/proc/take_damage(amount, component_probability, damage_casing = 1, randomize = 1)
-	if(randomize)
-		// 75%-125%, rand() works with integers, apparently.
-		amount *= (rand(75, 125) / 100.0)
-	amount = round(amount)
-	if(damage_casing)
-		damage += amount
-		damage = max(0,min(max_damage,damage))
-
-	if(component_probability)
-		for(var/I in get_all_components())
-			var/obj/item/weapon/computer_hardware/H = I
-			if(prob(component_probability))
-				H.take_damage(round(amount / 2))
-
-	if(damage >= max_damage)
-		break_apart()
-
-// Stronger explosions cause serious damage to internal components
-// Minor explosions are mostly mitigitated by casing.
-/obj/item/modular_computer/ex_act(severity)
-	take_damage(rand(100,200) / severity, 30 / severity)
-
-// EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
-/obj/item/modular_computer/emp_act(severity)
-	take_damage(rand(100,200) / severity, 50 / severity, 0)
-
-// "Stun" weapons can cause minor damage to components (short-circuits?)
-// "Burn" damage is equally strong against internal components and exterior casing
-// "Brute" damage mostly damages the casing.
-/obj/item/modular_computer/bullet_act(obj/item/projectile/Proj)
-	switch(Proj.damage_type)
-		if(BRUTE)
-			take_damage(Proj.damage, Proj.damage / 2)
-		if(BURN)
-			take_damage(Proj.damage, Proj.damage / 1.5)
+// Perform adjacency checks on our physical counterpart, if any.
+/obj/item/modular_computer/Adjacent(atom/neighbor)
+	if(physical && physical != src)
+		return physical.Adjacent(neighbor)
+	return ..()
 
 /obj/item/modular_computer/ui_host()
 	if(physical)
