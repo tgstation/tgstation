@@ -726,7 +726,7 @@ var/global/list/possible_items_special = list()
 	var/stolen_count = 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 	for(var/obj/I in all_items) //Check for wanted items
-		if(is_type_in_list(I, wanted_items))
+		if(is_type_in_typecache(I, wanted_items))
 			stolen_count++
 	if(stolen_count >= 5)
 		return 1
