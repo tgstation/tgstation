@@ -33,6 +33,8 @@
 
 
 /obj/item/weapon/computer_hardware/hard_drive/portable/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(!user.drop_item(src))
+		return
 	if(M.portable_drive)
 		user << "This computer's portable drive slot is already occupied by \the [M.portable_drive]."
 		return

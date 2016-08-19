@@ -96,6 +96,8 @@ var/global/ntnet_card_uid = 1
 	..()
 
 /obj/item/weapon/computer_hardware/network_card/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(!user.drop_item(src))
+		return
 	if(M.network_card)
 		user << "This computer's network card slot is already occupied by \the [M.network_card]."
 		return
