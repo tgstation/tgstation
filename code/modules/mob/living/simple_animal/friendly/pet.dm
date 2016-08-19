@@ -4,6 +4,7 @@
 	var/obj/item/clothing/tie/petcollar/pcollar = null
 	var/image/collar = null
 	var/image/pettag = null
+	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/clothing/tie/petcollar) && !pcollar)
@@ -23,7 +24,7 @@
 			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 	else
 		..()
@@ -34,15 +35,16 @@
 		pcollar = new(src)
 		regenerate_icons()
 
-/mob/living/simple_animal/pet/revive()
-	..()
-	regenerate_icons()
+/mob/living/simple_animal/pet/revive(full_heal = 0, admin_revive = 0)
+	if(..())
+		regenerate_icons()
+		. = 1
 
 /mob/living/simple_animal/pet/death(gibbed)
 	..(gibbed)
 	regenerate_icons()
 
 /mob/living/simple_animal/pet/regenerate_icons()
-	overlays.Cut()
-	overlays += collar
-	overlays += pettag
+	cut_overlays()
+	add_overlay(collar)
+	add_overlay(pettag)

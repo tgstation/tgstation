@@ -1,12 +1,17 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages = ROBOT | HUMAN
+	languages_spoken = ROBOT | HUMAN
+	languages_understood = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	see_in_dark = 8
+	bubble_icon = "machine"
+	weather_immunities = list("ash")
+
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
@@ -24,6 +29,7 @@
 
 	var/lawcheck[1]
 	var/ioncheck[1]
+	var/devillawcheck[5]
 
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
@@ -33,14 +39,22 @@
 
 /mob/living/silicon/New()
 	..()
+	silicon_mobs |= src
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
 
+/mob/living/silicon/med_hud_set_health()
+	return //we use a different hud
+
+/mob/living/silicon/med_hud_set_status()
+	return //we use a different hud
+
 /mob/living/silicon/Destroy()
 	radio = null
 	aicamera = null
+	silicon_mobs -= src
 	return ..()
 
 /mob/living/silicon/contents_explosion(severity, target)
@@ -132,18 +146,17 @@
 	switch(severity)
 		if(1)
 			src.take_organ_damage(20)
-			Stun(8)
 		if(2)
 			src.take_organ_damage(10)
-			Stun(3)
-	flick("noise", src:flash)
 	src << "<span class='userdanger'>*BZZZT*</span>"
 	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
+	flash_eyes(affect_silicon = 1)
 	..()
 
 /mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	blocked = (100-blocked)/100
-	if(!damage || (blocked <= 0))	return 0
+	if(!damage || (blocked <= 0))
+		return 0
 	switch(damagetype)
 		if(BRUTE)
 			adjustBruteLoss(damage * blocked)
@@ -174,7 +187,8 @@
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
 /*
-	if(!effect || (blocked >= 2))	return 0
+	if(!effect || (blocked >= 2))
+		return 0
 	switch(effecttype)
 		if(STUN)
 			stunned = max(stunned,(effect/(blocked+1)))
@@ -187,7 +201,7 @@
 		if(STUTTER)
 			stuttering = max(stuttering,(effect/(blocked+1)))
 		if(EYE_BLUR)
-			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
+			blur_eyes(effect/(blocked+1))
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect/(blocked+1)))
 	updatehealth()
@@ -204,18 +218,30 @@
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawc"])
 		switch(lawcheck[L+1])
-			if ("Yes") lawcheck[L+1] = "No"
-			if ("No") lawcheck[L+1] = "Yes"
-//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+			if ("Yes")
+				lawcheck[L+1] = "No"
+			if ("No")
+				lawcheck[L+1] = "Yes"
 		checklaws()
 
 	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawi"])
 		switch(ioncheck[L])
-			if ("Yes") ioncheck[L] = "No"
-			if ("No") ioncheck[L] = "Yes"
-//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+			if ("Yes")
+				ioncheck[L] = "No"
+			if ("No")
+				ioncheck[L] = "Yes"
 		checklaws()
+
+	if (href_list["lawdevil"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawdevil"])
+		switch(devillawcheck[L])
+			if ("Yes")
+				devillawcheck[L] = "No"
+			if ("No")
+				devillawcheck[L] = "Yes"
+		checklaws()
+
 
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
@@ -232,6 +258,11 @@
 	var/number = 1
 	sleep(10)
 
+	if (src.laws.devillaws && src.laws.devillaws.len)
+		for(var/index = 1, index <= src.laws.devillaws.len, index++)
+			if (src.devillawcheck[index] == "Yes")
+				src.say("[radiomod] 666. [src.laws.devillaws[index]]")
+				sleep(10)
 
 
 	if (src.laws.zeroth)
@@ -271,6 +302,12 @@
 /mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
+
+	if (src.laws.devillaws && src.laws.devillaws.len)
+		for(var/index = 1, index <= src.laws.devillaws.len, index++)
+			if (!src.devillawcheck[index])
+				src.devillawcheck[index] = "No"
+			list += {"<A href='byond://?src=\ref[src];lawdevil=[index]'>[src.devillawcheck[index]] 666:</A> [src.laws.devillaws[index]]<BR>"}
 
 	if (src.laws.zeroth)
 		if (!src.lawcheck[1])
@@ -366,7 +403,8 @@
 	diagsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/sensor_mode()
-	set name = "Set Sensor Augmentation"
+	if(incapacitated())
+		return
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
 	remove_med_sec_hud()
 	switch(sensor_type)
@@ -392,7 +430,7 @@
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 							"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			if(prob(8))
-				flick("noise", flash)
+				flash_eyes(affect_silicon = 1)
 			add_logs(M, src, "attacked")
 			adjustBruteLoss(damage)
 			updatehealth()
@@ -400,7 +438,6 @@
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
 							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
-	return
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	if(..())
@@ -426,7 +463,6 @@
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
 	if(L.a_intent == "help")
 		visible_message("[L.name] rubs its head against [src].")
-	return
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
@@ -452,20 +488,14 @@
 						"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>")
 	return 0
 
-/mob/living/silicon/adjustEarDamage()
-	return
-
-/mob/living/silicon/setEarDamage()
-	return
-
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)
 
-/mob/living/silicon/grabbedby(mob/living/user)
+/mob/living/silicon/grippedby(mob/living/user)
 	return
 
-/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
 	if(affect_silicon)
 		return ..()
 
@@ -483,3 +513,9 @@
 	if(changed)
 		animate(src, transform = ntransform, time = 2,easing = EASE_IN|EASE_OUT)
 	return ..()
+
+/mob/living/silicon/is_literate()
+	return 1
+
+/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+	return 0

@@ -25,7 +25,7 @@
 
 /obj/mecha/working/ripley/Destroy()
 	for(var/i=1, i <= hides, i++)
-		new /obj/item/asteroid/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
+		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	damage_absorption["brute"] =  initial(damage_absorption["brute"])
 	for(var/atom/movable/A in cargo)
 		A.loc = loc
@@ -50,9 +50,9 @@
 	if (hides)
 		overlays = null
 		if(hides < 3)
-			overlays += image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g" : "ripley-g-open")
+			add_overlay(image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g" : "ripley-g-open"))
 		else
-			overlays += image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open")
+			add_overlay(image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open"))
 
 
 /obj/mecha/working/ripley/firefighter
@@ -61,6 +61,7 @@
 	icon_state = "firefighter"
 	max_temperature = 65000
 	health = 250
+	burn_state = LAVA_PROOF
 	lights_power = 7
 	damage_absorption = list("brute"=0.6,"fire"=0.5,"bullet"=0.7,"laser"=0.7,"energy"=1,"bomb"=0.4)
 	max_equip = 5 // More armor, less tools
@@ -148,7 +149,7 @@
 	var/datum/gas_mixture/environment = T.return_air()
 	var/pressure = environment.return_pressure()
 
-	if(pressure < 20)
+	if(pressure < 40)
 		step_in = 3
 		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown)/2
@@ -156,3 +157,15 @@
 		step_in = 5
 		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown)
+
+/obj/mecha/working/ripley/relay_container_resist(mob/living/user, obj/O)
+	user << "<span class='notice'>You lean on the back of [O] and start pushing so it falls out of [src].</span>"
+	if(do_after(user, 300, target = O))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
+			return
+		user << "<span class='notice'>You successfully pushed [O] out of [src]!</span>"
+		O.loc = loc
+		cargo -= O
+	else
+		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
+			user << "<span class='warning'>You fail to push [O] out of [src]!</span>"

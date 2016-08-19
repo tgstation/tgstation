@@ -32,7 +32,7 @@ RPD
 /datum/pipe_info/New(pid,direction,dt)
 	src.id=pid
 	src.icon_state=pipeID2State["[pid]"]
-	src.dir=direction
+	src.dir = direction
 	src.dirtype=dt
 
 /datum/pipe_info/proc/Render(dispenser,label)
@@ -70,7 +70,7 @@ var/global/list/disposalpipeID2State=list(
 /datum/pipe_info/disposal/New(var/pid,var/dt)
 	src.id=pid
 	src.icon_state=disposalpipeID2State[pid+1]
-	src.dir=2
+	src.dir = SOUTH
 	src.dirtype=dt
 	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
 		icon_state = "con[icon_state]"
@@ -123,11 +123,8 @@ var/global/list/RPD_recipes=list(
 /obj/item/weapon/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
-	opacity = 0
-	density = 0
-	anchored = 0
 	flags = CONDUCT
 	force = 10
 	throwforce = 10
@@ -138,12 +135,11 @@ var/global/list/RPD_recipes=list(
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
-	var/p_type = 0
-	var/p_conntype = 0
+	var/p_type = PIPE_SIMPLE
+	var/p_conntype = PIPE_BENDABLE
 	var/p_dir = 1
 	var/p_flipped = 0
 	var/p_class = ATMOS_MODE
-	var/p_disposal = 0
 	var/list/paint_colors = list(
 		"grey"		= rgb(255,255,255),
 		"red"		= rgb(255,0,0),
@@ -183,7 +179,8 @@ var/global/list/RPD_recipes=list(
 	return "<a href=\"?src=\ref[src];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]\"><img src=\"[pic]\" /></a>"
 
 /obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user)
-	if(!user || !src)	return 0
+	if(!user || !src)
+		return 0
 	var/dat = {"<h2>Type</h2>
 <b>Utilities:</b>
 <ul>"}
@@ -527,7 +524,7 @@ var/global/list/RPD_recipes=list(
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 
-	if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))
+	if(istype(A,/area/shuttle)||istype(A,/turf/open/space/transit))
 		return 0
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
@@ -592,7 +589,7 @@ var/global/list/RPD_recipes=list(
 			return 0
 
 		if(DISPOSALS_MODE)
-			if(!(istype(A, /turf)))
+			if(!isturf(A) || is_anchored_dense_turf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
@@ -608,7 +605,7 @@ var/global/list/RPD_recipes=list(
 				activate()
 
 				C.add_fingerprint(usr)
-				C.update()
+				C.update_icon()
 				return 1
 			return 0
 		else

@@ -1,0 +1,4 @@
+author: "Jordie0608"
+delete-after: True
+changes: 
+  - rscadd: "Advanced Energy Guns once again have a chance to irradiate you if EMPed."

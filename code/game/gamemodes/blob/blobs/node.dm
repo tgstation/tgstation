@@ -5,36 +5,37 @@
 	desc = "A large, pulsating yellow mass."
 	health = 200
 	maxhealth = 200
+	health_regen = 3
+	point_return = 25
 
-/obj/effect/blob/node/New(loc, var/h = 100)
+
+/obj/effect/blob/node/New(loc)
 	blob_nodes += src
-	SSobj.processing |= src
-	..(loc, h)
+	START_PROCESSING(SSobj, src)
+	..(loc)
 
-/obj/effect/blob/node/adjustcolors(a_color)
-	overlays.Cut()
+/obj/effect/blob/node/scannerreport()
+	return "Gradually expands and sustains nearby blob spores and blobbernauts."
+
+/obj/effect/blob/node/update_icon()
+	cut_overlays()
 	color = null
 	var/image/I = new('icons/mob/blob.dmi', "blob")
-	I.color = a_color
-	src.overlays += I
+	if(overmind)
+		I.color = overmind.blob_reagent_datum.color
+	src.add_overlay(I)
 	var/image/C = new('icons/mob/blob.dmi', "blob_node_overlay")
-	src.overlays += C
-
-/obj/effect/blob/node/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
+	src.add_overlay(C)
 
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/effect/blob/node/Life()
-	pulseLoop(5)
-	health = min(initial(health), health + 1)
-	color = null
+/obj/effect/blob/node/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	exposed_temperature *= 0.75
+	..()
 
-/obj/effect/blob/node/update_icon()
-	if(health <= 0)
-		qdel(src)
-		return
-	return
+/obj/effect/blob/node/Life()
+	Pulse_Area(overmind, 10, 3, 2)
+	color = null

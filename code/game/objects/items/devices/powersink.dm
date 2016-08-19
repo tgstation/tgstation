@@ -11,10 +11,10 @@
 	throw_speed = 1
 	throw_range = 2
 	materials = list(MAT_METAL=750)
-	origin_tech = "powerstorage=3;syndicate=5"
-	var/drain_rate = 600000		// amount of power to drain per tick
+	origin_tech = "powerstorage=5;syndicate=5"
+	var/drain_rate = 1600000	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
-	var/max_power = 1e8		// maximum power that can be drained before exploding
+	var/max_power = 1e10		// maximum power that can be drained before exploding
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
 	var/admins_warned = 0 // stop spam, only warn the admins once that we are about to boom
 
@@ -34,20 +34,20 @@
 		if(DISCONNECTED)
 			attached = null
 			if(mode == OPERATING)
-				SSobj.processing.Remove(src)
+				STOP_PROCESSING(SSobj, src)
 			anchored = 0
 
 		if(CLAMPED_OFF)
 			if(!attached)
 				return
 			if(mode == OPERATING)
-				SSobj.processing.Remove(src)
+				STOP_PROCESSING(SSobj, src)
 			anchored = 1
 
 		if(OPERATING)
 			if(!attached)
 				return
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 			anchored = 1
 
 	mode = value
@@ -77,7 +77,7 @@
 				"<span class='notice'>You detach \the [src] from the cable.</span>",
 				"<span class='italics'>You hear some wires being disconnected from something.</span>")
 	else
-		..()
+		return ..()
 
 /obj/item/device/powersink/attack_paw()
 	return
@@ -133,13 +133,13 @@
 						if(A.charging == 2) // If the cell was full
 							A.charging = 1 // It's no longer full
 
-	if(power_drained > max_power * 0.95)
+	if(power_drained > max_power * 0.98)
 		if (!admins_warned)
 			admins_warned = 1
 			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is 95% full. Explosion imminent.")
 		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
 
 	if(power_drained >= max_power)
-		SSobj.processing.Remove(src)
-		explosion(src.loc, 3,6,9,12)
+		STOP_PROCESSING(SSobj, src)
+		explosion(src.loc, 4,8,16,32)
 		qdel(src)

@@ -2,6 +2,8 @@
 //Things like airguitar can be done without arms, and the flap thing makes so little sense it's a keeper.
 //Intended to be called by a higher up emote proc if the requested emote isn't in the custom emotes.
 
+
+
 /mob/living/emote(act, m_type=1, message = null)
 	if(stat)
 		return
@@ -13,6 +15,7 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
+	act = lowertext(act)
 	switch(act)//Hello, how would you like to order? Alphabetically!
 		if ("aflap")
 			if (!src.restrained())
@@ -47,6 +50,10 @@
 			message = "<B>[src]</B> chokes!"
 			m_type = 2
 
+		if ("cross","crosses")
+			message = "<B>[src]</B> crosses their arms."
+			m_type = 2
+
 		if ("chuckle","chuckles")
 			message = "<B>[src]</B> chuckles."
 			m_type = 2
@@ -75,9 +82,9 @@
 
 		if ("faint","faints")
 			message = "<B>[src]</B> faints."
-			if(src.sleeping)
+			if(sleeping)
 				return //Can't faint while asleep
-			src.sleeping += 10 //Short-short nap
+			SetSleeping(10) //Short-short nap
 			m_type = 1
 
 		if ("flap","flaps")
@@ -86,13 +93,17 @@
 				m_type = 2
 
 		if ("flip","flips")
-			if (!src.restrained() || !src.resting || !src.sleeping)
+			if (!restrained() || !resting || !sleeping)
 				src.SpinAnimation(7,1)
 				m_type = 2
 
 		if ("frown","frowns")
 			message = "<B>[src]</B> frowns."
 			m_type = 1
+
+		if ("gag","gags")
+			message = "<B>[src]</B> gags!"
+			m_type = 2
 
 		if ("gasp","gasps")
 			message = "<B>[src]</B> gasps!"
@@ -120,9 +131,32 @@
 			message = "<B>[src]</B> grins."
 			m_type = 1
 
+		if ("groan","groans")
+			message = "<B>[src]</B> groans!"
+			m_type = 1
+
+
+		if ("grimace","grimaces")
+			message = "<B>[src]</B> grimaces."
+			m_type = 1
+
 		if ("jump","jumps")
 			message = "<B>[src]</B> jumps!"
 			m_type = 1
+
+		if ("kiss","kisses") //S-so forward uwa~
+			var/M = null
+			if (param)
+				for (var/mob/A in view(1, src))
+					if (param == A.name)
+						M = A
+						break
+			if (!M)
+				param = null
+			if (param)
+				message = "<B>[src]</B> blows a kiss to [param]." //I was gonna make this <B>[src]</B> kisses [param] but then I imagined dealing with an ahelp about someone spamming it and following certain players around and I had a miniature stroke.
+			else
+				message = "<B>[src]</B> blows a kiss."
 
 		if ("laugh","laughs")
 			message = "<B>[src]</B> laughs."
@@ -175,10 +209,17 @@
 				else
 					pointed(M)
 			m_type = 1
-
+		if ("pout","pouts")
+			message = "<B>[src]</B> pouts."
+			m_type = 2
+		
 		if ("scream","screams")
 			message = "<B>[src]</B> screams!"
 			m_type = 2
+
+		if ("scowl","scowls")
+			message = "<B>[src]</B> scowls."
+			m_type = 1
 
 		if ("shake","shakes")
 			message = "<B>[src]</B> shakes its head."
@@ -198,6 +239,10 @@
 
 		if ("sneeze","sneezes")
 			message = "<B>[src]</B> sneezes."
+			m_type = 2
+
+		if ("smug","smugs")
+			message = "<B>[src]</B> grins smugly."
 			m_type = 2
 
 		if ("sniff","sniffs")
@@ -222,9 +267,28 @@
 			else
 				message = "<B>[src]</B> stares."
 
+		if ("stretch","stretches")
+			message = "<B>[src]</B> stretches their arms."
+			m_type = 2
+
 		if ("sulk","sulks")
 			message = "<B>[src]</B> sulks down sadly."
 			m_type = 1
+
+		if ("surrender","surrenders")
+			message = "<B>[src]</B> puts their hands on their head and falls to the ground, they surrender!"
+			if(sleeping)
+				return //Can't surrender while asleep.
+			Weaken(20) //So you can't resist.
+			m_type = 1
+
+		if ("faint","faints")
+			message = "<B>[src]</B> faints."
+			if(sleeping)
+				return //Can't faint while asleep
+			SetSleeping(10) //Short-short nap
+			m_type = 1
+
 
 		if ("sway","sways")
 			message = "<B>[src]</B> sways around dizzily."
@@ -250,12 +314,16 @@
 			message = "<B>[src]</B> whimpers."
 			m_type = 2
 
+		if ("wsmile","wsmiles")
+			message = "<B>[src]</B> smiles weakly."
+			m_type = 2
+
 		if ("yawn","yawns")
 			message = "<B>[src]</B> yawns."
 			m_type = 2
 
 		if ("help")
-			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
+			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cross, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, grimace, groan, jump, kiss, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, stretch, sulk, surrender, sway, tremble, twitch, twitch_s, wave, whimper, wsmile, yawn"
 
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"

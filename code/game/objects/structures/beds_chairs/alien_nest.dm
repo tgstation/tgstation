@@ -10,57 +10,58 @@
 	can_be_unanchored = 0
 	canSmoothWith = null
 	buildstacktype = null
+	flags = NODECONSTRUCT
 	var/image/nest_overlay
 
 /obj/structure/bed/nest/New()
-	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=LYING_MOB_LAYER)
 	return ..()
 
-/obj/structure/bed/nest/user_unbuckle_mob(mob/living/user)
-	if(buckled_mob && buckled_mob.buckled == src)
-		var/mob/living/M = buckled_mob
+/obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
+	if(has_buckled_mobs())
+		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
+			var/mob/living/M = buck
 
-		if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
-			unbuckle_mob()
+			if(user.getorgan(/obj/item/organ/alien/plasmavessel))
+				unbuckle_mob(M)
+				add_fingerprint(user)
+				return
+
+			if(M != user)
+				M.visible_message(\
+					"[user.name] pulls [M.name] free from the sticky nest!",\
+					"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
+					"<span class='italics'>You hear squelching...</span>")
+			else
+				M.visible_message(\
+					"<span class='warning'>[M.name] struggles to break free from the gelatinous resin!</span>",\
+					"<span class='notice'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
+					"<span class='italics'>You hear squelching...</span>")
+				if(!do_after(M, 1200, target = src))
+					if(M && M.buckled)
+						M << "<span class='warning'>You fail to unbuckle yourself!</span>"
+					return
+				if(!M.buckled)
+					return
+				M.visible_message(\
+					"<span class='warning'>[M.name] breaks free from the gelatinous resin!</span>",\
+					"<span class='notice'>You break free from the gelatinous resin!</span>",\
+					"<span class='italics'>You hear squelching...</span>")
+
+			unbuckle_mob(M)
 			add_fingerprint(user)
-			return
-
-		if(M != user)
-			M.visible_message(\
-				"[user.name] pulls [M.name] free from the sticky nest!",\
-				"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
-				"<span class='italics'>You hear squelching...</span>")
-		else
-			M.visible_message(\
-				"<span class='warning'>[M.name] struggles to break free from the gelatinous resin!</span>",\
-				"<span class='notice'>You struggle to break free from the gelatinous resin... (Stay still for two minutes.)</span>",\
-				"<span class='italics'>You hear squelching...</span>")
-			if(!do_after(M, 1200, target = src))
-				if(M && M.buckled)
-					M << "<span class='warning'>You fail to unbuckle yourself!</span>"
-				return
-			if(!M.buckled)
-				return
-			M.visible_message(\
-				"<span class='warning'>[M.name] breaks free from the gelatinous resin!</span>",\
-				"<span class='notice'>You break free from the gelatinous resin!</span>",\
-				"<span class='italics'>You hear squelching...</span>")
-
-		unbuckle_mob()
-		add_fingerprint(user)
 
 /obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/living/user)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.stat || M.buckled || istype(user,
-
-/mob/living/silicon/pai) )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
 		return
 
-	if(M.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(M.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
-	if(!user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(!user.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
 
-	unbuckle_mob()
+	if(has_buckled_mobs())
+		unbuckle_all_mobs()
 
 	if(buckle_mob(M))
 		M.visible_message(\
@@ -69,26 +70,33 @@
 			"<span class='italics'>You hear squelching...</span>")
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob)
+	if(M in buckled_mobs)
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
-		M.layer = MOB_LAYER - 0.3
-		overlays += nest_overlay
+		M.layer = BELOW_MOB_LAYER
+		add_overlay(nest_overlay)
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 		M.layer = initial(M.layer)
 		overlays -= nest_overlay
 
-/obj/structure/bed/nest/attackby(obj/item/weapon/W, mob/user, params)
-	var/aforce = W.force
-	health = max(0, health - aforce)
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	visible_message("<span class='danger'>[user] hits [src] with [W]!</span>")
-	healthcheck()
+/obj/structure/bed/nest/attacked_by(obj/item/I, mob/user)
+	..()
+	take_damage(I.force, I.damtype)
 
-/obj/structure/bed/nest/proc/healthcheck()
+/obj/structure/bed/nest/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health -= damage
 	if(health <=0)
 		density = 0
 		qdel(src)
-	return
+

@@ -14,14 +14,15 @@
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
+
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses<cost || limit == 0)
 		return 0
 	return 1
+
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
 	if(!S || qdeleted(S))
 		S = new spell_type()
-
 	//Check if we got the spell already
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
@@ -95,7 +96,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-	spell_type = /obj/effect/proc_holder/spell/dumbfire/fireball
+	spell_type = /obj/effect/proc_holder/spell/fireball
 	log_name = "FB"
 
 /datum/spellbook_entry/magicm
@@ -207,6 +208,12 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
 	log_name = "LB"
 
+/datum/spellbook_entry/infinite_guns
+	name = "Lesser Summon Guns"
+	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns
+	log_name = "IG"
+	cost = 3
+
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
@@ -221,9 +228,16 @@
 
 /datum/spellbook_entry/shapeshift
 	name = "Wild Shapeshift"
-	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift/wild
+	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift
 	log_name = "WS"
 	category = "Assistance"
+	cost = 1
+
+/datum/spellbook_entry/spacetime_dist
+	name = "Spacetime Distortion"
+	spell_type = /obj/effect/proc_holder/spell/spacetime_dist
+	log_name = "STD"
+	category = "Defensive"
 	cost = 1
 
 /datum/spellbook_entry/item
@@ -266,9 +280,15 @@
 	item_path = /obj/item/weapon/gun/magic/staff/chaos
 	log_name = "SC"
 
+/datum/spellbook_entry/item/spellblade
+	name = "Spellblade"
+	desc = "A sword capable of firing blasts of energy which rip targets limb from limb."
+	item_path = /obj/item/weapon/gun/magic/staff/spellblade
+	log_name = "SB"
+
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
-	desc = "A particular staff that can mold solid metal into ornate wooden doors. Useful for getting around in the absence of other transportation. Does not work on glass."
+	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
 	item_path = /obj/item/weapon/gun/magic/staff/door
 	log_name = "SD"
 	cost = 1
@@ -350,35 +370,57 @@
 	limit = 3
 	category = "Assistance"
 
-/datum/spellbook_entry/item/super_matter
-	name = "Supermatter Sword"
-	desc = "Buying this is an incredibly bad idea. The radiation will kill you within minutes. Please consider other options."
-	item_path = /obj/item/weapon/melee/supermatter_sword
-	log_name = "SX"
-	category = "Weapons"
-	cost = 6
+/datum/spellbook_entry/item/hugbottle
+	name = "Bottle of Tickles"
+	desc = "A bottle of magically infused fun, the smell of which will \
+		attract adorable extradimensional beings when broken. These beings \
+		are similar to slaughter demons, but they do not permamently kill \
+		their victims, instead putting them in an extradimensional hugspace, \
+		to be released on the demon's death. Chaotic, but not ultimately \
+		damaging. The crew's reaction to the other hand could be very \
+		destructive."
+	item_path = /obj/item/weapon/antag_spawner/slaughter_demon/laughter
+	cost = 1 //non-destructive; it's just a jape, sibling!
+	log_name = "HB"
+	limit = 3
+	category = "Assistance"
 
-/datum/spellbook_entry/item/veil_render
-	name = "Veil Render"
-	desc = "A sword that can cut through reality itself, leading to mass destruction. Remember to run after you use it!"
-	item_path = /obj/item/weapon/veilrender
-	log_name = "VR"
-	category = "Weapons"
-	limit = 2
+/datum/spellbook_entry/item/hadesstone
+	name = "Dark Seed"
+	desc = "A small, dark stone that whispers to you menacingly.\
+			The seed calls for the corpses of living beings,\
+			in order to summon an ancient, powerful being.\
+			The power and tenacity of the summoned being directly\
+			correlates to the power of the absorbed beings,\
+			so choose your targets wisely."
+	item_path = /obj/item/hades_summoner
+	cost = 2
+	log_name = "DS"
+	limit = 1
+	category = "Assistance"
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
 	item_path = /obj/item/weapon/twohanded/mjollnir
 	log_name = "MJ"
-	category = "Weapons"
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
 	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everthing nearby to the point of impact."
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
-	category = "Weapons"
+
+/datum/spellbook_entry/item/cursed_heart
+	name = "Cursed Heart"
+	desc = "A heart that has been revived by dark magicks, the user must \
+	concentrate to ensure the heart beats, but every beat heals them. It \
+	must beat every 6 seconds. The heart is fickle, and will not work for a \
+	lich."
+	item_path = /obj/item/organ/heart/cursed/wizard
+	log_name = "CH"
+	cost = 1
+	category = "Defensive"
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
@@ -404,7 +446,6 @@
 
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
-	category = "Rituals"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
 	log_name = "SG"
 
@@ -416,15 +457,14 @@
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
 	rightandwrong(0, user, 25)
+	active = 1
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
 	user << "<span class='notice'>You have cast summon guns!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
-	category = "Challenges"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
-	cost = 0
 	log_name = "SU"
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
@@ -434,11 +474,10 @@
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
-	rightandwrong(1, user, 0)
-	book.uses += 1
+	rightandwrong(1, user, 25)
 	active = 1
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon magic and gained an extra charge for your spellbook.</span>"
+	user << "<span class='notice'>You have cast summon magic!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -467,27 +506,6 @@
 		. += "You cast it [times] times.<br>"
 	return .
 
-/datum/spellbook_entry/summon/multisword
-	name = "Multiverse War"
-	category = "Rituals"
-	desc = "Triggers a multiverse war in which the crew (and you) must summon copies of yourself from alternate realities to do battle and hijack the emergency shuttle. Automatically triggers a shuttle call on purchase."
-	log_name = "MW"
-	cost = 8
-
-/datum/spellbook_entry/summon/multisword/IsAvailible()
-	if(!ticker.mode) // In case spellbook is placed on map
-		return 0
-	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
-
-/datum/spellbook_entry/summon/multisword/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned",log_name)
-	only_me()
-	new /obj/item/weapon/multisword(get_turf(user)) //Because the proc skips special roles
-	SSshuttle.emergency.request()
-	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have triggerd a multiverse war!</span>"
-	return 1
-
 /obj/item/weapon/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
@@ -498,7 +516,6 @@
 	w_class = 1
 	var/uses = 10
 	var/temp = null
-	var/op = 1
 	var/tab = null
 	var/mob/living/carbon/human/owner
 	var/list/datum/spellbook_entry/entries = list()
@@ -512,7 +529,7 @@
 		user << "It appears to have no author."
 
 /obj/item/weapon/spellbook/proc/Initialize()
-	var/entry_types = typesof(/datum/spellbook_entry) - /datum/spellbook_entry - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
+	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
 		if(E.IsAvailible())
@@ -539,7 +556,7 @@
 				if(!isnull(CT.limit))
 					CT.limit++
 			qdel(O)
-	if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
+	else if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
 		user << "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>"
 		uses++
 		for(var/datum/spellbook_entry/item/bloodbottle/BB in entries)
@@ -724,7 +741,7 @@
 	return
 
 /obj/item/weapon/spellbook/oneuse/fireball
-	spell = /obj/effect/proc_holder/spell/dumbfire/fireball
+	spell = /obj/effect/proc_holder/spell/fireball
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."
@@ -757,7 +774,7 @@
 /obj/item/weapon/spellbook/oneuse/blind/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You go blind!</span>"
-	user.eye_blind = 10
+	user.blind_eyes(10)
 
 /obj/item/weapon/spellbook/oneuse/mindswap
 	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
@@ -784,28 +801,8 @@
 		user <<"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>"
 		return
 
-	if(user.mind.special_verbs.len)
-		for(var/V in user.mind.special_verbs)
-			user.verbs -= V
-
-	if(stored_swap.mind.special_verbs.len)
-		for(var/V in stored_swap.mind.special_verbs)
-			stored_swap.verbs -= V
-
-	var/mob/dead/observer/ghost = stored_swap.ghostize(0)
-
-	user.mind.transfer_to(stored_swap)
-
-	if(stored_swap.mind.special_verbs.len)
-		for(var/V in user.mind.special_verbs)
-			user.verbs += V
-
-	ghost.mind.transfer_to(user)
-	user.key = ghost.key
-
-	if(user.mind.special_verbs.len)
-		for(var/V in user.mind.special_verbs)
-			user.verbs += V
+	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
+	swapper.cast(user, stored_swap, 1)
 
 	stored_swap <<"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>"
 	user <<"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>"
@@ -847,7 +844,7 @@
 		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
 		magichead.flags |= NODROP		//curses!
-		magichead.flags_inv = null	//so you can still see their face
+		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH
 		if(!user.unEquip(user.wear_mask))
 			qdel(user.wear_mask)
@@ -876,4 +873,9 @@
 /obj/item/weapon/spellbook/oneuse/summonitem/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
+	qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/random/New()
+	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse))
+	new real_type(loc)
 	qdel(src)

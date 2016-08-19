@@ -36,8 +36,7 @@
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
 		if(istype(I.loc,/obj/item/weapon/storage))	//in a container.
 			var/obj/item/weapon/storage/U = I.loc
-			user.client.screen -= I
-			U.contents.Remove(I)
+			U.remove_from_storage(I, src)
 		else if(user.l_hand == I)					//in a hand
 			user.drop_l_hand()
 		else if(user.r_hand == I)					//in a hand
@@ -57,8 +56,8 @@
 	var/image/img = image("icon"=I, "layer"=FLOAT_LAYER)	//take a snapshot. (necessary to stop the underlays appearing under our inventory-HUD slots ~Carn
 	I.pixel_x = xx		//and then return it
 	I.pixel_y = yy
-	overlays += img
-	overlays += "evidence"	//should look nicer for transparent stuff. not really that important, but hey.
+	add_overlay(img)
+	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
 
 	desc = "An evidence bag containing [I]. [I.desc]"
 	I.loc = src
@@ -70,7 +69,7 @@
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
 		"<span class='italics'>You hear someone rustle around in a plastic bag, and remove something.</span>")
-		overlays.Cut()	//remove the overlays
+		cut_overlays()	//remove the overlays
 		user.put_in_hands(I)
 		w_class = 1
 		icon_state = "evidenceobj"
@@ -84,12 +83,13 @@
 /obj/item/weapon/storage/box/evidence
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
-	New()
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		..()
-		return
+
+/obj/item/weapon/storage/box/evidence/New()
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)
+	new /obj/item/weapon/evidencebag(src)
+	..()
+	return

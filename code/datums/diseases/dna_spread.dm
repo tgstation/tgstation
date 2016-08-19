@@ -5,7 +5,7 @@
 	spread_flags = CONTACT_GENERAL
 	cure_text = "Mutadone"
 	cures = list("mutadone")
-	disease_flags = CAN_CARRY|CAN_RESIST
+	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	agent = "S4E1 retrovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	var/datum/dna/original_dna = null
@@ -17,6 +17,8 @@
 /datum/disease/dnaspread/stage_act()
 	..()
 	if(!affected_mob.dna)
+		cure()
+	if(NOTRANSSTING in affected_mob.dna.species.specflags) //Only species that can be spread by transformation sting can be spread by the retrovirus
 		cure()
 
 	if(!strain_data["dna"])

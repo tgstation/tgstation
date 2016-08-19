@@ -86,7 +86,8 @@ FLOOR SAFES
 
 
 /obj/structure/safe/Topic(href, href_list)
-	if(!ishuman(usr))	return
+	if(!ishuman(usr))
+		return
 	var/mob/living/carbon/human/user = usr
 
 	var/canhear = 0
@@ -144,6 +145,7 @@ FLOOR SAFES
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
+		. = 1 //no afterattack
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			if(!user.drop_item())
@@ -156,13 +158,13 @@ FLOOR SAFES
 		else
 			user << "<span class='notice'>[I] won't fit in [src].</span>"
 			return
+	else if(istype(I, /obj/item/clothing/tie/stethoscope))
+		user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
 	else
-		if(istype(I, /obj/item/clothing/tie/stethoscope))
-			user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
-			return
+		return ..()
 
 
-obj/structure/safe/blob_act()
+obj/structure/safe/blob_act(obj/effect/blob/B)
 	return
 
 obj/structure/safe/ex_act(severity, target)
@@ -175,7 +177,7 @@ obj/structure/safe/ex_act(severity, target)
 	icon_state = "floorsafe"
 	density = 0
 	level = 1	//underfloor
-	layer = 2.5
+	layer = LOW_OBJ_LAYER
 
 
 /obj/structure/safe/floor/initialize()
@@ -185,4 +187,4 @@ obj/structure/safe/ex_act(severity, target)
 
 
 /obj/structure/safe/floor/hide(var/intact)
-	invisibility = intact ? 101 : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : 0

@@ -10,15 +10,15 @@
 	var/datum/mind/M = user.mind
 	var/list/organs = user.getorganszone("head", 1)
 
-	for(var/obj/item/organ/internal/I in organs)
+	for(var/obj/item/organ/I in organs)
 		I.Remove(user, 1)
 
 	explosion(get_turf(user),0,0,2,0,silent=1)
 	for(var/mob/living/carbon/human/H in range(2,user))
 		H << "<span class='userdanger'>You are blinded by a shower of blood!</span>"
 		H.Stun(1)
-		H.eye_blurry = 20
-		H.eye_stat += 5
+		H.blur_eyes(20)
+		H.adjust_eye_damage(5)
 		H.confused += 3
 	for(var/mob/living/silicon/S in range(2,user))
 		S << "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>"
@@ -26,7 +26,7 @@
 	var/turf = get_turf(user)
 	spawn(5) // So it's not killed in explosion
 		var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
-		for(var/obj/item/organ/internal/I in organs)
+		for(var/obj/item/organ/I in organs)
 			I.loc = crab
 		crab.origin = M
 		if(crab.origin)

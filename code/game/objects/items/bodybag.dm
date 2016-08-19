@@ -9,9 +9,9 @@
 	w_class = 2
 
 /obj/item/bodybag/attack_self(mob/user)
-		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
-		R.add_fingerprint(user)
-		qdel(src)
+	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
+	R.add_fingerprint(user)
+	qdel(src)
 
 
 /obj/item/weapon/storage/box/bodybags
@@ -21,13 +21,8 @@
 
 /obj/item/weapon/storage/box/bodybags/New()
 	..()
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
+	for(var/i in 1 to 7)
+		new /obj/item/bodybag(src)
 
 
 /obj/structure/closet/body_bag
@@ -40,6 +35,7 @@
 	density = 0
 	mob_storage_capacity = 2
 	open_sound = 'sound/items/zip.ogg'
+	close_sound = 'sound/items/zip.ogg'
 
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
@@ -65,7 +61,7 @@
 /obj/structure/closet/body_bag/update_icon()
 	..()
 	if (tagged)
-		overlays += "bodybag_label"
+		add_overlay("bodybag_label")
 
 /obj/structure/closet/body_bag/close()
 	if(..())
@@ -98,6 +94,7 @@
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = 2
+	origin_tech = "bluespace=4;materials=4;plasmatech=4"
 
 /obj/structure/closet/body_bag/bluespace
 	name = "bluespace body bag"

@@ -6,10 +6,11 @@
 	w_class = 2
 	throw_range = 4
 	throw_speed = 1
+	flags = NOBLUDGEON
 	force = 3
 	attack_verb = list("blown up", "exploded", "detonated")
 	materials = list(MAT_METAL=50, MAT_GLASS=30)
-	origin_tech = "syndicate=3;combat=2"
+	origin_tech = "syndicate=1;combat=3;engineering=3"
 
 /obj/item/device/doorCharge/ex_act(severity, target)
 	switch(severity)

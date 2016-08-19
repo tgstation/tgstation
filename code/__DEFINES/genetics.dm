@@ -16,7 +16,6 @@
 #define RACEMUT		"Monkified"
 #define BADSIGHT	"Near Sightness"
 #define LASEREYES	"Laser Eyes"
-#define STEALTH		"Cloak Of Darkness"
 #define CHAMELEON	"Chameleon"
 #define WACKY		"Wacky"
 #define MUT_MUTE	"Mute"
@@ -67,7 +66,7 @@
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
 
-#define DNA_STRUC_ENZYMES_BLOCKS	20
+#define DNA_STRUC_ENZYMES_BLOCKS	19
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
@@ -81,7 +80,7 @@
 #define TR_KEEPSRC		128
 #define TR_KEEPORGANS	256
 
-//Organ stuff, It's here because "Genetics" is the most relevant file for organs
+//Organ stuff, It's here because "Genetics" is the most relevant file for organs and bodyparts
 #define ORGAN_ORGANIC   1
 #define ORGAN_ROBOTIC   2
 
@@ -92,3 +91,15 @@
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
+
+#define CLONER_FRESH_CLONE "fresh"
+#define CLONER_MATURE_CLONE "mature"
+
+//Blood levels
+#define BLOOD_VOLUME_MAXIMUM		2000
+#define BLOOD_VOLUME_SLIME_SPLIT	1120
+#define BLOOD_VOLUME_NORMAL			560
+#define BLOOD_VOLUME_SAFE			501
+#define BLOOD_VOLUME_OKAY			336
+#define BLOOD_VOLUME_BAD			224
+#define BLOOD_VOLUME_SURVIVE		122

@@ -18,10 +18,10 @@
 
 /obj/item/device/geiger_counter/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/geiger_counter/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/device/geiger_counter/process()
@@ -122,7 +122,7 @@
 			return 0
 		user.visible_message("<span class='notice'>[user] unscrews [src]'s maintenance panel and begins fiddling with its innards...</span>", "<span class='notice'>You begin resetting [src]...</span>")
 		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(!do_after(user, 40, target = user))
+		if(!do_after(user, 40/I.toolspeed, target = user))
 			return 0
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
 		playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
@@ -130,10 +130,12 @@
 		radiation_count = 0
 		update_icon()
 		return 1
-	..()
+	else
+		return ..()
 
-/obj/item/device/geiger_counter/AltClick()
-	..()
+/obj/item/device/geiger_counter/AltClick(mob/living/user)
+	if(!istype(user) || user.incapacitated())
+		return ..()
 	if(!scanning)
 		usr << "<span class='warning'>[src] must be on to reset its radiation level!</span>"
 		return 0

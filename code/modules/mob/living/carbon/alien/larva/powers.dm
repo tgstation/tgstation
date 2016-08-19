@@ -9,8 +9,8 @@
 	if(user.stat != CONSCIOUS)
 		return
 
-	if (user.layer != TURF_LAYER+0.2)
-		user.layer = TURF_LAYER+0.2
+	if (user.layer != ABOVE_NORMAL_TURF_LAYER)
+		user.layer = ABOVE_NORMAL_TURF_LAYER
 		user.visible_message("<span class='name'>[user] scurries to the ground!</span>", \
 						"<span class='noticealien'>You are now hiding.</span>")
 	else
@@ -32,8 +32,6 @@
 		return
 	var/mob/living/carbon/alien/larva/L = user
 
-	if(L.stat != CONSCIOUS)
-		return
 	if(L.handcuffed || L.legcuffed) // Cuffing larvas ? Eh ?
 		user << "<span class='danger'>You cannot evolve when you are cuffed.</span>"
 
@@ -45,6 +43,9 @@
 		L << "<span class='name'>Drones</span> <span class='info'>are the weakest and slowest of the castes, but can grow into the queen if there is none, and are vital to maintaining a hive with their resin secretion abilities.</span>"
 		var/alien_caste = alert(L, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
 
+		if(user.incapacitated()) //something happened to us while we were choosing.
+			return
+
 		var/mob/living/carbon/alien/humanoid/new_xeno
 		switch(alien_caste)
 			if("Hunter")
@@ -53,8 +54,8 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(L.loc)
 			if("Drone")
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
-		if(L.mind)	L.mind.transfer_to(new_xeno)
-		qdel(L)
+
+		L.alien_evolve(new_xeno)
 		return 0
 	else
 		user << "<span class='danger'>You are not fully grown.</span>"

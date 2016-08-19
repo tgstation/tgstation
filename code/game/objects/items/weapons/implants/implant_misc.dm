@@ -2,7 +2,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns"
 	icon_state = "auth"
-	origin_tech = "materials=2;magnets=2;programming=2;biotech=5;syndicate=5"
+	origin_tech = "magnets=2;programming=7;biotech=5;syndicate=5"
 	activated = 0
 
 /obj/item/weapon/implant/weapons_auth/get_data()
@@ -33,7 +33,6 @@
 	return dat
 
 /obj/item/weapon/implant/adrenalin/activate()
-	if(uses < 1)	return 0
 	uses--
 	imp_in << "<span class='notice'>You feel a sudden surge of energy!</span>"
 	imp_in.SetStunned(0)
@@ -46,16 +45,19 @@
 	imp_in.reagents.add_reagent("synaptizine", 10)
 	imp_in.reagents.add_reagent("omnizine", 10)
 	imp_in.reagents.add_reagent("stimulants", 10)
+	if(!uses)
+		qdel(src)
 
 
 /obj/item/weapon/implant/emp
 	name = "emp implant"
 	desc = "Triggers an EMP."
 	icon_state = "emp"
-	origin_tech = "materials=2;biotech=3;magnets=4;syndicate=4"
-	uses = 2
+	origin_tech = "biotech=3;magnets=4;syndicate=1"
+	uses = 3
 
 /obj/item/weapon/implant/emp/activate()
-	if (src.uses < 1)	return 0
-	src.uses--
+	uses--
 	empulse(imp_in, 3, 5)
+	if(!uses)
+		qdel(src)

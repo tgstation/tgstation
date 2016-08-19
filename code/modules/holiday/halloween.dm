@@ -191,7 +191,7 @@
 
 /mob/living/simple_animal/shade/howling_ghost/proc/EtherealMove(direction)
 	loc = get_step(src, direction)
-	dir = direction
+	setDir(direction)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/roam()
 	if(prob(80))
@@ -212,8 +212,8 @@
 			step(I,direction)
 		return
 
-/mob/living/simple_animal/shade/howling_ghost/adjustBruteLoss()
-	return
+/mob/living/simple_animal/shade/howling_ghost/adjustHealth()
+	. = 0
 
 /mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
@@ -272,7 +272,8 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/AttackTarget()
 	return
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/adjustBruteLoss()
+/mob/living/simple_animal/hostile/retaliate/clown/insane/adjustHealth()
+	. = 0
 	if(prob(5))
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 

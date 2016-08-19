@@ -3,7 +3,7 @@
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "infrared"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
-	origin_tech = "magnets=2"
+	origin_tech = "magnets=2;materials=2"
 
 	var/on = 0
 	var/visible = 0
@@ -13,7 +13,7 @@
 
 /obj/item/device/assembly/infra/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/assembly/infra/Destroy()
 	if(first)
@@ -24,7 +24,8 @@
 	return "The infrared trigger is [on?"on":"off"]."
 
 /obj/item/device/assembly/infra/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return 0//Cooldown check
 	on = !on
 	update_icon()
 	return 1
@@ -32,20 +33,20 @@
 /obj/item/device/assembly/infra/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		on = 0
 		if(first)
 			qdel(first)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return secured
 
 /obj/item/device/assembly/infra/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(on)
-		overlays += "infrared_on"
+		add_overlay("infrared_on")
 		attached_overlays += "infrared_on"
 
 	if(holder)
@@ -67,7 +68,7 @@
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
 		I.master = src
 		I.density = 1
-		I.dir = dir
+		I.setDir(dir)
 		first = I
 		step(I, I.dir)
 		if(first)
@@ -84,13 +85,14 @@
 /obj/item/device/assembly/infra/Move()
 	var/t = dir
 	..()
-	dir = t
+	setDir(t)
 	qdel(first)
 	return
 
 /obj/item/device/assembly/infra/holder_movement()
-	if(!holder)	return 0
-//	dir = holder.dir
+	if(!holder)
+		return 0
+//	setDir(holder.dir)
 	qdel(first)
 	return 1
 
@@ -100,9 +102,7 @@
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
-	spawn(10)
-		process_cooldown()
-	return
+	addtimer(src, "process_cooldown", 10)
 
 /obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
 	if(is_secured(user))
@@ -141,7 +141,7 @@
 	if(usr.incapacitated())
 		return
 
-	dir = turn(dir, 90)
+	setDir(turn(dir, 90))
 	return
 
 /obj/item/device/assembly/infra/AltClick(mob/user)
@@ -191,7 +191,7 @@
 		left--
 	if(left < 1)
 		if(!(visible))
-			invisibility = 101
+			invisibility = INVISIBILITY_ABSTRACT
 		else
 			invisibility = 0
 	else
@@ -201,7 +201,7 @@
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(loc)
 		I.master = master
 		I.density = 1
-		I.dir = dir
+		I.setDir(dir)
 		I.previous = src
 		next = I
 		step(I, I.dir)

@@ -76,3 +76,31 @@ Bonus
 
 /datum/symptom/vomit/blood/Vomit(mob/living/carbon/M)
 	M.vomit(0, 1)
+
+
+/*
+//////////////////////////////////////
+
+Projectile Vomiting
+
+	Very Very Noticable.
+	Decreases resistance.
+	Doesn't increase stage speed.
+	Little transmittable.
+	Medium Level.
+
+Bonus
+	As normal vomiting, except it will spread further,
+	likely causing more to walk across the vomit.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/vomit/projectile
+
+	name = "Projectile Vomiting"
+	stealth = -2
+	level = 4
+
+/datum/symptom/vomit/projectile/Vomit(mob/living/carbon/M)
+	M.vomit(6,0,1,5,1)

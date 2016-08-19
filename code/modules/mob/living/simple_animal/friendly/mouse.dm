@@ -44,6 +44,7 @@
 		..(1)
 		var/obj/item/trash/deadmouse/M = new(src.loc)
 		M.icon_state = icon_dead
+		M.name = name
 		if(toast)
 			M.color = "#3A3A3A"
 			M.desc = "It's toast."
@@ -61,7 +62,7 @@
 
 /mob/living/simple_animal/mouse/handle_automated_action()
 	if(prob(chew_probability))
-		var/turf/simulated/floor/F = get_turf(src)
+		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && !F.intact)
 			var/obj/structure/cable/C = locate() in F
 			if(C && prob(15))

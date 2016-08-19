@@ -11,15 +11,37 @@
 	force = 10
 	throwforce = 7
 	w_class = 3
-	origin_tech = "combat=4"
+	origin_tech = "combat=5"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
-	hitsound = 'sound/weapons/slash.ogg' //pls replace
+	hitsound = 'sound/weapons/chainhit.ogg'
+	materials = list(MAT_METAL = 1000)
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (OXYLOSS)
 
 
+/obj/item/weapon/melee/sabre
+	name = "officer's sabre"
+	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
+	icon_state = "sabre"
+	item_state = "sabre"
+	flags = CONDUCT
+	force = 15
+	throwforce = 10
+	w_class = 4
+	block_chance = 50
+	armour_penetration = 75
+	sharpness = IS_SHARP
+	origin_tech = "combat=5"
+	attack_verb = list("lunged at", "stabbed")
+	hitsound = 'sound/weapons/rapierhit.ogg'
+	materials = list(MAT_METAL = 1000)
+
+/obj/item/weapon/melee/sabre/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight
+	return ..()
 
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"
@@ -34,45 +56,46 @@
 	var/on = 1
 
 /obj/item/weapon/melee/classic_baton/attack(mob/target, mob/living/user)
-	if(on)
-		add_fingerprint(user)
-		if((CLUMSY in user.disabilities) && prob(50))
-			user << "<span class ='danger'>You club yourself over the head.</span>"
-			user.Weaken(3 * force)
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				H.apply_damage(2*force, BRUTE, "head")
-			else
-				user.take_organ_damage(2*force)
-			return
-		if(isrobot(target))
-			..()
-			return
-		if(!isliving(target))
-			return
-		if (user.a_intent == "harm")
-			if(!..()) return
-			if(!isrobot(target)) return
-		else
-			if(cooldown <= 0)
-				playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-				target.Weaken(3)
-				add_logs(user, target, "stunned", src)
-				src.add_fingerprint(user)
-				target.visible_message("<span class ='danger'>[user] has knocked down [target] with \the [src]!</span>", \
-					"<span class ='userdanger'>[user] has knocked down [target] with \the [src]!</span>")
-				if(!iscarbon(user))
-					target.LAssailant = null
-				else
-					target.LAssailant = user
-				cooldown = 1
-				spawn(40)
-					cooldown = 0
-		return
-	else
+	if(!on)
 		return ..()
 
-
+	add_fingerprint(user)
+	if((CLUMSY in user.disabilities) && prob(50))
+		user << "<span class ='danger'>You club yourself over the head.</span>"
+		user.Weaken(3 * force)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(2*force, BRUTE, "head")
+		else
+			user.take_organ_damage(2*force)
+		return
+	if(isrobot(target))
+		..()
+		return
+	if(!isliving(target))
+		return
+	if (user.a_intent == "harm")
+		if(!..())
+			return
+		if(!isrobot(target))
+			return
+	else
+		if(cooldown <= world.time)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+					return
+			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
+			target.Weaken(3)
+			add_logs(user, target, "stunned", src)
+			src.add_fingerprint(user)
+			target.visible_message("<span class ='danger'>[user] has knocked down [target] with \the [src]!</span>", \
+				"<span class ='userdanger'>[user] has knocked down [target] with \the [src]!</span>")
+			if(!iscarbon(user))
+				target.LAssailant = null
+			else
+				target.LAssailant = user
+			cooldown = world.time + 40
 
 /obj/item/weapon/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -88,7 +111,7 @@
 
 /obj/item/weapon/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
-	var/obj/item/organ/internal/brain/B = H.getorgan(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
 
 	user.visible_message("<span class='suicide'>[user] stuffs the [src] up their nose and presses the 'extend' button! It looks like they're trying to clear their mind.</span>")
 	if(!on)
@@ -103,7 +126,6 @@
 			qdel(B)
 		gibs(H.loc, H.viruses, H.dna)
 		return (BRUTELOSS)
-	return
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
@@ -138,11 +160,12 @@
 	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
+	origin_tech = "combat=7;materials=6"
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	visible_message("<span class='warning'>\The [src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
 
 /obj/item/weapon/melee/supermatter_sword/process()
@@ -154,7 +177,7 @@
 		consume_everything(target)
 	else
 		var/turf/T = get_turf(src)
-		if(!istype(T,/turf/space))
+		if(!istype(T,/turf/open/space))
 			consume_turf(T)
 
 /obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
@@ -168,7 +191,7 @@
 	..()
 	if(ismob(target))
 		var/mob/M
-		if(src.loc == M) //target caught the sword
+		if(src.loc == M)
 			M.drop_item()
 	consume_everything(target)
 
@@ -205,9 +228,14 @@
 		consume_turf(target)
 
 /obj/item/weapon/melee/supermatter_sword/proc/consume_turf(turf/T)
+	if(istype(T, T.baseturf))
+		return //Can't void the void, baby!
 	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
 	T.visible_message("<span class='danger'>\The [T] smacks into \the [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
-	T.ChangeTurf(/turf/space)
+	T.ChangeTurf(T.baseturf)
 	T.CalculateAdjacentTurfs()
+
+/obj/item/weapon/melee/supermatter_sword/add_blood(list/blood_dna)
+	return 0

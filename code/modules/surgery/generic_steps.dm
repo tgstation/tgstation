@@ -52,15 +52,18 @@
 
 	if(istype(tool, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = tool
-		if(WT.isOn())	return 1
+		if(WT.isOn())
+			return 1
 
 	else if(istype(tool, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/L = tool
-		if(L.lit)	return 1
+		if(L.lit)
+			return 1
 
 	else if(istype(tool, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = tool
-		if(M.lit)	return 1
+		if(M.lit)
+			return 1
 
 	return 0
 
@@ -74,7 +77,7 @@
 //saw bone
 /datum/surgery_step/saw
 	name = "saw bone"
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/mounted_chainsaw = 65, /obj/item/weapon/twohanded/required/chainsaw = 50, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 54
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

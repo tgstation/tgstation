@@ -127,7 +127,10 @@
 			return
 		output += "<h2><center>Notes of [target_ckey]</center></h2>"
 		if(!linkless)
-			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a></center>"
+			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a>"
+			output += " <a href='?_src_=holder;shownoteckey=[target_ckey]'>\[Refresh Page\]</a></center>"
+		else
+			output += " <a href='?_src_=holder;shownoteckeylinkless=[target_ckey]'>\[Refresh Page\]</a></center>"
 		output += ruler
 		while(query_get_notes.NextRow())
 			var/id = query_get_notes.item[1]
@@ -169,9 +172,6 @@
 		output += ruler
 	usr << browse(output, "window=show_notes;size=900x500")
 
-/proc/regex_note_sql_extract(str, exp)
-	return new /datum/regex(str, exp, call(LIBREGEX_LIBRARY, "regEx_find")(str, exp))
-
 #define NOTESFILE "data/player_notes.sav"
 //if the AUTOCONVERT_NOTES is turned on, anytime a player connects this will be run to try and add all their notes to the databas
 /proc/convert_notes_sql(ckey)
@@ -184,13 +184,13 @@
 		var/notetext
 		notesfile >> notetext
 		var/server
-		if (config && config.server_name)
+		if(config && config.server_name)
 			server = config.server_name
-		var/regex = "^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$"
-		var/datum/regex/results = regex_note_sql_extract(notetext, regex)
-		var/timestamp = results.str(2)
-		notetext = results.str(3)
-		var/adminckey = results.str(4)
+		var/regex/note = new("^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$", "i")
+		note.Find(notetext)
+		var/timestamp = note.group[1]
+		notetext = note.group[2]
+		var/adminckey = note.group[3]
 		var/DBQuery/query_convert_time = dbcon.NewQuery("SELECT ADDTIME(STR_TO_DATE('[timestamp]','%d-%b-%Y'), '0')")
 		if(!query_convert_time.Execute())
 			var/err = query_convert_time.ErrorMsg()

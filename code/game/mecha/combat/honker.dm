@@ -29,8 +29,9 @@
 /obj/mecha/combat/honker/get_stats_part()
 	var/integrity = health/initial(health)*100
 	var/cell_charge = get_charge()
-	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(),0.01) : "None"
-	var/tank_temperature = internal_tank ? internal_tank.return_temperature() : "Unknown"
+	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
+	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
+	var/tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
 	var/cabin_pressure = round(return_pressure(),0.01)
 	var/output = {"[report_internal_damage()]
 						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]

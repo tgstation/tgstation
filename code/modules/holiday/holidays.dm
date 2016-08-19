@@ -86,15 +86,24 @@
 	var/game_age = text2num(time2text(world.timeofday, "YY")) - 3
 	var/Fact
 	switch(game_age)
-		if(16)	Fact = " SS13 is now old enough to drive!"
-		if(18)	Fact = " SS13 is now legal!"
-		if(21)	Fact = " SS13 can now drink!"
-		if(26)	Fact = " SS13 can now rent a car!"
-		if(30)	Fact = " SS13 can now go home and be a family man!"
-		if(40)	Fact = " SS13 can now suffer a midlife crisis!"
-		if(50)	Fact = " Happy golden anniversary!"
-		if(65)	Fact = " SS13 can now start thinking about retirement!"
-		if(96)	Fact = " Please send a time machine back to pick me up, I need to update the time formatting for this feature!" //See you later suckers
+		if(16)
+			Fact = " SS13 is now old enough to drive!"
+		if(18)
+			Fact = " SS13 is now legal!"
+		if(21)
+			Fact = " SS13 can now drink!"
+		if(26)
+			Fact = " SS13 can now rent a car!"
+		if(30)
+			Fact = " SS13 can now go home and be a family man!"
+		if(40)
+			Fact = " SS13 can now suffer a midlife crisis!"
+		if(50)
+			Fact = " Happy golden anniversary!"
+		if(65)
+			Fact = " SS13 can now start thinking about retirement!"
+		if(96)
+			Fact = " Please send a time machine back to pick me up, I need to update the time formatting for this feature!" //See you later suckers
 	if(!Fact)
 		Fact = " SS13 is now [game_age] years old!"
 

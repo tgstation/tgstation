@@ -1,35 +1,31 @@
 /obj/effect/proc_holder/changeling/revive
-	name = "Regenerate"
+	name = "Revive"
 	desc = "We regenerate, healing all damage from our form."
+	helptext = "Does not regrow lost organs or a missing head."
 	req_stat = DEAD
+	always_keep = TRUE
+	ignores_fakedeath = TRUE
 
 //Revive from revival stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
-	if(user.stat == DEAD)
-		dead_mob_list -= user
-		living_mob_list += user
-	user.tod = null
-	user.setToxLoss(0)
-	user.setOxyLoss(0)
-	user.setCloneLoss(0)
-	user.SetParalysis(0)
-	user.SetStunned(0)
-	user.SetWeakened(0)
-	user.radiation = 0
-	user.heal_overall_damage(user.getBruteLoss(), user.getFireLoss())
-	user.reagents.clear_reagents()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.restore_blood()
-		H.remove_all_embedded_objects()
-	user << "<span class='notice'>We have regenerated.</span>"
 	user.status_flags &= ~(FAKEDEATH)
-	user.update_canmove()
+	user.tod = null
+	user.revive(full_heal = 1)
+	var/list/missing = user.get_missing_limbs()
+	missing -= "head" // headless changelings are funny
+	if(missing.len)
+		playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
+		user.visible_message("<span class='warning'>[user]'s missing limbs \
+			reform, making a loud, grotesque sound!</span>",
+			"<span class='userdanger'>Your limbs regrow, making a \
+			loud, crunchy sound and giving you great pain!</span>",
+			"<span class='italics'>You hear organic matter ripping \
+			and tearing!</span>")
+		user.emote("scream")
+		user.regenerate_limbs(0, list("head"))
+	user << "<span class='notice'>We have revived ourselves.</span>"
 	user.mind.changeling.purchasedpowers -= src
-	user.med_hud_set_status()
-	user.med_hud_set_health()
 	feedback_add_details("changeling_powers","CR")
-	user.stat = CONSCIOUS
 	return 1
 
 /obj/effect/proc_holder/changeling/revive/can_be_used_by(mob/user)

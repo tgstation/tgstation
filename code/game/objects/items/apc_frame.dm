@@ -16,7 +16,7 @@
 		return
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
-	if(!istype(loc, /turf/simulated/floor))
+	if(!istype(loc, /turf/open/floor))
 		usr << "<span class='warning'>You cannot place [src] on this spot!</span>"
 		return
 	if(A.requires_power == 0 || istype(A, /area/space))
@@ -39,19 +39,20 @@
 			ndir = turn(ndir, 180)
 
 		var/obj/O = new result_path(get_turf(usr), ndir, 1)
-		transfer_fingerprints_to(O)
+		after_attach(O)
 
 	qdel(src)
 
+/obj/item/wallframe/proc/after_attach(var/obj/O)
+	transfer_fingerprints_to(O)
 
 /obj/item/wallframe/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/screwdriver))
 		// For camera-building borgs
 		var/turf/T = get_step(get_turf(user), user.dir)
-		if(istype(T, /turf/simulated/wall))
+		if(istype(T, /turf/closed/wall))
 			T.attackby(src, user, params)
-
 
 	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
 	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)

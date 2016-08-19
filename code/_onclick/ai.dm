@@ -10,9 +10,9 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(var/atom/A, params)
-	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(src, client.buildmode, params, A)
-		return
+	if(client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return
 
 	if(control_disabled || stat) return
 
@@ -27,9 +27,9 @@
 		return
 	next_click = world.time + 1
 
-	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(src, client.buildmode, params, A)
-		return
+	if(client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return
 
 	if(control_disabled || stat)
 		return
@@ -40,7 +40,7 @@
 		return
 	if(modifiers["middle"])
 		if(controlled_mech) //Are we piloting a mech? Placed here so the modifiers are not overridden.
-			controlled_mech.click_action(A, src) //Override AI normal click behavior.
+			controlled_mech.click_action(A, src, params) //Override AI normal click behavior.
 		return
 
 		return
@@ -163,12 +163,10 @@
 
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
-	if(can_be_used_by(usr))
-		toggle_lethal()
+	toggle_lethal()
 	add_fingerprint(usr)
 /obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
-	if(can_be_used_by(usr))
-		toggle_on()
+	toggle_on()
 	add_fingerprint(usr)
 
 //

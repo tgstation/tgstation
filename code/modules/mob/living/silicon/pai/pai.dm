@@ -8,6 +8,8 @@
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
+	weather_immunities = list("ash")
+
 	var/ram = 100	// Used as currency to purchase different abilities
 	var/list/software = list()
 	var/userDNA		// The DNA string of our assigned user
@@ -92,17 +94,11 @@
 		else
 			stat(null, text("Systems nonfunctional"))
 
-/mob/living/silicon/pai/check_eye(mob/user)
-	if (!src.current)
-		return null
-	user.reset_view(src.current)
-	return 1
-
-/mob/living/silicon/pai/blob_act()
+/mob/living/silicon/pai/blob_act(obj/effect/blob/B)
 	return 0
 
-/mob/living/silicon/pai/restrained()
-	return 0
+/mob/living/silicon/pai/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/pai/emp_act(severity)
 	// 20% chance to kill
@@ -155,68 +151,11 @@
 
 // See software.dm for Topic()
 
-///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)
-
-/mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
-	usr:cameraFollow = null
-	if (!C)
-		src.unset_machine()
-		src.reset_view(null)
-		return 0
-	if (stat == 2 || !C.status || !(src.network in C.network)) return 0
-
-	// ok, we're alive, camera is good and in our network...
-
-	set_machine(src)
-	current = C
-	reset_view(C)
-	return 1
-
-
-/mob/living/silicon/pai/cancel_camera()
-	set category = "pAI Commands"
-	set name = "Cancel Camera View"
-	src.reset_view(null)
-	src.unset_machine()
-	src:cameraFollow = null
-
 /mob/living/silicon/pai/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
 	return
 
-/mob/living/silicon/pai/on_forcemove(atom/newloc)
-	if(card)
-		card.loc = newloc
-	else //something went very wrong.
-		CRASH("pAI without card")
-	loc = card
-
-//Addition by Mord_Sith to define AI's network change ability
-/*
-/mob/living/silicon/pai/proc/pai_network_change()
-	set category = "pAI Commands"
-	set name = "Change Camera Network"
-	src.reset_view(null)
-	src.unset_machine()
-	src:cameraFollow = null
-	var/cameralist[0]
-
-	if(usr.stat == 2)
-		usr << "You can't change your camera network because you are dead!"
-		return
-
-	for (var/obj/machinery/camera/C in Cameras)
-		if(!C.status)
-			continue
-		else
-			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison") COMPILE ERROR! This will have to be updated as camera.network is no longer a string, but a list instead
-				cameralist[C.network] = C.network
-
-	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
-	src << "\blue Switched to [src.network] camera network."
-//End of code by Mord_Sith
-*/
-
-
+/mob/living/silicon/pai/canUseTopic(atom/movable/M)
+	return 1
 /*
 // Debug command - Maybe should be added to admin verbs later
 /mob/verb/makePAI(var/turf/t in view())

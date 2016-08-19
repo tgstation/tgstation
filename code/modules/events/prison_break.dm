@@ -1,52 +1,60 @@
-/datum/round_event_control/prison_break
-	name = "Prison Break"
-	typepath = /datum/round_event/prison_break
+/datum/round_event_control/grey_tide
+	name = "Grey Tide"
+	typepath = /datum/round_event/grey_tide
 	max_occurrences = 2
+	min_players = 5
 
-/datum/round_event/prison_break
+/datum/round_event/grey_tide
 	announceWhen = 50
 	endWhen = 20
-	var/list/area/prisonAreas = list()
+	var/list/area/areasToOpen = list()
+	var/list/potential_areas = list(/area/atmos,
+									/area/bridge,
+									/area/engine,
+									/area/medical,
+									/area/security,
+									/area/quartermaster,
+									/area/toxins)
+	var/severity = 1
 
 
-/datum/round_event/prison_break/setup()
+/datum/round_event/grey_tide/setup()
 	announceWhen = rand(50, 60)
 	endWhen = rand(20, 30)
+	severity = rand(1,3)
+	for(var/i in 1 to severity)
+		var/picked_area = pick_n_take(potential_areas)
+		for(var/area/A in world)
+			if(istype(A, picked_area))
+				areasToOpen += A
 
-	for(var/area/security/A in world)
-		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
-			prisonAreas += A
 
-
-/datum/round_event/prison_break/announce()
-	if(prisonAreas && prisonAreas.len > 0)
-		priority_announce("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
+/datum/round_event/grey_tide/announce()
+	if(areasToOpen && areasToOpen.len > 0)
+		priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 	else
-		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
+		world.log << "ERROR: Could not initate grey-tide. No areas in the list!"
 		kill()
 
 
-/datum/round_event/prison_break/start()
-	for(var/area/A in prisonAreas)
+/datum/round_event/grey_tide/start()
+	for(var/area/A in areasToOpen)
 		for(var/obj/machinery/light/L in A)
 			L.flicker(10)
 
-/datum/round_event/prison_break/end()
-	for(var/area/A in prisonAreas)
+/datum/round_event/grey_tide/end()
+	for(var/area/A in areasToOpen)
 		for(var/obj/O in A)
 			if(istype(O,/obj/machinery/power/apc))
 				var/obj/machinery/power/apc/temp = O
 				temp.overload_lighting()
-			else if(istype(O,/obj/structure/closet/secure_closet/brig))
-				var/obj/structure/closet/secure_closet/brig/temp = O
+			else if(istype(O,/obj/structure/closet/secure_closet))
+				var/obj/structure/closet/secure_closet/temp = O
 				temp.locked = 0
 				temp.update_icon()
-			else if(istype(O,/obj/machinery/door/airlock/security))
-				var/obj/machinery/door/airlock/security/temp = O
-				temp.prison_open()
-			else if(istype(O,/obj/machinery/door/airlock/glass_security))
-				var/obj/machinery/door/airlock/glass_security/temp = O
+			else if(istype(O,/obj/machinery/door/airlock))
+				var/obj/machinery/door/airlock/temp = O
 				temp.prison_open()
 			else if(istype(O,/obj/machinery/door_timer))
 				var/obj/machinery/door_timer/temp = O
-				temp.releasetime = 1
+				temp.timer_end(forced = TRUE)

@@ -19,7 +19,6 @@
 	idle_power_usage = 80
 	machinetype = 7
 	//heatgen = 40
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/hub"
 	long_range_link = 1
 	netspeed = 40
 
@@ -36,16 +35,17 @@
 
 /obj/machinery/telecomms/hub/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telecomms/hub(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
-	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 2)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/hub(null)
+	B.apply_default_parts(src)
 
-
+/obj/item/weapon/circuitboard/machine/telecomms/hub
+	name = "circuit board (Hub Mainframe)"
+	build_path = /obj/machinery/telecomms/hub
+	origin_tech = "programming=2;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/subspace/filter = 2)
 
 
 

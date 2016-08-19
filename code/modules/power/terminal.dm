@@ -8,10 +8,9 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
-	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
 	anchored = 1
-	layer = 2.6 // a bit above wires
+	layer = WIRE_TERMINAL_LAYER //a bit above wires
 
 
 /obj/machinery/power/terminal/New()
@@ -27,7 +26,7 @@
 
 /obj/machinery/power/terminal/hide(i)
 	if(i)
-		invisibility = 101
+		invisibility = INVISIBILITY_MAXIMUM
 		icon_state = "term-f"
 	else
 		invisibility = 0
@@ -49,8 +48,8 @@
 
 
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user)
-	if(istype(loc, /turf/simulated))
-		var/turf/simulated/T = loc
+	if(istype(loc, /turf))
+		var/turf/T = loc
 		if(T.intact)
 			user << "<span class='warning'>You must first expose the power terminal!</span>"
 			return
@@ -75,6 +74,5 @@
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		dismantle(user)
-		return
-
-	..()
+	else
+		return ..()

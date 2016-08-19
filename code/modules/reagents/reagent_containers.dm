@@ -5,7 +5,7 @@
 	icon_state = null
 	w_class = 1
 	var/amount_per_transfer_from_this = 5
-	var/list/possible_transfer_amounts = list(5,10,15,25,30)
+	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	var/volume = 30
 	var/list/list_reagents = null
 	var/spawned_disease = null
@@ -14,7 +14,7 @@
 
 /obj/item/weapon/reagent_containers/New(location, vol = 0)
 	..()
-	if (vol > 0)
+	if (isnum(vol) && vol > 0)
 		volume = vol
 	create_reagents(volume)
 	if(spawned_disease)
@@ -38,7 +38,8 @@
 				return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
-	return
+	if(user.a_intent == "harm")
+		return ..()
 
 /obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return

@@ -1,10 +1,11 @@
 //replaces the old Ticklag verb, fps is easier to understand
-/client/proc/fps()
+/client/proc/set_server_fps()
 	set category = "Debug"
-	set name = "Set fps"
+	set name = "Set server fps"
 	set desc = "Sets game speed in frames-per-second. Can potentially break the game"
 
-	if(!check_rights(R_DEBUG))	return
+	if(!check_rights(R_DEBUG))
+		return
 
 	var/fps = round(input("Sets game frames-per-second. Can potentially break the game","FPS", config.fps) as num|null)
 

@@ -10,7 +10,7 @@
 	health = 25
 
 	var/amount_grown = 0
-	var/max_grown = 200
+	var/max_grown = 100
 	var/time_of_birth
 
 	rotate_on_lying = 0
@@ -18,7 +18,7 @@
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
 	regenerate_icons()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
+	internal_organs += new /obj/item/organ/alien/plasmavessel/small/tiny
 
 	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
 	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
@@ -43,7 +43,6 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		adjustBruteLoss(5 + rand(1,9))
-		Paralyse(1)
 		spawn()
 			step_away(src,user,15)
 			sleep(1)
@@ -70,8 +69,8 @@
 
 	return
 
-/mob/living/carbon/alien/larva/restrained()
-	return 0
+/mob/living/carbon/alien/larva/restrained(ignore_grab)
+	. = 0
 
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field

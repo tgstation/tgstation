@@ -27,7 +27,7 @@
 /obj/machinery/camera_assembly/New(loc, ndir, building)
 	..()
 	if(building)
-		dir = ndir
+		setDir(ndir)
 
 /obj/machinery/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
@@ -78,7 +78,7 @@
 					usr << "<span class='warning'>No input found, please hang up and try your call again!</span>"
 					return
 
-				var/list/tempnetwork = text2list(input, ",")
+				var/list/tempnetwork = splittext(input, ",")
 				if(tempnetwork.len < 1)
 					usr << "<span class='warning'>No network found, please hang up and try your call again!</span>"
 					return
@@ -87,7 +87,7 @@
 				var/obj/machinery/camera/C = new(src.loc)
 				src.loc = C
 				C.assembly = src
-				C.dir = src.dir
+				C.setDir(src.dir)
 
 				C.network = tempnetwork
 				var/area/A = get_area_master(src)
@@ -103,11 +103,11 @@
 
 	// Upgrades!
 	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
-		if(!user.unEquip(W))
+		if(!user.drop_item(W))
 			return
 		user << "<span class='notice'>You attach \the [W] into the assembly inner circuits.</span>"
 		upgrades += W
-		W.loc = src
+		W.forceMove(src)
 		return
 
 	// Taking out upgrades
@@ -120,7 +120,7 @@
 			upgrades -= U
 		return
 
-	..()
+	return ..()
 
 /obj/machinery/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
 	if(busy)

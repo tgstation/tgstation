@@ -7,30 +7,30 @@
 //Wild West Areas
 
 /area/awaymission/wwmines
-	name = "\improper Wild West Mines"
+	name = "Wild West Mines"
 	icon_state = "away1"
 	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwgov
-	name = "\improper Wild West Mansion"
+	name = "Wild West Mansion"
 	icon_state = "away2"
 	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwrefine
-	name = "\improper Wild West Refinery"
+	name = "Wild West Refinery"
 	icon_state = "away3"
 	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwvault
-	name = "\improper Wild West Vault"
+	name = "Wild West Vault"
 	icon_state = "away3"
 	luminosity = 0
 
 /area/awaymission/wwvaultdoors
-	name = "\improper Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
+	name = "Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
 	icon_state = "away2"
 	requires_power = 0
 	luminosity = 0
@@ -100,18 +100,13 @@
 				hijack.owner = user.mind
 				user.mind.objectives += hijack
 				user << "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>"
-				var/obj_count = 1
-				for(var/datum/objective/OBJ in user.mind.objectives)
-					user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-					obj_count++
+				user.mind.announce_objectives()
 				user.set_species(/datum/species/shadow)
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."
-				for(var/mob/living/simple_animal/hostile/faithless/F in world)
-					F.health = -10
-					F.stat = 2
-					F.icon_state = "faithless_dead"
+				for(var/mob/living/simple_animal/hostile/faithless/F in mob_list)
+					F.death()
 
 
 ///////////////Meatgrinder//////////////
@@ -122,32 +117,28 @@
 	desc = "What is that thing?"
 	density = 1
 	anchored = 1
-	layer = 3
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
 	var/triggered = 0
-
-/obj/effect/meatgrinder/New()
-	icon_state = "blobpod"
 
 /obj/effect/meatgrinder/Crossed(AM as mob|obj)
 	Bumped(AM)
 
 /obj/effect/meatgrinder/Bumped(mob/M as mob|obj)
 
-	if(triggered) return
+	if(triggered)
+		return
 
-	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
+	if(istype(M, /mob/living/carbon/human) && M.stat != DEAD && M.ckey)
 		for(var/mob/O in viewers(world.view, src.loc))
-			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
+		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
 		triggered = 1
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		for(var/mob/O in viewers(world.view, src.loc))
-			s.set_up(3, 1, src)
-			s.start()
-			explosion(M, 1, 0, 0, 0)
-			qdel(src)
+		s.set_up(3, 1, src)
+		s.start()
+		explosion(M, 1, 0, 0, 0)
+		qdel(src)
 
 /////For the Wishgranter///////////
 
@@ -162,7 +153,7 @@
 	C << "<span class='notice'>Death is not your end!</span>"
 
 	spawn(rand(80,120))
-		C.revive()
+		C.revive(full_heal = 1, admin_revive = 1)
 		C << "<span class='notice'>You have regenerated.</span>"
 		C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
 		C.update_canmove()

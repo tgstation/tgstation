@@ -17,7 +17,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /*
  * Photo
@@ -28,7 +28,7 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 	burntime = 5
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
@@ -94,7 +94,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-	burn_state = 0 //Burnable
+	burn_state = FLAMMABLE
 
 /*
  * Camera
@@ -117,7 +117,8 @@
 	var/see_ghosts = 0 //for the spoop of it
 
 
-/obj/item/device/camera/CheckParts()
+/obj/item/device/camera/CheckParts(list/parts_list)
+	..()
 	var/obj/item/device/camera/C = locate(/obj/item/device/camera) in contents
 	if(C)
 		pictures_max = C.pictures_max
@@ -130,6 +131,12 @@
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
+
+/obj/item/device/camera/detective
+	name = "Detective's camera"
+	desc = "A polaroid camera with extra capacity for crime investigations."
+	pictures_max = 30
+	pictures_left = 30
 
 
 /obj/item/device/camera/siliconcam //camera AI can take pictures with
@@ -251,9 +258,9 @@
 						holding = "They are holding \a [L.r_hand]"
 
 			if(!mob_detail)
-				mob_detail = "You can see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
+				mob_detail = "You can see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
 			else
-				mob_detail += "You can also see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
+				mob_detail += "You can also see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
 
 
 	return mob_detail
@@ -416,7 +423,9 @@
 		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc)) return
+	if(!on || !pictures_left || !isturf(target.loc))
+		return
+
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
@@ -471,5 +480,5 @@
 	p.pixel_x = rand(-10, 10)
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
-	visible_message("[C.name] spits out a photograph from a narrow slot on it's chassis.")
+	visible_message("[C.name] spits out a photograph from a narrow slot on its chassis.")
 	usr << "<span class='notice'>You print a photograph.</span>"

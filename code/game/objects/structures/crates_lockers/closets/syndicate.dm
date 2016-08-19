@@ -23,24 +23,11 @@
 /obj/structure/closet/syndicate/nuclear/New()
 	..()
 	contents = list()
-	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/ammo_box/magazine/m10mm(src)
+	for(var/i in 1 to 5)
+		new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/syndie/med(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
-	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/device/pda/syndicate(src)
 	return
 
@@ -91,6 +78,14 @@
 	if(pickednum >= 40)
 		new /obj/item/stack/sheet/mineral/uranium(src, rand(rare_min, rare_max))
 
+	//Titanium (rare ore)
+	if(pickednum >= 40)
+		new /obj/item/stack/sheet/mineral/titanium(src, rand(rare_min, rare_max))
+
+	//Plastitanium (rare ore)
+	if(pickednum >= 40)
+		new /obj/item/stack/sheet/mineral/plastitanium(src, rand(rare_min, rare_max))
+
 	//Diamond (rare HONK)
 	if(pickednum >= 45)
 		new /obj/item/stack/sheet/mineral/diamond(src, rand(rare_min, rare_max))
@@ -117,6 +112,8 @@
 	/obj/item/stack/sheet/mineral/diamond,
 	/obj/item/stack/sheet/mineral/bananium,
 	/obj/item/stack/sheet/plasteel,
+	/obj/item/stack/sheet/mineral/titanium,
+	/obj/item/stack/sheet/mineral/plastitanium,
 	/obj/item/stack/rods
 	)
 

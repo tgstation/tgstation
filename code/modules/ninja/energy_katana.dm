@@ -1,4 +1,3 @@
-
 /obj/item/weapon/katana/energy
 	name = "energy katana"
 	desc = "A katana infused with strong energy."
@@ -6,7 +5,7 @@
 	item_state = "energy_katana"
 	force = 40
 	throwforce = 20
-	armour_penetration = 15
+	armour_penetration = 50
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/item/weapon/katana/energy/afterattack(atom/target, mob/user, proximity_flag, click_parameters)

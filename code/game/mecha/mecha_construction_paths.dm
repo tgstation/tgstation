@@ -27,7 +27,7 @@
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
-		if(S.amount < 5)
+		if(S.get_amount() < 5)
 			user << ("<span class='warning'>There's not enough material in this stack!</span>")
 			return 0
 		else
@@ -59,7 +59,7 @@
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
-		if(S.amount < 5)
+		if(S.get_amount() < 5)
 			user << ("<span class='warning'>There's not enough material in this stack!</span>")
 			return 0
 		else
@@ -77,7 +77,7 @@
 
 /datum/construction/mecha/ripley_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -287,7 +287,7 @@
 
 /datum/construction/mecha/gygax_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -574,7 +574,7 @@
 
 /datum/construction/mecha/firefighter_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -801,7 +801,7 @@
 
 /datum/construction/mecha/honker_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -874,7 +874,7 @@
 
 /datum/construction/mecha/durand_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "You connect [used_atom] to the [holder]")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -1164,7 +1164,7 @@
 
 /datum/construction/mecha/phazon_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 
@@ -1221,7 +1221,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="The bluespace crystal is installed."),
 					 //10
-					 list("key"=/obj/item/bluespace_crystal,
+					 list("key"=/obj/item/weapon/ore/bluespace_crystal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Super capacitor is secured."),
 					 //12
@@ -1417,7 +1417,7 @@
 				holder.icon_state = "phazon16"
 			else
 				user.visible_message("[user] removes the bluespace crystal from the [holder].", "<span class='notice'>You remove the bluespace crystal from the [holder].</span>")
-				new /obj/item/bluespace_crystal(get_turf(holder))
+				new /obj/item/weapon/ore/bluespace_crystal(get_turf(holder))
 				holder.icon_state = "phazon14"
 		if(8)
 			if(diff==FORWARD)
@@ -1497,7 +1497,7 @@
 
 /datum/construction/mecha/odysseus_chassis/custom_action(step, atom/used_atom, mob/user)
 	user.visible_message("[user] has connected [used_atom] to the [holder].", "<span class='notice'>You connect [used_atom] to the [holder].</span>")
-	holder.overlays += used_atom.icon_state+"+o"
+	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
 	return 1
 

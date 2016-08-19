@@ -3,16 +3,18 @@
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
-	origin_tech = "magnets=1"
+	origin_tech = "magnets=1;engineering=1"
 	attachable = 1
 
 	var/timing = 0
 	var/time = 5
+	var/saved_time = 5
+	var/loop = 0
 
 
 /obj/item/device/assembly/timer/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/assembly/timer/describe()
 	if(timing)
@@ -21,7 +23,8 @@
 
 
 /obj/item/device/assembly/timer/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())
+		return 0//Cooldown check
 	timing = !timing
 	update_icon()
 	return 1
@@ -30,10 +33,10 @@
 /obj/item/device/assembly/timer/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		timing = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return secured
 
@@ -46,6 +49,8 @@
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
+		if(loop)
+			timing = 1
 	update_icon()
 
 
@@ -55,14 +60,14 @@
 		if(time <= 0)
 			timing = 0
 			timer_end()
-			time = initial(time)
+			time = saved_time
 
 
 /obj/item/device/assembly/timer/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(timing)
-		overlays += "timer_timing"
+		add_overlay("timer_timing")
 		attached_overlays += "timer_timing"
 	if(holder)
 		holder.update_icon()
@@ -73,6 +78,7 @@
 		var/second = time % 60
 		var/minute = (time - second) / 60
 		var/dat = "<TT><B>Timing Unit</B>\n[(timing ? "<A href='?src=\ref[src];time=0'>Timing</A>" : "<A href='?src=\ref[src];time=1'>Not Timing</A>")] [minute]:[second]\n<A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT>"
+		dat += "<BR><BR><A href='?src=\ref[src];repeat=[(loop ? "0'>Stop repeating" : "1'>Set to repeat")]</A>"
 		dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
 		var/datum/browser/popup = new(user, "timer", name)
@@ -95,11 +101,14 @@
 			bombers += timer_message
 			log_game("[key_name(usr)] activated [src] attachment for [loc]")
 		update_icon()
+	if(href_list["repeat"])
+		loop = text2num(href_list["repeat"])
 
 	if(href_list["tp"])
 		var/tp = text2num(href_list["tp"])
 		time += tp
 		time = min(max(round(time), 1), 600)
+		saved_time = time
 
 	if(href_list["close"])
 		usr << browse(null, "window=timer")
@@ -107,4 +116,3 @@
 
 	if(usr)
 		attack_self(usr)
-

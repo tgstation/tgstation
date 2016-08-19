@@ -38,7 +38,7 @@
 		if(number < 3)
 			var/obj/effect/particle_effect/steam/I = PoolOrNew(/obj/effect/particle_effect/steam, oldposition)
 			number++
-			I.dir = holder.dir
+			I.setDir(holder.dir)
 			oldposition = get_turf(holder)
 			spawn(10)
 				qdel(I)
@@ -68,7 +68,7 @@
 		if(T != oldposition)
 			if(!has_gravity(T))
 				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
-				I.dir = holder.dir
+				I.setDir(holder.dir)
 				flick("ion_fade", I)
 				I.icon_state = ""
 				spawn(20)
@@ -100,8 +100,6 @@
 
 	flashing = flash
 	flashing_factor = flash_fact
-
-	return
 
 /datum/effect_system/reagents_explosion/start()
 	if(explosion_message)

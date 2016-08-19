@@ -16,22 +16,36 @@ var/global/list/undershirt_m = list()	 //stores only undershirt name
 var/global/list/undershirt_f = list()	 //stores only undershirt name
 	//Socks
 var/global/list/socks_list = list()		//stores /datum/sprite_accessory/socks indexed by name
-var/global/list/socks_m = list()	 //stores only socks name
-var/global/list/socks_f = list()	 //stores only socks name
 	//Lizard Bits (all datum lists indexed by name)
 var/global/list/body_markings_list = list()
 var/global/list/tails_list_lizard = list()
-var/global/list/tails_list_human = list()
 var/global/list/animated_tails_list_lizard = list()
-var/global/list/animated_tails_list_human = list()
 var/global/list/snouts_list = list()
 var/global/list/horns_list = list()
-var/global/list/ears_list = list()
 var/global/list/frills_list = list()
 var/global/list/spines_list = list()
 var/global/list/animated_spines_list = list()
+
+	//Mutant Human bits
+var/global/list/tails_list_human = list()
+var/global/list/animated_tails_list_human = list()
+var/global/list/ears_list = list()
+var/global/list/wings_list = list()
+var/global/list/wings_open_list = list()
+var/global/list/r_wings_list = list()
+
+var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
+var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things
+
 	//Backpacks
-var/global/list/backbaglist = list("Backpack", "Satchel")
+#define GBACKPACK "Grey Backpack"
+#define GSATCHEL "Grey Satchel"
+#define GDUFFLEBAG "Grey Dufflebag"
+#define LSATCHEL "Leather Satchel"
+#define DBACKPACK "Department Backpack"
+#define DSATCHEL "Department Satchel"
+#define DDUFFLEBAG "Department Dufflebag"
+var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()
 
@@ -78,3 +92,62 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
+
+var/global/list/guitar_notes = flist("sound/guitar/")
+
+var/global/list/station_prefixes = list("", "Imperium", "Heretical", "Cuban",
+	"Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique",
+	"Houseruled", "Religious", "Atheist", "Traditional", "Houseruled",
+	"Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death",
+	"Zybourne", "Central", "Main", "Government", "Uoi", "Fat",
+	"Automated", "Experimental", "Augmented")
+
+var/global/list/station_names = list("", "Stanford", "Dorf", "Alium",
+	"Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World",
+	"Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia",
+	"Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East",
+	"South", "Slant-ways", "Widdershins", "Rimward", "Expensive",
+	"Procreatory", "Imperial", "Unidentified", "Immoral", "Carp", "Ork",
+	"Pete", "Control", "Nettle", "Aspie", "Class", "Crab", "Fist",
+	"Corrogated","Skeleton","Race", "Fatguy", "Gentleman", "Capitalist",
+	"Communist", "Bear", "Beard", "Derp", "Space", "Spess", "Star", "Moon",
+	"System", "Mining", "Neckbeard", "Research", "Supply", "Military",
+	"Orbital", "Battle", "Science", "Asteroid", "Home", "Production",
+	"Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional",
+	"Robot", "Hats", "Pizza")
+
+var/global/list/station_suffixes = list("Station", "Frontier",
+	"Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk",
+	"Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb",
+	"Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive",
+	"Complex", "Base", "Facility", "Depot", "Outpost", "Installation",
+	"Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform",
+	"Construct", "Hangar", "Prison", "Center", "Port", "Waystation",
+	"Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object",
+	"Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp",
+	"Airstrip")
+
+var/global/list/greek_letters = list("Alpha", "Beta", "Gamma", "Delta",
+	"Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu",
+	"Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi",
+	"Chi", "Psi", "Omega")
+
+var/global/list/phonetic_alphabet = list("Alpha", "Bravo", "Charlie",
+	"Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet",
+	"Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec",
+	"Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray",
+	"Yankee", "Zulu")
+
+var/global/list/numbers_as_words = list("One", "Two", "Three", "Four",
+	"Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
+	"Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+	"Eighteen", "Nineteen")
+
+/proc/generate_number_strings()
+	var/list/L
+	for(var/i in 1 to 99)
+		L += "[i]"
+		L += "\Roman[i]"
+	return L
+
+var/global/list/station_numerals = greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings()

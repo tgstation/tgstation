@@ -25,24 +25,22 @@
 	var/step = alpha / frames
 	for(var/i = 0, i < frames, i++)
 		alpha -= step
-		sleep(world.tick_lag)
+		stoplag()
 
 /obj/effect/particle_effect/smoke/New()
 	..()
 	create_reagents(500)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/effect/particle_effect/smoke/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
-	SSobj.processing.Remove(src)
-	spawn(0)
-		fade_out()
-	spawn(10)
-		qdel(src)
+	STOP_PROCESSING(SSobj, src)
+	addtimer(src, "fade_out", 0)
+	QDEL_IN(src, 10)
 
 /obj/effect/particle_effect/smoke/process()
 	lifetime--
@@ -63,10 +61,12 @@
 	if(C.smoke_delay)
 		return 0
 	C.smoke_delay++
-	spawn(10)
-		if(C)
-			C.smoke_delay = 0
+	addtimer(src, "remove_smoke_delay", 10, FALSE, C)
 	return 1
+
+/obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)
+	if(C)
+		C.smoke_delay = 0
 
 /obj/effect/particle_effect/smoke/proc/spread_smoke()
 	var/turf/t_loc = get_turf(src)
@@ -79,7 +79,7 @@
 			smoke_mob(L)
 		var/obj/effect/particle_effect/smoke/S = new type(T)
 		reagents.copy_to(S, reagents.total_volume)
-		S.dir = pick(cardinal)
+		S.setDir(pick(cardinal))
 		S.amount = amount-1
 		S.color = color
 		S.lifetime = lifetime
@@ -154,8 +154,8 @@
 	var/blast = 0
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A, /turf/simulated))
-		var/turf/simulated/T = A
+	if(istype(A,/turf/open))
+		var/turf/open/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
@@ -163,9 +163,12 @@
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
-				if(G.toxins)
-					G.nitrogen += (G.toxins)
-					G.toxins = 0
+				var/list/G_gases = G.gases
+				if(G_gases["plasma"])
+					G.assert_gas("n2")
+					G_gases["n2"][MOLES] += (G_gases["plasma"][MOLES])
+					G_gases["plasma"][MOLES] = 0
+					G.garbage_collect()
 		for(var/obj/machinery/atmospherics/components/unary/U in T)
 			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 				U.welded = 1
@@ -175,7 +178,6 @@
 			L.ExtinguishMob()
 		for(var/obj/item/Item in T)
 			Item.extinguish()
-	return
 
 /datum/effect_system/smoke_spread/freezing/set_up(radius = 5, loca, blasting = 0)
 	..()
@@ -183,7 +185,7 @@
 
 /datum/effect_system/smoke_spread/freezing/start()
 	if(blast)
-		for(var/turf/T in trange(2, location))
+		for(var/turf/T in RANGE_TURFS(2, location))
 			Chilled(T)
 	..()
 
@@ -200,7 +202,7 @@
 /obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())
 		M.drop_item()
-		M.sleeping = max(M.sleeping,10)
+		M.Sleeping(max(M.sleeping,10))
 		M.emote("cough")
 		return 1
 

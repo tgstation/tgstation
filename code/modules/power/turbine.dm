@@ -31,7 +31,7 @@
 	density = 1
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
-	var/turf/simulated/inturf
+	var/turf/inturf
 	var/starter = 0
 	var/rpm = 0
 	var/rpmtarget = 0
@@ -49,16 +49,16 @@
 	density = 1
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
-	var/turf/simulated/outturf
+	var/turf/outturf
 	var/lastgen
 	var/productivity = 1
 
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
-	desc = "A computer to remotely control a gas turbine"
+	desc = "A computer to remotely control a gas turbine."
 	icon_screen = "turbinecomp"
 	icon_keyboard = "tech_key"
-	circuit = /obj/item/weapon/circuitboard/turbine_computer
+	circuit = /obj/item/weapon/circuitboard/computer/turbine_computer
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0
 
@@ -66,21 +66,20 @@
 
 /obj/machinery/power/compressor/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 5)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/power_compressor(null)
+	B.apply_default_parts(src)
 // The inlet of the compressor is the direction it faces
 
 	gas_contained = new
 	inturf = get_step(src, dir)
 
+/obj/item/weapon/circuitboard/machine/power_compressor
+	name = "circuit board (Power Compressor)"
+	build_path = /obj/machinery/power/compressor
+	origin_tech = "programming=4;powerstorage=4;engineering=4"
+	req_components = list(
+							/obj/item/stack/cable_coil = 5,
+							/obj/item/weapon/stock_parts/manipulator = 6)
 
 /obj/machinery/power/compressor/initialize()
 	..()
@@ -142,7 +141,7 @@
 		return
 	if(!starter)
 		return
-	overlays.Cut()
+	cut_overlays()
 
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
@@ -170,13 +169,13 @@
 
 
 	if(rpm>50000)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER))
 	else if(rpm>10000)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER))
 	else if(rpm>2000)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER))
 	else if(rpm>500)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER))
 	 //TODO: DEFERRED
 
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
@@ -188,20 +187,18 @@
 
 /obj/machinery/power/turbine/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/power_turbine(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/stack/cable_coil(src, 5)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/power_turbine(null)
+	B.apply_default_parts(src)
 // The outlet is pointed at the direction of the turbine component
-
 	outturf = get_step(src, dir)
 
+/obj/item/weapon/circuitboard/machine/power_turbine
+	name = "circuit board (Power Turbine)"
+	build_path = /obj/machinery/power/turbine
+	origin_tech = "programming=4;powerstorage=4;engineering=4"
+	req_components = list(
+							/obj/item/stack/cable_coil = 5,
+							/obj/item/weapon/stock_parts/capacitor = 6)
 
 /obj/machinery/power/turbine/initialize()
 	..()
@@ -234,7 +231,7 @@
 		return
 	if(!compressor.starter)
 		return
-	overlays.Cut()
+	cut_overlays()
 
 	// This is the power generation function. If anything is needed it's good to plot it in EXCEL before modifying
 	// the TURBGENQ and TURBGENG values
@@ -260,7 +257,7 @@
 // If it works, put an overlay that it works!
 
 	if(lastgen > 100)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER))
 
 	updateDialog()
 

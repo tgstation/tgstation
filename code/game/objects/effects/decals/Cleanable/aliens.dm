@@ -5,8 +5,7 @@
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
 	gender = PLURAL
 	density = 0
-	anchored = 1
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")

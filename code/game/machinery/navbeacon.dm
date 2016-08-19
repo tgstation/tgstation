@@ -8,7 +8,7 @@
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
-	layer = 2.5
+	layer = LOW_OBJ_LAYER
 	anchored = 1
 
 	var/open = 0		// true if cover is open
@@ -28,14 +28,16 @@
 	var/turf/T = loc
 	hide(T.intact)
 	if(codes["patrol"])
-		navbeacons += src //Register with the patrol list!
+		if(!navbeacons["[z]"])
+			navbeacons["[z]"] = list()
+		navbeacons["[z]"] += src //Register with the patrol list!
 	if(codes["delivery"])
 		deliverybeacons += src
 		deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	navbeacons &= src //Remove from beacon list, if in one.
-	deliverybeacons &= src
+	navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	deliverybeacons -= src
 	return ..()
 
 // set the transponder codes assoc list from codes_txt
@@ -45,7 +47,7 @@
 
 	codes = new()
 
-	var/list/entries = text2list(codes_txt, ";")	// entries are separated by semicolons
+	var/list/entries = splittext(codes_txt, ";")	// entries are separated by semicolons
 
 	for(var/e in entries)
 		var/index = findtext(e, "=")		// format is "key=value"
@@ -60,7 +62,7 @@
 // called when turf state changes
 // hide the object if turf is intact
 /obj/machinery/navbeacon/hide(intact)
-	invisibility = intact ? 101 : 0
+	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
 	updateicon()
 
 // update the icon_state
@@ -95,7 +97,8 @@
 			updateDialog()
 		else
 			user << "<span class='warning'>You must open the cover first!</span>"
-	return
+	else
+		return ..()
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user, 1)

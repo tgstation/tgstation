@@ -29,6 +29,29 @@
 				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
 				)
 
+/obj/effect/spawner/lootdrop/gambling
+	name = "gambling valuables spawner"
+	loot = list(
+				/obj/item/weapon/gun/projectile/revolver/russian = 5,
+				/obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 1,
+				/obj/item/toy/cards/deck/syndicate = 2
+				)
+
+/obj/effect/spawner/lootdrop/grille_or_trash
+	name = "maint grille or trash spawner"
+	loot = list(/obj/structure/grille = 5,
+			/obj/item/weapon/cigbutt = 1,
+			/obj/item/trash/cheesie = 1,
+			/obj/item/trash/candy = 1,
+			/obj/item/trash/chips = 1,
+			/obj/item/trash/deadmouse = 1,
+			/obj/item/trash/pistachios = 1,
+			/obj/item/trash/plate = 1,
+			/obj/item/trash/popcorn = 1,
+			/obj/item/trash/raisins = 1,
+			/obj/item/trash/sosjerky = 1,
+			/obj/item/trash/syndi_cakes = 1)
+
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
 
@@ -61,7 +84,7 @@
 				/obj/item/bodybag = 1,
 				/obj/item/clothing/glasses/meson = 2,
 				/obj/item/clothing/glasses/sunglasses = 1,
-				/obj/item/clothing/gloves/color/yellow/fake = 1,
+				/obj/item/clothing/gloves/color/fyellow = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
 				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,
@@ -76,7 +99,8 @@
 				/obj/item/device/flashlight/pen = 1,
 				/obj/item/device/multitool = 2,
 				/obj/item/device/radio/off = 2,
-				/obj/item/device/t_scanner = 6,
+				/obj/item/device/t_scanner = 5,
+				/obj/item/weapon/airlock_painter = 1,
 				/obj/item/stack/cable_coil = 4,
 				/obj/item/stack/cable_coil{amount = 5} = 6,
 				/obj/item/stack/medical/bruise_pack = 1,
@@ -85,7 +109,7 @@
 				/obj/item/stack/rods{amount = 50} = 1,
 				/obj/item/stack/sheet/cardboard = 2,
 				/obj/item/stack/sheet/metal{amount = 20} = 1,
-				/obj/item/stack/sheet/mineral/plasma{layer = 2.9} = 1,
+				/obj/item/stack/sheet/mineral/plasma = 1,
 				/obj/item/stack/sheet/rglass = 1,
 				/obj/item/weapon/book/manual/wiki/engineering_construction = 1,
 				/obj/item/weapon/book/manual/wiki/engineering_hacking = 1,
@@ -119,7 +143,21 @@
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
-				"" = 11
+				/obj/item/weaponcrafting/reciever = 1,
+				/obj/item/clothing/head/cone = 2,
+				/obj/item/weapon/grenade/smokebomb = 2,
+				/obj/item/device/geiger_counter = 3,
+				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 1,
+				/obj/item/device/radio/headset = 1,
+				/obj/item/device/assembly/infra = 1,
+				/obj/item/device/assembly/igniter = 2,
+				/obj/item/device/assembly/signaler = 2,
+				/obj/item/device/assembly/mousetrap = 2,
+				/obj/item/weapon/reagent_containers/syringe = 2,
+				/obj/item/clothing/gloves/color/random = 8,
+				/obj/item/clothing/shoes/laceup = 1,
+				/obj/item/weapon/storage/secure/briefcase = 3,
+				"" = 4
 				)
 
 /obj/effect/spawner/lootdrop/crate_spawner

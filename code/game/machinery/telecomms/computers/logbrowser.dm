@@ -14,7 +14,7 @@
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
 	req_access = list(access_tcomsat)
-	circuit = "/obj/item/weapon/circuitboard/comm_server"
+	circuit = /obj/item/weapon/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/attack_hand(mob/user)
 	if(..())
@@ -173,7 +173,7 @@
 					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 				else
-					for(var/obj/machinery/telecomms/server/T in ultra_range(25, src))
+					for(var/obj/machinery/telecomms/server/T in urange(25, src))
 						if(T.network == network)
 							servers.Add(T)
 
@@ -206,7 +206,7 @@
 
 		var/newnet = stripped_input(usr, "Which network do you want to view?", "Comm Monitor", network)
 
-		if(newnet && ((usr in range(1, src) || issilicon(usr))))
+		if(newnet && ((usr in range(1, src)) || issilicon(usr)))
 			if(length(newnet) > 15)
 				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 
@@ -221,6 +221,5 @@
 	return
 
 /obj/machinery/computer/telecomms/server/attackby()
-	..()
-	src.updateUsrDialog()
-	return
+	. = ..()
+	updateUsrDialog()

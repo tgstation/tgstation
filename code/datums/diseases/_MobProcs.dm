@@ -125,7 +125,7 @@
 					Cl = M.wear_mask
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
-	if(!passed && (D.spread_flags & AIRBORNE) && !internals)
+	if(!passed && (D.spread_flags & AIRBORNE) && !internal)
 		passed = (prob((50*D.permeability_mod) - 1))
 
 	if(passed)
@@ -140,6 +140,6 @@
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
-	if(dna && VIRUSIMMUNE in dna.species.specflags)
+	if(dna && (VIRUSIMMUNE in dna.species.specflags))
 		return 0
 	return ..()

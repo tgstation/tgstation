@@ -20,11 +20,11 @@
 		if(chargelevel != newlevel)
 			chargelevel = newlevel
 
-			overlays.Cut()
-			overlays += "ccharger-o[newlevel]"
+			cut_overlays()
+			add_overlay("ccharger-o[newlevel]")
 
 	else
-		overlays.Cut()
+		cut_overlays()
 
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
@@ -33,10 +33,13 @@
 		user << "Current charge: [round(charging.percent(), 1)]%"
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user, params)
-	if(stat & BROKEN)
-		return
-
-	if(istype(W, /obj/item/weapon/stock_parts/cell) && anchored)
+	if(istype(W, /obj/item/weapon/stock_parts/cell))
+		if(stat & BROKEN)
+			user << "<span class='warning'>[src] is broken!</span>"
+			return
+		if(!anchored)
+			user << "<span class='warning'>[src] isn't attached to the ground!</span>"
+			return
 		if(charging)
 			user << "<span class='warning'>There is already a cell in the charger!</span>"
 			return
@@ -63,6 +66,9 @@
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+	else
+		return ..()
+
 
 /obj/machinery/cell_charger/proc/removecell()
 	charging.updateicon()

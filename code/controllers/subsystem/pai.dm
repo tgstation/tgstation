@@ -2,12 +2,10 @@ var/datum/subsystem/pai/SSpai
 
 /datum/subsystem/pai
 	name = "pAI"
-	wait = 20
-
-	var/askDelay = 600
+	init_order = 20
+	flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/list/candidates = list()
-	var/list/asked = list()
 
 /datum/subsystem/pai/New()
 	NEW_SS_GLOBAL(SSpai)
@@ -180,33 +178,10 @@ var/datum/subsystem/pai/SSpai
 	user << browse(dat, "window=findPai")
 
 /datum/subsystem/pai/proc/requestRecruits()
-	for(var/mob/dead/observer/O in player_list)
-		if(jobban_isbanned(O, ROLE_PAI))
-			continue
-		if(asked.Find(O.key))
-			if(world.time < asked[O.key] + askDelay)
-				continue
-			else
-				asked.Remove(O.key)
-		if(O.client)
-			var/hasSubmitted = 0
-			for(var/datum/paiCandidate/c in SSpai.candidates)
-				if(c.key == O.key)
-					hasSubmitted = 1
-			if(!hasSubmitted && (ROLE_PAI in O.client.prefs.be_special))
-				question(O.client)
-
-/datum/subsystem/pai/proc/question(client/C)
-	spawn(0)
-		if(!C)	return
-		asked.Add(C.key)
-		asked[C.key] = world.time
-		var/response = alert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "Yes", "No", "Never for this round")
-		if(!C)	return		//handle logouts that happen whilst the alert is waiting for a response.
-		if(response == "Yes")
-			recruitWindow(C.mob)
-		else if (response == "Never for this round")
-			asked[C.key] = INFINITY
+	var/list/candidates = pollCandidates("Someone is requesting a pAI personality. Would you like to play as a personal AI?", ROLE_PAI, null, ROLE_PAI,300, ignore_category = POLL_IGNORE_PAI)
+	for(var/V in candidates)
+		recruitWindow(V)
+	return
 
 /datum/paiCandidate
 	var/name

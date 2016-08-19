@@ -20,71 +20,94 @@
 	jump_action.Grant(user)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
-	if (get_dist(user, src) > 1 || user.eye_blind)
-		if(user == current_user)
-			off_action.Activate()
-		return 0
-	return 1
+	if( (stat & (NOPOWER|BROKEN)) || !Adjacent(user) || user.eye_blind || user.incapacitated() )
+		user.unset_machine()
+
+/obj/machinery/computer/camera_advanced/Destroy()
+	if(current_user)
+		current_user.unset_machine()
+	if(eyeobj)
+		qdel(eyeobj)
+	return ..()
+
+/obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
+	if(M == current_user)
+		off_action.Activate()
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
-	if(..())
+	if(current_user)
+		user << "The console is already in use!"
 		return
 	if(!iscarbon(user))
 		return
+	if(..())
+		return
 	var/mob/living/carbon/L = user
 
-	if(!current_user)
-		if(!eyeobj)
-			CreateEye()
-		GrantActions(user)
-		current_user = user
-		eyeobj.user = user
-		eyeobj.name = "Camera Eye ([user.name])"
-		L.remote_view = 1
-		L.remote_control = eyeobj
-		L.client.perspective = EYE_PERSPECTIVE
-		if(!eyeobj.initialized)
-			for(var/obj/machinery/camera/C in cameranet.cameras)
-				if(!C.can_use())
-					continue
-				if(C.network&networks)
-					eyeobj.setLoc(get_turf(C))
-					break
+	if(!eyeobj)
+		CreateEye()
+
+	if(!eyeobj.initialized)
+		var/camera_location
+		for(var/obj/machinery/camera/C in cameranet.cameras)
+			if(!C.can_use())
+				continue
+			if(C.network&networks)
+				camera_location = get_turf(C)
+				break
+		if(camera_location)
 			eyeobj.initialized = 1
+			give_eye_control(L)
+			eyeobj.setLoc(camera_location)
 		else
-			eyeobj.setLoc(eyeobj.loc)
+			user.unset_machine()
 	else
-		user << "The console is already in use!"
+		give_eye_control(L)
+		eyeobj.setLoc(eyeobj.loc)
+
+
+
+/obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
+	GrantActions(user)
+	current_user = user
+	eyeobj.eye_user = user
+	eyeobj.name = "Camera Eye ([user.name])"
+	user.remote_control = eyeobj
+	user.reset_perspective(eyeobj)
 
 /mob/camera/aiEye/remote
 	name = "Inactive Camera Eye"
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
-	var/mob/living/carbon/human/user = null
+	var/mob/living/carbon/human/eye_user = null
 	var/obj/machinery/computer/camera_advanced/origin
 	var/initialized = 0
 	var/visible_icon = 0
 	var/image/user_image = null
 
+/mob/camera/aiEye/remote/Destroy()
+	eye_user = null
+	origin = null
+	return ..()
+
 /mob/camera/aiEye/remote/GetViewerClient()
-	if(user)
-		return user.client
+	if(eye_user)
+		return eye_user.client
 	return null
 
 /mob/camera/aiEye/remote/setLoc(T)
-	if(user)
-		if(!isturf(user.loc))
+	if(eye_user)
+		if(!isturf(eye_user.loc))
 			return
 		T = get_turf(T)
 		loc = T
 		cameranet.visibility(src)
-		if(user.client)
-			if(visible_icon)
-				user.client.images -= user_image
+		if(visible_icon)
+			if(eye_user.client)
+				eye_user.client.images -= user_image
 				user_image = image(icon,loc,icon_state,FLY_LAYER)
-				user.client.images += user_image
-			user.client.eye = src
+				eye_user.client.images += user_image
 
 /mob/camera/aiEye/remote/relaymove(mob/user,direct)
 	var/initial = initial(sprint)
@@ -113,14 +136,13 @@
 		return
 	var/mob/living/carbon/C = target
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
-	C.remote_view = 0
 	remote_eye.origin.current_user = null
 	remote_eye.origin.jump_action.Remove(C)
-	remote_eye.user = null
+	remote_eye.eye_user = null
 	if(C.client)
-		C.client.perspective = MOB_PERSPECTIVE
-		C.client.eye = src
-		C.client.images -= remote_eye.user_image
+		C.reset_perspective(null)
+		if(remote_eye.visible_icon)
+			C.client.images -= remote_eye.user_image
 		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
 			C.client.images -= chunk.obscured
 	C.remote_control = null

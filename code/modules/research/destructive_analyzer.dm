@@ -11,17 +11,21 @@ Note: Must be placed within 3 tiles of the R&D Console
 	name = "Destructive Analyzer"
 	desc = "Learn science by destroying things!"
 	icon_state = "d_analyzer"
-	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 0
 
 /obj/machinery/r_n_d/destructive_analyzer/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/destructive_analyzer(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/destructive_analyzer
+	name = "circuit board (Destructive Analyzer)"
+	build_path = /obj/machinery/r_n_d/destructive_analyzer
+	origin_tech = "magnets=2;engineering=2;programming=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1)
 
 /obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
 	var/T = 0
@@ -36,30 +40,15 @@ Note: Must be placed within 3 tiles of the R&D Console
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
+/obj/machinery/r_n_d/destructive_analyzer/disconnect_console()
+	linked_console.linked_destroy = null
+	..()
 
-/obj/machinery/r_n_d/destructive_analyzer/attackby(obj/item/O, mob/user, params)
-	if (shocked)
-		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer", O))
-		if(linked_console)
-			linked_console.linked_destroy = null
-			linked_console = null
-		return
-
-	if(exchange_parts(user, O))
-		return
-
-	default_deconstruction_crowbar(O)
-
-	if (disabled)
-		return
-	if (!linked_console)
-		user << "<span class='warning'>The [src.name] must be linked to an R&D console first!</span>"
-		return
-	if (busy)
-		user << "<span class='warning'>The [src.name] is busy right now.</span>"
-		return
-	if (istype(O, /obj/item) && !loaded_item)
+/obj/machinery/r_n_d/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
+	if(user.a_intent != "harm")
+		. = 1
+		if(!is_insertion_ready(user))
+			return
 		if(!O.origin_tech)
 			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
 			return
@@ -78,4 +67,3 @@ Note: Must be placed within 3 tiles of the R&D Console
 		spawn(10)
 			icon_state = "d_analyzer_l"
 			busy = 0
-	return

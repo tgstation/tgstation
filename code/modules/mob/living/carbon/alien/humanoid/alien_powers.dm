@@ -5,46 +5,21 @@ These are general powers. Specific powers are stored under the appropriate alien
 /*Alien spit now works like a taser shot. It won't home in on the target but will act the same once it does hit.
 Doesn't work on other aliens/AI.*/
 
-/datum/action/spell_action/alien
-
-/datum/action/spell_action/alien/UpdateName()
-	var/obj/effect/proc_holder/alien/ab = target
-	return ab.name
-
-/datum/action/spell_action/alien/IsAvailable()
-	if(!target)
-		return 0
-	var/obj/effect/proc_holder/alien/ab = target
-
-	if(usr)
-		return ab.cost_check(ab.check_turf,usr,1)
-	else
-		if(owner)
-			return ab.cost_check(ab.check_turf,owner,1)
-	return 1
-
-/datum/action/spell_action/alien/CheckRemoval()
-	if(!iscarbon(owner))
-		return 1
-
-	var/mob/living/carbon/C = owner
-	if(target.loc && !(target.loc in C.internal_organs))
-		return 1
-
-	return 0
-
 
 /obj/effect/proc_holder/alien
 	name = "Alien Power"
 	panel = "Alien"
 	var/plasma_cost = 0
 	var/check_turf = 0
-
 	var/has_action = 1
 	var/datum/action/spell_action/alien/action = null
 	var/action_icon = 'icons/mob/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_alien"
+
+/obj/effect/proc_holder/alien/New()
+	..()
+	action = new(src)
 
 /obj/effect/proc_holder/alien/Click()
 	if(!istype(usr,/mob/living/carbon))
@@ -73,7 +48,7 @@ Doesn't work on other aliens/AI.*/
 		if(!silent)
 			user << "<span class='noticealien'>Not enough plasma stored.</span>"
 		return 0
-	if(check_turf && (!isturf(user.loc) || istype(user.loc, /turf/space)))
+	if(check_turf && (!isturf(user.loc) || istype(user.loc, /turf/open/space)))
 		if(!silent)
 			user << "<span class='noticealien'>Bad place for a garden!</span>"
 		return 0
@@ -90,8 +65,7 @@ Doesn't work on other aliens/AI.*/
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		src << "There's already a weed node here."
 		return 0
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("<span class='alertalien'>[user] has planted some alien weeds!</span>"), 1)
+	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
 	new/obj/structure/alien/weeds/node(user.loc)
 	return 1
 
@@ -112,7 +86,18 @@ Doesn't work on other aliens/AI.*/
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		M << "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]"
-		user << {"<span class='noticealien'>You said: "[msg]" to [M]</span>"}
+		user << "<span class='noticealien'>You said: \"[msg]\" to [M]</span>"
+		for(var/ded in dead_mob_list)
+			if(!isobserver(ded))
+				continue
+			var/follow_link_user = FOLLOW_LINK(ded, user)
+			var/follow_link_whispee = FOLLOW_LINK(ded, M)
+			ded << "[follow_link_user] \
+				<span class='name'>[user]</span> \
+				<span class='alertalien'>Alien Whisper --> </span> \
+				[follow_link_whispee] \
+				<span class='name'>[M]</span> \
+				<span class='noticealien'>[msg]</span>"
 	else
 		return 0
 	return 1
@@ -126,7 +111,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
 	var/list/mob/living/carbon/aliens_around = list()
 	for(var/mob/living/carbon/A  in oview(user))
-		if(A.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
 			aliens_around.Add(A)
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
 	if(!M)
@@ -138,7 +123,7 @@ Doesn't work on other aliens/AI.*/
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
 			M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-			user << {"<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"}
+			user << "<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"
 		else
 			user << "<span class='noticealien'>You need to be closer!</span>"
 	return
@@ -164,14 +149,14 @@ Doesn't work on other aliens/AI.*/
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		// TURF CHECK
-		else if(istype(target, /turf/simulated))
+		else if(istype(target, /turf))
 			var/turf/T = target
 			// R WALL
-			if(istype(T, /turf/simulated/wall/r_wall))
+			if(istype(T, /turf/closed/wall/r_wall))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 			// R FLOOR
-			if(istype(T, /turf/simulated/floor/engine))
+			if(istype(T, /turf/open/floor/engine))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		else// Not a type we can acid.
@@ -204,25 +189,67 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin
 	name = "Spit Neurotoxin"
 	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
-	plasma_cost = 50
-	action_icon_state = "alien_neurotoxin"
+	action_icon_state = "alien_neurotoxin_0"
+	active = FALSE
 
-/obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/alien/user)
-	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
+/obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/user)
+	var/message
+	if(active)
+		message = "<span class='notice'>You empty your neurotoxin gland.</span>"
+		remove_ranged_ability(user, message)
+	else
+		message = "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
+		add_ranged_ability(user, message)
+
+/obj/effect/proc_holder/alien/neurotoxin/update_icon()
+	action.button_icon_state = "alien_neurotoxin_[active]"
+	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+	if(..())
+		return
+	var/p_cost = 50
+	if(!iscarbon(user) || user.lying || user.stat)
+		remove_ranged_ability(user)
+		return
+
+	if(user.getPlasma() < p_cost)
+		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
+		remove_ranged_ability(user)
+		return
 
 	var/turf/T = user.loc
 	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
 	if(!isturf(U) || !isturf(T))
-		return 0
+		return FALSE
 
+	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
 	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
 	A.current = U
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
+	A.preparePixelProjectile(target, get_turf(target), user, params)
 	A.fire()
+	user.newtonian_move(get_dir(U, T))
+	user.adjustPlasma(-p_cost)
 
-	return 1
+	return TRUE
 
+/obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
+	if(user.ranged_ability == src)
+		user.ranged_ability = null
+
+/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user, msg)
+	..()
+	if(isalienadult(user))
+		var/mob/living/carbon/alien/humanoid/A = user
+		A.drooling = 1
+		A.update_icons()
+
+/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(mob/living/user, msg)
+	..()
+	if(isalienadult(user))
+		var/mob/living/carbon/alien/humanoid/A = user
+		A.drooling = 0
+		A.update_icons()
 
 /obj/effect/proc_holder/alien/resin
 	name = "Secrete Resin"
@@ -241,8 +268,10 @@ Doesn't work on other aliens/AI.*/
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 0
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
-	if(!choice) return 0
-
+	if(!choice)
+		return 0
+	if (!cost_check(check_turf,user))
+		return 0
 	user << "<span class='notice'>You shape a [choice].</span>"
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 
@@ -261,7 +290,9 @@ Doesn't work on other aliens/AI.*/
 		for(var/atom/movable/A in user.stomach_contents)
 			user.stomach_contents.Remove(A)
 			A.loc = user.loc
-			A.update_pipe_vision()
+			if(isliving(A))
+				var/mob/M = A
+				M.reset_perspective()
 		user.visible_message("<span class='alertealien'>[user] hurls out the contents of their stomach!</span>")
 	return
 
@@ -288,7 +319,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/sneak
 	name = "Sneak"
 	desc = "Blend into the shadows to stalk your prey."
-	var/active = 0
+	active = 0
 
 	action_icon_state = "alien_sneak"
 
@@ -306,16 +337,20 @@ Doesn't work on other aliens/AI.*/
 
 
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel) return 0
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel) return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
+	for(var/X in abilities)
+		var/obj/effect/proc_holder/alien/APH = X
+		if(APH.has_action)
+			APH.action.UpdateButtonIcon()
 	return 1
 
 /mob/living/carbon/alien/adjustPlasma(amount)

@@ -38,7 +38,8 @@
 		activate(reagents.total_volume)
 
 /obj/item/weapon/implant/chem/activate(cause)
-	if(!cause || !imp_in)	return 0
+	if(!cause || !imp_in)
+		return 0
 	var/mob/living/carbon/R = imp_in
 	var/injectamount = null
 	if (cause == "action_button")
@@ -59,3 +60,9 @@
 /obj/item/weapon/implantcase/chem/New()
 	imp = new /obj/item/weapon/implant/chem(src)
 	..()
+	
+/obj/item/weapon/implantcase/chem/attackby(obj/item/weapon/W, mob/user, params)
+	if(imp)
+		imp.attackby(W, user, params)
+	else 
+		return ..()

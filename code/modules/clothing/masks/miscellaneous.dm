@@ -22,14 +22,14 @@
 	icon_state = "sterile"
 	item_state = "sterile"
 	w_class = 1
-	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
+	visor_flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
-	action_button_name = "Adjust Sterile Mask"
-	ignore_maskadjust = 0
+	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
@@ -45,10 +45,9 @@
 	desc = "A rubber pig mask."
 	icon_state = "pig"
 	item_state = "pig"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = 2
-	action_button_name = "Toggle Voice Box"
+	actions_types = list(/datum/action/item_action/toggle_voice_box)
 	var/voicechange = 0
 
 /obj/item/clothing/mask/pig/attack_self(mob/user)
@@ -65,8 +64,7 @@
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!" //It's only ever going to be attached to your face.
 	icon_state = "pig"
 	item_state = "pig"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = 2
 	var/voicechange = 1
 
@@ -81,8 +79,7 @@
 	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
 	item_state = "cowmask"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = 2
 	var/voicechange = 1
 
@@ -96,8 +93,7 @@
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
 	item_state = "horsehead"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEYES|HIDEEARS
 	w_class = 2
 	var/voicechange = 1
 
@@ -111,10 +107,10 @@
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
 	w_class = 1
 	flags_cover = MASKCOVERSMOUTH
-	flags_inv = HIDEFACE
-	visor_flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
 	slot_flags = SLOT_MASK
-	ignore_maskadjust = 0
 	adjusted_flags = SLOT_HEAD
 	icon_state = "bandbotany"
 

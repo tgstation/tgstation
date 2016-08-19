@@ -6,47 +6,21 @@
 		update_inv_back()
 		update_icons()
 		update_transform()
-		//Hud Stuff
-		update_hud()
 
 /mob/living/carbon/monkey/update_icons()
-	update_hud()
-	overlays.Cut()
+	cut_overlays()
 	icon_state = "monkey1"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 ////////
-/mob/living/carbon/monkey/update_inv_wear_mask()
-	var/obj/item/clothing/mask/M = ..()
-	if(M)
-		M.screen_loc = ui_monkey_mask
-		if(client && hud_used)
-			client.screen += M
-	apply_overlay(FACEMASK_LAYER)
-
-
-/mob/living/carbon/monkey/update_inv_head()
-	var/obj/item/H = ..()
-	if(H)
-		H.screen_loc = ui_monkey_head
-		if(client && hud_used)
-			client.screen += H
-	apply_overlay(HEAD_LAYER)
-
-/mob/living/carbon/monkey/update_inv_back()
-	var/obj/item/B = ..()
-	if(B)
-		B.screen_loc = ui_monkey_back
-		if(client && hud_used)
-			client.screen += B
-	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/monkey/update_fire()
 	..("Monkey_burning")
 
 /mob/living/carbon/monkey/update_inv_handcuffed()
-	if(..())
+	remove_overlay(HANDCUFF_LAYER)
+	if(handcuffed)
 		overlays_standing[HANDCUFF_LAYER] = image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
 		apply_overlay(HANDCUFF_LAYER)
 
@@ -57,3 +31,24 @@
 		standing.pixel_y = 8
 		overlays_standing[LEGCUFF_LAYER] = standing
 	apply_overlay(LEGCUFF_LAYER)
+
+
+//monkey HUD updates for items in our inventory
+
+//update whether our head item appears on our hud.
+/mob/living/carbon/monkey/update_hud_head(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		I.screen_loc = ui_monkey_head
+		client.screen += I
+
+//update whether our mask item appears on our hud.
+/mob/living/carbon/monkey/update_hud_wear_mask(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		I.screen_loc = ui_monkey_mask
+		client.screen += I
+
+//update whether our back item appears on our hud.
+/mob/living/carbon/monkey/update_hud_back(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		I.screen_loc = ui_monkey_back
+		client.screen += I

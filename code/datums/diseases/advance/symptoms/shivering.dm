@@ -31,6 +31,10 @@ Bonus
 		var/mob/living/carbon/M = A.affected_mob
 		M << "<span class='warning'>[pick("You feel cold.", "You start shivering.")]</span>"
 		if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-			M.bodytemperature = min(M.bodytemperature - (20 * A.stage), BODYTEMP_COLD_DAMAGE_LIMIT + 1)
-
+			Chill(M, A)
 	return
+
+/datum/symptom/shivering/proc/Chill(mob/living/M, datum/disease/advance/A)
+	var/get_cold = (sqrt(16+A.totalStealth()*2))+(sqrt(21+A.totalResistance()*2))
+	M.bodytemperature = min(M.bodytemperature - (get_cold * A.stage), BODYTEMP_COLD_DAMAGE_LIMIT + 1)
+	return 1

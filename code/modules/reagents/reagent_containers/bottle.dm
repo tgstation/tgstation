@@ -3,15 +3,42 @@
 /obj/item/weapon/reagent_containers/glass/bottle
 	name = "bottle"
 	desc = "A small bottle."
-	icon_state = null
+	icon_state = "bottle"
 	item_state = "atoxinbottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
 
+
 /obj/item/weapon/reagent_containers/glass/bottle/New()
 	..()
 	if(!icon_state)
-		icon_state = "bottle[rand(1,20)]"
+		icon_state = "bottle"
+	update_icon()
+
+/obj/item/weapon/reagent_containers/glass/bottle/on_reagent_change()
+	update_icon()
+
+/obj/item/weapon/reagent_containers/glass/bottle/update_icon()
+	overlays.Cut()
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]-10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 9)
+				filling.icon_state = "[icon_state]-10"
+			if(10 to 29)
+				filling.icon_state = "[icon_state]25"
+			if(30 to 49)
+				filling.icon_state = "[icon_state]50"
+			if(50 to 69)
+				filling.icon_state = "[icon_state]75"
+			if(70 to INFINITY)
+				filling.icon_state = "[icon_state]100"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		overlays += filling
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine
 	name = "epinephrine bottle"
@@ -297,3 +324,15 @@
 	desc = "A small bottle. Contains a sample of Inquisitius."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/fluspanish
+
+/obj/item/weapon/reagent_containers/glass/bottle/tuberculosis
+	name = "Fungal Tuberculosis culture bottle"
+	desc = "A small bottle. Contains a sample of Fungal Tubercle bacillus."
+	icon_state = "bottle3"
+	spawned_disease = /datum/disease/tuberculosis
+
+/obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure
+	name = "BVAK bottle"
+	desc = "A small bottle containing Bio Virus Antidote Kit."
+	icon_state = "bottle5"
+	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)

@@ -19,7 +19,7 @@
 	H << "<font color='green'>The mythical greentext appear at your feet! Pick it up if you dare...</font>"
 
 
-/obj/item/weapon/greentext/
+/obj/item/weapon/greentext
 	name = "greentext"
 	desc = "No one knows what this massive tome does, but it feels <i><font color='green'>desirable</font></i> all the same..."
 	w_class = 4
@@ -28,6 +28,12 @@
 	var/mob/living/last_holder
 	var/mob/living/new_holder
 	var/list/color_altered_mobs = list()
+	burn_state = FIRE_PROOF
+	var/quiet = FALSE
+
+/obj/item/weapon/greentext/New()
+	..()
+	poi_list |= src
 
 /obj/item/weapon/greentext/equipped(mob/living/user as mob)
 	user << "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>"
@@ -39,7 +45,7 @@
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
 	user.color = "#00FF00"
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
@@ -48,7 +54,7 @@
 		user.color = "#FF0000" //ya blew it
 	last_holder 	= null
 	new_holder 		= null
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/greentext/process()
@@ -63,6 +69,7 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
+		burn_state = ON_FIRE
 		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
@@ -70,12 +77,21 @@
 		last_holder.color = "#FF0000"
 		last_holder = new_holder //long live the king
 
-/obj/item/weapon/greentext/Destroy()
+/obj/item/weapon/greentext/Destroy(force)
+	if((burn_state != ON_FIRE) && (!force))
+		return QDEL_HINT_LETMELIVE
+
+	. = ..()
+	poi_list.Remove(src)
 	for(var/mob/M in mob_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
 		if(M in color_altered_mobs)
 			message += " and you're finally able to forgive yourself"
 			M.color = initial(M.color)
 		message += "...</span>"
-		M << message
-	return ..()
+		// can't skip the mob check as it also does the decolouring
+		if(!quiet)
+			M << message
+
+/obj/item/weapon/greentext/quiet
+	quiet = TRUE

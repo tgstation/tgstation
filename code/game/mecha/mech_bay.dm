@@ -1,23 +1,20 @@
-/turf/simulated/floor/mech_bay_recharge_floor               //        Whos idea it was
+/turf/open/floor/mech_bay_recharge_floor               //        Whos idea it was
 	name = "mech bay recharge station"                      //        Recharging turfs
 	icon = 'icons/turf/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
-/turf/simulated/floor/mech_bay_recharge_floor/break_tile()
-	src.ChangeTurf(/turf/simulated/floor/plating)
+/turf/open/floor/mech_bay_recharge_floor/break_tile()
+	src.ChangeTurf(/turf/open/floor/plating)
 
-/turf/simulated/floor/mech_bay_recharge_floor/airless
+/turf/open/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
-
+	initial_gas_mix = "TEMP=2.7"
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	density = 1
 	anchored = 1
-	dir = 4
+	dir = EAST
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	var/obj/mecha/recharging_mech
@@ -29,16 +26,17 @@
 
 /obj/machinery/mech_bay_recharge_port/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mech_recharger(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mech_recharger(null)
+	B.apply_default_parts(src)
 	recharging_turf = get_step(loc, dir)
+
+/obj/item/weapon/circuitboard/machine/mech_recharger
+	name = "circuit board (Mechbay Recharger)"
+	build_path = /obj/machinery/mech_bay_recharge_port
+	origin_tech = "programming=3;powerstorage=3;engineering=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/capacitor = 5)
 
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
 	var/MC
@@ -76,14 +74,16 @@
 	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
 	desc = "Used to control mechbay power ports."
 	icon_screen = "recharge_comp"
 	icon_keyboard = "rd_key"
-	circuit = /obj/item/weapon/circuitboard/mech_bay_power_console
+	circuit = /obj/item/weapon/circuitboard/computer/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
 /obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
@@ -94,33 +94,35 @@
 		return
 	interact(user)
 
-/obj/machinery/computer/mech_bay_power_console/interact(mob/user)
-	var/data
-	if(!recharge_port)
-		data += "<div class='statusDisplay'>No recharging port detected.</div><BR>"
-		data += "<A href='?src=\ref[src];reconnect=1'>Reconnect</A>"
-	else
-		data += "<h3>Mech status</h3>"
-		if(!recharge_port.recharging_mech)
-			data += "<div class='statusDisplay'>No mech detected.</div>"
-		else
-			data += "<div class='statusDisplay'>Integrity: [recharge_port.recharging_mech.health]<BR>"
-			if(recharge_port.recharging_mech.cell.crit_fail)
-				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
-			else
-				data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
+/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "mech_bay_power_console", "Mech Bay Power Control Console", 400, 170, master_ui, state)
+		ui.open()
 
-	var/datum/browser/popup = new(user, "mech recharger", name, 300, 300)
-	popup.set_content(data)
-	popup.open()
-	return
-
-/obj/machinery/computer/mech_bay_power_console/Topic(href, href_list)
+/obj/machinery/computer/mech_bay_power_console/ui_act(action, params)
 	if(..())
 		return
-	if(href_list["reconnect"])
-		reconnect()
-	updateUsrDialog()
+	switch(action)
+		if("reconnect")
+			reconnect()
+			. = TRUE
+			update_icon()
+
+/obj/machinery/computer/mech_bay_power_console/ui_data(mob/user)
+	var/list/data = list()
+	if(recharge_port && !qdeleted(recharge_port))
+		data["recharge_port"] = list("mech" = null)
+		if(recharge_port.recharging_mech && !qdeleted(recharge_port.recharging_mech))
+			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.health, "maxhealth" = initial(recharge_port.recharging_mech.health), "cell" = null)
+			if(recharge_port.recharging_mech.cell && !qdeleted(recharge_port.recharging_mech.cell))
+				data["recharge_port"]["mech"]["cell"] = list(
+				"critfail" = recharge_port.recharging_mech.cell.crit_fail,
+				"charge" = recharge_port.recharging_mech.cell.charge,
+				"maxcharge" = recharge_port.recharging_mech.cell.maxcharge
+				)
+	return data
+
 
 /obj/machinery/computer/mech_bay_power_console/proc/reconnect()
 	if(recharge_port)
@@ -139,16 +141,11 @@
 		else
 			recharge_port = null
 
-/obj/machinery/computer/mech_bay_power_console/process()
-	if(recharge_port && recharge_port.recharging_mech && recharge_port.recharging_mech.cell)
-		updateDialog()
-
-
 /obj/machinery/computer/mech_bay_power_console/update_icon()
 	..()
 	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || stat & (NOPOWER|BROKEN))
 		return
-	overlays += "recharge_comp_on"
+	add_overlay("recharge_comp_on")
 
 /obj/machinery/computer/mech_bay_power_console/initialize()
 	reconnect()

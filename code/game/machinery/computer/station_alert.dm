@@ -1,83 +1,59 @@
-
 /obj/machinery/computer/station_alert
 	name = "station alert console"
 	desc = "Used to access the station's automated alert system."
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
-	circuit = /obj/item/weapon/circuitboard/stationalert
-	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
+	circuit = /obj/item/weapon/circuitboard/computer/stationalert
+	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
 
-/obj/machinery/computer/station_alert/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-	return
+/obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "station_alert", name, 300, 500, master_ui, state)
+		ui.open()
 
+/obj/machinery/computer/station_alert/ui_data(mob/user)
+	var/list/data = list()
 
-/obj/machinery/computer/station_alert/interact(mob/user)
-	usr.set_machine(src)
-	var/dat = ""
-	for (var/cat in src.alarms)
-		dat += text("<h2>[]</h2>", cat)
-		var/list/L = src.alarms[cat]
-		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
-				var/area/A = alm[1]
-				var/list/sources = alm[3]
-				dat += "<NOBR>"
-				dat += "&bull; "
-				dat += "[format_text(A.name)]"
-				if (sources.len > 1)
-					dat += text(" - [] sources", sources.len)
-				dat += "</NOBR><BR>\n"
-		else
-			dat += "-- All Systems Nominal<BR>\n"
-		dat += "<BR>\n"
-	//user << browse(dat, "window=alerts")
-	//onclose(user, "alerts")
-	var/datum/browser/popup = new(user, "alerts", "Station Alert Console")
-	popup.add_head_content("<META HTTP-EQUIV='Refresh' CONTENT='10'>")
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
+	data["alarms"] = list()
+	for(var/class in alarms)
+		data["alarms"][class] = list()
+		for(var/area in alarms[class])
+			data["alarms"][class] += area
 
+	return data
 
-/obj/machinery/computer/station_alert/Topic(href, href_list)
-	if(..())
-		return
-	return
-
-
-/obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
-	if(alarmsource.z != z)
+/obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
+	if(source.z != z)
 		return
 	if(stat & (BROKEN))
 		return
-	var/list/L = src.alarms[class]
-	for (var/I in L)
+
+	var/list/L = alarms[class]
+	for(var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
 			var/list/sources = alarm[3]
-			if (!(alarmsource in sources))
-				sources += alarmsource
+			if (!(source in sources))
+				sources += source
 			return 1
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
-	if (O && istype(O, /list))
+	if(O && istype(O, /list))
 		CL = O
 		if (CL.len == 1)
 			C = CL[1]
-	else if (O && istype(O, /obj/machinery/camera))
+	else if(O && istype(O, /obj/machinery/camera))
 		C = O
-	L[A.name] = list(A, (C ? C : O), list(alarmsource))
+	L[A.name] = list(A, (C ? C : O), list(source))
 	return 1
 
 
 /obj/machinery/computer/station_alert/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat & (BROKEN))
 		return
-	var/list/L = src.alarms[class]
+	var/list/L = alarms[class]
 	var/cleared = 0
 	for (var/I in L)
 		if (I == A.name)
@@ -92,17 +68,16 @@
 
 
 /obj/machinery/computer/station_alert/process()
-	update_icon()
 	..()
-	return
 
 /obj/machinery/computer/station_alert/update_icon()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	var/active_alarms = 0
-	for (var/cat in src.alarms)
-		var/list/L = src.alarms[cat]
-		if(L.len) active_alarms = 1
+	var/active_alarms = FALSE
+	for(var/cat in alarms)
+		var/list/L = alarms[cat]
+		if(L.len)
+			active_alarms = TRUE
 	if(active_alarms)
-		overlays += "alert:2"
+		add_overlay("alert:2")

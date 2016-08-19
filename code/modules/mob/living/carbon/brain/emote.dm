@@ -53,6 +53,7 @@
 
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			return
 
 	if (message)
 		log_emote("[name]/[key] : [message]")

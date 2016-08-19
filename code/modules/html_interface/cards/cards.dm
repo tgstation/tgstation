@@ -7,8 +7,7 @@
 	src.head = src.head + "<link rel=\"stylesheet\" type=\"text/css\" href=\"cards.css\" />"
 	src.updateLayout("<div id=\"headbar\"></div><div class=\"wrapper\"><table><tr><td style=\"vertical-align: middle;\"><div id=\"hand\"></div></td></tr></table></div>")
 
-/datum/html_interface/cards/sendResources(client/client)
-	. = ..() // we need the default resources
-
-	client << browse_rsc('cards.css')
-	client << browse_rsc('cards.png')
+/datum/html_interface/cards/registerResources(var/list/resources = list())
+	resources["cards.css"] = 'cards.css'
+	resources["cards.png"] = 'cards.png'
+	..(resources)

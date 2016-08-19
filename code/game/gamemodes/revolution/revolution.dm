@@ -20,6 +20,11 @@
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 
+	announce_span = "danger"
+	announce_text = "Some crewmembers are attempting a coup!\n\
+	<span class='danger'>Revolutionaries</span>: Expand your cause and overthrow the heads of staff by execution or otherwise.\n\
+	<span class='notice'>Crew</span>: Prevent the revolutionaries from taking over the station."
+
 	var/finished = 0
 	var/check_counter = 0
 	var/max_headrevs = 3
@@ -78,12 +83,11 @@
 		//	equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 		//	Removing revolutionary uplinks.	-Pete
 			equip_revolutionary(rev_mind.current)
-			update_rev_icons_added(rev_mind)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
 	modePlayer += head_revolutionaries
-	SSshuttle.emergencyNoEscape = 1
+	SSshuttle.registerHostileEnvironment(src)
 	..()
 
 
@@ -107,13 +111,11 @@
 		rev_mind.objectives += rev_obj
 
 /datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
-	var/obj_count = 1
+	update_rev_icons_added(rev_mind)
 	if (you_are)
 		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
-	for(var/datum/objective/objective in rev_mind.objectives)
-		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		rev_mind.special_role = "Head Revolutionary"
-		obj_count++
+	rev_mind.special_role = "Head Revolutionary"
+	rev_mind.announce_objectives()
 
 /////////////////////////////////////////////////////////////////////////////////
 //This are equips the rev heads with their gear, and makes the clown not clumsy//
@@ -148,7 +150,7 @@
 	if (!where2)
 		mob << "The Syndicate were unfortunately unable to get you a chameleon security HUD."
 	else
-		mob << "The chameleon security HUD in your [where2] will help you keep track of who is loyalty-implanted, and unable to be recruited."
+		mob << "The chameleon security HUD in your [where2] will help you keep track of who is mindshield-implanted, and unable to be recruited."
 
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
@@ -192,7 +194,7 @@
 			if(khrushchev.current && khrushchev.current.client && khrushchev.current.stat != DEAD)
 				if(ROLE_REV in khrushchev.current.client.prefs.be_special)
 					promotable_revs += khrushchev
-		if(promotable_revs)
+		if(promotable_revs.len)
 			var/datum/mind/stalin = pick(promotable_revs)
 			revolutionaries -= stalin
 			head_revolutionaries += stalin
@@ -216,12 +218,8 @@
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
 	if(config.continuous["revolution"])
-		if(finished != 0)
-			SSshuttle.emergencyNoEscape = 0
-			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-				SSshuttle.emergency.mode = SHUTTLE_DOCKED
-				SSshuttle.emergency.timer = world.time
-				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+		if(finished)
+			SSshuttle.clearHostileEnvironment(src)
 		return ..()
 	if(finished != 0)
 		return 1
@@ -231,6 +229,15 @@
 ///////////////////////////////////////////////////
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
+/proc/is_revolutionary(mob/M)
+	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.revolutionaries
+
+/proc/is_head_revolutionary(mob/M)
+	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.head_revolutionaries
+
+/proc/is_revolutionary_in_general(mob/M)
+	return is_revolutionary(M) || is_head_revolutionary(M)
+
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in command_positions)
 		return 0
@@ -249,8 +256,8 @@
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
-	if(jobban_isbanned(rev_mind.current, "Revolutionary"))
-		replace_jobbaned_player(rev_mind.current, "Revolutionary")
+	if(jobban_isbanned(rev_mind.current, ROLE_REV))
+		replace_jobbaned_player(rev_mind.current, ROLE_REV, ROLE_REV)
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
@@ -268,7 +275,7 @@
 
 		if(beingborged)
 			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>"
-			message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[rev_mind.current]'>FLW</A>) has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
+			message_admins("[ADMIN_LOOKUPFLW(rev_mind.current)] has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
 			rev_mind.current.Paralyse(5)
@@ -315,7 +322,7 @@
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && rev_mind.current.client && T && (T.z == ZLEVEL_STATION))
+		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && T && (T.z == ZLEVEL_STATION))
 			if(ishuman(rev_mind.current))
 				return 0
 	return 1

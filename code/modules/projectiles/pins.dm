@@ -4,6 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "firing_pin"
 	item_state = "pen"
+	origin_tech = "materials=2;combat=4"
 	flags = CONDUCT
 	w_class = 1
 	attack_verb = list("poked")
@@ -78,6 +79,7 @@
 	desc = "This safety firing pin allows weapons to be fired within proximity to a firing range."
 	fail_message = "<span class='warning'>TEST RANGE CHECK FAILED.</span>"
 	pin_removeable = 1
+	origin_tech = "combat=2;materials=2"
 
 /obj/item/device/firing_pin/test_range/pin_auth(mob/living/user)
 	for(var/obj/machinery/magnetic_controller/M in range(user, 3))
@@ -98,11 +100,11 @@
 			return 1
 	return 0
 
-/obj/item/device/firing_pin/implant/loyalty
-	name = "loyalty firing pin"
-	desc = "This Security firing pin authorizes the weapon for only loyalty-implanted users."
+/obj/item/device/firing_pin/implant/mindshield
+	name = "mindshield firing pin"
+	desc = "This Security firing pin authorizes the weapon for only mindshield-implanted users."
 	icon_state = "firing_pin_loyalty"
-	req_implant = /obj/item/weapon/implant/loyalty
+	req_implant = /obj/item/weapon/implant/mindshield
 
 /obj/item/device/firing_pin/implant/pindicate
 	name = "syndicate firing pin"
@@ -210,3 +212,8 @@
 	icon_state = "firing_pin_blue"
 	suit_requirement = /obj/item/clothing/suit/bluetag
 	tagcolor = "blue"
+
+/obj/item/device/firing_pin/Destroy()
+	if(gun)
+		gun.pin = null
+	return ..()

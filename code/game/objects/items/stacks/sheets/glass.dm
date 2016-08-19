@@ -21,11 +21,13 @@
 	is_cyborg = 1
 	cost = 500
 
+/obj/item/stack/sheet/glass/fifty
+	amount = 50
+
 /obj/item/stack/sheet/glass/attack_self(mob/user)
 	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
-	..()
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
@@ -56,18 +58,23 @@
 		return ..()
 
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user)
-	if(!user || !src)	return 0
-	if(!istype(user.loc,/turf)) return 0
+	if(!user || !src)
+		return 0
+	if(!istype(user.loc,/turf))
+		return 0
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
-	if(zero_amount())	return 0
+	if(zero_amount())
+		return 0
 	var/title = "Sheet-Glass"
 	title += " ([src.get_amount()] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 
 			var/list/directions = new/list(cardinal)
 			var/i = 0
@@ -94,15 +101,17 @@
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window( user.loc, 0 )
-			W.dir = dir_to_set
+			W.setDir(dir_to_set)
 			W.ini_dir = W.dir
 			W.anchored = 0
 			W.air_update_turf(1)
 			src.use(1)
 			W.add_fingerprint(user)
 		if("Full Window")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 			if(src.get_amount() < 2)
 				user << "<span class='warning'>You need more glass to do that!</span>"
 				return 1
@@ -153,8 +162,10 @@
 	construct_window(user)
 
 /obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
-	if(!user || !src)	return 0
-	if(!istype(user.loc,/turf)) return 0
+	if(!user || !src)
+		return 0
+	if(!istype(user.loc,/turf))
+		return 0
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
@@ -162,8 +173,10 @@
 	title += " ([src.get_amount()] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 			var/list/directions = new/list(cardinal)
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
@@ -190,15 +203,17 @@
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced( user.loc, 1 )
 			W.state = 0
-			W.dir = dir_to_set
+			W.setDir(dir_to_set)
 			W.ini_dir = W.dir
 			W.anchored = 0
 			W.add_fingerprint(user)
 			src.use(1)
 
 		if("Full Window")
-			if(!src)	return 1
-			if(src.loc != user)	return 1
+			if(!src)
+				return 1
+			if(src.loc != user)
+				return 1
 			if(src.get_amount() < 2)
 				user << "<span class='warning'>You need more glass to do that!</span>"
 				return 1
@@ -237,16 +252,16 @@
 			src.use(5)
 			switch(user.dir)
 				if(SOUTH)
-					WD.dir = SOUTH
+					WD.setDir(SOUTH)
 					WD.ini_dir = SOUTH
 				if(EAST)
-					WD.dir = EAST
+					WD.setDir(EAST)
 					WD.ini_dir = EAST
 				if(WEST)
-					WD.dir = WEST
+					WD.setDir(WEST)
 					WD.ini_dir = WEST
 				else //If the user is facing northeast. northwest, southeast, southwest or north, default to north
-					WD.dir = NORTH
+					WD.setDir(NORTH)
 					WD.ini_dir = NORTH
 		else
 			return 1
@@ -290,7 +305,8 @@
 			pixel_y = rand(-5, 5)
 
 /obj/item/weapon/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
-	if(!proximity || !(src in user)) return
+	if(!proximity || !(src in user))
+		return
 	if(isturf(A))
 		return
 	if(istype(A, /obj/item/weapon/storage))
@@ -301,8 +317,8 @@
 		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
-			var/obj/item/organ/limb/affecting = H.get_organ(organ)
-			if(affecting.take_damage(force / 2))
+			var/obj/item/bodypart/affecting = H.get_bodypart(organ)
+			if(affecting && affecting.take_damage(force / 2))
 				H.update_damage_overlays(0)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
@@ -323,7 +339,8 @@
 				G.attackby(NG, user)
 			user << "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>"
 			qdel(src)
-	..()
+	else
+		return ..()
 
 /obj/item/weapon/shard/Crossed(mob/AM)
 	if(istype(AM) && has_gravity(loc))
@@ -331,9 +348,13 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(PIERCEIMMUNE in H.dna.species.specflags)
-				return 0
+				return
+			var/picked_def_zone = pick("l_leg", "r_leg")
+			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
+			if(!istype(O))
+				return
 			if(!H.shoes)
-				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
+				H.apply_damage(5, BRUTE, picked_def_zone)
 				H.Weaken(3)
 				if(cooldown < world.time - 10) //cooldown to avoid message spam.
 					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \

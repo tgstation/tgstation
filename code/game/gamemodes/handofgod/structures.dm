@@ -3,7 +3,7 @@
 	if(global_handofgod_traptypes.len && global_handofgod_structuretypes.len)
 		return
 
-	var/list/types = typesof(/obj/structure/divine) - /obj/structure/divine - /obj/structure/divine/trap
+	var/list/types = subtypesof(/obj/structure/divine) - /obj/structure/divine/trap
 	for(var/T in types)
 		var/obj/structure/divine/D = T
 		if(initial(D.constructable))
@@ -28,10 +28,17 @@
 	var/side = "neutral" //"blue" or "red", also used for colouring structures when construction is started by a deity
 	var/health = 100
 	var/maxhealth = 100
+	var/deactivated = 0		//Structures being hidden can't be used. Mainly to prevent invisible defense pylons.
 	var/autocolours = TRUE //do we colour to our side?
 
 /obj/structure/divine/New()
 	..()
+
+/obj/structure/divine/proc/deactivate()
+	deactivated = 1
+
+/obj/structure/divine/proc/activate()
+	deactivated = 0
 
 
 /obj/structure/divine/proc/update_icons()
@@ -45,51 +52,67 @@
 	return ..()
 
 
-/obj/structure/divine/proc/healthcheck()
+
+/obj/structure/divine/attackby(obj/item/I, mob/user)
+
+	//Structure conversion/capture
+	if(istype(I, /obj/item/weapon/godstaff))
+		if(!is_handofgod_cultist(user))
+			user << "<span class='notice'>You're not quite sure what the hell you're even doing.</span>"
+			return
+		var/obj/item/weapon/godstaff/G = I
+		if(G.god && deity != G.god)
+			assign_deity(G.god, alert_old_deity = TRUE)
+			visible_message("<span class='boldnotice'>\The [src] has been captured by [user]!</span>")
+	else
+		return ..()
+
+/obj/structure/divine/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype, 1)
+
+/obj/structure/divine/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health -= damage
 	if(!health)
 		visible_message("<span class='danger'>\The [src] was destroyed!</span>")
 		qdel(src)
 
 
-/obj/structure/divine/attackby(obj/item/I, mob/user)
-	if(!I || (I.flags & ABSTRACT))
-		return 0
+/obj/structure/divine/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
-	//Structure conversion/capture
-	if(istype(I, /obj/item/weapon/godstaff))
-		var/obj/item/weapon/godstaff/G = I
-		if(G.god && deity != G.god)
-			assign_deity(G.god, alert_old_deity = TRUE)
-			visible_message("<span class='boldnotice'>\The [src] has been captured by [user]!</span>")
-		return
 
+/obj/structure/divine/attack_alien(mob/living/carbon/alien/humanoid/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(get_turf(src), I.hitsound, 50, 1)
-	visible_message("<span class='danger'>\The [src] has been attacked with \the [I][(user ? " by [user]" : ".")]!</span>")
-	health = max(0, health-I.force)
-	healthcheck()
+	add_hiddenprint(user)
+	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	take_damage(20, BRUTE, 0)
 
-
-/obj/structure/divine/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return 0
-
-	if(Proj.damage_type == BRUTE || Proj.damage_type == BURN)
-		health = max(0, health-Proj.damage)
-		healthcheck()
-
-
-/obj/structure/divine/attack_animal(mob/living/simple_animal/M)
-	if(!M)
-		return 0
-
-	visible_message("<span class='danger'>\The [src] has been attacked by \the [M]!</span>")
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	if(!damage)
-		return
-	health = max(0, health-damage)
-	healthcheck()
+/obj/machinery/attack_animal(mob/living/simple_animal/M)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(M.melee_damage_upper > 0 || M.obj_damage)
+		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
+		"<span class='danger'>You smash against the [src.name].</span>")
+		if(M.obj_damage)
+			take_damage(M.obj_damage, M.melee_damage_type, 1)
+		else
+			take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
 
 
 /obj/structure/divine/proc/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
@@ -189,7 +212,8 @@
 			user << "<span class='notice'>\The [src] does not require any more greater gems!"
 		return
 
-	..()
+	else
+		return ..()
 
 
 /obj/structure/divine/construction_holder/proc/check_completion()
@@ -217,7 +241,7 @@
 
 /obj/structure/divine/nexus
 	name = "nexus"
-	desc = "It anchors a deity to this world. It radiates an unusual aura. Cultists protect this at all costs. It looks well protected from explosion shock."
+	desc = "It anchors a deity to this world. It radiates an unusual aura. Cultists protect this at all costs. It looks well protected from explosive shock."
 	icon_state = "nexus"
 	health = 500
 	maxhealth = 500
@@ -229,11 +253,22 @@
 /obj/structure/divine/nexus/ex_act()
 	return
 
-
-/obj/structure/divine/nexus/healthcheck()
+/obj/structure/divine/nexus/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health -= damage
 	if(deity)
 		deity.update_health_hud()
-
 	if(!health)
 		if(!qdeleted(deity) && deity.nexus_required)
 			deity << "<span class='danger'>Your nexus was destroyed. You feel yourself fading...</span>"
@@ -243,11 +278,10 @@
 
 
 /obj/structure/divine/nexus/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/structure/divine/nexus/process()
-	healthcheck()
 	if(deity)
 		deity.update_followers()
 		deity.add_faith(faith_regen_rate + (powerpylons.len / 5) + (deity.alive_followers / 3))
@@ -256,7 +290,7 @@
 
 
 /obj/structure/divine/nexus/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
@@ -266,7 +300,7 @@
 	icon_state = "conduit"
 	health = 150
 	maxhealth = 150
-	metal_cost = 20
+	metal_cost = 10
 	glass_cost = 5
 
 
@@ -277,6 +311,15 @@
 	if(deity)
 		deity.conduits += src
 
+/obj/structure/divine/conduit/deactivate()
+	..()
+	if(deity)
+		deity.conduits -= src
+
+/obj/structure/divine/conduit/activate()
+	..()
+	if(deity)
+		deity.conduits += src
 
 /* //No good sprites, and not enough items to make it viable yet
 /obj/structure/divine/forge
@@ -295,12 +338,14 @@
 	desc = "An altar dedicated to a deity.  Cultists can \"forcefully teach\" their non-aligned crewmembers to join their side and take up their deity."
 	icon_state = "convertaltar"
 	density = 0
-	metal_cost = 15
+	metal_cost = 10
 	can_buckle = 1
 
 
 /obj/structure/divine/convertaltar/attack_hand(mob/living/user)
 	..()
+	if(deactivated)
+		return
 	var/mob/living/carbon/human/H = locate() in get_turf(src)
 	if(!is_handofgod_cultist(user))
 		user << "<span class='notice'>You try to use it, but unfortunately you don't know any rituals.</span>"
@@ -323,12 +368,14 @@
 	desc = "An altar designed to perform blood sacrifice for a deity.  The cultists performing the sacrifice will gain a powerful material to use in their forge.  Sacrificing a prophet will yield even better results."
 	icon_state = "sacrificealtar"
 	density = 0
-	metal_cost = 25
+	metal_cost = 15
 	can_buckle = 1
 
 
 /obj/structure/divine/sacrificealtar/attack_hand(mob/living/user)
 	..()
+	if(deactivated)
+		return
 	var/mob/living/L = locate() in get_turf(src)
 	if(!is_handofgod_cultist(user))
 		user << "<span class='notice'>You try to use it, but unfortunately you don't know any rituals.</span>"
@@ -387,23 +434,27 @@
 	autocolours = FALSE
 	var/time_between_uses = 1800
 	var/last_process = 0
+	var/cult_only = TRUE
 
+/obj/structure/divine/healingfountain/anyone
+	desc = "A fountain containing the waters of life."
+	cult_only = FALSE
 
 /obj/structure/divine/healingfountain/attack_hand(mob/living/user)
+	if(deactivated)
+		return
 	if(last_process + time_between_uses > world.time)
 		user << "<span class='notice'>The fountain appears to be empty.</span>"
 		return
 	last_process = world.time
-	if(!is_handofgod_cultist(user))
+	if(!is_handofgod_cultist(user) && cult_only)
 		user << "<span class='danger'><B>The water burns!</b></spam>"
 		user.reagents.add_reagent("hell_water",20)
 	else
 		user << "<span class='notice'>The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
-		user.reagents.add_reagent("doctorsdelight",20)
+		user.reagents.add_reagent("godblood",20)
 	update_icons()
-	spawn(time_between_uses)
-		if(src)
-			update_icons()
+	addtimer(src, "update_icons", time_between_uses)
 
 
 /obj/structure/divine/healingfountain/update_icons()
@@ -421,13 +472,13 @@
 	health = 30
 	maxhealth = 30
 	metal_cost = 5
-	glass_cost = 20
+	glass_cost = 15
 
 
 /obj/structure/divine/powerpylon/New()
 	..()
 	if(deity && deity.god_nexus)
-		deity.god_nexus.powerpylons |= src
+		deity.god_nexus.powerpylons += src
 
 
 /obj/structure/divine/powerpylon/Destroy()
@@ -435,6 +486,16 @@
 		deity.god_nexus.powerpylons -= src
 	return ..()
 
+
+/obj/structure/divine/powerpylon/deactivate()
+	..()
+	if(deity)
+		deity.god_nexus.powerpylons -= src
+
+/obj/structure/divine/powerpylon/activate()
+	..()
+	if(deity)
+		deity.god_nexus.powerpylons += src
 
 /obj/structure/divine/defensepylon
 	name = "defense pylon"
@@ -444,12 +505,12 @@
 	maxhealth = 150
 	metal_cost = 25
 	glass_cost = 30
-	var/obj/machinery/gun_turret/defensepylon_internal_turret/pylon_gun
+	var/obj/machinery/porta_turret/defensepylon_internal_turret/pylon_gun
 
 
 /obj/structure/divine/defensepylon/New()
 	..()
-	pylon_gun = new()
+	pylon_gun = new(src)
 	pylon_gun.base = src
 	pylon_gun.faction = list("[side] god")
 
@@ -471,52 +532,66 @@
 
 /obj/structure/divine/defensepylon/attack_god(mob/camera/god/user)
 	if(user.side == side)
+		if(deactivated)
+			user << "You need to reveal it first!"
+			return
 		pylon_gun.on = !pylon_gun.on
 		icon_state = (pylon_gun.on) ? "defensepylon-[side]" : "defensepylon"
 
+/obj/structure/divine/defensepylon/deactivate()
+	..()
+	pylon_gun.on = 0
+	icon_state = (pylon_gun.on) ? "defensepylon-[side]" : "defensepylon"
+
+/obj/structure/divine/defensepylon/activate()
+	..()
+	pylon_gun.on = 1
+	icon_state = (pylon_gun.on) ? "defensepylon-[side]" : "defensepylon"
 
 //This sits inside the defensepylon, to avoid copypasta
-/obj/machinery/gun_turret/defensepylon_internal_turret
+/obj/machinery/porta_turret/defensepylon_internal_turret
 	name = "defense pylon"
 	desc = "A plyon which is blessed to withstand many blows, and fire strong bolts at nonbelievers."
 	icon = 'icons/obj/hand_of_god_structures.dmi'
-	icon_state = "defensepylon"
+	installation = null
+	always_up = 1
+	use_power = 0
+	has_cover = 0
 	health = 200
+	projectile =  /obj/item/projectile/beam/pylon_bolt
+	eprojectile =  /obj/item/projectile/beam/pylon_bolt
+	shot_sound =  'sound/weapons/emitter2.ogg'
+	eshot_sound = 'sound/weapons/emitter2.ogg'
 	base_icon_state = "defensepylon"
-	scan_range = 7
+	active_state = ""
+	off_state = ""
 	faction = null
-	projectile_type = /obj/item/projectile/beam/pylon_bolt
-	fire_sound = 'sound/weapons/emitter2.ogg'
+	emp_vunerable = 0
 	var/side = "neutral"
-	var/on = 1
 
-/obj/machinery/gun_turret/defensepylon_internal_turret/process()
-	if(on)
-		..()
+/obj/machinery/porta_turret/defensepylon_internal_turret/setup()
+	return
 
-/obj/machinery/gun_turret/defensepylon_internal_turret/fire(atom/target)
+/obj/machinery/porta_turret/defensepylon_internal_turret/shootAt(atom/movable/target)
 	var/obj/item/projectile/A = ..()
 	if(A)
 		A.color = side
 
-/obj/machinery/gun_turret/defensepylon_internal_turret/validate_target(atom/target)
-	. = ..()
-	if(.)
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.handcuffed) //dishonourable to kill somebody who might be converted.
-				return 0
+/obj/machinery/porta_turret/defensepylon_internal_turret/assess_perp(mob/living/carbon/human/perp)
+	if(perp.handcuffed) //dishonourable to kill somebody who might be converted.
+		return 0
+	var/badtarget = 0
+	switch(side)
+		if("blue")
+			badtarget = is_handofgod_bluecultist(perp)
+		if("red")
+			badtarget = is_handofgod_redcultist(perp)
+		else
+			badtarget = 1
+	if(badtarget)
+		return 0
+	return 10
 
-		var/badtarget = 0
-		switch(side)
-			if("blue")
-				badtarget = is_handofgod_bluecultist(target)
-			if("red")
-				badtarget = is_handofgod_redcultist(target)
-			else
-				badtarget = 1
-		if(badtarget)
-			return 0
 
 
 /obj/item/projectile/beam/pylon_bolt

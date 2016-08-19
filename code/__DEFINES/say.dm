@@ -11,7 +11,6 @@
 #define MODE_INTERCOM "intercom"
 #define MODE_BINARY "binary"
 #define MODE_WHISPER "whisper"
-#define MODE_SECURE_HEADSET "secure headset"
 #define MODE_DEPARTMENT "department"
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
@@ -24,8 +23,12 @@
 #define SPAN_SANS "sans"
 #define SPAN_PAPYRUS "papyrus"
 #define SPAN_REALLYBIG "reallybig"
+#define SPAN_COMMAND "command_headset"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS 1
 #define REDUCE_RANGE 2
 #define NOPASS 4
+
+// A link given to ghost alice to follow bob
+#define FOLLOW_LINK(alice, bob) "<a href=?src=\ref[alice];follow=\ref[bob]>(F)</a>"
