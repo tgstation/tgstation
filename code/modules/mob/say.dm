@@ -35,10 +35,6 @@
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
-	if(!deadchat_allowed)
-		src << "<span class='danger'>Deadchat is globally muted.</span>"
-		return
-
 	if(jobban_isbanned(src, "OOC"))
 		src << "<span class='danger'>You have been banned from deadchat.</span>"
 		return
