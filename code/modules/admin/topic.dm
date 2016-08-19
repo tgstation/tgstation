@@ -203,12 +203,6 @@
 				if(!banckey || !banreason || !banjob || !banduration)
 					usr << "Not enough parameters (Requires ckey, reason and job)."
 					return
-			if(BANTYPE_APPEARANCE)
-				if(!banckey || !banreason)
-					usr << "Not enough parameters (Requires ckey and reason)."
-					return
-				banduration = null
-				banjob = null
 			if(BANTYPE_ADMIN_PERMA)
 				if(!banckey || !banreason)
 					usr << "Not enough parameters (Requires ckey and reason)."

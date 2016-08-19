@@ -1,3 +1,13 @@
+19 August 2016, by Shadowlight213
+
+Changed appearance bans to be jobbans.
+
+UPDATE `bans` SET `job` = "appearance", `bantype` = "JOB_PERMABAN" WHERE `bantype` = "APPEARANCE_PERMABAN"
+
+Remember to add a prefix to the table name if you use them
+
+----------------------------------------------------
+
 3 July 2016, by Jordie0608
 
 Modified table 'poll_question', adding column 'dontshow' which was recently added to the server schema.
