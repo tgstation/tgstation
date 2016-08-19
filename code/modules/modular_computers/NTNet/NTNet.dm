@@ -11,7 +11,7 @@ var/global/datum/ntnet/ntnet_global = new()
 	var/list/fileservers = list()
 	// Amount of logs the system tries to keep in memory. Keep below 999 to prevent byond from acting weirdly.
 	// High values make displaying logs much laggier.
-	var/setting_maxlogcount = 100
+	var/setting_maxlogcount = 300
 
 	// These only affect wireless. LAN (consoles) are unaffected since it would be possible to create scenario where someone turns off NTNet, and is unable to turn it back on since it refuses connections
 	var/setting_softwaredownload = 1
