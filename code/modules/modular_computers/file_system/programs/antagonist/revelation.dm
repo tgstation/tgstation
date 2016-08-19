@@ -29,7 +29,7 @@
 		qdel(computer.hard_drive)
 		computer.take_damage(25, 10, 1, 1)
 		if(computer.battery_module && prob(25))
-			explosivepower += (computer.battery_module.battery_rating / 750)
+			explosivepower += (computer.battery_module.battery.charge / 750)
 			qdel(computer.battery_module)
 			computer.visible_message("<span class='notice'>\The [computer]'s battery explodes in rain of sparks.</span>")
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
