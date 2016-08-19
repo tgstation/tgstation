@@ -146,7 +146,7 @@
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
-	cost = 30000
+	cost = 45000
 	contains = list(/obj/item/weapon/implant/uplink)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
