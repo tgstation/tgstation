@@ -29,6 +29,8 @@ var/global/ntnet_card_uid = 1
 	..(l)
 	identification_id = ntnet_card_uid
 	ntnet_card_uid++
+	var/olddesc = desc
+	desc = "[olddesc] This one appears to have a network ID of [identification_id]"
 
 /obj/item/weapon/computer_hardware/network_card/advanced
 	name = "advanced NTNet network card"
