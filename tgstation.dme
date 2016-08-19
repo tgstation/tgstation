@@ -14,7 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\butthurtstation.dm"
+#include "_maps\tgstation2.dm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -1322,6 +1322,7 @@
 #include "code\modules\mob\living\carbon\death.dm"
 #include "code\modules\mob\living\carbon\emote.dm"
 #include "code\modules\mob\living\carbon\examine.dm"
+#include "code\modules\mob\living\carbon\give.dm"
 #include "code\modules\mob\living\carbon\inventory.dm"
 #include "code\modules\mob\living\carbon\life.dm"
 #include "code\modules\mob\living\carbon\say.dm"
