@@ -739,79 +739,84 @@
 	force = 20
 	hitsound = "swing_hit"
 	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
-	var/cooldown_time = 20
-	var/chaser_cooldown = 101
-	var/chaser_timer = 0
-	var/timer = 0
-	var/blast_range = 3
-	var/obj/effect/hierophant/rune
-	var/teleporting = FALSE
-	var/friendly_fire_check = FALSE
+	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
+	var/chaser_cooldown = 101 //how long the cooldown between firing chasers at mobs is
+	var/chaser_timer = 0 //what our current chaser cooldown is
+	var/timer = 0 //what our current cooldown is
+	var/blast_range = 3 //how long the cardinal blast's walls are
+	var/obj/effect/hierophant/rune //the associated rune we teleport to
+	var/teleporting = FALSE //if we ARE teleporting
+	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
 
 /obj/item/weapon/hierophant_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()
 	var/turf/T = get_turf(target)
-	if(timer > world.time)
+	if(!T || timer > world.time)
 		return
-	timer = world.time + CLICK_CD_MELEE
+	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
 	if(proximity_flag)
 		addtimer(src, "aoe_burst", 0, FALSE, T, user)
 	else
-		if(istype(target, /turf/closed/mineral) && get_dist(user, target) < 6)
+		if(istype(target, /turf/closed/mineral) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
 			addtimer(src, "cardinal_blasts", 0, FALSE, T, user)
 			timer = world.time + cooldown_time
-		else if(target in view(5, get_turf(user)))
+		else if(target in view(5, get_turf(user))) //if the target is in view, hit it
 			timer = world.time + cooldown_time
-			if(isliving(target) && chaser_timer <= world.time)
+			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
 				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, 1.5, friendly_fire_check))
 			else
-				addtimer(src, "cardinal_blasts", 0, FALSE, T, user)
+				addtimer(src, "cardinal_blasts", 0, FALSE, T, user) //otherwise, just do cardinal blast
 		else
-			user << "<span class='warning'>That target is out of range!</span>"
+			user << "<span class='warning'>That target is out of range!</span>" //too far away
 
 /obj/item/weapon/hierophant_staff/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/toggle_unfriendly_fire)
+	if(actiontype == /datum/action/item_action/toggle_unfriendly_fire) //toggle friendly fire...
 		friendly_fire_check = !friendly_fire_check
 		user << "<span class='warning'>You toggle friendly fire [friendly_fire_check ? "off":"on"]!</span>"
 		return
-	if(src != user.l_hand && src != user.r_hand)
+	if(src != user.l_hand && src != user.r_hand) //you need to hold the staff to teleport
 		user << "<span class='warning'>You need to hold the staff in your hands to teleport with it!</span>"
 		return
-	if(get_dist(user, rune) < 3)
+	if(get_dist(user, rune) <= 2) //rune too close abort
 		user << "<span class='warning'>You are too close to the rune to teleport to it!</span>"
 		return
-	teleporting = TRUE
+	teleporting = TRUE //start channel
 	user.update_action_buttons_icon()
 	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
-	if(do_after(user, 40, target = user) && rune)
+	if(do_after(user, 37, target = user) && rune)
 		var/turf/T = get_turf(rune)
 		var/turf/source = get_turf(user)
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, user))
 		playsound(T,'sound/magic/blink.ogg', 200, 1)
 		playsound(source,'sound/magic/blink.ogg', 200, 1)
-		sleep(3)
-		if(!user)
+		if(!do_after(user, 3, target = user) || !rune) //no walking away shitlord
+			teleporting = FALSE
+			if(user)
+				user.update_action_buttons_icon()
 			return
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, user))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(source, user))
 		for(var/t in RANGE_TURFS(1, T))
-			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE))
+			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //blasts produced will not hurt allies
+			B.damage = 30
 		for(var/t in RANGE_TURFS(1, source))
-			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE))
+			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //but absolutely will hurt enemies
+			B.damage = 30
 		for(var/mob/living/L in range(1, source))
-			addtimer(src, "teleport_mob", 0, FALSE, source, L, T)
-		sleep(6)
+			addtimer(src, "teleport_mob", 0, FALSE, source, L, T) //regardless, take all mobs near us along
+		sleep(6) //at this point the blasts detonate
 	teleporting = FALSE
-	if(!user)
-		return
-	user.update_action_buttons_icon()
+	if(user)
+		user.update_action_buttons_icon()
 
 /obj/item/weapon/hierophant_staff/proc/teleport_mob(turf/source, mob/M, turf/target)
 	var/previous_color = M.color
-	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M))
-	animate(M, alpha = 0, color = "660099", time = 2, easing = EASE_OUT)
+	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
+	if(!turf_to_teleport_to)
+		return
+	animate(M, alpha = 0, color = "660099", time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
 	if(!M)
 		return
@@ -822,14 +827,14 @@
 	if(!M)
 		return
 	M.forceMove(turf_to_teleport_to)
-	animate(M, alpha = 255, color = previous_color, time = 2, easing = EASE_IN)
+	animate(M, alpha = 255, color = previous_color, time = 2, easing = EASE_IN) //fade IN
 	sleep(1)
 	if(!M)
 		return
 	M.density = previous_density
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
 
-/obj/item/weapon/hierophant_staff/proc/cardinal_blasts(turf/T, mob/living/user)
+/obj/item/weapon/hierophant_staff/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)
 		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, user))
@@ -839,7 +844,7 @@
 	for(var/d in cardinal)
 		addtimer(src, "blast_wall", 0, FALSE, T, d, user)
 
-/obj/item/weapon/hierophant_staff/proc/blast_wall(turf/T, dir, mob/living/user)
+/obj/item/weapon/hierophant_staff/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long
 	if(!T)
 		return
 	var/range = blast_range
@@ -852,7 +857,7 @@
 		previousturf = J
 		J = get_step(previousturf, dir)
 
-/obj/item/weapon/hierophant_staff/proc/aoe_burst(turf/T, mob/living/user)
+/obj/item/weapon/hierophant_staff/proc/aoe_burst(turf/T, mob/living/user) //make a 3x3 blast around a target
 	if(!T)
 		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
