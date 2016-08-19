@@ -15,7 +15,7 @@
 		activate()
 
 /datum/computer_file/program/revelation/proc/activate()
-	var/explosivepower = 0
+	var/explosivepower = 1
 	if(computer)
 		if(computer.surgeprotected == 1)
 			computer.visible_message("<span class='notice'>\The [computer] emits an intense buzzing before falling silent!</span>")
@@ -29,7 +29,7 @@
 		qdel(computer.hard_drive)
 		computer.take_damage(25, 10, 1, 1)
 		if(computer.battery_module && prob(25))
-			explosivepower += computer.battery_module.battery_rating / 750
+			explosivepower += (computer.battery_module.battery_rating / 750)
 			qdel(computer.battery_module)
 			computer.visible_message("<span class='notice'>\The [computer]'s battery explodes in rain of sparks.</span>")
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
@@ -42,7 +42,7 @@
 				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 				spark_system.start()
 				explosivepower += 2
-		explosion(location, 0, explosivepower - 4, explosivepower, explosivepower + 2)
+		explosion(location, 0, max(explosivepower - 2,0), explosivepower, explosivepower + 2)
 
 /datum/computer_file/program/revelation/ui_act(action, params)
 	if(..())
