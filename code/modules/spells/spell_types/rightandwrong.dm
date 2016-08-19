@@ -102,7 +102,7 @@
 				if("mindflayer")
 					G = new /obj/item/weapon/gun/energy/mindflayer(get_turf(H))
 				if("hyperkinetic")
-					G = new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper(get_turf(H))
+					G = new /obj/item/weapon/gun/energy/kinetic_accelerator(get_turf(H))
 				if("advplasmacutter")
 					G = new /obj/item/weapon/gun/energy/plasmacutter/adv(get_turf(H))
 				if("wormhole")
