@@ -139,27 +139,34 @@ var/list/teleportlocs = list()
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/labor
 	name = "Labor Camp Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/supply
 	name = "Supply Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 
 /area/shuttle/transport
 	name = "Transport Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
+	blob_allowed = FALSE
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
+	blob_allowed = FALSE
 
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
+	blob_allowed = FALSE
 
 /area/start
 	name = "start area"
@@ -658,6 +665,7 @@ var/list/teleportlocs = list()
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
+	blob_allowed = FALSE
 
 /area/solar/auxport
 		name = "Fore Port Solar Array"

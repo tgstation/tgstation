@@ -152,7 +152,7 @@
 	add_mutations_static = list(CLOWNMUT)
 
 /obj/item/weapon/dnainjector/anticlumsy
-	name = "\improper DNA injector (Anti-Clumy)"
+	name = "\improper DNA injector (Anti-Clumsy)"
 	desc = "Apply this for Security Clown."
 	remove_mutations_static = list(CLOWNMUT)
 

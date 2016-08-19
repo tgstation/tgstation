@@ -23,7 +23,7 @@ field_generator power level display
 #define FG_ONLINE 2
 
 /obj/machinery/field/generator
-	name = "Field Generator"
+	name = "field generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
 	icon = 'icons/obj/machines/field_generator.dmi'
 	icon_state = "Field_Gen"
@@ -133,6 +133,15 @@ field_generator power level display
 	else
 		return ..()
 
+/obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
+	if(M.environment_smash >= 3 && active == FG_OFFLINE && state != FG_UNSECURED)
+		state = FG_UNSECURED
+		anchored = FALSE
+		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
+	else
+		..()
+	if(!anchored)
+		step(src, get_dir(M, src))
 
 /obj/machinery/field/generator/emp_act()
 	return 0
@@ -182,8 +191,10 @@ field_generator power level display
 				start_fields()
 
 
-/obj/machinery/field/generator/proc/calc_power()
+/obj/machinery/field/generator/proc/calc_power(set_power_draw)
 	var/power_draw = 2 + fields.len
+	if(set_power_draw)
+		power_draw = set_power_draw
 
 	if(draw_power(round(power_draw/2,1)))
 		check_power_level()

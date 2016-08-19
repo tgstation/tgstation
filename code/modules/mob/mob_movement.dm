@@ -12,7 +12,9 @@
 			return 1
 	return (!mover.density || !density || lying)
 
-//there are bugs with byond's default versions of these verbs
+
+//The byond version of these verbs wait for the next tick before acting. 
+//	instant verbs however can run mid tick or even during the time between ticks.
 /client/verb/moveup()
 	set name = ".moveup"
 	set instant = 1

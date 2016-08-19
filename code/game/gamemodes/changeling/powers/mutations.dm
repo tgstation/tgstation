@@ -146,7 +146,7 @@
 
 /obj/item/weapon/melee/arm_blade
 	name = "arm blade"
-	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter"
+	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
@@ -179,24 +179,20 @@
 
 		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
-
-		if(A.hasPower())
-			if(A.locked)
-				user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
-				return
-			user << "<span class='warning'>The airlock's motors are resisting, this may take time...</span>"
-			if(do_after(user, 100, target = A))
-				A.open(2)
-			return
-
-		else if(A.locked)
+		if(A.locked)
 			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
 			return
 
-		else
-			//user.say("Heeeeeeeeeerrre's Johnny!")
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='italics'>You hear a metal screeching sound.</span>")
-			A.open(1)
+		if(A.hasPower())
+			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the airlock open.</span>", \
+			"<span class='italics'>You hear a metal screeching sound.</span>")
+			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			if(!do_after(user, 100, target = A))
+				return
+		//user.say("Heeeeeeeeeerrre's Johnny!")
+		user.visible_message("<span class='warning'>[user] forces the airlock to open with their [src]!</span>", "<span class='warning'>We force the airlock to open.</span>", \
+		"<span class='italics'>You hear a metal screeching sound.</span>")
+		A.open(2)
 
 
 /***************************************\

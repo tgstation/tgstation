@@ -5,7 +5,7 @@
   component.exports = {
     computed: {
       clickable () {
-        if (this.get('enabled') && !this.get('state')) {
+        if (this.get('enabled') && (!this.get('state') || this.get('state') == "toggle")) {
           return true
         }
         return false

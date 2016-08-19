@@ -203,11 +203,18 @@
 		for(var/obj/item/I in BP.embedded_objects)
 			msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [BP.name]!</B>\n"
 
+	//stores how many left limbs are missing
+	var/l_limbs_missing = 0
 	for(var/t in missing)
 		if(t=="head")
 			msg += "<span class='deadsay'><B>[capitalize(t_his)] [parse_zone(t)] is missing!</B><span class='warning'>\n"
 			continue
+		if(t == "l_arm" || t == "l_leg")
+			l_limbs_missing++
 		msg += "<B>[capitalize(t_his)] [parse_zone(t)] is missing!</B>\n"
+
+	if(l_limbs_missing >= 2)
+		msg += "[t_He] looks all right now.\n"
 
 	if(temp)
 		if(temp < 30)
@@ -345,8 +352,6 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
-	if(!get_bodypart(ARM_LEFT) && !get_bodypart(LEG_LEFT))
-		msg += "[t_He] looks all right now.\n"
 	msg += "*---------*</span>"
 
 	user << msg

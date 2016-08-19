@@ -14,14 +14,15 @@
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
+
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses<cost || limit == 0)
 		return 0
 	return 1
+
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
 	if(!S || qdeleted(S))
 		S = new spell_type()
-
 	//Check if we got the spell already
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
@@ -445,7 +446,6 @@
 
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
-	category = "Rituals"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
 	log_name = "SG"
 
@@ -457,15 +457,14 @@
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
 	rightandwrong(0, user, 25)
+	active = 1
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
 	user << "<span class='notice'>You have cast summon guns!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
-	category = "Challenges"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
-	cost = 0
 	log_name = "SU"
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
@@ -475,11 +474,10 @@
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
-	rightandwrong(1, user, 0)
-	book.uses += 1
+	rightandwrong(1, user, 25)
 	active = 1
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon magic and gained an extra charge for your spellbook.</span>"
+	user << "<span class='notice'>You have cast summon magic!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -518,7 +516,6 @@
 	w_class = 1
 	var/uses = 10
 	var/temp = null
-	var/op = 1
 	var/tab = null
 	var/mob/living/carbon/human/owner
 	var/list/datum/spellbook_entry/entries = list()

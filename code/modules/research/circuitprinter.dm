@@ -23,12 +23,13 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								"Hydroponics Machinery",
 								"Subspace Telecomms",
 								"Research Machinery",
-								"Misc. Machinery"
+								"Misc. Machinery",
+								"Computer Parts"
 								)
 
 /obj/machinery/r_n_d/circuit_imprinter/New()
 	..()
-	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND))
+	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL))
 	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/circuit_imprinter(null)
 	B.apply_default_parts(src)
