@@ -233,7 +233,7 @@
 
 obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 
-	if(istype(I,obj/item/stack/spacecash)
+	if(istype(I,/obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/c = I
 
 		if(!user.drop_item(c))
@@ -243,10 +243,10 @@ obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 		return
 
 
-	var/obj/item/weapon/card/id/I = W.GetID()
+	var/obj/item/weapon/card/id/D = I.GetID()
 	// Awaiting payment state
-	if(state == 2 && I)
-		if(process_payment(I,W))
+	if(state == 2 && D)
+		if(process_payment(D,I))
 			fabricate_and_recalc_price(1)
 			if((devtype == 1) && fabricated_laptop)
 				fabricated_laptop.cpu.battery_module.charge_to_full()
