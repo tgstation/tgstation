@@ -61,7 +61,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				if(used_cache_components[i])
 					clockwork_component_cache[i] += consumed_components[i]
 		else if(slab && !slab.no_cost) //if the slab exists and isn't debug, log the scripture as being used
-			feedback_add_details("clockcult_scripture_recited", log_name)
+			feedback_add_details("clockcult_scripture_recited", logname)
 	if(slab)
 		slab.busy = null
 	qdel(src)
