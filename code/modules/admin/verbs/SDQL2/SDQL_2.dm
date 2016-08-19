@@ -499,3 +499,8 @@
 	if(word != "")
 		query_list += word
 	return query_list
+
+//helper proc for calling initial() using SDQL2
+/datum/proc/call_initial(var_name)
+	if(var_name in vars)
+		vars[var_name] = initial(vars[var_name])
