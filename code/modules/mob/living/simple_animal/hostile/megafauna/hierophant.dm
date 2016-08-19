@@ -89,7 +89,7 @@ Difficulty: Hard
 			timeout_time--
 		if(timeout_time <= 0 && did_reset)
 			did_reset = TRUE
-			adjusthealth(health - maxHealth)*0.25) //heal for 25% of our missing health
+			adjusthealth((health - maxHealth)*0.25) //heal for 25% of our missing health
 			if(get_dist(src, spawned_rune) > 2)
 				blink(spawned_rune)
 			else
