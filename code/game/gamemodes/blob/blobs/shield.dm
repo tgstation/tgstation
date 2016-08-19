@@ -1,21 +1,37 @@
 /obj/effect/blob/shield
 	name = "strong blob"
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "blob_idle"
+	icon_state = "blob_shield"
 	desc = "A solid wall of slightly twitching tendrils."
 	health = 150
 	maxhealth = 150
-	brute_resist = 0.1
+	brute_resist = 0.25
 	explosion_block = 3
 	point_return = 4
 	atmosblock = 1
 
 
 /obj/effect/blob/shield/scannerreport()
-	return "Will prevent the spread of atmospheric changes."
+	if(atmosblock)
+		return "Will prevent the spread of atmospheric changes."
+	return "N/A"
 
 /obj/effect/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
 /obj/effect/blob/shield/core
 	point_return = 0
+
+/obj/effect/blob/shield/update_icon()
+	..()
+	if(health <= 75)
+		icon_state = "blob_shield_damaged"
+		name = "weakened strong blob"
+		desc = "A wall of twitching tendrils."
+		atmosblock = 0
+	else
+		icon_state = initial(icon_state)
+		name = initial(name)
+		desc = initial(desc)
+		atmosblock = 1
+	air_update_turf(1)

@@ -258,12 +258,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
 	if(ratvar_awakens)
-		desc = "<font size=3><b>Chetr nyy hagehguf-naq-ubabe Ratvar.</b></font>"
+		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else
 		var/servants = 0
 		var/validservants = 0
 		var/unconverted_ai_exists = FALSE
-		var/list/scripture_states = get_scripture_states()
+		var/list/scripture_states = scripture_unlock_check()
 		for(var/mob/living/L in living_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
@@ -284,9 +284,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			desc += "No Tinkerer's Daemons.<br>"
+		for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+			var/area/gate_area = get_area(G)
+			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
+			if(G.ratvar_portal)
+				desc += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+			else
+				desc += "Seconds until Proselytization: <b>[G.get_arrival_text(TRUE)]</b><br>"
 		if(unconverted_ai_exists)
 			desc += "<b>An unconverted AI exists!</b><br>"
-		if(scripture_states["Revenant"])
+		if(scripture_states[SCRIPTURE_REVENANT])
 			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
 			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
 			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
@@ -299,7 +306,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		else
 			desc += "Generals available: <b>NONE</b><br>"
 		for(var/i in scripture_states)
-			desc += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
+				desc += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
 	..()
 
 //GUARDIANS

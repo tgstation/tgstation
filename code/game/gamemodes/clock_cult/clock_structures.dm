@@ -161,17 +161,13 @@
 /obj/structure/clockwork/cache/New()
 	..()
 	START_PROCESSING(SSobj, src)
-	var/list/scripture_states = get_scripture_states()
 	clockwork_caches++
-	scripture_unlock_alert(scripture_states)
 	SetLuminosity(2,1)
 	for(var/i in all_clockwork_mobs)
 		cache_check(i)
 
 /obj/structure/clockwork/cache/Destroy()
-	var/list/scripture_states = get_scripture_states()
 	clockwork_caches--
-	scripture_unlock_alert(scripture_states)
 	STOP_PROCESSING(SSobj, src)
 	if(linkedwall)
 		linkedwall.linkedcache = null
@@ -656,6 +652,9 @@
 
 /obj/effect/clockwork/overlay/ex_act()
 	return FALSE
+
+/obj/effect/clockwork/overlay/singularity_pull(S, current_size)
+	return
 
 /obj/effect/clockwork/overlay/Destroy()
 	if(linked)

@@ -16,7 +16,6 @@ Components, which are fallen fragments of Ratvar's body as he rusts in Reebe, ar
 Game-wise, clockwork slabs will generate components over time, with more powerful components being slower.
 
 This file's folder contains:
-	__clock_defines.dm: Defined variables
 	clock_cult.dm: Core gamemode files.
 	clock_items.dm: Items (excluding the proselytizer).
 	clock_machines.dm: Machinery like the mending motor.
@@ -27,6 +26,7 @@ This file's folder contains:
 	clock_structures.dm: Structures and effects
 	clock_unsorted.dm: Anything else with no place to be
 
+	clockcult defines are in __DEFINES/clockcult.dm
 */
 
 ///////////
@@ -88,9 +88,7 @@ This file's folder contains:
 		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
 		"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
 		whim without hesitation.</span>")
-	var/list/scripture_states = get_scripture_states()
 	ticker.mode.servants_of_ratvar += M.mind
-	scripture_unlock_alert(scripture_states)
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
 	M.languages_spoken |= RATVAR
@@ -104,20 +102,26 @@ This file's folder contains:
 			var/mob/living/silicon/robot/R = S
 			R.UnlinkSelf()
 			R.emagged = 1
-			R << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
+			if(!silent)
+				R << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
 			for(var/C in A.connected_robots)
 				var/mob/living/silicon/robot/R = C
 				if(R.connected_ai == A)
-					add_servant_of_ratvar(R)
+					R.visible_message("<span class='heavy_brass'>[R]'s eyes glow a blazing yellow!</span>", \
+					"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
+					whim without hesitation.</span>")
+					R << "<span class='boldwarning'>Your onboard camera is no longer active and your safeties have been disabled.</span>"
+					add_servant_of_ratvar(R, TRUE)
 		S.laws = new/datum/ai_laws/ratvar
 		S.laws.associate(S)
 		S.update_icons()
 		S.show_laws()
 		var/datum/action/innate/hierophant/H = new()
 		H.Grant(S)
-		H.title = null //so it's just the borg's name
+		H.title = "Silicon"
+		H.span_for_name = "nezbere"
 		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	else if(isbrain(M))
 		var/datum/action/innate/hierophant/H = new()
@@ -145,9 +149,7 @@ This file's folder contains:
 	if(!silent)
 		M.visible_message("<span class='big'>[M] seems to have remembered their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
-	var/list/scripture_states = get_scripture_states()
 	ticker.mode.servants_of_ratvar -= M.mind
-	scripture_unlock_alert(scripture_states)
 	ticker.mode.update_servant_icons_removed(M.mind)
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
@@ -181,7 +183,7 @@ This file's folder contains:
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable
 	var/required_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
-	var/clockwork_objective = "gateway" //The objective that the servants must fulfill
+	var/clockwork_objective = CLOCKCULT_GATEWAY //The objective that the servants must fulfill
 	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
@@ -235,20 +237,20 @@ This file's folder contains:
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/forge_clock_objectives() //Determine what objective that Ratvar's servants will fulfill
-	var/list/possible_objectives = list("escape", "gateway")
+	var/list/possible_objectives = list(CLOCKCULT_ESCAPE, CLOCKCULT_GATEWAY)
 	var/silicons_possible = FALSE
 	for(var/mob/living/silicon/S in living_mob_list)
 		silicons_possible = TRUE
 	if(silicons_possible)
-		possible_objectives += "silicons"
+		possible_objectives += CLOCKCULT_SILICONS
 	clockwork_objective = pick(possible_objectives)
 	switch(clockwork_objective)
-		if("escape")
+		if(CLOCKCULT_ESCAPE)
 			required_escapees = round(max(1, roundstart_player_count / 3)) //33% of the player count must be cultists
 			clockwork_explanation = "Ensure that [required_escapees] servants of Ratvar escape from [station_name()]."
-		if("gateway")
+		if(CLOCKCULT_GATEWAY)
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
-		if("silicons")
+		if(CLOCKCULT_SILICONS)
 			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift."
 	return 1
 
@@ -289,16 +291,16 @@ This file's folder contains:
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	switch(clockwork_objective)
-		if("escape")
+		if(CLOCKCULT_ESCAPE)
 			var/surviving_servants = 0
 			for(var/datum/mind/M in servants_of_ratvar)
 				if(M.current && M.current.stat != DEAD && (M.current.onCentcom() || M.current.onSyndieBase()))
 					surviving_servants++
-			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]. <i><b>[surviving_servants]</b> managed to escape!</i>"
+			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()].<br><i><b>[surviving_servants]</b> managed to escape!</i>"
 			if(surviving_servants >= required_escapees)
 				return TRUE
 			return FALSE
-		if("silicons")
+		if(CLOCKCULT_SILICONS)
 			var/total_silicons = 0
 			var/valid_silicons = 0
 			var/successful = TRUE
@@ -312,10 +314,10 @@ This file's folder contains:
 					valid_silicons++
 			if(valid_silicons < total_silicons)
 				successful = FALSE
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift. \
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift.<br>\
 			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!</i>"
 			return successful
-		if("gateway")
+		if(CLOCKCULT_GATEWAY)
 			return ratvar_awakens
 	return FALSE //This shouldn't ever be reached, but just in case it is
 
@@ -332,7 +334,7 @@ This file's folder contains:
 			feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
 		else
 			var/half_victory = FALSE
-			if(clockwork_objective == "gateway")
+			if(clockwork_objective == CLOCKCULT_GATEWAY)
 				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
 				if(G)
 					half_victory = TRUE

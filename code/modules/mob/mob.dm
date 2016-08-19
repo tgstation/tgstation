@@ -2,6 +2,7 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	all_clockwork_mobs -= src
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -593,7 +594,7 @@ var/next_mob_id = 0
 
 	if(statpanel("Status"))
 		stat(null, "Map: [MAP_NAME]")
-		if (nextmap && istype(nextmap))
+		if(nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(SSshuttle.emergency)

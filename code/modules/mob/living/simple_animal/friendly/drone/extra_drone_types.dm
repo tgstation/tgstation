@@ -102,6 +102,7 @@
 	health = 50
 	maxHealth = 50
 	density = TRUE
+	speed = 1
 	ventcrawler = 0
 	faction = list("ratvar")
 	speak_emote = list("clinks", "clunks")

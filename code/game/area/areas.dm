@@ -74,6 +74,11 @@
 					D.cancelAlarm("Power", src, source)
 				else
 					D.triggerAlarm("Power", src, cameras, source)
+			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+				if(state == 1)
+					p.cancelAlarm("Power", src, source)
+				else
+					p.triggerAlarm("Power", src, cameras, source)
 
 /area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
@@ -89,6 +94,8 @@
 				a.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
 				D.triggerAlarm("Atmosphere", src, cameras, source)
+			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+				p.triggerAlarm("Atmosphere", src, cameras, source)
 
 		else if (src.atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
@@ -97,6 +104,8 @@
 				a.cancelAlarm("Atmosphere", src, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
 				D.cancelAlarm("Atmosphere", src, source)
+			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+				p.cancelAlarm("Atmosphere", src, source)
 
 		src.atmosalm = danger_level
 		return 1
@@ -128,6 +137,8 @@
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.triggerAlarm("Fire", src, cameras, source)
+	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+		p.triggerAlarm("Fire", src, cameras, source)
 
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
@@ -150,6 +161,8 @@
 		a.cancelAlarm("Fire", src, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.cancelAlarm("Fire", src, source)
+	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+		p.cancelAlarm("Fire", src, source)
 
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid

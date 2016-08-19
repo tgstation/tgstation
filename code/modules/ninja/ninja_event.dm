@@ -55,7 +55,7 @@ Contents:
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected_candidate = popleft(candidates)
+	var/mob/dead/selected_candidate = pick_n_take(candidates)
 	var/key = selected_candidate.key
 
 	//Prepare ninja player mind

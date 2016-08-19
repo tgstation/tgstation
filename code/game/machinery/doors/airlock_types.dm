@@ -352,13 +352,6 @@
 /obj/machinery/door/airlock/cult/narsie_act()
 	return
 
-/obj/machinery/door/airlock/cult/ratvar_act()
-	..()
-	if(src)
-		var/previouscolor = color
-		color = "#FAE48C"
-		animate(src, color = previouscolor, time = 8)
-
 /obj/machinery/door/airlock/cult/friendly
 	friendly = TRUE
 

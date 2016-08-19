@@ -1,4 +1,0 @@
-author: "Ergovisavi"
-delete-after: True
-changes: 
-  - tweak: "Watchers no longer randomly fire beams at you when damaged, and no longer beam you at point blank."

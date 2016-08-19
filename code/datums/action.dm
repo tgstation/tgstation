@@ -13,6 +13,7 @@
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/background_icon_state = "bg_default"
+	var/buttontooltipstyle = ""
 
 	var/icon_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
@@ -23,6 +24,7 @@
 	button = new
 	button.linked_action = src
 	button.name = name
+	button.actiontooltipstyle = buttontooltipstyle
 	if(desc)
 		button.desc = desc
 
@@ -189,6 +191,7 @@
 
 /datum/action/item_action/clock
 	background_icon_state = "bg_clock"
+	buttontooltipstyle = "clockcult"
 
 /datum/action/item_action/clock/IsAvailable()
 	if(!is_servant_of_ratvar(owner))

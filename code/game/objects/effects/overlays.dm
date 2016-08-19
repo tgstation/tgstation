@@ -268,6 +268,7 @@
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
 	duration = 70
+	luminosity = 6
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()

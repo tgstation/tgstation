@@ -25,15 +25,15 @@
 			take_damage(rand(5,10), BRUTE, 0)
 
 /obj/structure/grille/ratvar_act()
-	if(prob(20))
-		if(destroyed)
-			new /obj/structure/grille/ratvar/broken(src.loc)
-		else
-			new /obj/structure/grille/ratvar(src.loc)
-		qdel(src)
+	if(destroyed)
+		new /obj/structure/grille/ratvar/broken(src.loc)
+	else
+		new /obj/structure/grille/ratvar(src.loc)
+	qdel(src)
 
 /obj/structure/grille/blob_act(obj/effect/blob/B)
-	qdel(src)
+	if(!destroyed)
+		Break()
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user))

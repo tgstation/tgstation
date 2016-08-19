@@ -161,6 +161,9 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			C.holder = null
 		admins.Cut()
 		load_admin_ranks()
+		//Clear profile access
+		for(var/A in world.GetConfig("admin"))
+			world.SetConfig("APP/admin", A, null)
 
 	var/list/rank_names = list()
 	for(var/datum/admin_rank/R in admin_ranks)
@@ -189,6 +192,8 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			var/datum/admins/D = new(rank_names[rank], ckey)	//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
+			if(D.rank.rights & R_DEBUG) //grant profile access
+				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
 		establish_db_connection()
@@ -214,6 +219,8 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
 			if(!D)
 				continue									//will occur if an invalid rank is provided
+			if(D.rank.rights & R_DEBUG) //grant profile access
+				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 
 	#ifdef TESTING

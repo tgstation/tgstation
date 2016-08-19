@@ -79,9 +79,8 @@
 		qdel(src)
 
 /obj/structure/table_frame/ratvar_act()
-	if(prob(20))
-		new /obj/structure/table_frame/brass(src.loc)
-		qdel(src)
+	new /obj/structure/table_frame/brass(src.loc)
+	qdel(src)
 
 /*
  * Wooden Frames

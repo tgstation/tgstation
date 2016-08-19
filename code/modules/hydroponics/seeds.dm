@@ -34,9 +34,6 @@
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
 
-	var/innate_yieldmod = 0 //modifier for yield, seperate to the one in Hydro trays, as that one is SPECIFICALLY for nutriment/chems (which means it's constantly reset)
-	//This is added onto the yield mod of the hydro tray, yield *= (parent.yieldmod+innate_yieldmod)
-
 	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
 	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
 
@@ -105,7 +102,6 @@
 
 /obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj, /obj/item/projectile/energy/florayield))
-
 		var/rating = 1
 		if(istype(loc, /obj/machinery/hydroponics))
 			var/obj/machinery/hydroponics/H = loc
@@ -128,9 +124,10 @@
 		if(parent.yieldmod == 0)
 			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
 		else
-			return_yield *= (parent.yieldmod+innate_yieldmod)
+			return_yield *= (parent.yieldmod)
 
 	return return_yield
+
 
 /obj/item/seeds/proc/harvest(mob/user = usr)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
@@ -150,6 +147,7 @@
 	parent.update_tray()
 
 	return result
+
 
 /obj/item/seeds/proc/prepare_result(var/obj/item/weapon/reagent_containers/food/snacks/grown/T)
 	if(T.reagents)

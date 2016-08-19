@@ -43,7 +43,6 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		adjustBruteLoss(5 + rand(1,9))
-		Paralyse(1)
 		spawn()
 			step_away(src,user,15)
 			sleep(1)
