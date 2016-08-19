@@ -1,4 +1,4 @@
-/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = 1)
+/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked = 0)
 	if(!skipcatch)	//ugly, but easy
 		if(in_throw_mode && !get_active_hand())	//empty active hand and we're in throw mode
 			if(canmove && !restrained())

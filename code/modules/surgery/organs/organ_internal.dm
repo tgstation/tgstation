@@ -54,7 +54,7 @@
 /obj/item/organ/internal/Destroy()
 	if(owner)
 		Remove(owner, 1)
-	..()
+	return ..()
 
 /obj/item/organ/internal/attack(mob/living/carbon/M, mob/user)
 	if(M == user && ishuman(user))

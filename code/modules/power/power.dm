@@ -9,7 +9,7 @@
 /obj/machinery/power
 	name = null
 	icon = 'icons/obj/power.dmi'
-	anchored = 1.0
+	anchored = 1
 	var/datum/powernet/powernet = null
 	use_power = 0
 	idle_power_usage = 0
@@ -17,7 +17,7 @@
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
-	..()
+	return ..()
 
 ///////////////////////////////
 // General procedures
@@ -280,7 +280,7 @@
 //power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
 //source is an object caused electrocuting (airlock, grille, etc)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1.0)
+/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1)
 	if(istype(M.loc,/obj/mecha))	return 0	//feckin mechs are dumb
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M

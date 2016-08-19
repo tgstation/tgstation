@@ -43,7 +43,5 @@ Housekeeping and pipe network stuff
 		node1_connect = turn(node1_connect, 180)
 		node3_connect = turn(node3_connect, 180)
 
-	var/list/node_connects = new/list()
-
-	node_connects.Add(node1_connect, node2_connect, node3_connect)
+	var/list/node_connects = list(node1_connect, node2_connect, node3_connect)
 	..(node_connects)

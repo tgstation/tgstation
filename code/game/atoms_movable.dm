@@ -155,7 +155,7 @@
 /atom/movable/proc/throw_impact(atom/hit_atom)
 	return hit_atom.hitby(src)
 
-/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1)
+/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
 	if(!anchored && hitpush)
 		step(src, AM.dir)
 	..()
@@ -217,6 +217,9 @@
 			break
 		dist_travelled++
 		dist_since_sleep++
+
+		if(dist_travelled > 600) //safety to prevent infinite while loop.
+			break
 		if(dist_since_sleep >= speed)
 			dist_since_sleep = 0
 			sleep(1)

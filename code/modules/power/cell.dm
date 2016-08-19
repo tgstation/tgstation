@@ -5,8 +5,8 @@
 	icon_state = "cell"
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
@@ -33,7 +33,7 @@
 		overlays += image('icons/obj/power.dmi', "cell-o1")
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
-	return 100.0*charge/maxcharge
+	return 100*charge/maxcharge
 
 // use power from a cell
 /obj/item/weapon/stock_parts/cell/proc/use(amount)
@@ -43,7 +43,7 @@
 	if(charge < amount)	return 0
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
-		feedback_add_details("cell_used","[src.name]")
+		feedback_add_details("cell_used","[src.type]")
 	return 1
 
 // recharge the cell
@@ -165,9 +165,9 @@
 	..()
 	charge = 0
 
-/obj/item/weapon/stock_parts/cell/pulse //80 pulse shots
+/obj/item/weapon/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
-	maxcharge = 16000
+	maxcharge = 40000
 	rating = 3
 	chargerate = 1500
 

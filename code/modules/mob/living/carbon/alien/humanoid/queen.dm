@@ -10,8 +10,6 @@
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
-	create_reagents(100)
-
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
 		if(Q == src)		continue
@@ -77,17 +75,3 @@
 	icon_state = "queen_s"
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
-
-/mob/living/carbon/alien/humanoid/queen/large/update_icons()
-	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
-	if(stat == DEAD)
-		icon_state = "queen_dead"
-	else if((stat == UNCONSCIOUS && !sleeping) || weakened)
-		icon_state = "queen_l"
-	else if(sleeping || lying || resting)
-		icon_state = "queen_sleep"
-	else
-		icon_state = "queen_s"
-	for(var/image/I in overlays_standing)
-		overlays += I

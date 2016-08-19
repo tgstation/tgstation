@@ -68,7 +68,7 @@
 	if(processing)	shutdown_core()
 	visible_message("<span class='danger'>The [src.name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
-	..()
+	return ..()
 
 
 /obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
@@ -196,7 +196,7 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = 4
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1

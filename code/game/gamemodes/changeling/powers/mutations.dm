@@ -294,7 +294,7 @@
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
 	chemical_cost = 20
-	dna_cost = 2
+	dna_cost = 1
 	genetic_damage = 11
 	req_human = 1
 	max_genetic_damage = 20
@@ -311,7 +311,7 @@
 	icon_state = "lingarmor"
 	flags = NODROP
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 40, bullet = 20, laser = 30, energy = 13, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 70, bullet = 50, laser = 70, energy = 50, bomb = 10, bio = 4, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
@@ -329,7 +329,7 @@
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
 	flags = BLOCKHAIR | NODROP
-	armor = list(melee = 40, bullet = 15, laser = 30,energy = 10, bomb = 5, bio = 2, rad = 0)
+	armor = list(melee = 60, bullet = 30, laser = 60, energy = 30, bomb = 10, bio = 4, rad = 0)
 	flags_inv = HIDEEARS
 	flags_cover = HEADCOVERSEYES
 

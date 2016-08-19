@@ -7,7 +7,7 @@
 	icon_state = "E-W"
 	density = 1
 	layer = 3.1
-	anchored = 1.0
+	anchored = 1
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs = null
 	var/exit_delay = 1

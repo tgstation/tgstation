@@ -47,10 +47,14 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
-	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> | "
-	body += "<A href='?_src_=holder;watchlist=\ref[M]'>Watchlist Flag</A> "
-
+	body += "<A href='?_src_=holder;shownoteckey=[M.ckey]'>Notes</A> | "
 	if(M.client)
+		if(M.client.check_watchlist(M.client.ckey))
+			body += "<A href='?_src_=holder;watchremove=[M.ckey]'>Remove from Watchlist</A> | "
+			body += "<A href='?_src_=holder;watchedit=[M.ckey]'>Edit Watchlist reason</A> "
+		else
+			body += "<A href='?_src_=holder;watchadd=\ref[M.ckey]'>Add to Watchlist</A> "
+
 		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
 		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
@@ -508,9 +512,12 @@ var/global/floorIsLava = 0
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
+	else if (ticker.current_state == GAME_STATE_STARTUP)
+		usr << "<font color='red'>Error: Start Now: Game is in startup, please wait until it has finished.</font>"
 	else
 		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
-		return 0
+		
+	return 0
 
 /datum/admins/proc/toggleenter()
 	set category = "Server"
@@ -805,3 +812,15 @@ var/global/floorIsLava = 0
 	qdel(frommob)
 
 	return 1
+
+/client/proc/adminGreet(logout)
+	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+		var/string
+		if(logout && config && config.announce_admin_logout)
+			string = pick(
+				"Admin logout: [key_name(src)]")
+		else if(!logout && config && config.announce_admin_login && (prefs.toggles & ANNOUNCE_LOGIN))
+			string = pick(
+				"Admin login: [key_name(src)]")
+		if(string)
+			message_admins("[string]")

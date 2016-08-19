@@ -71,13 +71,11 @@ var/datum/subsystem/lighting/SSlighting
 
 	if(z_level)
 		//we need to loop through to clear only shifted turfs from the list. or we will cause errors
-		var/i=1
 		for(var/thing in changed_turfs)
 			var/turf/T = thing
 			if(T.z in z_start to z_finish)
-				++i
 				continue
-			changed_turfs.Cut(i, i+1)
+			changed_turfs.Remove(thing)
 	else
 		changed_turfs.Cut()
 

@@ -154,7 +154,7 @@
 			hardset_dna(H, null, null, null, null, newrace)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "What are we again?", "Race change")  as null|anything in skin_tones
+				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in skin_tones
 
 				if(new_s_tone)
 					H.skin_tone = new_s_tone

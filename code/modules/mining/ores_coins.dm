@@ -22,6 +22,7 @@
 	icon_state = "Uranium ore"
 	origin_tech = "materials=5"
 	points = 18
+	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/weapon/ore/iron
@@ -29,6 +30,7 @@
 	icon_state = "Iron ore"
 	origin_tech = "materials=1"
 	points = 1
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/weapon/ore/glass
@@ -36,6 +38,7 @@
 	icon_state = "Glass ore"
 	origin_tech = "materials=1"
 	points = 1
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user)
@@ -60,8 +63,9 @@
 /obj/item/weapon/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
-	origin_tech = "materials=2"
+	origin_tech = "plasmatech=2;materials=2"
 	points = 36
+	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
 /obj/item/weapon/ore/plasma/attackby(obj/item/I, mob/user, params)
@@ -78,6 +82,7 @@
 	icon_state = "Silver ore"
 	origin_tech = "materials=3"
 	points = 18
+	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/weapon/ore/gold
@@ -85,6 +90,7 @@
 	icon_state = "Gold ore"
 	origin_tech = "materials=4"
 	points = 18
+	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/weapon/ore/diamond
@@ -92,6 +98,7 @@
 	icon_state = "Diamond ore"
 	origin_tech = "materials=6"
 	points = 36
+	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/weapon/ore/bananium
@@ -99,6 +106,7 @@
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 	points = 27
+	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
 /obj/item/weapon/ore/slag
@@ -121,6 +129,11 @@
 	var/attacher = "UNKNOWN"
 	var/datum/wires/explosive/gibtonite/wires
 
+/obj/item/weapon/twohanded/required/gibtonite/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()
+
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
@@ -131,7 +144,7 @@
 		return
 
 	if(wires && !primed)
-		if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
+		if(wires.IsInteractionTool(I))
 			wires.Interact(user)
 			return
 
@@ -213,7 +226,7 @@
 	flags = CONDUCT
 	force = 1
 	throwforce = 2
-	w_class = 1.0
+	w_class = 1
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null
@@ -232,36 +245,43 @@
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
 	value = 160
+	materials = list(MAT_GOLD = 400)
 
 /obj/item/weapon/coin/silver
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
 	value = 40
+	materials = list(MAT_SILVER = 400)
 
 /obj/item/weapon/coin/diamond
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
 	value = 120
+	materials = list(MAT_DIAMOND = 400)
 
 /obj/item/weapon/coin/iron
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 20
+	materials = list(MAT_METAL = 400)
 
 /obj/item/weapon/coin/plasma
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
 	value = 80
+	materials = list(MAT_PLASMA = 400)
 
 /obj/item/weapon/coin/uranium
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
 	value = 160
+	materials = list(MAT_URANIUM = 400)
 
 /obj/item/weapon/coin/clown
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 600 //makes the clown cri
+	materials = list(MAT_BANANIUM = 400)
 
 /obj/item/weapon/coin/adamantine
 	cmineral = "adamantine"
@@ -326,7 +346,9 @@
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)
-		if(do_after(user, 15, target = src))
+		var/oldloc = loc
+		sleep(15)
+		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
 								 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 								 "<span class='italics'>You hear the clattering of loose change.</span>")

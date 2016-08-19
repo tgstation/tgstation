@@ -46,13 +46,13 @@
 			user << "<span class='warning'>There is already a PDA inside!</span>"
 			return
 		else
-			var/obj/item/device/pda/P = usr.get_active_hand()
+			var/obj/item/device/pda/P = user.get_active_hand()
 			if(istype(P))
 				if(!user.drop_item())
 					return
 				storedpda = P
 				P.loc = src
-				P.add_fingerprint(usr)
+				P.add_fingerprint(user)
 				update_icon()
 
 

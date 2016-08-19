@@ -11,11 +11,11 @@ LINEN BINS
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
 	slot_flags = SLOT_BACK
-	layer = 4.0
+	layer = 4
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
-	w_class = 1.0
+	w_class = 1
 	item_color = "white"
 	burn_state = 0 //Burnable
 

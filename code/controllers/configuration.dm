@@ -163,6 +163,11 @@
 
 	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
 
+	var/autoconvert_notes = 0 //if all connecting player's notes should attempt to be converted to the database
+
+	var/announce_admin_logout = 0
+	var/announce_admin_login = 0
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -178,7 +183,7 @@
 				probabilities[M.config_tag] = M.probability
 				if(M.votable)
 					votable_modes += M.config_tag
-		del(M)
+		qdel(M)
 	votable_modes += "secret"
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
@@ -343,6 +348,12 @@
 					if (world.log != newlog)
 						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
 						world.log = newlog
+				if("autoconvert_notes")
+					config.autoconvert_notes = 1
+				if("announce_admin_logout")
+					config.announce_admin_logout = 1
+				if("announce_admin_login")
+					config.announce_admin_login = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -567,7 +578,7 @@
 		var/datum/game_mode/M = new T()
 		if(M.config_tag && M.config_tag == mode_name)
 			return M
-		del(M)
+		qdel(M)
 	return new /datum/game_mode/extended()
 
 /datum/configuration/proc/get_runnable_modes()
@@ -576,10 +587,10 @@
 		var/datum/game_mode/M = new T()
 		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
 		if(!(M.config_tag in modes))
-			del(M)
+			qdel(M)
 			continue
 		if(probabilities[M.config_tag]<=0)
-			del(M)
+			qdel(M)
 			continue
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]

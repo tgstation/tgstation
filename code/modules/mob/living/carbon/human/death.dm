@@ -66,5 +66,5 @@
 
 /mob/living/carbon/proc/Drain()
 	ChangeToHusk()
-	mutations |= NOCLONE
+	disabilities |= NOCLONE
 	return 1

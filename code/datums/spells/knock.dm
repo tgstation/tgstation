@@ -20,5 +20,9 @@
 				if(istype(door,/obj/machinery/door/airlock))
 					door:locked = 0
 				door.open()
+		for(var/obj/structure/closet/C in T.contents)
+			spawn(1)
+				C.locked = 0
+				C.open()
 
 	return

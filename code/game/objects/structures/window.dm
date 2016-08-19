@@ -53,13 +53,13 @@
 
 /obj/structure/window/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			spawnfragments()
 			return
-		if(3.0)
+		if(3)
 			if(prob(50))
 				spawnfragments()
 				return
@@ -168,7 +168,7 @@
 
 	var/mob/living/simple_animal/M = user
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0)
+	if(M.melee_damage_upper <= 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
 		return
 
 	attack_generic(M, M.melee_damage_upper)
@@ -364,7 +364,7 @@
 	if(!disassembled)
 		playsound(src, "shatter", 70, 1)
 	update_nearby_icons()
-	..()
+	return ..()
 
 
 /obj/structure/window/Move()

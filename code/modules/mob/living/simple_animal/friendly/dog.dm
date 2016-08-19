@@ -29,6 +29,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -39,6 +40,7 @@
 	icon_living = "pug"
 	icon_dead = "pug_dead"
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/corgi/New()
 	..()
@@ -52,12 +54,6 @@
 /mob/living/simple_animal/pet/dog/corgi/revive()
 	..()
 	regenerate_icons()
-
-/mob/living/simple_animal/pet/dog/corgi/sac_act(obj/effect/rune/R, victim) //Still the best thing in this game
-	usr << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
-	usr.reagents.add_reagent("hell_water", 2)
-	R.stone_or_gib(victim)
-
 
 /mob/living/simple_animal/pet/dog/corgi/show_inv(mob/user)
 	user.set_machine(src)
@@ -275,7 +271,9 @@
 	return valid
 
 /mob/living/simple_animal/pet/dog/corgi/proc/update_corgi_fluff()
-	switch(src.inventory_head.type)
+	if(!inventory_head)
+		return
+	switch(inventory_head.type)
 		if(/obj/item/clothing/head/helmet)
 			name = "Sergeant [real_name]"
 			desc = "The ever-loyal, the ever-vigilant."
@@ -388,6 +386,7 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	..()
@@ -511,6 +510,7 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
+	gold_core_spawnable = 0
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
@@ -532,7 +532,7 @@
 					dir = i
 					sleep(1)
 
-/mob/living/simple_animal/pet/pug/Life()
+/mob/living/simple_animal/pet/dog/pug/Life()
 	..()
 
 	if(!stat && !resting && !buckled)

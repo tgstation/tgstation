@@ -29,6 +29,7 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
+	gold_core_spawnable = 1
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
@@ -130,6 +131,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 10,
 							/obj/item/stack/sheet/animalhide/xeno = 2)
 	mob_size = MOB_SIZE_LARGE
+	gold_core_spawnable = 0
 
 /obj/item/projectile/neurotox
 	name = "neurotoxin"

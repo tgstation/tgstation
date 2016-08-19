@@ -181,9 +181,6 @@
 		var/turf/tile = loc
 		if(isturf(tile))
 			tile.clean_blood()
-			if (istype(tile, /turf/simulated/floor))
-				var/turf/simulated/floor/F = tile
-				F.dirt = 0
 			for(var/A in tile)
 				if(istype(A, /obj/effect))
 					if(is_cleanable(A))
@@ -238,14 +235,6 @@
 		step(src, direction)
 		update_mob()
 		handle_rotation()
-		if(istype(src.loc, /turf/simulated))
-			var/turf/simulated/T = src.loc
-			if(T.wet == 2)	//Lube! Fall off!
-				playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
-				buckled_mob.Stun(7)
-				buckled_mob.Weaken(7)
-				unbuckle_mob()
-				step(src, dir)
 		move_delay = 1
 		spawn(2)
 			move_delay = 0
@@ -299,11 +288,6 @@
 			if(EAST)
 				buckled_mob.pixel_x = -12
 				buckled_mob.pixel_y = 7
-
-
-/obj/structure/stool/bed/chair/janicart/bullet_act(obj/item/projectile/Proj)
-	if(buckled_mob)
-		buckled_mob.bullet_act(Proj)
 
 /obj/item/key
 	name = "key"

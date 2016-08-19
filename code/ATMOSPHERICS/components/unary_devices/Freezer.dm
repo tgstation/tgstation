@@ -4,7 +4,7 @@
 	icon_state = "freezer"
 	density = 1
 	var/min_temperature = 0
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	current_heat_capacity = 1000
 
@@ -69,7 +69,7 @@
 /obj/machinery/atmospherics/components/unary/cold_sink/freezer/interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/air_contents = AIR1
 	user.set_machine(src)
 	var/temp_text = ""
 	if(air_contents.temperature > (T0C - 20))
@@ -128,7 +128,7 @@
 	icon_state = "heater"
 	density = 1
 	var/max_temperature = 0
-	anchored = 1.0
+	anchored = 1
 
 	current_heat_capacity = 1000
 
@@ -194,7 +194,7 @@
 	return interact(user)
 
 /obj/machinery/atmospherics/components/unary/heat_reservoir/heater/interact(mob/user)
-	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/air_contents = AIR1
 
 	if(stat & (NOPOWER|BROKEN))
 		return

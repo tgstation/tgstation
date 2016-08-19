@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/pipes/transit_tube_pod.dmi'
 	icon_state = "pod"
 	animate_movement = FORWARD_STEPS
-	anchored = 1.0
+	anchored = 1
 	density = 1
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
@@ -23,7 +23,7 @@
 	for(var/atom/movable/AM in contents)
 		AM.loc = loc
 
-	..()
+	return ..()
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))

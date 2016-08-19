@@ -37,6 +37,7 @@
 	R.notify_ai(2)
 	R.update_icons()
 	R.update_headlamp()
+	R.magpulse = 0
 
 	return 1
 

@@ -16,7 +16,7 @@
 	if(showpipe)
 		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions) //scrub_cap works for now
 
-	if(!nodes[NODE1] || !on || stat & (NOPOWER|BROKEN))
+	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "cold_off"
 		return
 
@@ -27,7 +27,7 @@
 	..()
 	if(!on)
 		return 0
-	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/air_contents = AIR1
 
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity

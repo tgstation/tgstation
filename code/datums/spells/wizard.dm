@@ -157,6 +157,20 @@
 	cast_sound = "sound/magic/ForceWall.ogg"
 
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	name = "Stop Time"
+	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
+	charge_max = 300
+	clothes_req = 1
+	invocation = "TOKI WO TOMARE"
+	invocation_type = "shout"
+	range = 0
+	cooldown_min = 90
+	summon_amt = 1
+	action_icon_state = "time"
+
+	summon_type = list(/obj/effect/timestop/wizard)
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
 	desc = "This spell conjures a simple carp."

@@ -70,7 +70,7 @@
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")
 		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
-	..()
+	return ..()
 
 /obj/machinery/power/emitter/update_icon()
 	if (active && powernet && avail(active_power_usage))
@@ -181,7 +181,8 @@
 			user << "<span class='warning'>Turn off \the [src] first!</span>"
 			return
 		switch(state)
-			if(0 && !isinspace())
+			if(0)
+				if(isinspace()) return
 				state = 1
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
@@ -264,4 +265,5 @@
 	if(!emagged)
 		locked = 0
 		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")
+		if(user)
+			user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")

@@ -14,7 +14,6 @@
 
 
 /mob/living/carbon/human/New()
-	create_reagents(1000)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 	//initialise organs
@@ -30,8 +29,9 @@
 		I.Insert(src)
 
 	// for spawned humans; overwritten by other code
-	ready_dna(src)
+	create_dna(src)
 	randomize_human(src)
+	ready_dna(src)
 
 	make_blood()
 
@@ -113,7 +113,7 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if (1)
 			b_loss += 500
 			if (prob(getarmor(null, "bomb")))
 				shred_clothing(1,150)
@@ -123,7 +123,7 @@
 				gib()
 				return
 
-		if (2.0)
+		if (2)
 			b_loss += 60
 
 			f_loss += 60
@@ -139,7 +139,7 @@
 			if (prob(70))
 				Paralyse(10)
 
-		if(3.0)
+		if(3)
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
@@ -270,7 +270,7 @@
 	spreadFire(AM)
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, safety = 0)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0)
 	if(!safety)
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
@@ -280,7 +280,11 @@
 			heart_attack = 0
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
-	return ..(shock_damage,source,siemens_coeff)
+	. = ..(shock_damage,source,siemens_coeff,safety,override)
+	if(.)
+		electrocution_animation(40)
+
+
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
@@ -802,3 +806,29 @@
 			H.bloody_hands_mob = null
 			H.update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
+
+
+
+//Turns a mob black, flashes a skeleton overlay
+//Just like a cartoon!
+/mob/living/carbon/human/proc/electrocution_animation(anim_duration)
+	//Handle mutant parts if possible
+	if(dna && dna.species)
+		dna.species.handle_mutant_bodyparts(src,"black")
+		dna.species.handle_hair(src,"black")
+		dna.species.update_color(src,"black")
+		overlays += "electrocuted_base"
+		spawn(anim_duration)
+			if(src)
+				if(dna && dna.species)
+					dna.species.handle_mutant_bodyparts(src)
+					dna.species.handle_hair(src)
+					dna.species.update_color(src)
+				overlays -= "electrocuted_base"
+
+	else //or just do a generic animation
+		var/list/viewing = list()
+		for(var/mob/M in viewers(src))
+			if(M.client)
+				viewing += M.client
+		flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)

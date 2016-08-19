@@ -33,6 +33,7 @@
 	maxbodytemp = 1500
 
 	faction = list("russian")
+	gold_core_spawnable = 1
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson

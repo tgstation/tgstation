@@ -223,7 +223,7 @@
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
-	..()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))

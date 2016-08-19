@@ -2,12 +2,12 @@
 	name = "jetpack (empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
-	w_class = 4.0
+	w_class = 4
 	item_state = "jetpack"
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	action_button_name = "Toggle Jetpack"
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail
-	var/on = 0.0
+	var/on = 0
 	var/stabilization_on = 0
 	var/volume_rate = 500              //Needed for borg jetpack transfer
 

@@ -58,10 +58,10 @@ for reference:
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
-	anchored = 1.0
-	density = 1.0
-	var/health = 100.0
-	var/maxhealth = 100.0
+	anchored = 1
+	density = 1
+	var/health = 100
+	var/maxhealth = 100
 
 /obj/structure/barricade/wooden/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -93,11 +93,11 @@ for reference:
 
 /obj/structure/barricade/wooden/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			visible_message("<span class='warning'>The barricade is blown apart!</span>")
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			src.health -= 25
 			if (src.health <= 0)
 				visible_message("<span class='warning'>The barricade is blown apart!</span>")
@@ -135,12 +135,12 @@ for reference:
 	name = "deployable barrier"
 	desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
 	icon = 'icons/obj/objects.dmi'
-	anchored = 0.0
-	density = 1.0
+	anchored = 0
+	density = 1
 	icon_state = "barrier0"
-	var/health = 100.0
-	var/maxhealth = 100.0
-	var/locked = 0.0
+	var/health = 100
+	var/maxhealth = 100
+	var/locked = 0
 //	req_access = list(access_maint_tunnels)
 
 /obj/machinery/deployable/barrier/New()
@@ -151,14 +151,14 @@ for reference:
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user, params)
 	if (W.GetID())
 		if (src.allowed(user))
-			if	(src.emagged < 2.0)
+			if	(src.emagged < 2)
 				src.locked = !src.locked
 				src.anchored = !src.anchored
 				src.icon_state = "barrier[src.locked]"
-				if ((src.locked == 1.0) && (src.emagged < 2.0))
+				if ((src.locked == 1) && (src.emagged < 2))
 					user << "Barrier lock toggled on."
 					return
-				else if ((src.locked == 0.0) && (src.emagged < 2.0))
+				else if ((src.locked == 0) && (src.emagged < 2))
 					user << "Barrier lock toggled off."
 					return
 			else
@@ -213,10 +213,10 @@ for reference:
 
 /obj/machinery/deployable/barrier/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.explode()
 			return
-		if(2.0)
+		if(2)
 			src.health -= 25
 			if (src.health <= 0)
 				src.explode()

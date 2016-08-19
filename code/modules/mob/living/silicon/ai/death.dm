@@ -8,6 +8,7 @@
 	else
 		icon_state = "ai_dead"
 
+	anchored = 0 //unbolt floorbolts
 	update_canmove()
 	if(src.eyeobj)
 		src.eyeobj.setLoc(get_turf(src))

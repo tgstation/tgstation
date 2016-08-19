@@ -4,11 +4,11 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
-	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
-	visible = 0.0
+	var/health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	visible = 0
 	flags = ON_BORDER
 	opacity = 0
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/reinf = 0
 
 /obj/machinery/door/window/New()
@@ -24,7 +24,7 @@
 	if(health == 0)
 		playsound(src, "shatter", 70, 1)
 	electronics = null
-	..()
+	return ..()
 
 
 
@@ -167,14 +167,14 @@
 
 /obj/machinery/door/window/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if(prob(25))
 				qdel(src)
 			else
 				take_damage(120)
-		if(3.0)
+		if(3)
 			take_damage(60)
 
 
@@ -235,10 +235,8 @@
 		return
 	var/mob/living/simple_animal/M = user
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0)
-		return
-	attack_generic(M, M.melee_damage_upper)
-
+	if(M.melee_damage_upper > 0 && (M.melee_damage_type == BRUTE || M.melee_damage_type == BURN))
+		attack_generic(M, M.melee_damage_upper)
 
 /obj/machinery/door/window/attack_slime(mob/living/simple_animal/slime/user)
 	user.do_attack_animation(src)
@@ -311,9 +309,9 @@
 
 					user << "<span class='notice'>You remove the airlock electronics.</span>"
 
-					var/obj/item/weapon/airlock_electronics/ae
+					var/obj/item/weapon/electronics/airlock/ae
 					if(!electronics)
-						ae = new/obj/item/weapon/airlock_electronics( src.loc )
+						ae = new/obj/item/weapon/electronics/airlock( src.loc )
 						if(req_one_access)
 							ae.use_one_access = 1
 							ae.conf_access = src.req_one_access
@@ -380,7 +378,7 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	var/id = null
-	health = 300.0 //Stronger doors for prison (regular window door health is 200)
+	health = 300 //Stronger doors for prison (regular window door health is 200)
 	reinf = 1
 	explosion_block = 1
 

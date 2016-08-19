@@ -1,7 +1,5 @@
 #define DEBUG					//Enables byond profiling and full runtime logs - note, this may also be defined in your .dme file
-//#define dellogging			//Enables logging of forced del() calls (used for debugging)
-//#define TESTING				//Enables in-depth debug messages to runtime log (used for debugging)
-								//By using the testing("message") proc you can create debug-feedback for people with this
+//#define TESTING				//Enables in-depth debug messages to runtime log (used for debugging)								//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
 #define PRELOAD_RSC	1			/*set to:
@@ -46,15 +44,6 @@
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
 
 //Additional code for the above flags.
-#ifdef dellogging
-#warn compiling del logging. This will have additional overheads.	//will warn you if compiling with dellogging
-var/list/del_counter = list()
-/proc/log_del(datum/X)
-	if(istype(X)){del_counter[X.type]++;}
-	del(X)
-#define del(X) log_del(X)							//overrides all del() calls with log_del()
-#endif
-
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif

@@ -13,7 +13,6 @@
 	unique_name = 1
 
 /mob/living/carbon/monkey/New()
-	create_reagents(1000)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -103,7 +102,7 @@
 				if (prob(25))
 					Paralyse(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					add_logs(M, src, "pushed", admin=0)
+					add_logs(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 				else
@@ -155,7 +154,19 @@
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		switch(M.melee_damage_type)
+			if(BRUTE)
+				adjustBruteLoss(damage)
+			if(BURN)
+				adjustFireLoss(damage)
+			if(TOX)
+				adjustToxLoss(damage)
+			if(OXY)
+				adjustOxyLoss(damage)
+			if(CLONE)
+				adjustCloneLoss(damage)
+			if(STAMINA)
+				adjustStaminaLoss(damage)
 		updatehealth()
 
 
@@ -188,14 +199,14 @@
 /mob/living/carbon/monkey/ex_act(severity, target)
 	..()
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib()
 			return
-		if(2.0)
+		if(2)
 			adjustBruteLoss(60)
 			adjustFireLoss(60)
 			adjustEarDamage(30,120)
-		if(3.0)
+		if(3)
 			adjustBruteLoss(30)
 			if (prob(50))
 				Paralyse(10)

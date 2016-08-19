@@ -134,6 +134,29 @@
 	..()
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
 
+/obj/item/ammo_box/magazine/wt550m9
+	name = "wt550 magazine (9mm)"
+	icon_state = "9mmt-20"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = "9mm"
+	max_ammo = 20
+
+/obj/item/ammo_box/magazine/wt550m9/update_icon()
+	..()
+	icon_state = "9mmt-[round(ammo_count(),4)]"
+
+/obj/item/ammo_box/magazine/wt550m9/wtap
+	name = "wt550 magazine (Armour Piercing 9mm)"
+	ammo_type = /obj/item/ammo_casing/c9mmap
+
+/obj/item/ammo_box/magazine/wt550m9/wttx
+	name = "wt550 magazine (Toxin Tipped 9mm)"
+	ammo_type = /obj/item/ammo_casing/c9mmtox
+
+/obj/item/ammo_box/magazine/wt550m9/wtic
+	name = "wt550 magazine (Incindiary 9mm)"
+	ammo_type = /obj/item/ammo_casing/c9mminc
+
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
 	icon_state = "uzi9mm-32"
@@ -147,14 +170,22 @@
 
 /obj/item/ammo_box/magazine/smgm9mm
 	name = "SMG magazine (9mm)"
-	icon_state = "smg9mm-20"
+	icon_state = "smg9mm-42"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
-	max_ammo = 20
+	max_ammo = 42
 
-/obj/item/ammo_box/magazine/smgm9mm/update_icon()
-	..()
-	icon_state = "smg9mm-[round(ammo_count(),5)]"
+/obj/item/ammo_box/magazine/smgm9mm/ap
+	name = "SMG magazine (Armour Piercing 9mm)"
+	ammo_type = /obj/item/ammo_casing/c9mmap
+
+/obj/item/ammo_box/magazine/smgm9mm/toxin
+	name = "SMG magazine (Toxin Tipped 9mm)"
+	ammo_type = /obj/item/ammo_casing/c9mmtox
+
+/obj/item/ammo_box/magazine/smgm9mm/fire
+	name = "SMG Magazine (Incindiary 9mm)"
+	ammo_type = /obj/item/ammo_casing/c9mminc
 
 /obj/item/ammo_box/magazine/smgm45
 	name = "SMG magazine (.45)"

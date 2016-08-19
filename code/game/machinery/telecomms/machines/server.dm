@@ -55,7 +55,7 @@
 	if(Compiler)
 		Compiler.GC()
 		Compiler = null
-	..()
+	return ..()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(signal.data["message"])

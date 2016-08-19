@@ -193,21 +193,21 @@
 //Turns a direction into text
 /proc/dir2text(direction)
 	switch(direction)
-		if(1.0)
+		if(1)
 			return "north"
-		if(2.0)
+		if(2)
 			return "south"
-		if(4.0)
+		if(4)
 			return "east"
-		if(8.0)
+		if(8)
 			return "west"
-		if(5.0)
+		if(5)
 			return "northeast"
-		if(6.0)
+		if(6)
 			return "southeast"
-		if(9.0)
+		if(9)
 			return "northwest"
-		if(10.0)
+		if(10)
 			return "southwest"
 		else
 	return

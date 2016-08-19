@@ -59,6 +59,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+			D.holder = O
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -169,7 +170,6 @@
 	else
 		hardset_dna(O, null, null, null, null, dna.species.type)
 
-	dna = null
 	if(newname) //if there's a name as an argument, always take that one over the current name
 		O.real_name = newname
 	else
@@ -189,6 +189,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+			D.holder = O
 		O.med_hud_set_status()
 
 	//keep damage?

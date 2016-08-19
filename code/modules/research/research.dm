@@ -190,6 +190,7 @@ research holder datum.
 	var/desc = "description"			//General description of what it does and what it makes.
 	var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
 	var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
+	var/rare = 1						//How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
 	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
 
 
@@ -209,6 +210,7 @@ research holder datum.
 	name = "Plasma Research"
 	desc = "Research into the mysterious substance colloqually known as 'plasma'."
 	id = "plasmatech"
+	rare = 3
 
 /datum/tech/powerstorage
 	name = "Power Manipulation Technology"
@@ -219,6 +221,7 @@ research holder datum.
 	name = "'Blue-space' Research"
 	desc = "Research into the sub-reality known as 'blue-space'"
 	id = "bluespace"
+	rare = 2
 
 /datum/tech/biotech
 	name = "Biological Technology"
@@ -244,6 +247,8 @@ research holder datum.
 	name = "Illegal Technologies Research"
 	desc = "The study of technologies that violate Nanotrassen regulations."
 	id = "syndicate"
+	rare = 4
+
 
 /*
 /datum/tech/arcane
@@ -273,16 +278,36 @@ research holder datum.
 */
 
 
+/datum/tech/proc/getCost(var/current_level = null)
+	// Calculates tech disk's supply points sell cost
+	if(!current_level)
+		current_level = initial(level)
+
+	if(current_level >= level)
+		return 0
+
+	var/cost = 0
+	var/i
+	for(i=current_level+1, i<=level, i++)
+		if(i == initial(level))
+			continue
+		cost += i*5*rare
+
+	return cost
+
+
+
+
 /obj/item/weapon/disk/tech_disk
 	name = "Technology Disk"
 	desc = "A disk for storing technology data for further research."
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = 1
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)

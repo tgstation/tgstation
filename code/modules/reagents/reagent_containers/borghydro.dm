@@ -43,7 +43,7 @@ Borg Hypospray
 
 /obj/item/weapon/reagent_containers/borghypo/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 
 /obj/item/weapon/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg

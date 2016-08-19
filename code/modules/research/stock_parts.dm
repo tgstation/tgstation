@@ -69,12 +69,12 @@
 	name = "stock part"
 	desc = "What?"
 	icon = 'icons/obj/stock_parts.dmi'
-	w_class = 2.0
+	w_class = 2
 	var/rating = 1
 
 /obj/item/weapon/stock_parts/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)
 
 //Rating 1
 

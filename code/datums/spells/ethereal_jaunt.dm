@@ -88,7 +88,7 @@
 	// Eject contents if deleted somehow
 	for(var/atom/movable/AM in src)
 		AM.loc = get_turf(src)
-	..()
+	return ..()
 
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
 	if (!src.canmove || reappearing || !direction) return

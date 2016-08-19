@@ -116,6 +116,12 @@
 	required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, "sacid" = 1)
 	result_amount = 5
 
+/datum/chemical_reaction/oxandrolone
+	name = "Oxandrolone"
+	id = "oxandrolone"
+	result = "oxandrolone"
+	required_reagents = list("carbon" = 3, "phenol" = 1, "hydrogen" = 1, "oxygen" = 1)
+	result_amount = 6
 
 /datum/chemical_reaction/salbutamol
 	name = "Salbutamol"

@@ -9,7 +9,7 @@
 
 /turf/simulated/wall/cult/break_wall()
 	new /obj/effect/decal/cleanable/blood(src)
-	new /obj/structure/cultgirder(src)
+	return (new /obj/structure/cultgirder(src))
 
 /turf/simulated/wall/cult/devastate_wall()
 	new /obj/effect/decal/cleanable/blood(src)

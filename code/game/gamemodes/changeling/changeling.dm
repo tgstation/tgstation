@@ -454,3 +454,4 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
+	return ..()

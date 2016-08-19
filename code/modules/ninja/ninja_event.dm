@@ -167,7 +167,6 @@ Contents:
 
 /proc/create_space_ninja(spawn_loc)
 	var/mob/living/carbon/human/new_ninja = new(spawn_loc)
-	if(prob(50)) new_ninja.gender = "female"
 	var/datum/preferences/A = new()//Randomize appearance for the ninja.
 	A.real_name = "[pick(ninja_titles)] [pick(ninja_names)]"
 	A.copy_to(new_ninja)

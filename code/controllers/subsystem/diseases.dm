@@ -13,10 +13,8 @@ var/datum/subsystem/diseases/SSdisease
 	..("P:[processing.len]")
 
 /datum/subsystem/diseases/fire()
-	var/i=1
 	for(var/thing in processing)
 		if(thing)
 			thing:process()
-			++i
 			continue
-		processing.Cut(i,i+1)
+		processing.Remove(thing)

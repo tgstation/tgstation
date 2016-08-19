@@ -78,7 +78,7 @@
 			if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
 				var/obj/item/weapon/reagent_containers/food/snacks/S = I
 				S.create_reagents(S.volume)
-				feedback_add_details("food_made","[S.name]")
+				feedback_add_details("food_made","[S.type]")
 				send_feedback = 0
 			var/list/parts = del_reqs(R, I)
 			for(var/A in parts)
@@ -93,7 +93,7 @@
 					I.reagents.reagent_list.Add(A)
 			I.CheckParts()
 			if(send_feedback)
-				feedback_add_details("object_crafted","[I.name]")
+				feedback_add_details("object_crafted","[I.type]")
 			return 1
 	return 0
 

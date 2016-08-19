@@ -10,10 +10,10 @@ RSF
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	var/matter = 0
 	var/mode = 1
-	w_class = 3.0
+	w_class = 3
 
 /obj/item/weapon/rsf/New()
 	desc = "A RSF. It currently holds [matter]/30 fabrication-units."

@@ -106,6 +106,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	var/obj/item/device/gangtool/gangtool = new(mob)
 	var/obj/item/weapon/pen/gang/T = new(mob)
 	var/obj/item/toy/crayon/spraycan/gang/SC = new(mob,gang)
+	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob,gang)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -139,8 +140,14 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		. += 1
 	else
 		mob << "The <b>territory spraycan</b> in your [where3] can be used to claim areas of the station for your gang. The more territory your gang controls, the more influence you get. All gangsters can use these, so distribute them to grow your influence faster."
-	mob.update_icons()
 
+	var/where4 = mob.equip_in_one_of_slots(C, slots)
+	if (!where4)
+		mob << "Your Syndicate benefactors were unfortunately unable to get you a chameleon security HUD."
+		. += 1
+	else
+		mob << "The <b>chameleon security HUD</b> in your [where4] will help you keep track of who is loyalty-implanted, and unable to be recruited."
+	mob.update_icons()
 	return .
 
 
@@ -241,39 +248,20 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 /datum/game_mode/proc/auto_declare_completion_gang(datum/gang/winner)
 	if(gangs.len)
 		if(!winner)
-			world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</B></FONT><br>"
+			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
 		else
-			world << "<FONT size=3 color=red><B>The [winner.name] Gang successfully performed a hostile takeover of the station!</B></FONT><br>"
+			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
 
 	for(var/datum/gang/G in gangs)
-		world << "<br><b>The [G.name] Gang was [winner==G ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
-		world << "<br>The [G.name] Gang Bosses were:"
-		gang_membership_report(G.bosses)
-		world << "<br>The [G.name] Gangsters were:"
-		gang_membership_report(G.gangsters)
-		world << "<br>"
-
-
-
-/datum/game_mode/proc/gang_membership_report(list/membership)
-	var/text = ""
-	for(var/datum/mind/gang_mind in membership)
-		text += "<br><b>[gang_mind.key]</b> was <b>[gang_mind.name]</b> ("
-		if(gang_mind.current)
-			if(gang_mind.current.stat == DEAD || isbrain(gang_mind.current))
-				text += "died"
-			else if(gang_mind.current.z > ZLEVEL_STATION)
-				text += "fled the station"
-			else
-				text += "survived"
-			if(gang_mind.current.real_name != gang_mind.name)
-				text += " as <b>[gang_mind.current.real_name]</b>"
-		else
-			text += "body destroyed"
-		text += ")"
-
-	world << text
-
+		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
+		text += "<br>The [G.name] Gang Bosses were:"
+		for(var/datum/mind/boss in G.bosses)
+			text += printplayer(boss, 1)
+		text += "<br>The [G.name] Gangsters were:"
+		for(var/datum/mind/gangster in G.gangsters)
+			text += printplayer(gangster, 1)
+		text += "<br>"
+		world << text
 
 //////////////////////////////////////////////////////////
 //Handles influence, territories, and the victory checks//

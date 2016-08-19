@@ -171,7 +171,7 @@
 			return .(O.vars[variable])
 
 		if("text")
-			var/new_value = input("Enter new text:","Text",O.vars[variable]) as text|null
+			var/new_value = input("Enter new text:","Text",O.vars[variable]) as message|null
 			if(new_value == null) return
 
 			var/process_vars = 0

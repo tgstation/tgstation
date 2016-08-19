@@ -15,9 +15,9 @@
 	var/temp = null
 	var/frequency = 1451
 	var/broadcasting = null
-	var/listening = 1.0
+	var/listening = 1
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = 2
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 7
@@ -129,7 +129,7 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=10000)

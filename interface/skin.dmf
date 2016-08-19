@@ -108,6 +108,14 @@ macro "borghotkeymode"
 		command = "resist"
 		is-disabled = false
 	elem 
+		name = "O"
+		command = "ooc"
+		is-disabled = false
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "D+REP"
 		command = ".east"
 		is-disabled = false
@@ -374,6 +382,10 @@ macro "macro"
 		command = "Aghost"
 		is-disabled = false
 	elem 
+		name = "CTRL+O"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "F6"
 		command = "Player-Panel"
 		is-disabled = false
@@ -541,6 +553,10 @@ macro "hotkeymode"
 		is-disabled = false
 	elem 
 		name = "O"
+		command = "ooc"
+		is-disabled = false
+	elem 
+		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
 	elem 
@@ -724,6 +740,10 @@ macro "borgmacro"
 	elem 
 		name = "CTRL+B"
 		command = "resist"
+		is-disabled = false
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
 		is-disabled = false
 	elem 
 		name = "CTRL+D+REP"

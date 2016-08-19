@@ -95,13 +95,11 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/proc/process_pipenets()
-	var/i=1
 	for(var/thing in networks)
 		if(thing)
 			thing:process()
-			++i
 			continue
-		networks.Cut(i, i+1)
+		networks.Remove(thing)
 
 
 /datum/subsystem/air/proc/process_atmos_machinery()

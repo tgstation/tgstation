@@ -170,13 +170,10 @@
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	glass = 0
 
-/obj/item/weapon/firelock_board
+/obj/item/weapon/electronics/firelock
 	name = "firelock circuitry"
 	desc = "A circuit board used in construction of firelocks."
-	icon = 'icons/obj/module.dmi'
 	icon_state = "mainboard"
-	w_class = 2
-	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 
 /obj/structure/firelock_frame
 	name = "firelock frame"
@@ -270,7 +267,7 @@
 				if(constructionStep != CONSTRUCTION_GUTTED) return
 				user.visible_message("<span class='notice'>[user] removes [src]'s circuit board.</span>", \
 									 "<span class='notice'>You remove the circuit board from [src].</span>")
-				new /obj/item/weapon/firelock_board(get_turf(src))
+				new /obj/item/weapon/electronics/firelock(get_turf(src))
 				playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
 				constructionStep = CONSTRUCTION_NOCIRCUIT
 				update_icon()
@@ -308,7 +305,7 @@
 					M.amount = 3
 					qdel(src)
 				return
-			if(istype(C, /obj/item/weapon/firelock_board))
+			if(istype(C, /obj/item/weapon/electronics/firelock))
 				user.visible_message("<span class='notice'>[user] starts adding [C] to [src]...</span>", \
 									 "<span class='notice'>You begin adding a circuit board to [src]...</span>")
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)

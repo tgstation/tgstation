@@ -21,7 +21,7 @@
 		node
 			BlockDefinition/program
 			statement/FunctionDefinition/curFunction
-		stack
+		datum/stack
 			scopes		= new()
 			functions	= new()
 

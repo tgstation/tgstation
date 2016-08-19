@@ -34,7 +34,7 @@
 	if(targloc == curloc)
 		if(BB.original == user) //if we target ourselves we go straight to bullet_act()
 			user.bullet_act(BB)
-		del(BB)
+		qdel(BB)
 		return 1
 	BB.loc = get_turf(user)
 	BB.starting = get_turf(user)

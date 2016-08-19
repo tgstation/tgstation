@@ -14,13 +14,7 @@ Chief Engineer
 	req_admin_notify = 1
 	minimal_player_age = 7
 
-	default_id = /obj/item/weapon/card/id/silver
-	default_pda = /obj/item/device/pda/heads/ce
-	default_pda_slot = slot_l_store
-	default_headset = /obj/item/device/radio/headset/heads/ce
-	default_backpack = /obj/item/weapon/storage/backpack/industrial
-	default_satchel = /obj/item/weapon/storage/backpack/satchel_eng
-	default_storagebox = /obj/item/weapon/storage/box/engineer
+	outfit = /datum/outfit/job/ce
 
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
@@ -31,17 +25,27 @@ Chief Engineer
 			            access_heads, access_construction, access_sec_doors, access_minisat,
 			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
 
-/datum/job/chief_engineer/equip_items(mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_engineer(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/white(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black/ce(H), slot_gloves)
+/datum/outfit/job/ce
+	name = "Chief Engineer"
 
-	//Equip telebaton
-	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
+	id = /obj/item/weapon/card/id/silver
+	belt = /obj/item/weapon/storage/belt/utility/full
+	l_pocket = /obj/item/device/pda/heads/ce
+	ears = /obj/item/device/radio/headset/heads/ce
+	uniform = /obj/item/clothing/under/rank/chief_engineer
+	shoes = /obj/item/clothing/shoes/sneakers/brown
+	head = /obj/item/clothing/head/hardhat/white
+	gloves = /obj/item/clothing/gloves/color/black/ce
+	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
-	announce_head(H, list("Engineering")) //tell underlings (engineering radio) they have a head
+	backpack = /obj/item/weapon/storage/backpack/industrial
+	satchel = /obj/item/weapon/storage/backpack/satchel_eng
+	box = /obj/item/weapon/storage/box/engineer
+	pda_slot = slot_l_store
+
+/datum/outfit/job/ce/post_equip(mob/living/carbon/human/H)
+	..()
+	announce_head(H, list("Engineering"))
 
 /*
 Station Engineer
@@ -57,24 +61,28 @@ Station Engineer
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 
-	default_pda = /obj/item/device/pda/engineering
-	default_pda_slot = slot_l_store
-	default_headset = /obj/item/device/radio/headset/headset_eng
-	default_backpack = /obj/item/weapon/storage/backpack/industrial
-	default_satchel = /obj/item/weapon/storage/backpack/satchel_eng
-	default_storagebox = /obj/item/weapon/storage/box/engineer
+	outfit = /datum/outfit/job/engineer
 
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 									access_external_airlocks, access_construction, access_tcomsat)
 
-/datum/job/engineer/equip_items(mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/device/t_scanner(H), slot_r_store)
+/datum/outfit/job/engineer
+	name = "Station Engineer"
+
+	belt = /obj/item/weapon/storage/belt/utility/full
+	l_pocket = /obj/item/device/pda/engineering
+	ears = /obj/item/device/radio/headset/headset_eng
+	uniform = /obj/item/clothing/under/rank/engineer
+	shoes = /obj/item/clothing/shoes/workboots
+	head = /obj/item/clothing/head/hardhat
+	r_pocket = /obj/item/device/t_scanner
+
+	backpack = /obj/item/weapon/storage/backpack/industrial
+	satchel = /obj/item/weapon/storage/backpack/satchel_eng
+	box = /obj/item/weapon/storage/box/engineer
+	pda_slot = slot_l_store
 
 /*
 Atmospheric Technician
@@ -90,17 +98,20 @@ Atmospheric Technician
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 
-	default_pda = /obj/item/device/pda/atmos
-	default_pda_slot = slot_l_store
-	default_headset = /obj/item/device/radio/headset/headset_eng
-	default_storagebox = /obj/item/weapon/storage/box/engineer
+	outfit = /datum/outfit/job/atmos
 
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 									access_external_airlocks, access_construction, access_atmospherics)
 	minimal_access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction)
 
-/datum/job/atmos/equip_items(mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/atmospheric_technician(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/device/analyzer(H), slot_r_store)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/atmostech/(H), slot_belt)
+/datum/outfit/job/atmos
+	name = "Atmospheric Technician"
+
+	belt = /obj/item/weapon/storage/belt/utility/atmostech
+	l_pocket = /obj/item/device/pda/atmos
+	ears = /obj/item/device/radio/headset/headset_eng
+	uniform = /obj/item/clothing/under/rank/atmospheric_technician
+	r_pocket = /obj/item/device/analyzer
+
+	box = /obj/item/weapon/storage/box/engineer
+	pda_slot = slot_l_store

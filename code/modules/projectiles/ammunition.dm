@@ -6,7 +6,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	var/fire_sound = null						//What sound should play when this ammo is fired
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
@@ -19,8 +19,8 @@
 	..()
 	if(projectile_type)
 		BB = new projectile_type(src)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 	dir = pick(alldirs)
 	update_icon()
 
@@ -64,7 +64,7 @@
 	item_state = "syringe_kit"
 	materials = list(MAT_METAL=30000)
 	throwforce = 2
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	var/list/stored_ammo = list()

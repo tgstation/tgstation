@@ -7,6 +7,7 @@
 	icon_living = "shade"
 	maxHealth = 50
 	health = 50
+	healable = 0
 	speak_emote = list("hisses")
 	emote_hear = list("wails.","screeches.")
 	response_help  = "puts their hand through"

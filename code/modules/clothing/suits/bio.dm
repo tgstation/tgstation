@@ -21,7 +21,7 @@
 	permeability_coefficient = 0.01
 	flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	slowdown = 1.0
+	slowdown = 1
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT

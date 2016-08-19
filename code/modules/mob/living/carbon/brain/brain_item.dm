@@ -112,7 +112,7 @@
 	if(brainmob)
 		qdel(brainmob)
 		brainmob = null
-	..()
+	return ..()
 
 /obj/item/organ/internal/brain/alien
 	name = "alien brain"

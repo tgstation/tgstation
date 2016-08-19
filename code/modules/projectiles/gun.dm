@@ -11,11 +11,11 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=2000)
-	w_class = 3.0
+	w_class = 3
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	force = 5.0
+	force = 5
 	origin_tech = "combat=1"
 	needs_permit = 1
 	attack_verb = list("struck", "hit", "bashed")
@@ -232,7 +232,7 @@
 		user.update_inv_l_hand()
 	else
 		user.update_inv_r_hand()
-	feedback_add_details("gun_fired","[src.name]")
+	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging

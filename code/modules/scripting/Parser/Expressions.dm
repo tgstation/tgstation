@@ -56,7 +56,7 @@
 					var
 						token/accessor/A=T
 						node/expression/value/variable/E//=new(A.member)
-						stack/S=new()
+						datum/stack/S = new()
 					while(istype(A.object, /token/accessor))
 						S.Push(A)
 						A=A.object
@@ -130,7 +130,7 @@
 	Takes the operator on top of the opr stack and assigns its operand(s). Then this proc pushes the value of that operation to the top
 	of the val stack.
 */
-		Reduce(stack/opr, stack/val)
+		Reduce(datum/stack/opr, datum/stack/val)
 			var/node/expression/operator/O=opr.Pop()
 			if(!O) return
 			if(!istype(O))
@@ -181,7 +181,7 @@
 	- <ParseParamExpression()>
 */
 		ParseExpression(list/end=list(/token/end), list/ErrChars=list("{", "}"), check_functions = 0)
-			var/stack
+			var/datum/stack
 				opr=new
 				val=new
 			src.expecting=VALUE

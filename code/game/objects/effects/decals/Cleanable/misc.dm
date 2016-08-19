@@ -114,7 +114,7 @@
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	viruses = null
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"

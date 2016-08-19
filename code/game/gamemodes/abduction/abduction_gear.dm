@@ -460,11 +460,16 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.stunned)
 		L.SetSleeping(60)
-	L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
+		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
-	add_logs(user, L, "put to sleep")
+		add_logs(user, L, "put to sleep")
+	else
+		L.drowsyness += 1
+		user << "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>"
+		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
+							"<span class='userdanger'>You suddenly feel drowsy!</span>")
 	return
 
 /obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
@@ -490,13 +495,22 @@ Congratulations! You are now trained for xenobiology research!"}
 						"<span class='userdanger'>[user] probes you!</span>")
 
 	var/species = "<span class='warning'>Unknown species</span>"
+	var/helptext = "<span class='warning'>Species unsuitable for experiments.</span>"
+	
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.dna && H.dna.species)
 			species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
 			species = "<span class='warning'>Changeling lifeform</span>"
+		var/obj/item/organ/internal/gland/temp = locate() in H.internal_organs
+		if(temp)
+			helptext = "<span class='warning'>Experimental gland detected!</span>"
+		else
+			helptext = "<span class='notice'>Subject suitable for experiments.</span>"
+
 	user << "<span class='notice'>Probing result:</span>[species]"
+	user << "[helptext]"
 
 /obj/item/weapon/restraints/handcuffs/energy
 	name = "hard-light energy field"

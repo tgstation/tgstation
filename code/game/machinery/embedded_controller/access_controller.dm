@@ -118,7 +118,7 @@
 	for(var/obj/machinery/doorButtons/access_button/A in world)
 		if(A.controller == src)
 			A.controller = null
-	..()
+	return ..()
 
 /obj/machinery/doorButtons/airlock_controller/Topic(href, href_list)
 	if(..())

@@ -28,3 +28,8 @@
 		user.see_in_dark = 0
 		user.dna.species.invis_sight = initial(user.dna.species.invis_sight)
 	return 1
+
+
+/obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user)
+	user.permanent_sight_flags &= ~SEE_MOBS
+	user.sight &= ~SEE_MOBS

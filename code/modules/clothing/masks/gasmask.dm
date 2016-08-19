@@ -4,7 +4,7 @@
 	icon_state = "gas_alt"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
-	w_class = 3.0
+	w_class = 3
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01

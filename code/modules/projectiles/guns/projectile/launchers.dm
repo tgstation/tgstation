@@ -9,6 +9,10 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	w_class = 3
+	pin = /obj/item/device/firing_pin/implant/pindicate
+
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/unrestricted
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/revolver/grenadelauncher/attackby(obj/item/A, mob/user, params)
 	..()
@@ -26,7 +30,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
-	name = "gyrojet pistol"
+	name = "\improper Gyrojet rocket pistol"
 	desc = "A prototype pistol designed to fire self propelled rockets."
 	icon_state = "gyropistol"
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'

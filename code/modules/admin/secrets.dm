@@ -221,7 +221,7 @@
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/mob/living/carbon/human/H in mob_list)
 				if(H.dna && H.ckey)
-					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.blood_type]</td></tr>"
+					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=DNA;size=440x410")
 		if("fingerprints")

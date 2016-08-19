@@ -37,7 +37,7 @@
 	The token at <index> in <tokens>.
 */
 			curToken
-		stack
+		datum/stack
 			blocks=new
 		node/BlockDefinition
 			GlobalBlock/global_block=new

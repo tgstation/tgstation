@@ -2,6 +2,8 @@
 /mob/living/silicon/ai/proc/show_laws_verb()
 	set category = "AI Commands"
 	set name = "Show Laws"
+	if(usr.stat == 2)
+		return //won't work if dead
 	src.show_laws()
 
 /mob/living/silicon/ai/show_laws(everyone = 0)

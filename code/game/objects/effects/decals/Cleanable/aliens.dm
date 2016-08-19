@@ -12,12 +12,14 @@
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	var/list/viruses = list()
 	blood_DNA = list("UNKNOWN DNA" = "X*")
+	bloodiness = MAX_SHOE_BLOODINESS
+	blood_state = BLOOD_STATE_XENO
 
 /obj/effect/decal/cleanable/xenoblood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	viruses = null
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
 	spawn (0)

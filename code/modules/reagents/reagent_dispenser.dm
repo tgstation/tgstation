@@ -12,14 +12,14 @@
 
 /obj/structure/reagent_dispensers/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(5))
 				qdel(src)
 				return
@@ -67,15 +67,15 @@
 
 /obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				PoolOrNew(/obj/effect/effect/water, src.loc)
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(5))
 				PoolOrNew(/obj/effect/effect/water, src.loc)
 				qdel(src)

@@ -13,7 +13,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/g_amount = 0
 	var/gold_amount = 0
 	var/diamond_amount = 0
-	var/max_material_amount = 75000.0
+	var/max_material_amount = 75000
 	var/efficiency_coeff
 	reagents = new(0)
 
@@ -48,7 +48,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		G.reagents.trans_to(src, G.reagents.total_volume)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-	max_material_amount = T * 75000.0
+	max_material_amount = T * 75000
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T += M.rating

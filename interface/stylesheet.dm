@@ -55,6 +55,7 @@ h1.alert, h2.alert		{color: #000000;}
 .warning				{color: #ff0000;	font-style: italic;}
 .announce 				{color: #228b22;	font-weight: bold;}
 .boldannounce			{color: #ff0000;	font-weight: bold;}
+.greenannounce			{color: #00ff00;	font-weight: bold;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
@@ -64,6 +65,8 @@ h1.alert, h2.alert		{color: #000000;}
 .suicide				{color: #ff5050;	font-style: italic;}
 .green					{color: #03ff39;}
 .shadowling				{color: #3b2769;}
+.cult					{color: #960000; font-weight: bold; font-size: 3;}
+.purple					{color: #5e2d79;}
 
 .newscaster				{color: #800000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}

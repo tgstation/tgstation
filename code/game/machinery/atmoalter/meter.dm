@@ -4,7 +4,7 @@
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
-	anchored = 1.0
+	anchored = 1
 	power_channel = ENVIRON
 	var/frequency = 0
 	var/id
@@ -21,7 +21,7 @@
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
 	src.target = null
-	..()
+	return ..()
 
 /obj/machinery/meter/initialize()
 	if (!target)

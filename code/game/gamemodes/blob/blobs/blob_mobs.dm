@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore
 	name = "blob"
-	desc = "Some blob thing."
+	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
 	icon_living = "blobpod"
 	health = 40
@@ -39,6 +39,7 @@
 	var/obj/effect/blob/factory/factory = null
 	var/list/human_overlays = list()
 	var/is_zombie = 0
+	gold_core_spawnable = 1
 
 /mob/living/simple_animal/hostile/blob/blobspore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
@@ -94,12 +95,12 @@
 	var/turf/location = get_turf(src)
 
 	// Create the reagents to put into the air
-	create_reagents(5)
+	create_reagents(10)
 
 	if(overmind && overmind.blob_reagent_datum)
-		reagents.add_reagent(overmind.blob_reagent_datum.id, 5)
+		reagents.add_reagent(overmind.blob_reagent_datum.id, 10)
 	else
-		reagents.add_reagent("spore", 5)
+		reagents.add_reagent("spore", 10)
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
@@ -116,7 +117,7 @@
 	if(contents)
 		for(var/mob/M in contents)
 			M.loc = src.loc
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
@@ -145,7 +146,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut
 	name = "blobbernaut"
-	desc = "Some HUGE blob thing."
+	desc = "A hulking, mobile chunk of blobmass."
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"
@@ -161,7 +162,7 @@
 	force_threshold = 10
 	environment_smash = 3
 	mob_size = MOB_SIZE_LARGE
-
+	gold_core_spawnable = 1
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()
 	return

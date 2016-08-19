@@ -3,7 +3,7 @@
 	desc = "Looks absolutely SHOCKING!"
 	icon_state = "echair0"
 	var/obj/item/assembly/shock_kit/part = null
-	var/last_time = 1.0
+	var/last_time = 1
 
 /obj/structure/stool/bed/chair/e_chair/New()
 	..()

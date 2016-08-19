@@ -8,8 +8,8 @@
 	icon_state = "autolathe"
 	density = 1
 
-	var/operating = 0.0
-	anchored = 1.0
+	var/operating = 0
+	anchored = 1
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = 0
@@ -58,6 +58,13 @@
 	wires = new(src)
 	files = new /datum/research/autolathe(src)
 	matching_designs = list()
+
+/obj/machinery/autolathe/Destroy()
+	qdel(wires)
+	wires = null
+	qdel(materials)
+	materials = null
+	return ..()
 
 /obj/machinery/autolathe/interact(mob/user)
 	if(!is_operational())
@@ -109,7 +116,7 @@
 	if (stat)
 		return 1
 
-	var/material_amount = materials.can_insert(O)
+	var/material_amount = materials.get_item_material_amount(O)
 	if(!material_amount)
 		user << "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>"
 		return 1

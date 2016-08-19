@@ -185,7 +185,7 @@
 			N.amount = max(N.amount - 1, 0)
 			if (N.amount <= 0)
 				piles -= N
-				del(N)
+				qdel(N)
 			break
 
 	for (var/obj/T in contents)//Now we find the seed we need to vend

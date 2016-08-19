@@ -51,3 +51,28 @@
 		lying = 90 //Anything else looks retarded
 	..()
 	update_icons()
+
+
+/mob/living/carbon/alien/humanoid/queen/large/update_icons()
+	update_hud()		//TODO: remove the need for this to be here
+	overlays.Cut()
+	if(stat == DEAD)
+		icon_state = "queen_dead"
+	else if((stat == UNCONSCIOUS && !sleeping) || weakened)
+		icon_state = "queen_l"
+	else if(sleeping || lying || resting)
+		icon_state = "queen_sleep"
+	else
+		icon_state = "queen_s"
+	for(var/image/I in overlays_standing)
+		overlays += I
+
+/mob/living/carbon/alien/humanoid/queen/large/update_inv_l_hand()
+	remove_overlay(L_HAND_LAYER)
+	if(handcuffed)
+		drop_l_hand()
+
+/mob/living/carbon/alien/humanoid/queen/large/update_inv_r_hand()
+	remove_overlay(R_HAND_LAYER)
+	if(handcuffed)
+		drop_r_hand()

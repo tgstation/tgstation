@@ -13,14 +13,19 @@ Chaplain
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
-	default_pda = /obj/item/device/pda/chaplain
+	outfit = /datum/outfit/job/chaplain
 
 	access = list(access_morgue, access_chapel_office, access_crematorium)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 
-/datum/job/chaplain/equip_items(mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
+/datum/outfit/job/chaplain
+	name = "Chaplain"
+
+	belt = /obj/item/device/pda/chaplain
+	uniform = /obj/item/clothing/under/rank/chaplain
+
+/datum/outfit/job/chaplain/post_equip(mob/living/carbon/human/H)
+	..()
 
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
 	var/new_religion = "Christianity"

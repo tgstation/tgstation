@@ -86,6 +86,25 @@
 	force = 0
 	on = 0
 
+/obj/item/weapon/melee/classic_baton/telescopic/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+	var/obj/item/organ/internal/brain/B = H.getorgan(/obj/item/organ/internal/brain)
+
+	user.visible_message("<span class='suicide'>[user] stuffs the [src] up their nose and presses the 'extend' button! It looks like they're trying to clear their mind.</span>")
+	if(!on)
+		src.attack_self(user)
+	else
+		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
+		add_fingerprint(user)
+	sleep(3)
+	if (H && !qdeleted(H))
+		if (B && !qdeleted(B))
+			H.internal_organs -= B
+			qdel(B)
+		gibs(H.loc, H.viruses, H.dna)
+		return (BRUTELOSS)
+	return
+
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
 	if(on)

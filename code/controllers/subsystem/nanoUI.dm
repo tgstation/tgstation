@@ -38,12 +38,10 @@ var/datum/subsystem/nano/SSnano
 
 
 /datum/subsystem/nano/fire()
-	var/i=1
 	for(var/thing in SSnano.processing_uis)
 		if(thing)
 			var/datum/nanoui/ui = thing
 			if(ui.src_object && ui.user)
 				ui.process()
-				++i
 				continue
-		processing_uis.Cut(i, i+1)
+		processing_uis.Remove(thing)

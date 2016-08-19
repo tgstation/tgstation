@@ -77,11 +77,33 @@
 	item_state = null
 	origin_tech = null
 	vision_flags = SEE_MOBS
-	darkness_view = 3
+	darkness_view = 1
 	invis_view = 2
 	flash_protect = -1
 	unacidable = 1
 	flags = ABSTRACT | NODROP
+	action_button_name = "Shift Nerves"
+	action_button_is_hands_free = 1
+	var/max_darkness_view = 8
+	var/min_darkness_view = 0
+
+/obj/item/clothing/glasses/night/shadowling/attack_self(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.dna.species.id != "shadowling")
+		user << "<span class='warning'>You aren't sure how to do this...</span>"
+		return
+	var/new_dark_view
+	new_dark_view = (input(user, "Enter the radius of tiles to see with night vision.", "Night Vision", "[new_dark_view]") as num)
+	new_dark_view = Clamp(new_dark_view,min_darkness_view,max_darkness_view)
+	switch(new_dark_view)
+		if(0)
+			user << "<span class='notice'>Your night vision capabilities fade away for the time being.</span>"
+		else
+			user << "<span class='notice'>You shift your night vision capabilities to see [new_dark_view] tiles away.</span>"
+	darkness_view = new_dark_view
+	return
 
 
 /obj/structure/shadow_vortex

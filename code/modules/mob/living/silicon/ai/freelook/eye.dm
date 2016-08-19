@@ -38,7 +38,7 @@
 
 /mob/camera/aiEye/Destroy()
 	ai = null
-	..()
+	return ..()
 
 /atom/proc/move_camera_by_click()
 	if(istype(usr, /mob/living/silicon/ai))
@@ -100,5 +100,7 @@
 	set category = "AI Commands"
 	set name = "Toggle Camera Acceleration"
 
+	if(usr.stat == 2)
+		return //won't work if dead
 	acceleration = !acceleration
 	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."

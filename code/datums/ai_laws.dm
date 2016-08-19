@@ -134,7 +134,7 @@
 	src.ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	del(src.inherent)
+	qdel(src.inherent)
 	src.inherent = list()
 
 /datum/ai_laws/proc/add_supplied_law(number, law)

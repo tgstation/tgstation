@@ -95,6 +95,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor(null))
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_extend_shuttle(null))
 
 
 
@@ -136,7 +137,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 				sleep(90)
 				H.visible_message("<span class='warning'>[H]'s body begins to violently stretch and contort.</span>", \
-								  "<span class='shadowling'>You begin to rend apart the final barries to godhood.</span>")
+								  "<span class='shadowling'>You begin to rend apart the final barriers to godhood.</span>")
 
 				sleep(40)
 				H << "<i><b>Yes!</b></i>"

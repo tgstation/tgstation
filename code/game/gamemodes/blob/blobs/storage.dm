@@ -2,8 +2,9 @@
 	name = "storage blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
-	health = 30
-	fire_resist = 2
+	desc = "A huge, smooth mass supported by tendrils."
+	health = 60
+	maxhealth = 60
 
 /obj/effect/blob/storage/update_icon()
 	if(health <= 0)

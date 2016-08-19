@@ -14,7 +14,7 @@
 	var/stop_bleeding = 0
 	var/self_delay = 50
 
-/obj/item/stack/medical/attack(mob/living/carbon/M, mob/user)
+/obj/item/stack/medical/attack(mob/living/M, mob/user)
 
 	if(M.stat == 2)
 		var/t_him = "it"
@@ -25,8 +25,8 @@
 		user << "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>"
 		return
 
-	if(!istype(M))
-		user << "<span class='danger'>You don't know how to apply \the [src] to [M]...</span>"
+	if(!istype(M, /mob/living/carbon) && !istype(M, /mob/living/simple_animal))
+		user << "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>"
 		return 1
 
 	if(!user.IsAdvancedToolUser())
@@ -48,7 +48,18 @@
 			return
 
 	if(user)
-		if(M != user)
+		if (M != user)
+			if (istype(M, /mob/living/simple_animal))
+				var/mob/living/simple_animal/critter = M
+				if (!(critter.healable))
+					user << "<span class='notice'> You cannot use [src] on [M]!</span>"
+					return
+				else if (critter.health == critter.maxHealth)
+					user << "<span class='notice'> [M] is at full health.</span>"
+					return
+				else if(src.heal_brute < 1)
+					user << "<span class='notice'> [src] won't help [M] at all.</span>"
+					return
 			user.visible_message("<span class='green'>[user] applies [src] on [M].</span>", "<span class='green'>You apply [src] on [M].</span>")
 		else
 			var/t_himself = "itself"

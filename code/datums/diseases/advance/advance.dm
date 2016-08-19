@@ -107,7 +107,7 @@ var/list/advance_cures = 	list(
 		if(resistance && !(id in affected_mob.resistances))
 			affected_mob.resistances[id] = id
 		remove_virus()
-	del(src)	//delete the datum to stop it processing
+	qdel(src)	//delete the datum to stop it processing
 
 // Returns the advance disease with a different reference memory.
 /datum/disease/advance/Copy(process = 0)

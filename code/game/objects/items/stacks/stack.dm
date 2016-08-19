@@ -13,7 +13,7 @@
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
-	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/max_amount = 50 //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 	var/is_cyborg = 0 // It's 1 if module is used by a cyborg, and uses its storage
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
@@ -27,7 +27,7 @@
 /obj/item/stack/Destroy()
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
-	..()
+	return ..()
 
 /obj/item/stack/examine(mob/user)
 	..()
@@ -183,7 +183,7 @@
 /obj/item/stack/proc/zero_amount()
 	if(is_cyborg)
 		return source.energy < cost
-	if (amount < 1)
+	if(amount < 1)
 		qdel(src)
 		return 1
 	return 0
@@ -221,6 +221,7 @@
 	if (user.get_inactive_hand() == src)
 		if(zero_amount())	return
 		var/obj/item/stack/F = new src.type( user, 1)
+		. = F
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)

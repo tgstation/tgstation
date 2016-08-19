@@ -194,3 +194,12 @@ NOTIFY_NEW_PLAYER_AGE 0
 
 ## Uncomment to have the game log runtimes to the log folder. (Note: this disables normal output in dd/ds, so it should be left off for testing.
 #LOG_RUNTIMES
+
+##Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
+AUTOCONVERT_NOTES
+
+##Comment this out to stop admin messages sent anytime an admin disconnects from a round in play, you can edit the messages in admin.dm
+ANNOUNCE_ADMIN_LOGOUT
+
+##Uncomment to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
+#ANNOUNCE_ADMIN_LOGIN

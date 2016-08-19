@@ -121,7 +121,8 @@
 	origin_tech = "materials=4;biotech=3"
 	implant_color = "#101010"
 	flash_protect = 2
-	// Welding with thermals will still hurt your eyes a bit.
+	aug_message = null
+	eye_color = "fff"
 
 /obj/item/organ/internal/cyberimp/eyes/shield/emp_act(severity)
 	return

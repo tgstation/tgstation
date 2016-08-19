@@ -93,16 +93,16 @@
 	..()
 
 	switch (severity)
-		if (1.0)
+		if (1)
 			gib()
 			return
 
-		if (2.0)
+		if (2)
 			adjustBruteLoss(60)
 			adjustFireLoss(60)
 			adjustEarDamage(30,120)
 
-		if(3.0)
+		if(3)
 			adjustBruteLoss(30)
 			if (prob(50))
 				Paralyse(1)
@@ -149,9 +149,10 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/organ/internal/body_egg/alien_embryo/A = getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
-				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
-				client.images += I
+				var/obj/item/organ/internal/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
+				if(A)
+					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
+					client.images += I
 	return
 
 

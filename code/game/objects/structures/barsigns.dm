@@ -246,7 +246,7 @@
 /datum/barsign/emergencyrumparty
 	name = "The Emergency Rum Party"
 	icon = "emergencyrumparty"
-	desc = "Still serving drinks that were banned years ago."
+	desc = "Recently relicensed after a long closure."
 
 /datum/barsign/combocafe
 	name = "The Combo Cafe"
@@ -276,7 +276,7 @@
 /datum/barsign/thenet
 	name = "The Net"
 	icon = "thenet"
-	desc = "The sea of drinkformation." //you couldn't come up with something better?
+	desc = "You just seem to get caught up in it for hours."
 
 
 /datum/barsign/hiddensigns

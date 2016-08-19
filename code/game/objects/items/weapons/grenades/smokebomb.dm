@@ -14,7 +14,7 @@
 
 /obj/item/weapon/grenade/smokebomb/Destroy()
 	qdel(smoke)
-	..()
+	return ..()
 
 /obj/item/weapon/grenade/smokebomb/prime()
 	update_mob()

@@ -83,7 +83,7 @@
 	var/a_intent = "help"//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
-	var/obj/structure/stool/bed/buckled = null//Living
+	var/obj/buckled = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/storage/s_active = null//Carbon
@@ -105,9 +105,6 @@
 	var/job = null//Living
 
 	var/radiation = 0//Carbon
-
-	var/list/mutations = list() //Carbon -- Doohl
-	//see: setup.dm for list of mutations
 
 	var/voice_name = "unidentifiable voice"
 
@@ -139,6 +136,9 @@
 	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
+	var/digitalinvis = 0 //Are they ivisible to the AI?
+	var/image/digitaldisguise = null  //what does the AI see instead of them?
+
 	var/weakeyes = 0 //Are they vulnerable to flashes?
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics

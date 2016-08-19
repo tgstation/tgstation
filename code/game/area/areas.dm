@@ -391,7 +391,7 @@
 			else
 				qdel(AM)
 		if(istype(T, /turf/simulated))
-			del(T)
+			qdel(T)
 
 	/*for(var/atom/movable/bug in src) // If someone (or something) is somehow still in the shuttle's docking area...
 		if(ismob(bug))

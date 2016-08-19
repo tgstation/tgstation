@@ -56,7 +56,7 @@
 
 /obj/item/weapon/gun/magic/Destroy()
 	if(can_charge)	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 
 /obj/item/weapon/gun/magic/process()
@@ -74,6 +74,6 @@
 	return
 
 /obj/item/weapon/gun/magic/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is casting a spell on themself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is twisting the [src.name] above \his head, releasing a magical blast! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, fire_sound, 50, 1, -1)
 	return (FIRELOSS)

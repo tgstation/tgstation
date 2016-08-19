@@ -62,7 +62,7 @@ var/list/freqtospan = list(
 /atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
 
-/atom/movable/proc/say_quote(input, list/spans)
+/atom/movable/proc/say_quote(input, list/spans=list())
 	if(!input)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(input, length(input))

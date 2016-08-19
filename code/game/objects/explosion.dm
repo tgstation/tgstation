@@ -1,11 +1,5 @@
 //TODO: Flash range does nothing currently
 
-//A very crude linear approximatiaon of pythagoras theorem.
-/proc/cheap_pythag(dx, dy)
-	dx = abs(dx); dy = abs(dy);
-	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
-	else		return dy + (0.5*dx)
-
 /proc/trange(Dist=0,turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
 	if(Center==null) return
 
@@ -41,6 +35,7 @@
 		if(!epicenter) return
 
 		var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
+		var/list/cached_exp_block = list()
 
 		if(adminlog)
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
@@ -87,24 +82,34 @@
 		var/y0 = epicenter.y
 		var/z0 = epicenter.z
 
-		for(var/turf/T in trange(max_range, epicenter))
+		var/list/affected_turfs = trange(max_range, epicenter)
 
-			var/dist = cheap_pythag(T.x - x0,T.y - y0)
+		if(config.reactionary_explosions)
+			for(var/turf/T in affected_turfs) // we cache the explosion block rating of every turf in the explosion area
+				cached_exp_block[T] = 0
+				if(T.density && T.explosion_block)
+					cached_exp_block[T] += T.explosion_block
+
+				for(var/obj/machinery/door/D in T)
+					if(D.density && D.explosion_block)
+						cached_exp_block[T] += D.explosion_block
+
+				for(var/obj/structure/window/W in T)
+					if(W.reinf && W.fulltile)
+						cached_exp_block[T] += W.explosion_block
+
+				for(var/obj/effect/blob/B in T)
+					cached_exp_block[T] += B.explosion_block
+
+		for(var/turf/T in affected_turfs)
+
+			var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 
 			if(config.reactionary_explosions)
 				var/turf/Trajectory = T
 				while(Trajectory != epicenter)
 					Trajectory = get_step_towards(Trajectory, epicenter)
-					if(Trajectory.density && Trajectory.explosion_block)
-						dist += Trajectory.explosion_block
-
-					for(var/obj/machinery/door/D in Trajectory)
-						if(D.density && D.explosion_block)
-							dist += D.explosion_block
-
-					for(var/obj/structure/window/W in Trajectory)
-						if(W.reinf && W.fulltile)
-							dist += W.explosion_block
+					dist += cached_exp_block[Trajectory]
 
 			var/flame_dist = 0
 			var/throw_dist = dist
@@ -196,7 +201,7 @@
 	var/list/wipe_colours = list()
 	for(var/turf/T in trange(max_range, epicenter))
 		wipe_colours += T
-		var/dist = cheap_pythag(T.x - x0, T.y - y0)
+		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 
 		if(newmode == "Yes")
 			var/turf/TT = T
@@ -212,6 +217,9 @@
 				for(var/obj/structure/window/W in TT)
 					if(W.explosion_block && W.fulltile)
 						dist += W.explosion_block
+
+				for(var/obj/effect/blob/B in T)
+					dist += B.explosion_block
 
 		if(dist < dev)
 			T.color = "red"

@@ -5,7 +5,7 @@
 	icon_state = "gangtool-white"
 	item_state = "walkietalkie"
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT

@@ -106,10 +106,10 @@
 	icon_state = "cutters"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 6.0
+	force = 6
 	throw_speed = 3
 	throw_range = 7
-	w_class = 2.0
+	w_class = 2
 	materials = list(MAT_METAL=80)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
@@ -194,6 +194,10 @@
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
 	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+
+/obj/item/weapon/weldingtool/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] welds \his every orifice closed! It looks like \he's trying to commit suicide..</span>")
+	return (FIRELOSS)
 
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)

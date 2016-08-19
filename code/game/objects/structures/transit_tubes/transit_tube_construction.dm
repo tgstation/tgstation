@@ -7,7 +7,7 @@
 	icon_state = "E-W" //icon_state decides which tube will be built
 	density = 0
 	layer = 3.1 //same as the built tube
-	anchored = 0.0
+	anchored = 0
 
 //wrapper for turn that changes the transit tube formatted icon_state instead of the dir
 /obj/structure/c_transit_tube/proc/tube_turn(angle)
@@ -138,5 +138,5 @@
 	name = "unattached transit tube pod"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube_pod.dmi'
 	icon_state = "pod"
-	anchored = 0.0
+	anchored = 0
 	density = 0

@@ -91,14 +91,14 @@
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if(prob(80))
 				qdel(src)
 			else
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
-		if(2.0)
+		if(2)
 			if(prob(20))
 				qdel(src)
 			else
@@ -106,7 +106,7 @@
 				s.set_up(2, 1, src)
 				s.start()
 
-		if(3.0)
+		if(3)
 			if(prob(80))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)

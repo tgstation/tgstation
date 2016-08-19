@@ -24,6 +24,7 @@
 	wander = 0
 	speed = 0
 	ventcrawler = 2
+	healable = 0
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB
 	sight = (SEE_TURFS | SEE_OBJS)
@@ -79,7 +80,7 @@
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!
-	..()
+	return ..()
 
 /mob/living/simple_animal/drone/Login()
 	..()

@@ -302,17 +302,20 @@ CREATE TABLE `SS13_poll_vote` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `watch`
+-- Table structure for table `SS13_watch`
 --
 
 DROP TABLE IF EXISTS `SS13_watch`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_watch` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `reason` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `timestamp` datetime NOT NULL,
+  `adminckey` varchar(32) NOT NULL,
+  `last_editor` varchar(32),
+  `edits` text,
+  PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -330,6 +333,26 @@ CREATE TABLE `SS13_memo` (
   `last_editor` varchar(32),
   `edits` text,
   PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `SS13_notes`
+--
+
+DROP TABLE IF EXISTS `SS13_notes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_notes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `notetext` text NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `adminckey` varchar(32) NOT NULL,
+  `last_editor` varchar(32),
+  `edits` text,
+  `server` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

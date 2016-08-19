@@ -70,7 +70,7 @@
 	new /obj/item/weapon/defibrillator/compact/loaded(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/weapon/storage/belt/medical(src)
-	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/weapon/reagent_containers/hypospray/CMO(src)
 	new /obj/item/organ/internal/cyberimp/eyes/hud/medical(src)
 
