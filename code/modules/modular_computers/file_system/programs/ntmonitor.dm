@@ -55,9 +55,9 @@
 				ntnet_global.setting_disabled = 1
 			return 1
 		if("purgelogs")
+			var/mob/user = usr
 			if(computer.computer_emagged == 0)
-				 var/mob/user = usr
-				 usr << "<span class='notice'>Warning: Access Denied. The Network Security Firewall has blocked the purge command!</span>"
+				usr << "<span class='notice'>Warning: Access Denied. The Network Security Firewall has blocked the purge command!</span>"
 			. = 1
 			if(ntnet_global)
 				ntnet_global.purge_logs()

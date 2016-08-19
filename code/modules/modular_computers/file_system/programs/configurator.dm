@@ -64,11 +64,10 @@
 		"enabled" = H.enabled,
 		"critical" = H.critical,
 		"powerusage" = H.power_usage
-		if(H.istype(/obj/item/weapon/computer_hardware/network_card))
-			"ID" = "Network ID: [H.identification_ID]"
 		)))
 
 	data["hardware"] = all_entries
+
 	return data
 
 
