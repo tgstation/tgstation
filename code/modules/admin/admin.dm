@@ -490,14 +490,24 @@ var/global/BSACooldown = 0
 	message_admins("[key_name_admin(usr)] toggled OOC.")
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggledeadchat()
+	set category = "Server"
+	set desc="Toggle dis bitch"
+	set name="Toggle Deadchat"
+	deadchat_allowed = !( deadchat_allowed )
+
+	log_admin("[key_name(usr)] toggled Deadchat [deadchat_allowed ? "on" : "off"].")
+	message_admins("[key_name_admin(usr)] toggled Deadchat [deadchat_allowed ? "on" : "off"].")
+	feedback_add_details("admin_verb","TDCHAT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/toggleoocdead()
 	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle Dead OOC"
 	dooc_allowed = !( dooc_allowed )
 
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
+	log_admin("[key_name(usr)] toggled Dead OOC [dooc_allowed ? "on" : "off"].")
+	message_admins("[key_name_admin(usr)] toggled Dead OOC [dooc_allowed ? "on" : "off"].")
 	feedback_add_details("admin_verb","TDOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*
 /datum/admins/proc/toggletraitorscaling()
