@@ -1,6 +1,4 @@
-#define SURGE_PROTECTION_NONE 0
-#define SURGE_PROTECTION_NOEXPLODE 1
-#define SURGE_PROTECTION_NODAMAGE 2
+
 
 // Global var to track modular computers
 var/list/global_modular_computers = list()
