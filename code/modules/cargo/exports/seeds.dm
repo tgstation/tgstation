@@ -32,9 +32,4 @@
 		return 0
 
 	var/potDiff = (S.potency - discoveredPlants[S.type])
-	if(potDiff < 1)
-		return round(S.rarity * S.potency / 100)
-	if(potDiff >= 1 && potDiff <=10)
 		return round(..() * potDiff)
-	else
-		return round(..() * 10)
