@@ -7388,8 +7388,10 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "apI" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/pod_2)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/lapvend,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "apJ" = (
 /turf/closed/wall,
 /area/mining_construction)
@@ -79822,7 +79824,7 @@ ayy
 ayy
 aAO
 aBN
-aDe
+apI
 aDe
 aFT
 aDe

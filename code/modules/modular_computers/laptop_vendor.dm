@@ -242,7 +242,7 @@ obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 		if(!user.drop_item(c))
 			return
 		credits += c.value
-		visible_message("<span class='info'> <span class='name'>[usr]</span> inserts [c.value] credits into the [src].</span>")
+		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] credits into the [src].</span>")
 		qdel(c)
 		return
 
@@ -290,6 +290,7 @@ obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 				fabricated_tablet.battery_module.charge_to_full()
 				fabricated_tablet.forceMove(src.loc)
 				fabricated_tablet = null
+			credits -= total_price
 			say("Enjoy your new product!")
 			state = 3
 			return 1

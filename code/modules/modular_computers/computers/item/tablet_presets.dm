@@ -19,3 +19,13 @@
 	network_card = new/obj/item/weapon/computer_hardware/network_card(src)
 	nano_printer = new/obj/item/weapon/computer_hardware/nano_printer(src)
 	card_slot = new/obj/item/weapon/computer_hardware/card_slot(src)
+
+// Cargo ordered version. About as good as the advanced one, but no card reader
+/obj/item/modular_computer/tablet/preset/cargo/New()
+	. = ..()
+	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
+	battery_module = new/obj/item/weapon/computer_hardware/battery_module(src)
+	battery_module.charge_to_full()
+	hard_drive = new/obj/item/weapon/computer_hardware/hard_drive/small(src)
+	network_card = new/obj/item/weapon/computer_hardware/network_card(src)
+	nano_printer = new/obj/item/weapon/computer_hardware/nano_printer(src)
