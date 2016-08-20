@@ -15,15 +15,22 @@
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice" || H.mind.special_role == "survivalist") continue
 		if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
 			ticker.mode.traitors += H.mind
-			var/datum/objective/summon_guns/guns = new
-			guns.owner = H.mind
-			H.mind.objectives += guns
-			H.mind.special_role = "survivalist"
+			if(!summon_type)
+				var/datum/objective/steal_five_of_type/summon_guns/guns = new
+				guns.owner = H.mind
+				H.mind.objectives += guns
+				H.mind.special_role = "survivalist"
+				H << "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>"
+			else
+				var/datum/objective/steal_five_of_type/summon_magic/magic = new
+				magic.owner = H.mind
+				H.mind.objectives += magic
+				H.mind.special_role = "amateur magician"
+				H << "<B>You are the amateur magician! Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way.</B>"
 			var/datum/objective/survive/survive = new
 			survive.owner = H.mind
 			H.mind.objectives += survive
 			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
-			H << "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>"
 			H.mind.announce_objectives()
 		var/randomizeguns 			= pick(gunslist)
 		var/randomizemagic 			= pick(magiclist)
@@ -95,7 +102,7 @@
 				if("mindflayer")
 					G = new /obj/item/weapon/gun/energy/mindflayer(get_turf(H))
 				if("hyperkinetic")
-					G = new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper(get_turf(H))
+					G = new /obj/item/weapon/gun/energy/kinetic_accelerator(get_turf(H))
 				if("advplasmacutter")
 					G = new /obj/item/weapon/gun/energy/plasmacutter/adv(get_turf(H))
 				if("wormhole")

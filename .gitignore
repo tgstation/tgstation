@@ -3,6 +3,9 @@
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 
+#Ignore byond config folder.
+/cfg/**/*
+
 #Ignore compiled files and other files generated during compilation.
 *.mdme
 *.dmb

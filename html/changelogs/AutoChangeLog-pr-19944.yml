@@ -1,0 +1,4 @@
+author: "Ergovisavi"
+delete-after: True
+changes: 
+  - tweak: "Consolidates the fulton packs into a single item and makes them more user friendly"

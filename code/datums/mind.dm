@@ -1441,7 +1441,6 @@
 		ticker.mode.wizards += src
 		special_role = "Wizard"
 		assigned_role = "Wizard"
-		//ticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
 			current.loc = pick(latejoin)
 			current << "HOT INSERTION, GO GO GO"
@@ -1449,8 +1448,6 @@
 			current.loc = pick(wizardstart)
 
 		ticker.mode.equip_wizard(current)
-		for(var/obj/item/weapon/spellbook/S in current.contents)
-			S.op = 0
 		ticker.mode.name_wizard(current)
 		ticker.mode.forge_wizard_objectives(src)
 		ticker.mode.greet_wizard(src)
