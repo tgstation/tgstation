@@ -1,11 +1,12 @@
 /obj/item/weapon/gun/projectile/bow
 	name = "bow"
-	desc = "A bow."
+	desc = "A sturdy bow made out of wood and reinforced with iron"
 	icon_state = "bow_unloaded"
 	item_state = "bow"
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
 	flags = HANDSLOW
+	weapon_weight = WEAPON_HEAVY
 	var/draw_sound = 'sound/weapons/draw_bow.ogg'
 	var/ready_to_fire = 0
 	var/slowdown_when_ready = 2
@@ -19,6 +20,13 @@
 	else
 		icon_state = initial(icon_state)
 		slowdown = initial(slowdown)
+
+/obj/item/weapon/gun/projectile/bow/dropped(mob/user)
+	if(magazine && magazine.ammo_count())
+		magazine.empty_magazine()
+		if(ready_to_fire)
+			ready_to_fire = !ready_to_fire
+		update_icon()
 
 /obj/item/weapon/gun/projectile/bow/attack_self(mob/living/user)
 	if(!ready_to_fire && magazine.ammo_count())
@@ -73,3 +81,19 @@
 	sharpness = IS_SHARP
 	projectile_type = /obj/item/projectile/bullet/reusable/arrow
 	caliber = "arrow"
+
+//quiver
+/obj/item/weapon/storage/backpack/quiver
+	name = "quiver"
+	desc = "A quiver for holding arrows."
+	icon_state = "quiver"
+	item_state = "quiver"
+	storage_slots = 20
+	can_hold = list(
+		/obj/item/ammo_casing/caseless/arrow
+		)
+
+/obj/item/weapon/storage/backpack/quiver/full/New()
+	..()
+	for(var/i, i <= storage_slots, i++)
+		new /obj/item/ammo_casing/caseless/arrow(src)

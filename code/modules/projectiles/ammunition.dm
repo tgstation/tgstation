@@ -165,3 +165,8 @@
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
 	return stored_ammo.len
+
+/obj/item/ammo_box/magazine/proc/empty_magazine()
+	for(var/obj/item/ammo in stored_ammo)
+		ammo.forceMove(get_turf(src))
+		stored_ammo -= ammo
