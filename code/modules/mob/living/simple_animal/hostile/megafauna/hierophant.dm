@@ -97,9 +97,10 @@ Difficulty: Hard
 			wander = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
-	if(health > 0)
+	if(health > 0 || stat == DEAD)
 		return
 	else
+		stat = DEAD
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		animate(src, alpha = 0, color = "660099", time = 20, easing = EASE_OUT)
 		burst_range = 7
@@ -153,7 +154,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
-	anger_modifier = Clamp(((maxHealth - health)/40),0,50)
+	anger_modifier = Clamp(((maxHealth - health)/45),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.1)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.16)
 
@@ -468,15 +469,20 @@ Difficulty: Hard
 				continue
 			if(L.client)
 				flash_color(L.client, "#660099", 1)
+			playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
 			L << "<span class='userdanger'>You're struck by a [name]!</span>"
-			L.apply_damage(damage, BRUTE)
+			L.apply_damage(damage, BURN)
+			if(ismegafauna(L))
+				L.apply_damage(damage, BRUTE)
+			add_logs(caster, L, "struck with a [name]")
 		for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
 			hit_things += M
 			if(M.occupant)
 				if(friendly_fire_check && caster && caster.faction_check(M.occupant))
 					continue
 				M.occupant << "<span class='userdanger'>Your [M] is struck by a [name]!</span>"
-			M.take_damage(damage, "brute", 0)
+			playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
+			M.take_damage(damage, "fire", 0)
 		sleep(0.15) //yes, this high of an accuracy is required because movement is super bullshit fast
 
 /obj/effect/hierophant
