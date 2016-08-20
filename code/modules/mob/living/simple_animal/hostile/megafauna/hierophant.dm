@@ -512,7 +512,7 @@ Difficulty: Hard
 		..()
 
 /obj/effect/hierophant/Destroy(force)
-	if(!force)
+	if(!force && active_boss)
 		return QDEL_HINT_LETMELIVE
 	. = ..()
 
