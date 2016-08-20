@@ -104,7 +104,7 @@ Difficulty: Hard
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		animate(src, alpha = 0, color = "660099", time = 20, easing = EASE_OUT)
 		burst_range = 7
-		visible_message("[src] disappears in a massive burst of magic, leaving only its staff.")
+		visible_message("<span class='hierophant_warning'>[src] disappears in a massive burst of magic, leaving only its staff.</span>")
 		burst(get_turf(src))
 		var/obj/item/weapon/hierophant_staff/H = new /obj/item/weapon/hierophant_staff(loc)
 		H.rune = spawned_rune
