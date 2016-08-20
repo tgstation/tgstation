@@ -38,7 +38,7 @@
 				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 				spark_system.start()
 				explosivepower += 2
-		if(!surgeprotected)
+		if(!computer.surgeprotected)
 			explosion(location, 0, max(explosivepower - 2,0), explosivepower, explosivepower + 2)
 
 /datum/computer_file/program/revelation/ui_act(action, params)
