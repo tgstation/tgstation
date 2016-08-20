@@ -24,15 +24,17 @@
 	card_slot = new/obj/item/weapon/computer_hardware/card_slot(src)
 
 //For the network administrator!
-/obj/item/modular_computer/tablet/preset/netmin/New()
-	. = ..()
+/obj/item/modular_computer/tablet/preset/netmin
 	name = "Command Tablet"
 	desc = "The special tablet of the network administrator."
 	unacidable = 1
 	icon_state = "rdtablet"
 	icon_state_unpowered = "rdtablet"
-	surgeprotected = 1
+	surgeprotected = SURGE_PROTECTION_NOEXPLODE
 	max_hardware_size = 2
+
+/obj/item/modular_computer/tablet/preset/netmin/New()
+	. = ..()
 	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
 	battery_module = new/obj/item/weapon/computer_hardware/battery_module/super(src)
 	battery_module.charge_to_full()

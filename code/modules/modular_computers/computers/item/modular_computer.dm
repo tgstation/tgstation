@@ -33,7 +33,7 @@
 	var/damage = 0				// Current damage level
 	var/broken_damage = 50		// Damage level at which the computer ceases to operate
 	var/max_damage = 100		// Damage level at which the computer breaks apart.
-	var/surgeprotected = 0 // Whether it can be dedonated by syndicate applications.
+	var/surgeprotected = SURGE_PROTECTION_NONE // Whether it can be dedonated by syndicate applications.
 
 	// Important hardware (must be installed for computer to work)
 	var/obj/item/weapon/computer_hardware/processor_unit/processor_unit				// CPU. Without it the computer won't run. Better CPUs can run more programs at once.
