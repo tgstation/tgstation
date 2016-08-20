@@ -131,7 +131,7 @@
 	id = "hierophant"
 	description = "A huge fucking bird priest awaits you in this arena."
 	suffix = "lavaland_surface_hierophant.dmm"
-	cost = 5
+	cost = 0
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/ato
