@@ -135,7 +135,7 @@
 		data["occupant"]["stat"] = occupant.stat
 		data["occupant"]["health"] = occupant.health
 		data["occupant"]["maxHealth"] = occupant.maxHealth
-		data["occupant"]["minHealth"] = config.health_threshold_dead
+		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
 		data["occupant"]["bruteLoss"] = occupant.getBruteLoss()
 		data["occupant"]["oxyLoss"] = occupant.getOxyLoss()
 		data["occupant"]["toxLoss"] = occupant.getToxLoss()

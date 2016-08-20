@@ -239,7 +239,7 @@
 		if(host)
 			var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 			if(iscarbon(host))
-				resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
+				resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
 			stat(null, "Host Health: [resulthealth]%")
 			if(ratvar_awakens)
 				stat(null, "You are [recovering ? "un" : ""]able to deploy!")
@@ -444,7 +444,7 @@
 		return 0
 	var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 	if(iscarbon(host))
-		resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
+		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
 	if(!ratvar_awakens && host.stat != DEAD && resulthealth > 60) //if above 20 health, fails
 		src << "<span class='warning'>Your host must be at 60% or less health to emerge like this!</span>"
 		return
