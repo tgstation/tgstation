@@ -17,10 +17,6 @@
 /datum/computer_file/program/revelation/proc/activate()
 	var/explosivepower = 1
 	if(computer)
-		if(computer.surgeprotected == 1)
-			computer.visible_message("<span class='notice'>\The [computer] emits an intense buzzing before falling silent!</span>")
-			computer.battery_module.battery.charge = 0
-			return
 		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
 		spawn(20)
 		computer.enabled = 0
@@ -42,7 +38,8 @@
 				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 				spark_system.start()
 				explosivepower += 2
-		explosion(location, 0, max(explosivepower - 2,0), explosivepower, explosivepower + 2)
+		if(!surgeprotected)
+			explosion(location, 0, max(explosivepower - 2,0), explosivepower, explosivepower + 2)
 
 /datum/computer_file/program/revelation/ui_act(action, params)
 	if(..())

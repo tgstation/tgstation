@@ -32,6 +32,7 @@
 	icon_state = "rdtablet"
 	icon_state_unpowered = "rdtablet"
 	surgeprotected = 1
+	max_hardware_size = 2
 	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
 	battery_module = new/obj/item/weapon/computer_hardware/battery_module/super(src)
 	battery_module.charge_to_full()
