@@ -514,6 +514,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 1
+	persistence_replacement = /obj/item/weapon/spellbook/oneuse/random
 	var/uses = 10
 	var/temp = null
 	var/tab = null
@@ -704,6 +705,7 @@
 	name = "spellbook of "
 	uses = 1
 	desc = "This template spellbook was never meant for the eyes of man..."
+	persistence_replacement = null
 
 /obj/item/weapon/spellbook/oneuse/New()
 	..()
