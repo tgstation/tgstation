@@ -11,7 +11,7 @@
 	environment_smash = 3
 	obj_damage = 75
 	luminosity = 3
-	faction = list("mining")
+	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 	flying = 1
 	robust_searching = 1
