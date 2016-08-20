@@ -89,7 +89,7 @@ Difficulty: Hard
 			timeout_time--
 		if(timeout_time <= 0 && !did_reset)
 			did_reset = TRUE
-			adjustHealth((health - maxHealth)*0.25) //heal for 25% of our missing health
+			adjustHealth((health - maxHealth)*0.5) //heal for 50% of our missing health
 			if(spawned_rune.z != z || get_dist(src, spawned_rune) > 2)
 				blink(spawned_rune)
 			else
@@ -126,6 +126,12 @@ Difficulty: Hard
 	adjustHealth(-L.maxHealth)
 	L.dust()
 
+/mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount)
+	if(blinking && amount > 0)
+		return 0
+	wander = TRUE
+	return ..()
+
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
 	if(!blinking)
 		if(target && isliving(target))
@@ -147,7 +153,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
-	anger_modifier = Clamp(((maxHealth - health)/50),0,50)
+	anger_modifier = Clamp(((maxHealth - health)/40),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.1)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.16)
 
@@ -163,7 +169,7 @@ Difficulty: Hard
 	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier*0.75) //scale cooldown lower with high anger.
 
 	if(prob(anger_modifier*0.75)) //major ranged attack
-		ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier*0.5) //scale cooldown lower with high anger.
+		ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier*0.75) //scale cooldown lower with high anger.
 		var/list/possibilities = list("blast_spam")
 		if(get_dist(src, target) > 2)
 			possibilities += "blink_spam"
@@ -183,8 +189,6 @@ Difficulty: Hard
 						blinking = FALSE
 						blink(target)
 						blinking = TRUE
-						sleep(8)
-					if(loc != target.loc)
 						sleep(8)
 					blinking = FALSE
 				else
@@ -208,11 +212,10 @@ Difficulty: Hard
 						else
 							addtimer(src, "diagonal_blasts", 0, FALSE, target)
 						sleep(6)
-				animate(src, color = initial(color), time = 12)
-				sleep(12)
+				animate(src, color = initial(color), time = 10)
+				sleep(10)
 				blinking = FALSE
 			if("chaser_swarm") //fire four fucking chasers at a target and their friends.
-				chaser_cooldown = world.time + initial(chaser_cooldown)
 				blinking = TRUE
 				animate(src, color = "#660099", time = 10)
 				var/list/targets = ListTargets()
@@ -227,8 +230,9 @@ Difficulty: Hard
 					C.moving = 4
 					C.moving_dir = pick_n_take(cardinal_copy)
 					sleep(10)
-				animate(src, color = initial(color), time = 12)
-				sleep(12)
+				chaser_cooldown = world.time + initial(chaser_cooldown)
+				animate(src, color = initial(color), time = 10)
+				sleep(10)
 				blinking = FALSE
 		return
 
@@ -252,7 +256,7 @@ Difficulty: Hard
 			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 4 - anger_modifier*0.05), FALSE))
 			chaser_cooldown = world.time + initial(chaser_cooldown)
 			if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
-				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 6 - anger_modifier*0.05), FALSE))
+				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 5 - anger_modifier*0.05), FALSE))
 				OC.moving = 4
 				OC.moving_dir = pick(cardinal - C.moving_dir)
 		else //just release a burst of power
@@ -348,7 +352,7 @@ Difficulty: Hard
 		var/dist = get_dist(original, T)
 		if(dist > last_dist)
 			last_dist = dist
-			sleep(1 + burst_range - last_dist) //gets faster as it gets further out
+			sleep(1 + (burst_range - last_dist)*0.75) //gets faster as it gets further out
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
