@@ -379,8 +379,6 @@
 #include "code\game\gamemodes\miniantags\abduction\machinery\pad.dm"
 #include "code\game\gamemodes\miniantags\bot_swarm\swarmer.dm"
 #include "code\game\gamemodes\miniantags\bot_swarm\swarmer_event.dm"
-#include "code\game\gamemodes\miniantags\hades\hades.dm"
-#include "code\game\gamemodes\miniantags\hades\hades_chapel.dm"
 #include "code\game\gamemodes\miniantags\monkey\monkey.dm"
 #include "code\game\gamemodes\miniantags\morph\morph.dm"
 #include "code\game\gamemodes\miniantags\revenant\revenant.dm"
