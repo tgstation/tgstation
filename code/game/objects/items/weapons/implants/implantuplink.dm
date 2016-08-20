@@ -7,7 +7,7 @@
 
 /obj/item/weapon/implant/uplink/New()
 	hidden_uplink = new(src)
-	hidden_uplink.telecrystals = 10
+	hidden_uplink.telecrystals = 14
 	..()
 
 /obj/item/weapon/implant/uplink/implant(mob/user)
