@@ -167,6 +167,7 @@
 	return stored_ammo.len
 
 /obj/item/ammo_box/magazine/proc/empty_magazine()
+	var/turf_mag = get_turf(src)
 	for(var/obj/item/ammo in stored_ammo)
-		ammo.forceMove(get_turf(src))
+		ammo.forceMove(turf_mag)
 		stored_ammo -= ammo

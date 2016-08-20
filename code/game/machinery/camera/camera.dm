@@ -106,6 +106,10 @@
 			..()
 
 
+/obj/machinery/camera/blob_act(obj/effect/blob/B)
+	if(B && B.loc == loc)
+		take_damage(health, BRUTE, 0)
+
 /obj/machinery/camera/ex_act(severity, target)
 	if(src.invuln)
 		return

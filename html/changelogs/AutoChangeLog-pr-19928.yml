@@ -1,0 +1,5 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - tweak: "Service and cargo have lost roundstart tablets and engineering has gained them"
+  - tweak: "you can now charge battery modules in cell chargers. Use a screwdriver on a computer to remove them. As a note, tablets and laptops can be charged directly by placing them in a security charger."

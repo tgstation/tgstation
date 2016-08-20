@@ -118,7 +118,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return ..()
 
 /obj/item/blob_act(obj/effect/blob/B)
-	qdel(src)
+	if(B && B.loc == loc)
+		qdel(src)
 
 /obj/item/ex_act(severity, target)
 	if(severity == 1 || target == src)

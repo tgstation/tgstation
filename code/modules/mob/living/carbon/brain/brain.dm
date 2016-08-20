@@ -56,7 +56,7 @@
 
 /mob/living/carbon/brain/can_be_revived()
 	. = 1
-	if(!container || health <= config.health_threshold_dead)
+	if(!container || health <= HEALTH_THRESHOLD_DEAD)
 		return 0
 
 /mob/living/carbon/brain/update_sight()
