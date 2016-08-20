@@ -17,6 +17,9 @@
 /datum/computer_file/program/revelation/proc/activate()
 	var/explosivepower = 1
 	if(computer)
+		if(computer.surgeprotected == 2)
+			computer.visible_message("<span class='notice'>\The [computer] emits a buzzing noise and heats up...</span>")
+			return 0
 		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
 		spawn(20)
 		computer.enabled = 0
