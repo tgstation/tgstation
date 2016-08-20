@@ -629,11 +629,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
+	else
+		return null
 
 	var/list/areas = list()
 	if(subtypes)
+		var/list/cache = typecacheof(areatype)
 		for(var/V in sortedAreas)
-			if(istype(V, areatype))
+			var/area/A = V
+			if(cache[A.type])
 				areas += V
 	else
 		for(var/V in sortedAreas)
@@ -655,9 +659,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	var/list/turfs = list()
 	if(subtypes)
+		var/list/cache = typecacheof(areatype)
 		for(var/V in sortedAreas)
 			var/area/A = V
-			if(!istype(A, areatype))
+			if(!cache[A.type])
 				continue
 			for(var/turf/T in A)
 				if(target_z == 0 || target_z == T.z)
@@ -685,9 +690,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	var/list/atoms = list()
 	if(subtypes)
+		var/list/cache = typecacheof(areatype)
 		for(var/V in sortedAreas)
 			var/area/A = V
-			if(!istype(A, areatype))
+			if(!cache[A.type])
 				continue
 			return A.contents
 	else
