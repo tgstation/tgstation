@@ -50,7 +50,6 @@ Difficulty: Very Hard
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	var/obj/item/device/gps/internal
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
 	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
@@ -95,10 +94,6 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
 	..()
 	internal = new/obj/item/device/gps/internal/colossus(src)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
-	qdel(internal)
-	. = ..()
 
 /obj/effect/overlay/temp/at_shield
 	name = "anti-toolbox field"

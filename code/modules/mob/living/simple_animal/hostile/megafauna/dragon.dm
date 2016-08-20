@@ -46,7 +46,6 @@ Difficulty: Medium
 	pixel_x = -16
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
-	var/obj/item/device/gps/internal
 	var/swooping = 0
 	var/swoop_cooldown = 0
 	medal_type = MEDAL_PREFIX
@@ -57,10 +56,6 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/New()
 	..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
-	qdel(internal)
-	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == 3)

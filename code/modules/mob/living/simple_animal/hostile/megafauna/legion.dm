@@ -52,7 +52,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
-	new/obj/item/device/gps/internal/legion(src)
+	internal = new/obj/item/device/gps/internal/legion(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	..()

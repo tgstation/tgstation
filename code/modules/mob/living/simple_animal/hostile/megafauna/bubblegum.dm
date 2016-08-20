@@ -91,7 +91,7 @@ Difficulty: Hard
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
 		bloodspell.phased = 1
-	new/obj/item/device/gps/internal/bubblegum(src)
+	internal = new/obj/item/device/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
 	if(charging)
