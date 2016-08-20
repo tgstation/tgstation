@@ -42,7 +42,6 @@ Difficulty: Hard
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
-	flying = 1
 	pixel_x = -32
 	del_on_death = 1
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
