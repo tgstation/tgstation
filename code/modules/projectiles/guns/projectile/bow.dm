@@ -2,11 +2,13 @@
 	name = "bow"
 	desc = "A bow."
 	icon_state = "bow_unloaded"
-	item_state = "bow_unloaded"
+	item_state = "bow"
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
 	flags = HANDSLOW
+	var/draw_sound = 'sound/weapons/draw_bow.ogg'
 	var/ready_to_fire = 0
-	var/slowdown_when_ready = 1
+	var/slowdown_when_ready = 2
 
 /obj/item/weapon/gun/projectile/bow/update_icon()
 	if(magazine.ammo_count() && !ready_to_fire)
@@ -18,9 +20,13 @@
 		icon_state = initial(icon_state)
 		slowdown = initial(slowdown)
 
-/obj/item/weapon/gun/projectile/bow/attack_self(mob/user)
+/obj/item/weapon/gun/projectile/bow/attack_self(mob/living/user)
 	if(!ready_to_fire && magazine.ammo_count())
 		ready_to_fire = 1
+		playsound(user, draw_sound, 100, 1)
+		update_icon()
+	else
+		ready_to_fire = 0
 		update_icon()
 
 /obj/item/weapon/gun/projectile/bow/attackby(obj/item/A, mob/user, params)
@@ -30,8 +36,19 @@
 		update_icon()
 		chamber_round()
 
+/obj/item/weapon/gun/projectile/bow/can_shoot()
+	. = ..()
+	if(!ready_to_fire)
+		return FALSE
+
+/obj/item/weapon/gun/projectile/bow/shoot_with_empty_chamber(mob/living/user as mob|obj)
+	return
+
 /obj/item/weapon/gun/projectile/bow/process_chamber(eject_casing = 0, empty_chamber = 1)
-	..()
+	. = ..()
+	if(ready_to_fire)
+		ready_to_fire = !ready_to_fire
+		update_icon()
 
 // ammo
 /obj/item/ammo_box/magazine/internal/bow
@@ -46,11 +63,13 @@
 	icon_state = "arrow"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow
 	range = 10
-	damage = 15
+	damage = 25
 	damage_type = BRUTE
 
 /obj/item/ammo_casing/caseless/arrow
 	name = "arrow"
 	icon_state = "arrow"
+	force = 10
+	sharpness = IS_SHARP
 	projectile_type = /obj/item/projectile/bullet/reusable/arrow
 	caliber = "arrow"
