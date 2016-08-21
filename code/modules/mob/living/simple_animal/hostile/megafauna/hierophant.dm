@@ -222,7 +222,7 @@ Difficulty: Hard
 						pickedtarget = pick_n_take(targets)
 					if(pickedtarget.stat == DEAD)
 						pickedtarget = target
-					var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, pickedtarget, max(1, 4 - anger_modifier*0.05), FALSE))
+					var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, pickedtarget, max(1, 4 - anger_modifier*0.06), FALSE))
 					C.moving = 4
 					C.moving_dir = pick_n_take(cardinal_copy)
 					sleep(10)
@@ -249,10 +249,10 @@ Difficulty: Hard
 				addtimer(src, "diagonal_blasts", 0, FALSE, target)
 	else
 		if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
-			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 4 - anger_modifier*0.05), FALSE))
+			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 4 - anger_modifier*0.06), FALSE))
 			chaser_cooldown = world.time + initial(chaser_cooldown)
 			if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
-				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 5 - anger_modifier*0.05), FALSE))
+				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 5 - anger_modifier*0.06), FALSE))
 				OC.moving = 4
 				OC.moving_dir = pick(cardinal - C.moving_dir)
 		else //just release a burst of power
@@ -466,9 +466,9 @@ Difficulty: Hard
 				flash_color(L.client, "#660099", 1)
 			playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
 			L << "<span class='userdanger'>You're struck by a [name]!</span>"
-			L.apply_damage(damage, BURN)
+			L.adjustFireLoss(damage)
 			if(ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid))
-				L.apply_damage(damage, BRUTE)
+				L.adjustBruteLoss(damage)
 			add_logs(caster, L, "struck with a [name]")
 		for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
 			hit_things += M
