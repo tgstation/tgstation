@@ -41,6 +41,10 @@
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
 	icon_state = "black"
+	
+/obj/item/clothing/shoes/sandal/mninja
+	armor = list(melee = 5)
+	desc = "An official Syndicate Ninja sandals. They have thin metal platings on the bottom. You feel that you could block melee attacks with these."
 
 /obj/item/clothing/shoes/galoshes
 	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces."
