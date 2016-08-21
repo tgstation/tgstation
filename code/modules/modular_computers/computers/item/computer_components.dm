@@ -3,11 +3,11 @@
 	if(!H.can_install)
 		return 0
 
-	if(H.w_class > max_hardware_size)
-		user << "<span class='warning'>This component is too large for \the [src]!</span>"
+	if(user && !user.unEquip(H))
 		return 0
 
-	if(user && !user.unEquip(H))
+	if(H.w_class > max_hardware_size)
+		user << "<span class='warning'>This component is too large for \the [src]!</span>"
 		return 0
 
 	if(!H.on_install(src, user))

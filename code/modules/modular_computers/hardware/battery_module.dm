@@ -24,7 +24,7 @@
 		return 0
 
 	if(I.w_class > holder.max_hardware_size)
-		user << "<span class='warning'>This power cell is too large for \the [src]!</span>"
+		user << "<span class='warning'>This power cell is too large for \the [holder]!</span>"
 		return 0
 
 	if(user && !user.unEquip(I))

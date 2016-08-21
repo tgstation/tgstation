@@ -8,6 +8,7 @@ var/list/global_modular_computers = list()
 	desc = "An advanced computer."
 
 	use_power = 1
+	idle_power_usage = 5
 	var/hardware_flag = 0								// A flag that describes this device type
 	var/last_power_usage = 0							// Power usage during last tick
 
@@ -31,6 +32,18 @@ var/list/global_modular_computers = list()
 
 	var/obj/item/modular_computer/processor/cpu = null				// CPU that handles most logic while this type only handles power and other specific things.
 
+/obj/machinery/modular_computer/New()
+	..()
+	cpu = new(src)
+	cpu.physical = src
+	global_modular_computers.Add(src)
+
+/obj/machinery/modular_computer/Destroy()
+	if(cpu)
+		qdel(cpu)
+		cpu = null
+	return ..()
+
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	if(cpu)
 		cpu.attack_ghost(user)
@@ -43,7 +56,7 @@ var/list/global_modular_computers = list()
 	cut_overlays()
 
 	if(!cpu || !cpu.enabled)
-		if (!(stat & NOPOWER) || (cpu && cpu.use_power()))
+		if (!(stat & NOPOWER) && (cpu && cpu.use_power()))
 			add_overlay(screen_icon_screensaver)
 		SetLuminosity(0)
 		return
@@ -71,17 +84,9 @@ var/list/global_modular_computers = list()
 	if(cpu)
 		cpu.eject_disk()
 
-/obj/machinery/modular_computer/New()
-	..()
-	cpu = new(src)
-	cpu.physical = src
-	global_modular_computers.Add(src)
-
-/obj/machinery/modular_computer/Destroy()
+/obj/machinery/modular_computer/AltClick(mob/user)
 	if(cpu)
-		qdel(cpu)
-		cpu = null
-	return ..()
+		cpu.AltClick(user)
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /obj/machinery/modular_computer/attack_hand(mob/user)
@@ -108,8 +113,11 @@ var/list/global_modular_computers = list()
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
 	if(cpu && cpu.use_power()) // If "CPU" still has a power source, PC wouldn't go offline.
+		stat &= ~NOPOWER
+		update_icon()
 		return
 	..()
+	update_icon()
 
 /obj/machinery/modular_computer/attackby(var/obj/item/weapon/W as obj, mob/user)
 	if(cpu)

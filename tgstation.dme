@@ -1517,6 +1517,7 @@
 #include "code\modules\mob\new_player\poll.dm"
 #include "code\modules\mob\new_player\preferences_setup.dm"
 #include "code\modules\mob\new_player\sprite_accessories.dm"
+#include "code\modules\modular_computers\laptop_vendor.dm"
 #include "code\modules\modular_computers\computers\item\computer.dm"
 #include "code\modules\modular_computers\computers\item\computer_components.dm"
 #include "code\modules\modular_computers\computers\item\computer_damage.dm"

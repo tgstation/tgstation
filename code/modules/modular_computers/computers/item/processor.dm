@@ -50,5 +50,4 @@
 		return
 	..()
 	machinery_computer.update_icon()
-	machinery_computer.use_power = 0
 	return

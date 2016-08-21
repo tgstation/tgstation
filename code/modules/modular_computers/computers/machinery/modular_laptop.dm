@@ -48,6 +48,11 @@
 	if(Adjacent(usr))
 		open_computer()
 
+/obj/item/laptop/buildable/New()
+	stored_computer = new /obj/machinery/modular_computer/laptop/buildable
+	stored_computer.stat |= MAINT
+
+
 // The actual laptop
 /obj/machinery/modular_computer/laptop
 	name = "laptop computer"

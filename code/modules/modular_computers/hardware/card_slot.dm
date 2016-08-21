@@ -60,11 +60,13 @@
 	var/ejected = 0
 	if(stored_card && (!slot || slot == 1))
 		stored_card.forceMove(get_turf(src))
+		stored_card.verb_pickup()
 		stored_card = null
 		ejected++
 
 	if(stored_card2 && (!slot || slot == 2))
 		stored_card2.forceMove(get_turf(src))
+		stored_card2.verb_pickup()
 		stored_card2 = null
 		ejected++
 
@@ -77,6 +79,6 @@
 				var/datum/computer_file/program/P = I
 				P.event_idremoved(1, slot)
 
-		user << "<span class='notice'>You remove the card[ejected>=2 ? "s" : ""] from \the [src].</span>"
+		user << "<span class='notice'>You remove the card[ejected>1 ? "s" : ""] from \the [src].</span>"
 		return 1
 	return 0

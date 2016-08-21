@@ -25,7 +25,6 @@
 // Used in following function to reduce copypaste
 /obj/item/modular_computer/proc/power_failure()
 	if(enabled) // Shut down the computer
-		physical.visible_message("<span class='danger'>\The [src] shuts down unexpectedly.</span>")
 		if(active_program)
 			active_program.event_powerfailure(0)
 		for(var/I in idle_threads)

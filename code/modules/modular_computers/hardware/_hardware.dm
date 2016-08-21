@@ -19,6 +19,17 @@
 	var/damage_failure = 50			// "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
 	var/malfunction_probability = 10// Chance of malfunction when the component is damaged
 
+/obj/item/weapon/computer_hardware/New(var/obj/L)
+	..()
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-8, 8)
+
+/obj/item/weapon/computer_hardware/Destroy()
+	if(holder)
+		holder.uninstall_component(src)
+	return ..()
+
+
 /obj/item/weapon/computer_hardware/attackby(obj/item/I, mob/living/user)
 	// Multitool. Runs diagnostics
 	if(istype(I, /obj/item/device/multitool))
@@ -43,25 +54,9 @@
 
 	return ..()
 
-
 // Called on multitool click, prints diagnostic information to the user.
 /obj/item/weapon/computer_hardware/proc/diagnostics(var/mob/user)
 	user << "Hardware Integrity Test... (Corruption: [damage]/[max_damage]) [damage > damage_failure ? "FAIL" : damage > damage_malfunction ? "WARN" : "PASS"]"
-
-/obj/item/weapon/computer_hardware/New(var/obj/L)
-	if(istype(L, /obj/machinery/modular_computer))
-		var/obj/machinery/modular_computer/C = L
-		if(C.cpu)
-			holder = C.cpu
-			return
-	if(istype(L, /obj/item/modular_computer))
-		holder = L
-		return
-
-/obj/item/weapon/computer_hardware/Destroy()
-	if(holder)
-		holder.uninstall_component(src)
-	return ..()
 
 // Handles damage checks
 /obj/item/weapon/computer_hardware/proc/check_functionality()

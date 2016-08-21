@@ -61,13 +61,11 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(usr.incapacitated() || !istype(usr, /mob/living))
+	if(issilicon(usr))
 		return
 
-	if(!Adjacent(usr))
-		return
-
-	proc_eject_id(usr)
+	if (usr.canUseTopic(src))
+		proc_eject_id(usr)
 
 // Eject ID card from computer, if it has ID slot with card inside.
 /obj/item/modular_computer/verb/eject_disk()
@@ -75,13 +73,11 @@
 	set category = "Object"
 	set src in view(1)
 
-	if(usr.incapacitated() || !istype(usr, /mob/living))
+	if(issilicon(usr))
 		return
 
-	if(!Adjacent(usr))
-		return
-
-	proc_eject_disk(usr)
+	if (usr.canUseTopic(src))
+		proc_eject_disk(usr)
 
 /obj/item/modular_computer/proc/proc_eject_id(mob/user, slot)
 	if(!user)
@@ -101,7 +97,20 @@
 		user << "<span class='warning'>There is no data disk in \the [src]!</span>"
 		return
 
-	uninstall_component(portable_drive, user)
+	var/obj/item/I = portable_drive
+	if(uninstall_component(portable_drive, user))
+		I.verb_pickup()
+
+/obj/item/modular_computer/AltClick(mob/user)
+	..()
+	if(issilicon(user))
+		return
+
+	if(user.canUseTopic(src))
+		if(portable_drive)
+			proc_eject_disk(user)
+		else if(card_slot)
+			proc_eject_id(user)
 
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
@@ -114,6 +123,12 @@
 	if(card_slot)
 		return card_slot.GetID()
 	return ..()
+
+/obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
+	var/mob/M = usr
+	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
+		return attack_self(M)
+	return
 
 /obj/item/modular_computer/attack_ghost(mob/dead/observer/user)
 	if(enabled)
@@ -365,7 +380,7 @@
 		P.kill_program(1)
 		idle_threads.Remove(P)
 	if(loud)
-		physical.visible_message("<span class='danger'>\The [src] shuts down.</span>")
+		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
 	enabled = 0
 	update_icon()
 	return
