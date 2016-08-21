@@ -492,15 +492,15 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 45
+	overdose_threshold = 30
 	addiction_threshold = 30
+	stun_threshold = 6
+	stun_resist = 4
+	speedboost = FAST
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
-	M.status_flags |= GOTTAGOFAST
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
-	M.adjustStaminaLoss(-1*REM, 0)
+	M.adjustStaminaLoss(-1, 0)
+	stun_resist_act(M)
 	..()
 	. = 1
 
@@ -509,6 +509,10 @@
 		M.adjustToxLoss(0.5*REM, 0)
 		M.losebreath++
 		. = 1
+	if(prob(12))
+		var/obj/item/I = M.get_active_hand()
+		if(I)
+			M.drop_item()
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
@@ -554,26 +558,47 @@
 	M.reagents.remove_reagent("histamine",3)
 	..()
 
+/datum/reagent/medicine/sleeptoxin
+	name = "Sleep Toxin"
+	id = "sleeptoxin"
+	description = "A weak yet nontoxic sedative that can be used to safely put a patient to sleep."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	metabolization_rate = REAGENTS_METABOLISM
+
+/datum/reagent/medicine/sleeptoxin/on_mob_life(mob/living/M)
+	switch(current_cycle)
+		if(7)
+			M << "<span class='warning'>You start to feel tired...</span>" //Warning when the victim is starting to pass out
+		if(8 to 14)
+			M.drowsyness += 1
+		else if(15 to INFINITY)
+			M.sleeping += 1
+	..()
+	. = 1
+
 /datum/reagent/medicine/morphine
 	name = "Morphine"
 	id = "morphine"
-	description = "A painkiller that allows the patient to move at full speed even in bulky objects. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
+	description = "A painkiller that allows the patient to move at full speed, regardless of injury or clothing. However, it will make you drowsy, drains faster on severe injuries and reduces the effectiveness of stun-resisting chemicals. Overdose will cause a variety of effects, ranging from minor to lethal."
 	reagent_state = LIQUID
 	color = "#A9FBFB"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
+	speedboost = IGNORE_SLOWDOWN
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/M)
-	M.status_flags |= IGNORESLOWDOWN
-	switch(current_cycle)
-		if(11)
-			M << "<span class='warning'>You start to feel tired...</span>" //Warning when the victim is starting to pass out
-		if(12 to 24)
-			M.drowsyness += 1
-		if(24 to INFINITY)
-			M.Sleeping(2, 0)
-			. = 1
+	if(iscarbon(M))
+		var/mob/living/carbon/N = M
+		N.hal_screwyhud = 5
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		R.stun_timer = max(0, stun_timer - 0.5)
+	if(current_cycle >= 10)
+		M.drowsyness += 1
+		if(M.health <= 30)
+			M.sleeping += 1
+	. = 1
 	..()
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M)
@@ -803,18 +828,17 @@
 	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
+	stun_threshold = 4
+	stun_resist = 4
+	speedboost = FAST
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
-	M.status_flags |= GOTTAGOFAST
 	if(M.health < 50 && M.health > 0)
 		M.adjustOxyLoss(-1*REM, 0)
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustParalysis(-3, 0)
-	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0)
-	M.adjustStaminaLoss(-5*REM, 0)
+	M.adjustStaminaLoss(-3*REM, 0)
 	..()
 	. = 1
 
@@ -1066,10 +1090,7 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
-	M.adjustStaminaLoss(-1, 0)
+	M.stun_resist_act()
 	. = 1
 	..()
 
@@ -1083,10 +1104,12 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	id = "changelingAdrenaline2"
 	description = "Drastically increases movement speed."
 	color = "#C8A5DC"
-	metabolization_rate = 1
+	metabolization_rate = 2.5* REAGENTS_METABOLISM
+	speedboost = VERY_FAST
+	stun_resist = 4
+	stun_threshold = 4
 
 /datum/reagent/medicine/changelingAdrenaline2/on_mob_life(mob/living/M as mob)
-	M.status_flags |= GOTTAGOREALLYFAST
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
