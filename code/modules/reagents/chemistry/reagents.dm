@@ -2,6 +2,11 @@
 #define LIQUID 2
 #define GAS 3
 
+#define NORMAL 0
+#define FAST 1
+#define VERY_FAST 2
+#define IGNORE_SLOWDOWN 4
+
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
 //Various reagents
@@ -25,6 +30,10 @@
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
+	var/stun_timer = 0 // How many ticks since you last resisted a stun, tracked by stun-resisting reagents.
+	var/stun_threshold = 0 //How many ticks it takes to resist a stun, tracked by stun-resisting chems
+	var/stun_resist = 0 //How many ticks of stun does the chem resist, used by stun-resisting chems.
+	var/speedboost = NORMAL //Refactor of the terrible old speedboost management system, everything is checked in the check_speedboost proc in the chemistry-holder file. Uses the defines NORMAL, FAST, VERY_FAST and IGNORE_SLOWDOWN.
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -113,3 +122,21 @@
 		result += "[R.name], [R.volume] | "
 
 	return result
+
+/datum/reagent/proc/stun_resist_act(mob/living/M)
+	if(stun_timer == (stun_threshold))
+		M << "<span class='notice'>You feel the [name] kick in!</span>"
+	if(!(M.stunned || M.weakened || M.paralysis))
+		stun_timer++
+		metabolization_rate = initial(metabolization_rate)
+	else
+		metabolization_rate = 2 * initial(metabolization_rate)
+		for(var/datum/reagent/R in M.reagents.reagent_list)
+			if(R.stun_timer >= R.stun_threshold)
+				if(R.stun_timer >= R.stun_threshold + 3)
+					R.stun_timer = R.stun_threshold - 1
+				else
+					R.stun_timer = 0
+				M.AdjustParalysis(-R.stun_resist)
+				M.AdjustStunned(-R.stun_resist)
+				M.AdjustWeakened(-R.stun_resist)
