@@ -486,6 +486,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
+	persistence_replacement = /obj/item/weapon/disk/fakenucleardisk
 
 /obj/item/weapon/disk/nuclear/New()
 	..()
@@ -556,3 +557,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to \
 		[COORD(targetturf)].")
 	return QDEL_HINT_LETMELIVE //Cancel destruction unless forced
+
+/obj/item/weapon/disk/fakenucleardisk
+	name = "cheap plastic imitation of the nuclear authentication disk"
+	desc = "Broken dreams and a faint oder of cheese."
+	icon_state = "nucleardisk"

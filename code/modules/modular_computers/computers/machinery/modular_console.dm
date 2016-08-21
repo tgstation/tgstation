@@ -13,7 +13,7 @@
 	base_idle_power_usage = 100
 	base_active_power_usage = 500
 	max_hardware_size = 3
-	steel_sheet_cost = 20
+	steel_sheet_cost = 10
 	light_strength = 2
 	_max_damage = 300
 	_break_damage = 150

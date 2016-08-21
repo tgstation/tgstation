@@ -837,7 +837,7 @@
 		var/they_breathe = (!(NOBREATH in C.dna.species.specflags))
 		var/they_lung = C.getorganslot("lungs")
 
-		if(C.health > config.health_threshold_crit)
+		if(C.health > HEALTH_THRESHOLD_CRIT)
 			return
 
 		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")

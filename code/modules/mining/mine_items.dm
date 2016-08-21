@@ -558,6 +558,8 @@
 		setting = FALSE
 		return
 
+	var/area/A = get_area(T)
+
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "colony_drop(\ref[src])"
 	landing_zone.name = "Landing Zone"
@@ -566,6 +568,8 @@
 	landing_zone.width = width
 	landing_zone.height = height
 	landing_zone.setDir(lz_dir)
+	landing_zone.turf_type = T.baseturf
+	landing_zone.area_type = A.type
 
 	for(var/obj/machinery/computer/shuttle/S in machines)
 		if(S.shuttleId == shuttle_id)
@@ -637,6 +641,9 @@
 	for(var/S in SSshuttle.stationary)
 		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
 		if(SM.id == "mining_home" || SM.id == "mining_away")
+
+			var/area/A = get_area(landing_spot)
+
 			Mport = new(landing_spot)
 			Mport.id = "landing_zone_dock"
 			Mport.name = "landing zone dock"
@@ -645,6 +652,9 @@
 			Mport.width = SM.width
 			Mport.height = SM.height
 			Mport.setDir(dir)
+			Mport.turf_type = landing_spot.baseturf
+			Mport.area_type = A.type
+
 			break
 	if(!Mport)
 		user << "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>"

@@ -385,20 +385,6 @@
 	limit = 3
 	category = "Assistance"
 
-/datum/spellbook_entry/item/hadesstone
-	name = "Dark Seed"
-	desc = "A small, dark stone that whispers to you menacingly.\
-			The seed calls for the corpses of living beings,\
-			in order to summon an ancient, powerful being.\
-			The power and tenacity of the summoned being directly\
-			correlates to the power of the absorbed beings,\
-			so choose your targets wisely."
-	item_path = /obj/item/hades_summoner
-	cost = 2
-	log_name = "DS"
-	limit = 1
-	category = "Assistance"
-
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
@@ -514,6 +500,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 1
+	persistence_replacement = /obj/item/weapon/spellbook/oneuse/random
 	var/uses = 10
 	var/temp = null
 	var/tab = null
@@ -704,6 +691,7 @@
 	name = "spellbook of "
 	uses = 1
 	desc = "This template spellbook was never meant for the eyes of man..."
+	persistence_replacement = null
 
 /obj/item/weapon/spellbook/oneuse/New()
 	..()

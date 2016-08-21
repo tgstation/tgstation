@@ -451,6 +451,8 @@ var/datum/subsystem/ticker/ticker
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
 		world.log << dellog
 
+	//Collects persistence features
+	SSpersistence.CollectData()
 	return 1
 
 /datum/subsystem/ticker/proc/send_tip_of_the_round()
