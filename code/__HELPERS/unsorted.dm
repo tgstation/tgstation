@@ -626,7 +626,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/get_areas(areatype, subtypes=TRUE)
 	if(istext(areatype))
 		areatype = text2path(areatype)
-	if(isarea(areatype))
+	else if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 	else
@@ -676,33 +676,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	return turfs
-
-//Takes: Area type as text string or as typepath OR an instance of the area.
-//Returns: A list of all atoms	(objs, turfs, mobs) in areas of that type of that type in the world.
-/proc/get_area_all_atoms(areatype, subtypes=FALSE)
-	if(isarea(areatype))
-		var/area/A = areatype
-		return A.contents
-	if(istext(areatype))
-		areatype = text2path(areatype)
-	else
-		return null
-
-	var/list/atoms = list()
-	if(subtypes)
-		var/list/cache = typecacheof(areatype)
-		for(var/V in sortedAreas)
-			var/area/A = V
-			if(!cache[A.type])
-				continue
-			return A.contents
-	else
-		for(var/V in sortedAreas)
-			var/area/A = V
-			if(A.type != areatype)
-				continue
-			return A.contents
-	return atoms
 
 /proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
