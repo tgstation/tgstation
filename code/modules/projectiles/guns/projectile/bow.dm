@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/bow
 	name = "bow"
-	desc = "A sturdy bow made out of wood and reinforced with iron"
+	desc = "A sturdy bow made out of wood and reinforced with iron."
 	icon_state = "bow_unloaded"
 	item_state = "bow"
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
