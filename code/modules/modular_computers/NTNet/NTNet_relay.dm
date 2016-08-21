@@ -42,6 +42,8 @@
 	else
 		use_power = 1
 
+	update_icon()
+
 	if(dos_overload)
 		dos_overload = max(0, dos_overload - dos_dissipate)
 

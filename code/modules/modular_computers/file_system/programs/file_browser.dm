@@ -122,7 +122,7 @@
 			var/obj/item/weapon/computer_hardware/hard_drive/portable/RHDD = computer.portable_drive
 			if(!HDD || !RHDD)
 				return 1
-			var/datum/computer_file/F = HDD.find_file_by_name(params)
+			var/datum/computer_file/F = HDD.find_file_by_name(params["name"])
 			if(!F || !istype(F))
 				return 1
 			var/datum/computer_file/C = F.clone(0)
@@ -133,7 +133,7 @@
 			var/obj/item/weapon/computer_hardware/hard_drive/portable/RHDD = computer.portable_drive
 			if(!HDD || !RHDD)
 				return 1
-			var/datum/computer_file/F = RHDD.find_file_by_name(params)
+			var/datum/computer_file/F = RHDD.find_file_by_name(params["name"])
 			if(!F || !istype(F))
 				return 1
 			var/datum/computer_file/C = F.clone(0)
