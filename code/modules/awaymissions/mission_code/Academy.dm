@@ -91,7 +91,7 @@
 	if(!current_wizard)
 		return
 	spawn(0)
-		var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD, current_wizard)
 		var/mob/dead/observer/chosen = null
 
 		if(candidates.len)
@@ -266,7 +266,7 @@
 			servant_mind.objectives += O
 			servant_mind.transfer_to(H)
 
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [user.real_name] Servant?", "wizard")
+			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", "wizard", mob = H)
 			var/mob/dead/observer/chosen = null
 
 			if(candidates.len)
