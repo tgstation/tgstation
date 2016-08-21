@@ -220,7 +220,7 @@ Difficulty: Hard
 						C.moving_dir = pick_n_take(cardinal_copy)
 						sleep(10)
 				else //fire a massive 3x3 chaser at our target
-					PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser/giant, list(loc, src, target, max(1, 2 - anger_modifier*0.02, FALSE))
+					PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser/giant, list(loc, src, target, max(1.5, 2.5 - anger_modifier*0.02), FALSE))
 					sleep(10)
 				chaser_cooldown = world.time + initial(chaser_cooldown)
 				animate(src, color = initial(color), time = 10)
