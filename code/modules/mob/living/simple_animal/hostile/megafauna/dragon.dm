@@ -147,6 +147,8 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
+	if(swooping)
+		return
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 	if(prob(15 + anger_modifier) && !client)
@@ -155,7 +157,7 @@ Difficulty: Medium
 		else
 			fire_rain()
 
-	else if(prob(10+anger_modifier) && !client && !swooping)
+	else if(prob(10+anger_modifier) && !client)
 		if(health > maxHealth/2)
 			addtimer(src, "swoop_attack", 0)
 		else
