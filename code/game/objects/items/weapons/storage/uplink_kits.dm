@@ -118,6 +118,7 @@
 			new /obj/item/clothing/gloves/fingerless(src)
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/bandana/skull(src)
+			return
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
