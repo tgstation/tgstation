@@ -492,7 +492,7 @@ var/list/teleport_runes = list()
 		return
 
 	var/datum/game_mode/cult/cult_mode
-	
+
 	if(ticker.mode.name == "cult")
 		cult_mode = ticker.mode
 
@@ -576,10 +576,8 @@ var/list/teleport_runes = list()
 	if(potential_revive_mobs.len > 1)
 		mob_to_revive = input(user, "Choose a corpse to revive.", "Corpse to Revive") as null|anything in potential_revive_mobs
 	else
-		mob_to_sacrifice = potential_revive_mobs[1]
-	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1))
-		return
-	if(!validness_checks(mob_to_revive, user, 0))
+		mob_to_revive = potential_revive_mobs[1]
+	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1) || !validness_checks(mob_to_revive, user, 0))
 		return
 	rune_in_use = 1
 	if(user.name == "Herbert West")
