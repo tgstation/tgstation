@@ -126,13 +126,6 @@
 	cost = 0
 	allow_duplicates = FALSE
 
-/datum/map_template/ruin/lavaland/ato
-	name = "Automated Trade Outpost"
-	id = "ato"
-	description = "A sign at the front says 'Stealing is bad.'"
-	suffix = "lavaland_surface_automated_trade_outpost.dmm"
-	cost = 5
-
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
 	id = "ufo-crash"
