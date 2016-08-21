@@ -18,9 +18,9 @@
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
-		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
-		list("oculine"),
-		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
+		list("epinephrine", "sleeptoxin", "salbutamol", "bicaridine", "kelotane"),
+		list("oculine", "morphine"),
+		list("antitoxin", "mutadone", "mannitol", "pen_acid", "atropine"),
 		list("omnizine")
 	)
 
