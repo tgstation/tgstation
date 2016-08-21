@@ -190,6 +190,7 @@
 	var/client/C = directory[target]
 
 	var/static/stealthkey
+	var/adminname = config.showircname ? "[sender](IRC)" : "Administrator"
 
 	if(!C)
 		return "No client"
@@ -206,7 +207,7 @@
 	msg = emoji_parse(msg)
 
 	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>Administrator</A></b>: [msg]</font>"
+	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
 	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
 
 	//always play non-admin recipients the adminhelp sound
