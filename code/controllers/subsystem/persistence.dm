@@ -25,7 +25,7 @@ var/datum/subsystem/persistence/SSpersistence
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
 
 	secret_satchels >> satchels
-	if(!satchels.len || satchels.len < 20) //guards against low drop pools assuring that one player can reliably find his own gear.
+	if(isnull(satchels) || satchels.len < 20) //guards against low drop pools assuring that one player can reliably find his own gear.
 		return
 
 	var/list/chosen_satchel = pick_n_take(satchels)
