@@ -46,6 +46,7 @@
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/device/assault_pod/mining(src)
 
 
 /**********************Shuttle Computer**************************/
@@ -505,7 +506,7 @@
 
 /area/shuttle/auxillary_base
 	name = "Auxillary Base"
-
+	luminosity = 0 //Lighting gets lost when it lands anyway
 
 /obj/machinery/computer/shuttle/auxillary_base
 	name = "auxillary base launch control"
@@ -515,12 +516,18 @@
 	req_access = list(access_heads)
 	possible_destinations = null
 	clockwork = TRUE
+	var/obj/item/device/gps/internal/base/locator
+
+/obj/machinery/computer/shuttle/auxillary_base/New(location, obj/item/weapon/circuitboard/computer/shuttle/C)
+	..()
+	locator = new /obj/item/device/gps/internal/base(src)
 
 /obj/machinery/computer/shuttle/auxillary_base/Topic(href, href_list)
 	if(href_list["move"])
 		if(z != ZLEVEL_STATION)
 			usr << "<span class='warning'>You can't move the base again!</span>"
 			return 0
+		playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
 	..()
 
 /obj/item/device/assault_pod/mining
@@ -529,6 +536,7 @@
 	item_state = "electronic"
 	icon = 'icons/obj/device.dmi'
 	desc = "Deploy to designate the landing zone of the auxillary base."
+	w_class = 2
 	shuttle_id = "colony_drop"
 	var/setting = FALSE
 	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
@@ -546,7 +554,7 @@
 		if(T.z != ZLEVEL_MINING)
 			user << "Wouldn't do much good dropping a mining base away from the mining area!"
 			return
-		var/colony_radius = max(width, height)/2
+		var/colony_radius = max(width, height)*0.5
 		var/list/area_counter = get_areas_in_range(colony_radius, T)
 		if(area_counter.len > 1) //Avoid smashing ruins unless you are inside a really big one
 			user << "Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one."
@@ -562,7 +570,7 @@
 
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "colony_drop(\ref[src])"
-	landing_zone.name = "Landing Zone"
+	landing_zone.name = "Landing Zone ([T.x], [T.y])"
 	landing_zone.dwidth = dwidth
 	landing_zone.dheight = dheight
 	landing_zone.width = width
@@ -573,7 +581,7 @@
 
 	for(var/obj/machinery/computer/shuttle/S in machines)
 		if(S.shuttleId == shuttle_id)
-			S.possible_destinations = "[landing_zone.id]"
+			S.possible_destinations += "[landing_zone.id];"
 
 //Serves as a nice mechanic to people get ready for the launch.
 	minor_announce("Auxiliary base landing zone coordinates locked in for [get_area(user)]. Launch command now available!")
@@ -586,9 +594,6 @@
 	desc = "Allows the deployment of the mining base ANYWHERE. Use with caution."
 	no_restrictions = TRUE
 
-
-/area/shuttle/auxillary_base
-	name = "Auxillary Base"
 
 /obj/docking_port/mobile/auxillary_base
 	name = "auxillary base"
@@ -607,7 +612,7 @@
 	density = 0
 	var/shuttle_ID = "landing_zone_dock"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "miningbeacon" //Temp until proper sprite
+	icon_state = "miningbeacon"
 	var/obj/docking_port/stationary/Mport //Linked docking port for the mining shuttle
 	pressure_resistance = 200 //So it does not get blown into lava.
 	var/anti_spam_cd = 0 //The linking process might be a bit intensive, so this here to prevent over use.
@@ -631,7 +636,7 @@
 		return
 
 	if(!locate(/obj/machinery/computer/shuttle/auxillary_base) in view(src,15))
-		user << "<span class='warning'>The aux base console must be within view in order to interface.</span>"
+		user << "<span class='warning'>The auxillary base's console must be within view in order to interface.</span>"
 		return //It does not really interface with the base console, it just needs to be near.
 
 

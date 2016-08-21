@@ -119,6 +119,10 @@ var/list/GPS_list = list()
 	gpstag = "MINER"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 
+/obj/item/device/gps/internal/base
+	gpstag = "NT_AUX"
+	desc = "A homing signal from Nanotrasen's mining base."
+
 /obj/item/device/gps/visible_debug
 	name = "visible GPS"
 	gpstag = "ADMIN"
