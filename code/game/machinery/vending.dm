@@ -842,7 +842,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
 	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
 	icon_state = "seeds"
-	products = list(/obj/item/seeds/ambrosia = 3,/obj/item/seeds/apple = 3,/obj/item/seeds/banana = 3,/obj/item/seeds/berry = 3,
+	products = list(/obj/item/seeds/ambrosia = 3,/obj/item/seeds/apple = 3,/obj/item/seeds/banana = 3,/*/obj/item/seeds/buttseed = 3,*//obj/item/seeds/berry = 3,
 						/obj/item/seeds/cabbage = 3,/obj/item/seeds/carrot = 3,/obj/item/seeds/cherry = 3,/obj/item/seeds/chanter = 3,
 						/obj/item/seeds/chili = 3,/obj/item/seeds/cocoapod = 3,/obj/item/seeds/coffee = 3,/obj/item/seeds/corn = 3,
 						/obj/item/seeds/eggplant = 3,/obj/item/seeds/grape = 3,/obj/item/seeds/grass = 3,/obj/item/seeds/lemon = 3,

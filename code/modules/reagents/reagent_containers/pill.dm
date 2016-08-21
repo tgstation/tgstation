@@ -24,6 +24,83 @@
 
 
 /obj/item/weapon/reagent_containers/pill/attack(mob/M, mob/user, def_zone, self_delay)
+	if(user.zone_selected == "groin" && user.a_intent == "grab")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/obj/item/organ/internal/butt/B = H.getorgan(/obj/item/organ/internal/butt)
+			if(B)
+				if(!H.w_uniform)
+					var/buttspace = B.capacity - B.stored
+					if(!itemstorevalue)
+						switch(w_class)
+							if(1) itemstorevalue += 1 // tiny
+							if(2) itemstorevalue += 2 // small
+							if(3) itemstorevalue += 4 // normal
+							else itemstorevalue = -1 // too big in case we decide to add huge pills(?)
+					if(itemstorevalue != -1)//if the item is not too big
+						if(B.stored < B.capacity && itemstorevalue <= buttspace) // if the butt can still hold an item
+							if(H == user)
+								user.visible_message("<span class='notice'>You stuff \the [src] into your butt.</span>", "<span class='warning'>[user] stuffs \the [src] into his own butt.</span>")
+							else
+								H.visible_message("<span class='warning'>[user] attempts to stuff \the [src] inside [H]'s butt...</span>", "<span class='warning'>You attempt to stuff \the [src] inside [H]'s butt...</span>")
+								if(!do_mob(user, H))
+									if(H == user)
+										user << "<span class='warning'>You fail to stuff \the [src] in your butt.</span>"
+									else
+										user << "<span class='warning'>You fail to stuff \the [src] in [H]'s butt.</span>"
+									return 0
+								H.visible_message("<span class='danger'>[user] stuffs \the [src] inside [H]'s butt.</span>", "<span class='userdanger'>You stuff \the [src] inside [H]'s butt.</span>")
+							user.unEquip(src)
+							add_logs(user, M, "stuffed", object="[reagentlist(src)]")
+							B.contents += src
+							B.stored += itemstorevalue
+							for(var/i = 1 to reagents.total_volume)
+								if(!(src in B.contents))
+									break
+								sleep(50)
+								reagents.trans_to(M, 1)
+								i++
+
+							// Safely remove the item we have consumed
+							if(B)
+								if(B.contents)
+									B.contents -= src
+
+								B.stored -= itemstorevalue
+
+							qdel(src)
+
+							return 1
+						else
+							if(H == user)
+								user << "<span class='warning'>Your butt is full!</span>"
+							else
+								user << "<span class='warning'>[H]'s butt is full!</span>"
+							return 0
+					else
+						if(H == user)
+							user << "<span class='warning'>This item is too big to fit in your butt!</span>"
+						else
+							user << "<span class='warning'>This item is too big to fit in [H]'s butt!</span>"
+						return 0
+				else
+					if(H == user)
+						user << "<span class='warning'>You'll need to remove your jumpsuit first.</span>"
+					else
+						user << "<span class='warning'>You'll need to remove [H]'s jumpsuit first.</span>"
+						H << "<span class='warning'>You feel your butt being poked with \the [src]!</span>"
+						user.visible_message("<span class='warning'>[user] pokes [H]'s butt with \the [src]!</span>", "<span class='warning'>You poke [H]'s butt with \the [src]!</span>")
+					return 0
+			else
+				if(H == user)
+					user << "<span class='warning'>You have no butt!</span>"
+				else
+					user << "<span class='warning'>[H] has no butt!</span>"
+				return 0
+		else
+			user << "<span class='warning'>You can only do that to humans.</span>"
+			return 0
+
 	if(!canconsume(M, user))
 		return 0
 
