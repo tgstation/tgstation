@@ -20,18 +20,18 @@ var/datum/subsystem/persistence/SSpersistence
 	CollectSecretSatchels()
 
 /datum/subsystem/persistence/proc/PlaceSecretSatchel()
-	var/list/satchels = list()
 	secret_satchels = new /savefile("data/npc_saves/SecretSatchels_[MAP_NAME].sav")
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
 
-	secret_satchels >> satchels
-	if(isnull(satchels) || satchels.len < 20) //guards against low drop pools assuring that one player can reliably find his own gear.
+	secret_satchels >> old_secret_satchels
+	if(isnull(old_secret_satchels))
 		return
 
-	var/list/chosen_satchel = pick_n_take(satchels)
-	old_secret_satchels = satchels
+	var/list/chosen_satchel
+	if(old_secret_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
+		chosen_satchel = pick_n_take(old_secret_satchels)
 	secret_satchels << old_secret_satchels
-	if(chosen_satchel.len != 3) //Malformed
+	if(!chosen_satchel || chosen_satchel.len != 3) //Malformed
 		return
 
 	var/path = text2path(chosen_satchel[3]) //If the item no longer exist, this returns null
