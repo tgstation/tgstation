@@ -175,14 +175,6 @@
 	suffix = "lavaland_surface_survivalpod.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/tomb
-	name = "Strange Outpost"
-	id = "tomb"
-	description = "A strange tomb, housing the dead of whatever strange civilization \
-		lived here before. You swear you hear rattling coming from the inside."
-	suffix = "lavaland_surface_tomb.dmm"
-	cost = 10
-
 /datum/map_template/ruin/lavaland/pizza
 	name = "Ruined Pizza Party"
 	id = "pizza"
