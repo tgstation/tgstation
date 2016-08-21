@@ -76,6 +76,11 @@
 	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
 	return(BRUTELOSS)
 
+/obj/item/weapon/katana/syndicate
+	name = "syndicate katana"
+	desc = "The syndicate has not uncovered the secret art of folding steel. Thus this weapon is not as robust as the real deal."
+	force = 30
+
 /obj/item/weapon/wirerod
 	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
