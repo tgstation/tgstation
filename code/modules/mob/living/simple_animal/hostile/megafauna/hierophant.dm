@@ -41,8 +41,7 @@ Difficulty: Hard
 	icon_living = "hierophant"
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/hierophant.dmi'
-	faction = list("mining")
-	weather_immunities = list("lava","ash")
+	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
 	armour_penetration = 50
 	melee_damage_lower = 25
@@ -50,29 +49,23 @@ Difficulty: Hard
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
-	flying = 1
-	mob_size = MOB_SIZE_LARGE
 	pixel_x = -16
 	ranged_cooldown_time = 40
 	aggro_vision_range = 23
-	idle_vision_range = 5
 	loot = list(/obj/item/weapon/hierophant_staff)
 	wander = FALSE
-	var/anger_modifier = 0 //determines how angry we are and how lethal our attacks are
 	var/burst_range = 2 //range on burst aoe
 	var/beam_range = 3 //range on cross blast beams
 	var/chaser_cooldown = 101 //base cooldown/cooldown var between spawning chasers
 	var/major_attack_cooldown = 60 //base cooldown for major attacks
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
-	var/obj/effect/hierophant/spawned_rune //the rune we teleport back to/attune our dropped staff to
-	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our original location
+	var/obj/effect/hierophant/spawned_rune //the rune we teleport back to
+	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our rune
 	var/did_reset //if we timed out, returned to our original location, and healed some
-	var/obj/item/device/gps/internal
 	medal_type = MEDAL_PREFIX
 	score_type = BIRD_SCORE
 	del_on_death = TRUE
 	death_sound = 'sound/magic/Repulse.ogg'
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/New()
 	..()
@@ -108,7 +101,6 @@ Difficulty: Hard
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
-	qdel(internal)
 	qdel(spawned_rune)
 	. = ..()
 
