@@ -45,6 +45,4 @@ Assistant
 
 	if(visualsOnly)
 		return
-	
-	if(minimal_player_age > 30)
-		H.dna.add_mutation(CLOWNMUT)
+
