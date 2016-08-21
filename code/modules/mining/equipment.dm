@@ -168,9 +168,9 @@
 	force = 15
 	throwforce = 10
 	var/cooldown = 0
-	var/fieldsactive = 0
 	var/burst_time = 30
 	var/fieldlimit = 4
+	var/list/fields = list()
 	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/weapon/resonator/upgraded
@@ -188,14 +188,10 @@
 		R.resonance_damage *= 0.75
 		R.burst(T)
 		return
-	if(fieldsactive < fieldlimit)
+	if(fields.len < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		new /obj/effect/resonance(T, creator, burst_time)
-		fieldsactive++
-		addtimer(src, "lower_fields", burst_time)
-
-/obj/item/weapon/resonator/proc/lower_fields()
-	fieldsactive--
+		var/obj/effect/resonance/R = new /obj/effect/resonance(T, creator, burst_time, src)
+		fields += R
 
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
@@ -220,9 +216,13 @@
 	anchored = TRUE
 	mouse_opacity = 0
 	var/resonance_damage = 20
+	var/creator
+	var/obj/item/weapon/resonator/res
 
-/obj/effect/resonance/New(loc, var/creator = null, var/timetoburst)
+/obj/effect/resonance/New(loc, set_creator, timetoburst, set_resonator)
 	..()
+	cerator = set_creator
+	res = set_resonator
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
@@ -232,6 +232,11 @@
 		name = "strong resonance field"
 		resonance_damage = 60
 	addtimer(src, "burst", timetoburst, FALSE, proj_turf)
+
+/obj/effect/resonance/Destroy()
+	if(res)
+		res.fields -= src
+	return ..()
 
 /obj/effect/resonance/proc/burst(turf/T)
 	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
