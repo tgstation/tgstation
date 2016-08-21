@@ -213,24 +213,26 @@
 	name = "Unholy Water"
 	id = "unholywater"
 	description = "Something that shouldn't exist on this plane of existance."
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	stun_threshold = 4
+	stun_resist = 6
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustParalysis(-1, 0)
-		M.AdjustStunned(-2, 0)
-		M.AdjustWeakened(-2, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
+		M.stun_resist_act()
+		speedboost = FAST
 	else
 		M.adjustBrainLoss(3)
 		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
-	holder.remove_reagent(src.id, 1)
+		speedboost = NORMAL
 	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
