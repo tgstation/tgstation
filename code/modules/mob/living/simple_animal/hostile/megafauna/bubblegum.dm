@@ -137,8 +137,10 @@ Difficulty: Hard
 	DestroySurroundings()
 	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, T)
 	sleep(5)
+	walk(src,0)
 	throw_at(T, 7, 1, src, 0)
 	charging = 0
+	Goto(target,move_to_delay,minimum_distance)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
