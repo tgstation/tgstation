@@ -1090,10 +1090,7 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
-	M.adjustStaminaLoss(-1, 0)
+	M.stun_resist_act()
 	. = 1
 	..()
 
@@ -1107,10 +1104,12 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	id = "changelingAdrenaline2"
 	description = "Drastically increases movement speed."
 	color = "#C8A5DC"
-	metabolization_rate = 1
+	metabolization_rate = 2.5* REAGENTS_METABOLISM
+	speedboost = VERY_FAST
+	stun_resist = 4
+	stun_threshold = 4
 
 /datum/reagent/medicine/changelingAdrenaline2/on_mob_life(mob/living/M as mob)
-	M.status_flags |= GOTTAGOREALLYFAST
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
