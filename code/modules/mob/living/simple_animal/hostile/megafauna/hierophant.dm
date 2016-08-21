@@ -56,7 +56,7 @@ Difficulty: Hard
 	ranged_cooldown_time = 40
 	aggro_vision_range = 23
 	idle_vision_range = 5
-	loot = list()
+	loot = list(/obj/item/weapon/hierophant_staff)
 	wander = FALSE
 	var/anger_modifier = 0 //determines how angry we are and how lethal our attacks are
 	var/burst_range = 2 //range on burst aoe
@@ -78,7 +78,6 @@ Difficulty: Hard
 	..()
 	internal = new/obj/item/device/gps/internal/hierophant(src)
 	spawned_rune = new(loc)
-	spawned_rune.active_boss = src
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Life()
 	. = ..()
@@ -106,15 +105,11 @@ Difficulty: Hard
 		burst_range = 7
 		visible_message("<span class='hierophant_warning'>[src] disappears in a massive burst of magic, leaving only its staff.</span>")
 		burst(get_turf(src))
-		var/obj/item/weapon/hierophant_staff/H = new /obj/item/weapon/hierophant_staff(loc)
-		H.rune = spawned_rune
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	qdel(internal)
-	if(spawned_rune)
-		spawned_rune.active_boss = null
-		spawned_rune = null
+	qdel(spawned_rune)
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/devour(mob/living/L)
@@ -493,28 +488,25 @@ Difficulty: Hard
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 	color = "#CC00FF"
-	var/mob/living/active_boss
 
 /obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/hierophant_staff))
-		if(active_boss) //admin spawn edge case reeeeee
-			user << "<span class='hierophant_warning'>You touch the rune with the staff, but nothing happens.</span>"
-			return
 		var/obj/item/weapon/hierophant_staff/H = I
-		if(H.rune == src) //you're already using this rune as a target
-			user << "<span class='hierophant_warning'>You touch the rune with the staff, but nothing happens.</span>"
+		if(H.rune == src)
+			user << "<span class='notice'>You start removing your hierophant rune...</span>"
+			H.timer = world.time + 51
+			if(do_after(user, 50, target = src))
+				playsound(src,'sound/magic/Blind.ogg', 200, 1, -4)
+				PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(get_turf(src), user))
+				user << "<span class='hierophant_warning'>You touch the rune with the staff, dispelling it!</span>"
+				H.rune = null
+				user.update_action_buttons_icon()
+				qdel(src)
 		else //use this rune instead
-			H.rune = src
-			user << "<span class='hierophant'>You touch the rune with the staff, attuning it!</span>\n\
-			<span class='notice'>Return to the rune at any time by using the Vortex Recall action button granted by the staff.</span>"
-			user.update_action_buttons_icon()
+			user << "<span class='hierophant_warning'>You touch the rune with the staff, but nothing happens.</span>"
+
 	else
 		..()
-
-/obj/effect/hierophant/Destroy(force)
-	if(!force && active_boss)
-		return QDEL_HINT_LETMELIVE
-	. = ..()
 
 /obj/item/device/gps/internal/hierophant
 	icon_state = null

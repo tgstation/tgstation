@@ -775,8 +775,26 @@
 		friendly_fire_check = !friendly_fire_check
 		user << "<span class='warning'>You toggle friendly fire [friendly_fire_check ? "off":"on"]!</span>"
 		return
+	if(!rune)
+		if(isturf(user.loc))
+			user.visible_message("<span class='hierophant_warning'>[user] holds [src] carefully in front of them, moving it in a strange pattern...</span>", \
+			"<span class='notice'>You start creating a hierophant rune to teleport to...</span>")
+			timer = world.time + 51
+			if(do_after(user, 50, target = user))
+				var/turf/T = get_turf(user)
+				playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
+				PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, user))
+				var/obj/effect/hierophant/H = new/obj/effect/hierophant(T)
+				rune = H
+				user.update_action_buttons_icon()
+				user.visible_message("<span class='hierophant_warning'>[user] creates a strange rune beneath them!</span>", \
+				"<span class='hierophant'>You create a hierophant rune, which you can teleport yourself and any allies to at any time!</span>\n\
+				<span class='notice'>You can remove the rune to place a new one by striking it with the staff.</span>")
+		else
+			user << "<span class='warning'>You need to be on solid ground to produce a rune!</span>"
+		return
 	if(src != user.l_hand && src != user.r_hand) //you need to hold the staff to teleport
-		user << "<span class='warning'>You need to hold the staff in your hands to teleport with it!</span>"
+		user << "<span class='warning'>You need to hold the staff in your hands to [rune ? "teleport with it":"create a rune"]!</span>"
 		return
 	if(get_dist(user, rune) <= 2) //rune too close abort
 		user << "<span class='warning'>You are too close to the rune to teleport to it!</span>"
@@ -784,6 +802,7 @@
 	teleporting = TRUE //start channel
 	user.update_action_buttons_icon()
 	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
+	timer = world.time + 41
 	if(do_after(user, 37, target = user) && rune)
 		var/turf/T = get_turf(rune)
 		var/turf/source = get_turf(user)

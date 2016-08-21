@@ -213,13 +213,13 @@
 
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"
-	desc = "Recall yourself, and anyone nearby, to an attuned hierophant rune at any time."
+	desc = "Recall yourself, and anyone nearby, to an attuned hierophant rune at any time.<br>If no such rune exists, will produce a rune at your location."
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable()
 	if(istype(target, /obj/item/weapon/hierophant_staff))
 		var/obj/item/weapon/hierophant_staff/H = target
-		if(H.teleporting || !H.rune)
+		if(H.teleporting)
 			return 0
 	return ..()
 
