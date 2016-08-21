@@ -124,40 +124,6 @@ Bonus
 					M.resistances -= res
 		M << "<span class='warning'>You feel weaker.</span>"
 
-/*
-//////////////////////////////////////
-
-Longevity
-
-	Medium hidden boost.
-	Large resistance boost.
-	Large stage speed boost.
-	Large transmittablity boost.
-	High Level.
-
-Bonus
-	After a certain amount of time the symptom will cure itself.
-
-//////////////////////////////////////
-*/
-
-/datum/symptom/heal/longevity
-
-	name = "Longevity"
-	stealth = 3
-	resistance = 4
-	stage_speed = 4
-	transmittable = 4
-	level = 3
-	var/longevity = 30
-
-/datum/symptom/heal/longevity/Heal(mob/living/M, datum/disease/advance/A)
-	longevity -= 1
-	if(!longevity)
-		A.cure()
-
-/datum/symptom/heal/longevity/Start(datum/disease/advance/A)
-	longevity = rand(initial(longevity) - 5, initial(longevity) + 5)
 
 /*
 //////////////////////////////////////

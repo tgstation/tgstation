@@ -27,14 +27,12 @@ Difficulty: Medium
 	icon = 'icons/mob/lavaland/legion.dmi'
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	faction = list("mining")
 	speak_emote = list("echoes")
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	speed = 2
 	ranged = 1
-	flying = 1
 	del_on_death = 1
 	retreat_distance = 5
 	minimum_distance = 5
@@ -48,14 +46,13 @@ Difficulty: Medium
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	elimination = 1
-	aggro_vision_range = 18
 	idle_vision_range = 13
 	appearance_flags = 0
 	mouse_opacity = 1
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
-	new/obj/item/device/gps/internal/legion(src)
+	internal = new/obj/item/device/gps/internal/legion(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	..()

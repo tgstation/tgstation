@@ -35,8 +35,6 @@ Difficulty: Hard
 	icon_dead = ""
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
-	faction = list("mining")
-	weather_immunities = list("lava","ash")
 	speak_emote = list("gurgles")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -44,12 +42,8 @@ Difficulty: Hard
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
-	flying = 1
-	mob_size = MOB_SIZE_LARGE
 	pixel_x = -32
 	del_on_death = 1
-	aggro_vision_range = 18
-	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	var/charging = 0
 	medal_type = MEDAL_PREFIX
@@ -68,7 +62,7 @@ Difficulty: Hard
 	move_to_delay = Clamp(round((health/maxHealth) * 10), 5, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
-	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
+	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	if(charging)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -97,7 +91,7 @@ Difficulty: Hard
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
 		bloodspell.phased = 1
-	new/obj/item/device/gps/internal/bubblegum(src)
+	internal = new/obj/item/device/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
 	if(charging)
