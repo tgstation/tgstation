@@ -419,7 +419,7 @@
 
 	var/mob/living/carbon/human/new_character = new(loc)
 
-	if(config.force_random_names || appearance_isbanned(src))
+	if(config.force_random_names || jobban_isbanned(src, "appearance"))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(new_character)

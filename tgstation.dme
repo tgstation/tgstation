@@ -839,7 +839,6 @@
 #include "code\modules\admin\admin_memo.dm"
 #include "code\modules\admin\admin_ranks.dm"
 #include "code\modules\admin\admin_verbs.dm"
-#include "code\modules\admin\banappearance.dm"
 #include "code\modules\admin\banjob.dm"
 #include "code\modules\admin\create_mob.dm"
 #include "code\modules\admin\create_object.dm"
