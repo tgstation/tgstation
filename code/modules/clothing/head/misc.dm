@@ -186,6 +186,11 @@
 	H.facial_hair_style = "Neckbeard"
 	return(BRUTELOSS)
 
+/obj/item/clothing/head/fedora/mninja
+	name = "Syndicate Ninja Fedora"
+	desc = "An official Syndicate Ninja Fedora, feels a bit more robust than your average fedora."
+	armor = list(melee = 5, bullet = 10, laser = 10, energy = 5, bomb = 5, bio = 0, rad = 0)
+
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
 	icon_state = "sombrero"
