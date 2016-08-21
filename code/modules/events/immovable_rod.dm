@@ -36,6 +36,12 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/z_original = 0
 	var/destination
 
+/obj/effect/immovablerod/butt
+	name = "gigantic ass"
+	desc = "godDAMN that ass is well rounded"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "butt"
+
 /obj/effect/immovablerod/New(atom/start, atom/end)
 	..()
 	if(SSaugury)

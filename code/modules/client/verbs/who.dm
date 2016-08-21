@@ -83,3 +83,24 @@
 		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
 	src << msg
 
+/client/verb/mentorwho()
+	set category = "Mentor"
+	set name = "Mentorwho"
+
+	var/msg = "<b>Current Mentors:</b>\n"
+	for(var/client/C in mentors)
+		var/suffix = ""
+		if(holder)
+			if(isobserver(C.mob))
+				suffix += " - Observing"
+			else if(istype(C.mob,/mob/new_player))
+				suffix += " - Lobby"
+			else
+				suffix += " - Playing"
+
+			if(C.is_afk())
+				suffix += " (AFK)"
+
+		msg += "\t[C][suffix]\n"
+
+	src << msg

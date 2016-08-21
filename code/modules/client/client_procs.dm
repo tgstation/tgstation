@@ -35,6 +35,22 @@
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	if(href_list["mentor_msg"])
+		if(config.mentors_mobname_only)
+			var/mob/M = locate(href_list["mentor_msg"])
+			cmd_mentor_pm(M,null)
+		else
+			cmd_mentor_pm(href_list["mentor_msg"],null)
+		return
+
+	if(href_list["mentor_follow"])
+		var/mob/living/M = locate(href_list["mentor_follow"])
+
+		if(istype(M))
+			mentor_follow(M)
+		return
+
+
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
@@ -136,6 +152,12 @@ var/next_external_rsc = 0
 		admins |= src
 		holder.owner = src
 
+	var/mentor = mentor_datums[ckey]
+	if(mentor)
+		verbs += /client/proc/cmd_mentor_say
+		verbs += /client/proc/show_mentor_memo
+		mentors += src
+
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
@@ -185,6 +207,9 @@ var/next_external_rsc = 0
 		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
+
+	if(mentor && !holder)
+		mentor_memo_output("Show")
 
 	add_verbs_from_config()
 	set_client_age_from_db()

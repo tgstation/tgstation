@@ -43,6 +43,7 @@
 		internal_organs += new /obj/item/organ/heart
 
 	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/organ/internal/butt
 
 	//Note: Additional organs are generated/replaced on the dna.species level
 

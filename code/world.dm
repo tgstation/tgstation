@@ -37,6 +37,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_mode()
 	load_motd()
 	load_admins()
+	load_mentors()
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -118,6 +119,16 @@ var/last_irc_status = 0
 		s["revision_date"] = revdata.date
 
 		var/list/adm = get_admin_counts()
+		//var/mentors = 0
+		for(var/client/C in clients)
+			var/mentor = mentor_datums[C.ckey]
+			if(mentor)
+				mentors++
+			if(C.holder)
+				if(C.holder.fakekey)
+					continue	//so stealthmins aren't revealed by the hub
+				admins++
+
 		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
 		s["gamestate"] = 1
 		if(ticker)

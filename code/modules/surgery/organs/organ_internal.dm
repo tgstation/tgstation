@@ -433,3 +433,61 @@
 	if(inflamed)
 		S.reagents.add_reagent("????", 5)
 	return S
+
+/obj/item/organ/internal/butt //nvm i need to make it internal for surgery fuck
+	name = "butt"
+	desc = "extremely treasured body part"
+	icon_state = "butt"
+	item_state = "butt"
+	zone = "groin"
+	slot = "butt"
+	throwforce = 5
+	throw_speed = 4
+	force = 5
+	hitsound = 'sound/misc/fart.ogg'
+	body_parts_covered = HEAD
+	slot_flags = SLOT_HEAD
+	embed_chance = 5 //This is a joke
+	var/loose = 0
+	var/capacity = 2 // this is how much items the butt can hold. 1 means only 1 tiny item, while 2 means 2 tiny items OR 1 small item.
+	var/stored = 0 //how many items are inside
+
+/obj/item/organ/internal/butt/xeno //XENOMORPH BUTTS ARE BEST BUTTS yes i agree
+	name = "alien butt"
+	desc = "best trophy ever"
+	icon_state = "xenobutt"
+	item_state = "xenobutt"
+	capacity = 3 // aka either 3 tiny items or 1 small+1 tiny. xenos are huge,their butt should be bigger too
+
+/obj/item/organ/internal/butt/bluebutt // bluespace butts, science
+	name = "butt of holding"
+	desc = "This butt has bluespace properties, letting you store more items in it. Four tiny items, or two small ones, or one normal one can fit."
+	icon_state = "bluebutt"
+	item_state = "bluebutt"
+	origin_tech = "bluespace=5;biotech=4"
+	capacity = 4
+
+/*/obj/item/organ/internal/butt/attackby(var/obj/item/W, mob/user as mob, params) // copypasting bot manufucturing process, im a lazy fuck
+
+	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
+		user.drop_item()
+		qdel(W)
+		var/turf/T = get_turf(src.loc)
+		var/B = new /mob/living/simple_animal/bot/buttbot/(T)
+		if(istype(src, /obj/item/organ/internal/butt/xeno))
+			B.xeno = 1
+			B.icon_state = "buttbot_xeno"
+			B.speech_list = list("hissing butts", "hiss hiss motherfucker", "nice trophy nerd", "butt", "woop get an alien inspection")
+		user << "<span class='notice'>You add the robot arm to the butt and... What?</span>"
+		user.drop_item(src)
+		qdel(src)
+*/
+/obj/item/organ/internal/butt/throw_impact(atom/hit_atom)
+	..()
+	var/mob/living/carbon/M = hit_atom
+	playsound(src, 'sound/misc/fart.ogg', 50, 1, 5)
+	if((ishuman(hit_atom)))
+		M.apply_damage(5, STAMINA)
+		if(prob(5))
+			M.Weaken(3)
+			visible_message("<span class='danger'>The [src.name] smacks [M] right in the face!</span>", 3)

@@ -4,6 +4,9 @@
 
 /mob/living/carbon/emote(act,m_type=1,message = null)
 	var/param = null
+	var/delay = 5
+	if(spam_flag == 1)
+		return
 
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
@@ -183,6 +186,9 @@
 
 	if (message)
 		log_emote("[name]/[key] : [message]")
+		src.spam_flag = 1
+		spawn(delay)
+			src.spam_flag = 0
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.

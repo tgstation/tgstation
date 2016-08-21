@@ -60,3 +60,17 @@
 	new_msg = jointext(new_words," ")
 
 	return new_msg
+
+/proc/buttificate(phrase)
+	var/params = replacetext(phrase, " ", "&")
+	var/list/buttphrase = params2list(params)
+	var/finalphrase = ""
+	for(var/p in buttphrase)
+		if(prob(20))
+			p="butt"
+		finalphrase = finalphrase+p+" "
+	finalphrase = replacetext(finalphrase, " #39 ","'")
+	finalphrase = replacetext(finalphrase, " s "," ") //this is really dumb and hacky, gets rid of trailing 's' character on the off chance that '#39' gets swapped
+	if(findtext(finalphrase,"butt"))
+		return finalphrase
+	return

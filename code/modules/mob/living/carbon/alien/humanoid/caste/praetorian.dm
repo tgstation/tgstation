@@ -15,6 +15,7 @@
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/acid
 	internal_organs += new /obj/item/organ/alien/neurotoxin
+	internal_organs += new /obj/item/organ/internal/butt/xeno
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
 	..()

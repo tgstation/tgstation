@@ -1,5 +1,6 @@
 var/list/clients = list()							//all clients
 var/list/admins = list()							//all clients whom are admins
+var/list/mentors = list()                           //all clients whom are mentors
 var/list/deadmins = list()							//all clients who have used the de-admin verb.
 var/list/directory = list()							//all ckeys with associated client
 var/list/stealthminID = list()					//reference list with IDs that store ckeys, for stealthmins

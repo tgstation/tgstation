@@ -100,3 +100,11 @@
 	load_admins()
 	feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("[key_name_admin(usr)] manually reloaded admins")
+
+/client/proc/reload_mentors()
+	set name = "Reload Mentors"
+	set category = "Admin"
+	if(!src.holder)	return
+	message_admins("[key_name_admin(usr)] manually reloaded mentors")
+	load_mentors()
+	feedback_add_details("admin_verb","RLDM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

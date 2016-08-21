@@ -10,6 +10,7 @@
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/acid
+	internal_organs += new /obj/item/organ/internal/butt/xeno
 
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	..()

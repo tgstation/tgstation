@@ -37,6 +37,7 @@
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
+	internal_organs += new /obj/item/organ/internal/butt
 
 	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
