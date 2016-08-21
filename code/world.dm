@@ -39,7 +39,6 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_admins()
 	if(config.usewhitelist)
 		load_whitelist()
-	appearance_loadbanfile()
 	LoadBans()
 	investigate_reset()
 
@@ -169,6 +168,13 @@ var/last_irc_status = 0
 		else
 			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
 
+	else if("namecheck" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
+			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
+			return keywords_lookup(input["namecheck"],1)
 
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)

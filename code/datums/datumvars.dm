@@ -262,6 +262,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 
 	if(ismob(D))
 		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
+		body += "<option value='?_src_=vars;remove_spell=\ref[D]'>Remove Spell</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
 		body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
 		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
@@ -561,6 +562,18 @@ body
 
 			src.give_spell(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
+
+		else if(href_list["remove_spell"])
+			if(!check_rights(0))
+				return
+
+			var/mob/M = locate(href_list["remove_spell"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
+			remove_spell(M)
+			href_list["datumrefresh"] = href_list["remove_spell"]
 
 		else if(href_list["give_disease"])
 			if(!check_rights(0))

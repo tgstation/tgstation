@@ -22,7 +22,7 @@
 /mob/living/carbon/brain/update_stat()
 	if(status_flags & GODMODE)
 		return
-	if(health <= config.health_threshold_dead)
+	if(health <= HEALTH_THRESHOLD_DEAD)
 		if(stat != DEAD)
 			death()
 		var/obj/item/organ/brain/BR

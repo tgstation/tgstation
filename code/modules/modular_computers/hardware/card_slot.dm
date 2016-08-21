@@ -21,6 +21,8 @@
 	..()
 
 /obj/item/weapon/computer_hardware/card_slot/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(!user.drop_item(src))
+		return
 	if(M.card_slot)
 		user << "This computer's card slot is already occupied by \the [M.card_slot]."
 		return

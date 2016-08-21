@@ -20,6 +20,8 @@
 	..()
 
 /obj/item/weapon/computer_hardware/tesla_link/try_install_component(mob/living/user, obj/item/modular_computer/M, found = 0)
+	if(!user.drop_item(src))
+		return
 	if(istype(M, /obj/item/modular_computer/processor))
 		var/obj/item/modular_computer/processor/P = M
 		if(P.machinery_computer.tesla_link)
