@@ -472,7 +472,7 @@ Difficulty: Hard
 			playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
 			L << "<span class='userdanger'>You're struck by a [name]!</span>"
 			L.apply_damage(damage, BURN)
-			if(ismegafauna(L))
+			if(ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid))
 				L.apply_damage(damage, BRUTE)
 			add_logs(caster, L, "struck with a [name]")
 		for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
