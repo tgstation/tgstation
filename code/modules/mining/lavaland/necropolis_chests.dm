@@ -842,10 +842,13 @@
 	M.visible_message("<span class='hierophant_warning'>[M] fades out!</span>")
 	var/previous_density = M.density
 	M.density = FALSE
-	sleep(3)
+	sleep(2)
 	if(!M)
 		return
 	M.forceMove(turf_to_teleport_to)
+	sleep(1)
+	if(!M)
+		return
 	animate(M, alpha = 255, color = previous_color, time = 2, easing = EASE_IN) //fade IN
 	sleep(1)
 	if(!M)
@@ -858,7 +861,7 @@
 		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, user))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
-	sleep(3)
+	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, user, friendly_fire_check))
 	for(var/d in cardinal)
 		addtimer(src, "blast_wall", 0, FALSE, T, d, user)
@@ -881,6 +884,6 @@
 		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
-	sleep(3)
+	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, friendly_fire_check))
