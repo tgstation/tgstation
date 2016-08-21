@@ -77,7 +77,12 @@
 	chameleon_blacklist += target.type
 	var/list/temp_list = typesof(chameleon_type)
 	for(var/V in temp_list - (chameleon_blacklist))
-		chameleon_list += V
+		if(istype(V, /obj/item))
+			var/obj/item/I = V
+			if(initial(I.flags) & ABSTRACT)
+				continue
+			else
+				chameleon_list += I
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/list/item_names = list()
@@ -86,7 +91,7 @@
 		var/obj/item/I = U
 		item_names += initial(I.name)
 	var/picked_name
-	picked_name = input("Select [chameleon_name] to change it to", "Chameleon [chameleon_name]", picked_name) in item_names
+	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) in item_names
 	if(!picked_name)
 		return
 	for(var/V in chameleon_list)

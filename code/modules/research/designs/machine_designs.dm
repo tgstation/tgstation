@@ -386,3 +386,11 @@
 	req_tech = list("programming" = 4, "biotech" = 3)
 	build_path = /obj/item/weapon/circuitboard/machine/plantgenes
 	category = list ("Misc. Machinery")
+
+/datum/design/board/ntnet_relay
+	name = "Machine Design (NTNet Relay Board)"
+	desc = "The circuit board for a wireless network relay."
+	id = "ntnet_relay"
+	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 2)
+	build_path = /obj/item/weapon/circuitboard/machine/ntnet_relay
+	category = list("Subspace Telecomms")

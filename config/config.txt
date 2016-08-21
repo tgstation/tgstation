@@ -172,6 +172,9 @@ ALLOW_HOLIDAYS
 ##Remove the # mark if you are going to use the SVN irc bot to relay adminhelps
 #USEIRCBOT
 
+##Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
+#SHOW_IRC_NAME
+
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.5
 

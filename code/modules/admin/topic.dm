@@ -92,10 +92,10 @@
 					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create a death squad.")
 			if("blob")
-				var/strength = input("Set Blob Strength (1=Weak, 2=Strong, 3=Full)","Set Strength",1) as num
-				message_admins("[key_name(usr)] spawned a blob with strength [strength].")
-				log_admin("[key_name(usr)] spawned a blob with strength [strength].")
-				new/datum/round_event/blob(strength)
+				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1) as num
+				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
+				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
+				new/datum/round_event/ghost_role/blob(TRUE, strength)
 			if("gangs")
 				if(src.makeGangsters())
 					message_admins("[key_name(usr)] created gangs.")
@@ -203,12 +203,6 @@
 				if(!banckey || !banreason || !banjob || !banduration)
 					usr << "Not enough parameters (Requires ckey, reason and job)."
 					return
-			if(BANTYPE_APPEARANCE)
-				if(!banckey || !banreason)
-					usr << "Not enough parameters (Requires ckey and reason)."
-					return
-				banduration = null
-				banjob = null
 			if(BANTYPE_ADMIN_PERMA)
 				if(!banckey || !banreason)
 					usr << "Not enough parameters (Requires ckey and reason)."
@@ -517,15 +511,16 @@
 			usr << "This mob has no ckey"
 			return
 
-		var/banreason = appearance_isbanned(M)
-		if(banreason)
-			switch(alert("Reason: '[banreason]' Remove appearance ban?","Please Confirm","Yes","No"))
+
+		if(jobban_isbanned(M, "appearance"))
+			switch(alert("Remove appearance ban?","Please Confirm","Yes","No"))
 				if("Yes")
 					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
 					log_admin("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
 					feedback_inc("ban_appearance_unban", 1)
-					DB_ban_unban(M.ckey, BANTYPE_APPEARANCE)
-					appearance_unban(M)
+					DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, "appearance")
+					if(M.client)
+						jobban_buildcache(M.client)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [key_name_admin(M)]'s appearance ban.</span>")
 					M << "<span class='boldannounce'><BIG>[usr.client.ckey] has removed your appearance ban.</BIG></span>"
 
@@ -537,8 +532,9 @@
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
 				log_admin("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
 				feedback_inc("ban_appearance",1)
-				DB_ban_record(BANTYPE_APPEARANCE, M, -1, reason)
-				appearance_fullban(M, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
+				DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance")
+				if(M.client)
+					jobban_buildcache(M.client)
 				add_note(M.ckey, "Appearance banned - [reason]", null, usr.ckey, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				M << "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>"
@@ -987,7 +983,7 @@
 							msg += ", [job]"
 					add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes.</span>")
-					M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
+					M << "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>"
 					M << "<span class='boldannounce'>The reason is: [reason]</span>"
 					M << "<span class='danger'>This jobban will be lifted in [mins] minutes.</span>"
 					href_list["jobban2"] = 1 // lets it fall through and refresh
@@ -1010,7 +1006,7 @@
 								msg += ", [job]"
 						add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg].</span>")
-						M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
+						M << "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>"
 						M << "<span class='boldannounce'>The reason is: [reason]</span>"
 						M << "<span class='danger'>Jobban can be lifted only upon request.</span>"
 						href_list["jobban2"] = 1 // lets it fall through and refresh

@@ -116,6 +116,10 @@
 				return
 	return ..()
 
+/obj/machinery/light_construct/blob_act(obj/effect/blob/B)
+	if(B && B.loc == loc)
+		qdel(src)
+
 
 /obj/machinery/light_construct/small
 	name = "small light fixture frame"
@@ -521,6 +525,15 @@
 			if(3)
 				if(prob(25))
 					broken()
+
+/obj/machinery/light/blob_act(obj/effect/blob/B)
+	if(B && B.loc == loc)
+		broken()
+		qdel(src)
+	else if(prob(50))
+		broken()
+	else
+		flicker()
 
 // called when area power state changes
 /obj/machinery/light/power_change()

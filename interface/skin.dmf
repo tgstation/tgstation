@@ -22,25 +22,25 @@ macro "default"
 		command = "westface"
 	elem
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 	elem
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 	elem
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 	elem
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -61,13 +61,13 @@ macro "default"
 		command = "a-intent harm"
 	elem
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+B"
 		command = "resist"
 	elem
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+E"
 		command = "quick-equip"
@@ -85,10 +85,10 @@ macro "default"
 		command = ".southwest"
 	elem
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+X"
 		command = ".northeast"
@@ -153,25 +153,25 @@ macro "hotkeys"
 		command = "westface"
 	elem
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 	elem
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 	elem
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 	elem
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -204,10 +204,10 @@ macro "hotkeys"
 		command = "a-intent harm"
 	elem
 		name = "A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "B"
 		command = "resist"
@@ -216,10 +216,10 @@ macro "hotkeys"
 		command = "resist"
 	elem
 		name = "D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "E"
 		command = "quick-equip"
@@ -261,19 +261,19 @@ macro "hotkeys"
 		command = ".southwest"
 	elem "s_key"
 		name = "S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "T"
 		command = "say"
 	elem "w_key"
 		name = "W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "X"
 		command = ".northeast"
@@ -342,25 +342,25 @@ macro "robot-default"
 		command = "westface"
 	elem
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 	elem
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 	elem
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 	elem
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -381,7 +381,7 @@ macro "robot-default"
 		command = "a-intent left"
 	elem
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+B"
 		command = "resist"
@@ -390,7 +390,7 @@ macro "robot-default"
 		command = "ooc"
 	elem
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+F"
 		command = "a-intent left"
@@ -402,10 +402,10 @@ macro "robot-default"
 		command = "unequip-module"
 	elem
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+X"
 		command = ".northeast"
@@ -464,25 +464,25 @@ macro "robot-hotkeys"
 		command = "westface"
 	elem
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 	elem
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 	elem
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 	elem
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -515,10 +515,10 @@ macro "robot-hotkeys"
 		command = "a-intent left"
 	elem
 		name = "A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "B"
 		command = "resist"
@@ -533,10 +533,10 @@ macro "robot-hotkeys"
 		command = "ooc"
 	elem
 		name = "D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "F"
 		command = "a-intent left"
@@ -557,19 +557,19 @@ macro "robot-hotkeys"
 		command = "unequip-module"
 	elem "s_key"
 		name = "S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "T"
 		command = "say"
 	elem "w_key"
 		name = "W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "X"
 		command = ".northeast"

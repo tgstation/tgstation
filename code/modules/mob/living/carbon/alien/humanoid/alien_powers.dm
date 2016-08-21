@@ -237,6 +237,19 @@ Doesn't work on other aliens/AI.*/
 	if(user.ranged_ability == src)
 		user.ranged_ability = null
 
+/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user, msg)
+	..()
+	if(isalienadult(user))
+		var/mob/living/carbon/alien/humanoid/A = user
+		A.drooling = 1
+		A.update_icons()
+
+/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(mob/living/user, msg)
+	..()
+	if(isalienadult(user))
+		var/mob/living/carbon/alien/humanoid/A = user
+		A.drooling = 0
+		A.update_icons()
 
 /obj/effect/proc_holder/alien/resin
 	name = "Secrete Resin"

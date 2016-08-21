@@ -183,7 +183,10 @@
 		/obj/item/weapon/reagent_containers/pill,
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/weapon/ore,
-		/obj/item/weapon/reagent_containers/food/drinks
+		/obj/item/weapon/reagent_containers/food/drinks,
+		/obj/item/organ/hivelord_core,
+		/obj/item/device/wormhole_jaunter
+
 		)
 
 

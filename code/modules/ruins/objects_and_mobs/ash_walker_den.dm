@@ -24,7 +24,7 @@
 		if(H.stat)
 			visible_message("<span class='warning'>Serrated tendrils eagerly pull [H] to [src], tearing the body apart as its blood seeps over the eggs.</span>")
 			playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
-			if(istype(H,/mob/living/simple_animal/hostile/megafauna/dragon))
+			if(ismegafauna(H))
 				meat_counter += 20
 			else
 				meat_counter ++

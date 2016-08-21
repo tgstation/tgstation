@@ -1,0 +1,8 @@
+author: "Wjohnston, Gun Hog"
+delete-after: True
+changes: 
+  - rscadd: "Aliens with Neurotoxic Spit readied will now have drooling animations."
+  - rscadd: "Hunters may now safely leap over lava."
+  - tweak: "Hulk punches no longer stun Xenos."
+  - tweak: "Alien evolve and promotion buttons updated to current Xeno sprites"
+  - bugfix: "Handcuff sprites for Xenos now show properly."

@@ -209,7 +209,7 @@
 	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
 		qdel(H)
 
-	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg(R.module)
+	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/hyper(R.module)
 	R.module.rebuild()
 
 	return 1

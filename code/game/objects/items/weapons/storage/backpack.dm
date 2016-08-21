@@ -288,6 +288,7 @@
 	..()
 	PoolOrNew(/obj/item/stack/tile/plasteel, src)
 	new /obj/item/weapon/crowbar(src)
+	SSpersistence.new_secret_satchels += src
 
 /obj/item/weapon/storage/backpack/satchel/flat/secret/
 	var/list/reward_one_of_these = list() //Intended for map editing

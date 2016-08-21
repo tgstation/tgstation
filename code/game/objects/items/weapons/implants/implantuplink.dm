@@ -28,7 +28,18 @@
 
 /obj/item/weapon/implanter/uplink
 	name = "implanter (uplink)"
+	persistence_replacement = /obj/item/weapon/implanter/weakuplink
 
 /obj/item/weapon/implanter/uplink/New()
 	imp = new /obj/item/weapon/implant/uplink(src)
 	..()
+/obj/item/weapon/implanter/weakuplink
+	name = "implanter (uplink)"
+
+/obj/item/weapon/implanter/weakuplink/New()
+	imp = new /obj/item/weapon/implant/uplink/weak(src)
+	..()
+
+/obj/item/weapon/implant/uplink/weak/New()
+	..()
+	hidden_uplink.telecrystals = 5
