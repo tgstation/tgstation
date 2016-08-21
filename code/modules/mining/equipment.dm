@@ -190,8 +190,8 @@
 		return
 	if(fields.len < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		var/obj/effect/resonance/R = new /obj/effect/resonance(T, creator, burst_time, src)
-		fields += R
+		var/obj/effect/resonance/RE = new /obj/effect/resonance(T, creator, burst_time, src)
+		fields += RE
 
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
@@ -221,7 +221,7 @@
 
 /obj/effect/resonance/New(loc, set_creator, timetoburst, set_resonator)
 	..()
-	cerator = set_creator
+	creator = set_creator
 	res = set_resonator
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
@@ -247,7 +247,7 @@
 		if(creator)
 			add_logs(creator, L, "used a resonator field on", "resonator")
 		L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-		L.apply_damage(damage, BRUTE)
+		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)
 
 /**********************Facehugger toy**********************/
