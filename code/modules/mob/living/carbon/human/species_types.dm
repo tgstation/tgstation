@@ -26,6 +26,8 @@
 		return 0
 	if(rank in engineering_positions)
 		return 0
+	if(rank in command_positions)
+		return 0
 	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
 		return 0
 	return ..()
@@ -75,15 +77,23 @@
 
 	return randname
 
+/datum/species/lizard/qualifies_for_rank(rank, list/features)
+	if(rank in command_positions)
+		return 0
+	return ..()
+
 //I wag in death
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 
-/datum/species/lizard/qualifies_for_rank(rank, list/features)
-	if(rank in command_positions)
-		return 0
-	return 1
+/*
+ Lizard subspecies: ASHWALKERS
+*/
+/datum/species/lizard/ashwalker
+	name = "Ash Walker"
+	id = "lizard"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
 
 
 //MOTH PEOPLE
@@ -94,7 +104,6 @@
 	say_mod = "flutters"
 	default_color = "00FF00"
 	specflags = list(EYECOLOR)
-	roundstart = 1
 	specflags = list(LIPS)
 	mutant_bodyparts = list("wing")
 	default_features = list("wing" = "Plain")
@@ -114,15 +123,81 @@
 /datum/species/moth/qualifies_for_rank(rank, list/features)
 	if(rank in command_positions)
 		return 0
-	return 1
+	return ..()
 
-/*
- Lizard subspecies: ASHWALKERS
-*/
-/datum/species/lizard/ashwalker
-	name = "Ash Walker"
-	id = "lizard"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
+//BIRDS
+/datum/species/bird
+	// flappy bird
+	name = "Avian"
+	id = "avian"
+	say_mod = "squawks"
+	default_color = "00FF00"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/bird
+
+/datum/species/bird/qualifies_for_rank(rank, list/features)
+	if(rank in command_positions)
+		return 0
+	return ..()
+
+//CATS FUCK
+/datum/species/cat
+	// catban
+	name = "Tarajan"
+	id = "tarajan"
+	say_mod = "meows"
+	default_color = "00FF00"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	attack_verb = "slash"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/cat
+	//mutations_to_have = list(CLUMSY, EPILEPSY, UNINTELLIGABLE, NERVOUS, COUGH)
+	//teeth_type = /obj/item/stack/teeth/cat
+	brutemod = 2	// multiplier for brute damage
+	burnmod = 2		// multiplier for burn damage
+	coldmod = 2		// multiplier for cold damage
+	heatmod = 2		// multiplier for heat damage
+	stunmod = 2		// multiplier for stun duration
+
+/datum/species/cat/qualifies_for_rank(rank, list/features)
+	if(rank in command_positions)
+		return 0
+	if(rank in security_positions) //This list does not include lawyers.
+		return 0
+	if(rank in science_positions)
+		return 0
+	if(rank in medical_positions)
+		return 0
+	if(rank in engineering_positions)
+		return 0
+	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
+		return 0
+	return ..()
+
+
+//Bots - IPC
+/datum/species/bot
+	// Why bother have borgs
+	name = "IPC"
+	id = "ipc"
+	say_mod = "beeps"
+	default_color = "00FF00"
+	roundstart = 1
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	attack_verb = "punch"
+	attack_sound = 'sound/weapons/smash.ogg'
+	miss_sound = 'sound/weapons/punchmiss.ogg'
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/robo
+
+/datum/species/bot/qualifies_for_rank(rank, list/features)
+	if(rank in command_positions)
+		return 0
+	return ..()
+
 /*
  PODPEOPLE
 */

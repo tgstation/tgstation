@@ -473,7 +473,7 @@
 		user.drop_item()
 		qdel(W)
 		var/turf/T = get_turf(src.loc)
-		var/B = new /mob/living/simple_animal/bot/buttbot/(T)
+		new /mob/living/simple_animal/bot/buttbot/B(T)
 		if(istype(src, /obj/item/organ/internal/butt/xeno))
 			B.xeno = 1
 			B.icon_state = "buttbot_xeno"

@@ -92,18 +92,25 @@
 
 //MENU
 
-/mob/living/simple_animal/bot/screambot/attack_hand(mob/user)
-	var/dat = "<div class='statusDisplay'>"
-	dat += "Human scream: <A href='?src=\ref[src];action=toggle;scream=human'>[('sound/misc/scream_f1.ogg' in sounds) ? "On" : "Off"]</A><BR>"
-	dat += "Synthesized scream: <A href='?src=\ref[src];action=toggle;scream=silicon'>[('sound/voice/screamsilicon.ogg' in sounds) ? "On" : "Off"]</A><BR>"
-	dat += "Cat scream: <A href='?src=\ref[src];action=toggle;scream=cat'>[('sound/misc/cat.ogg' in sounds) ? "On" : "Off"]</A><BR>"
-	dat += "Lizard scream: <A href='?src=\ref[src];action=toggle;scream=lizard'>[('sound/misc/lizard.ogg' in sounds) ? "On" : "Off"]</A><BR>"
-	dat += "Bird scream: <A href='?src=\ref[src];action=toggle;scream=caw'>[('sound/misc/caw.ogg' in sounds) ? "On" : "Off"]</A><BR>"
-	var/datum/browser/popup = new(user, "screambot", name, 300, 300)
-	popup.set_content(dat)
-	//update_controls()
-	popup.open()
-	return
+/mob/living/simple_animal/bot/screambot/get_controls(mob/user)
+	var/dat
+	dat += hack(user)
+	dat += showpai(user)
+	dat += text({"
+<TT><B>Screambot v1 controls</B></TT><BR><BR>
+Human scream: []<BR>
+Synthesized scream: []<BR>
+Cat scream: []<BR>
+Lizard scream: []<BR>
+Bird scream: []<BR>"},
+
+"<A href='?src=\ref[src];action=toggle;scream=human'>[('sound/misc/scream_f1.ogg' in sounds) ? "On" : "Off"]</A>",
+"<A href='?src=\ref[src];action=toggle;scream=silicon'>[('sound/voice/screamsilicon.ogg' in sounds) ? "On" : "Off"]</A>",
+"<A href='?src=\ref[src];action=toggle;scream=cat'>[('sound/misc/cat.ogg' in sounds) ? "On" : "Off"]</A>",
+"<A href='?src=\ref[src];action=toggle;scream=lizard'>[('sound/misc/lizard.ogg' in sounds) ? "On" : "Off"]</A>",
+"<A href='?src=\ref[src];action=toggle;scream=caw'>[('sound/misc/caw.ogg' in sounds) ? "On" : "Off"]</A>" )
+	return	dat
+
 
 /mob/living/simple_animal/bot/screambot/Topic(href, href_list)
 	if(..())
@@ -117,31 +124,39 @@
 					sounds -= 'sound/misc/scream_f2.ogg'
 					sounds -= 'sound/misc/scream_m1.ogg'
 					sounds -= 'sound/misc/scream_m2.ogg'
+					update_controls()
 				else
 					sounds += 'sound/misc/scream_f1.ogg'
 					sounds += 'sound/misc/scream_f2.ogg'
 					sounds += 'sound/misc/scream_m1.ogg'
 					sounds += 'sound/misc/scream_m2.ogg'
+					update_controls()
 			if("silicon")
 				if('sound/voice/screamsilicon.ogg' in sounds)
 					sounds -= 'sound/voice/screamsilicon.ogg'
+					update_controls()
 				else
 					sounds += 'sound/voice/screamsilicon.ogg'
+					update_controls()
 			if("cat")
 				if('sound/misc/cat.ogg' in sounds)
 					sounds -= 'sound/misc/cat.ogg'
+					update_controls()
 				else
 					sounds += 'sound/misc/cat.ogg'
+					update_controls()
 			if("lizard")
 				if('sound/misc/lizard.ogg' in sounds)
 					sounds -= 'sound/misc/lizard.ogg'
+					update_controls()
 				else
 					sounds += 'sound/misc/lizard.ogg'
+					update_controls()
 			if("caw")
 				if('sound/misc/caw.ogg' in sounds)
 					sounds -= 'sound/misc/caw.ogg'
+					update_controls()
 				else
 					sounds += 'sound/misc/caw.ogg'
-
-	update_controls()
+					update_controls()
 	return

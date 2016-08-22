@@ -76,6 +76,13 @@
 	desc = "Delicious dino damage"
 	filling_color = "#6B8E23"
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/bird
+	icon_state = "fishfillet"
+	desc = "Looks like chicken meat"
+	filling_color = "#3B2E43"
+	name = "-bird meat"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human/mutant/bird
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	icon_state = "plantmeat"
 	desc = "All the joys of healthy eating with all the fun of cannibalism."
@@ -96,6 +103,19 @@
 	desc = "How did they get enough meat from a moth?"
 	list_reagents = list("nutriment" = 3, "uranium" = 0.5)
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/robo
+	icon_state = "IPCmeat"
+	desc = "Crunchy IPC meat"
+	filling_color = "#ffffff"
+	name = "-IPC meat"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human/mutant/robo
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/cat
+	icon_state = "rottenmeat"
+	desc = "Aww, the kitty is playing dead."
+	filling_color = "#ff69b4"
+	name = "-cat meat"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human/mutant/cat
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	name = "-bone"
@@ -211,6 +231,22 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human/mutant/lizard
+	name = "lizard steak"
+	desc = "A piece of hot spicy lizard meat."
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human/mutant/bird
+	name = "bird steak"
+	desc = "A piece of hot spicy bird meat."
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human/mutant/robo
+	name = "robo steak"
+	desc = "A piece of hot spicy robo meat."
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human/mutant/cat
+	name = "cat steak"
+	desc = "A piece of hot spicy cat meat."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/killertomato
 	name = "killer tomato steak"

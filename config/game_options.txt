@@ -168,7 +168,7 @@ TRAITOR_OBJECTIVES_AMOUNT 2
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
 
 ## If non-human species are barred from joining as a head of staff
-#ENFORCE_HUMAN_AUTHORITY
+ENFORCE_HUMAN_AUTHORITY
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
@@ -276,8 +276,12 @@ ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
+ROUNDSTART_RACES moth
+ROUNDSTART_RACES ipc
+ROUNDSTART_RACES avian
+ROUNDSTART_RACES tarajan
 #ROUNDSTART_RACES fly
-ROUNDSTART_RACES plasmaman
+#ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 #ROUNDSTART_RACES shadowling
 
