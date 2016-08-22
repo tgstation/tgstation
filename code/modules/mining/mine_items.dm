@@ -509,10 +509,13 @@
 	luminosity = 0 //Lighting gets lost when it lands anyway
 
 /obj/machinery/computer/shuttle/auxillary_base
-	name = "auxillary base launch control"
+	name = "auxillary base management console"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	shuttleId = "colony_drop"
+	desc = "Allows a deployable expedition base to be dropped from the station to a designated mining location. It can also \
+interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
+
 	req_access = list(access_heads)
 	possible_destinations = null
 	clockwork = TRUE
@@ -524,12 +527,18 @@
 
 /obj/machinery/computer/shuttle/auxillary_base/Topic(href, href_list)
 	if(href_list["move"])
-		if(z != ZLEVEL_STATION)
+		if(z != ZLEVEL_STATION && shuttleId == "colony_drop")
 			usr << "<span class='warning'>You can't move the base again!</span>"
 			return 0
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
 		feedback_add_details("colonies_dropped") //Number of times a base has been dropped!
 	..()
+
+/obj/machinery/computer/shuttle/auxillary_base/proc/set_mining_mode()
+	if(z == ZLEVEL_MINING) //The console switches to controlling the mining shuttle once landed.
+		req_access = list()
+		shuttleId = "mining" //The base can only be dropped once, so this gives the console a new purpose.
+		possible_destinations = "mining_home;mining_away;landing_zone_dock"
 
 /obj/item/device/assault_pod/mining
 	name = "Landing Field Designator"
@@ -637,11 +646,10 @@
 	if(landing_spot.z != ZLEVEL_MINING)
 		user << "<span class='warning'>This device is only to be used in a mining zone.</span>"
 		return
-	var/aux_base_console = locate(/obj/machinery/computer/shuttle/auxillary_base) in machines
+	var/obj/machinery/computer/shuttle/auxillary_base/aux_base_console = locate(/obj/machinery/computer/shuttle/auxillary_base) in machines
 	if(!aux_base_console || get_dist(landing_spot, aux_base_console) > console_range)
 		user << "<span class='warning'>The auxillary base's console must be within [console_range] meters in order to interface.</span>"
-		return //It does not really interface with the base console, it just needs to be near.
-
+		return //Needs to be near the base to serve as its dock and configure it to control the mining shuttle.
 
 //Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
 
@@ -693,7 +701,8 @@
 		qdel(Mport)
 		return
 
-	user << "<span class='notice'>Mining shuttle calibration successful!</span>"
+	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
+	user << "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>"
 	anchored = 1 //Locks in place to mark the landing zone.
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 
