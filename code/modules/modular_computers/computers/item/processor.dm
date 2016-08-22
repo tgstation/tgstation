@@ -30,6 +30,8 @@
 	steel_sheet_cost = machinery_computer.steel_sheet_cost
 	max_damage = machinery_computer._max_damage
 	broken_damage = machinery_computer._break_damage
+	base_active_power_usage = machinery_computer.base_active_power_usage
+	base_idle_power_usage = machinery_computer.base_idle_power_usage
 
 /obj/item/modular_computer/processor/relay_qdel()
 	qdel(machinery_computer)
