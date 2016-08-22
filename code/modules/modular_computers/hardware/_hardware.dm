@@ -87,14 +87,17 @@
 	damage = max(0, min(damage, max_damage))		// Clamp the value.
 
 
+// Component-side compatibility check.
+/obj/item/weapon/computer_hardware/proc/can_install(obj/item/modular_computer/M, mob/living/user = null)
+	return can_install
+
 // Called when component is installed into PC.
 /obj/item/weapon/computer_hardware/proc/on_install(obj/item/modular_computer/M, mob/living/user = null)
-	return 1
+	return
 
 // Called when component is removed from PC.
 /obj/item/weapon/computer_hardware/proc/on_remove(obj/item/modular_computer/M, mob/living/user = null)
 	try_eject()
-	return 1
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.
 /obj/item/weapon/computer_hardware/proc/try_insert(obj/item/I, mob/living/user = null)
