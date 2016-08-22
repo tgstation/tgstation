@@ -280,6 +280,19 @@
 		emag.reagents.add_reagent("lube", 2 * coeff)
 
 
+/obj/item/weapon/robot_module/detective
+	name = "detective robot module"
+
+obj/item/weapon/robot_module/detective/New()
+	..()
+	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/disabler/cyborg(src)
+	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
+	modules += new /obj/item/device/detective_scanner(src)
+	emag = new /obj/item/weapon/gun/energy/revolver/cyborg(src)
+	fix_modules()
+
+
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
 

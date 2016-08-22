@@ -371,3 +371,38 @@
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
 		slung = 0
 		update_icon()
+
+/obj/item/weapon/gun/energy/revolver/cyborg
+	name = "cyborg revolver"
+	desc = "An autorevolver that fires 3d-printed flachettes slowly regenerated using a cyborg's internal power source."
+	item_state = "mateba"
+	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
+	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
+	var/recharge_time = 10
+
+/obj/item/weapon/gun/energy/revolver/cyborg/update_icon()
+	return
+
+/obj/item/weapon/gun/energy/revolver/cyborg/New()
+	..()
+	SSobj.processing += src
+
+
+/obj/item/weapon/gun/energy/revolver/cyborg/Destroy()
+	SSobj.processing += src
+	..()
+
+/obj/item/weapon/gun/energy/revolver/cyborg/process()
+	charge_tick++
+	if(charge_tick < recharge_time) return 0
+	charge_tick = 0
+
+	if(!power_supply) return 0 //sanity
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
+				power_supply.give(shot.e_cost)	//...to recharge the shot
+
+	return 1

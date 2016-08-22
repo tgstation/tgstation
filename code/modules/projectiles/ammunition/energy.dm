@@ -210,3 +210,8 @@ obj/item/ammo_casing/energy/net
 
 /obj/item/ammo_casing/energy/gravitychaos/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
 	gun = G
+
+/obj/item/ammo_casing/energy/c3dbullet
+	projectile_type = /obj/item/projectile/bullet
+	select_name = "execute"
+	fire_sound = "gunshot"
