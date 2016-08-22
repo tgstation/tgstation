@@ -528,6 +528,7 @@
 			usr << "<span class='warning'>You can't move the base again!</span>"
 			return 0
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
+		feedback_add_details("colonies_dropped") //Number of times a base has been dropped!
 	..()
 
 /obj/item/device/assault_pod/mining
@@ -608,6 +609,7 @@
 
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"
+	desc = "A bluespace beacon calibrated to mark a landing spot for the mining shuttle when deployed near the auxillary mining base."
 	anchored = 0
 	density = 0
 	var/shuttle_ID = "landing_zone_dock"
@@ -616,6 +618,7 @@
 	var/obj/docking_port/stationary/Mport //Linked docking port for the mining shuttle
 	pressure_resistance = 200 //So it does not get blown into lava.
 	var/anti_spam_cd = 0 //The linking process might be a bit intensive, so this here to prevent over use.
+	var/console_range = 15 //Wifi range of the beacon to find the aux base console
 
 /obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
 	if(anchored)
@@ -634,9 +637,9 @@
 	if(landing_spot.z != ZLEVEL_MINING)
 		user << "<span class='warning'>This device is only to be used in a mining zone.</span>"
 		return
-
-	if(!locate(/obj/machinery/computer/shuttle/auxillary_base) in view(src,15))
-		user << "<span class='warning'>The auxillary base's console must be within view in order to interface.</span>"
+	var/aux_base_console = locate(/obj/machinery/computer/shuttle/auxillary_base) in machines
+	if(!aux_base_console || get_dist(landing_spot, aux_base_console) > console_range)
+		user << "<span class='warning'>The auxillary base's console must be within [console_range] meters in order to interface.</span>"
 		return //It does not really interface with the base console, it just needs to be near.
 
 
@@ -651,7 +654,7 @@
 
 			Mport = new(landing_spot)
 			Mport.id = "landing_zone_dock"
-			Mport.name = "landing zone dock"
+			Mport.name = "auxillary base landing site"
 			Mport.dwidth = SM.dwidth
 			Mport.dheight = SM.dheight
 			Mport.width = SM.width
