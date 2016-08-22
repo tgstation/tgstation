@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Cloning can now give bad mutations if unupgraded!"
+  - rscadd: "Cloning can, however, give you good ones if upgraded!"
