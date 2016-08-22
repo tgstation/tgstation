@@ -182,8 +182,8 @@
 
 	icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
+	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
@@ -231,10 +231,10 @@
 			occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			occupant.adjustCloneLoss(-((speed_coeff/2)))
+			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
 
 			//Premature clones may have brain damage.
-			occupant.adjustBrainLoss(-((speed_coeff/2)))
+			occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
 
 			//So clones don't die of oxyloss in a running pod.
 			if (occupant.reagents.get_reagent_amount("salbutamol") < 30)

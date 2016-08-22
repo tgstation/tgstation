@@ -7,12 +7,13 @@
 	density = 0 //this being 0 causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
 	opacity = 0
 	anchored = 1
-	explosion_block = 1
+	layer = BELOW_MOB_LAYER
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/health = 30
 	var/maxhealth = 30
 	var/health_regen = 2 //how much health this blob regens when pulsed
-	var/pulse_timestamp = 0 //we got pulsed/healed when?
+	var/pulse_timestamp = 0 //we got pulsed when?
+	var/heal_timestamp = 0 //we got healed when?
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
@@ -24,8 +25,8 @@
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		blobs_legit += src
 	blobs += src //Keep track of the blob in the normal list either way
-	src.setDir(pick(1, 2, 4, 8))
-	src.update_icon()
+	setDir(pick(cardinal))
+	update_icon()
 	..(loc)
 	ConsumeTile()
 	if(atmosblock)
@@ -84,46 +85,56 @@
 		if(overmind)
 			overmind.blob_reagent_datum.death_reaction(src, cause)
 		qdel(src) //we dead now
-		return
-	return
 
 /obj/effect/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
 		color = overmind.blob_reagent_datum.color
 	else
 		color = null
-	return
-
 
 /obj/effect/blob/process()
 	Life()
-	return
 
 /obj/effect/blob/proc/Life()
 	return
 
 /obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	src.Be_Pulsed()
-	if(claim_range)
-		for(var/obj/effect/blob/B in urange(claim_range, src, 1))
-			if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
-				B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
-				B.update_icon()
-	if(pulse_range)
-		for(var/obj/effect/blob/B in orange(pulse_range, src))
+	var/expanded = FALSE
+	if(prob(70) && expand())
+		expanded = TRUE
+	var/list/blobs_to_affect = list()
+	for(var/obj/effect/blob/B in urange(claim_range, src, 1))
+		blobs_to_affect += B
+	shuffle(blobs_to_affect)
+	for(var/L in blobs_to_affect)
+		var/obj/effect/blob/B = L
+		if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
+			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
+			B.update_icon()
+		var/distance = get_dist(get_turf(src), get_turf(B))
+		var/expand_probablity = max(20 - distance * 8, 1)
+		if(B.Adjacent(src))
+			expand_probablity = 20
+		if(distance <= expand_range)
+			var/can_expand = TRUE
+			if(blobs_to_affect.len >= 120 && B.heal_timestamp > world.time)
+				can_expand = FALSE
+			if(can_expand && B.pulse_timestamp <= world.time && prob(expand_probablity))
+				var/obj/effect/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
+				if(newB)
+					if(expanded)
+						qdel(newB)
+					expanded = TRUE
+		if(distance <= pulse_range)
 			B.Be_Pulsed()
-	if(expand_range)
-		if(prob(85))
-			src.expand()
-		for(var/obj/effect/blob/B in orange(expand_range, src))
-			if(prob(max(13 - get_dist(get_turf(src), get_turf(B)) * 4, 1))) //expand falls off with range but is faster near the blob causing the expansion
-				B.expand()
-	return
 
 /obj/effect/blob/proc/Be_Pulsed()
 	if(pulse_timestamp <= world.time)
 		ConsumeTile()
-		health = min(maxhealth, health+health_regen)
+		if(heal_timestamp <= world.time)
+			health = min(maxhealth, health+health_regen)
+			heal_timestamp = world.time + 20
 		update_icon()
 		pulse_timestamp = world.time + 10
 		return 1 //we did it, we were pulsed!
@@ -137,6 +148,7 @@
 
 /obj/effect/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
 	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
+	O.setDir(dir)
 	if(controller)
 		var/mob/camera/blob/BO = controller
 		O.color = BO.blob_reagent_datum.color
@@ -311,6 +323,7 @@
 		B.overmind = controller
 	B.creation_action()
 	B.update_icon()
+	B.setDir(dir)
 	qdel(src)
 	return B
 
@@ -342,13 +355,13 @@
 	brute_resist = 0.25
 
 /obj/effect/blob/normal/scannerreport()
-	if(health <= 10)
+	if(health <= 15)
 		return "Currently weak to brute damage."
 	return "N/A"
 
 /obj/effect/blob/normal/update_icon()
 	..()
-	if(health <= 10)
+	if(health <= 15)
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."

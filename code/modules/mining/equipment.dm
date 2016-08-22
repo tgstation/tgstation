@@ -460,3 +460,110 @@
 	C.preserved()
 	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)
+
+/*********************Mining Hammer****************/
+/obj/item/weapon/twohanded/required/mining_hammer
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "mining_hammer1"
+	item_state = "mining_hammer1"
+	name = "proto-kinetic crusher"
+	desc = "An early design of the proto-kinetic accelerator, it is little more than an combination of various mining tools cobbled together, forming a high-tech club.\
+	  While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna. \
+	 \n<span class='info'>Mark a mob with the destabilizing force, then hit them in melee to activate it for extra damage. Extra damage if backstabbed in this fashion. \
+	 This weapon is only particularly effective against large creatures.</span>"
+	force = 20 //As much as a bone spear, but this is significantly more annoying to carry around due to requiring the use of both hands at all times
+	w_class = 4
+	slot_flags = SLOT_BACK
+	force_unwielded = 20 //It's never not wielded so these are the same
+	force_wielded = 20
+	throwforce = 5
+	throw_speed = 4
+	luminosity = 4
+	armour_penetration = 10
+	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("smashes", "crushes", "cleaves", "chops", "pulps")
+	sharpness = IS_SHARP
+	var/charged = 1
+	var/charge_time = 16
+	var/atom/mark = null
+	var/marked_image = null
+
+/obj/item/projectile/destabilizer
+	name = "destabilizing force"
+	icon_state = "pulse1"
+	damage = 0 //We're just here to mark people. This is still a melee weapon.
+	damage_type = BRUTE
+	flag = "bomb"
+	range = 6
+	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced =  null
+
+/obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0, hit_zone)
+	if(hammer_synced)
+		if(hammer_synced.mark == target)
+			return ..()
+		if(isliving(target))
+			if(hammer_synced.mark && hammer_synced.marked_image)
+				hammer_synced.mark.underlays -= hammer_synced.marked_image
+				hammer_synced.marked_image = null
+			var/mob/living/L = target
+			if(L.mob_size >= MOB_SIZE_LARGE)
+				hammer_synced.mark = L
+				var/image/I = image('icons/effects/effects.dmi', loc = L, icon_state = "shield2",pixel_y = (-L.pixel_y),pixel_x = (-L.pixel_x))
+				L.underlays += I
+				hammer_synced.marked_image = I
+		var/target_turf = get_turf(target)
+		if(istype(target_turf, /turf/closed/mineral))
+			var/turf/closed/mineral/M = target_turf
+			PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, M)
+			M.gets_drilled(firer)
+	..()
+
+/obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
+	if(!proximity_flag && charged)//Mark a target, or mine a tile.
+		var/turf/proj_turf = get_turf(src)
+		if(!istype(proj_turf, /turf))
+			return
+		var/datum/gas_mixture/environment = proj_turf.return_air()
+		var/pressure = environment.return_pressure()
+		if(pressure > 50)
+			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+			return
+		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(user.loc)
+		D.preparePixelProjectile(target,get_turf(target), user)
+		D.hammer_synced = src
+		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, 1)
+		D.fire()
+		charged = 0
+		icon_state = "mining_hammer1_uncharged"
+		addtimer(src, "Recharge", charge_time)
+		return
+	if(proximity_flag && target == mark && isliving(target))
+		var/mob/living/L = target
+		PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, get_turf(L))
+		mark = 0
+		if(L.mob_size >= MOB_SIZE_LARGE)
+			L.underlays -= marked_image
+			qdel(marked_image)
+			marked_image = null
+			var/backstab = check_target_facings(user, L)
+			var/def_check = L.getarmor(type = "bomb")
+			if(backstab == FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR || backstab == FACING_SAME_DIR)
+				L.apply_damage(80, BRUTE, blocked = def_check)
+				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+			else
+				L.apply_damage(50, BRUTE, blocked = def_check)
+
+/obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
+	if(!charged)
+		charged = 1
+		icon_state = "mining_hammer1"
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+
+/obj/item/weapon/twohanded/required/mining_hammer/pickup(mob/user)
+	..()
+	user.AddLuminosity(luminosity)
+
+/obj/item/weapon/twohanded/required/mining_hammer/dropped(mob/user)
+	..()
+	user.AddLuminosity(-luminosity)

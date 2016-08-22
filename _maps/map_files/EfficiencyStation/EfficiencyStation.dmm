@@ -30133,7 +30133,6 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bhw" = (
@@ -35575,7 +35574,6 @@
 	},
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen/red,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "btj" = (
@@ -37106,7 +37104,6 @@
 	pixel_x = -1;
 	pixel_y = -1
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bwb" = (
@@ -41610,7 +41607,6 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/qm)
 "bFe" = (
@@ -55719,6 +55715,7 @@
 /area/tcommsat/server)
 "cib" = (
 /obj/machinery/power/terminal,
+/obj/machinery/ntnet_relay,
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"

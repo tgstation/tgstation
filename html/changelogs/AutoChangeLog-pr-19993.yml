@@ -1,0 +1,4 @@
+author: "Ergovisavi"
+delete-after: True
+changes: 
+  - bugfix: "Bubblegum's charge indicator should be significantly more accurate now."

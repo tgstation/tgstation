@@ -55,7 +55,7 @@
 	desc = "Used to call and send the mining shuttle."
 	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
-	possible_destinations = "mining_home;mining_away;mining_base"
+	possible_destinations = "mining_home;mining_away;landing_zone_dock"
 	no_destination_swap = 1
 	var/global/list/dumb_rev_heads = list()
 
@@ -532,10 +532,10 @@
 	shuttle_id = "colony_drop"
 	var/setting = FALSE
 	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
-	dwidth = 11 //These dimensions are to be set by the mappers for their respective maps.
-	dheight = 0
-	width = 23
-	height = 23
+	dwidth = 4 //These dimensions are to be set by the mappers for their respective maps.
+	dheight = 4
+	width = 9
+	height = 9
 	lz_dir = 1
 
 /obj/item/device/assault_pod/mining/attack_self(mob/living/user)
@@ -554,9 +554,11 @@
 
 	user << "<span class='notice'>You begin setting the landing zone parameters...</span>"
 	setting = TRUE
-	if(!do_after(user, 50, target = src)) //You get a few seconds to cancel if you do not want to drop there.
+	if(!do_after(user, 50, target = user)) //You get a few seconds to cancel if you do not want to drop there.
 		setting = FALSE
 		return
+
+	var/area/A = get_area(T)
 
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "colony_drop(\ref[src])"
@@ -566,6 +568,8 @@
 	landing_zone.width = width
 	landing_zone.height = height
 	landing_zone.setDir(lz_dir)
+	landing_zone.turf_type = T.baseturf
+	landing_zone.area_type = A.type
 
 	for(var/obj/machinery/computer/shuttle/S in machines)
 		if(S.shuttleId == shuttle_id)
@@ -589,6 +593,104 @@
 /obj/docking_port/mobile/auxillary_base
 	name = "auxillary base"
 	id = "colony_drop"
-	dwidth = 11
-	width = 23
-	height = 23
+	//Reminder to map-makers to set these values equal to the size of your base.
+	dheight = 4
+	dwidth = 4
+	width = 9
+	height = 9
+	var/anti_spam_cd = 0
+
+
+/obj/structure/mining_shuttle_beacon
+	name = "mining shuttle beacon"
+	anchored = 0
+	density = 0
+	var/shuttle_ID = "landing_zone_dock"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "miningbeacon" //Temp until proper sprite
+	var/obj/docking_port/stationary/Mport //Linked docking port for the mining shuttle
+	pressure_resistance = 200 //So it does not get blown into lava.
+	var/anti_spam_cd = 0 //The linking process might be a bit intensive, so this here to prevent over use.
+
+/obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
+	if(anchored)
+		user << "<span class='warning'>Landing zone already set.</span>"
+		return
+
+	if(anti_spam_cd)
+		user << "<span class='warning'>[src] is currently recalibrating. Please wait.</span>"
+		return
+
+	anti_spam_cd = 1
+	addtimer(src, "clear_cooldown", 100)
+
+	var/turf/landing_spot = get_turf(src)
+
+	if(landing_spot.z != ZLEVEL_MINING)
+		user << "<span class='warning'>This device is only to be used in a mining zone.</span>"
+		return
+
+	if(!locate(/obj/machinery/computer/shuttle/auxillary_base) in view(src,15))
+		user << "<span class='warning'>The aux base console must be within view in order to interface.</span>"
+		return //It does not really interface with the base console, it just needs to be near.
+
+
+//Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
+
+
+	for(var/S in SSshuttle.stationary)
+		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
+		if(SM.id == "mining_home" || SM.id == "mining_away")
+
+			var/area/A = get_area(landing_spot)
+
+			Mport = new(landing_spot)
+			Mport.id = "landing_zone_dock"
+			Mport.name = "landing zone dock"
+			Mport.dwidth = SM.dwidth
+			Mport.dheight = SM.dheight
+			Mport.width = SM.width
+			Mport.height = SM.height
+			Mport.setDir(dir)
+			Mport.turf_type = landing_spot.baseturf
+			Mport.area_type = A.type
+
+			break
+	if(!Mport)
+		user << "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>"
+		return
+	var/search_radius = max(Mport.width, Mport.height)/2
+	var/list/landing_areas = get_areas_in_range(search_radius, landing_spot)
+	for(var/area/shuttle/auxillary_base/AB in landing_areas) //You land NEAR the base, not IN it.
+		user << "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>"
+		SSshuttle.stationary.Remove(Mport)
+		qdel(Mport)
+		return
+	var/obj/docking_port/mobile/mining_shuttle
+	for(var/S in SSshuttle.mobile)
+		var/obj/docking_port/mobile/MS = S
+		if(MS.id != "mining")
+			continue
+		mining_shuttle = MS
+
+	if(!mining_shuttle) //Not having a mining shuttle is a map issue
+		user << "<span class='warning'>No mining shuttle signal detected. Please contact Nanotrasen Support.</span>"
+		SSshuttle.stationary.Remove(Mport)
+		qdel(Mport)
+		return
+
+	if(!mining_shuttle.canDock(Mport))
+		user << "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>"
+		SSshuttle.stationary.Remove(Mport)
+		qdel(Mport)
+		return
+
+	user << "<span class='notice'>Mining shuttle calibration successful!</span>"
+	anchored = 1 //Locks in place to mark the landing zone.
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+
+/obj/structure/mining_shuttle_beacon/proc/clear_cooldown()
+	anti_spam_cd = 0
+
+/obj/structure/mining_shuttle_beacon/attack_robot(mob/user)
+	return (attack_hand(user)) //So borgies can help

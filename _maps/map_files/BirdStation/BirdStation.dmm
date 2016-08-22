@@ -2066,6 +2066,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/ntnet_relay,
 /turf/open/floor/plasteel/black,
 /area/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
@@ -8036,7 +8037,6 @@
 /area/maintenance/fsmaint)
 "atE" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/carpet,
 /area/maintenance/fsmaint)
 "atF" = (
@@ -23786,7 +23786,6 @@
 /area/maintenance/fsmaint)
 "ZAw" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ZAx" = (
@@ -64050,13 +64049,13 @@ bee
 aTF
 aUr
 aUr
-aWF
-aXi
+aWG
+aWG
 bep
 aWI
 bep
-aXi
-aZO
+aWG
+aWG
 aTK
 bew
 baZ
@@ -66106,13 +66105,13 @@ aUr
 aUr
 aUr
 aUr
-aWJ
-aXi
-aXi
-aXi
-aXi
-aXi
-aZR
+aWG
+aWG
+aWG
+aWG
+aWG
+aWG
+aWG
 aTK
 beA
 beA
