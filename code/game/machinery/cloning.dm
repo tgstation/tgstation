@@ -338,7 +338,7 @@
 		occupant << "<span class='notice'><b>The world is suddenly bright \
 			and sudden and loud!</b><br>\
 			<i>You feel your body weight suddenly, as your mind suddenly \
-			comprehends where you are and what is going on.</i></span>"
+			comprehends where you are and what is suddenly going on.</i></span>"
 		occupant.flash_eyes()
 
 	var/turf/T = get_turf(src)
