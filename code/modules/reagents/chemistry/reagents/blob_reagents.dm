@@ -11,6 +11,7 @@
 	var/blobbernaut_message = "slams" //blobbernaut attack verb
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
+	can_synth = 0
 
 /datum/reagent/blob/proc/send_message(mob/living/M)
 	var/totalmessage = message

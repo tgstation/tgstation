@@ -31,6 +31,7 @@
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
+	can_synth = 0
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
