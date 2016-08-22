@@ -13,6 +13,8 @@
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		if(F.seed)
+			if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit)) //Prevents a single cash lemon making more than 1000 credits
+				return
 			if(user && !user.drop_item()) //couldn't drop the item
 				return
 			while(t_amount < t_max)
