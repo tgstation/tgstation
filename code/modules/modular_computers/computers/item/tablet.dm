@@ -7,4 +7,4 @@
 	hardware_flag = PROGRAM_TABLET
 	max_hardware_size = 1
 	w_class = 2
-	var/use_power = 0
+	steel_sheet_cost = 1

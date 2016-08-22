@@ -55,6 +55,20 @@
 
 
 
+/obj/item/modular_computer/New()
+	START_PROCESSING(SSobj, src)
+	update_icon()
+	if(!physical)
+		physical = src
+	..()
+
+/obj/item/modular_computer/Destroy()
+	kill_program(1)
+	STOP_PROCESSING(SSobj, src)
+	for(var/H in all_components)
+		qdel(H)
+	return ..()
+
 // Eject ID card from computer, if it has ID slot with card inside.
 /obj/item/modular_computer/verb/eject_id()
 	set name = "Eject ID"
@@ -153,20 +167,6 @@
 		user << "<span class='danger'>It is heavily damaged!</span>"
 	else if(damage)
 		user << "<span class='warning'>It is damaged.</span>"
-
-/obj/item/modular_computer/New()
-	START_PROCESSING(SSmachine, src)
-	update_icon()
-	if(!physical)
-		physical = src
-	..()
-
-/obj/item/modular_computer/Destroy()
-	kill_program(1)
-	STOP_PROCESSING(SSmachine, src)
-	for(var/H in all_components)
-		qdel(H)
-	return ..()
 
 /obj/item/modular_computer/update_icon()
 	icon_state = icon_state_unpowered

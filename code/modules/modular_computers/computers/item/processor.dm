@@ -17,7 +17,7 @@
 	machinery_computer = null
 
 /obj/item/modular_computer/processor/New(comp)
-	STOP_PROCESSING(SSmachine, src) // Processed by its machine
+	STOP_PROCESSING(SSobj, src) // Processed by its machine
 
 	if(!comp || !istype(comp, /obj/machinery/modular_computer))
 		CRASH("Inapropriate type passed to obj/item/modular_computer/processor/New()! Aborting.")
