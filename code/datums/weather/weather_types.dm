@@ -153,10 +153,4 @@
 					else
 						randmutg(H)
 					H.domutcheck()
-	L.rad_act(15,1)
-
-/datum/weather/rad_storm/end()
-	if(..())
-		return
-	priority_announce("The radiation threat has passed. Please return to your workplaces. Maintenance access restrictions will be restored shortly.", "Anomaly Alert")
-	addtimer(GLOBAL_PROC, "revoke_maint_all_access", 300, TRUE)
+	L.rad_act(20,1)
