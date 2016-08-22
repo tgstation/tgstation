@@ -504,6 +504,11 @@
 		mutmod = 0
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
 
+	if(S.has_reagent("superrobustnutriment", 1))
+		yieldmod = 2.3
+		mutmod = 0
+		adjustNutri(round(S.get_reagent_amount("superrobustnutriment") *1 ))
+
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
 	if(S.has_reagent("charcoal", 1))
 		adjustToxic(-round(S.get_reagent_amount("charcoal") * 2))
