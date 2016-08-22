@@ -4,6 +4,11 @@
 	else
 		return "[pick(lizard_names_female)]-[pick(lizard_names_female)]"
 
+/proc/moth_name(gender)
+	if(gender == MALE)
+		return "[pick(moth_names_male)]"
+	else
+		return "[pick(moth_names_female)]"
 
 var/church_name = null
 /proc/church_name()

@@ -80,6 +80,42 @@
 	if(H)
 		H.endTailWag()
 
+/datum/species/lizard/qualifies_for_rank(rank, list/features)
+	if(rank in command_positions)
+		return 0
+	return 1
+
+
+//MOTH PEOPLE
+/datum/species/moth
+	// WHO THE FUCK?
+	name = "Mothmen"
+	id = "moth"
+	say_mod = "flutters"
+	default_color = "00FF00"
+	specflags = list(EYECOLOR)
+	roundstart = 1
+	specflags = list(LIPS)
+	mutant_bodyparts = list("wing")
+	default_features = list("wing" = "Plain")
+	attack_verb = "slash"
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/moth
+//	teeth_type = /obj/item/stack/teeth/lizard
+	exotic_bloodtype = "L"
+
+/datum/species/moth/random_name(gender,unique,lastname)
+	if(unique)
+		return random_unique_moth_name(gender)
+
+	var/randname = moth_name(gender)
+
+	return randname
+
+/datum/species/moth/qualifies_for_rank(rank, list/features)
+	if(rank in command_positions)
+		return 0
+	return 1
+
 /*
  Lizard subspecies: ASHWALKERS
 */

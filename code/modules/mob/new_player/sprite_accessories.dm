@@ -1311,6 +1311,75 @@
 	hasinner = 1
 	color_src = HAIR
 
+/datum/sprite_accessory/wing
+	color_src = 0
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/wing/plain
+	name = "Plain"
+	icon_state = "plain"
+
+/datum/sprite_accessory/wing/monarch
+	name = "Monarch"
+	icon_state = "monarch"
+
+/datum/sprite_accessory/wing/luna
+	name = "Luna"
+	icon_state = "luna"
+
+/datum/sprite_accessory/wing/atlas
+	name = "Atlas"
+	icon_state = "atlas"
+
+/datum/sprite_accessory/wing/redish
+	name = "Redish"
+	icon_state = "redish"
+
+/datum/sprite_accessory/wing/royal
+	name = "Royal"
+	icon_state = "royal"
+
+/datum/sprite_accessory/wing/gothic
+	name = "Gothic"
+	icon_state = "gothic"
+
+/datum/sprite_accessory/wing/Lovers
+	name = "Lovers"
+	icon_state = "lovers"
+
+/datum/sprite_accessory/wing/whitefly
+	name = "White fly"
+	icon_state = "whitefly"
+
+/datum/sprite_accessory/wing/punished
+	name = "Punished"
+	icon_state = "punished"
+
+/datum/sprite_accessory/wing/firewatch
+	name = "Fire watch"
+	icon_state = "firewatch"
+
+/datum/sprite_accessory/wing/deathhead
+	name = "Death head"
+	icon_state = "deathhead"
+
+/datum/sprite_accessory/wing/poison
+	name = "Poison"
+	icon_state = "poison"
+
+/datum/sprite_accessory/wing/ragged
+	name = "Ragged"
+	icon_state = "ragged"
+
+/datum/sprite_accessory/wing/moonfly
+	name = "Moon Fly"
+	icon_state = "moonfly"
+
+/datum/sprite_accessory/wing/snow
+	name = "Snow"
+	icon_state = "snow"
+	icon_state = "atlas"
+
 /datum/sprite_accessory/wings/none
 	name = "None"
 	icon_state = "none"

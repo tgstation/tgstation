@@ -224,7 +224,7 @@
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
-		M.stun_resist_act()
+		stun_resist_act(M)
 		speedboost = FAST
 	else
 		M.adjustBrainLoss(3)

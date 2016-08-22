@@ -409,6 +409,8 @@
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")
 					S = wings_open_list[H.dna.features["wings"]]
+				if("wing")
+					S = wing_list[H.dna.features["wing"]]
 
 			if(!S || S.icon_state == "none")
 				continue

@@ -91,6 +91,12 @@
 	desc = "Nothing says tasty like maggot filled radioactive mutant flesh."
 	list_reagents = list("nutriment" = 3, "uranium" = 3)
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/moth
+	icon_state = "mothmeat"
+	desc = "How did they get enough meat from a moth?"
+	list_reagents = list("nutriment" = 3, "uranium" = 0.5)
+
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	name = "-bone"
 	icon_state = "skeletonmeat"

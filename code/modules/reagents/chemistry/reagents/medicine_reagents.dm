@@ -572,7 +572,7 @@
 			M << "<span class='warning'>You start to feel tired...</span>" //Warning when the victim is starting to pass out
 		if(8 to 14)
 			M.drowsyness += 1
-		else if(15 to INFINITY)
+		if(15 to INFINITY)
 			M.sleeping += 1
 	..()
 	. = 1
@@ -1090,7 +1090,7 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
-	M.stun_resist_act()
+	stun_resist_act(M)
 	. = 1
 	..()
 
