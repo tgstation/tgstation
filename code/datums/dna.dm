@@ -309,6 +309,12 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 	var/datum/mutation/human/HM = pick(good_mutations)
 	. = HM.force_give(M)
 
+/proc/randmutvg(mob/living/carbon/M)
+	if(!M.has_dna())
+		return
+	var/datum/mutation/human/HM = pick((good_mutations) - mutations_list[HULK] - mutations_list[DWARFISM])
+	. = HM.force_give(M)
+
 /proc/randmuti(mob/living/carbon/M)
 	if(!M.has_dna())
 		return
