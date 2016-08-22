@@ -111,6 +111,7 @@
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/storage/belt/military/assault(src)
+			new /obj/item/weapon/card/id/syndicate(src) //name yourself something edgy and dark
 			new /obj/item/clothing/shoes/sandal/mninja(src)
 			new /obj/item/clothing/head/fedora/mninja(src)
 			new /obj/item/clothing/suit/jacket/leather/overcoat/mninja(src)
