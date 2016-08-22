@@ -21,7 +21,7 @@
 				CAT_SPAGHETTI)
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
-	var/display_compact = FALSE
+	var/display_compact = TRUE
 
 
 
