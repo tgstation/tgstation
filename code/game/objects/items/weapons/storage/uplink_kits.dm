@@ -64,6 +64,7 @@
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/clothing/shoes/chameleon(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
+			new /obj/item/weapon/grenade/syndieminibomb(src)
 			return
 
 		if("implant") // 55+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
