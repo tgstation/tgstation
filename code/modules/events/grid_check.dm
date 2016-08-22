@@ -2,8 +2,6 @@
 	name = "Grid Check"
 	typepath = /datum/round_event/grid_check
 	weight = 10
-	min_players = 3
-	earliest_start = 6000
 	max_occurrences = 3
 
 /datum/round_event/grid_check
@@ -37,4 +35,4 @@
 			if(is_type_in_typecache(A,skipped_areas))
 				continue
 
-			C.energy_fail(rand(30,60))
+			C.energy_fail(rand(30,120))
