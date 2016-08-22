@@ -351,8 +351,7 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
 		ui.open()
-		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
-	else
+	if(ui)
 		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
 
 /obj/machinery/power/smes/ui_data()

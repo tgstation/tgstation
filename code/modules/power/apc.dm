@@ -632,8 +632,7 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
-		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
-	else
+	if(ui)
 		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
 
 /obj/machinery/power/apc/ui_data(mob/user)
