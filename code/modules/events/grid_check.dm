@@ -16,7 +16,7 @@
 
 /datum/round_event/grid_check/start()
 	for(var/obj/machinery/power/smes/S in machines)
-		if(istype(get_area(S), /area/turret_protected) || S.z != ZLEVEL_STATION)
+		if(istype(get_area(S), /area/turret_protected) || istype(get_area(S), /area/engine/engine_smes) || S.z != ZLEVEL_STATION)
 			continue
 
 		S.energy_fail(rand(15,30))
