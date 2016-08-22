@@ -77,7 +77,7 @@
 	chameleon_blacklist += target.type
 	var/list/temp_list = typesof(chameleon_type)
 	for(var/V in temp_list - (chameleon_blacklist))
-		if(istype(V, /obj/item))
+		if(ispath(V, /obj/item))
 			var/obj/item/I = V
 			if(initial(I.flags) & ABSTRACT)
 				continue
