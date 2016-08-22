@@ -100,3 +100,9 @@
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
 		prime()
 		return 1 //It hit the grenade, not them
+
+/obj/item/weapon/grenade/attack(mob/user)
+	if(user.zone_selected == "groin" && user.a_intent == "grab")
+		..()
+	else
+		return

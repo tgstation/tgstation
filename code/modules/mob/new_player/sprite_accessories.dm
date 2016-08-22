@@ -1314,6 +1314,7 @@
 /datum/sprite_accessory/wing
 	color_src = 0
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	hasinner = 1
 
 /datum/sprite_accessory/wing/plain
 	name = "Plain"

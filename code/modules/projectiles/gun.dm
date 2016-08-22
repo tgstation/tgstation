@@ -270,9 +270,10 @@ obj/item/weapon/gun/proc/newshot()
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging
 		..()
+	else if(user.zone_selected == "groin" && user.a_intent == "grab")
+		..()
 	else
 		return
-
 /obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = I

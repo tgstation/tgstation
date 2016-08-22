@@ -69,6 +69,14 @@
 				temp_bleed += 1
 			if(brutedamage > 70)
 				temp_bleed += 2
+		var/obj/item/organ/internal/butt/B = getorgan(/obj/item/organ/internal/butt)
+		if(!B)
+			return
+		if(B in internal_organs)
+			if(B.contents.len)
+				var/obj/item/A = pick(B.contents)
+				if(A.is_sharp() || is_pointed(A))
+					temp_bleed += 1
 
 		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 

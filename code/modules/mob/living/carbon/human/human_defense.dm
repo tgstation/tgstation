@@ -379,12 +379,6 @@
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (disabilities & FAT) && ismonkey(pulling))
-		devour_mob(pulling)
-	else
-		..()
-
-/mob/living/carbon/human/grippedby(mob/living/user)
 	if(user.zone_selected == "groin")
 		var/obj/item/organ/internal/butt/B = src.getorgan(/obj/item/organ/internal/butt)
 		if(!w_uniform)
@@ -425,6 +419,12 @@
 				user << "<span class='warning'>You'll need to remove [src]'s jumpsuit first!</span>"
 				src << "<span class='warning'>You feel your butt being grabbed!</span>"
 			return 0
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (disabilities & FAT) && ismonkey(pulling))
+		devour_mob(pulling)
+	else
+		..()
+
+/mob/living/carbon/human/grippedby(mob/living/user)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)
 	..()

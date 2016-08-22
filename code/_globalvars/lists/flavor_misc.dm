@@ -33,6 +33,8 @@ var/global/list/ears_list = list()
 var/global/list/wings_list = list()
 var/global/list/wings_open_list = list()
 var/global/list/r_wings_list = list()
+
+	//Moth bits
 var/global/list/wing_list = list()
 
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites

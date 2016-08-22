@@ -990,10 +990,10 @@ var/list/preferences_datums = list()
 						features["spines"] = new_spines
 
 				if("wing")
-					var/new_wings
-					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in wing_list
-					if(new_wings)
-						features["wing"] = new_wings
+					var/new_wing
+					new_wing = input(user, "Choose your character's wings:", "Character Preference") as null|anything in wing_list
+					if(new_wing)
+						features["wing"] = new_wing
 
 				if("body_markings")
 					var/new_body_markings
