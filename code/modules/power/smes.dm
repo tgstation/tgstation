@@ -44,6 +44,7 @@
 
 /obj/machinery/power/smes/New()
 	..()
+	smes_list |= src
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smes(null)
 	B.apply_default_parts(src)
 
@@ -183,6 +184,7 @@
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
+	smes_list -= src
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
@@ -345,12 +347,12 @@
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(ui)
-		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
 
 	if(!ui)
 		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
 		ui.open()
+		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
+	else
 		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
 
 /obj/machinery/power/smes/ui_data()
