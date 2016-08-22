@@ -470,3 +470,8 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+/proc/window_flash(var/client_or_usr)
+	if (!client_or_usr)
+		return
+	winset(client_or_usr, "mainwindow", "flash=5")
