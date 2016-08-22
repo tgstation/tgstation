@@ -104,6 +104,7 @@
 	H.on_remove(src, user)
 	if(enabled && (!processor_unit || !hard_drive || !use_power()))
 		shutdown_computer()
+	update_icon()
 	return 1
 
 
