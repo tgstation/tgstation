@@ -29,6 +29,7 @@
 	var/input_level = 50000 // amount of power the SMES attempts to charge by
 	var/input_level_max = 200000 // cap on input_level
 	var/input_available = 0 // amount of charge available from input last tick
+	var/failure_timer = 0
 
 	var/output_attempt = 1 // 1 = attempting to output, 0 = not attempting to output
 	var/outputting = 1 // 1 = actually outputting, 0 = not outputting
@@ -251,6 +252,9 @@
 
 	if(stat & BROKEN)
 		return
+	if(failure_timer)	// Disabled by gridcheck.
+		failure_timer--
+		return
 
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
@@ -341,14 +345,19 @@
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(ui)
+		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
+
 	if(!ui)
 		ui = new(user, src, ui_key, "smes", name, 340, 440, master_ui, state)
 		ui.open()
+		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
 
 /obj/machinery/power/smes/ui_data()
 	var/list/data = list(
 		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"capacity" = capacity,
+		"failTime" = failure_timer,
 		"charge" = charge,
 
 		"inputAttempt" = input_attempt,
@@ -369,6 +378,9 @@
 	if(..())
 		return
 	switch(action)
+		if("reboot")
+			failure_timer = 0
+			update_icon()
 		if("tryinput")
 			input_attempt = !input_attempt
 			log_smes(usr.ckey)
@@ -423,6 +435,7 @@
 			if(.)
 				output_level = Clamp(target, 0, output_level_max)
 				log_smes(usr.ckey)
+	return 1
 
 /obj/machinery/power/smes/proc/log_smes(user = "")
 	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", "singulo")
@@ -441,6 +454,9 @@
 	update_icon()
 	log_smes("an emp")
 	..()
+
+/obj/machinery/power/smes/proc/energy_fail(duration)
+	failure_timer = duration
 
 /obj/machinery/power/smes/engineering
 	charge = 1.5e6 // Engineering starts with some charge for singulo
