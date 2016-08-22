@@ -355,7 +355,7 @@
 /obj/item/clothing/suit/jacket/leather/overcoat/mninja
 	name = "Syndicate Ninja Overcoat"
 	desc = "An official Syndicate Ninja Overcoat. They have some extra paddings in where it counts."
-	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 5, bio = 0, rad = 0)
+	armor = list(melee = 25, bullet = 20, laser = 20, energy = 25, bomb = 20, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/jacket/puffer
 	name = "puffer jacket"
