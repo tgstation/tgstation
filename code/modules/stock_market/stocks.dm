@@ -139,8 +139,16 @@
 			speculation += rand(-400, 0) / 1000 * speculation
 			if (prob(1) && prob(5)) // pop that bubble
 				speculation += rand(-4000, 0) / 1000 * speculation
-
-	current_value += (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
+	var/fucking_stock_spikes = current_value + 500
+	var/piece_of_shit_fuck = current_value - 500
+	var/i_hate_this_code = (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
+	if(i_hate_this_code > fucking_stock_spikes || i_hate_this_code < piece_of_shit_fuck)
+		message_admins("STOCK ALERT: [name] attempted to increase/decrease its value by more than 500 credits, this has been stopped. Please alert iamgoofball on #coderbus at irc.rizon.net with the following info:")
+		message_admins("STOCK ALERT: Speculation was: [speculation]")
+		message_admins("STOCK ALERT: Performance was: [performance]")
+		message_admins("STOCK ALERT: If you can, take a screenshot of this data.")
+	else
+		current_value += i_hate_this_code
 	if (current_value < 5)
 		current_value = 5
 
