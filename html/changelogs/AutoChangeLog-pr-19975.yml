@@ -1,0 +1,5 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - rscdel: "Reverts getting partial credit for discovered seeds."
+  - tweak: "Tweaks Money Tree Potency Values [For instance: 1000 Space Cash requires 98-100 Potency]"
