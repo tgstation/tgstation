@@ -106,18 +106,26 @@
 	..()
 	switch(seed.potency)
 		if(0 to 10)
-			trash = /obj/item/stack/spacecash
+			trash = /obj/item/seeds/cash
+			seed = /obj/item/stack/spacecash
 		if(11 to 20)
-			trash = /obj/item/stack/spacecash/c10
+			trash = /obj/item/seeds/cash
+			seed = /obj/item/stack/spacecash/c10
 		if(21 to 30)
-			trash = /obj/item/stack/spacecash/c20
+			trash = /obj/item/seeds/cash
+			seed = /obj/item/stack/spacecash/c20
 		if(31 to 40)
-			trash = /obj/item/stack/spacecash/c50
+			trash = /obj/item/seeds/cash
+			seed = /obj/item/stack/spacecash/c50
 		if(41 to 50)
-			trash = /obj/item/stack/spacecash/c100
+			trash = /obj/item/seeds/cash
+			seed = /obj/item/stack/spacecash/c100
 		if(51 to 60)
-			trash = /obj/item/stack/spacecash/c200
+			trash = /obj/item/seeds/cash
+			seed = /obj/item/stack/spacecash/c200
 		if(61 to 80)
-			trash = /obj/item/stack/spacecash/c500
+			trash = /obj/item/seeds/cash
+			seed = /obj/item/stack/spacecash/c500
 		else
-			trash = /obj/item/stack/spacecash/c1000
+			trash = /obj/item/seeds/cash
+			seed = /obj/item/stack/spacecash/c1000
