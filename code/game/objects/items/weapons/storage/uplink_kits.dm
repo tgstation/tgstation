@@ -58,7 +58,7 @@
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
 			return
 
-		if("murder") // 22 tc now
+		if("murder") // 28 tc now
 			new /obj/item/weapon/melee/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/card/emag(src)
