@@ -143,6 +143,7 @@
 		name = mimiced_atom.name
 		appearance = mimiced_atom.appearance
 		setDir(mimiced_atom.dir)
+		mouse_opacity = 0
 	animate(src, alpha = 0, time = duration)
 
 /obj/effect/overlay/cult
