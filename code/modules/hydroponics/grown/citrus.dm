@@ -105,19 +105,19 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit/add_juice()
 	..()
 	switch(seed.potency)
-		if(0 to 10)
+		if(0 to 22)
 			trash = /obj/item/stack/spacecash
-		if(11 to 20)
+		if(23 to 42)
 			trash = /obj/item/stack/spacecash/c10
-		if(21 to 30)
+		if(43 to 59)
 			trash = /obj/item/stack/spacecash/c20
-		if(31 to 40)
+		if(60 to 73)
 			trash = /obj/item/stack/spacecash/c50
-		if(41 to 50)
+		if(74 to 84)
 			trash = /obj/item/stack/spacecash/c100
-		if(51 to 60)
+		if(85 to 92)
 			trash = /obj/item/stack/spacecash/c200
-		if(61 to 80)
+		if(93 to 98)
 			trash = /obj/item/stack/spacecash/c500
 		else
 			trash = /obj/item/stack/spacecash/c1000
