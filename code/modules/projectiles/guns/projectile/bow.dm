@@ -24,8 +24,7 @@
 /obj/item/weapon/gun/projectile/bow/dropped(mob/user)
 	if(magazine && magazine.ammo_count())
 		magazine.empty_magazine()
-		if(ready_to_fire)
-			ready_to_fire = FALSE
+		ready_to_fire = FALSE
 		update_icon()
 
 /obj/item/weapon/gun/projectile/bow/attack_self(mob/living/user)
@@ -54,9 +53,8 @@
 
 /obj/item/weapon/gun/projectile/bow/process_chamber(eject_casing = 0, empty_chamber = 1)
 	. = ..()
-	if(ready_to_fire)
-		ready_to_fire = FALSE
-		update_icon()
+	ready_to_fire = FALSE
+	update_icon()
 
 // ammo
 /obj/item/ammo_box/magazine/internal/bow
