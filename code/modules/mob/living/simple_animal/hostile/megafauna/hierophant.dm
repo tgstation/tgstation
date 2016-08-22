@@ -16,7 +16,7 @@ The Hierophant's attacks are as follows, and INTENSIFY at a random chance based 
 	If target is at least 2 tiles away; Blinks to the target after a very brief delay, damaging everything near the start and end points.
 		As above, but does so multiple times if below half health.
 	Rapidly creates non-omnidirectional Cross Blasts under a target.
-	If chasers are off cooldown;
+	If chasers are off cooldown, does an advanced chaser attack;
 		Creates four high-speed chasers.
 		Creates a large 3x3 chaser.
 - IF TARGET WAS STRUCK IN MELEE: Creates a 3x3 square of blasts under the target.
@@ -61,7 +61,7 @@ Difficulty: Hard
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
 	var/obj/effect/hierophant/spawned_rune //the rune we teleport back to
 	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our rune
-	var/did_reset //if we timed out, returned to our original location, and healed some
+	var/did_reset //if we timed out, returned to our rune, and healed some
 	medal_type = MEDAL_PREFIX
 	score_type = BIRD_SCORE
 	del_on_death = TRUE
@@ -115,9 +115,10 @@ Difficulty: Hard
 	L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount)
-	if(blinking && amount > 0)
-		return 0
+	if(amount < 0)
+		return ..()
 	wander = TRUE
+	did_reset = FALSE
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
@@ -207,12 +208,12 @@ Difficulty: Hard
 							pickedtarget = pick_n_take(targets)
 						if(pickedtarget.stat == DEAD)
 							pickedtarget = target
-						var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, pickedtarget, max(1, 4 - anger_modifier*0.06), FALSE))
+						var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, pickedtarget, max(1, 3.5 - anger_modifier*0.05), FALSE))
 						C.moving = 3
 						C.moving_dir = pick_n_take(cardinal_copy)
 						sleep(10)
 				else //fire a massive 3x3 chaser at our target
-					PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser/giant, list(loc, src, target, max(1.5, 2.5 - anger_modifier*0.02), FALSE))
+					PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser/giant, list(loc, src, target, max(2, 3 - anger_modifier*0.02), FALSE))
 					sleep(10)
 				chaser_cooldown = world.time + initial(chaser_cooldown)
 				animate(src, color = initial(color), time = 10)
@@ -237,10 +238,10 @@ Difficulty: Hard
 				addtimer(src, "diagonal_blasts", 0, FALSE, target)
 	else
 		if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
-			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 4 - anger_modifier*0.06), FALSE))
+			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 3.5 - anger_modifier*0.05), FALSE))
 			chaser_cooldown = world.time + initial(chaser_cooldown)
 			if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
-				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 5 - anger_modifier*0.06), FALSE))
+				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(2, 5 - anger_modifier*0.06), FALSE))
 				OC.moving = 4
 				OC.moving_dir = pick(cardinal - C.moving_dir)
 		else //just release a burst of power
@@ -362,7 +363,7 @@ Difficulty: Hard
 	var/previous_moving_dir //what dir it was moving in before that
 	var/more_previouser_moving_dir //what dir it was moving in before THAT
 	var/moving = 0 //how many steps to move before recalculating
-	var/standard_moving_before_recalc = 4//how many times we step before recalculating normally
+	var/standard_moving_before_recalc = 4 //how many times we step before recalculating normally
 	var/tiles_per_step = 1 //how many tiles we move each step
 	var/speed = 3 //how many deciseconds between each step
 	var/currently_seeking = FALSE
@@ -420,8 +421,9 @@ Difficulty: Hard
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(loc, src))
 	playsound(loc,'sound/magic/blink.ogg', 200, 1)
 	sleep(2)
-	for(var/t in RANGE_TURFS(1, loc))
-		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, src, FALSE))
+	if(loc)
+		for(var/t in RANGE_TURFS(1, loc))
+			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, src, FALSE))
 
 /obj/effect/overlay/temp/hierophant/telegraph
 	icon = 'icons/effects/96x96.dmi'
