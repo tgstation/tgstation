@@ -22,8 +22,8 @@
 	new /obj/item/weapon/storage/box/rxglasses(src)
 
 /obj/structure/closet/secure_closet/medical2
-	name = "anesthetic closet"
-	desc = "Used to knock people out."
+	name = "surgery supplies"
+	desc = "Contains a variety of useful supplies for surgery."
 	req_access = list(access_surgery)
 
 /obj/structure/closet/secure_closet/medical2/New()
@@ -32,6 +32,18 @@
 		new /obj/item/weapon/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/mask/breath/medical(src)
+	for(var/i in 1 to 2)
+		new /obj/item/robot_parts/l_arm(src)
+	for(var/i in 1 to 2)
+		new /obj/item/robot_parts/r_arm(src)
+	for(var/i in 1 to 2)
+		new /obj/item/robot_parts/l_leg(src)
+	for(var/i in 1 to 2)
+		new /obj/item/robot_parts/r_leg(src)
+	for(var/i in 1 to 2)
+		new /obj/item/robot_parts/chest(src)
+	for(var/i in 1 to 2)
+		new /obj/item/robot_parts/head(src)
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
