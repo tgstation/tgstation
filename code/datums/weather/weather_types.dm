@@ -118,21 +118,19 @@
 	name = "radiation storm"
 	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
 
-	//telegraph_message = "<span class='boldwarning'>An eerie moan rises on the wind. Sheets of burning ash blacken the horizon. Seek shelter.</span>"
 	telegraph_duration = 300
-	telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'
-	telegraph_overlay = "light_ash"
+	//telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'	//TODO: Get sounds and sprite overlays
+	//telegraph_overlay = "light_ash"
 
-	//weather_message = "<span class='userdanger'><i>Smoldering clouds of scorching ash billow down around you! Get inside!</i></span>"
+	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
-	weather_sound = 'sound/lavaland/ash_storm_start.ogg'
-	weather_overlay = "ash_storm"
+	//weather_sound = 'sound/lavaland/ash_storm_start.ogg'
+	//weather_overlay = "ash_storm"
 
-	//end_message = "<span class='boldannounce'>The shrieking wind whips away the last of the ash falls to its usual murmur. It should be safe to go outside now.</span>"
-	end_duration = 300
-	end_sound = 'sound/lavaland/ash_storm_end.ogg'
-	end_overlay = "light_ash"
+	end_duration = 100
+	//end_sound = 'sound/lavaland/ash_storm_end.ogg'
+	//end_overlay = "light_ash"
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai)
@@ -154,3 +152,8 @@
 						randmutg(H)
 					H.domutcheck()
 	L.rad_act(20,1)
+
+/datum/weather/rad_storm/end()
+	if(..())
+		return
+	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
