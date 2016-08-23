@@ -4,7 +4,7 @@
 
 	icon = 'icons/obj/modular_console.dmi'
 	icon_state = "console"
-	icon_state_unpowered = "console"
+	icon_state_unpowered = "console-off"
 	screen_icon_state_menu = "menu"
 	hardware_flag = PROGRAM_CONSOLE
 	var/console_department = "" // Used in New() to set network tag according to our area.
