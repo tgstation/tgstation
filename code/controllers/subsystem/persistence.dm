@@ -47,6 +47,7 @@ var/datum/subsystem/persistence/SSpersistence
 	if(istype(F.loc,/turf/open/floor) && !istype(F.loc,/turf/open/floor/plating/))
 		F.hide(1)
 	new path(F)
+	return 1
 
 /datum/subsystem/persistence/proc/PlaceFreeSatchel()
 	for(var/V in shuffle(get_area_turfs(pick(the_station_areas))))
