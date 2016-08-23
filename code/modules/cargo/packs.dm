@@ -753,8 +753,7 @@
 					/obj/item/weapon/stock_parts/scanning_module/adv,
 					/obj/item/weapon/stock_parts/scanning_module/adv,
 					/obj/item/weapon/stock_parts/capacitor/adv,
-					/obj/item/weapon/stock_parts/capacitor/adv,
-					)
+					/obj/item/weapon/stock_parts/capacitor/adv)
 	crate_name = "stock parts crate"
 
 
