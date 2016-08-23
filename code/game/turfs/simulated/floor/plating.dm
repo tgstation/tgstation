@@ -151,13 +151,16 @@
 /turf/open/floor/engine/cult
 	name = "engraved floor"
 	icon_state = "plating"
-	var/obj/effect/clockwork/overlay/floor/realappearence
+	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
 
 /turf/open/floor/engine/cult/New()
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
-	realappearence = PoolOrNew(/obj/effect/overlay/cult/floor, src)
+	realappearence = PoolOrNew(/obj/effect/overlay/cult/floor/bloodcult, src)
 	realappearence.linked = src
+
+/obj/effect/clockwork/overlay/floor/bloodcult
+	icon_state = "cult"
 
 /turf/open/floor/engine/cult/Destroy()
 	be_removed()
