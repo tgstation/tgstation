@@ -34,7 +34,7 @@
 	..()
 	if(!small)
 		var/image/I = image('icons/mob/alien.dmi', "alienq_running")
-		owner.add_alt_appearance("smallqueen", I, list(owner))
+		owner.add_alt_appearance("smallqueen", I.override = 1, list(owner))
 		small = 1
 	else
 		owner.remove_alt_appearance("smallqueen")
