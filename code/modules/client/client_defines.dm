@@ -20,7 +20,7 @@
 	var/moving			= null
 
 	var/area			= null
-
+	var/list/datum/compid_info_list = list()
 		///////////////
 		//SOUND STUFF//
 		///////////////
