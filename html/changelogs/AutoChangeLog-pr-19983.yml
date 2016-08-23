@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscdel: "Removed the Longevity symptom."
-  - rscadd: "Added Viral Aggressive Metabolism, which will make viruses act quickly but decay over time."
