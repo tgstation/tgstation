@@ -118,8 +118,8 @@
 	species = "bananium"
 	plantname = "Bananium Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bananium
-	lifespan = 7
-	endurance = 1
+	lifespan = 13
+	endurance = 10
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip)
@@ -137,11 +137,10 @@
 	filling_color = "#FFFF00"
 	bitesize = 5
 	
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana/bananium/add_juice()
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/bananium/New()
+	materials = list(MAT_BANANIUM = potency*20)
 	..()
-	switch(seed.potency)
-		if(100)
-			trash = /obj/item/stack/sheet/mineral/bananium
+
 // Other
 /obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"
