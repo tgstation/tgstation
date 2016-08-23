@@ -410,6 +410,14 @@ macro "hotkeys"
 		command = ".screenshot"
 		is-disabled = false
 	elem 
+		name = "F3"
+		command = "asay"
+		is-disabled = false
+	elem 
+		name = "F4"
+		command = "msay"
+		is-disabled = false
+	elem 
 		name = "F5"
 		command = "Aghost"
 		is-disabled = false
