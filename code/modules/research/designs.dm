@@ -220,13 +220,13 @@ other types of metals and chemistry for reagents).
 	category = list("Mining Designs")
 
 /datum/design/hyperaccelerator
-	name = "Hyper-Kinetic Accelerator Mod"
-	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts.."
+	name = "Kinetic Accelerator Mining AoE Mod"
+	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts that destroy rock."
 	id = "hypermod"
 	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/modkit/projectile_mod
+	build_path = /obj/item/modkit/aoe/turfs
 	category = list("Mining Designs")
 
 

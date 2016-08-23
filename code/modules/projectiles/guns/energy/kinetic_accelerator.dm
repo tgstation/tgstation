@@ -59,9 +59,7 @@
 /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg
 	holds_charge = TRUE
 	unique_frequency = TRUE
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/hyper
-	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
+	max_mod_capacity = 2
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/New()
 	. = ..()
@@ -132,17 +130,7 @@
 		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
 
 
-
-
-
-
-
-
-
-
 //Casing
-
-
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
@@ -165,13 +153,8 @@
 			var/obj/item/projectile/kinetic/K = BB
 			K.damage /= K.damage_divisor
 
-/obj/item/ammo_casing/energy/kinetic/hyper
-	projectile_type = /obj/item/projectile/kinetic/hyper
-
-
 
 //Projectiles
-
 /obj/item/projectile/kinetic
 	name = "kinetic force"
 	icon_state = null
@@ -180,12 +163,18 @@
 	flag = "bomb"
 	range = 3
 	var/damage_divisor = 4
+	var/turf_aoe = FALSE
+	var/mob_aoe = 0
 
 /obj/item/projectile/kinetic/on_range()
+	if(turf_aoe || mob_aoe)
+		aoe_blast()
 	PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, loc)
 	..()
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
+	if(turf_aoe || mob_aoe)
+		aoe_blast(target)
 	var/turf/target_turf= get_turf(target)
 	if(istype(target_turf, /turf/closed/mineral))
 		var/turf/closed/mineral/M = target_turf
@@ -193,36 +182,25 @@
 	PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, target_turf)
 	. = ..()
 
-
-//AoE
-
-/obj/item/projectile/kinetic/hyper
-	name = "kinetic explosion"
-
-/obj/item/projectile/kinetic/hyper/proc/aoe_blast(atom/target)
+/obj/item/projectile/kinetic/proc/aoe_blast(atom/target)
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		target_turf = get_turf(src)
 	PoolOrNew(/obj/effect/overlay/temp/explosion/fast, target_turf)
-	for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
-		if(istype(T, /turf/closed/mineral))
-			var/turf/closed/mineral/M = T
-			M.gets_drilled(firer)
-
-/obj/item/projectile/kinetic/hyper/on_range()
-	aoe_blast()
-	..()
-
-/obj/item/projectile/kinetic/hyper/on_hit(atom/target)
-	aoe_blast(target)
-	. = ..()
-
-
-
+	if(turf_aoe)
+		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
+			if(istype(T, /turf/closed/mineral))
+				var/turf/closed/mineral/M = T
+				M.gets_drilled(firer)
+	if(mob_aoe)
+		for(var/mob/living/L in range(1, target_turf) - firer - target)
+			var/armor = L.run_armor_check(def_zone, flag, "", "", armour_penetration)
+			L.apply_damage(damage*mob_aoe, damage_type, def_zone, armor)
+			L << "<span class='userdanger'>You're struck by a [name]!</span>"
+			world << "hit [L]"
 
 
 //Modkits
-
 /obj/item/modkit
 	name = "modification kit"
 	desc = "An upgrade for kinetic accelerators."
@@ -243,9 +221,7 @@
 /obj/item/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 
 
-
-//Types
-
+//Range
 /obj/item/modkit/range
 	name = "range increase"
 	desc = "Increases the range of a kinetic accelerator when installed. Occupies two mod slots."
@@ -254,8 +230,8 @@
 /obj/item/modkit/range/modify_projectile(obj/item/projectile/kinetic/K)
 	K.range += modifier
 
-//Damage
 
+//Damage
 /obj/item/modkit/damage
 	name = "damage increase"
 	desc = "Increases the damage of kinetic accelerator when installed. Occupies two mod slots."
@@ -264,10 +240,10 @@
 /obj/item/modkit/damage/modify_projectile(obj/item/projectile/kinetic/K)
 	K.damage += modifier
 
-//Cooldown
 
+//Cooldown
 /obj/item/modkit/cooldown
-	name = "coolodown decrease"
+	name = "cooldown decrease"
 	desc = "Decreases the cooldown of a kinetic accelerator. Occupies two mod slots."
 	modifier = 2.5
 
@@ -280,22 +256,28 @@
 	..()
 
 
-//Projectile Type
+//AoE blasts
+/obj/item/modkit/aoe/modify_projectile(obj/item/projectile/kinetic/K)
+	K.name = "kinetic explosion"
+	..()
 
-/obj/item/modkit/projectile_mod
-	name = "hyper shot"
+/obj/item/modkit/aoe/turfs
+	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE. Occupies two mod slots."
-	var/projectile_type = /obj/item/ammo_casing/energy/kinetic/hyper
 
-/obj/item/modkit/projectile_mod/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.ammo_type = list(projectile_type)
-	KA.update_ammo_types()
+/obj/item/modkit/aoe/turfs/modify_projectile(obj/item/projectile/kinetic/K)
+	K.turf_aoe = TRUE
 	..()
 
-/obj/item/modkit/projectile_mod/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	KA.update_ammo_types()
+/obj/item/modkit/aoe/mobs
+	name = "offensive explosion"
+	desc = "Causes the kinetic accelerator to damage mobs in an AoE. Occupies two mod slots."
+	modifier = 0.25
+
+/obj/item/modkit/aoe/mobs/modify_projectile(obj/item/projectile/kinetic/K)
+	K.mob_aoe += modifier
 	..()
+
 
 //Indoors
 /obj/item/modkit/indoors
@@ -306,6 +288,7 @@
 
 /obj/item/modkit/indoors/modify_projectile(obj/item/projectile/kinetic/K)
 	K.damage_divisor = Clamp(K.damage_divisor - modifier, 0, INFINITY)
+
 
 //Trigger Guard
 /obj/item/modkit/trigger_guard

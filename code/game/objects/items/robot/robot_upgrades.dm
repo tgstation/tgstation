@@ -194,23 +194,29 @@
 
 	return 1
 
-/obj/item/borg/upgrade/hyperka
-	name = "mining cyborg hyper-kinetic accelerator"
-	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+/obj/item/borg/upgrade/aoeka
+	name = "mining cyborg mining aoe kinetic accelerator"
+	desc = "A mining cyborg kinetic accelerator upgrade that causes it to destroy rock in an AoE."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
 	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
 
-/obj/item/borg/upgrade/hyperka/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/aoeka/action(mob/living/silicon/robot/R)
 	if(..())
 		return
 
 	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
-		qdel(H)
-
-	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/hyper(R.module)
-	R.module.rebuild()
+		var/current_mod_capacity = 0
+		for(var/obj/item/modkit/M in H.modkits)
+			current_mod_capacity += M.cost
+		var/obj/item/modkit/aoe/turfs/T = new/obj/item/modkit/aoe/turfs(H)
+		if((current_mod_capacity + T.cost) > max_mod_capacity)
+			usr << "<span class='notice'>This unit has no space for additional modkits!</span>"
+			qdel(T)
+			return
+		else
+			T.install(H)
 
 	return 1
 
