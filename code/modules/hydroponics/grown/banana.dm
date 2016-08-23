@@ -118,8 +118,8 @@
 	species = "bananium"
 	plantname = "Bananium Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bananium
-	lifespan = 50
-	endurance = 30
+	lifespan = 1
+	endurance = 1
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip)
