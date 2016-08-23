@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 3, "bond" = 1, "screwed" = 3, "sabotage" = 3, "guns" = 1, "murder" = 2, "implant" = 2, "hacker" = 2, "lordsingulo" = 2, "darklord" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 3, "bond" = 1, "screwed" = 3, "sabotage" = 3, "guns" = 1, "murder" = 2, "implant" = 2, "hacker" = 2, "lordsingulo" = 2, "darklord" = 1, "mallninja" = 2)))
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/chameleon(src)
@@ -100,6 +100,25 @@
 			new /obj/item/weapon/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/weapon/card/id/syndicate(src)
+			return
+		if("mallninja")
+			new /obj/item/weapon/katana/syndicate(src)
+			new /obj/item/weapon/implanter/adrenalin(src)
+			new /obj/item/weapon/throwing_star(src)
+			new /obj/item/weapon/throwing_star(src)
+			new /obj/item/weapon/throwing_star(src)
+			new /obj/item/weapon/throwing_star(src)
+			new /obj/item/weapon/throwing_star(src)
+			new /obj/item/weapon/throwing_star(src)
+			new /obj/item/weapon/storage/belt/military/assault(src)
+			new /obj/item/weapon/card/id/syndicate(src) //name yourself something edgy and dark
+			new /obj/item/clothing/shoes/sandal/mninja(src)
+			new /obj/item/clothing/head/fedora/mninja(src)
+			new /obj/item/clothing/suit/jacket/leather/overcoat/mninja(src)
+			new /obj/item/clothing/under/pants/black(src)
+			new /obj/item/clothing/gloves/fingerless(src)
+			new /obj/item/clothing/glasses/sunglasses(src)
+			new /obj/item/clothing/mask/bandana/skull(src)
 			return
 
 /obj/item/weapon/storage/box/syndie_kit
