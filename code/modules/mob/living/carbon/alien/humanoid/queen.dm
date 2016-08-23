@@ -33,7 +33,7 @@
 /datum/action/small_sprite/Trigger()
 	..()
 	if(!small)
-		var/image/I = image('icons/mob/alien.dmi', "alienq_running")
+		var/image/I = image(icon = 'icons/mob/alien.dmi' , icon_state = "alienq_running", loc = owner)
 		I.override = 1
 		owner.add_alt_appearance("smallqueen", I, list(owner))
 		small = 1
