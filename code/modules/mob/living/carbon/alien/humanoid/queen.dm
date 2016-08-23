@@ -27,15 +27,18 @@
 /datum/action/small_sprite
 	name = "Toggle Giant Sprite - Others will always see you as giant"
 	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
 	var/small = 0
 
 /datum/action/small_sprite/Trigger()
 	..()
 	if(!small)
 		var/image/I = image('icons/mob/alien.dmi', "alienq_running")
-		owner.add_alt_appearance("alienq_running", I, list(src))
+		owner.add_alt_appearance("smallqueen", I, list(owner))
+		small = 1
 	else
-		owner.remove_alt_appearance("alienq_running")
+		owner.remove_alt_appearance("smallqueen")
+		small = 0
 
 /mob/living/carbon/alien/humanoid/royal/queen/New()
 	//there should only be one queen
