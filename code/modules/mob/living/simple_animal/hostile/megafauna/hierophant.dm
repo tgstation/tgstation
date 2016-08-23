@@ -15,10 +15,8 @@ The Hierophant's attacks are as follows, and INTENSIFY at a random chance based 
 - INTENSE ATTACKS:
 	If target is at least 2 tiles away; Blinks to the target after a very brief delay, damaging everything near the start and end points.
 		As above, but does so multiple times if below half health.
-	Rapidly creates non-omnidirectional Cross Blasts under a target.
-	If chasers are off cooldown, does an advanced chaser attack;
-		Creates four high-speed chasers.
-		Creates a large 3x3 chaser.
+	Rapidly creates Cross Blasts under a target.
+	If chasers are off cooldown, creates four high-speed chasers.
 - IF TARGET WAS STRUCK IN MELEE: Creates a 3x3 square of blasts under the target.
 
 Cross Blasts and the AoE burst gain additional range as the Hierophant loses health, while Chasers gain additional speed.
@@ -54,8 +52,8 @@ Difficulty: Hard
 	aggro_vision_range = 23
 	loot = list(/obj/item/weapon/hierophant_staff)
 	wander = FALSE
-	var/burst_range = 2 //range on burst aoe
-	var/beam_range = 3 //range on cross blast beams
+	var/burst_range = 3 //range on burst aoe
+	var/beam_range = 5 //range on cross blast beams
 	var/chaser_cooldown = 101 //base cooldown/cooldown var between spawning chasers
 	var/major_attack_cooldown = 60 //base cooldown for major attacks
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
@@ -95,7 +93,7 @@ Difficulty: Hard
 		stat = DEAD
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		animate(src, alpha = 0, color = "660099", time = 20, easing = EASE_OUT)
-		burst_range = 7
+		burst_range = 10
 		visible_message("<span class='hierophant_warning'>[src] disappears in a massive burst of magic, leaving only its staff.</span>")
 		burst(get_turf(src))
 		..()
@@ -115,11 +113,10 @@ Difficulty: Hard
 	L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount)
-	if(amount < 0)
-		return ..()
-	wander = TRUE
-	did_reset = FALSE
-	return ..()
+	. = ..()
+	if(src && amount > 0)
+		wander = TRUE
+		did_reset = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
 	if(!blinking)
@@ -142,9 +139,9 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
-	anger_modifier = Clamp(((maxHealth - health)/45),0,50)
-	burst_range = initial(burst_range) + round(anger_modifier * 0.1)
-	beam_range = initial(beam_range) + round(anger_modifier * 0.16)
+	anger_modifier = Clamp(((maxHealth - health) / 42),0,50)
+	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
+	beam_range = initial(beam_range) + round(anger_modifier * 0.1)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	calculate_rage()
@@ -155,22 +152,22 @@ Difficulty: Hard
 		if(L.stat == DEAD && get_dist(src, L) > 2)
 			blink(L)
 			return
-	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier*0.75) //scale cooldown lower with high anger.
+	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75) //scale cooldown lower with high anger.
 
-	if(prob(anger_modifier*0.75)) //major ranged attack
-		ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier*0.75) //scale cooldown lower with high anger.
+	if(prob(anger_modifier * 0.75)) //major ranged attack
+		ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier * 0.75) //scale cooldown lower with high anger.
 		var/list/possibilities = list("cross_blast_spam")
 		if(get_dist(src, target) > 2)
 			possibilities += "blink_spam"
 		if(chaser_cooldown < world.time)
-			if(prob(anger_modifier*2))
-				possibilities = list("advanced_chaser")
+			if(prob(anger_modifier * 2))
+				possibilities = list("chaser_swarm")
 			else
-				possibilities += "advanced_chaser"
+				possibilities += "chaser_swarm"
 		switch(pick(possibilities))
 			if("blink_spam") //blink either once or multiple times.
-				if(health < maxHealth*0.5)
-					var/counter = 1 + round(anger_modifier*0.08)
+				if(health < maxHealth * 0.5)
+					var/counter = 1 + round(anger_modifier * 0.08)
 					while(health && target && counter)
 						if(loc == target.loc) //we're on the same tile as them after about a second we can stop now
 							break
@@ -185,10 +182,12 @@ Difficulty: Hard
 			if("cross_blast_spam") //fire a lot of cross blasts at a target.
 				blinking = TRUE
 				animate(src, color = "#660099", time = 6)
-				var/counter = 1 + round(anger_modifier*0.12)
+				var/counter = 1 + round(anger_modifier * 0.12)
 				while(health && target && counter)
 					counter--
-					if(prob(60))
+					if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
+						addtimer(src, "alldir_blasts", 0, FALSE, target)
+					else if(prob(60))
 						addtimer(src, "cardinal_blasts", 0, FALSE, target)
 					else
 						addtimer(src, "diagonal_blasts", 0, FALSE, target)
@@ -196,24 +195,20 @@ Difficulty: Hard
 				animate(src, color = initial(color), time = 10)
 				sleep(10)
 				blinking = FALSE
-			if("advanced_chaser") //fire some strong chaser at a target
+			if("chaser_swarm") //fire four fucking chasers at a target and their friends.
 				blinking = TRUE
 				animate(src, color = "#660099", time = 10)
-				if(prob(50)) //fire four fucking chasers at a target and their friends.
-					var/list/targets = ListTargets()
-					var/list/cardinal_copy = cardinal.Copy()
-					while(health && targets.len && cardinal_copy.len)
-						var/mob/living/pickedtarget = pick(targets)
-						if(targets.len > 4)
-							pickedtarget = pick_n_take(targets)
-						if(pickedtarget.stat == DEAD)
-							pickedtarget = target
-						var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, pickedtarget, max(1, 3.5 - anger_modifier*0.05), FALSE))
-						C.moving = 3
-						C.moving_dir = pick_n_take(cardinal_copy)
-						sleep(10)
-				else //fire a massive 3x3 chaser at our target
-					PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser/giant, list(loc, src, target, max(2, 3 - anger_modifier*0.02), FALSE))
+				var/list/targets = ListTargets()
+				var/list/cardinal_copy = cardinal.Copy()
+				while(health && targets.len && cardinal_copy.len)
+					var/mob/living/pickedtarget = pick(targets)
+					if(targets.len > 4)
+						pickedtarget = pick_n_take(targets)
+					if(pickedtarget.stat == DEAD)
+						pickedtarget = target
+					var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, pickedtarget, max(1, 3 - anger_modifier * 0.04), FALSE))
+					C.moving = 3
+					C.moving_dir = pick_n_take(cardinal_copy)
 					sleep(10)
 				chaser_cooldown = world.time + initial(chaser_cooldown)
 				animate(src, color = initial(color), time = 10)
@@ -221,16 +216,19 @@ Difficulty: Hard
 				blinking = FALSE
 		return
 
-	if(prob(70-anger_modifier)) //a cross blast of some type
+	if(prob(10 + (anger_modifier * 0.5)))
+		blink(target)
+
+	else if(prob(70 - anger_modifier)) //a cross blast of some type
 		if(prob(anger_modifier)) //at us?
-			if(prob(anger_modifier*2) && health < maxHealth*0.5) //we're super angry do it at all dirs
+			if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
 				addtimer(src, "alldir_blasts", 0, FALSE, src)
 			else if(prob(60))
 				addtimer(src, "cardinal_blasts", 0, FALSE, src)
 			else
 				addtimer(src, "diagonal_blasts", 0, FALSE, src)
 		else //at them?
-			if(prob(anger_modifier*2) && health < maxHealth*0.5) //we're super angry do it at all dirs
+			if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
 				addtimer(src, "alldir_blasts", 0, FALSE, target)
 			else if(prob(60))
 				addtimer(src, "cardinal_blasts", 0, FALSE, target)
@@ -238,10 +236,10 @@ Difficulty: Hard
 				addtimer(src, "diagonal_blasts", 0, FALSE, target)
 	else
 		if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
-			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 3.5 - anger_modifier*0.05), FALSE))
+			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 3 - anger_modifier * 0.04), FALSE))
 			chaser_cooldown = world.time + initial(chaser_cooldown)
 			if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
-				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(2, 5 - anger_modifier*0.06), FALSE))
+				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1.5, 5 - anger_modifier * 0.07), FALSE))
 				OC.moving = 4
 				OC.moving_dir = pick(cardinal - C.moving_dir)
 		else //just release a burst of power
@@ -412,18 +410,6 @@ Difficulty: Hard
 
 /obj/effect/overlay/temp/hierophant/chaser/proc/make_blast()
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(loc, caster, friendly_fire_check))
-
-/obj/effect/overlay/temp/hierophant/chaser/giant
-	tiles_per_step = 3
-	standard_moving_before_recalc = 1
-
-/obj/effect/overlay/temp/hierophant/chaser/giant/make_blast()
-	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(loc, src))
-	playsound(loc,'sound/magic/blink.ogg', 200, 1)
-	sleep(2)
-	if(loc)
-		for(var/t in RANGE_TURFS(1, loc))
-			PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, src, FALSE))
 
 /obj/effect/overlay/temp/hierophant/telegraph
 	icon = 'icons/effects/96x96.dmi'
