@@ -220,7 +220,7 @@
 	user << "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/weapon/gun/energy/kinetic_accelerator))
+	if(istype(A, /obj/item/weapon/gun/energy/kinetic_accelerator) && !issilicon(user))
 		install(A)
 	else
 		..()
