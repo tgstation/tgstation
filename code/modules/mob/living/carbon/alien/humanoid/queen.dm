@@ -22,7 +22,20 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite()
 
+/datum/action/small_sprite
+	name = "Toggle Giant Sprite - Others will always see you as giant"
+	button_icon_state = "smallqueen"
+	var/small = 0
+
+/datum/action/small_sprite/Trigger()
+	..()
+	if(!small)
+		var/image/I = image('icons/mob/alien.dmi', "alienq_running")
+		owner.add_alt_appearance("alienq_running", I, list(src))
+	else
+		owner.remove_alt_appearance("alienq_running")
 
 /mob/living/carbon/alien/humanoid/royal/queen/New()
 	//there should only be one queen
@@ -44,6 +57,7 @@
 	internal_organs += new /obj/item/organ/alien/eggsac
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
+	smallsprite.Grant(src)
 	..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
