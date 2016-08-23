@@ -247,7 +247,7 @@
 			return
 		else
 			change_stack(user,stackmaterial)
-			user << "<span class='notice'>You take [amount] sheets out of the stack</span>"
+			user << "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>"
 	return
 
 /obj/item/stack/proc/change_stack(mob/user,amount)
