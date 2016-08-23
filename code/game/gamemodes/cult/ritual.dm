@@ -264,5 +264,6 @@ This file contains the arcane tome files.
 		var/obj/machinery/shield/S = V
 		if(S && !qdeleted(S))
 			qdel(S)
-	new rune_to_scribe(Turf, chosen_keyword)
-	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
+	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
+	user << "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>"
+	feedback_add_details("cult_runes_scribed", R.cultist_name)
