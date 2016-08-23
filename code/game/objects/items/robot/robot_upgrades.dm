@@ -194,32 +194,6 @@
 
 	return 1
 
-/obj/item/borg/upgrade/aoeka
-	name = "mining cyborg mining aoe kinetic accelerator"
-	desc = "A mining cyborg kinetic accelerator upgrade that causes it to destroy rock in an AoE."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
-	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
-
-/obj/item/borg/upgrade/aoeka/action(mob/living/silicon/robot/R)
-	if(..())
-		return
-
-	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
-		var/current_mod_capacity = 0
-		for(var/obj/item/modkit/M in H.modkits)
-			current_mod_capacity += M.cost
-		var/obj/item/modkit/aoe/turfs/T = new/obj/item/modkit/aoe/turfs(H)
-		if((current_mod_capacity + T.cost) > H.max_mod_capacity)
-			usr << "<span class='notice'>This unit has no space for additional modkits!</span>"
-			qdel(T)
-			return
-		else
-			T.install(H)
-
-	return 1
-
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"

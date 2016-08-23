@@ -318,6 +318,7 @@
 	modules += new /obj/item/weapon/storage/bag/ore/cyborg(src)
 	modules += new /obj/item/weapon/pickaxe/drill/cyborg(src)
 	modules += new /obj/item/weapon/shovel(src)
+	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/weapon/weldingtool/mini(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
