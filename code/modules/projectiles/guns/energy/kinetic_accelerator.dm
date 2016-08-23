@@ -219,6 +219,12 @@
 	..()
 	user << "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
+/obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
+	if(istype(A, /obj/item/weapon/gun/energy/kinetic_accelerator))
+		install(A)
+	else
+		..()
+
 /obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
 	if(..())
 		return
@@ -373,46 +379,15 @@
 	desc = "Causes kinetic accelerator bolts to have a white tracer trail and explosion."
 	cost = 4
 	denied_type = /obj/item/borg/upgrade/modkit/tracer
+	var/bolt_color = "#FFFFFF"
 
 /obj/item/borg/upgrade/modkit/tracer/modify_projectile(obj/item/projectile/kinetic/K)
 	K.icon_state = "ka_tracer"
+	K.color = bolt_color
 
-/obj/item/borg/upgrade/modkit/tracer/brown
-	name = "brown tracer bolts"
-	desc = "Causes kinetic accelerator bolts to have a brown tracer trail and explosion."
+/obj/item/borg/upgrade/modkit/tracer/adjustable
+	name = "adjustable tracer bolts"
+	desc = "Causes kinetic accelerator bolts to have a adjustably-colored tracer trail and explosion. Use in-hand to change color."
 
-/obj/item/borg/upgrade/modkit/tracer/brown/modify_projectile(obj/item/projectile/kinetic/K)
-	K.color = "#C08F45"
-	..()
-
-/obj/item/borg/upgrade/modkit/tracer/yellow
-	name = "yellow tracer bolts"
-	desc = "Causes kinetic accelerator bolts to have a yellow tracer trail and explosion."
-
-/obj/item/borg/upgrade/modkit/tracer/yellow/modify_projectile(obj/item/projectile/kinetic/K)
-	K.color = "#FFFF99"
-	..()
-
-/obj/item/borg/upgrade/modkit/tracer/orange
-	name = "orange tracer bolts"
-	desc = "Causes kinetic accelerator bolts to have an orange tracer trail and explosion."
-
-/obj/item/borg/upgrade/modkit/tracer/orange/modify_projectile(obj/item/projectile/kinetic/K)
-	K.color = "#FF9933"
-	..()
-
-/obj/item/borg/upgrade/modkit/tracer/green
-	name = "green tracer bolts"
-	desc = "Causes kinetic accelerator bolts to have a green tracer trail and explosion."
-
-/obj/item/borg/upgrade/modkit/tracer/green/modify_projectile(obj/item/projectile/kinetic/K)
-	K.color = "#515B41"
-	..()
-
-/obj/item/borg/upgrade/modkit/tracer/purple
-	name = "purple tracer bolts"
-	desc = "Causes kinetic accelerator bolts to have a purple tracer trail and explosion."
-
-/obj/item/borg/upgrade/modkit/tracer/purple/modify_projectile(obj/item/projectile/kinetic/K)
-	K.color = "#8456A4"
-	..()
+/obj/item/borg/upgrade/modkit/tracer/adjustable/attack_self(mob/user)
+	bolt_color = input(user,"Choose Color") as color
