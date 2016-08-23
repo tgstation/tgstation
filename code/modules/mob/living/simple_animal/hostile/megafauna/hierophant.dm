@@ -141,7 +141,7 @@ Difficulty: Hard
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
 	anger_modifier = Clamp(((maxHealth - health) / 42),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
-	beam_range = initial(beam_range) + round(anger_modifier * 0.1)
+	beam_range = initial(beam_range) + round(anger_modifier * 0.12)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	calculate_rage()
