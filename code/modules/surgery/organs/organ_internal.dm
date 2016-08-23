@@ -293,6 +293,12 @@
 		message = lizard_hiSS.Replace(message, "SSS")
 	return message
 
+/obj/item/organ/tongue/bird
+	name = "avian tongue"
+	desc = "A strong muscle typically found in avian races, they can manipulate their food with it."
+	icon_state = "tonguebird"
+	say_mod = "squawks"
+
 /obj/item/organ/tongue/fly
 	name = "proboscis"
 	desc = "A freakish looking meat tube that apparently can take in liquids."

@@ -133,6 +133,7 @@
 	say_mod = "squawks"
 	default_color = "00FF00"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	mutant_organs = list(/obj/item/organ/tongue/bird)
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
