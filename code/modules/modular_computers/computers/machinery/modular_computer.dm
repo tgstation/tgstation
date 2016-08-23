@@ -54,6 +54,7 @@ var/list/global_modular_computers = list()
 
 /obj/machinery/modular_computer/update_icon()
 	cut_overlays()
+	icon_state = icon_state_powered
 
 	if(!cpu || !cpu.enabled)
 		if (!(stat & NOPOWER) && (cpu && cpu.use_power()))
@@ -69,6 +70,7 @@ var/list/global_modular_computers = list()
 			overlays.Add(screen_icon_state_menu)
 
 	if(cpu && cpu.damage > cpu.broken_damage)
+		add_overlay("bsod")
 		add_overlay("broken")
 
 // Eject ID card from computer, if it has ID slot with card inside.

@@ -181,6 +181,7 @@
 			add_overlay(icon_state_menu)
 
 	if(damage > broken_damage)
+		add_overlay("bsod")
 		add_overlay("broken")
 
 

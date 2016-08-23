@@ -104,5 +104,3 @@
 // Laptop frame, starts empty and closed.
 /obj/item/modular_computer/laptop/buildable
 	start_open = 0
-
-
