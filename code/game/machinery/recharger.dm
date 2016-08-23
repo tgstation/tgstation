@@ -8,7 +8,7 @@
 	idle_power_usage = 4
 	active_power_usage = 250
 	var/obj/item/charging = null
-	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/laptop,/obj/item/modular_computer)
+	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/modular_computer)
 	var/recharge_coeff = 1
 
 /obj/machinery/recharger/New()
@@ -129,16 +129,6 @@
 				R.stored_ammo += new R.ammo_type(R)
 				use_power(200 * recharge_coeff)
 				using_power = 1
-
-		if(istype(charging, /obj/item/laptop))
-			var/obj/item/laptop/L = charging
-			if(L.stored_computer.cpu.battery_module)
-				var/obj/item/weapon/computer_hardware/battery/B = L.stored_computer.cpu.battery_module
-				if(B.battery)
-					if(B.battery.charge < B.battery.maxcharge)
-						B.battery.give(B.battery.chargerate * recharge_coeff)
-						use_power(200 * recharge_coeff)
-						using_power = 1
 
 		if(istype(charging, /obj/item/modular_computer))
 			var/obj/item/modular_computer/C = charging
