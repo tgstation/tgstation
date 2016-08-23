@@ -1,0 +1,5 @@
+author: "Ergovisavi"
+delete-after: True
+changes: 
+  - rscadd: "Adds \"Sacred Flame\", a spell that makes everyone around you more flammable, and lights yourself on fire. Share the wealth. Of fire."
+  - tweak: "Replaces the fireball spellbook as a possible reward from a Drake chest with a book of sacred flame."
