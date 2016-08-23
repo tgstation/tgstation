@@ -184,7 +184,7 @@
 	icon_state = "wallglow"
 	layer = ABOVE_NORMAL_TURF_LAYER
 
-/obj/effect/overlay/temp/cult/turf/open/floor
+/obj/effect/overlay/temp/cult/turf/floor
 	icon_state = "floorglow"
 	duration = 5
 

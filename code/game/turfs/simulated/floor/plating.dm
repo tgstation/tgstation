@@ -155,8 +155,8 @@
 
 /turf/open/floor/engine/cult/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
-	realappearence = PoolOrNew(/obj/effect/overlay/cult/floor/bloodcult, src)
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
+	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor/bloodcult, src)
 	realappearence.linked = src
 
 /obj/effect/clockwork/overlay/floor/bloodcult
@@ -174,10 +174,6 @@
 /turf/open/floor/engine/cult/proc/be_removed()
 	qdel(realappearence)
 	realappearence = null
-
-/turf/open/floor/engine/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
-	..()
 
 /turf/open/floor/engine/cult/narsie_act()
 	return
