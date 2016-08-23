@@ -6,6 +6,7 @@
 	dat +={"
 			<B>General Secrets</B><BR>
 			<BR>
+			<A href='?src=\ref[src];secrets=spawnselfdummy'>Spawn yourself as a Test Dummy</A><BR>
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=mentor_log'>Mentor Log</A><BR>
@@ -92,6 +93,29 @@
 	var/datum/round_event/E
 	var/ok = 0
 	switch(item)
+		if("spawnselfdummy")
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","TD")
+			message_admins("[key_name_admin(usr)] spawned himself as a Test Dummy.")
+			var/turf/T = get_turf(usr)
+			var/mob/living/carbon/human/dummy/D = new /mob/living/carbon/human/dummy(T)
+			usr.client.cmd_assume_direct_control(D)
+			D.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(D), slot_w_uniform)
+			D.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(D), slot_shoes)
+			D.equip_to_slot_or_del(new /obj/item/weapon/card/id/admin(D), slot_wear_id)
+			D.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(D), slot_ears)
+			D.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(D), slot_back)
+			D.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(D.back), slot_in_backpack)
+		//	T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/misc/adminspawn.ogg',5)
+			D.name = "Admin"
+			D.real_name = "Admin"
+			var/newname = ""
+			newname = copytext(sanitize(input(D, "Before you step out as an embodied god, what name do you wish for?", "Choose your name.", "Admin") as null|text),1,MAX_NAME_LEN)
+			if (!newname)
+				newname = "Admin"
+			D.name = newname
+			D.real_name = newname
+
 		if("admin_log")
 			var/dat = "<B>Admin Log<HR></B>"
 			for(var/l in admin_log)

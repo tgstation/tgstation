@@ -190,6 +190,17 @@ update_label("John Doe", "Clowny")
 	access = J.get_access()
 	..()
 
+/obj/item/weapon/card/id/admin
+	name = "Admin ID"
+	icon_state = "admin"
+	item_state = "gold_id"
+	registered_name = "Admin"
+	assignment = "Testing Shit"
+
+/obj/item/weapon/card/id/admin/New()
+	access = get_absolutely_all_accesses()
+	..()
+
 /obj/item/weapon/card/id/centcom
 	name = "\improper Centcom ID"
 	desc = "An ID straight from Cent. Com."

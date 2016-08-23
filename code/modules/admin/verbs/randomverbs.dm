@@ -1179,4 +1179,5 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 				A.nitrogen = 82.1472
 				A.temperature = T20C
 	message_admins("[key_name(src)] filled the hullbreachs in [size] tiles.")
-	log_game("[key_name(src)] filled the hullbreachs in [size] tiles.") */
+	log_game("[key_name(src)] filled the hullbreachs in [size] tiles.")
+	*/

@@ -257,6 +257,10 @@
 /proc/get_all_syndicate_access()
 	return list(access_syndicate, access_syndicate)
 
+/proc/get_absolutely_all_accesses()
+	return (get_all_accesses() | get_all_centcom_access() | get_all_syndicate_access() | get_ert_access("commander"))
+
+
 /proc/get_region_accesses(code)
 	switch(code)
 		if(0)
