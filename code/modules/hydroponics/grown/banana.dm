@@ -137,7 +137,7 @@
 	filling_color = "#FFFF00"
 	bitesize = 5
 	
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace/add_juice()
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/bananium/add_juice()
 	..()
 	switch(seed.potency)
 		if(100)
