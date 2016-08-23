@@ -63,7 +63,7 @@
 	plantname = "Mimana Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime
 	growthstages = 4
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/banana/bananium)
 	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
 	rarity = 15
 
@@ -90,7 +90,7 @@
 	icon_grow = "banana-grow"
 	plantname = "Bluespace Banana Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/banana/bananium)
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport)
 	reagents_add = list("singulo" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 	rarity = 30
@@ -109,6 +109,39 @@
 	desc = "A peel from a bluespace banana."
 	icon_state = "banana_peel_blue"
 
+//BANANIUM
+
+/obj/item/seeds/banana/bananium
+	name = "pack of Bananium seeds"
+	desc = "They're seeds that grow into bananium trees. When grown, keep away from robotics."
+	icon_state = "seed-banana"
+	species = "bananium"
+	plantname = "Bananium Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bananium
+	lifespan = 50
+	endurance = 30
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_dead = "banana-dead"
+	genes = list(/datum/plant_gene/trait/slip)
+	mutatelist = list()
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.02)
+	rarity = 50 //Nanotrason would love this
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/bananium
+	seed = /obj/item/seeds/banana/bananium
+	name = "Bananium Banana"
+	desc = "If this plant has enough potency, there will be something special inside...."
+	icon_state = "banana"
+	item_state = "banana"
+	trash = /obj/item/weapon/grown/bananapeel
+	filling_color = "#FFFF00"
+	bitesize = 5
+	
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/bananium/add_juice()
+	..()
+	switch(seed.potency)
+		if(100)
+			trash = /obj/item/stack/sheet/mineral/bananium
 // Other
 /obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"

@@ -98,6 +98,14 @@
 	materials = list(MAT_BIOMASS = 50)
 	build_path = /obj/item/weapon/reagent_containers/glass/bottle/killer/pestkiller
 	category = list("initial","Botany Chemicals")
+	
+/datum/design/srh
+	name = "Super Robust Fertalizer"
+	id = "srh"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 1000)
+	build_path = /obj/item/weapon/reagent_containers/glass/bottle/nutrient/srh
+	category = list("initial","Botany Chemicals")
 
 /datum/design/botany_bottle
 	name = "Empty Bottle"

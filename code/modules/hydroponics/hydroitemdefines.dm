@@ -158,9 +158,15 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
-	desc = "Contains a fertilizer that doubles the yield of a plant while causing no mutations."
+	desc = "Contains a fertilizer that increases yield by 30% and prevents mutations when harvesting a plant"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
+
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/srh
+	name = "bottle of Super Robust Harvest"
+	desc = "Contains a very robust fertilizer that increases the yield of a plant by 130% while causing no mutations."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle17"
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh/New()
 	..()
