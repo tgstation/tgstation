@@ -795,11 +795,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small,
 /obj/machinery/flasher{
 	id = "AI";
@@ -815,14 +810,6 @@
 	pixel_y = 2;
 	req_access_txt = "16"
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
 "abW" = (
@@ -832,11 +819,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -30133,7 +30115,6 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bhw" = (
@@ -35575,7 +35556,6 @@
 	},
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen/red,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "btj" = (
@@ -37106,7 +37086,6 @@
 	pixel_x = -1;
 	pixel_y = -1
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bwb" = (
@@ -41610,7 +41589,6 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/qm)
 "bFe" = (

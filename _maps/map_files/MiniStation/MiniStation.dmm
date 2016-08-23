@@ -2557,7 +2557,6 @@
 	on = 1
 	},
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/caution/corner{
 	dir = 4
 	},

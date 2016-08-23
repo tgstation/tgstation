@@ -51,7 +51,7 @@
 		bodies += M
 
 	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = pollCandidates(question, "pAI", null, FALSE, 100)
+	var/list/candidates = pollCandidatesForMobs(question, "pAI", null, FALSE, 100, bodies)
 	while(candidates.len && bodies.len)
 		var/mob/dead/observer/ghost = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)

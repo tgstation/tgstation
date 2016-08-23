@@ -167,7 +167,7 @@
 		for(var/A in bad_se_blocks)
 			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
 	if(efficiency > 5 && prob(20))
-		randmutg(H)
+		randmutvg(H)
 	if(efficiency < 3 && prob(50))
 		var/mob/M = randmutb(H)
 		if(ismob(M))
@@ -197,7 +197,7 @@
 			beginning to regenerate in a cloning pod. You will \
 			become conscious when it is complete.</span>"
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+	H.hardset_dna(ui, H.dna.struc_enzymes, H.real_name, null, mrace, features)
 	if(H)
 		H.faction |= factions
 

@@ -166,7 +166,7 @@
 	blobber.notransform = 1 //stop the naut from moving around
 	blobber.adjustHealth(blobber.maxHealth * 0.5)
 	blob_mobs += blobber
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50, blobber) //players must answer rapidly
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		var/client/C = pick(candidates)
 		blobber.notransform = 0
