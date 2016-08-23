@@ -162,12 +162,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 
-/obj/item/weapon/reagent_containers/glass/bottle/nutrient/srh
-	name = "bottle of Super Robust Harvest"
-	desc = "Contains a very robust fertilizer that increases the yield of a plant by 130% while causing no mutations."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
-
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh/New()
 	..()
 	reagents.add_reagent("robustharvestnutriment", 50)
