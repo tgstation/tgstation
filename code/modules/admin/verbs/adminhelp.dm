@@ -169,3 +169,18 @@
 		message["crossmessage"] = type
 
 		world.Export("[global.cross_address]?[list2params(message)]")
+
+
+/proc/ircadminwho()
+	var/msg = "Admins: "
+	for(var/client/C in admins)
+		msg += "[C] "
+
+		if(C.holder.fakekey)
+			msg += "(Stealth)"
+
+		if(C.is_afk())
+			msg += "(AFK)"
+		msg += ", "
+
+	return msg
