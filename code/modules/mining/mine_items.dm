@@ -515,6 +515,7 @@
 	shuttleId = "colony_drop"
 	desc = "Allows a deployable expedition base to be dropped from the station to a designated mining location. It can also \
 interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
+	var/launch_warning = TRUE
 
 	req_access = list(access_heads)
 	possible_destinations = null
@@ -530,7 +531,10 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(z != ZLEVEL_STATION && shuttleId == "colony_drop")
 			usr << "<span class='warning'>You can't move the base again!</span>"
 			return 0
-		playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
+		if(launch_warning)
+			say("<span class='danger'>Launch sequence activated! Prepare for drop!</span>")
+			playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
+			launch_warning = FALSE
 		feedback_add_details("colonies_dropped") //Number of times a base has been dropped!
 	..()
 
