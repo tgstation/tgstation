@@ -1137,6 +1137,22 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	H.regenerate_icons()
 
 #undef ON_PURRBATION
+
+/client/proc/spawn_human()
+	set category = "Fun"
+	set name = "Spawn Human"
+	set desc = "Spawns a normal Human"
+
+	if(!holder)
+		return
+
+	var/turf/T = get_turf(usr)
+	new /mob/living/carbon/human(T)
+	message_admins("[key_name_admin(usr)] spawned a human.")
+	log_admin("[key_name(usr)] spawned a human.")
+	feedback_add_details("admin_verb","SH")
+
+
 /*
 /client/proc/reset_atmos()
 	set name = "Clean Air"

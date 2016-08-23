@@ -81,6 +81,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
 	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
 
+	var/alternate_screams = list() // This is used to add alternate scream sounds to mobs when equipped
+
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	var/sharpness = IS_BLUNT

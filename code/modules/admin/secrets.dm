@@ -103,9 +103,8 @@
 			D.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(D), slot_w_uniform)
 			D.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(D), slot_shoes)
 			D.equip_to_slot_or_del(new /obj/item/weapon/card/id/admin(D), slot_wear_id)
-			D.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(D), slot_ears)
+			D.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cent(D), slot_ears)
 			D.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(D), slot_back)
-			D.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(D.back), slot_in_backpack)
 		//	T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/misc/adminspawn.ogg',5)
 			D.name = "Admin"
 			D.real_name = "Admin"

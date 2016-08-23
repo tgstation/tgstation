@@ -168,6 +168,20 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	alternate_screams = list('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg')
+
+/obj/item/clothing/suit/xenos/equipped(mob/living/carbon/user, slot)
+	if(slot == slot_wear_suit)
+		user.add_screams(src.alternate_screams)
+	else
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.reindex_screams()
+		else
+			user.reindex_screams()
+
+	return ..()
+
 
 /obj/item/clothing/head/fedora
 	name = "fedora"

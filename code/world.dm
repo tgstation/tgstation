@@ -119,7 +119,7 @@ var/last_irc_status = 0
 		s["revision_date"] = revdata.date
 
 		var/list/adm = get_admin_counts()
-		//var/mentors = 0
+		var/mentors = 0
 		for(var/client/C in clients)
 			var/mentor = mentor_datums[C.ckey]
 			if(mentor)
@@ -130,6 +130,7 @@ var/last_irc_status = 0
 				admins++
 
 		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
+		s["mentors"] = mentors
 		s["gamestate"] = 1
 		if(ticker)
 			s["gamestate"] = ticker.current_state

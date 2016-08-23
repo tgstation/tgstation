@@ -582,3 +582,26 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
+
+/obj/item/clothing/under/cosby
+	name = "sweater"
+	desc = "Zip zap zoobity bap"
+	icon_state = "cosby"
+	item_state = "r_suit" //bleh
+	item_color = "cosby"
+	can_adjust = 0
+	force = 0.001 	//TG doesn't have the forcehitsound that Hippie has at the moment, so this is just a hacky solution until or unless we figure something out -DerptheStewpidGoat
+	alternate_screams = list('sound/voice/cosby1.ogg','sound/voice/cosby2.ogg','sound/voice/cosby3.ogg','sound/voice/cosby4.ogg','sound/voice/cosby5.ogg')
+	burn_state = -1
+
+/obj/item/clothing/under/cosby/equipped(mob/living/carbon/user, slot)
+	if(slot == slot_w_uniform)
+		user.add_screams(src.alternate_screams) // using src to clarify which list we want
+	else
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.reindex_screams() // Use the more robust version
+		else
+			user.reindex_screams()
+
+	return ..()

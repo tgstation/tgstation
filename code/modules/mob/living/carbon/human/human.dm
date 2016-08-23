@@ -1090,3 +1090,26 @@
 			Weaken(10)
 		return 1
 	..()
+
+/mob/living/carbon/human/reindex_screams()
+	..()
+
+	// Check equipped items for alternate screams
+	if(ears)
+		add_screams(ears.alternate_screams)
+	if(wear_suit)
+		add_screams(wear_suit.alternate_screams)
+	if(w_uniform)
+		add_screams(w_uniform.alternate_screams)
+	if(glasses)
+		add_screams(glasses.alternate_screams)
+	if(gloves)
+		add_screams(gloves.alternate_screams)
+	if(shoes)
+		add_screams(shoes.alternate_screams)
+	if(belt)
+		add_screams(belt.alternate_screams)
+	if(s_store)
+		add_screams(s_store.alternate_screams)
+	if(wear_id)
+		add_screams(wear_id.alternate_screams)

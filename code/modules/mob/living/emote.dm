@@ -9,6 +9,9 @@
 		return
 
 	var/param = null
+	var/delay = 5
+	if(src.spam_flag == 1)
+		return
 
 	if (findtext(act, "-", 1, null)) //Removes dashes for npcs "EMOTE-PLAYERNAME" or something like that, I ain't no AI coder. It's not for players. -Sum99
 		var/t1 = findtext(act, "-", 1, null)
@@ -212,10 +215,20 @@
 		if ("pout","pouts")
 			message = "<B>[src]</B> pouts."
 			m_type = 2
-		
+
 		if ("scream","screams")
+			var/sound = pick('sound/misc/scream_m1.ogg', 'sound/misc/scream_m2.ogg')
+			if(gender == FEMALE)
+				sound = pick('sound/misc/scream_f1.ogg', 'sound/misc/scream_f2.ogg')
+			if(isalien(src))
+				sound = pick('sound/voice/hiss6.ogg')
+			// if(issilicon(src))
+			// 	sound = pick('sound/voice/screamsilicon.ogg')
+			playsound(src.loc, sound, 50, 1, 10, 1.2)
 			message = "<B>[src]</B> screams!"
+			src.adjustOxyLoss(5)
 			m_type = 2
+			delay = 15
 
 		if ("scowl","scowls")
 			message = "<B>[src]</B> scowls."
@@ -334,6 +347,9 @@
 
 	if (message)
 		log_emote("[name]/[key] : [message]")
+		src.spam_flag = 1
+		spawn(delay)
+			src.spam_flag = 0
 
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.
