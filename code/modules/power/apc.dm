@@ -1150,6 +1150,14 @@
 
 
 /obj/machinery/power/apc/proc/energy_fail(duration)
+	for(var/obj/machinery/M in area.contents)
+		if(M.critical_machine)
+			return
+	for(var/A in ai_list)
+		var/mob/living/silicon/ai/I = A
+		if(get_area(I) == area)
+			return
+
 	failure_timer = max(failure_timer, round(duration))
 
 

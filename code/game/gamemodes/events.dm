@@ -57,7 +57,6 @@
 		S.charge = S.capacity
 		S.output_level = S.output_level_max
 		S.output_attempt = 1
-		S.failure_timer = 0
 		S.update_icon()
 		S.power_change()
 	for(var/area/A in world)
@@ -76,7 +75,6 @@
 		S.charge = S.capacity
 		S.output_level = S.output_level_max
 		S.output_attempt = 1
-		S.failure_timer = 0
 		S.update_icon()
 		S.power_change()
 

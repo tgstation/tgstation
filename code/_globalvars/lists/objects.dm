@@ -1,5 +1,4 @@
 var/global/list/cable_list = list()					//Index for all cables, so that powernets don't have to look through the entire world all the time
-var/global/list/smes_list = list()					//list of all SMES
 var/global/list/portals = list()					//list of all /obj/effect/portal
 var/global/list/airlocks = list()					//list of all airlocks
 var/global/list/mechas_list = list()				//list of all mechs. Used by hostile mobs target tracking.
