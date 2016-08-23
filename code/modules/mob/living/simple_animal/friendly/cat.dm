@@ -115,7 +115,7 @@
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 	family = list()
 	if(!dead)
-		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
+		for(var/mob/living/simple_animal/pet/cat/kitten/C in mob_list)
 			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
 				continue
 			if(C.type in family)

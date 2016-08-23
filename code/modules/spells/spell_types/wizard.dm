@@ -385,3 +385,24 @@
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
 	..(targets, user, 3)
+
+/obj/effect/proc_holder/spell/targeted/sacred_flame
+	name = "Sacred Flame"
+	desc = "Makes everyone around you more flammable, and lights yourself on fire."
+	charge_max = 60
+	clothes_req = 0
+	invocation = "FI'RAN DADISKO"
+	invocation_type = "shout"
+	max_targets = 0
+	range = 6
+	include_user = 1
+	selection_type = "view"
+	action_icon_state = "sacredflame"
+	sound = "sound/magic/Fireball.ogg"
+
+/obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
+	for(var/mob/living/L in targets)
+		L.adjust_fire_stacks(20)
+	if(isliving(user))
+		var/mob/living/U = user
+		U.IgniteMob()
