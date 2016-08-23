@@ -211,7 +211,7 @@
 		for(var/obj/item/modkit/M in H.modkits)
 			current_mod_capacity += M.cost
 		var/obj/item/modkit/aoe/turfs/T = new/obj/item/modkit/aoe/turfs(H)
-		if((current_mod_capacity + T.cost) > max_mod_capacity)
+		if((current_mod_capacity + T.cost) > H.max_mod_capacity)
 			usr << "<span class='notice'>This unit has no space for additional modkits!</span>"
 			qdel(T)
 			return
