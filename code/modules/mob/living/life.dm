@@ -8,7 +8,12 @@
 	if (notransform)
 		return
 	if(!loc)
-		return
+		if(client)
+			for(var/obj/effect/landmark/error/E in landmarks_list)
+				loc = E.loc
+				break
+		else
+			return
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
@@ -45,7 +50,6 @@
 	if(stat != DEAD)
 		handle_disabilities() // eye, ear, brain damages
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
-
 
 
 /mob/living/proc/handle_breathing()

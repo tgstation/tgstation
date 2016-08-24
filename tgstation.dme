@@ -956,6 +956,7 @@
 #include "code\modules\awaymissions\gateway.dm"
 #include "code\modules\awaymissions\pamphlet.dm"
 #include "code\modules\awaymissions\signpost.dm"
+#include "code\modules\awaymissions\super_secret_room.dm"
 #include "code\modules\awaymissions\zlevel.dm"
 #include "code\modules\awaymissions\maploader\dmm_suite.dm"
 #include "code\modules\awaymissions\maploader\reader.dm"
