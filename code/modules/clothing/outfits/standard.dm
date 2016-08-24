@@ -168,7 +168,8 @@
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/projectile/revolver/mateba,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
-
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/syndieminibomb,1) //You can replace this with a HE grenade, and the kit already comes with a syndicate ID
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/implanter/adrenalin,1)
 	var/obj/item/device/pda/heads/pda = H.belt
 	pda.owner = H.real_name
 	pda.ownjob = "Reaper"
