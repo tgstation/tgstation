@@ -3,7 +3,9 @@
 
 The Hierophant
 
-The Hierophant spawns somewhere who knows
+The Hierophant spawns in its arena, an area designed to make it harder to fight than it would otherwise be.
+
+The text this boss speaks is ROT4, use ROT22 to decode
 
 The Hierophant's attacks are as follows, and INTENSIFY at a random chance based on Hierophant's health;
 - Creates a cardinal or diagonal blast(Cross Blast) under its target, exploding after a short time.
@@ -22,7 +24,7 @@ The Hierophant's attacks are as follows, and INTENSIFY at a random chance based 
 Cross Blasts and the AoE burst gain additional range as the Hierophant loses health, while Chasers gain additional speed.
 
 When The Hierophant dies, it leaves behind its staff, which, while much weaker than when wielded by The Hierophant itself, is still quite effective.
-- The rune it teleports back to also becomes avalible for use, allowing you, too, to teleport to it at will.
+- The staff can place a teleport rune, allowing the user to teleport themself and their allies to the rune.
 
 Difficulty: Hard
 
@@ -34,6 +36,7 @@ Difficulty: Hard
 	health = 2500
 	maxHealth = 2500
 	attacktext = "clubs"
+	//attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	attack_sound = "swing_hit"
 	icon_state = "hierophant"
 	icon_living = "hierophant"
@@ -79,12 +82,14 @@ Difficulty: Hard
 			timeout_time--
 		if(timeout_time <= 0 && !did_reset)
 			did_reset = TRUE
-			adjustHealth((health - maxHealth)*0.5) //heal for 50% of our missing health
-			if(spawned_rune.z != z || get_dist(src, spawned_rune) > 2)
-				blink(spawned_rune)
-			else
-				Goto(spawned_rune, move_to_delay, 0)
+			//visible_message("<span class='hierophant'>\"Vixyvrmrk xs fewi...\"</span>")
+			blink(spawned_rune)
+			adjustHealth((health - maxHealth) * 0.5) //heal for 50% of our missing health
 			wander = FALSE
+			/*if(health > maxHealth * 0.9)
+				visible_message("<span class='hierophant'>\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\"</span>")
+			else
+				visible_message("<span class='hierophant'>\"Vitemvw gsqtpixi. Stivexmsrep ijjmgmirgc gsqtvsqmwih.\"</span>")*/
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
 	if(health > 0 || stat == DEAD)
@@ -94,6 +99,7 @@ Difficulty: Hard
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		animate(src, alpha = 0, color = "660099", time = 20, easing = EASE_OUT)
 		burst_range = 10
+		//visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] disappears in a massive burst of magic, leaving only its staff.</span>")
 		burst(get_turf(src))
 		..()
@@ -106,15 +112,24 @@ Difficulty: Hard
 	for(var/obj/item/W in L)
 		if(!L.unEquip(W))
 			qdel(W)
+	/*visible_message(
+		"<span class='hierophant'>\"Wsyvgi sj irivkc xettih. Vitemvmrk...\"</span>\n<span class='hierophant_warning'>[src] annihilates [L]!</span>",
+		"<span class='userdanger'>You annihilate [L], restoring your health!</span>")*/
 	visible_message(
 		"<span class='hierophant'>\"Caw.\"</span>\n<span class='hierophant_warning'>[src] annihilates [L]!</span>",
 		"<span class='userdanger'>You annihilate [L], restoring your health!</span>")
 	adjustHealth(-L.maxHealth*0.5)
 	L.dust()
 
+/*/mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
+	var/targets_the_same = (new_target == target)
+	. = ..()
+	if(. && !targets_the_same)
+		visible_message("<span class='hierophant'>\"Xevkix psgexih.\"</span>")*/
+
 /mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount)
 	. = ..()
-	if(src && amount > 0)
+	if(src && amount > 0 && !blinking)
 		wander = TRUE
 		did_reset = FALSE
 
@@ -130,6 +145,8 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Move()
 	if(!blinking)
+		/*if(!stat)
+			playsound(loc, 'sound/mecha/mechmove04.ogg', 100, 1)*/
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Goto(target, delay, minimum_distance)
@@ -167,6 +184,7 @@ Difficulty: Hard
 		switch(pick(possibilities))
 			if("blink_spam") //blink either once or multiple times.
 				if(health < maxHealth * 0.5)
+					//visible_message("<span class='hierophant'>\"Mx ampp rsx iwgeti.\"</span>")
 					var/counter = 1 + round(anger_modifier * 0.08)
 					while(health && target && counter)
 						if(loc == target.loc) //we're on the same tile as them after about a second we can stop now
@@ -180,22 +198,27 @@ Difficulty: Hard
 				else
 					blink(target)
 			if("cross_blast_spam") //fire a lot of cross blasts at a target.
+				//visible_message("<span class='hierophant'>\"Piezi mx rsalivi xs vyr.\"</span>")
 				blinking = TRUE
 				animate(src, color = "#660099", time = 6)
 				var/counter = 1 + round(anger_modifier * 0.12)
 				while(health && target && counter)
 					counter--
+					var/bonus_delay = 0
 					if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
 						addtimer(src, "alldir_blasts", 0, FALSE, target)
+						bonus_delay = 2 //this attack is mean, give them a little chance to dodge
 					else if(prob(60))
 						addtimer(src, "cardinal_blasts", 0, FALSE, target)
 					else
 						addtimer(src, "diagonal_blasts", 0, FALSE, target)
-					sleep(6)
+						bonus_delay = -1 //this one isn't so mean, so do the next one faster(if there is one)
+					sleep(6 + bonus_delay)
 				animate(src, color = initial(color), time = 10)
 				sleep(10)
 				blinking = FALSE
 			if("chaser_swarm") //fire four fucking chasers at a target and their friends.
+				//visible_message("<span class='hierophant'>\"Mx gerrsx lmhi.\"</span>")
 				blinking = TRUE
 				animate(src, color = "#660099", time = 10)
 				var/list/targets = ListTargets()
@@ -216,7 +239,7 @@ Difficulty: Hard
 				blinking = FALSE
 		return
 
-	if(prob(10 + (anger_modifier * 0.5)))
+	if(prob(10 + (anger_modifier * 0.5)) && get_dist(src, target) > 2)
 		blink(target)
 
 	else if(prob(70 - anger_modifier)) //a cross blast of some type
@@ -249,6 +272,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(victim)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/diagonal, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in diagonals)
@@ -258,6 +282,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(victim)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in cardinal)
@@ -267,6 +292,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(victim)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 	for(var/d in alldirs)
@@ -289,7 +315,9 @@ Difficulty: Hard
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, src))
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	//playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
 	playsound(source,'sound/magic/blink.ogg', 200, 1)
+	//playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
 	blinking = TRUE
 	sleep(2) //short delay before we start...
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, src))
@@ -322,12 +350,14 @@ Difficulty: Hard
 		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, src, FALSE))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original) //release a wave of blasts
 	playsound(original,'sound/magic/blink.ogg', 200, 1)
+	//playsound(original,'sound/machines/AirlockOpen.ogg', 200, 1)
 	var/last_dist = 0
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
@@ -452,7 +482,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	playsound(T,'sound/magic/Blind.ogg', 200, 1, -4) //make a sound
+	playsound(T,'sound/magic/Blind.ogg', 125, 1, -5) //make a sound
 	sleep(6) //wait a little
 	var/timing = 10 //oop, we're damaging stuff now!
 	while(src && !qdeleted(src) && timing && T)
@@ -465,8 +495,9 @@ Difficulty: Hard
 				flash_color(L.client, "#660099", 1)
 			playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
 			L << "<span class='userdanger'>You're struck by a [name]!</span>"
-			var/armor = L.run_armor_check("chest", "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
-			L.apply_damage(damage, BURN, "chest", armor)
+			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
+			var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
+			L.apply_damage(damage, BURN, limb_to_hit, armor)
 			if(ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid))
 				L.adjustBruteLoss(damage)
 			add_logs(caster, L, "struck with a [name]")

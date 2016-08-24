@@ -738,6 +738,7 @@
 	w_class = 4
 	force = 20
 	hitsound = "swing_hit"
+	//hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
 	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
 	var/chaser_cooldown = 101 //how long the cooldown between firing chasers at mobs is
@@ -809,7 +810,9 @@
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, user))
 		playsound(T,'sound/magic/blink.ogg', 200, 1)
+		//playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
 		playsound(source,'sound/magic/blink.ogg', 200, 1)
+		//playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
 		if(!do_after(user, 3, target = user) || !rune) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
@@ -861,6 +864,7 @@
 		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, user))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, user, friendly_fire_check))
 	for(var/d in cardinal)
@@ -884,6 +888,7 @@
 		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, friendly_fire_check))
