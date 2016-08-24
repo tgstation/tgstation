@@ -1,21 +1,21 @@
 
-// Available as custom loadout item, this is literally the worst possible cheap tablet
-/obj/item/modular_computer/tablet/preset/cheap/New()
-	. = ..()
+// This is literally the worst possible cheap tablet
+/obj/item/device/modular_computer/tablet/preset/cheap
 	desc = "A low-end tablet often seen among low ranked station personnel."
-	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
-	battery_module = new/obj/item/weapon/computer_hardware/battery_module/micro(src)
-	battery_module.charge_to_full()
-	hard_drive = new/obj/item/weapon/computer_hardware/hard_drive/micro(src)
-	network_card = new/obj/item/weapon/computer_hardware/network_card(src)
+
+/obj/item/device/modular_computer/tablet/preset/cheap/New()
+	. = ..()
+	install_component(new /obj/item/weapon/computer_hardware/processor_unit/small)
+	install_component(new /obj/item/weapon/computer_hardware/battery(src, /obj/item/weapon/stock_parts/cell/computer/micro))
+	install_component(new /obj/item/weapon/computer_hardware/hard_drive/small)
+	install_component(new /obj/item/weapon/computer_hardware/network_card)
 
 // Alternative version, an average one, for higher ranked positions mostly
-/obj/item/modular_computer/tablet/preset/advanced/New()
+/obj/item/device/modular_computer/tablet/preset/advanced/New()
 	. = ..()
-	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
-	battery_module = new/obj/item/weapon/computer_hardware/battery_module(src)
-	battery_module.charge_to_full()
-	hard_drive = new/obj/item/weapon/computer_hardware/hard_drive/small(src)
-	network_card = new/obj/item/weapon/computer_hardware/network_card(src)
-	nano_printer = new/obj/item/weapon/computer_hardware/nano_printer(src)
-	card_slot = new/obj/item/weapon/computer_hardware/card_slot(src)
+	install_component(new /obj/item/weapon/computer_hardware/processor_unit/small)
+	install_component(new /obj/item/weapon/computer_hardware/battery(src, /obj/item/weapon/stock_parts/cell/computer))
+	install_component(new /obj/item/weapon/computer_hardware/hard_drive/small)
+	install_component(new /obj/item/weapon/computer_hardware/network_card)
+	install_component(new /obj/item/weapon/computer_hardware/card_slot)
+	install_component(new /obj/item/weapon/computer_hardware/printer/mini)

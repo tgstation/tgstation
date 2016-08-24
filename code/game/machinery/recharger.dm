@@ -7,8 +7,8 @@
 	use_power = 1
 	idle_power_usage = 4
 	active_power_usage = 250
-	var/obj/item/weapon/charging = null
-	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/weapon/computer_hardware/battery_module,/obj/item/laptop,/obj/item/modular_computer/)
+	var/obj/item/charging = null
+	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/device/modular_computer)
 	var/recharge_coeff = 1
 
 /obj/machinery/recharger/New()
@@ -37,9 +37,7 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 		return
 
-	var/allowed = 0
-	for (var/allowed_type in allowed_devices)
-		if (istype(G, allowed_type)) allowed = 1
+	var/allowed = is_type_in_list(G, allowed_devices)
 
 	if(allowed)
 		if(anchored)
@@ -132,28 +130,10 @@
 				use_power(200 * recharge_coeff)
 				using_power = 1
 
-		if(istype(charging, /obj/item/laptop))
-			var/obj/item/laptop/L = charging
-			if(L.stored_computer.cpu.battery_module)
-				var/obj/item/weapon/computer_hardware/battery_module/B = L.stored_computer.cpu.battery_module
-				if(B.battery)
-					if(B.battery.charge < B.battery.maxcharge)
-						B.battery.give(B.battery.chargerate * recharge_coeff)
-						use_power(200 * recharge_coeff)
-						using_power = 1
-
-		if(istype(charging, /obj/item/weapon/computer_hardware/battery_module))
-			var/obj/item/weapon/computer_hardware/battery_module/B = charging
-			if(B.battery)
-				if(B.battery.charge < B.battery.maxcharge)
-					B.battery.give(B.battery.chargerate * recharge_coeff)
-					use_power(200 * recharge_coeff)
-					using_power = 1
-
-		if(istype(charging, /obj/item/modular_computer))
-			var/obj/item/modular_computer/C = charging
+		if(istype(charging, /obj/item/device/modular_computer))
+			var/obj/item/device/modular_computer/C = charging
 			if(C.battery_module)
-				var/obj/item/weapon/computer_hardware/battery_module/B = C.battery_module
+				var/obj/item/weapon/computer_hardware/battery/B = C.battery_module
 				if(B.battery)
 					if(B.battery.charge < B.battery.maxcharge)
 						B.battery.give(B.battery.chargerate * recharge_coeff)

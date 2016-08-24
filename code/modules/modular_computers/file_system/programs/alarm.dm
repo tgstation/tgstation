@@ -101,6 +101,6 @@
 	. = ..(user)
 	alarmdisplay += src
 
-/datum/computer_file/program/alarm_monitor/kill_program(forced = 0)
+/datum/computer_file/program/alarm_monitor/kill_program(forced = FALSE)
 	alarmdisplay -= src
-	..(forced)
+	..()

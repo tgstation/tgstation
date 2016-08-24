@@ -129,7 +129,7 @@
 			else
 				show_assignments = 1
 		if("PRG_print")
-			if(computer && computer.nano_printer) //This option should never be called if there is no printer
+			if(computer && computer.printer) //This option should never be called if there is no printer
 				if(mod_mode)
 					if(authorized())
 						var/contents = {"<h4>Access Report</h4>
@@ -145,7 +145,7 @@
 							if(A in known_access_rights)
 								contents += "  [get_access_desc(A)]"
 
-						if(!computer.nano_printer.print_text(contents,"access report"))
+						if(!computer.printer.print_text(contents,"access report"))
 							usr << "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>"
 							return
 						else
@@ -155,7 +155,7 @@
 									<br>
 									[data_core ? data_core.get_manifest(0) : ""]
 									"}
-					if(!computer.nano_printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
+					if(!computer.printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
 						usr << "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>"
 						return
 					else
@@ -337,7 +337,7 @@
 	data["assignments"] = show_assignments
 	if(computer)
 		data["have_id_slot"] = !!computer.card_slot
-		data["have_printer"] = !!computer.nano_printer
+		data["have_printer"] = !!computer.printer
 		if(!computer.card_slot && mod_mode == 1)
 			mod_mode = 0 //We can't modify IDs when there is no card reader
 	else
