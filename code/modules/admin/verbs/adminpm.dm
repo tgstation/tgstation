@@ -176,6 +176,7 @@
 		for(var/client/X in admins)
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" //inform X
 	else
+		window_flash(C)
 		log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
 		for(var/client/X in admins)
@@ -209,7 +210,7 @@
 	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
 	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
 	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-
+	window_flash(C)
 	//always play non-admin recipients the adminhelp sound
 	C << 'sound/effects/adminhelp.ogg'
 
