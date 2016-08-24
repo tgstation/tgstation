@@ -161,7 +161,15 @@ var/last_irc_status = 0
 				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 				for(var/obj/machinery/computer/communications/CM in machines)
 					CM.overrideCooldown()
-
+#define CHAT_OOC 1
+			if(input["crossmessage"] == "OOC")
+				for(var/client/C in clients)
+					if(C.prefs.chat_toggles & CHAT_OOC)
+						var/sender_key = input["message_sender"]
+						var/color_of_memes = "#002eb8"
+						if(!(sender_key in C.prefs.ignoring))
+							C << "<font color='[color_of_memes]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[input["message_sender"]]:</EM> <span class='message'>[input["message"]]</span></span></font>"
+#undef CHAT_OOC
 	else if("adminmsg" in input)
 		if(!key_valid)
 			return "Bad Key"
