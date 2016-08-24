@@ -248,18 +248,16 @@
 		else
 			change_stack(user,stackmaterial)
 			user << "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>"
-	return
 
 /obj/item/stack/proc/change_stack(mob/user,amount)
 	var/obj/item/stack/F = new src.type(user, amount)
 	. = F
 	F.copy_evidences(src)
 	user.put_in_hands(F)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount)
-	if (src && usr.machine==src)
-		spawn(0) src.interact(usr)
+	spawn(0) src.interact(usr)
 
 
 
