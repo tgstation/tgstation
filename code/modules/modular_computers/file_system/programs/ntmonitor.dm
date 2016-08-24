@@ -58,6 +58,7 @@
 			. = 1
 			if(ntnet_global)
 				ntnet_global.purge_logs()
+				return 1
 		if("updatemaxlogs")
 			. = 1
 			var/mob/user = usr

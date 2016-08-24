@@ -67,6 +67,7 @@
 		)))
 
 	data["hardware"] = all_entries
+
 	return data
 
 

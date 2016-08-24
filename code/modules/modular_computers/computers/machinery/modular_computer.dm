@@ -1,3 +1,5 @@
+
+
 // Global var to track modular computers
 var/list/global_modular_computers = list()
 
@@ -27,6 +29,7 @@ var/list/global_modular_computers = list()
 	var/base_active_power_usage = 100								// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
 	var/base_idle_power_usage = 10									// Power usage when the computer is idle and screen is off (currently only applies to laptops)
 
+	var/surgeprotected = SURGE_PROTECTION_NONE
 	var/_max_damage = 100
 	var/_break_damage = 50
 

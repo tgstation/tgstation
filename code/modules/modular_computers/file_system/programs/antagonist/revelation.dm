@@ -15,24 +15,35 @@
 		activate()
 
 /datum/computer_file/program/revelation/proc/activate()
+	var/explosivepower = 1
 	if(computer)
+		if(computer.surgeprotected == SURGE_PROTECTION_NODAMAGE)
+			computer.visible_message("<span class='notice'>\The [computer] emits a buzzing noise and heats up...</span>")
+			return 0
 		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
+		spawn(20)
 		computer.enabled = 0
 		computer.update_icon()
+		var/turf/location = get_turf(holder)
 		qdel(computer.hard_drive)
 		computer.take_damage(25, 10, 1, 1)
-		if(computer.battery_module && prob(25))
+		if(computer.battery_module && prob(75))
+			explosivepower += (computer.battery_module.battery.charge / 750)
 			qdel(computer.battery_module)
 			computer.visible_message("<span class='notice'>\The [computer]'s battery explodes in rain of sparks.</span>")
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()
 		if(istype(computer, /obj/item/modular_computer/processor))
 			var/obj/item/modular_computer/processor/P = computer
-			if(P.machinery_computer.tesla_link && prob(50))
+			if(P.machinery_computer.tesla_link && prob(75))
 				qdel(P.machinery_computer.tesla_link)
 				computer.visible_message("<span class='notice'>\The [computer]'s tesla link explodes in rain of sparks.</span>")
 				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 				spark_system.start()
+				explosivepower += 2
+		if(computer.surgeprotected == SURGE_PROTECTION_NOEXPLODE)
+			return 0
+		explosion(location, 0, max(explosivepower - 2,0), explosivepower, explosivepower + 2)
 
 /datum/computer_file/program/revelation/ui_act(action, params)
 	if(..())
