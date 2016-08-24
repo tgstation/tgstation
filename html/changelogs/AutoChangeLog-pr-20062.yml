@@ -1,0 +1,10 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Adds a KA mod that does damage in an AoE, found only in necropolis chests."
+  - rscadd: "You can now install any KA mods into a mining cyborg, though its mod capacity is slightly lower."
+  - tweak: "Mining cyborgs now have a crowbar to remove mods from their KA."
+  - tweak: "Kinetic Accelerators now have a larger mod capacity, though most mods can still only be installed the same amount of times as they can currently."
+  - tweak: "You can now hit modkits with Kinetic Accelerators to install that modkit into the accelerator. Mining cyborgs are unable to do so."
+  - rscadd: "Added white and adjustably-coloured tracer round mods to the mining equipment vendor, so you can see where your projectile is going(and look cool)."
+  - rscadd: "Added the super and hyper chassis mods to the mining equipment vendor, so you can use excess mod space to have a cool-looking KA."
