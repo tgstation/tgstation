@@ -7,11 +7,12 @@
 	world << sound('sound/misc/highlander.ogg')
 
 	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == 2 || !(H.client)) continue
-		if(is_special_character(H)) continue
+		if(H.stat == DEAD || !(H.client)) continue
 
 		ticker.mode.traitors += H.mind
 		H.mind.special_role = "highlander"
+
+		H.dna.species.specflags |= NOGUNS //nice try jackass
 
 		var/datum/objective/steal/steal_objective = new
 		steal_objective.owner = H.mind

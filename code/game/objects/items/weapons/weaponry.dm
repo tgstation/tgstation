@@ -57,6 +57,8 @@
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>"
 	flags = CONDUCT | NODROP
+	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
+	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved", "gored") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 
 /obj/item/weapon/claymore/highlander/New()
@@ -65,14 +67,21 @@
 
 /obj/item/weapon/claymore/highlander/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	for(var/mob/living/simple_animal/shade/S in src)
+		S << "<span class='userdanger'>Your home breaks apart, and you with it!</span>"
+		qdel(S)
 	return ..()
 
 /obj/item/weapon/claymore/highlander/process()
 	if(isliving(loc))
 		var/mob/living/L = loc
 		if(L.stat == DEAD)
-			L.visible_message("<span class='warning'>[L] explodes in a shower of gore!</span>", "<span class='userdanger'>No! There can be only one...</span>")
+			L << "<span class='userdanger'>You are unworthy.</span>"
+			L.visible_message("<span class='warning'>[L] explodes in a shower of gore!</span>")
+			var/obj/item/organ/brain/B = L.getorgan(/obj/item/organ/brain)
 			L.gib()
+			if(B)
+				qdel(B) //NO SECOND CHANCES
 
 /obj/item/weapon/claymore/highlander/examine(mob/user)
 	..()
@@ -83,6 +92,12 @@
 	. = ..()
 	if(target && target.stat == DEAD && old_target_stat != DEAD && target.mind && target.mind.special_role == "highlander")
 		user.adjustBruteLoss(-200) //STEAL THE LIFE OF OUR FALLEN FOES
+		var/mob/living/simple_animal/shade/S = new(src)
+		S.real_name = "Soul of [target.real_name]"
+		S.name = S.real_name
+		target.mind.transfer_to(S)
+		S.status_flags |= GODMODE
+		S << "<span class='userdanger'>[user]'s blade has claimed your soul! Join them in glorious bloodletting!</span>"
 		add_notch(user)
 
 /obj/item/weapon/claymore/highlander/IsReflect()
@@ -95,7 +110,7 @@
 	switch(notches)
 		if(1)
 			user << "<span class='notice'>Your first kill - hopefully one of many. You scratch a notch into [src]'s blade.</span>"
-			user << "<span class='warning'>You feel your fallen foe's soul melding with your own, restoring your wounds!</span>"
+			user << "<span class='warning'>You feel your fallen foe's soul entering your blade, restoring your wounds!</span>"
 			new_name = "notched claymore"
 		if(2)
 			user << "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the blade.</span>"
