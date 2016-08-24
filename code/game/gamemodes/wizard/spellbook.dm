@@ -867,3 +867,9 @@
 	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse))
 	new real_type(loc)
 	qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/sacredflame
+	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
+	spellname = "sacred flame"
+	icon_state ="booksacredflame"
+	desc = "Become one with the flames that burn within... and invite others to do so as well."
