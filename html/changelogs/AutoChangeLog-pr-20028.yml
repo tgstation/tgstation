@@ -1,4 +1,0 @@
-author: "Shadowlight213"
-delete-after: True
-changes: 
-  - rscadd: "A new event has been added. The automated grid check. All apcs in non critical areas will be shut off for some time, but can be manually rebooted via interaction."

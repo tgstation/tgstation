@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Using a resonator on an existing resonator field will immediately detonate that field. Normal resonators will reduce the damage dealt to 80% of normal, while upgraded resonators will not reduce it at all."
