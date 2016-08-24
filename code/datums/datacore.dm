@@ -65,13 +65,9 @@
 			crimes |= crime
 			return
 
-/datum/datacore/proc/manifest(nosleep = 0)
-	spawn()
-		if(!nosleep)
-			sleep(40)
-		for(var/mob/living/carbon/human/H in player_list)
-			manifest_inject(H)
-		return
+/datum/datacore/proc/manifest()
+	for(var/mob/living/carbon/human/H in player_list)
+		manifest_inject(H)
 
 /datum/datacore/proc/manifest_modify(name, assignment)
 	var/datum/data/record/foundrecord = find_record("name", name, data_core.general)
