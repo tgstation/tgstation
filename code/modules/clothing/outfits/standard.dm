@@ -195,19 +195,14 @@
 	belt = /obj/item/device/pda/heads
 	back = /obj/item/weapon/storage/backpack/black
 
-	backpack_contents = list(/obj/item/weapon/storage/toolbox/syndicate,1)
-
-	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = H.l_hand
-	for(var/obj/item/briefcase_item in sec_briefcase)
-		qdel(briefcase_item)
-	for(var/i=3, i>0, i--)
-		sec_briefcase.handle_item_insertion(new /obj/item/weapon/aiModule/syndicate,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/clusterbuster/emp,2)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/ionrifle,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/implanter/emp,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/aiModule/reset,1)
+	backpack_contents = list(/obj/item/weapon/storage/toolbox/syndicate,1\
+	/obj/item/weapon/aiModule/syndicate,1\
+	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1\
+	/obj/item/weapon/grenade/clusterbuster/emp,2\
+	/obj/item/weapon/gun/energy/ionrifle,1\
+	/obj/item/weapon/grenade/plastic/x4,1\
+	/obj/item/weapon/implanter/emp,1\
+	/obj/item/weapon/aiModule/reset,1)
 	
 /datum/outfit/centcom_commander
 	name = "Centcom Commander"
