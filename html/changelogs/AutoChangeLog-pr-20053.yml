@@ -1,4 +1,0 @@
-author: "Incoming5643"
-delete-after: True
-changes: 
-  - rscadd: "A slight change to the secret satchel system described below: If a satchel cannot be spawned due to there not being enough hidden satchels to choose from, a <b>free</b> empty satchel will spawn hidden SOMEWHERE on the station. Dig it up and bury it with something interesting!"
