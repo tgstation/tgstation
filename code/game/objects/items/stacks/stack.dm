@@ -257,7 +257,6 @@
 	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount)
-	spawn(0) src.interact(usr)
 
 
 
