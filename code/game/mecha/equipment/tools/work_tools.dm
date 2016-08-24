@@ -319,7 +319,8 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/Destroy()
-	chassis.events.clearEvent("onMove",event)
+	if(chassis)
+		chassis.events.clearEvent("onMove",event)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/action(var/obj/item/stack/cable_coil/target)
