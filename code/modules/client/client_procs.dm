@@ -385,7 +385,7 @@ var/next_external_rsc = 0
 			return TRUE
 
 /client/proc/note_randomizer_user()
-	var/const/adminckey = "CID RANDOMIZER DETECTOR"
+	var/const/adminckey = "CID-Error"
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
 	var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id FROM [format_table_name("notes")] WHERE ckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
