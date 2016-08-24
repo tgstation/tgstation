@@ -70,6 +70,8 @@
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
 
+	var/check_randomizer = 0
+
 	//IP Intel vars
 	var/ipintel_email
 	var/ipintel_rating_bad = 1
@@ -402,6 +404,8 @@
 					config.notify_new_player_age = text2num(value)
 				if("irc_first_connection_alert")
 					config.irc_first_connection_alert = 1
+				if("check_randomizer")
+					config.check_randomizer = 1
 				if("ipintel_email")
 					if (value != "ch@nge.me")
 						config.ipintel_email = value

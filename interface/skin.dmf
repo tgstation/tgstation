@@ -631,7 +631,7 @@ menu "menu"
 	elem
 		name = ""
 		category = "&File"
-	elem
+	elem "reconnectbutton"
 		name = "&Reconnect"
 		category = "&File"
 		command = ".reconnect"
