@@ -304,6 +304,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/dangerous/trisword
+	name = "Triple-bladed energy sword"
+	desc = "A very, very dangerous weapon that only the elite of the elite are capable of using. \
+			We found a whole crate of them on an abandoned base, so right now they're very cheap.\
+			Handle with caution."
+	item = /obj/item/weapon/trisword
+	cost = 2
+
 /datum/uplink_item/stealthy_weapons/virus_grenade
 	name = "Fungal Tuberculosis Grenade"
 	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) \
