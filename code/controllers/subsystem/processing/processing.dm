@@ -29,6 +29,6 @@ var/datum/subsystem/processing/SSprocessing
 		if(thing)
 			thing.process(wait)
 		else
-			SSfastprocess.processing -= thing
+			processing -= thing
 		if (MC_TICK_CHECK)
 			return
