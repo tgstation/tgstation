@@ -14,33 +14,33 @@
 
 /obj/item/weapon/computer_hardware/battery/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
-		return 0
+		return FALSE
 
 	if(!istype(I, /obj/item/weapon/stock_parts/cell))
-		return 0
+		return FALSE
 
 	if(battery)
 		user << "<span class='warning'>You try to connect \the [I] to \the [src], but it's connectors are occupied.</span>"
-		return 0
+		return FALSE
 
 	if(I.w_class > holder.max_hardware_size)
 		user << "<span class='warning'>This power cell is too large for \the [holder]!</span>"
-		return 0
+		return FALSE
 
 	if(user && !user.unEquip(I))
-		return 0
+		return FALSE
 
 	battery = I
 	I.forceMove(src)
 	user << "<span class='notice'>You connect \the [I] to \the [src].</span>"
 
-	return 1
+	return TRUE
 
 
 /obj/item/weapon/computer_hardware/battery/try_eject(slot=0, mob/living/user = null)
 	if(!battery)
 		user << "<span class='warning'>There is no power cell connected to \the [src].</span>"
-		return 0
+		return FALSE
 	else
 		battery.forceMove(get_turf(src))
 		user << "<span class='notice'>You detach \the [battery] from \the [src].</span>"
@@ -50,8 +50,8 @@
 			if(holder.enabled && !holder.use_power())
 				holder.shutdown_computer()
 
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 

@@ -44,7 +44,7 @@ var/global/nttransfer_uid = 0
 		if(!remote)
 			crash_download("Connection to remote server lost")
 
-/datum/computer_file/program/nttransfer/kill_program(forced = 0)
+/datum/computer_file/program/nttransfer/kill_program(forced = FALSE)
 	if(downloaded_file) // Client mode, clean up variables for next use
 		finalize_download()
 

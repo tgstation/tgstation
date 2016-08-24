@@ -85,7 +85,7 @@
 			if(!istype(P) || P.program_state == PROGRAM_STATE_KILLED)
 				return
 
-			P.kill_program(1)
+			P.kill_program(forced = TRUE)
 			user << "<span class='notice'>Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed.</span>"
 
 		if("PC_runprogram")
@@ -119,7 +119,6 @@
 			if(P.requires_ntnet && !get_ntnet_status(P.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
 				user << "<span class='danger'>\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning.</span>"
 				return
-			P.emagged = emagged
 			if(P.run_program(user))
 				active_program = P
 				update_icon()

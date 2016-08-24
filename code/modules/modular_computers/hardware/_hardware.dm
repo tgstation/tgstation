@@ -61,16 +61,16 @@
 // Handles damage checks
 /obj/item/weapon/computer_hardware/proc/check_functionality()
 	if(!enabled) // Disabled.
-		return 0
+		return FALSE
 
 	if(damage > damage_failure) // Too damaged to work at all.
-		return 0
+		return FALSE
 
 	if(damage > damage_malfunction) // Still working. Well, sometimes...
 		if(prob(malfunction_probability))
-			return 0
+			return FALSE
 
-	return 1 // Good to go.
+	return TRUE // Good to go.
 
 /obj/item/weapon/computer_hardware/examine(var/mob/user)
 	. = ..()
@@ -101,8 +101,8 @@
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.
 /obj/item/weapon/computer_hardware/proc/try_insert(obj/item/I, mob/living/user = null)
-	return 0
+	return FALSE
 
 // Called when someone tries to eject something from it - card from card reader, etc.
 /obj/item/weapon/computer_hardware/proc/try_eject(slot=0, mob/living/user = null)
-	return 0
+	return FALSE

@@ -31,16 +31,16 @@
 
 /obj/item/weapon/computer_hardware/card_slot/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
-		return 0
+		return FALSE
 
 	if(!istype(I, /obj/item/weapon/card/id))
-		return 0
+		return FALSE
 
 	if(stored_card && stored_card2)
 		user << "<span class='warning'>You try to insert \the [I] into \the [src], but it's slots are occupied.</span>"
-		return 0
+		return FALSE
 	if(user && !user.unEquip(I))
-		return 0
+		return FALSE
 
 	if(!stored_card)
 		stored_card = I
@@ -49,13 +49,13 @@
 	I.forceMove(src)
 	user << "<span class='notice'>You insert \the [I] into \the [src].</span>"
 
-	return 1
+	return TRUE
 
 
 /obj/item/weapon/computer_hardware/card_slot/try_eject(slot=0, mob/living/user = null)
 	if(!stored_card && !stored_card2)
 		user << "<span class='warning'>There are no cards in \the [src].</span>"
-		return 0
+		return FALSE
 
 	var/ejected = 0
 	if(stored_card && (!slot || slot == 1))
@@ -80,5 +80,5 @@
 				P.event_idremoved(1, slot)
 
 		user << "<span class='notice'>You remove the card[ejected>1 ? "s" : ""] from \the [src].</span>"
-		return 1
-	return 0
+		return TRUE
+	return FALSE

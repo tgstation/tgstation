@@ -27,7 +27,7 @@
 		return 0
 
 	// Attempting to download antag only program, but without having emagged computer. No.
-	if(PRG.available_on_syndinet && !emagged)
+	if(PRG.available_on_syndinet && !computer.emagged)
 		return 0
 
 	if(!computer || !computer.hard_drive || !computer.hard_drive.can_store_file(PRG))
@@ -101,7 +101,6 @@
 	return 0
 
 /datum/computer_file/program/ntnetdownload/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
 
@@ -113,7 +112,6 @@
 		ui.set_autoupdate(state = 1)
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
-
 	my_computer = computer
 
 	if(!istype(my_computer))
@@ -146,7 +144,7 @@
 			"size" = P.size
 			)))
 		data["hackedavailable"] = 0
-		if(emagged) // If we are running on emagged computer we have access to some "bonus" software
+		if(computer.emagged) // If we are running on emagged computer we have access to some "bonus" software
 			var/list/hacked_programs[0]
 			for(var/S in ntnet_global.available_antag_software)
 				var/datum/computer_file/program/P = S

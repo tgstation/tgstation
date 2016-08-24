@@ -64,7 +64,7 @@
 	..()
 
 /obj/item/device/modular_computer/Destroy()
-	kill_program(1)
+	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
 	for(var/H in all_components)
 		qdel(H)
@@ -241,7 +241,6 @@
 		if(active_program.program_state != PROGRAM_STATE_KILLED)
 			active_program.process_tick()
 			active_program.ntnet_status = get_ntnet_status()
-			active_program.emagged = emagged
 		else
 			active_program = null
 
@@ -250,7 +249,6 @@
 		if(P.program_state != PROGRAM_STATE_KILLED)
 			P.process_tick()
 			P.ntnet_status = get_ntnet_status()
-			P.emagged = emagged
 		else
 			idle_threads.Remove(P)
 
@@ -313,7 +311,7 @@
 	return data
 
 // Relays kill program request to currently active program. Use this to quit current program.
-/obj/item/device/modular_computer/proc/kill_program(forced = 0)
+/obj/item/device/modular_computer/proc/kill_program(forced = FALSE)
 	if(active_program)
 		active_program.kill_program(forced)
 		active_program = null
@@ -331,19 +329,18 @@
 
 /obj/item/device/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
-		return 0
+		return FALSE
 	return ntnet_global.add_log(text, network_card)
 
 /obj/item/device/modular_computer/proc/shutdown_computer(loud = 1)
-	kill_program(1)
+	kill_program(forced = TRUE)
 	for(var/datum/computer_file/program/P in idle_threads)
-		P.kill_program(1)
+		P.kill_program(forced = TRUE)
 		idle_threads.Remove(P)
 	if(loud)
 		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
 	enabled = 0
 	update_icon()
-	return
 
 
 /obj/item/device/modular_computer/attackby(obj/item/weapon/W as obj, mob/user as mob)

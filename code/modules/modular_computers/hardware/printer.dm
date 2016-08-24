@@ -19,9 +19,9 @@
 
 /obj/item/weapon/computer_hardware/printer/proc/print_text(var/text_to_print, var/paper_title = "")
 	if(!stored_paper)
-		return 0
+		return FALSE
 	if(!check_functionality())
-		return 0
+		return FALSE
 
 	var/obj/item/weapon/paper/P = new/obj/item/weapon/paper(get_turf(holder))
 
@@ -35,22 +35,22 @@
 	P.update_icon()
 	stored_paper--
 	P = null
-	return 1
+	return TRUE
 
 /obj/item/weapon/computer_hardware/printer/try_insert(obj/item/I, mob/living/user = null)
 	if(istype(I, /obj/item/weapon/paper))
 		if(user && !user.unEquip(I))
-			return 0
+			return FALSE
 
 		if(stored_paper >= max_paper)
 			user << "<span class='warning'>You try to add \the [I] into [src], but it's paper bin is full!</span>"
-			return 0
+			return FALSE
 
 		user << "<span class='notice'>You insert \the [I] into [src]'s paper recycler.</span>"
 		qdel(I)
 		stored_paper++
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/computer_hardware/printer/mini
 	name = "miniprinter"

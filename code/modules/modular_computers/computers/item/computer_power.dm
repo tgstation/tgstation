@@ -1,20 +1,20 @@
 // Tries to draw power from charger or, if no operational charger is present, from power cell.
 /obj/item/device/modular_computer/proc/use_power(amount = 0)
 	if(check_power_override())
-		return 1
+		return TRUE
 
 	if(recharger && recharger.check_functionality())
 		if(recharger.use_power(amount))
-			return 1
+			return TRUE
 
 	if(battery_module && battery_module.battery && battery_module.battery.charge)
 		var/obj/item/weapon/stock_parts/cell/cell = battery_module.battery
 		if(cell.use(amount * CELLRATE))
-			return 1
+			return TRUE
 		else // Discharge the cell anyway.
 			cell.use(min(amount*CELLRATE, cell.charge))
-			return 0
-	return 0
+			return FALSE
+	return FALSE
 
 /obj/item/device/modular_computer/proc/give_power(amount)
 	if(battery_module && battery_module.battery)
@@ -45,11 +45,11 @@
 
 	if(use_power(power_usage))
 		last_power_usage = power_usage
-		return 1
+		return TRUE
 	else
 		power_failure()
-		return 0
+		return FALSE
 
 // Used by child types if they have other power source than battery or recharger
 /obj/item/device/modular_computer/proc/check_power_override()
-	return 0
+	return FALSE
