@@ -75,6 +75,9 @@
 /obj/item/weapon/claymore/highlander/process()
 	if(isliving(loc))
 		var/mob/living/L = loc
+		L.SetStunned(0)
+		L.SetWeakened(0)
+		L.SetParalysis(0)
 		if(L.stat == DEAD)
 			L << "<span class='userdanger'>You are unworthy.</span>"
 			L.visible_message("<span class='warning'>[L] explodes in a shower of gore!</span>")
