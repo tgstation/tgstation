@@ -733,7 +733,7 @@
 	id = "laptop"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 1000)
-	build_path = /obj/item/modular_computer/laptop/buildable
+	build_path = /obj/item/device/modular_computer/laptop/buildable
 	category = list("initial","Misc")
 
 /datum/design/tablet
@@ -741,5 +741,5 @@
 	id = "tablet"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
-	build_path = /obj/item/modular_computer/tablet
+	build_path = /obj/item/device/modular_computer/tablet
 	category = list("initial","Misc")

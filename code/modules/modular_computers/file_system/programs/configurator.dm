@@ -12,7 +12,7 @@
 	size = 4
 	available_on_ntnet = 0
 	requires_ntnet = 0
-	var/obj/item/modular_computer/movable = null
+	var/obj/item/device/modular_computer/movable = null
 
 
 /datum/computer_file/program/computerconfig/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)

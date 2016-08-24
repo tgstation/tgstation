@@ -1,4 +1,4 @@
-/obj/item/modular_computer/proc/can_install_component(obj/item/weapon/computer_hardware/H, mob/living/user = null)
+/obj/item/device/modular_computer/proc/can_install_component(obj/item/weapon/computer_hardware/H, mob/living/user = null)
 	if(!H.can_install(src, user))
 		return 0
 
@@ -37,7 +37,7 @@
 
 
 // Installs component.
-/obj/item/modular_computer/proc/install_component(obj/item/weapon/computer_hardware/H, mob/living/user = null)
+/obj/item/device/modular_computer/proc/install_component(obj/item/weapon/computer_hardware/H, mob/living/user = null)
 	if(!can_install_component(H, user))
 		return 0
 
@@ -73,7 +73,7 @@
 
 
 // Uninstalls component.
-/obj/item/modular_computer/proc/uninstall_component(obj/item/weapon/computer_hardware/H, mob/living/user = null)
+/obj/item/device/modular_computer/proc/uninstall_component(obj/item/weapon/computer_hardware/H, mob/living/user = null)
 	if(H.holder != src) // Not our component at all.
 		return 0
 
@@ -109,7 +109,7 @@
 
 
 // Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
-/obj/item/modular_computer/proc/find_hardware_by_name(name)
+/obj/item/device/modular_computer/proc/find_hardware_by_name(name)
 	for(var/i in all_components)
 		var/obj/O = i
 		if(O.name == name)

@@ -1,5 +1,5 @@
 // Operates TGUI
-/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/item/device/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	if(!enabled)
 		if(ui)
 			ui.close()
@@ -38,7 +38,7 @@
 		ui.set_autoupdate(state = 1)
 
 
-/obj/item/modular_computer/ui_data(mob/user)
+/obj/item/device/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["programs"] = list()
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
@@ -52,7 +52,7 @@
 
 
 // Handles user's GUI input
-/obj/item/modular_computer/ui_act(action, params)
+/obj/item/device/modular_computer/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
@@ -127,7 +127,7 @@
 		else
 			return
 
-/obj/item/modular_computer/ui_host()
+/obj/item/device/modular_computer/ui_host()
 	if(physical)
 		return physical
 	return src

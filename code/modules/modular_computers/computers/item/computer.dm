@@ -1,7 +1,7 @@
 // This is the base type that does all the hardware stuff.
 // Other types expand it - tablets use a direct subtypes, and
 // consoles and laptops use "procssor" item that is held inside machinery piece
-/obj/item/modular_computer
+/obj/item/device/modular_computer
 	name = "modular microcomputer"
 	desc = "A small portable microcomputer."
 
@@ -56,14 +56,14 @@
 
 
 
-/obj/item/modular_computer/New()
+/obj/item/device/modular_computer/New()
 	START_PROCESSING(SSobj, src)
 	update_icon()
 	if(!physical)
 		physical = src
 	..()
 
-/obj/item/modular_computer/Destroy()
+/obj/item/device/modular_computer/Destroy()
 	kill_program(1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/H in all_components)
@@ -71,7 +71,7 @@
 	return ..()
 
 // Eject ID card from computer, if it has ID slot with card inside.
-/obj/item/modular_computer/verb/eject_id()
+/obj/item/device/modular_computer/verb/eject_id()
 	set name = "Eject ID"
 	set category = "Object"
 	set src in view(1)
@@ -83,7 +83,7 @@
 		proc_eject_id(usr)
 
 // Eject ID card from computer, if it has ID slot with card inside.
-/obj/item/modular_computer/verb/eject_disk()
+/obj/item/device/modular_computer/verb/eject_disk()
 	set name = "Eject Data Disk"
 	set category = "Object"
 	set src in view(1)
@@ -94,7 +94,7 @@
 	if (usr.canUseTopic(src))
 		proc_eject_disk(usr)
 
-/obj/item/modular_computer/proc/proc_eject_id(mob/user, slot)
+/obj/item/device/modular_computer/proc/proc_eject_id(mob/user, slot)
 	if(!user)
 		user = usr
 
@@ -104,7 +104,7 @@
 
 	card_slot.try_eject(slot, user)
 
-/obj/item/modular_computer/proc/proc_eject_disk(mob/user)
+/obj/item/device/modular_computer/proc/proc_eject_disk(mob/user)
 	if(!user)
 		user = usr
 
@@ -116,7 +116,7 @@
 	if(uninstall_component(portable_drive, user))
 		I.verb_pickup()
 
-/obj/item/modular_computer/AltClick(mob/user)
+/obj/item/device/modular_computer/AltClick(mob/user)
 	..()
 	if(issilicon(user))
 		return
@@ -129,23 +129,23 @@
 
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
-/obj/item/modular_computer/GetAccess()
+/obj/item/device/modular_computer/GetAccess()
 	if(card_slot)
 		return card_slot.GetAccess()
 	return ..()
 
-/obj/item/modular_computer/GetID()
+/obj/item/device/modular_computer/GetID()
 	if(card_slot)
 		return card_slot.GetID()
 	return ..()
 
-/obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
+/obj/item/device/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
 		return attack_self(M)
 	return
 
-/obj/item/modular_computer/attack_ghost(mob/dead/observer/user)
+/obj/item/device/modular_computer/attack_ghost(mob/dead/observer/user)
 	if(enabled)
 		ui_interact(user)
 	else if(IsAdminGhost(user))
@@ -153,7 +153,7 @@
 		if(response == "Yes")
 			turn_on(user)
 
-/obj/item/modular_computer/emag_act(mob/user)
+/obj/item/device/modular_computer/emag_act(mob/user)
 	if(emagged)
 		user << "<span class='warning'>\The [src] was already emagged.</span>"
 		return 0
@@ -162,14 +162,14 @@
 		user << "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>"
 		return 1
 
-/obj/item/modular_computer/examine(mob/user)
+/obj/item/device/modular_computer/examine(mob/user)
 	..()
 	if(damage > broken_damage)
 		user << "<span class='danger'>It is heavily damaged!</span>"
 	else if(damage)
 		user << "<span class='warning'>It is damaged.</span>"
 
-/obj/item/modular_computer/update_icon()
+/obj/item/device/modular_computer/update_icon()
 	cut_overlays()
 	if(!enabled)
 		icon_state = icon_state_unpowered
@@ -186,13 +186,13 @@
 
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
-/obj/item/modular_computer/attack_self(mob/user)
+/obj/item/device/modular_computer/attack_self(mob/user)
 	if(enabled)
 		ui_interact(user)
 	else
 		turn_on(user)
 
-/obj/item/modular_computer/proc/turn_on(mob/user)
+/obj/item/device/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(damage > broken_damage)
 		if(issynth)
@@ -220,7 +220,7 @@
 			user << "<span class='warning'>You press the power button but \the [src] does not respond.</span>"
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/item/modular_computer/process()
+/obj/item/device/modular_computer/process()
 	if(!enabled) // The computer is turned off
 		last_power_usage = 0
 		return 0
@@ -258,7 +258,7 @@
 	//check_update_ui_need()
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
-/obj/item/modular_computer/proc/get_header_data()
+/obj/item/device/modular_computer/proc/get_header_data()
 	var/list/data = list()
 
 	if(battery_module && battery_module.battery)
@@ -313,7 +313,7 @@
 	return data
 
 // Relays kill program request to currently active program. Use this to quit current program.
-/obj/item/modular_computer/proc/kill_program(forced = 0)
+/obj/item/device/modular_computer/proc/kill_program(forced = 0)
 	if(active_program)
 		active_program.kill_program(forced)
 		active_program = null
@@ -323,18 +323,18 @@
 	update_icon()
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
-/obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
+/obj/item/device/modular_computer/proc/get_ntnet_status(specific_action = 0)
 	if(network_card)
 		return network_card.get_signal(specific_action)
 	else
 		return 0
 
-/obj/item/modular_computer/proc/add_log(text)
+/obj/item/device/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
 		return 0
 	return ntnet_global.add_log(text, network_card)
 
-/obj/item/modular_computer/proc/shutdown_computer(loud = 1)
+/obj/item/device/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(1)
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(1)
@@ -346,7 +346,7 @@
 	return
 
 
-/obj/item/modular_computer/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/modular_computer/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	// Insert items into the components
 	for(var/h in all_components)
 		var/obj/item/weapon/computer_hardware/H = h
@@ -411,11 +411,11 @@
 	..()
 
 // Used by processor to relay qdel() to machinery type.
-/obj/item/modular_computer/proc/relay_qdel()
+/obj/item/device/modular_computer/proc/relay_qdel()
 	return
 
 // Perform adjacency checks on our physical counterpart, if any.
-/obj/item/modular_computer/Adjacent(atom/neighbor)
+/obj/item/device/modular_computer/Adjacent(atom/neighbor)
 	if(physical && physical != src)
 		return physical.Adjacent(neighbor)
 	return ..()

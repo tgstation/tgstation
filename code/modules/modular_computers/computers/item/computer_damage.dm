@@ -1,4 +1,4 @@
-/obj/item/modular_computer/proc/take_damage(amount, component_probability, damage_casing = 1, randomize = 1)
+/obj/item/device/modular_computer/proc/take_damage(amount, component_probability, damage_casing = 1, randomize = 1)
 	if(randomize)
 		// 75%-125%, rand() works with integers, apparently.
 		amount *= (rand(75, 125) / 100.0)
@@ -18,24 +18,24 @@
 
 // Stronger explosions cause serious damage to internal components
 // Minor explosions are mostly mitigitated by casing.
-/obj/item/modular_computer/ex_act(severity)
+/obj/item/device/modular_computer/ex_act(severity)
 	take_damage(rand(100,200)/severity, component_probability = 30/severity)
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
-/obj/item/modular_computer/emp_act(severity)
+/obj/item/device/modular_computer/emp_act(severity)
 	take_damage(rand(100,200)/severity, component_probability = 50/severity, damage_casing = 0)
 
 // "Stun" weapons can cause minor damage to components (short-circuits?)
 // "Burn" damage is equally strong against internal components and exterior casing
 // "Brute" damage mostly damages the casing.
-/obj/item/modular_computer/bullet_act(obj/item/projectile/Proj)
+/obj/item/device/modular_computer/bullet_act(obj/item/projectile/Proj)
 	switch(Proj.damage_type)
 		if(BRUTE)
 			take_damage(Proj.damage, component_probability = Proj.damage/2)
 		if(BURN)
 			take_damage(Proj.damage, component_probability = Proj.damage/1.5)
 
-/obj/item/modular_computer/proc/break_apart()
+/obj/item/device/modular_computer/proc/break_apart()
 	physical.visible_message("\The [src] breaks apart!")
 	var/turf/newloc = get_turf(src)
 	new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))

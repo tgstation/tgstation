@@ -52,7 +52,7 @@
 	w_class = 3
 	origin_tech = "engineering=2;powerstorage=1"
 
-/obj/item/weapon/computer_hardware/recharger/wired/can_install(obj/item/modular_computer/M, mob/living/user = null)
+/obj/item/weapon/computer_hardware/recharger/wired/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	if(istype(M.physical, /obj/machinery) && M.physical.anchored)
 		return ..()
 	user << "<span class='warning'>\The [src] is incompatible with portable computers!</span>"
