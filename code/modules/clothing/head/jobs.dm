@@ -88,6 +88,10 @@
 
 	dog_fashion = /datum/dog_fashion/head/beret
 
+/obj/item/clothing/head/beret/highlander
+	desc = "That was white fabric. <i>Was.</i>"
+	flags = NODROP
+	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
 
 //Security
 

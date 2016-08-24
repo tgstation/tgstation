@@ -54,6 +54,83 @@
 	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return(BRUTELOSS)
 
+/obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
+	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>"
+	flags = CONDUCT | NODROP
+	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
+
+/obj/item/weapon/claymore/highlander/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/claymore/highlander/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/weapon/claymore/highlander/process()
+	if(isliving(loc))
+		var/mob/living/L = loc
+		if(L.stat == DEAD)
+			L.visible_message("<span class='warning'>[L] explodes in a shower of gore!</span>", "<span class='userdanger'>No! There can be only one...</span>")
+			L.gib()
+
+/obj/item/weapon/claymore/highlander/examine(mob/user)
+	..()
+	user << "It has [notches] notches scratched into the blade."
+
+/obj/item/weapon/claymore/highlander/attack(mob/living/target, mob/living/user)
+	var/old_target_stat = target.stat
+	. = ..()
+	if(target && target.stat == DEAD && old_target_stat != DEAD && target.mind && target.mind.special_role == "highlander")
+		user.adjustBruteLoss(-200) //STEAL THE LIFE OF OUR FALLEN FOES
+		add_notch(user)
+
+/obj/item/weapon/claymore/highlander/IsReflect()
+	return 1 //YOU THINK YOUR PUNY LASERS CAN STOP ME?
+
+/obj/item/weapon/claymore/highlander/proc/add_notch(mob/living/user)
+	notches++
+	force++
+	var/new_name = name
+	switch(notches)
+		if(1)
+			user << "<span class='notice'>Your first kill - hopefully one of many. You scratch a notch into [src]'s blade.</span>"
+			user << "<span class='warning'>You feel your fallen foe's soul melding with your own, restoring your wounds!</span>"
+			new_name = "notched claymore"
+		if(2)
+			user << "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the blade.</span>"
+			new_name = "double-notched claymore"
+		if(3)
+			user << "<span class='notice'>You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b></span>"
+			new_name = "triple-notched claymore"
+		if(4)
+			user << "<span class='notice'>You've lost count of</span> <span class='boldannounce'>how many you've killed.</span>"
+			new_name = "many-notched claymore"
+		if(5)
+			user << "<span class='boldannounce'>Five voices now echo in your mind, cheering the slaughter.</span>"
+			new_name = "battle-tested claymore"
+		if(6)
+			user << "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>"
+			new_name = "battle-scarred claymore"
+		if(7)
+			user << "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>"
+			new_name = "blood-spattered claymore"
+		if(8)
+			user << "<span class='userdanger'>IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i></span>"
+			new_name = "bloodthirsty claymore"
+		if(9)
+			user << "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>"
+			new_name = "gore-stained claymore"
+		if(10)
+			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
+			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
+			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
+			icon_state = "claymore_valhalla"
+			item_state = "cultblade"
+
+	name = new_name
+	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
+
 /obj/item/weapon/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20"
