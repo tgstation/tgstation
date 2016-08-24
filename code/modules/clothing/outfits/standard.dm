@@ -207,6 +207,8 @@
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/ionrifle,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/implanter/emp,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/aiModule/reset,1)
+	
 /datum/outfit/centcom_commander
 	name = "Centcom Commander"
 
