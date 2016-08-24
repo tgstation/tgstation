@@ -68,24 +68,24 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
-	mutatelist = list(/obj/item/seeds/cash)
+	mutatelist = list(/obj/item/seeds/firelemon)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
 	seed = /obj/item/seeds/lemon
 	name = "lemon"
-	desc = "When life gives you lemons, be grateful they aren't limes."
+	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
 	filling_color = "#FFD700"
 
-// Money Lemon
-/obj/item/seeds/cash
-	name = "pack of money seeds"
-	desc = "When life gives you lemons, mutate them into cash."
-	icon_state = "seed-cash"
-	species = "cashtree"
-	plantname = "Money Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
+// Combustible lemon
+/obj/item/seeds/firelemon //combustible lemon is too long so firelemon
+	name = "pack of combustible lemon seeds"
+	desc = "When life gives you lemons, don't make lemonade. Make life take the lemons back! Get mad! I don't want your damn lemons!"
+	icon_state = "seed-firelemon"
+	species = "firelemon"
+	plantname = "Combustible Lemon Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
@@ -93,31 +93,57 @@
 	endurance = 45
 	yield = 4
 	reagents_add = list("nutriment" = 0.05)
-	rarity = 50  // Nanotrasen approves...
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
-	seed = /obj/item/seeds/cash
-	name = "Money Fruit"
-	desc = "Looks like a lemon with something bulging from the inside."
-	icon_state = "moneyfruit"
+/obj/item/weapon/reagent_containers/food/snacks/grown/firelemon
+	seed = /obj/item/seeds/firelemon
+	name = "Combustible Lemon"
+	desc = "Made for burning houses down."
+	icon_state = "firelemon"
 	bitesize_mod = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit/add_juice()
+/obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/attack_self(mob/living/user)
+	var/area/A = get_area(user)
+	user.visible_message("<span class='warning'>[user] primes the [src]!</span>", "<span class='userdanger'>You prime the [src]!</span>")
+	message_admins("[user] ([user.key ? user.key : "no key"]) primed a combustible lemon for detonation at [A] ([user.x], [user.y], [user.z]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>(JMP)</a>")
+	log_game("[user] ([user.key ? user.key : "no key"]) primed a combustible lemon for detonation at [A] ([user.x],[user.y],[user.z]).")
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()
+	prime()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/burn()
+	prime()
 	..()
-	switch(seed.potency)
-		if(0 to 22)
-			trash = /obj/item/stack/spacecash
-		if(23 to 42)
-			trash = /obj/item/stack/spacecash/c10
-		if(43 to 59)
-			trash = /obj/item/stack/spacecash/c20
-		if(60 to 73)
-			trash = /obj/item/stack/spacecash/c50
-		if(74 to 84)
-			trash = /obj/item/stack/spacecash/c100
-		if(85 to 92)
-			trash = /obj/item/stack/spacecash/c200
-		if(93 to 98)
-			trash = /obj/item/stack/spacecash/c500
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/proc/update_mob()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.unEquip(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/ex_act(severity)
+	qdel(src) //Ensuring that it's deleted by its own explosion
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/proc/prime()
+	icon_state = "firelemon_active"
+	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
+		if(0 to 30)
+			update_mob()
+			explosion(src.loc,-1,-1,2, flame_range = 1)
+			qdel(src)
+		if(31 to 50)
+			update_mob()
+			explosion(src.loc,-1,-1,2, flame_range = 2)
+			qdel(src)
+		if(51 to 70)
+			update_mob()
+			explosion(src.loc,-1,-1,2, flame_range = 3)
+			qdel(src)
+		if(71 to 90)
+			update_mob()
+			explosion(src.loc,-1,-1,2, flame_range = 4)
+			qdel(src)
 		else
-			trash = /obj/item/stack/spacecash/c1000
+			update_mob()
+			explosion(src.loc,-1,-1,2, flame_range = 5)
+			qdel(src)
