@@ -22,7 +22,7 @@
 		Weaken(1)
 		victim.take_organ_damage(10)
 		take_organ_damage(10)
-		visible_message("<span class='danger'> [src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
+		visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
