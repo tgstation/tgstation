@@ -50,6 +50,7 @@
 	for(var/obj/machinery/power/apc/C in machines)
 		if(C.cell && C.z == ZLEVEL_STATION)
 			C.cell.charge = C.cell.maxcharge
+			C.failure_timer = 0
 	for(var/obj/machinery/power/smes/S in machines)
 		if(S.z != ZLEVEL_STATION)
 			continue

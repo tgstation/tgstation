@@ -114,6 +114,7 @@ Class Procs:
 	var/global/gl_uid = 1
 	var/panel_open = 0
 	var/state_open = 0
+	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
