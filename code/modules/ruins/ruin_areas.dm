@@ -97,6 +97,17 @@
 	name = "Hotel Staff Room"
 	icon_state = "crew_quarters"
 
+/area/ruin/viva
+	name = "Outpost"
+
+/area/ruin/viva/comms
+	name = "Outpost Communications"
+	icon_state = "away2"
+
+/area/ruin/viva/hydroponics
+	name = "Outpost Hydroponics"
+	icon_state = "away3"
+
 /area/ruin/fakespace
 	icon_state = "space"
 	requires_power = 1
@@ -110,3 +121,4 @@
 	outdoors = 1
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 	blob_allowed = 0
+

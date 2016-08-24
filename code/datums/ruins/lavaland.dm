@@ -186,6 +186,15 @@
 	allow_duplicates = FALSE
 	cost = 10
 
+/datum/map_template/ruin/lavaland/viva
+	id = "viva"
+	suffix = "lavaland_surface_thingstocome.dmm"
+	name = "Abandoned Hideout"
+	description = "An abandoned hideout once used by old-Earth ideologists who defected from Nanotrasen. Burnt documents and scattered supplies seems to imply they might \
+		of left in a hurry.."
+	allow_duplicates = FALSE
+	cost = 10
+
 /datum/map_template/ruin/lavaland/hermit
 	name = "Makeshift Shelter"
 	id = "hermitcave"
