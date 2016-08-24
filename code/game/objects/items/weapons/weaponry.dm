@@ -65,7 +65,7 @@
 
 /obj/item/weapon/claymore/highlander/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/item/weapon/claymore/highlander/process()
 	if(isliving(loc))
