@@ -3,9 +3,6 @@
 /obj/machinery/abductor
 	var/team = 0
 
-/obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
-	return H.dna.species.id == "abductor"
-
 /obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
 	if(H.dna.species.id == "abductor")
 		var/datum/species/abductor/S = H.dna.species
@@ -37,7 +34,7 @@
 /obj/machinery/abductor/console/attack_hand(mob/user)
 	if(..())
 		return
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		user << "<span class='warning'>You start mashing alien buttons at random!</span>"
 		if(do_after(user,100, target = src))
 			TeleporterSend()
@@ -52,6 +49,7 @@
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
 		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=vest'>Agent Vest</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=silencer'>Radio Silencer</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
 	else
@@ -80,13 +78,13 @@
 
 		dat+="<br>"
 		dat += "<a href='?src=\ref[src];select_disguise=1'>Select Agent Vest Disguise</a><br>"
+		dat += "<a href='?src=\ref[src];toggle_vest=1'>[vest.flags & NODROP ? "Unlock" : "Lock"] Vest</a><br>"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/abductor/console/Topic(href, href_list)
 	if(..())
@@ -99,6 +97,8 @@
 		TeleporterRetrieve()
 	else if(href_list["flip_vest"])
 		FlipVest()
+	else if(href_list["toggle_vest"])
+		toggle_vest()
 	else if(href_list["select_disguise"])
 		SelectDisguise()
 	else if(href_list["dispense"])
@@ -111,23 +111,22 @@
 				Dispense(/obj/item/device/abductor/silencer)
 			if("tool")
 				Dispense(/obj/item/device/abductor/gizmo)
+			if("vest")
+				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
 	src.updateUsrDialog()
 
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
 	if(gizmo!=null && pad!=null && gizmo.marked)
 		pad.Retrieve(gizmo.marked)
-	return
 
 /obj/machinery/abductor/console/proc/TeleporterSend()
 	if(pad!=null)
 		pad.Send()
-	return
 
 /obj/machinery/abductor/console/proc/FlipVest()
 	if(vest!=null)
 		vest.flip_mode()
-	return
 
 /obj/machinery/abductor/console/proc/SelectDisguise(remote=0)
 	var/list/entries = list()
@@ -141,7 +140,6 @@
 	var/datum/icon_snapshot/chosen = entries[entry_name]
 	if(chosen && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)
-	return
 
 /obj/machinery/abductor/console/proc/SetDroppoint(turf/open/location,user)
 	if(!istype(location))
@@ -182,7 +180,6 @@
 			disguises[i] = entry
 			return
 	disguises.Add(entry)
-	return
 
 /obj/machinery/abductor/console/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/device/abductor/gizmo))
@@ -193,6 +190,9 @@
 	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
 		var/obj/item/clothing/suit/armor/abductor/vest/V = O
 		user << "<span class='notice'>You link the vest to the console.</span>"
+		if(istype(vest))
+			if(vest.flags & NODROP)
+				toggle_vest()
 		vest = V
 	else
 		return ..()
@@ -208,4 +208,10 @@
 			new item(src.loc)
 	else
 		say("Insufficent data!")
-	return
+
+/obj/machinery/abductor/console/proc/toggle_vest()
+	vest.flags ^= NODROP
+	var/mob/M = vest.loc
+	if(istype(M))
+		M << "<span class='notice'>[src] is now \
+			[vest.flags & NODROP ? "locked" : "unlocked"].</span>"

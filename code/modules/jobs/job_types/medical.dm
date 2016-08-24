@@ -18,10 +18,10 @@ Chief Medical Officer
 
 	access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels)
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
@@ -37,7 +37,7 @@ Chief Medical Officer
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/weapon/storage/backpack/medic
-	satchel = /obj/item/weapon/storage/backpack/satchel_med
+	satchel = /obj/item/weapon/storage/backpack/satchel/med
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
 
 /datum/outfit/job/cmo/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -79,7 +79,7 @@ Medical Doctor
 	suit_store = /obj/item/device/flashlight/pen
 
 	backpack = /obj/item/weapon/storage/backpack/medic
-	satchel = /obj/item/weapon/storage/backpack/satchel_med
+	satchel = /obj/item/weapon/storage/backpack/satchel/med
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
 
 /*
@@ -112,7 +112,7 @@ Chemist
 	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
 
 	backpack = /obj/item/weapon/storage/backpack/chemistry
-	satchel = /obj/item/weapon/storage/backpack/satchel_chem
+	satchel = /obj/item/weapon/storage/backpack/satchel/chem
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
 
 /*
@@ -145,7 +145,7 @@ Geneticist
 	suit_store =  /obj/item/device/flashlight/pen
 
 	backpack = /obj/item/weapon/storage/backpack/genetics
-	satchel = /obj/item/weapon/storage/backpack/satchel_gen
+	satchel = /obj/item/weapon/storage/backpack/satchel/gen
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
 
 /*
@@ -179,5 +179,5 @@ Virologist
 	suit_store =  /obj/item/device/flashlight/pen
 
 	backpack = /obj/item/weapon/storage/backpack/virology
-	satchel = /obj/item/weapon/storage/backpack/satchel_vir
+	satchel = /obj/item/weapon/storage/backpack/satchel/vir
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med

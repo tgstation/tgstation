@@ -127,19 +127,12 @@
 				observer.loc = O.loc
 			else
 				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
-			if(client.prefs.be_random_name)
-				client.prefs.real_name = random_unique_name(gender)
-			if(client.prefs.be_random_body)
-				client.prefs.random_character(gender)
-			if(HAIR in client.prefs.pref_species.specflags)
-				observer.hair_style = client.prefs.hair_style
-				observer.hair_color = observer.brighten_color(client.prefs.hair_color)
-			if(FACEHAIR in client.prefs.pref_species.specflags)
-				observer.facial_hair_style = client.prefs.facial_hair_style
-				observer.facial_hair_color = observer.brighten_color(client.prefs.facial_hair_color)
-			observer.real_name = client.prefs.real_name
-			observer.name = observer.real_name
 			observer.key = key
+			observer.client = client
+			observer.set_ghost_appearance()
+			if(observer.client && observer.client.prefs)
+				observer.real_name = observer.client.prefs.real_name
+				observer.name = observer.real_name
 			observer.update_icon()
 			observer.stopLobbySound()
 			qdel(mind)
@@ -208,6 +201,8 @@
 	if(href_list["votepollid"] && href_list["votetype"])
 		var/pollid = text2num(href_list["votepollid"])
 		var/votetype = href_list["votetype"]
+		//lets take data from the user to decide what kind of poll this is, without validating it
+		//what could go wrong
 		switch(votetype)
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
@@ -226,6 +221,7 @@
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
+					                            //(protip, this stops no exploits)
 					usr << "The option ID difference is too big. Please contact administration or the database admin."
 					return
 
@@ -264,6 +260,14 @@
 								usr << "<span class='danger'>Maximum replies reached.</span>"
 								break
 				usr << "<span class='notice'>Vote successful.</span>"
+			if(POLLTYPE_IRV)
+				if (!href_list["IRVdata"])
+					src << "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>"
+				var/list/votelist = splittext(href_list["IRVdata"], ",")
+				if (!vote_on_irv_poll(pollid, votelist))
+					src << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+					return
+				src << "<span class='notice'>Vote successful.</span>"
 
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -336,12 +340,20 @@
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if (ticker.current_state == GAME_STATE_PLAYING)
-		if(announcement_systems.len)
-			if(character.mind)
-				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
-					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
-					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
+	var/area/A = get_area(character)
+	var/message = "<span class='game deadsay'><span class='name'>\
+		[character.real_name]</span> ([rank]) has arrived at the station at \
+		<span class='name'>[A.name]</span>.</span>"
+	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if((!announcement_systems.len) || (!character.mind))
+		return
+	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
+		return
+
+	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /mob/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -407,7 +419,7 @@
 
 	var/mob/living/carbon/human/new_character = new(loc)
 
-	if(config.force_random_names || appearance_isbanned(src))
+	if(config.force_random_names || jobban_isbanned(src, "appearance"))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(new_character)

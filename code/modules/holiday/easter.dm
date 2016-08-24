@@ -72,16 +72,16 @@
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg,/obj/item/weapon/reagent_containers/food/snacks/chocolateegg,/obj/item/weapon/reagent_containers/food/snacks/boiledegg)
 
 /obj/item/weapon/storage/bag/easterbasket/proc/countEggs()
-	overlays.Cut()
-	overlays += image("icon" = icon, "icon_state" = "basket-grass", "layer" = -1)
-	overlays += image("icon" = icon, "icon_state" = "basket-egg[contents.len <= 5 ? contents.len : 5]", "layer" = -1)
+	cut_overlays()
+	add_overlay(image("icon" = icon, "icon_state" = "basket-grass", "layer" = -1))
+	add_overlay(image("icon" = icon, "icon_state" = "basket-egg[contents.len <= 5 ? contents.len : 5]", "layer" = -1))
 
 /obj/item/weapon/storage/bag/easterbasket/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	countEggs()
 
 /obj/item/weapon/storage/bag/easterbasket/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	..()
+	. = ..()
 	countEggs()
 
 //Bunny Suit
@@ -151,14 +151,14 @@
 	desc = "The Cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
 
-/datum/table_recipe/hotcrossbun
+/datum/crafting_recipe/food/food/hotcrossbun
 	name = "Hot-Cross Bun"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/hotcrossbun
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
@@ -175,14 +175,14 @@
 	icon_state = "briochecake_slice"
 	filling_color = "#FFD700"
 
-/datum/table_recipe/briochecake
+/datum/crafting_recipe/food/food/briochecake
 	name = "Brioche cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/scotchegg
 	name = "scotch egg"
@@ -193,7 +193,7 @@
 	filling_color = "#FFFFF0"
 	list_reagents = list("nutriment" = 6)
 
-/datum/table_recipe/scotchegg
+/datum/crafting_recipe/food/scotchegg
 	name = "Scotch egg"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
@@ -202,24 +202,24 @@
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/scotchegg
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
-	name = "Mämmi"
+	name = "Mammi"
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
 	icon_state = "mammi"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 
-/datum/table_recipe/mammi
-	name = "Mämmi"
+/datum/crafting_recipe/food/mammi
+	name = "Mammi"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
 	name = "chocolate bunny"
@@ -229,11 +229,11 @@
 	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
 	filling_color = "#A0522D"
 
-/datum/table_recipe/chocolatebunny
+/datum/crafting_recipe/food/chocolatebunny
 	name = "Chocolate bunny"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
-	category = CAT_FOOD
+	category = CAT_MISCFOOD

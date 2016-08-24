@@ -1,3 +1,10 @@
+// Byond direction defines, because I want to put them somewhere.
+// #define NORTH 1
+// #define SOUTH 2
+// #define EAST 4
+// #define WEST 8
+
+
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
 #define JANUARY		1
@@ -23,8 +30,7 @@
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-#define MUTATIONS_LAYER			27		//mutations. Tk headglows, cold resistance glow, etc
-#define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
+#define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
 #define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
 #define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
 #define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
@@ -50,12 +56,11 @@
 #define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			27		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_SPECIES_LAYER			SPECIES_LAYER+1
 #define UNDER_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER+1
 #define UNDER_BODY_LAYER			BODY_LAYER+1
 #define UNDER_BODY_ADJ_LAYER		BODY_ADJ_LAYER+1
@@ -83,7 +88,6 @@
 #define UNDER_FIRE_LAYER			FIRE_LAYER+1
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
-#define ABOVE_SPECIES_LAYER			SPECIES_LAYER-1
 #define ABOVE_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER-1
 #define ABOVE_BODY_LAYER			BODY_LAYER-1
 #define ABOVE_BODY_ADJ_LAYER		BODY_ADJ_LAYER-1
@@ -148,10 +152,13 @@
 
 #define CLICK_CD_MELEE 8
 #define CLICK_CD_RANGE 4
+#define CLICK_CD_RAPID 2
+#define CLICK_CD_CLICK_ABILITY 6
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
-#define CLICK_CD_TKSTRANGLE 10
 #define CLICK_CD_RESIST 20
+#define CLICK_CD_GRABBING 10
+
 //click cooldowns, in tenths of a second
 
 
@@ -165,6 +172,11 @@
 #define MOB_SIZE_HUMAN 2
 #define MOB_SIZE_LARGE 3
 
+//Cuff resist speeds
+
+#define FAST_CUFFBREAK 1
+#define INSTANT_CUFFBREAK 2
+
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
 
@@ -177,14 +189,14 @@
 #define STAGE_SIX 11 //From supermatter shard
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_SPACEMAX 9
-#define ZLEVEL_MINING 5
-#define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_ABANDONNEDTSAT 3
-#define ZLEVEL_CENTCOM 2
 #define ZLEVEL_STATION 1
+#define ZLEVEL_CENTCOM 2
+#define ZLEVEL_MINING 5
 #define ZLEVEL_LAVALAND 5
-#define ZLEVEL_UNDERGROUND 6
+#define ZLEVEL_EMPTY_SPACE 11
+
+#define ZLEVEL_SPACEMIN 3
+#define ZLEVEL_SPACEMAX 11
 
 //ticker.current_state values
 #define GAME_STATE_STARTUP		0
@@ -226,7 +238,7 @@
 #define MIN_RANGE_FIND 16
 #define FUZZY_CHANCE_HIGH 85
 #define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 15
+#define CHANCE_TALK 1
 
 #define SNPC_BRUTE 1
 #define SNPC_STEALTH 2
@@ -251,6 +263,8 @@
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
 #define MAT_BANANIUM	"$bananium"
+#define MAT_TITANIUM	"$titanium"
+#define MAT_BIOMASS		"$biomass"
 
 
 //check_target_facings() return defines
@@ -284,6 +298,10 @@ var/list/bloody_footprints_cache = list()
 #define TURF_WET_LUBE	2
 #define TURF_WET_ICE	3
 #define TURF_WET_PERMAFROST 4
+#define TURF_WET_SLIDE	5
+
+//Maximum amount of time, (in approx. seconds.) a tile can be wet for.
+#define MAXIMUM_WET_TIME 300
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -295,6 +313,9 @@ var/list/bloody_footprints_cache = list()
 #define POLLTYPE_TEXT		"TEXT"
 #define POLLTYPE_RATING		"NUMVAL"
 #define POLLTYPE_MULTI		"MULTICHOICE"
+#define POLLTYPE_IRV		"IRV"
+
+
 
 //lighting area defines
 #define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
@@ -304,6 +325,9 @@ var/list/bloody_footprints_cache = list()
 
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
+
+//Gets the turf this atom inhabits
+#define get_turf(A) (get_step(A, 0))
 
 //Bot types
 #define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
@@ -393,12 +417,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
 #define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
 
-//Launching Shuttles to Centcomm
-#define NOLAUNCH -1
-#define UNLAUNCHED 0
-#define ENDGAME_LAUNCHED 1
-#define EARLY_LAUNCHED 2
-
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
@@ -421,5 +439,92 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
-// Shuttle return values
-#define SHUTTLE_ALREADY_DOCKED 7
+#define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
+
+// Evil narsie colour
+#define NARSIE_WINDOW_COLOUR "#7D1919"
+
+// Defib stats
+#define DEFIB_TIME_LIMIT 120
+#define DEFIB_TIME_LOSS 60
+
+// Diagonal movement
+#define FIRST_DIAG_STEP 1
+#define SECOND_DIAG_STEP 2
+
+//Slime commands defines
+#define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
+#define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
+#define SLIME_FRIENDSHIP_STOPEAT_NOANGRY	7 //Min friendship to order it to stop eating someone without it losing friendship
+#define SLIME_FRIENDSHIP_STOPCHASE			4 //Min friendship to order it to stop chasing someone (their target)
+#define SLIME_FRIENDSHIP_STOPCHASE_NOANGRY	6 //Min friendship to order it to stop chasing someone (their target) without it losing friendship
+#define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
+#define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
+
+#define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
+#define DEADCHAT_DEATHRATTLE "deathrattle"
+#define DEADCHAT_REGULAR "regular-deadchat"
+
+// Bluespace shelter deploy checks
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+
+//debug printing macros
+#define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
+#define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
+#define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+
+#define COORD(A) "([A.x],[A.y],[A.z])"
+#define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
+
+// Inventory depth: limits how many nested storage items you can access directly.
+// 1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
+#define INVENTORY_DEPTH		3
+#define STORAGE_VIEW_DEPTH	2
+
+
+
+// Medal names
+
+#define BOSS_KILL_MEDAL "Killer"
+
+#define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
+
+// Score names
+
+#define LEGION_SCORE "Legion Killed"
+#define COLOSSUS_SCORE "Colossus Killed"
+#define BUBBLEGUM_SCORE "Bubblegum Killed"
+#define DRAKE_SCORE "Drakes Killed"
+#define BOSS_SCORE "Bosses Killed"
+#define TENDRIL_CLEAR_SCORE "Tendrils Killed"
+
+
+
+									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
+#define NTNET_SOFTWAREDOWNLOAD 1 	// Downloads of software from NTNet
+#define NTNET_PEERTOPEER 2			// P2P transfers of files between devices
+#define NTNET_COMMUNICATION 3		// Communication (messaging)
+#define NTNET_SYSTEMCONTROL 4		// Control of various systems, RCon, air alarm control, etc.
+
+// NTNet transfer speeds, used when downloading/uploading a file/program.
+#define NTNETSPEED_LOWSIGNAL 0.5	// GQ/s transfer speed when the device is wirelessly connected and on Low signal
+#define NTNETSPEED_HIGHSIGNAL 1	// GQ/s transfer speed when the device is wirelessly connected and on High signal
+#define NTNETSPEED_ETHERNET 2		// GQ/s transfer speed when the device is using wired connection
+
+
+// Program bitflags
+#define PROGRAM_ALL 7
+#define PROGRAM_CONSOLE 1
+#define PROGRAM_LAPTOP 2
+#define PROGRAM_TABLET 4
+
+#define PROGRAM_STATE_KILLED 0
+#define PROGRAM_STATE_BACKGROUND 1
+#define PROGRAM_STATE_ACTIVE 2
+
+// Caps for NTNet logging. Less than 10 would make logging useless anyway, more than 500 may make the log browser too laggy. Defaults to 100 unless user changes it.
+#define MAX_NTNET_LOGS 300
+#define MIN_NTNET_LOGS 10

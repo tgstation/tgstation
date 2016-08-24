@@ -135,7 +135,7 @@
 /datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
 	for(var/obj/item/carried_item in H.contents)
 		if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
-			carried_item.add_blood(H)//Oh yes, there will be blood...
+			carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 
 /datum/outfit/assassin
@@ -194,7 +194,7 @@
 	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 	r_pocket = /obj/item/weapon/lighter
 	l_pocket = /obj/item/ammo_box/a357
-	back = /obj/item/weapon/storage/backpack/satchel
+	back = /obj/item/weapon/storage/backpack/satchel/leather
 	id = /obj/item/weapon/card/id
 
 /datum/outfit/centcom_commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -222,7 +222,7 @@
 	head = /obj/item/clothing/head/helmet/space/beret
 	belt = /obj/item/weapon/gun/energy/pulse/pistol/m1911
 	r_pocket = /obj/item/weapon/lighter
-	back = /obj/item/weapon/storage/backpack/satchel
+	back = /obj/item/weapon/storage/backpack/satchel/leather
 	id = /obj/item/weapon/card/id
 
 /datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -272,13 +272,13 @@
 	name = "Soviet Admiral"
 
 	uniform = /obj/item/clothing/under/soviet
-	head = /obj/item/clothing/head/hgpiratecap
+	head = /obj/item/clothing/head/pirate/captain
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	suit = /obj/item/clothing/suit/hgpirate
-	back = /obj/item/weapon/storage/backpack/satchel
+	suit = /obj/item/clothing/suit/pirate/captain
+	back = /obj/item/weapon/storage/backpack/satchel/leather
 	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 
 	id = /obj/item/weapon/card/id
@@ -357,7 +357,7 @@
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)//Here you go Deuryn
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()

@@ -9,9 +9,10 @@
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/captain(src)
 	else
-		new /obj/item/weapon/storage/backpack/satchel_cap(src)
+		new /obj/item/weapon/storage/backpack/satchel/cap(src)
 	new /obj/item/clothing/suit/cloak/cap(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
+	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/under/captainparade(src)
 	new /obj/item/clothing/head/caphat/parade(src)
@@ -25,6 +26,7 @@
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
+	new /obj/item/weapon/storage/belt/sabre(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/weapon/door_remote/captain(src)
 
@@ -77,8 +79,8 @@
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/weapon/gun/energy/gun/hos(src)
-	new /obj/item/weapon/door_remote/head_of_security(src)
 	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/pinpointer(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -100,7 +102,8 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/gloves/color/black/krav_maga/sec(src)
+	new /obj/item/clothing/gloves/krav_maga/sec(src)
+	new /obj/item/weapon/door_remote/head_of_security(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
@@ -111,6 +114,7 @@
 	..()
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet/sec(src)
+	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/device/flashlight/seclite(src)
@@ -170,6 +174,7 @@
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
+	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
@@ -185,7 +190,7 @@
 /obj/structure/closet/secure_closet/injection/New()
 	..()
 	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+		new /obj/item/weapon/reagent_containers/syringe/lethal/execution(src)
 
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"

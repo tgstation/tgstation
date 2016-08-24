@@ -73,6 +73,12 @@
 	material_id = MAT_SILVER
 	message = "cm3 of silver"
 
+// Titanium.
+/datum/export/material/titanium
+	cost = 250
+	material_id = MAT_TITANIUM
+	message = "cm3 of titanium"
+
 // Metal. Common building material.
 /datum/export/material/metal
 	message = "cm3 of metal"

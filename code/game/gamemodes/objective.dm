@@ -23,9 +23,18 @@
 /datum/objective/proc/get_target()
 	return target
 
+
+/datum/objective/proc/get_crewmember_minds()
+	. = list()
+	for(var/V in data_core.locked)
+		var/datum/data/record/R = V
+		var/mob/M = R.fields["reference"]
+		if(M && M.mind)
+			. += M.mind
+
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
@@ -34,7 +43,7 @@
 	return target
 
 /datum/objective/proc/find_target_by_role(role, role_type=0, invert=0)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if((possible_target != owner) && ishuman(possible_target.current))
 			var/is_role = 0
 			if(role_type)
@@ -212,7 +221,7 @@
 /datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
 		return 0
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
 	if(issilicon(owner.current))
 		return 0
@@ -224,10 +233,15 @@
 	for(var/mob/living/player in player_list)
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				if(istype(player, /mob/living/silicon)) //Borgs are technically dead anyways
+				if(issilicon(player)) //Borgs are technically dead anyways
+					continue
+				if(isanimal(player)) //animals don't count
+					continue
+				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == A)
-					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
+					var/location = get_turf(player.mind.current)
+					if(!player.mind.special_role && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
 	return 1
 
@@ -239,7 +253,7 @@
 /datum/objective/hijackclone/check_completion()
 	if(!owner.current)
 		return 0
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
 
 	var/area/A = SSshuttle.emergency.areaInstance
@@ -247,19 +261,29 @@
 	for(var/mob/living/player in player_list) //Make sure nobody else is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				if(istype(player, /mob/living/silicon))
+				if(issilicon(player)) //Borgs are technically dead anyways
+					continue
+				if(isanimal(player)) //animals don't count
+					continue
+				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == A)
-					if(player.real_name != owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
+					var/location = get_turf(player.mind.current)
+					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
 
 	for(var/mob/living/player in player_list) //Make sure at least one of you is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				if(istype(player, /mob/living/silicon))
+				if(issilicon(player)) //Borgs are technically dead anyways
+					continue
+				if(isanimal(player)) //animals don't count
+					continue
+				if(isbrain(player)) //also technically dead
 					continue
 				if(get_area(player) == A)
-					if(player.real_name == owner.current.real_name && !istype(get_turf(player.mind.current), /turf/open/floor/plasteel/shuttle/red))
+					var/location = get_turf(player.mind.current)
+					if(player.real_name == owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 1
 	return 0
 
@@ -271,7 +295,7 @@
 /datum/objective/block/check_completion()
 	if(!istype(owner.current, /mob/living/silicon))
 		return 0
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 1
 
 	var/area/A = SSshuttle.emergency.areaInstance
@@ -293,7 +317,7 @@
 	martyr_compatible = 1
 
 /datum/objective/purge/check_completion()
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 1
 
 	var/area/A = SSshuttle.emergency.areaInstance
@@ -342,13 +366,13 @@
 		return 1
 	if(ticker.mode.station_was_nuked) //If they escaped the blast somehow, let them win
 		return 1
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
 	var/turf/location = get_turf(owner.current)
 	if(!location)
 		return 0
 
-	if(istype(location, /turf/open/floor/plasteel/shuttle/red)) // Fails traitors if they are in the shuttle brig -- Polymorph
+	if(istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
 	if(location.onCentcom() || location.onSyndieBase())
@@ -689,23 +713,35 @@ var/global/list/possible_items_special = list()
 	else
 		explanation_text = "Free Objective"
 
-/datum/objective/summon_guns
-	explanation_text = "Steal at least five guns!"
+/datum/objective/steal_five_of_type
+	explanation_text = "Steal at least five items!"
+	var/list/wanted_items = list(/obj/item)
 
-/datum/objective/summon_guns/check_completion()
+/datum/objective/steal_five_of_type/New()
+	..()
+	wanted_items = typecacheof(wanted_items)
+
+/datum/objective/steal_five_of_type/summon_guns
+	explanation_text = "Steal at least five guns!"
+	wanted_items = list(/obj/item/weapon/gun)
+
+/datum/objective/steal_five_of_type/summon_magic
+	explanation_text = "Steal at least five magical artefacts!"
+	wanted_items = list(/obj/item/weapon/spellbook, /obj/item/weapon/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/weapon/scrying, /obj/item/weapon/antag_spawner/contract, /obj/item/device/necromantic_stone)
+
+/datum/objective/steal_five_of_type/check_completion()
 	if(!isliving(owner.current))
 		return 0
-	var/guncount = 0
+	var/stolen_count = 0
 	var/list/all_items = owner.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
-	for(var/obj/I in all_items) //Check for guns
-		if(istype(I, /obj/item/weapon/gun))
-			guncount++
-	if(guncount >= 5)
+	for(var/obj/I in all_items) //Check for wanted items
+		if(is_type_in_typecache(I, wanted_items))
+			stolen_count++
+	if(stolen_count >= 5)
 		return 1
 	else
 		return 0
 	return 0
-
 
 
 ////////////////////////////////

@@ -7,9 +7,10 @@
 	icon_state = "singularity_s1"
 	anchored = 1
 	density = 1
-	layer = 6
+	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
 	unacidable = 1 //Don't comment this out.
+	appearance_flags = 0
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
@@ -34,7 +35,7 @@
 
 	src.energy = starting_energy
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -43,7 +44,7 @@
 	return
 
 /obj/singularity/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	return ..()
 
@@ -148,17 +149,18 @@
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
-		if(STAGE_TWO)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
-			current_size = STAGE_TWO
-			icon = 'icons/effects/96x96.dmi'
-			icon_state = "singularity_s3"
-			pixel_x = -32
-			pixel_y = -32
-			grav_pull = 6
-			consume_range = 1
-			dissipate_delay = 5
-			dissipate_track = 0
-			dissipate_strength = 5
+		if(STAGE_TWO)
+			if((check_turfs_in(1,1))&&(check_turfs_in(2,1))&&(check_turfs_in(4,1))&&(check_turfs_in(8,1)))
+				current_size = STAGE_TWO
+				icon = 'icons/effects/96x96.dmi'
+				icon_state = "singularity_s3"
+				pixel_x = -32
+				pixel_y = -32
+				grav_pull = 6
+				consume_range = 1
+				dissipate_delay = 5
+				dissipate_track = 0
+				dissipate_strength = 5
 		if(STAGE_THREE)
 			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
 				current_size = STAGE_THREE
@@ -236,20 +238,21 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+	for(var/tile in spiral_range_turfs(grav_pull, src))
 		var/turf/T = tile
-		if(!T)
+		if(!T || !isturf(loc))
 			continue
 		if(get_dist(T, src) > consume_range)
 			T.singularity_pull(src, current_size)
 		else
 			consume(T)
 		for(var/thing in T)
-			var/atom/movable/X = thing
-			if(get_dist(X, src) > consume_range)
-				X.singularity_pull(src, current_size)
-			else
-				consume(X)
+			if(isturf(loc) && thing != src)
+				var/atom/movable/X = thing
+				if(get_dist(X, src) > consume_range)
+					X.singularity_pull(src, current_size)
+				else
+					consume(X)
 			CHECK_TICK
 	return
 

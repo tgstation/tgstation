@@ -20,6 +20,7 @@
 	window_id = "autoed209"
 	window_name = "Automatic Security Unit v2.6"
 	allow_pai = 0
+	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	var/lastfired = 0
 	var/shot_delay = 3 //.3 seconds between shots
@@ -305,15 +306,13 @@ Auto Patrol[]"},
 	target = null
 	last_found = world.time
 	frustration = 0
-	spawn(0)
-		handle_automated_action() //ensure bot quickly responds
+	addtimer(src, "handle_automated_action", 0) //ensure bot quickly responds
 
 /mob/living/simple_animal/bot/ed209/proc/back_to_hunt()
 	anchored = 0
 	frustration = 0
 	mode = BOT_HUNT
-	spawn(0)
-		handle_automated_action() //ensure bot quickly responds
+	addtimer(src, "handle_automated_action", 0) //ensure bot quickly responds
 
 // look for a criminal in view of the bot
 
@@ -359,7 +358,7 @@ Auto Patrol[]"},
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.overlays += image('icons/obj/aibots.dmi', "hs_hole")
+	Sa.add_overlay(image('icons/obj/aibots.dmi', "hs_hole"))
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 

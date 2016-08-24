@@ -46,6 +46,9 @@
 		if(fire_stacks < 0)
 			msg += "It's soaked in water.\n"
 
+		if(pulledby && pulledby.grab_state)
+			msg += "It's restrained by [pulledby]'s grip.\n"
+
 		if(stat == UNCONSCIOUS)
 			msg += "It isn't responding to anything around it; it seems to be asleep.\n"
 		msg += "</span>"

@@ -45,10 +45,6 @@
 		if(affected_mob.notransform)
 			return
 		affected_mob.notransform = 1
-		affected_mob.canmove = 0
-		affected_mob.icon = null
-		affected_mob.overlays.Cut()
-		affected_mob.invisibility = INVISIBILITY_ABSTRACT
 		for(var/obj/item/W in affected_mob)
 			if(istype(W, /obj/item/weapon/implant))
 				qdel(W)

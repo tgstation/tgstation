@@ -140,27 +140,32 @@ var/pipenetwarnings = 10
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
+	var/target_temperature
+	var/target_heat_capacity
 
 	if(istype(target, /turf/open))
+
 		var/turf/open/modeled_location = target
+		target_temperature = modeled_location.GetTemperature()
+		target_heat_capacity = modeled_location.GetHeatCapacity()
 
 		if(modeled_location.blocks_air)
 
 			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
-				var/delta_temperature = air.temperature - modeled_location.temperature
+				var/delta_temperature = air.temperature - target_temperature
 
 				var/heat = thermal_conductivity*delta_temperature* \
-					(partial_heat_capacity*modeled_location.heat_capacity/(partial_heat_capacity+modeled_location.heat_capacity))
+					(partial_heat_capacity*target_heat_capacity/(partial_heat_capacity+target_heat_capacity))
 
 				air.temperature -= heat/total_heat_capacity
-				modeled_location.temperature += heat/modeled_location.heat_capacity
+				modeled_location.TakeTemperature(heat/target_heat_capacity)
 
 		else
 			var/delta_temperature = 0
 			var/sharer_heat_capacity = 0
 
-			delta_temperature = (air.temperature - modeled_location.air.temperature)
-			sharer_heat_capacity = modeled_location.air.heat_capacity()
+			delta_temperature = (air.temperature - target_temperature)
+			sharer_heat_capacity = target_heat_capacity
 
 			var/self_temperature_delta = 0
 			var/sharer_temperature_delta = 0
@@ -175,9 +180,7 @@ var/pipenetwarnings = 10
 				return 1
 
 			air.temperature += self_temperature_delta
-
-			modeled_location.air.temperature += sharer_temperature_delta
-			modeled_location.air_update_turf()
+			modeled_location.TakeTemperature(sharer_temperature_delta)
 
 
 	else

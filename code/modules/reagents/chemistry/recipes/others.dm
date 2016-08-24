@@ -175,6 +175,34 @@
 	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/virus_food_uranium
+	name = "Decaying uranium gel"
+	id = "uraniumvirusfood"
+	result = "uraniumvirusfood"
+	required_reagents = list("uranium" = 1, "virusfood" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/virus_food_uranium_plasma
+	name = "Unstable uranium gel"
+	id = "uraniumvirusfood_plasma"
+	result = "uraniumplasmavirusfood_unstable"
+	required_reagents = list("uranium" = 5, "plasmavirusfood" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/virus_food_uranium_plasma_gold
+	name = "Stable uranium gel"
+	id = "uraniumvirusfood_gold"
+	result = "uraniumplasmavirusfood_stable"
+	required_reagents = list("uranium" = 10, "gold" = 10, "plasma" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/virus_food_uranium_plasma_silver
+	name = "Stable uranium gel"
+	id = "uraniumvirusfood_silver"
+	result = "uraniumplasmavirusfood_stable"
+	required_reagents = list("uranium" = 10, "silver" = 10, "plasma" = 1)
+	result_amount = 1
+
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
 	id = "mixvirus"
@@ -256,6 +284,30 @@
 	required_reagents = list("synaptizinevirusfood" = 1)
 	level_min = 1
 	level_max = 1
+
+/datum/chemical_reaction/mix_virus/mix_virus_10
+
+	name = "Mix Virus 10"
+	id = "mixvirus10"
+	required_reagents = list("uraniumvirusfood" = 5)
+	level_min = 6
+	level_max = 7
+
+/datum/chemical_reaction/mix_virus/mix_virus_11
+
+	name = "Mix Virus 11"
+	id = "mixvirus11"
+	required_reagents = list("uraniumplasmavirusfood_unstable" = 5)
+	level_min = 7
+	level_max = 7
+
+/datum/chemical_reaction/mix_virus/mix_virus_12
+
+	name = "Mix Virus 12"
+	id = "mixvirus12"
+	required_reagents = list("uraniumplasmavirusfood_stable" = 5)
+	level_min = 8
+	level_max = 8
 
 /datum/chemical_reaction/mix_virus/rem_virus
 
@@ -517,3 +569,10 @@
 	result = "royal_bee_jelly"
 	required_reagents = list("mutagen" = 10, "honey" = 40)
 	result_amount = 5
+
+/datum/chemical_reaction/laughter
+	name = "laughter"
+	id = "laughter"
+	result = "laughter"
+	required_reagents = list("sugar" = 1, "banana" = 1)
+	result_amount = 10

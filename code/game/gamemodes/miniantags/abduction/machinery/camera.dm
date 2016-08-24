@@ -45,15 +45,12 @@
 	set_droppoint_action.target = console
 	set_droppoint_action.Grant(user)
 
-/obj/machinery/computer/camera_advanced/abductor/proc/IsAbductor(mob/living/carbon/human/H)
-	return H.dna.species.id == "abductor"
-
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
 	var/datum/species/abductor/S = H.dna.species
 	return S.scientist
 
 /obj/machinery/computer/camera_advanced/abductor/attack_hand(mob/user)
-	if(!iscarbon(user) || !IsAbductor(user))
+	if(!isabductor(user))
 		return
 	return ..()
 

@@ -502,7 +502,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
 	if(direction)
-		animation.dir = direction
+		animation.setDir(direction)
 	animation.icon = a_icon
 	animation.layer = target:layer+1
 	if(a_icon_state)
@@ -543,7 +543,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				return 0
 			if(current.opacity)
 				return 0
-			for(var/atom/A in current)
+			for(var/thing in current)
+				var/atom/A = thing
 				if(A.opacity)
 					return 0
 			current = get_step_towards(current, target_turf)
@@ -719,16 +720,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return "right foot"
 	else
 		return zone
-
-
-//Gets the turf this atom inhabits
-
-/proc/get_turf(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isturf(A), A=A.loc); //semicolon is for the empty statement
-	return A
-
 
 /*
 
@@ -1302,7 +1293,7 @@ B --><-- A
 	set waitfor = 0
 	if(!A || !I)
 		return
-	A.overlays |= I
+	A.add_overlay(I)
 	sleep(duration)
 	A.overlays -= I
 
@@ -1369,3 +1360,51 @@ proc/pick_closest_path(value)
 			sleep(world.tick_lag*4)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
+
+/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
+	var/client/C
+	if(istype(mob_or_client, /mob))
+		var/mob/M = mob_or_client
+		if(M.client)
+			C = M.client
+		else
+			return
+	else if(istype(mob_or_client, /client))
+		C = mob_or_client
+
+	if(!istype(C))
+		return
+
+	C.color = flash_color
+	spawn(0)
+		animate(C, color = initial(C.color), time = flash_time)
+
+#define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+
+#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, FALSE, item)
+
+/proc/check_for_cleanbot_bug()
+	var/static/admins_warned //bet you didn't know you could do this!
+	var/icon/Icon_test = icon('icons/BadAss.dmi')
+	if(!istype(Icon_test))
+		var/msg = "Cleanbot bug detected in icons! Icons are mapping to [Icon_test]"
+		if (!admins_warned)
+			admins_warned = 1
+			spawn(25)
+				message_admins(msg)
+		stack_trace(msg)
+	var/sound/Sound_test = sound('sound/misc/null.ogg')
+	if(!istype(Sound_test))
+		var/msg = "Cleanbot bug detected in sounds! Sounds are mapping to [Sound_test]"
+		if (!admins_warned)
+			admins_warned = 1
+			spawn(25)
+				message_admins(msg)
+		stack_trace(msg)
+
+/proc/random_nukecode()
+	var/val = rand(0, 99999)
+	var/str = "[val]"
+	while(length(str) < 5)
+		str = "0" + str
+	. = str

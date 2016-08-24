@@ -4,11 +4,14 @@
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
+	fps = 20
 
 var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
+	check_for_cleanbot_bug()
 	map_ready = 1
+	world.log << "Map is ready."
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
@@ -36,7 +39,6 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_admins()
 	if(config.usewhitelist)
 		load_whitelist()
-	appearance_loadbanfile()
 	LoadBans()
 	investigate_reset()
 
@@ -154,7 +156,26 @@ var/last_irc_status = 0
 			return
 		else
 			if(input["crossmessage"] == "Ahelp")
-				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message"]]</b></span>")
+				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
+			if(input["crossmessage"] == "Comms_Console")
+				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
+				for(var/obj/machinery/computer/communications/CM in machines)
+					CM.overrideCooldown()
+
+	else if("adminmsg" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
+
+	else if("namecheck" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
+			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
+			return keywords_lookup(input["namecheck"],1)
+
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
@@ -177,6 +198,14 @@ var/last_irc_status = 0
 		blackbox.save_all_data_to_sql()
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
+		return
+	if(mapchanging)
+		world << "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>"
+		rebootingpendingmapchange = 1
+		spawn(1200)
+			if(mapchanging)
+				mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
+				Reboot("Map change timed out", time = 10)
 		return
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
@@ -386,17 +415,19 @@ var/failed_db_connections = 0
 		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
 
 var/datum/votablemap/nextmap
-
+var/mapchanging = 0
+var/rebootingpendingmapchange = 0
 /proc/changemap(var/datum/votablemap/VM)
 	if (!SERVERTOOLS)
 		return
 	if (!istype(VM))
 		return
-
+	mapchanging = 1
 	log_game("Changing map to [VM.name]([VM.friendlyname])")
 	var/file = file("setnewmap.bat")
 	file << "\nset MAPROTATE=[VM.name]\n"
 	. = shell("..\\bin\\maprotate.bat")
+	mapchanging = 0
 	switch (.)
 		if (null)
 			message_admins("Failed to change map: Could not run map rotator")
@@ -426,3 +457,5 @@ var/datum/votablemap/nextmap
 		else
 			message_admins("Failed to change map: Unknown error: Error code #[.]")
 			log_game("Failed to change map: Unknown error: Error code #[.]")
+	if(rebootingpendingmapchange)
+		world.Reboot("Map change finished", time = 10)

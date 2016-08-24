@@ -5,6 +5,7 @@
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	icon_state = "trayson-meson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
+	origin_tech = "materials=3;magnets=3;engineering=3;plasmatech=3"
 
 	var/mode = 0	//0 - regular mesons mode	1 - t-ray mode
 	var/invis_objects = list()
@@ -14,13 +15,13 @@
 	mode = !mode
 
 	if(mode)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
 		user << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
 		invis_view = SEE_INVISIBLE_MINIMUM
@@ -66,8 +67,7 @@
 				O.invisibility = 0
 				invis_objects += O
 
-	spawn(5)
-		invis_update()
+	addtimer(src, "invis_update", 5)
 
 /obj/item/clothing/glasses/meson/engine/proc/invis_update()
 	for(var/obj/O in invis_objects)
@@ -95,6 +95,7 @@
 	name = "Optical T-Ray Scanner"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	icon_state = "trayson-tray_off"
+	origin_tech = "materials=3;magnets=2;engineering=2"
 
 	mode = 1
 	var/on = 0
@@ -119,10 +120,10 @@
 	on = !on
 
 	if(on)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		user << "<span class='notice'>You turn the goggles on.</span>"
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		user << "<span class='notice'>You turn the goggles off.</span>"
 		invis_update()
 

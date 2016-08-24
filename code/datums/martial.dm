@@ -66,12 +66,8 @@
 		H.verbs += help_verb
 	if(make_temporary)
 		temporary = 1
-	if(H.martial_art && H.martial_art.temporary)
-		if(temporary)
-			base = H.martial_art.base
-		else
-			H.martial_art.base = src //temporary styles have priority
-			return
+	if(H.martial_art && temporary)
+		base = H.martial_art
 	H.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
@@ -115,7 +111,7 @@
 								"<span class='userdanger'>[A] has hit [D] with a [atk_verb]!</span>")
 
 	D.apply_damage(damage, STAMINA, affecting, armor_block)
-	add_logs(A, D, "punched")
+	add_logs(A, D, "punched (boxing) ")
 	if(D.getStaminaLoss() > 50)
 		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
 		if((D.stat != DEAD) && prob(knockout_prob))
@@ -124,6 +120,7 @@
 			D.apply_effect(10,WEAKEN,armor_block)
 			D.SetSleeping(5)
 			D.forcesay(hit_appends)
+			add_logs(A, D, "knocked out (boxing) ")
 		else if(D.lying)
 			D.forcesay(hit_appends)
 	return 1
@@ -166,7 +163,7 @@
 	A.say("TORNADO SWEEP!")
 	spawn(0)
 		for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-			A.dir = i
+			A.setDir(i)
 			playsound(A.loc, 'sound/weapons/punch1.ogg', 15, 1, -1)
 			sleep(1)
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
@@ -174,6 +171,7 @@
 	for(var/turf/T in range(1,A))
 		turfs.Add(T)
 	R.cast(turfs)
+	add_logs(A, D, "tornado sweeped(Plasma Fist)")
 	return
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -183,6 +181,7 @@
 	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 	D.throw_at(throw_target, 200, 4,A)
 	A.say("HYAH!")
+	add_logs(A, D, "threw back (Plasma Fist)")
 	return
 
 /datum/martial_art/plasma_fist/proc/Plasma(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -192,6 +191,7 @@
 	D.visible_message("<span class='danger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
 	D.gib()
+	add_logs(A, D, "gibbed (Plasma Fist)")
 	return
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -270,6 +270,7 @@
 		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
 		D.Stun(3)
 		return 1
+	add_logs(A, D, "wrist wrenched (Sleeping Carp)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -281,6 +282,7 @@
 		D.Weaken(4)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		return 1
+	add_logs(A, D, "back-kicked (Sleeping Carp)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -293,6 +295,7 @@
 		D.Stun(2)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		return 1
+	add_logs(A, D, "stomach kneed (Sleeping Carp)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -305,6 +308,7 @@
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		D.Stun(4)
 		return 1
+	add_logs(A, D, "head kicked (Sleeping Carp)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -317,16 +321,24 @@
 		D.apply_damage(50, BRUTE, "chest")
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, 1, -1)
 		return 1
+	add_logs(A, D, "elbow dropped (Sleeping Carp)")
 	return basic_hit(A,D)
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
-	D.grabbedby(A,1)
-	var/obj/item/weapon/grab/G = A.get_active_hand()
-	if(G)
-		G.state = GRAB_AGGRESSIVE //Instant aggressive grab
+	if(A.grab_state >= GRAB_AGGRESSIVE)
+		D.grabbedby(A, 1)
+	else
+		A.start_pulling(D, 1)
+		if(A.pulling)
+			D.drop_r_hand()
+			D.drop_l_hand()
+			D.stop_pulling()
+			add_logs(A, D, "grabbed", addition="aggressively")
+			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
+	return 1
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
@@ -341,6 +353,7 @@
 	if(prob(D.getBruteLoss()) && !D.lying)
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
 		D.Weaken(4)
+	add_logs(A, D, "[atk_verb] (Sleeping Carp)")
 	return 1
 
 
@@ -502,7 +515,7 @@
 			H.Weaken(4)
 		if(H.staminaloss && !H.sleeping)
 			var/total_health = (H.health - H.staminaloss)
-			if(total_health <= config.health_threshold_crit && !H.stat)
+			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
 				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
 									   "<span class='userdanger'>[user] knocks you unconscious!</span>")
 				H.SetSleeping(30)

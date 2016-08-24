@@ -28,6 +28,7 @@
 			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
 			<A href='?src=\ref[src];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
 			<A href='?src=\ref[src];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
+			<A href='?src=\ref[src];secrets=reset_name'>Reset Station Name</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
 			<BR>
@@ -44,6 +45,7 @@
 
 			<A href='?src=\ref[src];secrets=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];secrets=monkey'>Turn all humans into monkeys</A><BR>
+			<A href='?src=\ref[src];secrets=anime'>Chinese Cartoons</A><BR>
 			<A href='?src=\ref[src];secrets=allspecies'>Change the species of all humans</A><BR>
 			<A href='?src=\ref[src];secrets=power'>Make all areas powered</A><BR>
 			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
@@ -62,6 +64,8 @@
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
+			<A href='?src=\ref[src];secrets=masspurrbation'>Mass Purrbation</A><BR>
+			<A href='?src=\ref[src];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -143,6 +147,14 @@
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
 				for(var/datum/disease/D in SSdisease.processing)
 					D.cure(D)
+
+		if("reset_name")
+			if(!check_rights(R_ADMIN))
+				return
+			world.name = new_station_name()
+			station_name = world.name
+			log_admin("[key_name(usr)] reset the station name.")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the station name.</span>")
 
 		if("list_bombers")
 			if(!check_rights(R_ADMIN))
@@ -379,6 +391,32 @@
 			for(var/obj/machinery/light/L in machines)
 				L.broken()
 
+		if("anime")
+			if(!check_rights(R_FUN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","CC")
+			message_admins("[key_name_admin(usr)] made everything kawaii.")
+			for(var/mob/living/carbon/human/H in mob_list)
+				H << sound('sound/AI/animes.ogg')
+
+				if(H.dna.species.id == "human")
+					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
+						H.dna.features["tail_human"] = "Cat"
+						H.dna.features["ears"] = "Cat"
+					var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
+					var/obj/item/clothing/under/schoolgirl/I = new seifuku
+					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
+					var/list/names = splittext(H.real_name," ")
+					var/forename = names.len > 1 ? names[2] : names[1]
+					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
+					H.fully_replace_character_name(H.real_name,newname)
+					H.unEquip(H.w_uniform)
+					H.equip_to_slot_or_del(I, slot_w_uniform)
+					I.flags |= NODROP
+				else
+					H << "You're not kawaii enough for this."
+
 		if("whiteout")
 			if(!check_rights(R_FUN))
 				return
@@ -389,8 +427,7 @@
 				L.fix()
 
 		if("floorlava")
-			var/datum/weather/floor_is_lava/storm = new /datum/weather/floor_is_lava
-			storm.weather_start_up()
+			SSweather.run_weather("the floor is lava")
 
 		if("virus")
 			if(!check_rights(R_FUN))
@@ -530,11 +567,25 @@
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))
 				return
-			var/ctf_enabled = 0
+			var/ctf_enabled = FALSE
 			for(var/obj/machinery/capture_the_flag/CTF in machines)
-				ctf_enabled = !CTF.ctf_enabled
-				CTF.ctf_enabled = !CTF.ctf_enabled
+				ctf_enabled = CTF.toggle_ctf()
 			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+		if("masspurrbation")
+			if(!check_rights(R_FUN))
+				return
+			mass_purrbation()
+			message_admins("[key_name_admin(usr)] has put everyone on \
+				purrbation!")
+			log_admin("[key_name(usr)] has put everyone on purrbation.")
+		if("massremovepurrbation")
+			if(!check_rights(R_FUN))
+				return
+			mass_remove_purrbation()
+			message_admins("[key_name_admin(usr)] has removed everyone from \
+				purrbation.")
+			log_admin("[key_name(usr)] has removed everyone from purrbation.")
 
 	if(E)
 		E.processing = 0

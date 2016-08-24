@@ -30,7 +30,8 @@ Clown
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/device/megaphone/clown = 1
+		/obj/item/device/megaphone/clown = 1,
+		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1
 		)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
@@ -50,6 +51,10 @@ Clown
 
 	if(visualsOnly)
 		return
+
+	var/obj/item/weapon/implant/sad_trombone/S = new/obj/item/weapon/implant/sad_trombone(H)
+	S.imp_in = H
+	S.implanted = 1
 
 	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")

@@ -7,12 +7,13 @@
 	anchored = 1
 	flags = CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	var/health = 10
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
 
 /obj/structure/grille/New()
+	..()
 	stored = new/obj/item/stack/rods(src)
 	stored.amount = 2
 
@@ -23,8 +24,16 @@
 		else
 			take_damage(rand(5,10), BRUTE, 0)
 
-/obj/structure/grille/blob_act(obj/effect/blob/B)
+/obj/structure/grille/ratvar_act()
+	if(destroyed)
+		new /obj/structure/grille/ratvar/broken(src.loc)
+	else
+		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
+
+/obj/structure/grille/blob_act(obj/effect/blob/B)
+	if(!destroyed)
+		Break()
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user))
@@ -70,13 +79,16 @@
 
 /obj/structure/grille/attack_animal(var/mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
-	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
+	if(!M.melee_damage_upper && !M.obj_damage || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
 		return
 	M.do_attack_animation(src)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 					  "<span class='danger'>You smash against [src].</span>", \
 					  "<span class='italics'>You hear twisting metal.</span>")
-	take_damage(M.melee_damage_upper, M.melee_damage_type)
+	if(M.obj_damage)
+		take_damage(M.obj_damage, M.melee_damage_type)
+	else
+		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type)
 
 
 /obj/structure/grille/mech_melee_attack(obj/mecha/M)
@@ -113,7 +125,7 @@
 	..()
 
 /obj/structure/grille/proc/Break()
-	icon_state = "brokengrille"
+	icon_state = "broken[initial(icon_state)]"
 	density = 0
 	destroyed = 1
 	stored.amount = 1
@@ -143,7 +155,7 @@
 			health = 10
 			density = 1
 			destroyed = 0
-			icon_state = "grille"
+			icon_state = initial(icon_state)
 			R.use(1)
 			return
 
@@ -172,7 +184,7 @@
 					WD = new/obj/structure/window/reinforced/fulltile(loc) //reinforced window
 				else
 					WD = new/obj/structure/window/fulltile(loc) //normal window
-				WD.dir = dir_to_set
+				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
 				WD.anchored = 0
 				WD.state = 0
@@ -258,3 +270,51 @@
 
 /obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/obj/structure/grille/broken // Pre-broken grilles for map placement
+	icon_state = "brokengrille"
+	density = 0
+	health = 0
+	destroyed = 1
+
+/obj/structure/grille/broken/New()
+	..()
+	stored.amount = 1
+	icon_state = "brokengrille"
+
+/obj/structure/grille/ratvar
+	icon_state = "ratvargrille"
+	desc = "A strangely-shaped grille."
+
+/obj/structure/grille/ratvar/New()
+	..()
+	change_construction_value(1)
+	if(destroyed)
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille/broken, get_turf(src))
+	else
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille, get_turf(src))
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/grille, get_turf(src))
+
+/obj/structure/grille/ratvar/Destroy()
+	change_construction_value(-1)
+	return ..()
+
+/obj/structure/grille/ratvar/narsie_act()
+	take_damage(rand(1, 3), BRUTE)
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
+/obj/structure/grille/ratvar/ratvar_act()
+	return
+
+/obj/structure/grille/ratvar/broken
+	density = 0
+	health = 0
+	destroyed = 1
+
+/obj/structure/grille/ratvar/broken/New()
+	..()
+	stored.amount = 1
+	icon_state = "brokenratvargrille"

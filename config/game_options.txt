@@ -1,11 +1,7 @@
 ### HEALTH ###
 
-# level of health at which a mob becomes unconscious (crit)
-HEALTH_THRESHOLD_CRIT 0
-
-# level of health at which a mob becomes dead
-HEALTH_THRESHOLD_DEAD -100
-
+#Damage multiplier, effects both weapons and healing on all mobs. For example, 1.25 would result in 25% higher damage.
+DAMAGE_MULTIPLIER 1
 
 ### REVIVAL ###
 
@@ -96,6 +92,8 @@ PROBABILITY RAGINMAGES 2
 PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
+PROBABILITY DEVIL 0
+PROBABILITY DEVIL_AGENTS 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -197,9 +195,12 @@ EVENTS_MIN_PLAYERS_MUL 1
 ALLOW_AI
 
 ### Secborg ###
-## Uncomment to prevent the secborg module from being chosen
+## Uncomment to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
 
+### Peacekeeper Borg ###
+## Uncomment to prevent the peacekeeper cyborg module from being chosen
+#DISABLE_PEACEBORG
 
 ### AWAY MISSIONS ###
 
@@ -309,7 +310,8 @@ ROUNDSTART_RACES plasmaman
 ASSISTANT_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
-STARLIGHT
+## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
+#STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
 #GREY_ASSISTANTS

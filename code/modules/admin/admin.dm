@@ -21,6 +21,9 @@ var/global/BSACooldown = 0
 	if(!check_rights())
 		return
 
+	if(!isobserver(usr))
+		log_game("[key_name_admin(usr)] checked the player panel while in game.")
+
 	if(!M)
 		usr << "You seem to be selecting a mob that doesn't exist anymore."
 		return
@@ -630,7 +633,8 @@ var/global/BSACooldown = 0
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
-		new chosen(usr.loc)
+		var/atom/A = new chosen(usr.loc)
+		A.admin_spawned = TRUE
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -699,13 +703,19 @@ var/global/BSACooldown = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
-/datum/admins/proc/output_devil_info()
+/datum/admins/proc/output_all_devil_info()
 	var/devil_number = 0
 	for(var/D in ticker.mode.devils)
 		devil_number++
 		usr << "Devil #[devil_number]:<br><br>" + ticker.mode.printdevilinfo(D)
 	if(!devil_number)
 		usr << "<b>No Devils located</b>" //Just so you know the thing is actually working and not just ignoring you.
+
+/datum/admins/proc/output_devil_info(mob/living/M)
+	if(istype(M) && M.mind && M.mind.devilinfo)
+		usr << ticker.mode.printdevilinfo(M.mind)
+	else
+		usr << "<b>[M] is not a devil."
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())

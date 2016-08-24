@@ -56,8 +56,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/jumptoturf,			/*allows us to jump to a specific turf*/
 	/client/proc/admin_call_shuttle,	/*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcom*/
-	/client/proc/cmd_admin_destroy_shuttle, /* Destroys the emergency shuttle, allowing us to import a new shuttle template. Or just horribly fuck with the game. */
-	/client/proc/cmd_admin_import_shuttle, /* Imports a emergency shuttle from a template, and sends it to its round start location. Probably should destroy the old one first.*/
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
@@ -67,7 +65,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/toggleSNPC /* Toggles an npc's processing mode */
+	/client/proc/toggleSNPC, /* Toggles an npc's processing mode */
+	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -95,7 +94,11 @@ var/list/admin_verbs_fun = list(
 	/client/proc/forceEvent,
 	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke
+	/client/proc/toggle_nuke,
+	/client/proc/mass_zombie_infection,
+	/client/proc/mass_zombie_cure,
+	/client/proc/polymorph_all,
+	/client/proc/show_tip
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -144,7 +147,10 @@ var/list/admin_verbs_debug = list(
 	/client/proc/create_outfits,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
-	/client/proc/map_template_upload
+	/client/proc/map_template_upload,
+	/client/proc/jump_to_ruin,
+	/client/proc/clear_dynamic_transit,
+	/client/proc/toggle_medal_disable
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -294,7 +300,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-		/client/proc/fps,
+		/client/proc/set_server_fps,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin
@@ -519,16 +525,30 @@ var/list/admin_verbs_hideable = list(
 	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_list
 	if(!S)
 		return
-	S = spell_list[S]
+
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
+
+	S = spell_list[S]
 	if(T.mind)
 		T.mind.AddSpell(new S)
 	else
 		T.AddSpell(new S)
 		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
+/client/proc/remove_spell(mob/T in mob_list)
+	set category = "Fun"
+	set name = "Remove Spell"
+	set desc = "Remove a spell from the selected mob."
+
+	if(T && T.mind)
+		var/obj/effect/proc_holder/spell/S = input("Choose the spell to remove", "NO ABRAKADABRA") as null|anything in T.mind.spell_list
+		if(S)
+			T.mind.RemoveSpell(S)
+			log_admin("[key_name(usr)] removed the spell [S] from [key_name(T)].")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed the spell [S] from [key_name(T)].</span>")
+			feedback_add_details("admin_verb","RS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_disease(mob/T in mob_list)
 	set category = "Fun"
@@ -548,10 +568,10 @@ var/list/admin_verbs_hideable = list(
 	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
 	if(!message)
 		return
-	var/templanguages = O.languages
-	O.languages |= ALL
+	var/templanguages = O.languages_spoken
+	O.languages_spoken |= ALL
 	O.say(message)
-	O.languages = templanguages
+	O.languages_spoken = templanguages
 	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>")
 	feedback_add_details("admin_verb","OS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

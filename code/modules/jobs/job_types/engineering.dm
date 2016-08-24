@@ -36,10 +36,10 @@ Chief Engineer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black/ce
-	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
+	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/modular_computer/tablet/preset/advanced=1)
 
 	backpack = /obj/item/weapon/storage/backpack/industrial
-	satchel = /obj/item/weapon/storage/backpack/satchel_eng
+	satchel = /obj/item/weapon/storage/backpack/satchel/eng
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
@@ -85,10 +85,11 @@ Station Engineer
 	r_pocket = /obj/item/device/t_scanner
 
 	backpack = /obj/item/weapon/storage/backpack/industrial
-	satchel = /obj/item/weapon/storage/backpack/satchel_eng
+	satchel = /obj/item/weapon/storage/backpack/satchel/eng
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
 
 /*
 Atmospheric Technician
@@ -120,7 +121,8 @@ Atmospheric Technician
 	r_pocket = /obj/item/device/analyzer
 
 	backpack = /obj/item/weapon/storage/backpack/industrial
-	satchel = /obj/item/weapon/storage/backpack/satchel_eng
+	satchel = /obj/item/weapon/storage/backpack/satchel/eng
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)

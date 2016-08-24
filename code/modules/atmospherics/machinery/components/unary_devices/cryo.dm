@@ -28,11 +28,12 @@
 /obj/item/weapon/circuitboard/machine/cryo_tube
 	name = "circuit board (Cryotube)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
-	origin_tech = "programming=4;biotech=3;engineering=4"
+	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 4)
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 2)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/construction()
 	..(dir, dir)
@@ -161,7 +162,7 @@
 		user << "[src] seems empty."
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target))
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
 
@@ -211,7 +212,7 @@
 		occupantData["stat"] = occupant.stat
 		occupantData["health"] = occupant.health
 		occupantData["maxHealth"] = occupant.maxHealth
-		occupantData["minHealth"] = config.health_threshold_dead
+		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
 		occupantData["bruteLoss"] = occupant.getBruteLoss()
 		occupantData["oxyLoss"] = occupant.getOxyLoss()
 		occupantData["toxLoss"] = occupant.getToxLoss()

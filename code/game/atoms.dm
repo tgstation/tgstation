@@ -1,23 +1,26 @@
 /atom
-	layer = 2
+	layer = TURF_LAYER
 	var/level = 2
 	var/flags = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
+	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
-	var/list/image/hud_list = list()
+	var/list/image/hud_list = null
 	//HUD images that this atom can provide.
 	var/list/hud_possible
 
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+	//overlays that should remain on top and not normally be removed, like c4.
+	var/list/priority_overlays
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -25,7 +28,11 @@
 			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
 			qdel(AA)
 		alternate_appearances = null
-
+	if(viewing_alternate_appearances)
+		for(var/aakey in viewing_alternate_appearances)
+			for(var/aa in viewing_alternate_appearances[aakey])
+				var/datum/alternate_appearance/AA = aa
+				AA.hide(list(src))
 	return ..()
 
 
@@ -64,10 +71,20 @@
 		hulk.changeNext_move(CLICK_CD_MELEE)
 		add_logs(hulk, src, "punched", "hulk powers")
 		hulk.do_attack_animation(src)
-	return
 
-/atom/proc/CheckParts()
-	return
+/atom/proc/CheckParts(list/parts_list)
+	for(var/A in parts_list)
+		if(istype(A, /datum/reagent))
+			if(!reagents)
+				reagents = new()
+			reagents.reagent_list.Add(A)
+			reagents.conditional_update()
+		else if(istype(A, /atom/movable))
+			var/atom/movable/M = A
+			if(istype(M.loc, /mob/living))
+				var/mob/living/L = M.loc
+				L.unEquip(M)
+			M.loc = src
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -128,7 +145,6 @@
 			return 1
 	else if(src in container)
 		return 1
-	return
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
@@ -215,37 +231,73 @@ var/list/blood_splatter_icons = list()
 /atom/proc/blood_splatter_index()
 	return "\ref[initial(icon)]-[initial(icon_state)]"
 
-/atom/proc/add_blood_list(mob/living/carbon/M)
+//returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
+/mob/living/proc/get_blood_dna_list()
+	if(get_blood_id() != "blood")
+		return
+	return list("ANIMAL DNA" = "Y-")
+
+/mob/living/carbon/get_blood_dna_list()
+	if(get_blood_id() != "blood")
+		return
+	var/list/blood_dna = list()
+	if(dna)
+		blood_dna[dna.unique_enzymes] = dna.blood_type
+	else
+		blood_dna["UNKNOWN DNA"] = "X*"
+	return blood_dna
+
+/mob/living/carbon/alien/get_blood_dna_list()
+	return list("UNKNOWN DNA" = "X*")
+
+//to add a mob's dna info into an object's blood_DNA list.
+/atom/proc/transfer_mob_blood_dna(mob/living/L)
 	// Returns 0 if we have that blood already
-	if(!istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
+	var/new_blood_dna = L.get_blood_dna_list()
+	if(!new_blood_dna)
+		return 0
+	if(!blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
 		blood_DNA = list()
-	//if this blood isn't already in the list, add it
-	if(blood_DNA[M.dna.unique_enzymes])
-		return 0 //already bloodied with this blood. Cannot add more.
-	blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
+	var/old_length = blood_DNA.len
+	blood_DNA |= new_blood_dna
+	if(blood_DNA.len == old_length)
+		return 0
 	return 1
 
-//returns 1 if made bloody, returns 0 otherwise
-/atom/proc/add_blood(mob/living/carbon/M)
-	if(!M || !M.has_dna() || rejects_blood())
-		return 0
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(NOBLOOD in H.dna.species.specflags)
-			return 0
-	return 1
+//to add blood dna info to the object's blood_DNA list
+/atom/proc/transfer_blood_dna(list/blood_dna)
+	if(!blood_DNA)
+		blood_DNA = list()
+	var/old_length = blood_DNA.len
+	blood_DNA |= blood_dna
+	if(blood_DNA.len > old_length)
+		return 1//some new blood DNA was added
 
-/obj/add_blood(mob/living/carbon/M)
-	if(!..())
-		return 0
-	return add_blood_list(M)
 
-/obj/item/add_blood(mob/living/carbon/M)
+//to add blood from a mob onto something, and transfer their dna info
+/atom/proc/add_mob_blood(mob/living/M)
+	var/list/blood_dna = M.get_blood_dna_list()
+	if(!blood_dna)
+		return 0
+	return add_blood(blood_dna)
+
+//to add blood onto something, with blood dna info to include.
+/atom/proc/add_blood(list/blood_dna)
+	return 0
+
+/obj/add_blood(list/blood_dna)
+	return transfer_blood_dna(blood_dna)
+
+/obj/item/add_blood(list/blood_dna)
 	var/blood_count = !blood_DNA ? 0 : blood_DNA.len
 	if(!..())
 		return 0
-	//apply the blood-splatter overlay if it isn't already in there
-	if(!blood_count && initial(icon) && initial(icon_state))
+	if(!blood_count)//apply the blood-splatter overlay if it isn't already in there
+		add_blood_overlay()
+	return 1 //we applied blood to the item
+
+/obj/item/proc/add_blood_overlay()
+	if(initial(icon) && initial(icon_state))
 		//try to find a pre-processed blood-splatter. otherwise, make a new one
 		var/index = blood_splatter_index()
 		var/icon/blood_splatter_icon = blood_splatter_icons[index]
@@ -255,57 +307,34 @@ var/list/blood_splatter_icons = list()
 			blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 			blood_splatter_icon = fcopy_rsc(blood_splatter_icon)
 			blood_splatter_icons[index] = blood_splatter_icon
-		overlays += blood_splatter_icon
-	return 1 //we applied blood to the item
+		add_overlay(blood_splatter_icon)
 
-/obj/item/clothing/gloves/add_blood(mob/living/carbon/M)
-	if(!..())
-		return 0
+/obj/item/clothing/gloves/add_blood(list/blood_dna)
+	. = ..()
 	transfer_blood = rand(2, 4)
-	bloody_hands_mob = M
-	return 1
 
-/turf/add_blood(mob/living/carbon/human/M)
-	if(!..())
-		return 0
-
-	var/obj/effect/decal/cleanable/blood/B = locate() in contents	//check for existing blood splatter
+/turf/add_blood(list/blood_dna)
+	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
-		blood_splatter(src,M.get_blood(M.vessel),1)
-		B = locate(/obj/effect/decal/cleanable/blood) in contents
-	B.add_blood_list(M)
+		B = new /obj/effect/decal/cleanable/blood/splatter(src)
+	B.transfer_blood_dna(blood_dna) //give blood info to the blood decal.
 	return 1 //we bloodied the floor
 
-/mob/living/carbon/human/add_blood(mob/living/carbon/M)
-	if(!..())
-		return 0
-	add_blood_list(M)
+/mob/living/carbon/human/add_blood(list/blood_dna)
+	if(wear_suit)
+		wear_suit.add_blood(blood_dna)
+		update_inv_wear_suit()
+	else if(w_uniform)
+		w_uniform.add_blood(blood_dna)
+		update_inv_w_uniform()
+	if(gloves)
+		var/obj/item/clothing/gloves/G = gloves
+		G.add_blood(blood_dna)
+	else
+		transfer_blood_dna(blood_dna)
 	bloody_hands = rand(2, 4)
-	bloody_hands_mob = M
 	update_inv_gloves()	//handles bloody hands overlays and updating
-	return 1 //we applied blood to the item
-
-/atom/proc/rejects_blood()
-	return 0
-
-// Only adds blood on the floor -- Skie
-/atom/proc/add_blood_floor(mob/living/carbon/M)
-	if(istype(src, /turf))
-		if(M.has_dna())	//mobs with dna = (monkeys + humans at time of writing)
-			var/obj/effect/decal/cleanable/blood/B = locate() in contents
-			if(!B)
-				blood_splatter(src,M,1)
-				B = locate(/obj/effect/decal/cleanable/blood) in contents
-			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
-		else if(istype(M, /mob/living/carbon/alien))
-			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
-			if(!B)
-				B = new(src)
-			B.blood_DNA["UNKNOWN BLOOD"] = "X*"
-		else if(istype(M, /mob/living/silicon/robot))
-			var/obj/effect/decal/cleanable/oil/B = locate() in contents
-			if(!B)
-				B = new(src)
+	return 1
 
 /atom/proc/clean_blood()
 	if(istype(blood_DNA, /list))
@@ -357,6 +386,9 @@ var/list/blood_splatter_icons = list()
 /atom/proc/narsie_act()
 	return
 
+/atom/proc/ratvar_act()
+	return
+
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
     return 0
 
@@ -405,3 +437,11 @@ var/list/blood_splatter_icons = list()
 			if(nutri_check.nutriment_factor >0)
 				M.reagents.remove_reagent(R.id,R.volume)
 
+
+//Hook for running code when a dir change occurs
+/atom/proc/setDir(newdir)
+	dir = newdir
+
+/atom/on_varedit(modified_var)
+	if(!Debug2)
+		admin_spawned = TRUE

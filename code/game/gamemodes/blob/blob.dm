@@ -20,11 +20,17 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	round_ends_with_antag_death = 1
 
-	var/burst = 0
+	announce_span = "green"
+	announce_text = "Dangerous gelatinous organisms are spreading throughout the station!\n\
+	<span class='green'>Blobs</span>: Consume the station and spread as far as you can.\n\
+	<span class='notice'>Crew</span>: Fight back the blobs and minimize station damage."
+
+	var/message_sent = FALSE
 
 	var/cores_to_spawn = 1
-	var/players_per_core = 20
+	var/players_per_core = 25
 	var/blob_point_rate = 3
+	var/blob_base_starting_points = 80
 
 	var/blobwincount = 350
 
@@ -61,11 +67,6 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 				candidates += player
 	return candidates
 
-/datum/game_mode/blob/announce()
-	world << "<B>The current game mode is - <font color='green'>Blob</font>!</B>"
-	world << "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>"
-	world << "You must kill it all while minimizing the damage to the station."
-
 /datum/game_mode/blob/proc/show_message(message)
 	for(var/datum/mind/blob in blob_overminds)
 		blob.current << message
@@ -73,12 +74,13 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 /datum/game_mode/blob/post_setup()
 
 	for(var/datum/mind/blob in blob_overminds)
-		var/mob/camera/blob/B = blob.current.become_overmind(1)
+		var/mob/camera/blob/B = blob.current.become_overmind(TRUE, round(blob_base_starting_points/blob_overminds.len))
+		B.mind.name = B.name
 		var/turf/T = pick(blobstart)
 		B.loc = T
 		B.base_point_rate = blob_point_rate
 
-	SSshuttle.emergencyNoEscape = 1
+	SSshuttle.registerHostileEnvironment(src)
 
 	// Disable the blob event for this round.
 	var/datum/round_event_control/blob/B = locate() in SSevent.control
@@ -91,6 +93,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 		sleep(message_delay)
 
 		send_intercept(1)
+		message_sent = TRUE
 
 		sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 8)
 

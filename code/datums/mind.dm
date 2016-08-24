@@ -52,6 +52,7 @@
 
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
+	var/linglink
 
 	var/miming = 0 // Mime's vow of silence
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
@@ -60,6 +61,8 @@
 	var/datum/devilinfo/devilinfo //Information about the devil, if any.
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
+
+	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -205,8 +208,41 @@
 	ticker.mode.update_wiz_icons_removed(src)
 	ticker.mode.update_cult_icons_removed(src)
 	ticker.mode.update_rev_icons_removed(src)
-	gang_datum.remove_gang_hud(src)
+	if(gang_datum)
+		gang_datum.remove_gang_hud(src)
 
+
+//Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
+
+/datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
+	if(iscultist(creator))
+		ticker.mode.add_cultist(src)
+
+	else if(is_gangster(creator))
+		ticker.mode.add_gangster(src, creator.mind.gang_datum, TRUE)
+
+	else if(is_handofgod_redcultist(creator) || is_handofgod_redprophet(creator))
+		ticker.mode.add_hog_follower(src, "Red")
+
+	else if(is_handofgod_bluecultist(creator) || is_handofgod_blueprophet(creator))
+		ticker.mode.add_hog_follower(src, "Blue")
+
+	else if(is_revolutionary_in_general(creator))
+		ticker.mode.add_revolutionary(src)
+
+	else if(is_servant_of_ratvar(creator))
+		add_servant_of_ratvar(src)
+
+	else if(is_nuclear_operative(creator))
+		make_Nuke(null, null, 0, FALSE)
+
+	enslaved_to = creator
+
+	current.faction = creator.faction
+
+	if(special_role)
+		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
+		current << "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>"
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -244,10 +280,11 @@
 		"nuclear",
 		"traitor", // "traitorchan",
 		"monkey",
+		"clockcult"
 	)
 	var/text = ""
 
-	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+	if(ishuman(current))
 		/** REVOLUTION ***/
 		text = "revolution"
 		if (ticker.mode.config_tag=="revolution")
@@ -326,80 +363,23 @@
 
 		sections["gang"] = text
 
-
-		/** CULT ***/
-		text = "cult"
-		if (ticker.mode.config_tag=="cult")
+		/** Abductors **/
+		text = "Abductor"
+		if(ticker.mode.config_tag == "abductor")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (src in ticker.mode.cult)
-			text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
-/*
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
-*/
-		else if(isloyal(current))
-			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
+		if(src in ticker.mode.abductors)
+			text += "<b>Abductor</b>|<a href='?src=\ref[src];abductor=clear'>human</a>"
+			text += "|<a href='?src=\ref[src];common=undress'>undress</a>|<a href='?src=\ref[src];abductor=equip'>equip</a>"
 		else
-			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
+			text += "<a href='?src=\ref[src];abductor=abductor'>Abductor</a>|<b>human</b>"
 
-		if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
+		if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
 
-		sections["cult"] = text
-
-		/** WIZARD ***/
-		text = "wizard"
-		if (ticker.mode.config_tag=="wizard")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if ((src in ticker.mode.wizards) || (src in ticker.mode.apprentices))
-			text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>"
-			text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
-		else
-			text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
-
-		if(current && current.client && (ROLE_WIZARD in current.client.prefs.be_special))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-
-		sections["wizard"] = text
-
-		/** CHANGELING ***/
-		text = "changeling"
-		if (ticker.mode.config_tag=="changeling" || ticker.mode.config_tag=="traitorchan")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if ((src in ticker.mode.changelings) && special_role)
-			text += "<b>YES</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
-				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
-		else if(src in ticker.mode.changelings) //Station Aligned Changeling
-			text += "<b>YES (but not an antag)</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
-				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
-		else
-			text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
-//			var/datum/game_mode/changeling/changeling = ticker.mode
-//			if (istype(changeling) && changeling.changelingdeath)
-//				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
-
-		if(current && current.client && (ROLE_CHANGELING in current.client.prefs.be_special))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-
-		sections["changeling"] = text
+		sections["abductor"] = text
 
 		/** NUCLEAR ***/
 		text = "nuclear"
@@ -426,6 +406,71 @@
 
 		sections["nuclear"] = text
 
+		/** WIZARD ***/
+		text = "wizard"
+		if (ticker.mode.config_tag=="wizard")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if ((src in ticker.mode.wizards) || (src in ticker.mode.apprentices))
+			text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>"
+			text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."
+			if (objectives.len==0)
+				text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
+		else
+			text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
+
+		if(current && current.client && (ROLE_WIZARD in current.client.prefs.be_special))
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
+		sections["wizard"] = text
+
+	/** CULT ***/
+	text = "cult"
+	if (ticker.mode.config_tag=="cult")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if (src in ticker.mode.cult)
+		text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
+		text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
+
+	else if(isloyal(current))
+		text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
+	else if(is_convertable_to_cult(src))
+		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
+	else
+		text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Nar-Sie</i>"
+
+	if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+
+	sections["cult"] = text
+
+	/** CLOCKWORK CULT **/
+	text = "clockwork cult"
+	if(ticker.mode.config_tag == "clockwork cult")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(src in ticker.mode.servants_of_ratvar)
+		text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
+		text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
+	else if(isloyal(current))
+		text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
+	else if(is_eligible_servant(current))
+		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
+	else
+		text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Ratvar</i>"
+
+	if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+
+	sections["clockcult"] = text
+
 	/** TRAITOR ***/
 	text = "traitor"
 	if (ticker.mode.config_tag=="traitor" || ticker.mode.config_tag=="traitorchan")
@@ -445,44 +490,6 @@
 
 	sections["traitor"] = text
 
-	/** SHADOWLING **/
-	text = "shadowling"
-	if(ticker.mode.config_tag == "shadowling")
-		text = uppertext(text)
-	text = "<i><b>[text]</b></i>: "
-	if(src in ticker.mode.shadows)
-		text += "<b>SHADOWLING</b>|thrall|<a href='?src=\ref[src];shadowling=clear'>human</a>"
-	else if(src in ticker.mode.thralls)
-		text += "shadowling|<b>THRALL</b>|<a href='?src=\ref[src];shadowling=clear'>human</a>"
-	else
-		text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
-
-	if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_special))
-		text += "|Enabled in Prefs"
-	else
-		text += "|Disabled in Prefs"
-
-	sections["shadowling"] = text
-
-	/** Abductors **/
-
-	text = "Abductor"
-	if(ticker.mode.config_tag == "abductor")
-		text = uppertext(text)
-	text = "<i><b>[text]</b></i>: "
-	if(src in ticker.mode.abductors)
-		text += "<b>Abductor</b>|<a href='?src=\ref[src];abductor=clear'>human</a>"
-		text += "|<a href='?src=\ref[src];common=undress'>undress</a>|<a href='?src=\ref[src];abductor=equip'>equip</a>"
-	else
-		text += "<a href='?src=\ref[src];abductor=abductor'>Abductor</a>|<b>human</b>"
-
-	if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
-		text += "|Enabled in Prefs"
-	else
-		text += "|Disabled in Prefs"
-
-	sections["abductor"] = text
-
 	/** HAND OF GOD **/
 	text = "hand of god"
 	if(ticker.mode.config_tag == "handofgod")
@@ -491,17 +498,17 @@
 	if (src in ticker.mode.red_deities)
 		text += "<b>RED GOD</b>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if(src in ticker.mode.red_deity_prophets)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<b>RED PROPHET</b>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<b>RED PROPHET</b>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if (src in ticker.mode.red_deity_followers)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<b>RED FOLLOWER</b>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<b>RED FOLLOWER</b>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if (src in ticker.mode.blue_deities)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<b>BLUE GOD</b>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<b>BLUE GOD</b>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if (src in ticker.mode.blue_deity_prophets)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<b>BLUE PROPHET</b>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<b>BLUE PROPHET</b>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if (src in ticker.mode.blue_deity_followers)
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<b>BLUE FOLLOWER</b>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<b>BLUE FOLLOWER</b>"
 	else
-		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<B>EMPLOYEE</b>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<B>EMPLOYEE</b>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 
 	if(current && current.client && (ROLE_HOG_GOD in current.client.prefs.be_special))
 		text += "|HOG God Enabled in Prefs"
@@ -515,8 +522,36 @@
 
 	sections["follower"] = text
 
-	/** MONKEY ***/
-	if (istype(current, /mob/living/carbon))
+	if(ishuman(current) || ismonkey(current))
+
+		/** CHANGELING ***/
+		text = "changeling"
+		if (ticker.mode.config_tag=="changeling" || ticker.mode.config_tag=="traitorchan")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if ((src in ticker.mode.changelings) && special_role)
+			text += "<b>YES</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
+			if (objectives.len==0)
+				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
+			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
+				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
+		else if(src in ticker.mode.changelings) //Station Aligned Changeling
+			text += "<b>YES (but not an antag)</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
+			if (objectives.len==0)
+				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
+			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
+				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
+		else
+			text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
+
+		if(current && current.client && (ROLE_CHANGELING in current.client.prefs.be_special))
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
+		sections["changeling"] = text
+
+		/** MONKEY ***/
 		text = "monkey"
 		if (ticker.mode.config_tag=="monkey")
 			text = uppertext(text)
@@ -1016,6 +1051,22 @@
 				if (!ticker.mode.equip_cultist(current))
 					usr << "<span class='danger'>Spawning amulet failed!</span>"
 
+	else if(href_list["clockcult"])
+		switch(href_list["clockcult"])
+			if("clear")
+				remove_servant_of_ratvar(current, TRUE)
+				message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current].")
+				log_admin("[key_name(usr)] has removed clockwork servant status from [current].")
+			if("servant")
+				if(!is_servant_of_ratvar(current))
+					add_servant_of_ratvar(current, TRUE)
+					message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
+					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
+			if("slab")
+				if(!ticker.mode.equip_servant(current))
+					usr << "<span class='warning'>Failed to outfit [current] with a slab!</span>"
+				else
+					usr << "<span class='notice'>Successfully gave [current] a clockwork slab!</span>"
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
@@ -1148,43 +1199,6 @@
 				ticker.mode.forge_traitor_objectives(src)
 				usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
 
-	else if(href_list["shadowling"])
-		switch(href_list["shadowling"])
-			if("clear")
-				ticker.mode.update_shadow_icons_removed(src)
-				if(src in ticker.mode.shadows)
-					ticker.mode.shadows -= src
-					special_role = null
-					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
-					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
-					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
-					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
-					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
-					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
-				else if(src in ticker.mode.thralls)
-					ticker.mode.remove_thrall(src,0)
-					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
-					log_admin("[key_name(usr)] has de-thrall'ed [current].")
-			if("shadowling")
-				if(!ishuman(current))
-					usr << "<span class='warning'>This only works on humans!</span>"
-					return
-				ticker.mode.shadows += src
-				special_role = "shadowling"
-				current << "<span class='shadowling'><b>Something stirs deep in your mind. A red light floods your vision, and slowly you remember. Though your human disguise has served you well, the \
-				time is nigh to cast it off and enter your true form. You have disguised yourself amongst the humans, but you are not one of them. You are a shadowling, and you are to ascend at all costs.\
-				</b></span>"
-				ticker.mode.finalize_shadowling(src)
-				ticker.mode.update_shadow_icons_added(src)
-			if("thrall")
-				if(!ishuman(current))
-					usr << "<span class='warning'>This only works on humans!</span>"
-					return
-				ticker.mode.add_thrall(src)
-				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
-				log_admin("[key_name(usr)] has thrall'ed [current].")
-
 	else if(href_list["devil"])
 		switch(href_list["devil"])
 			if("clear")
@@ -1196,24 +1210,29 @@
 						special_role = null
 						current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-						RemoveSpell(/obj/effect/proc_holder/spell/dumbfire/fireball/hellish)
+						RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
 						message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
 						devilinfo = null
+						if(issilicon(current))
+							var/mob/living/silicon/S = current
+							S.clear_law_sixsixsix(current)
 						log_admin("[key_name(usr)] has de-devil'ed [current].")
 				else if(src in ticker.mode.sintouched)
 					ticker.mode.sintouched -= src
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
 					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
 			if("devil")
-				if(!ishuman(current))
-					usr << "<span class='warning'>This only works on humans!</span>"
+				if(!ishuman(current) && !iscyborg(current))
+					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
 					return
 				ticker.mode.devils += src
 				special_role = "devil"
 				ticker.mode.finalize_devil(src)
+				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
+				announce_objectives()
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src
@@ -1335,13 +1354,17 @@
 				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
 
 	else if (href_list["obj_announce"])
-		var/obj_count = 1
-		current << "<span class='notice'>Your current objectives:</span>"
-		for(var/datum/objective/objective in objectives)
-			current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+		announce_objectives()
 
 	edit_memory()
+
+/datum/mind/proc/announce_objectives()
+	var/obj_count = 1
+	current << "<span class='notice'>Your current objectives:</span>"
+	for(var/objective in objectives)
+		var/datum/objective/O = objective
+		current << "<B>Objective #[obj_count]</B>: [O.explanation_text]"
+		obj_count++
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.get_contents()
@@ -1363,7 +1386,7 @@
 		ticker.mode.finalize_traitor(src)
 		ticker.mode.greet_traitor(src)
 
-/datum/mind/proc/make_Nuke(turf/spawnloc,nuke_code,leader=0, telecrystals = TRUE)
+/datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
@@ -1371,24 +1394,33 @@
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
 
-		current.loc = spawnloc
+		if(spawnloc)
+			current.loc = spawnloc
 
-		var/mob/living/carbon/human/H = current
-		qdel(H.belt)
-		qdel(H.back)
-		qdel(H.ears)
-		qdel(H.gloves)
-		qdel(H.head)
-		qdel(H.shoes)
-		qdel(H.wear_id)
-		qdel(H.wear_suit)
-		qdel(H.w_uniform)
+		if(istype(current, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = current
+			qdel(H.belt)
+			qdel(H.back)
+			qdel(H.ears)
+			qdel(H.gloves)
+			qdel(H.head)
+			qdel(H.shoes)
+			qdel(H.wear_id)
+			qdel(H.wear_suit)
+			qdel(H.w_uniform)
 
-		ticker.mode.equip_syndicate(current, telecrystals)
+			ticker.mode.equip_syndicate(current, telecrystals)
 
 		if (nuke_code)
 			store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 			current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+		else
+			var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+			if(nuke)
+				store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke.r_code]", 0, 0)
+				current << "The nuclear authorization code is: <B>nuke.r_code</B>"
+			else
+				current << "You were not provided with a nuclear code. Trying asking your team leader or contacting syndicate command.</B>"
 
 		if (leader)
 			ticker.mode.prepare_syndicate_leader(src,nuke_code)
@@ -1409,7 +1441,6 @@
 		ticker.mode.wizards += src
 		special_role = "Wizard"
 		assigned_role = "Wizard"
-		//ticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
 			current.loc = pick(latejoin)
 			current << "HOT INSERTION, GO GO GO"
@@ -1417,8 +1448,6 @@
 			current.loc = pick(wizardstart)
 
 		ticker.mode.equip_wizard(current)
-		for(var/obj/item/weapon/spellbook/S in current.contents)
-			S.op = 0
 		ticker.mode.name_wizard(current)
 		ticker.mode.forge_wizard_objectives(src)
 		ticker.mode.greet_wizard(src)
@@ -1426,8 +1455,7 @@
 
 /datum/mind/proc/make_Cultist()
 	if(!(src in ticker.mode.cult))
-		ticker.mode.cult += src
-		ticker.mode.update_cult_icons_added(src)
+		ticker.mode.add_cultist(src,FALSE)
 		special_role = "Cultist"
 		current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 		current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
@@ -1678,8 +1706,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		spawn(0)
-			S.start_recharge()
+		addtimer(S, "start_recharge", 0)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)
@@ -1688,7 +1715,11 @@
 				return G
 			break
 
-
+/datum/mind/proc/grab_ghost(force)
+	var/mob/dead/observer/G = get_ghost(even_if_they_cant_reenter = force)
+	. = G
+	if(G)
+		G.reenter_corpse()
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

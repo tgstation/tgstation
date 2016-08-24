@@ -187,6 +187,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=Gas Scan'><img src=pda_reagent.png> [scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
 					if (cartridge.access_remote_door)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
+					if (cartridge.access_dronephone)
+						dat += "<li><a href='byond://?src=\ref[src];choice=Drone Phone'><img src=pda_dronephone.png> Drone Phone</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
@@ -254,7 +256,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (3)
 				dat += "<h4><img src=pda_atmos.png> Atmospheric Readings</h4>"
 
-				var/turf/T = get_turf(user.loc)
+				var/turf/T = user.loc
 				if (isnull(T))
 					dat += "Unable to obtain a reading.<br>"
 				else
@@ -269,12 +271,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (total_moles)
 						for(var/id in env_gases)
 							var/gas_level = env_gases[id][MOLES]/total_moles
-							if(id in hardcoded_gases || gas_level > 0.001)
+							if(gas_level > 0)
 								dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100, 0.01)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
-
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
 
@@ -381,6 +382,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					scanmode = 0
 				else if((!isnull(cartridge)) && (cartridge.access_atmos))
 					scanmode = 5
+			if("Drone Phone")
+				var/area/A = get_area(U)
+				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
+				if(A && alert_s)
+					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
+					_alert_drones(msg, 1)
+					U << msg
+
 
 //NOTEKEEPER FUNCTIONS===================================
 
@@ -464,6 +473,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							else
 								M.close()
 
+
 			if("Detonate")//Detonate PDA
 				if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 					var/obj/item/device/pda/P = locate(href_list["target"])
@@ -520,7 +530,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2||mode == 21)//To clear message overlays.
-		overlays.Cut()
+		cut_overlays()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
@@ -613,13 +623,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(L && L.stat != UNCONSCIOUS)
 		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
 
-	overlays.Cut()
-	overlays += image(icon, icon_alert)
+	cut_overlays()
+	add_overlay(image(icon, icon_alert))
 
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
 	for(var/mob/M in player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a><span class='name'> [msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>"
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>"
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
 	if(!P || qdeleted(P) || P.toff)
@@ -777,6 +788,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
 		user << "<span class='notice'>You scan \the [C].</span>"
+	else if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.attackby(C, user, params)
 	else
 		return ..()
 

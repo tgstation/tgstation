@@ -5,7 +5,7 @@
 // the same logical /area have the parent /area object... well, you would be mistaken.  If you
 // want to find machines, mobs, etc, in the same logical area, you will need to check all the
 // related areas.  This returns a master contents list to assist in that.
-/proc/area_contents(var/area/A)
+/proc/area_contents(area/A)
 	if(!istype(A)) return null
 	var/list/contents = list()
 	for(var/area/LSA in A.related)
@@ -26,7 +26,7 @@
 
 /area/New()
 	icon_state = ""
-	layer = 10
+	layer = AREA_LAYER
 	master = src
 	uid = ++global_uid
 	related = list(src)
@@ -74,7 +74,11 @@
 					D.cancelAlarm("Power", src, source)
 				else
 					D.triggerAlarm("Power", src, cameras, source)
-	return
+			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+				if(state == 1)
+					p.cancelAlarm("Power", src, source)
+				else
+					p.triggerAlarm("Power", src, cameras, source)
 
 /area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
@@ -90,6 +94,8 @@
 				a.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
 				D.triggerAlarm("Atmosphere", src, cameras, source)
+			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+				p.triggerAlarm("Atmosphere", src, cameras, source)
 
 		else if (src.atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
@@ -98,6 +104,8 @@
 				a.cancelAlarm("Atmosphere", src, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
 				D.cancelAlarm("Atmosphere", src, source)
+			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+				p.cancelAlarm("Atmosphere", src, source)
 
 		src.atmosalm = danger_level
 		return 1
@@ -117,8 +125,7 @@
 					if(D.operating)
 						D.nextstate = CLOSED
 					else if(!D.density)
-						spawn(0)
-							D.close()
+						addtimer(D, "close", 0)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
@@ -130,7 +137,8 @@
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.triggerAlarm("Fire", src, cameras, source)
-	return
+	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+		p.triggerAlarm("Fire", src, cameras, source)
 
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
@@ -143,8 +151,7 @@
 					if(D.operating)
 						D.nextstate = OPEN
 					else if(D.density)
-						spawn(0)
-							D.open()
+						addtimer(D, "open", 0)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 
@@ -154,7 +161,8 @@
 		a.cancelAlarm("Fire", src, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.cancelAlarm("Fire", src, source)
-	return
+	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+		p.cancelAlarm("Fire", src, source)
 
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
@@ -177,8 +185,7 @@
 	for (var/mob/living/silicon/SILICON in player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			spawn(600)
-				SILICON.cancelAlarm("Burglar", src, trigger)
+			addtimer(SILICON, "cancelAlarm", 600, FALSE,"Burglar",src,trigger)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1
@@ -191,13 +198,11 @@
 	if(!eject)
 		eject = 1
 		updateicon()
-	return
 
 /area/proc/readyreset()
 	if(eject)
 		eject = 0
 		updateicon()
-	return
 
 /area/proc/partyalert()
 	if(src.name == "Space") //no parties in space!!!
@@ -206,7 +211,6 @@
 		src.party = 1
 		src.updateicon()
 		src.mouse_opacity = 0
-	return
 
 /area/proc/partyreset()
 	if (src.party)
@@ -218,9 +222,7 @@
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					spawn(0)
-					D.open()
-	return
+					addtimer(D, "open", 0)
 
 /area/proc/updateicon()
 	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.

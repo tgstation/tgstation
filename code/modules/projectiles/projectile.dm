@@ -3,13 +3,18 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
 	density = 0
+	anchored = 1
+	flags = ABSTRACT
 	unacidable = 1
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
-	pressure_resistance = INFINITY
+	var/hitsound_wall = ""
+
+	burn_state = LAVA_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
+	var/obj/item/ammo_casing/ammo_casing = null
 	var/suppressed = 0	//Attack message
 	var/yo = null
 	var/xo = null
@@ -19,13 +24,18 @@
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
 	var/paused = FALSE //for suspending the projectile midair
 	var/p_x = 16
-	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
+	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
+	var/speed = 1			//Amount of deciseconds it takes for projectile to travel
+	var/Angle = 0
+	var/spread = 0			//amount (in degrees) of projectile spread
+	var/legacy = 0			//legacy projectile system
+	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
-	var/projectile_type = "/obj/item/projectile"
+	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
 		//Effects
 	var/stun = 0
@@ -39,6 +49,7 @@
 	var/stamina = 0
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
+	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -98,6 +109,12 @@
 	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
+	if(isturf(A) && hitsound_wall)
+		var/volume = Clamp(vol_by_damage() + 20, 0, 100)
+		if(suppressed)
+			volume = 5
+		playsound(loc, hitsound_wall, volume, 1, -1)
+
 	var/turf/target_turf = get_turf(A)
 
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
@@ -119,23 +136,99 @@
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
 
+/obj/item/projectile/proc/fire(var/setAngle)
+	if(setAngle)
+		Angle = setAngle
+	if(!legacy) //new projectiles
+		set waitfor = 0
+		var/next_run = world.time
+		while(loc)
+			if(paused)
+				next_run = world.time
+				sleep(1)
+				continue
 
-/obj/item/projectile/proc/fire()
-	set waitfor = 0
-	while(loc)
-		if(!paused)
 			if((!( current ) || loc == current))
 				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
-			step_towards(src, current)
+
+			if(!Angle)
+				Angle=round(Get_Angle(src,current))
+			if(spread)
+				Angle += (rand() - 0.5) * spread
+			var/matrix/M = new
+			M.Turn(Angle)
+			transform = M
+
+			var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
+			var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
+			var/pixel_x_offset = pixel_x + Pixel_x
+			var/pixel_y_offset = pixel_y + Pixel_y
+			var/new_x = x
+			var/new_y = y
+
+			while(pixel_x_offset > 16)
+				pixel_x_offset -= 32
+				pixel_x -= 32
+				new_x++// x++
+			while(pixel_x_offset < -16)
+				pixel_x_offset += 32
+				pixel_x += 32
+				new_x--
+
+			while(pixel_y_offset > 16)
+				pixel_y_offset -= 32
+				pixel_y -= 32
+				new_y++
+			while(pixel_y_offset < -16)
+				pixel_y_offset += 32
+				pixel_y += 32
+				new_y--
+
+			step_towards(src, locate(new_x, new_y, z))
+			next_run += max(world.tick_lag, speed)
+			var/delay = next_run - world.time
+			if(delay <= world.tick_lag*2)
+				pixel_x = pixel_x_offset
+				pixel_y = pixel_y_offset
+			else
+				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)))
+
 			if(original && (original.layer>=2.75) || ismob(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original, 1)
 			Range()
-		sleep(1)
+			if (delay > 0)
+				sleep(delay)
+
+	else //old projectile system
+		set waitfor = 0
+		while(loc)
+			if(!paused)
+				if((!( current ) || loc == current))
+					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
+				step_towards(src, current)
+				if(original && (original.layer>=2.75) || ismob(original))
+					if(loc == get_turf(original))
+						if(!(original in permutated))
+							Bump(original, 1)
+				Range()
+			sleep(config.run_speed * 0.9)
 
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
 		Bump(AM, 1)
+
+/obj/item/projectile/Destroy()
+	ammo_casing = null
+	return ..()
+
+/obj/item/projectile/proc/dumbfire(var/dir)
+	current = get_ranged_target_turf(src, dir, world.maxx)
+	fire()
+
+
+/obj/item/projectile/experience_pressure_difference()
+	return

@@ -23,21 +23,7 @@
 		height = bounds[MAP_MAXY]
 	return bounds
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
-	if(centered)
-		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
-	if(!T)
-		return
-	if(T.x+width > world.maxx)
-		return
-	if(T.y+height > world.maxy)
-		return
-
-	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
-	if(!bounds)
-		return 0
-
-	//initialize things that are normally initialized after map load
+/proc/initTemplateBounds(var/list/bounds)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -57,6 +43,23 @@
 	SSobj.setup_template_objects(atoms)
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+
+/datum/map_template/proc/load(turf/T, centered = FALSE)
+	if(centered)
+		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
+	if(!T)
+		return
+	if(T.x+width > world.maxx)
+		return
+	if(T.y+height > world.maxy)
+		return
+
+	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	if(!bounds)
+		return 0
+
+	//initialize things that are normally initialized after map load
+	initTemplateBounds(bounds)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return 1
@@ -87,6 +90,7 @@
 
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
+	preloadShelterTemplates()
 
 /proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -120,5 +124,15 @@
 
 		var/datum/map_template/shuttle/S = new shuttle_type()
 
-		shuttle_templates[S.name] = S
-		map_templates[S.name] = S
+		shuttle_templates[S.shuttle_id] = S
+		map_templates[S.shuttle_id] = S
+
+/proc/preloadShelterTemplates()
+	for(var/item in subtypesof(/datum/map_template/shelter))
+		var/datum/map_template/shelter/shelter_type = item
+		if(!(initial(shelter_type.mappath)))
+			continue
+		var/datum/map_template/shelter/S = new shelter_type()
+
+		shelter_templates[S.shelter_id] = S
+		map_templates[S.shelter_id] = S

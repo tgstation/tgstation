@@ -11,7 +11,7 @@
 	name = "electromagnetic generator"
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
-	layer = 2.5
+	layer = LOW_OBJ_LAYER
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 50
@@ -134,8 +134,7 @@
 				on = !on
 
 				if(on)
-					spawn()
-						magnetic_process()
+					addtimer(src, "magnetic_process", 0)
 
 
 

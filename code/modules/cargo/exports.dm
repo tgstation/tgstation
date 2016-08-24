@@ -26,7 +26,35 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
  then the player gets the profit from selling his own wasted time.
 */
+/proc/export_item_and_contents(atom/movable/AM, contraband, emagged, dry_run=FALSE)
+	if(!exports_list.len)
+		setupExports()
 
+	var/sold_str = ""
+	var/cost = 0
+
+	var/list/contents = AM.GetAllContents()
+
+	// We go backwards, so it'll be innermost objects sold first
+	for(var/i in reverseRange(contents))
+		var/atom/movable/thing = i
+		for(var/datum/export/E in exports_list)
+			if(!E)
+				continue
+			if(E.applies_to(thing, contraband, emagged))
+				if(dry_run)
+					cost += E.get_cost(thing, contraband, emagged)
+				else
+					E.sell_object(thing, contraband, emagged)
+					sold_str += " [thing.name]"
+				break
+		if(!dry_run)
+			qdel(thing)
+
+	if(dry_run)
+		return cost
+	else
+		return sold_str
 
 /datum/export
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
@@ -37,7 +65,6 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
 	var/list/exclude_types = list()	// Types excluded from export
-	var/shuttle_floor = FALSE 		// TRUE if the item can be sold on the floor, not only in crates.
 
 	// Used by print-out
 	var/total_cost = 0
@@ -70,8 +97,12 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 // Adds item's cost and amount to the current export cycle.
 // get_cost, get_amount and applies_to do not neccesary mean a successful sale.
 /datum/export/proc/sell_object(obj/O, contr = 0, emag = 0)
-	total_cost += get_cost(O)
-	total_amount += get_amount(O)
+	var/cost = get_cost(O)
+	var/amount = get_amount(O)
+	total_cost += cost
+	total_amount += amount
+	feedback_add_details("export_sold_amount","[O.type]|[amount]")
+	feedback_add_details("export_sold_cost","[O.type]|[cost]")
 
 // Total printout for the cargo console.
 // Called before the end of current export cycle.
@@ -100,3 +131,11 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export/proc/export_end()
 	total_cost = 0
 	total_amount = 0
+
+var/list/exports_list = list()
+
+/proc/setupExports()
+	for(var/subtype in subtypesof(/datum/export))
+		var/datum/export/E = new subtype
+		if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
+			exports_list += E

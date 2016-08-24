@@ -9,12 +9,12 @@
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
 	num_modifier = 6 // Six additional traitors
 
+	announce_text = "There are double agents trying to kill each other!\n\
+	<span class='danger'>Traitors</span>: Eliminate your targets and protect yourself!\n\
+	<span class='notice'>Crew</span>: Stop the double agents before they can cause too much mayhem."
+
 	var/list/target_list = list()
 	var/list/late_joining_list = list()
-
-/datum/game_mode/traitor/double_agents/announce()
-	world << "<B>The current game mode is - Double Agents!</B>"
-	world << "<B>There are double agents killing eachother! Do not let them succeed!</B>"
 
 /datum/game_mode/traitor/double_agents/post_setup()
 	var/i = 0

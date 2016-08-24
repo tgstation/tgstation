@@ -1,11 +1,11 @@
 //Beam
 /obj/effect/ebeam/chain
 	name = "lightning chain"
-	layer = MOB_LAYER - 0.1
+	layer = LYING_MOB_LAYER
 
 /mob/living/simple_animal/hostile/guardian/beam
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage_lower = 7
+	melee_damage_upper = 7
 	attacktext = "shocks"
 	melee_damage_type = BURN
 	attack_sound = 'sound/machines/defib_zap.ogg'
@@ -108,5 +108,5 @@
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
 						"<span class='italics'>You hear a heavy electrical crack.</span>" \
 					)
-				L.adjustFireLoss(0.9) //adds up very rapidly
+				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1

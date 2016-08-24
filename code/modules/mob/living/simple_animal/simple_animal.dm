@@ -43,6 +43,7 @@
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
+	var/obj_damage = 0 //how much damage this simple animal does to objects, if any
 	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
 	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
@@ -61,7 +62,6 @@
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 	var/flying = 0 //whether it's flying or touching the ground.
-
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
 	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
@@ -76,9 +76,16 @@
 
 	var/allow_movement_on_non_turfs = FALSE
 
+	var/attacked_sound = "punch" //Played when someone punches the creature
+
+	var/dextrous = FALSE //If the creature has, and can use, hands
+	var/dextrous_hud_type = /datum/hud/dextrous
+	var/datum/personal_crafting/handcrafting
+
 
 /mob/living/simple_animal/New()
 	..()
+	handcrafting = new()
 	verbs -= /mob/verb/observe
 	if(!real_name)
 		real_name = name
@@ -171,6 +178,9 @@
 
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atmos_suitable = 1
+
+	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
+		atmos_suitable = 0 //getting choked
 
 	var/atom/A = src.loc
 	if(isturf(A))
@@ -280,23 +290,23 @@
 
 /mob/living/simple_animal/adjustBruteLoss(amount)
 	if(damage_coeff[BRUTE])
-		. = adjustHealth(amount*damage_coeff[BRUTE])
+		. = adjustHealth(amount * damage_coeff[BRUTE] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustFireLoss(amount)
 	if(damage_coeff[BURN])
-		. = adjustHealth(amount*damage_coeff[BURN])
+		. = adjustHealth(amount * damage_coeff[BURN] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustOxyLoss(amount)
 	if(damage_coeff[OXY])
-		. = adjustHealth(amount*damage_coeff[OXY])
+		. = adjustHealth(amount * damage_coeff[OXY] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustToxLoss(amount)
 	if(damage_coeff[TOX])
-		. = adjustHealth(amount*damage_coeff[TOX])
+		. = adjustHealth(amount * damage_coeff[TOX] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustCloneLoss(amount)
 	if(damage_coeff[CLONE])
-		. = adjustHealth(amount*damage_coeff[CLONE])
+		. = adjustHealth(amount * damage_coeff[CLONE] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return
@@ -316,7 +326,7 @@
 		if("harm", "disarm")
 			M.do_attack_animation(src)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
-			playsound(loc, "punch", 25, 1, -1)
+			playsound(loc, attacked_sound, 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
 			updatehealth()
@@ -394,13 +404,16 @@
 	if(loot.len)
 		for(var/i in loot)
 			new i(loc)
+	if(dextrous)
+		unEquip(r_hand)
+		unEquip(l_hand)
 	if(!gibbed)
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
 		if(deathmessage)
-			visible_message("<span class='danger'>[deathmessage]</span>")
+			visible_message("<span class='danger'>\The [src] [deathmessage]</span>")
 		else if(!del_on_death)
-			visible_message("<span class='danger'>\the [src] stops moving...</span>")
+			visible_message("<span class='danger'>\The [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
 		qdel(src)
@@ -409,21 +422,30 @@
 		icon_state = icon_dead
 		stat = DEAD
 		density = 0
+		lying = 1
 	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
+	var/bomb_armor = getarmor(null, "bomb")
 	switch (severity)
 		if (1)
-			gib()
-			return
-
+			if(prob(bomb_armor))
+				adjustBruteLoss(500)
+			else
+				gib()
+				return
 		if (2)
-			adjustBruteLoss(60)
+			var/bloss = 60
+			if(prob(bomb_armor))
+				bloss = bloss / 1.5
+			adjustBruteLoss(bloss)
 
 		if(3)
-			adjustBruteLoss(30)
-	updatehealth()
+			var/bloss = 30
+			if(prob(bomb_armor))
+				bloss = bloss / 1.5
+			adjustBruteLoss(bloss)
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -445,7 +467,7 @@
 	return
 
 /mob/living/simple_animal/IgniteMob()
-	return
+	return FALSE
 
 /mob/living/simple_animal/ExtinguishMob()
 	return
@@ -455,6 +477,7 @@
 		icon = initial(icon)
 		icon_state = icon_living
 		density = initial(density)
+		lying = 0
 		. = 1
 
 /mob/living/simple_animal/fully_heal(admin_revive = 0)
@@ -471,16 +494,17 @@
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in view(7, src))
-		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
 			continue
-		else if(istype(M, childtype)) //Check for children FIRST.
+		else if(istype(M, childtype)) //Check for children SECOND.
 			children++
 		else if(istype(M, animal_species))
 			if(M.ckey)
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
-		else if(istype(M, /mob/))
+
+		else if(istype(M, /mob/living) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			alone = 0
 			continue
 	if(alone && partner && children < 3)
@@ -489,16 +513,25 @@
 		return 1
 	return 0
 
-/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
-	if(!child_override)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(incapacitated())
+		return 0
+	if(no_dextery || dextrous)
+		if(be_close && !in_range(M, src))
+			return 0
+	else
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+	return 1
+
+/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
+	if(!canUseTopic(who, TRUE))
 		return
 	else
 		..()
 
-/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where, child_override)
-	if(!child_override)
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where)
+	if(!canUseTopic(who, TRUE))
 		return
 	else
 		..()
@@ -557,3 +590,79 @@
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
+
+/mob/living/simple_animal/get_idcard()
+	return access_card
+
+//Dextrous simple mobs can use hands!
+/mob/living/simple_animal/create_mob_hud()
+	if(client && !hud_used)
+		if(dextrous)
+			hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
+		else
+			..()
+
+/mob/living/simple_animal/OpenCraftingMenu()
+	if(dextrous)
+		handcrafting.ui_interact(src)
+
+/mob/living/simple_animal/can_hold_items()
+	return dextrous
+
+/mob/living/simple_animal/IsAdvancedToolUser()
+	return dextrous
+
+/mob/living/simple_animal/activate_hand(selhand)
+	if(!dextrous)
+		return ..()
+	if(istext(selhand))
+		selhand = lowertext(selhand)
+		if(selhand == "right" || selhand == "r")
+			selhand = 0
+		if(selhand == "left" || selhand == "l")
+			selhand = 1
+	if(selhand != src.hand)
+		swap_hand()
+	else
+		mode()
+
+/mob/living/simple_animal/swap_hand()
+	if(!dextrous)
+		return ..()
+	var/obj/item/held_item = get_active_hand()
+	if(held_item)
+		if(istype(held_item, /obj/item/weapon/twohanded))
+			var/obj/item/weapon/twohanded/T = held_item
+			if(T.wielded == 1)
+				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
+				return
+	hand = !hand
+	if(hud_used && hud_used.inv_slots[slot_l_hand] && hud_used.inv_slots[slot_r_hand])
+		var/obj/screen/inventory/hand/H
+		H = hud_used.inv_slots[slot_l_hand]
+		H.update_icon()
+		H = hud_used.inv_slots[slot_r_hand]
+		H.update_icon()
+
+/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
+	if(!dextrous)
+		return ..()
+	if(!ismob(A))
+		A.attack_hand(src)
+		update_hand_icons()
+
+/mob/living/simple_animal/put_in_hands(obj/item/I)
+	..()
+	update_hand_icons()
+
+/mob/living/simple_animal/proc/update_hand_icons()
+	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+		if(r_hand)
+			r_hand.layer = ABOVE_HUD_LAYER
+			r_hand.screen_loc = ui_rhand
+			client.screen |= r_hand
+		if(l_hand)
+			l_hand.layer = ABOVE_HUD_LAYER
+			l_hand.screen_loc = ui_lhand
+			client.screen |= l_hand
+

@@ -43,7 +43,6 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		adjustBruteLoss(5 + rand(1,9))
-		Paralyse(1)
 		spawn()
 			step_away(src,user,15)
 			sleep(1)
@@ -70,8 +69,8 @@
 
 	return
 
-/mob/living/carbon/alien/larva/restrained()
-	return 0
+/mob/living/carbon/alien/larva/restrained(ignore_grab)
+	. = 0
 
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field

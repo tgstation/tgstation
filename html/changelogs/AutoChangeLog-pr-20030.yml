@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - rscdel: "Removes check on lights preventing you from turning them on while in a locker"

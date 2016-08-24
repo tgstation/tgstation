@@ -11,7 +11,7 @@
 	icon_state = "vest_stealth"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	origin_tech = "materials=5;biotech=4;powerstorage=5;abductor=3"
+	origin_tech = "magnets=7;biotech=4;powerstorage=4;abductor=4"
 	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/mode = VEST_STEALTH
@@ -52,8 +52,8 @@
 	stealth_active = 1
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
-		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
+		addtimer(GLOBAL_PROC, "anim", 0, FALSE, M.loc, M, 'icons/mob/mob.dmi',
+			null, "cloak", null, M.dir)
 
 		M.name_override = disguise.name
 		M.icon = disguise.icon
@@ -61,7 +61,6 @@
 		M.overlays = disguise.overlays
 		M.update_inv_r_hand()
 		M.update_inv_l_hand()
-	return
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
@@ -69,12 +68,11 @@
 	stealth_active = 0
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
-		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
+		addtimer(GLOBAL_PROC, "anim", 0, FALSE, M.loc, M, 'icons/mob/mob.dmi',
+			null, "uncloak", null, M.dir)
 		M.name_override = null
-		M.overlays.Cut()
+		M.cut_overlays()
 		M.regenerate_icons()
-	return
 
 /obj/item/clothing/suit/armor/abductor/vest/hit_reaction()
 	DeactivateStealth()
@@ -105,26 +103,18 @@
 		M.SetStunned(0)
 		M.SetWeakened(0)
 		combat_cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown==initial(combat_cooldown))
-		SSobj.processing.Remove(src)
-
-/obj/item/device/abductor/proc/IsAbductor(user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id != "abductor")
-			return 0
-		return 1
-	return 0
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/abductor/proc/AbductorCheck(user)
-	if(IsAbductor(user))
-		return 1
+	if(isabductor(user))
+		return TRUE
 	user << "<span class='warning'>You can't figure how this works!</span>"
-	return 0
+	return FALSE
 
 /obj/item/device/abductor/proc/ScientistCheck(user)
 	var/mob/living/carbon/human/H = user
@@ -137,7 +127,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gizmo_scan"
 	item_state = "silencer"
-	origin_tech = "materials=5;magnets=5;bluespace=6;abductor=4"
+	origin_tech = "engineering=7;magnets=4;bluespace=4;abductor=3"
 	var/mode = GIZMO_SCAN
 	var/mob/living/marked = null
 	var/obj/machinery/abductor/console/console
@@ -194,7 +184,7 @@
 		user << "<span class='warning'>This specimen is already marked!</span>"
 		return
 	if(istype(target,/mob/living/carbon/human))
-		if(IsAbductor(target))
+		if(isabductor(target))
 			marked = target
 			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
 		else
@@ -218,7 +208,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "silencer"
 	item_state = "gizmo"
-	origin_tech = "materials=5;magnets=5;abductor=3"
+	origin_tech = "materials=4;programming=7;abductor=3"
 
 /obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
@@ -262,7 +252,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
 	activated = 1
-	origin_tech = "materials=2;biotech=3;magnets=4;bluespace=5;abductor=5"
+	origin_tech = "materials=2;biotech=7;magnets=4;bluespace=4;abductor=5"
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 30
 
@@ -270,16 +260,15 @@
 	if(cooldown == initial(cooldown))
 		home.Retrieve(imp_in,1)
 		cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
-	return
 
 /obj/item/weapon/implant/abductor/process()
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/implant/abductor/implant(var/mob/source, var/mob/user)
 	if(..())
@@ -304,27 +293,26 @@
 			break
 	return console
 
-
-/obj/item/device/firing_pin/alien
+/obj/item/device/firing_pin/abductor
 	name = "alien firing pin"
-	desc = "An odd device that resembles a firing pin."
-	fail_message = "<span class='alienwarning'>UNAUTHORIZED -- UNAUTHORIZED</span>"
+	icon_state = "firing_pin_ayy"
+	desc = "This firing pin is slimy and warm; you can swear you feel it \
+		constantly trying to mentally probe you."
+	fail_message = "<span class='abductor'>\
+		Firing error, please contact Command.</span>"
 
-/obj/item/device/firing_pin/alien/pin_auth(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id != "abductor")
-			return 0
-	return 1
+/obj/item/device/firing_pin/abductor/pin_auth(mob/living/user)
+	. = isabductor(user)
 
 /obj/item/weapon/gun/energy/alien
 	name = "alien pistol"
 	desc = "A complicated gun that fires bursts of high-intensity radiation."
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
-	pin = /obj/item/device/firing_pin/alien
+	pin = /obj/item/device/firing_pin/abductor
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
-	origin_tech = "combat=5;materials=4;powerstorage=3;abductor=3"
+	origin_tech = "combat=4;magnets=7;powerstorage=3;abductor=3"
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
@@ -366,7 +354,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=6;combat=5;biotech=7;abductor=4"
+	origin_tech = "materials=4;combat=4;biotech=7;abductor=4"
 	force = 7
 	w_class = 3
 	actions_types = list(/datum/action/item_action/toggle_mode)
@@ -402,16 +390,8 @@ Congratulations! You are now trained for xenobiology research!"}
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
-/obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
-	if(!ishuman(user))
-		return 0
-	var/mob/living/carbon/human/H = user
-	if(H.dna.species.id != "abductor")
-		return 0
-	return 1
-
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
 
 	if(isrobot(target))
@@ -461,10 +441,9 @@ Congratulations! You are now trained for xenobiology research!"}
 		H.forcesay(hit_appends)
 
 	add_logs(user, L, "stunned")
-	return
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
-	if(L.stunned)
+	if(L.stunned || L.sleeping)
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
@@ -475,7 +454,6 @@ Congratulations! You are now trained for xenobiology research!"}
 		user << "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>"
 		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel drowsy!</span>")
-	return
 
 /obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
 	if(!iscarbon(L))
@@ -524,10 +502,11 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "cuff_white" // Needs sprite
 	breakouttime = 450
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
-	origin_tech = "materials=2;magnets=5;abductor=2"
+	origin_tech = "materials=4;magnets=5;abductor=2"
 
 /obj/item/weapon/restraints/handcuffs/energy/used
 	desc = "energy discharge"
+	flags = DROPDEL
 
 /obj/item/weapon/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [src] break in a discharge of energy!</span>", \
@@ -535,7 +514,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,user.loc)
 	S.start()
-	qdel(src)
+	. = ..()
 
 /obj/item/weapon/abductor_baton/examine(mob/user)
 	..()
@@ -552,31 +531,38 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
+	desc = "It's a gleaming sharp knife made out of silvery-green metal."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
+	desc = "You've never seen this before."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
+	desc = "You're not sure if you want the veil pulled back."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
+	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
+	desc = "Maybe alien surgeons have finally found a use for the drill."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
+	desc = "Why would bloodless aliens have a tool to stop bleeding? \
+		Unless..."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
@@ -586,7 +572,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
 	blockTracking = 1
-	origin_tech = "materials=6;magnets=5;abductor=3"
+	origin_tech = "materials=7;magnets=4;abductor=3"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers

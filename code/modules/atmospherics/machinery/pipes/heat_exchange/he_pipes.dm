@@ -36,8 +36,8 @@
 		else if(T.blocks_air)
 			environment_temperature = T.temperature
 		else
-			var/datum/gas_mixture/environment = T.return_air()
-			environment_temperature = environment.temperature
+			var/turf/open/OT = T
+			environment_temperature = OT.GetTemperature()
 	else
 		environment_temperature = T.temperature
 
@@ -46,11 +46,11 @@
 
 
 	//heatup/cooldown any mobs buckled to ourselves based on our temperature
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		var/hc = pipe_air.heat_capacity()
 		var/mob/living/heat_source = buckled_mobs[1]
 		//Best guess-estimate of the total bodytemperature of all the mobs, since they share the same environment it's ~ok~ to guess like this
-		var/avg_temp = (pipe_air.temperature * hc + (heat_source.bodytemperature * buckled_mobs.len) * 3500) / (hc + (buckled_mobs.len * 3500))
+		var/avg_temp = (pipe_air.temperature * hc + (heat_source.bodytemperature * buckled_mobs.len) * 3500) / (hc + (buckled_mobs ? buckled_mobs.len * 3500 : 0))
 		for(var/m in buckled_mobs)
 			var/mob/living/L = m
 			L.bodytemperature = avg_temp
@@ -82,7 +82,7 @@
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
 
 	//burn any mobs buckled based on temperature
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		var/heat_limit = 1000
 		if(pipe_air.temperature > heat_limit + 1)
 			for(var/m in buckled_mobs)

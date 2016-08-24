@@ -123,7 +123,7 @@
 	maxWeightClass = 7
 	gasPerThrow = 5
 
-/datum/table_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
+/datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/weapon/pneumatic_cannon/ghetto
 	tools = list(/obj/item/weapon/weldingtool,
@@ -154,8 +154,8 @@
 	src.update_icons()
 
 /obj/item/weapon/pneumatic_cannon/proc/update_icons()
-	src.overlays.Cut()
+	src.cut_overlays()
 	if(!tank)
 		return
-	src.overlays += image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]")
+	src.add_overlay(image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]"))
 	src.update_icon()

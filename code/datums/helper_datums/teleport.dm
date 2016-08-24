@@ -82,15 +82,18 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			spawn(0)
-				src = null
-				effect.attach(location)
-				effect.start()
+			addtimer(src, "do_effect", 0, FALSE, location, effect)
 		if(sound)
-			spawn(0)
-				src = null
-				playsound(location,sound,60,1)
-	return
+			addtimer(src, "do_sound", 0, FALSE, location, sound)
+
+/datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
+	src = null
+	effect.attach(location)
+	effect.start()
+
+/datum/teleport/proc/do_sound(atom/location, sound)
+	src = null
+	playsound(location, sound, 60, 1)
 
 //do the monkey dance
 /datum/teleport/proc/doTeleport()
@@ -103,12 +106,19 @@
 		if(!center)
 			center = destination
 		for(var/turf/T in range(precision,center))
-			posturfs.Add(T)
+			var/area/A = T.loc
+			if(!A.noteleport)
+				posturfs.Add(T)
+
 		destturf = safepick(posturfs)
 	else
 		destturf = get_turf(destination)
 
 	if(!destturf || !curturf)
+		return 0
+
+	var/area/A = get_area(curturf)
+	if(A.noteleport)
 		return 0
 
 	playSpecials(curturf,effectin,soundin)
@@ -159,3 +169,51 @@
 			var/mob/living/MM = teleatom
 			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
 	return 1
+
+// Safe location finder
+
+/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels)
+	if(!zlevels)
+		zlevels = list(zlevel)
+	var/cycles = 1000
+	for(var/cycle in 1 to cycles)
+		// DRUNK DIALLING WOOOOOOOOO
+		var/x = rand(1, world.maxx)
+		var/y = rand(1, world.maxy)
+		var/z = pick(zlevels)
+		var/random_location = locate(x,y,z)
+
+		if(!(istype(random_location, /turf/open/floor)))
+			continue
+		var/turf/open/floor/F = random_location
+		if(!F.air)
+			continue
+
+		var/datum/gas_mixture/A = F.air
+		var/list/A_gases = A.gases
+		var/trace_gases
+		for(var/id in A_gases)
+			if(id in hardcoded_gases)
+				continue
+			trace_gases = TRUE
+			break
+
+		// Can most things breathe?
+		if(trace_gases)
+			continue
+		if(!(A_gases["o2"] && A_gases["o2"][MOLES] >= 16))
+			continue
+		if(A_gases["plasma"])
+			continue
+		if(A_gases["co2"] && A_gases["co2"][MOLES] >= 10)
+			continue
+
+		// Aim for goldilocks temperatures and pressure
+		if((A.temperature <= 270) || (A.temperature >= 360))
+			continue
+		var/pressure = A.return_pressure()
+		if((pressure <= 20) || (pressure >= 550))
+			continue
+
+		// DING! You have passed the gauntlet, and are "probably" safe.
+		return F

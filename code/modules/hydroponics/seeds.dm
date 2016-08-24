@@ -11,6 +11,7 @@
 	var/product						// A type path. The thing that is created when the plant is harvested.
 	var/species = ""				// Used to update icons. Should match the name in the sprites unless all icon_* are overriden.
 
+	var/growing_icon = 'icons/obj/hydroponics/growing.dmi' //the file that stores the sprites of the growing plant from this seed.
 	var/icon_grow					// Used to override grow icon (default is "[species]-grow"). You can use one grow icon for multiple closely related plants with it.
 	var/icon_dead					// Used to override dead icon (default is "[species]-dead"). You can use one dead icon for multiple closely related plants with it.
 	var/icon_harvest				// Used to override harvest icon (default is "[species]-harvest"). If null, plant will use [icon_grow][growthstages].
@@ -33,8 +34,8 @@
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
 
-	var/innate_yieldmod = 1 //modifier for yield, seperate to the one in Hydro trays, as that one is SPECIFICALLY for nutriment/chems (which means it's constantly reset)
-	//This is added onto the yield mod of the hydro tray, yield *= (parent.yieldmod+innate_yieldmod)
+	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
+	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
 
 /obj/item/seeds/New(loc, nogenes = 0)
 	..()
@@ -101,7 +102,6 @@
 
 /obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj, /obj/item/projectile/energy/florayield))
-
 		var/rating = 1
 		if(istype(loc, /obj/machinery/hydroponics))
 			var/obj/machinery/hydroponics/H = loc
@@ -124,9 +124,10 @@
 		if(parent.yieldmod == 0)
 			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
 		else
-			return_yield *= (parent.yieldmod+innate_yieldmod)
+			return_yield *= (parent.yieldmod)
 
 	return return_yield
+
 
 /obj/item/seeds/proc/harvest(mob/user = usr)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
@@ -146,6 +147,7 @@
 	parent.update_tray()
 
 	return result
+
 
 /obj/item/seeds/proc/prepare_result(var/obj/item/weapon/reagent_containers/food/snacks/grown/T)
 	if(T.reagents)
@@ -227,7 +229,7 @@
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		user << "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>"
 		var/text = get_analyzer_text()
 		if(text)
@@ -246,6 +248,10 @@
 // Maybe some day it would be used as unit test.
 /proc/check_plants_growth_stages_icons()
 	var/list/states = icon_states('icons/obj/hydroponics/growing.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_fruits.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_flowers.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_mushrooms.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_vegetables.dmi')
 	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds - typesof(/obj/item/seeds/sample)
 
 	for(var/seedpath in paths)

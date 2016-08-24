@@ -23,7 +23,7 @@
 
 
 obj/item/weapon/mop/proc/clean(turf/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1))
+	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
 		A.clean_blood()
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
@@ -31,7 +31,7 @@ obj/item/weapon/mop/proc/clean(turf/A)
 		if(istype(A, /turf/closed))
 			var/turf/closed/C = A
 			C.thermite = 0
-	reagents.reaction(A, TOUCH, 10)	//10 is the multiplier for the reaction effect. probably needed to wet the floor properly.
+	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
 	reagents.remove_any(1)			//reaction() doesn't use up the reagents
 
 
@@ -77,6 +77,7 @@ obj/item/weapon/mop/proc/clean(turf/A)
 	mopcap = 10
 	icon_state = "advmop"
 	item_state = "mop"
+	origin_tech = "materials=3;engineering=3"
 	force = 6
 	throwforce = 8
 	throw_range = 4

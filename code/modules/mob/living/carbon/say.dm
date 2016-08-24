@@ -18,3 +18,9 @@
 	if(silent)
 		return 0
 	return ..()
+
+/mob/living/carbon/get_spans()
+	. = ..()
+	var/obj/item/organ/tongue/T = getorganslot("tongue")
+	if(T)
+		. |= T.get_spans()

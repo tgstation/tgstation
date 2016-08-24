@@ -11,8 +11,8 @@
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
-	redcoat
-		item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
+/obj/item/clothing/shoes/sneakers/black/redcoat
+	item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/brown
 	name = "brown shoes"
@@ -20,18 +20,23 @@
 	icon_state = "brown"
 	item_color = "brown"
 
-	captain
-		item_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
-	hop
-		item_color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
-	ce
-		item_color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
-	rd
-		item_color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
-	cmo
-		item_color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
-	cmo
-		item_color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
+/obj/item/clothing/shoes/sneakers/brown/captain
+	item_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/hop
+	item_color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/ce
+	item_color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/rd
+	item_color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/cmo
+	item_color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/qm
+	item_color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/blue
 	name = "blue shoes"

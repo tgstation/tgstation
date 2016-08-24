@@ -31,6 +31,6 @@
 	if(!cost)
 		return 0
 
-	var/potDiff = max(S.potency - discoveredPlants[S.type], 0)
-
+	var/potDiff = (S.potency - discoveredPlants[S.type])
+		
 	return round(..() * potDiff)

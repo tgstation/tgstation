@@ -106,3 +106,93 @@
 
 /turf/open/floor/noslip/MakeSlippery()
 	return
+
+/turf/open/floor/oldshuttle
+	icon = 'icons/turf/shuttleold.dmi'
+	icon_state = "floor"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+//Clockwork floor: Slowly heals toxin damage on nearby servants.
+/turf/open/floor/clockwork
+	name = "clockwork floor"
+	desc = "Tightly-pressed brass tiles. They emit minute vibration."
+	icon_state = "plating"
+	var/obj/effect/clockwork/overlay/floor/realappearence
+
+/turf/open/floor/clockwork/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
+	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor, src)
+	realappearence.linked = src
+	change_construction_value(1)
+
+/turf/open/floor/clockwork/Destroy()
+	be_removed()
+	return ..()
+
+/turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		be_removed()
+	return ..()
+
+/turf/open/floor/clockwork/proc/be_removed()
+	STOP_PROCESSING(SSobj, src)
+	change_construction_value(-1)
+	qdel(realappearence)
+	realappearence = null
+
+/turf/open/floor/clockwork/Entered(atom/movable/AM)
+	..()
+	START_PROCESSING(SSobj, src)
+
+/turf/open/floor/clockwork/process()
+	if(!healservants())
+		STOP_PROCESSING(SSobj, src)
+
+/turf/open/floor/clockwork/proc/healservants()
+	for(var/mob/living/L in src)
+		if(L.stat == DEAD || !is_servant_of_ratvar(L))
+			continue
+		var/swapdamage = FALSE
+		if(L.has_dna()) //if has_dna() is true they're at least carbon
+			var/mob/living/carbon/C = L
+			if(TOXINLOVER in C.dna.species.specflags)
+				swapdamage = TRUE
+		if(isanimal(L))
+			var/mob/living/simple_animal/A = L
+			if(A.damage_coeff[TOX] < 0)
+				swapdamage = TRUE
+		if(swapdamage) //they'd take damage, we need to swap it
+			L.adjustToxLoss(3)
+		else
+			L.adjustToxLoss(-3)
+		. = 1
+
+/turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/weapon/crowbar))
+		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+		playsound(src, 'sound/items/Crowbar.ogg', 20, 1)
+		if(!do_after(user, 70 / I.toolspeed, target = src))
+			return 0
+		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it!</span>")
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+		make_plating()
+		return 1
+	return ..()
+
+/turf/open/floor/clockwork/make_plating()
+	new/obj/item/clockwork/alloy_shards/small(src)
+	new/obj/item/clockwork/alloy_shards/medium(src)
+	return ..()
+
+/turf/open/floor/clockwork/ratvar_act()
+	for(var/mob/M in src)
+		M.ratvar_act()
+
+/turf/open/floor/clockwork/narsie_act()
+	..()
+	if(istype(src, /turf/open/floor/clockwork)) //if we haven't changed type
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)

@@ -32,14 +32,14 @@
 
 
 /obj/item/weapon/lipstick/attack_self(mob/user)
-	overlays.Cut()
+	cut_overlays()
 	user << "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>"
 	open = !open
 	if(open)
 		var/image/colored = image("icon"='icons/obj/items.dmi', "icon_state"="lipstick_uncap_color")
 		colored.color = colour
 		icon_state = "lipstick_uncap"
-		overlays += colored
+		add_overlay(colored)
 	else
 		icon_state = "lipstick"
 

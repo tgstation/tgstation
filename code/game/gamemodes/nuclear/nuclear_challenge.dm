@@ -13,32 +13,26 @@
 	var/declaring_war = 0
 
 /obj/item/device/nuclear_challenge/attack_self(mob/living/user)
-	if(declaring_war)
-		return
-	if(player_list.len < CHALLENGE_MIN_PLAYERS)
-		user << "The enemy crew is too small to be worth declaring war on."
-		return
-	if(user.z != ZLEVEL_CENTCOM)
-		user << "You have to be at your base to use this."
-		return
-
-	if(world.time > CHALLENGE_TIME_LIMIT)
-		user << "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make  do with what you have on hand."
+	if(!check_allowed(user))
 		return
 
 	declaring_war = 1
 	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew?", "Declare war?", "Yes", "No")
+	declaring_war = 0
 	if(are_you_sure == "No")
 		user << "On second thought, the element of surprise isn't so bad after all."
-		declaring_war = 0
+		return
+	if(!check_allowed(user))
 		return
 
+	declaring_war = 1
 	var/war_declaration = "[user.real_name] has declared his intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."
 	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/Alarm.ogg')
 	user << "You've attracted the attention of powerful forces within the syndicate. A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission."
 
-	for(var/obj/machinery/computer/shuttle/syndicate/S in machines)
-		S.challenge = TRUE
+	for(var/V in syndicate_shuttle_boards)
+		var/obj/item/weapon/circuitboard/computer/syndicate_shuttle/board = V
+		board.challenge = TRUE
 
 	var/obj/item/device/radio/uplink/nuclear/U = new(get_turf(user))
 	U.hidden_uplink.owner = "[user.key]"
@@ -47,8 +41,25 @@
 	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
 	qdel(src)
 
+/obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)
+	if(declaring_war)
+		return 0
+	if(player_list.len < CHALLENGE_MIN_PLAYERS)
+		user << "The enemy crew is too small to be worth declaring war on."
+		return 0
+	if(user.z != ZLEVEL_CENTCOM)
+		user << "You have to be at your base to use this."
+		return 0
+	if(world.time-round_start_time > CHALLENGE_TIME_LIMIT)
+		user << "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand."
+		return 0
+	for(var/V in syndicate_shuttle_boards)
+		var/obj/item/weapon/circuitboard/computer/syndicate_shuttle/board = V
+		if(board.moved)
+			user << "The shuttle has already been moved! You have forfeit the right to declare war."
+			return 0
+	return 1
 
 #undef CHALLENGE_TELECRYSTALS
-#undef CHALLENGE_TIME_LIMIT
 #undef CHALLENGE_MIN_PLAYERS
 #undef CHALLENGE_SHUTTLE_DELAY

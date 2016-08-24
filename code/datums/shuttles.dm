@@ -3,12 +3,14 @@
 	var/prefix = "_maps/shuttles/"
 	var/suffix
 	var/port_id
+	var/shuttle_id
 
 	var/description
 	var/admin_notes
 
 /datum/map_template/shuttle/New()
-	mappath = "[prefix][port_id]_[suffix].dmm"
+	shuttle_id = "[port_id]_[suffix]"
+	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
 /datum/map_template/shuttle/emergency
@@ -34,23 +36,29 @@
 	description = "The documentation hasn't been finished yet for this \
 		shuttle.\n\
 		In case of emergency: Break glass."
+	admin_notes = "No brig, no medical facilities, no air."
+
+/datum/map_template/shuttle/emergency/asteroid
+	suffix = "asteroid"
+	name = "Asteroid emergency shuttle"
 
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
-	description = "Features include a very tough Bardrone, with laws to be \
-		a good bartender, bathroom, a quality lounge for the heads, and a \
-		small gambling table."
-	admin_notes = "Bardrone should be controlled by a player, either admin \
-		or ghost, has modified drone laws, can speak human and see normally."
+	description = "Features include sentient bar staff (a Bardrone and a \
+		Barmaid), bathroom, a quality lounge for the heads, and a \
+		large gathering table."
+	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically \
+		sentienced by the fun balloon at 60 seconds before arrival. Has \
+		medical facilities."
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
-	name = "emergency shuttle (Birdboat)"
+	name = "Birdboat emergency shuttle"
 
 /datum/map_template/shuttle/emergency/box
 	suffix = "box"
-	name = "emergency shuttle (Box)"
+	name = "Box emergency shuttle"
 
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"
@@ -65,7 +73,7 @@
 		short. Have a fun ride!"
 	admin_notes = "Brig is replaced by anchored greentext book surrounded by \
 		lavaland chasms, stationside door has been removed to prevent \
-		accidental dropping."
+		accidental dropping. No brig."
 
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
@@ -83,7 +91,11 @@
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
-	name = "emergency shuttle (Metastation)"
+	name = "Meta emergency shuttle"
+
+/datum/map_template/shuttle/emergency/mini
+	suffix = "mini"
+	name = "Mini emergency shuttle"
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -92,8 +104,9 @@
 		darkness between the stars on route to the station. Let's not think \
 		too hard about where all the bodies came from."
 	admin_notes = "Contains real cult ruins, mob eyeballs, and inactive \
-		constructs. Put players in constructs if you want them to move. \
-		Cloning pods in 'medbay' area are showcases and nonfunctional."
+		constructs. Cult mobs will automatically be sentienced by fun \
+		balloon. Cloning pods in 'medbay' area are showcases and \
+		nonfunctional."
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
@@ -111,6 +124,36 @@
 		of radiation, and induce hallucinations in anyone looking at it \
 		without protective goggles. Emitters spawn powered on, expect \
 		admin notices, they are harmless."
+
+/datum/map_template/shuttle/emergency/imfedupwiththisworld
+	suffix = "imfedupwiththisworld"
+	name = "Oh, Hi Daniel"
+	description = "How was space work today? \
+		Oh, pretty good. We got a new space station and the company will make a lot of money. \
+		What space station? \
+		I cannot tell you; it's space confidential. \
+		Aw, come space on. Why not? \
+		No, I can't. Anyway, how is your space roleplay life?"
+
+/datum/map_template/shuttle/emergency/goon
+	suffix = "goon"
+	name = "NES Port"
+	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) \
+	is a shuttle used at other less known nanotrasen facilities \
+	and has a more open inside for larger crowds."
+
+/datum/map_template/shuttle/emergency/wabbajack
+	suffix = "wabbajack"
+	name = "NT Lepton Violet"
+	description = "The research team based on this vessel went missing one \
+	day, and no amount of investigation could discover what happened to \
+	them. The only occupants were a number of dead rodents, who appeared to \
+	have clawed each other to death. Needless to say, no engineering team \
+	wanted to go  near the thing, and it's only being used as an Emergency \
+	Escape Shuttle because there is literally nothing else available."
+	admin_notes = "If the crew can solve the puzzle, they will wake the \
+	wabbajack statue. It will likely not end well. There's a reason it's \
+	boarded up. Maybe they should have just left it alone."
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"

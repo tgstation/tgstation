@@ -37,13 +37,13 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
+	pockets = /obj/item/weapon/storage/internal/pocket
 
-/obj/item/clothing/suit/hgpirate
+/obj/item/clothing/suit/pirate/captain
 	name = "pirate captain coat"
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
-	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 
 
 /obj/item/clothing/suit/cyborg_suit
@@ -91,6 +91,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	burn_state = FIRE_PROOF
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/suit/hastur
 	name = "\improper Hastur's robe"
@@ -153,6 +154,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 
 /obj/item/clothing/suit/cardborg
@@ -332,6 +334,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
@@ -372,6 +375,30 @@
 	item_state = "militaryjacket"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/device/radio)
 
+/obj/item/clothing/suit/jacket/letterman
+	name = "letterman jacket"
+	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
+	icon_state = "letterman"
+	item_state = "letterman"
+
+/obj/item/clothing/suit/jacket/letterman_red
+	name = "red letterman jacket"
+	desc = "A letterman jacket in a sick red color. Radical."
+	icon_state = "letterman_red"
+	item_state = "letterman_red"
+
+/obj/item/clothing/suit/jacket/letterman_syndie
+	name = "blood-red letterman jacket"
+	desc = "Oddly, this jacket seems to have a large S on the back..."
+	icon_state = "letterman_s"
+	item_state = "letterman_s"
+
+/obj/item/clothing/suit/jacket/letterman_nanotrasen
+	name = "blue letterman jacket"
+	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
+	icon_state = "letterman_n"
+	item_state = "letterman_n"
+
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
 	desc = "A suit made out of chitinous alien hide."
@@ -395,6 +422,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 	hooded = 1
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/head/winterhood
 	name = "winter hood"
@@ -450,7 +478,7 @@
 	name = "engineering winter coat"
 	icon_state = "coatengineer"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 20)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
 	hoodtype = /obj/item/clothing/head/winterhood/engineering
 
 /obj/item/clothing/head/winterhood/engineering
@@ -467,7 +495,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/hydro
 	name = "hydroponics winter coat"
 	icon_state = "coathydro"
-	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
+	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
 	hoodtype = /obj/item/clothing/head/winterhood/hydro
 
 /obj/item/clothing/head/winterhood/hydro

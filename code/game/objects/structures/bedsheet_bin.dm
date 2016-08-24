@@ -11,7 +11,7 @@ LINEN BINS
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
 	slot_flags = SLOT_BACK
-	layer = 4
+	layer = MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
@@ -28,9 +28,11 @@ LINEN BINS
 /obj/item/weapon/bedsheet/attack_self(mob/user)
 	user.drop_item()
 	if(layer == initial(layer))
-		layer = 5
+		layer = ABOVE_MOB_LAYER
+		user << "<span class='notice'>You cover yourself with [src].</span>"
 	else
 		layer = initial(layer)
+		user << "<span class='notice'>You smooth [src] out beneath you.</span>"
 	add_fingerprint(user)
 	return
 
@@ -172,9 +174,16 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
+/obj/item/weapon/bedsheet/nanotrasen
+	name = "nanotrasen bedsheet"
+	desc = "It has the Nanotrasen logo on it and has an aura of duty."
+	icon_state = "sheetNT"
+	item_color = "nanotrasen"
+
 /obj/item/weapon/bedsheet/ian
 	icon_state = "sheetian"
 	item_color = "ian"
+
 
 /obj/item/weapon/bedsheet/random
 	icon_state = "sheetrainbow"

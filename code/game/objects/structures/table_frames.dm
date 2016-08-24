@@ -16,7 +16,7 @@
 	icon_state = "table_frame"
 	density = 0
 	anchored = 0
-	layer = 2.8
+	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2
 
@@ -73,6 +73,15 @@
 	else
 		return ..()
 
+/obj/structure/table_frame/narsie_act()
+	if(prob(20))
+		new /obj/structure/table_frame/wood(src.loc)
+		qdel(src)
+
+/obj/structure/table_frame/ratvar_act()
+	new /obj/structure/table_frame/brass(src.loc)
+	qdel(src)
+
 /*
  * Wooden Frames
  */
@@ -109,3 +118,16 @@
 			qdel(src)
 	else
 		return ..()
+
+/obj/structure/table_frame/brass
+	name = "brass table frame"
+	desc = "Four pieces of brass arranged in a square. It's slightly warm to the touch."
+	icon_state = "brass_frame"
+	framestackamount = 0
+
+/obj/structure/table_frame/brass/narsie_act()
+	..()
+	if(src) //do we still exist?
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)

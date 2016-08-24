@@ -45,7 +45,7 @@
 			for(var/i in 1 to 3)
 				new /obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
 		if(31 to 35)
-			new /obj/item/seeds/cash(src)
+			new /obj/item/seeds/firelemon(src)
 		if(36 to 40)
 			new /obj/item/weapon/melee/baton(src)
 		if(41 to 45)
@@ -65,7 +65,7 @@
 		if(57 to 58)
 			new /obj/item/toy/syndicateballoon(src)
 		if(59 to 60)
-			new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper(src)
+			new /obj/item/modkit/projectile_mod(src)
 			new /obj/item/clothing/suit/space(src)
 			new /obj/item/clothing/head/helmet/space(src)
 		if(61 to 62)
@@ -158,8 +158,8 @@
 			if (input == code)
 				user << "<span class='notice'>The crate unlocks!</span>"
 				locked = 0
-				overlays.Cut()
-				overlays += "securecrateg"
+				cut_overlays()
+				add_overlay("securecrateg")
 			else if (input == null || length(input) != codelen)
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
@@ -173,6 +173,11 @@
 
 /obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
 	boom(user)
+
+/obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
+	if(!user.canUseTopic(src))
+		return
+	attack_hand(user)
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)

@@ -111,6 +111,8 @@
 			S.loc = remote_eye.loc
 			S.visible_message("[S] warps in!")
 			X.stored_slimes -= S
+	else
+		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
@@ -133,6 +135,8 @@
 				S.visible_message("[S] vanishes in a flash of light!")
 				S.loc = X
 				X.stored_slimes += S
+	else
+		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
 
 /datum/action/innate/feed_slime
@@ -152,6 +156,8 @@
 			food.LAssailant = C
 			X.monkeys --
 			owner << "[X] now has [X.monkeys] monkeys left."
+	else
+		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
 
 /datum/action/innate/monkey_recycle
@@ -171,3 +177,5 @@
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
 				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)
+	else
+		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"

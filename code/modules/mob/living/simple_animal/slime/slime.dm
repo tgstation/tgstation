@@ -1,12 +1,19 @@
+var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
+	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
+	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
+	"cerulean", "sepia", "black", "pyrite")
+
+
 /mob/living/simple_animal/slime
-	name = "baby slime"
+	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
 	ventcrawler = 2
 	var/is_adult = 0
 	var/docile = 0
-	languages = SLIME | HUMAN
+	languages_spoken = SLIME | HUMAN
+	languages_understood = SLIME | HUMAN
 	faction = list("slime")
 
 	harm_intent_damage = 5
@@ -16,10 +23,8 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
-	speak_emote = list("chirps")
+	speak_emote = list("telepathically chirps")
 	bubble_icon = "slime"
-
-	layer = 5
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 
@@ -65,15 +70,19 @@
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
+	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
 
 	var/colour = "grey"
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-/mob/living/simple_animal/slime/New()
+/mob/living/simple_animal/slime/New(loc, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
+
+	is_adult = new_is_adult
+
 	if(is_adult)
 		var/datum/action/innate/slime/reproduce/R = new
 		R.Grant(src)
@@ -83,31 +92,40 @@
 		var/datum/action/innate/slime/evolve/E = new
 		E.Grant(src)
 	create_reagents(100)
-	spawn (0)
-		number = rand(1, 1000)
-		name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
-		icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
-		icon_dead = "[icon_state] dead"
-		real_name = name
-		slime_mutation = mutation_table(colour)
-		var/sanitizedcolour = replacetext(colour, " ", "")
-		coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
+	set_colour(new_colour)
 	..()
 
+/mob/living/simple_animal/slime/proc/set_colour(new_colour)
+	colour = new_colour
+	update_name()
+	slime_mutation = mutation_table(colour)
+	var/sanitizedcolour = replacetext(colour, " ", "")
+	coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
+	regenerate_icons()
+
+/mob/living/simple_animal/slime/proc/update_name()
+	if(slime_name_regex.Find(name))
+		number = rand(1, 1000)
+		name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
+		real_name = name
+
+/mob/living/simple_animal/slime/proc/random_colour()
+	set_colour(pick(slime_colours))
+
 /mob/living/simple_animal/slime/regenerate_icons()
-	overlays.len = 0
+	cut_overlays()
 	var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
 		if(mood && !stat)
-			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
 	else
 		icon_state = icon_dead
 	..()
 
 /mob/living/simple_animal/slime/movement_delay()
-	if(bodytemperature >= 330.23) // 135 F
+	if(bodytemperature >= 330.23) // 135 F or 57.08 C
 		return -1	// slimes become supercharged at high temperatures
 
 	. = ..()
@@ -171,7 +189,7 @@
 				stat(null, "You can evolve!")
 
 		if(stat == UNCONSCIOUS)
-			stat(null,"You are knocked out by high levels of CO2!")
+			stat(null,"You are knocked out by high levels of BZ!")
 		else
 			stat(null,"Power Level: [powerlevel]")
 
@@ -274,7 +292,7 @@
 		if(stat == DEAD && surgeries.len)
 			if(M.a_intent == "help")
 				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(M, src))
+					if(S.next_step(M))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
@@ -289,7 +307,7 @@
 	if(stat == DEAD && surgeries.len)
 		if(user.a_intent == "help")
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, src))
+				if(S.next_step(user))
 					return 1
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
@@ -324,9 +342,6 @@
 			Target = null
 			++Discipline
 	return
-
-/mob/living/simple_animal/slime/getTrail()
-	return null
 
 /mob/living/simple_animal/slime/examine(mob/user)
 
@@ -389,7 +404,7 @@
 		sleep(3)
 		if(user)
 			step_away(src,user,15)
-		canmove = 1
+		update_canmove()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1
@@ -403,3 +418,6 @@
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())
 		return 3
+
+/mob/living/simple_animal/slime/random/New(loc, new_colour, new_is_adult)
+	. = ..(loc, pick(slime_colours), prob(50))

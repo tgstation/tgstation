@@ -1,7 +1,7 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/turf/open/floor/plating/asteroid/airless,/area/space)
-"c" = (/turf/closed/mineral,/area/space)
-"d" = (/turf/closed/mineral/random/high_chance,/area/space)
+"b" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"c" = (/turf/closed/mineral,/area/ruin/unpowered/no_grav)
+"d" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaa

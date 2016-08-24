@@ -13,6 +13,13 @@
 	..()
 	tracked_implants -= src
 
+/obj/item/weapon/implanter/tracking/New()
+	imp = new /obj/item/weapon/implant/tracking( src )
+	..()
+/obj/item/weapon/implanter/tracking/gps/New()
+	imp = new /obj/item/device/gps/mining/internal( src )
+	..()
+
 /obj/item/weapon/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Tracking Beacon<BR>

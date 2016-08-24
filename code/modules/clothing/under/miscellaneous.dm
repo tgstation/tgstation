@@ -79,6 +79,14 @@
 	item_color = "sexyclown"
 	can_adjust = 0
 
+/obj/item/clothing/under/jabroni
+	name = "Jabroni Outfit"
+	desc = "The leather club is two sectors down."
+	icon_state = "darkholme"
+	item_state = "darkholme"
+	item_color = "darkholme"
+	can_adjust = 0
+
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
@@ -566,6 +574,7 @@
 	name = "Plasma-man jumpsuit refill pack"
 	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
 	icon_state = "plasmarefill"
+	origin_tech = "materials=2;plasmatech=3;biotech=1"
 
 /obj/item/clothing/under/rank/security/navyblue/russian
 	name = "russian officer's uniform"
@@ -573,4 +582,3 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
-

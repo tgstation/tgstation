@@ -67,7 +67,7 @@
 					var/copy_as_paper = 1
 					if(istype(copy, /obj/item/weapon/paper/contract/employment))
 						var/obj/item/weapon/paper/contract/employment/E = copy
-						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target)
+						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target.current)
 						if(C)
 							copy_as_paper = 0
 					if(copy_as_paper)
@@ -84,6 +84,7 @@
 							c.info += "</font>"
 							c.name = copy.name
 							c.fields = copy.fields
+							c.update_icon()
 							c.updateinfolinks()
 							toner--
 					busy = 1
@@ -127,7 +128,7 @@
 		else if(doccopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 5 && !busy && doccopy)
-					new /obj/item/documents/photocopy(src, doccopy)
+					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = 1
 					sleep(15)
@@ -151,7 +152,7 @@
 							temp_img = icon("icons/ass/assfemale.png")
 						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
 							temp_img = icon("icons/ass/assmale.png")
-					else if(isdrone (ass) || istype(ass,/mob/living/simple_animal/drone)) //Drones are hot
+					else if(isdrone(ass)) //Drones are hot
 						temp_img = icon("icons/ass/assdrone.png")
 					else
 						break
@@ -174,25 +175,17 @@
 		updateUsrDialog()
 	else if(href_list["remove"])
 		if(copy)
-			if(!istype(usr,/mob/living/silicon/ai)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
-				copy.loc = usr.loc
-				usr.put_in_hands(copy)
-			else
-				copy.loc = src.loc
-			usr << "<span class='notice'>You take [copy] out of [src].</span>"
+			remove_photocopy(copy, usr)
 			copy = null
-			updateUsrDialog()
 		else if(photocopy)
-			if(!istype(usr,/mob/living/silicon/ai)) //same with this one, wtf
-				photocopy.loc = usr.loc
-				usr.put_in_hands(photocopy)
-			else
-				photocopy.loc = src.loc
-			usr << "<span class='notice'>You take [photocopy] out of [src].</span>"
+			remove_photocopy(photocopy, usr)
 			photocopy = null
-			updateUsrDialog()
+		else if(doccopy)
+			remove_photocopy(doccopy, usr)
+			doccopy = null
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
+		updateUsrDialog()
 	else if(href_list["min"])
 		if(copies > 1)
 			copies--
@@ -245,6 +238,14 @@
 	flick("photocopier1", src)
 	updateUsrDialog()
 
+/obj/machinery/photocopier/proc/remove_photocopy(obj/item/O, mob/user)
+	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
+		O.loc = user.loc
+		user.put_in_hands(O)
+	else
+		O.loc = src.loc
+	user << "<span class='notice'>You take [O] out of [src].</span>"
+
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
@@ -255,7 +256,7 @@
 				if(!user.drop_item())
 					return
 				copy = O
-				do_insertion(O)
+				do_insertion(O, user)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 
@@ -264,7 +265,7 @@
 			if(!user.drop_item())
 				return
 			photocopy = O
-			do_insertion(O)
+			do_insertion(O, user)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 
@@ -273,7 +274,7 @@
 			if(!user.drop_item())
 				return
 			doccopy = O
-			do_insertion(O)
+			do_insertion(O, user)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 

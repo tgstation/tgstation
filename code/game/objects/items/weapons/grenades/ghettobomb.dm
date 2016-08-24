@@ -19,8 +19,8 @@
 
 /obj/item/weapon/grenade/iedcasing/New(loc)
 	..()
-	overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
-	overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
+	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled"))
+	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired"))
 	times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
 	det_time = text2num(pickweight(times))
 	if(det_time < 0) //checking for 'duds'
@@ -29,7 +29,8 @@
 	else
 		range = pick(2,2,2,3,3,3,4)
 
-/obj/item/weapon/grenade/iedcasing/CheckParts()
+/obj/item/weapon/grenade/iedcasing/CheckParts(list/parts_list)
+	..()
 	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
 		var/muh_layer = can.layer
@@ -54,8 +55,7 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
-			spawn(det_time)
-				prime()
+			addtimer(src, "prime", det_time)
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()

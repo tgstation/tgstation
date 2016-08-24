@@ -29,7 +29,7 @@
 			user.visible_message("<span class='warning'>[user] waves around blank sign.</span>")
 		user.changeNext_move(CLICK_CD_MELEE)
 
-/datum/table_recipe/picket_sign
+/datum/crafting_recipe/picket_sign
 	name = "Picket Sign"
 	result = /obj/item/weapon/picket_sign
 	reqs = list(/obj/item/stack/rods = 1,

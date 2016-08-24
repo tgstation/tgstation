@@ -11,6 +11,7 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
+	var/clashing = FALSE //If Nar-Sie is fighting Ratvar
 
 /obj/singularity/narsie/large
 	name = "Nar-Sie"
@@ -19,7 +20,6 @@
 	pixel_x = -236
 	pixel_y = -256
 	current_size = 12
-	move_self = 1 //Do we move on our own?
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
@@ -31,12 +31,12 @@
 	var/area/A = get_area(src)
 	if(A)
 		var/image/alert_overlay = image('icons/effects/effects.dmi', "ghostalertsie")
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, attack_not_jump = 1)
+		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 
 	narsie_spawn_animation()
 
 	sleep(70)
-	SSshuttle.emergency.request(null, 0.3) // Cannot recall
+	SSshuttle.emergency.request(null, 0.1) // Cannot recall
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
@@ -45,12 +45,21 @@
 
 
 /obj/singularity/narsie/process()
+	if(clashing)
+		return
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	move()
+	if(istype(target, /obj/structure/clockwork/massive/ratvar))
+		move(get_dir(src, target)) //Oh, it's you again.
+	else
+		move()
 	if(prob(25))
 		mezzer()
+
+
+/obj/singularity/narsie/Process_Spacemove()
+	return clashing
 
 
 /obj/singularity/narsie/Bump(atom/A)
@@ -59,7 +68,7 @@
 
 
 /obj/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/M in oviewers(8, src))
+	for(var/mob/living/carbon/M in viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				M << "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>"
@@ -77,6 +86,12 @@
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
+	for(var/obj/structure/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
+		if(enemy.z != z)
+			continue
+		acquire(enemy)
+		return
+
 	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
@@ -108,7 +123,7 @@
 		return
 
 
-/obj/singularity/narsie/proc/acquire(mob/food)
+/obj/singularity/narsie/proc/acquire(atom/food)
 	if(food == target)
 		return
 	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>"
@@ -136,7 +151,7 @@
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/obj/narsie_spawn_anim.dmi'
-	dir = SOUTH
+	setDir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
 	sleep(11)

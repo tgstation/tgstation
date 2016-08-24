@@ -8,7 +8,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
 	anchored = 1
-	layer = 3.5
+	layer = HIGH_OBJ_LAYER
 	density = 0
 	var/obj/machinery/porta_turret/parent_turret = null
 

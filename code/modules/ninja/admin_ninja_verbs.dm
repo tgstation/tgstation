@@ -30,6 +30,7 @@ Contents:
 		H.wear_suit:randomize_param()
 		spawn(0)
 			H.wear_suit:ninitialize(10,H)
+	ticker.mode.update_ninja_icons_added(H)
 
 
 //ADMIN CREATE NINJA (From Ghost)
@@ -52,8 +53,10 @@ Contents:
 	if(!C)
 		return
 
-	var/datum/round_event/ninja/E = new /datum/round_event/ninja()
-	E.key=C.key
+	// passing FALSE means the event doesn't start immediately
+	var/datum/round_event/ghost_role/ninja/E = new(FALSE)
+	E.priority_candidates += C
+	E.processing = TRUE
 
 	message_admins("<span class='notice'>[key_name_admin(key)] has spawned [key_name_admin(C.key)] as a Space Ninja.</span>")
 	log_admin("[key] used Spawn Space Ninja.")

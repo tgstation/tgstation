@@ -45,7 +45,7 @@
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
-	var/fps = 10
+	var/fps = 20
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
 	var/hostedby = null
@@ -70,6 +70,13 @@
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
 
+	//IP Intel vars
+	var/ipintel_email
+	var/ipintel_rating_bad = 1
+	var/ipintel_save_good = 12
+	var/ipintel_save_bad = 1
+	var/ipintel_domain = "check.getipintel.net"
+
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
@@ -93,6 +100,7 @@
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
 	var/forbid_secborg = 0				// disallow secborg module to be chosen.
+	var/forbid_peaceborg = 0
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
@@ -129,9 +137,6 @@
 	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
-	var/health_threshold_crit = 0
-	var/health_threshold_dead = -100
-
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
@@ -158,6 +163,8 @@
 
 	var/silent_ai = 0
 	var/silent_borg = 0
+
+	var/damage_multiplier = 1 //Modifier for damage to all mobs. Impacts healing as well.
 
 	var/allowwebclient = 0
 	var/webclientmembersonly = 0
@@ -205,6 +212,7 @@
 	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
 	var/cross_name = "Other server"
+	var/showircname = 0
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -368,6 +376,12 @@
 						global.cross_allowed = 1
 				if("cross_comms_name")
 					cross_name = value
+				if("medal_hub_address")
+					global.medal_hub = value
+				if("medal_hub_password")
+					global.medal_pass = value
+				if("show_irc_name")
+					config.showircname = 1
 				if("see_own_notes")
 					config.see_own_notes = 1
 				if("soft_popcap")
@@ -388,6 +402,17 @@
 					config.notify_new_player_age = text2num(value)
 				if("irc_first_connection_alert")
 					config.irc_first_connection_alert = 1
+				if("ipintel_email")
+					if (value != "ch@nge.me")
+						config.ipintel_email = value
+				if("ipintel_rating_bad")
+					config.ipintel_rating_bad = text2num(value)
+				if("ipintel_domain")
+					config.ipintel_domain = value
+				if("ipintel_save_good")
+					config.ipintel_save_good = text2num(value)
+				if("ipintel_save_bad")
+					config.ipintel_save_bad = text2num(value)
 				if("aggressive_changelog")
 					config.aggressive_changelog = 1
 				if("log_runtimes")
@@ -429,10 +454,8 @@
 
 		else if(type == "game_options")
 			switch(name)
-				if("health_threshold_crit")
-					config.health_threshold_crit	= text2num(value)
-				if("health_threshold_dead")
-					config.health_threshold_dead	= text2num(value)
+				if("damage_multiplier")
+					config.damage_multiplier		= text2num(value)
 				if("revival_pod_plants")
 					config.revival_pod_plants		= text2num(value)
 				if("revival_cloning")
@@ -560,6 +583,8 @@
 					config.allow_ai					= 1
 				if("disable_secborg")
 					config.forbid_secborg			= 1
+				if("disable_peaceborg")
+					config.forbid_peaceborg			= 1
 				if("silent_ai")
 					config.silent_ai 				= 1
 				if("silent_borg")

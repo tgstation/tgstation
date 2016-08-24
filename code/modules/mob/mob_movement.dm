@@ -8,14 +8,32 @@
 	if(buckled == mover)
 		return 1
 	if(ismob(mover))
-		var/mob/moving_mob = mover
-		if ((other_mobs && moving_mob.other_mobs))
-			return 1
 		if (mover in buckled_mobs)
 			return 1
 	return (!mover.density || !density || lying)
 
 
+//The byond version of these verbs wait for the next tick before acting. 
+//	instant verbs however can run mid tick or even during the time between ticks.
+/client/verb/moveup()
+	set name = ".moveup"
+	set instant = 1
+	Move(get_step(mob, NORTH), NORTH)
+
+/client/verb/movedown()
+	set name = ".movedown"
+	set instant = 1
+	Move(get_step(mob, SOUTH), SOUTH)
+
+/client/verb/moveright()
+	set name = ".moveright"
+	set instant = 1
+	Move(get_step(mob, EAST), EAST)
+
+/client/verb/moveleft()
+	set name = ".moveleft"
+	set instant = 1
+	Move(get_step(mob, WEST), WEST)
 
 /client/Northeast()
 	swap_hand()
@@ -86,21 +104,22 @@
 			step(mob.control_object,direct)
 			if(!mob.control_object)
 				return
-			mob.control_object.dir = direct
+			mob.control_object.setDir(direct)
 		else
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
 
 /client/Move(n, direct)
+	if(world.time < move_delay)
+		return 0
+	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
 		return 0
 	if(mob.notransform)
 		return 0	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
-	if(world.time < move_delay)
-		return 0
 	if(!isliving(mob))
 		return mob.Move(n,direct)
 	if(mob.stat == DEAD)
@@ -114,17 +133,17 @@
 			Process_Incorpmove(direct)
 			return 0
 
-	if(Process_Grab())
-		return
-
-	if(mob.buckled)							//if we're buckled to something, tell it we moved.
-		return mob.buckled.relaymove(mob, direct)
-
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
 		return AIMove(n,direct,mob)
+
+	if(Process_Grab()) //are we restrained by someone's grip?
+		return
+
+	if(mob.buckled)							//if we're buckled to something, tell it we moved.
+		return mob.buckled.relaymove(mob, direct)
 
 	if(!mob.canmove)
 		return 0
@@ -136,53 +155,9 @@
 	if(!mob.Process_Spacemove(direct))
 		return 0
 
-	if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
-		for(var/mob/M in orange(1, mob))
-			if(M.pulling == mob)
-				if(!M.incapacitated() && mob.Adjacent(M))
-					src << "<span class='warning'>You're restrained! You can't move!</span>"
-					move_delay = world.time + 10
-					return 0
-				else
-					M.stop_pulling()
-
-
 	//We are now going to move
 	moving = 1
 	move_delay = mob.movement_delay() + world.time
-
-	//Something with pulling things
-	if(locate(/obj/item/weapon/grab, mob))
-		move_delay = max(move_delay, world.time + 7)
-		var/list/L = mob.ret_grab()
-		if(istype(L, /list))
-			if(L.len == 2)
-				L -= mob
-				var/mob/M = L[1]
-				if(M)
-					if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
-						. = ..()
-						if(M)//Mob may get deleted during parent call
-							if (isturf(M.loc))
-								var/diag = get_dir(mob, M)
-								if ((diag - 1) & diag)
-								else
-									diag = null
-								if ((get_dist(mob, M) > 1 || diag))
-									step(M, get_dir(M.loc, mob.loc))
-			else
-				for(var/mob/M in L)
-					M.other_mobs = 1
-					if(mob != M)
-						M.animate_movement = 3
-				for(var/mob/M in L)
-					spawn( 0 )
-						step(M, direct)
-						return
-					spawn( 1 )
-						M.other_mobs = null
-						M.animate_movement = 2
-						return
 
 	if(mob.confused)
 		if(mob.confused > 40)
@@ -207,39 +182,17 @@
 ///Called by client/Move()
 ///Checks to see if you are being grabbed and if so attemps to break it
 /client/proc/Process_Grab()
-	if(mob.grabbed_by.len)
-		var/list/grabbing = list()
+	if(mob.pulledby)
+		if(mob.incapacitated(ignore_restraints = 1))
+			move_delay = world.time + 10
+			return 1
+		else if(mob.restrained(ignore_grab = 1))
+			move_delay = world.time + 10
+			src << "<span class='warning'>You're restrained! You can't move!</span>"
+			return 1
+		else
+			return mob.resist_grab(1)
 
-		if(istype(mob.l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.l_hand
-			grabbing += G.affecting
-
-		if(istype(mob.r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.r_hand
-			grabbing += G.affecting
-
-		for(var/X in mob.grabbed_by)
-			var/obj/item/weapon/grab/G = X
-			switch(G.state)
-
-				if(GRAB_PASSIVE)
-					if(!grabbing.Find(G.assailant)) //moving always breaks a passive grab unless we are also grabbing our grabber.
-						qdel(G)
-
-				if(GRAB_AGGRESSIVE)
-					move_delay = world.time + 10
-					if(!prob(25))
-						return 1
-					mob.visible_message("<span class='danger'>[mob] has broken free of [G.assailant]'s grip!</span>")
-					qdel(G)
-
-				if(GRAB_NECK)
-					move_delay = world.time + 10
-					if(!prob(5))
-						return 1
-					mob.visible_message("<span class='danger'>[mob] has broken free of [G.assailant]'s headlock!</span>")
-					qdel(G)
-	return 0
 
 ///Process_Incorpmove
 ///Called by client/Move()
@@ -252,7 +205,7 @@
 	switch(L.incorporeal_move)
 		if(1)
 			L.loc = get_step(L, direct)
-			L.dir = direct
+			L.setDir(direct)
 		if(2)
 			if(prob(50))
 				var/locx
@@ -292,17 +245,21 @@
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
-			L.dir = direct
-		if(3) //Incorporeal move, but blocked by holy-watered tiles
+			L.setDir(direct)
+		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
+			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
+				L << "<span class='warning'>[S] bars your passage!</span>"
+				if(istype(L, /mob/living/simple_animal/revenant))
+					var/mob/living/simple_animal/revenant/R = L
+					R.reveal(20)
+					R.stun(20)
+				return
 			if(stepTurf.flags & NOJAUNT)
 				L << "<span class='warning'>Holy energies block your path.</span>"
-				L.notransform = 1
-				spawn(2)
-					L.notransform = 0
 			else
 				L.loc = get_step(L, direct)
-				L.dir = direct
+				L.setDir(direct)
 	return 1
 
 
@@ -352,27 +309,19 @@
 /mob/proc/mob_negates_gravity()
 	return 0
 
+//moves the mob/object we're pulling
 /mob/proc/Move_Pulled(atom/A)
-	if (!canmove || restrained() || !pulling)
+	if (!pulling)
 		return
-	if (pulling.anchored)
-		return
-	if (!pulling.Adjacent(src))
+	if (pulling.anchored || !pulling.Adjacent(src))
+		stop_pulling()
 		return
 	if (A == loc && pulling.density)
 		return
 	if (!Process_Spacemove(get_dir(pulling.loc, A)))
 		return
-	if (ismob(pulling))
-		var/mob/M = pulling
-		var/atom/movable/t = M.pulling
-		M.stop_pulling()
-		step(pulling, get_dir(pulling.loc, A))
-		if(M)
-			M.start_pulling(t)
-	else
-		step(pulling, get_dir(pulling.loc, A))
-	return
+	step(pulling, get_dir(pulling.loc, A))
+
 
 /mob/proc/slip(s_amount, w_amount, obj/O, lube)
 	return

@@ -15,7 +15,7 @@
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
-	if(IsAbductor(target))
+	if(isabductor(target))
 		return
 	close_machine(target)
 
@@ -30,8 +30,8 @@
 		..()
 
 /obj/machinery/abductor/experiment/close_machine(mob/target)
-	for(var/mob/living/carbon/C in loc)
-		if(IsAbductor(C))
+	for(var/A in loc)
+		if(isabductor(A))
 			return
 	if(state_open && !panel_open)
 		..(target)
@@ -159,11 +159,7 @@
 		var/datum/objective/abductee/O = new objtype()
 		ticker.mode.abductees += H.mind
 		H.mind.objectives += O
-		var/obj_count = 1
-		H << "<span class='notice'>Your current objectives:</span>"
-		for(var/datum/objective/objective in H.mind.objectives)
-			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+		H.mind.announce_objectives()
 		ticker.mode.update_abductor_icons_added(H.mind)
 
 		for(var/obj/item/organ/gland/G in H.internal_organs)

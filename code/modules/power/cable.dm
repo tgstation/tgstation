@@ -33,7 +33,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
-	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
+	layer = WIRE_LAYER //Above pipes, which are at GAS_PIPE_LAYER
 	var/cable_color = "red"
 	var/obj/item/stack/cable_coil/stored
 
@@ -92,6 +92,10 @@ By design, d1 is the smallest direction and d2 is the highest
 		cut_cable_from_powernet()				// update the powernets
 	cable_list -= src							//remove it from global cable list
 	return ..()									// then go ahead and delete the cable
+
+/obj/structure/cable/blob_act(obj/effect/blob/B)
+	if(invisibility != INVISIBILITY_MAXIMUM)
+		qdel(src)
 
 /obj/structure/cable/Deconstruct()
 	var/turf/T = loc
@@ -517,8 +521,8 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
 		if(!do_mob(user, H, 50))
 			return
-		item_heal_robotic(H, user, 0, 5)
-		src.use(1)
+		if(item_heal_robotic(H, user, 0, 5))
+			use(1)
 		return
 	else
 		return ..()

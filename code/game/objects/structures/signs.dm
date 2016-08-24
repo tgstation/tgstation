@@ -3,7 +3,7 @@
 	anchored = 1
 	opacity = 0
 	density = 0
-	layer = 3.5
+	layer = SIGN_LAYER
 
 /obj/structure/sign/basic
 	name = "blank sign"
@@ -15,7 +15,6 @@
 
 /obj/structure/sign/blob_act(obj/effect/blob/B)
 	qdel(src)
-	return
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench))
@@ -27,7 +26,9 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 							 "<span class='notice'>You unfasten [src].</span>")
-		new /obj/item/sign_backing(get_turf(user))
+		var/obj/item/sign_backing/SB = new (get_turf(user))
+		SB.icon_state = icon_state
+		SB.sign_path = type
 		qdel(src)
 	else if(istype(O, /obj/item/weapon/pen))
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
@@ -82,11 +83,12 @@
 
 /obj/item/sign_backing
 	name = "sign backing"
-	desc = "A blank sign with adhesive backing."
+	desc = "A sign with adhesive backing."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	w_class = 3
 	burn_state = FLAMMABLE
+	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	if(isturf(target) && proximity)
@@ -94,7 +96,7 @@
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 							 "<span class='notice'>You attach a blank sign to [T].</span>")
 		playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
-		new /obj/structure/sign/basic(T)
+		new sign_path(T)
 		user.drop_item()
 		qdel(src)
 	else
@@ -109,12 +111,18 @@
 
 /obj/structure/sign/map/left/dream
 	icon_state = "map-left-DS"
+	desc = "A framed picture of the station.\nClockwise from the top, you see Engineering(<b>yellow</b>), Arrivals(<b>blue and white</b>), Atmospherics(<b>yellow</b>), Security(<b>red</b>), \
+	Cargo(<b>brown</b>), Science(<b>purple</b>), Escape(<b>red and white</b>), and Medbay(<b>blue</b>).\nIn the center of the station, you see the Bridge(<b>dark blue</b>).\n\
+	Around those, you see Hallways/Entrances(<b>light grey</b>), Public Areas(<b>grey</b>), and Maintenance(<b>dark grey</b>)."
 
 /obj/structure/sign/map/right
 	icon_state = "map-right"
 
 /obj/structure/sign/map/right/dream
 	icon_state = "map-right-DS"
+	desc = "A framed picture of the station.\nClockwise from the top, you see Engineering(<b>yellow</b>), Arrivals(<b>blue and white</b>), Atmospherics(<b>yellow</b>), Security(<b>red</b>), \
+	Cargo(<b>brown</b>), Science(<b>purple</b>), Escape(<b>red and white</b>), and Medbay(<b>blue</b>).\nIn the center of the station, you see the Bridge(<b>dark blue</b>).\n\
+	Around those, you see Hallways/Entrances(<b>light grey</b>), Public Areas(<b>grey</b>), and Maintenance(<b>dark grey</b>)."
 
 /obj/structure/sign/securearea
 	name = "\improper SECURE AREA"
@@ -198,15 +206,10 @@
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
 	icon_state = "atmosplaque"
 
-/obj/structure/sign/maltesefalcon	//The sign is 64x32, so it needs two tiles. ;3
-	name = "The Maltese Falcon"
-	desc = "The Maltese Falcon, Space Bar and Grill."
-
-/obj/structure/sign/maltesefalcon/left
-	icon_state = "maltesefalcon-left"
-
-/obj/structure/sign/maltesefalcon/right
-	icon_state = "maltesefalcon-right"
+/obj/structure/sign/nanotrasen
+	name = "\improper NanoTrasen Logo "
+	desc = "A sign with the Nanotrasen Logo on it.  Glory to Nanotrasen!"
+	icon_state = "nanotrasen"
 
 /obj/structure/sign/science			//These 3 have multiple types, just var-edit the icon_state to whatever one you want on the map
 	name = "\improper SCIENCE"
@@ -252,3 +255,5 @@
 	name = "escape arm"
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
+
+

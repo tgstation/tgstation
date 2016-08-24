@@ -10,7 +10,7 @@
 
 
 /obj/structure/mirror/attack_hand(mob/user)
-	if(shattered)
+	if(shattered || !Adjacent(user))
 		return
 
 	if(ishuman(user))
@@ -45,6 +45,7 @@
 	icon_state = "mirror_broke"
 	playsound(src, "shatter", 70, 1)
 	desc = "Oh no, seven years of bad luck!"
+	shattered = 1
 
 
 /obj/structure/mirror/bullet_act(obj/item/projectile/P)
@@ -109,7 +110,7 @@
 	attack_generic(user)
 
 /obj/structure/mirror/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper <= 0)
+	if(!M.melee_damage_upper && !M.obj_damage)
 		return
 	attack_generic(M)
 
@@ -120,7 +121,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()

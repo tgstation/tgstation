@@ -53,14 +53,14 @@
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		qdel(air_contents)
 
-	SSobj.processing -= src
-	return ..()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src
@@ -92,12 +92,12 @@
 	user << "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/weapon/tank/blob_act(obj/effect/blob/B)
-	if(prob(50))
-		var/turf/location = src.loc
-		if (!( istype(location, /turf) ))
+	if(B && B.loc == loc)
+		var/turf/location = get_turf(src)
+		if(!location)
 			qdel(src)
 
-		if(src.air_contents)
+		if(air_contents)
 			location.assume_air(air_contents)
 
 		qdel(src)
@@ -113,7 +113,7 @@
 				step(W, pick(alldirs))
 		H.hair_style = "Bald"
 		H.update_hair()
-		H.blood_max = 5
+		H.bleed_rate = 5
 		gibs(H.loc, H.viruses, H.dna)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
 
@@ -127,7 +127,7 @@
 	else if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
 	else
-		return ..()
+		. = ..()
 
 /obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)

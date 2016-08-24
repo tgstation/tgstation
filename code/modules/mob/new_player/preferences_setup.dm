@@ -61,21 +61,26 @@
 	if(previewJob)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
-
+	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
-
-	mannequin.dir = NORTH
+	CHECK_TICK
+	mannequin.setDir(NORTH)
+	
 	var/icon/stamp = getFlatIcon(mannequin)
+	CHECK_TICK
 	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
-
-	mannequin.dir = WEST
+	CHECK_TICK
+	mannequin.setDir(WEST)
 	stamp = getFlatIcon(mannequin)
+	CHECK_TICK
 	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
-
-	mannequin.dir = SOUTH
+	CHECK_TICK
+	mannequin.setDir(SOUTH)
 	stamp = getFlatIcon(mannequin)
+	CHECK_TICK
 	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
-
+	CHECK_TICK
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
+	CHECK_TICK
 	qdel(mannequin)

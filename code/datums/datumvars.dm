@@ -1,11 +1,12 @@
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 
+var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRUE, "screen" = TRUE, "images" = TRUE)
+
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
 
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
-	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
@@ -261,6 +262,7 @@
 
 	if(ismob(D))
 		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
+		body += "<option value='?_src_=vars;remove_spell=\ref[D]'>Remove Spell</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
 		body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
 		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
@@ -305,6 +307,7 @@
 	var/list/names = list()
 	for (var/V in D.vars)
 		names += V
+	sleep(1)//For some reason, without this sleep, VVing will cause client to disconnect on certain objects.
 
 	names = sortList(names)
 
@@ -342,8 +345,6 @@ body
 
 	usr << browse(html, "window=variables\ref[D];size=475x650")
 
-	return
-
 /client/proc/debug_variable(name, value, level, datum/DA = null)
 	var/html = ""
 
@@ -353,10 +354,10 @@ body
 		html += "<li>"
 
 	if (isnull(value))
-		html += "[name] = <span class='value'>null</span>"
+		html += "[html_encode(name)] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[name] = <span class='value'>\"[html_encode(value)]\"</span>"
+		html += "[html_encode(name)] = <span class='value'>\"[html_encode(value)]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
@@ -364,9 +365,9 @@ body
 		var/rnd = rand(1,10000)
 		var/rname = "tmp\ref[I][rnd].png"
 		usr << browse_rsc(I, rname)
-		html += "[name] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
+		html += "[html_encode(name)] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
 		#else
-		html += "[name] = /icon (<span class='value'>[value]</span>)"
+		html += "[html_encode(name)] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
 /*		else if (istype(value, /image))
@@ -381,39 +382,45 @@ body
 		#endif
 */
 	else if (isfile(value))
-		html += "[name] = <span class='value'>'[value]'</span>"
+		html += "[html_encode(name)] = <span class='value'>'[value]'</span>"
 
 	else if (istype(value, /datum))
 		var/datum/D = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [D.type]"
 
 	else if (istype(value, /client))
 		var/client/C = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [C] [C.type]"
 //
 	else if (istype(value, /list))
 		var/list/L = value
-		html += "[name] = /list ([L.len])"
+		html += "[html_encode(name)] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
-			// not sure if this is completely right...
-			if(0)   //(L.vars.len > 0)
-				html += "<ol>"
-				html += "</ol>"
-			else
-				html += "<ul>"
-				var/index = 1
-				for (var/entry in L)
-					if(istext(entry))
-						html += debug_variable(entry, L[entry], level + 1)
-					//html += debug_variable("[index]", L[index], level + 1)
-					else
+			html += "<ul>"
+			var/index = 1
+			for(var/entry in L)
+				var/state = "INDEX"
+				var/val = null
+				if(isnum(entry) || internal_byond_list_vars[name])
+					state = "INDEX"
+				else
+					val = L[entry]
+					if(!isnull(val))
+						state = "ASSOC"
+					if(isnull(L[index]))
+						state = "ASSOC"
+
+				switch(state)
+					if("INDEX")
 						html += debug_variable(index, L[index], level + 1)
-					index++
-				html += "</ul>"
+					if("ASSOC")
+						html += debug_variable(entry, val, level + 1)
+				index++
+			html += "</ul>"
 
 	else
-		html += "[name] = <span class='value'>[html_encode(value)]</span>"
+		html += "[html_encode(name)] = <span class='value'>[html_encode(value)]</span>"
 
 	html += "</li>"
 
@@ -556,6 +563,18 @@ body
 			src.give_spell(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
 
+		else if(href_list["remove_spell"])
+			if(!check_rights(0))
+				return
+
+			var/mob/M = locate(href_list["remove_spell"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
+			remove_spell(M)
+			href_list["datumrefresh"] = href_list["remove_spell"]
+
 		else if(href_list["give_disease"])
 			if(!check_rights(0))
 				return
@@ -635,26 +654,7 @@ body
 			if(!istype(M))
 				usr << "This can only be used on instances of type /mob"
 				return
-			M << "Control of your mob has been offered to dead players."
-			log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-			message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
-			var/poll_message = "Do you want to play as [M.real_name]?"
-			if(M.mind && M.mind.assigned_role)
-				poll_message = "[poll_message] Job:[M.mind.assigned_role]."
-			if(M.mind && M.mind.special_role)
-				poll_message = "[poll_message] Status:[M.mind.special_role]."
-			var/list/mob/dead/observer/candidates = pollCandidates(poll_message, "pAI", null, FALSE, 100)
-			var/mob/dead/observer/theghost = null
-
-			if(candidates.len)
-				theghost = pick(candidates)
-				M << "Your mob has been taken over by a ghost!"
-				message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
-				M.ghostize(0)
-				M.key = theghost.key
-			else
-				M << "There were no ghosts willing to take control."
-				message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
+			offer_control(M)
 
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))
@@ -760,9 +760,9 @@ body
 
 			switch(href_list["rotatedir"])
 				if("right")
-					A.dir = turn(A.dir, -45)
+					A.setDir(turn(A.dir, -45))
 				if("left")
-					A.dir = turn(A.dir, 45)
+					A.setDir(turn(A.dir, 45))
 			href_list["datumrefresh"] = href_list["rotatedatum"]
 
 		else if(href_list["editorgans"])
@@ -890,9 +890,7 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				var/datum/species/old_species = H.dna.species
 				H.set_species(newtype)
-				H.dna.species.admin_set_species(H,old_species)
 
 		else if(href_list["removebodypart"])
 			if(!check_rights(R_SPAWN))
@@ -922,30 +920,25 @@ body
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
+			if(!ishumanbasic(H))
+				usr << "This can only be done to the basic human species \
+					at the moment."
+				return
 
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 
-			if(H.dna.species.id == "human")
-				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-					usr << "Put [H] on purrbation."
-					H << "Something is nya~t right."
-					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
-					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
-					H.dna.features["tail_human"] = "Cat"
-					H.dna.features["ears"] = "Cat"
-				else
-					usr << "Removed [H] from purrbation."
-					H << "You are no longer a cat."
-					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
-					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
-					H.dna.features["tail_human"] = "None"
-					H.dna.features["ears"] = "None"
-				H.regenerate_icons()
-				return
+			var/success = purrbation_toggle(H)
+			if(success)
+				usr << "Put [H] on purrbation."
+				log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
+				message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 
-			usr << "You can only put humans on purrbation."
+			else
+				usr << "Removed [H] from purrbation."
+				log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
+				message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))
@@ -986,7 +979,3 @@ body
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
 				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
 				href_list["datumrefresh"] = href_list["mobToDamage"]
-
-
-	return
-

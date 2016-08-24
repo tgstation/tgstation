@@ -27,6 +27,9 @@
 /obj/item/ammo_casing/magic/chaos
 	projectile_type = /obj/item/projectile/magic
 
+/obj/item/ammo_casing/magic/spellblade
+	projectile_type = /obj/item/projectile/magic/spellblade
+
 /obj/item/ammo_casing/magic/chaos/newshot()
 	projectile_type = pick(typesof(/obj/item/projectile/magic))
 	..()

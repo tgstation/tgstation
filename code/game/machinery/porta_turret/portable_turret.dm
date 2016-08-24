@@ -3,7 +3,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "grey_target_prism"
 	anchored = 1
-	layer = 3
+	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = 1
 	use_power = 1				//this turret uses and requires power
@@ -370,6 +370,14 @@
 	else
 		qdel(src)
 
+/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	if(user.melee_damage_upper == 0)
+		user.emote("[user.friendly] [src]")
+	else
+		user.do_attack_animation(src)
+		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+		take_damage(damage)
 
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	switch(damage_type)
@@ -502,7 +510,7 @@
 	if(cover)
 		cover.icon_state = "openTurretCover"
 	raised = 1
-	layer = 4
+	layer = MOB_LAYER
 
 /obj/machinery/porta_turret/proc/popDown()	//pops the turret down
 	if(disabled)
@@ -511,7 +519,7 @@
 		return
 	if(stat & BROKEN)
 		return
-	layer = 3
+	layer = OBJ_LAYER
 	raising = 1
 	if(cover)
 		flick("popdown", cover)
@@ -587,7 +595,7 @@
 	if(target)
 		spawn()
 			popUp()				//pop the turret up if it's not already up.
-		dir = get_dir(base, target)	//even if you can't shoot, follow the target
+		setDir(get_dir(base, target)	)//even if you can't shoot, follow the target
 		spawn()
 			shootAt(target)
 		return 1
@@ -701,12 +709,11 @@
 /obj/machinery/turretid/New(loc, ndir = 0, built = 0)
 	..()
 	if(built)
-		dir = ndir
+		setDir(ndir)
 		locked = 0
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
-	return
 
 /obj/machinery/turretid/initialize() //map-placed turrets autolink turrets
 	if(control_area && istext(control_area))
@@ -779,13 +786,7 @@
 			return
 
 	user.set_machine(src)
-	var/loc = src.loc
-	if (istype(loc, /turf))
-		loc = loc:loc
-	if (!istype(loc, /area))
-		user << text("Turret badly positioned - loc.loc is [].", loc)
-		return
-	var/area/area = loc
+	var/area/area = get_area(src)
 	var/t = ""
 
 	if(src.locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))

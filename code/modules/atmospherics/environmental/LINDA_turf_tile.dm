@@ -30,6 +30,8 @@
 	var/datum/gas_mixture/air
 
 	var/obj/effect/hotspot/active_hotspot
+	var/atmos_cooldown  = 0
+	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
 
 	var/list/atmos_overlay_types = list() //gas IDs of current active gas overlays
 
@@ -101,7 +103,7 @@
 		atmos_overlay_types -= overlay
 
 	for(var/overlay in new_overlay_types-atmos_overlay_types) //doesn't add overlays that already exist
-		overlays += overlay
+		add_overlay(overlay)
 
 	atmos_overlay_types = new_overlay_types
 
@@ -129,6 +131,9 @@
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
 	var/adjacent_turfs_length = adjacent_turfs.len
+	atmos_cooldown++
+	if (planetary_atmos)
+		adjacent_turfs_length++
 
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t
@@ -179,6 +184,18 @@
 
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
+	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
+		var/datum/gas_mixture/G = new
+		G.copy_from_turf(src)
+		G.archive()
+		if(air.compare(G))
+			if(!our_excited_group)
+				var/datum/excited_group/EG = new
+				EG.add_turf(src)
+				our_excited_group = excited_group
+			air.share(G, adjacent_turfs_length)
+			last_share_check()
+
 	air.react()
 
 	update_visuals()
@@ -192,10 +209,12 @@
 		if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 			if(consider_superconductivity(starting = 1))
 				remove = 0
-	HandleWet() // if the tile is wet, and cold, make ice. Or if it's wet, and warm, dry it off.
 
+	if (atmos_cooldown > EXCITED_GROUP_DISMANTLE_CYCLES*2)
+		SSair.remove_from_active(src)
 	if(!our_excited_group && remove == 1)
 		SSair.remove_from_active(src)
+
 
 /turf/open/proc/share_air(turf/open/T, fire_count, adjacent_turfs_length)
 	if(T.current_cycle < fire_count)
@@ -218,23 +237,33 @@
 /turf/open/proc/last_share_check()
 	if(air.last_share > MINIMUM_AIR_TO_SUSPEND)
 		excited_group.reset_cooldowns()
+		atmos_cooldown = 0
 	else if(air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
 		excited_group.dismantle_cooldown = 0
+		atmos_cooldown = 0
 
 /turf/open/proc/high_pressure_movements()
 	for(var/atom/movable/M in src)
 		M.experience_pressure_difference(pressure_difference, pressure_direction)
 
-/atom/movable/var/pressure_resistance = 5
+/atom/movable/var/pressure_resistance = 10
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
-/atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
+
+/atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+	var/const/PROBABILITY_OFFSET = 25
+	var/const/PROBABILITY_BASE_PRECENT = 75
 	set waitfor = 0
 	. = 0
-	if(!anchored && !pulledby)
+	if (!anchored && !pulledby)
 		. = 1
-		if(pressure_difference > pressure_resistance && last_high_pressure_movement_air_cycle < SSair.times_fired)
-			last_high_pressure_movement_air_cycle = SSair.times_fired
-			step(src, direction)
+		if (last_high_pressure_movement_air_cycle < SSair.times_fired)
+			var/move_prob = 100
+			if (pressure_resistance > 0)
+				move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
+			move_prob += pressure_resistance_prob_delta
+			if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
+				step(src, direction)
+				last_high_pressure_movement_air_cycle = SSair.times_fired
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 
@@ -272,16 +301,22 @@
 	breakdown_cooldown = 0
 	dismantle_cooldown = 0
 
-/datum/excited_group/proc/self_breakdown()
+//argument is so world start can clear out any turf differences quickly.
+/datum/excited_group/proc/self_breakdown(space_is_all_consuming = 0)
 	var/datum/gas_mixture/A = new
 
 	//make local for sanic speed
 	var/list/A_gases = A.gases
 	var/list/turf_list = src.turf_list
 	var/turflen = turf_list.len
+	var/space_in_group = 0
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
+		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/space))
+			space_in_group = 1
+			qdel(A)
+			A = new/datum/gas_mixture/space()
 		A.merge(T.air)
 
 	for(var/id in A_gases)
@@ -290,6 +325,7 @@
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.air.copy_from(A)
+		T.atmos_cooldown = 0
 		T.update_visuals()
 
 	breakdown_cooldown = 0

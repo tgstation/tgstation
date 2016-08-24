@@ -7,7 +7,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
-	layer = MOB_LAYER + 1
+	layer = GHOST_LAYER
 	stat = DEAD
 	density = 0
 	canmove = 0
@@ -16,7 +16,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -50,9 +51,15 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	//If there's a bug with changing your ghost settings, it's probably related to this.
 	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
 	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
+	// Used for displaying in ghost chat, without changing the actual name
+	// of the mob
+	var/deadchat_name
 
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
+
+	if(global.cross_allowed)
+		verbs += /mob/dead/observer/proc/server_hop
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	if(icon_state in ghost_forms_with_directions_list)
@@ -106,17 +113,34 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 	..()
 
+/mob/dead/observer/narsie_act()
+	var/old_color = color
+	color = "#960000"
+	animate(src, color = old_color, time = 10)
+
+/mob/dead/observer/ratvar_act()
+	var/old_color = color
+	color = "#FAE48C"
+	animate(src, color = old_color, time = 10)
+
 /mob/dead/observer/Destroy()
-	if (ghostimage)
-		ghost_darkness_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
-		updateallghostimages()
+	ghost_images_full -= ghostimage
+	qdel(ghostimage)
+	ghostimage = null
+
+	ghost_images_default -= ghostimage_default
+	qdel(ghostimage_default)
+	ghostimage_default = null
+
+	ghost_images_simple -= ghostimage_simple
+	qdel(ghostimage_simple)
+	ghostimage_simple = null
+
+	updateallghostimages()
 	return ..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
-
 
 /*
  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
@@ -143,6 +167,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	if(new_form)
 		icon_state = new_form
+		ghostimage.icon_state = new_form
 		if(icon_state in ghost_forms_with_directions_list)
 			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
 		else
@@ -152,7 +177,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		updatedir = 1
 	else
 		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
-		dir = 2 		//reset the dir to its default so the sprites all properly align up
+		setDir(2 		)//reset the dir to its default so the sprites all properly align up
 
 	if(ghost_accs == GHOST_ACCS_FULL && icon_state in ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
 		var/datum/sprite_accessory/S
@@ -163,7 +188,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(facial_hair_color)
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
-				overlays += facial_hair_image
+				add_overlay(facial_hair_image)
 				ghostimage.overlays += facial_hair_image
 		if(hair_style)
 			S = hair_styles_list[hair_style]
@@ -172,7 +197,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(hair_color)
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
-				overlays += hair_image
+				add_overlay(hair_image)
 				ghostimage.overlays += hair_image
 
 /*
@@ -245,7 +270,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
-		dir = direct //only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+		setDir(direct )//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -272,11 +297,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
-		if(ticker)
-			if(ticker.mode)
-				for(var/datum/gang/G in ticker.mode.gangs)
-					if(isnum(G.dom_timer))
-						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
+		if(ticker && ticker.mode)
+			for(var/datum/gang/G in ticker.mode.gangs)
+				if(G.is_dominating)
+					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
+			if(istype(ticker.mode, /datum/game_mode/blob))
+				var/datum/game_mode/blob/B = ticker.mode
+				if(B.message_sent)
+					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -307,7 +335,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.desc = message
 				var/old_layer = source.layer
 				source.layer = FLOAT_LAYER
-				A.overlays += source
+				A.add_overlay(source)
 				source.layer = old_layer
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
@@ -375,7 +403,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	dir = 2 //reset dir so the right directional sprites show up
+	setDir(2 )//reset dir so the right directional sprites show up
 	..()
 	//restart our floating animation after orbit is done.
 	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
@@ -512,6 +540,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!target)
 		return 0
+
+	if(ismegafauna(target))
+		src << "<span class='warning'>This creature is too powerful for you to possess!</span>"
+		return 0
+
 	if(can_reenter_corpse || (mind && mind.current))
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go foward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
@@ -520,8 +553,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return 0
 
 	target.key = key
+	target.faction = list("neutral")
 	return 1
 
+/mob/dead/observer/proc/server_hop()
+	set category = "Ghost"
+	set name = "Server Hop!"
+	set desc= "Jump to the other server"
+	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
+		return 0
+	if (client && global.cross_allowed)
+		src << "<span class='notice'>Sending you to [global.cross_address].</span>"
+		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
+		client << link(global.cross_address)
+	else
+		src << "<span class='error'>There is no other server configured!</span>"
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
@@ -590,7 +636,57 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "<span class='notice'>Data HUDs enabled.</span>"
 		data_huds_on = 1
 
+/mob/dead/observer/verb/restore_ghost_apperance()
+	set name = "Restore Ghost Character"
+	set desc = "Sets your deadchat name and ghost appearance to your \
+		roundstart character."
+	set category = "Ghost"
+
+	set_ghost_appearance()
+	if(client && client.prefs)
+		deadchat_name = client.prefs.real_name
+
+/mob/dead/observer/proc/set_ghost_appearance()
+	if((!client) || (!client.prefs))
+		return
+
+	if(client.prefs.be_random_name)
+		client.prefs.real_name = random_unique_name(gender)
+	if(client.prefs.be_random_body)
+		client.prefs.random_character(gender)
+
+	if(HAIR in client.prefs.pref_species.specflags)
+		hair_style = client.prefs.hair_style
+		hair_color = brighten_color(client.prefs.hair_color)
+	if(FACEHAIR in client.prefs.pref_species.specflags)
+		facial_hair_style = client.prefs.facial_hair_style
+		facial_hair_color = brighten_color(client.prefs.facial_hair_color)
+
+	update_icon()
+
 /mob/dead/observer/canUseTopic()
 	if(check_rights(R_ADMIN, 0))
 		return 1
 	return
+
+/mob/dead/observer/is_literate()
+	return 1
+
+/mob/dead/observer/on_varedit(var_name)
+	. = ..()
+	switch(var_name)
+		if("icon")
+			ghostimage.icon = icon
+			ghostimage_default.icon = icon
+			ghostimage_simple.icon = icon
+		if("icon_state")
+			ghostimage.icon_state = icon_state
+			ghostimage_default.icon_state = icon_state
+			ghostimage_simple.icon_state = icon_state
+		if("fun_verbs")
+			if(fun_verbs)
+				verbs += /mob/dead/observer/verb/boo
+				verbs += /mob/dead/observer/verb/possess
+			else
+				verbs -= /mob/dead/observer/verb/boo
+				verbs -= /mob/dead/observer/verb/possess

@@ -1,7 +1,6 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
-	var/ratingdesc
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
@@ -15,28 +14,28 @@
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
 	var/rigged = 0		// true if rigged to explode
-	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
+	var/ratingdesc = TRUE
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	charge = maxcharge
-	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
-	desc = desc + ratingdesc
+	if(ratingdesc)
+		desc += " This one has a power rating of [maxcharge], and you should not swallow it."
 	updateicon()
 
 /obj/item/weapon/stock_parts/cell/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
 	if(modified_var == "self_recharge")
 		if(self_recharge)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
-			SSobj.processing -= src
+			STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/stock_parts/cell/process()
@@ -46,13 +45,13 @@
 		return PROCESS_KILL
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
-	overlays.Cut()
+	cut_overlays()
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
-		overlays += image('icons/obj/power.dmi', "cell-o2")
+		add_overlay(image('icons/obj/power.dmi', "cell-o2"))
 	else
-		overlays += image('icons/obj/power.dmi', "cell-o1")
+		add_overlay(image('icons/obj/power.dmi', "cell-o1"))
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100*charge/maxcharge
@@ -77,19 +76,12 @@
 	if(maxcharge < amount)
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
-	if(crit_fail)
-		return 0
-	if(!prob(reliability))
-		minor_fault++
-		if(prob(minor_fault))
-			crit_fail = 1
-			return 0
 	charge += power_used
 	return power_used
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
-	if(crit_fail || rigged)
+	if(rigged)
 		user << "<span class='danger'>This power cell seems to be faulty!</span>"
 	else
 		user << "The charge meter reads [round(src.percent() )]%."
@@ -140,8 +132,6 @@
 	charge -= 1000 / severity
 	if (charge < 0)
 		charge = 0
-	if(reliability != 100 && prob(50/severity))
-		reliability -= 10 / severity
 	..()
 
 /obj/item/weapon/stock_parts/cell/ex_act(severity, target)
@@ -169,7 +159,6 @@
 /obj/item/weapon/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
-	origin_tech = null
 	maxcharge = 500
 	materials = list(MAT_GLASS=40)
 	rating = 2
@@ -225,10 +214,10 @@
 
 /obj/item/weapon/stock_parts/cell/super
 	name = "super-capacity power cell"
-	origin_tech = "powerstorage=5"
+	origin_tech = "powerstorage=3;materials=3"
 	icon_state = "scell"
 	maxcharge = 20000
-	materials = list(MAT_GLASS=70)
+	materials = list(MAT_GLASS=300)
 	rating = 4
 	chargerate = 2000
 
@@ -238,10 +227,10 @@
 
 /obj/item/weapon/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
-	origin_tech = "powerstorage=6"
+	origin_tech = "powerstorage=4;engineering=4;materials=4"
 	icon_state = "hpcell"
 	maxcharge = 30000
-	materials = list(MAT_GLASS=80)
+	materials = list(MAT_GLASS=400)
 	rating = 5
 	chargerate = 3000
 
@@ -252,10 +241,10 @@
 /obj/item/weapon/stock_parts/cell/bluespace
 	name = "bluespace power cell"
 	desc = "A rechargable transdimensional power cell."
-	origin_tech = "powerstorage=7"
+	origin_tech = "powerstorage=5;bluespace=4;materials=4;engineering=4"
 	icon_state = "bscell"
 	maxcharge = 40000
-	materials = list(MAT_GLASS=80)
+	materials = list(MAT_GLASS=600)
 	rating = 6
 	chargerate = 4000
 
@@ -266,31 +255,44 @@
 /obj/item/weapon/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
 	icon_state = "icell"
-	origin_tech =  null
+	origin_tech =  "powerstorage=7"
 	maxcharge = 30000
-	materials = list(MAT_GLASS=80)
+	materials = list(MAT_GLASS=1000)
 	rating = 6
 	chargerate = 30000
 
 /obj/item/weapon/stock_parts/cell/infinite/use()
 	return 1
 
+/obj/item/weapon/stock_parts/cell/infinite/abductor
+	name = "void core"
+	desc = "An alien power cell that produces energy seemingly out of nowhere."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "cell"
+	origin_tech =  "abductor=5;powerstorage=8;engineering=6"
+	maxcharge = 50000
+	rating = 12
+	ratingdesc = FALSE
+
+/obj/item/weapon/stock_parts/cell/infinite/abductor/update_icon()
+	return
+
+
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
-	origin_tech = "powerstorage=1"
 	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato_cell" //"potato_battery"
+	origin_tech = "powerstorage=1;biotech=1"
 	charge = 100
 	maxcharge = 300
 	materials = list()
-	minor_fault = 1
 	rating = 1
 
 /obj/item/weapon/stock_parts/cell/high/slime
 	name = "charged slime core"
 	desc = "A yellow slime core infused with plasma, it crackles with power."
-	origin_tech = "powerstorage=2;biotech=4"
+	origin_tech = "powerstorage=5;biotech=4"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
 	materials = list()

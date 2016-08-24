@@ -6,7 +6,7 @@ var/list/GPS_list = list()
 	icon_state = "gps-c"
 	w_class = 2
 	slot_flags = SLOT_BELT
-	origin_tech = "programming=2;engineering=2"
+	origin_tech = "materials=2;magnets=1;bluespace=2"
 	var/gpstag = "COM0"
 	var/emped = 0
 	var/turf/locked_location
@@ -16,24 +16,26 @@ var/list/GPS_list = list()
 	..()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
-	overlays += "working"
+	add_overlay("working")
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
 	return ..()
 
 /obj/item/device/gps/emp_act(severity)
-	emped = 1
+	emped = TRUE
 	overlays -= "working"
-	overlays += "emp"
-	spawn(300)
-		emped = 0
-		overlays -= "emp"
-		overlays += "working"
+	add_overlay("emp")
+	addtimer(src, "reboot", 300)
+
+/obj/item/device/gps/proc/reboot()
+	emped = FALSE
+	overlays -= "emp"
+	add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
-	if(!in_range(src, user))
-		return
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return //user not valid to use gps
 	if(emped)
 		user << "It's busted!"
 	if(tracking)
@@ -41,7 +43,7 @@ var/list/GPS_list = list()
 		user << "[src] is no longer tracking, or visible to other GPS devices."
 		tracking = FALSE
 	else
-		overlays += "working"
+		add_overlay("working")
 		user << "[src] is now tracking, and visible to other GPS devices."
 		tracking = TRUE
 
@@ -99,9 +101,59 @@ var/list/GPS_list = list()
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 
+/obj/item/device/gps/cyborg
+	icon_state = "gps-b"
+	gpstag = "BORG0"
+	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
+	flags = NODROP
+
 /obj/item/device/gps/internal
 	icon_state = null
 	flags = ABSTRACT
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM
+
+/obj/item/device/gps/mining/internal
+	icon_state = "gps-m"
+	gpstag = "MINER"
+	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+/obj/item/device/gps/internal/base
+	gpstag = "NT_AUX"
+	desc = "A homing signal from Nanotrasen's mining base."
+
+/obj/item/device/gps/visible_debug
+	name = "visible GPS"
+	gpstag = "ADMIN"
+	desc = "This admin-spawn GPS unit leaves the coordinates visible \
+		on any turf that it passes over, for debugging. Especially useful \
+		for marking the area around the transition edges."
+	var/list/turf/tagged
+
+/obj/item/device/gps/visible_debug/New()
+	. = ..()
+	tagged = list()
+	SSfastprocess.processing += src
+
+/obj/item/device/gps/visible_debug/process()
+	var/turf/T = get_turf(src)
+	if(T)
+		// I assume it's faster to color,tag and OR the turf in, rather
+		// then checking if its there
+		T.color = RANDOM_COLOUR
+		T.maptext = "[T.x],[T.y],[T.z]"
+		tagged |= T
+
+/obj/item/device/gps/visible_debug/proc/clear()
+	while(tagged.len)
+		var/turf/T = pop(tagged)
+		T.color = initial(T.color)
+		T.maptext = initial(T.maptext)
+
+/obj/item/device/gps/visible_debug/Destroy()
+	if(tagged)
+		clear()
+	tagged = null
+	SSfastprocess.processing -= src
+	. = ..()

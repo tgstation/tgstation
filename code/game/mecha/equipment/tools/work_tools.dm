@@ -190,7 +190,7 @@
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
-	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4"
+	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4;engineering=4"
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MELEE|RANGED
@@ -319,7 +319,8 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/Destroy()
-	chassis.events.clearEvent("onMove",event)
+	if(chassis)
+		chassis.events.clearEvent("onMove",event)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/action(var/obj/item/stack/cable_coil/target)

@@ -4,6 +4,7 @@
 	damage_absorption = list("brute"=0.7,"fire"=1,"bullet"=0.7,"laser"=0.85,"energy"=1,"bomb"=0.8)
 
 /obj/mecha/combat/CheckParts(atom/holder)
+	..()
 	var/obj/item/weapon/stock_parts/capacitor/C = locate() in holder
 	var/obj/item/weapon/stock_parts/scanning_module/SM = locate() in holder
 	step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best

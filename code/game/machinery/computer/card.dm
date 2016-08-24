@@ -504,12 +504,16 @@ var/time_last_changed_position = 0
 
 /obj/machinery/computer/card/minor/hos
 	target_dept = 2
+	icon_screen = "idhos"
 
 /obj/machinery/computer/card/minor/cmo
 	target_dept = 3
+	icon_screen = "idcmo"
 
 /obj/machinery/computer/card/minor/rd
 	target_dept = 4
+	icon_screen = "idrd"
 
 /obj/machinery/computer/card/minor/ce
 	target_dept = 5
+	icon_screen = "idce"

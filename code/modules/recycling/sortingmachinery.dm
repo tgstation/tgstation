@@ -54,7 +54,7 @@
 		return
 	user << "<span class='notice'>You lean on the back of [O] and start pushing to rip the wrapping around it.</span>"
 	if(do_after(user, 50, target = O))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
+		if(!user || user.stat != CONSCIOUS || user.loc != O || O.loc != src )
 			return
 		user << "<span class='notice'>You successfully removed [O]'s wrapping !</span>"
 		O.loc = loc
@@ -80,6 +80,20 @@
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	qdel(src)
+
+/obj/item/smallDelivery/attack_self_tk(mob/user)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.unEquip(src)
+		for(var/X in contents)
+			var/atom/movable/AM = X
+			M.put_in_hands(AM)
+	else
+		for(var/X in contents)
+			var/atom/movable/AM = X
+			AM.forceMove(src.loc)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 

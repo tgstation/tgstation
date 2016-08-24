@@ -4,7 +4,7 @@
 	icon_state = "helmet"
 	flags = HEADBANGPROTECT
 	item_state = "helmet"
-	armor = list(melee = 30, bullet = 25, laser = 25,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEEARS
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
@@ -35,6 +35,10 @@
 	can_flashlight = 1
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/blueshirt
+	icon_state = "blueshift"
+	item_state = "blueshift"
+
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
@@ -45,10 +49,10 @@
 	can_toggle = 1
 	flags = HEADBANGPROTECT
 	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE
+	flags_inv = HIDEEARS|HIDEFACE
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
-	visor_flags_inv = HIDEMASK|HIDEFACE
+	visor_flags_inv = HIDEFACE
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
@@ -60,7 +64,7 @@
 			up = !up
 			flags ^= visor_flags
 			flags_inv ^= visor_flags_inv
-			flags_cover ^= initial(flags_cover)
+			flags_cover ^= visor_flags_cover
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
 			user << "[up ? alt_toggle_message : toggle_message] \the [src]"
 
@@ -206,7 +210,7 @@
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
-	flags_inv = HIDEEARS|HIDEHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = HEADCOVERSEYES
 	armor = list(melee = 25, bullet = 25, laser = 25, energy = 10, bomb = 10, bio = 5, rad = 20)
 	icon_state = "skull"
@@ -286,8 +290,6 @@
 	var/mob/user = usr
 	if(user.incapacitated())
 		return
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>"
 	F.on = !F.on
 	user << "<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>"
 

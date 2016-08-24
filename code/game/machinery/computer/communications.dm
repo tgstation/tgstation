@@ -116,6 +116,20 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			else if (src.authenticated==2 && message_cooldown)
 				usr << "Intercomms recharging. Please stand by."
 
+		if("crossserver")
+			if(authenticated==2)
+				if(CM.lastTimeUsed + 600 > world.time)
+					usr << "Arrays recycling.  Please stand by."
+					return
+				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
+				if(!input || !(usr in view(1,src)))
+					return
+				send2otherserver("[station_name()]", input,"Comms_Console")
+				minor_announce(input, title = "Outgoing message to allied station")
+				log_say("[key_name(usr)] has sent a message to the other server: [input]")
+				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
+				CM.lastTimeUsed = world.time
+
 		if("callshuttle")
 			src.state = STATE_DEFAULT
 			if(src.authenticated)
@@ -384,6 +398,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
+					if(cross_allowed)
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -505,7 +521,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "Current login: None"
 			dat += "<BR><BR><B>General Functions</B>"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
-			if(SSshuttle.emergency.mode <= SHUTTLE_IDLE)
+			if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
 			dat += "<BR><BR><B>Special Functions</B>"

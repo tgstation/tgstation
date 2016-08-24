@@ -29,6 +29,10 @@
 	if(prob(50))
 		M.heal_organ_damage(1,0, 0)
 		. = 1
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+			C.blood_volume += 0.4
 	..()
 
 /datum/reagent/consumable/vitamin
@@ -44,6 +48,10 @@
 		. = 1
 	if(M.satiety < 600)
 		M.satiety += 30
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+			C.blood_volume += 0.5
 	..()
 
 /datum/reagent/consumable/sugar
@@ -155,7 +163,7 @@
 	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
 		if(istype(T, /turf/open))
 			var/turf/open/OT = T
-			OT.MakeSlippery(TURF_WET_WATER) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
+			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=10, wet_time_to_add=reac_volume) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
 			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -239,11 +247,18 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 
-/datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
+/datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
 		return
 	if(M.has_bane(BANE_SALT))
 		M.mind.disrupt_spells(-200)
+
+/datum/reagent/consumable/sodiumchloride/reaction_turf(turf/T, reac_volume) //Creates an umbra-blocking salt pile
+	if(!istype(T))
+		return
+	if(reac_volume < 1)
+		return
+	new/obj/effect/decal/cleanable/salt(T)
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -324,8 +339,7 @@
 /datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
-	if(reac_volume >= 3)
-		T.MakeSlippery()
+	T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*2)
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )

@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/medbeam
 	name = "Medical Beamgun"
-	desc = "Delivers medical nanites in a focused beam."
+	desc = "Don't cross the streams!"
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
@@ -18,9 +18,13 @@
 
 /obj/item/weapon/gun/medbeam/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/medbeam/dropped(mob/user)
+	..()
+	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/equipped(mob/user)
 	..()
 	LoseTarget()
 
@@ -43,15 +47,14 @@
 	current_target = target
 	active = 1
 	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
-	spawn(0)
-		current_beam.Start()
+	addtimer(current_beam, "Start", 0)
 
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/medbeam/process()
 
 	var/source = loc
-	if(!mounted && !ishuman(source))
+	if(!mounted && !isliving(source))
 		LoseTarget()
 		return
 
@@ -66,7 +69,7 @@
 
 	if(get_dist(source, current_target)>max_range || !los_check(source, current_target))
 		LoseTarget()
-		if(ishuman(source))
+		if(isliving(source))
 			source << "<span class='warning'>You lose control of the beam!</span>"
 		return
 
@@ -103,6 +106,8 @@
 	return
 
 /obj/item/weapon/gun/medbeam/proc/on_beam_tick(var/mob/living/target)
+	if(target.health != target.maxHealth)
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
 	target.adjustBruteLoss(-4)
 	target.adjustFireLoss(-4)
 	return
@@ -119,4 +124,4 @@
 
 /obj/item/weapon/gun/medbeam/mech/New()
 	..()
-	SSobj.processing -= src //Mech mediguns do not process until installed, and are controlled by the holder obj
+	STOP_PROCESSING(SSobj, src) //Mech mediguns do not process until installed, and are controlled by the holder obj

@@ -150,8 +150,8 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
-	health = 15
-	maxHealth = 15
+	health = 25
+	maxHealth = 25
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "cuts"
@@ -161,11 +161,9 @@
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY
 	flying = 1
+	limb_destroyer = 1
 	speak_emote = list("states")
 	bubble_icon = "syndibot"
 	gold_core_spawnable = 1
 	del_on_death = 1
-
-/mob/living/simple_animal/hostile/viscerator/New()
-	..()
-	deathmessage = "[src] is smashed into pieces!"
+	deathmessage = "is smashed into pieces!"

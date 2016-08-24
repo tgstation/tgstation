@@ -31,6 +31,7 @@
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
+	can_synth = 0
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
@@ -74,7 +75,7 @@
 	name = "Synaptizine"
 	id = "synaptizine"
 	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#FF00FF"
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
@@ -235,7 +236,7 @@
 	id = "styptic_powder"
 	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#FF9696"
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -261,7 +262,7 @@
 	id = "salglu_solution"
 	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage.  Can be used as a blood substitute on an IV drip."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#DCDCDC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
@@ -272,13 +273,13 @@
 	..()
 
 /datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && method == INJECT)
+	if(ishuman(M) && method == INJECT)
 		var/mob/living/carbon/human/H = M
-		//The lower the blood of the patient, the better it is as a blood substitute.
-		var/efficiency = (560-H.vessel.get_reagent_amount("blood"))/700 + 0.2
-		efficiency = min(0.75,efficiency)
-		//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
-		H.vessel.add_reagent("blood", efficiency * min(5,reac_volume))
+		if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
+			efficiency = min(0.75,efficiency)
+			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
+			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
 	..()
 
 /datum/reagent/medicine/mine_salve
@@ -306,6 +307,12 @@
 			if(show_message)
 				M << "<span class='warning'>Your stomach agonizingly cramps!</span>"
 		else
+			var/mob/living/carbon/C = M
+			for(var/s in C.surgeries)
+				var/datum/surgery/S = s
+				S.success_multiplier = max(0.10, S.success_multiplier)
+				// +10% success propability on each step, useful while operating in less-than-perfect conditions
+
 			if(show_message)
 				M << "<span class='danger'>You feel your wounds fade away to nothing!</span>" //It's a painkiller, after all
 	..()
@@ -321,7 +328,7 @@
 	id = "synthflesh"
 	description = "Has a 100% chance of instantly healing brute and burn damage. One unit of the chemical will heal one point of damage. Touch application only."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#FFEBEB"
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -337,7 +344,7 @@
 	id = "charcoal"
 	description = "Heals toxin damage as well as slowly removing any other chemicals the patient has in their bloodstream."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/M)
@@ -353,7 +360,7 @@
 	id = "omnizine"
 	description = "Slowly heals all damage types. Overdose will cause damage in all types instead."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
@@ -378,7 +385,7 @@
 	id = "calomel"
 	description = "Quickly purges the body of all chemicals. Toxin damage is dealt if the patient is in good condition."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#19C832"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/M)
@@ -395,7 +402,7 @@
 	id = "potass_iodide"
 	description = "Efficiently restores low radiation damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#14FF3C"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/M)
@@ -408,7 +415,7 @@
 	id = "pen_acid"
 	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
@@ -428,7 +435,7 @@
 	id = "sal_acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#D2D2D2"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
@@ -452,7 +459,7 @@
 	id = "salbutamol"
 	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#00FFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/M)
@@ -467,7 +474,7 @@
 	id = "perfluorodecalin"
 	description = "Extremely rapidly restores oxygen deprivation, but inhibits speech. May also heal small amounts of bruising and burns."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
@@ -484,7 +491,7 @@
 	id = "ephedrine"
 	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 45
 	addiction_threshold = 30
@@ -538,7 +545,7 @@
 	id = "diphenhydramine"
 	description = "Rapidly purges the body of Histamine and reduces jitteriness. Slight chance of causing drowsiness."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#64FFE6"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/M)
@@ -553,7 +560,7 @@
 	id = "morphine"
 	description = "A painkiller that allows the patient to move at full speed even in bulky objects. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#A9FBFB"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
@@ -626,7 +633,7 @@
 	id = "oculine"
 	description = "Quickly restores eye damage, cures nearsightedness, and has a chance to restore vision to the blind."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#FFFFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
@@ -654,7 +661,7 @@
 	id = "atropine"
 	description = "If a patient is in critical condition, rapidly heals all damage types as well as regulating oxygen in the body. Excellent for stabilizing wounded patients."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#000000"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35
 
@@ -683,7 +690,7 @@
 	id = "epinephrine"
 	description = "Minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
@@ -719,7 +726,7 @@
 	id = "strange_reagent"
 	description = "A miracle drug capable of bringing the dead back to life. Only functions if the target has less than 100 brute and burn damage (independent of one another), and causes slight damage to the living."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#A0E85E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
@@ -753,7 +760,7 @@
 	name = "Mannitol"
 	id = "mannitol"
 	description = "Efficiently restores brain damage."
-	color = "#C8A5DC"
+	color = "#DCDCFF"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(-3*REM)
@@ -763,7 +770,7 @@
 	name = "Mutadone"
 	id = "mutadone"
 	description = "Removes jitteriness and restores genetic defects."
-	color = "#C8A5DC"
+	color = "#5096C8"
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
@@ -775,7 +782,7 @@
 	name = "Antihol"
 	id = "antihol"
 	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
-	color = "#C8A5DC"
+	color = "#00B4C8"
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/M)
 	M.dizziness = 0
@@ -794,7 +801,7 @@
 	name = "Stimulants"
 	id = "stimulants"
 	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
-	color = "#C8A5DC"
+	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
@@ -823,8 +830,8 @@
 /datum/reagent/medicine/stimulants/longterm
 	name = "Stimulants"
 	id = "stimulants_longterm"
-	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Higly addictive."
-	color = "#00ff00"
+	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Highly addictive."
+	color = "#78008C"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 0
 	addiction_threshold = 5
@@ -863,7 +870,7 @@
 	id = "insulin"
 	description = "Increases sugar depletion rates."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#FFFFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
@@ -1000,6 +1007,32 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-5*REM, 0)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
+	name = "Earthsblood"
+	id = "earthsblood"
+	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
+	color = rgb(255, 175, 0)
+	overdose_threshold = 25
+
+/datum/reagent/medicine/earthsblood/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-3 * REM, 0)
+	M.adjustFireLoss(-3 * REM, 0)
+	M.adjustOxyLoss(-15 * REM, 0)
+	M.adjustToxLoss(-3 * REM, 0)
+	M.adjustBrainLoss(2 * REM) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	M.adjustCloneLoss(-1 * REM, 0)
+	M.adjustStaminaLoss(-30 * REM, 0)
+	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
+	M.druggy = min(max(0, M.druggy + 10), 15) //See above
+	..()
+	. = 1
+
+/datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
+	M.hallucination = min(max(0, M.hallucination + 10), 50)
+	M.adjustToxLoss(5 * REM, 0)
 	..()
 	. = 1
 

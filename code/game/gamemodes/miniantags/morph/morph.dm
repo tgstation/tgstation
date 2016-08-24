@@ -53,14 +53,14 @@
 	return
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_health()
-	if(morphed)
+	if(morphed && !isliving(form))
 		var/image/holder = hud_list[HEALTH_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
 	..()
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_status()
-	if(morphed)
+	if(morphed && !isliving(form))
 		var/image/holder = hud_list[STATUS_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
@@ -128,7 +128,7 @@
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
-	overlays.Cut()
+	cut_overlays()
 
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
@@ -144,14 +144,18 @@
 		visible_message("<span class='warning'>[src] twists and dissolves into a pile of green flesh!</span>", \
 						"<span class='userdanger'>Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--</span>")
 		restore()
+	barf_contents()
 	..()
 
-/mob/living/simple_animal/hostile/morph/Destroy()
+/mob/living/simple_animal/hostile/morph/proc/barf_contents()
 	for(var/atom/movable/AM in src)
 		AM.loc = loc
 		if(prob(90))
 			step(AM, pick(alldirs))
-	return ..()
+
+/mob/living/simple_animal/hostile/morph/wabbajack_act(mob/living/new_mob)
+	barf_contents()
+	. = ..()
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()
@@ -176,17 +180,17 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/morph/AttackingTarget()
-	if(isliving(target)) // Eat Corpses to regen health
+	if(isliving(target)) //Eat Corpses to regen health
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			if(do_after(src, 30, target = L))
 				if(eat(L))
 					adjustHealth(-50)
 			return
-	else if(istype(target,/obj/item)) // Eat items just to be annoying
+	else if(istype(target,/obj/item)) //Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
-			if(do_after(src,20, target = I))
+			if(do_after(src, 20, target = I))
 				eat(I)
 			return
 	target.attack_animal(src)
@@ -195,31 +199,25 @@
 
 /datum/round_event_control/morph
 	name = "Spawn Morph"
-	typepath = /datum/round_event/morph
+	typepath = /datum/round_event/ghost_role/morph
 	weight = 0 //Admin only
 	max_occurrences = 1
 
-/datum/round_event/morph
-	var/key_of_morph
+/datum/round_event/ghost_role/morph
+	minimum_required = 1
+	role_name = "morphling"
 
-/datum/round_event/morph/proc/get_morph(end_if_fail = 0)
-	key_of_morph = null
-	if(!key_of_morph)
-		var/list/candidates = get_candidates(ROLE_ALIEN)
-		if(!candidates.len)
-			if(end_if_fail)
-				return 0
-			return find_morph()
-		var/client/C = pick(candidates)
-		key_of_morph = C.key
-	if(!key_of_morph)
-		if(end_if_fail)
-			return 0
-		return find_morph()
-	var/datum/mind/player_mind = new /datum/mind(key_of_morph)
+/datum/round_event/ghost_role/morph/spawn_role()
+	var/list/candidates = get_candidates("alien", null, ROLE_ALIEN)
+	if(!candidates.len)
+		return NOT_ENOUGH_PLAYERS
+
+	var/mob/dead/selected = pick_n_take(candidates)
+
+	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = 1
 	if(!xeno_spawn)
-		return find_morph()
+		return MAP_ERROR
 	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(xeno_spawn))
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Morph"
@@ -227,20 +225,7 @@
 	ticker.mode.traitors |= player_mind
 	S << S.playstyle_string
 	S << 'sound/magic/Mutate.ogg'
-	message_admins("[key_of_morph] has been made into morph by an event.")
-	log_game("[key_of_morph] was spawned as a morph by an event.")
-	return 1
-
-/datum/round_event/morph/start()
-	get_morph()
-
-
-/datum/round_event/morph/proc/find_morph()
-	message_admins("Attempted to spawn a morph but there was no players available. Will try again momentarily.")
-	spawn(50)
-		if(get_morph(1))
-			message_admins("Situation has been resolved, [key_of_morph] has been spawned as a morph.")
-			log_game("[key_of_morph] was spawned as a morph by an event.")
-			return 0
-		message_admins("Unfortunately, no candidates were available for becoming a morph. Shutting down.")
-	return kill()
+	message_admins("[selected.key] has been made into morph by an event.")
+	log_game("[selected.key] was spawned as a morph by an event.")
+	spawned_mobs += S
+	return SUCCESSFUL_SPAWN

@@ -15,7 +15,7 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	anchored = 1
 	density = 1
 	verb_say = "beeps"
@@ -84,7 +84,8 @@
 							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
 							/obj/machinery/vending/cola = "Robust Softdrinks",
 							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-							/obj/machinery/vending/autodrobe = "AutoDrobe")
+							/obj/machinery/vending/autodrobe = "AutoDrobe",
+							/obj/machinery/vending/clothing = "ClothesMate")
 
 /obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -277,9 +278,9 @@
 		if(anchored)
 			panel_open = !panel_open
 			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
-			overlays.Cut()
+			cut_overlays()
 			if(panel_open)
-				overlays += image(icon, "[initial(icon_state)]-panel")
+				add_overlay(image(icon, "[initial(icon_state)]-panel"))
 			updateUsrDialog()
 		else
 			user << "<span class='warning'>You must first secure [src].</span>"
@@ -304,7 +305,9 @@
 			if(canister.charges[STANDARD_CHARGE] == 0)
 				user << "<span class='notice'>This [canister.name] is empty!</span>"
 			else
-				var/transfered = refill_inventory(canister,product_records,user)
+				var/transfered = refill_inventory(canister,product_records,STANDARD_CHARGE)
+				transfered += refill_inventory(canister,coin_records,COIN_CHARGE)
+				transfered += refill_inventory(canister,hidden_records,CONTRABAND_CHARGE)
 				if(transfered)
 					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
 				else
@@ -578,7 +581,6 @@
 
 	stat |= BROKEN
 	icon_state = "[initial(icon_state)]-broken"
-	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
@@ -657,13 +659,15 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/tequila = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 5,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 5,/obj/item/weapon/reagent_containers/food/drinks/bottle/hcider = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 5,
 					/obj/item/weapon/reagent_containers/food/drinks/ale = 6,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 4,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 4,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass = 12,/obj/item/weapon/reagent_containers/food/drinks/flask = 3)
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass = 12,
+					/obj/item/weapon/reagent_containers/food/drinks/flask = 3)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/mug/tea = 12)
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
@@ -783,7 +787,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access_txt = "5"
 	products = list(/obj/item/weapon/reagent_containers/syringe = 12,/obj/item/weapon/reagent_containers/dropper = 3,/obj/item/stack/medical/gauze = 8,/obj/item/weapon/reagent_containers/pill/patch/styptic = 5, /obj/item/weapon/reagent_containers/pill/insulin = 10,
-				/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 5,/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4,
+				/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 5,/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4, /obj/item/weapon/reagent_containers/spray/medical/sterilizer = 1,
 				/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 4,/obj/item/weapon/reagent_containers/glass/bottle/morphine = 4,/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution = 3,
 				/obj/item/weapon/reagent_containers/glass/bottle/toxin = 3,/obj/item/weapon/reagent_containers/syringe/antiviral = 6,/obj/item/weapon/reagent_containers/pill/salbutamol = 2,/obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/morphine = 4,/obj/item/weapon/reagent_containers/pill/charcoal = 6)
@@ -805,7 +809,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "wallmed-deny"
 	density = 0
 	products = list(/obj/item/weapon/reagent_containers/syringe = 3,/obj/item/weapon/reagent_containers/pill/patch/styptic = 5,
-					/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 5,/obj/item/weapon/reagent_containers/pill/charcoal = 2)
+					/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 5,/obj/item/weapon/reagent_containers/pill/charcoal = 2,
+					/obj/item/weapon/reagent_containers/spray/medical/sterilizer = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 2,/obj/item/weapon/reagent_containers/pill/morphine = 2)
 
 /obj/machinery/vending/security
@@ -816,7 +821,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "sec-deny"
 	req_access_txt = "1"
 	products = list(/obj/item/weapon/restraints/handcuffs = 8,/obj/item/weapon/restraints/handcuffs/cable/zipties = 10,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/assembly/flash/handheld = 5,
-					/obj/item/weapon/reagent_containers/food/snacks/donut = 12,/obj/item/weapon/storage/box/evidence = 6,/obj/item/device/flashlight/seclite = 4)
+					/obj/item/weapon/reagent_containers/food/snacks/donut = 12,/obj/item/weapon/storage/box/evidence = 6,/obj/item/device/flashlight/seclite = 4,/obj/item/weapon/restraints/legcuffs/bola/energy = 7)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2)
 	premium = list(/obj/item/weapon/coin/antagtoken = 1)
 
@@ -828,7 +833,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "nutri"
 	icon_deny = "nutri-deny"
 	products = list(/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez = 30,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z = 20,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh = 10,/obj/item/weapon/reagent_containers/spray/pestspray = 20,
-					/obj/item/weapon/reagent_containers/syringe = 5,/obj/item/weapon/storage/bag/plants = 5,/obj/item/weapon/cultivator = 3,/obj/item/weapon/shovel/spade = 3,/obj/item/device/analyzer/plant_analyzer = 4)
+					/obj/item/weapon/reagent_containers/syringe = 5,/obj/item/weapon/storage/bag/plants = 5,/obj/item/weapon/cultivator = 3,/obj/item/weapon/shovel/spade = 3,/obj/item/device/plant_analyzer = 4)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5)
 
 /obj/machinery/vending/hydroseeds
@@ -846,7 +851,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						/obj/item/seeds/tea = 3,/obj/item/seeds/tobacco = 3,/obj/item/seeds/tomato = 3,
 						/obj/item/seeds/tower = 3,/obj/item/seeds/watermelon = 3,/obj/item/seeds/wheat = 3,/obj/item/seeds/whitebeet = 3)
 	contraband = list(/obj/item/seeds/amanita = 2,/obj/item/seeds/glowshroom = 2,/obj/item/seeds/liberty = 2,/obj/item/seeds/nettle = 2,
-						/obj/item/seeds/plump = 2,/obj/item/seeds/reishi = 2)
+						/obj/item/seeds/plump = 2,/obj/item/seeds/reishi = 2,/obj/item/seeds/cannabis = 3)
 	premium = list(/obj/item/weapon/reagent_containers/spray/waterflower = 1)
 
 
@@ -896,7 +901,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/suit/snowman = 1,
 					/obj/item/clothing/head/snowman = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2)
-	premium = list(/obj/item/clothing/suit/hgpirate = 2, /obj/item/clothing/head/hgpiratecap = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
+	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1, /obj/item/weapon/skub = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
 
 /obj/machinery/vending/dinnerware
@@ -982,7 +987,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/tie/blue=1, /obj/item/clothing/tie/red=1, /obj/item/clothing/tie/black=1, /obj/item/clothing/tie/horrible=1,
 	/obj/item/clothing/tie/scarf/red=1,/obj/item/clothing/tie/scarf/green=1,/obj/item/clothing/tie/scarf/darkblue=1,
 	/obj/item/clothing/tie/scarf/purple=1,/obj/item/clothing/tie/scarf/yellow=1,/obj/item/clothing/tie/scarf/orange=1,
-	/obj/item/clothing/tie/scarf/lightblue=1,/obj/item/clothing/tie/scarf/white=1,/obj/item/clothing/tie/scarf/black=1,
+	/obj/item/clothing/tie/scarf/cyan=1,/obj/item/clothing/tie/scarf=1,/obj/item/clothing/tie/scarf/black=1,
 	/obj/item/clothing/tie/scarf/zebra=1,/obj/item/clothing/tie/scarf/christmas=1,/obj/item/clothing/tie/stripedredscarf=1,
 	/obj/item/clothing/tie/stripedbluescarf=1,/obj/item/clothing/tie/stripedgreenscarf=1,/obj/item/clothing/tie/waistcoat=1,
 	/obj/item/clothing/under/blackskirt=1,/obj/item/clothing/under/blueskirt=1,/obj/item/clothing/under/blueskirt/redskirt=1,
@@ -991,9 +996,13 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
 	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
 	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
-	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1)
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2)
-	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/tie/dope_necklace=3)
+	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,
+	/obj/item/clothing/head/beanie=1, /obj/item/clothing/head/beanie/black=1, /obj/item/clothing/head/beanie/red=1, /obj/item/clothing/head/beanie/green=1, /obj/item/clothing/head/beanie/darkblue=1,
+	/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
+	/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
+	/obj/item/clothing/suit/jacket/letterman_red=1)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1)
+	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/tie/dope_necklace=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 #undef STANDARD_CHARGE

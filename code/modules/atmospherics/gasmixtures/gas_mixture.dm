@@ -372,7 +372,7 @@ var/list/gaslist_cache = null
 
 	copy.temperature = temperature
 	for(var/id in cached_gases)
-		add_gas(id)
+		copy.add_gas(id)
 		copy_gases[id][MOLES] = cached_gases[id][MOLES]
 
 	return copy

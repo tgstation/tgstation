@@ -10,7 +10,7 @@
 		total_burn	+= BP.burn_dam
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	update_stat()
-	if(((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
+	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
 		ChangeToHusk()
 		if(on_fire)
 			shred_clothing()
@@ -152,11 +152,6 @@
 	updatehealth()
 	if(update)
 		update_damage_overlays(0)
-
-/mob/living/carbon/human/proc/restore_blood()
-	if(!(NOBLOOD in dna.species.specflags))
-		var/blood_volume = vessel.get_reagent_amount("blood")
-		vessel.add_reagent("blood",560-blood_volume)
 
 ////////////////////////////////////////////
 

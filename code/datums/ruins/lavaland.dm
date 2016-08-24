@@ -126,13 +126,6 @@
 	cost = 0
 	allow_duplicates = FALSE
 
-/datum/map_template/ruin/lavaland/ato
-	name = "Automated Trade Outpost"
-	id = "ato"
-	description = "A sign at the front says 'Stealing is bad.'"
-	suffix = "lavaland_surface_automated_trade_outpost.dmm"
-	cost = 5
-
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
 	id = "ufo-crash"
@@ -164,13 +157,47 @@
 	id = "fountain"
 	description = "The fountain has a warning on the side. DANGER: May have \
 		undeclared side effects that only become obvious when implemented."
-	suffix = "lavaland_fountain_hall.dmm"
+	suffix = "lavaland_surface_fountain_hall.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/zombie_gym
-	name = "Zombie Gym"
-	id = "zombie-gym"
-	description = "The patrons at this gym are serious about health, and \
-		making sure people work on their cardio."
-	suffix = "lavaland_gym.dmm"
+/datum/map_template/ruin/lavaland/survivalcapsule
+	name = "Survival Capsule Ruins"
+	id = "survivalcapsule"
+	description = "What was once sanctuary to the common miner, \
+		is now their tomb."
+	suffix = "lavaland_surface_survivalpod.dmm"
+	cost = 5
+
+/datum/map_template/ruin/lavaland/pizza
+	name = "Ruined Pizza Party"
+	id = "pizza"
+	description = "Little Timmy's birthday pizza-bash took a turn for the worse \
+		when a bluespace anomaly passed by."
+	suffix = "lavaland_surface_pizzaparty.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/cultaltar
+	name = "Summoning Ritual"
+	id = "cultaltar"
+	description = "A place of vile worship, the scrawling of blood in the middle glowing eerily.\
+		 A demonic laugh echoes throughout the caverns"
+	suffix = "lavaland_surface_cultaltar.dmm"
+	allow_duplicates = FALSE
+	cost = 10
+
+/datum/map_template/ruin/lavaland/hermit
+	name = "Makeshift Shelter"
+	id = "hermitcave"
+	description = "A place of shelter for a lone hermit, scraping by to live another day."
+	suffix = "lavaland_surface_hermit.dmm"
+	allow_duplicates = FALSE
+	cost = 10
+
+/datum/map_template/ruin/lavaland/cult_shuttle
+	name = "Crashed Cult Hive"
+	id = "cultshuttle"
+	description = "A once-bustling home for zealots of the blood-worshiping type. Turns out practicing \
+		dark rituals mid-jump isn't the best idea."
+	suffix = "lavaland_surface_cultcrash.dmm"
 	cost = 10

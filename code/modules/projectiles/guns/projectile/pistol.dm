@@ -3,7 +3,7 @@
 	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = 2
-	origin_tech = "combat=2;materials=2;syndicate=2"
+	origin_tech = "combat=3;materials=2;syndicate=4"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
 	can_suppress = 1
 	burst_size = 1
@@ -56,3 +56,21 @@
 	burst_size = 3
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
+
+/obj/item/weapon/gun/projectile/automatic/pistol/stickman
+	name = "flat gun"
+	desc = "A 2 dimensional gun.. what?"
+	icon_state = "flatgun"
+	origin_tech = "combat=3;materials=2;abductor=3"
+
+/obj/item/weapon/gun/projectile/automatic/pistol/stickman/pickup(mob/living/user)
+	user << "<span class='notice'>As you try to pick up [src], it slips out of your grip..</span>"
+	if(prob(50))
+		user << "<span class='notice'>..and vanishes from your vision! Where the hell did it go?</span>"
+		user.unEquip(src)
+		qdel(src)
+		user.update_icons()
+	else
+		user << "<span class='notice'>..and falls into view. Whew, that was a close one.</span>"
+		user.unEquip(src)
+

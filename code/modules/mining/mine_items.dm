@@ -16,18 +16,18 @@
 /obj/structure/closet/wardrobe/miner/New()
 	..()
 	contents = list()
-	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
-	new /obj/item/weapon/storage/backpack/industrial(src)
-	new /obj/item/weapon/storage/backpack/satchel_eng(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/gloves/fingerless(src)
+	new /obj/item/weapon/storage/backpack/dufflebag(src)
+	new /obj/item/weapon/storage/backpack/explorer(src)
+	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
@@ -38,14 +38,15 @@
 	..()
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/weapon/storage/box/emptysandbags(src)
-	new /obj/item/device/radio/headset/headset_cargo(src)
+	new /obj/item/weapon/shovel(src)
+	new /obj/item/weapon/pickaxe/mini(src)
+	new /obj/item/device/radio/headset/headset_cargo/mining(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/weapon/storage/bag/ore(src)
-	new /obj/item/weapon/shovel(src)
-	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/device/assault_pod/mining(src)
 
 
 /**********************Shuttle Computer**************************/
@@ -55,8 +56,16 @@
 	desc = "Used to call and send the mining shuttle."
 	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
-	possible_destinations = "mining_home;mining_away"
+	possible_destinations = "mining_home;mining_away;landing_zone_dock"
 	no_destination_swap = 1
+	var/global/list/dumb_rev_heads = list()
+
+/obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
+	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in ticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
+		user << "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>"
+		dumb_rev_heads += user.mind
+		return
+	..()
 
 /*********************Pickaxe & Drills**************************/
 
@@ -73,8 +82,18 @@
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
-	origin_tech = "materials=1;engineering=1"
+	origin_tech = "materials=2;engineering=3"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
+
+/obj/item/weapon/pickaxe/mini
+	name = "compact pickaxe"
+	desc = "A smaller, compact version of the standard pickaxe."
+	icon_state = "minipick"
+	force = 10
+	throwforce = 7
+	slot_flags = SLOT_BELT
+	w_class = 3
+	materials = list(MAT_METAL=1000)
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
@@ -84,7 +103,7 @@
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
 	digspeed = 20 //mines faster than a normal pickaxe, bought from mining vendor
-	origin_tech = "materials=3;engineering=2"
+	origin_tech = "materials=3;engineering=4"
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
 
@@ -93,7 +112,7 @@
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
 	digspeed = 14
-	origin_tech = "materials=4;engineering=3"
+	origin_tech = "materials=5;engineering=4"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 
@@ -105,7 +124,7 @@
 	digspeed = 25 //available from roundstart, faster than a pickaxe.
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
-	origin_tech = "materials=2;powerstorage=3;engineering=2"
+	origin_tech = "materials=2;powerstorage=2;engineering=3"
 	desc = "An electric mining drill for the especially scrawny."
 
 /obj/item/weapon/pickaxe/drill/cyborg
@@ -117,7 +136,7 @@
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
 	digspeed = 7
-	origin_tech = "materials=6;powerstorage=4;engineering=5"
+	origin_tech = "materials=6;powerstorage=4;engineering=4"
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
@@ -130,7 +149,7 @@
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
-	origin_tech = "materials=3;powerstorage=2;engineering=2"
+	origin_tech = "materials=6;powerstorage=4;engineering=5;magnets=4"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
@@ -150,7 +169,7 @@
 	item_state = "shovel"
 	w_class = 3
 	materials = list(MAT_METAL=50)
-	origin_tech = "materials=1;engineering=1"
+	origin_tech = "materials=2;engineering=2"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
 
@@ -204,130 +223,63 @@
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = 1
+	origin_tech = "engineering=3;bluespace=3"
+	var/template_id = "shelter_alpha"
+	var/datum/map_template/shelter/template
 	var/used = FALSE
 
+/obj/item/weapon/survivalcapsule/proc/get_template()
+	if(template)
+		return
+	template = shelter_templates[template_id]
+	if(!template)
+		throw EXCEPTION("Shelter template ([template_id]) not found!")
+		qdel(src)
+
+/obj/item/weapon/survivalcapsule/Destroy()
+	template = null // without this, capsules would be one use. per round.
+	. = ..()
+
+/obj/item/weapon/survivalcapsule/examine(mob/user)
+	. = ..()
+	get_template()
+	user << "This capsule has the [template.name] stored."
+	user << template.description
+
 /obj/item/weapon/survivalcapsule/attack_self()
+	// Can't grab when capsule is New() because templates aren't loaded then
+	get_template()
 	if(used == FALSE)
-		src.loc.visible_message("<span class='warning'>\The [src] begins to shake. Stand back!</span>")
+		src.loc.visible_message("<span class='warning'>\The [src] begins \
+			to shake. Stand back!</span>")
 		used = TRUE
 		sleep(50)
-		var/turf/T = get_turf(src)
-		var/clear = TRUE
-		for(var/turf/turf in range(2,T))
-			if(istype(turf, /turf/closed) && !istype(turf, /turf/closed/mineral))
-				clear = FALSE
-				break
-			for(var/obj/obj in turf)
-				if(obj.density && obj.anchored)
-					clear = FALSE
-					break
-		if(!clear)
-			src.loc.visible_message("<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a 5x5 area!</span>")
+		var/turf/deploy_location = get_turf(src)
+		var/status = template.check_deploy(deploy_location)
+		switch(status)
+			if(SHELTER_DEPLOY_BAD_AREA)
+				src.loc.visible_message("<span class='warning'>\The [src] \
+				will not function in this area.</span>")
+			if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
+				var/width = template.width
+				var/height = template.height
+				src.loc.visible_message("<span class='warning'>\The [src] \
+				doesn't have room to deploy! You need to clear a \
+				[width]x[height] area!</span>")
+
+		if(status != SHELTER_DEPLOY_ALLOWED)
 			used = FALSE
 			return
+
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
-		PoolOrNew(/obj/effect/particle_effect/smoke, src.loc)
+
+		var/turf/T = deploy_location
 		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
 			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
-		load()
+		template.load(deploy_location, centered = TRUE)
+		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
 		qdel(src)
-
-/obj/item/weapon/survivalcapsule/proc/load()
-	var/list/blacklist = list(/area/shuttle) //Shuttles move based on area, and we'd like not to break them
-	var/turf/start_turf = get_turf(src.loc)
-	var/turf/cur_turf
-	var/x_size = 5
-	var/y_size = 5
-	var/list/walltypes = list(/turf/closed/wall/shuttle/survival/pod)
-	var/floor_type = /turf/open/floor/pod
-	var/room
-
-	//Center the room/spawn it
-	start_turf = locate(start_turf.x -2, start_turf.y - 2, start_turf.z)
-
-	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter")
-
-	start_turf = get_turf(src.loc)
-
-	//Fill it
-
-	//The door
-	cur_turf = locate(start_turf.x, start_turf.y-2, start_turf.z)
-	new /obj/machinery/door/airlock/survival_pod(cur_turf)
-
-
-	//Bed middle right
-	cur_turf = locate(start_turf.x+1, start_turf.y, start_turf.z)
-	new /obj/structure/bed/pod(cur_turf)
-	new /obj/item/weapon/bedsheet/black(cur_turf)
-
-	//Chair bottom right
-	cur_turf = locate(start_turf.x+1, start_turf.y-1, start_turf.z)
-	new /obj/structure/tubes(cur_turf)
-	var/obj/structure/chair/comfy/black/C = new (cur_turf)
-	C.dir = 8
-
-	//GPS computer top right
-	cur_turf = locate(start_turf.x+1, start_turf.y+1, start_turf.z)
-	new /obj/item/device/gps/computer(cur_turf)
-
-	//Donk Pocket Storage Top/middle
-	cur_turf = locate(start_turf.x, start_turf.y+1, start_turf.z)
-	new /obj/machinery/smartfridge/survival_pod(cur_turf)
-
-	//Table in Bottom Left
-	cur_turf = locate(start_turf.x-1, start_turf.y-1, start_turf.z)
-	new /obj/structure/table/survival_pod(cur_turf)
-
-	//Sleeper Middle Left
-	cur_turf = locate(start_turf.x-1, start_turf.y, start_turf.z)
-	new /obj/machinery/sleeper/survival_pod(cur_turf)
-
-	//Fans Top Left
-	cur_turf = locate(start_turf.x-1, start_turf.y+1, start_turf.z)
-	new /obj/structure/fans(cur_turf)
-
-	//Signs
-	cur_turf = locate(start_turf.x-2, start_turf.y, start_turf.z)
-	var/obj/structure/sign/mining/survival/S1 = new(cur_turf)
-	S1.dir = WEST
-
-	cur_turf = locate(start_turf.x+2, start_turf.y, start_turf.z)
-	var/obj/structure/sign/mining/survival/S2 = new(cur_turf)
-	S2.dir = EAST
-
-	cur_turf = locate(start_turf.x, start_turf.y+2, start_turf.z)
-	var/obj/structure/sign/mining/survival/S3 = new(cur_turf)
-	S3.dir = NORTH
-
-	cur_turf = locate(start_turf.x-1, start_turf.y-2, start_turf.z)
-	var/obj/structure/sign/mining/survival/S4 = new(cur_turf)
-	S4.dir = SOUTH
-
-	cur_turf = locate(start_turf.x+1, start_turf.y-2, start_turf.z)
-	new /obj/structure/sign/mining(cur_turf)
-
-	var/area/survivalpod/L = new /area/survivalpod
-
-	var/turf/threshhold = locate(start_turf.x, start_turf.y-2, start_turf.z)
-	threshhold.ChangeTurf(/turf/open/floor/pod)
-	var/turf/open/floor/pod/doorturf = threshhold
-	doorturf.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
-	var/area/ZZ = get_area(threshhold)
-	if(!is_type_in_list(ZZ, blacklist))
-		L.contents += threshhold
-	threshhold.overlays.Cut()
-
-	new /obj/structure/fans/tiny(threshhold) //a tiny fan, to keep the air in.
-
-	var/list/turfs = room["floors"]
-	for(var/turf/open/floor/A in turfs)
-		A.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
-		A.overlays.Cut()
-		var/area/Z = get_area(A)
-		if(!is_type_in_list(Z, blacklist))
-			L.contents += A
 
 //Pod turfs and objects
 
@@ -378,14 +330,14 @@
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_pod
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod
 	opacity = 0
 	glass = 1
 
 /obj/machinery/door/airlock/survival_pod/vertical
 	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_pod/vertical
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
@@ -415,9 +367,9 @@
 
 /obj/machinery/sleeper/survival_pod/update_icon()
 	if(state_open)
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays += "sleeper_cover"
+		add_overlay("sleeper_cover")
 
 //Computer
 /obj/item/device/gps/computer
@@ -450,13 +402,20 @@
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
 	desc = "A heated storage unit."
-	icon_state = "bedcomputer"
+	icon_state = "donkvendor"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
+
+/obj/machinery/smartfridge/survival_pod/empty
+	name = "dusty survival pod storage"
+	desc = "A heated storage unit. This one's seen better days."
+
+/obj/machinery/smartfridge/survival_pod/empty/New()
+	return()
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
@@ -504,7 +463,7 @@
 /obj/structure/fans/tiny
 	name = "tiny fan"
 	desc = "A tiny fan, releasing a thin gust of air."
-	layer = TURF_LAYER + 0.8
+	layer = ABOVE_NORMAL_TURF_LAYER
 	density = 0
 	icon_state = "fan_tiny"
 	buildstackamount = 2
@@ -524,7 +483,7 @@
 //Signs
 /obj/structure/sign/mining
 	name = "nanotrasen mining corps sign"
-	desc = "A sign of relief for weary miners, and a warning for would be competitors to Nanotrasen's mining claims."
+	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "ntpod"
 
@@ -540,6 +499,219 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	name = "tubes"
 	anchored = 1
-	layer = MOB_LAYER - 0.2
+	layer = BELOW_MOB_LAYER
 	density = 0
 
+///Mining Base////
+
+/area/shuttle/auxillary_base
+	name = "Auxillary Base"
+	luminosity = 0 //Lighting gets lost when it lands anyway
+
+/obj/machinery/computer/shuttle/auxillary_base
+	name = "auxillary base management console"
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "dorm_available"
+	shuttleId = "colony_drop"
+	desc = "Allows a deployable expedition base to be dropped from the station to a designated mining location. It can also \
+interface with the mining shuttle at the landing site if a mobile beacon is also deployed."
+	var/launch_warning = TRUE
+
+	req_access = list(access_heads)
+	possible_destinations = null
+	clockwork = TRUE
+	var/obj/item/device/gps/internal/base/locator
+
+/obj/machinery/computer/shuttle/auxillary_base/New(location, obj/item/weapon/circuitboard/computer/shuttle/C)
+	..()
+	locator = new /obj/item/device/gps/internal/base(src)
+
+/obj/machinery/computer/shuttle/auxillary_base/Topic(href, href_list)
+	if(href_list["move"])
+		if(z != ZLEVEL_STATION && shuttleId == "colony_drop")
+			usr << "<span class='warning'>You can't move the base again!</span>"
+			return 0
+		if(launch_warning)
+			say("<span class='danger'>Launch sequence activated! Prepare for drop!</span>")
+			playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
+			launch_warning = FALSE
+		feedback_add_details("colonies_dropped") //Number of times a base has been dropped!
+	..()
+
+/obj/machinery/computer/shuttle/auxillary_base/proc/set_mining_mode()
+	if(z == ZLEVEL_MINING) //The console switches to controlling the mining shuttle once landed.
+		req_access = list()
+		shuttleId = "mining" //The base can only be dropped once, so this gives the console a new purpose.
+		possible_destinations = "mining_home;mining_away;landing_zone_dock"
+
+/obj/item/device/assault_pod/mining
+	name = "Landing Field Designator"
+	icon_state = "gangtool-purple"
+	item_state = "electronic"
+	icon = 'icons/obj/device.dmi'
+	desc = "Deploy to designate the landing zone of the auxillary base."
+	w_class = 2
+	shuttle_id = "colony_drop"
+	var/setting = FALSE
+	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
+	dwidth = 4 //These dimensions are to be set by the mappers for their respective maps.
+	dheight = 4
+	width = 9
+	height = 9
+	lz_dir = 1
+
+/obj/item/device/assault_pod/mining/attack_self(mob/living/user)
+	if(setting)
+		return
+	var/turf/T = get_turf(user)
+	if(!no_restrictions)
+		if(T.z != ZLEVEL_MINING)
+			user << "Wouldn't do much good dropping a mining base away from the mining area!"
+			return
+		var/colony_radius = max(width, height)*0.5
+		var/list/area_counter = get_areas_in_range(colony_radius, T)
+		if(area_counter.len > 1) //Avoid smashing ruins unless you are inside a really big one
+			user << "Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one."
+			return
+
+	user << "<span class='notice'>You begin setting the landing zone parameters...</span>"
+	setting = TRUE
+	if(!do_after(user, 50, target = user)) //You get a few seconds to cancel if you do not want to drop there.
+		setting = FALSE
+		return
+
+	var/area/A = get_area(T)
+
+	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
+	landing_zone.id = "colony_drop(\ref[src])"
+	landing_zone.name = "Landing Zone ([T.x], [T.y])"
+	landing_zone.dwidth = dwidth
+	landing_zone.dheight = dheight
+	landing_zone.width = width
+	landing_zone.height = height
+	landing_zone.setDir(lz_dir)
+	landing_zone.turf_type = T.baseturf
+	landing_zone.area_type = A.type
+
+	for(var/obj/machinery/computer/shuttle/S in machines)
+		if(S.shuttleId == shuttle_id)
+			S.possible_destinations += "[landing_zone.id];"
+
+//Serves as a nice mechanic to people get ready for the launch.
+	minor_announce("Auxiliary base landing zone coordinates locked in for [get_area(user)]. Launch command now available!")
+	user << "<span class='notice'>Landing zone set.</span>"
+
+	qdel(src)
+
+/obj/item/device/assault_pod/mining/unrestricted
+	name = "omni-locational landing field designator"
+	desc = "Allows the deployment of the mining base ANYWHERE. Use with caution."
+	no_restrictions = TRUE
+
+
+/obj/docking_port/mobile/auxillary_base
+	name = "auxillary base"
+	id = "colony_drop"
+	//Reminder to map-makers to set these values equal to the size of your base.
+	dheight = 4
+	dwidth = 4
+	width = 9
+	height = 9
+	var/anti_spam_cd = 0
+
+
+/obj/structure/mining_shuttle_beacon
+	name = "mining shuttle beacon"
+	desc = "A bluespace beacon calibrated to mark a landing spot for the mining shuttle when deployed near the auxillary mining base."
+	anchored = 0
+	density = 0
+	var/shuttle_ID = "landing_zone_dock"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "miningbeacon"
+	var/obj/docking_port/stationary/Mport //Linked docking port for the mining shuttle
+	pressure_resistance = 200 //So it does not get blown into lava.
+	var/anti_spam_cd = 0 //The linking process might be a bit intensive, so this here to prevent over use.
+	var/console_range = 15 //Wifi range of the beacon to find the aux base console
+
+/obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
+	if(anchored)
+		user << "<span class='warning'>Landing zone already set.</span>"
+		return
+
+	if(anti_spam_cd)
+		user << "<span class='warning'>[src] is currently recalibrating. Please wait.</span>"
+		return
+
+	anti_spam_cd = 1
+	addtimer(src, "clear_cooldown", 100)
+
+	var/turf/landing_spot = get_turf(src)
+
+	if(landing_spot.z != ZLEVEL_MINING)
+		user << "<span class='warning'>This device is only to be used in a mining zone.</span>"
+		return
+	var/obj/machinery/computer/shuttle/auxillary_base/aux_base_console = locate(/obj/machinery/computer/shuttle/auxillary_base) in machines
+	if(!aux_base_console || get_dist(landing_spot, aux_base_console) > console_range)
+		user << "<span class='warning'>The auxillary base's console must be within [console_range] meters in order to interface.</span>"
+		return //Needs to be near the base to serve as its dock and configure it to control the mining shuttle.
+
+//Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
+
+
+	for(var/S in SSshuttle.stationary)
+		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
+		if(SM.id == "mining_home" || SM.id == "mining_away")
+
+			var/area/A = get_area(landing_spot)
+
+			Mport = new(landing_spot)
+			Mport.id = "landing_zone_dock"
+			Mport.name = "auxillary base landing site"
+			Mport.dwidth = SM.dwidth
+			Mport.dheight = SM.dheight
+			Mport.width = SM.width
+			Mport.height = SM.height
+			Mport.setDir(dir)
+			Mport.turf_type = landing_spot.baseturf
+			Mport.area_type = A.type
+
+			break
+	if(!Mport)
+		user << "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>"
+		return
+	var/search_radius = max(Mport.width, Mport.height)/2
+	var/list/landing_areas = get_areas_in_range(search_radius, landing_spot)
+	for(var/area/shuttle/auxillary_base/AB in landing_areas) //You land NEAR the base, not IN it.
+		user << "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>"
+		SSshuttle.stationary.Remove(Mport)
+		qdel(Mport)
+		return
+	var/obj/docking_port/mobile/mining_shuttle
+	for(var/S in SSshuttle.mobile)
+		var/obj/docking_port/mobile/MS = S
+		if(MS.id != "mining")
+			continue
+		mining_shuttle = MS
+
+	if(!mining_shuttle) //Not having a mining shuttle is a map issue
+		user << "<span class='warning'>No mining shuttle signal detected. Please contact Nanotrasen Support.</span>"
+		SSshuttle.stationary.Remove(Mport)
+		qdel(Mport)
+		return
+
+	if(!mining_shuttle.canDock(Mport))
+		user << "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the aux. mining base.</span>"
+		SSshuttle.stationary.Remove(Mport)
+		qdel(Mport)
+		return
+
+	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
+	user << "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>"
+	anchored = 1 //Locks in place to mark the landing zone.
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+
+/obj/structure/mining_shuttle_beacon/proc/clear_cooldown()
+	anti_spam_cd = 0
+
+/obj/structure/mining_shuttle_beacon/attack_robot(mob/user)
+	return (attack_hand(user)) //So borgies can help

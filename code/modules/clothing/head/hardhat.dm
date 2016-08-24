@@ -14,9 +14,6 @@
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/hardhat/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-		return
 	on = !on
 	icon_state = "hardhat[on]_[item_color]"
 	item_state = "hardhat[on]_[item_color]"

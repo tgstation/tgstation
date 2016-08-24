@@ -218,7 +218,7 @@
 		I = new /icon(icon, icon_state, dir)
 	else
 		I = new /icon(icon, icon_state)
-		dir = "default"
+		setDir("default")
 
 	var/filename = "[ckey("[icon]_[icon_state]_[dir]")].png"
 	src << browse_rsc(I, filename)
