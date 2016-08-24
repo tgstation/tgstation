@@ -68,7 +68,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
-	mutatelist = list(/obj/item/seeds/firelemon)
+	mutatelist = list(/obj/item/seeds/cash)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
