@@ -362,13 +362,5 @@
 /obj/item/weapon/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
 
-
-/obj/item/weapon/nullrod/claymore/multiverse/New() //No copypaste here, no sir.
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/nullrod/claymore/multiverse/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-/obj/item/weapon/nullrod/claymore/multiverse/process()
+/obj/item/weapon/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
 	force = rand(0, 30)
