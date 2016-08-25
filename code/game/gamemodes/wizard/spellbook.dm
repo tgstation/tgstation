@@ -408,6 +408,23 @@
 	cost = 1
 	category = "Defensive"
 
+
+/datum/spellbook_entry/item/battlemage
+	name = "Battlemage Armour"
+	desc = "An ensorcelled suit of armour, protected by a powerful shield. The shield can completly negate sixteen attacks before being permanently depleted."
+	item_path = /obj/item/wizard_armour_charge
+	log_name = "BM"
+	limit = 1
+	category = "Defensive"
+
+/datum/spellbook_entry/item/battlemage_charge
+	name = "Battlemage Armour Charges"
+	desc = "A powerful defensive rune, it will grant eight additional charges to a suit of battlemage armour."
+	item_path = /obj/item/clothing/suit/space/hardsuit/shielded/wizard
+	log_name = "AC"
+	category = "Defensive"
+	cost = 1
+
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"
