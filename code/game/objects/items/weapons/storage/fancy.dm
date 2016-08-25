@@ -114,10 +114,6 @@
 		cig.desc = "\An [name] brand [cig.name]."
 	name = "\improper [name] packet"
 
-/obj/item/weapon/storage/fancy/cigarettes/CtrlClick(mob/user)
-	if(contents.len > 0)
-		return ..()
-
 /obj/item/weapon/storage/fancy/cigarettes/AltClick(mob/user)
 	if(user.get_active_hand())
 		return
@@ -127,12 +123,12 @@
 		break
 
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
-	if(fancy_open)
+	if(fancy_open || !contents.len)
 		cut_overlays()
-		icon_state = initial(icon_state)
 		if(!contents.len)
-			icon_state += "_empty"
+			icon_state = "[initial(icon_state)]_empty"
 		else
+			icon_state = initial(icon_state)
 			add_overlay("[icon_state]_open")
 			var/i = contents.len
 			for(var/C in contents)
@@ -260,10 +256,6 @@
 	can_hold = list(/obj/item/clothing/mask/cigarette/cigar)
 	icon_type = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
-
-/obj/item/weapon/storage/fancy/cigarettes/cigars/CtrlClick(mob/user)
-	var/obj/item/weapon/storage/fancy/F = src
-	return F.CtrlClick(user)
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/update_icon()
 	if(fancy_open)
