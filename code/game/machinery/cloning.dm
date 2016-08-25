@@ -336,7 +336,7 @@
 		clonemind.transfer_to(occupant)
 		occupant.grab_ghost()
 		occupant << "<span class='notice'><b>There is a bright flash!</b><br>\
-			<i>You feel like a new human.</i></span>"
+			<i>You feel like a new being.</i></span>"
 		occupant.flash_eyes()
 
 	var/turf/T = get_turf(src)
