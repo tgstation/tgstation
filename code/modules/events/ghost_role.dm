@@ -8,18 +8,18 @@
 /datum/round_event/ghost_role/start()
 	try_spawning()
 
-/datum/round_event/ghost_role/proc/try_spawning(sanity = 0)
+/datum/round_event/ghost_role/proc/try_spawning(sanity = 0, retry = 0)
 	// The event does not run until the spawning has been attempted
 	// to prevent us from getting gc'd halfway through
 	processing = FALSE
 
 	var/status = spawn_role()
-	if(status == WAITING_FOR_SOMETHING)
+	if((status == WAITING_FOR_SOMETHING) && (retry < 2))
 		message_admins("The event will not spawn a [role_name] until certain \
 			conditions are met. Waiting 30s and then retrying.")
 		spawn(300)
 			// I hope this doesn't end up running out of stack space
-			try_spawning()
+			try_spawning(0,++retry)
 		return
 
 	if(status == MAP_ERROR)
