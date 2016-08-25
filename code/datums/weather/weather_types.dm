@@ -119,6 +119,7 @@
 	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
 
 	telegraph_duration = 300
+	telegraph_message = "<span class='warning'>The air begins to grow warm.</span>"
 	//telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'	//TODO: Get sounds and sprite overlays
 	//telegraph_overlay = "light_ash"
 
@@ -129,6 +130,7 @@
 	//weather_overlay = "ash_storm"
 
 	end_duration = 100
+	telegraph_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 	//end_sound = 'sound/lavaland/ash_storm_end.ogg'
 	//end_overlay = "light_ash"
 
@@ -151,7 +153,10 @@
 					else
 						randmutg(H)
 					H.domutcheck()
-	L.rad_act(20,1)
+	if(ismonkey(L) && !L.ckey)
+		L.rad_act(1,1)	//This is here to prevent all the genetics and viro monkeys from collapsing forever and spamming ghosts.
+	else
+		L.rad_act(20,1)
 
 /datum/weather/rad_storm/end()
 	if(..())
