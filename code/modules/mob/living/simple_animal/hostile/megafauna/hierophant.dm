@@ -32,7 +32,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "Hierophant"
-	desc = "Stolen from Hyper Light Drifter."
+	desc = "Stolen from Hyper Light Drifter. Commit number 57."
 	health = 2500
 	maxHealth = 2500
 	attacktext = "clubs"
@@ -207,7 +207,7 @@ Difficulty: Hard
 					var/delay = 6
 					if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
 						addtimer(src, "alldir_blasts", 0, FALSE, target)
-						delay = 8 //this attack is mean, give them a little chance to dodge
+						delay = 8.5 //this attack is mean, give them a little chance to dodge
 					else if(prob(60))
 						addtimer(src, "cardinal_blasts", 0, FALSE, target)
 					else
@@ -257,16 +257,15 @@ Difficulty: Hard
 				addtimer(src, "cardinal_blasts", 0, FALSE, target)
 			else
 				addtimer(src, "diagonal_blasts", 0, FALSE, target)
-	else
-		if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
-			var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 3 - anger_modifier * 0.04), FALSE))
-			chaser_cooldown = world.time + initial(chaser_cooldown)
-			if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
-				var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1.5, 5 - anger_modifier * 0.07), FALSE))
-				OC.moving = 4
-				OC.moving_dir = pick(cardinal - C.moving_dir)
-		else //just release a burst of power
-			addtimer(src, "burst", 0, FALSE, get_turf(src))
+	else if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
+		var/obj/effect/overlay/temp/hierophant/chaser/C = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1, 3 - anger_modifier * 0.04), FALSE))
+		chaser_cooldown = world.time + initial(chaser_cooldown)
+		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
+			var/obj/effect/overlay/temp/hierophant/chaser/OC = PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(loc, src, target, max(1.5, 5 - anger_modifier * 0.07), FALSE))
+			OC.moving = 4
+			OC.moving_dir = pick(cardinal - C.moving_dir)
+	else //just release a burst of power
+		addtimer(src, "burst", 0, FALSE, get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/diagonal_blasts(mob/victim) //fire diagonal cross blasts with a delay
 	var/turf/T = get_turf(victim)
@@ -366,7 +365,7 @@ Difficulty: Hard
 		var/dist = get_dist(original, T)
 		if(dist > last_dist)
 			last_dist = dist
-			sleep(1 + (burst_range - last_dist)*0.5) //gets faster as it gets further out
+			sleep(1 + (burst_range - last_dist) * 0.5) //gets faster as it gets further out
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, src, FALSE))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
