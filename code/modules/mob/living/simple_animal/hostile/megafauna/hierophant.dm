@@ -62,7 +62,7 @@ Difficulty: Hard
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
 	var/obj/effect/hierophant/spawned_rune //the rune we teleport back to
 	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our rune
-	var/did_reset //if we timed out, returned to our rune, and healed some
+	var/did_reset = TRUE //if we timed out, returned to our rune, and healed some
 	//var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...")
 	//var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
 	medal_type = MEDAL_PREFIX
@@ -487,16 +487,16 @@ Difficulty: Hard
 	playsound(T,'sound/magic/Blind.ogg', 125, 1, -5) //make a sound
 	sleep(6) //wait a little
 	bursting = TRUE
-	do_damage() //do damage and mark us as bursting
+	do_damage(T) //do damage and mark us as bursting
 	sleep(1.3) //slightly forgiving; the burst animation is 1.5 deciseconds
 	bursting = FALSE //we no longer damage crossers
 
 /obj/effect/overlay/temp/hierophant/blast/Crossed(atom/movable/AM)
 	..()
 	if(bursting)
-		do_damage()
+		do_damage(get_turf(src))
 
-/obj/effect/overlay/temp/hierophant/blast/proc/do_damage()
+/obj/effect/overlay/temp/hierophant/blast/proc/do_damage(turf/T)
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
 		hit_things += L
 		if((friendly_fire_check && caster && caster.faction_check(L)) || L.stat == DEAD)
