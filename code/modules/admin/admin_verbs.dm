@@ -675,10 +675,13 @@ var/list/admin_verbs_hideable = list(
 			while (!area && --j > 0)
 
 /client/proc/toggle_AI_interact()
- 	set name = "Toggle Admin AI Interact"
- 	set category = "Admin"
- 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
+	set name = "Toggle Admin AI Interact"
+	set category = "Admin"
+	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
- 	AI_Interact = !AI_Interact
- 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
- 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+	AI_Interact = !AI_Interact
+	if(mob && IsAdminGhost(mob))
+		mob.has_unlimited_silicon_privilege = AI_Interact
+
+	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
+	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
