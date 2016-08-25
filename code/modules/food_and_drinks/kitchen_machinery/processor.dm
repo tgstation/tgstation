@@ -35,8 +35,8 @@
 /obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/processor)
-			name = "circuit board (Slime Processor)"
-			build_path = /obj/machinery/processor/Slime
+			name = "circuit board (slime Processor)"
+			build_path = /obj/machinery/processor/slime
 			user << "<span class='notice'>Name protocols successfully updated.</span>"
 		else
 			name = "circuit board (Food Processor)"
@@ -232,7 +232,7 @@
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
-			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0 // DEAR GOD THIS BURNS MY EYES HAVE YOU EVER LOOKED IN AN ENGLISH DICTONARY BEFORE IN YOUR LIFE AAAAAAAAAAAAAAAAAAAAA - Iamgoofball
+			log_admin("DEBUG: [O] in processor hasnt got a suitable recipe. How did it get in there? Please report it immediatly!!!")
 			continue
 		total_time += P.time
 	var/offset = prob(50) ? -2 : 2
@@ -266,15 +266,15 @@
 		M.loc = src.loc
 	return
 
-/obj/machinery/processor/Slime
+/obj/machinery/processor/slime
 	name = "Slime processor"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
-/obj/machinery/processor/Slime/New()
+/obj/machinery/processor/slime/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor/Slime(null)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor/slime(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/processor/Slime
+/obj/item/weapon/circuitboard/machine/processor/slime
 	name = "circuit board (Slime Processor)"
-	build_path = /obj/machinery/processor/Slime
+	build_path = /obj/machinery/processor/slime
