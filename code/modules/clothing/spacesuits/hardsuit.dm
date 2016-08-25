@@ -659,3 +659,32 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+
+///SWAT version
+/obj/item/clothing/suit/space/hardsuit/shielded/swat
+	name = "death commando spacesuit"
+	desc = "an advanced hardsuit favored by commandos for use in special operations."
+	icon_state = "deathsquad"
+	item_state = "swat_suit"
+	item_color = "syndi"
+	max_charges = 4
+	current_charges = 4
+	recharge_delay = 15
+	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	unacidable = 1
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
+	dog_fashion = /datum/dog_fashion/back/deathsquad
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
+	name = "death commando helmet"
+	desc = "A tactical helmet with built in energy shielding."
+	icon_state = "deathsquad"
+	item_state = "deathsquad"
+	item_color = "syndi"
+	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
+	actions_types = list()
