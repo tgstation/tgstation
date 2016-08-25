@@ -54,22 +54,26 @@
 	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return(BRUTELOSS)
 
+var/list/highlander_claymores = list()
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>"
 	flags = CONDUCT | NODROP
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved", "gored") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
+	var/announced = FALSE //If we've announced our winner
 
 /obj/item/weapon/claymore/highlander/New()
 	..()
 	START_PROCESSING(SSobj, src)
+	highlander_claymores += src
 
 /obj/item/weapon/claymore/highlander/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/simple_animal/shade/S in src)
 		S << "<span class='userdanger'>Your home breaks apart, and you with it!</span>"
 		qdel(S)
+	highlander_claymores -= src
 	return ..()
 
 /obj/item/weapon/claymore/highlander/process()
@@ -85,6 +89,17 @@
 			L.gib()
 			if(B)
 				qdel(B) //NO SECOND CHANCES
+		else
+			if(announced)
+				return
+			for(var/obj/item/weapon/claymore/highlander/H in highlander_claymores)
+				if(H != src)
+					return
+			announced = TRUE
+			world << "<span class='userdanger'>[L.real_name] IS THE ONLY ONE LEFT STANDING!</span>"
+			world << sound('sound/misc/highlander_only_one.ogg')
+			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING! You feel your bonds vanish - you can freely drop or sheathe your [name]! (The kilt stays, though.)</span>"
+			flags = CONDUCT
 
 /obj/item/weapon/claymore/highlander/examine(mob/user)
 	..()
