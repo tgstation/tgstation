@@ -32,7 +32,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "Hierophant"
-	desc = "Stolen from Hyper Light Drifter. Commit number 57."
+	desc = "Stolen from Hyper Light Drifter. Commit number 58."
 	health = 2500
 	maxHealth = 2500
 	attacktext = "clubs"
@@ -63,6 +63,8 @@ Difficulty: Hard
 	var/obj/effect/hierophant/spawned_rune //the rune we teleport back to
 	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our rune
 	var/did_reset //if we timed out, returned to our rune, and healed some
+	//var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...")
+	//var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
 	medal_type = MEDAL_PREFIX
 	score_type = BIRD_SCORE
 	del_on_death = TRUE
@@ -113,7 +115,7 @@ Difficulty: Hard
 		if(!L.unEquip(W))
 			qdel(W)
 	/*visible_message(
-		"<span class='hierophant'>\"Wsyvgi sj irivkc xettih. Vitemvmrk...\"</span>\n<span class='hierophant_warning'>[src] annihilates [L]!</span>",
+		"<span class='hierophant'>\"[pick(kill_phrases)]\"</span>\n<span class='hierophant_warning'>[src] annihilates [L]!</span>",
 		"<span class='userdanger'>You annihilate [L], restoring your health!</span>")*/
 	visible_message(
 		"<span class='hierophant'>\"Caw.\"</span>\n<span class='hierophant_warning'>[src] annihilates [L]!</span>",
@@ -125,7 +127,7 @@ Difficulty: Hard
 	var/targets_the_same = (new_target == target)
 	. = ..()
 	if(. && target && !targets_the_same)
-		visible_message("<span class='hierophant'>\"Xevkix psgexih.\"</span>")*/
+		visible_message("<span class='hierophant'>\"[pick(target_phrases)]\"</span>")*/
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount)
 	. = ..()
@@ -146,7 +148,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/Move()
 	if(!blinking)
 		/*if(!stat)
-			playsound(loc, 'sound/mecha/mechmove04.ogg', 100, 1)*/
+			playsound(loc, 'sound/mecha/mechmove04.ogg', 150, 1, -4)*/
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Goto(target, delay, minimum_distance)
