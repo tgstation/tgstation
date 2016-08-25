@@ -132,6 +132,10 @@
 	item_state = "multiverse"
 	slot_flags = SLOT_BELT
 
+/obj/item/weapon/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
+	force = rand(1, 30)
+	..()
+
 /obj/item/weapon/nullrod/claymore/saber
 	name = "light energy sword"
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -362,5 +366,3 @@
 /obj/item/weapon/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
 
-/obj/item/weapon/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
-	force = rand(0, 30)
