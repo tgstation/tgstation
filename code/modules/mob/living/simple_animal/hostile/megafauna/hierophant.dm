@@ -124,7 +124,7 @@ Difficulty: Hard
 /*/mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)
 	. = ..()
-	if(. && !targets_the_same)
+	if(. && target && !targets_the_same)
 		visible_message("<span class='hierophant'>\"Xevkix psgexih.\"</span>")*/
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount)
@@ -204,16 +204,16 @@ Difficulty: Hard
 				var/counter = 1 + round(anger_modifier * 0.12)
 				while(health && target && counter)
 					counter--
-					var/bonus_delay = 0
+					var/delay = 6
 					if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
 						addtimer(src, "alldir_blasts", 0, FALSE, target)
-						bonus_delay = 2 //this attack is mean, give them a little chance to dodge
+						delay = 8 //this attack is mean, give them a little chance to dodge
 					else if(prob(60))
 						addtimer(src, "cardinal_blasts", 0, FALSE, target)
 					else
 						addtimer(src, "diagonal_blasts", 0, FALSE, target)
-						bonus_delay = -1 //this one isn't so mean, so do the next one faster(if there is one)
-					sleep(6 + bonus_delay)
+						delay = 5 //this one isn't so mean, so do the next one faster(if there is one)
+					sleep(delay)
 				animate(src, color = initial(color), time = 10)
 				sleep(10)
 				blinking = FALSE
@@ -467,6 +467,7 @@ Difficulty: Hard
 	var/damage = 10 //how much damage do we do?
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
+	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us
 
 /obj/effect/overlay/temp/hierophant/blast/New(loc, new_caster, friendly_fire)
 	..()
@@ -484,32 +485,39 @@ Difficulty: Hard
 		return
 	playsound(T,'sound/magic/Blind.ogg', 125, 1, -5) //make a sound
 	sleep(6) //wait a little
-	var/timing = 10 //oop, we're damaging stuff now!
-	while(src && !qdeleted(src) && timing && T)
-		timing--
-		for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
-			hit_things += L
-			if((friendly_fire_check && caster && caster.faction_check(L)) || L.stat == DEAD)
+	bursting = TRUE
+	do_damage() //do damage and mark us as bursting
+	sleep(1.3) //slightly forgiving; the burst animation is 1.5 deciseconds
+	bursting = FALSE //we no longer damage crossers
+
+/obj/effect/overlay/temp/hierophant/blast/Crossed(atom/movable/AM)
+	..()
+	if(bursting)
+		do_damage()
+
+/obj/effect/overlay/temp/hierophant/blast/proc/do_damage()
+	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
+		hit_things += L
+		if((friendly_fire_check && caster && caster.faction_check(L)) || L.stat == DEAD)
+			continue
+		if(L.client)
+			flash_color(L.client, "#660099", 1)
+		playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
+		L << "<span class='userdanger'>You're struck by a [name]!</span>"
+		var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
+		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
+		L.apply_damage(damage, BURN, limb_to_hit, armor)
+		if(ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid))
+			L.adjustBruteLoss(damage)
+		add_logs(caster, L, "struck with a [name]")
+	for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
+		hit_things += M
+		if(M.occupant)
+			if(friendly_fire_check && caster && caster.faction_check(M.occupant))
 				continue
-			if(L.client)
-				flash_color(L.client, "#660099", 1)
-			playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
-			L << "<span class='userdanger'>You're struck by a [name]!</span>"
-			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
-			var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
-			L.apply_damage(damage, BURN, limb_to_hit, armor)
-			if(ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid))
-				L.adjustBruteLoss(damage)
-			add_logs(caster, L, "struck with a [name]")
-		for(var/obj/mecha/M in T.contents - hit_things) //and mechs.
-			hit_things += M
-			if(M.occupant)
-				if(friendly_fire_check && caster && caster.faction_check(M.occupant))
-					continue
-				M.occupant << "<span class='userdanger'>Your [M] is struck by a [name]!</span>"
-			playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
-			M.take_damage(damage, "fire", 0)
-		sleep(0.15) //yes, this high of an accuracy is required because movement is super bullshit fast
+			M.occupant << "<span class='userdanger'>Your [M] is struck by a [name]!</span>"
+		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
+		M.take_damage(damage, "fire", 0)
 
 /obj/effect/hierophant
 	name = "hierophant rune"
