@@ -554,16 +554,15 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	shuttle_id = "colony_drop"
 	var/setting = FALSE
 	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
-	dwidth = 4 //These dimensions are to be set by the mappers for their respective maps.
-	dheight = 4
-	width = 9
-	height = 9
-	lz_dir = 1
 
 /obj/item/device/assault_pod/mining/attack_self(mob/living/user)
 	if(setting)
 		return
 	var/turf/T = get_turf(user)
+	var/obj/docking_port/mobile/auxillary_base/base_dock = locate(/obj/docking_port/mobile/auxillary_base) in SSshuttle.mobile
+	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
+		user << "<span class='warning'>This station is not equipped with an auxillary base. Please contact your Nanotrasen contractor.</span>"
+		return
 	if(!no_restrictions)
 		if(T.z != ZLEVEL_MINING)
 			user << "Wouldn't do much good dropping a mining base away from the mining area!"
@@ -585,12 +584,12 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "colony_drop(\ref[src])"
 	landing_zone.name = "Landing Zone ([T.x], [T.y])"
-	landing_zone.dwidth = dwidth
-	landing_zone.dheight = dheight
-	landing_zone.width = width
-	landing_zone.height = height
-	landing_zone.setDir(lz_dir)
-	landing_zone.turf_type = T.baseturf
+	landing_zone.dwidth = base_dock.dwidth
+	landing_zone.dheight = base_dock.dheight
+	landing_zone.width = base_dock.width
+	landing_zone.height = base_dock.height
+	landing_zone.setDir(base_dock.dir)
+	landing_zone.turf_type = T.type
 	landing_zone.area_type = A.type
 
 	for(var/obj/machinery/computer/shuttle/S in machines)
@@ -672,14 +671,14 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			Mport.width = SM.width
 			Mport.height = SM.height
 			Mport.setDir(dir)
-			Mport.turf_type = landing_spot.baseturf
+			Mport.turf_type = landing_spot.type
 			Mport.area_type = A.type
 
 			break
 	if(!Mport)
 		user << "<span class='warning'>This station is not equipped with an approprite mining shuttle. Please contact Nanotrasen Support.</span>"
 		return
-	var/search_radius = max(Mport.width, Mport.height)/2
+	var/search_radius = max(Mport.width, Mport.height)*0.5
 	var/list/landing_areas = get_areas_in_range(search_radius, landing_spot)
 	for(var/area/shuttle/auxillary_base/AB in landing_areas) //You land NEAR the base, not IN it.
 		user << "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>"
