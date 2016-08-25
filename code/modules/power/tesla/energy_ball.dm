@@ -38,6 +38,9 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
+/obj/singularity/energy_ball/ex_act(severity, target)
+	return
+
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/EB = orbiting
