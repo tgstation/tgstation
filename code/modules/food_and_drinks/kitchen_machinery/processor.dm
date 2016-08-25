@@ -28,6 +28,23 @@
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
+/obj/item/weapon/circuitboard/machine/processor
+	name = "circuit board (Food Processor)"
+	build_path = /obj/machinery/processor
+
+/obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
+	if(istype(I,/obj/item/weapon/screwdriver))
+		if(build_path == /obj/machinery/processor)
+			name = "circuit board (Slime Processor)"
+			build_path = /obj/machinery/processor/Slime
+			user << "<span class='notice'>Name protocols successfully updated.</span>"
+		else
+			name = "circuit board (Food Processor)"
+			build_path = /obj/machinery/processor
+			user << "<span class='notice'>Defaulting name protocols.</span>"
+	else
+		return ..()
+
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		rating_amount = B.rating
@@ -249,3 +266,15 @@
 		M.loc = src.loc
 	return
 
+/obj/machinery/processor/Slime
+	name = "Slime processor"
+	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
+
+/obj/machinery/processor/Slime/New()
+	..()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor/Slime(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/processor/Slime
+	name = "circuit board (Slime Processor)"
+	build_path = /obj/machinery/processor/Slime
