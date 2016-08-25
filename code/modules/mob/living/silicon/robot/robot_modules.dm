@@ -135,7 +135,7 @@
 	modules += new /obj/item/weapon/extinguisher(src)
 
 	modules += new /obj/item/weapon/pickaxe(src)
-	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 
 	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 
