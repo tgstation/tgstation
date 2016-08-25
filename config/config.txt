@@ -23,6 +23,9 @@ BAN_LEGACY_SYSTEM
 ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
 #USE_AGE_RESTRICTION_FOR_JOBS
 
+# Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
+#USE_ACCOUNT_AGE_FOR_JOBS
+
 ## log OOC channel
 LOG_OOC
 
