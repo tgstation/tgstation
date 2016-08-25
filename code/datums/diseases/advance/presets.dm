@@ -66,7 +66,7 @@
 		symptoms = list(new/datum/symptom/asthmothia)
 	..(process, D, copy)
 
-// Asthmothia
+// Apoptoplast
 
 /datum/disease/advance/apoptoplast/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
 	if(!D)
