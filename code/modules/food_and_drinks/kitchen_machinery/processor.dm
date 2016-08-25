@@ -148,9 +148,9 @@
 				"<span class='notice'>You jump out from the processor!</span>", \
 				"<span class='italics'>You hear chimpering.</span>")
 		return
-	var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
+	var/obj/item/weapon/reagent_containers/glass/bucket = new(loc)
 	var/datum/reagent/blood/B = new()
-	B.holder = bucket_of_blood
+	B.holder = bucket
 	B.volume = 70
 	//set reagent data
 	B.data["donor"] = O
@@ -163,9 +163,9 @@
 
 	if(O.resistances&&O.resistances.len)
 		B.data["resistances"] = O.resistances.Copy()
-	bucket_of_blood.reagents.reagent_list += B
-	bucket_of_blood.reagents.update_total()
-	bucket_of_blood.on_reagent_change()
+	bucket.reagents.reagent_list += B
+	bucket.reagents.update_total()
+	bucket.on_reagent_change()
 	//bucket_of_blood.reagents.handle_reactions() //blood doesn't react
 	..()
 
