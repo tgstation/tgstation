@@ -31,26 +31,7 @@
 	if(..())
 		return
 
-	R.notify_ai(2)
-
-	R.uneq_all()
-	R.hands.icon_state = "nomod"
-	R.icon_state = "robot"
-	qdel(R.module)
-	R.module = null
-
-	R.modtype = "robot"
-	R.designation = "Default"
-	R.updatename("Default")
-
-	R.update_icons()
-	R.update_headlamp()
-
-	R.speed = 0 // Remove upgrades.
-	R.ionpulse = FALSE
-	R.magpulse = FALSE
-
-	R.status_flags |= CANPUSH
+	R.ResetModule()
 
 	return 1
 

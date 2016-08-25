@@ -77,7 +77,7 @@ var/list/ai_list = list()
 
 	var/obj/machinery/camera/portable/builtInCamera
 
-/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
+/mob/living/silicon/ai/New(loc, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	..()
 	rename_self("ai")
 	name = real_name
@@ -917,3 +917,6 @@ var/list/ai_list = list()
 		src << "Hack complete. \The [apc] is now under your \
 			exclusive control."
 		apc.update_icon()
+
+/mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
+	..(loc,L,B,1)
