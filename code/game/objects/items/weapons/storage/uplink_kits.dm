@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 3, "bond" = 1, "screwed" = 3, "sabotage" = 3, "guns" = 1, "murder" = 2, "implant" = 2, "hacker" = 2, "lordsingulo" = 2, "darklord" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "lordsingulo" = 1, "darklord" = 1, "Sniper" = 1)))
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -110,6 +110,15 @@
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/clothing/shoes/chameleon(src) //because slipping while being a dark lord sucks
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
+			return
+
+		if("Sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
+			new /obj/item/weapon/gun/projectile/automatic/sniper_rifle(src)
+			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src)
+			new /obj/item/clothing/glasses/thermal/syndi(src)
+			new /obj/item/clothing/gloves/color/latex/nitrile(src)
+			new /obj/item/clothing/mask/gas/clown_hat(src)
+			new /obj/item/clothing/under/suit_jacket/really_black(src)
 			return
 
 /obj/item/weapon/storage/box/syndie_kit
