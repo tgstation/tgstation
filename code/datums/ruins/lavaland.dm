@@ -91,6 +91,7 @@
 
 /datum/map_template/ruin/lavaland/sin
 	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/sin/envy
 	name = "Ruin of Envy"
@@ -124,7 +125,6 @@
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
-	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
@@ -192,12 +192,4 @@
 	description = "A place of shelter for a lone hermit, scraping by to live another day."
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
-	cost = 10
-
-/datum/map_template/ruin/lavaland/cult_shuttle
-	name = "Crashed Cult Hive"
-	id = "cultshuttle"
-	description = "A once-bustling home for zealots of the blood-worshiping type. Turns out practicing \
-		dark rituals mid-jump isn't the best idea."
-	suffix = "lavaland_surface_cultcrash.dmm"
 	cost = 10
