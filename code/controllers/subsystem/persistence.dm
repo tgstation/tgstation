@@ -69,7 +69,7 @@ var/datum/subsystem/persistence/SSpersistence
 				savable_obj += O.persistence_replacement
 			else
 				savable_obj += O.type
-		if(savable_obj.len < 1)
+		if(isemptylist(savable_obj))
 			continue
 		if(isemptylist(old_secret_satchels))
 			old_secret_satchels = list(list(F.x, F.y, "[pick(savable_obj)]"))
