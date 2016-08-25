@@ -55,7 +55,7 @@
 		if(100)
 			SpeakPeace(list("And that's a solid hundred.", "Good hustle I guess.", "You've probably heard a lot of repeats by now."))
 		if(101)
-			SpeakPeace(list("I hope your getting the reference this room is presenting.", "As well as the more obscure meta reference this conversation is presenting.", "This stuff has layers."))
+			SpeakPeace(list("I hope you're getting the reference this room is presenting.", "As well as the more obscure meta reference this conversation is presenting.", "This stuff has layers."))
 		if(102)
 			SpeakPeace(list("I am very tempted to just stretch this out forever.","It's technically easier than doing this.","Just an option."))
 		if(108)
@@ -86,14 +86,14 @@
 	times_spoken_to++
 
 /obj/structure/speaking_tile/proc/SpeakPeace(list/statements)
-	for(var/i=1, i<=statements.len, i++)
+	for(var/i in 1 to statements.len)
 		say("<span class='deadsay'>[statements[i]]</span>")
 		if(i != statements.len)
 			sleep(30)
 
 /obj/item/rupee
 	name = "weird crystal"
-	desc = "Your excitement boils away as you realize it's just colored glass. Why would someone horde these things?"
+	desc = "Your excitement boils away as you realize it's just colored glass. Why would someone hoard these things?"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
 	w_class = 2
