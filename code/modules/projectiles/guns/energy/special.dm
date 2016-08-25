@@ -238,6 +238,7 @@
 	name = "security temperature gun"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	origin_tech = "combat=2;materials=2;powerstorage=1;magnets=1"
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/energy/laser/instakill
 	name = "instakill rifle"
