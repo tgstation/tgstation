@@ -127,7 +127,7 @@
 
 /obj/item/weapon/nullrod/claymore/multiverse
 	name = "extradimensional blade"
-	desc = "Once the harbringer of a interdimensional war, now a dormant souvenir. Still sharp though."
+	desc = "Once the harbringer of a interdimensional war, its sharpness fluctuates wildly. "
 	icon_state = "multiverse"
 	item_state = "multiverse"
 	slot_flags = SLOT_BELT
@@ -361,3 +361,14 @@
 
 /obj/item/weapon/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
+
+
+/obj/item/weapon/nullrod/claymore/multiverse/New() //No copypaste here, no sir.
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/nullrod/claymore/multiverse/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+/obj/item/weapon/nullrod/claymore/multiverse/process()
+	force = rand(0, 30)
