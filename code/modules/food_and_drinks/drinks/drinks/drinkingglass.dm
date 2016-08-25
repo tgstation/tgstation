@@ -516,7 +516,7 @@
 				name = "Hard Cider"
 				desc = "Tastes like autumn."
 			if("triple_citrus")
-				icon_state = "banana" //needs own sprite mine are trash
+				icon_state = "triplecitrus" //needs own sprite mine are trash
 				name = "glass of triple citrus"
 				desc = "A mixture of citrus juices. Tangy, yet smooth."
 			else
