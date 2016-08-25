@@ -120,19 +120,13 @@
 
 	telegraph_duration = 300
 	telegraph_message = "<span class='warning'>The air begins to grow warm.</span>"
-	//telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'	//TODO: Get sounds and sprite overlays
-	//telegraph_overlay = "light_ash"
 
 	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
-	//weather_sound = 'sound/lavaland/ash_storm_start.ogg'
-	//weather_overlay = "ash_storm"
 
 	end_duration = 100
 	telegraph_message = "<span class='notice'>The air seems to be cooling off again.</span>"
-	//end_sound = 'sound/lavaland/ash_storm_end.ogg'
-	//end_overlay = "light_ash"
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai)
