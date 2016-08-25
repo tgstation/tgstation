@@ -328,7 +328,7 @@
 	name = "Death Commando"
 
 	uniform = /obj/item/clothing/under/color/green
-	suit = /obj/item/clothing/suit/space/hardsuit/deathsquad
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/swat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/sechailer/swat

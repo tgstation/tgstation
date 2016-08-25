@@ -1,10 +1,11 @@
-/obj/machinery/modular_computer/console/
+/obj/machinery/modular_computer/console
 	name = "console"
 	desc = "A stationary computer."
 
 	icon = 'icons/obj/modular_console.dmi'
 	icon_state = "console"
-	icon_state_unpowered = "console"
+	icon_state_powered = "console"
+	icon_state_unpowered = "console-off"
 	screen_icon_state_menu = "menu"
 	hardware_flag = PROGRAM_CONSOLE
 	var/console_department = "" // Used in New() to set network tag according to our area.
@@ -12,7 +13,7 @@
 	density = 1
 	base_idle_power_usage = 100
 	base_active_power_usage = 500
-	max_hardware_size = 3
+	max_hardware_size = 4
 	steel_sheet_cost = 10
 	light_strength = 2
 	_max_damage = 300
@@ -21,16 +22,19 @@
 /obj/machinery/modular_computer/console/buildable/New()
 	..()
 	// User-built consoles start as empty frames.
-	qdel(tesla_link)
+	qdel(cpu.recharger)
 	qdel(cpu.network_card)
 	qdel(cpu.hard_drive)
 
 /obj/machinery/modular_computer/console/New()
 	..()
-	cpu.battery_module = null
-	cpu.network_card = new/obj/item/weapon/computer_hardware/network_card/wired(src)
-	tesla_link = new/obj/item/weapon/computer_hardware/tesla_link(src)
-	cpu.hard_drive = new/obj/item/weapon/computer_hardware/hard_drive/super(src) // Consoles generally have better HDDs due to lower space limitations
+	if(cpu.battery_module)
+		qdel(cpu.battery_module)
+
+	cpu.install_component(new /obj/item/weapon/computer_hardware/network_card/wired)
+	cpu.install_component(new /obj/item/weapon/computer_hardware/recharger/APC)
+	cpu.install_component(new /obj/item/weapon/computer_hardware/hard_drive/super) // Consoles generally have better HDDs due to lower space limitations
+
 	var/area/A = get_area(src)
 	// Attempts to set this console's tag according to our area. Since some areas have stuff like "XX - YY" in their names we try to remove that too.
 	if(A && console_department)

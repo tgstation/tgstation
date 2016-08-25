@@ -173,11 +173,11 @@
 	else
 		ui_header = "ntnrc_idle.gif"
 
-/datum/computer_file/program/chatclient/kill_program(forced = 0)
+/datum/computer_file/program/chatclient/kill_program(forced = FALSE)
 	if(channel)
 		channel.remove_client(src)
 		channel = null
-	..(forced)
+	..()
 
 /datum/computer_file/program/chatclient/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 

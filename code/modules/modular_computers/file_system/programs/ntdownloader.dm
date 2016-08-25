@@ -15,7 +15,7 @@
 	var/download_completion = 0 //GQ of downloaded data.
 	var/download_netspeed = 0
 	var/downloaderror = ""
-	var/obj/item/modular_computer/my_computer = null
+	var/obj/item/device/modular_computer/my_computer = null
 
 /datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)
@@ -27,10 +27,10 @@
 		return 0
 
 	// Attempting to download antag only program, but without having emagged computer. No.
-	if(PRG.available_on_syndinet && !computer_emagged)
+	if(PRG.available_on_syndinet && !computer.emagged)
 		return 0
 
-	if(!computer || !computer.hard_drive || !computer.hard_drive.try_store_file(PRG))
+	if(!computer || !computer.hard_drive || !computer.hard_drive.can_store_file(PRG))
 		return 0
 
 	ui_header = "downloader_running.gif"
@@ -50,7 +50,7 @@
 /datum/computer_file/program/ntnetdownload/proc/abort_file_download()
 	if(!downloaded_file)
 		return
-	generate_network_log("Aborted download of file [hacked_download ? "**ENCRYPTED**" : downloaded_file.filename].[downloaded_file.filetype].")
+	generate_network_log("Aborted download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
 	downloaded_file = null
 	download_completion = 0
 	ui_header = "downloader_finished.gif"
@@ -58,7 +58,7 @@
 /datum/computer_file/program/ntnetdownload/proc/complete_file_download()
 	if(!downloaded_file)
 		return
-	generate_network_log("Completed download of file [hacked_download ? "**ENCRYPTED**" : downloaded_file.filename].[downloaded_file.filetype].")
+	generate_network_log("Completed download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
 	if(!computer || !computer.hard_drive || !computer.hard_drive.store_file(downloaded_file))
 		// The download failed
 		downloaderror = "I/O ERROR - Unable to save file. Check whether you have enough free space on your hard drive and whether your hard drive is properly connected. If the issue persists contact your system administrator for assistance."
@@ -101,7 +101,6 @@
 	return 0
 
 /datum/computer_file/program/ntnetdownload/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
 
@@ -113,7 +112,6 @@
 		ui.set_autoupdate(state = 1)
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
-
 	my_computer = computer
 
 	if(!istype(my_computer))
@@ -146,7 +144,7 @@
 			"size" = P.size
 			)))
 		data["hackedavailable"] = 0
-		if(computer_emagged) // If we are running on emagged computer we have access to some "bonus" software
+		if(computer.emagged) // If we are running on emagged computer we have access to some "bonus" software
 			var/list/hacked_programs[0]
 			for(var/S in ntnet_global.available_antag_software)
 				var/datum/computer_file/program/P = S
