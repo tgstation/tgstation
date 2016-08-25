@@ -148,7 +148,8 @@
 				"<span class='notice'>You jump out from the processor!</span>", \
 				"<span class='italics'>You hear chimpering.</span>")
 		return
-	var/obj/item/weapon/reagent_containers/glass/bucket = new(loc)
+	var/obj/bucket = new /obj/item/weapon/reagent_containers/glass/bucket(loc)
+
 	var/datum/reagent/blood/B = new()
 	B.holder = bucket
 	B.volume = 70
@@ -219,6 +220,15 @@
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
+	if(user.a_intent == "grab" && user.pulling && isliving(user.pulling) && isslime(user.pulling) || ismonkey(user.pulling))
+		if(user.grab_state < GRAB_AGGRESSIVE)
+			user << "<span class='warning'>You need a better grip to do that!</span>"
+			return
+		var/mob/living/pushed_mob = user.pulling
+		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
+		pushed_mob.forceMove(src)
+		user.stop_pulling()
+		return
 	if(src.contents.len == 0)
 		user << "<span class='warning'>The processor is empty!</span>"
 		return 1
