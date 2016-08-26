@@ -11,6 +11,11 @@
 	flight_x_offset = 15
 	flight_y_offset = 10
 
+/obj/item/weapon/gun/energy/gun
+	name = "hyper-velocity energy gun"
+	desc = "An advanced version of the energy gun that fires a much more focused beam, resulting in instantaneous travel."
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hitscan, /obj/item/ammo_casing/energy/laser/hitscan)
+
 /obj/item/weapon/gun/energy/gun/mini
 	name = "miniature energy gun"
 	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: stun and kill."

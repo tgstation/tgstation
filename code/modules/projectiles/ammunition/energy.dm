@@ -11,10 +11,18 @@
 	projectile_type = /obj/item/projectile/beam/laser
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/hitscan
+	hitscan = 1
+	delay = 15
+
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 83
 	select_name = "kill"
+
+/obj/item/ammo_casing/energy/lasergun/hitscan
+	hitscan = 1
+	delay = 15
 
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 100
@@ -63,6 +71,10 @@
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
+
+/obj/item/ammo_casing/energy/electrode/hitscan
+	hitscan = 1
+	delay = 20
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
@@ -116,6 +128,10 @@
 	select_name  = "disable"
 	e_cost = 50
 	fire_sound = "sound/weapons/taser2.ogg"
+
+/obj/item/ammo_casing/energy/disabler/hitscan
+	hitscan = 1
+	delay = 10
 
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma

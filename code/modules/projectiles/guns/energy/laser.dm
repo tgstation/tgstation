@@ -10,6 +10,11 @@
 	ammo_x_offset = 1
 	shaded_charge = 1
 
+/obj/item/weapon/gun/energy/laser/hitscan
+	name = "hyper-velocity laser gun"
+	desc = "An advanced laser gun that uses its drawback of having a longer then usual firing cycle to ensure its lasers actually travel at the speed of light."
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/hitscan)
+
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
