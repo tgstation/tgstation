@@ -57,14 +57,26 @@
 	projectile_type = /obj/item/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"
 
+/obj/item/ammo_casing/energy/laser/bluetag/hitscan
+	hitscan = 1
+	delay = 10
+
 /obj/item/ammo_casing/energy/laser/redtag
 	projectile_type = /obj/item/projectile/beam/lasertag/redtag
 	select_name = "redtag"
+
+/obj/item/ammo_casing/energy/laser/redtag/hitscan
+	hitscan = 1
+	delay = 10
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
 	e_cost = 50
 	fire_sound = 'sound/weapons/laser3.ogg'
+
+/obj/item/ammo_casing/energy/xray/hitscan
+	hitscan = 1
+	delay = 30
 
 /obj/item/ammo_casing/energy/electrode
 	projectile_type = /obj/item/projectile/energy/electrode

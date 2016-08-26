@@ -116,6 +116,11 @@
 	pin = null
 	ammo_x_offset = 3
 
+/obj/item/weapon/gun/energy/xray/hitscan
+	name = "hyper-velocity xray laser"
+	desc = "This is the worst idea ever."
+	ammo_type = list(/obj/item/ammo_casing/energy/xray/hitscan)
+
 ////////Laser Tag////////////////////
 
 /obj/item/weapon/gun/energy/laser/bluetag
@@ -130,6 +135,11 @@
 	ammo_x_offset = 2
 	selfcharge = 1
 
+/obj/item/weapon/gun/energy/laser/bluetag/hitscan
+	name = "'advanced' laser tag gun"
+	desc = "Statistics show that having a bullet that travels faster then your enemy's bullet gives you a combat advantage!"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
+
 /obj/item/weapon/gun/energy/laser/redtag
 	name = "laser tag gun"
 	icon_state = "redtag"
@@ -141,3 +151,8 @@
 	pin = /obj/item/device/firing_pin/tag/red
 	ammo_x_offset = 2
 	selfcharge = 1
+
+/obj/item/weapon/gun/energy/laser/redtag/hitscan
+	name = "'advanced' laser tag gun"
+	desc = "Statistics show that having a bullet that travels faster then your enemy's bullet gives you a combat advantage!"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)

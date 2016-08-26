@@ -26,7 +26,7 @@
 	origin_tech = "combat=4"
 	ammo_x_offset = 2
 
-/obj/item/weaopn/gun/energy/gun/advtaser/hitscan
+/obj/item/weapon/gun/energy/gun/advtaser/hitscan
 	name = "hyper-impact taser"
 	desc = "An advanced version of the hybrid taser that uses tesla engine based technology to make discharges instantly hit. This comes at the drawback of higher cooldown cycles."
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hitscan, /obj/item/ammo_casing/energy/disabler/hitscan)
