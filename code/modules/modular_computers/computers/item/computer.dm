@@ -66,8 +66,11 @@
 /obj/item/device/modular_computer/Destroy()
 	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
-	for(var/H in all_components)
-		qdel(H)
+	for(var/H in A_C)
+		var/obj/item/weapon/computer_hardware/CH = A_C
+		if(CH.holder == src)
+			CH.holder = null
+			qdel(CH)
 	return ..()
 
 // Eject ID card from computer, if it has ID slot with card inside.
