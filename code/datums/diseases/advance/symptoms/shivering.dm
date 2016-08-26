@@ -64,7 +64,7 @@ Bonus
 	resistance = -2
 	stage_speed = -4
 	transmittable = 1
-	level = 7
+	level = 5
 	severity = 5
 
 /datum/symptom/freezing/Activate(datum/disease/advance/A)
@@ -73,11 +73,11 @@ Bonus
 		var/mob/living/carbon/M = A.affected_mob
 		switch(A.stage)
 			if(3)
-				M << "<span class='warning'>[pick("You feel cold.", "You feel as if you can't warm up.", "You start shivering.")]</span>"
+				M << "<span class='warning'>[pick("You feel cold.", "You feel as if you can't warm up.", "You shiver.")]</span>"
 				M.emote("shiver")
 
 			if(4,5)
-				M << "<span class='userdanger'>[pick("Your skin starts freezing!", "You feel cold!", "You can't feel your limbs!")]</span>"
+				M << "<span class='warning'>[pick("Your skin freezes!", "You feel extremely cold!")]</span>"
 				M.emote("shiver")
 				Freeze(M, A)
 	return

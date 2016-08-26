@@ -76,7 +76,7 @@ Bonus
 	resistance = -0
 	stage_speed = -1
 	transmittable = -2
-	level = 7
+	level = 8
 	severity = 3
 
 /datum/symptom/asphyxiation/Activate(datum/disease/advance/A)

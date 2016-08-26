@@ -81,7 +81,7 @@ Bonus
 	resistance = -2
 	stage_speed = -2
 	transmittable = -2
-	level = 7
+	level = 8
 	severity = 6
 
 /datum/symptom/alkali/Activate(datum/disease/advance/A)

@@ -10,7 +10,7 @@ Radioactive Metabolism
 	Fatal Level.
 
 Bonus
-	Emits radioactive pulses.
+	The mob randomly emits radioactive pulses.
 
 //////////////////////////////////////
 */
@@ -22,12 +22,12 @@ Bonus
 	resistance = -2
 	stage_speed = 2
 	transmittable = -4
-	level = 7
+	level = 8
 	severity = 6
 
 /datum/symptom/radioactive/Activate(datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(prob(SYMPTOM_ACTIVATION_PROB/2))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(2,3)
@@ -39,5 +39,5 @@ Bonus
 
 /datum/symptom/radioactive/proc/Radpulse(mob/living/M, datum/disease/advance/A)
 	var/get_rad = ((sqrt(20+A.totalStageSpeed()))*10)
-	radiation_pulse(get_turf(src), 1, 4, get_rad, 0)
+	radiation_pulse(get_turf(M), 1, 4, get_rad, 0)
 	return 1

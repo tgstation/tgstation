@@ -60,7 +60,7 @@ Bonus
 	resistance = -2
 	stage_speed = -2
 	transmittable = -2
-	level = 8
+	level = 9
 
 /datum/symptom/aptx/Activate(datum/disease/advance/A)
 	..()
