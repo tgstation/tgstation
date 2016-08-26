@@ -66,8 +66,8 @@
 /obj/item/device/modular_computer/Destroy()
 	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
-	for(var/H in A_C)
-		var/obj/item/weapon/computer_hardware/CH = A_C
+	for(var/H in all_components)
+		var/obj/item/weapon/computer_hardware/CH = H
 		if(CH.holder == src)
 			CH.holder = null
 			qdel(CH)
