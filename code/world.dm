@@ -59,8 +59,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	spawn(10)
 		Master.Setup()
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
+	process_teleport_locs()			//Sets up the wizard teleport locations
 
 	#ifdef MAP_NAME
 	map_name = "[MAP_NAME]"
