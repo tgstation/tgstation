@@ -1574,9 +1574,9 @@ datum/supply_pack
 	cost = 3000
 	special = TRUE
 	contains = list(
-					/obj/machinery/shield_sat,
-					/obj/machinery/shield_sat,
-					/obj/machinery/shield_sat
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield
 					)
 	crate_name= "shield sat crate"
 
@@ -1586,6 +1586,6 @@ datum/supply_pack
 	cost = 5000
 	special = TRUE
 	contains = list(
-					/obj/item/weapon/circuitboard/machine/computer/shield_control
+					/obj/item/weapon/circuitboard/machine/computer/sat_control
 					)
 	crate_name= "shield control board crate"

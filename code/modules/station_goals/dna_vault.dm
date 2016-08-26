@@ -179,7 +179,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		roll_powers(user)
-		ui = new(user, src, ui_key, "dna_vault", name, 250, 200, master_ui, state)
+		ui = new(user, src, ui_key, "dna_vault", name, 350, 400, master_ui, state)
 		ui.open()
 
 
@@ -221,7 +221,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 			. = TRUE
 
 /obj/machinery/dna_vault/proc/check_goal()
-	if(plants.len > plants_max && animals.len > animals_max && dna.len > dna_max)
+	if(plants.len >= plants_max && animals.len >= animals_max && dna.len >= dna_max)
 		completed = TRUE
 
 

@@ -8,6 +8,7 @@
 	var/weight = 1 //In case of multiple goals later.
 	var/required_crew = 10
 	var/list/gamemode_blacklist = list()
+	var/completed = FALSE
 
 /datum/station_goal/proc/send_report()
 	priority_announce("Priority Nanotrasen directive recieved.", "Incoming Priority Message", 'sound/AI/commandreport.ogg')
@@ -22,7 +23,7 @@
 	return "Goal instructions go here"
 
 /datum/station_goal/proc/check_completion()
-	return FALSE
+	return completed
 
 /datum/station_goal/proc/print_result()
 	if(check_completion())
