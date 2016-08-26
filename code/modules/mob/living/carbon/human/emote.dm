@@ -45,10 +45,11 @@
 				m_type = 2
 
 		if ("collapse","collapses")
-			Paralyse(2)
-			adjustStaminaLoss(100) // Hampers abuse against simple mobs, but still leaves it a viable option.
-			message = "<B>[src]</B> collapses!"
-			m_type = 2
+			if(status_flags & CANPARALYSE)	//You can't collapse if you can't actually collapse.
+				Paralyse(2)
+				adjustStaminaLoss(100) // Hampers abuse against simple mobs, but still leaves it a viable option.
+				message = "<B>[src]</B> collapses!"
+				m_type = 2
 
 		if ("cough","coughs")
 			if (miming)

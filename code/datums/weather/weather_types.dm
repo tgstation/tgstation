@@ -126,7 +126,7 @@
 	weather_duration_upper = 1500
 
 	end_duration = 100
-	telegraph_message = "<span class='notice'>The air seems to be cooling off again.</span>"
+	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai)
@@ -147,10 +147,7 @@
 					else
 						randmutg(H)
 					H.domutcheck()
-	if(ismonkey(L) && !L.ckey)
-		L.rad_act(1,1)	//This is here to prevent all the genetics and viro monkeys from collapsing forever and spamming ghosts.
-	else
-		L.rad_act(20,1)
+	L.rad_act(20,1)
 
 /datum/weather/rad_storm/end()
 	if(..())
