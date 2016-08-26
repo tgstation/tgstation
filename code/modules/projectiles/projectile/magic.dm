@@ -181,7 +181,7 @@
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
 		if("robot")
-			var/robot = pick("cyborg","syndiborg","drone","cogscarb")
+			var/robot = pick("cyborg","syndiborg","drone")
 			switch(robot)
 				if("cyborg")
 					new_mob = new /mob/living/silicon/robot(M.loc)
@@ -194,8 +194,6 @@
 					new_mob = new path(M.loc)
 				if("drone")
 					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
-				if("cogscarb")
-					new_mob = new /mob/living/simple_animal/drone/cogscarab(M.loc)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
 				new_mob.invisibility = 0
