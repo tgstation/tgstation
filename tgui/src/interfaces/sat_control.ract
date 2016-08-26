@@ -1,0 +1,16 @@
+{{#if data.notice}}
+  <ui-notice>
+    {{data.notice}}
+  </ui-notice>
+{{/if}}
+<ui-display title='Satellite Network Control' button>
+	{{#each data.satellites}}
+	  <ui-section candystripe nowrap>
+        <div class='content'>#{{id}}</div>
+        <div class='content'>{{mode}}</div>
+        <div class='content'>
+          <ui-button action='toggle' params='{"id": "{{id}}"}'>{{active ? "Deactivate" : "Activate"}}</ui-button>
+        </div>
+      </ui-section>
+	{{/each}}
+</ui-display>
