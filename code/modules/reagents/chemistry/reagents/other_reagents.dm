@@ -1201,9 +1201,9 @@
 	color = "#CEC3C6" // rgb: 206,195,198
 
 /datum/reagent/uranium/uraniumvirusfood
-	name = "decaying uranium gel"
-	id = "uraniumvirusfood"
-	color = "#67ADBA" // rgb: 103,173,186
+	name = "conductive mutagenic agar"
+	id = "goldvirusfood"
+	color = "#DEDE20" // rgb: 222,222,32
 
 /datum/reagent/uranium/uraniumvirusfood/unstable
 	name = "unstable uranium gel"
