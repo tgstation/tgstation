@@ -76,7 +76,6 @@ Bonus
 	level = 9
 	severity = 5
 
-	var/original_siemens
 
 /datum/symptom/tesla/Activate(datum/disease/advance/A)
 	..()
@@ -103,12 +102,3 @@ Bonus
 				M << "<span class='warning'>[pick("You feel charged.", "You feel currents of electricity wash over your skin.", "You feel insulated.")]</span>"
 
 	return
-
-/datum/symptom/tesla/Start(datum/disease/advance/A) //Make the mob immune to shocks, mainly to prevent self-shocking
-	var/mob/living/M = A.affected_mob
-	original_siemens = M.siemens_coeff
-	M.siemens_coeff = 0
-
-/datum/symptom/tesla/End(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
-	M.siemens_coeff = original_siemens
