@@ -180,6 +180,18 @@ var/last_irc_status = 0
 			return "Bad Key"
 		else
 			return ircadminwho()
+	else if("triggerevent" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			for(var/E in SSevent.control)
+				var/datum/round_event_control/v = E
+				if(lowertext(v.name) == lowertext(input["triggerevent"]))
+					v.runEvent()
+					message_admins("[input["sender"]] triggered an event:[v.name] from irc.")
+					log_admin("[input["sender"]] triggered an event:[v.name] from irc.")
+					return "[v.name] activated"
+			return "Unable to match event name."
 
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
