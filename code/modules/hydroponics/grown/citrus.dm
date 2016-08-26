@@ -126,6 +126,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/proc/prime()
 	icon_state = "firelemon_active"
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	sleep(rand(30,60))
 	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
 		if(0 to 30)
 			update_mob()
