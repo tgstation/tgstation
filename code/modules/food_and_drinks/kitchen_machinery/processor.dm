@@ -28,6 +28,23 @@
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
+/obj/item/weapon/circuitboard/machine/processor
+	name = "circuit board (Food Processor)"
+	build_path = /obj/machinery/processor
+
+/obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
+	if(istype(I,/obj/item/weapon/screwdriver))
+		if(build_path == /obj/machinery/processor)
+			name = "circuit board (slime Processor)"
+			build_path = /obj/machinery/processor/slime
+			user << "<span class='notice'>Name protocols successfully updated.</span>"
+		else
+			name = "circuit board (Food Processor)"
+			build_path = /obj/machinery/processor
+			user << "<span class='notice'>Defaulting name protocols.</span>"
+	else
+		return ..()
+
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		rating_amount = B.rating
@@ -131,9 +148,10 @@
 				"<span class='notice'>You jump out from the processor!</span>", \
 				"<span class='italics'>You hear chimpering.</span>")
 		return
-	var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
+	var/obj/bucket = new /obj/item/weapon/reagent_containers/glass/bucket(loc)
+
 	var/datum/reagent/blood/B = new()
-	B.holder = bucket_of_blood
+	B.holder = bucket
 	B.volume = 70
 	//set reagent data
 	B.data["donor"] = O
@@ -146,9 +164,9 @@
 
 	if(O.resistances&&O.resistances.len)
 		B.data["resistances"] = O.resistances.Copy()
-	bucket_of_blood.reagents.reagent_list += B
-	bucket_of_blood.reagents.update_total()
-	bucket_of_blood.on_reagent_change()
+	bucket.reagents.reagent_list += B
+	bucket.reagents.update_total()
+	bucket.on_reagent_change()
 	//bucket_of_blood.reagents.handle_reactions() //blood doesn't react
 	..()
 
@@ -202,6 +220,15 @@
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
+	if(user.a_intent == "grab" && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
+		if(user.grab_state < GRAB_AGGRESSIVE)
+			user << "<span class='warning'>You need a better grip to do that!</span>"
+			return
+		var/mob/living/pushed_mob = user.pulling
+		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
+		pushed_mob.forceMove(src)
+		user.stop_pulling()
+		return
 	if(src.contents.len == 0)
 		user << "<span class='warning'>The processor is empty!</span>"
 		return 1
@@ -215,7 +242,7 @@
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
-			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0 // DEAR GOD THIS BURNS MY EYES HAVE YOU EVER LOOKED IN AN ENGLISH DICTONARY BEFORE IN YOUR LIFE AAAAAAAAAAAAAAAAAAAAA - Iamgoofball
+			log_admin("DEBUG: [O] in processor hasnt got a suitable recipe. How did it get in there? Please report it immediatly!!!")
 			continue
 		total_time += P.time
 	var/offset = prob(50) ? -2 : 2
@@ -249,3 +276,15 @@
 		M.loc = src.loc
 	return
 
+/obj/machinery/processor/slime
+	name = "Slime processor"
+	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
+
+/obj/machinery/processor/slime/New()
+	..()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor/slime(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/processor/slime
+	name = "circuit board (Slime Processor)"
+	build_path = /obj/machinery/processor/slime
