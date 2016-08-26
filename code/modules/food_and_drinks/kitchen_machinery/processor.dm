@@ -220,7 +220,7 @@
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
-	if(user.a_intent == "grab" && user.pulling && isliving(user.pulling) && isslime(user.pulling) || ismonkey(user.pulling))
+	if(user.a_intent == "grab" && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
