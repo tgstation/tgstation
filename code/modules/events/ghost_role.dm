@@ -14,10 +14,11 @@
 	processing = FALSE
 
 	var/status = spawn_role()
-	if((status == WAITING_FOR_SOMETHING) && (retry < 2))
+	if((status == WAITING_FOR_SOMETHING) && (retry < 3))
+		var/waittime = 300 * (2^retry)
 		message_admins("The event will not spawn a [role_name] until certain \
-			conditions are met. Waiting 30s and then retrying.")
-		spawn(300)
+			conditions are met. Waiting [waittime/10]s and then retrying.")
+		spawn(waittime)
 			// I hope this doesn't end up running out of stack space
 			try_spawning(0,++retry)
 		return
