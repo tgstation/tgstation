@@ -1,5 +1,5 @@
 
-//Bartender //it's chef what the fuck is your problem?
+//Chef
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
@@ -8,7 +8,6 @@
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	put_on_delay = 10
-	pockets = /obj/item/weapon/storage/internal/pocket/small
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)

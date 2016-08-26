@@ -64,7 +64,6 @@
 	burn_state = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
-	pockets = /obj/item/weapon/storage/internal/pocket/tiny // Honk!
 
 /obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
