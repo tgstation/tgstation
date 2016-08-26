@@ -61,7 +61,7 @@ var/list/highlander_claymores = list()
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved", "gored") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
-	var/announced = FALSE //If we've announced our winner
+	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
 
 /obj/item/weapon/claymore/highlander/New()
 	..()
@@ -79,16 +79,10 @@ var/list/highlander_claymores = list()
 /obj/item/weapon/claymore/highlander/process()
 	if(isliving(loc))
 		var/mob/living/L = loc
-		L.SetStunned(0)
-		L.SetWeakened(0)
-		L.SetParalysis(0)
 		if(L.stat == DEAD)
 			L << "<span class='userdanger'>You are unworthy.</span>"
 			L.visible_message("<span class='warning'>[L] explodes in a shower of gore!</span>")
-			var/obj/item/organ/brain/B = L.getorgan(/obj/item/organ/brain)
-			L.gib()
-			if(B)
-				qdel(B) //NO SECOND CHANCES
+			L.gib(TRUE)
 		else
 			if(announced)
 				return
@@ -99,7 +93,15 @@ var/list/highlander_claymores = list()
 			world << "<span class='userdanger'>[L.real_name] IS THE ONLY ONE LEFT STANDING!</span>"
 			world << sound('sound/misc/highlander_only_one.ogg')
 			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING! You feel your bonds vanish - you can freely drop or sheathe your [name]! (The kilt stays, though.)</span>"
-			flags = CONDUCT
+			flags &= ~NODROP
+
+/obj/item/weapon/claymore/highlander/pickup(mob/living/user)
+	user << "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>"
+	user.add_stun_absorption("highlander", INFINITY, 1, "is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
+
+/obj/item/weapon/claymore/highlander/dropped(mob/living/user)
+	user << "<span class='danger'>The power of Scotland fades away! You are no longer shielded from stuns.</span>"
+	user.add_stun_absorption("highlander", 0.1, 1, "is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
 
 /obj/item/weapon/claymore/highlander/examine(mob/user)
 	..()
@@ -121,7 +123,7 @@ var/list/highlander_claymores = list()
 /obj/item/weapon/claymore/highlander/IsReflect()
 	return 1 //YOU THINK YOUR PUNY LASERS CAN STOP ME?
 
-/obj/item/weapon/claymore/highlander/proc/add_notch(mob/living/user)
+/obj/item/weapon/claymore/highlander/proc/add_notch(mob/living/user) //DYNAMIC CLAYMORE PROGRESSION SYSTEMS - THIS IS THE FUTURE
 	notches++
 	force++
 	var/new_name = name

@@ -34,7 +34,6 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
 		H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), slot_head)
-		H.equip_to_slot_or_del(new /obj/item/weapon/claymore/highlander(H), slot_l_hand)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), slot_l_store)
 
@@ -47,6 +46,10 @@
 		W.flags |= NODROP
 		W.update_label(H.real_name)
 		H.equip_to_slot_or_del(W, slot_wear_id)
+
+		var/obj/item/weapon/claymore/highlander/H1 = new(H)
+		H.put_in_hands(H1)
+		H1.pickup(H)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 	log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
