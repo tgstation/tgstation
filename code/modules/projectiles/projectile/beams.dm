@@ -9,6 +9,9 @@
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	flag = "laser"
 	eyeblur = 2
+	muzzle_type = /obj/effect/overlay/temp/projectile/muzzle
+	tracer_type	= /obj/effect/overlay/temp/projectile/tracer
+	impact_type = /obj/effect/overlay/temp/projectile/impact
 
 /obj/item/projectile/beam/laser
 
@@ -16,6 +19,9 @@
 	name = "heavy laser"
 	icon_state = "heavylaser"
 	damage = 40
+	muzzle_type = /obj/effect/overlay/temp/projectile/muzzle/heavy
+	tracer_type	= /obj/effect/overlay/temp/projectile/tracer/heavy
+	impact_type = /obj/effect/overlay/temp/projectile/impact/heavy
 
 /obj/item/projectile/beam/laser/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -44,6 +50,9 @@
 	irradiate = 30
 	range = 15
 	forcedodge = 1
+	muzzle_type = /obj/effect/overlay/temp/projectile/muzzle/xray
+	tracer_type	= /obj/effect/overlay/temp/projectile/tracer/xray
+	impact_type = /obj/effect/overlay/temp/projectile/impact/xray
 
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
@@ -53,12 +62,18 @@
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
+	muzzle_type = /obj/effect/overlay/temp/projectile/muzzle/disable
+	tracer_type	= /obj/effect/overlay/temp/projectile/tracer/disable
+	impact_type = /obj/effect/overlay/temp/projectile/impact/disable
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
 	luminosity = 2
+	muzzle_type = /obj/effect/overlay/temp/projectile/muzzle/pulse
+	tracer_type	= /obj/effect/overlay/temp/projectile/tracer/pulse
+	impact_type = /obj/effect/overlay/temp/projectile/impact/pulse
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -118,6 +133,9 @@
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)
+	muzzle_type = /obj/effect/overlay/temp/projectile/muzzle/blue
+	tracer_type	= /obj/effect/overlay/temp/projectile/tracer/blue
+	impact_type = /obj/effect/overlay/temp/projectile/impact/blue
 
 /obj/item/projectile/beam/instakill
 	name = "instagib laser"

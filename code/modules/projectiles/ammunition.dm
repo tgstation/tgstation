@@ -16,6 +16,10 @@
 	var/randomspread = 0						//Randomspread for automatics
 	var/delay = 0								//Delay for energy weapons
 	var/click_cooldown_override = 0				//Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
+	var/hitscan = 0								//Should the projectile be hitscanning?
+	var/muzzle_type
+	var/tracer_type
+	var/impact_type
 
 /obj/item/ammo_casing/New()
 	..()

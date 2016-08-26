@@ -1643,6 +1643,7 @@
 #include "code\modules\procedural_mapping\mapGenerators\shuttle.dm"
 #include "code\modules\procedural_mapping\mapGenerators\syndicate.dm"
 #include "code\modules\projectiles\ammunition.dm"
+#include "code\modules\projectiles\effects.dm"
 #include "code\modules\projectiles\firing.dm"
 #include "code\modules\projectiles\gun.dm"
 #include "code\modules\projectiles\pins.dm"

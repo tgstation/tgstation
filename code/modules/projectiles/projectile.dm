@@ -36,7 +36,7 @@
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
-	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
+	var/range = 100 //This will de-increment every step. When 0, it will delete the projectile.
 		//Effects
 	var/stun = 0
 	var/weaken = 0
@@ -51,7 +51,22 @@
 	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 
-/obj/item/projectile/New()
+		//HITSCAN
+	var/hitscan = 0
+
+	var/muzzle_type = /obj/effect/overlay/temp/projectile/muzzle
+	var/tracer_type	= /obj/effect/overlay/temp/projectile/tracer
+	var/impact_type = /obj/effect/overlay/temp/projectile/impact
+	var/firstmove = 2
+
+/obj/item/projectile/New(var/obj/item/ammo_casing/AC)
+	hitscan = AC.hitscan
+	if(AC.muzzle_type)
+		muzzle_type = AC.muzzle_type
+	if(AC.tracer_type)
+		tracer_type = AC.tracer_type
+	if(AC.impact_type)
+		impact_type = AC.impact_type
 	permutated = list()
 	return ..()
 
@@ -61,6 +76,14 @@
 		on_range()
 
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
+	if(hitscan)
+		var/matrix/M = new
+		M.Turn(Angle)
+		if(ispath(impact_type))
+			var/obj/effect/overlay/temp/projectile/impact/I = new impact_type(src.loc)
+			I.set_transform(M)
+			I.pixel_x = src.pixel_x
+			I.pixel_y = src.pixel_y
 	qdel(src)
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
@@ -91,6 +114,7 @@
 
 	add_logs(firer, L, "shot", src, reagent_note)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
+
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -143,10 +167,11 @@
 		set waitfor = 0
 		var/next_run = world.time
 		while(loc)
-			if(paused)
-				next_run = world.time
-				sleep(1)
-				continue
+			if(!hitscan)
+				if(paused)
+					next_run = world.time
+					sleep(1)
+					continue
 
 			if((!( current ) || loc == current))
 				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
@@ -158,6 +183,20 @@
 			var/matrix/M = new
 			M.Turn(Angle)
 			transform = M
+			if(hitscan)
+				if(firstmove == 1)
+					if(ispath(muzzle_type))
+						var/obj/effect/overlay/temp/projectile/muzzle/P = new muzzle_type(src.loc)
+						P.set_transform(M)
+						P.pixel_x = src.pixel_x
+						P.pixel_y = src.pixel_y
+						firstmove = -1
+				else if (firstmove == -1)
+					if(ispath(tracer_type))
+						var/obj/effect/overlay/temp/projectile/tracer/T = new tracer_type(src.loc)
+						T.set_transform(M)
+						T.pixel_x = src.pixel_x
+						T.pixel_y = src.pixel_y
 
 			var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
 			var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
@@ -185,8 +224,9 @@
 				new_y--
 
 			step_towards(src, locate(new_x, new_y, z))
+			var/delay = 0
 			next_run += max(world.tick_lag, speed)
-			var/delay = next_run - world.time
+			delay = next_run - world.time
 			if(delay <= world.tick_lag*2)
 				pixel_x = pixel_x_offset
 				pixel_y = pixel_y_offset
@@ -198,8 +238,11 @@
 					if(!(original in permutated))
 						Bump(original, 1)
 			Range()
-			if (delay > 0)
-				sleep(delay)
+			if(!hitscan)
+				if (delay > 0)
+					sleep(delay)
+			if(firstmove > 0)
+				firstmove--
 
 	else //old projectile system
 		set waitfor = 0
