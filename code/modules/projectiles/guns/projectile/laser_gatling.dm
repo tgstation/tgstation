@@ -97,7 +97,7 @@
 
 /obj/item/weapon/gun/projectile/minigun
 	name = "laser gatling gun"
-	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
+	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source or a gatling fusion core to use."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	item_state = "minigun"
