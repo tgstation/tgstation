@@ -79,3 +79,8 @@
 	icon_state = "m1911"
 	item_state = "gun"
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
+
+/obj/item/weapon/gun/energy/pulse/pistol/m1911/hitscan
+	name = "hyper-velocity M1911-P"
+	desc = "The weapon of a badmin."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse/hitscan, /obj/item/ammo_casing/energy/electrode/hitscan, /obj/item/ammo_casing/energy/laser/hitscan)
