@@ -558,7 +558,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant that cleans up clean blood stains and remove DNA evidence much more faser than regular soup.\
-			Use this to hide murder and make forensics useless and can also drop it to make people slip. 
+			Use this to hide murder and make forensics useless or drop it to make people slip. 
 
 	item = /obj/item/weapon/soap/syndie
 	cost = 1
