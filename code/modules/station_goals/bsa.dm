@@ -18,6 +18,8 @@
 	P.special_enabled = TRUE
 
 /datum/station_goal/bluespace_cannon/check_completion()
+	if(..())
+		return TRUE
 	var/obj/machinery/bsa/full/B = locate()
 	if(B && !B.stat)
 		return TRUE

@@ -21,6 +21,8 @@
 	P.special_enabled = TRUE
 
 /datum/station_goal/station_shield/check_completion()
+	if(..())
+		return TRUE
 	var/list/coverage = list()
 	for(var/obj/machinery/satellite/meteor_shield/A in machines)
 		if(!A.active || A.z != ZLEVEL_STATION)

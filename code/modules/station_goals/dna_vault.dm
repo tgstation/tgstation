@@ -49,6 +49,8 @@
 	P.special_enabled = TRUE
 
 /datum/station_goal/dna_vault/check_completion()
+	if(..())
+		return TRUE
 	for(var/obj/machinery/dna_vault/V in machines)
 		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna >= human_count)
 			return TRUE
@@ -241,7 +243,6 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 			if(!dna[ui])
 				uploaded++
 				dna[ui] = 1
-		P.clear_data()
 		check_goal()
 		user << "<span class='notice'>[uploaded] new datapoints uploaded.</span>"
 	else
