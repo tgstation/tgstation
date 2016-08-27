@@ -28,6 +28,7 @@
 	item_state = "sabre"
 	flags = CONDUCT
 	force = 15
+	dismemberment_chance = 45
 	throwforce = 10
 	w_class = 4
 	block_chance = 50
