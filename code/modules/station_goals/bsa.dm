@@ -41,7 +41,7 @@
 		M.buffer = src
 		user << "<span class='notice'>You store linkage information in [W]'s buffer.</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/bsa/front
 	name = "Bluespace Artillery Bore"
@@ -54,11 +54,11 @@
 		M.buffer = src
 		user << "<span class='notice'>You store linkage information in [W]'s buffer.</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/bsa/middle
 	name = "Bluespace Artillery Fusor"
-	desc = "Contents classifed by Nanotrasen Naval Command. Needs to be linked with other parts using multitool."
+	desc = "Contents classifed by Nanotrasen Naval Command. Needs to be linked with the other BSA parts using multitool."
 	icon_state = "fuel_chamber"
 	var/obj/machinery/bsa/back/back 
 	var/obj/machinery/bsa/front/front
@@ -76,7 +76,7 @@
 				M.buffer = null
 				user << "<span class='notice'>You link [src] with [front].</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/bsa/middle/proc/check_completion()
 	if(!front || !back)

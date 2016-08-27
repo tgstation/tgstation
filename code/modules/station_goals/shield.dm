@@ -63,7 +63,6 @@
 	for(var/obj/machinery/satellite/S in machines)
 		if(S.id == id && S.z == z)
 			S.toggle()
-	return
 
 /obj/machinery/computer/sat_control/ui_data()
 	var/list/data = list()
@@ -114,7 +113,7 @@
 	if(istype(W, /obj/item/device/multitool))
 		user << "// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]"
 	else
-		..()
+		return ..()
 
 /obj/machinery/satellite/meteor_shield
 	name = "Meteor Shield Satellite"

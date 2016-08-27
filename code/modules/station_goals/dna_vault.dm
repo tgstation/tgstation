@@ -2,7 +2,7 @@
 // Cargo can order DNA samplers + DNA vault boards
 // DNA vault requires x animals ,y plants, z human dna
 // DNA vaults require high tier stock parts and cold
-// After completion each crewmember can recieve single upgrade chosen out of 2 for the mob.
+// After completion each crewmember can receive single upgrade chosen out of 2 for the mob.
 #define VAULT_TOXIN "Toxin Adaptation"
 #define VAULT_NOBREATH "Lung Enhancement"
 #define VAULT_FIREPROOF "Thermal Regulation"
@@ -246,7 +246,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 		check_goal()
 		user << "<span class='notice'>[uploaded] new datapoints uploaded.</span>"
 	else
-		..()
+		return ..()
 
 
 
@@ -274,4 +274,3 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 			H << "<span class='notice'>Your feel tough.</span>"
 			S.armor = 30
 	power_lottery[H] = list()
-	return

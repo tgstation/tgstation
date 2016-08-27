@@ -11,7 +11,7 @@
 	var/completed = FALSE
 
 /datum/station_goal/proc/send_report()
-	priority_announce("Priority Nanotrasen directive recieved.", "Incoming Priority Message", 'sound/AI/commandreport.ogg')
+	priority_announce("Priority Nanotrasen directive received.", "Incoming Priority Message", 'sound/AI/commandreport.ogg')
 	print_command_report(get_report(),"Nanotrasen Directive [pick(phonetic_alphabet)] \Roman[rand(1,50)]")
 	on_report()
 
