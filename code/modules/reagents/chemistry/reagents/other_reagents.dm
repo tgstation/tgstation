@@ -1279,11 +1279,10 @@ datum/reagent/romerol
 	color = "#78FFF0"
 	metabolization_rate = 5
 
-/datum/reagent/hormone/on_mob_delete(mob/m)
-	if(method == INJECT && iscarbon(m))
-		if(m.gender == FEMALE)
-			m.gender = MALE
-		else
-			m.gender = FEMALE
-		m.regenerate_icons()
+/datum/reagent/hormone/on_mob_delete(mob/living/carbon/M)
+	if(M.gender == FEMALE)
+		M.gender = MALE
+	else
+		M.gender = FEMALE
+	M.regenerate_icons()
 	..()
