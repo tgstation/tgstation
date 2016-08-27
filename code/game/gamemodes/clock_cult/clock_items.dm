@@ -752,6 +752,7 @@
 	item_state = "ratvarian_spear"
 	force = 17 //Extra damage is dealt to silicons in attack()
 	throwforce = 40
+	dismemberment_chance = 51
 	sharpness = IS_SHARP_ACCURATE
 	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -767,6 +768,7 @@
 /obj/item/clockwork/ratvarian_spear/proc/update_force()
 	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
 		force = 30
+		dismemberment_chance = 90
 		throwforce = 50
 	else
 		force = initial(force)
