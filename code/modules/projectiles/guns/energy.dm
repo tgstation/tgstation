@@ -29,6 +29,14 @@
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
+	update_ammo_types()
+	if(selfcharge)
+		START_PROCESSING(SSobj, src)
+	update_icon()
+	return
+
+
+/obj/item/weapon/gun/energy/proc/update_ammo_types()
 	var/obj/item/ammo_casing/energy/shot
 	for (var/i = 1, i <= ammo_type.len, i++)
 		var/shottype = ammo_type[i]
@@ -37,10 +45,6 @@
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
-	if(selfcharge)
-		START_PROCESSING(SSobj, src)
-	update_icon()
-	return
 
 /obj/item/weapon/gun/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)

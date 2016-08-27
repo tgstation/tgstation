@@ -13,6 +13,7 @@
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/background_icon_state = "bg_default"
+	var/buttontooltipstyle = ""
 
 	var/icon_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
@@ -23,6 +24,7 @@
 	button = new
 	button.linked_action = src
 	button.name = name
+	button.actiontooltipstyle = buttontooltipstyle
 	if(desc)
 		button.desc = desc
 
@@ -189,6 +191,7 @@
 
 /datum/action/item_action/clock
 	background_icon_state = "bg_clock"
+	buttontooltipstyle = "clockcult"
 
 /datum/action/item_action/clock/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
@@ -303,6 +306,7 @@
 	..()
 
 /datum/action/item_action/toggle_research_scanner/ApplyIcon(obj/screen/movable/action_button/current_button)
+	current_button.cut_overlays()
 	if(button_icon && button_icon_state)
 		var/image/img = image(button_icon, current_button, "scan_mode")
 		current_button.add_overlay(img)
@@ -409,3 +413,15 @@
 	if(target && procname)
 		call(target, procname)(usr)
 	return 1
+
+//Stickmemes
+/datum/action/item_action/stickmen
+	name = "Summon Stick Minions"
+	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	button_icon_state = "art_summon"
+
+//surf_ss13
+/datum/action/item_action/bhop
+	name = "Activate Jump Boots"
+	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
+	button_icon_state = "jetboot"

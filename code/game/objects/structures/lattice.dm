@@ -16,8 +16,6 @@
 
 /obj/structure/lattice/New()
 	..()
-	if(!(istype(src.loc, /turf/open/space)))
-		qdel(src)
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
 			qdel(LAT)

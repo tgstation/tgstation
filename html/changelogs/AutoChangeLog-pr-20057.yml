@@ -1,0 +1,5 @@
+author: "kilkun"
+delete-after: True
+changes: 
+  - rscadd: "Adds a shielded deathsquad hardsuit. it has four charges and recharges after 15 seconds of not being shot (compared to the syndicate 3 charges and 20 second recharge rate)"
+  - tweak: "All death commandos now spawn with this new hardsuit. The previous hardsuit was not removed."

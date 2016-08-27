@@ -66,7 +66,7 @@
 			take_damage(rand(25,75), BRUTE, 0)
 
 /obj/structure/window/blob_act(obj/effect/blob/B)
-	shatter()
+	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/window/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
@@ -74,12 +74,11 @@
 		shard.color = NARSIE_WINDOW_COLOUR
 
 /obj/structure/window/ratvar_act()
-	if(prob(20))
-		if(!fulltile)
-			new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
-		else
-			new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
-		qdel(src)
+	if(!fulltile)
+		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+	else
+		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+	qdel(src)
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -157,9 +156,12 @@
 	attack_generic(user, 15)
 
 /obj/structure/window/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper)
+	if(!M.melee_damage_upper && !M.obj_damage)
 		return
-	attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
+	if(M.obj_damage)
+		attack_generic(M, M.obj_damage, M.melee_damage_type)
+	else
+		attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
 
 
 /obj/structure/window/attack_slime(mob/living/simple_animal/slime/user)

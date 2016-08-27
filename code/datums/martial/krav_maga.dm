@@ -152,26 +152,30 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 
 //Krav Maga Gloves
 
-/obj/item/clothing/gloves/color/black/krav_maga
-	can_be_cut = 0
+/obj/item/clothing/gloves/krav_maga
 	var/datum/martial_art/krav_maga/style = new
 
-/obj/item/clothing/gloves/color/black/krav_maga/equipped(mob/user, slot)
+/obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
 	if(slot == slot_gloves)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 
-/obj/item/clothing/gloves/color/black/krav_maga/dropped(mob/user)
+/obj/item/clothing/gloves/krav_maga/dropped(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(slot_gloves) == src)
 		style.remove(H)
 
-/obj/item/clothing/gloves/color/black/krav_maga/sec//more obviously named, given to sec
+/obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
 	name = "krav maga gloves"
 	desc = "These gloves can teach you to perform Krav Maga using nanochips."
 	icon_state = "fightgloves"
 	item_state = "fightgloves"
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	burn_state = FIRE_PROOF

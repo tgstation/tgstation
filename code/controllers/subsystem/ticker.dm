@@ -31,6 +31,11 @@ var/datum/subsystem/ticker/ticker
 	var/list/syndicate_coalition = list()	//list of traitor-compatible factions
 	var/list/factions = list()				//list of all factions
 	var/list/availablefactions = list()		//list of factions with openings
+	var/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, \
+	SCRIPTURE_SCRIPT = FALSE, \
+	SCRIPTURE_APPLICATION = FALSE, \
+	SCRIPTURE_REVENANT = FALSE, \
+	SCRIPTURE_JUDGEMENT = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 
@@ -63,15 +68,14 @@ var/datum/subsystem/ticker/ticker
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
 		syndicate_code_response	= generate_code_phrase()
-	setupFactions()
 	..()
 
 /datum/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = config.lobby_countdown * 10
-			world << "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>"
-			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
+			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
+			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
 
 		if(GAME_STATE_PREGAME)
@@ -104,6 +108,7 @@ var/datum/subsystem/ticker/ticker
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
+			scripture_states = scripture_unlock_alert(scripture_states)
 
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -165,8 +170,8 @@ var/datum/subsystem/ticker/ticker
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
 		modes = sortList(modes)
-		world << "<B>The current game mode is - Secret!</B>"
-		world << "<B>Possibilities:</B> [english_list(modes)]"
+		world << "<b>The gamemode is: secret!\n\
+		Possibilities:</B> [english_list(modes)]"
 	else
 		mode.announce()
 
@@ -446,6 +451,8 @@ var/datum/subsystem/ticker/ticker
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
 		world.log << dellog
 
+	//Collects persistence features
+	SSpersistence.CollectData()
 	return 1
 
 /datum/subsystem/ticker/proc/send_tip_of_the_round()

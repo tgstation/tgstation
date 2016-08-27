@@ -33,7 +33,7 @@
 	icon_state = "queen_finder"
 	name = "queen sense"
 	desc = "Allows you to sense the general direction of your Queen."
-	screen_loc = ui_alienplasmadisplay
+	screen_loc = ui_alien_queen_finder
 
 /datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner)
 	..()
@@ -116,6 +116,7 @@
 
 	alien_plasma_display = new /obj/screen/alien/plasma_display()
 	infodisplay += alien_plasma_display
+
 	if(!istype(mymob, /mob/living/carbon/alien/humanoid/royal/queen))
 		alien_queen_finder = new /obj/screen/alien/alien_queen_finder
 		infodisplay += alien_queen_finder

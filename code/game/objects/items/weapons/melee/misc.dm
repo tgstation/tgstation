@@ -13,7 +13,7 @@
 	w_class = 3
 	origin_tech = "combat=5"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
-	hitsound = 'sound/weapons/slash.ogg' //pls replace
+	hitsound = 'sound/weapons/chainhit.ogg'
 	materials = list(MAT_METAL = 1000)
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
@@ -21,6 +21,27 @@
 		return (OXYLOSS)
 
 
+/obj/item/weapon/melee/sabre
+	name = "officer's sabre"
+	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
+	icon_state = "sabre"
+	item_state = "sabre"
+	flags = CONDUCT
+	force = 15
+	throwforce = 10
+	w_class = 4
+	block_chance = 50
+	armour_penetration = 75
+	sharpness = IS_SHARP
+	origin_tech = "combat=5"
+	attack_verb = list("lunged at", "stabbed")
+	hitsound = 'sound/weapons/rapierhit.ogg'
+	materials = list(MAT_METAL = 1000)
+
+/obj/item/weapon/melee/sabre/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight
+	return ..()
 
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"

@@ -10,7 +10,7 @@
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
-	pressure_resistance = INFINITY
+
 	burn_state = LAVA_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
@@ -49,6 +49,7 @@
 	var/stamina = 0
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
+	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -146,7 +147,7 @@
 				next_run = world.time
 				sleep(1)
 				continue
-			
+
 			if((!( current ) || loc == current))
 				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 
@@ -199,7 +200,7 @@
 			Range()
 			if (delay > 0)
 				sleep(delay)
-			
+
 	else //old projectile system
 		set waitfor = 0
 		while(loc)
@@ -227,3 +228,7 @@
 /obj/item/projectile/proc/dumbfire(var/dir)
 	current = get_ranged_target_turf(src, dir, world.maxx)
 	fire()
+
+
+/obj/item/projectile/experience_pressure_difference()
+	return

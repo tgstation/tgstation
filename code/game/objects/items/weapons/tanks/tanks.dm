@@ -92,12 +92,12 @@
 	user << "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/weapon/tank/blob_act(obj/effect/blob/B)
-	if(prob(50))
-		var/turf/location = src.loc
-		if (!( istype(location, /turf) ))
+	if(B && B.loc == loc)
+		var/turf/location = get_turf(src)
+		if(!location)
 			qdel(src)
 
-		if(src.air_contents)
+		if(air_contents)
 			location.assume_air(air_contents)
 
 		qdel(src)

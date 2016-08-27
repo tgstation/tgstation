@@ -1,3 +1,4 @@
+#define MEDAL_PREFIX "Drake"
 /*
 
 ASH DRAKE
@@ -35,38 +36,26 @@ Difficulty: Medium
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/dragon.dmi'
-	faction = list("mining")
-	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
-	luminosity = 3
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
-	flying = 1
-	mob_size = MOB_SIZE_LARGE
 	pixel_x = -16
-	aggro_vision_range = 18
-	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
-	var/anger_modifier = 0
-	var/obj/item/device/gps/internal
 	var/swooping = 0
 	var/swoop_cooldown = 0
+	medal_type = MEDAL_PREFIX
+	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/New()
 	..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
-	qdel(internal)
-	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == 3)
@@ -79,13 +68,20 @@ Difficulty: Medium
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
-	if(swooping)
-		return
-	else
+	if(!swooping)
 		..()
-		if(isliving(target))
-			var/mob/living/L = target
-			devour(L)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
+	if(!swooping)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Move()
+	if(!swooping)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
+	if(!swooping)
+		..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -139,20 +135,21 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
+	if(swooping)
+		fire_rain()
+		return
 
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth/2)
-			swoop_attack(1)
+			addtimer(src, "swoop_attack", 0, FALSE, 1)
 		else
 			fire_rain()
 
-	else if(prob(10+anger_modifier) && !client && !swooping)
+	else if(prob(10+anger_modifier) && !client)
 		if(health > maxHealth/2)
-			swoop_attack()
+			addtimer(src, "swoop_attack", 0)
 		else
-			swoop_attack()
-			swoop_attack()
-			swoop_attack()
+			addtimer(src, "triple_swoop", 0)
 	else
 		fire_walls()
 
@@ -163,19 +160,17 @@ Difficulty: Medium
 			PoolOrNew(/obj/effect/overlay/temp/target, turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
-	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
-	if(prob(50))
-		attack_dirs = list(NORTH,WEST,SOUTH,EAST)
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
-	for(var/d in attack_dirs)
+	for(var/d in cardinal)
 		addtimer(src, "fire_wall", 0, FALSE, d)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(d)
-	var/turf/E = get_edge_target_turf(src, d)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
+	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
-	for(var/turf/open/J in getline(src,E))
-		if(!range)
+	var/turf/previousturf = get_turf(src)
+	for(var/turf/J in getline(src,E))
+		if(!range || !previousturf.CanAtmosPass(J))
 			break
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)
@@ -184,7 +179,13 @@ Difficulty: Medium
 			if(L != src)
 				L.adjustFireLoss(20)
 				L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+		previousturf = J
 		sleep(1)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
+	swoop_attack()
+	swoop_attack()
+	swoop_attack()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
 	if(stat || swooping)
@@ -217,7 +218,7 @@ Difficulty: Medium
 		tturf = get_turf(src)
 	forceMove(tturf)
 	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, tturf)
-	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
+	animate(src, pixel_x = initial(pixel_x), pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
@@ -261,3 +262,7 @@ Difficulty: Medium
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
 
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
+	return
+
+#undef MEDAL_PREFIX

@@ -34,7 +34,8 @@ other types of metals and chemistry for reagents).
 	var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
-	var/build_path = ""					//The file path of the object that gets created
+	var/build_path = null				//The file path of the object that gets created
+	var/list/make_reagents = list()			//Reagents produced. Format: "id" = amount. Currently only supported by the biogenerator.
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
 	var/maxstack = 1
@@ -158,36 +159,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
-/datum/design/modkit
-	name = "Modification Kit"
-	desc = "A device which allows kinetic accelerators to be wielded with one hand, and by any organism."
-	id = "modkit"
-	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
-	build_path = /obj/item/modkit
-	category = list("Mining Designs")
-
-/datum/design/superaccelerator
-	name = "Super-Kinetic Accelerator"
-	desc = "An upgraded version of the proto-kinetic accelerator, with superior damage, speed and range."
-	id = "superaccelerator"
-	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
-	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/super
-	category = list("Mining Designs")
-
-/datum/design/hyperaccelerator
-	name = "Hyper-Kinetic Accelerator"
-	desc = "An upgraded version of the proto-kinetic accelerator, with even more superior damage, speed and range."
-	id = "hyperaccelerator"
-	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
-	category = list("Mining Designs")
-
 /datum/design/superresonator
 	name = "Upgraded Resonator"
 	desc = "An upgraded version of the resonator that allows more fields to be active at once."
@@ -197,6 +168,67 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1500, MAT_SILVER = 1000, MAT_URANIUM = 1000)
 	build_path = /obj/item/weapon/resonator/upgraded
 	category = list("Mining Designs")
+
+/datum/design/trigger_guard_mod
+	name = "Kinetic Accelerator Trigger Guard Mod"
+	desc = "A device which allows kinetic accelerators to be wielded by any organism."
+	id = "triggermod"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	build_path = /obj/item/borg/upgrade/modkit/trigger_guard
+	category = list("Mining Designs")
+
+/datum/design/damage_mod
+	name = "Kinetic Accelerator Damage Mod"
+	desc = "A device which allows kinetic accelerators to deal more damage."
+	id = "damagemod"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	build_path = /obj/item/borg/upgrade/modkit/damage
+	category = list("Mining Designs", "Cyborg Upgrade Modules")
+
+/datum/design/cooldown_mod
+	name = "Kinetic Accelerator Cooldown Mod"
+	desc = "A device which decreases the cooldown of a Kinetic Accelerator."
+	id = "cooldownmod"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	build_path = /obj/item/borg/upgrade/modkit/cooldown
+	category = list("Mining Designs", "Cyborg Upgrade Modules")
+
+/datum/design/range_mod
+	name = "Kinetic Accelerator Range Mod"
+	desc = "A device which allows kinetic accelerators to fire at a further range."
+	id = "rangemod"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	build_path = /obj/item/borg/upgrade/modkit/range
+	category = list("Mining Designs", "Cyborg Upgrade Modules")
+
+/datum/design/superaccelerator
+	name = "Kinetic Accelerator Pressure Mod"
+	desc = "A modification kit which allows Kinetic Accelerators to do more damage while indoors."
+	id = "indoormod"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
+	build_path = /obj/item/borg/upgrade/modkit/indoors
+	category = list("Mining Designs", "Cyborg Upgrade Modules")
+
+/datum/design/hyperaccelerator
+	name = "Kinetic Accelerator Mining AoE Mod"
+	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts that destroy rock."
+	id = "hypermod"
+	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs
+	category = list("Mining Designs", "Cyborg Upgrade Modules")
+
 
 /////////////////////////////////////////
 //////////////Blue Space/////////////////

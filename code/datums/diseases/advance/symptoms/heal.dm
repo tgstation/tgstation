@@ -41,6 +41,45 @@ Bonus
 /*
 //////////////////////////////////////
 
+Apoptosis
+
+	Lowers resistance.
+	Decreases stage speed.
+	Decreases transmittablity.
+
+Bonus
+	Heals toxins in the affected mob's blood stream faster.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/aptx
+
+	name = "Apoptoxin filter"
+	stealth = 0
+	resistance = -2
+	stage_speed = -2
+	transmittable = -2
+	level = 8
+
+/datum/symptom/aptx/Activate(datum/disease/advance/A)
+	..()
+	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
+		var/mob/living/M = A.affected_mob
+		switch(A.stage)
+			if(4, 5)
+				Apoptosis(M, A)
+	return
+
+/datum/symptom/aptx/proc/Apoptosis(mob/living/M, datum/disease/advance/A)
+	var/get_damage = (sqrt(20+A.totalStageSpeed())*(2+rand()))
+	M.adjustToxLoss(-get_damage)
+	return 1
+
+
+/*
+//////////////////////////////////////
+
 Metabolism
 
 	Little bit hidden.
@@ -85,40 +124,6 @@ Bonus
 					M.resistances -= res
 		M << "<span class='warning'>You feel weaker.</span>"
 
-/*
-//////////////////////////////////////
-
-Longevity
-
-	Medium hidden boost.
-	Large resistance boost.
-	Large stage speed boost.
-	Large transmittablity boost.
-	High Level.
-
-Bonus
-	After a certain amount of time the symptom will cure itself.
-
-//////////////////////////////////////
-*/
-
-/datum/symptom/heal/longevity
-
-	name = "Longevity"
-	stealth = 3
-	resistance = 4
-	stage_speed = 4
-	transmittable = 4
-	level = 3
-	var/longevity = 30
-
-/datum/symptom/heal/longevity/Heal(mob/living/M, datum/disease/advance/A)
-	longevity -= 1
-	if(!longevity)
-		A.cure()
-
-/datum/symptom/heal/longevity/Start(datum/disease/advance/A)
-	longevity = rand(initial(longevity) - 5, initial(longevity) + 5)
 
 /*
 //////////////////////////////////////

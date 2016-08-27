@@ -342,6 +342,9 @@
 	return dat
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D)
+	if(D.make_reagents.len)
+		return 0
+
 	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
 
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff)))

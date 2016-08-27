@@ -225,18 +225,40 @@
 	if (user.get_inactive_hand() == src)
 		if(zero_amount())
 			return
-		var/obj/item/stack/F = new src.type(user, 1)
-		. = F
-		F.copy_evidences(src)
-		user.put_in_hands(F)
-		src.add_fingerprint(user)
-		F.add_fingerprint(user)
-		use(1)
-		if (src && usr.machine==src)
-			spawn(0) src.interact(usr)
+		change_stack(user,1)
 	else
 		..()
 	return
+
+/obj/item/stack/AltClick(mob/user)
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		if(zero_amount())
+			return
+		//get amount from user
+		var/min = 0
+		var/max = src.get_amount()
+		var/stackmaterial = input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max]") as num
+		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= src.get_amount())
+			return
+		else
+			change_stack(user,stackmaterial)
+			user << "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>"
+
+/obj/item/stack/proc/change_stack(mob/user,amount)
+	var/obj/item/stack/F = new src.type(user, amount)
+	. = F
+	F.copy_evidences(src)
+	user.put_in_hands(F)
+	add_fingerprint(user)
+	F.add_fingerprint(user)
+	use(amount)
+
+
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, merge_type))

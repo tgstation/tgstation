@@ -59,6 +59,62 @@ Bonus
 
 	return 1
 
+/*
+//////////////////////////////////////
 
+Damage Converter (uranium)
 
+	Less Stealth easier to work with.
+	Lowers resistance.
+	Decreases stage speed.
+	Uranium only
 
+Bonus
+	Slowly converts brute/fire damage to toxin even faster without limb compensation
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/damage_converter_uranium
+
+	name = "Toxic metabolism"
+	stealth = 0
+	resistance = -2
+	stage_speed = -2
+	transmittable = 0
+	level = 7
+
+/datum/symptom/damage_converter_uranium/Activate(datum/disease/advance/A)
+	..()
+	if(prob(SYMPTOM_ACTIVATION_PROB * 15))
+		var/mob/living/M = A.affected_mob
+		switch(A.stage)
+			if(4, 5)
+				Convert(M)
+	return
+
+/datum/symptom/damage_converter_uranium/proc/Convert(mob/living/M)
+
+	var/get_damage = rand(1, 2)
+
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+
+		var/list/parts = H.get_damaged_bodyparts(1,1)
+
+		if(!parts.len)
+			return
+
+		for(var/obj/item/bodypart/L in parts)
+			L.heal_damage(get_damage, get_damage, 0)
+		M.adjustToxLoss(get_damage)
+
+	else
+		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
+			M.adjustFireLoss(-get_damage)
+			M.adjustBruteLoss(-get_damage)
+			M.adjustToxLoss(get_damage)
+		else
+			return
+
+	return 1

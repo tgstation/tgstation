@@ -39,7 +39,6 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_admins()
 	if(config.usewhitelist)
 		load_whitelist()
-	appearance_loadbanfile()
 	LoadBans()
 	investigate_reset()
 
@@ -99,8 +98,8 @@ var/last_irc_status = 0
 		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
 			return
 		var/list/adm = get_admin_counts()
-		var/status = "Admins: [Sum(adm)] (Active: [adm["admins"]] AFK: [adm["afkadmins"]] Stealth: [adm["stealthadmins"]] Skipped: [adm["noflagadmins"]]). "
-		status += "Players: [clients.len] (Active: [get_active_player_count()]). Mode: [master_mode]."
+		var/status = "Admins: [adm["total"]] (Active: [adm["present"]] AFK: [adm["afk"]] Stealth: [adm["stealth"]] Skipped: [adm["noflags"]]). "
+		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
 
@@ -169,6 +168,18 @@ var/last_irc_status = 0
 		else
 			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
 
+	else if("namecheck" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
+			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
+			return keywords_lookup(input["namecheck"],1)
+	else if("adminwho" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			return ircadminwho()
 
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)

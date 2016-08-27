@@ -28,7 +28,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	flying = 1
-	pressure_resistance = 200
+	pressure_resistance = 300
 	gold_core_spawnable = 0 //too spooky for science
 	var/ghost_hair_style
 	var/ghost_hair_color

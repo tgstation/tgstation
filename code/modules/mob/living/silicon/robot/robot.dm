@@ -715,18 +715,18 @@
 	if (M.a_intent =="disarm")
 		if(!(lying))
 			M.do_attack_animation(src)
-			if (prob(85))
+			if(get_active_hand())
+				uneq_active()
+				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
+				"<span class='userdanger'>[M] has disabled [src]'s active module!</span>")
+				add_logs(M, src, "disarmed")
+			else
 				Stun(2)
 				step(src,get_dir(M,src))
-				addtimer(src, "step", 5, FALSE, src, get_dir(M, src))
 				add_logs(M, src, "pushed")
-				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-								"<span class='userdanger'>[M] has forced back [src]!</span>")
-			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
-								"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+				"<span class='userdanger'>[M] has forced back [src]!</span>")
+			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 	else
 		..()
 	return

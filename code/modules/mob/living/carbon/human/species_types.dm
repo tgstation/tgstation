@@ -974,7 +974,7 @@ SYNDICATE BLACK OPS
 /datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
 	if(H.stat || H.stunned || H.weakened)
 		return 0
-	if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
+	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 		H << "Your suit blocks your wings from extending!"
 		return 0
 	var/turf/T = get_turf(H)
@@ -991,8 +991,7 @@ SYNDICATE BLACK OPS
 /datum/action/innate/flight
 	name = "Toggle Flight"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUNNED
-	button_icon_state = "slimesplit"
-	background_icon_state = "bg_alien"
+	button_icon_state = "flight"
 
 /datum/action/innate/flight/Activate()
 	var/mob/living/carbon/human/H = owner

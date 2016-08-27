@@ -14,11 +14,12 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'//
+	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai"
 	anchored = 1
 	density = 1
 	status_flags = CANSTUN|CANPUSH
+	a_intent = "harm" //so we always get pushed instead of trying to swap
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8
@@ -294,8 +295,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/ai_roster()
 	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
 
-	for(var/datum/data/record/t in sortRecord(data_core.general))
-		dat += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
+	dat += data_core.get_manifest()
 	dat += "</body></html>"
 
 	src << browse(dat, "window=airoster")

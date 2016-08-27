@@ -17,6 +17,17 @@
 			T.air.copy_from_turf(T)
 		SSair.add_to_active(T)
 
+/datum/mapGeneratorModule/bottomLayer/massdelete
+	spawnableAtoms = list()
+	spawnableTurfs = list()
+
+/datum/mapGeneratorModule/bottomLayer/massdelete/generate()
+	if(!mother)
+		return
+	for(var/V in mother.map)
+		var/turf/T = V
+		T.empty()
+
 //Only places atoms/turfs on area borders
 /datum/mapGeneratorModule/border
 	clusterCheckFlags = CLUSTER_CHECK_NONE
@@ -38,3 +49,6 @@
 
 /datum/mapGenerator/repressurize
 	modules = list(/datum/mapGeneratorModule/bottomLayer/repressurize)
+
+/datum/mapGenerator/massdelete
+	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete)

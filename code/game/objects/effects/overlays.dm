@@ -23,6 +23,7 @@
 	icon_state = "nothing"
 	anchored = 1
 	layer = ABOVE_MOB_LAYER
+	burn_state = LAVA_PROOF
 	mouse_opacity = 0
 	var/duration = 10 //in deciseconds
 	var/randomdir = TRUE
@@ -95,6 +96,13 @@
 	if(colour)
 		color = colour
 
+/obj/effect/overlay/temp/kinetic_blast
+	name = "kinetic explosion"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "kinetic_blast"
+	layer = ABOVE_ALL_MOB_LAYER
+	duration = 4
+
 /obj/effect/overlay/temp/explosion
 	name = "explosion"
 	icon = 'icons/effects/96x96.dmi'
@@ -102,6 +110,10 @@
 	pixel_x = -32
 	pixel_y = -32
 	duration = 8
+
+/obj/effect/overlay/temp/explosion/fast
+	icon_state = "explosionfast"
+	duration = 4
 
 /obj/effect/overlay/temp/blob
 	name = "blob"
@@ -131,6 +143,7 @@
 		name = mimiced_atom.name
 		appearance = mimiced_atom.appearance
 		setDir(mimiced_atom.dir)
+		mouse_opacity = 0
 	animate(src, alpha = 0, time = duration)
 
 /obj/effect/overlay/temp/cult
@@ -172,7 +185,7 @@
 	icon_state = "wallglow"
 	layer = ABOVE_NORMAL_TURF_LAYER
 
-/obj/effect/overlay/temp/cult/turf/open/floor
+/obj/effect/overlay/temp/cult/turf/floor
 	icon_state = "floorglow"
 	duration = 5
 
@@ -237,23 +250,24 @@
 /obj/effect/overlay/temp/ratvar/sigil/transgression
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
-	duration = 50
+	duration = 70
+	luminosity = 6
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
-	animate(transform = oldtransform, alpha = 0, time = 45)
+	animate(transform = oldtransform, alpha = 0, time = 65)
 
 /obj/effect/overlay/temp/ratvar/sigil/vitality
 	color = "#1E8CE1"
 	icon_state = "sigilactivepulse"
-	layer = BELOW_MOB_LAYER
+	layer = ABOVE_MOB_LAYER
 
 /obj/effect/overlay/temp/ratvar/sigil/accession
 	color = "#AF0AAF"
 	layer = ABOVE_MOB_LAYER
-	duration = 50
+	duration = 70
 	icon_state = "sigilactiveoverlay"
 	alpha = 0
 

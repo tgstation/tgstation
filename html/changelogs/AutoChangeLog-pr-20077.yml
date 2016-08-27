@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - bugfix: "Bumping the AI on help intent will no longer cause it and you to swap positions, even if it is unanchored. If unanchored, it will properly push the AI around."

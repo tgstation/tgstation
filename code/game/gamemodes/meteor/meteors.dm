@@ -160,6 +160,15 @@
 /obj/effect/meteor/ex_act()
 	return
 
+#define METEOR_MEDAL "Your Life Before Your Eyes"
+
+/obj/effect/meteor/examine(mob/user)
+	if(!admin_spawned && isliving(user))
+		UnlockMedal(METEOR_MEDAL,user.client)
+	..()
+
+#undef METEOR_MEDAL
+
 /obj/effect/meteor/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pickaxe))
 		make_debris()

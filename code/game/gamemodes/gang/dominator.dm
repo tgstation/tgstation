@@ -185,7 +185,7 @@
 			return 0
 
 		var/area/A = get_area(loc)
-		var/locname = initial(A.name)
+		var/locname = A.map_name
 
 		gang = tempgang
 		gang.dom_attempts --
@@ -196,7 +196,7 @@
 		operating = 1
 		icon_state = "dominator-[gang.color]"
 
-		countdown.text_color = gang.color_hex
+		countdown.color = gang.color_hex
 		countdown.start()
 
 		SetLuminosity(3)
@@ -208,10 +208,12 @@
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
 
 /obj/machinery/dominator/attack_hulk(mob/user)
+	..(user, 1)
 	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
 	"<span class='danger'>You punch [src].</span>",\
 	"<span class='italics'>You hear metal being slammed.</span>")
 	take_damage(5)
+	return 1
 
 /obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
 	add_fingerprint(user)

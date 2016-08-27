@@ -14,9 +14,6 @@
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-		return
 	on = !on
 	icon_state = "[basestate][on]-[item_color]"
 	user.update_inv_head()	//so our mob-overlays update
@@ -151,7 +148,7 @@
 	item_state = "eng_hardsuit"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
-//	pockets = /obj/item/weapon/storage/internal/pocket
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
@@ -197,7 +194,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	jetpack = /obj/item/weapon/tank/jetpack/suit
-//	pockets = /obj/item/weapon/storage/internal/pocket/big
+	pockets = /obj/item/weapon/storage/internal/pocket/big
 
 
 	//Mining hardsuit
@@ -223,7 +220,7 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
-//	pockets = /obj/item/weapon/storage/internal/pocket
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 
 	//Syndicate hardsuit
@@ -494,6 +491,32 @@
 	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 
+	//Clown
+/obj/item/clothing/head/helmet/space/hardsuit/clown
+	name = "cosmohonk hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low-humor environment. Has radiation shielding."
+	icon_state = "hardsuit0-clown"
+	item_state = "hardsuit0-clown"
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
+	item_color = "clown"
+
+/obj/item/clothing/suit/space/hardsuit/clown
+	name = "cosmohonk hardsuit"
+	desc = "A special suit that protects against hazardous, low humor environments. Has radiation shielding. Only a true clown can wear it."
+	icon_state = "hardsuit-clown"
+	item_state = "clown_hardsuit"
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/clown
+	pockets = /obj/item/weapon/storage/internal/pocket
+
+/obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, slot)
+	if(!..() || !ishuman(M))
+		return FALSE
+	var/mob/living/carbon/human/H = M
+	if(H.mind.assigned_role == "Clown")
+		return TRUE
+	else
+		return FALSE
 
 
 /////////////SHIELDED//////////////////////////////////
@@ -636,3 +659,32 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+
+///SWAT version
+/obj/item/clothing/suit/space/hardsuit/shielded/swat
+	name = "death commando spacesuit"
+	desc = "an advanced hardsuit favored by commandos for use in special operations."
+	icon_state = "deathsquad"
+	item_state = "swat_suit"
+	item_color = "syndi"
+	max_charges = 4
+	current_charges = 4
+	recharge_delay = 15
+	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	unacidable = 1
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
+	dog_fashion = /datum/dog_fashion/back/deathsquad
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
+	name = "death commando helmet"
+	desc = "A tactical helmet with built in energy shielding."
+	icon_state = "deathsquad"
+	item_state = "deathsquad"
+	item_color = "syndi"
+	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
+	strip_delay = 130
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
+	actions_types = list()

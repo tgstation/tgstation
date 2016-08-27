@@ -60,7 +60,13 @@
 		if(check_shields(P.damage, "the [P.name]", P, PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
 			return 2
+
 	return (..(P , def_zone))
+
+/mob/living/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
+	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
+	if(affecting && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
+		affecting.dismember(P.damtype)
 
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(wear_suit)
@@ -271,7 +277,9 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armour_penetration))
 			return 0
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
+		if(!dam_zone) //Dismemberment successful
+			return 1
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
@@ -301,7 +309,9 @@
 		if(check_shields(damage, "the [M.name]"))
 			return 0
 
-		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+		var/dam_zone = dismembering_strike(M, pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
+		if(!dam_zone) //Dismemberment successful
+			return 1
 
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(affecting, "melee")

@@ -139,27 +139,34 @@ var/list/teleportlocs = list()
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/labor
 	name = "Labor Camp Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/supply
 	name = "Supply Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 
 /area/shuttle/transport
 	name = "Transport Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
+	blob_allowed = FALSE
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
+	blob_allowed = FALSE
 
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
+	blob_allowed = FALSE
 
 /area/start
 	name = "start area"
@@ -658,6 +665,7 @@ var/list/teleportlocs = list()
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
+	blob_allowed = FALSE
 
 /area/solar/auxport
 		name = "Fore Port Solar Array"
@@ -1158,6 +1166,10 @@ var/list/teleportlocs = list()
 	name = "Construction Area"
 	icon_state = "yellow"
 
+/area/mining_construction
+	name = "Auxillary Base Construction"
+	icon_state = "yellow"
+
 /area/construction/supplyshuttle
 	name = "Supply Shuttle"
 	icon_state = "yellow"
@@ -1384,6 +1396,13 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
+
+/area/awaymission/errorroom
+	name = "Super Secret Room"
+	luminosity = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	has_gravity = 1
+
 
 /area/spacecontent
 	name = "space"

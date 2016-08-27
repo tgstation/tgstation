@@ -3,7 +3,7 @@
 	level = 1
 
 	var/intact = 1
-	var/baseturf = /turf/open/space
+	var/turf/baseturf = /turf/open/space
 
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
@@ -284,6 +284,9 @@
 		if(A.level >= affecting_level)
 			A.ex_act(severity, target)
 
+/turf/ratvar_act()
+	for(var/mob/M in src)
+		M.ratvar_act()
 
 /turf/proc/add_blueprints(atom/movable/AM)
 	var/image/I = new

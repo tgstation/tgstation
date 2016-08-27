@@ -4,8 +4,6 @@
 
 	if (notransform)
 		return
-	if(!loc)
-		return
 
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
@@ -48,7 +46,7 @@
 
 	var/datum/gas_mixture/breath
 
-	if(health <= config.health_threshold_crit || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
+	if(health <= HEALTH_THRESHOLD_CRIT || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
 		losebreath++
 
 	//Suffocate
@@ -311,7 +309,7 @@
 	if(sleeping)
 		handle_dreams()
 		AdjustSleeping(-1)
-		if(prob(10) && health>config.health_threshold_crit)
+		if(prob(10) && health>HEALTH_THRESHOLD_CRIT)
 			emote("snore")
 
 	var/restingpwr = 1 + 4 * resting

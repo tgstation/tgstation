@@ -44,7 +44,7 @@
 	if(M.get_num_legs() < 2)
 		vehicle_move_delay ++
 		if(M.get_num_arms() <= 0)
-			if(buckled_mobs.len)//to prevent the message displaying twice due to unbuckling
+			if(has_buckled_mobs())//to prevent the message displaying twice due to unbuckling
 				M << "<span class='warning'>Your limbless body flops off \the [src].</span>"
 			unbuckle_mob(M)
 
@@ -104,11 +104,13 @@
 
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
-		if(M.amount < 5)
+		if(M.get_amount() < 5)
 			user << "<span class='warning'>You need at least five metal sheets to make proper wheels!</span>"
 			return
 		user << "<span class='notice'>You begin to add wheels to [src].</span>"
 		if(do_after(user, 80, target = src))
+			if(!M || M.get_amount() < 5)
+				return
 			M.use(5)
 			user << "<span class='notice'>You finish making wheels for [src].</span>"
 			new /obj/vehicle/scooter/skateboard(user.loc)
@@ -131,6 +133,8 @@
 			return
 		user << "<span class='notice'>You begin making handlebars for [src].</span>"
 		if(do_after(user, 25, target = src))
+			if(!C || C.get_amount() < 2)
+				return
 			user << "<span class='notice'>You add the rods to [src], creating handlebars.</span>"
 			C.use(2)
 			new/obj/vehicle/scooter(get_turf(src))

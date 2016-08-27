@@ -24,7 +24,7 @@
 	bitesize_mod = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/hatchet))
+	if(I.is_sharp())
 		user << "<span class='notice'>You sharpen the carrot into a shiv with [I].</span>"
 		var/obj/item/weapon/kitchen/knife/carrotshiv/Shiv = new /obj/item/weapon/kitchen/knife/carrotshiv
 		if(!remove_item_from_storage(user))

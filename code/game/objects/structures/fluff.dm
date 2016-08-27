@@ -8,12 +8,10 @@
 	anchored = TRUE
 	density = FALSE
 	opacity = 0
-	var/deconstructible = 1
+	var/deconstructible = TRUE
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
-		if(!deconstructible)
-			return
+	if(istype(I, /obj/item/weapon/wrench) && deconstructible)
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(user, 'sound/items/Ratchet.ogg', 50, 1)
 		if(!do_after(user, 50, target = src))
@@ -64,8 +62,61 @@
 	desc = "A towering basalt sculpture of a proud and regal drake. Its eyes are six glowing gemstones."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "drake_statue"
+	pixel_x = -16
 	density = TRUE
+	deconstructible = FALSE
 
 /obj/structure/fluff/drake_statue/falling //A variety of statue in disrepair; parts are broken off and a gemstone is missing
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."
 	icon_state = "drake_statue_falling"
+
+
+/obj/structure/fluff/bus/
+	name = "bus"
+	desc = "GO TO SCHOOL. READ A BOOK."
+	icon = 'icons/obj/bus.dmi'
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/bus/dense
+	name = "bus"
+	icon_state = "backwall"
+
+/obj/structure/fluff/bus/passable
+	name = "bus"
+	icon_state = "frontwalltop"
+	density = 0
+	layer = ABOVE_ALL_MOB_LAYER //except for the stairs tile, which should be set to OBJ_LAYER aka 3.
+
+
+/obj/structure/fluff/bus/passable/seat
+	name = "seat"
+	desc = "Buckle up! ...What do you mean, there's no seatbelts?!"
+	icon_state = "backseat"
+	pixel_y = 17
+	layer = OBJ_LAYER
+
+
+/obj/structure/fluff/bus/passable/seat/driver
+	name = "driver's seat"
+	desc = "Space Jesus is my copilot."
+	icon_state = "driverseat"
+
+/obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
+	playsound(src.loc, 'sound/items/carhorn.ogg', 50, 1)
+
+/obj/structure/fluff/paper
+	name = "dense lining of papers"
+	desc = "A lining of paper scattered across the bottom of a wall."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "paper"
+	deconstructible = FALSE
+
+/obj/structure/fluff/paper/corner
+	icon_state = "papercorner"
+
+/obj/structure/fluff/paper/stack
+	name = "dense stack of papers"
+	desc = "A stack of various papers, childish scribbles scattered across each page."
+	icon_state = "paperstack"

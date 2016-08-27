@@ -189,12 +189,16 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/variable
 	var/assoc_key
 	if(assoc)
-		variable = input("Which var?","Var") as null|anything in L + "(ADD VAR)"
+		variable = input("Which var?","Var") as null|anything in L + "(ADD VAR)" + "(CLEAR NULLS)"
 	else
-		variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
+		variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)" + "(CLEAR NULLS)"
 
 	if(variable == "(ADD VAR)")
 		mod_list_add(L, O, original_name, objectvar)
+		return
+
+	if(variable == "(CLEAR NULLS)")
+		listclearnulls(L)
 		return
 
 	if(assoc)
@@ -594,6 +598,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	switch(class)
 
 		if("list")
+			if(!istype(O.vars[variable],/list))
+				var/listchange = alert(usr,"Force change to empty list?","Change to list?","Yes","No")
+				if(listchange == "Yes")
+					O.vars[variable] = list()	//Unlike all other VV operations, the type change must be set here, not at the end of setting data. Hence the warning
 			mod_list(O.vars[variable], O, original_name, variable)
 			return
 

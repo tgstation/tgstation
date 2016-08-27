@@ -211,7 +211,7 @@
 		if("animal")
 			var/path
 			if(prob(50))
-				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
+				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon")
 				switch(beast)
 					if("carp")
 						path = /mob/living/simple_animal/hostile/carp
@@ -237,6 +237,20 @@
 						path = /mob/living/simple_animal/hostile/carp/ranged
 					if("chaosmagicarp")
 						path = /mob/living/simple_animal/hostile/carp/ranged/chaos
+					if("watcher")
+						path = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
+					if("goliath")
+						path = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+					if("headcrab")
+						path = /mob/living/simple_animal/hostile/headcrab
+					if("morph")
+						path = /mob/living/simple_animal/hostile/morph
+					if("stickman")
+						path = /mob/living/simple_animal/hostile/stickman
+					if("stickdog")
+						path = /mob/living/simple_animal/hostile/stickman/dog
+					if("lesserdragon")
+						path = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 			else
 				var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","cak")
 				switch(animal)
@@ -349,3 +363,11 @@
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
 
+/obj/item/projectile/magic/spellblade
+	name = "blade energy"
+	icon_state = "lavastaff"
+	damage = 15
+	damage_type = BURN
+	flag = "magic"
+	dismemberment = 50
+	nodamage = 0

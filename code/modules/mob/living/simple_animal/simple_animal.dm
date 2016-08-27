@@ -43,6 +43,7 @@
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
+	var/obj_damage = 0 //how much damage this simple animal does to objects, if any
 	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
 	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
@@ -289,23 +290,23 @@
 
 /mob/living/simple_animal/adjustBruteLoss(amount)
 	if(damage_coeff[BRUTE])
-		. = adjustHealth(amount*damage_coeff[BRUTE])
+		. = adjustHealth(amount * damage_coeff[BRUTE] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustFireLoss(amount)
 	if(damage_coeff[BURN])
-		. = adjustHealth(amount*damage_coeff[BURN])
+		. = adjustHealth(amount * damage_coeff[BURN] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustOxyLoss(amount)
 	if(damage_coeff[OXY])
-		. = adjustHealth(amount*damage_coeff[OXY])
+		. = adjustHealth(amount * damage_coeff[OXY] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustToxLoss(amount)
 	if(damage_coeff[TOX])
-		. = adjustHealth(amount*damage_coeff[TOX])
+		. = adjustHealth(amount * damage_coeff[TOX] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustCloneLoss(amount)
 	if(damage_coeff[CLONE])
-		. = adjustHealth(amount*damage_coeff[CLONE])
+		. = adjustHealth(amount * damage_coeff[CLONE] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return
@@ -595,8 +596,11 @@
 
 //Dextrous simple mobs can use hands!
 /mob/living/simple_animal/create_mob_hud()
-	if(client && !hud_used && dextrous)
-		hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
+	if(client && !hud_used)
+		if(dextrous)
+			hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
+		else
+			..()
 
 /mob/living/simple_animal/OpenCraftingMenu()
 	if(dextrous)

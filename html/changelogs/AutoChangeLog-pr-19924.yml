@@ -1,0 +1,5 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - tweak: "The radiation storm random event will automatically enable and disable emergency maint."
+  - rscadd: "The radiation storm random event is now a weather type that affects the station."

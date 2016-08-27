@@ -140,6 +140,7 @@
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
+	update_icon()
 
 
 /obj/item/weapon/storage/belt/mining
@@ -182,7 +183,10 @@
 		/obj/item/weapon/reagent_containers/pill,
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/weapon/ore,
-		/obj/item/weapon/reagent_containers/food/drinks
+		/obj/item/weapon/reagent_containers/food/drinks,
+		/obj/item/organ/hivelord_core,
+		/obj/item/device/wormhole_jaunter
+
 		)
 
 
@@ -414,3 +418,31 @@
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
+
+/obj/item/weapon/storage/belt/sabre
+	name = "sabre sheath"
+	desc = "An ornate sheath designed to hold an officer's blade."
+	icon_state = "sheath"
+	item_state = "sheath"
+	storage_slots = 1
+	w_class = 4
+	max_w_class = 4
+	can_hold = list(
+		/obj/item/weapon/melee/sabre
+		)
+
+/obj/item/weapon/storage/belt/sabre/update_icon()
+	icon_state = "sheath"
+	item_state = "sheath"
+	if(contents.len)
+		icon_state += "-sabre"
+		item_state += "-sabre"
+	if(loc && istype(loc, /mob/living))
+		var/mob/living/L = loc
+		L.regenerate_icons()
+	..()
+
+/obj/item/weapon/storage/belt/sabre/New()
+	..()
+	new /obj/item/weapon/melee/sabre(src)
+	update_icon()

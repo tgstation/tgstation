@@ -78,8 +78,9 @@
 
 		if(!user.put_in_hands(I))
 			user << "<span class='notice'>You fumble for [I] and it falls on the floor.</span>"
-			return
+			return 1
 		user.visible_message("<span class='warning'>[user] draws [I] from [src]!</span>", "<span class='notice'>You draw [I] from [src].</span>")
+		return 1
 	else
 		return ..()
 
@@ -387,7 +388,10 @@ BLIND     // can't see anything
 			var/tie_color = hastie.item_color
 			if(!tie_color)
 				tie_color = hastie.icon_state
-			. += image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
+			var/image/tI = image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
+			tI.alpha = hastie.alpha
+			tI.color = hastie.color
+			. += tI
 
 
 /obj/item/clothing/under/New()
@@ -398,35 +402,48 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	attachTie(I, user)
-	..()
+	if(!attachTie(I, user))
+		..()
 
 /obj/item/clothing/under/proc/attachTie(obj/item/I, mob/user, notifyAttach = 1)
 	if(istype(I, /obj/item/clothing/tie))
+		var/obj/item/clothing/tie/T = I
 		if(hastie)
 			if(user)
 				user << "<span class='warning'>[src] already has an accessory.</span>"
 			return 0
 		else
-			if(user)
-				if(!user.drop_item())
-					return
-			hastie = I
-			I.loc = src
+			if(user && !user.drop_item())
+				return
+			if(!T.attach(src, user))
+				return
+
 			if(user && notifyAttach)
 				user << "<span class='notice'>You attach [I] to [src].</span>"
-			I.transform *= 0.5	//halve the size so it doesn't overpower the under
-			I.pixel_x += 8
-			I.pixel_y -= 8
-			I.layer = FLOAT_LAYER
-			add_overlay(I)
-
 
 			if(istype(loc, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
 
 			return 1
+
+/obj/item/clothing/under/proc/removetie(mob/user)
+	if(!isliving(user))
+		return
+	if(!can_use(user))
+		return
+
+	if(hastie)
+		var/obj/item/clothing/tie/T = hastie
+		hastie.detach(src, user)
+		if(user.put_in_hands(T))
+			user << "<span class='notice'>You detach [T] from [src].</span>"
+		else
+			user << "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>"
+
+		if(istype(loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = loc
+			H.update_inv_w_uniform()
 
 
 /obj/item/clothing/under/examine(mob/user)
@@ -492,7 +509,9 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/AltClick(mob/user)
-	..()
+	if(..())
+		return 1
+
 	if(!user.canUseTopic(src, be_close=TRUE))
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
@@ -540,28 +559,6 @@ BLIND     // can't see anything
 		user << "Alt-click on [src] to wear it normally."
 	else
 		user << "Alt-click on [src] to wear it casually."
-
-/obj/item/clothing/under/proc/removetie(mob/user)
-	if(!isliving(user))
-		return
-	if(!can_use(user))
-		return
-
-	if(hastie)
-		hastie.transform *= 2
-		hastie.pixel_x -= 8
-		hastie.pixel_y += 8
-		hastie.layer = initial(hastie.layer)
-		overlays = null
-		if(user.put_in_hands(hastie))
-			user << "You deattach [hastie] from [src]."
-		else
-			user << "You deattach [hastie] from [src] and it falls on the floor."
-		hastie = null
-
-		if(istype(loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(usr))

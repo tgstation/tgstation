@@ -13,6 +13,9 @@
 	poi_list -= src
 	return ..()
 
+/obj/structure/clockwork/massive/singularity_pull(S, current_size)
+	return
+
 /obj/structure/clockwork/massive/celestial_gateway //The gateway to Reebe, from which Ratvar emerges
 	name = "Gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
@@ -29,6 +32,7 @@
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
+	var/ratvar_portal = TRUE //if the gateway actually summons ratvar or just produces a hugeass conversion burst
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
 
@@ -37,13 +41,11 @@
 	glow = new(get_turf(src))
 	countdown = new(src)
 	countdown.start()
-	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
-	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
+	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>", FALSE, src)
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
-	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
@@ -75,7 +77,15 @@
 		glow.linked = src
 
 /obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
-	return 0 //Nice try, Toxins!
+	var/damage = max((health * 0.70) / severity, 100) //requires multiple bombs to take down
+	take_damage(damage, BRUTE)
+
+/obj/structure/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
+	. = "IMMINENT"
+	if(!health)
+		. = "DETONATING"
+	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
+		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)][s_on_time ? "S":""]"
 
 /obj/structure/clockwork/massive/celestial_gateway/process()
 	if(!progress_in_seconds || prob(7))
@@ -114,26 +124,48 @@
 				sleep(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
-				sleep(5)
-				new/obj/structure/clockwork/massive/ratvar(get_turf(src))
-				qdel(src)
+				var/turf/startpoint = get_turf(src)
+				sleep(3)
+				QDEL_IN(src, 3)
+				clockwork_gateway_activated = TRUE
+				if(ratvar_portal)
+					new/obj/structure/clockwork/massive/ratvar(startpoint)
+				else
+					world << "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
+					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
+					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>"
+					world << 'sound/magic/clockwork/invoke_general.ogg'
+					var/x0 = startpoint.x
+					var/y0 = startpoint.y
+					for(var/I in spiral_range_turfs(255, startpoint))
+						var/turf/T = I
+						if(!T)
+							continue
+						var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+						if(dist < 60)
+							dist = TRUE
+						else
+							dist = FALSE
+						T.ratvar_act(dist)
+						CHECK_TICK
+					for(var/I in all_clockwork_mobs)
+						var/mob/M = I
+						if(M.stat == CONSCIOUS)
+							clockwork_say(M, text2ratvar(pick("Purge all untruths and honor Engine!", "All glory to Engine's light!", "Engine's power is unmatched!")))
 
 /obj/structure/clockwork/massive/celestial_gateway/examine(mob/user)
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon
 	..()
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		var/arrival_text = "IMMINENT"
-		if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
-			arrival_text = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)]"
-		user << "<span class='big'><b>Seconds until Ratvar's arrival:</b> [arrival_text]s</span>"
+		user << "<span class='big'><b>Seconds until [ratvar_portal ? "Ratvar's arrival":"Proselytization"]:</b> [get_arrival_text(TRUE)]</span>"
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
 				user << "<span class='heavy_brass'>It's still opening.</span>"
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 				user << "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>"
 			if(GATEWAY_RATVAR_COMING to INFINITY)
-				user << "<span class='heavy_brass'>Ratvar is coming through the gateway!</span>"
+				user << "<span class='heavy_brass'>[ratvar_portal ? "Ratvar is coming through the gateway":"The gateway is glowing with massed power"]!</span>"
 	else
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
@@ -141,7 +173,7 @@
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 				user << "<span class='warning'>It seems to be leading somewhere.</span>"
 			if(GATEWAY_RATVAR_COMING to INFINITY)
-				user << "<span class='warning'><b>Something is coming through!</b></span>"
+				user << "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's glowing brightly"]!</span>"
 
 /obj/effect/clockwork/overlay/gateway_glow //the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
 	icon = 'icons/effects/96x96.dmi'
@@ -160,26 +192,27 @@
 	pixel_x = -235
 	pixel_y = -248
 	takes_damage = FALSE
+	appearance_flags = 0
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
 
 /obj/structure/clockwork/massive/ratvar/New()
 	..()
-	ratvar_awakens = TRUE
+	ratvar_awakens++
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
 	START_PROCESSING(SSobj, src)
-	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL-YVTUG FUNYY FUVAR NPEBFF GUV'F CNGU-RGV'P ERNYZ!!\"</font></span>"
+	world << "<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.3)
+	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.1)
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()
-	ratvar_awakens = FALSE
+	ratvar_awakens--
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
 	STOP_PROCESSING(SSobj, src)
@@ -188,22 +221,18 @@
 
 
 /obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
-	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Cogscarab", "Reclaimer", "No")
+	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No")
 	if(alertresult == "No" || !O)
 		return 0
-	var/mob/living/simple_animal/R
-	if(alertresult == "Cogscarab")
-		R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
-		R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
-	else
-		R = new/mob/living/simple_animal/hostile/clockwork/reclaimer(get_turf(src))
-		R.visible_message("<span class='heavy_brass'>[R] forms, and it emits a faint hum!</span>")
+	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
+	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
 	R.key = O.key
 
 
 /obj/structure/clockwork/massive/ratvar/Bump(atom/A)
-	forceMove(get_turf(A))
-	A.ratvar_act()
+	var/turf/T = get_turf(A)
+	forceMove(T)
+	T.ratvar_act()
 
 
 /obj/structure/clockwork/massive/ratvar/Process_Spacemove()
@@ -213,8 +242,12 @@
 /obj/structure/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
 		return
-	for(var/atom/A in range(proselytize_range, src))
-		A.ratvar_act()
+	for(var/I in circlerangeturfs(src, proselytize_range))
+		var/turf/T = I
+		T.ratvar_act()
+	for(var/I in circleviewturfs(src, round(proselytize_range * 0.5)))
+		var/turf/T = I
+		T.ratvar_act(1)
 	var/dir_to_step_in = pick(cardinal)
 	if(!prey)
 		for(var/obj/singularity/narsie/N in poi_list)
@@ -289,7 +322,7 @@
 		base_victory_chance++ //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "REEEEEEEEE!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>" //nar-sie get out
+			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "REEEEEEEEE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>" //nar-sie get out
 			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
 			world << 'sound/magic/demon_dies.ogg'

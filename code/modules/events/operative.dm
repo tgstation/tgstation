@@ -13,7 +13,7 @@
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected = popleft(candidates)
+	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/list/spawn_locs = list()
 	for(var/obj/effect/landmark/L in landmarks_list)
