@@ -321,7 +321,7 @@
 /obj/item/weapon/ectoplasm/revenant
 	name = "glimmering residue"
 	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
-	icon = 'icons/effects/effects.dmi'
+	icon = 'icons/effects/revenant.dmi'
 	icon_state = "revenantEctoplasm"
 	w_class = 2
 	var/essence = 75 //the maximum essence of the reforming revenant
