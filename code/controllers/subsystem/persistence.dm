@@ -24,7 +24,7 @@ var/datum/subsystem/persistence/SSpersistence
 	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
 
-	secret_satchels[MAP_NAME]] >> old_secret_satchels
+	secret_satchels[MAP_NAME] >> old_secret_satchels
 
 	if(isnull(old_secret_satchels))
 		return 0
