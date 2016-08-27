@@ -84,7 +84,7 @@
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 	if(paralysis)
-		AdjustParalysis(-1)
+		AdjustParalysis(-1, 1, 1)
 	if(stunned)
 		AdjustStunned(-1, 1, 1)
 	if(weakened)

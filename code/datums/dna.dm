@@ -321,6 +321,7 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
 	var/newdna = setblock(M.dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, hex_characters))
 	M.dna.uni_identity = newdna
+	M.updateappearance(mutations_overlay_update=1)
 	return
 
 /proc/clean_dna(mob/living/carbon/M)
