@@ -82,6 +82,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	var/sharpness = IS_BLUNT
+	var/dismemberment_chance = 0
 	var/toolspeed = 1
 
 	var/block_chance = 0
@@ -558,10 +559,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/is_sharp()
 	return sharpness
 
-/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
+/obj/item/proc/get_decapitation_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= 3)
-			. = force*(w_class-1)
+		if(dismemberment_chance > 0)
+			. = dismemberment_chance
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
