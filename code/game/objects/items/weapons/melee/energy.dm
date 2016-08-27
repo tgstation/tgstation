@@ -1,6 +1,7 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
 	var/force_on = 30 //force when active
+	var/dismemberment_chance_on = 90 //dismemberment chance when active
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -25,6 +26,8 @@
 	icon_state = "axe0"
 	force = 40
 	force_on = 150
+	dismemberment_chance = 80
+	dismemberment_chance_on = 100
 	throwforce = 25
 	throwforce_on = 30
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -86,6 +89,7 @@
 	if (active)
 		force = force_on
 		throwforce = throwforce_on
+		dismemberment_chance = dismemberment_chance_on
 		hitsound = 'sound/weapons/blade1.ogg'
 		throw_speed = 4
 		if(attack_verb_on.len)
@@ -100,6 +104,7 @@
 		START_PROCESSING(SSobj, src)
 	else
 		force = initial(force)
+		dismemberment_chance = initial(dismemberment_chance)
 		throwforce = initial(throwforce)
 		hitsound = initial(hitsound)
 		throw_speed = initial(throw_speed)
@@ -148,6 +153,8 @@
 	icon_state = "esaw"
 	force_on = 30
 	force = 18 //About as much as a spear
+	dismemberment_chance = 36
+	dismemberment_chance_on = 60
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "esaw_0"
@@ -227,6 +234,7 @@
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
 	force = 30	//Normal attacks deal esword damage
+	dismemberment_chance = 90
 	hitsound = 'sound/weapons/blade1.ogg'
 	active = 1
 	throwforce = 1//Throwing or dropping the item deletes it.
