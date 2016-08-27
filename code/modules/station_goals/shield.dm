@@ -100,7 +100,7 @@
 	active = !active
 	if(active)
 		animate(src, pixel_y = 2, time = 10, loop = -1)
-		anchored = 1
+		anchored = 1	
 	else
 		animate(src, pixel_y = 0, time = 10)
 		anchored = 0
@@ -131,9 +131,26 @@
 		if(!emagged)
 			qdel(M)
 
+/obj/machinery/satellite/meteor_shield/toggle()
+	..()
+	if(emagged)
+		if(active)
+			change_meteor_chance(2)
+		else
+			change_meteor_chance(0.5)
+
+/obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
+	var/datum/round_event_control/E = locate(/datum/round_event_control/meteor_wave) in SSevent.control
+	if(E)
+		E.weight *= mod
+
+/obj/machinery/satellite/meteor_shield/Destroy()
+	. = ..()
+	if(active && emagged)
+		change_meteor_chance(0.5)
+
 /obj/machinery/satellite/meteor_shield/emag_act()
 	if(!emagged)
 		emagged = 1
-		var/datum/round_event_control/E = locate(/datum/round_event_control/meteor_wave) in SSevent.control
-		if(E)
-			E.weight *= 2
+		if(active)
+			change_meteor_chance(2)
