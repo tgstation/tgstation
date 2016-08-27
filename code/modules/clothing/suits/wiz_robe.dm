@@ -209,6 +209,10 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
+	actions_types = null //No inbuilt light
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
+	return
 
 /obj/item/wizard_armour_charge
 	name = "battlemage shield charges"
