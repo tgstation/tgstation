@@ -303,4 +303,5 @@
 
 /obj/item/weapon/claymore/hog
 	force = 30
+	dismemberment_chance = 90
 	armour_penetration = 15
