@@ -7,6 +7,7 @@
 	sharpness = IS_SHARP
 	w_class = 4
 	force = 30
+	dismemberment_chance = 90
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
