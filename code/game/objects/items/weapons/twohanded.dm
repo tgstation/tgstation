@@ -26,6 +26,8 @@
 	var/wielded = 0
 	var/force_unwielded = 0
 	var/force_wielded = 0
+	var/dismemberment_chance_unwielded = 0
+	var/dismemberment_chance_wielded = 0
 	var/wieldsound = null
 	var/unwieldsound = null
 
@@ -35,6 +37,7 @@
 	wielded = 0
 	if(force_unwielded)
 		force = force_unwielded
+		dismemberment_chance = dismemberment_chance_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
 		name = copytext(name,1,sf)
@@ -69,6 +72,7 @@
 	wielded = 1
 	if(force_wielded)
 		force = force_wielded
+		dismemberment_chance = dismemberment_chance_wielded
 	name = "[name] (Wielded)"
 	update_icon()
 	if(isrobot(user))
@@ -168,6 +172,8 @@
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
+	dismemberment_chance_unwielded = 15
+	dismemberment_chance_wielded = 72
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -206,6 +212,8 @@
 	var/w_class_on = 4
 	force_unwielded = 3
 	force_wielded = 34
+	dismemberment_chance_unwielded = 0
+	dismemberment_chance_wielded = 100
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
@@ -340,6 +348,8 @@
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
+	dismemberment_chance_unwielded = 30
+	dismemberment_chance_wielded = 54
 	throwforce = 20
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3
@@ -407,6 +417,8 @@
 	flags = CONDUCT
 	force = 13
 	var/force_on = 21
+	dismemberment_chance = 52
+	var/dismemberment_chance_on = 84 
 	w_class = 5
 	throwforce = 13
 	throw_speed = 2
@@ -423,6 +435,7 @@
 	on = !on
 	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
 	force = on ? force_on : initial(force)
+	dismemberment_chance = on ? dismemberment_chance_on : initial(dismemberment_chance)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 
@@ -447,6 +460,7 @@
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	armour_penetration = 100
 	force_on = 30
+	dismemberment_chance = 100
 
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -462,6 +476,8 @@
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	force_unwielded = 15
 	force_wielded = 25
+	dismemberment_chance_unwielded = 45
+	dismemberment_chance_wielded = 75
 	throwforce = 20
 	throw_speed = 4
 	attack_verb = list("gored")
@@ -490,6 +506,8 @@
 	w_class = 4
 	force_unwielded = 7
 	force_wielded = 15
+	dismemberment_chance_unwielded = 21
+	dismemberment_chance_wielded = 45
 	attack_verb = list("attacked", "impaled", "pierced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -507,12 +525,16 @@
 	throwforce = 50
 	force_unwielded = 24
 	force_wielded = 34
+	dismemberment_chance_unwielded = 72
+	dismemberment_chance_wielded = 100
 
 /obj/item/weapon/twohanded/pitchfork/demonic/ascended
 	force = 100
 	throwforce = 100
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
+	dismemberment_chance_unwielded = 100
+	dismemberment_chance_wielded = 100
 
 /obj/item/weapon/twohanded/pitchfork/update_icon()
 	icon_state = "pitchfork[wielded]"
@@ -547,6 +569,8 @@
 	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
 	force_unwielded = 20
 	force_wielded = 40
+	dismemberment_chance_unwielded = 60
+	dismemberment_chance_wielded = 100
 	armour_penetration = 100
 	block_chance = 40
 	throwforce = 20
@@ -597,7 +621,9 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	force_unwielded = 11
-	force_wielded = 20					//I have no idea how to balance
+	force_wielded = 20
+	dismemberment_chance_unwielded = 33
+	dismemberment_chance_wielded = 60
 	throwforce = 22
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3
