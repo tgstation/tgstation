@@ -15,7 +15,7 @@
 	var/productivity = 0
 	var/max_items = 40
 	var/datum/research/files
-	var/list/show_categories = list("Food", "Botany Chemicals", "Leather and Cloth")
+	var/list/show_categories = list("Food", "Botany Chemicals", "Leather, Cloth and Paper")
 	var/list/timesFiveCategories = list("Food", "Botany Chemicals")
 
 /obj/machinery/biogenerator/New()
