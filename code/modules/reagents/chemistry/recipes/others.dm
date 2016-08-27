@@ -116,6 +116,45 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct(location)
 	return
 
+/datum/chemical_reaction/clothification
+	name = "Clothification"
+	id = "clothification"
+	result = null
+	required_reagents = list("plantfiber" = 25, "lye" = 5, "pestkiller" = 5, "sacid" = 5)
+	result_amount = 1
+
+/datum/chemical_reaction/clothification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/stack/sheet/cloth(location, created_volume)
+	return
+
+/datum/chemical_reaction/cardification
+	name = "Cardification"
+	id = "cardification"
+	result = null
+	required_reagents = list("plantfiber" = 10, "lye" = 5, "pestkiller" = 5)
+	required_temp = 374
+	result_amount = 1
+
+/datum/chemical_reaction/cardification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/stack/sheet/cardboard(location, created_volume)
+	return
+
+/datum/chemical_reaction/paperification
+	name = "paperification"
+	id = "paperification"
+	result = null
+	required_reagents = list("plantfiber" = 2, "lye" = 1, "pestkiller" = 1)
+	required_catalysts = list("drying_agent" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/paperification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/weapon/paper(location)
+	return
+
 /datum/chemical_reaction/carbondioxide
 	name = "Direct Carbon Oxidation"
 	id = "burningcarbon"
@@ -450,6 +489,20 @@
 	result = "drying_agent"
 	required_reagents = list("stable_plasma" = 2, "ethanol" = 1, "sodium" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/plantoil
+	name = "Plant Oil"
+	id = "plantoil"
+	required_reagents = list("plantfiber" = 1, "water" = 1)
+	required_temp = 474
+	result_amount = 1
+
+/datum/chemical_reaction/plantsugar
+	name = "Plant Sugar"
+	id = "plantsugar"
+	required_reagents = list("plantfiber" = 1)
+	required_catalysts = list("facid" = 1)
+	result_amount = 1
 
 //////////////////////////////////// Other goon stuff ///////////////////////////////////////////
 

@@ -65,7 +65,7 @@
 		msg += "- Other substances: [reagents.total_volume-reagents.get_reagent_amount("nutriment")]\n"
 		msg += "*---------*</span>"
 
-		var/list/scannable_reagents = list("charcoal" = "Anti-Toxin", "morphine" = "Morphine", "amatoxin" = "Amatoxins",
+		var/list/scannable_reagents = list("charcoal" = "Anti-Toxin","plantfiber" = "Plant Fiber", "morphine" = "Morphine", "amatoxin" = "Amatoxins",
 			"toxin" = "Toxins", "mushroomhallucinogen" = "Mushroom Hallucinogen", "condensedcapsaicin" = "Condensed Capsaicin",
 			"capsaicin" = "Capsaicin", "frostoil" = "Frost Oil", "gold" = "Mineral Content", "glycerol" = "Glycerol",
 			"radium" = "Highly Radioactive Material", "uranium" = "Radioactive Material")

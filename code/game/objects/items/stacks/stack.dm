@@ -22,7 +22,11 @@
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
 	if (amount)
-		src.amount = amount
+		if(amount<=max_amount)
+			src.amount = amount
+		else
+			amount = max_amount
+			new src.type(loc, amount-max_amount)
 	if(!merge_type)
 		merge_type = src.type
 	return

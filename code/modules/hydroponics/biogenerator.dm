@@ -213,9 +213,9 @@
 	var/S = 0
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
-		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
+		if((I.reagents.get_reagent_amount("nutriment")+I.reagents.get_reagent_amount("plantfiber")) < 0.1)
 			points += 1*productivity
-		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
+		else points += (I.reagents.get_reagent_amount("nutriment")+I.reagents.get_reagent_amount("plantfiber"))*10*productivity
 		qdel(I)
 	if(S)
 		processing = 1

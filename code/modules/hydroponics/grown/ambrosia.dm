@@ -22,7 +22,7 @@
 	potency = 5
 	icon_dead = "ambrosia-dead"
 	mutatelist = list(/obj/item/seeds/ambrosia/deus)
-	reagents_add = list("space_drugs" = 0.15, "bicaridine" = 0.1, "kelotane" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05, "toxin" = 0.1)
+	reagents_add = list("space_drugs" = 0.15, "bicaridine" = 0.1, "kelotane" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05, "toxin" = 0.1, "plantfiber" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris
 	seed = /obj/item/seeds/ambrosia
@@ -39,7 +39,7 @@
 	plantname = "Ambrosia Deus"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus
 	mutatelist = list(/obj/item/seeds/ambrosia/gaia)
-	reagents_add = list("omnizine" = 0.15, "synaptizine" = 0.15, "space_drugs" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05)
+	reagents_add = list("omnizine" = 0.15, "synaptizine" = 0.15, "space_drugs" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05, "plantfiber" = 0.1)
 	rarity = 40
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus
@@ -59,7 +59,7 @@
 	plantname = "Ambrosia Gaia"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia
 	mutatelist = list()
-	reagents_add = list("earthsblood" = 0.05, "nutriment" = 0.06, "vitamin" = 0.05)
+	reagents_add = list("earthsblood" = 0.05, "nutriment" = 0.06, "vitamin" = 0.05, "plantfiber" = 0.1)
 	rarity = 30 //These are some pretty good plants right here
 	oneharvest = TRUE
 	weed_rate = 4
