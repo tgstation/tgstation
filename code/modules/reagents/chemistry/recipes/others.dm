@@ -126,7 +126,6 @@
 /datum/chemical_reaction/clothification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/stack/sheet/cloth(location, created_volume)
-	return
 
 /datum/chemical_reaction/cardification
 	name = "Cardification"
@@ -139,7 +138,6 @@
 /datum/chemical_reaction/cardification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/stack/sheet/cardboard(location, created_volume)
-	return
 
 /datum/chemical_reaction/paperification
 	name = "paperification"
@@ -153,7 +151,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/weapon/paper(location)
-	return
 
 /datum/chemical_reaction/carbondioxide
 	name = "Direct Carbon Oxidation"
