@@ -19,7 +19,9 @@
 				/obj/item/stack/sheet/metal = list("iron" = 20),
 				/obj/item/stack/sheet/plasteel = list("iron" = 20, "plasma" = 20),
 				/obj/item/stack/sheet/mineral/wood = list("plantfiber" = 50),
+				/obj/item/stack/sheet/cloth = list("plantfiber" = 25),
 				/obj/item/stack/sheet/cardboard = list("plantfiber" = 10),
+				/obj/item/weapon/paper = list("plantfiber" = 2), // its not a stack/sheet, but it fits here.
 				/obj/item/stack/sheet/glass = list("silicon" = 20),
 				/obj/item/stack/sheet/rglass = list("silicon" = 20, "iron" = 20),
 				/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),
