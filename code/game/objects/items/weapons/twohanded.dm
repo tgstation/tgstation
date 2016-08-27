@@ -451,7 +451,7 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
+/obj/item/weapon/twohanded/required/chainsaw/get_decapitation_chance()
 	if(wielded)
 		. = ..()
 
