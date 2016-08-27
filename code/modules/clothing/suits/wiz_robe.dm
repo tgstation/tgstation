@@ -190,7 +190,7 @@
 	desc = "Not all wizards are afraid of getting up close and personal."
 	icon_state = "battlemage"
 	item_state = "battlemage"
-	recharge_rate = 1
+	recharge_rate = 0
 	current_charges = 15
 	recharge_cooldown = INFINITY
 	shield_state = "shield-red"
