@@ -576,3 +576,10 @@
 	result = "laughter"
 	required_reagents = list("sugar" = 1, "banana" = 1)
 	result_amount = 10
+
+/datum/chemical_reaction/hormone
+	name = "Exotic Hormone"
+	id = "hormone"
+	result = "hormone"
+	required_reagents = list("sugar" = 20, "whiskey" = 20, "teslium" = 20, "mutagen" = 20, "welding_fuel" = 20)
+	result_amount = 1

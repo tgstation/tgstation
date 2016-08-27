@@ -1270,3 +1270,19 @@ datum/reagent/romerol
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
+	
+/datum/reagent/hormone
+	name = "Exotic Hormone"
+	id = "hormone"
+	description = "Swaps your Gender"
+	reagent_state = LIQUID
+	color = "#78FFF0"
+	metabolization_rate = 5
+
+/datum/reagent/hormone/on_mob_delete(mob/living/carbon/M)
+	if(M.gender == FEMALE)
+		M.gender = MALE
+	else
+		M.gender = FEMALE
+	M.regenerate_icons()
+	..()
