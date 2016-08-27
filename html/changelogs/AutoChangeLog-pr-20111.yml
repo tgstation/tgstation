@@ -1,0 +1,5 @@
+author: "pubby"
+delete-after: True
+changes: 
+  - rscadd: "Mining scanner module to standard borgs"
+  - rscdel: "Sheet snatcher module from standard borgs"
