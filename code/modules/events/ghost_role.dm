@@ -1,3 +1,6 @@
+#define MAX_SPAWN_ATTEMPT 3
+
+
 /datum/round_event/ghost_role
 	// We expect 0 or more /clients (or things with .key) in this list
 	var/list/priority_candidates = list()
@@ -14,7 +17,12 @@
 	processing = FALSE
 
 	var/status = spawn_role()
-	if((status == WAITING_FOR_SOMETHING) && (retry < 3))
+	if((status == WAITING_FOR_SOMETHING))
+		if(retry >= MAX_SPAWN_ATTEMPT)
+			message_admins("[role_name] event has exceeded maximum spawn attempts. Aborting and refunding.")
+			if(control && control.occurrences > 0)	//Don't refund if it hasn't
+				control.occurrences--
+			return
 		var/waittime = 300 * (2^retry)
 		message_admins("The event will not spawn a [role_name] until certain \
 			conditions are met. Waiting [waittime/10]s and then retrying.")
@@ -61,3 +69,4 @@
 
 	return candidates
 
+#undef MAX_SPAWN_ATTEMPT
