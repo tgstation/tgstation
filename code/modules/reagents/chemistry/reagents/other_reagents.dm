@@ -1285,5 +1285,5 @@ datum/reagent/romerol
 			m.gender = MALE
 		else
 			m.gender = FEMALE
-		target.regenerate_icons()
+		m.regenerate_icons()
 	..()
