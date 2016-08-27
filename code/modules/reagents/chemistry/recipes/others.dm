@@ -581,5 +581,5 @@
 	name = "Exotic Hormone"
 	id = "hormone"
 	result = "hormone"
-	required_reagents = list("sugar" = 20, "whiskey" = 20, "blood" = 20, "mutagen" = 20, "welding_fuel" = 20)
+	required_reagents = list("sugar" = 20, "whiskey" = 20, "teslium" = 20, "mutagen" = 20, "welding_fuel" = 20)
 	result_amount = 1
