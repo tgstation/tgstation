@@ -86,6 +86,7 @@
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
 	sharpness = IS_SHARP
+	dismemberment_chance = 72
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -168,6 +169,7 @@
 	item_state = "scythe0"
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
+	dismemberment_chance = 54
 	w_class = 4
 	armour_penetration = 35
 	slot_flags = SLOT_BACK
@@ -248,6 +250,7 @@
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
+	dismemberment_chance = 72
 	w_class = 5
 	flags = NODROP | ABSTRACT
 	sharpness = IS_SHARP
@@ -294,6 +297,7 @@
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP
 	w_class = 5
+	dismemberment_chance = 72
 	sharpness = IS_SHARP
 
 /obj/item/weapon/nullrod/carp
@@ -335,6 +339,7 @@
 	item_state = "crysknife"
 	name = "arrhythmic knife"
 	w_class = 5
+	dismemberment_chance = 72
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	sharpness = IS_SHARP
 	slot_flags = null
@@ -346,6 +351,7 @@
 	icon_state = "pitchfork0"
 	name = "unholy pitchfork"
 	w_class = 3
+	dismemberment_chance = 36
 	desc = "Holding this makes you look absolutely devilish."
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
