@@ -24,7 +24,7 @@ var/datum/subsystem/persistence/SSpersistence
 	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
 
-	secret_satchels["[MAP_NAME]"] >> old_secret_satchels
+	secret_satchels[MAP_NAME]"] >> old_secret_satchels
 
 	if(isnull(old_secret_satchels))
 		return 0
@@ -36,7 +36,7 @@ var/datum/subsystem/persistence/SSpersistence
 		satchel_string = pick_n_take(expanded_old_satchels)
 
 	old_secret_satchels = jointext(expanded_old_satchels,"#")
-	secret_satchels["[MAP_NAME]"] << old_secret_satchels
+	secret_satchels[MAP_NAME] << old_secret_satchels
 
 	var/list/chosen_satchel = splittext(satchel_string,"|")
 	if(!chosen_satchel || isemptylist(chosen_satchel) || chosen_satchel.len != 3) //Malformed
@@ -78,4 +78,4 @@ var/datum/subsystem/persistence/SSpersistence
 		if(isemptylist(savable_obj))
 			continue
 		old_secret_satchels += "[F.x]|[F.y]|[pick(savable_obj)]#"
-	secret_satchels["[MAP_NAME]"] << old_secret_satchels
+	secret_satchels[MAP_NAME] << old_secret_satchels
