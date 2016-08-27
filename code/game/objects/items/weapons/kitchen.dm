@@ -84,6 +84,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 	w_class = 3
+	dismemberment_chance = 20
 
 /obj/item/weapon/kitchen/knife/butcher
 	name = "butcher's cleaver"
@@ -91,6 +92,7 @@
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
 	flags = CONDUCT
 	force = 15
+	dismemberment_chance = 30
 	throwforce = 10
 	materials = list(MAT_METAL=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
