@@ -11,7 +11,7 @@
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	update_stat()
 	if(((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
-		ChangeToHusk()
+		become_husk()
 		if(on_fire)
 			shred_clothing()
 	med_hud_set_health()
@@ -116,7 +116,7 @@
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
-		update |= picked.heal_damage(brute,burn,0)
+		update |= picked.heal_damage(brute,burn,0, 0)
 
 		brute -= (brute_was-picked.brute_dam)
 		burn -= (burn_was-picked.burn_dam)

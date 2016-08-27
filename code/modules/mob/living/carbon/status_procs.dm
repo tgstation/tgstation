@@ -43,6 +43,7 @@
 		if(!druggy)
 			clear_fullscreen("high")
 			clear_alert("high")
+
 /mob/living/carbon/set_drugginess(amount)
 	var/old_druggy = druggy
 	druggy = amount
@@ -60,6 +61,7 @@
 		disabilities &= ~BLIND
 		adjust_blindness(-1)
 		return 1
+
 /mob/living/carbon/become_blind()
 	if(!(disabilities & BLIND))
 		disabilities |= BLIND
@@ -77,3 +79,16 @@
 		disabilities |= NEARSIGHT
 		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
 		return 1
+
+/mob/living/carbon/cure_husk()
+	if(disabilities & HUSK)
+		disabilities &= ~HUSK
+		status_flags &= ~DISFIGURED
+		return 1
+
+/mob/living/carbon/become_husk()
+	if(disabilities & HUSK)
+		return
+	disabilities |= HUSK
+	status_flags |= DISFIGURED	//makes them unknown
+	return 1

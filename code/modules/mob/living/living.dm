@@ -518,6 +518,7 @@ Sorry Giacom. Please don't be mad :(
 	set_eye_damage(0)
 	cure_nearsighted()
 	cure_blind()
+	cure_husk()
 	disabilities = 0
 	ear_deaf = 0
 	ear_damage = 0

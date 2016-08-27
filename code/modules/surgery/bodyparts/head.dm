@@ -59,50 +59,61 @@
 	//First of all, name.
 	real_name = H.real_name
 
-	//Facial hair
-	if(H.facial_hair_style && (FACEHAIR in S.specflags))
-		facial_hair_style = H.facial_hair_style
-		if(S.hair_color)
-			if(S.hair_color == "mutcolor")
-				facial_hair_color = H.dna.features["mcolor"]
-			else
-				facial_hair_color = S.hair_color
-		else
-			facial_hair_color = H.facial_hair_color
-		hair_alpha = S.hair_alpha
-	else
+	if(H.disabilities & HUSK)
 		facial_hair_style = "Shaved"
 		facial_hair_color = "000"
 		hair_alpha = 255
-	//Hair
-	if(H.hair_style && (HAIR in S.specflags))
-		hair_style = H.hair_style
-		if(S.hair_color)
-			if(S.hair_color == "mutcolor")
-				hair_color = H.dna.features["mcolor"]
-			else
-				hair_color = S.hair_color
-		else
-			hair_color = H.hair_color
-		hair_alpha = S.hair_alpha
-	else
 		hair_style = "Bald"
 		hair_color = "000"
 		hair_alpha = initial(hair_alpha)
-	// lipstick
-	if(H.lip_style && (LIPS in S.specflags))
-		lip_style = H.lip_style
-		lip_color = H.lip_color
-	else
 		lip_style = null
-		lip_color = "white"
-	// eyes
-	if(EYECOLOR in S.specflags)
-		eyes = S.eyes
-		eye_color = H.eye_color
-	else
-		eyes = "eyes"
 		eye_color = ""
+	else
+		//Facial hair
+		if(H.facial_hair_style && (FACEHAIR in S.specflags))
+			facial_hair_style = H.facial_hair_style
+			if(S.hair_color)
+				if(S.hair_color == "mutcolor")
+					facial_hair_color = H.dna.features["mcolor"]
+				else
+					facial_hair_color = S.hair_color
+			else
+				facial_hair_color = H.facial_hair_color
+			hair_alpha = S.hair_alpha
+		else
+			facial_hair_style = "Shaved"
+			facial_hair_color = "000"
+			hair_alpha = 255
+		//Hair
+		if(H.hair_style && (HAIR in S.specflags))
+			hair_style = H.hair_style
+			if(S.hair_color)
+				if(S.hair_color == "mutcolor")
+					hair_color = H.dna.features["mcolor"]
+				else
+					hair_color = S.hair_color
+			else
+				hair_color = H.hair_color
+			hair_alpha = S.hair_alpha
+		else
+			hair_style = "Bald"
+			hair_color = "000"
+			hair_alpha = initial(hair_alpha)
+		// lipstick
+		if(H.lip_style && (LIPS in S.specflags))
+			lip_style = H.lip_style
+			lip_color = H.lip_color
+		else
+			lip_style = null
+			lip_color = "white"
+		// eyes
+		if(EYECOLOR in S.specflags)
+			eyes = S.eyes
+			eye_color = H.eye_color
+		else
+			eyes = "eyes"
+			eye_color = ""
+
 	..()
 
 /obj/item/bodypart/head/update_icon_dropped()

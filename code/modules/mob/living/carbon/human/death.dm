@@ -41,21 +41,8 @@
 	set_species(/datum/species/skeleton)
 	return 1
 
-/mob/living/carbon/proc/ChangeToHusk()
-	if(disabilities & HUSK)
-		return
-	disabilities |= HUSK
-	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
-	return 1
-
-/mob/living/carbon/human/ChangeToHusk()
-	. = ..()
-	if(.)
-		update_hair()
-		update_body()
-
 /mob/living/carbon/proc/Drain()
-	ChangeToHusk()
+	become_husk()
 	disabilities |= NOCLONE
 	blood_volume = 0
 	return 1
