@@ -54,7 +54,7 @@
 	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	return(BRUTELOSS)
 
-var/list/highlander_claymores = list()
+var/highlander_claymores = 0
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>"
 	flags = CONDUCT | NODROP
@@ -66,14 +66,14 @@ var/list/highlander_claymores = list()
 /obj/item/weapon/claymore/highlander/New()
 	..()
 	START_PROCESSING(SSobj, src)
-	highlander_claymores += src
+	highlander_claymores++
 
 /obj/item/weapon/claymore/highlander/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/simple_animal/shade/S in src)
 		S << "<span class='userdanger'>Your home breaks apart, and you with it!</span>"
 		qdel(S)
-	highlander_claymores -= src
+	highlander_claymores--
 	return ..()
 
 /obj/item/weapon/claymore/highlander/process()
@@ -84,11 +84,8 @@ var/list/highlander_claymores = list()
 			L.visible_message("<span class='warning'>[L] explodes in a shower of gore!</span>")
 			L.gib(TRUE)
 		else
-			if(announced)
+			if(announced || admin_spawned || highlander_claymores > 1)
 				return
-			for(var/obj/item/weapon/claymore/highlander/H in highlander_claymores)
-				if(H != src)
-					return
 			announced = TRUE
 			world << "<span class='userdanger'>[L.real_name] IS THE ONLY ONE LEFT STANDING!</span>"
 			world << sound('sound/misc/highlander_only_one.ogg')
