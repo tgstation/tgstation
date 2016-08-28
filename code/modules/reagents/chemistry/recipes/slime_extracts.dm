@@ -472,6 +472,20 @@
 	var/obj/item/slimepotion/docility/P = new /obj/item/slimepotion/docility
 	P.loc = get_turf(holder.my_atom)
 
+/datum/chemical_reaction/gender
+	name = "Gender Potion"
+	id = "m_gender"
+	result = null
+	required_reagents = list("blood" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/pink
+	required_other = 1
+
+/datum/chemical_reaction/gender/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/slimepotion/genderchange/G = new /obj/item/slimepotion/genderchange
+	G.loc = get_turf(holder.my_atom)
+
 //Black
 /datum/chemical_reaction/slimemutate2
 	name = "Advanced Mutation Toxin"

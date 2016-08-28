@@ -383,6 +383,30 @@
 	if(!uses)
 		qdel(src)
 
+/obj/item/slimepotion/genderchange
+	name = "gender change potion"
+	desc = "An interesting chemical mix that changes the biological gender of what its applied to. Cannot be used on things that lack gender entirely."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potlightpink"
+
+/obj/item/slimepotion/genderchange/attack(mob/living/L, mob/user)
+	if(!istype(L) || L.stat == DEAD)
+		user << "<span class='warning'>The potion can only be used on living things!</span>"
+		return
+
+	if(L.gender != MALE && L.gender != FEMALE)
+		user << "<span class='warning'>The potion can only be used on gendered things!</span>"
+		return
+
+	if(L.gender == MALE)
+		L.gender = FEMALE
+		L.visible_message("<span class='notice'>[L] suddenly looks more feminine!</span>")
+	else
+		L.gender = MALE
+		L.visible_message("<span class='notice'>[L] suddenly looks more masculine!</span>")
+	L.regenerate_icons()
+	qdel(src)
+
 ////////Adamantine Golem stuff I dunno where else to put it
 
 // This will eventually be removed.
