@@ -382,10 +382,10 @@ var/const/INJECT = 5 //injection
 					for(var/B in C.required_reagents)
 						remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
 
-					for(var/R in C.results)
-						feedback_add_details("chemical_reaction", "[R]|[C.results[R]*multiplier]")
+					for(var/P in C.results)
+						feedback_add_details("chemical_reaction", "[P]|[C.results[P]*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
-						add_reagent(result, C.results[R]*multiplier, null, chem_temp)
+						add_reagent(P, C.results[P]*multiplier, null, chem_temp)
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 
