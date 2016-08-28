@@ -186,7 +186,7 @@
 
 	mob.glide_size = world.icon_size/(delay/world.tick_lag)
 	mob.animate_movement = 2
-	src << "MOVING: [world.time] ||| [world.timeofday] ||| [world.icon_size]/([delay]/[world.tick_lag]) = [mob.glide_size] ||| [world.tick_lag]"
+	debug_usr("MOVING: [world.time] ||| [world.timeofday] ||| [world.icon_size]/([delay]/[world.tick_lag]) = [mob.glide_size] ||| [world.tick_lag]")
 	mob.glide_timer = addtimer(mob, "reset_glide", delay*1.5)
 	if(mob.confused)
 		if(mob.confused > 40)
