@@ -20,10 +20,13 @@
 	var/image/cross = image('icons/obj/storage.dmi',"bible")
 	var/font_color = "purple"
 	var/prayer_type = "PRAYER"
+	var/deity = "DEITY"
 	if(usr.job == "Chaplain")
 		cross = image('icons/obj/storage.dmi',"kingyellow")
 		font_color = "blue"
-		prayer_type = "CHAPLAIN PRAYER"
+		if (ticker && ticker.Bible_deity_name)
+			deity = ticker.Bible_deity_name
+		prayer_type = "CHAPLAIN PRAYER ([deity])"
 	else if(iscultist(usr))
 		cross = image('icons/obj/storage.dmi',"tome")
 		font_color = "red"
