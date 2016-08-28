@@ -1,5 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Added Battlemage armour to the spellbook. The armour is heavily shielded, but will not recharge once the shields are depleted."
-  - rscadd: "Added armour runes to the spellbook, which can grant additional charges to the Battlemage armour."

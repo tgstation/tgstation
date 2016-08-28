@@ -1,4 +1,0 @@
-author: "Shadowlight213"
-delete-after: True
-changes: 
-  - rscadd: "Added config option to use byond account creation age for job limits."

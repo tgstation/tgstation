@@ -1,5 +1,0 @@
-author: "Incoming5643"
-delete-after: True
-changes: 
-  - experiment: "Due to a bad case of \"being terrible\" the save system for secret satchels has been reworked. All saves are now unified in a single data file: /data/npc_saves/SecretSatchels"
-  - rscdel: "Old savefiles such as: /data/npc_saves/SecretSatchels_Box Station can now be safely removed."

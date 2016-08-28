@@ -1,7 +1,0 @@
-author: "xxalpha"
-delete-after: True
-changes: 
-  - rscadd: "Cigarette packs, donut boxes, egg boxes can now be closed and opened with Ctrl+Click."
-  - rscadd: "Lighters are now represented in cigarette packs with a sprite of their own."
-  - rscadd: "You can now remove a lighter from a cigarette pack quickly with Alt+Click."
-  - bugfix: "Reduced the amount of cigars that cigar cases can hold to 5 because the cigar case sprite doesn't support more than that."
