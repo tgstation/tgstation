@@ -231,7 +231,7 @@
 	density = 1
 	holo_integrity = 1
 
-/obj/effect/overlay/holograph/barrier/CanPass()
+/obj/effect/overlay/holograph/barrier/cyborg/CanPass()
 	return 0
 
 /obj/effect/overlay/holograph/barrier/cyborg/hacked
