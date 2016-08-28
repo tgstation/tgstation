@@ -60,26 +60,6 @@
 		return
 	usr.drop_item()
 
-//there are bugs with byond's default versions of these verbs
-/client/verb/moveup()
-	set name = ".moveup"
-	set instant = 1
-	Move(get_step(mob, NORTH), NORTH)
-
-/client/verb/movedown()
-	set name = ".movedown"
-	set instant = 1
-	Move(get_step(mob, SOUTH), SOUTH)
-
-/client/verb/moveright()
-	set name = ".moveright"
-	set instant = 1
-	Move(get_step(mob, EAST), EAST)
-
-/client/verb/moveleft()
-	set name = ".moveleft"
-	set instant = 1
-	Move(get_step(mob, WEST), WEST)
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
