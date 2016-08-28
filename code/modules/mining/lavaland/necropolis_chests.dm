@@ -474,7 +474,6 @@
 			new /obj/item/weapon/lava_staff(src)
 		if(3)
 			new /obj/item/weapon/spellbook/oneuse/sacredflame(src)
-			new /obj/item/weapon/gun/magic/wand/fireball(src)
 		if(4)
 			new /obj/item/weapon/dragons_blood(src)
 
