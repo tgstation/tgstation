@@ -224,9 +224,8 @@
 				new_y--
 
 			step_towards(src, locate(new_x, new_y, z))
-			var/delay = 0
 			next_run += max(world.tick_lag, speed)
-			delay = next_run - world.time
+			var/delay = next_run - world.time
 			if(delay <= world.tick_lag*2)
 				pixel_x = pixel_x_offset
 				pixel_y = pixel_y_offset
