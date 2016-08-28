@@ -50,7 +50,7 @@
 				continue
 			else
 				var/turf/river_turf = cur_turf.ChangeTurf(turf_type)
-				river_turf.Spread(20, 9, whitelist_area)
+				river_turf.Spread(25, 11, whitelist_area)
 
 	for(var/WP in river_nodes)
 		qdel(WP)
@@ -67,11 +67,16 @@
 		return
 	var/list/cardinal_turfs = list()
 	var/list/diagonal_turfs = list()
+	var/logged_turf_type
 	for(var/F in RANGE_TURFS(1, src) - src)
 		var/turf/T = F
 		var/area/new_area = get_area(T)
 		if(!T || (T.density && !istype(T, /turf/closed/mineral)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)))
 			continue
+
+		if(!logged_turf_type && istype(T, /turf/closed/mineral))
+			var/turf/closed/mineral/M = T
+			logged_turf_type = M.turf_type
 
 		if(get_dir(src, F) in cardinal)
 			cardinal_turfs += F
@@ -80,12 +85,12 @@
 
 	for(var/F in cardinal_turfs) //cardinal turfs are always changed but don't always spread
 		var/turf/T = F
-		if(T.ChangeTurf(type) && prob(probability))
+		if(!istype(T, logged_turf_type) && T.ChangeTurf(type) && prob(probability))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 
 	for(var/F in diagonal_turfs) //diagonal turfs only sometimes change, but will always spread if changed
 		var/turf/T = F
-		if(prob(probability) && T.ChangeTurf(type))
+		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 		else if(istype(T, /turf/closed/mineral))
 			var/turf/closed/mineral/M = T
