@@ -143,11 +143,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 							usr << "A replacement shuttle has already been purchased."
 						else
 							if(SSshuttle.points >= S.credit_cost)
+								M.shuttle_purchased = TRUE
 								M.unload_preview()
 								M.load_template(S)
 								M.existing_shuttle = SSshuttle.emergency
 								M.action_load(S)
-								M.shuttle_purchased = TRUE
 								SSshuttle.points -= S.credit_cost
 								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 								message_admins("[key_name_admin(usr)] purchased [S.name].")
