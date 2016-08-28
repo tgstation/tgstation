@@ -105,16 +105,17 @@
 
 /obj/structure/urinal
 	name = "urinal"
-	desc = "The HU-452, an experimental urinal. Comes complete with experimental urinal cake holder."
+	desc = "The HU-452, an experimental urinal. Comes complete with experimental urinal cake."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinal"
 	density = 0
 	anchored = 1
 	var/exposed = 0 // can you currently put an item inside
-	var/hiddenitem = null // what's in the urinal
+	var/obj/item/hiddenitem = null // what's in the urinal
 
 /obj/structure/urinal/New()
-	hiddenitem = new /obj/item/weapon/urinalcake
+	..()
+	hiddenitem = new /obj/item/weapon/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
@@ -137,7 +138,7 @@
 			if(ishuman(user))
 				user.put_in_hands(I)
 			else
-				I.loc = get_turf(src)
+				I.forceMove(get_turf(src))
 			user << "<span class='notice'>You fish [I] out of the drain enclosure.</span>"
 	else
 		..()
@@ -157,19 +158,20 @@
 			user << "<span class='warning'>[I] is too large for the drain enclosure.</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the drain enclosure!</span>"
+			user << "<span class='warning'>\[I] is stuck to your hand, you cannot put it in the drain enclosure!</span>"
 			return
-		I.loc = src
+		I.forceMove(src)
 		hiddenitem = I
 		user << "<span class='notice'>You place [I] into the drain enclosure.</span>"
 
 
-/obj/item/weapon/urinalcake
+/obj/item/weapon/reagent_containers/food/urinalcake
 	name = "urinal cake"
-	desc = "The noble urinal cake, protecting the station's pipes from the station's pee."
+	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "urinalcake"
 	w_class = 1
-	force = 1
-	throwforce = 1
+	list_reagents = list("chlorine" = 3, "ammonia" = 1)
 
 /obj/machinery/shower
 	name = "shower"
@@ -418,7 +420,7 @@
 	var/washing_face = 0
 	if(selected_area in list("head", "mouth", "eyes"))
 		washing_face = 1
-	user.visible_message("<span class='notice'>[user] start washing their [washing_face ? "face" : "hands"]...</span>", \
+	user.visible_message("<span class='notice'>[user] starts washing their [washing_face ? "face" : "hands"]...</span>", \
 						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
 	busy = 1
 
