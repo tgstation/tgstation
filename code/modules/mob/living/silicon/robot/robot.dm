@@ -1311,3 +1311,30 @@
 			locked = 1
 		notify_ai(1)
 		. = 1
+
+
+
+/mob/living/silicon/robot/proc/ResetModule()
+
+	notify_ai(2)
+
+	uneq_all()
+	hands.icon_state = "nomod"
+	icon_state = "robot"
+	qdel(module)
+	module = null
+
+	modtype = "robot"
+	designation = "Default"
+	updatename("Default")
+
+	update_icons()
+	update_headlamp()
+
+	speed = 0 // Remove upgrades.
+	ionpulse = FALSE
+	magpulse = FALSE
+
+	status_flags |= CANPUSH
+
+	return 1
