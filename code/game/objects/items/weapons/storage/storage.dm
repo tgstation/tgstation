@@ -76,7 +76,7 @@
 		if(iscarbon(user) || isdrone(user))
 			var/mob/living/L = user
 			if(!L.incapacitated() && I == L.get_active_hand())
-				if(can_be_inserted(I, 0 , L))
+				if(can_be_inserted(I, 0))
 					handle_item_insertion(I, 0 , L)
 
 
