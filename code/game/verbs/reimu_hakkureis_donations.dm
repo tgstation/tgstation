@@ -27,6 +27,9 @@ Owl Mask:/obj/item/clothing/mask/gas/owl_mask:180
 
 Personal Stuff
 Eye patch:/obj/item/clothing/glasses/eyepatch:130
+Orange glasses:/obj/item/clothing/glasses/orange:130
+Heat goggles:/obj/item/clothing/glasses/heat:130
+Cold goggles:/obj/item/clothing/glasses/cold:130
 Cane:/obj/item/weapon/cane:130
 Zippo:/obj/item/weapon/lighter:130
 Cigarette packet:/obj/item/weapon/storage/fancy/cigarettes:20
@@ -39,7 +42,6 @@ Red glasses:/obj/item/clothing/glasses/red:180
 Waistcoat:/obj/item/clothing/tie/waistcoat:85
 Cloak:/obj/item/clothing/cloak:190
 Donut Box:/obj/item/weapon/storage/fancy/donut_box:450
-Badminka Vodka:/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka:240
 
 Shoes
 Clown Shoes:/obj/item/clothing/shoes/clown_shoes:130
@@ -71,6 +73,12 @@ Executive Suit:/obj/item/clothing/under/suit_jacket/really_black:130
 Schoolgirl Uniform:/obj/item/clothing/under/schoolgirl:130
 Tacticool Turtleneck:/obj/item/clothing/under/syndicate/tacticool:130
 Soviet Uniform:/obj/item/clothing/under/soviet:130
+Kilt:/obj/item/clothing/under/kilt:100
+Gladiator uniform:/obj/item/clothing/under/gladiator:100
+Assistant's formal uniform:/obj/item/clothing/under/assistantformal:100
+Psychedelic jumpsuit:/obj/item/clothing/under/rank/psyche:220
+
+
 
 Gloves
 White:/obj/item/clothing/gloves/color/white:130
@@ -230,9 +238,15 @@ proc/build_prizes_list()
 	set name = "Donator panel"
 	set category = "OOC"
 
+
 	if(!ticker || ticker.current_state < 3)
 		alert("Please wait until game setting up!")
 		return
+
+	if(!istype(get_area(mob), /area/shuttle/arrival))
+		return
+
+
 
 	if (!donators[ckey]) //It doesn't exist yet
 		if (load_donator(ckey))
