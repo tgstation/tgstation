@@ -12,16 +12,15 @@
 	if(!already_frozen)
 		for(var/obj/I in contents)
 			if(!I.is_frozen)
-				make_frozen_visual(I)
+				I.make_frozen_visual(I)
 		already_frozen = TRUE
 	freeze_timer++
 	if(freeze_timer >= freeze_max)
 		freeze_timer = 0
 		for(var/obj/IT in contents)
 			if(!IT.is_frozen)
-				make_frozen_visual(IT)
+				IT.make_frozen_visual(IT)
 	MakeSlippery(TURF_WET_PERMAFROST)
-	air.temperature = 2.7
 	return
 /turf/open/indestructible
 	name = "floor"

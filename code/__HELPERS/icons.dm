@@ -1010,7 +1010,7 @@ var/global/list/humanoid_icon_cache = list()
 
 // Used to make the frozen item visuals for Freon.
 
-/proc/make_frozen_visual(var/obj/F)
+/obj/proc/make_frozen_visual(var/obj/F)
 	if(!F.is_frozen)
 		var/icon/IC
 		var/icon/P = new /icon

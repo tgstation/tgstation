@@ -20,6 +20,7 @@
 	var/health = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
+	var/starter_temp
 
 	var/update = 0
 	var/static/list/label2types = list(
@@ -84,6 +85,7 @@
 	desc = "Freon. Great for the atmosphere!"
 	icon_state = "freon"
 	gas_type = "freon"
+	starter_temp = 2.7
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
@@ -91,7 +93,6 @@
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
-
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
@@ -108,7 +109,8 @@
 	if(gas_type)
 		air_contents.add_gas(gas_type)
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-
+		if(starter_temp)
+			air_contents.temperature = starter_temp
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.add_gases("o2","n2")
 	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)

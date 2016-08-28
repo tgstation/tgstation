@@ -53,7 +53,7 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 
 /datum/gas/freon
 	id = "freon"
-	specific_heat = 1
+	specific_heat = 2000
 	name = "Freon"
 	gas_overlay = "freon"
 	moles_visible = MOLES_PLASMA_VISIBLE
