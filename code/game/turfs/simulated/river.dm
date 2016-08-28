@@ -50,7 +50,7 @@
 				continue
 			else
 				var/turf/river_turf = cur_turf.ChangeTurf(turf_type)
-				river_turf.Spread(25, 10, whitelist_area)
+				river_turf.Spread(20, 9, whitelist_area)
 
 	for(var/WP in river_nodes)
 		qdel(WP)
@@ -87,6 +87,9 @@
 		var/turf/T = F
 		if(prob(probability) && T.ChangeTurf(type))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
+		else if(istype(T, /turf/closed/mineral))
+			var/turf/closed/mineral/M = T
+			M.ChangeTurf(M.turf_type)
 
 
 #undef RANDOM_UPPER_X
