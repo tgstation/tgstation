@@ -14,48 +14,56 @@
 		<tr>
 			<td><b>Current Price:</b>
 			<td>{{data.totalprice}}C
+		</tr>
 		<tr>	
 			<td><b>Battery:</b>
 			<td><ui-button action='hw_battery' params='{"battery" : "1"}' state='{{data.hw_battery == 1 ? "selected" : null}}'>Standard</ui-button>
 			<td><ui-button action='hw_battery' params='{"battery" : "2"}' state='{{data.hw_battery == 2 ? "selected" : null}}'>Upgraded</ui-button>
 			<td><ui-button action='hw_battery' params='{"battery" : "3"}' state='{{data.hw_battery == 3 ? "selected" : null}}'>Advanced</ui-button>
+		</tr>
 		<tr>
 			<td><b>Hard Drive:</b>
 			<td><ui-button action='hw_disk' params='{"disk" : "1"}' state='{{data.hw_disk == 1 ? "selected" : null}}'>Standard</ui-button>
 			<td><ui-button action='hw_disk' params='{"disk" : "2"}' state='{{data.hw_disk == 2 ? "selected" : null}}'>Upgraded</ui-button>
 			<td><ui-button action='hw_disk' params='{"disk" : "3"}' state='{{data.hw_disk == 3 ? "selected" : null}}'>Advanced</ui-button>
+		</tr>
 		<tr>
 			<td><b>Network Card:</b>
 			<td><ui-button action='hw_netcard' params='{"netcard" : "0"}' state='{{data.hw_netcard == 0 ? "selected" : null}}'>None</ui-button>
 			<td><ui-button action='hw_netcard' params='{"netcard" : "1"}' state='{{data.hw_netcard == 1 ? "selected" : null}}'>Standard</ui-button>
 			<td><ui-button action='hw_netcard' params='{"netcard" : "2"}' state='{{data.hw_netcard == 2 ? "selected" : null}}'>Advanced</ui-button>
-		
+		</tr>
 		<tr>
 			<td><b>Nano Printer:</b>
 			<td><ui-button action='hw_nanoprint' params='{"print" : "0"}' state='{{data.hw_nanoprint == 0 ? "selected" : null}}'>None</ui-button>
 			<td><ui-button action='hw_nanoprint' params='{"print" : "1"}' state='{{data.hw_nanoprint == 1 ? "selected" : null}}'>Standard</ui-button>
+		</tr>
 		<tr>
 			<td><b>Card Reader:</b>
 			<td><ui-button action='hw_card' params='{"card" : "0"}' state='{{data.hw_card == 0 ? "selected" : null}}'>None</ui-button>
 			<td><ui-button action='hw_card' params='{"card" : "1"}' state='{{data.hw_card == 1 ? "selected" : null}}'>Standard</ui-button>
+		</tr>
 		</table>
 		
-		{{#if data.devtype != 2}}
+		{{#if data.devtype != 2}} {{! No tablets}}
 			<table>
 				<tr>
 					<td><b>Processor Unit:</b>
 					<td><ui-button action='hw_cpu' params='{"cpu" : "1"}' state='{{data.hw_cpu == 1 ? "selected" : null}}'>Standard</ui-button>
 					<td><ui-button action='hw_cpu' params='{"cpu" : "2"}' state='{{data.hw_cpu == 2 ? "selected" : null}}'>Advanced</ui-button>
+				</tr>
 				<tr>
 					<td><b>Tesla Relay:</b>
 					<td><ui-button action='hw_tesla' params='{"tesla" : "0"}' state='{{data.hw_tesla == 0 ? "selected" : null}}'>None</ui-button>
 					<td><ui-button action='hw_tesla' params='{"tesla" : "1"}' state='{{data.hw_tesla == 1 ? "selected" : null}}'>Standard</ui-button>
+				</tr>
 			</table>
 		{{/if}}
 		<table>
 			<tr>
 				<td><b>Confirm Order:</b>
 				<td><ui-button action='confirm_order'>CONFIRM</ui-button>
+			</tr>
 		</table>
 	
 	<hr>
