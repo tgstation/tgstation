@@ -129,7 +129,7 @@
 
 /datum/chemical_reaction/clf3/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	for(var/turf/turf in range(1+round((created_volume-1)/25),T)) // More lulz. (The range of the fireball increases by 1 for every 100 units in the mixture.)
+	for(var/turf/turf in range(1,T))
 		PoolOrNew(/obj/effect/hotspot, turf)
 	holder.chem_temp = 1000 // hot as shit
 
@@ -144,7 +144,7 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	for(var/turf/turf in range(1+round(created_volume/50,T))) // Scales at 200u
+	for(var/turf/turf in range(1,T))
 		PoolOrNew(/obj/effect/hotspot, turf)
 	holder.chem_temp = 1000 // hot as shit
 	..()

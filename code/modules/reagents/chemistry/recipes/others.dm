@@ -8,7 +8,7 @@
 /datum/chemical_reaction/lube
 	name = "Space Lube"
 	id = "lube"
-	results = list("lube" = 3) // fuck this spillover into nullspace.
+	results = list("lube" = 4)
 	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 
 /datum/chemical_reaction/spraytan
@@ -112,8 +112,8 @@
 /datum/chemical_reaction/virus_food
 	name = "Virus Food"
 	id = "virusfood"
-	results = list("virusfood" = 15) // Again, fuck the spillover into nullspace.
-	required_reagents = list("water" = 10, "milk" = 5)
+	results = list("virusfood" = 15)
+	required_reagents = list("water" = 5, "milk" = 5)
 
 /datum/chemical_reaction/virus_food_mutagen
 	name = "mutagenic agar"
