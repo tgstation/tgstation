@@ -21,7 +21,7 @@
 			if(!IT.is_frozen)
 				make_frozen_visual(IT)
 	MakeSlippery(TURF_WET_PERMAFROST)
-	air.temperature = 0
+	air.temperature = 2.7
 	return
 /turf/open/indestructible
 	name = "floor"
