@@ -38,13 +38,14 @@
 	name = "Inath-neq's Endowment"
 	desc = "Adrenaline courses through you as the Cogwheel's energy shields you from all harm!"
 	id = "inathneqs_endowment"
+	icon_state = "inathneqs_endowment"
 	duration = 15
 
 /datum/status_effect/inathneqs_endowment/on_apply()
 	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
 	owner.color = "#1E8CE1"
 	owner.fully_heal()
-	owner.add_stun_absorption("inathneq", 150, "'s flickering blue aura momentarily intensifies!", "Inath-neq's ward absorbs the stun!", " is glowing with a flickering blue light!")
+	owner.add_stun_absorption("inathneq", 150, 1, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " is surrounded by blue light!")
 	owner.status_flags |= GODMODE
 	animate(owner, color = initial(owner.color), time = 150, easing = EASE_IN)
 	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
