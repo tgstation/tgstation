@@ -27,15 +27,17 @@
 /obj/structure/particle_accelerator/particle_emitter/proc/emit_particle(strength = 0)
 	if((last_shot + fire_delay) <= world.time)
 		last_shot = world.time
-		var/turf/T = get_step(src,dir)
+		var/turf/T = get_turf(src)
+		var/obj/effect/accelerated_particle/P
 		switch(strength)
 			if(0)
-				new/obj/effect/accelerated_particle/weak(T, dir)
+				P = new/obj/effect/accelerated_particle/weak(T)
 			if(1)
-				new/obj/effect/accelerated_particle(T, dir)
+				P = new/obj/effect/accelerated_particle(T)
 			if(2)
-				new/obj/effect/accelerated_particle/strong(T, dir)
+				P = new/obj/effect/accelerated_particle/strong(T)
 			if(3)
-				new/obj/effect/accelerated_particle/powerful(T, dir)
+				P = new/obj/effect/accelerated_particle/powerful(T)
+		P.setDir(dir)
 		return 1
 	return 0
