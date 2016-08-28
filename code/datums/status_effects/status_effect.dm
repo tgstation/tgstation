@@ -13,17 +13,15 @@ var/list/status_effects = list() //All status effects affecting literally anyone
 	var/cosmetic = FALSE //If the status effect only exists for flavor.
 	var/unique = TRUE //If there can be multiple status effects of this type on one mob.
 
-/datum/status_effect/New(mob/living/new_owner)
+/datum/status_effect/New()
 	..()
-	if(!new_owner)
-		qdel(src)
-	owner = new_owner
-	status_effects["\ref[owner][id]"] = src
- 	start_ticking()
+	status_effects += src
+	spawn(1) //Give us time to set any variables
+		start_ticking()
 
 /datum/status_effect/Destroy()
-    status_effects -= "\ref[owner][id]"
-    return ..()
+	status_effects -= src
+	..()
 
 /datum/status_effect/proc/start_ticking()
 	if(!src)
@@ -56,15 +54,11 @@ var/list/status_effects = list() //All status effects affecting literally anyone
 // HELPER PROCS //
 //////////////////
 
-/mob/living/proc/apply_status_effect(datum/status_effect/effect)
-	if(status_effects["\ref[src][initial(effect.id)]"] && initial(effect.unique))
-		return 0
-	new effect(src)
+/mob/living/proc/apply_status_effect(effect)
+	var/datum/status_effect/S = new effect
+	for(var/datum/status_effect/S2 in status_effects)
+		if(S.unique && S2.unique && S.id == S2.id && S2.owner == src)
+			qdel(S)
+			return
+	S.owner = src
 	return 1
-
-/mob/living/proc/remove_status_effect(datum/status_effect/effect)
-    var/datum/status_effect/S = status_effects["\ref[src][initial(effect.id)]"]
-    if(!S)
-        return 0
-    qdel(S)
-    return 1

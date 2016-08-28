@@ -1,3 +1,4 @@
+
 //These are all the different status effects. Use the paths for each effect in the defines.
 
 #define BASIC_STATUS_EFFECT /datum/status_effect //Has no effect.
