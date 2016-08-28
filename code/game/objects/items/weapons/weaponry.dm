@@ -56,7 +56,7 @@
 
 var/highlander_claymores = 0
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
-	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>"
+	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	flags = CONDUCT | NODROP
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved", "gored") //ONLY THE MOST VISCERAL ATTACK VERBS
@@ -70,27 +70,20 @@ var/highlander_claymores = 0
 
 /obj/item/weapon/claymore/highlander/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	for(var/mob/living/simple_animal/shade/S in src)
-		S << "<span class='userdanger'>Your home breaks apart, and you with it!</span>"
-		qdel(S)
 	highlander_claymores--
 	return ..()
 
 /obj/item/weapon/claymore/highlander/process()
 	if(isliving(loc))
 		var/mob/living/L = loc
-		if(L.stat == DEAD)
-			L << "<span class='userdanger'>You are unworthy.</span>"
-			L.visible_message("<span class='warning'>[L] explodes in a shower of gore!</span>")
-			L.gib(TRUE)
-		else
+		if(L.stat != DEAD)
 			if(announced || admin_spawned || highlander_claymores > 1)
 				return
 			announced = TRUE
+			L.fully_heal()
 			world << "<span class='userdanger'>[L.real_name] IS THE ONLY ONE LEFT STANDING!</span>"
 			world << sound('sound/misc/highlander_only_one.ogg')
-			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING! You feel your bonds vanish - you can freely drop or sheathe your [name]! (The kilt stays, though.)</span>"
-			flags &= ~NODROP
+			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING!</span>"
 
 /obj/item/weapon/claymore/highlander/pickup(mob/living/user)
 	user << "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>"
@@ -102,25 +95,31 @@ var/highlander_claymores = 0
 
 /obj/item/weapon/claymore/highlander/examine(mob/user)
 	..()
-	user << "It has [notches] notches scratched into the blade."
+	user << "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
 
 /obj/item/weapon/claymore/highlander/attack(mob/living/target, mob/living/user)
 	var/old_target_stat = target.stat
 	. = ..()
 	if(target && target.stat == DEAD && old_target_stat != DEAD && target.mind && target.mind.special_role == "highlander")
-		user.adjustBruteLoss(-200) //STEAL THE LIFE OF OUR FALLEN FOES
-		var/mob/living/simple_animal/shade/S = new(src)
-		S.real_name = "Soul of [target.real_name]"
-		S.name = S.real_name
-		target.mind.transfer_to(S)
-		S.status_flags |= GODMODE
-		S << "<span class='userdanger'>[user]'s blade has claimed your soul! Join them in glorious bloodletting!</span>"
+		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
+		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
+		target.dust()
+
+/obj/item/weapon/claymore/highlander/attack_self(mob/living/user)
+	var/closest_victim
+	var/closest_distance = 255
+	for(var/mob/living/carbon/human/H in player_list - user)
+		if(H.client && H.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+			closest_victim = H
+	if(!closest_victim)
+		user << "<span class='warning'>[src] thrums for a moment and falls dark. Perhaps there's nobody nearby.</span>"
+	user << "<span class='danger'>[src] thrums and points to the [dir2text(get_dir(user, closest_victim))].</span>"
 
 /obj/item/weapon/claymore/highlander/IsReflect()
 	return 1 //YOU THINK YOUR PUNY LASERS CAN STOP ME?
 
-/obj/item/weapon/claymore/highlander/proc/add_notch(mob/living/user) //DYNAMIC CLAYMORE PROGRESSION SYSTEMS - THIS IS THE FUTURE
+/obj/item/weapon/claymore/highlander/proc/add_notch(mob/living/user) //DYNAMIC CLAYMORE PROGRESSION SYSTEM - THIS IS THE FUTURE
 	notches++
 	force++
 	var/new_name = name
@@ -132,33 +131,43 @@ var/highlander_claymores = 0
 		if(2)
 			user << "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the blade.</span>"
 			new_name = "double-notched claymore"
+			color = rgb(255, 235, 235)
 		if(3)
 			user << "<span class='notice'>You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b></span>"
 			new_name = "triple-notched claymore"
+			color = rgb(255, 215, 215)
 		if(4)
 			user << "<span class='notice'>You've lost count of</span> <span class='boldannounce'>how many you've killed.</span>"
 			new_name = "many-notched claymore"
+			color = rgb(255, 195, 195)
 		if(5)
 			user << "<span class='boldannounce'>Five voices now echo in your mind, cheering the slaughter.</span>"
 			new_name = "battle-tested claymore"
+			color = rgb(255, 175, 175)
 		if(6)
 			user << "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>"
 			new_name = "battle-scarred claymore"
+			color = rgb(255, 155, 155)
 		if(7)
 			user << "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>"
-			new_name = "blood-spattered claymore"
+			new_name = "vicious claymore"
+			color = rgb(255, 135, 135)
 		if(8)
 			user << "<span class='userdanger'>IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i></span>"
 			new_name = "bloodthirsty claymore"
+			color = rgb(255, 115, 115)
 		if(9)
 			user << "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>"
 			new_name = "gore-stained claymore"
+			color = rgb(255, 95, 95)
 		if(10)
 			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
+			user.update_icons()
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_valhalla"
 			item_state = "cultblade"
+			color = initial(color)
 
 	name = new_name
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
