@@ -7,7 +7,7 @@ var/datum/subsystem/persistence/SSpersistence
 	var/savefile/secret_satchels
 	var/list/satchel_blacklist 		= list() //this is a typecache
 	var/list/new_secret_satchels 	= list() //these are objects
-	var/list/old_secret_satchels 	= list() //these are just vars
+	var/old_secret_satchels 		= ""
 
 /datum/subsystem/persistence/New()
 	NEW_SS_GLOBAL(SSpersistence)
@@ -21,19 +21,25 @@ var/datum/subsystem/persistence/SSpersistence
 	CollectSecretSatchels()
 
 /datum/subsystem/persistence/proc/PlaceSecretSatchel()
-	secret_satchels = new /savefile("data/npc_saves/SecretSatchels_[MAP_NAME].sav")
+	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
 
-	secret_satchels >> old_secret_satchels
-	if(isnull(old_secret_satchels) || isemptylist(old_secret_satchels))
-		old_secret_satchels = list()
+	secret_satchels[MAP_NAME] >> old_secret_satchels
+
+	if(isnull(old_secret_satchels))
 		return 0
 
-	var/list/chosen_satchel
-	if(old_secret_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
-		chosen_satchel = pick_n_take(old_secret_satchels)
-	secret_satchels << old_secret_satchels
-	if(!chosen_satchel || chosen_satchel.len != 3) //Malformed
+	var/list/expanded_old_satchels = splittext(old_secret_satchels,"#")
+	var/satchel_string
+
+	if(expanded_old_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
+		satchel_string = pick_n_take(expanded_old_satchels)
+
+	old_secret_satchels = jointext(expanded_old_satchels,"#")
+	secret_satchels[MAP_NAME] << old_secret_satchels
+
+	var/list/chosen_satchel = splittext(satchel_string,"|")
+	if(!chosen_satchel || isemptylist(chosen_satchel) || chosen_satchel.len != 3) //Malformed
 		return 0
 
 	var/path = text2path(chosen_satchel[3]) //If the item no longer exist, this returns null
@@ -41,8 +47,8 @@ var/datum/subsystem/persistence/SSpersistence
 		return 0
 
 	var/obj/item/weapon/storage/backpack/satchel/flat/F = new()
-	F.x = chosen_satchel[1]
-	F.y = chosen_satchel[2]
+	F.x = text2num(chosen_satchel[1])
+	F.y = text2num(chosen_satchel[2])
 	F.z = ZLEVEL_STATION
 	if(istype(F.loc,/turf/open/floor) && !istype(F.loc,/turf/open/floor/plating/))
 		F.hide(1)
@@ -71,9 +77,5 @@ var/datum/subsystem/persistence/SSpersistence
 				savable_obj += O.type
 		if(isemptylist(savable_obj))
 			continue
-		if(isemptylist(old_secret_satchels))
-			old_secret_satchels = list(list(F.x, F.y, "[pick(savable_obj)]"))
-		else
-			old_secret_satchels.len += 1
-			old_secret_satchels[old_secret_satchels.len] = list(F.x, F.y, "[pick(savable_obj)]")
-	secret_satchels << old_secret_satchels
+		old_secret_satchels += "[F.x]|[F.y]|[pick(savable_obj)]#"
+	secret_satchels[MAP_NAME] << old_secret_satchels
