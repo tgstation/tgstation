@@ -165,7 +165,7 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	M.mind.make_Nuke(T, nuke_code = null, 0, FALSE)
+	M.mind.make_Nuke(null, nuke_code = null, 0, FALSE)
 	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname
@@ -209,7 +209,7 @@
 	R.mmi.brainmob.name = brainopsname
 
 	R.key = C.key
-	R.mind.make_Nuke(T, nuke_code = null,leader=0, telecrystals = TRUE)
+	R.mind.make_Nuke(null, nuke_code = null,leader=0, telecrystals = TRUE)
 
 ///////////SLAUGHTER DEMON
 

@@ -1393,6 +1393,7 @@
 		special_role = "Syndicate"
 		ticker.mode.forge_syndicate_objectives(src)
 		ticker.mode.greet_syndicate(src)
+		curent.faction |= "syndicate"
 
 		if(spawnloc)
 			current.loc = spawnloc
