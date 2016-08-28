@@ -1,7 +1,7 @@
 /datum/chemical_reaction
 	var/name = null
 	var/id = null
-	var/result = null
+	var/list/results = new/list()
 	var/list/required_reagents = new/list()
 	var/list/required_catalysts = new/list()
 
@@ -9,7 +9,6 @@
 	var/atom/required_container = null // the container required for the reaction to happen
 	var/required_other = 0 // an integer required for the reaction to happen
 
-	var/result_amount = 0
 	var/secondary = 0 // set to nonzero if secondary reaction
 	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 

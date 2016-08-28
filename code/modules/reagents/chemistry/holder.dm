@@ -382,11 +382,10 @@ var/const/INJECT = 5 //injection
 					for(var/B in C.required_reagents)
 						remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
 
-					var/created_volume = C.result_amount*multiplier
-					if(C.result)
-						feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
+					for(var/result in C.results)
+						feedback_add_details("chemical_reaction", "[result]|[C.results[result]*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
-						add_reagent(C.result, C.result_amount*multiplier, null, chem_temp)
+						add_reagent(result, C.results[result]*multiplier, null, chem_temp)
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 
@@ -405,7 +404,7 @@ var/const/INJECT = 5 //injection
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
 
-					C.on_reaction(src, created_volume)
+					C.on_reaction(src, multiplier)
 					reaction_occured = 1
 					break
 
@@ -542,10 +541,10 @@ var/const/INJECT = 5 //injection
 		add_reagent(r_id, amt, data)
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
-	
+
 	if(isnull(amount))
 		amount = INFINITY
-		
+
 	if(!isnum(amount))
 		return 1
 
