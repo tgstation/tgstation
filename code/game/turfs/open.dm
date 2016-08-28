@@ -104,18 +104,23 @@
 				return 0
 			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
-		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
+		if(!(lube&SLIDE_ICE))
+			C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
 
 		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
-		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+		if(!(lube&SLIDE_ICE))
+			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
 		C.accident(C.l_hand)
 		C.accident(C.r_hand)
 
 		var/olddir = C.dir
-		C.Stun(s_amount)
-		C.Weaken(w_amount)
-		C.stop_pulling()
+		if(!(lube&SLIDE_ICE))
+			C.Stun(s_amount)
+			C.Weaken(w_amount)
+			C.stop_pulling()
+		else
+			C.Stun(1)
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)
 			step(buckled_obj, olddir)
@@ -124,6 +129,9 @@
 				spawn (i)
 					step(C, olddir)
 					C.spin(1,1)
+		else if(lube&SLIDE_ICE)
+			spawn(1)
+				step(C, olddir)
 		return 1
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide

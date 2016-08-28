@@ -185,6 +185,8 @@ var/list/gaslist_cache = null
 			if(return_temperature() < 50)
 				if(holder)
 					holder.freon_gas_act()
+			else
+				temperature -= 10
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
