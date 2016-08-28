@@ -3,16 +3,16 @@
 ////////////////////////////////////////
 
 /datum/design/disk/normal
-	name = "basic hard drive"
+	name = "hard disk drive"
 	id = "hdd_basic"
 	req_tech = list("programming" = 1, "engineering" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 100)
-	build_path = /obj/item/weapon/computer_hardware/hard_drive/
+	build_path = /obj/item/weapon/computer_hardware/hard_drive
 	category = list("Computer Parts")
 
 /datum/design/disk/advanced
-	name = "advanced hard drive"
+	name = "advanced hard disk drive"
 	id = "hdd_advanced"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
@@ -21,7 +21,7 @@
 	category = list("Computer Parts")
 
 /datum/design/disk/super
-	name = "super hard drive"
+	name = "super hard disk drive"
 	id = "hdd_super"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
@@ -30,7 +30,7 @@
 	category = list("Computer Parts")
 
 /datum/design/disk/cluster
-	name = "cluster hard drive"
+	name = "cluster hard disk drive"
 	id = "hdd_cluster"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
@@ -39,8 +39,8 @@
 	category = list("Computer Parts")
 
 /datum/design/disk/small
-	name = "small hard drive"
-	id = "hdd_small"
+	name = "solid state drive"
+	id = "ssd_small"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 800, MAT_GLASS = 200)
@@ -48,17 +48,18 @@
 	category = list("Computer Parts")
 
 /datum/design/disk/micro
-	name = "micro hard drive"
-	id = "hdd_micro"
+	name = "micro solid state drive"
+	id = "ssd_micro"
 	req_tech = list("programming" = 1, "engineering" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 100)
 	build_path = /obj/item/weapon/computer_hardware/hard_drive/micro
 	category = list("Computer Parts")
 
+
 // Network cards
 /datum/design/netcard/basic
-	name = "basic network card"
+	name = "network card"
 	id = "netcard_basic"
 	req_tech = list("programming" = 2, "engineering" = 1)
 	build_type = IMPRINTER
@@ -87,9 +88,10 @@
 	build_path = /obj/item/weapon/computer_hardware/network_card/wired
 	category = list("Computer Parts")
 
-// Data crystals (USB flash drives)
+
+// Data disks
 /datum/design/portabledrive/basic
-	name = "basic data crystal"
+	name = "data disk"
 	id = "portadrive_basic"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
@@ -99,7 +101,7 @@
 	category = list("Computer Parts")
 
 /datum/design/portabledrive/advanced
-	name = "advanced data crystal"
+	name = "advanced data disk"
 	id = "portadrive_advanced"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
@@ -109,7 +111,7 @@
 	category = list("Computer Parts")
 
 /datum/design/portabledrive/super
-	name = "super data crystal"
+	name = "super data disk"
 	id = "portadrive_super"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
@@ -118,9 +120,10 @@
 	build_path = /obj/item/weapon/computer_hardware/hard_drive/portable/super
 	category = list("Computer Parts")
 
+
 // Card slot
 /datum/design/cardslot
-	name = "RFID card slot"
+	name = "ID card slot"
 	id = "cardslot"
 	req_tech = list("programming" = 2)
 	build_type = PROTOLATHE
@@ -128,34 +131,45 @@
 	build_path = /obj/item/weapon/computer_hardware/card_slot
 	category = list("Computer Parts")
 
-// Nano printer
-/datum/design/nanoprinter
-	name = "nano printer"
-	id = "nanoprinter"
+// Mini printer
+/datum/design/miniprinter
+	name = "miniprinter"
+	id = "miniprinter"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 600)
-	build_path = /obj/item/weapon/computer_hardware/nano_printer
+	build_path = /obj/item/weapon/computer_hardware/printer/mini
 	category = list("Computer Parts")
 
-// Tesla Link
-/datum/design/teslalink
-	name = "tesla link"
-	id = "teslalink"
+
+// APC Link
+/datum/design/APClink
+	name = "area power connector"
+	id = "APClink"
 	req_tech = list("programming" = 2, "powerstorage" = 3, "engineering" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000)
-	build_path = /obj/item/weapon/computer_hardware/tesla_link
+	build_path = /obj/item/weapon/computer_hardware/recharger/APC
 	category = list("Computer Parts")
 
+
 // Batteries
+/datum/design/battery/controller
+	name = "power cell controller"
+	id = "bat_control"
+	req_tech = list("powerstorage" = 1, "engineering" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 400)
+	build_path = /obj/item/weapon/computer_hardware/battery
+	category = list("Computer Parts")
+
 /datum/design/battery/normal
-	name = "standard battery module"
+	name = "battery module"
 	id = "bat_normal"
 	req_tech = list("powerstorage" = 1, "engineering" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 400)
-	build_path = /obj/item/weapon/computer_hardware/battery_module
+	build_path = /obj/item/weapon/stock_parts/cell/computer
 	category = list("Computer Parts")
 
 /datum/design/battery/advanced
@@ -164,7 +178,7 @@
 	req_tech = list("powerstorage" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 800)
-	build_path = /obj/item/weapon/computer_hardware/battery_module/advanced
+	build_path = /obj/item/weapon/stock_parts/cell/computer/advanced
 	category = list("Computer Parts")
 
 /datum/design/battery/super
@@ -173,16 +187,7 @@
 	req_tech = list("powerstorage" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1600)
-	build_path = /obj/item/weapon/computer_hardware/battery_module/super
-	category = list("Computer Parts")
-
-/datum/design/battery/ultra
-	name = "ultra battery module"
-	id = "bat_ultra"
-	req_tech = list("powerstorage" = 5, "engineering" = 4)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3200)
-	build_path = /obj/item/weapon/computer_hardware/battery_module/ultra
+	build_path = /obj/item/weapon/stock_parts/cell/computer/super
 	category = list("Computer Parts")
 
 /datum/design/battery/nano
@@ -191,7 +196,7 @@
 	req_tech = list("powerstorage" = 1, "engineering" = 1)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200)
-	build_path = /obj/item/weapon/computer_hardware/battery_module/nano
+	build_path = /obj/item/weapon/stock_parts/cell/computer/nano
 	category = list("Computer Parts")
 
 /datum/design/battery/micro
@@ -200,12 +205,13 @@
 	req_tech = list("powerstorage" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 400)
-	build_path = /obj/item/weapon/computer_hardware/battery_module/micro
+	build_path = /obj/item/weapon/stock_parts/cell/computer/micro
 	category = list("Computer Parts")
+
 
 // Processor unit
 /datum/design/cpu
-	name = "computer processor unit"
+	name = "processor board"
 	id = "cpu_normal"
 	req_tech = list("programming" = 3, "engineering" = 2)
 	build_type = IMPRINTER
@@ -215,7 +221,7 @@
 	category = list("Computer Parts")
 
 /datum/design/cpu/small
-	name = "computer microprocessor unit"
+	name = "microprocessor"
 	id = "cpu_small"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
@@ -225,7 +231,7 @@
 	category = list("Computer Parts")
 
 /datum/design/cpu/photonic
-	name = "computer photonic processor unit"
+	name = "photonic processor board"
 	id = "pcpu_normal"
 	req_tech = list("programming" = 5, "engineering" = 4)
 	build_type = IMPRINTER
@@ -235,7 +241,7 @@
 	category = list("Computer Parts")
 
 /datum/design/cpu/photonic/small
-	name = "computer photonic microprocessor unit"
+	name = "photonic microprocessor"
 	id = "pcpu_small"
 	req_tech = list("programming" = 4, "engineering" = 3)
 	build_type = IMPRINTER

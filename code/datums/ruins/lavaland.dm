@@ -91,6 +91,7 @@
 
 /datum/map_template/ruin/lavaland/sin
 	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/sin/envy
 	name = "Ruin of Envy"
@@ -124,7 +125,6 @@
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
-	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"

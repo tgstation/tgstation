@@ -1208,21 +1208,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	if(invoker.real_name == "Lucio")
 		clockwork_say(invoker, text2ratvar("Aww, let's break it DOWN!!"))
-	var/list/affected_servants = list()
 	for(var/mob/living/L in range(7, invoker))
 		if(!is_servant_of_ratvar(L) || L.stat == DEAD)
 			continue
-		L << "<span class='notice'>Inath-neq's power flows through you!</span>"
-		L.color = "#1E8CE1"
-		L.fully_heal()
-		L.add_stun_absorption("inathneq", total_duration, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's ward absorbs the stun!", " is glowing with a flickering blue light!")
-		L.status_flags |= GODMODE
-		animate(L, color = initial(L.color), time = total_duration, easing = EASE_IN)
-		affected_servants += L
-	spawn(total_duration)
-		for(var/mob/living/L in affected_servants)
-			L << "<span class='notice'>You feel Inath-neq's power fade from your body.</span>"
-			L.status_flags &= ~GODMODE
+		L.apply_status_effect(STATUS_EFFECT_INATHNEQS_ENDOWMENT)
 	return 1
 
 

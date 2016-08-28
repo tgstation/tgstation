@@ -14,6 +14,9 @@
 	if(..())
 		return 1
 
+	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
+	var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.portable_drive
+
 	switch(action)
 		if("PRG_openfile")
 			. = 1
@@ -23,7 +26,6 @@
 			var/newname = sanitize(input(usr, "Enter file name or leave blank to cancel:", "File rename"))
 			if(!newname)
 				return 1
-			var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
 			if(!HDD)
 				return 1
 			var/datum/computer_file/data/F = new/datum/computer_file/data()
@@ -32,7 +34,6 @@
 			HDD.store_file(F)
 		if("PRG_deletefile")
 			. = 1
-			var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
 			if(!HDD)
 				return 1
 			var/datum/computer_file/file = HDD.find_file_by_name(params["name"])
@@ -41,7 +42,6 @@
 			HDD.remove_file(file)
 		if("PRG_usbdeletefile")
 			. = 1
-			var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.portable_drive
 			if(!RHDD)
 				return 1
 			var/datum/computer_file/file = RHDD.find_file_by_name(params["name"])
@@ -54,7 +54,6 @@
 			error = null
 		if("PRG_clone")
 			. = 1
-			var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
 			if(!HDD)
 				return 1
 			var/datum/computer_file/F = HDD.find_file_by_name(params["name"])
@@ -64,7 +63,6 @@
 			HDD.store_file(C)
 		if("PRG_rename")
 			. = 1
-			var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
 			if(!HDD)
 				return 1
 			var/datum/computer_file/file = HDD.find_file_by_name(params["name"])
@@ -77,7 +75,6 @@
 			. = 1
 			if(!open_file)
 				return 1
-			var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
 			if(!HDD)
 				return 1
 			var/datum/computer_file/data/F = HDD.find_file_by_name(open_file)
@@ -104,36 +101,31 @@
 			. = 1
 			if(!open_file)
 				return 1
-			var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
 			if(!HDD)
 				return 1
 			var/datum/computer_file/data/F = HDD.find_file_by_name(open_file)
 			if(!F || !istype(F))
 				return 1
-			if(!computer.nano_printer)
+			if(!computer.printer)
 				error = "Missing Hardware: Your computer does not have required hardware to complete this operation."
 				return 1
-			if(!computer.nano_printer.print_text(parse_tags(F.stored_data)))
+			if(!computer.printer.print_text(parse_tags(F.stored_data)))
 				error = "Hardware error: Printer was unable to print the file. It may be out of paper."
 				return 1
 		if("PRG_copytousb")
 			. = 1
-			var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
-			var/obj/item/weapon/computer_hardware/hard_drive/portable/RHDD = computer.portable_drive
 			if(!HDD || !RHDD)
 				return 1
-			var/datum/computer_file/F = HDD.find_file_by_name(params)
+			var/datum/computer_file/F = HDD.find_file_by_name(params["name"])
 			if(!F || !istype(F))
 				return 1
 			var/datum/computer_file/C = F.clone(0)
 			RHDD.store_file(C)
 		if("PRG_copyfromusb")
 			. = 1
-			var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
-			var/obj/item/weapon/computer_hardware/hard_drive/portable/RHDD = computer.portable_drive
 			if(!HDD || !RHDD)
 				return 1
-			var/datum/computer_file/F = RHDD.find_file_by_name(params)
+			var/datum/computer_file/F = RHDD.find_file_by_name(params["name"])
 			if(!F || !istype(F))
 				return 1
 			var/datum/computer_file/C = F.clone(0)

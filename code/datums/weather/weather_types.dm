@@ -113,3 +113,43 @@
 	aesthetic = TRUE
 
 	probability = 10
+
+/datum/weather/rad_storm
+	name = "radiation storm"
+	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
+
+	telegraph_duration = 300
+	telegraph_message = "<span class='warning'>The air begins to grow warm.</span>"
+
+	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
+	weather_duration_lower = 600
+	weather_duration_upper = 1500
+
+	end_duration = 100
+	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
+
+	area_type = /area
+	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai)
+	target_z = ZLEVEL_STATION
+
+	immunity_type = "rad"
+
+/datum/weather/rad_storm/impact(mob/living/L)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.dna && H.dna.species)
+			if(!(RADIMMUNE in H.dna.species.specflags))
+				if(prob(25))
+					if(prob(25))
+						randmuti(H)
+					if(prob(90))
+						randmutb(H)
+					else
+						randmutg(H)
+					H.domutcheck()
+	L.rad_act(20,1)
+
+/datum/weather/rad_storm/end()
+	if(..())
+		return
+	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")

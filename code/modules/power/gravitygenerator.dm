@@ -36,6 +36,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(prob(20))
 		set_broken()
 
+/obj/machinery/gravity_generator/tesla_act(var/power)
+	..()
+	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+
 /obj/machinery/gravity_generator/update_icon()
 	..()
 	icon_state = "[get_status()]_[sprite_number]"

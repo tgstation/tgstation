@@ -1,4 +1,0 @@
-author: "PKPenguin321"
-delete-after: True
-changes: 
-  - rscadd: "Xeno queens now have an action button that makes them appear to themselves as the old, small queen sprite. Now they should be able to interact with things that are above them more easily."

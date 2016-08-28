@@ -44,7 +44,7 @@ var/global/nttransfer_uid = 0
 		if(!remote)
 			crash_download("Connection to remote server lost")
 
-/datum/computer_file/program/nttransfer/kill_program(forced = 0)
+/datum/computer_file/program/nttransfer/kill_program(forced = FALSE)
 	if(downloaded_file) // Client mode, clean up variables for next use
 		finalize_download()
 
@@ -170,7 +170,7 @@ var/global/nttransfer_uid = 0
 		data["uploading"] = 1
 		data["upload_uid"] = unique_token
 		data["upload_clients"] = connected_clients.len
-		data["upload_haspassword"] = server_password ? 1 : 0
+		data["haspassword"] = server_password ? 1 : 0
 		data["upload_filename"] = "[provided_file.filename].[provided_file.filetype]"
 	else if (upload_menu)
 		var/list/all_files[0]

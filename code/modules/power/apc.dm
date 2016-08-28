@@ -82,6 +82,8 @@
 	var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
 	var/auto_name = 0
+	var/failure_timer = 0
+	var/force_update = 0
 	var/update_state = -1
 	var/update_overlay = -1
 	var/global/status_overlays = 0
@@ -626,13 +628,17 @@
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+
 	if(!ui)
 		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
+	if(ui)
+		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
 		"locked" = locked,
+		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
 		"powerCellStatus" = cell ? cell.percent() : null,
@@ -697,7 +703,7 @@
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
-	if(operating && !shorted)
+	if(operating && !shorted && !failure_timer)
 		area.power_light = (lighting > 1)
 		area.power_equip = (equipment > 1)
 		area.power_environ = (environ > 1)
@@ -732,7 +738,7 @@
 	return TRUE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege))
+	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer))
 		return
 	switch(action)
 		if("lock")
@@ -782,6 +788,11 @@
 		if("deoccupy")
 			if(get_malf_status(usr))
 				malfvacate()
+		if("reboot")
+			failure_timer = 0
+			update_icon()
+			update()
+	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
@@ -873,6 +884,12 @@
 	if(stat & (BROKEN|MAINT))
 		return
 	if(!area.requires_power)
+		return
+	if(failure_timer)
+		update()
+		queue_icon_update()
+		failure_timer--
+		force_update = 1
 		return
 
 	/*
@@ -1013,7 +1030,8 @@
 
 	// update icon & area power if anything changed
 
-	if(last_lt != lighting || last_eq != equipment || last_en != environ)
+	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
+		force_update = 0
 		queue_icon_update()
 		update()
 	else if (last_ch != charging)
@@ -1129,6 +1147,19 @@
 		return 1
 	else
 		return 0
+
+
+/obj/machinery/power/apc/proc/energy_fail(duration)
+	for(var/obj/machinery/M in area.contents)
+		if(M.critical_machine)
+			return
+	for(var/A in ai_list)
+		var/mob/living/silicon/ai/I = A
+		if(get_area(I) == area)
+			return
+
+	failure_timer = max(failure_timer, round(duration))
+
 
 #undef APC_UPDATE_ICON_COOLDOWN
 

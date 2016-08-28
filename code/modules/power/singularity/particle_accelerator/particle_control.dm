@@ -159,6 +159,7 @@
 	var/turf/T = loc
 
 	assembled = 0
+	critical_machine = FALSE
 
 	var/obj/structure/particle_accelerator/fuel_chamber/F = locate() in orange(1,src)
 	if(!F)
@@ -189,6 +190,7 @@
 		return 0
 
 	assembled = 1
+	critical_machine = TRUE	//Only counts if the PA is actually assembled.
 	return 1
 
 /obj/machinery/particle_accelerator/control_box/proc/check_part(turf/T, type)

@@ -67,12 +67,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 var/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
-	for(var/area/AR in world)
-		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station) || AR.noteleport) continue
-		if(teleportlocs.Find(AR.name)) continue
+	for(var/V in sortedAreas)
+		var/area/AR = V
+		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station) || AR.noteleport)
+			continue
+		if(teleportlocs[AR.name])
+			continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
 		if (picked && (picked.z == ZLEVEL_STATION))
-			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
 	sortTim(teleportlocs, /proc/cmp_text_dsc)
@@ -1396,6 +1398,13 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
+
+/area/awaymission/errorroom
+	name = "Super Secret Room"
+	luminosity = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	has_gravity = 1
+
 
 /area/spacecontent
 	name = "space"

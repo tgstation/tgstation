@@ -4,8 +4,6 @@
 
 	if (notransform)
 		return
-	if(!loc)
-		return
 
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0

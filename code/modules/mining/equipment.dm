@@ -167,10 +167,10 @@
 	w_class = 3
 	force = 15
 	throwforce = 10
-	var/cooldown = 0
-	var/fieldsactive = 0
 	var/burst_time = 30
 	var/fieldlimit = 4
+	var/list/fields = list()
+	var/quick_burst_mod = 0.8
 	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/weapon/resonator/upgraded
@@ -180,17 +180,19 @@
 	item_state = "resonator_u"
 	origin_tech = "materials=4;powerstorage=3;engineering=3;magnets=3"
 	fieldlimit = 6
+	quick_burst_mod = 1
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	var/turf/T = get_turf(target)
-	if(locate(/obj/effect/resonance) in T)
+	var/obj/effect/resonance/R = locate(/obj/effect/resonance) in T
+	if(R)
+		R.resonance_damage *= quick_burst_mod
+		R.burst(T)
 		return
-	if(fieldsactive < fieldlimit)
+	if(fields.len < fieldlimit)
 		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		new /obj/effect/resonance(T, creator, burst_time)
-		fieldsactive++
-		spawn(burst_time)
-			fieldsactive--
+		var/obj/effect/resonance/RE = new /obj/effect/resonance(T, creator, burst_time, src)
+		fields += RE
 
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
@@ -202,7 +204,9 @@
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(!check_allowed_items(target, 1)) return
+		if(!check_allowed_items(target, 1))
+			return
+		user.changeNext_move(CLICK_CD_MELEE)
 		CreateResonance(target, user)
 
 /obj/effect/resonance
@@ -211,37 +215,42 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
 	mouse_opacity = 0
 	var/resonance_damage = 20
+	var/creator
+	var/obj/item/weapon/resonator/res
 
-/obj/effect/resonance/New(loc, var/creator = null, var/timetoburst)
+/obj/effect/resonance/New(loc, set_creator, timetoburst, set_resonator)
+	..()
+	creator = set_creator
+	res = set_resonator
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
-	if(istype(proj_turf, /turf/closed/mineral))
-		var/turf/closed/mineral/M = proj_turf
-		spawn(timetoburst)
-			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-			M.gets_drilled(creator)
-			qdel(src)
-	else
-		var/datum/gas_mixture/environment = proj_turf.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure < 50)
-			name = "strong resonance field"
-			resonance_damage = 60
-		spawn(timetoburst)
-			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-			if(creator)
-				for(var/mob/living/L in src.loc)
-					add_logs(creator, L, "used a resonator field on", "resonator")
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
-			else
-				for(var/mob/living/L in src.loc)
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
-					L.adjustBruteLoss(resonance_damage)
-			qdel(src)
+	var/datum/gas_mixture/environment = proj_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure < 50)
+		name = "strong resonance field"
+		resonance_damage = 60
+	addtimer(src, "burst", timetoburst, FALSE, proj_turf)
+
+/obj/effect/resonance/Destroy()
+	if(res)
+		res.fields -= src
+	return ..()
+
+/obj/effect/resonance/proc/burst(turf/T)
+	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
+	if(istype(T, /turf/closed/mineral))
+		var/turf/closed/mineral/M = T
+		M.gets_drilled(creator)
+	for(var/mob/living/L in T)
+		if(creator)
+			add_logs(creator, L, "used a resonator field on", "resonator")
+		L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+		L.apply_damage(resonance_damage, BRUTE)
+	qdel(src)
 
 /**********************Facehugger toy**********************/
 

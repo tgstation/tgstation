@@ -26,13 +26,13 @@
 			computer.visible_message("<span class='notice'>\The [computer]'s battery explodes in rain of sparks.</span>")
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()
-		if(istype(computer, /obj/item/modular_computer/processor))
-			var/obj/item/modular_computer/processor/P = computer
-			if(P.machinery_computer.tesla_link && prob(50))
-				qdel(P.machinery_computer.tesla_link)
-				computer.visible_message("<span class='notice'>\The [computer]'s tesla link explodes in rain of sparks.</span>")
-				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
-				spark_system.start()
+
+		if(computer.recharger && prob(50))
+			qdel(computer.recharger)
+			computer.visible_message("<span class='notice'>\The [computer]'s recharger explodes in rain of sparks.</span>")
+			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
+			spark_system.start()
+
 
 /datum/computer_file/program/revelation/ui_act(action, params)
 	if(..())
