@@ -31,6 +31,10 @@
 	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
 
+/obj/item/ammo_casing/energy/laser/practice/hitscan
+	hitscan = 1
+	select_name = "hyper-velocity practice"
+
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/item/projectile/beam/scatter
 	pellets = 5

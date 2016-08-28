@@ -36,7 +36,7 @@
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
-	var/range = 100 //This will de-increment every step. When 0, it will delete the projectile.
+	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
 		//Effects
 	var/stun = 0
 	var/weaken = 0

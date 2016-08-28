@@ -321,7 +321,7 @@
 /obj/item/weapon/gun/energy/laser/chameleon
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice, /obj/item/ammo_casing/energy/laser/practice/hitscan)
 	clumsy_check = 0
 	needs_permit = 0
 	pin = /obj/item/device/firing_pin
