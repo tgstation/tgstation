@@ -39,6 +39,7 @@ var/list/gaslist_cache = null
 	var/volume //liters
 	var/last_share
 	var/tmp/fuel_burnt
+	var/atom/holder
 
 /datum/gas_mixture/New(volume = CELL_VOLUME)
 	..()
@@ -179,6 +180,11 @@ var/list/gaslist_cache = null
 					//Prevents whatever mechanism is causing it to hit negative temperatures.
 				//world << "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]]
 			*/
+	if(cached_gases["freon"])
+		if(cached_gases["freon"][MOLES] > MOLES_PLASMA_VISIBLE)
+			if(holder)
+				holder.freon_gas_act()
+
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		//world << "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]"

@@ -4,7 +4,25 @@
 	var/wet = 0
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/image/wet_overlay = null
+	var/already_frozen = FALSE
+	var/freeze_timer = 0
+	var/freeze_max = 3
 
+/turf/open/freon_gas_act()
+	if(!already_frozen)
+		for(var/obj/I in contents)
+			if(!I.is_frozen)
+				make_frozen_visual(I)
+		already_frozen = TRUE
+	freeze_timer++
+	if(freeze_timer >= freeze_max)
+		freeze_timer = 0
+		for(var/obj/IT in contents)
+			if(!IT.is_frozen)
+				make_frozen_visual(IT)
+	MakeSlippery(TURF_WET_PERMAFROST)
+	air.temperature = 0
+	return
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
@@ -26,6 +44,7 @@
 
 	//cache some vars
 	var/datum/gas_mixture/air = src.air
+	air.holder = src
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
 	for(var/direction in cardinal)
@@ -119,7 +138,9 @@
 			wet_overlay = null
 		var/turf/open/floor/F = src
 		if(istype(F))
-			if(wet_setting == TURF_WET_ICE)
+			if(wet_setting == TURF_WET_PERMAFROST)
+				wet_overlay = image('icons/effects/water.dmi', src, "ice_floor")
+			else if(wet_setting == TURF_WET_ICE)
 				wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
 			else
 				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
@@ -151,24 +172,24 @@
 	if(wet == TURF_WET_ICE && air.temperature > T0C)
 		MakeDry(TURF_WET_ICE)
 		MakeSlippery(TURF_WET_WATER)
-	switch(air.temperature)
-		if(-INFINITY to T0C)
-			if(wet != TURF_WET_ICE && wet)
-				MakeDry(TURF_WET_ICE)
-				MakeSlippery(TURF_WET_ICE)
-		if(T0C to T20C)
-			wet_time = max(0, wet_time-1)
-		if(T20C to T0C + 40)
-			wet_time = max(0, wet_time-2)
-		if(T0C + 40 to T0C + 60)
-			wet_time = max(0, wet_time-3)
-		if(T0C + 60 to T0C + 80)
-			wet_time = max(0, wet_time-5)
-		if(T0C + 80 to T0C + 100)
-			wet_time = max(0, wet_time-10)
-		if(T0C + 100 to INFINITY)
-			wet_time = 0
-
+	if(wet != TURF_WET_PERMAFROST)
+		switch(air.temperature)
+			if(-INFINITY to T0C)
+				if(wet != TURF_WET_ICE && wet)
+					MakeDry(TURF_WET_ICE)
+					MakeSlippery(TURF_WET_ICE)
+			if(T0C to T20C)
+				wet_time = max(0, wet_time-1)
+			if(T20C to T0C + 40)
+				wet_time = max(0, wet_time-2)
+			if(T0C + 40 to T0C + 60)
+				wet_time = max(0, wet_time-3)
+			if(T0C + 60 to T0C + 80)
+				wet_time = max(0, wet_time-5)
+			if(T0C + 80 to T0C + 100)
+				wet_time = max(0, wet_time-10)
+			if(T0C + 100 to INFINITY)
+				wet_time = 0
 	if(wet && wet < TURF_WET_ICE && !wet_time)
 		MakeDry(TURF_WET_ICE)
 	if(!wet && wet_time)
