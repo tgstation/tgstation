@@ -140,7 +140,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(S)
 					for(var/obj/machinery/shuttle_manipulator/M in machines)
 						if(M.shuttle_purchased)
-
+							usr << "A replacement shuttle has already been purchased."
 						else
 							if(SSshuttle.points >= S.credit_cost)
 								M.unload_preview()
