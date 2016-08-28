@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - bugfix: "Placing a singularity or energy ball generator directly in front of an active particle accelerator may be a bad idea."
