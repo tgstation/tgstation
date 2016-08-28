@@ -90,6 +90,24 @@
 	P.amount = 5
 	P.loc = get_turf(holder.my_atom)
 
+/datum/chemical_reaction/slimeglass
+	name = "Slime Glass"
+	id = "m_glass"
+	result = null
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/metal
+	required_other = 1
+
+/datum/chemical_reaction/slimeglass/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/glass
+	M.amount = 15
+	M.loc = get_turf(holder.my_atom)
+	var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/rglass
+	P.amount = 5
+	P.loc = get_turf(holder.my_atom)
+
 //Gold
 /datum/chemical_reaction/slimecrit
 	name = "Slime Crit"
