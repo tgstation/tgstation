@@ -66,7 +66,7 @@
 	icon_state = "dragon"
 	desc = "A suit of armour fashioned from the remains of an ash drake. "
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe, /obj/item/weapon/twohanded/spear)
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 20, bomb = 50, bio = 0, rad = 0)
+	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 0, rad = 0)
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/cloakhood/drake
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
