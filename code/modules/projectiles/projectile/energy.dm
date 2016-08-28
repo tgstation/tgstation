@@ -18,7 +18,7 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
 	muzzle_type = /obj/effect/overlay/temp/projectile/muzzle/stun
-	tracer_type	= /obj/effect/overlay/temp/projectile/tracer/stun
+	tracer_type = /obj/effect/overlay/temp/projectile/tracer/stun
 	impact_type = /obj/effect/overlay/temp/projectile/impact/stun
 
 /obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = 0)

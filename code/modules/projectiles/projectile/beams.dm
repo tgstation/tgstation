@@ -72,7 +72,7 @@
 	damage = 50
 	luminosity = 2
 	muzzle_type = /obj/effect/overlay/temp/projectile/muzzle/pulse
-	tracer_type	= /obj/effect/overlay/temp/projectile/tracer/pulse
+	tracer_type = /obj/effect/overlay/temp/projectile/tracer/pulse
 	impact_type = /obj/effect/overlay/temp/projectile/impact/pulse
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
@@ -134,7 +134,7 @@
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)
 	muzzle_type = /obj/effect/overlay/temp/projectile/muzzle/blue
-	tracer_type	= /obj/effect/overlay/temp/projectile/tracer/blue
+	tracer_type = /obj/effect/overlay/temp/projectile/tracer/blue
 	impact_type = /obj/effect/overlay/temp/projectile/impact/blue
 
 /obj/item/projectile/beam/instakill
