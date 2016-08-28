@@ -88,6 +88,10 @@
 	throwforce = 2
 	slot_flags = SLOT_BELT
 	spawn_type = /obj/item/candle
+	fancy_open = TRUE
+
+/obj/item/weapon/storage/fancy/candle_box/CtrlClick(mob/user)
+	return
 
 ////////////
 //CIG PACK//
