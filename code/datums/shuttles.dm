@@ -183,7 +183,6 @@
 		definitely no zombifyin' reagents!"
 	admin_notes = "Meat currently contains no zombifying reagents, lizard on \
 		meatspike must be spawned in."
-	credit_cost = 5000
 
 /datum/map_template/shuttle/ferry/lighthouse
 	suffix = "lighthouse"
@@ -198,7 +197,6 @@
 	admin_notes = "Currently larger than ferry docking port on Box, will not \
 		hit anything, but must be force docked. Trader and ERT bodyguards are \
 		not included."
-	credit_cost = 7500
 
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
