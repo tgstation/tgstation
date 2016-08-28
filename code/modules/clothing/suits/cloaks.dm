@@ -78,7 +78,7 @@
 	name = "drake helm"
 	icon_state = "dragon"
 	desc = "The skull of a dragon."
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 20, bomb = 50, bio = 0, rad = 0)
+	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 0, rad = 0)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
