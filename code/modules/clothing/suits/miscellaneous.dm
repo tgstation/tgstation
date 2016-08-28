@@ -37,7 +37,6 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
-	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/suit/pirate/captain
 	name = "pirate captain coat"
@@ -91,7 +90,6 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	burn_state = FIRE_PROOF
-	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/suit/hastur
 	name = "\improper Hastur's robe"
@@ -154,8 +152,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
-	pockets = /obj/item/weapon/storage/internal/pocket
-
 
 /obj/item/clothing/suit/cardborg
 	name = "cardborg suit"
@@ -334,7 +330,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
@@ -422,7 +417,6 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 	hooded = 1
-	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/head/winterhood
 	name = "winter hood"
