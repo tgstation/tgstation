@@ -58,6 +58,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	user.visible_message("<span class='danger'>[user] claws at [src]!</span>")
+	playsound(user.loc, 'sound/weapons/slash.ogg', 100, 1)
 	take_damage(50)
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
