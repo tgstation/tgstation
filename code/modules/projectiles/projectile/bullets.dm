@@ -244,6 +244,7 @@
 	armour_penetration = 0
 	nodamage = 1
 	stun = 0
+	dismemberment = 0
 	weaken = 0
 	breakthings = FALSE
 
@@ -258,6 +259,7 @@
 	armour_penetration = 15
 	damage = 15
 	stun = 0
+	dismemberment = 0
 	weaken = 0
 	breakthings = FALSE
 
