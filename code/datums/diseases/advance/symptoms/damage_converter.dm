@@ -82,7 +82,7 @@ Bonus
 	resistance = -2
 	stage_speed = -2
 	transmittable = 0
-	level = 7
+	level = 8
 
 /datum/symptom/damage_converter_uranium/Activate(datum/disease/advance/A)
 	..()
