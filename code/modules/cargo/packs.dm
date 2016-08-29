@@ -147,7 +147,7 @@
 	name = "NULL_ENTRY"
 	hidden = TRUE
 	cost = 14000
-	contains = null
+	contains = list()
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 	dangerous = TRUE
