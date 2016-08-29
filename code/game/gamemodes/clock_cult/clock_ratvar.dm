@@ -294,7 +294,7 @@
 		world << 'sound/magic/clockwork/ratvar_attack.ogg'
 		sleep(5.2)
 		for(var/mob/M in mob_list)
-			flash_color(M, flash_color="#BE8700", flash_time=1)
+			flash_color(M, flash_color="#966400", flash_time=1)
 			shake_camera(M, 4, 3)
 		var/ratvar_chance = min(ticker.mode.servants_of_ratvar.len, 50)
 		var/narsie_chance = ticker.mode.cult.len
@@ -311,7 +311,7 @@
 		world << 'sound/magic/clockwork/narsie_attack.ogg'
 		sleep(7.4)
 		for(var/mob/M in mob_list)
-			flash_color(M, flash_color="#960000", flash_time=1)
+			flash_color(M, flash_color="#C80000", flash_time=1)
 			shake_camera(M, 4, 3)
 		if(winner == "Nar-Sie")
 			break
