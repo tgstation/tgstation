@@ -47,6 +47,16 @@
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space. "
 
+/mob/living/simple_animal/hostile/bear/russian
+	name = "combat bear"
+	desc = "A ferocious brown bear decked out in armor plating, a red star with yellow outlining details the shoulder plating."
+	icon_state = "combatbear"
+	icon_living = "combatbear"
+	icon_dead = "combatbear_dead"
+	faction = list("russian")
+	health = 120
+	maxHealth = 120
+
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
 	return 1	//No drifting in space for space bears!
 
