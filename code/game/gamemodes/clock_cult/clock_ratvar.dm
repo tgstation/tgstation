@@ -302,9 +302,7 @@
 			narsie_chance++
 		ratvar_chance = rand(base_victory_chance, ratvar_chance)
 		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
-		if(narsie_chance > ratvar_chance)
-			winner = "Nar-Sie"
-		else if(ratvar_chance > narsie_chance)
+		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break
 		sleep(rand(2,5))
@@ -313,7 +311,8 @@
 		for(var/mob/M in mob_list)
 			flash_color(M, flash_color="#C80000", flash_time=1)
 			shake_camera(M, 4, 3)
-		if(winner == "Nar-Sie")
+		if(narsie_chance > ratvar_chance)
+			winner = "Nar-Sie"
 			break
 		base_victory_chance *= 2 //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
