@@ -19,14 +19,15 @@
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/gloves/color/fyellow/New()
+	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
 	name = "black gloves"
 	icon_state = "black"
-	item_state = "bgloves"
-	item_color="brown"
+	item_state = "blackgloves"
+	item_color="black"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
@@ -35,10 +36,10 @@
 	var/can_be_cut = 1
 
 /obj/item/clothing/gloves/color/black/hos
-	item_color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.
+	item_color = "hosred"	//Exists for washing machines. Is not different from black gloves in any way.
 
 /obj/item/clothing/gloves/color/black/ce
-	item_color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
+	item_color = "chief"		//Exists for washing machines. Is not different from black gloves in any way.
 
 /obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -62,6 +63,7 @@
 	icon_state = "red"
 	item_state = "redgloves"
 	item_color = "red"
+
 
 /obj/item/clothing/gloves/color/red/insulated
 	name = "insulated gloves"
@@ -182,6 +184,7 @@
 	item_color = "mime"
 
 /obj/item/clothing/gloves/color/random/New()
+	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,
 		/obj/item/clothing/gloves/color/red = 1,

@@ -189,12 +189,12 @@
 
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
+	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		qdel(mymist)
 
 	if(on)
-		overlays += image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
+		add_overlay(image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir))
 		if(watertemp == "freezing")
 			return
 		if(!ismist)
@@ -478,3 +478,45 @@
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
+
+
+//Shower Curtains//
+//Defines used are pre-existing in layers.dm//
+
+
+/obj/structure/curtain
+	name = "curtain"
+	desc = "Contains less than 1% mercury."
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "open"
+	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
+	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
+	layer = WALL_OBJ_LAYER
+	anchored = 1
+	opacity = 0
+	density = 0
+	var/open = TRUE
+
+
+/obj/structure/curtain/proc/toggle()
+	open = !open
+	update_icon()
+
+/obj/structure/curtain/update_icon()
+	if(!open)
+		icon_state = "closed"
+		layer = WALL_OBJ_LAYER
+		density = 1
+		open = FALSE
+
+	else
+		icon_state = "open"
+		layer = SIGN_LAYER
+		density = 0
+		open = TRUE
+
+/obj/structure/curtain/attack_hand(mob/user)
+	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
+	toggle()
+	..()
+

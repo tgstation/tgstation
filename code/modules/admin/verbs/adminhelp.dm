@@ -1,4 +1,4 @@
-/proc/keywords_lookup(msg)
+/proc/keywords_lookup(msg,irc)
 
 	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
@@ -10,6 +10,7 @@
 	var/list/surnames = list()
 	var/list/forenames = list()
 	var/list/ckeys = list()
+	var/founds = ""
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)
@@ -56,9 +57,16 @@
 							var/is_antag = 0
 							if(found.mind && found.mind.special_role)
 								is_antag = 1
+							founds += "Name: [found.name]([found.real_name]) Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
 							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
 							continue
 		msg += "[original_word] "
+	if(irc)
+		if(founds == "")
+			return "Search Failed"
+		else
+			return founds
+
 	return msg
 
 
@@ -108,6 +116,7 @@
 	for(var/client/X in admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
+		window_flash(X)
 		X << msg
 
 
@@ -154,9 +163,25 @@
 /proc/send2otherserver(source,msg,type = "Ahelp")
 	if(global.cross_allowed)
 		var/list/message = list()
-		message["message"] = "[source]: [msg]"
+		message["message_sender"] = source
+		message["message"] = msg
 		message["source"] = "([config.cross_name])"
 		message["key"] = global.comms_key
 		message["crossmessage"] = type
 
 		world.Export("[global.cross_address]?[list2params(message)]")
+
+
+/proc/ircadminwho()
+	var/msg = "Admins: "
+	for(var/client/C in admins)
+		msg += "[C] "
+
+		if(C.holder.fakekey)
+			msg += "(Stealth)"
+
+		if(C.is_afk())
+			msg += "(AFK)"
+		msg += ", "
+
+	return msg

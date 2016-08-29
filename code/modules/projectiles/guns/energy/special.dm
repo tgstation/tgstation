@@ -40,7 +40,7 @@
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(power_supply.charge > shot.e_cost)
-		overlays += "decloner_spin"
+		add_overlay("decloner_spin")
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
@@ -82,113 +82,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
 
-/obj/item/weapon/gun/energy/kinetic_accelerator
-	name = "proto-kinetic accelerator"
-	desc = "According to Nanotrasen accounting, this is mining equipment. \
-	It's been modified for extreme power output to crush rocks, but often \
-	serves as a miner's first defense against hostile alien life; it's not \
-	very powerful unless used in a low pressure environment.\n\
-	It uses an experimental self-charging cell powered by the user's \
-	bioelectrical field. The downside of this is that it quickly discharges \
-	when not in direct contact with a user, and multiple accelerators can \
-	interfere with each other."
-	icon_state = "kineticgun"
-	item_state = "kineticgun"
-	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = /obj/item/weapon/stock_parts/cell/emproof
-	// Apparently these are safe to carry? I'm sure goliaths would disagree.
-	needs_permit = 0
-	var/overheat_time = 16
-	unique_rename = 1
-	origin_tech = "combat=3;powerstorage=3;engineering=3"
-	weapon_weight = WEAPON_LIGHT
-	var/holds_charge = FALSE
-	var/unique_frequency = FALSE // modified by KA modkits
-	var/overheat = FALSE
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/super
-	name = "super-kinetic accelerator"
-	desc = "An upgraded, superior version of the proto-kinetic accelerator."
-	icon_state = "kineticgun_u"
-	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
-	overheat_time = 15
-	origin_tech = "materials=5;powerstorage=3;engineering=4;magnets=3;combat=3"
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/hyper
-	name = "hyper-kinetic accelerator"
-	desc = "An upgraded, even more superior version of the proto-kinetic accelerator."
-	icon_state = "kineticgun_h"
-	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
-	overheat_time = 14
-	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg
-	holds_charge = TRUE
-	unique_frequency = TRUE
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/New()
-	. = ..()
-	if(!holds_charge)
-		empty()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
-	. = ..()
-	attempt_reload()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/equipped(mob/user)
-	. = ..()
-	if(!can_shoot())
-		attempt_reload()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/dropped()
-	. = ..()
-	if(!holds_charge)
-		// Put it on a delay because moving item from slot to hand
-		// calls dropped().
-		sleep(1)
-		if(!ismob(loc))
-			empty()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
-	power_supply.use(500)
-	update_icon()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/attempt_reload()
-	if(overheat)
-		return
-	overheat = TRUE
-
-	var/carried = 0
-	if(!unique_frequency)
-		for(var/obj/item/weapon/gun/energy/kinetic_accelerator/K in \
-			loc.GetAllContents())
-
-			carried++
-
-		carried = max(carried, 1)
-	else
-		carried = 1
-
-	addtimer(src, "reload", overheat_time * carried)
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
-	return
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
-	power_supply.give(500)
-	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-	else
-		loc << "<span class='warning'>[src] silently charges up.<span>"
-	update_icon()
-	overheat = FALSE
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
-	if(!can_shoot())
-		icon_state = "[initial(icon_state)]_empty"
-	else
-		icon_state = initial(icon_state)
-
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	name = "mini energy crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
@@ -204,6 +97,7 @@
 	overheat_time = 20
 	holds_charge = TRUE
 	unique_frequency = TRUE
+	can_flashlight = 0
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
@@ -340,6 +234,12 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/high"
 	pin = null
 
+/obj/item/weapon/gun/energy/temperature/security
+	name = "security temperature gun"
+	desc = "A weapon that can only be used to its full potential by the truly robust."
+	origin_tech = "combat=2;materials=2;powerstorage=1;magnets=1"
+	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/energy/laser/instakill
 	name = "instakill rifle"
 	icon_state = "instagib"
@@ -366,8 +266,10 @@
 
 /obj/item/weapon/gun/energy/gravity_gun
 	name = "one-point bluespace-gravitational manipulator"
+	icon_state = "gravity_gun"
+	item_state = "gravity_gun"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity"
-	ammo_type = list(/obj/item/ammo_casing/energy/gravipulse, /obj/item/ammo_casing/energy/gravipulse/alt)
+	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
 	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=4"
 	item_state = null
 	icon_state = "gravity_gun"

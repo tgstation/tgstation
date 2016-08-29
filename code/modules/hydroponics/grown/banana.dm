@@ -8,6 +8,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	lifespan = 50
 	endurance = 30
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip)
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)

@@ -7,7 +7,6 @@
 	maxhealth = 400
 	explosion_block = 6
 	point_return = -1
-	atmosblock = 1
 	health_regen = 0 //we regen in Life() instead of when pulsed
 	var/core_regen = 2
 	var/overmind_get_delay = 0 //we don't want to constantly try to find an overmind, this var tracks when we'll try to get an overmind again
@@ -17,7 +16,7 @@
 
 /obj/effect/blob/core/New(loc, client/new_overmind = null, new_rate = 2, placed = 0)
 	blob_cores += src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
@@ -31,26 +30,27 @@
 	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
 
 /obj/effect/blob/core/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	color = null
 	var/image/I = new('icons/mob/blob.dmi', "blob")
 	if(overmind)
 		I.color = overmind.blob_reagent_datum.color
-	overlays += I
+	add_overlay(I)
 	var/image/C = new('icons/mob/blob.dmi', "blob_core_overlay")
-	overlays += C
+	add_overlay(C)
 
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
 	if(overmind)
 		overmind.blob_core = null
 	overmind = null
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	return ..()
 
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
+	exposed_temperature *= 0.5
+	..()
 
 /obj/effect/blob/core/ex_act(severity, target)
 	var/damage = 50 - 10 * severity //remember, the core takes half brute damage, so this is 20/15/10 damage based on severity

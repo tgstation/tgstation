@@ -10,9 +10,12 @@
 	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Weaken(stunforce*3)
-		deductcharge(hitcost)
-		do_teleport(user, get_turf(user), 50)//honk honk
+		if(do_teleport(user, get_turf(user), 50))//honk honk
+			user.Weaken(stunforce*3)
+			deductcharge(hitcost)
+		else
+			user.Weaken(stunforce*3)
+			deductcharge(hitcost/4)
 		return
 	else
 		if(status)

@@ -25,7 +25,7 @@
 	canmove = 0
 	stunned = 1
 	icon = null
-	overlays.Cut()
+	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
 	var/atom/movable/overlay/animation = new( loc )
@@ -141,7 +141,7 @@
 	canmove = 0
 	stunned = 1
 	icon = null
-	overlays.Cut()
+	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"
@@ -422,8 +422,8 @@
 	. = new_slime
 	qdel(src)
 
-/mob/proc/become_overmind(mode_made = 0)
-	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made)
+/mob/proc/become_overmind(mode_made, starting_points = 60)
+	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made, starting_points)
 	if(mind)
 		mind.transfer_to(B)
 	else

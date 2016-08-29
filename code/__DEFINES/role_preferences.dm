@@ -19,7 +19,6 @@
 #define ROLE_NINJA				"space ninja"
 #define ROLE_MONKEY				"monkey"
 #define ROLE_GANG				"gangster"
-#define ROLE_SHADOWLING			"shadowling"
 #define ROLE_ABDUCTOR			"abductor"
 #define ROLE_REVENANT			"revenant"
 #define ROLE_HOG_GOD			"hand of god: god"
@@ -44,7 +43,6 @@ var/global/list/special_roles = list(
 	ROLE_NINJA,
 	ROLE_MONKEY = /datum/game_mode/monkey,
 	ROLE_GANG = /datum/game_mode/gang,
-	ROLE_SHADOWLING = /datum/game_mode/shadowling,
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
 	ROLE_HOG_GOD = /datum/game_mode/hand_of_god,
@@ -52,3 +50,8 @@ var/global/list/special_roles = list(
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
 )
+
+//Job defines for what happens when you fail to qualify for any job during job selection
+#define BEASSISTANT 	1
+#define BERANDOMJOB 	2
+#define RETURNTOLOBBY 	3

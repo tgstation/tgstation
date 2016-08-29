@@ -1,6 +1,6 @@
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
-	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
+	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
 	var/obj/item/weapon/twohanded/fireaxe/fireaxe = new/obj/item/weapon/twohanded/fireaxe
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
@@ -84,7 +84,7 @@
 
 /obj/structure/fireaxecabinet/blob_act(obj/effect/blob/B)
 	if(fireaxe)
-		fireaxe.loc = src.loc
+		fireaxe.forceMove(loc)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
@@ -112,38 +112,41 @@
 	take_damage(20)
 
 /obj/structure/fireaxecabinet/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper)
+	if(!M.melee_damage_upper && !M.obj_damage)
 		return
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 					  "<span class='danger'>You smash against [src].</span>")
-	take_damage(M.melee_damage_upper, M.melee_damage_type)
+	if(M.obj_damage)
+		take_damage(M.obj_damage, M.melee_damage_type)
+	else
+		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
 	return
 
 /obj/structure/fireaxecabinet/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(fireaxe)
-		overlays += "axe"
+		add_overlay("axe")
 	if(!open)
 		switch(health)
 			if(-INFINITY to 0)
-				overlays += "glass4"
+				add_overlay("glass4")
 			if(1 to 20)
-				overlays += "glass3"
+				add_overlay("glass3")
 			if(21 to 40)
-				overlays += "glass2"
+				add_overlay("glass2")
 			if(41 to 59)
-				overlays += "glass1"
+				add_overlay("glass1")
 			if(60)
-				overlays += "glass"
+				add_overlay("glass")
 		if(locked)
-			overlays += "locked"
+			add_overlay("locked")
 		else
-			overlays += "unlocked"
+			add_overlay("unlocked")
 	else
-		overlays += "glass_raised"
+		add_overlay("glass_raised")
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	user << "<span class = 'caution'> Resetting circuitry...</span>"

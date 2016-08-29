@@ -2,10 +2,10 @@
 	xgibs(loc, viruses)
 
 /mob/living/carbon/alien/gib_animation()
-	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-a")
+	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-a"))
 
 /mob/living/carbon/alien/spawn_dust()
 	new /obj/effect/decal/remains/xeno(loc)
 
 /mob/living/carbon/alien/dust_animation()
-	new /obj/effect/overlay/temp/dust_animation(loc, "dust-a")
+	PoolOrNew(/obj/effect/overlay/temp/dust_animation, list(loc, "dust-a"))

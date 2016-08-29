@@ -80,6 +80,6 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(priority_alarms.len)
-		overlays += "alert:2"
+		add_overlay("alert:2")
 	else if(minor_alarms.len)
-		overlays += "alert:1"
+		add_overlay("alert:1")

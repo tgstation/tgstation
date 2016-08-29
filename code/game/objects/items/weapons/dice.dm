@@ -115,6 +115,7 @@
 
 /obj/item/weapon/dice/proc/diceroll(mob/user)
 	result = rand(1, sides)
+	var/fake_result = rand(1, sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
 	if(sides == 20 && result == 20)
 		comment = "Nat 20!"
@@ -128,7 +129,7 @@
 	if(user != null) //Dice was rolled in someone's hand
 		user.visible_message("[user] has thrown [src]. It lands on [result]. [comment]", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
-							 "<span class='italics'>You hear [src] rolling.</span>")
+							 "<span class='italics'>You hear [src] rolling, it sounds like a [fake_result].</span>")
 	else if(src.throwing == 0) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
@@ -141,5 +142,5 @@
 		H.Weaken(3)
 
 /obj/item/weapon/dice/update_icon()
-	overlays.Cut()
-	overlays += "[src.icon_state][src.result]"
+	cut_overlays()
+	add_overlay("[src.icon_state][src.result]")

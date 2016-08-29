@@ -142,7 +142,7 @@
 
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
+	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/) || istype(O,/obj/item/weapon/grown/))
 		return 1
 	return 0
 
@@ -277,9 +277,9 @@
 	..()
 	overlays = 0
 	if(drying)
-		overlays += "drying_rack_drying"
+		add_overlay("drying_rack_drying")
 	if(contents.len)
-		overlays += "drying_rack_filled"
+		add_overlay("drying_rack_filled")
 
 /obj/machinery/smartfridge/drying_rack/process()
 	..()

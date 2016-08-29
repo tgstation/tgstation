@@ -150,22 +150,17 @@
 	sibling!</B>"
 
 /mob/living/simple_animal/slaughter/laughter/Destroy()
-	// You know, if there's ANYONE LEFT.
 	release_friends()
 	. = ..()
 
 /mob/living/simple_animal/slaughter/laughter/ex_act(severity)
-	if(severity == 1)
-		release_friends() // ABANDON SHIP
-	. = ..()
-
-/mob/living/simple_animal/slaughter/laughter/death()
-	release_friends()
-	. = ..()
-
-/mob/living/simple_animal/slaughter/laughter/wabbajack_act()
-	release_friends()
-	. = ..()
+	switch(severity)
+		if(1)
+			death()
+		if(2)
+			adjustBruteLoss(60)
+		if(3)
+			adjustBruteLoss(30)
 
 /mob/living/simple_animal/slaughter/laughter/proc/release_friends()
 	if(!consumed_mobs)

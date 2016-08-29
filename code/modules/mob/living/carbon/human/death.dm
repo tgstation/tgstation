@@ -1,8 +1,8 @@
 /mob/living/carbon/human/gib_animation()
-	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-h")
+	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-h"))
 
 /mob/living/carbon/human/dust_animation()
-	new /obj/effect/overlay/temp/dust_animation(loc, "dust-h")
+	PoolOrNew(/obj/effect/overlay/temp/dust_animation, list(loc, "dust-h"))
 
 /mob/living/carbon/human/spawn_gibs()
 	hgibs(loc, viruses, dna)
@@ -33,8 +33,7 @@
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	. = ..(gibbed)
 	if(mind && mind.devilinfo)
-		spawn(0)
-			mind.devilinfo.beginResurrectionCheck(src)
+		addtimer(mind.devilinfo, "beginResurrectionCheck", 0, FALSE, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

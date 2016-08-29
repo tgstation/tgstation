@@ -54,6 +54,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/static_environ
 
 	var/has_gravity = 0
+	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
@@ -66,12 +67,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 var/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
-	for(var/area/AR in world)
-		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station)) continue
-		if(teleportlocs.Find(AR.name)) continue
+	for(var/V in sortedAreas)
+		var/area/AR = V
+		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station) || AR.noteleport)
+			continue
+		if(teleportlocs[AR.name])
+			continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
 		if (picked && (picked.z == ZLEVEL_STATION))
-			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
 	sortTim(teleportlocs, /proc/cmp_text_dsc)
@@ -138,27 +141,34 @@ var/list/teleportlocs = list()
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/labor
 	name = "Labor Camp Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/supply
 	name = "Supply Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 
 /area/shuttle/transport
 	name = "Transport Shuttle"
+	blob_allowed = FALSE
 
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
+	blob_allowed = FALSE
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
+	blob_allowed = FALSE
 
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
+	blob_allowed = FALSE
 
 /area/start
 	name = "start area"
@@ -175,6 +185,7 @@ var/list/teleportlocs = list()
 	icon_state = "centcom"
 	requires_power = 0
 	has_gravity = 1
+	noteleport = 1
 	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
 
 /area/centcom/control
@@ -202,6 +213,7 @@ var/list/teleportlocs = list()
 	icon_state = "syndie-ship"
 	requires_power = 0
 	has_gravity = 1
+	noteleport = 1
 	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 
 /area/syndicate_mothership/control
@@ -284,12 +296,14 @@ var/list/teleportlocs = list()
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	noteleport = 1
 
 //Abductors
 /area/abductor_ship
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = 0
+	noteleport = 1
 	has_gravity = 1
 
 
@@ -653,6 +667,7 @@ var/list/teleportlocs = list()
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
+	blob_allowed = FALSE
 
 /area/solar/auxport
 		name = "Fore Port Solar Array"
@@ -897,6 +912,10 @@ var/list/teleportlocs = list()
 
 /area/security/vacantoffice
 	name = "Vacant Office"
+	icon_state = "security"
+
+/area/security/vacantoffice2
+	name = "Vacant Office B"
 	icon_state = "security"
 
 /area/quartermaster
@@ -1149,6 +1168,10 @@ var/list/teleportlocs = list()
 	name = "Construction Area"
 	icon_state = "yellow"
 
+/area/mining_construction
+	name = "Auxillary Base Construction"
+	icon_state = "yellow"
+
 /area/construction/supplyshuttle
 	name = "Supply Shuttle"
 	icon_state = "yellow"
@@ -1375,6 +1398,13 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
+
+/area/awaymission/errorroom
+	name = "Super Secret Room"
+	luminosity = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	has_gravity = 1
+
 
 /area/spacecontent
 	name = "space"

@@ -48,22 +48,22 @@
 		powered = 0
 
 /obj/item/weapon/defibrillator/proc/update_overlays()
-	overlays.Cut()
+	cut_overlays()
 	if(!on)
-		overlays += "[initial(icon_state)]-paddles"
+		add_overlay("[initial(icon_state)]-paddles")
 	if(powered)
-		overlays += "[initial(icon_state)]-powered"
+		add_overlay("[initial(icon_state)]-powered")
 	if(!bcell)
-		overlays += "[initial(icon_state)]-nocell"
+		add_overlay("[initial(icon_state)]-nocell")
 	if(!safety)
-		overlays += "[initial(icon_state)]-emagged"
+		add_overlay("[initial(icon_state)]-emagged")
 
 /obj/item/weapon/defibrillator/proc/update_charge()
 	if(powered) //so it doesn't show charge if it's unpowered
 		if(bcell)
 			var/ratio = bcell.charge / bcell.maxcharge
 			ratio = Ceiling(ratio*4) * 25
-			overlays += "[initial(icon_state)]-charge[ratio]"
+			add_overlay("[initial(icon_state)]-charge[ratio]")
 
 /obj/item/weapon/defibrillator/CheckParts(list/parts_list)
 	..()
@@ -197,11 +197,10 @@
 	if(slot == user.getBackSlot())
 		return 1
 
-/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user)
-	var/mob/living/carbon/human/M = user
-	if(paddles in get_both_hands(M))
+/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
+	if(ismob(paddles.loc))
+		var/mob/M = paddles.loc
 		M.unEquip(paddles,1)
-	update_icon()
 	return
 
 /obj/item/weapon/defibrillator/Destroy()
@@ -355,7 +354,7 @@
 		return 1
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
-	var/halfwaycritdeath = (config.health_threshold_crit + config.health_threshold_dead) / 2
+	var/halfwaycritdeath = (HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) / 2
 
 	if(busy)
 		return
@@ -556,6 +555,11 @@
 				H.heart_attack = 0
 				user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
+
+			else if (!H.getorgan(/obj/item/organ/heart))
+				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted.</span>")
+				playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+
 			else
 				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)

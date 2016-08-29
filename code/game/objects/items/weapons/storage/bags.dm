@@ -108,8 +108,8 @@
 	name = "plant bag"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
-	storage_slots = 50; //the number of plant pieces it can carry.
-	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
+	storage_slots = 100; //the number of plant pieces it can carry.
+	max_combined_w_class = 100 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = 3
 	w_class = 1
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
@@ -337,16 +337,16 @@
 			M.Weaken(2)
 
 /obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in contents)
-		overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1)
+		add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
 
 /obj/item/weapon/storage/bag/tray/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	rebuild_overlays()
 
 /obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1)
+	add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
 	. = ..()
 
 

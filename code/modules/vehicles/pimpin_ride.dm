@@ -10,7 +10,7 @@
 
 /obj/vehicle/janicart/handle_vehicle_offsets()
 	..()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			switch(buckled_mob.dir)
@@ -75,11 +75,11 @@
 
 
 /obj/vehicle/janicart/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(mybag)
-		overlays += "cart_garbage"
+		add_overlay("cart_garbage")
 	if(floorbuffer)
-		overlays += "cart_buffer"
+		add_overlay("cart_buffer")
 
 
 /obj/vehicle/janicart/attack_hand(mob/user)

@@ -40,6 +40,12 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	toolspeed = 2
 
+/obj/item/weapon/wrench/brass
+	name = "brass wrench"
+	desc = "A brass wrench. It's faintly warm to the touch."
+	icon_state = "wrench_brass"
+	toolspeed = 2
+
 /obj/item/weapon/wrench/medical
 	name = "medical wrench"
 	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
@@ -104,6 +110,7 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
+	..()
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("red","blue","pink","brown","green","cyan","yellow")
@@ -121,6 +128,12 @@
 	if(user.disabilities & CLUMSY && prob(50))
 		M = user
 	return eyestab(M,user)
+
+/obj/item/weapon/screwdriver/brass
+	name = "brass screwdriver"
+	desc = "A screwdriver made of brass. The handle feels freezing cold."
+	icon_state = "screwdriver_brass"
+	toolspeed = 2
 
 /obj/item/weapon/screwdriver/cyborg
 	name = "powered screwdriver"
@@ -173,6 +186,11 @@
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/wirecutters/brass
+	name = "brass wirecutters"
+	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
+	icon_state = "cutters_brass"
+	toolspeed = 2
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -199,6 +217,7 @@
 	throw_range = 5
 	w_class = 2
 
+
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
@@ -217,10 +236,11 @@
 	update_icon()
 	return
 
+
 /obj/item/weapon/weldingtool/proc/update_torch()
-	overlays.Cut()
+	cut_overlays()
 	if(welding)
-		overlays += "[initial(icon_state)]-on"
+		add_overlay("[initial(icon_state)]-on")
 		item_state = "[initial(item_state)]1"
 	else
 		item_state = "[initial(item_state)]"
@@ -236,9 +256,27 @@
 	update_torch()
 	return
 
-/obj/item/weapon/weldingtool/examine(mob/user)
-	..()
-	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+
+/obj/item/weapon/weldingtool/process()
+	switch(welding)
+		if(0)
+			force = 3
+			damtype = "brute"
+			update_icon()
+			if(!can_off_process)
+				STOP_PROCESSING(SSobj, src)
+			return
+	//Welders left on now use up fuel, but lets not have them run out quite that fast
+		if(1)
+			force = 15
+			damtype = "fire"
+			if(prob(5))
+				remove_fuel(1)
+			update_icon()
+
+	//This is to start fires. process() is only called if the welder is on.
+	open_flame()
+
 
 /obj/item/weapon/weldingtool/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] welds \his every orifice closed! It looks like \he's trying to commit suicide..</span>")
@@ -267,62 +305,34 @@
 			if(!do_mob(user, H, 50))
 				return
 			item_heal_robotic(H, user, 5, 0)
-			return
-		else
-			return
 	else
 		return ..()
-
-/obj/item/weapon/weldingtool/process()
-	switch(welding)
-		if(0)
-			force = 3
-			damtype = "brute"
-			update_icon()
-			if(!can_off_process)
-				SSobj.processing.Remove(src)
-			return
-	//Welders left on now use up fuel, but lets not have them run out quite that fast
-		if(1)
-			force = 15
-			damtype = "fire"
-			if(prob(5))
-				remove_fuel(1)
-			update_icon()
-
-
-	//This is to start fires. process() is only called if the welder is on.
-	open_flame()
 
 
 /obj/item/weapon/weldingtool/afterattack(atom/O, mob/user, proximity)
 	if(!proximity) return
-	if(istype(O, /obj/structure/reagent_dispensers/fueltank) && in_range(src, O))
-		if(!welding)
-			O.reagents.trans_to(src, max_fuel)
-			user << "<span class='notice'>[src] refueled.</span>"
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			update_icon()
-			return
-		else
-			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
-			log_game("[key_name(user)] triggered a fueltank explosion.")
-			user << "<span class='warning'>That was stupid of you.</span>"
-			O.ex_act()
-			return
 
 	if(welding)
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
+		if(get_fuel() <= 0)
+			user.AddLuminosity(-light_intensity)
 
 		if(isliving(O))
 			var/mob/living/L = O
-			L.IgniteMob()
+			if(L.IgniteMob())
+				message_admins("[key_name_admin(user)] set [key_name_admin(L)] on fire")
+				log_game("[key_name(user)] set [key_name(L)] on fire")
+
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
-	toggle(user)
+	switched_on(user)
+	if(welding)
+		SetLuminosity(0)
+		user.AddLuminosity(light_intensity)
 	update_icon()
+
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
@@ -338,22 +348,17 @@
 		check_fuel()
 		if(M)
 			M.flash_eyes(light_intensity)
-		return 1
+		return TRUE
 	else
 		if(M)
 			M << "<span class='warning'>You need more welding fuel to complete this task!</span>"
-		return 0
-
-
-//Returns whether or not the welding tool is currently on.
-/obj/item/weapon/weldingtool/proc/isOn()
-	return welding
+		return FALSE
 
 
 //Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weapon/weldingtool/proc/check_fuel(mob/user)
 	if(get_fuel() <= 0 && welding)
-		toggle(user, 1)
+		switched_on(user)
 		update_icon()
 		//mob icon update
 		if(ismob(loc))
@@ -364,9 +369,8 @@
 		return 0
 	return 1
 
-
-//Toggles the welder off and on
-/obj/item/weapon/weldingtool/proc/toggle(mob/user, message = 0)
+//Switches the welder on
+obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 	if(!status)
 		user << "<span class='warning'>[src] can't be turned on while unsecured!</span>"
 		return
@@ -378,22 +382,55 @@
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
 			user << "<span class='warning'>You need more fuel!</span>"
-			welding = 0
+			switched_off(user)
 	else
-		if(!message)
-			user << "<span class='notice'>You switch [src] off.</span>"
-		else
-			user << "<span class='warning'>[src] shuts off!</span>"
-		force = 3
-		damtype = "brute"
-		hitsound = "swing_hit"
-		update_icon()
+		user << "<span class='notice'>You switch [src] off.</span>"
+		switched_off(user)
+
+//Switches the welder off
+obj/item/weapon/weldingtool/proc/switched_off(mob/user)
+	welding = 0
+	if(user == loc) //If player is holding the welder
+		user.AddLuminosity(-light_intensity)
+		SetLuminosity(0)
+	else
+		SetLuminosity(0)
+
+	force = 3
+	damtype = "brute"
+	hitsound = "swing_hit"
+	update_icon()
+
+
+/obj/item/weapon/weldingtool/pickup(mob/user)
+	..()
+	if(welding)
+		SetLuminosity(0)
+		user.AddLuminosity(light_intensity)
+
+
+/obj/item/weapon/weldingtool/dropped(mob/user)
+	..()
+	if(welding)
+		if(user)
+			user.AddLuminosity(-light_intensity)
+		SetLuminosity(light_intensity)
+
+
+/obj/item/weapon/weldingtool/examine(mob/user)
+	..()
+	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
 /obj/item/weapon/weldingtool/is_hot()
 	return welding * heat
+
+//Returns whether or not the welding tool is currently on.
+/obj/item/weapon/weldingtool/proc/isOn()
+	return welding
+
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)
@@ -420,7 +457,13 @@
 			user.put_in_hands(F)
 		else
 			user << "<span class='warning'>You need one rod to start building a flamethrower!</span>"
-			return
+
+/obj/item/weapon/weldingtool/ignition_effect(atom/A, mob/user)
+	if(welding && remove_fuel(1, user))
+		. = "<span class='notice'>[user] casually lights [A] with [src], \
+			what a badass.</span>"
+	else
+		. = ""
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
@@ -477,6 +520,12 @@
 	light_intensity = 1
 	toolspeed = 2
 
+/obj/item/weapon/weldingtool/experimental/brass
+	name = "brass welding tool"
+	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
+	icon_state = "brasswelder"
+	item_state = "brasswelder"
+
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 //i don't think this is actually used, yaaaaay -Pete
@@ -521,6 +570,12 @@
 /obj/item/weapon/crowbar/red
 	icon_state = "crowbar_red"
 	force = 8
+
+/obj/item/weapon/crowbar/brass
+	name = "brass crowbar"
+	desc = "A brass crowbar. It feels faintly warm to the touch."
+	icon_state = "crowbar_brass"
+	toolspeed = 2
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"

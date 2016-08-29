@@ -29,11 +29,11 @@
 /obj/item/weapon/gun/energy/gun/mini/update_icon()
 	..()
 	if(F && F.on)
-		overlays += "mini-light"
+		add_overlay("mini-light")
 
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
-	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
+	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
 	origin_tech = null
 	force = 10
@@ -79,3 +79,46 @@
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
+	var/fail_tick = 0
+	var/fail_chance = 0
+
+/obj/item/weapon/gun/energy/gun/nuclear/process()
+	if(fail_tick > 0)
+		fail_tick--
+	..()
+
+/obj/item/weapon/gun/energy/gun/nuclear/shoot_live_shot()
+	failcheck()
+	update_icon()
+	..()
+
+/obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
+	if(prob(fail_chance) && istype(loc, /mob/living))
+		var/mob/living/M = loc
+		switch(fail_tick)
+			if(0 to 200)
+				fail_tick += (2*(fail_chance))
+				M.rad_act(40)
+				M << "<span class='userdanger'>Your [name] feels warmer.</span>"
+			if(201 to INFINITY)
+				SSobj.processing.Remove(src)
+				M.rad_act(80)
+				crit_fail = 1
+				M << "<span class='userdanger'>Your [name]'s reactor overloads!</span>"
+
+/obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
+	..()
+	fail_chance = min(fail_chance + round(15/severity), 100)
+
+/obj/item/weapon/gun/energy/gun/nuclear/update_icon()
+	..()
+	if(crit_fail)
+		add_overlay("[icon_state]_fail_3")
+	else
+		switch(fail_tick)
+			if(0)
+				add_overlay("[icon_state]_fail_0")
+			if(1 to 150)
+				add_overlay("[icon_state]_fail_1")
+			if(151 to INFINITY)
+				add_overlay("[icon_state]_fail_2")

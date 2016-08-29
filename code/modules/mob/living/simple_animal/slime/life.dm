@@ -234,7 +234,7 @@
 		Feedstop(0, 0)
 		return
 
-	add_nutrition(rand(7,15))
+	add_nutrition((rand(7,15) * config.damage_multiplier))
 
 	//Heal yourself.
 	adjustBruteLoss(-3)
@@ -393,8 +393,7 @@
 				else if(canmove && isturf(loc) && prob(33))
 					step(src, pick(cardinal))
 		else if(!AIproc)
-			spawn()
-				AIprocess()
+			addtimer(src, "AIprocess", 0)
 
 /mob/living/simple_animal/slime/handle_automated_movement()
 	return //slime random movement is currently handled in handle_targets()

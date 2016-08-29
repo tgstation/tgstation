@@ -101,7 +101,6 @@
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/device/radio)
 	burn_state = FIRE_PROOF
-
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
 	name = "blue suit jacket"

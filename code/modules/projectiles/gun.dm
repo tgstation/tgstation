@@ -107,7 +107,6 @@
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	user << "<span class='danger'>*click*</span>"
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-	return
 
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -320,8 +319,6 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 	var/mob/living/carbon/human/user = usr
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>"
 	F.on = !F.on
 	user << "<span class='notice'>You toggle the gunlight [F.on ? "on":"off"].</span>"
 
@@ -503,3 +500,9 @@ obj/item/weapon/gun/proc/newshot()
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
+
+
+/obj/item/weapon/gun/burn()
+	if(pin)
+		qdel(pin)
+	.=..()

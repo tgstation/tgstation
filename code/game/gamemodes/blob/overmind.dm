@@ -1,12 +1,15 @@
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
+	desc = "The overmind. It controls the blob."
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
-
+	mouse_opacity = 1
+	move_on_shuttle = 1
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	invisibility = INVISIBILITY_OBSERVER
+	layer = FLY_LAYER
 
 	pass_flags = PASSBLOB
 	faction = list("blob")
@@ -26,7 +29,8 @@
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 
-/mob/camera/blob/New(loc, pre_placed = 0, mode_made = 0)
+/mob/camera/blob/New(loc, pre_placed = 0, mode_made = 0, starting_points = 60)
+	blob_points = starting_points
 	if(pre_placed) //we already have a core!
 		manualplace_min_time = 0
 		autoplace_max_time = 0
@@ -42,10 +46,9 @@
 	name = new_name
 	real_name = new_name
 	last_attack = world.time
-	var/list/possible_reagents = list()
-	for(var/type in (subtypesof(/datum/reagent/blob)))
-		possible_reagents.Add(new type)
-	blob_reagent_datum = pick(possible_reagents)
+	var/datum/reagent/blob/BC = pick((subtypesof(/datum/reagent/blob)))
+	blob_reagent_datum = new BC
+	color = blob_reagent_datum.complementary_color
 	if(blob_core)
 		blob_core.update_icon()
 
@@ -70,18 +73,19 @@
 /mob/camera/blob/Destroy()
 	for(var/BL in blobs)
 		var/obj/effect/blob/B = BL
-		if(B.overmind == src)
+		if(B && B.overmind == src)
 			B.overmind = null
 			B.update_icon() //reset anything that was ours
 	for(var/BLO in blob_mobs)
 		var/mob/living/simple_animal/hostile/blob/BM = BLO
-		BM.overmind = null
-		BM.update_icons()
+		if(BM)
+			BM.overmind = null
+			BM.update_icons()
 	overminds -= src
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
-		ghostimage = null;
+		ghostimage = null
 		updateallghostimages()
 	return ..()
 
@@ -91,6 +95,12 @@
 	src << "<span class='notice'>You are the overmind!</span>"
 	blob_help()
 	update_health_hud()
+	add_points(0)
+
+/mob/camera/blob/examine(mob/user)
+	..()
+	if(blob_reagent_datum)
+		user << "Its chemical is <font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>."
 
 /mob/camera/blob/update_health_hud()
 	if(blob_core)
@@ -100,9 +110,8 @@
 				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.health)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
-	if(points != 0)
-		blob_points = Clamp(blob_points + points, 0, max_blob_points)
-		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
+	blob_points = Clamp(blob_points + points, 0, max_blob_points)
+	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_points)]</font></div>"
 
 /mob/camera/blob/say(message)
 	if (!message)
@@ -150,6 +159,11 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		if(ticker && istype(ticker.mode, /datum/game_mode/blob))
+			var/datum/game_mode/blob/B = ticker.mode
+			stat(null, "Blobs to Win: [blobs_legit.len]/[B.blobwincount]")
+		else
+			stat(null, "Total Blobs: [blobs.len]")
 		if(free_chem_rerolls)
 			stat(null, "You have [free_chem_rerolls] Free Chemical Reroll\s Remaining")
 		if(!placed)
@@ -170,6 +184,3 @@
 			return 0
 		loc = NewLoc
 		return 1
-
-/mob/camera/blob/proc/can_attack()
-	return (world.time > (last_attack + CLICK_CD_RANGE))

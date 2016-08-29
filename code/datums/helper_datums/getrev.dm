@@ -8,14 +8,14 @@ var/global/datum/getrev/revdata = new()
 
 /datum/getrev/New()
 	var/head_file = return_file_text(".git/logs/HEAD")
-	var/regex/head_log = new("(\\w{40}) (\\w{40}).+> (\\d{10}).+\n\\Z")
-	head_log.Find(head_file)
-	parentcommit = head_log.group[1]
-	commit = head_log.group[2]
-	var/unix_time = text2num(head_log.group[3])
 	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
 		testmerge = file2list("..\\prtestjob.lk")
-	date = unix2date(unix_time)
+	var/testlen = max(testmerge.len - 1, 0)
+	var/regex/head_log = new("(\\w{40}) .+> (\\d{10}).+(?=(\n.*(\\w{40}).*){[testlen]}\\Z)")
+	head_log.Find(head_file)
+	parentcommit = head_log.group[1]
+	date = unix2date(text2num(head_log.group[2]))
+	commit = head_log.group[4]
 	world.log << "Running /tg/ revision:"
 	world.log << "[date]"
 	world.log << commit

@@ -82,6 +82,8 @@
 	var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
 	var/auto_name = 0
+	var/failure_timer = 0
+	var/force_update = 0
 	var/update_state = -1
 	var/update_overlay = -1
 	var/global/status_overlays = 0
@@ -109,12 +111,12 @@
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if (building)
-		dir = ndir
+		setDir(ndir)
 	src.tdir = dir		// to fix Vars bug
-	dir = SOUTH
+	setDir(SOUTH)
 
 	if(auto_name)
-		name = "[get_area(src)] APC"
+		name = "\improper [get_area(src)] APC"
 
 	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
 	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
@@ -147,13 +149,13 @@
 		qdel(cell)
 	if(terminal)
 		disconnect_terminal()
-	return ..()
+	. = ..()
 
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.dir = tdir
+	terminal.setDir(tdir)
 	terminal.master = src
 
 /obj/machinery/power/apc/proc/init()
@@ -170,7 +172,7 @@
 	if(isarea(A) && src.areastring == null)
 		src.area = A
 	else
-		src.area = get_area_name(areastring)
+		src.area = get_area_by_name(areastring)
 	update_icon()
 
 	make_terminal()
@@ -274,12 +276,12 @@
 		if(overlays.len)
 			overlays.len = 0
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
-			overlays += status_overlays_lock[locked+1]
-			overlays += status_overlays_charging[charging+1]
+			add_overlay(status_overlays_lock[locked+1])
+			add_overlay(status_overlays_charging[charging+1])
 			if(operating)
-				overlays += status_overlays_equipment[equipment+1]
-				overlays += status_overlays_lighting[lighting+1]
-				overlays += status_overlays_environ[environ+1]
+				add_overlay(status_overlays_equipment[equipment+1])
+				add_overlay(status_overlays_lighting[lighting+1])
+				add_overlay(status_overlays_environ[environ+1])
 
 
 /obj/machinery/power/apc/proc/check_updates()
@@ -471,7 +473,9 @@
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
-			if (C.amount >= 10 && !terminal && opened && has_electronics != 2)
+			if (C.get_amount() < 10 || !C)
+				return
+			if (C.get_amount() >= 10 && !terminal && opened && has_electronics != 2)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
 				if (prob(50) && electrocute_mob(usr, N, N))
@@ -624,13 +628,17 @@
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+
 	if(!ui)
 		ui = new(user, src, ui_key, "apc", name, 535, 515, master_ui, state)
 		ui.open()
+	if(ui)
+		ui.set_autoupdate(state = (failure_timer ? 1 : 0))
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
 		"locked" = locked,
+		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
 		"powerCellStatus" = cell ? cell.percent() : null,
@@ -695,7 +703,7 @@
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
-	if(operating && !shorted)
+	if(operating && !shorted && !failure_timer)
 		area.power_light = (lighting > 1)
 		area.power_equip = (equipment > 1)
 		area.power_environ = (environ > 1)
@@ -730,7 +738,7 @@
 	return TRUE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege))
+	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer))
 		return
 	switch(action)
 		if("lock")
@@ -780,6 +788,11 @@
 		if("deoccupy")
 			if(get_malf_status(usr))
 				malfvacate()
+		if("reboot")
+			failure_timer = 0
+			update_icon()
+			update()
+	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
@@ -796,23 +809,11 @@
 		return
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
-	malf.malfhacking = TRUE
-	addtimer(src, "malfhacked", 600, FALSE, malf)
+	malf.malfhacking = addtimer(malf, "malfhacked", 600, FALSE, src)
 
-/obj/machinery/power/apc/proc/malfhacked(mob/living/silicon/ai/malf)
-	if(!istype(malf))
-		return
-	if(src && !src.aidisabled)
-		malf.malfhack = null
-		malf.malfhacking = FALSE
-		malf.malf_picker.processing_time += 10
-
-		malfai = malf.parent || malf
-		malfhack = TRUE
-		locked = TRUE
-
-		malf << "Hack complete. The APC is now under your exclusive control."
-		update_icon()
+	var/obj/screen/alert/hackingapc/A
+	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
+	A.target = src
 
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
@@ -840,9 +841,6 @@
 		qdel(malf)
 	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupier.cancel_camera()
-	if ((seclevel2num(get_security_level()) == SEC_LEVEL_DELTA) && malf.nuking)
-		for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-			point.the_disk = src //the pinpointer will detect the shunted AI
 
 
 /obj/machinery/power/apc/proc/malfvacate(forced)
@@ -854,11 +852,6 @@
 		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
 		src.occupier.parent.cancel_camera()
 		qdel(src.occupier)
-		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
-			for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-				for(var/mob/living/silicon/ai/A in ai_list)
-					if((A.stat != DEAD) && A.nuking)
-						point.the_disk = A //The pinpointer tracks the AI back into its core.
 
 	else
 		src.occupier << "<span class='danger'>Primary core damaged, unable to return core processes.</span>"
@@ -866,9 +859,9 @@
 			src.occupier.loc = src.loc
 			src.occupier.death()
 			src.occupier.gib()
-			for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-				point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
-
+			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
+				P.nuke_warning = FALSE
 
 /obj/machinery/power/apc/surplus()
 	if(terminal)
@@ -891,6 +884,12 @@
 	if(stat & (BROKEN|MAINT))
 		return
 	if(!area.requires_power)
+		return
+	if(failure_timer)
+		update()
+		queue_icon_update()
+		failure_timer--
+		force_update = 1
 		return
 
 	/*
@@ -1031,7 +1030,8 @@
 
 	// update icon & area power if anything changed
 
-	if(last_lt != lighting || last_eq != equipment || last_en != environ)
+	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
+		force_update = 0
 		queue_icon_update()
 		update()
 	else if (last_ch != charging)
@@ -1147,6 +1147,19 @@
 		return 1
 	else
 		return 0
+
+
+/obj/machinery/power/apc/proc/energy_fail(duration)
+	for(var/obj/machinery/M in area.contents)
+		if(M.critical_machine)
+			return
+	for(var/A in ai_list)
+		var/mob/living/silicon/ai/I = A
+		if(get_area(I) == area)
+			return
+
+	failure_timer = max(failure_timer, round(duration))
+
 
 #undef APC_UPDATE_ICON_COOLDOWN
 

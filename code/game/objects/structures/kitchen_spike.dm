@@ -40,7 +40,7 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		if(!buckled_mobs.len)
+		if(!has_buckled_mobs())
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20/I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
@@ -54,10 +54,10 @@
 		return ..()
 
 /obj/structure/kitchenspike/attack_hand(mob/user)
-	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !buckled_mobs.len)
+	if(isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(do_mob(user, src, 120))
-			if(buckled_mobs.len) //to prevent spam/queing up attacks
+			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
 				return
@@ -67,13 +67,15 @@
 			L.emote("scream")
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
-			L.buckled = src
-			L.dir = 2
+			L.setDir(2)
 			buckle_mob(L, force=1)
 			var/matrix/m180 = matrix(L.transform)
 			m180.Turn(180)
 			animate(L, transform = m180, time = 3)
 			L.pixel_y = L.get_standard_pixel_y_offset(180)
+	else if (has_buckled_mobs())
+		for(var/mob/living/L in buckled_mobs)
+			user_unbuckle_mob(L, user)
 	else
 		..()
 

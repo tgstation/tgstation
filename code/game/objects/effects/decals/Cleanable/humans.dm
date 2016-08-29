@@ -102,9 +102,8 @@
 	name = "drips of blood"
 	desc = "It's red."
 	gender = PLURAL
-	icon = 'icons/effects/drip.dmi'
 	icon_state = "1"
-	random_icon_states = list("1","2","3","4","5")
+	random_icon_states = list("drip1","drip2","drip3","drip4","drip5")
 	bloodiness = 0
 	var/drips = 1
 
@@ -147,7 +146,7 @@
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/Ddir in cardinal)
 		if(entered_dirs & Ddir)
@@ -158,7 +157,7 @@
 				I =  image(icon,"[blood_state]1",dir = Ddir)
 				bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = I
 			if(I)
-				overlays += I
+				add_overlay(I)
 		if(exited_dirs & Ddir)
 			var/image/I
 			if(bloody_footprints_cache["exited-[blood_state]-[Ddir]"])
@@ -167,7 +166,7 @@
 				I = image(icon,"[blood_state]2",dir = Ddir)
 				bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = I
 			if(I)
-				overlays += I
+				add_overlay(I)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
 

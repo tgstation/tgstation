@@ -10,6 +10,8 @@
 
 	if(query.NextRow())
 		var/diff = text2num(query.item[1])
+		if(config.use_account_age_for_jobs)
+			player_age = max(0,diff)	//So job code soesn't freak out if they are time traveling.
 		if(diff < YOUNG)
 			var/msg = "(IP: [address], ID: [computer_id]) is a new BYOND account made on [y]-[m]-[d]."
 			if(diff < 0)

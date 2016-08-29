@@ -75,7 +75,7 @@
 	switch(type)
 		if("destruction")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball(null))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball."
 		if("bluespace")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
@@ -162,14 +162,10 @@
 		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T)
-	var/new_op_code = "Ask your leader!"
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
-	if(nuke)
-		new_op_code = nuke.r_code
-	M.mind.make_Nuke(T, new_op_code, 0, FALSE)
+	M.mind.make_Nuke(T, nuke_code = null, 0, FALSE)
 	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname
@@ -213,12 +209,7 @@
 	R.mmi.brainmob.name = brainopsname
 
 	R.key = C.key
-	ticker.mode.syndicates += R.mind
-	ticker.mode.update_synd_icons_added(R.mind)
-	R.mind.special_role = "syndicate"
-	R.faction = list("syndicate")
-
-
+	R.mind.make_Nuke(T, nuke_code = null,leader=0, telecrystals = TRUE)
 
 ///////////SLAUGHTER DEMON
 

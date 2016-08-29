@@ -502,7 +502,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
 	if(direction)
-		animation.dir = direction
+		animation.setDir(direction)
 	animation.icon = a_icon
 	animation.layer = target:layer+1
 	if(a_icon_state)
@@ -543,7 +543,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				return 0
 			if(current.opacity)
 				return 0
-			for(var/atom/A in current)
+			for(var/thing in current)
+				var/atom/A = thing
 				if(A.opacity)
 					return 0
 			current = get_step_towards(current, target_turf)
@@ -623,57 +624,59 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
-/proc/get_areas(areatype)
-	if(!areatype)
-		return null
+/proc/get_areas(areatype, subtypes=TRUE)
 	if(istext(areatype))
 		areatype = text2path(areatype)
-	if(isarea(areatype))
+	else if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
+	else if(!ispath(areatype))
+		return null
 
-	var/list/areas = new/list()
-	for(var/area/N in world)
-		if(istype(N, areatype))
-			areas += N
+	var/list/areas = list()
+	if(subtypes)
+		var/list/cache = typecacheof(areatype)
+		for(var/V in sortedAreas)
+			var/area/A = V
+			if(cache[A.type])
+				areas += V
+	else
+		for(var/V in sortedAreas)
+			var/area/A = V
+			if(A.type == areatype)
+				areas += V
 	return areas
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype, target_z = 0)
-	if(!areatype)
-		return null
+/proc/get_area_turfs(areatype, target_z = 0, subtypes=FALSE)
 	if(istext(areatype))
 		areatype = text2path(areatype)
-	if(isarea(areatype))
+	else if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
+	else if(!ispath(areatype))
+		return null
 
-	var/list/turfs = new/list()
-	for(var/area/N in world)
-		if(istype(N, areatype))
-			for(var/turf/T in N)
+	var/list/turfs = list()
+	if(subtypes)
+		var/list/cache = typecacheof(areatype)
+		for(var/V in sortedAreas)
+			var/area/A = V
+			if(!cache[A.type])
+				continue
+			for(var/turf/T in A)
+				if(target_z == 0 || target_z == T.z)
+					turfs += T
+	else
+		for(var/V in sortedAreas)
+			var/area/A = V
+			if(A.type != areatype)
+				continue
+			for(var/turf/T in A)
 				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	return turfs
-
-//Takes: Area type as text string or as typepath OR an instance of the area.
-//Returns: A list of all atoms	(objs, turfs, mobs) in areas of that type of that type in the world.
-/proc/get_area_all_atoms(areatype)
-	if(!areatype)
-		return null
-	if(istext(areatype))
-		areatype = text2path(areatype)
-	if(isarea(areatype))
-		var/area/areatemp = areatype
-		areatype = areatemp.type
-
-	var/list/atoms = new/list()
-	for(var/area/N in world)
-		if(istype(N, areatype))
-			for(var/atom/A in N)
-				atoms += A
-	return atoms
 
 /proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
@@ -719,16 +722,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return "right foot"
 	else
 		return zone
-
-
-//Gets the turf this atom inhabits
-
-/proc/get_turf(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isturf(A), A=A.loc); //semicolon is for the empty statement
-	return A
-
 
 /*
 
@@ -1302,19 +1295,19 @@ B --><-- A
 	set waitfor = 0
 	if(!A || !I)
 		return
-	A.overlays |= I
+	A.add_overlay(I)
 	sleep(duration)
 	A.overlays -= I
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
-	var/validarea = 0
+	var/validarea = FALSE
 	for(var/V in sortedAreas)
 		var/area/A = V
-		validarea = 1
+		validarea = TRUE
 		for(var/turf/T in A)
 			if(T.z != zlevel)
-				validarea = 0
+				validarea = FALSE
 				break
 		if(validarea)
 			. += A
@@ -1370,7 +1363,7 @@ proc/pick_closest_path(value)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
 
-/proc/flash_color(mob_or_client, color="#960000", time=20)
+/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
 	if(istype(mob_or_client, /mob))
 		var/mob/M = mob_or_client
@@ -1384,7 +1377,36 @@ proc/pick_closest_path(value)
 	if(!istype(C))
 		return
 
-	var/old_color = C.color
-	C.color = "#960000"
+	C.color = flash_color
 	spawn(0)
-		animate(C, color = old_color, time = 20)
+		animate(C, color = initial(C.color), time = flash_time)
+
+#define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+
+#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, FALSE, item)
+
+/proc/check_for_cleanbot_bug()
+	var/static/admins_warned //bet you didn't know you could do this!
+	var/icon/Icon_test = icon('icons/BadAss.dmi')
+	if(!istype(Icon_test))
+		var/msg = "Cleanbot bug detected in icons! Icons are mapping to [Icon_test]"
+		if (!admins_warned)
+			admins_warned = 1
+			spawn(25)
+				message_admins(msg)
+		stack_trace(msg)
+	var/sound/Sound_test = sound('sound/misc/null.ogg')
+	if(!istype(Sound_test))
+		var/msg = "Cleanbot bug detected in sounds! Sounds are mapping to [Sound_test]"
+		if (!admins_warned)
+			admins_warned = 1
+			spawn(25)
+				message_admins(msg)
+		stack_trace(msg)
+
+/proc/random_nukecode()
+	var/val = rand(0, 99999)
+	var/str = "[val]"
+	while(length(str) < 5)
+		str = "0" + str
+	. = str

@@ -38,12 +38,11 @@
 	item_state = "pirate"
 	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 
-/obj/item/clothing/suit/hgpirate
+/obj/item/clothing/suit/pirate/captain
 	name = "pirate captain coat"
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
-	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 
 
 /obj/item/clothing/suit/cyborg_suit
@@ -153,7 +152,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
-
 
 /obj/item/clothing/suit/cardborg
 	name = "cardborg suit"
@@ -474,7 +472,7 @@
 	name = "engineering winter coat"
 	icon_state = "coatengineer"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 20)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
 	hoodtype = /obj/item/clothing/head/winterhood/engineering
 
 /obj/item/clothing/head/winterhood/engineering

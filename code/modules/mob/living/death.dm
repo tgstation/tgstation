@@ -44,8 +44,9 @@
 	unset_machine()
 	timeofdeath = world.time
 	tod = worldtime2text()
-	if(mind && mind.name && mind.active)
-		var/area/A = get_area(loc)
+	var/turf/T = get_turf(src)
+	if(mind && mind.name && mind.active && (T.z != ZLEVEL_CENTCOM))
+		var/area/A = get_area(T)
 		var/rendered = "<span class='game deadsay'><span class='name'>\
 			[mind.name]</span> has died at <span class='name'>[A.name]\
 			</span>.</span>"

@@ -79,6 +79,14 @@
 	item_color = "sexyclown"
 	can_adjust = 0
 
+/obj/item/clothing/under/jabroni
+	name = "Jabroni Outfit"
+	desc = "The leather club is two sectors down."
+	icon_state = "darkholme"
+	item_state = "darkholme"
+	item_color = "darkholme"
+	can_adjust = 0
+
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
@@ -346,6 +354,10 @@
 	body_parts_covered = CHEST|GROIN|FEET
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+
+/obj/item/clothing/under/kilt/highlander
+	desc = "You're the only one worthy of this kilt."
+	flags = NODROP
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"

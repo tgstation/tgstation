@@ -96,8 +96,9 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	verb_say = "beeps"
 	verb_yell = "blares"
-	pressure_resistance = 10
+	pressure_resistance = 15
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -113,6 +114,7 @@ Class Procs:
 	var/global/gl_uid = 1
 	var/panel_open = 0
 	var/state_open = 0
+	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
@@ -123,17 +125,17 @@ Class Procs:
 	..()
 	machines += src
 	if(!speed_process)
-		SSmachine.processing += src
+		START_PROCESSING(SSmachine, src)
 	else
-		SSfastprocess.processing += src
+		START_PROCESSING(SSfastprocess, src)
 	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
 	if(!speed_process)
-		SSmachine.processing -= src
+		STOP_PROCESSING(SSmachine, src)
 	else
-		SSfastprocess.processing -= src
+		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
 	return ..()
 
@@ -177,20 +179,18 @@ Class Procs:
 	density = 1
 	if(!target)
 		for(var/mob/living/carbon/C in loc)
-			if(C.buckled || C.buckled_mobs.len)
+			if(C.buckled || C.has_buckled_mobs())
 				continue
 			else
 				target = C
-	if(target && !target.buckled && !target.buckled_mobs.len)
+	if(target && !target.buckled && !target.has_buckled_mobs())
 		occupant = target
 		target.forceMove(src)
 	updateUsrDialog()
 	update_icon()
 
 /obj/machinery/blob_act(obj/effect/blob/B)
-	if(!density)
-		qdel(src)
-	if(prob(75))
+	if(density && prob(75))
 		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
@@ -275,10 +275,13 @@ Class Procs:
 /obj/machinery/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper > 0)
+	if(M.melee_damage_upper || M.obj_damage)
 		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
 		"<span class='danger'>You smash against the [src.name].</span>")
-		take_damage(M.melee_damage_upper, M.melee_damage_type, 1)
+		if(M.obj_damage)
+			take_damage(M.obj_damage, M.melee_damage_type, 1)
+		else
+			take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
 
 
 /obj/machinery/attack_paw(mob/living/user)
@@ -372,7 +375,7 @@ Class Procs:
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		dir = turn(dir,-90)
+		setDir(turn(dir,-90))
 		user << "<span class='notice'>You rotate [src].</span>"
 		return 1
 	return 0
@@ -464,10 +467,8 @@ Class Procs:
 /obj/machinery/tesla_act(var/power)
 	..()
 	if(prob(85))
-		emp_act(2)
+		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
-		ex_act(3)
-	else if(prob(90))
-		ex_act(2)
+		emp_act(2)
 	else
-		ex_act(1)
+		ex_act(2)

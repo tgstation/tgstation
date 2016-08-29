@@ -166,7 +166,7 @@
 	if(module)
 		return
 
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
@@ -213,7 +213,7 @@
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			icon_state = "minerborg"
+			icon_state = "ashborg"
 			animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
@@ -276,7 +276,7 @@
 	if(!animation_length)
 		return
 	icon = 'icons/mob/robot_transformations.dmi'
-	src.dir = SOUTH
+	src.setDir(SOUTH)
 	notransform = 1
 	flick(icon_state, src)
 	sleep(animation_length+1)
@@ -624,7 +624,7 @@
 /mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
-	..()
+	return ..()
 
 
 /mob/living/silicon/robot/emag_act(mob/user)
@@ -715,19 +715,18 @@
 	if (M.a_intent =="disarm")
 		if(!(lying))
 			M.do_attack_animation(src)
-			if (prob(85))
+			if(get_active_hand())
+				uneq_active()
+				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
+				"<span class='userdanger'>[M] has disabled [src]'s active module!</span>")
+				add_logs(M, src, "disarmed")
+			else
 				Stun(2)
 				step(src,get_dir(M,src))
-				spawn(5)
-					step(src,get_dir(M,src))
 				add_logs(M, src, "pushed")
-				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-								"<span class='userdanger'>[M] has forced back [src]!</span>")
-			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
-								"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+				"<span class='userdanger'>[M] has forced back [src]!</span>")
+			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 	else
 		..()
 	return
@@ -809,43 +808,44 @@
 	return update_icons()
 
 /mob/living/silicon/robot/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
-				overlays += "eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]" //Cyborgs converted by Ratvar have yellow eyes rather than blue
+				add_overlay("eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]") //Cyborgs converted by Ratvar have yellow eyes rather than blue
 				state_name = "standard"
 			if("mediborg")
-				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("toiletbot")
-				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 				state_name = "mediborg"
 			if("secborg")
-				overlays += "eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("engiborg")
-				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("janiborg")
-				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg")
-				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
+			if("minerborg","ashborg")
+				add_overlay("eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]")
+				state_name = "minerborg"
 			if("peaceborg")
-				overlays += "eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("syndie_bloodhound")
-				overlays += "eyes-syndie_bloodhound"
+				add_overlay("eyes-syndie_bloodhound")
 			else
-				overlays += "eyes"
+				add_overlay("eyes")
 				state_name = "serviceborg"
 		if(lamp_intensity > 2)
-			overlays += "eyes-[state_name]-lights"
+			add_overlay("eyes-[state_name]-lights")
 
 	if(opened)
 		if(wiresexposed)
-			overlays += "ov-opencover +w"
+			add_overlay("ov-opencover +w")
 		else if(cell)
-			overlays += "ov-opencover +c"
+			add_overlay("ov-opencover +c")
 		else
-			overlays += "ov-opencover -c"
+			add_overlay("ov-opencover -c")
 
 	update_fire()
 
@@ -1311,3 +1311,30 @@
 			locked = 1
 		notify_ai(1)
 		. = 1
+
+
+
+/mob/living/silicon/robot/proc/ResetModule()
+
+	notify_ai(2)
+
+	uneq_all()
+	hands.icon_state = "nomod"
+	icon_state = "robot"
+	qdel(module)
+	module = null
+
+	modtype = "robot"
+	designation = "Default"
+	updatename("Default")
+
+	update_icons()
+	update_headlamp()
+
+	speed = 0 // Remove upgrades.
+	ionpulse = FALSE
+	magpulse = FALSE
+
+	status_flags |= CANPUSH
+
+	return 1

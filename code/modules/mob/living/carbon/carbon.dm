@@ -50,16 +50,14 @@
 
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
-	CHECK_DNA_AND_SPECIES(src)
-
-	shock_damage *= (siemens_coeff * dna.species.siemens_coeff)
+	shock_damage *= siemens_coeff
+	if(dna && dna.species)
+		shock_damage *= dna.species.siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
 	if(reagents.has_reagent("teslium"))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	take_overall_damage(0,shock_damage)
-	//src.adjustFireLoss(shock_damage)
-	//src.updatehealth()
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
@@ -96,9 +94,9 @@
 		H = hud_used.inv_slots[slot_r_hand]
 		H.update_icon()
 	/*if (!( src.hand ))
-		src.hands.dir = NORTH
+		src.hands.setDir(NORTH)
 	else
-		src.hands.dir = SOUTH*/
+		src.hands.setDir(SOUTH)*/
 	return
 
 /mob/living/carbon/activate_hand(selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
@@ -121,7 +119,7 @@
 		M << "<span class='warning'>You can't put them out with just your bare hands!"
 		return
 
-	if(health >= 0)
+	if(health >= 0 && !(status_flags & FAKEDEATH))
 
 		if(lying)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
@@ -326,7 +324,7 @@
 				D = SOUTH
 			if(WEST)
 				D = NORTH
-		dir = D
+		setDir(D)
 		spintime -= speed
 
 /mob/living/carbon/resist_buckle()
@@ -636,7 +634,7 @@
 	if(!client)
 		return
 
-	if(stat == UNCONSCIOUS && health <= config.health_threshold_crit)
+	if(stat == UNCONSCIOUS && health <= HEALTH_THRESHOLD_CRIT)
 		var/severity = 0
 		switch(health)
 			if(-20 to -10) severity = 1
@@ -714,10 +712,10 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
+		if(health<= HEALTH_THRESHOLD_DEAD || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
+		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -781,5 +779,19 @@
 
 	..()
 
+/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
+	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
+		amount = -amount
+		if(amount > 0)
+			blood_volume -= 5*amount
+		else
+			blood_volume -= amount
+	return ..()
 
+/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
+	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	apply_overlay(FIRE_LAYER)
+
+/mob/living/carbon/fakefireextinguish()
+	remove_overlay(FIRE_LAYER)
 

@@ -1,5 +1,5 @@
 
-//Bartender //it's chef what the fuck is your problem?
+//Chef
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
@@ -8,7 +8,6 @@
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	put_on_delay = 10
-
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
@@ -64,7 +63,7 @@
 	icon_state = "detective"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 	var/candy_cooldown = 0
-
+	pockets = /obj/item/weapon/storage/internal/pocket/small/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
 /obj/item/clothing/head/det_hat/AltClick()
@@ -88,6 +87,10 @@
 
 	dog_fashion = /datum/dog_fashion/head/beret
 
+/obj/item/clothing/head/beret/highlander
+	desc = "That was white fabric. <i>Was.</i>"
+	flags = NODROP
+	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
 
 //Security
 

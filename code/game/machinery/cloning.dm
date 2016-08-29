@@ -48,6 +48,7 @@
 	radio.recalculateChannels()
 
 /obj/machinery/clonepod/Destroy()
+	go_out()
 	qdel(radio)
 	radio = null
 	qdel(countdown)
@@ -73,7 +74,7 @@
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/scanning_module = 2,
 							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/stack/sheet/glass = 1)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -87,7 +88,7 @@
 /obj/item/weapon/disk/data/New()
 	..()
 	icon_state = "datadisk[rand(0,6)]"
-	overlays += "datadisk_gene"
+	add_overlay("datadisk_gene")
 
 /obj/item/weapon/disk/data/attack_self(mob/user)
 	read_only = !read_only
@@ -158,8 +159,7 @@
 	countdown.start()
 
 	eject_wait = TRUE
-	spawn(30)
-		eject_wait = FALSE
+	addtimer(src, "wait_complete", 30)
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
@@ -167,7 +167,7 @@
 		for(var/A in bad_se_blocks)
 			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
 	if(efficiency > 5 && prob(20))
-		randmutg(H)
+		randmutvg(H)
 	if(efficiency < 3 && prob(50))
 		var/mob/M = randmutb(H)
 		if(ismob(M))
@@ -182,8 +182,8 @@
 
 	icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
+	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
@@ -197,7 +197,7 @@
 			beginning to regenerate in a cloning pod. You will \
 			become conscious when it is complete.</span>"
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+	H.hardset_dna(ui, H.dna.struc_enzymes, H.real_name, null, mrace, features)
 	if(H)
 		H.faction |= factions
 
@@ -206,6 +206,9 @@
 		H.suiciding = FALSE
 	attempting = FALSE
 	return TRUE
+
+/obj/machinery/clonepod/proc/wait_complete()
+	eject_wait = FALSE
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
@@ -228,10 +231,10 @@
 			occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			occupant.adjustCloneLoss(-((speed_coeff/2)))
+			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
 
 			//Premature clones may have brain damage.
-			occupant.adjustBrainLoss(-((speed_coeff/2)))
+			occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
 
 			//So clones don't die of oxyloss in a running pod.
 			if (occupant.reagents.get_reagent_amount("salbutamol") < 30)
@@ -332,10 +335,8 @@
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		clonemind.transfer_to(occupant)
 		occupant.grab_ghost()
-		occupant << "<span class='notice'><b>The world is suddenly bright \
-			and sudden and loud!</b><br>\
-			<i>You feel your body weight suddenly, as your mind suddenly \
-			comprehends where you are and what is going on.</i></span>"
+		occupant << "<span class='notice'><b>There is a bright flash!</b><br>\
+			<i>You feel like a new being.</i></span>"
 		occupant.flash_eyes()
 
 	var/turf/T = get_turf(src)
@@ -355,15 +356,13 @@
 		if(occupant.mind != clonemind)
 			clonemind.transfer_to(occupant)
 		occupant.grab_ghost() // We really just want to make you suffer.
-		flash_color(occupant, color="#960000", time=100)
+		flash_color(occupant, flash_color="#960000", flash_time=100)
 		occupant << "<span class='warning'><b>Agony blazes across your \
 			consciousness as your body is torn apart.</b><br>\
 			<i>Is this what dying is like? Yes it is.</i></span>"
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
-		spawn(40)
-			occupant.ghostize()
-			qdel(occupant)
+		QDEL_IN(occupant, 40)
 
 /obj/machinery/clonepod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)

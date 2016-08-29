@@ -23,7 +23,7 @@ var/const/INJECT = 5 //injection
 	maximum_volume = maximum
 
 	if(!(flags & REAGENT_NOREACT))
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
@@ -60,7 +60,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/Destroy()
 	. = ..()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		qdel(R)
@@ -128,7 +128,7 @@ var/const/INJECT = 5 //injection
 	return id
 
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-	if(!target )
+	if(!target || !total_volume)
 		return
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
@@ -293,7 +293,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/process()
 	if(flags & REAGENT_NOREACT)
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	for(var/reagent in reagent_list)
@@ -305,9 +305,9 @@ var/const/INJECT = 5 //injection
 		// Order is important, process() can remove from processing if
 		// the flag is present
 		flags &= ~(REAGENT_NOREACT)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 		flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -542,7 +542,10 @@ var/const/INJECT = 5 //injection
 		add_reagent(r_id, amt, data)
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
-
+	
+	if(isnull(amount))
+		amount = INFINITY
+		
 	if(!isnum(amount))
 		return 1
 

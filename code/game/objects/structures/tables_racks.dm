@@ -54,16 +54,14 @@
 			take_damage(rand(40,80), BRUTE, 0)
 
 /obj/structure/table/blob_act(obj/effect/blob/B)
-	if(prob(75))
-		qdel(src)
+	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/table/narsie_act()
 	if(prob(20))
 		new /obj/structure/table/wood(src.loc)
 
 /obj/structure/table/ratvar_act()
-	if(prob(20))
-		new /obj/structure/table/reinforced/brass(src.loc)
+	new /obj/structure/table/reinforced/brass(src.loc)
 
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
@@ -81,8 +79,10 @@
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	if(user.melee_damage_upper)
+	if(user.melee_damage_upper || user.obj_damage)
 		var/dmg_dealt = user.melee_damage_upper
+		if(user.obj_damage)
+			dmg_dealt = user.obj_damage
 		if(user.environment_smash)
 			dmg_dealt = 100
 		visible_message("<span class='warning'>[user] smashes [src]!</span>")
@@ -272,12 +272,13 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		spawn(5)
-			// Check again in a bit though
-			if(AM.loc == get_turf(src))
-				check_break(AM)
+		addtimer(src, "throw_check", 5, FALSE, AM)
 	else
 		check_break(AM)
+
+/obj/structure/table/glass/proc/throw_check(mob/living/M)
+	if(M.loc == get_turf(src))
+		check_break(M)
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
 	if(has_gravity(M) && M.mob_size > MOB_SIZE_SMALL)
@@ -364,7 +365,7 @@
 					user << "<span class='notice'>You weaken the table.</span>"
 					deconstruction_ready = 1
 	else
-		return ..()
+		. = ..()
 
 /obj/structure/table/reinforced/brass
 	name = "brass table"
@@ -460,10 +461,7 @@
 			take_damage(rand(5,25), BRUTE, 0)
 
 /obj/structure/rack/blob_act(obj/effect/blob/B)
-	if(prob(75))
-		qdel(src)
-	else
-		rack_destroy()
+	rack_destroy()
 
 
 /obj/structure/rack/mech_melee_attack(obj/mecha/M)
@@ -535,13 +533,16 @@
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	if(user.melee_damage_upper)
+	if(user.melee_damage_upper || user.obj_damage)
+		var/dmg_dealt = user.melee_damage_upper
+		if(user.obj_damage)
+			dmg_dealt = user.obj_damage
 		if(user.environment_smash)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			visible_message("<span class='warning'>[user] smashes [src] apart.</span>")
 			rack_destroy()
 		else
-			take_damage(user.melee_damage_upper, user.melee_damage_type)
+			take_damage(dmg_dealt, user.melee_damage_type)
 
 
 /obj/structure/rack/attack_tk() // no telehulk sorry
@@ -595,19 +596,18 @@
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( user.loc )
+		new /obj/item/stack/sheet/metal(user.loc)
 		qdel(src)
-		return
 	else
-		return ..()
+		. = ..()
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
-	user << "<span class='notice'>You start constructing rack...</span>"
-	if (do_after(user, 50, target = src))
+	user << "<span class='notice'>You start constructing a rack...</span>"
+	if(do_after(user, 50, target = src, progress=TRUE))
 		if(!user.drop_item())
 			return
-		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
+		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
+		user.visible_message("<span class='notice'>[user] assembles \a [R].\
+			</span>", "<span class='notice'>You assemble \a [R].</span>")
 		R.add_fingerprint(user)
 		qdel(src)
-		return
-

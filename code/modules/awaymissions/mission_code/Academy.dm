@@ -66,7 +66,7 @@
 	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/academy_wizard_spawner/process()
 	if(next_check < world.time)
@@ -91,7 +91,7 @@
 	if(!current_wizard)
 		return
 	spawn(0)
-		var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD, current_wizard)
 		var/mob/dead/observer/chosen = null
 
 		if(candidates.len)
@@ -121,7 +121,7 @@
 
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile)
-	wizmind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball)
+	wizmind.AddSpell(new /obj/effect/proc_holder/spell/fireball)
 
 	current_wizard = wizbody
 
@@ -131,7 +131,7 @@
 	if(health<0)
 		visible_message("<span class='warning'>[src] breaks down!</span>")
 		icon_state = "forge_off"
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		broken = 1
 
 /obj/structure/academy_wizard_spawner/attackby(obj/item/weapon/W, mob/living/user, params)
@@ -266,7 +266,7 @@
 			servant_mind.objectives += O
 			servant_mind.transfer_to(H)
 
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [user.real_name] Servant?", "wizard")
+			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", "wizard", mob = H)
 			var/mob/dead/observer/chosen = null
 
 			if(candidates.len)

@@ -8,12 +8,13 @@ var/global/posibrain_notif_cooldown = 0
 	w_class = 3
 	origin_tech = "biotech=3;programming=3;plasmatech=2"
 	var/notified = 0
-	var/askDelay = 10 * 60 * 1
+	var/askDelay = 600 //one minute
 	var/used = 0 //Prevents split personality virus. May be reset if personality deletion code is added.
 	brainmob = null
 	req_access = list(access_robotics)
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
+	var/autoping = TRUE //if it pings on creation immediately
 	var/begin_activation_message = "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
 	var/success_message = "<span class='notice'>The positronic brain pings, and its lights start flashing. Success!</span>"
 	var/fail_message = "<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>"
@@ -33,18 +34,21 @@ var/global/posibrain_notif_cooldown = 0
 		if(istype(ghost))
 			activate(ghost)
 
-/obj/item/device/mmi/posibrain/proc/ping_ghosts(msg)
-	if(!posibrain_notif_cooldown)
-		notify_ghosts("[name] [msg] in [get_area(src)]!", 'sound/effects/ghost2.ogg', enter_link="<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action=NOTIFY_ATTACK)
-		posibrain_notif_cooldown = 1
-		spawn(askDelay) //Global one minute cooldown to avoid spam.
-			posibrain_notif_cooldown = 0
+/obj/item/device/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
+	if(newlymade || !posibrain_notif_cooldown)
+		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
+		if(!newlymade)
+			posibrain_notif_cooldown = 1
+			addtimer(src, "reset_posibrain_cooldown", askDelay, FALSE)
+
+/obj/item/device/mmi/posibrain/proc/reset_posibrain_cooldown()
+	posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
 	if(brainmob && !brainmob.key && !notified)
 		//Start the process of requesting a new ghost.
 		user << begin_activation_message
-		ping_ghosts("requested")
+		ping_ghosts("requested", FALSE)
 		notified = 1
 		used = 0
 		update_icon()
@@ -98,7 +102,10 @@ var/global/posibrain_notif_cooldown = 0
 		candidate << "This brain has already been taken! Please try your possesion again later!"
 		return
 	notified = 0
-	brainmob.ckey = candidate.ckey
+	if(candidate.mind && !isobserver(candidate))
+		candidate.mind.transfer_to(brainmob)
+	else
+		brainmob.ckey = candidate.ckey
 	name = "[initial(name)] ([brainmob.name])"
 	brainmob << welcome_message
 	brainmob.mind.assigned_role = new_role
@@ -145,7 +152,8 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src
-	ping_ghosts("created")
+	if(autoping)
+		ping_ghosts("created", TRUE)
 	..()
 
 

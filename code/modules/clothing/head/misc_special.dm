@@ -25,6 +25,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/welding/attack_self()
@@ -71,7 +72,7 @@
 	throwforce = 15
 	damtype = BURN
 	hitsound = 'sound/items/Welder.ogg'
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
 	..()
@@ -79,7 +80,7 @@
 	throwforce = 0
 	damtype = BRUTE
 	hitsound = 'sound/weapons/tap.ogg'
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/is_hot()
 	return on * heat

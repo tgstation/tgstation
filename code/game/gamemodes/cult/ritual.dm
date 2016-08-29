@@ -70,7 +70,7 @@ This file contains the arcane tome files.
 	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
 
 	text += "<font color='red'><b>Convert</b></font><br>This rune is critical to the success of the cult. It will allow you to convert normal crew members into cultists. \
-	To do this, simply place the crew member upon the rune and invoke it. This rune requires two invokers to use. If the target to be converted is loyalty-implanted or a certain assignment, they will \
+	To do this, simply place the crew member upon the rune and invoke it. This rune requires two invokers to use. If the target to be converted is mindshield-implanted or a certain assignment, they will \
 	be unable to be converted. People the Geometer wishes sacrificed will also be ineligible for conversion, and anyone with a shielding presence like the null rod will not be converted.<br> \
 	Successful conversions will produce a tome for the new cultist.<br><br>"
 
@@ -172,9 +172,17 @@ This file contains the arcane tome files.
 	var/entered_rune_name
 	var/list/possible_runes = list()
 	var/list/shields = list()
+	var/area/A = get_area(src)
+
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
+
+	if(Turf.z != ZLEVEL_STATION && Turf.z != ZLEVEL_MINING)
+		user << "<span class='warning'>The veil is not weak enough here."
+		return
+	if(istype(A, /area/shuttle))
+		user << "<span class='warning'>Interference from hyperspace engines disrupts the Geometer's power on shuttles.</span>"
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name))
@@ -217,16 +225,10 @@ This file contains the arcane tome files.
 			else if(!cult_mode.eldergod)
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
-			var/area/A = get_area(src)
 			var/locname = initial(A.name)
 			if(loc.z && loc.z != ZLEVEL_STATION)
 				user << "<span class='warning'>The Geometer is not interested \
 					in lesser locations; the station is the prize!</span>"
-				return
-			if(istype(A, /area/shuttle))
-				user << "<span class='warning'>Interference from hyperspace \
-					engines prevents the Geometer from entering our world on \
-					a shuttle.</span>"
 				return
 			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 			if(confirm_final == "No")
@@ -262,5 +264,6 @@ This file contains the arcane tome files.
 		var/obj/machinery/shield/S = V
 		if(S && !qdeleted(S))
 			qdel(S)
-	new rune_to_scribe(Turf, chosen_keyword)
-	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
+	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
+	user << "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>"
+	feedback_add_details("cult_runes_scribed", R.cultist_name)

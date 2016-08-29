@@ -18,22 +18,23 @@
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
-#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
-
-#define HEADBANGPROTECT		4096
 #define EARBANGPROTECT		1024
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
+#define HEADBANGPROTECT		4096
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
+#define DROPDEL			16384 // When dropped, it calls qdel on itself
+#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
 //turf-only flags
 #define NOJAUNT		1
+#define UNUSED_TRANSIT_TURF 2
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -68,6 +69,9 @@
 #define NOHUNGER		17
 #define NOCRITDAMAGE	18
 #define NOZOMBIE		19
+#define EASYDISMEMBER	20
+#define EASYLIMBATTACHMENT 21
+#define TOXINLOVER		22
 
 #define FLYING	65536
 
@@ -82,6 +86,7 @@
 #define SLIME 16
 #define DRONE 32
 #define SWARMER 64
+#define RATVAR 128
 
 // Flags for reagents
 #define REAGENT_NOREACT 1

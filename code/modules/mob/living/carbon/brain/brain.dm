@@ -1,7 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /mob/living/carbon/brain
-	languages = HUMAN
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
 	var/obj/item/device/mmi/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
@@ -55,7 +56,7 @@
 
 /mob/living/carbon/brain/can_be_revived()
 	. = 1
-	if(!container || health <= config.health_threshold_dead)
+	if(!container || health <= HEALTH_THRESHOLD_DEAD)
 		return 0
 
 /mob/living/carbon/brain/update_sight()

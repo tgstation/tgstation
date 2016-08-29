@@ -1,5 +1,6 @@
 /obj
-	languages = HUMAN
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
 	var/crit_fail = 0
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
@@ -17,6 +18,8 @@
 	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
 	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
 
+	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
+
 /obj/New()
 	..()
 
@@ -29,7 +32,7 @@
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	return ..()
 
@@ -185,7 +188,7 @@
 		SSobj.burning += src
 		burn_world_time = world.time + burntime*rand(10,20)
 		if(global_overlay)
-			overlays += fire_overlay
+			add_overlay(fire_overlay)
 		return 1
 
 /obj/proc/burn()
@@ -219,4 +222,5 @@
 /obj/proc/CanAStarPass()
 	. = !density
 
-
+/obj/proc/check_uplink_validity()
+	return 1

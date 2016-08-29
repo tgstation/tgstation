@@ -3,6 +3,7 @@
 	icon_state = "alien_s"
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	limb_destroyer = 1
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
@@ -13,6 +14,7 @@
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
+	var/drooling = 0 //For Neruotoxic spit overlays
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
@@ -35,7 +37,6 @@
 		adjustBruteLoss(15)
 		var/hitverb = "punched"
 		if(mob_size < MOB_SIZE_LARGE)
-			Paralyse(1)
 			step_away(src,user,15)
 			sleep(1)
 			step_away(src,user,15)
@@ -162,15 +163,15 @@
 		A.loc = new_xeno
 	..()
 
-//For alien evolution/promotion procs. Checks for
-proc/alien_type_present(var/alienpath)
+//For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
+proc/get_alien_type(var/alienpath)
 	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
 			continue
-		return 1
-	return 0
+		return A
+	return FALSE
 
 
 /mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)

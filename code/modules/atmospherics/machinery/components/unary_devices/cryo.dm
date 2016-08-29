@@ -32,7 +32,8 @@
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 4)
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 2)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/construction()
 	..(dir, dir)
@@ -211,7 +212,7 @@
 		occupantData["stat"] = occupant.stat
 		occupantData["health"] = occupant.health
 		occupantData["maxHealth"] = occupant.maxHealth
-		occupantData["minHealth"] = config.health_threshold_dead
+		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
 		occupantData["bruteLoss"] = occupant.getBruteLoss()
 		occupantData["oxyLoss"] = occupant.getOxyLoss()
 		occupantData["toxLoss"] = occupant.getToxLoss()

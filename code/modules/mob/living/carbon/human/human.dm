@@ -120,6 +120,8 @@
 	var/b_loss = null
 	var/f_loss = null
 	var/bomb_armor = getarmor(null, "bomb")
+	if(istype(ex_target, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 
 	switch (severity)
 		if (1)
@@ -164,6 +166,7 @@
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
+				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--
 				if(!max_limb_loss)
@@ -358,7 +361,7 @@
 				if(pocket_item.flags & NODROP)
 					usr << "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>"
 				usr << "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>"
-			else if(place_item && place_item.mob_can_equip(src, pocket_id, 1) && !(place_item.flags&ABSTRACT))
+			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.flags&ABSTRACT))
 				usr << "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>"
 				delay_denominator = 4
 			else
@@ -701,7 +704,7 @@
 	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
-	//Loyalty implants imply trustworthyness
+	//mindshield implants imply trustworthyness
 	if(isloyal(src))
 		threatcount -= 1
 
@@ -814,7 +817,7 @@
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
 	CHECK_DNA_AND_SPECIES(C)
 
-	if(C.stat == DEAD)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
 	if(is_mouth_covered())
@@ -834,7 +837,7 @@
 		var/they_breathe = (!(NOBREATH in C.dna.species.specflags))
 		var/they_lung = C.getorganslot("lungs")
 
-		if(C.health > config.health_threshold_crit)
+		if(C.health > HEALTH_THRESHOLD_CRIT)
 			return
 
 		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
@@ -903,7 +906,7 @@
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
 	if(dna && dna.species)
-		overlays += "electrocuted_base"
+		add_overlay("electrocuted_base")
 		spawn(anim_duration)
 			if(src)
 				overlays -= "electrocuted_base"
@@ -972,7 +975,7 @@
 					if(5)
 						hud_used.healths.icon_state = "health0"
 		if(hud_used.healthdoll)
-			hud_used.healthdoll.overlays.Cut()
+			hud_used.healthdoll.cut_overlays()
 			if(stat != DEAD)
 				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
 				for(var/X in bodyparts)
@@ -993,9 +996,9 @@
 					if(hal_screwyhud == 5)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
+						hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[t]6")
+					hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[t]6"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
@@ -1059,12 +1062,7 @@
 			O = new /datum/objective/sintouched/pride
 	ticker.mode.sintouched += src.mind
 	src.mind.objectives += O
-	var/obj_count = 1
-	src << "<span class='notice'>Your current objectives:</span>"
-	for(O in src.mind.objectives)
-		var/datum/objective/objective = O
-		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	src.mind.announce_objectives()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
@@ -1074,6 +1072,20 @@
 /mob/living/carbon/human/is_literate()
 	return 1
 
+/mob/living/carbon/human/can_hold_items()
+	return TRUE
+
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float
+	..()
+
+
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
+	if(blood && (NOBLOOD in dna.species.specflags))
+		if(message)
+			visible_message("<span class='warning'>[src] dry heaves!</span>", \
+							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		if(stun)
+			Weaken(10)
+		return 1
 	..()

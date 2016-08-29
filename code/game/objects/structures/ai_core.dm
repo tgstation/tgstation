@@ -144,7 +144,7 @@
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
-				if(M.hacked)
+				if(M.hacked || M.clockwork)
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 

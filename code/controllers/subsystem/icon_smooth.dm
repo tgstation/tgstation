@@ -2,19 +2,25 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 
 /datum/subsystem/icon_smooth
 	name = "Icon Smoothing"
-	priority = -5
-	wait = 5
+	init_order = -5
+	wait = 1
+	priority = 35
+	flags = SS_TICKER
+
 	var/list/smooth_queue = list()
 
 /datum/subsystem/icon_smooth/New()
 	NEW_SS_GLOBAL(SSicon_smooth)
 
 /datum/subsystem/icon_smooth/fire()
-	for(var/atom in smooth_queue)
-		ss_smooth_icon(atom)
-		smooth_queue -= atom
+	while(smooth_queue.len)
+		var/atom/A = smooth_queue[smooth_queue.len]
+		smooth_queue.len--
+		ss_smooth_icon(A)
 		if (MC_TICK_CHECK)
 			return
+	if (!smooth_queue.len)
+		can_fire = 0
 
 /datum/subsystem/icon_smooth/Initialize()
 	smooth_zlevel(1,TRUE)

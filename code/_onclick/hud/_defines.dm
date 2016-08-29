@@ -24,6 +24,9 @@
 #define ui_lingchemdisplay "WEST:6,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
 #define ui_crafting	"12:-10,1:5"
+#define ui_building "12:-10,1:21"
+
+#define ui_devilsouldisplay "WEST:6,CENTER-1:15"
 
 //Lower center, persistant menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
@@ -93,6 +96,7 @@
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.
 #define ui_alien_health "EAST-1:28,CENTER-1:15"	//aliens have the health display where humans have the pressure damage indicator.
 #define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
+#define ui_alien_queen_finder "EAST-1:28,CENTER-3:15"
 
 // AI
 

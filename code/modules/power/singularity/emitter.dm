@@ -68,7 +68,7 @@
 	if (src.anchored)
 		usr << "<span class='warning'>It is fastened to the floor!</span>"
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.setDir(turn(src.dir, 270))
 	return 1
 
 /obj/machinery/power/emitter/AltClick(mob/user)
@@ -126,6 +126,16 @@
 		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
 		return 1
 
+/obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
+	if(ismegafauna(M))
+		state = 0
+		anchored = FALSE
+		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
+	else
+		..()
+	if(!anchored)
+		step(src, get_dir(M, src))
+
 
 /obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
 //	add_load(1000)
@@ -170,7 +180,7 @@
 
 		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
 
-		A.dir = src.dir
+		A.setDir(src.dir)
 		playsound(src.loc, projectile_sound, 25, 1)
 
 		if(prob(35))

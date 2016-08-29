@@ -6,18 +6,21 @@
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
+	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
-	var/list/image/hud_list = list()
+	var/list/image/hud_list = null
 	//HUD images that this atom can provide.
 	var/list/hud_possible
 
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+	//overlays that should remain on top and not normally be removed, like c4.
+	var/list/priority_overlays
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -25,7 +28,11 @@
 			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
 			qdel(AA)
 		alternate_appearances = null
-
+	if(viewing_alternate_appearances)
+		for(var/aakey in viewing_alternate_appearances)
+			for(var/aa in viewing_alternate_appearances[aakey])
+				var/datum/alternate_appearance/AA = aa
+				AA.hide(list(src))
 	return ..()
 
 
@@ -64,7 +71,6 @@
 		hulk.changeNext_move(CLICK_CD_MELEE)
 		add_logs(hulk, src, "punched", "hulk powers")
 		hulk.do_attack_animation(src)
-	return
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -139,7 +145,6 @@
 			return 1
 	else if(src in container)
 		return 1
-	return
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
@@ -302,7 +307,7 @@ var/list/blood_splatter_icons = list()
 			blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 			blood_splatter_icon = fcopy_rsc(blood_splatter_icon)
 			blood_splatter_icons[index] = blood_splatter_icon
-		overlays += blood_splatter_icon
+		add_overlay(blood_splatter_icon)
 
 /obj/item/clothing/gloves/add_blood(list/blood_dna)
 	. = ..()
@@ -432,3 +437,11 @@ var/list/blood_splatter_icons = list()
 			if(nutri_check.nutriment_factor >0)
 				M.reagents.remove_reagent(R.id,R.volume)
 
+
+//Hook for running code when a dir change occurs
+/atom/proc/setDir(newdir)
+	dir = newdir
+
+/atom/on_varedit(modified_var)
+	if(!Debug2)
+		admin_spawned = TRUE

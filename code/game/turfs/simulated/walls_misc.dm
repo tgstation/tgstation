@@ -43,37 +43,46 @@
 /turf/closed/wall/clockwork
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
-	icon = 'icons/turf/walls/clockwork_wall.dmi'
-	icon_state = "clockwork_wall"
-	canSmoothWith = list(/turf/closed/wall/clockwork)
-	smooth = SMOOTH_MORE
 	explosion_block = 2
+	var/obj/effect/clockwork/overlay/wall/realappearence
+	var/obj/structure/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/New()
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	SSobj.processing += src
-	clockwork_construction_value += 5
+	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/wall, src)
+	realappearence.linked = src
+	change_construction_value(5)
+
+/turf/closed/wall/clockwork/examine(mob/user)
+	..()
+	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
+		user << "<span class='brass'>It is linked, generating components in a cache!</span>"
 
 /turf/closed/wall/clockwork/Destroy()
-	SSobj.processing -= src
-	clockwork_construction_value -= 5
-	..()
+	be_removed()
+	return ..()
 
-/turf/closed/wall/clockwork/process()
-	if(prob(2))
-		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1, 5), 1, -4, 1, 1)
-	for(var/obj/structure/clockwork/cache/C in range(1, src))
-		if(prob(5))
-			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
-			playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
+/turf/closed/wall/clockwork/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		be_removed()
+	return ..()
+
+/turf/closed/wall/clockwork/proc/be_removed()
+	if(linkedcache)
+		linkedcache.linkedwall = null
+		linkedcache = null
+	change_construction_value(-5)
+	qdel(realappearence)
+	realappearence = null
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
-		if(!WT.isOn())
+		if(!WT.remove_fuel(0,user))
 			return 0
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
 		if(!do_after(user, 120 / WT.toolspeed, target = src))
 			return 0
@@ -85,7 +94,8 @@
 	return ..()
 
 /turf/closed/wall/clockwork/ratvar_act()
-	return 0
+	for(var/mob/M in src)
+		M.ratvar_act()
 
 /turf/closed/wall/clockwork/narsie_act()
 	..()
@@ -116,7 +126,12 @@
 	return new/obj/structure/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
-	new/obj/item/clockwork/alloy_shards(src)
+	for(var/i in 1 to 2)
+		new/obj/item/clockwork/alloy_shards/large(src)
+	for(var/i in 1 to 2)
+		new/obj/item/clockwork/alloy_shards/medium(src)
+	for(var/i in 1 to 3)
+		new/obj/item/clockwork/alloy_shards/small(src)
 
 
 /turf/closed/wall/vault
@@ -155,13 +170,19 @@
 	walltype = "shuttle"
 	smooth = SMOOTH_FALSE
 
+/turf/closed/wall/shuttle/syndie
+	icon_state = "wall3"
+	walltype = "syndieshuttle"
+	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
+
 /turf/closed/wall/shuttle/smooth
 	name = "wall"
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle"
 	walltype = "shuttle"
+	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle, /obj/machinery/door/airlock/glass, /obj/machinery/door/airlock/shuttle)
 
 /turf/closed/wall/shuttle/smooth/nodiagonal
 	smooth = SMOOTH_MORE
@@ -185,7 +206,7 @@
 	if(T.color != color)
 		T.color = color
 	if(T.dir != dir)
-		T.dir = dir
+		T.setDir(dir)
 	T.transform = transform
 	return T
 
@@ -193,11 +214,3 @@
 	. = ..()
 	T.transform = transform
 
-
-//why don't shuttle walls habe smoothwall? now i gotta do rotation the dirty way <- DOUBLE GOOFBALL FOR NOT CALLING PARENT
-/turf/closed/wall/shuttle/shuttleRotate(rotation)
-	if(smooth)
-		return ..()
-	var/matrix/M = transform
-	M.Turn(rotation)
-	transform = M

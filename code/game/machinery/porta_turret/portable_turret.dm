@@ -370,6 +370,14 @@
 	else
 		qdel(src)
 
+/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	if(user.melee_damage_upper == 0)
+		user.emote("[user.friendly] [src]")
+	else
+		user.do_attack_animation(src)
+		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+		take_damage(damage)
 
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	switch(damage_type)
@@ -587,7 +595,7 @@
 	if(target)
 		spawn()
 			popUp()				//pop the turret up if it's not already up.
-		dir = get_dir(base, target)	//even if you can't shoot, follow the target
+		setDir(get_dir(base, target)	)//even if you can't shoot, follow the target
 		spawn()
 			shootAt(target)
 		return 1
@@ -701,16 +709,16 @@
 /obj/machinery/turretid/New(loc, ndir = 0, built = 0)
 	..()
 	if(built)
-		dir = ndir
+		setDir(ndir)
 		locked = 0
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
-	return
 
 /obj/machinery/turretid/initialize() //map-placed turrets autolink turrets
 	if(control_area && istext(control_area))
-		for(var/area/A in world)
+		for(var/V in sortedAreas)
+			var/area/A = V
 			if(A.name == control_area)
 				control_area = A
 				break
@@ -722,7 +730,7 @@
 		else
 			control_area = CA
 
-	for(var/obj/machinery/porta_turret/T in get_area_all_atoms(control_area))
+	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
@@ -779,13 +787,7 @@
 			return
 
 	user.set_machine(src)
-	var/loc = src.loc
-	if (istype(loc, /turf))
-		loc = loc:loc
-	if (!istype(loc, /area))
-		user << text("Turret badly positioned - loc.loc is [].", loc)
-		return
-	var/area/area = loc
+	var/area/area = get_area(src)
 	var/t = ""
 
 	if(src.locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))

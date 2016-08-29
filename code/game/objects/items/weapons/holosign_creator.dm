@@ -140,7 +140,7 @@
 	qdel(src)
 
 /obj/effect/overlay/holograph/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper)
+	if(!M.melee_damage_upper && !M.obj_damage)
 		return
 	attack_generic(5, M)
 
@@ -231,7 +231,7 @@
 	density = 1
 	holo_integrity = 1
 
-/obj/effect/overlay/holograph/barrier/CanPass()
+/obj/effect/overlay/holograph/barrier/cyborg/CanPass()
 	return 0
 
 /obj/effect/overlay/holograph/barrier/cyborg/hacked
@@ -240,20 +240,21 @@
 	holo_integrity = 3
 	var/shockcd = 0
 
+/obj/effect/overlay/holograph/barrier/cyborg/hacked/proc/cooldown()
+	shockcd = FALSE
+
 /obj/effect/overlay/holograph/barrier/cyborg/hacked/attack_hand(mob/living/user)
 	if(!shockcd)
 		if(ismob(user))
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier", safety=1)
-			shockcd = 1
-			spawn(10)
-			shockcd = 0
+			shockcd = TRUE
+			addtimer(src, "cooldown", 10)
 
 /obj/effect/overlay/holograph/barrier/cyborg/hacked/Bumped(atom/user)
 	if(!shockcd)
 		if(ismob(user))
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier", safety=1)
-			shockcd = 1
-			spawn(10)
-			shockcd = 0
+			shockcd = TRUE
+			addtimer(src, "cooldown", 10)

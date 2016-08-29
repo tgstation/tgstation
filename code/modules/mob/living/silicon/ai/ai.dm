@@ -14,11 +14,12 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'//
+	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai"
 	anchored = 1
 	density = 1
 	status_flags = CANSTUN|CANPUSH
+	a_intent = "harm" //so we always get pushed instead of trying to swap
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8
@@ -45,7 +46,6 @@ var/list/ai_list = list()
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
 	var/list/datum/AI_Module/current_modules = list()
-	var/fire_res_on_core = 0
 	var/can_dominate_mechs = 0
 	var/shunted = 0 //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 
@@ -78,7 +78,7 @@ var/list/ai_list = list()
 
 	var/obj/machinery/camera/portable/builtInCamera
 
-/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
+/mob/living/silicon/ai/New(loc, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	..()
 	rename_self("ai")
 	name = real_name
@@ -157,7 +157,9 @@ var/list/ai_list = list()
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 	qdel(eyeobj) // No AI, no Eye
-	return ..()
+	malfhack = null
+
+	. = ..()
 
 
 /mob/living/silicon/ai/verb/pick_icon()
@@ -167,7 +169,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -230,6 +232,8 @@ var/list/ai_list = list()
 		icon_state = "ai-nanotrasen"
 	else if(icontype == "Gentoo")
 		icon_state = "ai-gentoo"
+	else if(icontype == "Angel")
+		icon_state = "ai-angel"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
@@ -291,8 +295,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/ai_roster()
 	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
 
-	for(var/datum/data/record/t in sortRecord(data_core.general))
-		dat += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
+	dat += data_core.get_manifest()
 	dat += "</body></html>"
 
 	src << browse(dat, "window=airoster")
@@ -318,10 +321,8 @@ var/list/ai_list = list()
 		if(C)
 			C.post_status("shuttle")
 
-	return
-
 /mob/living/silicon/ai/cancel_camera()
-	src.view_core()
+	view_core()
 
 /mob/living/silicon/ai/verb/toggle_anchor()
 	set category = "AI Commands"
@@ -382,8 +383,6 @@ var/list/ai_list = list()
 		if(3)
 			if (stat != DEAD)
 				adjustBruteLoss(30)
-
-	return
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)
@@ -468,7 +467,6 @@ var/list/ai_list = list()
 		return
 
 	..()
-	return
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
@@ -744,7 +742,6 @@ var/list/ai_list = list()
 	light_cameras()
 
 	src << "Camera lights activated."
-	return
 
 //AI_CAMERA_LUMINOSITY
 
@@ -896,3 +893,31 @@ var/list/ai_list = list()
 	if(..()) //successfully ressuscitated from death
 		icon_state = "ai"
 		. = 1
+
+/mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
+	malfhack = null
+	malfhacking = 0
+	clear_alert("hackingapc")
+
+	if(!istype(apc) || qdeleted(apc) || apc.stat & BROKEN)
+		src << "<span class='danger'>Hack aborted. The designated APC no \
+			longer exists on the power network.</span>"
+		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
+	else if(apc.aidisabled)
+		src << "<span class='danger'>Hack aborted. \The [apc] is no \
+			longer responding to our systems.</span>"
+		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 1)
+	else
+		malf_picker.processing_time += 10
+
+		apc.malfai = parent || src
+		apc.malfhack = TRUE
+		apc.locked = TRUE
+
+		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
+		src << "Hack complete. \The [apc] is now under your \
+			exclusive control."
+		apc.update_icon()
+
+/mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
+	..(loc,L,B,1)

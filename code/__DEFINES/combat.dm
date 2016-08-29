@@ -69,6 +69,7 @@
 #define UNARMED_ATTACK 2
 #define PROJECTILE_ATTACK 3
 #define THROWN_PROJECTILE_ATTACK 4
+#define LEAP_ATTACK 5
 
 
 //Gun Stuff
@@ -78,3 +79,9 @@
  #define WEAPON_LIGHT 0
  #define WEAPON_MEDIUM 1
  #define WEAPON_HEAVY 2
+
+
+//Health Defines
+
+#define HEALTH_THRESHOLD_CRIT 0
+#define HEALTH_THRESHOLD_DEAD -100

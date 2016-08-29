@@ -22,7 +22,7 @@
 /proc/log_adminsay(text)
 	if (config.log_adminchat)
 		log_admin("ASAY: [text]")
-		
+
 /proc/log_dsay(text)
 	if (config.log_adminchat)
 		log_admin("DSAY: [text]")
@@ -76,3 +76,6 @@
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		diary << "\[[time_stamp()]]COMMENT: [text]"
 
+/proc/log_chat(text)
+	if (config.log_pda)
+		diary << "\[[time_stamp()]]CHAT: [text]"

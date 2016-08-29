@@ -23,7 +23,7 @@
 		if(5)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(6)
-			new /obj/item/weapon/wingpotion(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/potion/flight(src)
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
@@ -47,7 +47,7 @@
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/stack/sheet/runed_metal/fifty(src)
+			new /obj/item/borg/upgrade/modkit/aoe/mobs(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
@@ -212,7 +212,11 @@
 	desc = "A dread talisman that can render you completely invulnerable."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "talisman"
+	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
+
+/datum/action/item_action/immortality
+	name = "Immortality"
 
 /obj/item/device/immortality_talisman/Destroy(force)
 	if(force)
@@ -228,7 +232,7 @@
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
-		Z.dir = user.dir
+		Z.setDir(user.dir)
 		user.forceMove(Z)
 		user.notransform = 1
 		user.status_flags |= GODMODE
@@ -411,48 +415,68 @@
 	vehicle_move_delay = 1
 
 //Potion of Flight
-
-/obj/item/weapon/wingpotion
-	name = "strange elixir"
-	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says 'erqo'hyy tvi'rf lbh jv'atf'"
+/obj/item/weapon/reagent_containers/glass/bottle/potion
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "potionflask"
-	w_class = 2
-	var/used = FALSE
 
-/obj/item/weapon/wingpotion/attack_self(mob/living/M)
-	if(used)
-		M << "<span class='notice'>The flask is empty, what a shame.</span>"
+/obj/item/weapon/reagent_containers/glass/bottle/potion/flight
+	name = "strange elixir"
+	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
+	list_reagents = list("flightpotion" = 5)
+
+/obj/item/weapon/reagent_containers/glass/bottle/potion/update_icon()
+	if(reagents.total_volume)
+		icon_state = "potionflask"
 	else
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			CHECK_DNA_AND_SPECIES(C)
-			if(C.wear_mask)
-				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
-			else
-				if(ishumanbasic(C)) //implying xenoshumans are holy
-					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
-				else
-					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
-					C.set_species(/datum/species/angel)
-					playsound(loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
-					C.adjustBruteLoss(20)
-					C.emote("scream")
-				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
-				src.used = TRUE
+		icon_state = "potionflask_empty"
 
+/datum/reagent/flightpotion
+	name = "Flight Potion"
+	id = "flightpotion"
+	description = "Strange mutagenic compound of unknown origins."
+	reagent_state = LIQUID
+	color = "#FFEBEB"
+
+/datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(!ishumanbasic(M) || reac_volume < 5) // implying xenohumans are holy
+			if(method == INGEST && show_message)
+				M << "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>"
+			return ..()
+
+		M << "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>"
+		M.set_species(/datum/species/angel)
+		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
+		M.adjustBruteLoss(20)
+		M.emote("scream")
+	..()
+
+
+
+
+///Bosses
+
+
+
+
+//Dragon
 
 /obj/structure/closet/crate/necropolis/dragon
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/New()
 	..()
-	var/loot = rand(1,2)
+	var/loot = rand(1,4)
 	switch(loot)
 		if(1)
 			new /obj/item/weapon/melee/ghost_sword(src)
 		if(2)
 			new /obj/item/weapon/lava_staff(src)
+		if(3)
+			new /obj/item/weapon/spellbook/oneuse/sacredflame(src)
+			new /obj/item/weapon/gun/magic/wand/fireball(src)
+		if(4)
+			new /obj/item/weapon/dragons_blood(src)
 
 /obj/item/weapon/melee/ghost_sword
 	name = "spectral blade"
@@ -472,14 +496,14 @@
 /obj/item/weapon/melee/ghost_sword/New()
 	..()
 	spirits = list()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
 		G.invisibility = initial(G.invisibility)
 	spirits.Cut()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	. = ..()
 
@@ -549,11 +573,14 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,3)
+	var/random = rand(1,4)
 
 	switch(random)
 		if(1)
-			user << "<span class='danger'>Other than tasting terrible, nothing really happens.</span>"
+			user << "<span class='danger'>Your appearence morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>"
+			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body")
+			H.eye_color = "fee5a3"
+			H.set_species(/datum/species/lizard)
 		if(2)
 			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
 			H.set_species(/datum/species/skeleton)
@@ -561,6 +588,9 @@
 			user << "<span class='danger'>You don't feel so good...</span>"
 			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
 			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
+		if(4)
+			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
+			H.weather_immunities |= "lava"
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	qdel(src)
@@ -578,7 +608,7 @@
 	stage2	= list("Your skin feels scaley.")
 	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
 	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon.</span>")
+	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
 	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
 
@@ -598,6 +628,9 @@
 	burn_state = LAVA_PROOF
 	hitsound = 'sound/weapons/sear.ogg'
 	var/turf_type = /turf/open/floor/plating/lava/smooth
+	var/transform_string = "lava"
+	var/reset_turf_type = /turf/open/floor/plating/asteroid/basalt
+	var/reset_string = "basalt"
 	var/cooldown = 200
 	var/timer = 0
 	var/banned_turfs
@@ -615,8 +648,91 @@
 		return
 
 	if(target in view(user.client.view, get_turf(user)))
-		var/turf/open/O = target
-		user.visible_message("<span class='danger'>[user] turns \the [O] into lava!</span>")
-		O.ChangeTurf(turf_type)
+
+		var/turf/open/T = get_turf(target)
+		if(!istype(T))
+			return
+		if(!istype(T, turf_type))
+			user.visible_message("<span class='danger'>[user] turns \the [T] into [transform_string]!</span>")
+			message_admins("[key_name_admin(user)] fired the lava staff at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(target)] ([T.x], [T.y], [T.z])</a>).")
+			log_game("[key_name(user)] fired the lava staff at [get_area(target)] ([T.x], [T.y], [T.z]).")
+			T.ChangeTurf(turf_type)
+		else
+			user.visible_message("<span class='danger'>[user] turns \the [T] into [reset_string]!</span>")
+			T.ChangeTurf(reset_turf_type)
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 		timer = world.time + cooldown
+
+///Bubblegum
+
+/obj/item/mayhem
+	name = "mayhem in a bottle"
+	desc = "A magically infused bottle of blood, the scent of which will drive anyone nearby into a murderous frenzy."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+/obj/item/mayhem/attack_self(mob/user)
+	for(var/mob/living/carbon/human/H in range(7,user))
+		spawn()
+			var/obj/effect/mine/pickup/bloodbath/B = new(H)
+			B.mineEffect(H)
+	user << "<span class='notice'>You shatter the bottle!</span>"
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	qdel(src)
+
+/obj/structure/closet/crate/necropolis/bubblegum
+	name = "bubblegum chest"
+
+/obj/structure/closet/crate/necropolis/bubblegum/New()
+	..()
+	var/loot = rand(1,4)
+	switch(loot)
+		if(1)
+			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
+		if(2)
+			new /obj/item/mayhem(src)
+		if(3)
+			new /obj/item/blood_contract(src)
+		if(4)
+			new /obj/item/weapon/gun/magic/staff/spellblade(src)
+
+/obj/item/blood_contract
+	name = "blood contract"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll2"
+	color = "#FF0000"
+	desc = "Mark your target for death. "
+	var/used = FALSE
+
+/obj/item/blood_contract/attack_self(mob/user)
+	if(used)
+		return
+	used = TRUE
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in player_list
+
+	if(!(isliving(choice)))
+		user << "[choice] is already dead!"
+		used = FALSE
+		return
+	else
+
+		var/mob/living/L = choice
+
+		message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
+
+		var/datum/objective/survive/survive = new
+		survive.owner = L.mind
+		L.mind.objectives += survive
+		L << "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>"
+		L.color = "#FF0000"
+		spawn()
+			var/obj/effect/mine/pickup/bloodbath/B = new(L)
+			B.mineEffect(L)
+
+		for(var/mob/living/carbon/human/H in player_list)
+			if(H == L)
+				continue
+			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. They have been marked red! Go kill them!</span>"
+			H.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife/butcher(H), slot_l_hand)
+
+	qdel(src)

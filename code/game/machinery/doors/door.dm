@@ -23,7 +23,7 @@
 	var/autoclose = 0 //does it automatically close after some time
 	var/safe = 1 //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = 0 //whether the door is bolted or not.
-
+	var/assemblytype //the type of door frame to drop during deconstruction
 	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 
 /obj/machinery/door/New()
@@ -61,6 +61,10 @@
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
+			if(mecha.occupant)
+				if(world.time - mecha.occupant.last_bumped <= 10)
+					return
+				mecha.occupant.last_bumped = world.time
 			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
 				open()
 			else
@@ -178,7 +182,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 
 
 /obj/machinery/door/blob_act(obj/effect/blob/B)
-	if(prob(40))
+	if(prob(60))
 		qdel(src)
 
 /obj/machinery/door/emp_act(severity)
@@ -335,3 +339,11 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 
 /obj/machinery/door/proc/unlock()
 	return
+
+/obj/machinery/door/proc/hostile_lockdown(mob/origin)
+	if(!stat) //So that only powered doors are closed.
+		close() //Close ALL the doors!
+
+/obj/machinery/door/proc/disable_lockdown()
+	if(!stat) //Opens only powered doors.
+		open() //Open everything!

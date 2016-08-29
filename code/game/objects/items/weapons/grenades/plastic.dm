@@ -81,7 +81,7 @@
 		message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [det_time] second fuse",0,1)
 		log_game("[key_name(user)] planted [src.name] on [target.name] at ([target.x],[target.y],[target.z]) with [det_time] second fuse")
 
-		target.overlays += image_overlay
+		target.add_overlay(image_overlay, 1)
 		if(!nadeassembly)
 			user << "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>"
 			addtimer(src, "prime", det_time*10)
@@ -130,6 +130,7 @@
 		if(!qdeleted(target))
 			location = get_turf(target)
 			target.overlays -= image_overlay
+			target.priority_overlays -= image_overlay
 	else
 		location = get_turf(src)
 	if(location)
@@ -157,12 +158,13 @@
 		if(!qdeleted(target))
 			location = get_turf(target)
 			target.overlays -= image_overlay
+			target.priority_overlays -= image_overlay
 	else
 		location = get_turf(src)
 	if(location)
-		if(istype(loc, /obj/item/weapon/twohanded/spear))
+		if(istype(loc, /obj/item/weapon/twohanded/spear) || !target)
 			explosion(location, 0, 2, 3)
-		else if(target.density)
+		else if(target && target.density)
 			var/turf/T = get_step(location, aim_dir)
 			explosion(get_step(T, aim_dir),0,0,3)
 			explosion(T,0,2,0)

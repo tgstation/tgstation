@@ -114,7 +114,7 @@ var/next_external_rsc = 0
 
 	//Admin Authorisation
 	var/localhost_addresses = list("127.0.0.1", "::1")
-	if(!address || (address in localhost_addresses))
+	if(address && (address in localhost_addresses))
 		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
 		if(localhost_rank)
 			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
@@ -143,6 +143,7 @@ var/next_external_rsc = 0
 		preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
+	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
 
@@ -206,9 +207,12 @@ var/next_external_rsc = 0
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
 
-	findJoinDate()
+	if(!IsGuestKey(key) && dbcon.IsConnected())
+		findJoinDate()
 
 	sync_client_with_db()
+
+	check_ip_intel()
 
 	send_resources()
 
@@ -286,7 +290,7 @@ var/next_external_rsc = 0
 	if (!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sanitizeSQL(src.ckey)
+	var/sql_ckey = sanitizeSQL(ckey)
 
 	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = '[address]' AND ckey != '[sql_ckey]'")
 	query_ip.Execute()
@@ -300,14 +304,17 @@ var/next_external_rsc = 0
 	while (query_cid.NextRow())
 		related_accounts_cid += "[query_cid.item[1]], "
 
+	var/admin_rank = "Player"
+	if (src.holder && src.holder.rank)
+		admin_rank = src.holder.rank.name
+	else
+		if (check_randomizer())
+			return
+
 	var/watchreason = check_watchlist(sql_ckey)
 	if(watchreason)
 		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is on the watchlist and has just connected - Reason: [watchreason]</font>")
 		send2irc_adminless_only("Watchlist", "[key_name(src)] is on the watchlist and has just connected - Reason: [watchreason]")
-
-	var/admin_rank = "Player"
-	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank.name
 
 	var/sql_ip = sanitizeSQL(src.address)
 	var/sql_computerid = sanitizeSQL(src.computer_id)
@@ -321,6 +328,94 @@ var/next_external_rsc = 0
 	var/serverip = "[world.internet_address]:[world.port]"
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
+
+/client/proc/check_randomizer()
+	. = FALSE
+	if (!config.check_randomizer)
+		return
+	var/static/cidcheck = list()
+	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
+
+	var/oldcid = cidcheck[ckey]
+	if (oldcid)
+		if (oldcid != computer_id) //IT CHANGED!!!
+			cidcheck -= ckey //so they can try again after removing the cid randomizer.
+
+			src << "<span class='userdanger'>Connection Error:</span>"
+			src << "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>"
+
+			if (!cidcheck_failedckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
+				send2irc_adminless_only("CidRandomizer", "[key_name(src)] has been detected as using a cid randomizer. Connection rejected.")
+				cidcheck_failedckeys[ckey] = 1
+				note_randomizer_user()
+
+			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
+
+			del(src)
+			return TRUE
+		else
+			if (cidcheck_failedckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
+				send2irc_adminless_only("CidRandomizer", "[key_name(src)] has been allowed to connect after showing they removed their cid randomizer.")
+				cidcheck_failedckeys -= ckey
+			cidcheck -= ckey
+	else
+		var/sql_ckey = sanitizeSQL(ckey)
+		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+		query_cidcheck.Execute()
+
+		var/lastcid
+		if (query_cidcheck.NextRow())
+			lastcid = query_cidcheck.item[1]
+
+		if (computer_id != lastcid)
+			cidcheck[ckey] = computer_id
+			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
+
+			var/url = winget(src, null, "url")
+			//special javascript to make them reconnect under a new window.
+			src << browse("<a id='link' href=byond://[url]>byond://[url]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
+			winset(src, "reconnectbutton", "is-disable=true") //reconnect keeps the same cid in the randomizer, they could use this button to fake it.
+			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+
+			//teeheehee (in case the above method doesn't work, its not 100% reliable.)
+			src << "<pre class=\"system system\">Network connection shutting down due to read error.</pre>"
+			del(src)
+			return TRUE
+
+/client/proc/note_randomizer_user()
+	var/const/adminckey = "CID-Error"
+	var/sql_ckey = sanitizeSQL(ckey)
+	//check to see if we noted them in the last day.
+	var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id FROM [format_table_name("notes")] WHERE ckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
+	if(!query_get_notes.Execute())
+		var/err = query_get_notes.ErrorMsg()
+		log_game("SQL ERROR obtaining id from notes table. Error : \[[err]\]\n")
+		return
+	if (query_get_notes.NextRow())
+		return
+
+	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
+	query_get_notes = dbcon.NewQuery("SELECT adminckey FROM [format_table_name("notes")] WHERE ckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
+	if(!query_get_notes.Execute())
+		var/err = query_get_notes.ErrorMsg()
+		log_game("SQL ERROR obtaining id from notes table. Error : \[[err]\]\n")
+		return
+	if (query_get_notes.NextRow())
+		if (query_get_notes.item[1] == adminckey)
+			return
+	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, logged = 0)
+
+
+/client/proc/check_ip_intel()
+	set waitfor = 0 //we sleep when getting the intel, no need to hold up the client connection while we sleep
+	if (config.ipintel_email)
+		var/datum/ipintel/res = get_ip_intel(address)
+		if (res.intel >= config.ipintel_rating_bad)
+			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
+		ip_intel = res.intel
+
 
 /client/proc/add_verbs_from_config()
 	if(config.see_own_notes)
@@ -363,3 +458,9 @@ var/next_external_rsc = 0
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+
+
+//Hook, override it to run code when dir changes
+//Like for /atoms, but clients are their own snowflake FUCK
+/client/proc/setDir(newdir)
+	dir = newdir
