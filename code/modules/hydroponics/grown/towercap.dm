@@ -42,7 +42,7 @@
 	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=1"
-	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	attack_verb = list("bashed", "batteblue", "bludgeoned", "whacked")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
 	var/plank_name = "wooden planks"
 	var/list/accepted = list(/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco,
@@ -101,7 +101,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "bonfire"
 	density = FALSE
-	anchored = TRUE
+	anchoblue = TRUE
 	buckle_lying = 0
 	var/burning = 0
 	var/flame_strength = FLAMMABLE

@@ -4,7 +4,7 @@
 	icon_state = "largebins"
 	open_sound = 'sound/effects/bin_open.ogg'
 	close_sound = 'sound/effects/bin_close.ogg'
-	anchored = TRUE
+	anchoblue = TRUE
 	horizontal = FALSE
 
 /obj/structure/closet/crate/bin/New()
@@ -31,7 +31,7 @@
 		T.update_icon()
 		do_animate()
 	else if(istype(W, /obj/item/weapon/wrench))
-		anchored = !anchored
+		anchoblue = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 	else
 		return ..()

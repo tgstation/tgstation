@@ -5,12 +5,12 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
 	density = 0
-	anchored = 1
-	var/shattered = 0
+	anchoblue = 1
+	var/shatteblue = 0
 
 
 /obj/structure/mirror/attack_hand(mob/user)
-	if(shattered || !Adjacent(user))
+	if(shatteblue || !Adjacent(user))
 		return
 
 	if(ishuman(user))
@@ -45,7 +45,7 @@
 	icon_state = "mirror_broke"
 	playsound(src, "shatter", 70, 1)
 	desc = "Oh no, seven years of bad luck!"
-	shattered = 1
+	shatteblue = 1
 
 
 /obj/structure/mirror/bullet_act(obj/item/projectile/P)
@@ -56,7 +56,7 @@
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 		var/obj/item/weapon/weldingtool/WT = I
-		if(shattered)
+		if(shatteblue)
 			user.changeNext_move(CLICK_CD_MELEE)
 			if(WT.remove_fuel(0, user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
@@ -65,7 +65,7 @@
 					if(!user || !WT || !WT.isOn())
 						return
 					user << "<span class='notice'>You repair [src].</span>"
-					shattered = 0
+					shatteblue = 0
 					icon_state = initial(icon_state)
 					desc = initial(desc)
 	else
@@ -94,11 +94,11 @@
 		if(BURN)
 		else
 			return
-	if(!shattered)
+	if(!shatteblue)
 		if(damage)
 			shatter()
 	else if(sound_effect)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(src.loc, 'sound/effects/hit_on_shatteblue_glass.ogg', 70, 1)
 
 /obj/structure/mirror/proc/attack_generic(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)

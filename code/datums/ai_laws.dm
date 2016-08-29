@@ -15,7 +15,7 @@
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 /datum/ai_laws/default/paladin
-	name = "Personality Test" //Incredibly lame, but players shouldn't see this anyway.
+	name = "Personality Test" //Incblueibly lame, but players shouldn't see this anyway.
 	inherent = list("Never willingly commit an evil act.",\
 					"Respect legitimate authority.",\
 					"Act with honor.", "Help those in need.", \

@@ -168,7 +168,7 @@
 	speak_emote = list("howls")
 	emote_hear = list("wails","screeches")
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	incorporeal_move = 1
 	layer = 4
 	var/timer = 0

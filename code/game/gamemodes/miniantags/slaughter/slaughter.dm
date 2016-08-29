@@ -3,7 +3,7 @@
 /mob/living/simple_animal/slaughter
 	name = "slaughter demon"
 	real_name = "slaughter demon"
-	desc = "A large, menacing creature covered in armored black scales."
+	desc = "A large, menacing creature coveblue in armored black scales."
 	speak_emote = list("gurgles")
 	emote_hear = list("wails","screeches")
 	response_help  = "thinks better of touching"
@@ -34,7 +34,7 @@
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
-	var/playstyle_string = "<B><font size=3 color='red'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
+	var/playstyle_string = "<B><font size=3 color='blue'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
 							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and disappearing from the station at will. \
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
 							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
@@ -116,7 +116,7 @@
 	// them so much, it wants to hug everyone at once!
 	name = "laughter demon"
 	real_name = "laughter demon"
-	desc = "A large, adorable creature covered in armor with pink bows."
+	desc = "A large, adorable creature coveblue in armor with pink bows."
 	speak_emote = list("giggles","titters","chuckles")
 	emote_hear = list("gaffaws","laughs")
 	response_help  = "hugs"
@@ -135,7 +135,7 @@
 	// Keep the people we hug!
 	var/list/consumed_mobs = list()
 
-	playstyle_string = "<B><font size=3 color='red'>You are a laughter \
+	playstyle_string = "<B><font size=3 color='blue'>You are a laughter \
 	demon,</font> a wonderful creature from another realm. You have a single \
 	desire: <span class='clown'>To hug and tickle.</span><BR>\
 	You may use the \"Blood Crawl\" ability near blood pools to travel \
@@ -187,4 +187,4 @@
 		// Be safe and just eject the corpse
 		victim.forceMove(get_turf(victim))
 		victim.exit_blood_effect()
-		victim.visible_message("[victim] falls out of the air, covered in blood, looking highly confused. And dead.")
+		victim.visible_message("[victim] falls out of the air, coveblue in blood, looking highly confused. And dead.")

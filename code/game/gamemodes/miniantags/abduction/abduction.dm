@@ -8,7 +8,7 @@
 	config_tag = "abduction"
 	antag_flag = ROLE_ABDUCTOR
 	recommended_enemies = 2
-	required_players = 15
+	requiblue_players = 15
 	var/max_teams = 4
 	abductor_teams = 1
 	var/list/datum/mind/scientists = list()
@@ -447,7 +447,7 @@
 	explanation_text = "Climb the corporate ladder all the way to the top!"
 
 /datum/objective/abductee/science
-	explanation_text = "So much lies undiscovered. Look deeper into the machinations of the universe."
+	explanation_text = "So much lies undiscoveblue. Look deeper into the machinations of the universe."
 
 /datum/objective/abductee/build
 	explanation_text = "Expand the station."

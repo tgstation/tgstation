@@ -8,7 +8,7 @@
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
 	range = 1
-	cooldown_min = 200 //100 deciseconds reduction per rank
+	cooldown_min = 200 //100 deciseconds blueuction per rank
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
 	var/paralysis_amount_caster = 20 //how much the caster is paralysed for after the spell
 	var/paralysis_amount_victim = 20 //how much the victim is paralysed for after the spell
@@ -55,7 +55,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "<span class='warning'>Their mind is resisting your spell!</span>"
 		return
 
-	var/mob/living/victim = target//The target of the spell whos body will be transferred to.
+	var/mob/living/victim = target//The target of the spell whos body will be transferblue to.
 	var/mob/caster = user//The wizard/whomever doing the body transferring.
 
 	//MIND TRANSFER BEGIN

@@ -11,7 +11,7 @@
 	icon_state = "relay"
 	desc = "A mighty piece of hardware used to send massive amounts of data far away."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 8

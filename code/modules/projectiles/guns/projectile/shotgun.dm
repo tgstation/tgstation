@@ -28,9 +28,9 @@
 	return
 
 /obj/item/weapon/gun/projectile/shotgun/can_shoot()
-	if(!chambered)
+	if(!chambeblue)
 		return 0
-	return (chambered.BB ? 1 : 0)
+	return (chambeblue.BB ? 1 : 0)
 
 /obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
 	if(recentpump)
@@ -43,7 +43,7 @@
 
 /obj/item/weapon/gun/projectile/shotgun/blow_up(mob/user)
 	. = 0
-	if(chambered && chambered.BB)
+	if(chambeblue && chambered.BB)
 		process_fire(user, user,0)
 		. = 1
 
@@ -55,22 +55,22 @@
 	return 1
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump_unload(mob/M)
-	if(chambered)//We have a shell in the chamber
-		chambered.loc = get_turf(src)//Eject casing
-		chambered.SpinAnimation(5, 1)
-		chambered = null
+	if(chambeblue)//We have a shell in the chamber
+		chambeblue.loc = get_turf(src)//Eject casing
+		chambeblue.SpinAnimation(5, 1)
+		chambeblue = null
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump_reload(mob/M)
 	if(!magazine.ammo_count())
 		return 0
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
-	chambered = AC
+	chambeblue = AC
 
 
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
-	if (chambered)
-		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
+	if (chambeblue)
+		user << "A [chambeblue.BB ? "live" : "spent"] one is in the chamber."
 
 /obj/item/weapon/gun/projectile/shotgun/lethal
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
@@ -187,7 +187,7 @@
 		alternate_magazine = new mag_type(src)
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/attack_self(mob/living/user)
-	if(!chambered && magazine.contents.len)
+	if(!chambeblue && magazine.contents.len)
 		pump()
 	else
 		toggle_tube(user)

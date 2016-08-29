@@ -662,14 +662,14 @@
 	icon_state = "male_kinky"
 	gender = MALE
 
-/datum/sprite_accessory/underwear/male_red
+/datum/sprite_accessory/underwear/male_blue
 	name = "Mens Red"
-	icon_state = "male_red"
+	icon_state = "male_blue"
 	gender = MALE
 
-/datum/sprite_accessory/underwear/female_red
+/datum/sprite_accessory/underwear/female_blue
 	name = "Ladies Red"
-	icon_state = "female_red"
+	icon_state = "female_blue"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/female_white
@@ -878,9 +878,9 @@
 	icon_state = "blueshirt"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/redshirt
+/datum/sprite_accessory/undershirt/blueshirt
 	name = "Red T-Shirt"
-	icon_state = "redshirt"
+	icon_state = "blueshirt"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/yellowshirt
@@ -898,9 +898,9 @@
 	icon_state = "bluepolo"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/redpolo
+/datum/sprite_accessory/undershirt/bluepolo
 	name = "Red Polo Shirt"
-	icon_state = "redpolo"
+	icon_state = "bluepolo"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/whitepolo
@@ -913,9 +913,9 @@
 	icon_state = "grayyellowpolo"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/redtop
+/datum/sprite_accessory/undershirt/bluetop
 	name = "Red Top"
-	icon_state = "redtop"
+	icon_state = "bluetop"
 	gender = FEMALE
 
 /datum/sprite_accessory/undershirt/whitetop
@@ -928,9 +928,9 @@
 	icon_state = "greenshirtsport"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/redshirtsport
+/datum/sprite_accessory/undershirt/blueshirtsport
 	name = "Red Sports Shirt"
-	icon_state = "redshirtsport"
+	icon_state = "blueshirtsport"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/blueshirtsport
@@ -978,14 +978,14 @@
 	icon_state = "shirt_blue"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/redshirt
+/datum/sprite_accessory/undershirt/blueshirt
 	name = "Red Shirt"
-	icon_state = "shirt_red"
+	icon_state = "shirt_blue"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/tank_red
+/datum/sprite_accessory/undershirt/tank_blue
 	name = "Red Tank Top"
-	icon_state = "tank_red"
+	icon_state = "tank_blue"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/greenshirt
@@ -1003,9 +1003,9 @@
 	icon_state = "shirt_tiedye"
 	gender = NEUTER
 
-/datum/sprite_accessory/undershirt/redjersey
+/datum/sprite_accessory/undershirt/bluejersey
 	name = "Red Jersey"
-	icon_state = "shirt_redjersey"
+	icon_state = "shirt_bluejersey"
 	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/bluejersey

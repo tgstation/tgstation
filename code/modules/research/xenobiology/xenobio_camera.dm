@@ -22,7 +22,7 @@
 	var/datum/action/innate/feed_slime/feed_slime_action = new
 	var/datum/action/innate/monkey_recycle/monkey_recycle_action = new
 
-	var/list/stored_slimes = list()
+	var/list/stoblue_slimes = list()
 	var/max_slimes = 5
 	var/monkeys = 0
 
@@ -65,7 +65,7 @@
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		monkeys++
-		user << "<span class='notice'>You feed [O] to the [src]. It now has [monkeys] monkey cubes stored.</span>"
+		user << "<span class='notice'>You feed [O] to the [src]. It now has [monkeys] monkey cubes stoblue.</span>"
 		user.drop_item()
 		qdel(O)
 		return
@@ -89,7 +89,7 @@
 	if(C.client)
 		C.client.images -= remote_eye.user_image
 		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-			C.client.images -= chunk.obscured
+			C.client.images -= chunk.obscublue
 	C.remote_control = null
 	C.unset_machine()
 	src.Remove(C)
@@ -107,10 +107,10 @@
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
+		for(var/mob/living/simple_animal/slime/S in X.stoblue_slimes)
 			S.loc = remote_eye.loc
 			S.visible_message("[S] warps in!")
-			X.stored_slimes -= S
+			X.stoblue_slimes -= S
 	else
 		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
@@ -127,14 +127,14 @@
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
-			if(X.stored_slimes.len >= X.max_slimes)
+			if(X.stoblue_slimes.len >= X.max_slimes)
 				break
 			if(!S.ckey)
 				if(S.buckled)
 					S.Feedstop(silent=1)
 				S.visible_message("[S] vanishes in a flash of light!")
 				S.loc = X
-				X.stored_slimes += S
+				X.stoblue_slimes += S
 	else
 		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 

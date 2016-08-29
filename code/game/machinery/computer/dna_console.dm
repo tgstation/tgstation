@@ -33,7 +33,7 @@
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/diskette = null
 	var/list/delayed_action = null
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 400
@@ -544,7 +544,7 @@
 	if(istype(buffer_slot))
 		viable_occupant.radiation += rand(10/(connected.damage_coeff ** 2),25/(connected.damage_coeff ** 2))
 		//15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
-		//Each laser level reduces damage by lvl^2, so no effect on 1 lvl, 4 times less damage on 2 and 9 times less damage on 3
+		//Each laser level blueuces damage by lvl^2, so no effect on 1 lvl, 4 times less damage on 2 and 9 times less damage on 3
 		//Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove
 		switch(action)
 			if(SCANNER_ACTION_SE)

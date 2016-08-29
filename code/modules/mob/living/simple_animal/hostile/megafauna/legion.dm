@@ -184,7 +184,7 @@ Difficulty: Medium
 		A.telegraph_duration = 100
 		A.end_duration = 100
 
-	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
+	user.visible_message("<span class='warning'>[user] holds [src] skywards as blue lightning crackles into the sky!</span>", \
 	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
 	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
 	A.telegraph()

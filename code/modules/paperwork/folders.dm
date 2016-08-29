@@ -11,9 +11,9 @@
 	desc = "A blue folder."
 	icon_state = "folder_blue"
 
-/obj/item/weapon/folder/red
-	desc = "A red folder."
-	icon_state = "folder_red"
+/obj/item/weapon/folder/blue
+	desc = "A blue folder."
+	icon_state = "folder_blue"
 
 /obj/item/weapon/folder/yellow
 	desc = "A yellow folder."
@@ -89,12 +89,12 @@
 	name = "folder- 'TOP SECRET'"
 	desc = "A folder stamped \"Top Secret - Property of The Syndicate.\""
 
-/obj/item/weapon/folder/syndicate/red
-	icon_state = "folder_sred"
+/obj/item/weapon/folder/syndicate/blue
+	icon_state = "folder_sblue"
 
-/obj/item/weapon/folder/syndicate/red/New()
+/obj/item/weapon/folder/syndicate/blue/New()
 	..()
-	new /obj/item/documents/syndicate/red(src)
+	new /obj/item/documents/syndicate/blue(src)
 	update_icon()
 
 /obj/item/weapon/folder/syndicate/blue

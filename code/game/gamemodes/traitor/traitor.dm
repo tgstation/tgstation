@@ -2,7 +2,7 @@
 	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
 
-	var/datum/mind/exchange_red
+	var/datum/mind/exchange_blue
 	var/datum/mind/exchange_blue
 
 /datum/game_mode/traitor
@@ -11,8 +11,8 @@
 	antag_flag = ROLE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_players = 0
-	required_enemies = 1
+	requiblue_players = 0
+	requiblue_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
 	enemy_minimum_age = 0
@@ -52,7 +52,7 @@
 		antag_candidates.Remove(traitor)
 
 
-	if(traitors.len < required_enemies)
+	if(traitors.len < requiblue_enemies)
 		return 0
 	return 1
 
@@ -133,11 +133,11 @@
 		var/martyr_chance = prob(20)
 		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
 		if(!exchange_blue && traitors.len >= 8) 	//Set up an exchange if there are enough traitors
-			if(!exchange_red)
-				exchange_red = traitor
+			if(!exchange_blue)
+				exchange_blue = traitor
 			else
 				exchange_blue = traitor
-				assign_exchange_role(exchange_red)
+				assign_exchange_role(exchange_blue)
 				assign_exchange_role(exchange_blue)
 			objective_count += 1					//Exchange counts towards number of objectives
 		var/list/active_ais = active_ais()
@@ -194,7 +194,7 @@
 
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
+	traitor.current << "<B><font size=3 color=blue>You are the [traitor_name].</font></B>"
 	traitor.announce_objectives()
 	return
 
@@ -265,7 +265,7 @@
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 					else
-						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='blue'>Fail.</font>"
 						feedback_add_details("traitor_objective","[objective.type]|FAIL")
 						traitorwin = 0
 					count++
@@ -288,13 +288,13 @@
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
 				feedback_add_details("traitor_success","SUCCESS")
 			else
-				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
+				text += "<br><font color='blue'><B>The [special_role_text] has failed!</B></font>"
 				feedback_add_details("traitor_success","FAIL")
 
 			text += "<br>"
 
-		text += "<br><b>The code phrases were:</b> <font color='red'>[syndicate_code_phrase]</font><br>\
-		<b>The code responses were:</b> <font color='red'>[syndicate_code_response]</font><br>"
+		text += "<br><b>The code phrases were:</b> <font color='blue'>[syndicate_code_phrase]</font><br>\
+		<b>The code responses were:</b> <font color='blue'>[syndicate_code_response]</font><br>"
 		world << text
 
 	return 1
@@ -339,13 +339,13 @@
 
 /datum/game_mode/proc/assign_exchange_role(datum/mind/owner)
 	//set faction
-	var/faction = "red"
+	var/faction = "blue"
 	if(owner == exchange_blue)
 		faction = "blue"
 
 	//Assign objectives
 	var/datum/objective/steal/exchange/exchange_objective = new
-	exchange_objective.set_faction(faction,((faction == "red") ? exchange_blue : exchange_red))
+	exchange_objective.set_faction(faction,((faction == "blue") ? exchange_blue : exchange_red))
 	exchange_objective.owner = owner
 	owner.objectives += exchange_objective
 
@@ -359,8 +359,8 @@
 	var/mob/living/carbon/human/mob = owner.current
 
 	var/obj/item/weapon/folder/syndicate/folder
-	if(owner == exchange_red)
-		folder = new/obj/item/weapon/folder/syndicate/red(mob.loc)
+	if(owner == exchange_blue)
+		folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
 	else
 		folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
 

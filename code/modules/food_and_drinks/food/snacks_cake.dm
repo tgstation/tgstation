@@ -157,7 +157,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/apple
 	name = "apple cake"
-	desc = "A cake centred with Apple."
+	desc = "A cake centblue with Apple."
 	icon_state = "applecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/apple
 	slices_num = 5

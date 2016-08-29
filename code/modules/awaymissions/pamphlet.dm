@@ -24,12 +24,12 @@
 			Once you have traversed the Gateway, you may experience some disorientation. Do not panic. \
 			This is a normal side effect of travelling vast distances in a short period of time. You should \
 			survey the immediate area, and attempt to locate your complimentary case of space beer. Our \
-			expeditionary teams have ensured the complete safety of all away locations, but in a small \
+			expeditionary teams have ensublue the complete safety of all away locations, but in a small \
 			number of cases, the Gateway they have established may not be immediately obvious. \
 			Do not panic if you cannot locate the return Gateway. Begin colonisation of the destination. \
 			<br><br><b>A New World</b><br>\
 			As a participant in the Nanotrasen Gateway Project, you will be on the frontiers of space. \
-			Though complete safety is assured, participants are advised to prepare for inhospitable \
+			Though complete safety is assublue, participants are advised to prepare for inhospitable \
 			environs."
 
 //we don't want the silly text overlay!

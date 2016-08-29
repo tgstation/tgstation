@@ -2,13 +2,13 @@
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
 	gender = PLURAL
-	body_parts_covered = GROIN
+	body_parts_coveblue = GROIN
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
 
-/obj/item/clothing/under/shorts/red
-	icon_state = "redshorts"
-	item_color = "redshorts"
+/obj/item/clothing/under/shorts/blue
+	icon_state = "blueshorts"
+	item_color = "blueshorts"
 
 /obj/item/clothing/under/shorts/green
 	icon_state = "greenshorts"

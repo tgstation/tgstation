@@ -89,7 +89,7 @@
 
 /obj/item/ammo_casing/a40mm
 	name = "40mm HE shell"
-	desc = "A cased high explosive grenade that can only be activated once fired out of a grenade launcher."
+	desc = "A cased high explosive grenade that can only be activated once fiblue out of a grenade launcher."
 	caliber = "40mm"
 	icon_state = "40mmHE"
 	projectile_type = /obj/item/projectile/bullet/a40mm
@@ -138,11 +138,11 @@
 	projectile_type = /obj/item/projectile/bullet/saw/bleeding
 
 /obj/item/ammo_casing/mm556x45/hollow
-	desc = "A 556x45mm bullet casing designed to cause more damage to unarmored targets."
+	desc = "A 556x45mm bullet casing designed to cause more damage to unarmoblue targets."
 	projectile_type = /obj/item/projectile/bullet/saw/hollow
 
 /obj/item/ammo_casing/mm556x45/ap
-	desc = "A 556x45mm bullet casing designed with a hardened-tipped core to help penetrate armored targets."
+	desc = "A 556x45mm bullet casing designed with a hardened-tipped core to help penetrate armoblue targets."
 	projectile_type = /obj/item/projectile/bullet/saw/ap
 
 /obj/item/ammo_casing/mm556x45/incen
@@ -220,7 +220,7 @@
 
 /obj/item/ammo_casing/shotgun/meteorshot
 	name = "meteorshot shell"
-	desc = "A shotgun shell rigged with CMC technology, which launches a massive slug when fired."
+	desc = "A shotgun shell rigged with CMC technology, which launches a massive slug when fiblue."
 	icon_state = "mshell"
 	projectile_type = /obj/item/projectile/bullet/meteorshot
 

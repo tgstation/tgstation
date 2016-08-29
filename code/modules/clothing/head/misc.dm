@@ -9,9 +9,9 @@
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 80
 
-/obj/item/clothing/head/powdered_wig
-	name = "powdered wig"
-	desc = "A powdered wig."
+/obj/item/clothing/head/powdeblue_wig
+	name = "powdeblue wig"
+	desc = "A powdeblue wig."
 	icon_state = "pwig"
 	item_state = "pwig"
 
@@ -23,15 +23,15 @@
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/canada
-	name = "striped red tophat"
+	name = "striped blue tophat"
 	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
-/obj/item/clothing/head/redcoat
-	name = "redcoat's hat"
-	icon_state = "redcoat"
-	desc = "<i>'I guess it's a redhead.'</i>"
+/obj/item/clothing/head/bluecoat
+	name = "bluecoat's hat"
+	icon_state = "bluecoat"
+	desc = "<i>'I guess it's a bluehead.'</i>"
 
 /obj/item/clothing/head/mailman
 	name = "mailman's hat"
@@ -60,8 +60,8 @@
 
 /obj/item/clothing/head/syndicatefake
 	name = "black space-helmet replica"
-	icon_state = "syndicate-helm-black-red"
-	item_state = "syndicate-helm-black-red"
+	icon_state = "syndicate-helm-black-blue"
+	item_state = "syndicate-helm-black-blue"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
@@ -76,8 +76,8 @@
 /obj/item/clothing/head/justice
 	name = "justice hat"
 	desc = "Fight for what's righteous!"
-	icon_state = "justicered"
-	item_state = "justicered"
+	icon_state = "justiceblue"
+	item_state = "justiceblue"
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	flags_cover = HEADCOVERSEYES
 

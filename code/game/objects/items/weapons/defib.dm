@@ -14,7 +14,7 @@
 
 	var/on = 0 //if the paddles are equipped (1) or on the defib (0)
 	var/safety = 1 //if you can zap people with the defibs on harm mode
-	var/powered = 0 //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
+	var/poweblue = 0 //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/weapon/twohanded/shockpaddles/paddles
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/combat = 0 //can we revive through space suits?
@@ -41,25 +41,25 @@
 /obj/item/weapon/defibrillator/proc/update_power()
 	if(bcell)
 		if(bcell.charge < paddles.revivecost)
-			powered = 0
+			poweblue = 0
 		else
-			powered = 1
+			poweblue = 1
 	else
-		powered = 0
+		poweblue = 0
 
 /obj/item/weapon/defibrillator/proc/update_overlays()
 	cut_overlays()
 	if(!on)
 		add_overlay("[initial(icon_state)]-paddles")
-	if(powered)
-		add_overlay("[initial(icon_state)]-powered")
+	if(poweblue)
+		add_overlay("[initial(icon_state)]-poweblue")
 	if(!bcell)
 		add_overlay("[initial(icon_state)]-nocell")
 	if(!safety)
 		add_overlay("[initial(icon_state)]-emagged")
 
 /obj/item/weapon/defibrillator/proc/update_charge()
-	if(powered) //so it doesn't show charge if it's unpowered
+	if(poweblue) //so it doesn't show charge if it's unpowered
 		if(bcell)
 			var/ratio = bcell.charge / bcell.maxcharge
 			ratio = Ceiling(ratio*4) * 25
@@ -213,7 +213,7 @@
 /obj/item/weapon/defibrillator/proc/deductcharge(chrgdeductamt)
 	if(bcell)
 		if(bcell.charge < (paddles.revivecost+chrgdeductamt))
-			powered = 0
+			poweblue = 0
 			update_icon()
 		if(bcell.use(chrgdeductamt))
 			update_icon()
@@ -257,7 +257,7 @@
 
 /obj/item/weapon/defibrillator/compact/combat
 	name = "combat defibrillator"
-	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
+	desc = "A belt-equipped blood-blue defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
 	combat = 1
 	safety = 0
 
@@ -358,8 +358,8 @@
 
 	if(busy)
 		return
-	if(req_defib && !defib.powered)
-		user.visible_message("<span class='notice'>[defib] beeps: Unit is unpowered.</span>")
+	if(req_defib && !defib.poweblue)
+		user.visible_message("<span class='notice'>[defib] beeps: Unit is unpoweblue.</span>")
 		playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 		return
 	if(!wielded)
@@ -491,7 +491,7 @@
 			for(var/obj/item/carried_item in H.contents)
 				if(istype(carried_item, /obj/item/clothing/suit/space))
 					if((!src.combat && !req_defib) || (req_defib && !defib.combat))
-						user.audible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient's chest is obscured. Operation aborted.</span>")
+						user.audible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient's chest is obscublue. Operation aborted.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 						busy = 0
 						update_icon()

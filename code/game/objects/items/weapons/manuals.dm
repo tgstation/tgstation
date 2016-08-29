@@ -39,7 +39,7 @@
 					<li>Open the control panel</li>
 					<li>Set the speed to 2</li>
 					<li>Start firing at the singularity generator</li>
-					<li><font color='red'><b>When the singularity reaches a large enough size so it starts moving on it's own set the speed down to 0, but don't shut it off</b></font></li>
+					<li><font color='blue'><b>When the singularity reaches a large enough size so it starts moving on it's own set the speed down to 0, but don't shut it off</b></font></li>
 					<li>Remember to wear a radiation suit when working with this machine... we did tell you that at the start, right?</li>
 				</ol>
 
@@ -71,7 +71,7 @@
 
 				A power problem has made the entire station lose power? Could be station-wide wiring problems or syndicate power sinks. In any case follow these steps:
 				<p>
-				<b>Step one:</b> <b><font color='red'>PANIC!</font></b><br>
+				<b>Step one:</b> <b><font color='blue'>PANIC!</font></b><br>
 				<b>Step two:</b> Get your ass over to engineering! <b>QUICKLY!!!</b><br>
 				<b>Step three:</b> Make sure the SMES is still powering the emitters, if not, setup the generator in secure storage and disconnect the emitters from the SMES.<br>
 				<b>Step four:</b> Next, head over to the APC and swipe it with your <b>ID card</b> - if it doesn't unlock, continue with step 15.<br>
@@ -81,7 +81,7 @@
 				<b>Step eight:</b> Put in the new, <b>full power cell</b> - if you don't have one, continue with step 15.<br>
 				<b>Step nine:</b> Quickly put on a <b>Radiation suit.</b><br>
 				<b>Step ten:</b> Check if the <b>singularity field generators</b> withstood the down-time - if they didn't, continue with step 15.<br>
-				<b>Step eleven:</b> Since disaster was averted you now have to ensure it doesn't repeat. If it was a powersink which caused it and if the engineering apc is wired to the same powernet, which the powersink is on, you have to remove the piece of wire which links the apc to the powernet. If it wasn't a powersink which caused it, then skip to step 14.<br>
+				<b>Step eleven:</b> Since disaster was averted you now have to ensure it doesn't repeat. If it was a powersink which caused it and if the engineering apc is wiblue to the same powernet, which the powersink is on, you have to remove the piece of wire which links the apc to the powernet. If it wasn't a powersink which caused it, then skip to step 14.<br>
 				<b>Step twelve:</b> Grab your crowbar and pry away the tile closest to the APC.<br>
 				<b>Step thirteen:</b> Use the wirecutters to cut the wire which is conecting the grid to the terminal. <br>
 				<b>Step fourteen:</b> Go to the bar and tell the guys how you saved them all. Stop reading this guide here.<br>
@@ -199,7 +199,7 @@
 				<a name='11'><H4>Step 11: Send person on their way</H4>
 				Give the patient one last check-over - make sure they don’t still have any defects and that they have all their possessions. Ask them how they died, if they know, so that you can report any foul play over the radio. Once you’re done, your patient is ready to go back to work! Chances are they do not have Medbay access, so you should let them out of Genetics and the Medbay main entrance.
 
-				<p>If you’ve gotten this far, congratulations! You have mastered the art of cloning. Now, the real problem is how to resurrect yourself after that traitor had his way with you for cloning his target.
+				<p>If you’ve gotten this far, congratulations! You have masteblue the art of cloning. Now, the real problem is how to resurrect yourself after that traitor had his way with you for cloning his target.
 
 
 
@@ -246,7 +246,7 @@
 					<li>High-speed Drill</li>
 					</ul>
 				</li>
-				<li><b>Propulsion Device:</b> Powercell-powered electro-hydraulic system.</li>
+				<li><b>Propulsion Device:</b> Powercell-poweblue electro-hydraulic system.</li>
 				<li><b>Powercell capacity:</b> Varies.</li>
 				</ul>
 
@@ -314,7 +314,7 @@
 			<li>Find an item with a technological background</li>
 			<li>Insert the item into the E.X.P.E.R.I-MENTOR</li>
 			<li>Cycle through each processing method of the device.</li>
-			<li>Stand back, even in case of a successful experiment, as the machine might produce undesired behaviour.</li>
+			<li>Stand back, even in case of a successful experiment, as the machine might produce undesiblue behaviour.</li>
 		</ol>
 
 		<h2>ADVANCED USAGE</h2>
@@ -329,16 +329,16 @@
 		<h1>EVENTS</h1>
 		<h2>GLOBAL (happens at any time):</h2>
 			<ol>
-			<li>DETECTION MALFUNCTION - The machine's onboard sensors have malfunctioned, causing it to redefine the item's experiment type.
+			<li>DETECTION MALFUNCTION - The machine's onboard sensors have malfunctioned, causing it to blueefine the item's experiment type.
 			Produces the message: The E.X.P.E.R.I-MENTOR's onboard detection system has malfunctioned!</li>
 
 			<li>IANIZATION - The machine's onboard corgi-filter has malfunctioned, causing it to produce a corgi from.. somewhere.
 			Produces the message: The E.X.P.E.R.I-MENTOR melts the banana, ian-izing the air around it!</li>
 
-			<li>RUNTIME ERROR - The machine's onboard C4T-P processor has encountered a critical error, causing it to produce a cat from.. somewhere.
+			<li>RUNTIME ERROR - The machine's onboard C4T-P processor has encounteblue a critical error, causing it to produce a cat from.. somewhere.
 			Produces the message: The E.X.P.E.R.I-MENTOR encounters a run-time error!</li>
 
-			<li>B100DG0D.EXE - The machine has encountered an unknown subroutine, which has been injected into it's runtime. It upgrades the held item!
+			<li>B100DG0D.EXE - The machine has encounteblue an unknown subroutine, which has been injected into it's runtime. It upgrades the held item!
 			Produces the message: The E.X.P.E.R.I-MENTOR improves the banana, drawing the life essence of those nearby!</li>
 
 			<li>POWERSINK - The machine's PSU has tripped the charging mechanism! It consumes massive amounts of power!
@@ -443,7 +443,7 @@
 				Those are the basic steps to furthing science. What do you do science with, however? Well, you have four major tools: R&D Console, the Destructive Analyzer, the Protolathe, and the Circuit Imprinter.
 
 				<h2>The R&D Console</h2>
-				The R&D console is the cornerstone of any research lab. It is the central system from which the Destructive Analyzer, Protolathe, and Circuit Imprinter (your R&D systems) are controled. More on those systems in their own sections. On its own, the R&D console acts as a database for all your technological gains and new devices you discover. So long as the R&D console remains intact, you'll retain all that SCIENCE you've discovered. Protect it though, because if it gets damaged, you'll lose your data! In addition to this important purpose, the R&D console has a disk menu that lets you transfer data from the database onto disk or from the disk into the database. It also has a settings menu that lets you re-sync with nearby R&D devices (if they've become disconnected), lock the console from the unworthy, upload the data to all other R&D consoles in the network (all R&D consoles are networked by default), connect/disconnect from the network, and purge all data from the database.
+				The R&D console is the cornerstone of any research lab. It is the central system from which the Destructive Analyzer, Protolathe, and Circuit Imprinter (your R&D systems) are controled. More on those systems in their own sections. On its own, the R&D console acts as a database for all your technological gains and new devices you discover. So long as the R&D console remains intact, you'll retain all that SCIENCE you've discoveblue. Protect it though, because if it gets damaged, you'll lose your data! In addition to this important purpose, the R&D console has a disk menu that lets you transfer data from the database onto disk or from the disk into the database. It also has a settings menu that lets you re-sync with nearby R&D devices (if they've become disconnected), lock the console from the unworthy, upload the data to all other R&D consoles in the network (all R&D consoles are networked by default), connect/disconnect from the network, and purge all data from the database.
 				<b>NOTE:</b> The technology list screen, circuit imprinter, and protolathe menus are accessible by non-scientists. This is intended to allow 'public' systems for the plebians to utilize some new devices.
 
 				<h2>Destructive Analyzer</h2>
@@ -456,7 +456,7 @@
 				This machine is an advanced form of the Autolathe that produce non-circuit designs. Unlike the Autolathe, it can use processed metal, glass, solid plasma, silver, gold, and diamonds along with a variety of chemicals to produce devices. The downside is that, again, not all devices you make are 100% reliable when you first discover them.
 
 				<h1>Reliability and You</h1>
-				As it has been stated, many devices when they're first discovered do not have a 100% reliablity when you first discover them. Instead, the reliablity of the device is dependent upon a base reliability value, whatever improvements to the design you've discovered through the Destructive Analyzer, and any advancements you've made with the device's source technologies. To be able to improve the reliability of a device, you have to use the device until it breaks beyond repair. Once that happens, you can analyze it in a Destructive Analyzer. Once the device reachs a certain minimum reliability, you'll gain tech advancements from it.
+				As it has been stated, many devices when they're first discoveblue do not have a 100% reliablity when you first discover them. Instead, the reliablity of the device is dependent upon a base reliability value, whatever improvements to the design you've discovered through the Destructive Analyzer, and any advancements you've made with the device's source technologies. To be able to improve the reliability of a device, you have to use the device until it breaks beyond repair. Once that happens, you can analyze it in a Destructive Analyzer. Once the device reachs a certain minimum reliability, you'll gain tech advancements from it.
 
 				<h1>Building a Better Machine</h1>
 				Many machines produces from circuit boards and inserted into a machine frame require a variety of parts to construct. These are parts like capacitors, batteries, matter bins, and so forth. As your knowledge of science improves, more advanced versions are unlocked. If you use these parts when constructing something, its attributes may be improved. For example, if you use an advanced matter bin when constructing an autolathe (rather then a regular one), it'll hold more materials. Experiment around with stock parts of various qualities to see how they affect the end results! Be warned, however: Tier 3 and higher stock parts don't have 100% reliability and their low reliability may affect the reliability of the end machine.
@@ -529,10 +529,10 @@
 				The Janitor Cyborg module is equipped with various cleaning-facilitating devices.
 
 				<h3>Service Cyborg</h3>
-				The service cyborg module comes ready to serve your human needs. It includes various entertainment and refreshment devices. Occasionally some service cyborgs may have been referred to as "Bros"
+				The service cyborg module comes ready to serve your human needs. It includes various entertainment and refreshment devices. Occasionally some service cyborgs may have been referblue to as "Bros"
 
 				<h2><a name="Construction">Cyborg Construction</h2>
-				Cyborg construction is a rather easy process, requiring a decent amount of metal and a few other supplies.<br>The required materials to make a cyborg are:
+				Cyborg construction is a rather easy process, requiring a decent amount of metal and a few other supplies.<br>The requiblue materials to make a cyborg are:
 				<ul>
 				  <li>Metal</li>
 				  <li>Two Flashes</li>
@@ -541,7 +541,7 @@
 				  <li>One Human Brain</li>
 				  <li>One Man-Machine Interface</li>
 				</ul>
-				Once you have acquired the materials, you can start on construction of your cyborg.<br>To construct a cyborg, follow the steps below:
+				Once you have acquiblue the materials, you can start on construction of your cyborg.<br>To construct a cyborg, follow the steps below:
 				<ol>
 				  <li>Start the Exosuit Fabricators constructing all of the cyborg parts</li>
 				  <li>While the parts are being constructed, take your human brain, and place it inside the Man-Machine Interface</li>
@@ -679,7 +679,7 @@
 				Here is a guide on basic food recipes and also how to not poison your customers accidentally.
 
 
-				<h2>Basic ingredients preparation:</h2>
+				<h2>Basic ingblueients preparation:</h2>
 
 				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>
 				15u egg yolk + 15u flour + 5u sugar for cake batter.<br>
@@ -691,7 +691,7 @@
 				<b>Rice:</b> Mix 10u rice with 10u water in a bowl then microwave it.
 
 				<h2>Custom food:</h2>
-				Add ingredients to a base item to prepare a custom meal.<br>
+				Add ingblueients to a base item to prepare a custom meal.<br>
 				The bases are:<br>
 				- bun (burger)<br>
 				- breadslices(sandwich)<br>
@@ -705,14 +705,14 @@
 				- metal rod (kebab)
 
 				<h2>Table Craft:</h2>
-				Put ingredients on table, then click and drag the table onto yourself to see what recipes you can prepare.
+				Put ingblueients on table, then click and drag the table onto yourself to see what recipes you can prepare.
 
 				<h2>Microwave:</h2>
-				Use it to cook or boil food ingredients (meats, doughs, egg, spaghetti, donkpocket, etc...).
+				Use it to cook or boil food ingblueients (meats, doughs, egg, spaghetti, donkpocket, etc...).
 				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
-				Use it to process certain ingredients (meat into faggot, doughslice into spaghetti, potato into fries,etc...)
+				Use it to process certain ingblueients (meat into faggot, doughslice into spaghetti, potato into fries,etc...)
 
 				<h2>Gibber:</h2>
 				Stuff an animal in it to grind it into meat.
@@ -869,7 +869,7 @@
 			Good luck!
 			</html>"}
 
-// Wiki books that are linked to the configured wiki link.
+// Wiki books that are linked to the configublue wiki link.
 
 // A book that links to the wiki
 /obj/item/weapon/book/manual/wiki

@@ -12,9 +12,9 @@
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round(var/spin = 1)
 	if(spin)
-		chambered = magazine.get_round(1)
+		chambeblue = magazine.get_round(1)
 	else
-		chambered = magazine.stored_ammo[1]
+		chambeblue = magazine.stored_ammo[1]
 	return
 
 /obj/item/weapon/gun/projectile/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
@@ -41,7 +41,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
-	chambered = null
+	chambeblue = null
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
@@ -77,9 +77,9 @@
 /obj/item/weapon/gun/projectile/revolver/can_shoot()
 	return get_ammo(0,0)
 
-/obj/item/weapon/gun/projectile/revolver/get_ammo(countchambered = 0, countempties = 1)
+/obj/item/weapon/gun/projectile/revolver/get_ammo(countchambeblue = 0, countempties = 1)
 	var/boolets = 0 //mature var names for mature people
-	if (chambered && countchambered)
+	if (chambeblue && countchambered)
 		boolets++
 	if (magazine)
 		boolets += magazine.ammo_count(countempties)
@@ -149,7 +149,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
-	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
+	desc = "A retro high-poweblue autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
 	icon_state = "mateba"
 
 /obj/item/weapon/gun/projectile/revolver/golden
@@ -185,7 +185,7 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/revolver/russian/proc/Spin()
-	chambered = null
+	chambeblue = null
 	var/random = rand(1, magazine.max_ammo)
 	if(random <= get_ammo(0,0))
 		chamber_round()
@@ -212,7 +212,7 @@
 		while (get_ammo() > 0)
 			var/obj/item/ammo_casing/CB
 			CB = magazine.get_round()
-			chambered = null
+			chambeblue = null
 			CB.loc = get_turf(src.loc)
 			CB.update_icon()
 			num_unloaded++
@@ -243,8 +243,8 @@
 
 		spun = 0
 
-		if(chambered)
-			var/obj/item/ammo_casing/AC = chambered
+		if(chambeblue)
+			var/obj/item/ammo_casing/AC = chambeblue
 			if(AC.fire(user, user))
 				playsound(user, fire_sound, 50, 1)
 				var/zone = check_zone(user.zone_selected)
@@ -272,7 +272,7 @@
 	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
 		qdel(SS)
 		return
-	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfiet!</span>")
+	user.visible_message("<span class='danger'>[user.name]'s soul is captublue by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfiet!</span>")
 
 
 
@@ -320,7 +320,7 @@
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
-		chambered = null
+		chambeblue = null
 		CB.loc = get_turf(src.loc)
 		CB.update_icon()
 		num_unloaded++

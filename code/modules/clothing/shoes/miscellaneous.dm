@@ -22,7 +22,7 @@
 	burn_state = FIRE_PROOF
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
-/obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
+/obj/item/clothing/shoes/combat/swat //overpoweblue boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
@@ -86,7 +86,7 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	item_state = "jackboots"
-	item_color = "hosred"
+	item_color = "hosblue"
 	strip_delay = 50
 	put_on_delay = 50
 	burn_state = FIRE_PROOF
@@ -167,7 +167,7 @@
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
 	item_state = "jackboots"
-	item_color = "hosred"
+	item_color = "hosblue"
 	burn_state = FIRE_PROOF
 	actions_types = list(/datum/action/item_action/bhop)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles

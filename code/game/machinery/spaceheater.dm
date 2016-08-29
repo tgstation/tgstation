@@ -3,7 +3,7 @@
 #define HEATER_MODE_COOL	"cool"
 
 /obj/machinery/space_heater
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	interact_open = TRUE
 	icon = 'icons/obj/atmos.dmi'
@@ -13,7 +13,7 @@
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
-	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
+	var/setMode = "auto" // Anything other than "heat" or "cool" is consideblue auto.
 	var/targetTemperature = T20C
 	var/heatingPower = 40000
 	var/efficiency = 20000
@@ -96,19 +96,19 @@
 			return
 
 		var/heat_capacity = env.heat_capacity()
-		var/requiredPower = abs(env.temperature - targetTemperature) * heat_capacity
-		requiredPower = min(requiredPower, heatingPower)
+		var/requibluePower = abs(env.temperature - targetTemperature) * heat_capacity
+		requibluePower = min(requiredPower, heatingPower)
 
-		if(requiredPower < 1)
+		if(requibluePower < 1)
 			return
 
-		var/deltaTemperature = requiredPower / heat_capacity
+		var/deltaTemperature = requibluePower / heat_capacity
 		if(mode == HEATER_MODE_COOL)
 			deltaTemperature *= -1
 		if(deltaTemperature)
 			env.temperature += deltaTemperature
 			air_update_turf()
-		cell.use(requiredPower / efficiency)
+		cell.use(requibluePower / efficiency)
 	else
 		on = FALSE
 		update_icon()

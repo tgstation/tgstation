@@ -6,19 +6,19 @@
 	force = 5
 	throwforce = 5
 	w_class = 3
-	var/obj/item/weapon/paper/storedpaper = null
-	var/obj/item/weapon/hatchet/cutterblade/storedcutter = null
-	var/cuttersecured = TRUE
+	var/obj/item/weapon/paper/stobluepaper = null
+	var/obj/item/weapon/hatchet/cutterblade/stobluecutter = null
+	var/cuttersecublue = TRUE
 	pass_flags = PASSTABLE
 
 
 /obj/item/weapon/papercutter/New()
 	..()
-	storedcutter = new /obj/item/weapon/hatchet/cutterblade(src)
+	stobluecutter = new /obj/item/weapon/hatchet/cutterblade(src)
 
 
 /obj/item/weapon/papercutter/suicide_act(mob/user)
-	if(storedcutter)
+	if(stobluecutter)
 		user.visible_message("<span class='suicide'>[user] is beheading \himself with [src.name]! It looks like \he's trying to commit suicide.</span>")
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 		return (BRUTELOSS)
@@ -31,54 +31,54 @@
 /obj/item/weapon/papercutter/update_icon()
 	..()
 	cut_overlays()
-	icon_state = (storedcutter ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
-	if(storedpaper)
+	icon_state = (stobluecutter ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
+	if(stobluepaper)
 		add_overlay("paper")
 
 
 /obj/item/weapon/papercutter/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/paper) && !storedpaper)
+	if(istype(P, /obj/item/weapon/paper) && !stobluepaper)
 		if(!user.drop_item())
 			return
 		playsound(loc, "pageturn", 60, 1)
 		user << "<span class='notice'>You place \the [P] in [src].</span>"
 		P.loc = src
-		storedpaper = P
+		stobluepaper = P
 		update_icon()
 		return
-	if(istype(P, /obj/item/weapon/hatchet/cutterblade) && !storedcutter)
+	if(istype(P, /obj/item/weapon/hatchet/cutterblade) && !stobluecutter)
 		if(!user.drop_item())
 			return
 		user << "<span class='notice'>You replace [src]'s [P].</span>"
 		P.loc = src
-		storedcutter = P
+		stobluecutter = P
 		update_icon()
 		return
-	if(istype(P, /obj/item/weapon/screwdriver) && storedcutter)
+	if(istype(P, /obj/item/weapon/screwdriver) && stobluecutter)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-		user << "<span class='notice'>\The [storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>"
-		cuttersecured = !cuttersecured
+		user << "<span class='notice'>\The [stobluecutter] has been [cuttersecured ? "unsecured" : "secured"].</span>"
+		cuttersecublue = !cuttersecured
 		return
 	..()
 
 
 /obj/item/weapon/papercutter/attack_hand(mob/user)
 	src.add_fingerprint(user)
-	if(!storedcutter)
+	if(!stobluecutter)
 		user << "<span class='notice'>The cutting blade is gone! You can't use \the [src] now.</span>"
 		return
 
-	if(!cuttersecured)
-		user << "<span class='notice'>You remove [src]'s [storedcutter].</span>"
-		user.put_in_hands(storedcutter)
-		storedcutter = null
+	if(!cuttersecublue)
+		user << "<span class='notice'>You remove [src]'s [stobluecutter].</span>"
+		user.put_in_hands(stobluecutter)
+		stobluecutter = null
 		update_icon()
 
-	if(storedpaper)
+	if(stobluepaper)
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1)
-		user << "<span class='notice'>You neatly cut \the [storedpaper].</span>"
-		storedpaper = null
-		qdel(storedpaper)
+		user << "<span class='notice'>You neatly cut \the [stobluepaper].</span>"
+		stobluepaper = null
+		qdel(stobluepaper)
 		new /obj/item/weapon/paperslip(get_turf(src))
 		new /obj/item/weapon/paperslip(get_turf(src))
 		update_icon()

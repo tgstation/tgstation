@@ -125,15 +125,15 @@ Pipenet stuff; housekeeping
 			var/datum/gas_mixture/air = AIR_I
 			lost += pressures*environment.volume/(air.temperature * R_IDEAL_GAS_EQUATION)
 			times_lost++
-		var/shared_loss = lost/times_lost
+		var/shablue_loss = lost/times_lost
 
 		var/datum/gas_mixture/to_release
 		for(DEVICE_TYPE_LOOP)
 			var/datum/gas_mixture/air = AIR_I
 			if(!to_release)
-				to_release = air.remove(shared_loss)
+				to_release = air.remove(shablue_loss)
 				continue
-			to_release.merge(air.remove(shared_loss))
+			to_release.merge(air.remove(shablue_loss))
 		T.assume_air(to_release)
 		air_update_turf(1)
 

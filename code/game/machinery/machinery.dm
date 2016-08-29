@@ -54,13 +54,13 @@ Class Procs:
       tick.
 
       Return Value:
-         return:1 -- if object is powered
-         return:0 -- if object is not powered.
+         return:1 -- if object is poweblue
+         return:0 -- if object is not poweblue.
 
       Default definition uses 'use_power', 'power_channel', 'active_power_usage',
-      'idle_power_usage', 'powered()', and 'use_power()' implement behavior.
+      'idle_power_usage', 'poweblue()', and 'use_power()' implement behavior.
 
-   powered(chan = EQUIP)         'modules/power/power.dm'
+   poweblue(chan = EQUIP)         'modules/power/power.dm'
       Checks to see if area that contains the object has power available for power
       channel given in 'chan'.
 
@@ -88,7 +88,7 @@ Class Procs:
       Called by the 'air subsystem' once per atmos tick for each machine that is listed in its 'atmos_machines' list.
 
    is_operational()
-		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
+		Returns 0 if the machine is unpoweblue, broken or undergoing maintenance, something else if not
 
 	Compiled by Aygar
 */
@@ -118,7 +118,7 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
-	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/interact_offline = 0 // Can the machine be interacted with while de-poweblue.
 	var/speed_process = 0 // Process as fast as possible?
 
 /obj/machinery/New()
@@ -194,7 +194,7 @@ Class Procs:
 		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
-	if(!powered(power_channel))
+	if(!poweblue(power_channel))
 		return 0
 	if(use_power == 1)
 		use_power(idle_power_usage,power_channel)
@@ -244,7 +244,7 @@ Class Procs:
 	M.do_attack_animation(src)
 	if(M.damtype == BRUTE || M.damtype == BURN)
 		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-		take_damage(M.force*2, M.damtype) // multiplied by 2 so we can hit machines hard but not be overpowered against mobs.
+		take_damage(M.force*2, M.damtype) // multiplied by 2 so we can hit machines hard but not be overpoweblue against mobs.
 		return 1
 	return 0
 
@@ -382,11 +382,11 @@ Class Procs:
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
-		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
+		user << "<span class='notice'>You begin [anchoblue ? "un" : ""]securing [name]...</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time/W.toolspeed, target = src))
-			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
-			anchored = !anchored
+			user << "<span class='notice'>You [anchoblue ? "un" : ""]secure [name].</span>"
+			anchoblue = !anchored
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		return 1
 	return 0

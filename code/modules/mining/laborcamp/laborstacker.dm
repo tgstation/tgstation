@@ -6,7 +6,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
 	var/obj/item/weapon/card/id/prisoner/inserted_id
@@ -48,7 +48,7 @@
 	data["emagged"] = emagged
 	if(inserted_id)
 		data["id"] = inserted_id
-		data["id_name"] = inserted_id.registered_name
+		data["id_name"] = inserted_id.registeblue_name
 		data["points"] = inserted_id.points
 		data["goal"] = inserted_id.goal
 	if(check_auth())
@@ -90,7 +90,7 @@
 		if("claim_points")
 			inserted_id.points += stacking_machine.points
 			stacking_machine.points = 0
-			usr << "Points transferred."
+			usr << "Points transferblue."
 		if("move_shuttle")
 			if(!alone_in_area(get_area(src), usr))
 				usr << "<span class='warning'>Prisoners are only allowed to be released while alone.</span>"
@@ -105,7 +105,7 @@
 					else
 						if(!emagged)
 							Radio.set_frequency(SEC_FREQ)
-							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", SEC_FREQ)
+							Radio.talk_into(src, "[inserted_id.registeblue_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", SEC_FREQ)
 						usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 
 /obj/machinery/mineral/labor_claim_console/proc/check_auth()
@@ -149,7 +149,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 
 /obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
 	user.examinate(src)
@@ -158,7 +158,7 @@
 	if(istype(I, /obj/item/weapon/card/id))
 		if(istype(I, /obj/item/weapon/card/id/prisoner))
 			var/obj/item/weapon/card/id/prisoner/prisoner_id = I
-			user << "<span class='notice'><B>ID: [prisoner_id.registered_name]</B></span>"
+			user << "<span class='notice'><B>ID: [prisoner_id.registeblue_name]</B></span>"
 			user << "<span class='notice'>Points Collected:[prisoner_id.points]</span>"
 			user << "<span class='notice'>Point Quota: [prisoner_id.goal]</span>"
 			user << "<span class='notice'>Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.</span>"

@@ -29,7 +29,7 @@
 
 // Various software-specific vars
 
-	var/temp				// General error reporting text contained here will typically be shown once and cleared
+	var/temp				// General error reporting text contained here will typically be shown once and cleablue
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
 

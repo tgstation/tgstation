@@ -6,7 +6,7 @@
 	set category = null
 	set name = "Admin PM Mob"
 	if(!holder)
-		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
+		src << "<font color='blue'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
 		return
 	if( !ismob(M) || !M.client )
 		return
@@ -18,7 +18,7 @@
 	set category = "Admin"
 	set name = "Admin PM"
 	if(!holder)
-		src << "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
+		src << "<font color='blue'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
@@ -38,7 +38,7 @@
 
 /client/proc/cmd_ahelp_reply(whom)
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		src << "<font color='blue'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
 	var/client/C
 	if(istext(whom))
@@ -49,7 +49,7 @@
 		C = whom
 	if(!C)
 		if(holder)
-			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			src << "<font color='blue'>Error: Admin-PM: Client not found.</font>"
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
 	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
@@ -62,7 +62,7 @@
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_admin_pm(whom, msg)
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		src << "<font color='blue'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
 
 	var/client/C
@@ -85,14 +85,14 @@
 		if(!msg)
 			return
 		if(holder)
-			src << "<font color='red'>Error: Use the admin IRC channel, nerd.</font>"
+			src << "<font color='blue'>Error: Use the admin IRC channel, nerd.</font>"
 			return
 
 
 	else
 		if(!C)
 			if(holder)
-				src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+				src << "<font color='blue'>Error: Admin-PM: Client not found.</font>"
 			else
 				adminhelp(msg)	//admin we are replying to left. adminhelp instead
 			return
@@ -105,7 +105,7 @@
 				return
 			if(!C)
 				if(holder)
-					src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+					src << "<font color='blue'>Error: Admin-PM: Client not found.</font>"
 				else
 					adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
 				return
@@ -133,11 +133,11 @@
 	else
 		if(C.holder)
 			if(holder)	//both are admins
-				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
+				C << "<font color='blue'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
 				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [keywordparsedmsg]</font>"
 
 			else		//recipient is an admin but sender is not
-				C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
+				C << "<font color='blue'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
 				src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
 
 			//play the recieving admin the adminhelp sound (if they have them enabled)
@@ -146,9 +146,9 @@
 
 		else
 			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
-				C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
-				C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
+				C << "<font color='blue' size='4'><b>-- Administrator private message --</b></font>"
+				C << "<font color='blue'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
+				C << "<font color='blue'><i>Click on the administrator's name to reply.</i></font>"
 				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
 
 				//always play non-admin recipients the adminhelp sound
@@ -168,7 +168,7 @@
 						return
 
 			else		//neither are admins
-				src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
+				src << "<font color='blue'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
 				return
 
 	if(irc)
@@ -207,9 +207,9 @@
 	log_admin("IRC PM: [sender] -> [key_name(C)] : [msg]")
 	msg = emoji_parse(msg)
 
-	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
-	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
+	C << "<font color='blue' size='4'><b>-- Administrator private message --</b></font>"
+	C << "<font color='blue'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
+	C << "<font color='blue'><i>Click on the administrator's name to reply.</i></font>"
 	window_flash(C)
 	//always play non-admin recipients the adminhelp sound
 	C << 'sound/effects/adminhelp.ogg'

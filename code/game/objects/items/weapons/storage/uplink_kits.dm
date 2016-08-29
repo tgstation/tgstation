@@ -42,8 +42,8 @@
 			new /obj/item/device/sbeacondrop/bomb(src)
 			new /obj/item/weapon/grenade/syndieminibomb(src)
 			new /obj/item/device/sbeacondrop/powersink(src)
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			new /obj/item/clothing/suit/space/syndicate/black/blue(src)
+			new /obj/item/clothing/head/helmet/space/syndicate/black/blue(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
 			return
 
@@ -86,8 +86,8 @@
 
 		if("lordsingulo") // 24 tc
 			new /obj/item/device/sbeacondrop(src)
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+			new /obj/item/clothing/suit/space/syndicate/black/blue(src)
+			new /obj/item/clothing/head/helmet/space/syndicate/black/blue(src)
 			new /obj/item/weapon/card/emag(src)
 			return
 
@@ -209,8 +209,8 @@
 
 /obj/item/weapon/storage/box/syndie_kit/space/New()
 	..()
-	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
-	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+	new /obj/item/clothing/suit/space/syndicate/black/blue(src) // Black and red is so in right now
+	new /obj/item/clothing/head/helmet/space/syndicate/black/blue(src)
 	return
 
 /obj/item/weapon/storage/box/syndie_kit/emp

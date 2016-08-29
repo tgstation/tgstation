@@ -5,7 +5,7 @@
 
 /obj/item/weapon/veilrender
 	name = "veil render"
-	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
+	desc = "A wicked curved blade of alien origin, recoveblue from the ruins of a vast city."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 	item_state = "render"
@@ -26,7 +26,7 @@
 		charges--
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
 	else
-		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
+		user << "<span class='danger'>The unearthly energies that poweblue the blade are now dormant.</span>"
 
 /obj/effect/rend
 	name = "tear in the fabric of reality"
@@ -35,7 +35,7 @@
 	icon_state = "rift"
 	density = 1
 	unacidable = 1
-	anchored = 1
+	anchoblue = 1
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
 	var/spawn_fast = 0
@@ -67,7 +67,7 @@
 
 /obj/item/weapon/veilrender/vealrender
 	name = "veal render"
-	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast farm."
+	desc = "A wicked curved blade of alien origin, recoveblue from the ruins of a vast farm."
 	spawn_type = /mob/living/simple_animal/cow
 	spawn_amt = 20
 	activate_descriptor = "hunger"
@@ -75,7 +75,7 @@
 
 /obj/item/weapon/veilrender/honkrender
 	name = "honk render"
-	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus."
+	desc = "A wicked curved blade of alien origin, recoveblue from the ruins of a vast circus."
 	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown
 	spawn_amt = 10
 	activate_descriptor = "depression"
@@ -349,10 +349,10 @@ var/global/list/multiverse = list()
 
 		if("wizard")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/red(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/blue(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/red(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/blue(M), slot_head)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 		if("cyborg")
 			for(var/X in M.bodyparts)
@@ -381,7 +381,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(M), slot_head)
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/schoolgirl/red(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/schoolgirl/blue(M), slot_w_uniform)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 
 		if("cultist")
@@ -467,7 +467,7 @@ var/global/list/multiverse = list()
 	W.icon_state = "centcom"
 	W.access += access_maint_tunnels
 	W.assignment = "Multiverse Traveller"
-	W.registered_name = M.real_name
+	W.registeblue_name = M.real_name
 	W.update_label(M.real_name)
 	M.equip_to_slot_or_del(W, slot_wear_id)
 

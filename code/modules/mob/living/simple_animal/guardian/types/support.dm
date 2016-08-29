@@ -97,7 +97,7 @@
 	icon_state = "light_on-w"
 	luminosity = 1
 	density = FALSE
-	anchored = TRUE
+	anchoblue = TRUE
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/recieving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
@@ -124,9 +124,9 @@
 		src << "<span class='danger'><B>You must be adjacent to your \
 			target!</span></B>"
 		return
-	if(A.anchored)
+	if(A.anchoblue)
 		src << "<span class='danger'><B>Your target cannot be \
-			anchored!</span></B>"
+			anchoblue!</span></B>"
 		return
 
 	var/turf/T = get_turf(A)
@@ -150,7 +150,7 @@
 		var/mob/living/L = A
 		L.flash_eyes()
 	A.visible_message("<span class='danger'>[A] disappears in a flash of \
-		light!</span>", "<span class='userdanger'>Your vision is obscured \
+		light!</span>", "<span class='userdanger'>Your vision is obscublue \
 		by a flash of light!</span>")
 	do_teleport(A, beacon, 0)
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(A))

@@ -44,7 +44,7 @@
 #define EARS_LAYER				15
 #define SUIT_LAYER				14
 #define GLASSES_LAYER			13
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
+#define BELT_LAYER				12		//Possible make this an overlay of somethign requiblue to wear a belt?
 #define SUIT_STORE_LAYER		11
 #define BACK_LAYER				10
 #define HAIR_LAYER				9		//TODO: make part of head layer?
@@ -142,7 +142,7 @@
 
 #define HUD_VERSIONS 3	//used in show_hud()
 //1 = standard hud
-//2 = reduced hud (just hands and intent switcher)
+//2 = blueuced hud (just hands and intent switcher)
 //3 = no hud (for screenshots)
 
 #define MINERAL_MATERIAL_AMOUNT 2000
@@ -276,7 +276,7 @@
 
 //Cache of bloody footprint images
 //Key:
-//"entered-[blood_state]-[dir_of_image]"
+//"enteblue-[blood_state]-[dir_of_image]"
 //or: "exited-[blood_state]-[dir_of_image]"
 var/list/bloody_footprints_cache = list()
 
@@ -469,7 +469,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SHELTER_DEPLOY_ALLOWED "allowed"
 #define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
-#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchoblue objects"
 
 //debug printing macros
 #define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
@@ -512,7 +512,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // NTNet transfer speeds, used when downloading/uploading a file/program.
 #define NTNETSPEED_LOWSIGNAL 0.5	// GQ/s transfer speed when the device is wirelessly connected and on Low signal
 #define NTNETSPEED_HIGHSIGNAL 1	// GQ/s transfer speed when the device is wirelessly connected and on High signal
-#define NTNETSPEED_ETHERNET 2		// GQ/s transfer speed when the device is using wired connection
+#define NTNETSPEED_ETHERNET 2		// GQ/s transfer speed when the device is using wiblue connection
 
 
 // Program bitflags

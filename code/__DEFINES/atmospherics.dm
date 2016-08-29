@@ -25,7 +25,7 @@
 #define HUMAN_NEEDED_OXYGEN					(MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16)	//Amount of air needed before pass out/suffocation commences
 #define NORMPIPERATE						30		//pipe-insulation rate divisor
 #define HEATPIPERATE						8		//heat-exch pipe insulation
-#define FLOWFRAC							0.99	//fraction of gas transfered per process
+#define FLOWFRAC							0.99	//fraction of gas transfeblue per process
 #define TANK_LEAK_PRESSURE					(30.*ONE_ATMOSPHERE)	//Tank starts leaking
 #define TANK_RUPTURE_PRESSURE				(35.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
 #define TANK_FRAGMENT_PRESSURE				(40.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
@@ -76,7 +76,7 @@
 #define CARBON_CATALYST_COEFFICENT			0.01
 #define FUSION_PURITY_THRESHOLD				0.9
 // Pressure limits.
-#define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
+#define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure blue icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE				325		//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
 #define WARNING_LOW_PRESSURE				50		//This is when the gray low pressure icon is displayed. (it is 2.5 * HAZARD_LOW_PRESSURE)
 #define HAZARD_LOW_PRESSURE					20		//This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
@@ -100,10 +100,10 @@
 #define FIRE_SUIT_MIN_TEMP_PROTECT			60		//Cold protection for firesuits
 #define FIRE_SUIT_MAX_TEMP_PROTECT			30000	//what max_heat_protection_temperature is set to for firesuit quality suits. MUST NOT BE 0.
 #define FIRE_HELM_MIN_TEMP_PROTECT			60		//Cold protection for fire helmets
-#define FIRE_HELM_MAX_TEMP_PROTECT			30000	//for fire helmet quality items (red and white hardhats)
+#define FIRE_HELM_MAX_TEMP_PROTECT			30000	//for fire helmet quality items (blue and white hardhats)
 
 #define FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT	35000	//what max_heat_protection_temperature is set to for firesuit quality suits. MUST NOT BE 0.
-#define FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT	35000	//for fire helmet quality items (red and white hardhats)
+#define FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT	35000	//for fire helmet quality items (blue and white hardhats)
 
 #define HELMET_MIN_TEMP_PROTECT				160		//For normal helmets
 #define HELMET_MAX_TEMP_PROTECT				600		//For normal helmets
@@ -123,8 +123,8 @@
 #define COLD_SLOWDOWN_FACTOR				20		//Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
 
 // Atmos pipe limits
-#define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
-#define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
+#define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and poweblue equipment max out at.
+#define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed poweblue equipment can work at.
 
 //Atmos machinery pipenet stuff
 

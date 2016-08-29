@@ -4,7 +4,7 @@
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "close"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 
 	var/obj/item/clothing/suit/space/suit = null
@@ -176,7 +176,7 @@
 		user << "<span class='warning'>The unit is not operational!</span>"
 		return
 	if(occupant || helmet || suit || storage)
-		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
+		user << "<span class='warning'>It's too clutteblue inside to fit in!</span>"
 		return
 
 	if(target == user)
@@ -229,7 +229,7 @@
 			if(!occupant)
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
-				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
+				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charblue flesh.</span>")
 			playsound(src, 'sound/machines/AirlockClose.ogg', 25, 1)
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				I.clean_blood()

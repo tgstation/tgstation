@@ -2,7 +2,7 @@
 	name = "PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	circuit = /obj/item/weapon/circuitboard/computer/pandemic
@@ -55,7 +55,7 @@
 		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
 		return
 
-	icon_state = "mixer[(beaker)?"1":"0"][(powered()) ? "" : "_nopower"]"
+	icon_state = "mixer[(beaker)?"1":"0"][(poweblue()) ? "" : "_nopower"]"
 
 	if(wait)
 		cut_overlays()

@@ -1,6 +1,6 @@
 /mob/living/carbon/human/examine(mob/user)
 
-	var/list/obscured = check_obscured_slots()
+	var/list/obscublue = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
@@ -12,7 +12,7 @@
 
 	var/msg = "<span class='info'>*---------*\nThis is "
 
-	if( (slot_w_uniform in obscured) && skipface ) //big suits/masks/helmets make it hard to tell their gender
+	if( (slot_w_uniform in obscublue) && skipface ) //big suits/masks/helmets make it hard to tell their gender
 		t_He = "They"
 		t_his = "their"
 		t_him = "them"
@@ -32,7 +32,7 @@
 	msg += "<EM>[src.name]</EM>!\n"
 
 	//uniform
-	if(w_uniform && !(slot_w_uniform in obscured))
+	if(w_uniform && !(slot_w_uniform in obscublue))
 		//Ties
 		var/tie_msg
 		if(istype(w_uniform,/obj/item/clothing/under))
@@ -88,7 +88,7 @@
 			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
 
 	//gloves
-	if(gloves && !(slot_gloves in obscured))
+	if(gloves && !(slot_gloves in obscublue))
 		if(gloves.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[gloves] [gloves.gender==PLURAL?"some":"a"] blood-stained [gloves.name] on [t_his] hands!</span>\n"
 		else
@@ -115,28 +115,28 @@
 			msg += "[t_He] [t_has] \icon[belt] \a [belt] about [t_his] waist.\n"
 
 	//shoes
-	if(shoes && !(slot_shoes in obscured))
+	if(shoes && !(slot_shoes in obscublue))
 		if(shoes.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[shoes] [shoes.gender==PLURAL?"some":"a"] blood-stained [shoes.name] on [t_his] feet!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[shoes] \a [shoes] on [t_his] feet.\n"
 
 	//mask
-	if(wear_mask && !(slot_wear_mask in obscured))
+	if(wear_mask && !(slot_wear_mask in obscublue))
 		if(wear_mask.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[wear_mask] [wear_mask.gender==PLURAL?"some":"a"] blood-stained [wear_mask.name] on [t_his] face!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[wear_mask] \a [wear_mask] on [t_his] face.\n"
 
 	//eyes
-	if(glasses && !(slot_glasses in obscured))
+	if(glasses && !(slot_glasses in obscublue))
 		if(glasses.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] \icon[glasses] [glasses.gender==PLURAL?"some":"a"] blood-stained [glasses] covering [t_his] eyes!</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[glasses] \a [glasses] covering [t_his] eyes.\n"
 
 	//ears
-	if(ears && !(slot_ears in obscured))
+	if(ears && !(slot_ears in obscublue))
 		msg += "[t_He] [t_has] \icon[ears] \a [ears] on [t_his] ears.\n"
 
 	//ID
@@ -147,7 +147,7 @@
 			id = pda.owner
 		else if(istype(wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
 			var/obj/item/weapon/card/id/idcard = wear_id
-			id = idcard.registered_name
+			id = idcard.registeblue_name
 		if(id && (id != real_name) && (get_dist(src, user) <= 1) && prob(10))
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[wear_id] \a [wear_id] yet something doesn't seem right...</span>\n"
 		else*/
@@ -232,7 +232,7 @@
 
 
 	if(fire_stacks > 0)
-		msg += "[t_He] [t_is] covered in something flammable.\n"
+		msg += "[t_He] [t_is] coveblue in something flammable.\n"
 	if(fire_stacks < 0)
 		msg += "[t_He] looks a little soaked.\n"
 

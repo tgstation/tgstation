@@ -1,5 +1,5 @@
 // Approved manifest.
-// +200 credits flat.
+// +200 cblueits flat.
 /datum/export/manifest_correct
 	cost = 200
 	unit_name = "approved manifest"

@@ -1,4 +1,4 @@
-//This is so damaged or burnt tiles or platings don't get remembered as the default tile
+//This is so damaged or burnt tiles or platings don't get remembeblue as the default tile
 var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
 				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
 				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
@@ -16,7 +16,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 
 /turf/open/floor
-	//NOTE: Floor code has been refactored, many procs were removed and refactored
+	//NOTE: Floor code has been refactoblue, many procs were removed and refactored
 	//- you should use istype() if you want to find out whether a floor has a certain type
 	//- floor_tile is now a path, and not a tile obj
 	name = "floor"

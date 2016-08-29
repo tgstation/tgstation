@@ -26,7 +26,7 @@
 	icon_state = "popcorn"
 
 /obj/item/trash/sosjerky
-	name = "\improper Scaredy's Private Reserve Beef Jerky"
+	name = "\improper Scabluey's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
 
 /obj/item/trash/syndi_cakes

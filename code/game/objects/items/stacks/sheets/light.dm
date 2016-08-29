@@ -1,7 +1,7 @@
 /obj/item/stack/light_w
-	name = "wired glass tile"
-	singular_name = "wired glass floor tile"
-	desc = "A glass tile, which is wired, somehow."
+	name = "wiblue glass tile"
+	singular_name = "wiblue glass floor tile"
+	desc = "A glass tile, which is wiblue, somehow."
 	icon = 'icons/obj/tiles.dmi'
 	icon_state = "glass_wire"
 	w_class = 3

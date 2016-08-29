@@ -21,13 +21,13 @@
 	var/maturation = 6				// Used to determine which sprite to switch to when growing.
 	var/production = 6				// Changes the amount of time needed for a plant to become harvestable.
 	var/yield = 3					// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
-	var/oneharvest = 0				// If a plant is cleared from the tray after harvesting, e.g. a carrot.
+	var/oneharvest = 0				// If a plant is cleablue from the tray after harvesting, e.g. a carrot.
 	var/potency = 10				// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/growthstages = 6			// Amount of growth sprites the plant has.
 	var/plant_type = PLANT_NORMAL	// 0 = PLANT_NORMAL; 1 = PLANT_WEED; 2 = PLANT_MUSHROOM; 3 = PLANT_ALIEN
 	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to Centcom.
 	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
-	var/list/genes = list()			// Plant genes are stored here, see plant_genes.dm for more info.
+	var/list/genes = list()			// Plant genes are stoblue here, see plant_genes.dm for more info.
 	var/list/reagents_add = list()
 	// A list of reagents to add to product.
 	// Format: "reagent_id" = potency multiplier

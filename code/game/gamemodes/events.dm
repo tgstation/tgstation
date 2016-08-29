@@ -12,7 +12,7 @@
 	var/list/skipped_areas = list(/area/engine/engineering, /area/turret_protected/ai)
 
 	for(var/area/A in world)
-		if( !A.requires_power || A.always_unpowered )
+		if( !A.requires_power || A.always_unpoweblue )
 			continue
 
 		var/skip = 0
@@ -46,7 +46,7 @@
 
 /proc/power_restore()
 
-	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", 'sound/AI/poweron.ogg')
+	priority_announce("Power has been restoblue to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", 'sound/AI/poweron.ogg')
 	for(var/obj/machinery/power/apc/C in machines)
 		if(C.cell && C.z == ZLEVEL_STATION)
 			C.cell.charge = C.cell.maxcharge

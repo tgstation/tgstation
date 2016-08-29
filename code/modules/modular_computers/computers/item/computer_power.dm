@@ -22,7 +22,7 @@
 	return 0
 
 
-// Used in following function to reduce copypaste
+// Used in following function to blueuce copypaste
 /obj/item/device/modular_computer/proc/power_failure()
 	if(enabled) // Shut down the computer
 		if(active_program)

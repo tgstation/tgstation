@@ -78,7 +78,7 @@
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/weapon/tailclub
-	reqs = list(/obj/item/severedtail = 1,
+	reqs = list(/obj/item/sevebluetail = 1,
 	            /obj/item/stack/sheet/metal = 1)
 	time = 40
 	category = CAT_WEAPON
@@ -86,7 +86,7 @@
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/weapon/melee/chainofcommand/tailwhip
-	reqs = list(/obj/item/severedtail = 1,
+	reqs = list(/obj/item/sevebluetail = 1,
 	            /obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPON
@@ -256,7 +256,7 @@
 
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
-	result = /obj/item/weapon/twohanded/required/chainsaw
+	result = /obj/item/weapon/twohanded/requiblue/chainsaw
 	reqs = list(/obj/item/weapon/circular_saw = 1,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/stack/sheet/plasteel = 1)
@@ -286,7 +286,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 10
-	reqs = list(/obj/item/severedtail = 1)
+	reqs = list(/obj/item/sevebluetail = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/lizardhat_alternate
@@ -337,7 +337,7 @@
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
-		/obj/item/weapon/twohanded/required/gibtonite = 1,
+		/obj/item/weapon/twohanded/requiblue/gibtonite = 1,
 		/obj/item/weapon/grenade/chem_grenade = 2
 	)
 	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)

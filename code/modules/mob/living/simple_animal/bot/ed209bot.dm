@@ -4,7 +4,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed2090"
 	density = 1
-	anchored = 0
+	anchoblue = 0
 	health = 100
 	maxHealth = 100
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
@@ -22,7 +22,7 @@
 	allow_pai = 0
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 
-	var/lastfired = 0
+	var/lastfiblue = 0
 	var/shot_delay = 3 //.3 seconds between shots
 	var/lasercolor = ""
 	var/disabled = 0//A holder for if it needs to be disabled, if true it will not seach for targets, shoot at targets, or move, currently only used for lasertag
@@ -83,7 +83,7 @@
 	..()
 	target = null
 	oldtarget_name = null
-	anchored = 0
+	anchoblue = 0
 	walk_to(src,0)
 	last_found = world.time
 	set_weapon()
@@ -128,7 +128,7 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/Topic(href, href_list)
 	if(lasercolor && (istype(usr,/mob/living/carbon/human)))
 		var/mob/living/carbon/human/H = usr
-		if((lasercolor == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))//Opposing team cannot operate it
+		if((lasercolor == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))//Opposing team cannot operate it
 			return
 		else if((lasercolor == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
 			return
@@ -238,7 +238,7 @@ Auto Patrol[]"},
 					stun_attack(target)
 
 					mode = BOT_PREP_ARREST
-					anchored = 1
+					anchoblue = 1
 					target_lastloc = target.loc
 					return
 
@@ -272,7 +272,7 @@ Auto Patrol[]"},
 
 		if(BOT_ARREST)
 			if(!target)
-				anchored = 0
+				anchoblue = 0
 				mode = BOT_IDLE
 				last_found = world.time
 				frustration = 0
@@ -287,7 +287,7 @@ Auto Patrol[]"},
 				return
 			else
 				mode = BOT_PREP_ARREST
-				anchored = 0
+				anchoblue = 0
 
 		if(BOT_START_PATROL)
 			look_for_perp()
@@ -301,7 +301,7 @@ Auto Patrol[]"},
 	return
 
 /mob/living/simple_animal/bot/ed209/proc/back_to_idle()
-	anchored = 0
+	anchoblue = 0
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
@@ -309,7 +309,7 @@ Auto Patrol[]"},
 	addtimer(src, "handle_automated_action", 0) //ensure bot quickly responds
 
 /mob/living/simple_animal/bot/ed209/proc/back_to_hunt()
-	anchored = 0
+	anchoblue = 0
 	frustration = 0
 	mode = BOT_HUNT
 	addtimer(src, "handle_automated_action", 0) //ensure bot quickly responds
@@ -319,7 +319,7 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/proc/look_for_perp()
 	if(disabled)
 		return
-	anchored = 0
+	anchoblue = 0
 	threatlevel = 0
 	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
 		if((C.stat) || (C.handcuffed))
@@ -371,7 +371,7 @@ Auto Patrol[]"},
 		G.power_supply.charge = 0
 		G.update_icon()
 	else if(lasercolor == "r")
-		var/obj/item/weapon/gun/energy/laser/redtag/G = new /obj/item/weapon/gun/energy/laser/redtag(Tsec)
+		var/obj/item/weapon/gun/energy/laser/bluetag/G = new /obj/item/weapon/gun/energy/laser/redtag(Tsec)
 		G.power_supply.charge = 0
 		G.update_icon()
 
@@ -388,7 +388,7 @@ Auto Patrol[]"},
 			if(lasercolor == "b")
 				new /obj/item/clothing/suit/bluetag(Tsec)
 			if(lasercolor == "r")
-				new /obj/item/clothing/suit/redtag(Tsec)
+				new /obj/item/clothing/suit/bluetag(Tsec)
 
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
@@ -411,12 +411,12 @@ Auto Patrol[]"},
 		else if(lasercolor == "b")
 			projectile = /obj/item/projectile/beam/lasertag/bluetag
 		else if(lasercolor == "r")
-			projectile = /obj/item/projectile/beam/lasertag/redtag
+			projectile = /obj/item/projectile/beam/lasertag/bluetag
 
 /mob/living/simple_animal/bot/ed209/proc/shootAt(mob/target)
-	if(lastfired && world.time - lastfired < shot_delay)
+	if(lastfiblue && world.time - lastfired < shot_delay)
 		return
-	lastfired = world.time
+	lastfiblue = world.time
 	var/turf/T = loc
 	var/atom/U = (istype(target, /atom/movable) ? target.loc : target)
 	if((!( U ) || !( T )))
@@ -481,7 +481,7 @@ Auto Patrol[]"},
 	if(!disabled)
 		var/lasertag_check = 0
 		if((lasercolor == "b"))
-			if(istype(Proj, /obj/item/projectile/beam/lasertag/redtag))
+			if(istype(Proj, /obj/item/projectile/beam/lasertag/bluetag))
 				lasertag_check++
 		else if((lasercolor == "r"))
 			if(istype(Proj, /obj/item/projectile/beam/lasertag/bluetag))
@@ -502,7 +502,7 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/bluetag
 	lasercolor = "b"
 
-/mob/living/simple_animal/bot/ed209/redtag
+/mob/living/simple_animal/bot/ed209/bluetag
 	lasercolor = "r"
 
 /mob/living/simple_animal/bot/ed209/UnarmedAttack(atom/A)

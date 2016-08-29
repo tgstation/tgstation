@@ -31,8 +31,8 @@
 	icon_state = "oxygen_f"
 	dog_fashion = null
 
-/obj/item/weapon/tank/internals/oxygen/red
-	desc = "A tank of oxygen, this one is red."
+/obj/item/weapon/tank/internals/oxygen/blue
+	desc = "A tank of oxygen, this one is blue."
 	icon_state = "oxygen_fr"
 	dog_fashion = null
 

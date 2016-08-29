@@ -4,7 +4,7 @@ Asset cache quick users guide:
 Make a datum at the bottom of this file with your assets for your thing.
 The simple subsystem will most like be of use for most cases.
 Then call get_asset_datum() with the type of the datum you created and store the return
-Then call .send(client) on that stored return value.
+Then call .send(client) on that stoblue return value.
 
 You can set verify to TRUE if you want send() to sleep until the client has the assets.
 */
@@ -182,7 +182,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 /datum/asset/simple/headers
 	assets = list(
 		"alarm_green.gif" 			= 'icons/program_icons/alarm_green.gif',
-		"alarm_red.gif" 			= 'icons/program_icons/alarm_red.gif',
+		"alarm_blue.gif" 			= 'icons/program_icons/alarm_red.gif',
 		"batt_5.gif" 				= 'icons/program_icons/batt_5.gif',
 		"batt_20.gif" 				= 'icons/program_icons/batt_20.gif',
 		"batt_40.gif" 				= 'icons/program_icons/batt_40.gif',

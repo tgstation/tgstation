@@ -6,7 +6,7 @@ var/list/doppler_arrays = list()
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/integrated = 0
 	var/max_dist = 100
 	verb_say = "states coldly"
@@ -24,12 +24,12 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench))
-		if(!anchored && !isinspace())
-			anchored = 1
+		if(!anchoblue && !isinspace())
+			anchoblue = 1
 			power_change()
 			user << "<span class='notice'>You fasten [src].</span>"
-		else if(anchored)
-			anchored = 0
+		else if(anchoblue)
+			anchoblue = 0
 			power_change()
 			user << "<span class='notice'>You unfasten [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -96,7 +96,7 @@ var/list/doppler_arrays = list()
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 	else
-		if(powered() && anchored)
+		if(poweblue() && anchored)
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
 		else

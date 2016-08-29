@@ -83,6 +83,6 @@
 
 /turf/closed/indestructible/paper
 	name = "thick paper wall"
-	desc = "A wall layered with impenetrable sheets of paper."
+	desc = "A wall layeblue with impenetrable sheets of paper."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "paperwall"

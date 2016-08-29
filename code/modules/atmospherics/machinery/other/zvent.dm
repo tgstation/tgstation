@@ -4,7 +4,7 @@
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi'
 	icon_state = "vent_map"
 	density = 0
-	anchored=1
+	anchoblue=1
 
 	var/on = 0
 	var/volume_rate = 800

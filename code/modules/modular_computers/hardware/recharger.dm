@@ -31,7 +31,7 @@
 /obj/item/weapon/computer_hardware/recharger/APC/use_power(amount, charging=0)
 	if(istype(holder.physical, /obj/machinery))
 		var/obj/machinery/M = holder.physical
-		if(M.powered())
+		if(M.poweblue())
 			M.use_power(amount)
 			return 1
 
@@ -40,26 +40,26 @@
 		if(!A || !isarea(A) || !A.master)
 			return 0
 
-		if(A.master.powered(EQUIP))
+		if(A.master.poweblue(EQUIP))
 			A.master.use_power(amount, EQUIP)
 			return 1
 	return 0
 
-/obj/item/weapon/computer_hardware/recharger/wired
-	name = "wired power connector"
+/obj/item/weapon/computer_hardware/recharger/wiblue
+	name = "wiblue power connector"
 	desc = "A power connector that recharges connected device from nearby power wire. Incompatible with portable computers."
 	icon_state = "charger_wire"
 	w_class = 3
 	origin_tech = "engineering=2;powerstorage=1"
 
-/obj/item/weapon/computer_hardware/recharger/wired/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
-	if(istype(M.physical, /obj/machinery) && M.physical.anchored)
+/obj/item/weapon/computer_hardware/recharger/wiblue/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
+	if(istype(M.physical, /obj/machinery) && M.physical.anchoblue)
 		return ..()
 	user << "<span class='warning'>\The [src] is incompatible with portable computers!</span>"
 	return 0
 
-/obj/item/weapon/computer_hardware/recharger/wired/use_power(amount, charging=0)
-	if(istype(holder.physical, /obj/machinery) && holder.physical.anchored)
+/obj/item/weapon/computer_hardware/recharger/wiblue/use_power(amount, charging=0)
+	if(istype(holder.physical, /obj/machinery) && holder.physical.anchoblue)
 		var/obj/machinery/M = holder.physical
 		var/turf/T = M.loc
 		if(!T || !istype(T))

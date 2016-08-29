@@ -220,7 +220,7 @@
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	name = "blood-red hardsuit helmet"
+	name = "blood-blue hardsuit helmet"
 	desc = "A dual-mode advanced helmet designed for work in special operations. It is in EVA mode. Property of Gorlex Marauders."
 	alt_desc = "A dual-mode advanced helmet designed for work in special operations. It is in combat mode. Property of Gorlex Marauders."
 	icon_state = "hardsuit1-syndi"
@@ -297,7 +297,7 @@
 
 
 /obj/item/clothing/suit/space/hardsuit/syndi
-	name = "blood-red hardsuit"
+	name = "blood-blue hardsuit"
 	desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in EVA mode. Property of Gorlex Marauders."
 	alt_desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in combat mode. Property of Gorlex Marauders."
 	icon_state = "hardsuit1-syndi"
@@ -584,14 +584,14 @@
 	slowdown = 0
 	max_charges = 5
 
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
-	name = "red shielded hardsuit"
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+	name = "blue shielded hardsuit"
 	icon_state = "ert_security"
 	item_state = "ert_security"
 	item_color = "ert_security"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
-	shield_state = "shield-red"
-	shield_on = "shield-red"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/blue
+	shield_state = "shield-blue"
+	shield_on = "shield-blue"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	name = "blue shielded hardsuit"
@@ -611,7 +611,7 @@
 	armor = list(melee = 0, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 100)
 
 
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/blue
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
 	item_color = "ert_security"
@@ -630,7 +630,7 @@
 //////Syndicate Version
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi
-	name = "blood-red hardsuit"
+	name = "blood-blue hardsuit"
 	desc = "An advanced hardsuit with built in energy shielding."
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_hardsuit"
@@ -646,7 +646,7 @@
 	..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
-	name = "blood-red hardsuit helmet"
+	name = "blood-blue hardsuit helmet"
 	desc = "An advanced hardsuit helmet with built in energy shielding."
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_helm"
@@ -656,7 +656,7 @@
 ///SWAT version
 /obj/item/clothing/suit/space/hardsuit/shielded/swat
 	name = "death commando spacesuit"
-	desc = "an advanced hardsuit favored by commandos for use in special operations."
+	desc = "an advanced hardsuit favoblue by commandos for use in special operations."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	item_color = "syndi"

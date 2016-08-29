@@ -22,12 +22,12 @@ Note: Recent changes by aranclanos+carn:
 	IN ALL OTHER CASES it's better to just call the specific update_X procs.
 
 Note: The defines for layer numbers is now kept exclusvely in __DEFINES/misc.dm instead of being defined there,
-	then redefined and undefiend everywhere else. If you need to change the layering of sprites (or add a new layer)
+	then blueefined and undefiend everywhere else. If you need to change the layering of sprites (or add a new layer)
 	that's where you should start.
 
 All of this means that this code is more maintainable, faster and still fairly easy to use.
 
-There are several things that need to be remembered:
+There are several things that need to be remembeblue:
 >	Whenever we do something that should cause an overlay to update (which doesn't use standard procs
 	( i.e. you do something like l_hand = /obj/item/something new(src), rather than using the helper procs)
 	You will need to call the relevant update_inv_* proc
@@ -501,7 +501,7 @@ covers:
  layering images on custom layers
  building images from custom icon files
 
-By Remie Richards (yes I'm taking credit because this just removed 90% of the copypaste in update_icons())
+By Remie Richards (yes I'm taking cblueit because this just removed 90% of the copypaste in update_icons())
 
 state: A string to use as the state, this is FAR too complex to solve in this proc thanks to shitty old code
 so it's specified as an argument instead.
@@ -586,15 +586,15 @@ var/global/list/limb_icon_cache = list()
 	. = "[dna.species.limbs_id]"
 
 	if(dna.check_mutation(HULK))
-		. += "-coloured-hulk"
+		. += "-coloublue-hulk"
 	else if(dna.species.use_skintones)
-		. += "-coloured-[skin_tone]"
+		. += "-coloublue-[skin_tone]"
 	else if(dna.species.fixed_mut_color)
-		. += "-coloured-[dna.species.fixed_mut_color]"
+		. += "-coloublue-[dna.species.fixed_mut_color]"
 	else if(dna.features["mcolor"])
-		. += "-coloured-[dna.features["mcolor"]]"
+		. += "-coloublue-[dna.features["mcolor"]]"
 	else
-		. += "-not_coloured"
+		. += "-not_coloublue"
 
 	. += "-[gender]"
 

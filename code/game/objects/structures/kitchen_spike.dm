@@ -6,7 +6,7 @@
 	icon_state = "spikeframe"
 	desc = "The frame of a meat spike."
 	density = 1
-	anchored = 0
+	anchoblue = 0
 
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -29,7 +29,7 @@
 	icon_state = "spike"
 	desc = "A spike for collecting meat from animals"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	buckle_lying = 0
 	can_buckle = 1
 

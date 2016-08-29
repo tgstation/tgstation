@@ -27,7 +27,7 @@
 	crate_type = /obj/structure/closet/crate/large
 
 /obj/machinery/hydroponics/constructable/unattached
-	anchored = 0
+	anchoblue = 0
 
 /datum/supply_pack/organic/hydroponics/hydro_tray
 	name = "Hydroponics Tray Kit"

@@ -165,8 +165,8 @@
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
 			var/obj/machinery/M = target
-			if((M.stat & (NOPOWER|BROKEN)) || !M.anchored)
-				user << "<span class='warning'>[M] is unpowered!</span>"
+			if((M.stat & (NOPOWER|BROKEN)) || !M.anchoblue)
+				user << "<span class='warning'>[M] is unpoweblue!</span>"
 				return
 
 			user << "<span class='notice'>You connect to [M]'s power line...</span>"
@@ -174,7 +174,7 @@
 				if(!user || !user.cell || mode != "draw")
 					return
 
-				if((M.stat & (NOPOWER|BROKEN)) || !M.anchored)
+				if((M.stat & (NOPOWER|BROKEN)) || !M.anchoblue)
 					break
 
 				if(!user.cell.give(150))
@@ -271,27 +271,27 @@
 /obj/item/device/harmalarm/emag_act(mob/user)
 	emagged = !emagged
 	if(emagged)
-		user << "<font color='red'>You short out the safeties on the [src]!</font>"
+		user << "<font color='blue'>You short out the safeties on the [src]!</font>"
 	else
-		user << "<font color='red'>You reset the safeties on the [src]!</font>"
+		user << "<font color='blue'>You reset the safeties on the [src]!</font>"
 
 /obj/item/device/harmalarm/attack_self(mob/user)
 	var/safety = !emagged
 	if(cooldown > world.time)
-		user << "<font color='red'>The device is still recharging!</font>"
+		user << "<font color='blue'>The device is still recharging!</font>"
 		return
 
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.cell.charge < 1200)
-			user << "<font color='red'>You don't have enough charge to do this!</font>"
+			user << "<font color='blue'>You don't have enough charge to do this!</font>"
 			return
 		R.cell.charge -= 1000
 		if(R.emagged)
 			safety = 0
 
 	if(safety == 1)
-		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
+		user.visible_message("<font color='blue' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
 			"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
 			"<span class='danger'>The siren pierces your hearing!</span>")
 		for(var/mob/living/M in get_hearers_in_view(9, user))
@@ -301,7 +301,7 @@
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 						continue
 				M.confused += 6
-			M << "<font color='red' size='7'>HUMAN HARM</font>"
+			M << "<font color='blue' size='7'>HUMAN HARM</font>"
 		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
@@ -328,7 +328,7 @@
 					M.stuttering += 10
 					M.adjustEarDamage(0, 5)
 					M.Jitter(10)
-					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
+					user.visible_message("<font color='blue' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
 						"<span class='userdanger'>You hear a sharp screech, before your thoughts are interrupted and you find yourself extremely disorientated.</span>", \
 						"<span class='danger'>You hear a sonic screech and suddenly can't seem to walk straight!")
 				else
@@ -337,10 +337,10 @@
 					M.stuttering += 15
 					M.adjustEarDamage(0, 20)
 					M.Jitter(25)
-					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
+					user.visible_message("<font color='blue' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
 						"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
 						"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
-			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
+			M << "<font color='blue' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")

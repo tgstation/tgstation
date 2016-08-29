@@ -121,7 +121,7 @@
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Peripherals control module is secured."),
+					 		"desc"="Peripherals control module is secublue."),
 					 //7
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -129,7 +129,7 @@
 					 //8
 					 list("key"=/obj/item/weapon/circuitboard/mecha/ripley/peripherals,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Central control module is secured."),
+					 		"desc"="Central control module is secublue."),
 					 //9
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -330,7 +330,7 @@
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Advanced capacitor is secured."),
+					 		"desc"="Advanced capacitor is secublue."),
 					 //7
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -338,7 +338,7 @@
 					 //8
 					 list("key"=/obj/item/weapon/stock_parts/capacitor,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Advanced scanner module is secured."),
+					 		"desc"="Advanced scanner module is secublue."),
 					 //9
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -346,7 +346,7 @@
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Weapon control module is secured."),
+					 		"desc"="Weapon control module is secublue."),
 					 //11
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -354,7 +354,7 @@
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/gygax/targeting,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Peripherals control module is secured."),
+					 		"desc"="Peripherals control module is secublue."),
 					 //13
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -362,7 +362,7 @@
 					 //14
 					 list("key"=/obj/item/weapon/circuitboard/mecha/gygax/peripherals,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Central control module is secured."),
+					 		"desc"="Central control module is secublue."),
 					 //15
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -622,7 +622,7 @@
 					 //7
 					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Peripherals control module is secured."),
+					 		"desc"="Peripherals control module is secublue."),
 					 //8
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -630,7 +630,7 @@
 					 //9
 					 list("key"=/obj/item/weapon/circuitboard/mecha/ripley/peripherals,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Central control module is secured."),
+					 		"desc"="Central control module is secublue."),
 					 //10
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -916,7 +916,7 @@
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Super capacitor is secured."),
+					 		"desc"="Super capacitor is secublue."),
 					 //7
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -924,7 +924,7 @@
 					 //8
 					 list("key"=/obj/item/weapon/stock_parts/capacitor,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Phasic scanner module is secured."),
+					 		"desc"="Phasic scanner module is secublue."),
 					 //9
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -932,7 +932,7 @@
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Weapon control module is secured."),
+					 		"desc"="Weapon control module is secublue."),
 					 //11
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -940,7 +940,7 @@
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/durand/targeting,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Peripherals control module is secured."),
+					 		"desc"="Peripherals control module is secublue."),
 					 //13
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -948,7 +948,7 @@
 					 //14
 					 list("key"=/obj/item/weapon/circuitboard/mecha/durand/peripherals,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Central control module is secured."),
+					 		"desc"="Central control module is secublue."),
 					 //15
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -1223,7 +1223,7 @@
 					 //10
 					 list("key"=/obj/item/weapon/ore/bluespace_crystal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Super capacitor is secured."),
+					 		"desc"="Super capacitor is secublue."),
 					 //12
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -1231,7 +1231,7 @@
 					 //12
 					 list("key"=/obj/item/weapon/stock_parts/capacitor,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Phasic scanner module is secured."),
+					 		"desc"="Phasic scanner module is secublue."),
 					 //13
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -1239,7 +1239,7 @@
 					 //14
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Weapon control module is secured."),
+					 		"desc"="Weapon control module is secublue."),
 					 //15
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -1247,7 +1247,7 @@
 					 //16
 					 list("key"=/obj/item/weapon/circuitboard/mecha/phazon/targeting,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Peripherals control module is secured."),
+					 		"desc"="Peripherals control module is secublue."),
 					 //17
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -1255,7 +1255,7 @@
 					 //18
 					 list("key"=/obj/item/weapon/circuitboard/mecha/phazon/peripherals,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Central control module is secured."),
+					 		"desc"="Central control module is secublue."),
 					 //19
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -1540,7 +1540,7 @@
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Peripherals control module is secured."),
+					 		"desc"="Peripherals control module is secublue."),
 					 //7
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
@@ -1548,7 +1548,7 @@
 					 //8
 					 list("key"=/obj/item/weapon/circuitboard/mecha/odysseus/peripherals,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Central control module is secured."),
+					 		"desc"="Central control module is secublue."),
 					 //9
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,

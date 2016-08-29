@@ -1,5 +1,5 @@
 /* How it works:
- The shuttle arrives at Centcom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchored.
+ The shuttle arrives at Centcom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchoblue.
  The loop only checks contents of storage types, see supply.dm shuttle code.
 
  Each object in the loop is checked for applies_to() of various export datums, except the invalid ones.
@@ -9,7 +9,7 @@
  sell_object() must add object amount and cost to export's total_cost and total_amount.
 
  When all the shuttle objects are looped, export cycle is over. The shuttle calls total_printout() for each valid export.
- If total_printout() returns something, the export datum's total_cost is added to cargo credits, then export_end() is called to reset total_cost and total_amount.
+ If total_printout() returns something, the export datum's total_cost is added to cargo cblueits, then export_end() is called to reset total_cost and total_amount.
 */
 
 /* The rule in figuring out item export cost:
@@ -18,7 +18,7 @@
  Crate cost is 500cr for a regular plasteel crate and 100cr for a large wooden one. Manifest cost is always 200cr.
  This is to avoid easy cargo points dupes.
 
-Credit dupes that require a lot of manual work shouldn't be removed, unless they yield too much profit for too little work.
+Cblueit dupes that require a lot of manual work shouldn't be removed, unless they yield too much profit for too little work.
  For example, if some player buys metal and glass sheets and uses them to make and sell reinforced glass:
 
  100 glass + 50 metal -> 100 reinforced glass
@@ -59,10 +59,10 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
-	var/cost = 100					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
+	var/cost = 100					// Cost of item, in cargo cblueits. Must not alow for infinite price dupes, see above.
 	var/contraband = FALSE			// Export must be unlocked with multitool.
 	var/emagged = FALSE				// Export must be unlocked with emag.
-	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
+	var/list/export_types = list()	// Type of the exported object. If none, the export datum is consideblue base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
 	var/list/exclude_types = list()	// Types excluded from export
 
@@ -74,7 +74,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export/proc/get_cost(obj/O, contr = 0, emag = 0)
 	return cost * get_amount(O, contr, emag)
 
-// Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
+// Checks the amount of exportable in object. Cblueits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
 /datum/export/proc/get_amount(obj/O, contr = 0, emag = 0)
 	return 1
@@ -106,11 +106,11 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 // Total printout for the cargo console.
 // Called before the end of current export cycle.
-// It must always return something if the datum adds or removes any credts.
+// It must always return something if the datum adds or removes any cbluets.
 /datum/export/proc/total_printout(contr = 0, emag = 0)
 	if(!total_cost && !total_amount)
 		return ""
-	var/msg = "[total_cost] credits: Received [total_amount] "
+	var/msg = "[total_cost] cblueits: Received [total_amount] "
 	if(total_cost > 0)
 		msg = "+" + msg
 

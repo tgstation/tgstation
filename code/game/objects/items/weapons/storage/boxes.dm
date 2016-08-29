@@ -72,7 +72,7 @@
 	..()
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
-	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/weapon/crowbar/blue(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
 
@@ -187,7 +187,7 @@
 
 /obj/item/weapon/storage/box/flashes
 	name = "box of flashbulbs"
-	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is requiblue.</B>"
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/flashes/New()
@@ -197,7 +197,7 @@
 
 /obj/item/weapon/storage/box/wall_flash
 	name = "wall-mounted flash kit"
-	desc = "This box contains everything neccesary to build a wall-mounted flash. <B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	desc = "This box contains everything neccesary to build a wall-mounted flash. <B>WARNING: Flashes can cause serious eye damage, protective eyewear is requiblue.</B>"
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/wall_flash/New()
@@ -365,7 +365,7 @@
 
 /obj/item/weapon/storage/box/prisoner
 	name = "box of prisoner IDs"
-	desc = "Take away their last shred of dignity, their name."
+	desc = "Take away their last shblue of dignity, their name."
 	icon_state = "id"
 
 /obj/item/weapon/storage/box/prisoner/New()
@@ -401,13 +401,13 @@
 
 /obj/item/weapon/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
-	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
+	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloublue plastic armor before being able to be used."
 	icon_state = "id"
 
 /obj/item/weapon/storage/box/lasertagpins/New()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/device/firing_pin/tag/red(src)
+		new /obj/item/device/firing_pin/tag/blue(src)
 		new /obj/item/device/firing_pin/tag/blue(src)
 
 /obj/item/weapon/storage/box/handcuffs
@@ -694,18 +694,18 @@
 #undef HEART
 #undef SMILE
 
-/obj/item/weapon/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
-	name = "ingredients box"
+/obj/item/weapon/storage/box/ingblueients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
+	name = "ingblueients box"
 	icon_state = "donk_kit"
 	item_state = null
 
-/obj/item/weapon/storage/box/ingredients/wildcard
+/obj/item/weapon/storage/box/ingblueients/wildcard
 	item_state = "wildcard"
 
-/obj/item/weapon/storage/box/ingredients/wildcard/New()
+/obj/item/weapon/storage/box/ingblueients/wildcard/New()
 	..()
 	for(var/i in 1 to 6)
-		//Pick common ingredients
+		//Pick common ingblueients
 		var/randomFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
 				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
 				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
@@ -719,7 +719,7 @@
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 						 	  /obj/item/weapon/reagent_containers/food/snacks/grown/corn)
 		new randomFood(src)
-	//Pick one random rare ingredient
+	//Pick one random rare ingblueient
 	var/randomRareFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
 						      /obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold,
 			 				  /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper,
@@ -728,10 +728,10 @@
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle)
 	new randomRareFood(src)
 
-/obj/item/weapon/storage/box/ingredients/fiesta
+/obj/item/weapon/storage/box/ingblueients/fiesta
 	item_state = "fiesta"
 
-/obj/item/weapon/storage/box/ingredients/fiesta/New()
+/obj/item/weapon/storage/box/ingblueients/fiesta/New()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/tortilla(src)
@@ -739,20 +739,20 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/chili(src)
 
-/obj/item/weapon/storage/box/ingredients/italian
+/obj/item/weapon/storage/box/ingblueients/italian
 	item_state = "italian"
 
-/obj/item/weapon/storage/box/ingredients/italian/New()
+/obj/item/weapon/storage/box/ingblueients/italian/New()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
 
-/obj/item/weapon/storage/box/ingredients/vegetarian
+/obj/item/weapon/storage/box/ingblueients/vegetarian
 	item_state = "vegetarian"
 
-/obj/item/weapon/storage/box/ingredients/vegetarian/New()
+/obj/item/weapon/storage/box/ingblueients/vegetarian/New()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
@@ -761,10 +761,10 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/grown/potato(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
 
-/obj/item/weapon/storage/box/ingredients/sweets
+/obj/item/weapon/storage/box/ingblueients/sweets
 	item_state = "sweets"
 
-/obj/item/weapon/storage/box/ingredients/sweets/New()
+/obj/item/weapon/storage/box/ingblueients/sweets/New()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(src)
@@ -773,10 +773,10 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/icecream(src)
 
-/obj/item/weapon/storage/box/ingredients/carnivore
+/obj/item/weapon/storage/box/ingblueients/carnivore
 	item_state = "carnivore"
 
-/obj/item/weapon/storage/box/ingredients/carnivore/New()
+/obj/item/weapon/storage/box/ingblueients/carnivore/New()
 	..()
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
@@ -786,10 +786,10 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
 
-/obj/item/weapon/storage/box/ingredients/exotic
+/obj/item/weapon/storage/box/ingblueients/exotic
 	item_state = "exotic"
 
-/obj/item/weapon/storage/box/ingredients/exotic/New()
+/obj/item/weapon/storage/box/ingblueients/exotic/New()
 	..()
 	new /obj/item/weapon/reagent_containers/food/condiment/soysauce(src)
 	for(var/i in 1 to 2)
@@ -797,10 +797,10 @@
 		new	/obj/item/weapon/reagent_containers/food/snacks/soydope(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
 
-/obj/item/weapon/storage/box/ingredients/New()
+/obj/item/weapon/storage/box/ingblueients/New()
 	..()
 	if(item_state)
-		desc = "A box containing supplementary ingredients for the aspiring chef. This box's theme is '[item_state]'."
+		desc = "A box containing supplementary ingblueients for the aspiring chef. This box's theme is '[item_state]'."
 
 /obj/item/weapon/storage/box/emptysandbags
 	name = "box of empty sandbags"

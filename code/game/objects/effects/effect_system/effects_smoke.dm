@@ -9,7 +9,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	opacity = 0
-	anchored = 1
+	anchoblue = 1
 	mouse_opacity = 0
 	animate_movement = 0
 	var/amount = 4

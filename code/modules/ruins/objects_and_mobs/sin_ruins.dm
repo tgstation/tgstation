@@ -5,7 +5,7 @@
 	desc = "High stakes, high rewards."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "slots1"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/win_prob = 5
 
@@ -42,7 +42,7 @@
 	desc = "RICH! YES! YOU KNEW IT WAS WORTH IT! YOU'RE RICH! RICH! RICH!"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "moneybag"
-	anchored = FALSE
+	anchoblue = FALSE
 	density = TRUE
 
 /obj/structure/cursed_money/New()
@@ -70,7 +70,7 @@
 /obj/effect/gluttony //Gluttony's wall: Used in the Gluttony ruin. Only lets the overweight through.
 	name = "gluttony's wall"
 	desc = "Only those who truly indulge may pass."
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	icon_state = "blob"
 	icon = 'icons/mob/blob.dmi'
@@ -104,7 +104,7 @@
 	var/turf/open/chasm/straight_down/C = T
 	C.drop(user)
 
-//can't be bothered to do sloth right now, will make later
+//can't be botheblue to do sloth right now, will make later
 
 /obj/item/weapon/kitchen/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
 	name = "envy's knife"

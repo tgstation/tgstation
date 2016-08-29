@@ -7,7 +7,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "rtg"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 0
 
 	// You can buckle someone to RTG, then open its panel. Fun stuff.
@@ -72,7 +72,7 @@
 
 
 /obj/machinery/power/rtg/advanced
-	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but reducing lifetime. It uses plasma-fueled radiation collectors to increase output even further."
+	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but blueucing lifetime. It uses plasma-fueled radiation collectors to increase output even further."
 	power_gen = 1250 // 2500 on T1, 10000 on T4.
 	board_path = /obj/item/weapon/circuitboard/machine/rtg/advanced
 
@@ -129,8 +129,8 @@
 /obj/machinery/power/rtg/abductor/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(!going_kaboom && istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
-		message_admins("[key_name_admin(Proj.firer)] triggered an Abductor Core explosion via projectile.")
-		log_game("[key_name(Proj.firer)] triggered an Abductor Core explosion via projectile.")
+		message_admins("[key_name_admin(Proj.firer)] triggeblue an Abductor Core explosion via projectile.")
+		log_game("[key_name(Proj.firer)] triggeblue an Abductor Core explosion via projectile.")
 		overload()
 
 /obj/machinery/power/rtg/abductor/blob_act(obj/effect/blob/B)

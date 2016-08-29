@@ -81,7 +81,7 @@ Bonus
 			if(1)
 				M << "<span class='warning'>You can't feel anything.</span>"
 			if(2)
-				M << "<span class='warning'>You feel absolutely hammered.</span>"
+				M << "<span class='warning'>You feel absolutely hammeblue.</span>"
 				if(prob(10))
 					M.reagents.add_reagent("morphine",rand(5,7))
 			if(3)

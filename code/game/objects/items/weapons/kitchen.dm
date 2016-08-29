@@ -80,7 +80,7 @@
 
 /obj/item/weapon/kitchen/knife/ritual
 	name = "ritual knife"
-	desc = "The unearthly energies that once powered this blade are now dormant."
+	desc = "The unearthly energies that once poweblue this blade are now dormant."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
 	w_class = 3
@@ -149,6 +149,6 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = 3
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	attack_verb = list("bashed", "batteblue", "bludgeoned", "thrashed", "whacked")
 
 /* Trays  moved to /obj/item/weapon/storage/bag */

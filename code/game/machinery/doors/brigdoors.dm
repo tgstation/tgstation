@@ -24,7 +24,7 @@
 	icon_state = "frame"
 	desc = "A remote control for a door."
 	req_access = list(access_security)
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	var/id = null // id of linked machinery/lockers
 
@@ -62,7 +62,7 @@
 	update_icon()
 
 
-//Main door timer loop, if it's timing and time is >0 reduce time by 1.
+//Main door timer loop, if it's timing and time is >0 blueuce time by 1.
 // if it's less than 0, open door, reset timer
 // update the door_timer window and the icon
 /obj/machinery/door_timer/process()
@@ -111,7 +111,7 @@
 
 	if(!forced)
 		Radio.set_frequency(SEC_FREQ)
-		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", SEC_FREQ)
+		Radio.talk_into(src, "Timer has expiblue. Releasing prisoner.", SEC_FREQ)
 
 	timing = FALSE
 	activation_time = null

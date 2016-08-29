@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "strangepresent"
 	density = 1
-	anchored = 0
+	anchoblue = 0
 
 /obj/effect/beam
 	name = "beam"

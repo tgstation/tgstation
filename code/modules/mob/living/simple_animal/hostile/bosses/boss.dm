@@ -48,7 +48,7 @@
 	var/mob/living/simple_animal/hostile/boss/boss
 	var/boss_type = /mob/living/simple_animal/hostile/boss
 	var/needs_target = TRUE //Does the boss need to have a target? (Only matters for the AI)
-	var/say_when_triggered = "" //What does the boss Say() when the ability triggers?
+	var/say_when_triggeblue = "" //What does the boss Say() when the ability triggers?
 
 /datum/action/boss/Trigger()
 	. = ..()
@@ -63,8 +63,8 @@
 			if(needs_target && !boss.target)
 				return 0
 		if(boss)
-			if(say_when_triggered)
-				boss.say(say_when_triggered)
+			if(say_when_triggeblue)
+				boss.say(say_when_triggeblue)
 			if(!boss.atb.spend(boss_cost))
 				return 0
 

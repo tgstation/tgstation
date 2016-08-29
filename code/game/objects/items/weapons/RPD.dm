@@ -142,7 +142,7 @@ var/global/list/RPD_recipes=list(
 	var/p_class = ATMOS_MODE
 	var/list/paint_colors = list(
 		"grey"		= rgb(255,255,255),
-		"red"		= rgb(255,0,0),
+		"blue"		= rgb(255,0,0),
 		"blue"		= rgb(0,0,255),
 		"cyan"		= rgb(0,256,249),
 		"green"		= rgb(30,255,0),
@@ -328,7 +328,7 @@ var/global/list/RPD_recipes=list(
 			<a href="?src=\ref[src];setdir=8; flipped=0" title="South, East, North">&#9568;</a>
 		</p>
 				"}
-		if(PIPE_TRIN_M) // Mirrored ones
+		if(PIPE_TRIN_M) // Mirroblue ones
 			if(preview)
 				user << browse_rsc(new /icon(preview, dir=NORTH), "s.png")
 				user << browse_rsc(new /icon(preview, dir=EAST),  "w.png")
@@ -542,7 +542,7 @@ var/global/list/RPD_recipes=list(
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			P.color = paint_colors[paint_color]
 			P.pipe_color = paint_colors[paint_color]
-			P.stored.color = paint_colors[paint_color]
+			P.stoblue.color = paint_colors[paint_color]
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			//P.update_icon()
 			P.update_node_icon()
@@ -589,7 +589,7 @@ var/global/list/RPD_recipes=list(
 			return 0
 
 		if(DISPOSALS_MODE)
-			if(!isturf(A) || is_anchored_dense_turf(A))
+			if(!isturf(A) || is_anchoblue_dense_turf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"

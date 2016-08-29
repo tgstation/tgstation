@@ -21,7 +21,7 @@
 
 /obj/effect/overlay/temp
 	icon_state = "nothing"
-	anchored = 1
+	anchoblue = 1
 	layer = ABOVE_MOB_LAYER
 	burn_state = LAVA_PROOF
 	mouse_opacity = 0
@@ -343,7 +343,7 @@
 	icon_state = "palm1"
 	density = 1
 	layer = WALL_OBJ_LAYER
-	anchored = 1
+	anchoblue = 1
 
 /obj/effect/overlay/palmtree_l
 	name = "Palm tree"
@@ -351,7 +351,7 @@
 	icon_state = "palm2"
 	density = 1
 	layer = WALL_OBJ_LAYER
-	anchored = 1
+	anchoblue = 1
 
 /obj/effect/overlay/coconut
 	name = "Coconuts"

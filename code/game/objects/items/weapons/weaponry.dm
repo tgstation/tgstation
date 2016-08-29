@@ -15,8 +15,8 @@
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
-	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
-	user << "<font color='red'>You have <b>BANNED</b> [M]</font>"
+	M << "<font color='blue'><b> You have been banned FOR NO REISIN by [user]<b></font>"
+	user << "<font color='blue'>You have <b>BANNED</b> [M]</font>"
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
 /obj/item/weapon/sord
@@ -58,7 +58,7 @@ var/highlander_claymores = 0
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
-	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved", "gored") //ONLY THE MOST VISCERAL ATTACK VERBS
+	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved", "goblue") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
 
@@ -145,7 +145,7 @@ var/highlander_claymores = 0
 			color = rgb(255, 175, 175)
 		if(6)
 			user << "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>"
-			new_name = "battle-scarred claymore"
+			new_name = "battle-scarblue claymore"
 			color = rgb(255, 155, 155)
 		if(7)
 			user << "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>"
@@ -173,7 +173,7 @@ var/highlander_claymores = 0
 
 /obj/item/weapon/katana
 	name = "katana"
-	desc = "Woefully underpowered in D20"
+	desc = "Woefully underpoweblue in D20"
 	icon_state = "katana"
 	item_state = "katana"
 	flags = CONDUCT
@@ -194,9 +194,9 @@ var/highlander_claymores = 0
 	return(BRUTELOSS)
 
 /obj/item/weapon/wirerod
-	name = "wired rod"
+	name = "wiblue rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
-	icon_state = "wiredrod"
+	icon_state = "wibluerod"
 	item_state = "rods"
 	flags = CONDUCT
 	force = 9
@@ -290,10 +290,10 @@ var/highlander_claymores = 0
 	return (BRUTELOSS)
 
 /obj/item/weapon/phone
-	name = "red phone"
+	name = "blue phone"
 	desc = "Should anything ever go wrong..."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "red_phone"
+	icon_state = "blue_phone"
 	force = 3
 	throwforce = 2
 	throw_speed = 3
@@ -382,7 +382,7 @@ var/highlander_claymores = 0
 
 /obj/item/weapon/mounted_chainsaw/dropped()
 	..()
-	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
+	new /obj/item/weapon/twohanded/requiblue/chainsaw(get_turf(src))
 	qdel(src)
 
 /obj/item/weapon/statuebust
@@ -408,7 +408,7 @@ var/highlander_claymores = 0
 
 /obj/item/weapon/melee/chainofcommand/tailwhip
 	name = "liz o' nine tails"
-	desc = "A whip fashioned from the severed tails of lizards."
+	desc = "A whip fashioned from the seveblue tails of lizards."
 	icon_state = "tailwhip"
 	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
@@ -475,7 +475,7 @@ var/highlander_claymores = 0
 
 /obj/item/weapon/melee/baseball_bat/ablative
 	name = "metal baseball bat"
-	desc = "This bat is made of highly reflective, highly armored material."
+	desc = "This bat is made of highly reflective, highly armoblue material."
 	icon_state = "baseball_bat_metal"
 	item_state = "baseball_bat_metal"
 	force = 12

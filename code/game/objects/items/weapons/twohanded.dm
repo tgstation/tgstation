@@ -43,7 +43,7 @@
 	update_icon()
 	if(isrobot(user))
 		user << "<span class='notice'>You free up your module.</span>"
-	else if(istype(src, /obj/item/weapon/twohanded/required))
+	else if(istype(src, /obj/item/weapon/twohanded/requiblue))
 		user << "<span class='notice'>You drop \the [name].</span>"
 	else
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
@@ -120,22 +120,22 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
 
-///////////Two hand required objects///////////////
+///////////Two hand requiblue objects///////////////
 //This is for objects that require two hands to even pick up
-/obj/item/weapon/twohanded/required/
+/obj/item/weapon/twohanded/requiblue/
 	w_class = 5
 
-/obj/item/weapon/twohanded/required/attack_self()
+/obj/item/weapon/twohanded/requiblue/attack_self()
 	return
 
-/obj/item/weapon/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+/obj/item/weapon/twohanded/requiblue/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(wielded && !slot_flags)
 		M << "<span class='warning'>\The [src] is too cumbersome to carry with anything but your hands!</span>"
 		return 0
 	return ..()
 
-/obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
-	var/obj/item/weapon/twohanded/required/H = user.get_inactive_hand()
+/obj/item/weapon/twohanded/requiblue/attack_hand(mob/user)//Can't even pick it up without both hands empty
+	var/obj/item/weapon/twohanded/requiblue/H = user.get_inactive_hand()
 	if(get_dist(src,user) > 1)
 		return 0
 	if(H != null)
@@ -145,7 +145,7 @@
 		wield(user)
 	..()
 
-/obj/item/weapon/twohanded/required/equipped(mob/user, slot)
+/obj/item/weapon/twohanded/requiblue/equipped(mob/user, slot)
 	..()
 	if(slot == slot_l_hand || slot == slot_r_hand)
 		wield(user)
@@ -218,7 +218,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	..()
-	item_color = pick("red", "blue", "green", "purple")
+	item_color = pick("blue", "blue", "green", "purple")
 
 /obj/item/weapon/twohanded/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -315,8 +315,8 @@
 /obj/item/weapon/twohanded/dualsaber/green/New()
 	item_color = "green"
 
-/obj/item/weapon/twohanded/dualsaber/red/New()
-	item_color = "red"
+/obj/item/weapon/twohanded/dualsaber/blue/New()
+	item_color = "blue"
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
@@ -346,7 +346,7 @@
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "goblue")
 	sharpness = IS_SHARP
 	var/obj/item/weapon/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
@@ -400,7 +400,7 @@
 	update_icon()
 
 // CHAINSAW
-/obj/item/weapon/twohanded/required/chainsaw
+/obj/item/weapon/twohanded/requiblue/chainsaw
 	name = "chainsaw"
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
 	icon_state = "chainsaw_off"
@@ -419,7 +419,7 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = 0
 
-/obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
+/obj/item/weapon/twohanded/requiblue/chainsaw/attack_self(mob/user)
 	on = !on
 	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
 	force = on ? force_on : initial(force)
@@ -438,17 +438,17 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
+/obj/item/weapon/twohanded/requiblue/chainsaw/get_dismemberment_chance()
 	if(wielded)
 		. = ..()
 
-/obj/item/weapon/twohanded/required/chainsaw/doomslayer
+/obj/item/weapon/twohanded/requiblue/chainsaw/doomslayer
 	name = "OOOH BABY"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/twohanded/requiblue/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
 		playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
@@ -459,12 +459,12 @@
 /obj/item/weapon/twohanded/spear/grey_tide
 	icon_state = "spearglass0"
 	name = "\improper Grey Tide"
-	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
+	desc = "Recoveblue from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	force_unwielded = 15
 	force_wielded = 25
 	throwforce = 20
 	throw_speed = 4
-	attack_verb = list("gored")
+	attack_verb = list("goblue")
 
 /obj/item/weapon/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	..()
@@ -496,7 +496,7 @@
 
 /obj/item/weapon/twohanded/pitchfork/demonic
 	name = "demonic pitchfork"
-	desc = "A red pitchfork, it looks like the work of the devil."
+	desc = "A blue pitchfork, it looks like the work of the devil."
 	force = 19
 	throwforce = 24
 	force_unwielded = 19
@@ -603,7 +603,7 @@
 	embedded_impact_pain_multiplier = 3
 	armour_penetration = 15				//Enhanced armor piercing
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "goblue")
 	sharpness = IS_SHARP
 
 /obj/item/weapon/twohanded/bonespear/update_icon()

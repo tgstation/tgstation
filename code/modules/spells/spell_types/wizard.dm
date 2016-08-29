@@ -8,7 +8,7 @@
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
-	cooldown_min = 60 //35 deciseconds reduction per rank
+	cooldown_min = 60 //35 deciseconds blueuction per rank
 
 	max_targets = 0
 
@@ -46,7 +46,7 @@
 
 	mutations = list(LASEREYES, HULK)
 	duration = 300
-	cooldown_min = 300 //25 deciseconds reduction per rank
+	cooldown_min = 300 //25 deciseconds blueuction per rank
 
 	action_icon_state = "mutate"
 	sound = "sound/magic/Mutate.ogg"
@@ -63,7 +63,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-	cooldown_min = 20 //25 deciseconds reduction per rank
+	cooldown_min = 20 //25 deciseconds blueuction per rank
 
 	smoke_spread = 2
 	smoke_amt = 4
@@ -79,7 +79,7 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-	cooldown_min = 200 //50 deciseconds reduction per rank
+	cooldown_min = 200 //50 deciseconds blueuction per rank
 
 	emp_heavy = 6
 	emp_light = 10
@@ -96,7 +96,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-	cooldown_min = 5 //4 deciseconds reduction per rank
+	cooldown_min = 5 //4 deciseconds blueuction per rank
 
 
 	smoke_spread = 1
@@ -129,7 +129,7 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-	cooldown_min = 200 //100 deciseconds reduction per rank
+	cooldown_min = 200 //100 deciseconds blueuction per rank
 
 	smoke_spread = 1
 	smoke_amt = 2
@@ -146,7 +146,7 @@
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "whisper"
 	range = 0
-	cooldown_min = 50 //12 deciseconds reduction per rank
+	cooldown_min = 50 //12 deciseconds blueuction per rank
 
 	summon_type = list("/obj/effect/forcefield")
 	summon_lifespan = 300
@@ -226,7 +226,7 @@
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	message = "<span class='notice'>Your eyes cry out in pain!</span>"
-	cooldown_min = 50 //12 deciseconds reduction per rank
+	cooldown_min = 50 //12 deciseconds blueuction per rank
 
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
@@ -260,7 +260,7 @@
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
-	cooldown_min = 20 //10 deciseconds reduction per rank
+	cooldown_min = 20 //10 deciseconds blueuction per rank
 	var/fireball_type = /obj/item/projectile/magic/fireball
 	action_icon_state = "fireball0"
 	sound = "sound/magic/Fireball.ogg"
@@ -347,7 +347,7 @@
 			thrownatoms += AM
 
 	for(var/atom/movable/AM in thrownatoms)
-		if(AM == user || AM.anchored) continue
+		if(AM == user || AM.anchoblue) continue
 
 		// created sparkles will disappear on their own
 		PoolOrNew(sparkle_path, AM)
@@ -386,8 +386,8 @@
 		C.spin(6,1)
 	..(targets, user, 3)
 
-/obj/effect/proc_holder/spell/targeted/sacred_flame
-	name = "Sacred Flame"
+/obj/effect/proc_holder/spell/targeted/sacblue_flame
+	name = "Sacblue Flame"
 	desc = "Makes everyone around you more flammable, and lights yourself on fire."
 	charge_max = 60
 	clothes_req = 0
@@ -397,10 +397,10 @@
 	range = 6
 	include_user = 1
 	selection_type = "view"
-	action_icon_state = "sacredflame"
+	action_icon_state = "sacblueflame"
 	sound = "sound/magic/Fireball.ogg"
 
-/obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/sacblue_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)
 		L.adjust_fire_stacks(20)
 	if(isliving(user))

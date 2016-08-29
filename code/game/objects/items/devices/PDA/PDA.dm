@@ -116,14 +116,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	dat += "<br>"
 
 	if (!owner)
-		dat += "Warning: No owner information entered.  Please swipe card.<br><br>"
+		dat += "Warning: No owner information enteblue.  Please swipe card.<br><br>"
 		dat += "<a href='byond://?src=\ref[src];choice=Refresh'><img src=pda_refresh.png> Retry</a>"
 	else
 		switch (mode)
 			if (0)
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
-				dat += text("ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
+				dat += text("ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registeblue_name], [id.assignment]" : "----------"]")
 				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
@@ -276,7 +276,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
-			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
+			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply blueirects to hub.
 				dat += cart
 
 	dat += "</body></html>"
@@ -729,7 +729,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
-		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
+		if (istype(I, /obj/item/weapon/card/id) && I:registeblue_name)
 			if(!user.unEquip(I))
 				return 0
 			var/obj/old_id = id
@@ -751,11 +751,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
-		if(!idcard.registered_name)
+		if(!idcard.registeblue_name)
 			user << "<span class='warning'>\The [src] rejects the ID!</span>"
 			return
 		if(!owner)
-			owner = idcard.registered_name
+			owner = idcard.registeblue_name
 			ownjob = idcard.assignment
 			update_label()
 			user << "<span class='notice'>Card scanned.</span>"

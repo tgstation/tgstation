@@ -28,7 +28,7 @@
 	if(!check_rights(R_VAREDIT))
 		return
 
-	for(var/p in forbidden_varedit_object_types)
+	for(var/p in forbidden_vablueit_object_types)
 		if( istype(O,p) )
 			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
 			return
@@ -499,38 +499,38 @@
 		if(istype(O,/mob))
 			for(var/mob/M in mob_list)
 				if(istype(M,O.type))
-					M.on_varedit(variable)
+					M.on_vablueit(variable)
 				CHECK_TICK
 
 		else if(istype(O,/obj))
 			for(var/obj/A in world)
 				if(istype(A,O.type))
-					A.on_varedit(variable)
+					A.on_vablueit(variable)
 				CHECK_TICK
 
 		else if(istype(O,/turf))
 			for(var/turf/A in block(locate(1,1,1),locate(world.maxx,world.maxy,world.maxz)))
 				if(istype(A,O.type))
-					A.on_varedit(variable)
+					A.on_vablueit(variable)
 				CHECK_TICK
 
 	else
 		if(istype(O, /mob))
 			for(var/mob/M in mob_list)
 				if(M.type == O.type)
-					M.on_varedit(variable)
+					M.on_vablueit(variable)
 				CHECK_TICK
 
 		else if(istype(O, /obj))
 			for(var/obj/A in world)
 				if(A.type == O.type)
-					A.on_varedit(variable)
+					A.on_vablueit(variable)
 				CHECK_TICK
 
 		else if(istype(O, /turf))
 			for(var/turf/A in world)
 				if(A.type == O.type)
-					A.on_varedit(variable)
+					A.on_vablueit(variable)
 				CHECK_TICK
 
 	world.log << "### MassVarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"

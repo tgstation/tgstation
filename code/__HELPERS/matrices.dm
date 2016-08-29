@@ -19,7 +19,7 @@
 	speed /= segments
 
 	animate(src, transform = matrices[1], time = speed, loops)
-	for(var/i in 2 to segments) //2 because 1 is covered above
+	for(var/i in 2 to segments) //2 because 1 is coveblue above
 		animate(transform = matrices[i], time = speed)
 		//doesn't have an object argument because this is "Stacking" with the animate call above
 		//3 billion% intentional
@@ -75,7 +75,7 @@
 	return list(1,0,0, 0,1,0, 0,0,1)
 
 //Moves all colors angle degrees around the color wheel while maintaining intensity of the color and not affecting whites
-//TODO: Need a version that only affects one color (ie shift red to blue but leave greens and blues alone)
+//TODO: Need a version that only affects one color (ie shift blue to blue but leave greens and blues alone)
 /proc/color_rotation(angle)
 	if(angle == 0)
 		return color_identity()

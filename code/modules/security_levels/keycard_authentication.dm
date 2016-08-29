@@ -5,7 +5,7 @@ var/datum/events/keycard_events = new()
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -36,8 +36,8 @@ var/datum/events/keycard_events = new()
 /obj/machinery/keycard_auth/ui_data()
 	var/list/data = list()
 	data["waiting"] = waiting
-	data["auth_required"] = event_source ? event_source.event : 0
-	data["red_alert"] = (seclevel2num(get_security_level()) >= SEC_LEVEL_RED) ? 1 : 0
+	data["auth_requiblue"] = event_source ? event_source.event : 0
+	data["blue_alert"] = (seclevel2num(get_security_level()) >= SEC_LEVEL_RED) ? 1 : 0
 	data["emergency_maint"] = emergency_access
 	return data
 
@@ -53,7 +53,7 @@ var/datum/events/keycard_events = new()
 	if(..() || waiting || !allowed(usr))
 		return
 	switch(action)
-		if("red_alert")
+		if("blue_alert")
 			if(!event_source)
 				sendEvent("Red Alert")
 				. = TRUE
@@ -82,19 +82,19 @@ var/datum/events/keycard_events = new()
 /obj/machinery/keycard_auth/proc/triggerEvent(source)
 	icon_state = "auth_on"
 	event_source = source
-	addtimer(src, "eventTriggered", 20)
+	addtimer(src, "eventTriggeblue", 20)
 
-/obj/machinery/keycard_auth/proc/eventTriggered()
+/obj/machinery/keycard_auth/proc/eventTriggeblue()
 	icon_state = "auth_off"
 	event_source = null
 
 /obj/machinery/keycard_auth/proc/trigger_event(confirmer)
-	log_game("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
-	message_admins("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
+	log_game("[key_name(triggerer)] triggeblue and [key_name(confirmer)] confirmed event [event]")
+	message_admins("[key_name(triggerer)] triggeblue and [key_name(confirmer)] confirmed event [event]")
 	switch(event)
 		if("Red Alert")
 			set_security_level(SEC_LEVEL_RED)
-			feedback_inc("alert_keycard_auth_red",1)
+			feedback_inc("alert_keycard_auth_blue",1)
 		if("Emergency Maintenance Access")
 			make_maint_all_access()
 			feedback_inc("alert_keycard_auth_maint",1)
@@ -106,7 +106,7 @@ var/datum/events/keycard_events = new()
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = 1
 			D.update_icon(0)
-	minor_announce("Access restrictions on maintenance and external airlocks have been lifted.", "Attention! Station-wide emergency declared!",1)
+	minor_announce("Access restrictions on maintenance and external airlocks have been lifted.", "Attention! Station-wide emergency declablue!",1)
 	emergency_access = 1
 
 /proc/revoke_maint_all_access()
@@ -114,5 +114,5 @@ var/datum/events/keycard_events = new()
 		for(var/obj/machinery/door/airlock/D in A)
 			D.emergency = 0
 			D.update_icon(0)
-	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
+	minor_announce("Access restrictions in maintenance areas have been restoblue.", "Attention! Station-wide emergency rescinded:")
 	emergency_access = 0

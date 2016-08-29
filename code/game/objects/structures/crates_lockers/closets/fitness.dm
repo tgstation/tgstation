@@ -8,7 +8,7 @@
 	new /obj/item/clothing/under/shorts/purple(src)
 	new /obj/item/clothing/under/shorts/grey(src)
 	new /obj/item/clothing/under/shorts/black(src)
-	new /obj/item/clothing/under/shorts/red(src)
+	new /obj/item/clothing/under/shorts/blue(src)
 	new /obj/item/clothing/under/shorts/blue(src)
 	new /obj/item/clothing/under/shorts/green(src)
 
@@ -36,18 +36,18 @@
 	new /obj/item/clothing/mask/luchador/tecnicos(src)
 
 
-/obj/structure/closet/lasertag/red
-	name = "red laser tag equipment"
+/obj/structure/closet/lasertag/blue
+	name = "blue laser tag equipment"
 	desc = "It's a storage unit for laser tag equipment."
-	icon_door = "red"
+	icon_door = "blue"
 
-/obj/structure/closet/lasertag/red/New()
+/obj/structure/closet/lasertag/blue/New()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/energy/laser/redtag(src)
+		new /obj/item/weapon/gun/energy/laser/bluetag(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/suit/redtag(src)
-	new /obj/item/clothing/head/helmet/redtaghelm(src)
+		new /obj/item/clothing/suit/bluetag(src)
+	new /obj/item/clothing/head/helmet/bluetaghelm(src)
 
 
 /obj/structure/closet/lasertag/blue

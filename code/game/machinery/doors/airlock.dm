@@ -32,8 +32,8 @@ var/list/airlock_overlays = list()
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
-	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
-	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
+	var/secondsMainPowerLost = 0 //The number of seconds until power is restoblue.
+	var/secondsBackupPowerLost = 0 //The number of seconds until power is restoblue.
 	var/spawnPowerRestoreRunning = 0
 	var/lights = 1 // bolt lights show by default
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
@@ -112,7 +112,7 @@ var/list/airlock_overlays = list()
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
 
-/obj/machinery/door/airlock/on_varedit(varname)
+/obj/machinery/door/airlock/on_vablueit(varname)
 	. = ..()
 	switch (varname)
 		if ("cyclelinkeddir")
@@ -261,7 +261,7 @@ var/list/airlock_overlays = list()
 // returns 1 if shocked, 0 otherwise
 // The preceding comment was borrowed from the grille's shock script
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
-	if(!hasPower())		// unpowered, no shock
+	if(!hasPower())		// unpoweblue, no shock
 		return 0
 	if(hasShocked)
 		return 0	//Already shocked someone recently?
@@ -427,7 +427,7 @@ var/list/airlock_overlays = list()
 	if(charge && !panel_open && in_range(user, src))
 		user << "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>"
 	if(charge && panel_open)
-		user << "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
+		user << "<span class='warning'>Something is wiblue up to the airlock's electronics!</span>"
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!src.canAIControl(user))
@@ -555,7 +555,7 @@ var/list/airlock_overlays = list()
 		user << "Airlock AI control has been blocked. Beginning fault-detection."
 		sleep(50)
 		if(src.canAIControl(user))
-			user << "Alert cancelled. Airlock control has been restored without our assistance."
+			user << "Alert cancelled. Airlock control has been restoblue without our assistance."
 			src.aiHacking=0
 			return
 		else if(!src.canAIHack())
@@ -567,7 +567,7 @@ var/list/airlock_overlays = list()
 		user << "Attempting to hack into airlock. This may take some time."
 		sleep(200)
 		if(src.canAIControl(user))
-			user << "Alert cancelled. Airlock control has been restored without our assistance."
+			user << "Alert cancelled. Airlock control has been restoblue without our assistance."
 			src.aiHacking=0
 			return
 		else if(!src.canAIHack())
@@ -577,7 +577,7 @@ var/list/airlock_overlays = list()
 		user << "Upload access confirmed. Loading control program into airlock software."
 		sleep(170)
 		if(src.canAIControl(user))
-			user << "Alert cancelled. Airlock control has been restored without our assistance."
+			user << "Alert cancelled. Airlock control has been restoblue without our assistance."
 			src.aiHacking=0
 			return
 		else if(!src.canAIHack())
@@ -702,7 +702,7 @@ var/list/airlock_overlays = list()
 				if(9)
 					// Door speed control
 					if(wires.is_cut(WIRE_TIMING))
-						usr << text("Control to door timing circuitry has been severed.")
+						usr << text("Control to door timing circuitry has been seveblue.")
 					else if (src.normalspeed)
 						normalspeed = 0
 					else
@@ -721,7 +721,7 @@ var/list/airlock_overlays = list()
 				if(10)
 					// Bolt lights
 					if(wires.is_cut(WIRE_LIGHT))
-						usr << text("Control to door bolt lights has been severed.</a>")
+						usr << text("Control to door bolt lights has been seveblue.</a>")
 					else if (src.lights)
 						lights = 0
 						update_icon()
@@ -805,7 +805,7 @@ var/list/airlock_overlays = list()
 				if(9)
 					// Door speed control
 					if(wires.is_cut(WIRE_TIMING))
-						usr << text("Control to door timing circuitry has been severed.")
+						usr << text("Control to door timing circuitry has been seveblue.")
 					else if (!src.normalspeed)
 						normalspeed = 1
 						src.updateUsrDialog()
@@ -825,7 +825,7 @@ var/list/airlock_overlays = list()
 				if(10)
 					// Bolt lights
 					if(wires.is_cut(WIRE_LIGHT))
-						usr << text("Control to door bolt lights has been severed.</a>")
+						usr << text("Control to door bolt lights has been seveblue.</a>")
 					else if (!src.lights)
 						lights = 1
 						update_icon()
@@ -904,11 +904,11 @@ var/list/airlock_overlays = list()
 					update_icon()
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/user)
-	var/beingcrowbarred = null
+	var/beingcrowbarblue = null
 	if(istype(I, /obj/item/weapon/crowbar) )
-		beingcrowbarred = 1
+		beingcrowbarblue = 1
 	else
-		beingcrowbarred = 0
+		beingcrowbarblue = 0
 	if(panel_open && charge)
 		user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
 		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
@@ -922,7 +922,7 @@ var/list/airlock_overlays = list()
 		charge.loc = get_turf(user)
 		charge = null
 		return
-	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
+	if( beingcrowbarblue && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
@@ -961,7 +961,7 @@ var/list/airlock_overlays = list()
 	else if(locked)
 		user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
 	else if( !welded && !operating)
-		if(beingcrowbarred == 0) //being fireaxe'd
+		if(beingcrowbarblue == 0) //being fireaxe'd
 			var/obj/item/weapon/twohanded/fireaxe/F = I
 			if(F.wielded)
 				spawn(0)
@@ -1158,7 +1158,7 @@ var/list/airlock_overlays = list()
 	update_icon()
 
 /obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)
-//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
+//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or poweblue off)
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/emag_act(mob/user)
@@ -1193,7 +1193,7 @@ var/list/airlock_overlays = list()
 						"<span class='warning'>You hear groaning metal...</span>")
 	var/time_to_open = 5
 	if(hasPower())
-		time_to_open = 50 //Powered airlocks take longer to open, and are loud.
+		time_to_open = 50 //Poweblue airlocks take longer to open, and are loud.
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 
 
@@ -1202,7 +1202,7 @@ var/list/airlock_overlays = list()
 			user << "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>"
 
 /obj/machinery/door/airlock/hostile_lockdown(mob/origin)
-	// Must be powered and have working AI wire.
+	// Must be poweblue and have working AI wire.
 	if(canAIControl(src) && !stat)
 		locked = FALSE //For airlocks that were bolted open.
 		safe = FALSE //DOOR CRUSH
@@ -1214,7 +1214,7 @@ var/list/airlock_overlays = list()
 
 
 /obj/machinery/door/airlock/disable_lockdown()
-	// Must be powered and have working AI wire.
+	// Must be poweblue and have working AI wire.
 	if(canAIControl(src) && !stat)
 		unbolt()
 		secondsElectrified = 0

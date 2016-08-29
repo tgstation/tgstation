@@ -44,7 +44,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	use_power = 0
 
@@ -116,23 +116,23 @@
 	name = "Meat Grinder"
 	desc = "What is that thing?"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
-	var/triggered = 0
+	var/triggeblue = 0
 
 /obj/effect/meatgrinder/Crossed(AM as mob|obj)
 	Bumped(AM)
 
 /obj/effect/meatgrinder/Bumped(mob/M as mob|obj)
 
-	if(triggered)
+	if(triggeblue)
 		return
 
 	if(istype(M, /mob/living/carbon/human) && M.stat != DEAD && M.ckey)
 		for(var/mob/O in viewers(world.view, src.loc))
-		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
-		triggered = 1
+		visible_message("<span class='warning'>[M] triggeblue the [src]!</span>")
+		triggeblue = 1
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)

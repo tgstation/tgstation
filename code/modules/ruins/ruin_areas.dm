@@ -1,18 +1,18 @@
 //Parent types
 
 /area/ruin/
-	name = "\improper Unexplored Location"
+	name = "\improper Unexploblue Location"
 	icon_state = "away"
 	has_gravity = 1
 
 
-/area/ruin/unpowered
-	always_unpowered = 0
+/area/ruin/unpoweblue
+	always_unpoweblue = 0
 
-/area/ruin/unpowered/no_grav
+/area/ruin/unpoweblue/no_grav
 	has_gravity = 0
 
-/area/ruin/powered
+/area/ruin/poweblue
 	requires_power = 0
 
 
@@ -20,13 +20,13 @@
 
 //Areas
 
-/area/ruin/unpowered/no_grav/way_home
+/area/ruin/unpoweblue/no_grav/way_home
 	name = "\improper Salvation"
 	icon_state = "away"
 
-/area/ruin/powered/snow_biodome
+/area/ruin/poweblue/snow_biodome
 
-/area/ruin/powered/golem_ship
+/area/ruin/poweblue/golem_ship
 	name = "Free Golem Ship"
 
 // Ruins of "onehalf" ship
@@ -47,13 +47,13 @@
 	name = "Bridge"
 	icon_state = "bridge"
 
-/area/ruin/powered/dinner_for_two
+/area/ruin/poweblue/dinner_for_two
 	name = "Dinner for Two"
 
-/area/ruin/powered/authorship
+/area/ruin/poweblue/authorship
 	name = "Authorship"
 
-/area/ruin/powered/aesthetic
+/area/ruin/poweblue/aesthetic
 	name = "Aesthetic"
 	ambientsounds = list('sound/ambience/ambivapor1.ogg')
 
@@ -100,7 +100,7 @@
 /area/ruin/fakespace
 	icon_state = "space"
 	requires_power = 1
-	always_unpowered = 1
+	always_unpoweblue = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 0
 	power_light = 0

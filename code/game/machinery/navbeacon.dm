@@ -9,7 +9,7 @@
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = 1
+	anchoblue = 1
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked

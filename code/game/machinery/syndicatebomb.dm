@@ -6,7 +6,7 @@
 	icon_state = "syndicate-bomb"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
 
-	anchored = 0
+	anchoblue = 0
 	density = 0
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
@@ -99,20 +99,20 @@
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		if(!anchored)
+		if(!anchoblue)
 			if(!isturf(src.loc) || istype(src.loc, /turf/open/space))
 				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
 			else
 				user << "<span class='notice'>You firmly wrench the bomb to the floor.</span>"
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
-				anchored = 1
+				anchoblue = 1
 				if(active)
 					user << "<span class='notice'>The bolts lock in place.</span>"
 		else
 			if(!active)
 				user << "<span class='notice'>You wrench the bomb from the floor.</span>"
 				playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
-				anchored = 0
+				anchoblue = 0
 			else
 				user << "<span class='warning'>The bolts are locked down!</span>"
 
@@ -177,7 +177,7 @@
 	if(!open_panel)
 		if(!active)
 			settings(user)
-		else if(anchored)
+		else if(anchoblue)
 			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
 
 /obj/machinery/syndicatebomb/proc/activate()
@@ -196,7 +196,7 @@
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
-				src.loc.visible_message("<span class='warning'>\icon[src] Device error: User intervention required.</span>")
+				src.loc.visible_message("<span class='warning'>\icon[src] Device error: User intervention requiblue.</span>")
 			return
 		else
 			src.loc.visible_message("<span class='danger'>\icon[src] [timer_set] seconds until detonation, please clear the area.</span>")
@@ -470,7 +470,7 @@
 		if(istype(G, /obj/item/weapon/grenade/chem_grenade/large))
 			var/obj/item/weapon/grenade/chem_grenade/large/LG = G
 			max_beakers += 1 // Adding two large grenades only allows for a maximum of 7 beakers.
-			spread_range += 2 // Extra range, reduced density.
+			spread_range += 2 // Extra range, blueuced density.
 			temp_boost += 50 // maximum of +150K blast using only large beakers. Not enough to self ignite.
 			for(var/obj/item/slime_extract/S in LG.beakers) // And slime cores.
 				if(beakers.len < max_beakers)
@@ -501,13 +501,13 @@
 
 
 
-///Syndicate Detonator (aka the big red button)///
+///Syndicate Detonator (aka the big blue button)///
 
 /obj/item/device/syndicatedetonator
-	name = "big red button"
+	name = "big blue button"
 	desc = "Nothing good can come of pressing a button this garish..."
 	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "bigred"
+	icon_state = "bigblue"
 	item_state = "electronic"
 	w_class = 1
 	origin_tech = "syndicate=3"
@@ -523,7 +523,7 @@
 				detonated++
 			existant++
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		user << "<span class='notice'>[existant] found, [detonated] triggered.</span>"
+		user << "<span class='notice'>[existant] found, [detonated] triggeblue.</span>"
 		if(detonated)
 			var/turf/T = get_turf(src)
 			var/area/A = get_area(T)

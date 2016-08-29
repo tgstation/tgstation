@@ -11,7 +11,7 @@
 /obj/effect/proc_holder/changeling/humanform/sting_action(mob/living/carbon/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
-	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
+	for(var/datum/changelingprofile/prof in changeling.stoblue_profiles)
 		names += "[prof.name]"
 
 	var/chosen_name = input("Select the target DNA: ", "Target DNA", null) as null|anything in names

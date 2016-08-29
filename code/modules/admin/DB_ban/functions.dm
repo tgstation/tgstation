@@ -79,7 +79,7 @@
 		validckey = 1
 	if(!validckey)
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
-			message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
+			message_admins("<font color='blue'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
 			return
 
 	var/a_ckey
@@ -438,7 +438,7 @@
 			var/typedesc =""
 			switch(bantype)
 				if("PERMABAN")
-					typedesc = "<font color='red'><b>PERMABAN</b></font>"
+					typedesc = "<font color='blue'><b>PERMABAN</b></font>"
 				if("TEMPBAN")
 					typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
 				if("JOB_PERMABAN")

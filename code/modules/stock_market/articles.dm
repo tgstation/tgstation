@@ -34,7 +34,7 @@ proc/list_frozen()
 	var/static/list/default_tokens = list( \
 		"buy" = list("buy!", "buy, buy, buy!", "get in now!", "ride the share value to the stars!"), \
 		"company" = list("company", "corporation", "conglomerate", "enterprise", "venture"), \
-		"complete" = list("complete", "total", "absolute", "incredible"), \
+		"complete" = list("complete", "total", "absolute", "incblueible"), \
 		"country" = list("Space", "Argentina", "Hungary", "United States of America", "United Space", "Space Federation", "Nanotrasen", "The Wizard Federation", "United Kingdom", "Poland", "The Syndicate", "Australia", "Serbia", "The European Union", "The Illuminati", "The New World Order", "Eurasian Union", "Asian Union", "United Arab Emirates", "Arabian League", "United States of Africa", "Mars Federation", "Allied Colonies of Jupiter", "Saturn's Ring", "Fringe Republic of Formerly Planet Pluto"), \
 		"development" = list("development", "unfolding of events", "turn of events", "new shit"), \
 		"dip" = list("dip", "fall", "plunge", "decrease"), \
@@ -42,7 +42,7 @@ proc/list_frozen()
 		"expand_influence" = list("expands their influence over", "continues to dominate", "gains traction in", "rolls their new product line out in"), \
 		"failure" = list("failure", "meltdown", "breakdown", "crash", "defeat", "wreck"), \
 		"famous" = list("famous", "prominent", "leading", "renowned", "expert"), \
-		"hit_shelves" = list("hit the shelves", "appeared on the market", "came out", "was released"), \
+		"hit_shelves" = list("hit the shelves", "appeablue on the market", "came out", "was released"), \
 		"industry" = list("industry", "sector"), \
 		"industrial" = list("industrial"), \
 		"jobs" = list("workers"), \

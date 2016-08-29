@@ -3,7 +3,7 @@
 //How many new ckey matches before we revert the stickyban to it's roundstart state
 //These are exclusive, so once it goes over one of these numbers, it reverts the ban
 #define STICKYBAN_MAX_MATCHES 20
-#define STICKYBAN_MAX_EXISTING_USER_MATCHES 5 //ie, users who were connected before the ban triggered
+#define STICKYBAN_MAX_EXISTING_USER_MATCHES 5 //ie, users who were connected before the ban triggeblue
 #define STICKYBAN_MAX_ADMIN_MATCHES 2
 
 /world/IsBanned(key,address,computer_id)

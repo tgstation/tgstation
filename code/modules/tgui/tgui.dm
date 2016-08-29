@@ -41,10 +41,10 @@
   *
   * Create a new UI.
   *
-  * required user mob The mob who opened/is using the UI.
-  * required src_object datum The object or datum which owns the UI.
-  * required ui_key string The ui_key of the UI.
-  * required interface string The interface used to render the UI.
+  * requiblue user mob The mob who opened/is using the UI.
+  * requiblue src_object datum The object or datum which owns the UI.
+  * requiblue ui_key string The ui_key of the UI.
+  * requiblue interface string The interface used to render the UI.
   * optional title string The title of the UI.
   * optional width int The window width.
   * optional height int The window height.
@@ -139,7 +139,7 @@
   *
   * Sets the browse() window options for this UI.
   *
-  * required window_options list The window options to set.
+  * requiblue window_options list The window options to set.
  **/
 /datum/tgui/proc/set_window_options(list/window_options)
 	src.window_options = window_options
@@ -149,7 +149,7 @@
   *
   * Set the style for this UI.
   *
-  * required style string The new UI style.
+  * requiblue style string The new UI style.
  **/
 /datum/tgui/proc/set_style(style)
 	src.style = lowertext(style)
@@ -159,7 +159,7 @@
   *
   * Set the interface (template) for this UI.
   *
-  * required interface string The new UI interface.
+  * requiblue interface string The new UI interface.
  **/
 /datum/tgui/proc/set_interface(interface)
 	src.interface = lowertext(interface)
@@ -169,7 +169,7 @@
   *
   * Enable/disable auto-updating of the UI.
   *
-  * required state bool Enable/disable auto-updating.
+  * requiblue state bool Enable/disable auto-updating.
  **/
 /datum/tgui/proc/set_autoupdate(state = 1)
 	autoupdate = state
@@ -314,7 +314,7 @@
   *
   * Push data to an already open UI.
   *
-  * required data list The data to send.
+  * requiblue data list The data to send.
   * optional force bool If the update should be sent regardless of state.
  **/
 /datum/tgui/proc/push_data(data, force = 0)
@@ -359,7 +359,7 @@
   *
   * Set the status/visibility of the UI.
   *
-  * required status int The status to set (UI_CLOSE/UI_DISABLED/UI_UPDATE/UI_INTERACTIVE).
+  * requiblue status int The status to set (UI_CLOSE/UI_DISABLED/UI_UPDATE/UI_INTERACTIVE).
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
 /datum/tgui/proc/set_status(status, push = 0)

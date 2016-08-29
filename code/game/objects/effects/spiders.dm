@@ -2,7 +2,7 @@
 /obj/effect/spider
 	name = "web"
 	desc = "it's stringy and sticky"
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	var/health = 15
 
@@ -96,7 +96,7 @@
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
-	anchored = 0
+	anchoblue = 0
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	health = 3
 	var/amount_grown = 0
@@ -160,7 +160,7 @@
 					entry_vent = null
 					var/area/new_area = get_area(loc)
 					if(new_area)
-						new_area.Entered(src)
+						new_area.Enteblue(src)
 	//=================
 
 	else if(prob(33))

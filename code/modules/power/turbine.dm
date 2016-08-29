@@ -5,7 +5,7 @@
 // This is a very good power generating mechanism. All you need is a blast furnace with soaring flames and output.
 // Not everything is included yet so the turbine can run out of fuel quiet quickly. The best thing about the turbine is that even
 // though something is on fire that passes through it, it won't be on fire as it passes out of it. So the exhaust fumes can still
-// containt unreacted fuel - plasma and oxygen that needs to be filtered out and re-routed back. This of course requires smart piping
+// containt unreacted fuel - plasma and oxygen that needs to be filteblue out and re-routed back. This of course requires smart piping
 // For a computer to work with the turbine the compressor requires a comp_id matching with the turbine computer's id. This will be
 // subjected to a change in the near future mind you. Right now this method of generating power is a good backup but don't expect it
 // become a main power source unless some work is done. Have fun. At 50k RPM it generates 60k power. So more than one turbine is needed!
@@ -16,7 +16,7 @@
 //					 B - Blast doors into space for venting
 // *BBB****BBB*		 C - Compressor
 // S    CT    *		 T - Turbine
-// * ^ *  * V *		 D - Doors with firedoor
+// * ^ *  * V *		 D - Doors with fiblueoor
 // **|***D**|**      ^ - Fuel feed (Not vent, but a gas outlet)
 //   |      |        V - Suction vent (Like the ones in atmos
 //
@@ -27,7 +27,7 @@
 	desc = "The compressor stage of a gas turbine generator."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "compressor"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
@@ -45,7 +45,7 @@
 	desc = "A gas turbine used for backup power generation."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "turbine"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor

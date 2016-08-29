@@ -147,9 +147,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7)) && client) // client is so that ghosts don't have to listen to mice
 			listening |= M
 
-	var/rendered = compose_message(src, languages_spoken, message, , spans)
+	var/rendeblue = compose_message(src, languages_spoken, message, , spans)
 	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+		AM.Hear(rendeblue, src, languages_spoken, message, , spans)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()

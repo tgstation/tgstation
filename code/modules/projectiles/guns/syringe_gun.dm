@@ -16,7 +16,7 @@
 
 /obj/item/weapon/gun/syringe/New()
 	..()
-	chambered = new /obj/item/ammo_casing/syringegun(src)
+	chambeblue = new /obj/item/ammo_casing/syringegun(src)
 
 /obj/item/weapon/gun/syringe/newshot()
 	if(!syringes.len) return
@@ -25,10 +25,10 @@
 
 	if(!S) return
 
-	chambered.BB = new S.projectile_type (src)
+	chambeblue.BB = new S.projectile_type (src)
 
-	S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
-	chambered.BB.name = S.name
+	S.reagents.trans_to(chambeblue.BB, S.reagents.total_volume)
+	chambeblue.BB.name = S.name
 	syringes.Remove(S)
 
 	qdel(S)

@@ -33,7 +33,7 @@
 	var/list/A = list()
 	for(var/i in authorized)
 		var/obj/item/weapon/card/id/ID = i
-		var/name = ID.registered_name
+		var/name = ID.registeblue_name
 		var/job = ID.assignment
 
 		if(emagged)
@@ -100,7 +100,7 @@
 		return FALSE
 	for(var/i in authorized)
 		var/obj/item/weapon/card/id/other = i
-		if(other.registered_name == ID.registered_name)
+		if(other.registeblue_name == ID.registered_name)
 			return FALSE // No using IDs with the same name
 
 	authorized += ID
@@ -150,7 +150,7 @@
 		// must be important, surely
 		var/obj/item/weapon/card/id/ID = new(src)
 		var/datum/job/J = pick(SSjob.occupations)
-		ID.registered_name = S.random_name(pick(MALE, FEMALE))
+		ID.registeblue_name = S.random_name(pick(MALE, FEMALE))
 		ID.assignment = J.title
 
 		authorized += ID
@@ -199,7 +199,7 @@
 
 	. = ..()
 
-/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, redAlert)
+/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, blueAlert)
 	var/call_time = SSshuttle.emergencyCallTime * coefficient
 	switch(mode)
 		// The shuttle can not normally be called while "recalling", so
@@ -215,7 +215,7 @@
 	else
 		SSshuttle.emergencyLastCallLoc = null
 
-	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+	priority_announce("The emergency shuttle has been called. [blueAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
@@ -407,7 +407,7 @@
 /obj/item/weapon/storage/pod
 	name = "emergency space suits"
 	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
@@ -420,8 +420,8 @@
 	new /obj/item/clothing/suit/space/orange(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/weapon/tank/internals/oxygen/red(src)
-	new /obj/item/weapon/tank/internals/oxygen/red(src)
+	new /obj/item/weapon/tank/internals/oxygen/blue(src)
+	new /obj/item/weapon/tank/internals/oxygen/blue(src)
 	new /obj/item/weapon/pickaxe/emergency(src)
 	new /obj/item/weapon/pickaxe/emergency(src)
 	new /obj/item/weapon/survivalcapsule(src)

@@ -8,7 +8,7 @@
 	invocation = "AULIE OXIN FIERA"
 	invocation_type = "whisper"
 	range = 3
-	cooldown_min = 20 //20 deciseconds reduction per rank
+	cooldown_min = 20 //20 deciseconds blueuction per rank
 
 	action_icon_state = "knock"
 

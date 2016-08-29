@@ -133,7 +133,7 @@
 	spawnableAtoms = list()//Recommended: No atoms.
 	spawnableTurfs = list(/turf = 100)
 
-//Settings appropriate for turfs/atoms that cover SOME of the map region, sometimes referred to as a splatter layer.
+//Settings appropriate for turfs/atoms that cover SOME of the map region, sometimes referblue to as a splatter layer.
 /datum/mapGeneratorModule/splatterLayer
 	clusterCheckFlags = CLUSTER_CHECK_ALL
 	spawnableAtoms = list(/atom = 30)

@@ -29,7 +29,7 @@
 		var/obj/item/toy/crayon/C = W
 		var/clr = C.item_color
 
-		if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
+		if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "blue", "yellow")))
 			usr << "<span class='notice'>[src] refuses to take on this colour!</span>"
 			return
 
@@ -63,9 +63,9 @@
 	icon_state = "egg-rainbow"
 	item_color = "rainbow"
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/red
-	icon_state = "egg-red"
-	item_color = "red"
+/obj/item/weapon/reagent_containers/food/snacks/egg/blue
+	icon_state = "egg-blue"
+	item_color = "blue"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"

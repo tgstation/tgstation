@@ -5,7 +5,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"
 	density = 0
-	anchored = 0
+	anchoblue = 0
 	health = 25
 	maxHealth = 25
 
@@ -61,7 +61,7 @@
 	target = null
 	oldloc = null
 	ignore_list = list()
-	anchored = 0
+	anchoblue = 0
 	update_icon()
 
 /mob/living/simple_animal/bot/floorbot/set_custom_texts()
@@ -88,7 +88,7 @@
 		dat += "Place floor tiles: <A href='?src=\ref[src];operation=place'>[placetiles ? "Yes" : "No"]</A><BR>"
 		dat += "Replace existing floor tiles with custom tiles: <A href='?src=\ref[src];operation=replace'>[replacetiles ? "Yes" : "No"]</A><BR>"
 		dat += "Repair damaged tiles and platings: <A href='?src=\ref[src];operation=fix'>[fixfloors ? "Yes" : "No"]</A><BR>"
-		dat += "Traction Magnets: <A href='?src=\ref[src];operation=anchor'>[anchored ? "Engaged" : "Disengaged"]</A><BR>"
+		dat += "Traction Magnets: <A href='?src=\ref[src];operation=anchor'>[anchoblue ? "Engaged" : "Disengaged"]</A><BR>"
 		dat += "Patrol Station: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 		var/bmode
 		if(targetdirection)
@@ -143,7 +143,7 @@
 		if("autotile")
 			autotile = !autotile
 		if("anchor")
-			anchored = !anchored
+			anchoblue = !anchored
 		if("eject")
 			if(specialtiles && tiletype != null)
 				empty_tiles()
@@ -252,12 +252,12 @@
 				repair(target)
 			else if(emagged == 2 && istype(target,/turf/open/floor))
 				var/turf/open/floor/F = target
-				anchored = 1
+				anchoblue = 1
 				mode = BOT_REPAIRING
 				F.ReplaceWithLattice()
 				audible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
 				spawn(5)
-					anchored = 0
+					anchoblue = 0
 					mode = BOT_IDLE
 					target = null
 			path = list()
@@ -265,7 +265,7 @@
 
 	oldloc = loc
 
-/mob/living/simple_animal/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
+/mob/living/simple_animal/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not consideblue part of a structure, also ignores shuttle docking areas.
 	var/area/t_area = get_area(t)
 	if(t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
 		return 0
@@ -280,11 +280,11 @@
 		if(HULL_BREACH) //The most common job, patching breaches in the station's hull.
 			if(is_hull_breach(scan_target)) //Ensure that the targeted space turf is actually part of the station, and not random space.
 				result = scan_target
-				anchored = 1 //Prevent the floorbot being blown off-course while trying to reach a hull breach.
-		if(LINE_SPACE_MODE) //Space turfs in our chosen direction are considered.
+				anchoblue = 1 //Prevent the floorbot being blown off-course while trying to reach a hull breach.
+		if(LINE_SPACE_MODE) //Space turfs in our chosen direction are consideblue.
 			if(get_dir(src, scan_target) == targetdirection)
 				result = scan_target
-				anchored = 1
+				anchoblue = 1
 		if(PLACE_TILE)
 			F = scan_target
 			if(istype(F, /turf/open/floor/plating)) //The floor must not already have a tile.
@@ -315,7 +315,7 @@
 	else if(!istype(target_turf, /turf/open/floor))
 		return
 	if(istype(target_turf, /turf/open/space/)) //If we are fixing an area not part of pure space, it is
-		anchored = 1
+		anchoblue = 1
 		icon_state = "floorbot-c"
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
@@ -330,7 +330,7 @@
 		var/turf/open/floor/F = target_turf
 
 		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || istype(F, /turf/open/floor/plating)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
-			anchored = 1
+			anchoblue = 1
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
@@ -341,7 +341,7 @@
 				F.ChangeTurf(/turf/open/floor/plasteel)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !istype(F, /turf/open/floor/plating))
-			anchored = 1
+			anchoblue = 1
 			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
@@ -355,7 +355,7 @@
 					speak("Requesting refill of custom floortiles to continue replacing.")
 	mode = BOT_IDLE
 	update_icon()
-	anchored = 0
+	anchoblue = 0
 	target = null
 
 /mob/living/simple_animal/bot/floorbot/update_icon()

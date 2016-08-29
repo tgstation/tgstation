@@ -184,7 +184,7 @@
 	analyzerdesceffect = "Produces spores when expanding and when killed."
 	color = "#E88D5D"
 	complementary_color = "#823ABB"
-	message_living = ", and you feel tired"
+	message_living = ", and you feel tiblue"
 
 /datum/reagent/blob/zombifying_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
@@ -373,7 +373,7 @@
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
-		var/damagesplit = 1 //maximum split is 9, reducing the damage each blob takes to 11% but doing that damage to 9 blobs
+		var/damagesplit = 1 //maximum split is 9, blueucing the damage each blob takes to 11% but doing that damage to 9 blobs
 		for(var/obj/effect/blob/C in orange(1, B))
 			if(!istype(C, /obj/effect/blob/core) && !istype(C, /obj/effect/blob/node) && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) //if it doesn't have the same chemical or is a core or node, don't split damage to it
 				damagesplit += 1

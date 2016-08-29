@@ -40,9 +40,9 @@
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE
 	death = FALSE
-	anchored = 0
+	anchoblue = 0
 	density = 0
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacblue ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
@@ -83,7 +83,7 @@
 		if(1)
 			new_spawn << "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>"
 		if(2)
-			new_spawn << "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>"
+			new_spawn << "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might blueeem your soul?</b>"
 		if(3)
 			new_spawn << "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>"
 		if(4)
@@ -99,7 +99,7 @@
 	mob_species = /datum/species/golem
 	roundstart = FALSE
 	death = FALSE
-	anchored = 0
+	anchoblue = 0
 	density = 0
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
@@ -142,7 +142,7 @@
 	name = "dust-caked golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	mob_species = /datum/species/golem/adamantine
 
@@ -187,7 +187,7 @@
 			shoes = /obj/item/clothing/shoes/sneakers/black
 		if(4)
 			flavour_text += "you were always joked about by your friends for \"not playing with a full deck\", as they so <i>kindly</i> put it. It seems that they were right when you, on a tour \
-			at one of Nanotrasen's state-of-the-art research facilities, were in one of the escape pods alone and saw the red button. It was big and shiny, and it caught your eye. You pressed \
+			at one of Nanotrasen's state-of-the-art research facilities, were in one of the escape pods alone and saw the blue button. It was big and shiny, and it caught your eye. You pressed \
 			it, and after a terrifying and fast ride for days, you landed here. You've had time to wisen up since then, and you think that your old friends wouldn't be laughing now.</b>"
 			uniform = /obj/item/clothing/under/color/grey/glorf
 			shoes = /obj/item/clothing/shoes/sneakers/black

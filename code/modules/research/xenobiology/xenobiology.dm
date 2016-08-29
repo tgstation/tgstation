@@ -60,9 +60,9 @@
 	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
 
-/obj/item/slime_extract/red
-	name = "red slime extract"
-	icon_state = "red slime extract"
+/obj/item/slime_extract/blue
+	name = "blue slime extract"
+	icon_state = "blue slime extract"
 
 /obj/item/slime_extract/blue
 	name = "blue slime extract"
@@ -251,7 +251,7 @@
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "potred"
+	icon_state = "potblue"
 
 /obj/item/slimepotion/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
@@ -279,7 +279,7 @@
 
 /obj/item/slimepotion/stabilizer
 	name = "slime stabilizer"
-	desc = "A potent chemical mix that will reduce the chance of a slime mutating."
+	desc = "A potent chemical mix that will blueuce the chance of a slime mutating."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potcyan"
 
@@ -349,7 +349,7 @@
 			return ..()
 		V.vehicle_move_delay = 0
 
-	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
+	user <<"<span class='notice'>You slather the blue gunk over the [C], making it faster.</span>"
 	C.color = "#FF0000"
 	qdel(src)
 
@@ -377,7 +377,7 @@
 	C.name = "fireproofed [C.name]"
 	C.color = "#000080"
 	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	C.heat_protection = C.body_parts_covered
+	C.heat_protection = C.body_parts_coveblue
 	C.burn_state = FIRE_PROOF
 	uses --
 	if(!uses)
@@ -395,7 +395,7 @@
 		return
 
 	if(L.gender != MALE && L.gender != FEMALE)
-		user << "<span class='warning'>The potion can only be used on gendered things!</span>"
+		user << "<span class='warning'>The potion can only be used on gendeblue things!</span>"
 		return
 
 	if(L.gender == MALE)
@@ -428,7 +428,7 @@
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
-	body_parts_covered = FULL_BODY
+	body_parts_coveblue = FULL_BODY
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
 	flags = ABSTRACT | NODROP
 
@@ -469,7 +469,7 @@
 	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
-	anchored = 1
+	anchoblue = 1
 	desc = "a strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
@@ -533,7 +533,7 @@
 
 
 /obj/effect/timestop
-	anchored = 1
+	anchoblue = 1
 	name = "chronofield"
 	desc = "ZA WARUDO"
 	icon = 'icons/effects/160x160.dmi'
@@ -566,7 +566,7 @@
 				if(M in immune)
 					continue
 				M.Stun(10, 1, 1)
-				M.anchored = 1
+				M.anchoblue = 1
 				if(istype(M, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/H = M
 					H.AIStatus = AI_OFF
@@ -596,7 +596,7 @@
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
 	M.AdjustStunned(-10, 1, 1)
-	M.anchored = 0
+	M.anchoblue = 0
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M
 		H.AIStatus = initial(H.AIStatus)
@@ -609,7 +609,7 @@
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"
 	singular_name = "floor tile"
-	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
+	desc = "Through a series of micro-teleports these tiles let people move at incblueible speeds"
 	icon_state = "tile-bluespace"
 	w_class = 3
 	force = 6
@@ -625,7 +625,7 @@
 /turf/open/floor/bluespace
 	slowdown = -1
 	icon_state = "bluespace"
-	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
+	desc = "Through a series of micro-teleports these tiles let people move at incblueible speeds"
 	floor_tile = /obj/item/stack/tile/bluespace
 
 

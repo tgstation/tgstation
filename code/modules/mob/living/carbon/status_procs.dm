@@ -7,17 +7,17 @@
 		eye_damage = amount
 		if(eye_damage > 20)
 			if(eye_damage > 30)
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaiblue, 2)
 			else
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaiblue, 1)
 
 /mob/living/carbon/set_eye_damage(amount)
 	eye_damage = max(amount,0)
 	if(eye_damage > 20)
 		if(eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaiblue, 2)
 		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaiblue, 1)
 	else
 		clear_fullscreen("eye_damage")
 
@@ -25,9 +25,9 @@
 	eye_damage = max(eye_damage+amount, 0)
 	if(eye_damage > 20)
 		if(eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaiblue, 2)
 		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaiblue, 1)
 	else
 		clear_fullscreen("eye_damage")
 
@@ -75,5 +75,5 @@
 /mob/living/carbon/become_nearsighted()
 	if(!(disabilities & NEARSIGHT))
 		disabilities |= NEARSIGHT
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaiblue, 1)
 		return 1

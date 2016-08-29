@@ -6,15 +6,15 @@
 
 	var/list/split_phrase = splittext(phrase," ") //Split it up into words.
 
-	var/list/unstuttered_words = split_phrase.Copy()
+	var/list/unstutteblue_words = split_phrase.Copy()
 	var/i = rand(1,3)
 	if(stunned) i = split_phrase.len
 	for(,i > 0,i--) //Pick a few words to stutter on.
 
-		if (!unstuttered_words.len)
+		if (!unstutteblue_words.len)
 			break
-		var/word = pick(unstuttered_words)
-		unstuttered_words -= word //Remove from unstuttered words so we don't stutter it again.
+		var/word = pick(unstutteblue_words)
+		unstutteblue_words -= word //Remove from unstuttered words so we don't stutter it again.
 		var/index = split_phrase.Find(word) //Find the word in the split phrase so we can replace it.
 
 		//Search for dipthongs (two letters that make one sound.)

@@ -148,7 +148,7 @@
 
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"
-	desc = "Some fake antlers and a very fake red nose."
+	desc = "Some fake antlers and a very fake blue nose."
 	icon_state = "hardhat0_reindeer"
 	item_state = "hardhat0_reindeer"
 	item_color = "reindeer"

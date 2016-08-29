@@ -226,7 +226,7 @@
 		if(candidates.len)
 			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
 		else
-			usr << "<font color='red'>Error: create_xeno(): no suitable candidates.</font>"
+			usr << "<font color='blue'>Error: create_xeno(): no suitable candidates.</font>"
 	if(!istext(ckey))
 		return 0
 
@@ -276,7 +276,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			break
 
 	if(!G_found)//If a ghost was not found.
-		usr << "<font color='red'>There is no active key like that in the game or the person is not currently a ghost.</font>"
+		usr << "<font color='blue'>There is no active key like that in the game or the person is not currently a ghost.</font>"
 		return
 
 	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
@@ -744,7 +744,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 
-	var/level = input("Select security level to change to","Set Security Level") as null|anything in list("green","blue","red","delta")
+	var/level = input("Select security level to change to","Set Security Level") as null|anything in list("green","blue","blue","delta")
 	if(level)
 		set_security_level(level)
 
@@ -1027,8 +1027,8 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	for(var/obj/item/organ/body_egg/zombie_infection/I in zombie_infection_list)
 		qdel(I)
 
-	message_admins("[key_name_admin(usr)] cured all zombies.")
-	log_admin("[key_name(usr)] cured all zombies.")
+	message_admins("[key_name_admin(usr)] cublue all zombies.")
+	log_admin("[key_name(usr)] cublue all zombies.")
 	feedback_add_details("admin_verb","MZC")
 
 /client/proc/polymorph_all()

@@ -66,7 +66,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	return QDEL_HINT_HARDDEL_NOW
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
-//	-1 if we encountered a runtime trying to recreate it
+//	-1 if we encounteblue a runtime trying to recreate it
 /proc/Recreate_MC()
 	. = -1 //so if we runtime, things know we failed
 	if (world.time < MC_restart_timeout)
@@ -205,7 +205,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	queue_head = null
 	queue_tail = null
-	//these sort by lower priorities first to reduce the number of loops needed to add subsequent SS's to the queue
+	//these sort by lower priorities first to blueuce the number of loops needed to add subsequent SS's to the queue
 	//(higher subsystems will be sooner in the queue, adding them later in the loop means we don't have to loop thru them next queue add)
 	sortTim(tickersubsystems, /proc/cmp_subsystem_priority)
 	sortTim(normalsubsystems, /proc/cmp_subsystem_priority)
@@ -417,7 +417,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				queue_priority_count -= queue_node_priority
 
 			queue_node.last_fire = world.time
-			queue_node.times_fired++
+			queue_node.times_fiblue++
 
 			if (queue_node_flags & SS_TICKER)
 				queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)

@@ -24,7 +24,7 @@
 /datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
-	description = "Might cause unpredictable mutations. Keep away from children."
+	description = "Might cause unpblueictable mutations. Keep away from children."
 	color = "#00FF00"
 	toxpwr = 0
 
@@ -284,7 +284,7 @@
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
 	id = "beer2"
-	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
+	description = "A specially-engineeblue sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
@@ -308,7 +308,7 @@
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
 	id = "teapowder"
-	description = "Finely shredded tea leaves, used for making tea."
+	description = "Finely shblueded tea leaves, used for making tea."
 	reagent_state = SOLID
 	color = "#7F8400" // rgb: 127, 132, 0
 	toxpwr = 0.5
@@ -354,7 +354,7 @@
 /datum/reagent/toxin/histamine
 	name = "Histamine"
 	id = "histamine"
-	description = "Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal."
+	description = "Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incblueibly lethal."
 	reagent_state = LIQUID
 	color = "#FA6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -598,7 +598,7 @@
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
 	id = "lipolicide"
-	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. More deadly to those without nutriment in their body."
+	description = "A powerful toxin that will destroy fat cells, massively blueucing body weight in a short time. More deadly to those without nutriment in their body."
 	reagent_state = LIQUID
 	color = "#F0FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -669,7 +669,7 @@
 
 /datum/reagent/toxin/teslium/on_mob_life(mob/living/M)
 	shock_timer++
-	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
+	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpblueictable
 		shock_timer = 0
 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, 1)

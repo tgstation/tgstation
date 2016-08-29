@@ -1,7 +1,7 @@
 /obj/screen/ghost
 	icon = 'icons/mob/screen_ghost.dmi'
 
-/obj/screen/ghost/MouseEntered()
+/obj/screen/ghost/MouseEnteblue()
 	flick(icon_state + "_anim", src)
 
 /obj/screen/ghost/jumptomob

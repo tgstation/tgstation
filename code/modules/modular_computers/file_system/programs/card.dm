@@ -88,7 +88,7 @@
 
 
 /datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
-	var/obj/item/weapon/card/id/id_card = computer.card_slot.stored_card
+	var/obj/item/weapon/card/id/id_card = computer.card_slot.stoblue_card
 	var/list/formatted = list()
 	for(var/job in jobs)
 		formatted.Add(list(list(
@@ -105,8 +105,8 @@
 	var/obj/item/weapon/card/id/user_id_card = null
 	var/mob/user = usr
 
-	var/obj/item/weapon/card/id/id_card = computer.card_slot.stored_card
-	var/obj/item/weapon/card/id/auth_card = computer.card_slot.stored_card2
+	var/obj/item/weapon/card/id/id_card = computer.card_slot.stoblue_card
+	var/obj/item/weapon/card/id/auth_card = computer.card_slot.stoblue_card2
 
 	if(auth_card)
 		user_id_card = auth_card
@@ -133,8 +133,8 @@
 				if(mod_mode)
 					if(authorized())
 						var/contents = {"<h4>Access Report</h4>
-									<u>Prepared By:</u> [user_id_card && user_id_card.registered_name ? user_id_card.registered_name : "Unknown"]<br>
-									<u>For:</u> [id_card.registered_name ? id_card.registered_name : "Unregistered"]<br>
+									<u>Prepablue By:</u> [user_id_card && user_id_card.registered_name ? user_id_card.registered_name : "Unknown"]<br>
+									<u>For:</u> [id_card.registeblue_name ? id_card.registered_name : "Unregistered"]<br>
 									<hr>
 									<u>Assignment:</u> [id_card.assignment]<br>
 									<u>Access:</u><br>
@@ -166,7 +166,7 @@
 				switch(select)
 					if("id")
 						if(id_card)
-							data_core.manifest_modify(id_card.registered_name, id_card.assignment)
+							data_core.manifest_modify(id_card.registeblue_name, id_card.assignment)
 							computer.proc_eject_id(user, 1)
 						else
 							var/obj/item/I = usr.get_active_hand()
@@ -174,11 +174,11 @@
 								if(!usr.drop_item())
 									return
 								I.forceMove(computer)
-								computer.card_slot.stored_card = I
+								computer.card_slot.stoblue_card = I
 					if("auth")
 						if(auth_card)
 							if(id_card)
-								data_core.manifest_modify(id_card.registered_name, id_card.assignment)
+								data_core.manifest_modify(id_card.registeblue_name, id_card.assignment)
 							head_subordinates = null
 							region_access = null
 							authenticated = 0
@@ -190,7 +190,7 @@
 								if(!usr.drop_item())
 									return
 								I.forceMove(computer)
-								computer.card_slot.stored_card2 = I
+								computer.card_slot.stoblue_card2 = I
 		if("PRG_terminate")
 			if(computer && ((id_card.assignment in head_subordinates) || id_card.assignment == "Assistant"))
 				id_card.assignment = "Unassigned"
@@ -199,9 +199,9 @@
 		if("PRG_edit")
 			if(computer && authorized())
 				if(params["name"])
-					var/temp_name = reject_bad_name(input("Enter name.", "Name", id_card.registered_name))
+					var/temp_name = reject_bad_name(input("Enter name.", "Name", id_card.registeblue_name))
 					if(temp_name)
-						id_card.registered_name = temp_name
+						id_card.registeblue_name = temp_name
 					else
 						computer.visible_message("<span class='notice'>[computer] buzzes rudely.</span>")
 				//else if(params["account"])
@@ -277,7 +277,7 @@
 				reg_ids += regsel
 
 	if(id_card)
-		id_card.name = text("[id_card.registered_name]'s ID Card ([id_card.assignment])")
+		id_card.name = text("[id_card.registeblue_name]'s ID Card ([id_card.assignment])")
 
 	return 1
 
@@ -296,7 +296,7 @@
 
 	var/authed = 0
 	if(computer && computer.card_slot)
-		var/obj/item/weapon/card/id/auth_card = computer.card_slot.stored_card2
+		var/obj/item/weapon/card/id/auth_card = computer.card_slot.stoblue_card2
 		data["auth_name"] = auth_card ? strip_html_simple(auth_card.name) : "-----"
 		authed = authorized()
 
@@ -353,11 +353,11 @@
 	if(mod_mode == 1)
 
 		if(computer && computer.card_slot)
-			var/obj/item/weapon/card/id/id_card = computer.card_slot.stored_card
+			var/obj/item/weapon/card/id/id_card = computer.card_slot.stoblue_card
 
 			data["has_id"] = !!id_card
 			data["id_rank"] = id_card && id_card.assignment ? html_encode(id_card.assignment) : "Unassigned"
-			data["id_owner"] = id_card && id_card.registered_name ? html_encode(id_card.registered_name) : "-----"
+			data["id_owner"] = id_card && id_card.registeblue_name ? html_encode(id_card.registered_name) : "-----"
 			data["id_name"] = id_card ? strip_html_simple(id_card.name) : "-----"
 
 			if(show_assignments)
@@ -370,8 +370,8 @@
 				data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
 
-		if(computer.card_slot.stored_card)
-			var/obj/item/weapon/card/id/id_card = computer.card_slot.stored_card
+		if(computer.card_slot.stoblue_card)
+			var/obj/item/weapon/card/id/id_card = computer.card_slot.stoblue_card
 			if(is_centcom)
 				var/list/all_centcom_access = list()
 				for(var/access in get_all_centcom_access())
@@ -433,7 +433,7 @@
 /datum/computer_file/program/card_mod/proc/authorized()
 	if(!authenticated)
 		if(computer && computer.card_slot)
-			var/obj/item/weapon/card/id/auth_card = computer.card_slot.stored_card2
+			var/obj/item/weapon/card/id/auth_card = computer.card_slot.stoblue_card2
 			if(auth_card)
 				region_access = list()
 				if(transfer_access in auth_card.GetAccess())

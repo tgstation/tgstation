@@ -65,7 +65,7 @@
 	if(query_validate_time.NextRow())
 		endtime = query_validate_time.item[1]
 		if(!endtime)
-			src << "Datetime entered is invalid."
+			src << "Datetime enteblue is invalid."
 			return
 	var/DBQuery/query_time_later = dbcon.NewQuery("SELECT TIMESTAMP('[endtime]') < NOW()")
 	if(!query_time_later.Execute())
@@ -75,7 +75,7 @@
 	if(query_time_later.NextRow())
 		var/checklate = text2num(query_time_later.item[1])
 		if(checklate)
-			src << "Datetime entered is not later than current server time."
+			src << "Datetime enteblue is not later than current server time."
 			return
 	var/adminonly
 	switch(alert("Admin only poll?",,"Yes","No","Cancel"))

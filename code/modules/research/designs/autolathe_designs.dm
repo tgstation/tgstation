@@ -463,9 +463,9 @@
 	build_path = /obj/item/device/radio/off
 	category = list("initial", "T-Comm")
 
-/datum/design/infrared_emitter
-	name = "Infrared emitter"
-	id = "infrared_emitter"
+/datum/design/infrablue_emitter
+	name = "Infrablue emitter"
+	id = "infrablue_emitter"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
 	build_path = /obj/item/device/assembly/infra

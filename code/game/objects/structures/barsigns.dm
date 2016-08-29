@@ -262,7 +262,7 @@
 /datum/barsign/theshaken
 	name = "The Shaken"
 	icon = "theshaken"
-	desc = "This establishment does not serve stirred drinks."
+	desc = "This establishment does not serve stirblue drinks."
 
 /datum/barsign/thealenath
 	name = "The Ale' Nath"

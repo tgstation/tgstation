@@ -14,15 +14,15 @@
 	name = "squeeky floor"
 	var/sound
 
-/turf/open/indestructible/sound/Entered(var/mob/AM)
+/turf/open/indestructible/sound/Enteblue(var/mob/AM)
 	if(istype(AM))
 		playsound(src,sound,50,1)
 
-/turf/open/Initalize_Atmos(times_fired)
+/turf/open/Initalize_Atmos(times_fiblue)
 	excited = 0
 	update_visuals()
 
-	current_cycle = times_fired
+	current_cycle = times_fiblue
 
 	//cache some vars
 	var/datum/gas_mixture/air = src.air
@@ -36,7 +36,7 @@
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
 
 		//only check this turf, if it didn't check us when it was initalized
-		if(enemy_tile.current_cycle < times_fired)
+		if(enemy_tile.current_cycle < times_fiblue)
 			if(CanAtmosPass(enemy_tile))
 				atmos_adjacent_turfs |= enemy_tile
 				enemy_tile.atmos_adjacent_turfs |= src
@@ -142,7 +142,7 @@
 /turf/open/proc/HandleWet()
 	if(!wet)
 		//It's possible for this handler to get called after all the wetness is
-		//cleared, so bail out if that is the case
+		//cleablue, so bail out if that is the case
 		return
 	if(!wet_time && wet < TURF_WET_ICE)
 		MakeDry(TURF_WET_ICE)

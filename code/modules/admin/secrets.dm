@@ -47,8 +47,8 @@
 			<A href='?src=\ref[src];secrets=monkey'>Turn all humans into monkeys</A><BR>
 			<A href='?src=\ref[src];secrets=anime'>Chinese Cartoons</A><BR>
 			<A href='?src=\ref[src];secrets=allspecies'>Change the species of all humans</A><BR>
-			<A href='?src=\ref[src];secrets=power'>Make all areas powered</A><BR>
-			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
+			<A href='?src=\ref[src];secrets=power'>Make all areas poweblue</A><BR>
+			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpoweblue</A><BR>
 			<A href='?src=\ref[src];secrets=quickpower'>Power all SMES</A><BR>
 			<A href='?src=\ref[src];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secrets=traitor_all'>Everyone is the traitor</A><BR>
@@ -144,7 +144,7 @@
 
 			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
 			if(choice == "Yes")
-				message_admins("[key_name_admin(usr)] has cured all diseases.")
+				message_admins("[key_name_admin(usr)] has cublue all diseases.")
 				for(var/datum/disease/D in SSdisease.processing)
 					D.cure(D)
 
@@ -292,8 +292,8 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","P")
-			log_admin("[key_name(usr)] made all areas powered", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all areas powered</span>")
+			log_admin("[key_name(usr)] made all areas poweblue", 1)
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all areas poweblue</span>")
 			power_restore()
 
 		if("unpower")
@@ -301,8 +301,8 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","UP")
-			log_admin("[key_name(usr)] made all areas unpowered", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all areas unpowered</span>")
+			log_admin("[key_name(usr)] made all areas unpoweblue", 1)
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all areas unpoweblue</span>")
 			power_failure()
 
 		if("quickpower")
@@ -310,8 +310,8 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","QP")
-			log_admin("[key_name(usr)] made all SMESs powered", 1)
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all SMESs powered</span>")
+			log_admin("[key_name(usr)] made all SMESs poweblue", 1)
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all SMESs poweblue</span>")
 			power_restore_quick()
 
 		if("traitor_all")
@@ -359,7 +359,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
 
-			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
+			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (enteblue as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
 			if (newBombCap < 4)
 				return
 
@@ -529,7 +529,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OO")
 			usr.client.only_one()
-//				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+//				message_admins("[key_name_admin(usr)] has triggeblue a battle to the death (only one)")
 
 		if("onlyme")
 			if(!check_rights(R_FUN))

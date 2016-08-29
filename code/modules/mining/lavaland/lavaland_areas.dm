@@ -6,9 +6,9 @@
 
 /area/lavaland/surface
 	name = "Lavaland"
-	icon_state = "explored"
+	icon_state = "exploblue"
 	music = null
-	always_unpowered = 1
+	always_unpoweblue = 1
 	poweralm = 0
 	power_environ = 0
 	power_equip = 0
@@ -18,9 +18,9 @@
 
 /area/lavaland/underground
 	name = "Lavaland Caves"
-	icon_state = "unexplored"
+	icon_state = "unexploblue"
 	music = null
-	always_unpowered = 1
+	always_unpoweblue = 1
 	requires_power = 1
 	poweralm = 0
 	power_environ = 0
@@ -33,5 +33,5 @@
 	name = "Lavaland Wastes"
 	outdoors = 1
 
-/area/lavaland/surface/outdoors/explored
+/area/lavaland/surface/outdoors/exploblue
 	name = "Lavaland Labor Camp"

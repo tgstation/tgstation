@@ -6,7 +6,7 @@
 
 /obj/machinery/doorButtons
 	power_channel = ENVIRON
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4

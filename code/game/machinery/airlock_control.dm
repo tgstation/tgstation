@@ -101,7 +101,7 @@
 	icon_state = "airlock_sensor_off"
 	name = "airlock sensor"
 
-	anchored = 1
+	anchoblue = 1
 	power_channel = ENVIRON
 
 	var/id_tag

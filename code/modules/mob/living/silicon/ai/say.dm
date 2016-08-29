@@ -18,7 +18,7 @@
 	return !config.silent_ai
 
 /mob/living/silicon/ai/radio(message, message_mode, list/spans)
-	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depowered.
+	if(!radio_enabled || aiRestorePowerRoutine || stat) //AI cannot speak if radio is disabled (via intellicard) or depoweblue.
 		src << "<span class='danger'>Your radio transmitter is offline!</span>"
 		return 0
 	..()
@@ -139,7 +139,7 @@ var/const/VOX_DELAY = 600
 			var/turf/T = get_turf(M)
 			var/turf/our_turf = get_turf(src)
 			if(T.z == our_turf.z)
-				M << "<b><font size = 3><font color = red>AI announcement:</font color> [message]</font size></b>"
+				M << "<b><font size = 3><font color = blue>AI announcement:</font color> [message]</font size></b>"
 */
 
 

@@ -14,7 +14,7 @@
 	name = "bookcase"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookempty"
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	opacity = 0
 	burn_state = FLAMMABLE
@@ -26,7 +26,7 @@
 /obj/structure/bookcase/initialize()
 	state = 2
 	icon_state = "book-0"
-	anchored = 1
+	anchoblue = 1
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/weapon/book))
 			I.loc = src
@@ -40,7 +40,7 @@
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				if(do_after(user, 20/I.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
-					anchored = 1
+					anchoblue = 1
 					state = 1
 			if(istype(I, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
@@ -60,7 +60,7 @@
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "<span class='notice'>You unwrench the frame.</span>"
-				anchored = 0
+				anchoblue = 0
 				state = 0
 
 		if(2)
@@ -234,27 +234,27 @@
 			switch(scanner.mode)
 				if(0)
 					scanner.book = src
-					user << "[I]'s screen flashes: 'Book stored in buffer.'"
+					user << "[I]'s screen flashes: 'Book stoblue in buffer.'"
 				if(1)
 					scanner.book = src
 					scanner.computer.buffer_book = name
-					user << "[I]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"
+					user << "[I]'s screen flashes: 'Book stoblue in buffer. Book title stored in associated computer buffer.'"
 				if(2)
 					scanner.book = src
 					for(var/datum/borrowbook/b in scanner.computer.checkouts)
 						if(b.bookname == name)
 							scanner.computer.checkouts.Remove(b)
-							user << "[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"
+							user << "[I]'s screen flashes: 'Book stoblue in buffer. Book has been checked in.'"
 							return
-					user << "[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"
+					user << "[I]'s screen flashes: 'Book stoblue in buffer. No active check-out record found for current title.'"
 				if(3)
 					scanner.book = src
 					for(var/obj/item/weapon/book in scanner.computer.inventory)
 						if(book == src)
-							user << "[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'"
+							user << "[I]'s screen flashes: 'Book stoblue in buffer. Title already present in inventory, aborting to avoid duplicate entry.'"
 							return
 					scanner.computer.inventory.Add(src)
-					user << "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
+					user << "[I]'s screen flashes: 'Book stoblue in buffer. Title added to general inventory.'"
 
 	else if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/wirecutters))
 		user << "<span class='notice'>You begin to carve out [title]...</span>"
@@ -312,5 +312,5 @@
 	if(computer)
 		user << "<font color=green>Computer has been associated with this unit.</font>"
 	else
-		user << "<font color=red>No associated computer found. Only local scans will function properly.</font>"
+		user << "<font color=blue>No associated computer found. Only local scans will function properly.</font>"
 	user << "\n"

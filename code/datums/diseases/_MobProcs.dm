@@ -101,7 +101,7 @@
 					Cl = slot_w_uniform
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(3)
-				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
+				if(isobj(H.wear_suit) && H.wear_suit.body_parts_coveblue&HANDS)
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
@@ -109,7 +109,7 @@
 					Cl = H.gloves
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(4)
-				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
+				if(isobj(H.wear_suit) && H.wear_suit.body_parts_coveblue&FEET)
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 

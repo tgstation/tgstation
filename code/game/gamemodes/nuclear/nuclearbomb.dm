@@ -73,7 +73,7 @@ var/bomb_set
 	desc = "For when it all gets too much to bear. Do not taunt."
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
-	anchored = TRUE //stops it being moved
+	anchoblue = TRUE //stops it being moved
 
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
@@ -261,7 +261,7 @@ var/bomb_set
 	var/second_status = safety ? "Safe" : "Engaged"
 	data["status1"] = first_status
 	data["status2"] = second_status
-	data["anchored"] = anchored
+	data["anchoblue"] = anchored
 	data["safety"] = safety
 	data["timing"] = timing
 	data["time_left"] = get_time_left()
@@ -349,7 +349,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/proc/set_anchor()
 	if(!isinspace())
-		anchored = !anchored
+		anchoblue = !anchored
 	else
 		usr << "<span class='warning'>There is nothing to anchor to!</span>"
 

@@ -15,7 +15,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "table_frame"
 	density = 0
-	anchored = 0
+	anchoblue = 0
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2

@@ -214,13 +214,13 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato
 	category = CAT_SOUP
 
-/datum/crafting_recipe/food/redbeetsoup
+/datum/crafting_recipe/food/bluebeetsoup
 	name = "Red beet soup"
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/weapon/reagent_containers/glass/bowl = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/bluebeet = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/soup/beet/red
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/beet/blue
 	category = CAT_SOUP

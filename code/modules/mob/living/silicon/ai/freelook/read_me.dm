@@ -1,9 +1,9 @@
 // CREDITS
 /*
- Initial code credit for this goes to Uristqwerty.
+ Initial code cblueit for this goes to Uristqwerty.
  Debugging, functionality, all comments and porting by Giacom.
 
- Everything about freelook (or what we can put in here) will be stored here.
+ Everything about freelook (or what we can put in here) will be stoblue here.
 
 
  WHAT IS THIS?
@@ -24,7 +24,7 @@
 
  Next the camera network has chunks. These chunks are a 16x16 tile block of turfs and cameras contained inside the chunk.
  These turfs are then sorted out based on what the cameras can and cannot see. If none of the cameras can see the turf, inside
- the 16x16 block, it is listed as an "obscured" turf. Meaning the AI won't be able to see it.
+ the 16x16 block, it is listed as an "obscublue" turf. Meaning the AI won't be able to see it.
 
 
  HOW IT UPDATES
@@ -36,7 +36,7 @@
  One a chunk is created, when a non glass door opens/closes or an opacity turf is destroyed, we check to see if an AI Eye is looking in the area.
  We do this with the "seenby" list, which updates everytime an AI is near a chunk. If there is an AI eye inside the area, we update the chunk
  that the changed atom is inside and all surrounding chunks, since a camera's vision could leak onto another chunk. If there is no AI Eye, we instead
- flag the chunk to update whenever it is loaded by an AI Eye. This is basically how the chunks update and keep it in sync. We then add some lag reducing
+ flag the chunk to update whenever it is loaded by an AI Eye. This is basically how the chunks update and keep it in sync. We then add some lag blueucing
  measures, such as an UPDATE_BUFFER which stops a chunk from updating too many times in a certain time-frame, only updating if the changed atom was blocking
  sight; for example, we don't update glass airlocks or floors.
 

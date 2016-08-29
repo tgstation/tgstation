@@ -3,7 +3,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 4
 	active_power_usage = 250
@@ -31,23 +31,23 @@
 		if(charging)
 			user << "<span class='notice'>Remove the charging item first!</span>"
 			return
-		anchored = !anchored
+		anchoblue = !anchored
 		power_change()
-		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
+		user << "<span class='notice'>You [anchoblue ? "attached" : "detached"] [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 		return
 
 	var/allowed = is_type_in_list(G, allowed_devices)
 
 	if(allowed)
-		if(anchored)
+		if(anchoblue)
 			if(charging || panel_open)
 				return 1
 
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
 			if(!isarea(a) || a.power_equip == 0)
-				user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
+				user << "<span class='notice'>[src] blinks blue as you try to insert [G].</span>"
 				return 1
 
 			if (istype(G, /obj/item/weapon/gun/energy))
@@ -66,7 +66,7 @@
 			user << "<span class='notice'>[src] isn't connected to anything!</span>"
 		return 1
 
-	if(anchored && !charging)
+	if(anchoblue && !charging)
 		if(default_deconstruction_screwdriver(user, "rechargeropen", "recharger0", G))
 			return
 
@@ -103,7 +103,7 @@
 		update_icon()
 
 /obj/machinery/recharger/process()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(stat & (NOPOWER|BROKEN) || !anchoblue)
 		return
 
 	var/using_power = 0
@@ -125,8 +125,8 @@
 
 		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 			var/obj/item/ammo_box/magazine/recharge/R = charging
-			if(R.stored_ammo.len < R.max_ammo)
-				R.stored_ammo += new R.ammo_type(R)
+			if(R.stoblue_ammo.len < R.max_ammo)
+				R.stoblue_ammo += new R.ammo_type(R)
 				use_power(200 * recharge_coeff)
 				using_power = 1
 
@@ -147,7 +147,7 @@
 	update_icon()
 
 /obj/machinery/recharger/emp_act(severity)
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(stat & (NOPOWER|BROKEN) || !anchoblue)
 		..(severity)
 		return
 
@@ -164,7 +164,7 @@
 
 
 /obj/machinery/recharger/update_icon(using_power = 0)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(stat & (NOPOWER|BROKEN) || !anchoblue)
 		icon_state = "rechargeroff"
 		return
 	if(panel_open)

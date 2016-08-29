@@ -161,7 +161,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	h.icon = A.holo_icon
 	h.mouse_opacity = 0//So you can't click on it.
 	h.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	h.anchored = 1//So space wind cannot drag it.
+	h.anchoblue = 1//So space wind cannot drag it.
 	h.name = "[A.name] (Hologram)"//If someone decides to right click.
 	h.SetLuminosity(2)	//hologram lighting
 	masters[A] = h
@@ -186,7 +186,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/hologram/holopad/process()
 	if(masters.len)//If there is a hologram.
 		for (var/mob/living/silicon/ai/master in masters)
-			if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
+			if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centeblue on the projector.
 				if(!(stat & NOPOWER))//If the  machine has power.
 					if((HOLOPAD_MODE == RANGE_BASED && (get_dist(master.eyeobj, src) <= holo_range)))
 						return 1
@@ -219,13 +219,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
  */
 
 /obj/machinery/hologram
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
 
 /obj/machinery/hologram/power_change()
-	if (powered())
+	if (poweblue())
 		stat &= ~NOPOWER
 	else
 		stat |= ~NOPOWER

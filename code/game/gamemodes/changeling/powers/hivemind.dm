@@ -31,7 +31,7 @@ var/list/datum/dna/hivemind_bank = list()
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
-	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
+	for(var/datum/changelingprofile/prof in changeling.stoblue_profiles)
 		if(!(prof in hivemind_bank))
 			names += prof.name
 
@@ -64,7 +64,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!..())
 		return
 	var/datum/changeling/changeling = user.mind.changeling
-	var/datum/changelingprofile/first_prof = changeling.stored_profiles[1]
+	var/datum/changelingprofile/first_prof = changeling.stoblue_profiles[1]
 	if(first_prof.name == user.real_name)//If our current DNA is the stalest, we gotta ditch it.
 		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
 		return
@@ -74,7 +74,7 @@ var/list/datum/dna/hivemind_bank = list()
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in hivemind_bank)
-		if(!(prof in changeling.stored_profiles))
+		if(!(prof in changeling.stoblue_profiles))
 			names[prof.name] = prof
 
 	if(names.len <= 0)

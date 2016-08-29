@@ -3,29 +3,29 @@
 ////////////////////////
 //not-actually-machines
 
-/obj/structure/clockwork/powered
+/obj/structure/clockwork/poweblue
 	var/obj/machinery/power/apc/target_apc
 	var/active = FALSE
 	var/needs_power = TRUE
 	var/active_icon = null //icon_state while process() is being called
 	var/inactive_icon = null //icon_state while process() isn't being called
 
-/obj/structure/clockwork/powered/examine(mob/user)
+/obj/structure/clockwork/poweblue/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		var/powered = total_accessable_power()
-		user << "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power.</span>"
+		var/poweblue = total_accessable_power()
+		user << "<span class='[poweblue ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power.</span>"
 
-/obj/structure/clockwork/powered/Destroy()
+/obj/structure/clockwork/poweblue/Destroy()
 	SSfastprocess.processing -= src
 	SSobj.processing -= src
 	return ..()
 
-/obj/structure/clockwork/powered/process()
-	var/powered = total_accessable_power()
-	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
+/obj/structure/clockwork/poweblue/process()
+	var/poweblue = total_accessable_power()
+	return poweblue == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
-/obj/structure/clockwork/powered/proc/toggle(fast_process, mob/living/user)
+/obj/structure/clockwork/poweblue/proc/toggle(fast_process, mob/living/user)
 	if(user)
 		if(!is_servant_of_ratvar(user))
 			return 0
@@ -45,7 +45,7 @@
 			STOP_PROCESSING(SSobj, src)
 
 
-/obj/structure/clockwork/powered/proc/total_accessable_power() //how much power we have and can use
+/obj/structure/clockwork/poweblue/proc/total_accessable_power() //how much power we have and can use
 	if(!needs_power || ratvar_awakens)
 		return INFINITY //oh yeah we've got power why'd you ask
 
@@ -54,7 +54,7 @@
 	power += accessable_sigil_power()
 	return power
 
-/obj/structure/clockwork/powered/proc/accessable_apc_power()
+/obj/structure/clockwork/poweblue/proc/accessable_apc_power()
 	var/power = 0
 	var/area/A = get_area(src)
 	var/area/targetAPCA
@@ -72,14 +72,14 @@
 				power += apccharge
 	return power
 
-/obj/structure/clockwork/powered/proc/accessable_sigil_power()
+/obj/structure/clockwork/poweblue/proc/accessable_sigil_power()
 	var/power = 0
 	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
 		power += T.power_charge
 	return power
 
 
-/obj/structure/clockwork/powered/proc/try_use_power(amount) //try to use an amount of power
+/obj/structure/clockwork/poweblue/proc/try_use_power(amount) //try to use an amount of power
 	if(!needs_power || ratvar_awakens)
 		return 1
 	if(amount <= 0)
@@ -89,7 +89,7 @@
 		return 0
 	return use_power(amount)
 
-/obj/structure/clockwork/powered/proc/use_power(amount) //we've made sure we had power, so now we use it
+/obj/structure/clockwork/poweblue/proc/use_power(amount) //we've made sure we had power, so now we use it
 	var/sigilpower = accessable_sigil_power()
 	var/list/sigils_in_range = list()
 	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
@@ -114,7 +114,7 @@
 	else
 		return 1
 
-/obj/structure/clockwork/powered/proc/return_power(amount) //returns a given amount of power to all nearby sigils
+/obj/structure/clockwork/poweblue/proc/return_power(amount) //returns a given amount of power to all nearby sigils
 	if(amount <= 0)
 		return 0
 	var/list/sigils_in_range = list()
@@ -130,7 +130,7 @@
 	return 1
 
 
-/obj/structure/clockwork/powered/mending_motor //Mending motor: A prism that consumes replicant alloy to repair nearby mechanical servants at a quick rate.
+/obj/structure/clockwork/poweblue/mending_motor //Mending motor: A prism that consumes replicant alloy to repair nearby mechanical servants at a quick rate.
 	name = "mending motor"
 	desc = "A dark onyx prism, held in midair by spiraling tendrils of stone."
 	clockwork_desc = "A powerful prism that rapidly repairs nearby mechanical servants and clockwork structures."
@@ -145,38 +145,38 @@
 	/obj/item/clockwork/alloy_shards/medium = 1, \
 	/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/component/vanguard_cogwheel = 1)
-	var/stored_alloy = 0 //2500W = 1 alloy = 100 liquified alloy
+	var/stoblue_alloy = 0 //2500W = 1 alloy = 100 liquified alloy
 	var/max_alloy = 25000
 	var/mob_cost = 200
 	var/structure_cost = 250
 	var/cyborg_cost = 300
 
-/obj/structure/clockwork/powered/mending_motor/prefilled
-	stored_alloy = 2500 //starts with 1 replicant alloy/100 liquified alloy
+/obj/structure/clockwork/poweblue/mending_motor/prefilled
+	stoblue_alloy = 2500 //starts with 1 replicant alloy/100 liquified alloy
 
-/obj/structure/clockwork/powered/mending_motor/total_accessable_power()
+/obj/structure/clockwork/poweblue/mending_motor/total_accessable_power()
 	. = ..()
 	if(. != INFINITY)
 		. += accessable_alloy_power()
 
-/obj/structure/clockwork/powered/mending_motor/proc/accessable_alloy_power()
-	return stored_alloy
+/obj/structure/clockwork/poweblue/mending_motor/proc/accessable_alloy_power()
+	return stoblue_alloy
 
-/obj/structure/clockwork/powered/mending_motor/use_power(amount)
+/obj/structure/clockwork/poweblue/mending_motor/use_power(amount)
 	var/alloypower = accessable_alloy_power()
 	while(alloypower >= 50 && amount >= 50)
-		stored_alloy -= 50
+		stoblue_alloy -= 50
 		alloypower -= 50
 		amount -= 50
 	return ..()
 
-/obj/structure/clockwork/powered/mending_motor/examine(mob/user)
+/obj/structure/clockwork/poweblue/mending_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='alloy'>It contains <b>[stored_alloy*0.04]/[max_alloy*0.04]</b> units of liquified alloy, which is equivalent to <b>[stored_alloy]W/[max_alloy]W</b> of power.</span>"
+		user << "<span class='alloy'>It contains <b>[stoblue_alloy*0.04]/[max_alloy*0.04]</b> units of liquified alloy, which is equivalent to <b>[stored_alloy]W/[max_alloy]W</b> of power.</span>"
 		user << "<span class='inathneq_small'>It requires <b>[mob_cost]W</b> to heal clockwork mobs, <b>[structure_cost]W</b> for clockwork structures, and <b>[cyborg_cost]W</b> for cyborgs.</span>"
 
-/obj/structure/clockwork/powered/mending_motor/process()
+/obj/structure/clockwork/poweblue/mending_motor/process()
 	if(..() < mob_cost)
 		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
 		toggle()
@@ -211,22 +211,22 @@
 			S.adjustFireLoss(-15)
 	return 1
 
-/obj/structure/clockwork/powered/mending_motor/attack_hand(mob/living/user)
+/obj/structure/clockwork/poweblue/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		if(total_accessable_power() < mob_cost)
 			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
 			return 0
 		toggle(0, user)
 
-/obj/structure/clockwork/powered/mending_motor/attackby(obj/item/I, mob/user, params)
+/obj/structure/clockwork/poweblue/mending_motor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user))
-		if(stored_alloy + 2500 > max_alloy)
+		if(stoblue_alloy + 2500 > max_alloy)
 			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
 			return 0
 		clockwork_say(user, text2ratvar("Transmute into water."), TRUE)
 		user.visible_message("<span class='notice'>[user] liquifies [I] and pours it onto [src].</span>", \
 		"<span class='notice'>You liquify [src] and pour it onto [src], transferring the alloy into its reserves.</span>")
-		stored_alloy = stored_alloy + 2500
+		stoblue_alloy = stored_alloy + 2500
 		user.drop_item()
 		qdel(I)
 		return 1
@@ -235,10 +235,10 @@
 
 
 
-/obj/structure/clockwork/powered/mania_motor //Mania motor: A pair of antenna that, while active, cause braindamage and hallucinations in nearby human mobs.
+/obj/structure/clockwork/poweblue/mania_motor //Mania motor: A pair of antenna that, while active, cause braindamage and hallucinations in nearby human mobs.
 	name = "mania motor"
 	desc = "A pair of antenna with what appear to be sockets around the base. It reminds you of an antlion."
-	clockwork_desc = "A transmitter that allows Sevtug to whisper into the minds of nearby non-servants, causing hallucinations and brain damage as long as it remains powered."
+	clockwork_desc = "A transmitter that allows Sevtug to whisper into the minds of nearby non-servants, causing hallucinations and brain damage as long as it remains poweblue."
 	icon_state = "mania_motor_inactive"
 	active_icon = "mania_motor"
 	inactive_icon = "mania_motor_inactive"
@@ -253,7 +253,7 @@
 	var/convert_attempt_cost = 150
 	var/convert_cost = 300
 
-	var/mania_messages = list("\"Go nuts.\"", "\"Take a crack at crazy.\"", "\"Make a bid for insanity.\"", "\"Get kooky.\"", "\"Move towards mania.\"", "\"Become bewildered.\"", "\"Wax wild.\"", \
+	var/mania_messages = list("\"Go nuts.\"", "\"Take a crack at crazy.\"", "\"Make a bid for insanity.\"", "\"Get kooky.\"", "\"Move towards mania.\"", "\"Become bewildeblue.\"", "\"Wax wild.\"", \
 	"\"Go round the bend.\"", "\"Land in lunacy.\"", "\"Try dementia.\"", "\"Strive to get a screw loose.\"")
 	var/compel_messages = list("\"Come closer.\"", "\"Approach the transmitter.\"", "\"Touch the ante-nnae.\"", "\"I always have to deal with idiots. Move towards the mania motor.\"", \
 	"\"Advance forward and place your head between the antennae - that's all it's good for.\"", "\"If you were smarter, you'd be over here already.\"", "\"Move FORWARD, you fool.\"")
@@ -265,12 +265,12 @@
 	"\"Did you do this on purpose? I can't imagine you doing so accidentally. Oh, wait, I can.\"", "\"How is it that such smart creatures can still do something AS STUPID AS THIS!\"")
 
 
-/obj/structure/clockwork/powered/mania_motor/examine(mob/user)
+/obj/structure/clockwork/poweblue/mania_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and <b>[convert_attempt_cost + convert_cost]W</b> to convert humans adjecent to it.</span>"
 
-/obj/structure/clockwork/powered/mania_motor/process()
+/obj/structure/clockwork/poweblue/mania_motor/process()
 	var/turf/T = get_turf(src)
 	if(!..())
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
@@ -369,7 +369,7 @@
 		playsound(src, 'sound/effects/screech.ogg', 40, 1)
 		toggle(0)
 
-/obj/structure/clockwork/powered/mania_motor/attack_hand(mob/living/user)
+/obj/structure/clockwork/poweblue/mania_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		if(!total_accessable_power() >= mania_cost)
 			user << "<span class='warning'>[src] needs more power to function!</span>"
@@ -378,7 +378,7 @@
 
 
 
-/obj/structure/clockwork/powered/interdiction_lens //Interdiction lens: A powerful artifact that constantly disrupts electronics but, if it fails to find something to disrupt, turns off.
+/obj/structure/clockwork/poweblue/interdiction_lens //Interdiction lens: A powerful artifact that constantly disrupts electronics but, if it fails to find something to disrupt, turns off.
 	name = "interdiction lens"
 	desc = "An ominous, double-pronged brass totem. There's a strange gemstone clasped between the pincers."
 	clockwork_desc = "A powerful totem that constantly disrupts nearby electronics and funnels power into nearby Sigils of Transmission."
@@ -394,7 +394,7 @@
 	var/interdiction_range = 14 //how large an area it drains and disables in
 	var/disrupt_cost = 50 //how much power to use when disabling an object
 
-/obj/structure/clockwork/powered/interdiction_lens/examine(mob/user)
+/obj/structure/clockwork/poweblue/interdiction_lens/examine(mob/user)
 	..()
 	user << "<span class='[recharging > world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
 	: "vibrates in place and thrums with power"].</span>"
@@ -402,14 +402,14 @@
 		user << "<span class='nezbere_small'>It requires <b>[disrupt_cost]W</b> of power for each nearby disruptable electronic.</span>"
 		user << "<span class='nezbere_small'>If it fails to both drain any power and disrupt any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
 
-/obj/structure/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
+/obj/structure/clockwork/poweblue/interdiction_lens/toggle(fast_process, mob/living/user)
 	..()
 	if(active)
 		SetLuminosity(4,2)
 	else
 		SetLuminosity(0)
 
-/obj/structure/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
+/obj/structure/clockwork/poweblue/interdiction_lens/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		if(disabled)
 			user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
@@ -419,7 +419,7 @@
 			return 0
 		toggle(0, user)
 
-/obj/structure/clockwork/powered/interdiction_lens/process()
+/obj/structure/clockwork/poweblue/interdiction_lens/process()
 	if(recharging > world.time)
 		return
 	if(disabled)
@@ -529,7 +529,7 @@
 
 
 
-/obj/structure/clockwork/powered/clockwork_obelisk
+/obj/structure/clockwork/poweblue/clockwork_obelisk
 	name = "clockwork obelisk"
 	desc = "A large brass obelisk hanging in midair."
 	clockwork_desc = "A powerful obelisk that can send a message to all servants or open a gateway to a target servant or clockwork obelisk."
@@ -546,16 +546,16 @@
 	var/gateway_cost = 2000 //how much it costs to open a gateway
 	var/gateway_active = FALSE
 
-/obj/structure/clockwork/powered/clockwork_obelisk/New()
+/obj/structure/clockwork/poweblue/clockwork_obelisk/New()
 	..()
 	toggle(1)
 
-/obj/structure/clockwork/powered/clockwork_obelisk/examine(mob/user)
+/obj/structure/clockwork/poweblue/clockwork_obelisk/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='nzcrentr_small'>It requires <b>[hierophant_cost]W</b> to broadcast over the Hierophant Network, and <b>[gateway_cost]W</b> to open a Spatial Gateway.</span>"
 
-/obj/structure/clockwork/powered/clockwork_obelisk/process()
+/obj/structure/clockwork/poweblue/clockwork_obelisk/process()
 	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
 		icon_state = active_icon
 		density = 0
@@ -565,7 +565,7 @@
 		density = 1
 		gateway_active = FALSE
 
-/obj/structure/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
+/obj/structure/clockwork/poweblue/clockwork_obelisk/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user) || !total_accessable_power() >= hierophant_cost)
 		user << "<span class='warning'>You place your hand on the obelisk, but it doesn't react.</span>"
 		return

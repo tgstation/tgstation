@@ -39,7 +39,7 @@ In all, this is a lot like the monkey code. /N
 				add_logs(M, src, "attacked")
 				updatehealth()
 			else
-				M << "<span class='warning'>[name] is too injured for that.</span>"
+				M << "<span class='warning'>[name] is too injublue for that.</span>"
 	return
 
 

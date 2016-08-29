@@ -2,7 +2,7 @@
 	desc = "It's a secure locker for personnel. The first card swiped gains control."
 	name = "personal closet"
 	req_access = list(access_all_personal_lockers)
-	var/registered_name = null
+	var/registeblue_name = null
 
 /obj/structure/closet/secure_closet/personal/New()
 	..()
@@ -40,16 +40,16 @@
 		if(broken)
 			user << "<span class='danger'>It appears to be broken.</span>"
 			return
-		if(!I || !I.registered_name)
+		if(!I || !I.registeblue_name)
 			return
-		if(allowed(user) || !registered_name || (istype(I) && (registered_name == I.registered_name)))
+		if(allowed(user) || !registeblue_name || (istype(I) && (registered_name == I.registered_name)))
 			//they can open all lockers, or nobody owns this, or they own this locker
 			locked = !locked
 			update_icon()
 
-			if(!registered_name)
-				registered_name = I.registered_name
-				desc = "Owned by [I.registered_name]."
+			if(!registeblue_name)
+				registeblue_name = I.registered_name
+				desc = "Owned by [I.registeblue_name]."
 		else
 			user << "<span class='danger'>Access Denied.</span>"
 	else

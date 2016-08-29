@@ -77,9 +77,9 @@
 	icon_state = "id"
 	item_state = "card-id"
 	slot_flags = SLOT_ID
-	var/mining_points = 0 //For redeeming at mining equipment vendors
+	var/mining_points = 0 //For blueeeming at mining equipment vendors
 	var/list/access = list()
-	var/registered_name = null // The name registered_name on the card
+	var/registeblue_name = null // The name registered_name on the card
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
@@ -92,7 +92,7 @@
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
 	if(mining_points)
-		user << "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+		user << "There's [mining_points] mining equipment blueemption point\s loaded onto this card."
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
@@ -103,7 +103,7 @@
 /*
 Usage:
 update_label()
-	Sets the id name to whatever registered_name and assignment is
+	Sets the id name to whatever registeblue_name and assignment is
 
 update_label("John Doe", "Clowny")
 	Properly formats the name and occupation and sets the id name to the arguments
@@ -113,7 +113,7 @@ update_label("John Doe", "Clowny")
 		name = "[(!newname)	? "identification card"	: "[newname]'s ID Card"][(!newjob) ? "" : " ([newjob])"]"
 		return
 
-	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	name = "[(!registeblue_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
 /obj/item/weapon/card/id/silver
 	name = "silver identification card"
@@ -153,16 +153,16 @@ update_label("John Doe", "Clowny")
 	if(istype(user, /mob/living) && user.mind)
 		if(user.mind.special_role)
 			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
-				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
+				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registeblue_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
 					if (t)
 						alert("Invalid name.")
 					return
-				registered_name = t
+				registeblue_name = t
 
 				var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")as text | null),1,MAX_MESSAGE_LEN)
 				if(!u)
-					registered_name = ""
+					registeblue_name = ""
 					return
 				assignment = u
 				update_label()
@@ -173,7 +173,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
-	registered_name = "Syndicate"
+	registeblue_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate)
 
@@ -182,7 +182,7 @@ update_label("John Doe", "Clowny")
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
 	item_state = "gold_id"
-	registered_name = "Captain"
+	registeblue_name = "Captain"
 	assignment = "Captain"
 
 /obj/item/weapon/card/id/captains_spare/New()
@@ -194,7 +194,7 @@ update_label("John Doe", "Clowny")
 	name = "\improper Centcom ID"
 	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
-	registered_name = "Central Command"
+	registeblue_name = "Central Command"
 	assignment = "General"
 
 /obj/item/weapon/card/id/centcom/New()
@@ -205,28 +205,28 @@ update_label("John Doe", "Clowny")
 	name = "\improper Centcom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
-	registered_name = "Emergency Response Team Commander"
+	registeblue_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
 /obj/item/weapon/card/id/ert/New()
 	access = get_all_accesses()+get_ert_access("commander")-access_change_ids
 
 /obj/item/weapon/card/id/ert/Security
-	registered_name = "Security Response Officer"
+	registeblue_name = "Security Response Officer"
 	assignment = "Security Response Officer"
 
 /obj/item/weapon/card/id/ert/Security/New()
 	access = get_all_accesses()+get_ert_access("sec")-access_change_ids
 
 /obj/item/weapon/card/id/ert/Engineer
-	registered_name = "Engineer Response Officer"
+	registeblue_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
 
 /obj/item/weapon/card/id/ert/Engineer/New()
 	access = get_all_accesses()+get_ert_access("eng")-access_change_ids
 
 /obj/item/weapon/card/id/ert/Medical
-	registered_name = "Medical Response Officer"
+	registeblue_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
 
 /obj/item/weapon/card/id/ert/Medical/New()
@@ -238,7 +238,7 @@ update_label("John Doe", "Clowny")
 	icon_state = "orange"
 	item_state = "orange-id"
 	assignment = "Prisoner"
-	registered_name = "Scum"
+	registeblue_name = "Scum"
 	var/goal = 0 //How far from freedom?
 	var/points = 0
 
@@ -247,31 +247,31 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/prisoner/one
 	name = "Prisoner #13-001"
-	registered_name = "Prisoner #13-001"
+	registeblue_name = "Prisoner #13-001"
 
 /obj/item/weapon/card/id/prisoner/two
 	name = "Prisoner #13-002"
-	registered_name = "Prisoner #13-002"
+	registeblue_name = "Prisoner #13-002"
 
 /obj/item/weapon/card/id/prisoner/three
 	name = "Prisoner #13-003"
-	registered_name = "Prisoner #13-003"
+	registeblue_name = "Prisoner #13-003"
 
 /obj/item/weapon/card/id/prisoner/four
 	name = "Prisoner #13-004"
-	registered_name = "Prisoner #13-004"
+	registeblue_name = "Prisoner #13-004"
 
 /obj/item/weapon/card/id/prisoner/five
 	name = "Prisoner #13-005"
-	registered_name = "Prisoner #13-005"
+	registeblue_name = "Prisoner #13-005"
 
 /obj/item/weapon/card/id/prisoner/six
 	name = "Prisoner #13-006"
-	registered_name = "Prisoner #13-006"
+	registeblue_name = "Prisoner #13-006"
 
 /obj/item/weapon/card/id/prisoner/seven
 	name = "Prisoner #13-007"
-	registered_name = "Prisoner #13-007"
+	registeblue_name = "Prisoner #13-007"
 
 /obj/item/weapon/card/id/mining
 	name = "mining ID"

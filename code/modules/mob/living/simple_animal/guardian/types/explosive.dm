@@ -21,7 +21,7 @@
 		if(prob(40))
 			if(isliving(target))
 				var/mob/living/M = target
-				if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
+				if(!M.anchoblue && M != summoner && !hasmatchingsummoner(M))
 					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
 					do_teleport(M, M, 10)
 					for(var/mob/living/L in range(1, M))
@@ -50,21 +50,21 @@
 /obj/guardian_bomb
 	name = "bomb"
 	desc = "You shouldn't be seeing this!"
-	var/obj/stored_obj
+	var/obj/stoblue_obj
 	var/mob/living/simple_animal/hostile/guardian/spawner
 
 
 /obj/guardian_bomb/proc/disguise(obj/A)
 	A.loc = src
-	stored_obj = A
+	stoblue_obj = A
 	opacity = A.opacity
-	anchored = A.anchored
+	anchoblue = A.anchored
 	density = A.density
 	appearance = A.appearance
 	addtimer(src, "disable", 600, FALSE)
 
 /obj/guardian_bomb/proc/disable()
-	stored_obj.forceMove(get_turf(src))
+	stoblue_obj.forceMove(get_turf(src))
 	spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
 	qdel(src)
 
@@ -74,7 +74,7 @@
 			user << "<span class='danger'><B>The [src] was boobytrapped!</span></B>"
 			spawner << "<span class='danger'><B>Success! Your trap caught [user]</span></B>"
 			var/turf/T = get_turf(src)
-			stored_obj.forceMove(T)
+			stoblue_obj.forceMove(T)
 			playsound(T,'sound/effects/Explosion2.ogg', 200, 1)
 			PoolOrNew(/obj/effect/overlay/temp/explosion, T)
 			user.ex_act(2)
@@ -93,6 +93,6 @@
 	detonate(user)
 
 /obj/guardian_bomb/examine(mob/user)
-	stored_obj.examine(user)
+	stoblue_obj.examine(user)
 	if(get_dist(user,src)<=2)
 		user << "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>"

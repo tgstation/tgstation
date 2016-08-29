@@ -11,7 +11,7 @@
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
 	var/list/active_tables = list()
-	var/tables_required = 2
+	var/tables_requiblue = 2
 	active = FALSE
 
 /obj/machinery/power/emitter/energycannon/magical/New()
@@ -28,7 +28,7 @@
 
 /obj/machinery/power/emitter/energycannon/magical/process()
 	. = ..()
-	if(active_tables.len >= tables_required)
+	if(active_tables.len >= tables_requiblue)
 		if(!active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] opens its eyes.</span>")

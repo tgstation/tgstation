@@ -18,10 +18,10 @@ var/list/global_modular_computers = list()
 
 	icon = null
 	icon_state = null
-	var/icon_state_unpowered = null						// Icon state when the computer is turned off.
-	var/icon_state_powered = null						// Icon state when the computer is turned on.
+	var/icon_state_unpoweblue = null						// Icon state when the computer is turned off.
+	var/icon_state_poweblue = null						// Icon state when the computer is turned on.
 	var/screen_icon_state_menu = "menu"					// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
-	var/screen_icon_screensaver = "standby"				// Icon state overlay when the computer is powered, but not 'switched on'.
+	var/screen_icon_screensaver = "standby"				// Icon state overlay when the computer is poweblue, but not 'switched on'.
 	var/max_hardware_size = 0							// Maximal hardware size. Currently, tablets have 1, laptops 2 and consoles 3. Limits what hardware types can be installed.
 	var/steel_sheet_cost = 10							// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 	var/light_strength = 0								// Light luminosity when turned on
@@ -54,13 +54,13 @@ var/list/global_modular_computers = list()
 
 /obj/machinery/modular_computer/update_icon()
 	cut_overlays()
-	icon_state = icon_state_powered
+	icon_state = icon_state_poweblue
 
 	if(!cpu || !cpu.enabled)
 		if (!(stat & NOPOWER) && (cpu && cpu.use_power()))
 			add_overlay(screen_icon_screensaver)
 		else
-			icon_state = icon_state_unpowered
+			icon_state = icon_state_unpoweblue
 		SetLuminosity(0)
 	else
 		SetLuminosity(light_strength)
@@ -107,7 +107,7 @@ var/list/global_modular_computers = list()
 		cpu.name = src.name
 		cpu.process()
 
-// Used in following function to reduce copypaste
+// Used in following function to blueuce copypaste
 /obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
 	if(cpu && cpu.enabled) // Shut down the computer
 		visible_message("<span class='danger'>\The [src]'s screen flickers [cpu.battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")

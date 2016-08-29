@@ -49,9 +49,9 @@
 	projectile_type = /obj/item/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"
 
-/obj/item/ammo_casing/energy/laser/redtag
-	projectile_type = /obj/item/projectile/beam/lasertag/redtag
-	select_name = "redtag"
+/obj/item/ammo_casing/energy/laser/bluetag
+	projectile_type = /obj/item/projectile/beam/lasertag/bluetag
+	select_name = "bluetag"
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
@@ -168,8 +168,8 @@ obj/item/ammo_casing/energy/net
 /obj/item/ammo_casing/energy/instakill/blue
 	projectile_type = /obj/item/projectile/beam/instakill/blue
 
-/obj/item/ammo_casing/energy/instakill/red
-	projectile_type = /obj/item/projectile/beam/instakill/red
+/obj/item/ammo_casing/energy/instakill/blue
+	projectile_type = /obj/item/projectile/beam/instakill/blue
 
 /obj/item/ammo_casing/energy/shock_revolver
 	fire_sound = 'sound/magic/lightningbolt.ogg'

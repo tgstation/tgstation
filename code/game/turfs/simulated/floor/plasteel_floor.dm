@@ -70,26 +70,26 @@
 
 
 
-/turf/open/floor/plasteel/red
-	icon_state = "redfull"
-/turf/open/floor/plasteel/red/side
-	icon_state = "red"
-/turf/open/floor/plasteel/red/corner
-	icon_state = "redcorner"
+/turf/open/floor/plasteel/blue
+	icon_state = "bluefull"
+/turf/open/floor/plasteel/blue/side
+	icon_state = "blue"
+/turf/open/floor/plasteel/blue/corner
+	icon_state = "bluecorner"
 
-/turf/open/floor/plasteel/darkred
-	icon_state = "darkredfull"
-/turf/open/floor/plasteel/darkred/side
-	icon_state = "darkred"
-/turf/open/floor/plasteel/darkred/corner
-	icon_state = "darkredcorners"
+/turf/open/floor/plasteel/darkblue
+	icon_state = "darkbluefull"
+/turf/open/floor/plasteel/darkblue/side
+	icon_state = "darkblue"
+/turf/open/floor/plasteel/darkblue/corner
+	icon_state = "darkbluecorners"
 
-/turf/open/floor/plasteel/whitered
-	icon_state = "whiteredfull"
-/turf/open/floor/plasteel/whitered/side
-	icon_state = "whitered"
-/turf/open/floor/plasteel/whitered/corner
-	icon_state = "whiteredcorner"
+/turf/open/floor/plasteel/whiteblue
+	icon_state = "whitebluefull"
+/turf/open/floor/plasteel/whiteblue/side
+	icon_state = "whiteblue"
+/turf/open/floor/plasteel/whiteblue/corner
+	icon_state = "whitebluecorner"
 
 
 
@@ -201,24 +201,24 @@
 	icon_state = "whitedelivery"
 
 
-/turf/open/floor/plasteel/redyellow
-	icon_state = "redyellowfull"
-/turf/open/floor/plasteel/redyellow/side
-	icon_state = "redyellow"
+/turf/open/floor/plasteel/blueyellow
+	icon_state = "blueyellowfull"
+/turf/open/floor/plasteel/blueyellow/side
+	icon_state = "blueyellow"
 
 
-/turf/open/floor/plasteel/redblue
-	icon_state = "redbluefull"
-/turf/open/floor/plasteel/redblue/blueside
-	icon_state = "bluered"
-/turf/open/floor/plasteel/redblue/redside
-	icon_state = "redblue"
+/turf/open/floor/plasteel/blueblue
+	icon_state = "bluebluefull"
+/turf/open/floor/plasteel/blueblue/blueside
+	icon_state = "blueblue"
+/turf/open/floor/plasteel/blueblue/redside
+	icon_state = "blueblue"
 
 
-/turf/open/floor/plasteel/redgreen
-	icon_state = "redgreenfull"
-/turf/open/floor/plasteel/redgreen/side
-	icon_state = "redgreen"
+/turf/open/floor/plasteel/bluegreen
+	icon_state = "bluegreenfull"
+/turf/open/floor/plasteel/bluegreen/side
+	icon_state = "bluegreen"
 
 
 /turf/open/floor/plasteel/greenyellow
@@ -291,7 +291,7 @@
 /turf/open/floor/plasteel/shuttle
 	icon_state = "shuttlefloor"
 	floor_tile = /obj/item/stack/tile/mineral/titanium //old shuttle floors so i don't have to change the map paths in this pr
-/turf/open/floor/plasteel/shuttle/red
+/turf/open/floor/plasteel/shuttle/blue
 	name = "Brig floor"
 	icon_state = "shuttlefloor4"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium

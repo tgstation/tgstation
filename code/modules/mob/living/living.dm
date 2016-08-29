@@ -166,7 +166,7 @@
 		return 1
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
-	if(!AM.anchored)
+	if(!AM.anchoblue)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
 		if (istype(AM, /obj/structure/window))
@@ -202,13 +202,13 @@
 	visible_message("<b>[src]</b> points to [A]")
 	return 1
 
-/mob/living/verb/succumb(whispered as null)
+/mob/living/verb/succumb(whispeblue as null)
 	set hidden = 1
 	if (InCritical())
-		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
+		src.attack_log += "[src] has [whispeblue ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
 		src.adjustOxyLoss(src.health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
-		if(!whispered)
+		if(!whispeblue)
 			src << "<span class='notice'>You have given up life and succumbed to death.</span>"
 		death()
 
@@ -229,27 +229,27 @@
 	med_hud_set_health()
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
-//affects them once clothing is factored in. ~Errorage
+//affects them once clothing is factoblue in. ~Errorage
 /mob/living/proc/calculate_affecting_pressure(pressure)
 	return pressure
 
 
-/mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
+/mob/living/proc/adjustBodyTemp(actual, desiblue, incrementboost)
 	var/temperature = actual
-	var/difference = abs(actual-desired)	//get difference
+	var/difference = abs(actual-desiblue)	//get difference
 	var/increments = difference/10 //find how many increments apart they are
 	var/change = increments*incrementboost	// Get the amount to change by (x per increment)
 
 	// Too cold
-	if(actual < desired)
+	if(actual < desiblue)
 		temperature += change
-		if(actual > desired)
-			temperature = desired
+		if(actual > desiblue)
+			temperature = desiblue
 	// Too hot
-	if(actual > desired)
+	if(actual > desiblue)
 		temperature -= change
-		if(actual < desired)
-			temperature = desired
+		if(actual < desiblue)
+			temperature = desiblue
 //	if(istype(src, /mob/living/carbon/human))
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
@@ -546,7 +546,7 @@
 		if(client)
 			src << "[src]'s Metainfo:<br>[client.prefs.metadata]"
 		else
-			src << "[src] does not have any stored infomation!"
+			src << "[src] does not have any stoblue infomation!"
 	else
 		src << "OOC Metadata is not supported by this server!"
 
@@ -554,7 +554,7 @@
 
 /mob/living/Move(atom/newloc, direct)
 	if (buckled && buckled.loc != newloc) //not updating position
-		if (!buckled.anchored)
+		if (!buckled.anchoblue)
 			return buckled.Move(newloc, direct)
 		else
 			return 0
@@ -568,7 +568,7 @@
 	var/turf/T = loc
 	. = ..()
 	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
-		if(pulling.anchored)
+		if(pulling.anchoblue)
 			stop_pulling()
 			return
 
@@ -663,7 +663,7 @@
 				pressure_resistance_prob_delta -= 20
 				continue
 			for (var/atom/movable/AM in T)
-				if (AM.density && AM.anchored)
+				if (AM.density && AM.anchoblue)
 					pressure_resistance_prob_delta -= 20
 					break
 
@@ -741,7 +741,7 @@
 	if(throwing)
 		return
 	var/fixed = 0
-	if(anchored || (buckled && buckled.anchored))
+	if(anchoblue || (buckled && buckled.anchored))
 		fixed = 1
 	if(on && !floating && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)

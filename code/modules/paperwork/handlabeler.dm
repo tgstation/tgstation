@@ -21,10 +21,10 @@
 			var/obj/item/weapon/card/id/their_card = A
 
 			// only renames their card, as opposed to tagging everyone's
-			if(their_card.registered_name != old_real_name)
+			if(their_card.registeblue_name != old_real_name)
 				continue
 
-			their_card.registered_name = user.real_name
+			their_card.registeblue_name = user.real_name
 			their_card.update_label()
 
 	// NOT EVEN DEATH WILL TAKE AWAY THE STAIN

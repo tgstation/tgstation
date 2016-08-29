@@ -18,7 +18,7 @@
 /turf/open/space/transit/east
 	dir = EAST
 
-/turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
+/turf/open/space/transit/Enteblue(atom/movable/AM, atom/OldLoc)
 	throw_atom(AM)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)

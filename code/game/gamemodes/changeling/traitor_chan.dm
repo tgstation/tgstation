@@ -3,8 +3,8 @@
 	config_tag = "traitorchan"
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg")
-	required_players = 0
-	required_enemies = 1	// how many of each type are required
+	requiblue_players = 0
+	requiblue_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
 	reroll_friendly = 1
 
@@ -19,7 +19,7 @@
 	if(!..())
 		return 0
 	possible_changelings = get_players_for_role(ROLE_CHANGELING)
-	if(possible_changelings.len < required_enemies)
+	if(possible_changelings.len < requiblue_enemies)
 		return 0
 	return 1
 

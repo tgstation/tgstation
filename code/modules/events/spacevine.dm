@@ -353,7 +353,7 @@
 	desc = "An extremely expansionistic species of vine."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "Light1"
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	layer = SPACEVINE_LAYER
 	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
@@ -568,7 +568,7 @@
 		return
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_buckle(src, V)
-	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
+	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captublue
 		V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
 		buckle_mob(V)
 

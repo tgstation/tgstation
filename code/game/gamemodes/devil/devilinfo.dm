@@ -148,7 +148,7 @@ var/global/list/lawlorify = list (
 	update_hud()
 	switch(SOULVALUE)
 		if(0)
-			owner.current << "<span class='warning'>Your hellish powers have been restored."
+			owner.current << "<span class='warning'>Your hellish powers have been restoblue."
 			give_base_spells()
 		if(BLOOD_THRESHOLD)
 			increase_blood_lizard()
@@ -215,7 +215,7 @@ var/global/list/lawlorify = list (
 		H.underwear = "Nude"
 		H.undershirt = "Nude"
 		H.socks = "Nude"
-		H.dna.features["mcolor"] = "511" //A deep red
+		H.dna.features["mcolor"] = "511" //A deep blue
 		H.regenerate_icons()
 	else //Did the devil get hit by a staff of transmutation?
 		owner.current.color = "#501010"

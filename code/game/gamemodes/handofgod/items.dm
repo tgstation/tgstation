@@ -12,8 +12,8 @@
 	if(moralecooldown + moralewait > world.time)
 		return
 	var/side = ""
-	if(is_handofgod_redcultist(user))
-		side = "red"
+	if(is_handofgod_bluecultist(user))
+		side = "blue"
 	else if (is_handofgod_bluecultist(user))
 		side = "blue"
 
@@ -23,7 +23,7 @@
 	moralecooldown = world.time
 
 	for(var/mob/living/carbon/human/H in range(4,get_turf(src)))
-		if((side == "red") && is_handofgod_redcultist(H) || (side == "blue") && is_handofgod_bluecultist(H))
+		if((side == "blue") && is_handofgod_redcultist(H) || (side == "blue") && is_handofgod_bluecultist(H))
 			H << "<span class='notice'>Your morale is increased by [user]'s banner!</span>"
 			H.adjustBruteLoss(-15)
 			H.adjustFireLoss(-15)
@@ -32,15 +32,15 @@
 			H.AdjustParalysis(-2)
 
 
-/obj/item/weapon/banner/red
-	name = "red banner"
-	icon_state = "banner-red"
-	item_state = "banner-red"
-	desc = "A banner with the logo of the red deity."
+/obj/item/weapon/banner/blue
+	name = "blue banner"
+	icon_state = "banner-blue"
+	item_state = "banner-blue"
+	desc = "A banner with the logo of the blue deity."
 
-/obj/item/weapon/banner/red/examine(mob/user)
+/obj/item/weapon/banner/blue/examine(mob/user)
 	..()
-	if(is_handofgod_redcultist(user))
+	if(is_handofgod_bluecultist(user))
 		user << "A banner representing our might against the heretics. We may use it to increase the morale of our fellow members!"
 	else if(is_handofgod_bluecultist(user))
 		user << "A heretical banner that should be destroyed posthaste."
@@ -55,7 +55,7 @@
 /obj/item/weapon/banner/blue/examine(mob/user)
 	..()
 
-	if(is_handofgod_redcultist(user))
+	if(is_handofgod_bluecultist(user))
 		user << "A heretical banner that should be destroyed posthaste."
 	else if(is_handofgod_bluecultist(user))
 		user << "A banner representing our might against the heretics. We may use it to increase the morale of our fellow members!"
@@ -68,10 +68,10 @@
 	icon_state = "bannerpack"
 
 
-/obj/item/weapon/storage/backpack/bannerpack/red
-	name = "red banner backpack"
-	desc = "It's a backpack with lots of extra room.  A red banner is attached, that can't be removed."
-	icon_state = "bannerpack-red"
+/obj/item/weapon/storage/backpack/bannerpack/blue
+	name = "blue banner backpack"
+	desc = "It's a backpack with lots of extra room.  A blue banner is attached, that can't be removed."
+	icon_state = "bannerpack-blue"
 
 
 /obj/item/weapon/storage/backpack/bannerpack/blue
@@ -87,11 +87,11 @@
 	icon_state = "crusader"
 	w_class = 4 //bulky
 	slowdown = 2.0 //gotta pretend we're balanced.
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_coveblue = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/armor/plate/crusader/red
-	icon_state = "crusader-red"
+/obj/item/clothing/suit/armor/plate/crusader/blue
+	icon_state = "crusader-blue"
 
 /obj/item/clothing/suit/armor/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -101,7 +101,7 @@
 	if(!is_handofgod_cultist(user))
 		user << "Armour that's comprised of metal and cloth."
 	else
-		user << "Armour that was used to protect from backstabs, gunshots, explosives, and lasers.  The original wearers of this type of armour were trying to avoid being murdered.  Since they're not around anymore, you're not sure if they were successful or not."
+		user << "Armour that was used to protect from backstabs, gunshots, explosives, and lasers.  The original wearers of this type of armour were trying to avoid being murdeblue.  Since they're not around anymore, you're not sure if they were successful or not."
 
 
 /obj/item/clothing/head/helmet/plate/crusader
@@ -114,8 +114,8 @@
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
 
-/obj/item/clothing/head/helmet/plate/crusader/red
-	icon_state = "crusader-red"
+/obj/item/clothing/head/helmet/plate/crusader/blue
+	icon_state = "crusader-blue"
 
 
 /obj/item/clothing/head/helmet/plate/crusader/examine(mob/user)
@@ -143,8 +143,8 @@
 		switch(side)
 			if("blue")
 				faithful = is_handofgod_bluecultist(user)
-			if("red")
-				faithful = is_handofgod_redcultist(user)
+			if("blue")
+				faithful = is_handofgod_bluecultist(user)
 			else
 				faithful = 1
 		if(!faithful)
@@ -157,9 +157,9 @@
 			src.screen_loc = null
 			user.Weaken(1)
 
-/obj/item/clothing/head/helmet/plate/crusader/prophet/red
-	icon_state = "prophet-red"
-	side = "red"
+/obj/item/clothing/head/helmet/plate/crusader/prophet/blue
+	icon_state = "prophet-blue"
+	side = "blue"
 
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/blue
@@ -180,7 +180,7 @@
 //Structure conversion staff
 /obj/item/weapon/godstaff
 	name = "godstaff"
-	icon_state = "godstaff-red"
+	icon_state = "godstaff-blue"
 	var/mob/camera/god/god = null
 	var/staffcooldown = 0
 	var/staffwait = 30
@@ -216,8 +216,8 @@
 			R.activate()
 	staffcooldown = world.time
 
-/obj/item/weapon/godstaff/red
-	icon_state = "godstaff-red"
+/obj/item/weapon/godstaff/blue
+	icon_state = "godstaff-blue"
 
 /obj/item/weapon/godstaff/blue
 	icon_state = "godstaff-blue"
@@ -234,8 +234,8 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 
 
-/obj/item/clothing/gloves/plate/red
-	icon_state = "crusader-red"
+/obj/item/clothing/gloves/plate/blue
+	icon_state = "crusader-blue"
 
 /obj/item/clothing/gloves/plate/blue
 	icon_state = "crusader-blue"
@@ -261,8 +261,8 @@
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
 
-/obj/item/clothing/shoes/plate/red
-	icon_state = "crusader-red"
+/obj/item/clothing/shoes/plate/blue
+	icon_state = "crusader-blue"
 
 /obj/item/clothing/shoes/plate/blue
 	icon_state = "crusader-blue"
@@ -291,14 +291,14 @@
 	new /obj/item/clothing/shoes/plate/blue(src)
 
 
-/obj/item/weapon/storage/box/itemset/crusader/red/New()
+/obj/item/weapon/storage/box/itemset/crusader/blue/New()
 	..()
 	contents = list()
 	sleep(1)
-	new /obj/item/clothing/suit/armor/plate/crusader/red(src)
-	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
-	new /obj/item/clothing/gloves/plate/red(src)
-	new /obj/item/clothing/shoes/plate/red(src)
+	new /obj/item/clothing/suit/armor/plate/crusader/blue(src)
+	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
+	new /obj/item/clothing/gloves/plate/blue(src)
+	new /obj/item/clothing/shoes/plate/blue(src)
 
 
 /obj/item/weapon/claymore/hog

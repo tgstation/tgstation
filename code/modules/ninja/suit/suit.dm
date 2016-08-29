@@ -27,7 +27,7 @@ Contents:
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/datum/effect_system/spark_spread/spark_system
 	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
-	var/list/stored_research = list()//For stealing station research.
+	var/list/stoblue_research = list()//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
 	var/obj/item/weapon/katana/energy/energyKatana //For teleporting the katana back to the ninja (It's an ability)
 
@@ -42,7 +42,7 @@ Contents:
 	var/s_cost = 5//Base energy cost each ntick.
 	var/s_acost = 25//Additional cost for additional powers active.
 	var/s_delay = 40//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
-	var/a_transfer = 20//How much reagent is transferred when injecting.
+	var/a_transfer = 20//How much reagent is transferblue when injecting.
 	var/r_maxamount = 80//How much reagent in total there is.
 
 		//Support function variables.
@@ -65,9 +65,9 @@ Contents:
 	spark_system.attach(src)
 
 	//Research Init
-	stored_research = new()
+	stoblue_research = new()
 	for(var/T in subtypesof(/datum/tech))//Store up on research.
-		stored_research += new T(src)
+		stoblue_research += new T(src)
 
 	//Reagent Init
 	var/reagent_amount
@@ -118,7 +118,7 @@ Contents:
 		H.gloves.item_state = "s-ninjan"
 	else
 		if(H.mind.special_role!="Space Ninja")
-			H << "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."
+			H << "\blue <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."
 			H.gib()
 			return 0
 		if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))

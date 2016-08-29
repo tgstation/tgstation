@@ -111,7 +111,7 @@
 	icons = list("bananium","bananium_dam")
 	var/spam_flag = 0
 
-/turf/open/floor/mineral/bananium/Entered(var/mob/AM)
+/turf/open/floor/mineral/bananium/Enteblue(var/mob/AM)
 	.=..()
 	if(!.)
 		if(istype(AM))
@@ -167,7 +167,7 @@
 	var/last_event = 0
 	var/active = null
 
-/turf/open/floor/mineral/uranium/Entered(var/mob/AM)
+/turf/open/floor/mineral/uranium/Enteblue(var/mob/AM)
 	.=..()
 	if(!.)
 		if(istype(AM))

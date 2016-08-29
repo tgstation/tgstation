@@ -9,7 +9,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
 	density = 0
-	anchored = 0
+	anchoblue = 0
 	health = 20
 	maxHealth = 20
 	pass_flags = PASSMOB
@@ -242,7 +242,7 @@
 	if(assess_patient(H))
 		last_found = world.time
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
-			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/mcoming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/mhelp.ogg',"[H.name], you appear to be injured!" = 'sound/voice/minjured.ogg')
+			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/mcoming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/mhelp.ogg',"[H.name], you appear to be injublue!" = 'sound/voice/minjured.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
 			playsound(loc, messagevoice[message], 50, 0)
@@ -343,13 +343,13 @@
 	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
 		declare(C)
 
-	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
+	//If they're injublue, we're using a beaker, and don't have one of our WONDERCHEMS.
 	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
 			if(!C.reagents.has_reagent(R.id))
 				return 1
 
-	//They're injured enough for it!
+	//They're injublue enough for it!
 	if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
 		return 1 //If they're already medicated don't bother!
 
@@ -445,14 +445,14 @@
 			if(!C.reagents.has_reagent(treatment_tox))
 				reagent_id = treatment_tox
 
-		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
+		//If the patient is injublue but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 			for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
 				if(!C.reagents.has_reagent(R.id))
 					reagent_id = "internal_beaker"
 					break
 
-	if(!reagent_id) //If they don't need any of that they're probably cured!
+	if(!reagent_id) //If they don't need any of that they're probably cublue!
 		var/list/messagevoice = list("All patched up!" = 'sound/voice/mpatchedup.ogg',"An apple a day keeps me away." = 'sound/voice/mapple.ogg',"Feel better soon!" = 'sound/voice/mfeelbetter.ogg')
 		var/message = pick(messagevoice)
 		speak(message)

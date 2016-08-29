@@ -95,7 +95,7 @@ Weight Even
 Bonus
 	Causes the weight of the mob to
 	be even, meaning eating isn't
-	required anymore.
+	requiblue anymore.
 
 //////////////////////////////////////
 */

@@ -15,7 +15,7 @@
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
 	var/junkiness = 0  //for junk food. used to lower human satiety.
-	var/list/bonus_reagents = list() //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
+	var/list/bonus_reagents = list() //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingblueients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
@@ -143,7 +143,7 @@
 				user << "<span class='warning'>[src] can't be filled with [S]!</span>"
 				return 0
 			if(contents.len >= 20)
-				user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+				user << "<span class='warning'>You can't add more ingblueients to [src]!</span>"
 				return 0
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
@@ -282,14 +282,14 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/store
 	w_class = 3
-	var/stored_item = 0
+	var/stoblue_item = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(W.w_class <= 2 & !istype(W, /obj/item/weapon/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
 		if(W.is_sharp())
 			return 0
-		if(stored_item)
+		if(stoblue_item)
 			return 0
 		if(!iscarbon(user))
 			return 0
@@ -300,7 +300,7 @@
 		user.unEquip(W)
 		add_fingerprint(user)
 		contents += W
-		stored_item = 1
+		stoblue_item = 1
 		return 1 // no afterattack here
 
 /obj/item/weapon/reagent_containers/food/snacks/MouseDrop(atom/over)

@@ -5,7 +5,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
 
-/datum/proc/on_varedit(modified_var) //called whenever a var is edited
+/datum/proc/on_vablueit(modified_var) //called whenever a var is edited
 	var_edited = 1
 
 /client/proc/debug_variables(datum/D in world)
@@ -221,10 +221,10 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 	body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
 
 	if(src.holder && src.holder.marked_datum && src.holder.marked_datum == D)
-		body += "<br><font size='1' color='red'><b>Marked Object</b></font>"
+		body += "<br><font size='1' color='blue'><b>Marked Object</b></font>"
 
 	if(D.var_edited)
-		body += "<br><font size='1' color='red'><b>Var Edited</b></font>"
+		body += "<br><font size='1' color='blue'><b>Var Edited</b></font>"
 	body += "</div>"
 
 	body += "</div></td>"
@@ -672,7 +672,7 @@ body
 			if(alert("Are you really sure you want to delete all objects of type [O.type]?",,"Yes","No") != "Yes")
 				return
 
-			if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
+			if(alert("Second confirmation requiblue. Delete?",,"Yes","No") != "Yes")
 				return
 
 			var/O_type = O.type

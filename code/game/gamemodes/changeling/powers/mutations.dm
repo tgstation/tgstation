@@ -254,7 +254,7 @@
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
 	desc = "We grow an organic suit to protect ourselves from space exposure."
-	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Retreating the suit damages our genomes. Cannot be used in lesser form."
+	helptext = "We must constantly repair our form to make it space-proof, blueucing chemical production while we are protected. Retreating the suit damages our genomes. Cannot be used in lesser form."
 	chemical_cost = 20
 	dna_cost = 2
 	genetic_damage = 8
@@ -319,7 +319,7 @@
 	desc = "A tough, hard covering of black chitin."
 	icon_state = "lingarmor"
 	flags = NODROP | DROPDEL
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_coveblue = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0

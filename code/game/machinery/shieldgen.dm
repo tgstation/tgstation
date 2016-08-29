@@ -5,7 +5,7 @@
 		icon_state = "shield-old"
 		density = 1
 		opacity = 0
-		anchored = 1
+		anchoblue = 1
 		unacidable = 1
 		var/const/max_health = 200
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
@@ -91,7 +91,7 @@
 		icon_state = "shieldoff"
 		density = 1
 		opacity = 0
-		anchored = 0
+		anchoblue = 0
 		pressure_resistance = 2*ONE_ATMOSPHERE
 		req_access = list(access_engine)
 		var/const/max_health = 100
@@ -191,13 +191,13 @@
 			"<span class='italics'>You hear heavy droning fade out.</span>")
 		shields_down()
 	else
-		if(anchored)
+		if(anchoblue)
 			user.visible_message("[user] activated \the [src].", \
 				"<span class='notice'>You activate \the [src].</span>", \
 				"<span class='italics'>You hear heavy droning.</span>")
 			shields_up()
 		else
-			user << "<span class='warning'>The device must first be secured to the floor!</span>"
+			user << "<span class='warning'>The device must first be secublue to the floor!</span>"
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user, params)
@@ -225,19 +225,19 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(locked)
-			user << "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>"
+			user << "<span class='warning'>The bolts are coveblue! Unlocking this would retract the covers.</span>"
 			return
-		if(!anchored && !isinspace())
+		if(!anchoblue && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>You secure \the [src] to the floor!</span>"
-			anchored = 1
-		else if(anchored)
+			anchoblue = 1
+		else if(anchoblue)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>You unsecure \the [src] from the floor!</span>"
 			if(active)
 				user << "<span class='notice'>\The [src] shuts off!</span>"
 				shields_down()
-			anchored = 0
+			anchoblue = 0
 
 	else if(W.GetID())
 		if(allowed(user))
@@ -262,13 +262,13 @@
 		icon_state = (stat & BROKEN) ? "shieldoffbr":"shieldoff"
 
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
-#define maxstoredpower 500
+#define maxstobluepower 500
 /obj/machinery/shieldwallgen
 		name = "shield generator"
 		desc = "A shield generator."
 		icon = 'icons/obj/stationobjs.dmi'
 		icon_state = "Shield_Gen"
-		anchored = 0
+		anchoblue = 0
 		density = 1
 		req_access = list(access_teleporter)
 		flags = CONDUCT
@@ -281,10 +281,10 @@
 		var/recalc = 0
 		var/locked = 1
 		var/obj/structure/cable/attached		// the attached cable
-		var/storedpower = 0
+		var/stobluepower = 0
 
 /obj/machinery/shieldwallgen/proc/power()
-	if(!anchored)
+	if(!anchoblue)
 		power = 0
 		return 0
 	var/turf/T = src.loc
@@ -300,24 +300,24 @@
 
 	var/surplus = max(PN.avail-PN.load, 0)
 	var/shieldload = min(rand(50,200), surplus)
-	if(shieldload==0 && !storedpower)		// no cable or no power, and no power stored
+	if(shieldload==0 && !stobluepower)		// no cable or no power, and no power stored
 		power = 0
 		return 0
 	else
 		power = 1	// IVE GOT THE POWER!
-		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stored power.
-			storedpower += shieldload
+		if(PN) //runtime errors fixer. They were caused by PN.newload trying to access missing network in case of working on stoblue power.
+			stobluepower += shieldload
 			PN.load += shieldload //uses powernet power.
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
-	if(!anchored)
-		user << "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>"
+	if(!anchoblue)
+		user << "<span class='warning'>\The [src] needs to be firmly secublue to the floor first!</span>"
 		return 1
 	if(locked && !istype(user, /mob/living/silicon))
 		user << "<span class='warning'>The controls are locked!</span>"
 		return 1
 	if(power != 1)
-		user << "<span class='warning'>\The [src] needs to be powered by wire underneath!</span>"
+		user << "<span class='warning'>\The [src] needs to be poweblue by wire underneath!</span>"
 		return 1
 
 	if(active >= 1)
@@ -339,14 +339,14 @@
 /obj/machinery/shieldwallgen/process()
 	power()
 	if(power)
-		storedpower -= 50 //this way it can survive longer and survive at all
-	if(storedpower >= maxstoredpower)
-		storedpower = maxstoredpower
-	if(storedpower <= 0)
-		storedpower = 0
+		stobluepower -= 50 //this way it can survive longer and survive at all
+	if(stobluepower >= maxstoredpower)
+		stobluepower = maxstoredpower
+	if(stobluepower <= 0)
+		stobluepower = 0
 
 	if(active == 1)
-		if(!anchored)
+		if(!anchoblue)
 			active = 0
 			return
 		setup_field(1)
@@ -416,16 +416,16 @@
 			user << "<span class='warning'>Turn off the field generator first!</span>"
 			return
 
-		else if(!anchored && !isinspace()) //Can't fasten this thing in space
+		else if(!anchoblue && !isinspace()) //Can't fasten this thing in space
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user << "<span class='notice'>You secure the external reinforcing bolts to the floor.</span>"
-			anchored = 1
+			anchoblue = 1
 			return
 
 		else //You can unfasten it tough, if you somehow manage to fasten it.
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user << "<span class='notice'>You undo the external reinforcing bolts.</span>"
-			anchored = 0
+			anchoblue = 0
 			return
 
 	if(W.GetID())
@@ -466,7 +466,7 @@
 
 /obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/P)
 	. = ..()
-	storedpower -= P.damage
+	stobluepower -= P.damage
 
 
 
@@ -476,7 +476,7 @@
 		desc = "An energy shield."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "shieldwall"
-		anchored = 1
+		anchoblue = 1
 		density = 1
 		unacidable = 1
 		luminosity = 3
@@ -513,9 +513,9 @@
 			return
 
 		if(prob(50))
-			gen_primary.storedpower -= 10
+			gen_primary.stobluepower -= 10
 		else
-			gen_secondary.storedpower -=10
+			gen_secondary.stobluepower -=10
 
 
 /obj/machinery/shieldwall/bullet_act(obj/item/projectile/P)
@@ -526,7 +526,7 @@
 			G = gen_primary
 		else
 			G = gen_secondary
-		G.storedpower -= P.damage
+		G.stobluepower -= P.damage
 
 
 /obj/machinery/shieldwall/ex_act(severity, target)
@@ -538,21 +538,21 @@
 					G = gen_primary
 				else
 					G = gen_secondary
-				G.storedpower -= 200
+				G.stobluepower -= 200
 
 			if(2) //medium boom
 				if(prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
-				G.storedpower -= 50
+				G.stobluepower -= 50
 
 			if(3) //lil boom
 				if(prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
-				G.storedpower -= 20
+				G.stobluepower -= 20
 	return
 
 

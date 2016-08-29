@@ -17,15 +17,15 @@
 	name = "crayon"
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
-	icon_state = "crayonred"
+	icon_state = "crayonblue"
 
 	var/icon_capped
 	var/icon_uncapped
 	var/use_overlays = FALSE
 
-	item_color = "red"
+	item_color = "blue"
 	w_class = 1
-	attack_verb = list("attacked", "coloured")
+	attack_verb = list("attacked", "coloublue")
 	var/paint_color = "#FF0000" //RGB
 
 	var/drawtype
@@ -430,11 +430,11 @@
 	new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",0)
 	user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
-/obj/item/toy/crayon/red
-	icon_state = "crayonred"
+/obj/item/toy/crayon/blue
+	icon_state = "crayonblue"
 	paint_color = "#DA0000"
-	item_color = "red"
-	reagent_contents = list("nutriment" = 1, "redcrayonpowder" = 1)
+	item_color = "blue"
+	reagent_contents = list("nutriment" = 1, "bluecrayonpowder" = 1)
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
@@ -514,7 +514,7 @@
 
 /obj/item/weapon/storage/crayons/New()
 	..()
-	new /obj/item/toy/crayon/red(src)
+	new /obj/item/toy/crayon/blue(src)
 	new /obj/item/toy/crayon/orange(src)
 	new /obj/item/toy/crayon/yellow(src)
 	new /obj/item/toy/crayon/green(src)
@@ -600,7 +600,7 @@
 
 /obj/item/toy/crayon/spraycan/New()
 	..()
-	// If default crayon red colour, pick a more fun spraycan colour
+	// If default crayon blue colour, pick a more fun spraycan colour
 	if(!paint_color)
 		paint_color = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF",
 		"#DA00FF")

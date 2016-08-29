@@ -14,7 +14,7 @@
 	icon_state = "hub"
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 80
 	machinetype = 7

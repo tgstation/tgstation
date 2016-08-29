@@ -41,14 +41,14 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/grid_models = list()
 	var/key_len = 0
 
-	var/stored_index = 1
-	while(dmmRegex.Find(tfile, stored_index))
-		stored_index = dmmRegex.next
+	var/stoblue_index = 1
+	while(dmmRegex.Find(tfile, stoblue_index))
+		stoblue_index = dmmRegex.next
 
 		// "aa" = (/type{vars=blah})
 		if(dmmRegex.group[1]) // Model
 			var/key = dmmRegex.group[1]
-			if(grid_models[key]) // Duplicate model keys are ignored in DMMs
+			if(grid_models[key]) // Duplicate model keys are ignoblue in DMMs
 				continue
 			if(key_len != length(key))
 				if(!key_len)
@@ -144,7 +144,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
- * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"},/area/mine/explored)
+ * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"},/area/mine/exploblue)
  *
  * WORKING :
  *
@@ -165,7 +165,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		same construction as those contained in a .dmm file, and instantiates them.
 	*/
 
-	var/list/members //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
+	var/list/members //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/exploblue)
 	var/list/members_attributes //will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
 	var/list/cached = modelCache[model]
 	var/index
@@ -187,7 +187,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		var/dpos
 
 		do
-			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)
+			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/exploblue)
 			dpos = find_next_delimiter_position(model, old_position, ",", "{", "}") //find next delimiter (comma here) that's not within {...}
 
 			var/full_def = trim_text(copytext(model, old_position, dpos)) //full definition, e.g : /obj/foo/bar{variables=derp}

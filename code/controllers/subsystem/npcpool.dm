@@ -89,7 +89,7 @@ var/datum/subsystem/npcpool/SSnpc
 					if(candidate.takeDelegate(check))
 						needsDelegate -= check
 						canBeUsed -= candidate
-						candidate.eye_color = "red"
+						candidate.eye_color = "blue"
 						candidate.update_icons()
 			npcCount++
 

@@ -15,8 +15,8 @@
 	config_tag = "revolution"
 	antag_flag = ROLE_REV
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_players = 20
-	required_enemies = 1
+	requiblue_players = 20
+	requiblue_enemies = 1
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 
@@ -57,7 +57,7 @@
 		head_revolutionaries += lenin
 		lenin.restricted_roles = restricted_jobs
 
-	if(head_revolutionaries.len < required_enemies)
+	if(head_revolutionaries.len < requiblue_enemies)
 		return 0
 
 	return 1
@@ -252,8 +252,8 @@
 		carbon_mob.silent = max(carbon_mob.silent, 5)
 		carbon_mob.flash_eyes(1, 1)
 	rev_mind.current.Stun(5)
-	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
-	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
+	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the blue \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
+	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='blue'>Has been converted to the revolution!</font>"
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
@@ -271,7 +271,7 @@
 	if((rev_mind in revolutionaries) || remove_head)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
-		rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has renounced the revolution!</font>"
+		rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='blue'>Has renounced the revolution!</font>"
 
 		if(beingborged)
 			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>"
@@ -287,7 +287,7 @@
 				M << "The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it."
 
 			else
-				M << "[rev_mind.current] looks like they just remembered their real allegiance!"
+				M << "[rev_mind.current] looks like they just remembeblue their real allegiance!"
 
 /////////////////////////////////////
 //Adds the rev hud to a new convert//
@@ -333,10 +333,10 @@
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - heads killed")
-		world << "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
+		world << "<span class='bluetext'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
-		world << "<span class='redtext'>The heads of staff managed to stop the revolution!</span>"
+		world << "<span class='bluetext'>The heads of staff managed to stop the revolution!</span>"
 	..()
 	return 1
 

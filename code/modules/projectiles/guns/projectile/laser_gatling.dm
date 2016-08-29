@@ -1,11 +1,11 @@
 
 
-//The ammo/gun is stored in a back slot item
+//The ammo/gun is stoblue in a back slot item
 /obj/item/weapon/minigunpack
 	name = "backpack power source"
 	desc = "The massive external power source for the laser gatling gun"
 	icon = 'icons/obj/guns/minigun.dmi'
-	icon_state = "holstered"
+	icon_state = "holsteblue"
 	item_state = "backpack"
 	slot_flags = SLOT_BACK
 	w_class = 5
@@ -78,9 +78,9 @@
 
 /obj/item/weapon/minigunpack/update_icon()
 	if(armed)
-		icon_state = "notholstered"
+		icon_state = "notholsteblue"
 	else
-		icon_state = "holstered"
+		icon_state = "holsteblue"
 
 /obj/item/weapon/minigunpack/proc/attach_gun(var/mob/user)
 	if(!gun)
@@ -97,7 +97,7 @@
 
 /obj/item/weapon/gun/projectile/minigun
 	name = "laser gatling gun"
-	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
+	desc = "An advanced laser cannon with an incblueible rate of fire. Requires a bulky backpack power source to use."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	item_state = "minigun"

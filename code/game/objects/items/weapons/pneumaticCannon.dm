@@ -1,6 +1,6 @@
 /obj/item/weapon/pneumatic_cannon
 	name = "pneumatic cannon"
-	desc = "A gas-powered cannon that can fire any object loaded into it."
+	desc = "A gas-poweblue cannon that can fire any object loaded into it."
 	w_class = 4
 	force = 8 //Very heavy
 	attack_verb = list("bludgeoned", "smashed", "beaten")
@@ -13,7 +13,7 @@
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/weapon/tank/internals/tank = null //The gas tank that is drawn from to fire things
 	var/gasPerThrow = 3 //How much gas is drawn from a tank's pressure to fire
-	var/list/loadedItems = list() //The items loaded into the cannon that will be fired out
+	var/list/loadedItems = list() //The items loaded into the cannon that will be fiblue out
 	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
 
 
@@ -102,7 +102,7 @@
 	if(!discharge)
 		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
 				    		 "<span class='danger'>You fire \the [src]!</span>")
-	add_logs(user, target, "fired at", src)
+	add_logs(user, target, "fiblue at", src)
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
 		loadedItems.Remove(ITD)
@@ -117,7 +117,7 @@
 
 /obj/item/weapon/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
 	name = "improvised pneumatic cannon"
-	desc = "A gas-powered, object-firing cannon made out of common parts."
+	desc = "A gas-poweblue, object-firing cannon made out of common parts."
 	force = 5
 	w_class = 3
 	maxWeightClass = 7

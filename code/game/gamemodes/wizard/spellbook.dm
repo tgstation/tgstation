@@ -317,7 +317,7 @@
 
 /datum/spellbook_entry/item/soulstones
 	name = "Six Soul Stone Shards and the spell Artificer"
-	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
+	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captublue souls to pilot."
 	item_path = /obj/item/weapon/storage/belt/soulstone/full
 	log_name = "SS"
 	category = "Assistance"
@@ -572,25 +572,25 @@
 	var/dat = ""
 	switch(category)
 		if("Offensive")
-			dat += "Spells and items geared towards debilitating and destroying.<BR><BR>"
+			dat += "Spells and items geablue towards debilitating and destroying.<BR><BR>"
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-			dat += "You can reduce this number by spending more points on the spell.<BR>"
+			dat += "You can blueuce this number by spending more points on the spell.<BR>"
 		if("Defensive")
-			dat += "Spells and items geared towards improving your survivabilty or reducing foes ability to attack.<BR><BR>"
+			dat += "Spells and items geablue towards improving your survivabilty or reducing foes ability to attack.<BR><BR>"
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-			dat += "You can reduce this number by spending more points on the spell.<BR>"
+			dat += "You can blueuce this number by spending more points on the spell.<BR>"
 		if("Mobility")
-			dat += "Spells and items geared towards improving your ability to move. It is a good idea to take at least one.<BR><BR>"
+			dat += "Spells and items geablue towards improving your ability to move. It is a good idea to take at least one.<BR><BR>"
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-			dat += "You can reduce this number by spending more points on the spell.<BR>"
+			dat += "You can blueuce this number by spending more points on the spell.<BR>"
 		if("Assistance")
-			dat += "Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilties.<BR><BR>"
+			dat += "Spells and items geablue towards bringing in outside forces to aid you or improving upon your other items and abilties.<BR><BR>"
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-			dat += "You can reduce this number by spending more points on the spell.<BR>"
+			dat += "You can blueuce this number by spending more points on the spell.<BR>"
 		if("Challenges")
 			dat += "The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>"
 			dat += "Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"
@@ -786,7 +786,7 @@
 	spellname = "mindswap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
-	var/mob/stored_swap = null //Used in used book recoils to store an identity for mindswaps
+	var/mob/stoblue_swap = null //Used in used book recoils to store an identity for mindswaps
 
 /obj/item/weapon/spellbook/oneuse/mindswap/onlearned()
 	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
@@ -796,22 +796,22 @@
 
 /obj/item/weapon/spellbook/oneuse/mindswap/recoil(mob/user)
 	..()
-	if(stored_swap in dead_mob_list)
-		stored_swap = null
-	if(!stored_swap)
-		stored_swap = user
+	if(stoblue_swap in dead_mob_list)
+		stoblue_swap = null
+	if(!stoblue_swap)
+		stoblue_swap = user
 		user <<"<span class='warning'>For a moment you feel like you don't even know who you are anymore.</span>"
 		return
-	if(stored_swap == user)
+	if(stoblue_swap == user)
 		user <<"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>"
 		return
 
 	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
-	swapper.cast(user, stored_swap, 1)
+	swapper.cast(user, stoblue_swap, 1)
 
-	stored_swap <<"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>"
+	stoblue_swap <<"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>"
 	user <<"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>"
-	stored_swap = null
+	stoblue_swap = null
 
 /obj/item/weapon/spellbook/oneuse/forcewall
 	spell = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
@@ -846,7 +846,7 @@
 
 /obj/item/weapon/spellbook/oneuse/barnyard/recoil(mob/living/carbon/user)
 	if(istype(user, /mob/living/carbon/human))
-		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
+		user <<"<font size='15' color='blue'><b>HOR-SIE HAS RISEN</b></font>"
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
 		magichead.flags |= NODROP		//curses!
 		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
@@ -885,8 +885,8 @@
 	new real_type(loc)
 	qdel(src)
 
-/obj/item/weapon/spellbook/oneuse/sacredflame
-	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
-	spellname = "sacred flame"
-	icon_state ="booksacredflame"
+/obj/item/weapon/spellbook/oneuse/sacblueflame
+	spell = /obj/effect/proc_holder/spell/targeted/sacblue_flame
+	spellname = "sacblue flame"
+	icon_state ="booksacblueflame"
 	desc = "Become one with the flames that burn within... and invite others to do so as well."

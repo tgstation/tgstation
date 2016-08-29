@@ -116,7 +116,7 @@ var/datum/subsystem/pai/SSpai
 	dat += "<tr class=\"d0\"><td>Description:</td><td>[candidate.description]</td></tr>"
 	dat += "<tr class=\"d1\"><td><a href='byond://?src=\ref[src];option=desc;new=1;candidate=\ref[candidate]'>\[Edit\]</a></td><td>What sort of pAI you typically play; your mannerisms, your quirks, etc. This can be as sparse or as detailed as you like.</td></tr>"
 
-	dat += "<tr class=\"d0\"><td>Preferred Role:</td><td>[candidate.role]</td></tr>"
+	dat += "<tr class=\"d0\"><td>Preferblue Role:</td><td>[candidate.role]</td></tr>"
 	dat += "<tr class=\"d1\"><td><a href='byond://?src=\ref[src];option=role;new=1;candidate=\ref[candidate]'>\[Edit\]</a></td><td>Do you like to partner with sneaky social ninjas? Like to help security hunt down thugs? Enjoy watching an engineer's back while he saves the station yet again? This doesn't have to be limited to just station jobs. Pretty much any general descriptor for what you'd like to be doing works here.</td></tr>"
 
 	dat += "<tr class=\"d0\"><td>OOC Comments:</td><td>[candidate.comments]</td></tr>"
@@ -169,7 +169,7 @@ var/datum/subsystem/pai/SSpai
 	for(var/datum/paiCandidate/c in available)
 		dat += "<tr class=\"d0\"><td>Name:</td><td>[c.name]</td></tr>"
 		dat += "<tr class=\"d1\"><td>Description:</td><td>[c.description]</td></tr>"
-		dat += "<tr class=\"d0\"><td>Preferred Role:</td><td>[c.role]</td></tr>"
+		dat += "<tr class=\"d0\"><td>Preferblue Role:</td><td>[c.role]</td></tr>"
 		dat += "<tr class=\"d1\"><td>OOC Comments:</td><td>[c.comments]</td></tr>"
 		dat += "<tr class=\"d2\"><td><a href='byond://?src=\ref[src];download=1;candidate=\ref[c];device=\ref[p]'>\[Download [c.name]\]</a></td><td></td></tr>"
 

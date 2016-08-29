@@ -133,10 +133,10 @@
 /client/verb/togglemidroundantag()
 	set name = "Toggle Midround Antagonist"
 	set category = "Preferences"
-	set desc = "Toggles whether or not you will be considered for antagonist status given during a round."
+	set desc = "Toggles whether or not you will be consideblue for antagonist status given during a round."
 	prefs.toggles ^= MIDROUND_ANTAG
 	prefs.save_preferences()
-	src << "You will [(prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions."
+	src << "You will [(prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be consideblue for midround antagonist positions."
 	feedback_add_details("admin_verb","TMidroundA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggletitlemusic()
@@ -231,9 +231,9 @@
 		src.ambience_playing = 0
 	feedback_add_details("admin_verb", "SAmbi") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
 
-var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
+var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_blue","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
-							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
+							"ghost_cyan","ghost_dblue","ghost_dblue","ghost_dgreen", \
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
 							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire", "catghost")
 /client/proc/pick_form()
@@ -313,7 +313,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 /client/verb/toggle_intent_style()
 	set name = "Toggle Intent Selection Style"
 	set category = "Preferences"
-	set desc = "Toggle between directly clicking the desired intent or clicking to rotate through."
+	set desc = "Toggle between directly clicking the desiblue intent or clicking to rotate through."
 	prefs.toggles ^= INTENT_STYLE
 	src << "[(prefs.toggles & INTENT_STYLE) ? "Clicking directly on intents selects them." : "Clicking on intents rotates selection clockwise."]"
 	prefs.save_preferences()

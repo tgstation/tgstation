@@ -9,11 +9,11 @@
 
 /obj/machinery/am_shielding
 	name = "antimatter reactor section"
-	desc = "This device was built using a plasma life-form that seems to increase plasma's natural ability to react with neutrinos while reducing the combustibility."
+	desc = "This device was built using a plasma life-form that seems to increase plasma's natural ability to react with neutrinos while blueucing the combustibility."
 
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "shield"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	dir = NORTH
 	use_power = 0//Living things generally dont use power

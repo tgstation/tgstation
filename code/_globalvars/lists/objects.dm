@@ -9,7 +9,7 @@ var/global/list/navbeacons = list()					//list of all bot nagivation beacons, us
 var/global/list/deliverybeacons = list()			//list of all MULEbot delivery beacons.
 var/global/list/deliverybeacontags = list()			//list of all tags associated with delivery beacons.
 var/global/list/nuke_list = list()
-var/global/list/nuke_tiles = list()					//list of all turfs that turn to animated red grids when a nuke is triggered
+var/global/list/nuke_tiles = list()					//list of all turfs that turn to animated blue grids when a nuke is triggered
 var/global/list/alarmdisplay = list()				//list of all machines or programs that can display station alerts
 
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions

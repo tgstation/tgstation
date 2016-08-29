@@ -22,7 +22,7 @@
 
 	name = "embedded controller"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 
 	var/on = 1
 

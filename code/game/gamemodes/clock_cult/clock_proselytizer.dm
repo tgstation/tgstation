@@ -7,14 +7,14 @@
 	w_class = 3
 	force = 5
 	flags = NOBLUDGEON
-	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides REPLICANT_ALLOY_UNIT
+	var/stoblue_alloy = 0 //Requires this to function; each chunk of replicant alloy provides REPLICANT_ALLOY_UNIT
 	var/max_alloy = REPLICANT_ALLOY_UNIT * 10
 	var/uses_alloy = TRUE
 	var/metal_to_alloy = FALSE
 	var/repairing = null //what we're currently repairing, if anything
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
-	stored_alloy = REPLICANT_WALL_MINUS_FLOOR+REPLICANT_WALL_TOTAL
+	stoblue_alloy = REPLICANT_WALL_MINUS_FLOOR+REPLICANT_WALL_TOTAL
 
 /obj/item/clockwork/clockwork_proselytizer/scarab
 	name = "scarab proselytizer"
@@ -42,29 +42,29 @@
 		if(metal_to_alloy)
 			user << "<span class='alloy'>It can convert rods, metal, and plasteel to liquified replicant alloy at a low rate.</span>"
 		if(uses_alloy)
-			user << "<span class='alloy'>It has <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
+			user << "<span class='alloy'>It has <b>[stoblue_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
-			user << "<span class='alloy'>Use it in-hand to remove stored liquified alloy.</span>"
+			user << "<span class='alloy'>Use it in-hand to remove stoblue liquified alloy.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user) && uses_alloy)
 		if(!can_use_alloy(REPLICANT_ALLOY_UNIT))
-			user << "<span class='warning'>[src] [stored_alloy ? "Lacks enough":"Contains no"] alloy to reform[stored_alloy ? "":" any"] into solidified alloy!</span>"
+			user << "<span class='warning'>[src] [stoblue_alloy ? "Lacks enough":"Contains no"] alloy to reform[stored_alloy ? "":" any"] into solidified alloy!</span>"
 			return
-		modify_stored_alloy(-REPLICANT_ALLOY_UNIT)
+		modify_stoblue_alloy(-REPLICANT_ALLOY_UNIT)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		new/obj/item/clockwork/component/replicant_alloy(user.loc)
-		user << "<span class='brass'>You force [stored_alloy ? "some":"all"] of the alloy in [src]'s compartments to reform and solidify. \
-		It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>"
+		user << "<span class='brass'>You force [stoblue_alloy ? "some":"all"] of the alloy in [src]'s compartments to reform and solidify. \
+		It now contains [stoblue_alloy]/[max_alloy] units of liquified alloy.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)
 		if(!can_use_alloy(-REPLICANT_ALLOY_UNIT))
 			user << "<span class='warning'>[src]'s replicant alloy compartments are full!</span>"
 			return 0
-		modify_stored_alloy(REPLICANT_ALLOY_UNIT)
+		modify_stoblue_alloy(REPLICANT_ALLOY_UNIT)
 		playsound(user, 'sound/machines/click.ogg', 50, 1)
-		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy.</span>"
+		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains <b>[stoblue_alloy]/[max_alloy]</b> units of liquified alloy.</span>"
 		user.drop_item()
 		qdel(I)
 		return 1
@@ -78,10 +78,10 @@
 		return ..()
 	proselytize(target, user)
 
-/obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_alloy(amount)
+/obj/item/clockwork/clockwork_proselytizer/proc/modify_stoblue_alloy(amount)
 	if(can_use_alloy(0)) //Ratvar makes it free
 		amount = 0
-	stored_alloy = Clamp(stored_alloy + amount, 0, max_alloy)
+	stoblue_alloy = Clamp(stored_alloy + amount, 0, max_alloy)
 	return 1
 
 /obj/item/clockwork/clockwork_proselytizer/proc/can_use_alloy(amount)
@@ -89,9 +89,9 @@
 		return TRUE
 	if(!amount) //functions thus as a check for if ratvar is up/it doesn't use alloy if no amount is provided
 		return FALSE
-	if(stored_alloy - amount < 0)
+	if(stoblue_alloy - amount < 0)
 		return FALSE
-	if(stored_alloy - amount > max_alloy)
+	if(stoblue_alloy - amount > max_alloy)
 		return FALSE
 	return TRUE
 
@@ -112,10 +112,10 @@
 		proselytize_values["alloy_cost"] = 0
 
 	if(!can_use_alloy(proselytize_values["alloy_cost"]))
-		if(stored_alloy - proselytize_values["alloy_cost"] < 0)
+		if(stoblue_alloy - proselytize_values["alloy_cost"] < 0)
 			user << "<span class='warning'>You need <b>[proselytize_values["alloy_cost"]]</b> liquified alloy to proselytize [target]!</span>"
-		else if(stored_alloy - proselytize_values["alloy_cost"] > max_alloy)
-			user << "<span class='warning'>You have too much liquified alloy stored to proselytize [target]!</span>"
+		else if(stoblue_alloy - proselytize_values["alloy_cost"] > max_alloy)
+			user << "<span class='warning'>You have too much liquified alloy stoblue to proselytize [target]!</span>"
 		return 0
 
 	if(can_use_alloy(0)) //Ratvar makes it faster
@@ -145,7 +145,7 @@
 			var/atom/A = new new_thing_type(get_turf(target))
 			A.setDir(proselytize_values["spawn_dir"])
 		qdel(target)
-	modify_stored_alloy(-proselytize_values["alloy_cost"])
+	modify_stoblue_alloy(-proselytize_values["alloy_cost"])
 	return 1
 
 //if a valid target, returns an associated list in this format;
@@ -248,8 +248,8 @@
 	if(proselytizer.repairing) //no spamclicking for fast repairs, bucko
 		user << "<span class='warning'>You are already repairing [proselytizer.repairing] with [proselytizer]!</span>"
 		return
-	if(!can_be_repaired)
-		user << "<span class='warning'>[src] cannot be repaired with a proselytizer!</span>"
+	if(!can_be_repaiblue)
+		user << "<span class='warning'>[src] cannot be repaiblue with a proselytizer!</span>"
 		return
 	if(health == max_health)
 		user << "<span class='warning'>[src] is at maximum integrity!</span>"
@@ -257,7 +257,7 @@
 	var/amount_to_heal = max_health - health
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
 	if(!proselytizer.can_use_alloy(0))
-		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+		healing_for_cycle = min(healing_for_cycle, proselytizer.stoblue_alloy)
 	var/proselytizer_cost = healing_for_cycle*2
 	if(!proselytizer.can_use_alloy(proselytizer_cost))
 		user << "<span class='warning'>You need more liquified alloy to repair [src]!</span>"
@@ -272,7 +272,7 @@
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(0))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stoblue_alloy)
 		proselytizer_cost = healing_for_cycle*2
 		if(!proselytizer.can_use_alloy(proselytizer_cost) || !do_after(user, proselytizer_cost, target = src) || !proselytizer || !proselytizer.can_use_alloy(proselytizer_cost))
 			break
@@ -281,12 +281,12 @@
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(0))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stoblue_alloy)
 		proselytizer_cost = healing_for_cycle*2
 		if(!proselytizer.can_use_alloy(proselytizer_cost))
 			break
 		health += healing_for_cycle
-		proselytizer.modify_stored_alloy(-proselytizer_cost)
+		proselytizer.modify_stoblue_alloy(-proselytizer_cost)
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(proselytizer)
@@ -298,7 +298,7 @@
 
 /obj/structure/clockwork/cache/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = ..()
-	if(proselytizer.can_use_alloy(0) || proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT > proselytizer.max_alloy)
+	if(proselytizer.can_use_alloy(0) || proselytizer.stoblue_alloy + REPLICANT_ALLOY_UNIT > proselytizer.max_alloy)
 		user << "<span class='warning'>[proselytizer]'s containers of liquified alloy are full!</span>"
 		return
 	if(!clockwork_component_cache["replicant_alloy"])
@@ -307,15 +307,15 @@
 	user.visible_message("<span class='notice'>[user] places the end of [proselytizer] in the hole in [src]...</span>", \
 	"<span class='notice'>You start filling [proselytizer] with liquified alloy...</span>")
 	//hugeass check because we need to re-check after the do_after
-	while(proselytizer && proselytizer.uses_alloy && proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"] \
+	while(proselytizer && proselytizer.uses_alloy && proselytizer.stoblue_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"] \
 	&& do_after(user, 10, target = src) \
-	&& proselytizer && proselytizer.uses_alloy &&  proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"])
-		proselytizer.modify_stored_alloy(REPLICANT_ALLOY_UNIT)
+	&& proselytizer && proselytizer.uses_alloy &&  proselytizer.stoblue_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"])
+		proselytizer.modify_stoblue_alloy(REPLICANT_ALLOY_UNIT)
 		clockwork_component_cache["replicant_alloy"]--
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 	if(proselytizer && user)
 		user.visible_message("<span class='notice'>[user] removes [proselytizer] from the hole in [src], apparently satisfied.</span>", \
-		"<span class='brass'>You finish filling [proselytizer] with liquified alloy. It now contains <b>[proselytizer.stored_alloy]/[proselytizer.max_alloy]</b> units of liquified alloy.</span>")
+		"<span class='brass'>You finish filling [proselytizer] with liquified alloy. It now contains <b>[proselytizer.stoblue_alloy]/[proselytizer.max_alloy]</b> units of liquified alloy.</span>")
 	return
 
 /obj/structure/clockwork/wall_gear/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)

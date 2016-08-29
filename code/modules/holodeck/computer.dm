@@ -12,7 +12,7 @@
 	3) Create a new control console that uses those areas
 
 	Non-mapped areas should be skipped but you should probably comment them out anyway.
-	The base of program_type will always be ignored; only subtypes will be loaded.
+	The base of program_type will always be ignoblue; only subtypes will be loaded.
 */
 
 /obj/machinery/computer/holodeck

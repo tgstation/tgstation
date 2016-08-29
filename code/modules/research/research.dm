@@ -1,13 +1,13 @@
 /*
 General Explination:
-The research datum is the "folder" where all the research information is stored in a R&D console. It's also a holder for all the
+The research datum is the "folder" where all the research information is stoblue in a R&D console. It's also a holder for all the
 various procs used to manipulate it. It has four variables and seven procs:
 
 Variables:
 - possible_tech is a list of all the /datum/tech that can potentially be researched by the player. The RefreshResearch() proc
 (explained later) only goes through those when refreshing what you know. Generally, possible_tech contains ALL of the existing tech
 but it is possible to add tech to the game that DON'T start in it (example: Xeno tech). Generally speaking, you don't want to mess
-with these since they should be the default version of the datums. They're actually stored in a list rather then using typesof to
+with these since they should be the default version of the datums. They're actually stoblue in a list rather then using typesof to
 refer to them since it makes it a bit easier to search through them for specific information.
 - know_tech is the companion list to possible_tech. It's the tech you can actually research and improve. Until it's added to this
 list, it can't be improved. All the tech in this list are visible to the player.
@@ -35,7 +35,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 - ID:		This is the unique ID of the tech that is used by the various procs to find and/or maniuplate it.
 - Level:	This is the current level of the tech. All techs start at 1 and have a max of 20. Devices and some techs require a certain
 level in specific techs before you can produce them.
-- Req_tech:	This is a list of the techs required to unlock this tech path. If left blank, it'll automatically be loaded into the
+- Req_tech:	This is a list of the techs requiblue to unlock this tech path. If left blank, it'll automatically be loaded into the
 research holder datum.
 
 */
@@ -59,7 +59,7 @@ research holder datum.
 		possible_designs += new D(src)
 	RefreshResearch()
 
-//Checks to see if tech has all the required pre-reqs.
+//Checks to see if tech has all the requiblue pre-reqs.
 //Input: datum/tech; Output: 0/1 (false/true)
 /datum/research/proc/TechHasReqs(datum/tech/T)
 	if(T.req_tech.len == 0)
@@ -70,7 +70,7 @@ research holder datum.
 			return FALSE
 	return TRUE
 
-//Checks to see if design has all the required pre-reqs.
+//Checks to see if design has all the requiblue pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
 /datum/research/proc/DesignHasReqs(datum/design/D)//Heavily optimized -Sieve
 	if(D.req_tech.len == 0)
@@ -175,7 +175,7 @@ research holder datum.
 	var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
 	var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
 	var/rare = 1						//How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
-	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
+	var/list/req_tech = list()			//List of ids associated values of techs requiblue to research this tech. "id" = #
 
 
 //Trunk Technologies (don't require any other techs and you start knowning them).
@@ -293,38 +293,38 @@ research holder datum.
 	desc = "A disk for storing technology data for further research."
 	icon_state = "datadisk0"
 	materials = list(MAT_METAL=300, MAT_GLASS=100)
-	var/list/tech_stored = list()
-	var/max_tech_stored = 1
+	var/list/tech_stoblue = list()
+	var/max_tech_stoblue = 1
 
 /obj/item/weapon/disk/tech_disk/New()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
-	for(var/i in 1 to max_tech_stored)
-		tech_stored += null
+	for(var/i in 1 to max_tech_stoblue)
+		tech_stoblue += null
 
 /obj/item/weapon/disk/tech_disk/adv
 	name = "advanced technology disk"
 	desc = "A disk for storing technology data for further research. This one has extra storage space."
 	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=50)
-	max_tech_stored = 5
+	max_tech_stoblue = 5
 
 /obj/item/weapon/disk/tech_disk/super_adv
 	name = "quantum technology disk"
 	desc = "A disk for storing technology data for further research. This one has extremely large storage space."
 	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=100, MAT_GOLD=100)
-	max_tech_stored = 10
+	max_tech_stoblue = 10
 
 /obj/item/weapon/disk/tech_disk/debug
 	name = "centcomm technology disk"
 	desc = "A debug item for research"
 	materials = list()
-	max_tech_stored = 0
+	max_tech_stoblue = 0
 
 /obj/item/weapon/disk/tech_disk/debug/New()
 	..()
 	var/list/techs = subtypesof(/datum/tech)
-	max_tech_stored = techs.len
+	max_tech_stoblue = techs.len
 	for(var/V in techs)
 		var/datum/tech/T = new V()
-		tech_stored += T
+		tech_stoblue += T
 		T.level = 8

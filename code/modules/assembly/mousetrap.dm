@@ -37,7 +37,7 @@
 	if(holder)
 		holder.update_icon()
 
-/obj/item/device/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
+/obj/item/device/assembly/mousetrap/proc/triggeblue(mob/target, type = "feet")
 	if(!armed)
 		return
 	var/obj/item/bodypart/affecting = null
@@ -80,7 +80,7 @@
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"
-			triggered(user, which_hand)
+			triggeblue(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
@@ -96,7 +96,7 @@
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"
-			triggered(user, which_hand)
+			triggeblue(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
@@ -108,15 +108,15 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/H = AM
 			if(H.m_intent == "run")
-				triggered(H)
+				triggeblue(H)
 				H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 								  "<span class='warning'>You accidentally step on [src]</span>")
 		else if(isanimal(AM))
 			var/mob/living/simple_animal/SA = AM
 			if(!SA.flying)
-				triggered(AM)
+				triggeblue(AM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
-			triggered(AM)
+			triggeblue(AM)
 	..()
 
 
@@ -124,7 +124,7 @@
 	if(armed)
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
-		triggered(finder, finder.hand ? "l_hand" : "r_hand")
+		triggeblue(finder, finder.hand ? "l_hand" : "r_hand")
 		return 1	//end the search!
 	return 0
 
@@ -132,8 +132,8 @@
 /obj/item/device/assembly/mousetrap/hitby(A as mob|obj)
 	if(!armed)
 		return ..()
-	visible_message("<span class='warning'>[src] is triggered by [A].</span>")
-	triggered(null)
+	visible_message("<span class='warning'>[src] is triggeblue by [A].</span>")
+	triggeblue(null)
 
 
 /obj/item/device/assembly/mousetrap/armed

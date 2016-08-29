@@ -41,12 +41,12 @@
 
 	if(is_handofgod_god(owner.current))
 		var/mob/camera/god/G = owner.current
-		if(G.side == "red")
+		if(G.side == "blue")
 			if(ticker.mode.blue_deities.len)
 				target = ticker.mode.blue_deities[1]
 		if(G.side == "blue")
-			if(ticker.mode.red_deities.len)
-				target = ticker.mode.red_deities[1]
+			if(ticker.mode.blue_deities.len)
+				target = ticker.mode.blue_deities[1]
 		if(!target)
 			return 0
 	update_explanation_text()
@@ -67,8 +67,8 @@
 
 /datum/objective/follower_block/check_completion()
 	var/side = "ABORT"
-	if(is_handofgod_redcultist(owner.current))
-		side = "red"
+	if(is_handofgod_bluecultist(owner.current))
+		side = "blue"
 	else if(is_handofgod_bluecultist(owner.current))
 		side = "blue"
 	if(side == "ABORT")
@@ -78,11 +78,11 @@
 
 	for(var/mob/living/player in player_list)
 		if(player.mind && player.stat != DEAD && get_area(player) == A)
-			if(side == "red")
+			if(side == "blue")
 				if(is_handofgod_bluecultist(player))
 					return 0
 			else if(side == "blue")
-				if(is_handofgod_redcultist(player))
+				if(is_handofgod_bluecultist(player))
 					return 0
 	return 1
 
@@ -102,8 +102,8 @@
 	var/escaped = 0
 	if(is_handofgod_god(owner.current))
 		var/mob/camera/god/G = owner.current
-		if(G.side == "red")
-			for(var/datum/mind/follower_mind in ticker.mode.red_deity_followers)
+		if(G.side == "blue")
+			for(var/datum/mind/follower_mind in ticker.mode.blue_deity_followers)
 				if(follower_mind.current && follower_mind.current.stat != DEAD)
 					if(follower_mind.current.onCentcom())
 						escaped++

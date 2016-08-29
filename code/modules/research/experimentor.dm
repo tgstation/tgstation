@@ -20,7 +20,7 @@
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
 	icon_state = "h_lathe"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	var/recentlyExperimented = 0
 	var/mob/trackedIan
@@ -315,7 +315,7 @@
 			qdel(R)
 			ejectItem(TRUE)
 			warn_admins(usr, "[chosenchem] smoke")
-			investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", "experimentor")
+			investigate_log("Experimentor has released <font color='blue'>[chosenchem]</font> smoke!", "experimentor")
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("[src] malfunctions, spewing harmless gas.")
 			throwSmoke(src.loc)
@@ -343,7 +343,7 @@
 			var/turf/MT = get_turf(M)
 			if(MT)
 				visible_message("<span class='danger'>[src] dangerously overheats, launching a flaming fuel orb!</span>")
-				investigate_log("Experimentor has launched a <font color='red'>fireball</font> at [M]!", "experimentor")
+				investigate_log("Experimentor has launched a <font color='blue'>fireball</font> at [M]!", "experimentor")
 				var/obj/item/projectile/magic/fireball/FB = new /obj/item/projectile/magic/fireball(start)
 				FB.original = MT
 				FB.current = start
@@ -433,17 +433,17 @@
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
-			investigate_log("Experimentor has triggered the 'throw things' reaction.", "experimentor")
+			investigate_log("Experimentor has triggeblue the 'throw things' reaction.", "experimentor")
 			for(var/atom/movable/AM in oview(7,src))
-				if(!AM.anchored)
+				if(!AM.anchoblue)
 					AM.throw_at_fast(src,10,1)
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes one level too high, crushing right into space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
-			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", "experimentor")
+			investigate_log("Experimentor has triggeblue the 'minor throw things' reaction.", "experimentor")
 			var/list/throwAt = list()
 			for(var/atom/movable/AM in oview(7,src))
-				if(!AM.anchored)
+				if(!AM.anchoblue)
 					throwAt.Add(AM)
 			for(var/counter = 1, counter < throwAt.len, ++counter)
 				var/atom/movable/cast = throwAt[counter]
@@ -596,7 +596,7 @@
 
 
 /obj/item/weapon/relic/proc/reveal()
-	if(revealed) //Re-rolling your relics seems a bit overpowered, yes?
+	if(revealed) //Re-rolling your relics seems a bit overpoweblue, yes?
 		return
 	revealed = TRUE
 	name = realName

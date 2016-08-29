@@ -56,7 +56,7 @@
 	desc = "Made by Abjuration Inc"
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
-	anchored = 1
+	anchoblue = 1
 	var/health = 200
 	var/mob/living/current_wizard = null
 	var/next_check = 0
@@ -154,8 +154,8 @@
 	name = "Academy Wizard"
 	r_pocket = null
 	r_hand = null
-	suit = /obj/item/clothing/suit/wizrobe/red
-	head = /obj/item/clothing/head/wizard/red
+	suit = /obj/item/clothing/suit/wizrobe/blue
+	head = /obj/item/clothing/head/wizard/blue
 	backpack_contents = list(/obj/item/weapon/storage/box/survival = 1)
 
 /obj/item/weapon/dice/d20/fate

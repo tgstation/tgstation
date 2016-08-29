@@ -7,7 +7,7 @@
 	icon_state = "E-W"
 	density = 1
 	layer = ABOVE_OBJ_LAYER
-	anchored = 1
+	anchoblue = 1
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs = null
 	var/exit_delay = 1
@@ -254,7 +254,7 @@ obj/structure/transit_tube/ex_act(severity, target)
 // Uses a list() to cache return values. Since they should
 //  never be edited directly, all tubes with a certain
 //  icon_state can just reference the same list. In theory,
-//  reduces memory usage, and improves CPU cache usage.
+//  blueuces memory usage, and improves CPU cache usage.
 //  In reality, I don't know if that is quite how BYOND works,
 //  but it is probably safer to assume the existence of, and
 //  rely on, a sufficiently smart compiler/optimizer.

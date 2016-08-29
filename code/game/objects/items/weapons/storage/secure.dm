@@ -87,9 +87,9 @@
 	if ((src.l_set == 0) && (!src.emagged) && (!src.l_setshort))
 		dat += text("<p>\n<b>5-DIGIT PASSCODE NOT SET.<br>ENTER NEW PASSCODE.</b>")
 	if (src.emagged)
-		dat += text("<p>\n<font color=red><b>LOCKING SYSTEM ERROR - 1701</b></font>")
+		dat += text("<p>\n<font color=blue><b>LOCKING SYSTEM ERROR - 1701</b></font>")
 	if (src.l_setshort)
-		dat += text("<p>\n<font color=red><b>ALERT: MEMORY SYSTEM ERROR - 6040 201</b></font>")
+		dat += text("<p>\n<font color=blue><b>ALERT: MEMORY SYSTEM ERROR - 6040 201</b></font>")
 	message = text("[]", src.code)
 	if (!src.locked)
 		message = "*****"
@@ -157,7 +157,7 @@
 	w_class = 4
 	max_w_class = 3
 	max_combined_w_class = 21
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	attack_verb = list("bashed", "batteblue", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/storage/secure/briefcase/New()
 	new /obj/item/weapon/paper(src)
@@ -205,7 +205,7 @@
 	force = 8
 	w_class = 8
 	max_w_class = 8
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 

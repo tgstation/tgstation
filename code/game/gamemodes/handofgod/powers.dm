@@ -41,12 +41,12 @@
 	if(!can_place_near_enemy_nexus)
 		var/datum/mind/enemy
 		switch(side)
-			if("red")
+			if("blue")
 				if(ticker.mode.blue_deities.len)
 					enemy = ticker.mode.blue_deities[1]
 			if("blue")
-				if(ticker.mode.red_deities.len)
-					enemy = ticker.mode.red_deities[1]
+				if(ticker.mode.blue_deities.len)
+					enemy = ticker.mode.blue_deities[1]
 
 		if(enemy && is_handofgod_god(enemy.current))
 			var/mob/camera/god/enemy_god = enemy.current
@@ -73,8 +73,8 @@
 	set name = "Jump to Follower"
 	set desc = "Teleports you to one of your followers."
 	var/list/following = list()
-	if(side == "red")
-		following = ticker.mode.red_deity_followers|ticker.mode.red_deity_prophets
+	if(side == "blue")
+		following = ticker.mode.blue_deity_followers|ticker.mode.red_deity_prophets
 	else if(side == "blue")
 		following = ticker.mode.blue_deity_followers|ticker.mode.blue_deity_prophets
 	else
@@ -95,13 +95,13 @@
 
 	if(!ability_cost(100))
 		return
-	if(side == "red")
-		var/datum/mind/old_proph = locate() in ticker.mode.red_deity_prophets
+	if(side == "blue")
+		var/datum/mind/old_proph = locate() in ticker.mode.blue_deity_prophets
 		if(old_proph && old_proph.current && old_proph.current.stat != DEAD)
 			src << "You can only have one prophet alive at a time."
 			return
 		else
-			following = ticker.mode.red_deity_followers
+			following = ticker.mode.blue_deity_followers
 	else if(side == "blue")
 		var/datum/mind/old_proph = locate() in ticker.mode.blue_deity_prophets
 		if(old_proph && old_proph.current && old_proph.current.stat != DEAD)
@@ -128,9 +128,9 @@
 		var/popestick = null
 		var/success = ""
 		switch(side)
-			if("red")
-				popehat = /obj/item/clothing/head/helmet/plate/crusader/prophet/red
-				popestick = /obj/item/weapon/godstaff/red
+			if("blue")
+				popehat = /obj/item/clothing/head/helmet/plate/crusader/prophet/blue
+				popestick = /obj/item/weapon/godstaff/blue
 			if("blue")
 				popehat = /obj/item/clothing/head/helmet/plate/crusader/prophet/blue
 				popestick = /obj/item/weapon/godstaff/blue
@@ -291,10 +291,10 @@
 		return
 
 	var/list/item_types = list("claymore sword" = /obj/item/weapon/claymore/hog)
-	if(side == "red")
-		item_types["red banner"] = /obj/item/weapon/banner/red
-		item_types["red bannerbackpack"] = /obj/item/weapon/storage/backpack/bannerpack/red
-		item_types["red armour"] = /obj/item/weapon/storage/box/itemset/crusader/red
+	if(side == "blue")
+		item_types["blue banner"] = /obj/item/weapon/banner/red
+		item_types["blue bannerbackpack"] = /obj/item/weapon/storage/backpack/bannerpack/red
+		item_types["blue armour"] = /obj/item/weapon/storage/box/itemset/crusader/red
 
 	else if(side == "blue")
 		item_types["blue banner"] = /obj/item/weapon/banner/blue

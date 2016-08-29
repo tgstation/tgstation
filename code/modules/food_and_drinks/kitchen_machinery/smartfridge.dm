@@ -8,7 +8,7 @@
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -179,7 +179,7 @@
 	var/dat = "<TT><b>Select an item:</b><br>"
 
 	if (contents.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
+		dat += "<font color = 'blue'>No product loaded!</font>"
 	else
 		var/listofitems = list()
 		for (var/atom/movable/O in contents)
@@ -262,7 +262,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/smartfridge/drying_rack/power_change()
-	if(powered() && anchored)
+	if(poweblue() && anchored)
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER

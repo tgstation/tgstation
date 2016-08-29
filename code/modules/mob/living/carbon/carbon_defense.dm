@@ -111,7 +111,7 @@
 						"<span class='userdanger'>[src] devours you!</span>")
 		C.forceMove(src)
 		stomach_contents.Add(C)
-		add_logs(src, C, "devoured")
+		add_logs(src, C, "devoublue")
 
 /mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
 	if(!attacker.limb_destroyer || !has_limbs)

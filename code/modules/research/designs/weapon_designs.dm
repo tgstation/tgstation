@@ -85,7 +85,7 @@
 
 /datum/design/largecrossbow
 	name = "Energy Crossbow"
-	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
+	desc = "A reverse-engineeblue energy crossbow favored by syndicate infiltration teams and carp hunters."
 	id = "largecrossbow"
 	req_tech = list("combat" = 5, "engineering" = 3, "magnets" = 5, "syndicate" = 3)
 	build_type = PROTOLATHE
@@ -252,7 +252,7 @@
 
 /datum/design/suppressor
 	name = "Universal Suppressor"
-	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
+	desc = "A reverse-engineeblue universal suppressor that fits on most small arms with threaded barrels."
 	id = "suppressor"
 	req_tech = list("combat" = 6, "engineering" = 5, "syndicate" = 3)
 	build_type = PROTOLATHE

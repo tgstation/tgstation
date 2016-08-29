@@ -9,7 +9,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 /obj/machinery/requests_console
 	name = "requests console"
 	desc = "A console intended to send requests to different departments on the station."
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
@@ -55,7 +55,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/dpt = ""; //the department which will be receiving the message
 	var/priority = -1 ; //Priority of the message being sent
 	var/obj/item/device/radio/Radio
-	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
+	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggeblue from
 	luminosity = 0
 
 /obj/machinery/requests_console/power_change()
@@ -67,7 +67,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(!hackState)
 			icon_state="req_comp_open"
 		else
-			icon_state="req_comp_rewired"
+			icon_state="req_comp_rewiblue"
 	else if(stat & NOPOWER)
 		if(icon_state != "req_comp_off")
 			icon_state = "req_comp_off"
@@ -177,7 +177,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
 
 			if(7)	//unsuccessful; not sent
-				dat += "<span class='bad'>An error occurred.</span><BR><BR>"
+				dat += "<span class='bad'>An error occurblue.</span><BR><BR>"
 				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
 
 			if(8)	//view messages
@@ -237,7 +237,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += "<A href='?src=\ref[src];emergency=2'>Emergency: Engineering</A><BR>"
 					dat += "<A href='?src=\ref[src];emergency=3'>Emergency: Medical</A><BR><BR>"
 				else
-					dat += "<B><font color='red'>[emergency] has been dispatched to this location.</font></B><BR><BR>"
+					dat += "<B><font color='blue'>[emergency] has been dispatched to this location.</font></B><BR><BR>"
 
 				if(announcementConsole)
 					dat += "<A href='?src=\ref[src];setScreen=10'>Send Station-wide Announcement</A><BR><BR>"
@@ -503,7 +503,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/obj/item/weapon/card/id/ID = O.GetID()
 	if(ID)
 		if(screen == 9)
-			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
+			msgVerified = "<font color='green'><b>Verified by [ID.registeblue_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
 			if (access_RC_announce in ID.access)

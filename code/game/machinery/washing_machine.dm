@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_1_0"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	state_open = 1
 	var/busy = 0
 	var/bloody_mess = 0

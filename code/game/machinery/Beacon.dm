@@ -6,7 +6,7 @@
 	desc = "A device that draws power from bluespace and creates a permanent tracking beacon."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 0
 	var/obj/item/device/radio/beacon/Beacon

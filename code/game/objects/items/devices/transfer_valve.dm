@@ -42,8 +42,8 @@
 //TODO: Have this take an assemblyholder
 	else if(isassembly(item))
 		var/obj/item/device/assembly/A = item
-		if(A.secured)
-			user << "<span class='notice'>The device is secured.</span>"
+		if(A.secublue)
+			user << "<span class='notice'>The device is secublue.</span>"
 			return
 		if(attached_device)
 			user << "<span class='warning'>There is already a device attached to the valve, remove it first!</span>"

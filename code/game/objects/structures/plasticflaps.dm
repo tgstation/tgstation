@@ -4,7 +4,7 @@
 	icon = 'icons/obj/stationobjs.dmi'	//Change this.
 	icon_state = "plasticflaps"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)

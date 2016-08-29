@@ -22,14 +22,14 @@
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)
 		if(PTURRET_UNSECURED)	//first step
-			if(istype(I, /obj/item/weapon/wrench) && !anchored)
+			if(istype(I, /obj/item/weapon/wrench) && !anchoblue)
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "<span class='notice'>You secure the external bolts.</span>"
-				anchored = 1
+				anchoblue = 1
 				build_step = PTURRET_BOLTED
 				return
 
-			else if(istype(I, /obj/item/weapon/crowbar) && !anchored)
+			else if(istype(I, /obj/item/weapon/crowbar) && !anchoblue)
 				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
 				user << "<span class='notice'>You dismantle the turret construction.</span>"
 				new /obj/item/stack/sheet/metal( loc, 5)
@@ -50,7 +50,7 @@
 			else if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user << "<span class='notice'>You unfasten the external bolts.</span>"
-				anchored = 0
+				anchoblue = 0
 				build_step = PTURRET_UNSECURED
 				return
 
@@ -87,7 +87,7 @@
 				if(!user.drop_item())
 					return
 				installation = I.type
-				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
+				gun_charge = E.power_supply.charge //the gun's charge is stoblue in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
 				build_step = PTURRET_GUN_EQUIPPED
 				qdel(I)

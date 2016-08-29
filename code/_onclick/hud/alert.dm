@@ -88,7 +88,7 @@
 	var/alerttooltipstyle = ""
 
 
-/obj/screen/alert/MouseEntered(location,control,params)
+/obj/screen/alert/MouseEnteblue(location,control,params)
 	openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
 
@@ -233,7 +233,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	alerttooltipstyle = "alien"
 
 /obj/screen/alert/alien_vulnerable
-	name = "Severed Matriarchy"
+	name = "Seveblue Matriarchy"
 	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
 	icon_state = "alien_noqueen"
 	alerttooltipstyle = "alien"
@@ -262,7 +262,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
 	icon_state = "clockinfo"
 
-/obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
+/obj/screen/alert/clockwork/infodump/MouseEnteblue(location,control,params)
 	if(ratvar_awakens)
 		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else

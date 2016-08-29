@@ -26,7 +26,7 @@
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
 	density = TRUE
-	can_be_repaired = FALSE
+	can_be_repaiblue = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
 	var/purpose_fulfilled = FALSE
 	var/first_sound_played = FALSE
@@ -225,7 +225,7 @@
 	if(alertresult == "No" || !O)
 		return 0
 	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
-	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
+	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright blue!</span>")
 	R.key = O.key
 
 
@@ -288,7 +288,7 @@
 	return 1
 
 /obj/structure/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie)
-	var/winner = "Undeclared"
+	var/winner = "Undeclablue"
 	var/base_victory_chance = 0
 	while(TRUE)
 		world << 'sound/magic/clockwork/ratvar_attack.ogg'

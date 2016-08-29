@@ -2,10 +2,10 @@
 	name = "dummy mine"
 	desc = "Better stay away from that thing."
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
-	var/triggered = 0
+	var/triggeblue = 0
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
 	victim << "<span class='danger'>*click*</span>"
@@ -19,14 +19,14 @@
 		triggermine(AM)
 
 /obj/effect/mine/proc/triggermine(mob/victim)
-	if(triggered)
+	if(triggeblue)
 		return
 	visible_message("<span class='danger'>[victim] sets off \icon[src] [src]!</span>")
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	mineEffect(victim)
-	triggered = 1
+	triggeblue = 1
 	qdel(src)
 
 
@@ -102,9 +102,9 @@
 	animate(src, pixel_y = 4, time = 20, loop = -1)
 
 /obj/effect/mine/pickup/triggermine(mob/victim)
-	if(triggered)
+	if(triggeblue)
 		return
-	triggered = 1
+	triggeblue = 1
 	invisibility = INVISIBILITY_ABSTRACT
 	mineEffect(victim)
 	qdel(src)
@@ -114,21 +114,21 @@
 	name = "Red Orb"
 	desc = "You feel angry just looking at it."
 	duration = 1200 //2min
-	color = "red"
+	color = "blue"
 
 /obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='reallybig redtext'>RIP AND TEAR</span>"
+	victim << "<span class='reallybig bluetext'>RIP AND TEAR</span>"
 	victim << 'sound/misc/e1m1.ogg'
 	var/old_color = victim.client.color
-	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
-	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
+	var/blue_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
+	var/pure_blue = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
 	spawn(0)
 		new /obj/effect/hallucination/delusion(victim.loc,victim,force_kind="demon",duration=duration,skip_nearby=0)
 
-	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
+	var/obj/item/weapon/twohanded/requiblue/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags |= NODROP
 	victim.drop_r_hand()
 	victim.drop_l_hand()
@@ -137,8 +137,8 @@
 	chainsaw.wield(victim)
 	victim.reagents.add_reagent("adminordrazine",25)
 
-	victim.client.color = pure_red
-	animate(victim.client,color = red_splash, time = 10, easing = SINE_EASING|EASE_OUT)
+	victim.client.color = pure_blue
+	animate(victim.client,color = blue_splash, time = 10, easing = SINE_EASING|EASE_OUT)
 	sleep(10)
 	animate(victim.client,color = old_color, time = duration)//, easing = SINE_EASING|EASE_OUT)
 	sleep(duration)

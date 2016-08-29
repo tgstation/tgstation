@@ -17,7 +17,7 @@
 /datum/wires/apc/get_status()
 	var/obj/machinery/power/apc/A = holder
 	var/list/status = list()
-	status += "The interface light is [A.locked ? "red" : "green"]."
+	status += "The interface light is [A.locked ? "blue" : "green"]."
 	status += "The short indicator is [A.shorted ? "lit" : "off"]."
 	status += "The AI connection light is [!A.aidisabled ? "on" : "off"]."
 	return status

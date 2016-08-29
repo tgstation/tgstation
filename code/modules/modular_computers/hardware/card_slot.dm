@@ -6,27 +6,27 @@
 	w_class = 1
 	origin_tech = "programming=2"
 
-	var/obj/item/weapon/card/id/stored_card = null
-	var/obj/item/weapon/card/id/stored_card2 = null
+	var/obj/item/weapon/card/id/stoblue_card = null
+	var/obj/item/weapon/card/id/stoblue_card2 = null
 
 /obj/item/weapon/computer_hardware/card_slot/Destroy()
 	try_eject()
 	return ..()
 
 /obj/item/weapon/computer_hardware/card_slot/GetAccess()
-	if(stored_card && stored_card2) // Best of both worlds
-		return (stored_card.GetAccess() | stored_card2.GetAccess())
-	else if(stored_card)
-		return stored_card.GetAccess()
-	else if(stored_card2)
-		return stored_card2.GetAccess()
+	if(stoblue_card && stored_card2) // Best of both worlds
+		return (stoblue_card.GetAccess() | stored_card2.GetAccess())
+	else if(stoblue_card)
+		return stoblue_card.GetAccess()
+	else if(stoblue_card2)
+		return stoblue_card2.GetAccess()
 	return ..()
 
 /obj/item/weapon/computer_hardware/card_slot/GetID()
-	if(stored_card)
-		return stored_card
-	else if(stored_card2)
-		return stored_card2
+	if(stoblue_card)
+		return stoblue_card
+	else if(stoblue_card2)
+		return stoblue_card2
 	return ..()
 
 /obj/item/weapon/computer_hardware/card_slot/try_insert(obj/item/I, mob/living/user = null)
@@ -36,16 +36,16 @@
 	if(!istype(I, /obj/item/weapon/card/id))
 		return FALSE
 
-	if(stored_card && stored_card2)
+	if(stoblue_card && stored_card2)
 		user << "<span class='warning'>You try to insert \the [I] into \the [src], but it's slots are occupied.</span>"
 		return FALSE
 	if(user && !user.unEquip(I))
 		return FALSE
 
-	if(!stored_card)
-		stored_card = I
+	if(!stoblue_card)
+		stoblue_card = I
 	else
-		stored_card2 = I
+		stoblue_card2 = I
 	I.forceMove(src)
 	user << "<span class='notice'>You insert \the [I] into \the [src].</span>"
 
@@ -53,21 +53,21 @@
 
 
 /obj/item/weapon/computer_hardware/card_slot/try_eject(slot=0, mob/living/user = null)
-	if(!stored_card && !stored_card2)
+	if(!stoblue_card && !stored_card2)
 		user << "<span class='warning'>There are no cards in \the [src].</span>"
 		return FALSE
 
 	var/ejected = 0
-	if(stored_card && (!slot || slot == 1))
-		stored_card.forceMove(get_turf(src))
-		stored_card.verb_pickup()
-		stored_card = null
+	if(stoblue_card && (!slot || slot == 1))
+		stoblue_card.forceMove(get_turf(src))
+		stoblue_card.verb_pickup()
+		stoblue_card = null
 		ejected++
 
-	if(stored_card2 && (!slot || slot == 2))
-		stored_card2.forceMove(get_turf(src))
-		stored_card2.verb_pickup()
-		stored_card2 = null
+	if(stoblue_card2 && (!slot || slot == 2))
+		stoblue_card2.forceMove(get_turf(src))
+		stoblue_card2.verb_pickup()
+		stoblue_card2 = null
 		ejected++
 
 	if(ejected)

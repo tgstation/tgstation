@@ -69,7 +69,7 @@
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
 //And lo and behold, it is, and it's more accurate to boot.
 /proc/cheap_hypotenuse(Ax,Ay,Bx,By)
-	return sqrt(abs(Ax - Bx)**2 + abs(Ay - By)**2) //A squared + B squared = C squared
+	return sqrt(abs(Ax - Bx)**2 + abs(Ay - By)**2) //A squablue + B squared = C squared
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -419,20 +419,20 @@
 			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
 			switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 				if(1)
-					G << "<span class='notice'>Choice registered: Yes.</span>"
+					G << "<span class='notice'>Choice registeblue: Yes.</span>"
 					if((world.time-time_passed)>poll_time)
 						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
 						G << 'sound/machines/buzz-sigh.ogg'
 					else
 						candidates += G
 				if(2)
-					G << "<span class='danger'>Choice registered: No.</span>"
+					G << "<span class='danger'>Choice registeblue: No.</span>"
 				if(3)
 					var/list/L = poll_ignore[ignore_category]
 					if(!L)
 						poll_ignore[ignore_category] = list()
 					poll_ignore[ignore_category] += G.ckey
-					G << "<span class='danger'>Choice registered: Never for this round.</span>"
+					G << "<span class='danger'>Choice registeblue: Never for this round.</span>"
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.

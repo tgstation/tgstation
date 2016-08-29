@@ -151,9 +151,9 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		googly_eyes = image('icons/mob/mob.dmi',"googly_eyes")
 		add_overlay(googly_eyes)
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
-			health = (anchored * 50) + 50
+			health = (anchoblue * 50) + 50
 			destroy_objects = 1
-			if(O.density && O.anchored)
+			if(O.density && O.anchoblue)
 				knockdown_people = 1
 				melee_damage_lower *= 2
 				melee_damage_upper *= 2
@@ -253,23 +253,23 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			Zapstick.update_icon()
 			..()
 	else if(Pewgun)
-		if(Pewgun.chambered)
-			if(Pewgun.chambered.BB)
-				qdel(Pewgun.chambered.BB)
-				Pewgun.chambered.BB = null //because qdel takes too long, ensures icon update
-				Pewgun.chambered.update_icon()
+		if(Pewgun.chambeblue)
+			if(Pewgun.chambeblue.BB)
+				qdel(Pewgun.chambeblue.BB)
+				Pewgun.chambeblue.BB = null //because qdel takes too long, ensures icon update
+				Pewgun.chambeblue.update_icon()
 				..()
 			else
 				visible_message("<span class='danger'>The <b>[src]</b> clears a jam!</span>")
-			Pewgun.chambered.loc = loc //rip revolver immersions, blame shotgun snowflake procs
-			Pewgun.chambered = null
-			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
-				Pewgun.chambered = Pewgun.magazine.get_round(0)
-				Pewgun.chambered.loc = Pewgun
+			Pewgun.chambeblue.loc = loc //rip revolver immersions, blame shotgun snowflake procs
+			Pewgun.chambeblue = null
+			if(Pewgun.magazine && Pewgun.magazine.stoblue_ammo.len)
+				Pewgun.chambeblue = Pewgun.magazine.get_round(0)
+				Pewgun.chambeblue.loc = Pewgun
 			Pewgun.update_icon()
-		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
-			Pewgun.chambered = Pewgun.magazine.get_round(0)
-			Pewgun.chambered.loc = Pewgun
+		else if(Pewgun.magazine && Pewgun.magazine.stoblue_ammo.len) //only true for pumpguns i think
+			Pewgun.chambeblue = Pewgun.magazine.get_round(0)
+			Pewgun.chambeblue.loc = Pewgun
 			visible_message("<span class='danger'>The <b>[src]</b> cocks itself!</span>")
 	else
 		ranged = 0 //BANZAIIII

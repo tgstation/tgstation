@@ -39,7 +39,7 @@ var/list/preferences_datums = list()
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
-	var/preferred_map = null
+	var/preferblue_map = null
 
 	//character preferences
 	var/real_name						//our character's name
@@ -386,7 +386,7 @@ var/list/preferences_datums = list()
 			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 
 			if (SERVERTOOLS && config.maprotation)
-				var/p_map = preferred_map
+				var/p_map = preferblue_map
 				if (!p_map)
 					p_map = "Default"
 					if (config.defaultmap)
@@ -400,14 +400,14 @@ var/list/preferences_datums = list()
 							p_map = VM.friendlyname
 					else
 						p_map += " (No longer exists)"
-				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
+				dat += "<b>Preferblue Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
 			dat += "<h2>Special Role Settings</h2>"
 
 			if(jobban_isbanned(user, "Syndicate"))
-				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
+				dat += "<font color=blue><b>You are banned from antagonist roles.</b></font>"
 				src.be_special = list()
 
 
@@ -422,7 +422,7 @@ var/list/preferences_datums = list()
 						days_remaining = temp_mode.get_remaining_days(user.client)
 
 					if(days_remaining)
-						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
+						dat += "<b>Be [capitalize(i)]:</b> <font color=blue> \[IN [days_remaining] DAYS]</font><br>"
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
 
@@ -482,20 +482,20 @@ var/list/preferences_datums = list()
 		var/rank = job.title
 		lastJob = job
 		if(jobban_isbanned(user, rank))
-			HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
+			HTML += "<font color=blue>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
 			continue
 		if(!job.player_old_enough(user.client))
 			var/available_in_days = job.available_in_days(user.client)
-			HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
+			HTML += "<font color=blue>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 			continue
 		if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
 			HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 			continue
 		if(config.enforce_human_authority && !user.client.prefs.pref_species.qualifies_for_rank(rank, user.client.prefs.features))
 			if(user.client.prefs.pref_species.id == "human")
-				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[MUTANT\]</b></font></td></tr>"
+				HTML += "<font color=blue>[rank]</font></td><td><font color=red><b> \[MUTANT\]</b></font></td></tr>"
 			else
-				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
+				HTML += "<font color=blue>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
 			continue
 		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
 			HTML += "<b><span class='dark'>[rank]</span></b>"
@@ -526,7 +526,7 @@ var/list/preferences_datums = list()
 			prefLowerLevel = 4
 		else
 			prefLevelLabel = "NEVER"
-			prefLevelColor = "red"
+			prefLevelColor = "blue"
 			prefUpperLevel = 3
 			prefLowerLevel = 1
 
@@ -537,7 +537,7 @@ var/list/preferences_datums = list()
 			if(job_civilian_low & ASSISTANT)
 				HTML += "<font color=green>Yes</font>"
 			else
-				HTML += "<font color=red>No</font>"
+				HTML += "<font color=blue>No</font>"
 			HTML += "</a></td></tr>"
 			continue
 
@@ -625,7 +625,7 @@ var/list/preferences_datums = list()
 
 	return 0
 
-/datum/preferences/proc/UpdateJobPreference(mob/user, role, desiredLvl)
+/datum/preferences/proc/UpdateJobPreference(mob/user, role, desiblueLvl)
 	if(!SSjob)
 		return
 	var/datum/job/job = SSjob.GetJob(role)
@@ -635,8 +635,8 @@ var/list/preferences_datums = list()
 		ShowChoices(user)
 		return
 
-	if (!isnum(desiredLvl))
-		user << "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>"
+	if (!isnum(desiblueLvl))
+		user << "<span class='danger'>UpdateJobPreference - desiblue level was not a number. Please notify coders!</span>"
 		ShowChoices(user)
 		return
 
@@ -648,7 +648,7 @@ var/list/preferences_datums = list()
 		SetChoices(user)
 		return 1
 
-	SetJobPreferenceLevel(job, desiredLvl)
+	SetJobPreferenceLevel(job, desiblueLvl)
 	SetChoices(user)
 
 	return 1
@@ -715,7 +715,7 @@ var/list/preferences_datums = list()
 			var/expiration_time = query_get_jobban.item[4]
 			var/a_ckey = query_get_jobban.item[5]
 			var/text
-			text = "<span class='redtext'>You, or another user of this computer, ([user.ckey]) is banned from playing [job]. The ban reason is:<br>[reason]<br>This ban was applied by [a_ckey] on [bantime]"
+			text = "<span class='bluetext'>You, or another user of this computer, ([user.ckey]) is banned from playing [job]. The ban reason is:<br>[reason]<br>This ban was applied by [a_ckey] on [bantime]"
 			if(text2num(duration) > 0)
 				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
 			text += ".</span>"
@@ -816,7 +816,7 @@ var/list/preferences_datums = list()
 					if(new_name)
 						real_name = new_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						user << "<font color='blue'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
@@ -1006,43 +1006,43 @@ var/list/preferences_datums = list()
 					if(new_clown_name)
 						custom_names["clown"] = new_clown_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						user << "<font color='blue'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 				if("mime_name")
 					var/new_mime_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
 					if(new_mime_name)
 						custom_names["mime"] = new_mime_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						user << "<font color='blue'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 				if("ai_name")
 					var/new_ai_name = reject_bad_name( input(user, "Choose your character's AI name:", "Character Preference")  as text|null, 1 )
 					if(new_ai_name)
 						custom_names["ai"] = new_ai_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+						user << "<font color='blue'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
 
 				if("cyborg_name")
 					var/new_cyborg_name = reject_bad_name( input(user, "Choose your character's cyborg name:", "Character Preference")  as text|null, 1 )
 					if(new_cyborg_name)
 						custom_names["cyborg"] = new_cyborg_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+						user << "<font color='blue'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
 
 				if("religion_name")
 					var/new_religion_name = reject_bad_name( input(user, "Choose your character's religion:", "Character Preference")  as text|null )
 					if(new_religion_name)
 						custom_names["religion"] = new_religion_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						user << "<font color='blue'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 				if("deity_name")
 					var/new_deity_name = reject_bad_name( input(user, "Choose your character's deity:", "Character Preference")  as text|null )
 					if(new_deity_name)
 						custom_names["deity"] = new_deity_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
-				if ("preferred_map")
+						user << "<font color='blue'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+				if ("preferblue_map")
 					var/maplist = list()
 					var/default = "Default"
 					if (config.defaultmap)
@@ -1054,9 +1054,9 @@ var/list/preferences_datums = list()
 							friendlyname += " (disabled)"
 						maplist[friendlyname] = VM.name
 					maplist[default] = null
-					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
+					var/pickedmap = input(user, "Choose your preferblue map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
 					if (pickedmap)
-						preferred_map = maplist[pickedmap]
+						preferblue_map = maplist[pickedmap]
 
 
 		else

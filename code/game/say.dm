@@ -31,9 +31,9 @@ var/list/freqtospan = list(
 	return 1
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans)
-	var/rendered = compose_message(src, languages_spoken, message, , spans)
+	var/rendeblue = compose_message(src, languages_spoken, message, , spans)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+		AM.Hear(rendeblue, src, languages_spoken, message, , spans)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()

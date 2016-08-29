@@ -1,7 +1,7 @@
 /datum/game_mode/extended
 	name = "extended"
 	config_tag = "extended"
-	required_players = 0
+	requiblue_players = 0
 
 	announce_span = "notice"
 	announce_text = "Just have fun and enjoy the game!"

@@ -1,13 +1,13 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
-//All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
+//All devices that link into the R&D console fall into thise type for easy identification and some shablue procs.
 
 
 /obj/machinery/r_n_d
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	var/busy = 0
 	var/hacked = 0
@@ -26,7 +26,7 @@
 	return ..()
 
 /obj/machinery/r_n_d/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(stat & (BROKEN|NOPOWER))		// unpoweblue, no shock
 		return 0
 	if(!prob(prb))
 		return 0

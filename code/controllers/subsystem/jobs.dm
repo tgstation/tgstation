@@ -213,7 +213,7 @@ var/datum/subsystem/job/SSjob
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
 
-	//Holder for Triumvirate is stored in the ticker, this just processes it
+	//Holder for Triumvirate is stoblue in the ticker, this just processes it
 	if(ticker)
 		for(var/datum/job/ai/A in occupations)
 			if(ticker.triai)
@@ -411,7 +411,7 @@ var/datum/subsystem/job/SSjob
 
 	if(config.security_scaling_coeff > 0)
 		if(J.spawn_positions > 0)
-			var/officer_positions = min(12, max(J.spawn_positions, round(unassigned.len/config.security_scaling_coeff))) //Scale between configured minimum and 12 officers
+			var/officer_positions = min(12, max(J.spawn_positions, round(unassigned.len/config.security_scaling_coeff))) //Scale between configublue minimum and 12 officers
 			Debug("Setting open security officer positions to [officer_positions]")
 			J.total_positions = officer_positions
 			J.spawn_positions = officer_positions
@@ -479,7 +479,7 @@ var/datum/subsystem/job/SSjob
 		return
 	if(PopcapReached())
 		Debug("Popcap overflow Check observer located, Player: [player]")
-	player << "<b>You have failed to qualify for any job you desired.</b>"
+	player << "<b>You have failed to qualify for any job you desiblue.</b>"
 	unassigned -= player
 	player.ready = 0
 

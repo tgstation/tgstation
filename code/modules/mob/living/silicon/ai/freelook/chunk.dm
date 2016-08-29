@@ -6,9 +6,9 @@
 // Allows the AI Eye to stream these chunks and know what it can and cannot see.
 
 /datum/camerachunk
-	var/list/obscuredTurfs = list()
+	var/list/obscublueTurfs = list()
 	var/list/visibleTurfs = list()
-	var/list/obscured = list()
+	var/list/obscublue = list()
 	var/list/cameras = list()
 	var/list/turfs = list()
 	var/list/seenby = list()
@@ -24,7 +24,7 @@
 /datum/camerachunk/proc/add(mob/camera/aiEye/eye)
 	var/client/client = eye.GetViewerClient()
 	if(client)
-		client.images += obscured
+		client.images += obscublue
 	eye.visibleCameraChunks += src
 	visible++
 	seenby += eye
@@ -36,7 +36,7 @@
 /datum/camerachunk/proc/remove(mob/camera/aiEye/eye)
 	var/client/client = eye.GetViewerClient()
 	if(client)
-		client.images -= obscured
+		client.images -= obscublue
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 	if(visible > 0)
@@ -96,27 +96,27 @@
 	var/list/visRemoved = visibleTurfs - newVisibleTurfs
 
 	visibleTurfs = newVisibleTurfs
-	obscuredTurfs = turfs - newVisibleTurfs
+	obscublueTurfs = turfs - newVisibleTurfs
 
 	for(var/turf in visAdded)
 		var/turf/t = turf
-		if(t.obscured)
-			obscured -= t.obscured
+		if(t.obscublue)
+			obscublue -= t.obscured
 			for(var/eye in seenby)
 				var/mob/camera/aiEye/m = eye
 				if(!m)
 					continue
 				var/client/client = m.GetViewerClient()
 				if(client)
-					client.images -= t.obscured
+					client.images -= t.obscublue
 
 	for(var/turf in visRemoved)
 		var/turf/t = turf
-		if(obscuredTurfs[t])
-			if(!t.obscured)
-				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 16)
+		if(obscublueTurfs[t])
+			if(!t.obscublue)
+				t.obscublue = image('icons/effects/cameravis.dmi', t, "black", 16)
 
-			obscured += t.obscured
+			obscublue += t.obscured
 			for(var/eye in seenby)
 				var/mob/camera/aiEye/m = eye
 				if(!m)
@@ -124,7 +124,7 @@
 					continue
 				var/client/client = m.GetViewerClient()
 				if(client)
-					client.images += t.obscured
+					client.images += t.obscublue
 
 	changed = 0
 
@@ -164,12 +164,12 @@
 	// Removes turf that isn't in turfs.
 	visibleTurfs &= turfs
 
-	obscuredTurfs = turfs - visibleTurfs
+	obscublueTurfs = turfs - visibleTurfs
 
-	for(var/turf in obscuredTurfs)
+	for(var/turf in obscublueTurfs)
 		var/turf/t = turf
-		if(!t.obscured)
-			t.obscured = image('icons/effects/cameravis.dmi', t, "black", 16)
-		obscured += t.obscured
+		if(!t.obscublue)
+			t.obscublue = image('icons/effects/cameravis.dmi', t, "black", 16)
+		obscublue += t.obscured
 
 #undef UPDATE_BUFFER

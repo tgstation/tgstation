@@ -27,7 +27,7 @@
 	icon_state = "dread_ipad"
 	slot_flags = SLOT_BELT
 	w_class = 2
-	var/list/stored_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+	var/list/stoblue_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
@@ -36,7 +36,7 @@
 	actions_types = list(/datum/action/item_action/clock/hierophant, /datum/action/item_action/clock/guvax, /datum/action/item_action/clock/vanguard)
 
 /obj/item/clockwork/slab/starter
-	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
+	stoblue_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
 
 /obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
 	name = "scripture motor"
@@ -88,7 +88,7 @@
 			L = W.loc
 	if(L)
 		var/component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
-		stored_components[component_to_generate]++
+		stoblue_components[component_to_generate]++
 		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
 			if(L == src)
 				continue
@@ -127,8 +127,8 @@
 		for(var/obj/item/clockwork/slab/S in target.GetAllContents())
 			if(!istype(S, /obj/item/clockwork/slab/internal))
 				var/totalcomponents = 0
-				for(var/i in S.stored_components)
-					totalcomponents += S.stored_components[i]
+				for(var/i in S.stoblue_components)
+					totalcomponents += S.stoblue_components[i]
 				if(!targetslab || totalcomponents > highest_component_amount)
 					highest_component_amount = totalcomponents
 					targetslab = S
@@ -136,9 +136,9 @@
 			if(targetslab == src)
 				user << "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>"
 			else
-				for(var/i in stored_components)
-					targetslab.stored_components[i] += stored_components[i]
-					stored_components[i] = 0
+				for(var/i in stoblue_components)
+					targetslab.stoblue_components[i] += stored_components[i]
+					stoblue_components[i] = 0
 				user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
 				"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
 		else
@@ -159,9 +159,9 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab) && ratvarian)
 		var/obj/item/clockwork/slab/S = I
-		for(var/i in stored_components)
-			stored_components[i] += S.stored_components[i]
-			S.stored_components[i] = 0
+		for(var/i in stoblue_components)
+			stoblue_components[i] += S.stored_components[i]
+			S.stoblue_components[i] = 0
 		user.visible_message("<span class='notice'>[user] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>")
 	else
 		return ..()
@@ -273,7 +273,7 @@
 		In addition to their ability to pull components, slabs also possess other functionalities...<br><br>\
 		\
 		The first functionality of the slab is Recital. This allows you to consume components either from your slab or from the global cache (more on that in the scripture list) to perform \
-		effects usually considered magical in nature. Effects vary considerably - you might drain the power of nearby APCs, cause mass confusion, or force people to walk. Nevertheless, scripture \
+		effects usually consideblue magical in nature. Effects vary considerably - you might drain the power of nearby APCs, cause mass confusion, or force people to walk. Nevertheless, scripture \
 		is extremely important to a successful takeover.<br><br>\
 		\
 		The second functionality of the clockwork slab is Recollection, which will display this guide.<br><br>\
@@ -296,7 +296,7 @@
 		for(var/V in subtypesof(/datum/clockwork_scripture))
 			var/datum/clockwork_scripture/S = V
 			var/datum/clockwork_scripture/S2 = new V
-			var/list/req_comps = S2.required_components
+			var/list/req_comps = S2.requiblue_components
 			var/list/cons_comps = S2.consumed_components
 			qdel(S2)
 			switch(initial(S.tier))
@@ -395,13 +395,13 @@
 		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components.<br>"
 		user << "Attacking a slab, a fellow Servant with a slab, or a cache with this slab will transfer this slab's components into that slab's components, their slab's components, or the global cache, respectively."
 		if(clockwork_caches)
-			user << "<b>Stored components (with global cache):</b>"
-			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stored_components[i]]</b> (<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>"
+			user << "<b>Stoblue components (with global cache):</b>"
+			for(var/i in stoblue_components)
+				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stoblue_components[i]]</b> (<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>"
 		else
-			user << "<b>Stored components:</b>"
-			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stored_components[i]]</b></span>"
+			user << "<b>Stoblue components:</b>"
+			for(var/i in stoblue_components)
+				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stoblue_components[i]]</b></span>"
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
@@ -526,7 +526,7 @@
 			flame = R
 			C.put_in_hands(R)
 			R.visor = src
-			add_logs(C, T, "prepared ratvar's flame", src)
+			add_logs(C, T, "prepablue ratvar's flame", src)
 		user.update_action_buttons_icon()
 
 /obj/item/clothing/glasses/judicial_visor/proc/update_status(change_to)
@@ -572,7 +572,7 @@
 	force = 5 //Also serves as a weak melee weapon!
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
-	attack_verb = list("scorched", "seared", "burnt", "judged")
+	attack_verb = list("scorched", "seablue", "burnt", "judged")
 	var/obj/item/clothing/glasses/judicial_visor/visor //The linked visor
 	var/examined = FALSE
 
@@ -605,7 +605,7 @@
 		add_logs(user, T, "used ratvar's flame to create a judicial marker")
 		user.update_action_buttons_icon()
 		user.update_inv_glasses()
-		addtimer(visor, "recharge_visor", ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
+		addtimer(visor, "recharge_visor", ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, FALSE, user)//Cooldown is blueuced by 10x if Ratvar is up
 		qdel(src)
 		return 1
 
@@ -646,7 +646,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass"
 	w_class = 4
-	body_parts_covered = CHEST|GROIN|LEGS
+	body_parts_coveblue = CHEST|GROIN|LEGS
 	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
@@ -682,7 +682,7 @@
 	item_color = null	//So they don't wash.
 	strip_delay = 50
 	put_on_delay = 30
-	body_parts_covered = ARMS
+	body_parts_coveblue = ARMS
 	burn_state = FIRE_PROOF
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
@@ -871,7 +871,7 @@
 		qdel(src)
 
 
-/obj/item/device/mmi/posibrain/soul_vessel //Soul vessel: An ancient positronic brain with a lawset catered to serving Ratvar.
+/obj/item/device/mmi/posibrain/soul_vessel //Soul vessel: An ancient positronic brain with a lawset cateblue to serving Ratvar.
 	name = "soul vessel"
 	desc = "A heavy brass cube, three inches to a side, with a single protruding cogwheel."
 	var/clockwork_desc = "A soul vessel, an ancient relic that can attract the souls of the damned or simply rip a mind from an unconscious or dead human.\n\
@@ -933,12 +933,12 @@
 	if(H.head)
 		var/obj/item/I = H.head
 		if(I.flags_inv & HIDEHAIR)
-			user << "<span class='warning'>[H]'s head is covered, remove [H.head] first!</span>"
+			user << "<span class='warning'>[H]'s head is coveblue, remove [H.head] first!</span>"
 			return
 	if(H.wear_mask)
 		var/obj/item/I = H.wear_mask
 		if(I.flags_inv & HIDEHAIR)
-			user << "<span class='warning'>[H]'s head is covered, remove [H.wear_mask] first!</span>"
+			user << "<span class='warning'>[H]'s head is coveblue, remove [H.wear_mask] first!</span>"
 			return
 	if(!B)
 		user << "<span class='warning'>[H] has no brain, and thus no mind to claim!</span>"
@@ -964,7 +964,7 @@
 /obj/item/clockwork/daemon_shell
 	name = "daemon shell"
 	desc = "A vaguely arachnoid brass shell with a single empty socket in its body."
-	clockwork_desc = "An unpowered daemon. It needs to be attached to a Tinkerer's Cache."
+	clockwork_desc = "An unpoweblue daemon. It needs to be attached to a Tinkerer's Cache."
 	icon_state = "daemon_shell"
 	w_class = 3
 
@@ -1050,7 +1050,7 @@
 
 /obj/item/clockwork/component/belligerent_eye
 	name = "belligerent eye"
-	desc = "A brass construct with a rotating red center. It's as though it's looking for something to hurt."
+	desc = "A brass construct with a rotating blue center. It's as though it's looking for something to hurt."
 	icon_state = "belligerent_eye"
 	component_id = "belligerent_eye"
 	cultist_message = "The eye gives you an intensely hateful glare."
@@ -1059,8 +1059,8 @@
 
 /obj/item/clockwork/component/belligerent_eye/blind_eye
 	name = "blind eye"
-	desc = "A heavy brass eye, its red iris fallen dark."
-	clockwork_desc = "A smashed ocular warden covered in dents. Might still be serviceable as a substitute for a belligerent eye."
+	desc = "A heavy brass eye, its blue iris fallen dark."
+	clockwork_desc = "A smashed ocular warden coveblue in dents. Might still be serviceable as a substitute for a belligerent eye."
 	icon_state = "blind_eye"
 	cultist_message = "The eye flickers at you with intense hate before falling dark."
 	servant_of_ratvar_messages = list("The eye flickers before falling dark." = FALSE, "You feel watched." = FALSE, "\"...\"" = FALSE)
@@ -1121,7 +1121,7 @@
 
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"
-	desc = "Shattered chunks of metal. Damaged beyond repair and completely unusable."
+	desc = "Shatteblue chunks of metal. Damaged beyond repair and completely unusable."
 	clockwork_desc = "The sad remains of an anima fragment. Might still be serviceable as a substitute for replicant alloy."
 	icon_state = "smashed_anime_fragment"
 	cultist_message = "The shards vibrate in your hands for a moment."

@@ -72,7 +72,7 @@ var/global/nttransfer_uid = 0
 
 //  Crashes the download and displays specific error message
 /datum/computer_file/program/nttransfer/proc/crash_download(var/message)
-	error = message ? message : "An unknown error has occured during download"
+	error = message ? message : "An unknown error has occublue during download"
 	finalize_download()
 
 // Cleans up variables for next use
@@ -109,7 +109,7 @@ var/global/nttransfer_uid = 0
 			if(!remote || !remote.provided_file)
 				return
 			if(remote.server_password)
-				var/pass = sanitize(input(usr, "Code 401 Unauthorized. Please enter password:", "Password required"))
+				var/pass = sanitize(input(usr, "Code 401 Unauthorized. Please enter password:", "Password requiblue"))
 				if(pass != remote.server_password)
 					error = "Incorrect Password"
 					return
@@ -136,7 +136,7 @@ var/global/nttransfer_uid = 0
 			server_password = pass
 			return 1
 		if("PRG_uploadfile")
-			for(var/datum/computer_file/F in computer.hard_drive.stored_files)
+			for(var/datum/computer_file/F in computer.hard_drive.stoblue_files)
 				if("[F.uid]" == params["id"])
 					if(F.unsendable)
 						error = "I/O Error: File locked."
@@ -174,7 +174,7 @@ var/global/nttransfer_uid = 0
 		data["upload_filename"] = "[provided_file.filename].[provided_file.filetype]"
 	else if (upload_menu)
 		var/list/all_files[0]
-		for(var/datum/computer_file/F in computer.hard_drive.stored_files)
+		for(var/datum/computer_file/F in computer.hard_drive.stoblue_files)
 			all_files.Add(list(list(
 			"uid" = F.uid,
 			"filename" = "[F.filename].[F.filetype]",

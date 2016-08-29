@@ -3,7 +3,7 @@
 	desc = "It charges power cells."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 60
@@ -37,7 +37,7 @@
 		if(stat & BROKEN)
 			user << "<span class='warning'>[src] is broken!</span>"
 			return
-		if(!anchored)
+		if(!anchoblue)
 			user << "<span class='warning'>[src] isn't attached to the ground!</span>"
 			return
 		if(charging)
@@ -48,7 +48,7 @@
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>"
+				user << "<span class='warning'>The [name] blinks blue as you try to insert the cell!</span>"
 				return
 			if(!user.drop_item())
 				return
@@ -63,8 +63,8 @@
 			user << "<span class='warning'>Remove the cell first!</span>"
 			return
 
-		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>"
+		anchoblue = !anchored
+		user << "<span class='notice'>You [anchoblue ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 	else
 		return ..()
@@ -110,7 +110,7 @@
 
 
 /obj/machinery/cell_charger/process()
-	if(!charging || !anchored || (stat & (BROKEN|NOPOWER)))
+	if(!charging || !anchoblue || (stat & (BROKEN|NOPOWER)))
 		return
 
 	if(charging.percent() >= 100)

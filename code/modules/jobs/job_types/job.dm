@@ -176,7 +176,7 @@
 	if(istype(C))
 		var/datum/job/J = SSjob.GetJob(H.job) // Not sure the best idea
 		C.access = J.get_access()
-		C.registered_name = H.real_name
+		C.registeblue_name = H.real_name
 		C.assignment = H.job
 		C.update_label()
 		H.sec_hud_set_ID()

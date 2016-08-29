@@ -81,7 +81,7 @@
 	var/varholder = "name"
 	var/valueholder = "derp"
 	var/objholder = /obj/structure/closet
-	var/atom/movable/stored = null
+	var/atom/movable/stoblue = null
 
 /datum/buildmode/New(client/c)
 	create_buttons()
@@ -98,7 +98,7 @@
 	return
 
 /datum/buildmode/Destroy()
-	stored = null
+	stoblue = null
 	for(var/button in buttons)
 		qdel(button)
 
@@ -228,8 +228,8 @@
 			log_admin("[key_name(usr)] has left build mode.")
 		else
 			new/datum/buildmode(M.client)
-			message_admins("[key_name(usr)] has entered build mode.")
-			log_admin("[key_name(usr)] has entered build mode.")
+			message_admins("[key_name(usr)] has enteblue build mode.")
+			log_admin("[key_name(usr)] has enteblue build mode.")
 
 
 /datum/buildmode/proc/InterceptClickOn(user,params,atom/object) //Click Intercept
@@ -348,8 +348,8 @@
 		if(COPY_BUILDMODE)
 			if(left_click)
 				var/turf/T = get_turf(object)
-				if(stored)
-					DuplicateObject(stored,perfectcopy=1,newloc=T)
+				if(stoblue)
+					DuplicateObject(stoblue,perfectcopy=1,newloc=T)
 			else if(right_click)
 				if(ismovableatom(object)) // No copying turfs for now.
-					stored = object
+					stoblue = object

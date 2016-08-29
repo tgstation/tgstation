@@ -131,7 +131,7 @@ var/datum/subsystem/ticker/ticker
 			if(secret_force_mode != "secret")
 				var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 				if(!smode.can_start())
-					message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
+					message_admins("\blue Unable to force secret [secret_force_mode]. [smode.requiblue_players] players and [smode.required_enemies] eligible antagonists needed.")
 				else
 					mode = smode
 
@@ -144,7 +144,7 @@ var/datum/subsystem/ticker/ticker
 	else
 		mode = config.pick_mode(master_mode)
 		if(!mode.can_start())
-			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
+			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.requiblue_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
 			qdel(mode)
 			mode = null
 			SSjob.ResetOccupations()
@@ -180,7 +180,7 @@ var/datum/subsystem/ticker/ticker
 		toggle_ooc(0) // Turn it off
 	round_start_time = world.time
 
-	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
+	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always pblueictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -248,7 +248,7 @@ var/datum/subsystem/ticker/ticker
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					world << sound('sound/effects/explosionfar.ogg')
-					flick("station_intact_fade_red",cinematic)
+					flick("station_intact_fade_blue",cinematic)
 					cinematic.icon_state = "summary_nukefail"
 				if("gang war") //Gang Domination (just show the override screen)
 					cinematic.icon_state = "intro_malf_still"
@@ -276,19 +276,19 @@ var/datum/subsystem/ticker/ticker
 				if("nuclear emergency") //Nuke Ops successfully bombed the station
 					flick("intro_nuke",cinematic)
 					sleep(35)
-					flick("station_explode_fade_red",cinematic)
+					flick("station_explode_fade_blue",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_nukewin"
 				if("AI malfunction") //Malf (screen,explosion,summary)
 					flick("intro_malf",cinematic)
 					sleep(76)
-					flick("station_explode_fade_red",cinematic)
+					flick("station_explode_fade_blue",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_malf"
 				if("blob") //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
-					flick("station_explode_fade_red",cinematic)
+					flick("station_explode_fade_blue",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_selfdes"
 				if("no_core") //Nuke failed to detonate as it had no core
@@ -306,7 +306,7 @@ var/datum/subsystem/ticker/ticker
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
-					flick("station_explode_fade_red", cinematic)
+					flick("station_explode_fade_blue", cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_selfdes"
 	//If its actually the end of the round, wait for it to end.
@@ -376,7 +376,7 @@ var/datum/subsystem/ticker/ticker
 				else
 					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
 			else
-				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>"
+				Player << "<font color='blue'><b>You did not survive the events on [station_name()]...</b></FONT>"
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
@@ -384,7 +384,7 @@ var/datum/subsystem/ticker/ticker
 	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
-	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"
+	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='blue'>Destroyed</font>" : "[station_integrity]%"]</B>"
 	if(joined_player_list.len)
 		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
 		if(station_evacuated)

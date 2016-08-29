@@ -198,7 +198,7 @@
 /obj/item/mecha_parts/part/durand_armor
 	gender = PLURAL
 	name = "\improper Durand armor plates"
-	desc = "A set of armor plates for the Durand. Built heavy to resist an incredible amount of brute force."
+	desc = "A set of armor plates for the Durand. Built heavy to resist an incblueible amount of brute force."
 	icon_state = "durand_armor"
 	origin_tech = "materials=5;combat=4;engineering=4"
 
@@ -299,7 +299,7 @@
 
 /obj/item/mecha_parts/part/phazon_armor
 	name="Phazon armor"
-	desc="Phazon armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
+	desc="Phazon armor plates. They are layeblue with plasma to protect the pilot from the stress of phasing and have unusual properties."
 	icon_state = "phazon_armor"
 	origin_tech = "materials=4;bluespace=4;plasmatech=5"
 

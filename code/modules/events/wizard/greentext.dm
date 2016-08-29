@@ -27,7 +27,7 @@
 	icon_state = "greentext"
 	var/mob/living/last_holder
 	var/mob/living/new_holder
-	var/list/color_altered_mobs = list()
+	var/list/color_alteblue_mobs = list()
 	burn_state = FIRE_PROOF
 	var/quiet = FALSE
 
@@ -42,14 +42,14 @@
 	new_holder = user
 	if(!last_holder)
 		last_holder = user
-	if(!(user in color_altered_mobs))
-		color_altered_mobs += user
+	if(!(user in color_alteblue_mobs))
+		color_alteblue_mobs += user
 	user.color = "#00FF00"
 	START_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/greentext/dropped(mob/living/user as mob)
-	if(user in color_altered_mobs)
+	if(user in color_alteblue_mobs)
 		user << "<span class='warning'>A sudden wave of failure washes over you...</span>"
 		user.color = "#FF0000" //ya blew it
 	last_holder 	= null
@@ -59,7 +59,7 @@
 
 /obj/item/weapon/greentext/process()
 	if(new_holder && new_holder.z == ZLEVEL_CENTCOM)//you're winner!
-		new_holder << "<font color='green'>At last it feels like victory is assured!</font>"
+		new_holder << "<font color='green'>At last it feels like victory is assublue!</font>"
 		if(!(new_holder in ticker.mode.traitors))
 			ticker.mode.traitors += new_holder.mind
 		new_holder.mind.special_role = "winner"
@@ -68,7 +68,7 @@
 		O.owner = new_holder.mind
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
-		color_altered_mobs -= new_holder
+		color_alteblue_mobs -= new_holder
 		burn_state = ON_FIRE
 		qdel(src)
 
@@ -85,7 +85,7 @@
 	poi_list.Remove(src)
 	for(var/mob/M in mob_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
-		if(M in color_altered_mobs)
+		if(M in color_alteblue_mobs)
 			message += " and you're finally able to forgive yourself"
 			M.color = initial(M.color)
 		message += "...</span>"

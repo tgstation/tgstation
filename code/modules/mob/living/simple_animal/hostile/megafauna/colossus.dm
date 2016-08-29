@@ -268,7 +268,7 @@ Difficulty: Very Hard
 
 /obj/machinery/smartfridge/black_box
 	name = "black box"
-	desc = "A completely indestructible chunk of crystal, rumoured to predate the start of this universe. It looks like you could store things inside it."
+	desc = "A completely indestructible chunk of crystal, rumoublue to predate the start of this universe. It looks like you could store things inside it."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "blackbox"
 	icon_on = "blackbox"
@@ -279,7 +279,7 @@ Difficulty: Very Hard
 	pixel_y = -4
 	use_power = 0
 	var/memory_saved = FALSE
-	var/list/stored_items = list()
+	var/list/stoblue_items = list()
 	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
 
 /obj/machinery/smartfridge/black_box/update_icon()
@@ -308,22 +308,22 @@ Difficulty: Very Hard
 
 /obj/machinery/smartfridge/black_box/proc/WriteMemory()
 	var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
-	stored_items = list()
+	stoblue_items = list()
 
 	for(var/obj/O in (contents-component_parts))
-		stored_items += O.type
+		stoblue_items += O.type
 
-	S["stored_items"]				<< stored_items
+	S["stoblue_items"]				<< stored_items
 	memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/ReadMemory()
 	var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
-	S["stored_items"] 		>> stored_items
+	S["stoblue_items"] 		>> stored_items
 
-	if(isnull(stored_items))
-		stored_items = list()
+	if(isnull(stoblue_items))
+		stoblue_items = list()
 
-	for(var/item in stored_items)
+	for(var/item in stoblue_items)
 		create_item(item)
 
 //in it's own proc to avoid issues with items that nolonger exist in the code base.

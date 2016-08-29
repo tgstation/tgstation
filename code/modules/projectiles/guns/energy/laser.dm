@@ -64,7 +64,7 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "cshotgun"
 	item_state = "shotgun"
-	desc = "A combat shotgun gutted and refitted with an internal laser system. Can switch between taser and scattered disabler shots."
+	desc = "A combat shotgun gutted and refitted with an internal laser system. Can switch between taser and scatteblue disabler shots."
 	shaded_charge = 0
 	pin = /obj/item/device/firing_pin/implant/mindshield
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
@@ -125,14 +125,14 @@
 	ammo_x_offset = 2
 	selfcharge = 1
 
-/obj/item/weapon/gun/energy/laser/redtag
+/obj/item/weapon/gun/energy/laser/bluetag
 	name = "laser tag gun"
-	icon_state = "redtag"
-	desc = "A retro laser gun modified to fire harmless beams red of light. Sound effects included!"
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
+	icon_state = "bluetag"
+	desc = "A retro laser gun modified to fire harmless beams blue of light. Sound effects included!"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
 	origin_tech = "combat=2;magnets=2"
 	clumsy_check = 0
 	needs_permit = 0
-	pin = /obj/item/device/firing_pin/tag/red
+	pin = /obj/item/device/firing_pin/tag/blue
 	ammo_x_offset = 2
 	selfcharge = 1

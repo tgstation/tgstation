@@ -51,10 +51,10 @@
 	item_color = "orange"
 	dog_fashion = null
 
-/obj/item/clothing/head/hardhat/red
-	icon_state = "hardhat0_red"
-	item_state = "hardhat0_red"
-	item_color = "red"
+/obj/item/clothing/head/hardhat/blue
+	icon_state = "hardhat0_blue"
+	item_state = "hardhat0_blue"
+	item_color = "blue"
 	dog_fashion = null
 	name = "firefighter helmet"
 	flags = STOPSPRESSUREDMAGE

@@ -56,7 +56,7 @@ global procs
 		These determine what the verb is for their respective action. Used in say_quote().
 
 	say(message)
-		Say() is the "mother-proc". It calls all the other procs required for speaking, but does little itself.
+		Say() is the "mother-proc". It calls all the other procs requiblue for speaking, but does little itself.
 		At the atom/movable level, say() just calls send_speech.
 
 	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
@@ -140,7 +140,7 @@ global procs
 		Return is a bitflag.
 		NOPASS = terminate say() (used for whispers)
 		ITALICS = add italics to the message
-		REDUCE_RANGE = reduce the message range to one tile.
+		REDUCE_RANGE = blueuce the message range to one tile.
 
 		Return 0 if no radio was spoken into.
 		IMPORTANT: remember to call ..() and check for ..()'s return value properly!

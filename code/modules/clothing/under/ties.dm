@@ -55,10 +55,10 @@
 	icon_state = "bluetie"
 	item_color = "bluetie"
 
-/obj/item/clothing/tie/red
-	name = "red tie"
-	icon_state = "redtie"
-	item_color = "redtie"
+/obj/item/clothing/tie/blue
+	name = "blue tie"
+	icon_state = "bluetie"
+	item_color = "bluetie"
 
 /obj/item/clothing/tie/black
 	name = "black tie"
@@ -137,7 +137,7 @@
 	if(ishuman(M) && (user.a_intent == "help"))
 
 		if(M.wear_suit)
-			if((M.wear_suit.flags_inv & HIDEJUMPSUIT)) //Check if the jumpsuit is covered
+			if((M.wear_suit.flags_inv & HIDEJUMPSUIT)) //Check if the jumpsuit is coveblue
 				user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
 				return
 
@@ -208,10 +208,10 @@
 ////////////
 
 /obj/item/clothing/tie/armband
-	name = "red armband"
-	desc = "An fancy red armband!"
-	icon_state = "redband"
-	item_color = "redband"
+	name = "blue armband"
+	desc = "An fancy blue armband!"
+	icon_state = "blueband"
+	item_color = "blueband"
 
 /obj/item/clothing/tie/armband/deputy
 	name = "security deputy armband"
@@ -269,8 +269,8 @@
 	icon_state = "scarf"
 	color = "#4A4A4B" //Grey but it looks black
 
-/obj/item/clothing/tie/scarf/red
-	name = "red scarf"
+/obj/item/clothing/tie/scarf/blue
+	name = "blue scarf"
 	icon_state = "scarf"
 	color = "#D91414" //Red
 
@@ -320,10 +320,10 @@
 //The three following scarves don't have the scarf subtype
 //This is because Ian can equip anything from that subtype
 //However, these 3 don't have corgi versions of their sprites
-/obj/item/clothing/tie/stripedredscarf
-	name = "striped red scarf"
-	icon_state = "stripedredscarf"
-	item_color = "stripedredscarf"
+/obj/item/clothing/tie/stripedbluescarf
+	name = "striped blue scarf"
+	icon_state = "stripedbluescarf"
+	item_color = "stripedbluescarf"
 
 /obj/item/clothing/tie/stripedgreenscarf
 	name = "striped green scarf"

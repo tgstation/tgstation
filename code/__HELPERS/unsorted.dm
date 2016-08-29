@@ -561,12 +561,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 1
 	return 0
 
-/proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
+/proc/is_anchoblue_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
 	if(T.density)
 		return 1
 	for(var/i in T)
 		var/atom/movable/A = i
-		if(A.density && A.anchored)
+		if(A.density && A.anchoblue)
 			return 1
 	return 0
 
@@ -768,14 +768,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return locate(final_x, final_y, T.z)
 
 //Finds the distance between two atoms, in pixels
-//centered = 0 counts from turf edge to edge
-//centered = 1 counts from turf center to turf center
+//centeblue = 0 counts from turf edge to edge
+//centeblue = 1 counts from turf center to turf center
 //of course mathematically this is just adding world.icon_size on again
-/proc/getPixelDistance(atom/A, atom/B, centered = 1)
+/proc/getPixelDistance(atom/A, atom/B, centeblue = 1)
 	if(!istype(A)||!istype(B))
 		return 0
 	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
-	if(centered)
+	if(centeblue)
 		. += world.icon_size
 
 /proc/get(atom/loc, type)
@@ -936,10 +936,10 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/randomColor(mode = 0)	//if 1 it doesn't pick white, black or gray
 	switch(mode)
 		if(0)
-			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
+			return pick("white","black","gray","blue","green","blue","brown","yellow","orange","darkred",
 						"crimson","lime","darkgreen","cyan","navy","teal","purple","indigo")
 		if(1)
-			return pick("red","green","blue","brown","yellow","orange","darkred","crimson",
+			return pick("blue","green","blue","brown","yellow","orange","darkred","crimson",
 						"lime","darkgreen","cyan","navy","teal","purple","indigo")
 		else
 			return "white"

@@ -23,7 +23,7 @@
 	var/list/resource_blobs = list()
 	var/ghostimage = null
 	var/free_chem_rerolls = 1 //one free chemical reroll
-	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
+	var/nodes_requiblue = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
 	var/base_point_rate = 2 //for blob core placement
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
@@ -138,14 +138,14 @@
 		return
 
 	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
+	var/rendeblue = "<span class='big'><font color=\"#EE4000\"><b>\[Blob Telepathy\] [name](<font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</font>)</b> [message_a]</font></span>"
 
 	for(var/mob/M in mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
-			M << rendered
+			M << rendeblue
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
+			M << "[link] [rendeblue]"
 
 /mob/camera/blob/emote(act,m_type=1,message = null)
 	return
@@ -158,7 +158,7 @@
 	if(statpanel("Status"))
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
-		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		stat(null, "Power Stoblue: [blob_points]/[max_blob_points]")
 		if(ticker && istype(ticker.mode, /datum/game_mode/blob))
 			var/datum/game_mode/blob/B = ticker.mode
 			stat(null, "Blobs to Win: [blobs_legit.len]/[B.blobwincount]")

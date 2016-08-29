@@ -63,7 +63,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetable
 	name = "vegetable pizza slice"
-	desc = "A slice of the most green pizza of all pizzas not containing green ingredients."
+	desc = "A slice of the most green pizza of all pizzas not containing green ingblueients."
 	icon_state = "vegetablepizzaslice"
 	filling_color = "#FFA500"
 

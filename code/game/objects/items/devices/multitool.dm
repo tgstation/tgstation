@@ -1,5 +1,5 @@
 #define PROXIMITY_NONE ""
-#define PROXIMITY_ON_SCREEN "_red"
+#define PROXIMITY_ON_SCREEN "_blue"
 #define PROXIMITY_NEAR "_yellow"
 
 /**
@@ -24,14 +24,14 @@
 	toolspeed = 1
 
 
-// Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
+// Syndicate device disguised as a multitool; it will turn blue when an AI camera is nearby.
 
 
 /obj/item/device/multitool/ai_detect
 	var/track_cooldown = 0
 	var/track_delay = 10 //How often it checks for proximity
 	var/detect_state = PROXIMITY_NONE
-	var/rangealert = 8	//Glows red when inside
+	var/rangealert = 8	//Glows blue when inside
 	var/rangewarning = 20 //Glows yellow when inside
 	origin_tech = "magnets=1;engineering=2;syndicate=1"
 

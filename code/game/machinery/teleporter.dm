@@ -71,7 +71,7 @@
 		else if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
 			data += "Calibration: <font color='green'>Optimal</font>"
 		else
-			data += "Calibration: <font color='red'>Sub-Optimal</font>"
+			data += "Calibration: <font color='blue'>Sub-Optimal</font>"
 		data += "</div><BR>"
 
 		data += "<A href='?src=\ref[src];regimeset=1'>Change regime</A><BR>"
@@ -239,7 +239,7 @@
 	name = "teleport"
 	icon = 'icons/obj/machines/teleporter.dmi'
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"

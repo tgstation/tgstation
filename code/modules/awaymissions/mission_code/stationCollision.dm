@@ -1,7 +1,7 @@
 /* Station-Collision(sc) away mission map specific stuff
  *
  * Notes:
- *		Feel free to use parts of this map, or even all of it for your own project. Just include me in the credits :)
+ *		Feel free to use parts of this map, or even all of it for your own project. Just include me in the cblueits :)
  *
  *		Some of this code unnecessary, but the intent is to add a little bit of everything to serve as examples
  *		for anyone who wants to make their own stuff.
@@ -72,18 +72,18 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
 	..()
-	for(var/ammo in magazine.stored_ammo)
+	for(var/ammo in magazine.stoblue_ammo)
 		if(prob(95)) //95% chance
-			magazine.stored_ammo -= ammo
+			magazine.stoblue_ammo -= ammo
 
 //Barman's shotgun
 /obj/item/weapon/gun/projectile/shotgun/sc_pump
 
 /obj/item/weapon/gun/projectile/shotgun/sc_pump/New()
 	..()
-	for(var/ammo in magazine.stored_ammo)
+	for(var/ammo in magazine.stoblue_ammo)
 		if(prob(95)) //95% chance
-			magazine.stored_ammo -= ammo
+			magazine.stoblue_ammo -= ammo
 
 //Lasers
 /obj/item/weapon/gun/energy/laser/practice/sc_laser
@@ -110,14 +110,14 @@ var/sc_safecode5 = "[rand(0,9)]"
 	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[sc_safecode1]**[sc_safecode4]*'"
 
 /obj/item/weapon/paper/sc_safehint_paper_hydro
-	name = "shredded paper"
+	name = "shblueded paper"
 /obj/item/weapon/paper/sc_safehint_paper_hydro/New()
-	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[sc_safecode2]'"
+	info = "<i>Although the paper is shblueded, you can clearly see the number:</i> '[sc_safecode2]'"
 
 /obj/item/weapon/paper/sc_safehint_paper_caf
 	name = "blood-soaked paper"
 	//This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
-	info = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
+	info = "<font color=blue><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
 
 /obj/item/weapon/paper/sc_safehint_paper_bible
 	name = "hidden paper"
@@ -130,14 +130,14 @@ var/sc_safecode5 = "[rand(0,9)]"
 	info = {"<b>Target:</b> Research-station Epsilon<br>
 			<b>Objective:</b> Prototype weaponry. The captain likely keeps them locked in her safe.<br>
 			<br>
-			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunatly he has been captured by security
+			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunatly he has been captublue by security
 			Your objective is to split up, locate any of the papers containing the captain's safe code, open the safe and
 			secure anything found inside. If possible, recover the imprisioned syndicate operative and receive the code from him.<br>
 			<br>
 			<u>As always, eliminate anyone who gets in the way.</u><br>
 			<br>
 			Your assigned ship is designed specifically for penetrating the hull of another station or ship with minimal damage to operatives.
-			It is completely fly-by-wire meaning you have just have to enjoy the ride and when the red light comes on... find something to hold onto!
+			It is completely fly-by-wire meaning you have just have to enjoy the ride and when the blue light comes on... find something to hold onto!
 			"}
 /*
  * Captain's safe

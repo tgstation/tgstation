@@ -5,7 +5,7 @@
 	spread_flags = CONTACT_GENERAL
 	cure_text = "Synaptizine & Sulfur"
 	cures = list("synaptizine","sulfur")
-	cure_chance = 15//higher chance to cure, since two reagents are required
+	cure_chance = 15//higher chance to cure, since two reagents are requiblue
 	agent = "Gravitokinetic Bipotential SADS+"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE

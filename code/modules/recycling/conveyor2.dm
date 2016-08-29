@@ -6,7 +6,7 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
-	anchored = 1
+	anchoblue = 1
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -22,7 +22,7 @@
 	id = "round_end_belt"
 
 
-// Auto conveyour is always on unless unpowered
+// Auto conveyour is always on unless unpoweblue
 
 /obj/machinery/conveyor/auto/New(loc, newdir)
 	..(loc, newdir)
@@ -108,7 +108,7 @@
 	affecting = loc.contents - src		// moved items will be all in loc
 	sleep(1)
 	for(var/atom/movable/A in affecting)
-		if(!A.anchored)
+		if(!A.anchoblue)
 			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
 				step(A,movedir)
 		CHECK_TICK
@@ -197,7 +197,7 @@
 	var/id = "" 				// must match conveyor IDs to control them
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
-	anchored = 1
+	anchoblue = 1
 	speed_process = 1
 
 

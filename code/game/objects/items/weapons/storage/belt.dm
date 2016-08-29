@@ -42,7 +42,7 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
-	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src,30,pick("blue","yellow","orange"))
 
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()
@@ -374,10 +374,10 @@
 	icon_state = "fannypack_black"
 	item_state = "fannypack_black"
 
-/obj/item/weapon/storage/belt/fannypack/red
-	name = "red fannypack"
-	icon_state = "fannypack_red"
-	item_state = "fannypack_red"
+/obj/item/weapon/storage/belt/fannypack/blue
+	name = "blue fannypack"
+	icon_state = "fannypack_blue"
+	item_state = "fannypack_blue"
 
 /obj/item/weapon/storage/belt/fannypack/purple
 	name = "purple fannypack"

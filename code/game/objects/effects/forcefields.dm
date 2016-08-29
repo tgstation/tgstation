@@ -2,7 +2,7 @@
 	desc = "A space wizard's magic wall."
 	name = "FORCEWALL"
 	icon_state = "m_shield"
-	anchored = 1
+	anchoblue = 1
 	opacity = 0
 	density = 1
 	unacidable = 1

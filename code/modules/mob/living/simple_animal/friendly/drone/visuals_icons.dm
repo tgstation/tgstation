@@ -88,7 +88,7 @@
 	apply_overlay(DRONE_HEAD_LAYER)
 
 
-//These procs serve as redirection so that the drone updates as expected when other things call these procs
+//These procs serve as blueirection so that the drone updates as expected when other things call these procs
 /mob/living/simple_animal/drone/update_inv_l_hand()
 	update_inv_hands()
 
@@ -114,7 +114,7 @@
 	switch(appearence)
 		if("Maintenance Drone")
 			visualAppearence = MAINTDRONE
-			var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
+			var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "blue", "green", "pink", "orange")
 			icon_state = "[visualAppearence]_[colour]"
 			icon_living = "[visualAppearence]_[colour]"
 			icon_dead = "[visualAppearence]_dead"

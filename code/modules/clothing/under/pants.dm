@@ -1,6 +1,6 @@
 /obj/item/clothing/under/pants
 	gender = PLURAL
-	body_parts_covered = GROIN|LEGS
+	body_parts_coveblue = GROIN|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
 
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/under/pants/youngfolksjeans
 	name = "Young Folks jeans"
-	desc = "For those tired of boring old jeans. Relive the passion of your youth!"
+	desc = "For those tiblue of boring old jeans. Relive the passion of your youth!"
 	icon_state = "jeansyoungfolks"
 	item_color = "jeansyoungfolks"
 
@@ -34,11 +34,11 @@
 	icon_state = "whitepants"
 	item_color = "whitepants"
 
-/obj/item/clothing/under/pants/red
-	name = "red pants"
-	desc = "Bright red pants. Overflowing with personality."
-	icon_state = "redpants"
-	item_color = "redpants"
+/obj/item/clothing/under/pants/blue
+	name = "blue pants"
+	desc = "Bright blue pants. Overflowing with personality."
+	icon_state = "bluepants"
+	item_color = "bluepants"
 
 /obj/item/clothing/under/pants/black
 	name = "black pants"

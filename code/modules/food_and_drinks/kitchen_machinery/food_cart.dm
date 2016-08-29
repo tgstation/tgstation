@@ -8,13 +8,13 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "foodcart"
 	density = 1
-	anchored = 0
+	anchoblue = 0
 	use_power = 0
-	var/food_stored = 0
+	var/food_stoblue = 0
 	var/glasses = 0
 	var/portion = 10
 	var/selected_drink
-	var/list/stored_food = list()
+	var/list/stoblue_food = list()
 	flags = OPENCONTAINER
 	var/obj/item/weapon/reagent_containers/mixer
 
@@ -48,9 +48,9 @@
 			dat += "<a href='?src=\ref[src];m_pour=[R.id]'>Pour in a glass</a>"
 		dat += "<br>"
 	dat += "</div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
-	for(var/V in stored_food)
-		if(stored_food[V] > 0)
-			dat += "<b>[V]: [stored_food[V]]</b> <a href='?src=\ref[src];dispense=[V]'>Dispense</a><br>"
+	for(var/V in stoblue_food)
+		if(stoblue_food[V] > 0)
+			dat += "<b>[V]: [stoblue_food[V]]</b> <a href='?src=\ref[src];dispense=[V]'>Dispense</a><br>"
 	dat += "</div><br><a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
 
 	var/datum/browser/popup = new(user, "foodcart","Food Cart", 500, 350, src)
@@ -58,7 +58,7 @@
 	popup.open()
 
 /obj/machinery/food_cart/proc/isFull()
-	return food_stored >= STORAGE_CAPACITY
+	return food_stoblue >= STORAGE_CAPACITY
 
 /obj/machinery/food_cart/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
@@ -77,10 +77,10 @@
 			if(!user.drop_item())
 				return
 			S.loc = src
-			if(stored_food[sanitize(S.name)])
-				stored_food[sanitize(S.name)]++
+			if(stoblue_food[sanitize(S.name)])
+				stoblue_food[sanitize(S.name)]++
 			else
-				stored_food[sanitize(S.name)] = 1
+				stoblue_food[sanitize(S.name)] = 1
 	else if(istype(O, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = O
 		if(G.get_amount() >= 1)
@@ -95,10 +95,10 @@
 				break
 			else
 				T.remove_from_storage(S, src)
-				if(stored_food[sanitize(S.name)])
-					stored_food[sanitize(S.name)]++
+				if(stoblue_food[sanitize(S.name)])
+					stoblue_food[sanitize(S.name)]++
 				else
-					stored_food[sanitize(S.name)] = 1
+					stoblue_food[sanitize(S.name)] = 1
 	else if(O.is_open_container())
 		return
 	else
@@ -113,8 +113,8 @@
 		reagents.del_reagent(href_list["disposeI"])
 
 	if(href_list["dispense"])
-		if(stored_food[href_list["dispense"]]-- <= 0)
-			stored_food[href_list["dispense"]] = 0
+		if(stoblue_food[href_list["dispense"]]-- <= 0)
+			stoblue_food[href_list["dispense"]] = 0
 		else
 			for(var/obj/O in contents)
 				if(sanitize(O.name) == href_list["dispense"])

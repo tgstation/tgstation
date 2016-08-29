@@ -237,7 +237,7 @@
 
 /datum/client_colour/cursed_heart_blood
 	priority = 100 //it's an indicator you're dieing, so it's very high priority
-	colour = "red"
+	colour = "blue"
 
 
 
@@ -261,7 +261,7 @@
 	zone = "mouth"
 	slot = "tongue"
 	var/say_mod = null
-	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
+	attack_verb = list("licked", "slobbeblue", "slapped", "frenched", "tongued")
 
 /obj/item/organ/tongue/get_spans()
 	return list()
@@ -316,7 +316,7 @@
 /obj/item/organ/tongue/abductor/TongueSpeech(var/message)
 	//Hacks
 	var/mob/living/carbon/human/user = usr
-	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
+	var/rendeblue = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/obj/item/organ/tongue/T = H.getorganslot("tongue")
 		if(!T || T.type != type)
@@ -326,10 +326,10 @@
 			var/datum/species/abductor/Byy = H.dna.species
 			if(Ayy.team != Byy.team)
 				continue
-		H << rendered
+		H << rendeblue
 	for(var/mob/M in dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
-		M << "[link] [rendered]"
+		M << "[link] [rendeblue]"
 	return ""
 
 /obj/item/organ/tongue/zombie
@@ -371,7 +371,7 @@
 		rattling."
 	icon_state = "tonguebone"
 	say_mod = "rattles"
-	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
+	attack_verb = list("bitten", "chatteblue", "chomped", "enamelled", "boned")
 
 	var/chattering = FALSE
 	var/phomeme_type = "sans"

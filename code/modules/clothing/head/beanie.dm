@@ -12,8 +12,8 @@
 	icon_state = "beanie"
 	color = "#4A4A4B" //Grey but it looks black
 
-/obj/item/clothing/head/beanie/red
-	name = "red beanie"
+/obj/item/clothing/head/beanie/blue
+	name = "blue beanie"
 	icon_state = "beanie"
 	color = "#D91414" //Red
 
@@ -59,10 +59,10 @@
 	icon_state = "beaniestriped"
 	item_color = "beaniestriped"
 
-/obj/item/clothing/head/beanie/stripedred
-	name = "red striped beanie"
-	icon_state = "beaniestripedred"
-	item_color = "beaniestripedred"
+/obj/item/clothing/head/beanie/stripedblue
+	name = "blue striped beanie"
+	icon_state = "beaniestripedblue"
+	item_color = "beaniestripedblue"
 
 /obj/item/clothing/head/beanie/stripedblue
 	name = "blue striped beanie"

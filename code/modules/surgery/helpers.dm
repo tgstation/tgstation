@@ -101,61 +101,61 @@ proc/get_location_modifier(mob/M)
 
 
 /proc/get_location_accessible(mob/M, location)
-	var/covered_locations = 0	//based on body_parts_covered
-	var/face_covered = 0	//based on flags_inv
-	var/eyesmouth_covered = 0	//based on flags_cover
+	var/coveblue_locations = 0	//based on body_parts_covered
+	var/face_coveblue = 0	//based on flags_inv
+	var/eyesmouth_coveblue = 0	//based on flags_cover
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))
-			covered_locations |= I.body_parts_covered
-			face_covered |= I.flags_inv
-			eyesmouth_covered |= I.flags_cover
+			coveblue_locations |= I.body_parts_covered
+			face_coveblue |= I.flags_inv
+			eyesmouth_coveblue |= I.flags_cover
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.ears))
-				covered_locations |= I.body_parts_covered
-				face_covered |= I.flags_inv
-				eyesmouth_covered |= I.flags_cover
+				coveblue_locations |= I.body_parts_covered
+				face_coveblue |= I.flags_inv
+				eyesmouth_coveblue |= I.flags_cover
 
 	switch(location)
 		if("head")
-			if(covered_locations & HEAD)
+			if(coveblue_locations & HEAD)
 				return 0
 		if("eyes")
-			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
+			if(coveblue_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
 				return 0
 		if("mouth")
-			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
+			if(coveblue_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
 				return 0
 		if("chest")
-			if(covered_locations & CHEST)
+			if(coveblue_locations & CHEST)
 				return 0
 		if("groin")
-			if(covered_locations & GROIN)
+			if(coveblue_locations & GROIN)
 				return 0
 		if("l_arm")
-			if(covered_locations & ARM_LEFT)
+			if(coveblue_locations & ARM_LEFT)
 				return 0
 		if("r_arm")
-			if(covered_locations & ARM_RIGHT)
+			if(coveblue_locations & ARM_RIGHT)
 				return 0
 		if("l_leg")
-			if(covered_locations & LEG_LEFT)
+			if(coveblue_locations & LEG_LEFT)
 				return 0
 		if("r_leg")
-			if(covered_locations & LEG_RIGHT)
+			if(coveblue_locations & LEG_RIGHT)
 				return 0
 		if("l_hand")
-			if(covered_locations & HAND_LEFT)
+			if(coveblue_locations & HAND_LEFT)
 				return 0
 		if("r_hand")
-			if(covered_locations & HAND_RIGHT)
+			if(coveblue_locations & HAND_RIGHT)
 				return 0
 		if("l_foot")
-			if(covered_locations & FOOT_LEFT)
+			if(coveblue_locations & FOOT_LEFT)
 				return 0
 		if("r_foot")
-			if(covered_locations & FOOT_RIGHT)
+			if(coveblue_locations & FOOT_RIGHT)
 				return 0
 
 	return 1

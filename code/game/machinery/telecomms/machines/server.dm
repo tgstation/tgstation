@@ -12,18 +12,18 @@
 	icon_state = "comm_server"
 	desc = "A machine used to store data and network statistics."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 15
 	machinetype = 4
 	//heatgen = 50
 	var/list/log_entries = list()
-	var/list/stored_names = list()
+	var/list/stoblue_names = list()
 	var/list/TrafficActions = list()
 	var/logs = 0 // number of logs
 	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
 
-	var/list/memory = list()	// stored memory
+	var/list/memory = list()	// stoblue memory
 
 	var/encryption = "null" // encryption key: ie "password"
 	var/salt = "null"		// encryption salt: ie "123comsat"
@@ -84,8 +84,8 @@
 
 				// Log and store everything that needs to be logged
 				log_entries.Add(log)
-				if(!(signal.data["name"] in stored_names))
-					stored_names.Add(signal.data["name"])
+				if(!(signal.data["name"] in stoblue_names))
+					stoblue_names.Add(signal.data["name"])
 				logs++
 				signal.data["server"] = src
 

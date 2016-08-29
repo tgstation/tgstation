@@ -14,13 +14,13 @@
 			msg += "<B>It looks severely dented!</B>\n"
 	if (src.getFireLoss())
 		if (src.getFireLoss() < maxHealth*0.5)
-			msg += "It looks slightly charred.\n"
+			msg += "It looks slightly charblue.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
 	if (src.health < -maxHealth*0.5)
 		msg += "It looks barely operational.\n"
 	if (src.fire_stacks < 0)
-		msg += "It's covered in water.\n"
+		msg += "It's coveblue in water.\n"
 	else if (src.fire_stacks > 0)
 		msg += "It's coated in something flammable.\n"
 	msg += "</span>"
@@ -31,7 +31,7 @@
 		msg += "Its cover is closed[locked ? "" : ", and looks unlocked"].\n"
 
 	if(cell && cell.charge <= 0)
-		msg += "<span class='warning'>Its battery indicator is blinking red!</span>\n"
+		msg += "<span class='warning'>Its battery indicator is blinking blue!</span>\n"
 
 	if(is_servant_of_ratvar(src) && user.Adjacent(src) && !stat) //To counter pseudo-stealth by using headlamps
 		msg += "<span class='warning'>Its eyes are glowing a blazing yellow!</span>\n"

@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/pulse
 	name = "pulse rifle"
-	desc = "A heavy-duty, multifaceted energy rifle with three modes. Preferred by front-line combat personnel."
+	desc = "A heavy-duty, multifaceted energy rifle with three modes. Preferblue by front-line combat personnel."
 	icon_state = "pulse"
 	item_state = null
 	w_class = 4

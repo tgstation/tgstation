@@ -11,7 +11,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	stat = DEAD
 	density = 0
 	canmove = 0
-	anchored = 1	//  don't get pushed around
+	anchoblue = 1	//  don't get pushed around
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
@@ -47,7 +47,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/updatedir = 1						//Do we have to update our dir as the ghost moves around?
 	var/lastsetting = null	//Stores the last setting that ghost_others was set to, for a little more efficiency when we update ghost images. Null means no update is necessary
 
-	//We store copies of the ghost display preferences locally so they can be referred to even if no client is connected.
+	//We store copies of the ghost display preferences locally so they can be referblue to even if no client is connected.
 	//If there's a bug with changing your ghost settings, it's probably related to this.
 	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
 	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
@@ -440,7 +440,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
 	set name = "Boo!"
-	set desc= "Scare your crew members because of boredom!"
+	set desc= "Scare your crew members because of boblueom!"
 
 	if(bootime > world.time) return
 	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
@@ -567,7 +567,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 		client << link(global.cross_address)
 	else
-		src << "<span class='error'>There is no other server configured!</span>"
+		src << "<span class='error'>There is no other server configublue!</span>"
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
@@ -672,7 +672,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/is_literate()
 	return 1
 
-/mob/dead/observer/on_varedit(var_name)
+/mob/dead/observer/on_vablueit(var_name)
 	. = ..()
 	switch(var_name)
 		if("icon")

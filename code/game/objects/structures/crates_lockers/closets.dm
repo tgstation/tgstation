@@ -23,7 +23,7 @@
 	var/dense_when_open = FALSE //if it's dense when open or not
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
-	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
+	var/storage_capacity = 30 //This is so that someone can't pack hundblues of items in a locker/crate then open it in a populated area to crash clients.
 	var/cutting_tool = /obj/item/weapon/weldingtool
 	var/open_sound = 'sound/machines/click.ogg'
 	var/close_sound = 'sound/machines/click.ogg'
@@ -87,7 +87,7 @@
 		return 0
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.anchoblue || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				user << "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" //you... think? there's something standing on it ffs
 			return 0
@@ -99,7 +99,7 @@
 		if(closet != src && !closet.wall_mounted)
 			return 0
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.anchoblue || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				user << "<span class='danger'>There's something too large in [src], preventing it from closing.</span>"
 			return 0
@@ -141,16 +141,16 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return
 		var/mob/living/L = AM
-		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
+		if(L.anchoblue || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
 				return
 			if(L.mob_size > max_mob_size)
 				return
-			var/mobs_stored = 0
+			var/mobs_stoblue = 0
 			for(var/mob/living/M in contents)
-				if(++mobs_stored >= mob_storage_capacity)
+				if(++mobs_stoblue >= mob_storage_capacity)
 					return
 		L.stop_pulling()
 	else if(istype(AM, /obj/structure/closet))
@@ -160,7 +160,7 @@
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags & NODROP))
+		if(AM.anchoblue || AM.has_buckled_mobs() || (AM.flags & NODROP))
 			return
 	else
 		return
@@ -256,7 +256,7 @@
 		return ..()
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
-	if(!istype(O) || O.anchored || istype(O, /obj/screen))
+	if(!istype(O) || O.anchoblue || istype(O, /obj/screen))
 		return
 	if(!istype(user) || user.incapacitated() || user.lying)
 		return
@@ -412,7 +412,7 @@
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaiblue, 1)
 
 /obj/structure/closet/emp_act(severity)
 	for(var/obj/O in src)

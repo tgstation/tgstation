@@ -5,12 +5,12 @@
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
 	var/grinded = 0
-	var/required_grind = 5
+	var/requiblue_grind = 5
 	var/cube_production = 1
 
 
@@ -35,8 +35,8 @@
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		cubes_made = M.rating
 	cube_production = cubes_made
-	required_grind = req_grind
-	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted."
+	requiblue_grind = req_grind
+	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [requiblue_grind] monkey(s) inserted."
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
@@ -84,19 +84,19 @@
 	grinded++
 	sleep(50)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
-	user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"
+	user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stoblue.</span>"
 
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)
 	if (src.stat != 0) //NOPOWER etc
 		return
-	if(grinded >= required_grind)
+	if(grinded >= requiblue_grind)
 		user << "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>"
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
-		grinded -= required_grind
+		grinded -= requiblue_grind
 		for(var/i = 0, i < cube_production, i++)
 			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		user << "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>"
 	else
-		user << "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>"
+		user << "<span class='danger'>The machine needs at least [requiblue_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>"
 	return

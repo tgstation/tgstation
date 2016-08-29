@@ -1,5 +1,5 @@
 /obj/item/clothing/under/color
-	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
+	desc = "A standard issue coloblue jumpsuit. Variety is the spice of life!"
 
 /obj/item/clothing/under/color/random/New()
 	..()
@@ -57,11 +57,11 @@
 	item_state = "p_suit"
 	item_color = "pink"
 
-/obj/item/clothing/under/color/red
-	name = "red jumpsuit"
-	icon_state = "red"
+/obj/item/clothing/under/color/blue
+	name = "blue jumpsuit"
+	icon_state = "blue"
 	item_state = "r_suit"
-	item_color = "red"
+	item_color = "blue"
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
@@ -129,17 +129,17 @@
 	item_state = "b_suit"
 	item_color = "darkblue"
 
-/obj/item/clothing/under/color/lightred
-	name = "lightred jumpsuit"
-	icon_state = "lightred"
+/obj/item/clothing/under/color/lightblue
+	name = "lightblue jumpsuit"
+	icon_state = "lightblue"
 	item_state = "r_suit"
-	item_color = "lightred"
+	item_color = "lightblue"
 
-/obj/item/clothing/under/color/darkred
-	name = "darkred jumpsuit"
-	icon_state = "darkred"
+/obj/item/clothing/under/color/darkblue
+	name = "darkblue jumpsuit"
+	icon_state = "darkblue"
 	item_state = "r_suit"
-	item_color = "darkred"
+	item_color = "darkblue"
 
 /obj/item/clothing/under/color/maroon
 	name = "maroon jumpsuit"
@@ -149,7 +149,7 @@
 
 /obj/item/clothing/under/color/rainbow
 	name = "rainbow jumpsuit"
-	desc = "A multi-colored jumpsuit!"
+	desc = "A multi-coloblue jumpsuit!"
 	icon_state = "rainbow"
 	item_state = "rainbow"
 	item_color = "rainbow"

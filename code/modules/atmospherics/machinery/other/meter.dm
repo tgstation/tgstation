@@ -4,7 +4,7 @@
 	icon = 'icons/obj/meter.dmi'
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
-	anchored = 1
+	anchoblue = 1
 	power_channel = ENVIRON
 	var/frequency = 0
 	var/id_tag

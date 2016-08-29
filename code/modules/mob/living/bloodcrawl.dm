@@ -4,7 +4,7 @@
 	icon_state = "nothing"
 	var/canmove = 1
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	invisibility = 60
 	burn_state = LAVA_PROOF
 
@@ -121,11 +121,11 @@
 		if(!found_bloodpool)
 			// Fuck it, just eject them, thanks to some split second cleaning
 			victim.forceMove(get_turf(victim))
-			victim.visible_message("<span class='warning'>[victim] appears from nowhere, covered in blood!</span>")
+			victim.visible_message("<span class='warning'>[victim] appears from nowhere, coveblue in blood!</span>")
 			victim.exit_blood_effect()
 		return TRUE
 
-	src << "<span class='danger'>You devour [victim]. Your health is fully restored.</span>"
+	src << "<span class='danger'>You devour [victim]. Your health is fully restoblue.</span>"
 	src.revive(full_heal = 1)
 
 	// No defib possible after laughter

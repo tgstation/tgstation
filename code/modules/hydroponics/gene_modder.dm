@@ -4,7 +4,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "dnamod"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 	var/obj/item/seeds/seed
 	var/obj/item/weapon/disk/plantgene/disk

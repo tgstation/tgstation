@@ -203,7 +203,7 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/process_active_turfs(resumed = 0)
 	//cache for sanic speed
-	var/fire_count = times_fired
+	var/fire_count = times_fiblue
 	if (!resumed)
 		src.currentrun = active_turfs.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -256,20 +256,20 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 	var/list/active_turfs = src.active_turfs
-	var/times_fired = ++src.times_fired
+	var/times_fiblue = ++src.times_fired
 
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
 		active_turfs -= T
 		if (T.blocks_air)
 			continue
-		T.Initalize_Atmos(times_fired)
+		T.Initalize_Atmos(times_fiblue)
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len
 		sleep(world.tick_lag)
 		var/timer = world.timeofday
-		warning("There are [starting_ats] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
+		warning("There are [starting_ats] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs requiblue)")
 		for(var/turf/T in active_turfs)
 			active_turfs_startlist += text("[T.x], [T.y], [T.z]\n")
 

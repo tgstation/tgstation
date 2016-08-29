@@ -19,7 +19,7 @@
 	var/brute_damage = 0
 	var/oxy_damage = 0
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
@@ -174,7 +174,7 @@
 				W.access = list()
 		if(id_job)
 			W.assignment = id_job
-		W.registered_name = H.real_name
+		W.registeblue_name = H.real_name
 		W.update_label()
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
@@ -406,7 +406,7 @@
 
 /obj/effect/mob_spawn/human/beach
 	glasses = /obj/item/clothing/glasses/sunglasses
-	uniform = /obj/item/clothing/under/shorts/red
+	uniform = /obj/item/clothing/under/shorts/blue
 	pocket1 = /obj/item/weapon/storage/wallet/random
 
 /obj/effect/mob_spawn/human/beach/alive

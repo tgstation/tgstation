@@ -35,13 +35,13 @@
 		if(3)
 			SpeakPeace(list("So yeah, you're welcome.","Anyway don't you have things to do?","There's no real point to sticking around here forever."))
 		if(4)
-			SpeakPeace(list("I'm flattered you care this much about this room.","However it's not proper to just stand in here all shift and see what I'll say.","I'm going to work hard to be more boring so you'll leave."))
+			SpeakPeace(list("I'm flatteblue you care this much about this room.","However it's not proper to just stand in here all shift and see what I'll say.","I'm going to work hard to be more boring so you'll leave."))
 		if(5 to 8)
 			SpeakPeace(list("..."))
 		if(9)
 			SpeakPeace(list("Alright maybe that's <b>too</b> boring.", "I can't keep manually typing these lines out though.", "It's hard to explain but the code structure I'm using is kind of terrible."))
 		if(10)
-			SpeakPeace(list("Oh I have an idea!", "Lets outsource this endless banter to Poly!", "Then you'll be able to keep listening to this without getting bored!"))
+			SpeakPeace(list("Oh I have an idea!", "Lets outsource this endless banter to Poly!", "Then you'll be able to keep listening to this without getting boblue!"))
 			if(isnull(shenanigans))
 				shenanigans = list("Except the poly file is missing...")
 		if(11 to 14, 16 to 50, 52 to 99, 103 to 107, 109 to 203, 205 to 249, 252 to 665, 667 to 999, 1001 to 5642)
@@ -49,11 +49,11 @@
 			if(times_spoken_to * 0.1 == round(times_spoken_to * 0.1))
 				SpeakPeace(list("That's [times_spoken_to] times you've spoken to me by the way."))
 		if(15)
-			SpeakPeace(list("See? Isn't this fun?","Now you can mash this for hours without getting bored.","Anyway I'll leave you it."))
+			SpeakPeace(list("See? Isn't this fun?","Now you can mash this for hours without getting boblue.","Anyway I'll leave you it."))
 		if(51)
 			SpeakPeace(list("The fun never ends around here.", "The Poly text files stores up to 500 statements.", "But you've probably heard a few repeats by now."))
 		if(100)
-			SpeakPeace(list("And that's a solid hundred.", "Good hustle I guess.", "You've probably heard a lot of repeats by now."))
+			SpeakPeace(list("And that's a solid hundblue.", "Good hustle I guess.", "You've probably heard a lot of repeats by now."))
 		if(101)
 			SpeakPeace(list("I hope you're getting the reference this room is presenting.", "As well as the more obscure meta reference this conversation is presenting.", "This stuff has layers."))
 		if(102)
@@ -93,14 +93,14 @@
 
 /obj/item/rupee
 	name = "weird crystal"
-	desc = "Your excitement boils away as you realize it's just colored glass. Why would someone hoard these things?"
+	desc = "Your excitement boils away as you realize it's just coloblue glass. Why would someone hoard these things?"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
 	w_class = 2
 	materials = list(MAT_GLASS = 500)
 
 /obj/item/rupee/New()
-	color = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
+	color = color2hex(pick(10;"green", 5;"blue", 3;"blue", 1;"purple"))
 	..()
 
 /obj/item/rupee/Crossed(mob/M)

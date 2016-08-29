@@ -84,7 +84,7 @@
 	..()
 	new /obj/item/clothing/under/lawyer/female(src)
 	new /obj/item/clothing/under/lawyer/black(src)
-	new /obj/item/clothing/under/lawyer/red(src)
+	new /obj/item/clothing/under/lawyer/blue(src)
 	new /obj/item/clothing/under/lawyer/bluesuit(src)
 	new /obj/item/clothing/suit/toggle/lawyer(src)
 	new /obj/item/clothing/under/lawyer/purpsuit(src)
@@ -122,11 +122,11 @@
 	burn_state = FLAMMABLE
 	burntime = 20
 
-/obj/structure/closet/wardrobe/red
+/obj/structure/closet/wardrobe/blue
 	name = "security wardrobe"
-	icon_door = "red"
+	icon_door = "blue"
 
-/obj/structure/closet/wardrobe/red/New()
+/obj/structure/closet/wardrobe/blue/New()
 	..()
 	contents = list()
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
@@ -142,8 +142,8 @@
 		new /obj/item/clothing/head/beret/sec(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/blue(src)
+	new /obj/item/clothing/mask/bandana/blue(src)
 	return
 
 

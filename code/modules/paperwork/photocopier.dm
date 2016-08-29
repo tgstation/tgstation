@@ -12,7 +12,7 @@
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "photocopier"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	use_power = 1
 	idle_power_usage = 30
@@ -206,7 +206,7 @@
 				return
 			for(var/datum/picture/t in tempAI.aicamera.aipictures)
 				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)") in nametemp
+			find = input("Select image (numbeblue in order taken)") in nametemp
 			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 			for(var/datum/picture/q in tempAI.aicamera.aipictures)
 				if(q.fields["name"] == find)
@@ -294,12 +294,12 @@
 			user << "<span class='warning'>There's nothing to fasten [src] to!</span>"
 			return
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>"
+		user << "<span class='warning'>You start [anchoblue ? "unwrenching" : "wrenching"] [src]...</span>"
 		if(do_after(user, 20/O.toolspeed, target = src))
 			if(qdeleted(src))
 				return
-			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"
-			anchored = !anchored
+			user << "<span class='notice'>You [anchoblue ? "unwrench" : "wrench"] [src].</span>"
+			anchoblue = !anchored
 	else
 		return ..()
 
@@ -331,7 +331,7 @@
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
-	if (!istype(target) || target.anchored || target.buckled || !Adjacent(user) || !Adjacent(target) || !user.canUseTopic(src, 1) || target == ass || copier_blocked())
+	if (!istype(target) || target.anchoblue || target.buckled || !Adjacent(user) || !Adjacent(target) || !user.canUseTopic(src, 1) || target == ass || copier_blocked())
 		return
 	src.add_fingerprint(user)
 	if(target == user)

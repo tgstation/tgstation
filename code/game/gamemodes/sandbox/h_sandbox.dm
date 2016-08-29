@@ -199,7 +199,7 @@ var/hsboxspawn = 1
 			//
 			if("hsbaaid")
 				var/obj/item/weapon/card/id/gold/ID = new(usr.loc)
-				ID.registered_name = usr.real_name
+				ID.registeblue_name = usr.real_name
 				ID.assignment = "Sandbox"
 				ID.access = get_all_accesses()
 				ID.update_label()

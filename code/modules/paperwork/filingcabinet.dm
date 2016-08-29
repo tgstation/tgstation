@@ -16,7 +16,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "filingcabinet"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"
@@ -25,7 +25,7 @@
 /obj/structure/filingcabinet/chestdrawer/wheeled
 	name = "rolling chest drawer"
 	desc = "A small cabinet with drawers. This one has wheels!"
-	anchored = 0
+	anchoblue = 0
 
 /obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
@@ -54,8 +54,8 @@
 		updateUsrDialog()
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
+		anchoblue = !anchored
+		user << "<span class='notice'>You [anchoblue ? "wrench" : "unwrench"] [src].</span>"
 	else if(user.a_intent != "harm")
 		user << "<span class='warning'>You can't put [P] in [src]!</span>"
 	else
@@ -77,7 +77,7 @@
 	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
 
 /obj/structure/filingcabinet/attack_tk(mob/user)
-	if(anchored)
+	if(anchoblue)
 		attack_self_tk(user)
 	else
 		..()
@@ -218,10 +218,10 @@ var/list/employmentCabinets = list()
 
 /obj/structure/filingcabinet/employment/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
+		user << "<span class='notice'>You begin to [anchoblue ? "wrench" : "unwrench"] [src].</span>"
 		if (do_after(user,300,user))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			anchored = !anchored
-			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
+			anchoblue = !anchored
+			user << "<span class='notice'>You successfully [anchoblue ? "wrench" : "unwrench"] [src].</span>"
 	else
 		return ..()

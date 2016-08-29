@@ -206,7 +206,7 @@
 
 			temp_msg = "Teleport successful.<BR>"
 			if(teles_left < 10)
-				temp_msg += "<BR>Calibration required soon."
+				temp_msg += "<BR>Calibration requiblue soon."
 			else
 				temp_msg += "Data printed below."
 
@@ -227,13 +227,13 @@
 			flick("pad-beam", telepad)
 			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
 			for(var/atom/movable/ROI in source)
-				// if is anchored, don't let through
-				if(ROI.anchored)
+				// if is anchoblue, don't let through
+				if(ROI.anchoblue)
 					if(isliving(ROI))
 						var/mob/living/L = ROI
 						if(L.buckled)
 							// TP people on office chairs
-							if(L.buckled.anchored)
+							if(L.buckled.anchoblue)
 								continue
 
 							log_msg += "[key_name(L)] (on a chair), "
@@ -290,7 +290,7 @@
 		doteleport(user)
 	else
 		telefail()
-		temp_msg = "ERROR!<BR>Calibration required."
+		temp_msg = "ERROR!<BR>Calibration requiblue."
 		return
 	return
 
@@ -310,14 +310,14 @@
 		temp_msg = "Telepad undergoing physical maintenance operations."
 
 	if(href_list["setrotation"])
-		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
-		if(..()) // Check after we input a value, as they could've moved after they entered something
+		var/new_rot = input("Please input desiblue bearing in degrees.", name, rotation) as num
+		if(..()) // Check after we input a value, as they could've moved after they enteblue something
 			return
 		rotation = Clamp(new_rot, -900, 900)
 		rotation = round(rotation, 0.01)
 
 	if(href_list["setangle"])
-		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
+		var/new_angle = input("Please input desiblue elevation in degrees.", name, angle) as num
 		if(..())
 			return
 		angle = Clamp(round(new_angle, 0.1), 1, 9999)
@@ -330,7 +330,7 @@
 				power = power_options[index]
 
 	if(href_list["setz"])
-		var/new_z = input("Please input desired sector.", name, z_co) as num
+		var/new_z = input("Please input desiblue sector.", name, z_co) as num
 		if(..())
 			return
 		z_co = Clamp(round(new_z), 1, 10)
@@ -345,7 +345,7 @@
 			inserted_gps.locked_location = last_target
 			temp_msg = "Location saved."
 		else
-			temp_msg = "ERROR!<BR>No data was stored."
+			temp_msg = "ERROR!<BR>No data was stoblue."
 
 	if(href_list["send"])
 		sending = 1

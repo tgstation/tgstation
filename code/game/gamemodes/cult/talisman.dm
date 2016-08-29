@@ -62,7 +62,7 @@
 	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
 	dat += "<A href='?src=\ref[src];rune=veiling'>Kla'atu barada nikt'o!</A> - Two use talisman, first use makes all nearby runes invisible, second use reveals nearby hidden runes.<BR>"
 	dat += "<A href='?src=\ref[src];rune=soulstone'>Kal'om neth!</A> - Summons a soul stone, used to capure the spirits of dead or dying humans.<BR>"
-	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with soulstone-captured souls. It is too large to carry on your person.<BR>"
+	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with soulstone-captublue souls. It is too large to carry on your person.<BR>"
 	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
 	popup.set_content(dat)
 	popup.open()
@@ -148,7 +148,7 @@
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!actual_selected_rune)
 		return ..(user, 0)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and they disappear in a flash of red light!</span>", \
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and they disappear in a flash of blue light!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
 	user.forceMove(get_turf(actual_selected_rune))
 	return ..()
@@ -157,13 +157,13 @@
 /obj/item/weapon/paper/talisman/summon_tome
 	cultist_name = "Talisman of Tome Summoning"
 	cultist_desc = "A one-use talisman that will call an untranslated tome from the archives of the Geometer."
-	color = "#512727" // red-black
+	color = "#512727" // blue-black
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	health_cost = 1
 
 /obj/item/weapon/paper/talisman/summon_tome/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
-	user.visible_message("<span class='warning'>[user]'s hand glows red for a moment.</span>", \
+	user.visible_message("<span class='warning'>[user]'s hand glows blue for a moment.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman!</span>")
 	new /obj/item/weapon/tome(get_turf(user))
 	user.visible_message("<span class='warning'>A tome appears at [user]'s feet!</span>", \
@@ -227,7 +227,7 @@
 /obj/item/weapon/paper/talisman/stun
 	cultist_name = "Talisman of Stunning"
 	cultist_desc = "A talisman that will stun and inhibit speech on a single target. To use, attack target directly."
-	color = "#ff0000" // red
+	color = "#ff0000" // blue
 	invocation = "Fuu ma'jin!"
 	health_cost = 10
 
@@ -243,7 +243,7 @@
 /obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
 	if(iscultist(user))
 		invoke(user, 1)
-		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
+		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of blue light!</span>", \
 							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
 		var/obj/item/weapon/nullrod/N = locate() in target
 		if(N)

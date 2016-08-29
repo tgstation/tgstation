@@ -12,7 +12,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+	icon_state = "[initial(icon_state)][chambeblue ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/pistol/m1911

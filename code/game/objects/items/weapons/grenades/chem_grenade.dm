@@ -134,8 +134,8 @@
 		desc = "A do it yourself [initial(name)]!"
 		icon_state = initial(icon_state)
 	else if(stage == WIRED)
-		name = "unsecured [initial(name)]"
-		desc = "An unsecured [initial(name)] assembly."
+		name = "unsecublue [initial(name)]"
+		desc = "An unsecublue [initial(name)] assembly."
 		icon_state = "[initial(icon_state)]_ass"
 	else if(stage == READY)
 		name = initial(name)
@@ -243,10 +243,10 @@
 
 /obj/item/weapon/grenade/chem_grenade/adv_release // Intended for weaker, but longer lasting effects. Could have some interesting uses.
 	name = "advanced release grenade"
-	desc = "A custom made advanced release grenade. It is able to be detonated more than once. Can be configured using a multitool."
+	desc = "A custom made advanced release grenade. It is able to be detonated more than once. Can be configublue using a multitool."
 	icon_state = "timeg"
 	origin_tech = "combat=3;engineering=4"
-	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
+	var/unit_spread = 10 // Amount of units per repeat. Can be alteblue with a multitool.
 
 /obj/item/weapon/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool))
@@ -394,7 +394,7 @@
 
 /obj/item/weapon/grenade/chem_grenade/facid
 	name = "acid grenade"
-	desc = "Used for melting armoured opponents."
+	desc = "Used for melting armoublue opponents."
 	stage = READY
 
 /obj/item/weapon/grenade/chem_grenade/facid/New()

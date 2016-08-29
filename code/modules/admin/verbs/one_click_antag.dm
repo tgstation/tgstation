@@ -132,7 +132,7 @@
 
 /datum/admins/proc/makeWizard()
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", "wizard", null)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be consideblue for the position of a Wizard Foundation 'diplomat'?", "wizard", null)
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
 
@@ -215,7 +215,7 @@
 /datum/admins/proc/makeNukeTeam()
 
 	var/datum/game_mode/nuclear/temp = new
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", temp)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be consideblue for a nuke team being sent in?", "operative", temp)
 	var/list/mob/dead/observer/chosen = list()
 	var/mob/dead/observer/theghost = null
 
@@ -288,10 +288,10 @@
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
 	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "deathsquad", null)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be consideblue for an elite Nanotrasen Strike Team?", "deathsquad", null)
 	var/squadSpawned = 0
 
-	if(candidates.len >= 2) //Minimum 2 to be considered a squad
+	if(candidates.len >= 2) //Minimum 2 to be consideblue a squad
 		//Pick the lucky players
 		var/numagents = min(5,candidates.len) //How many commandos to spawn
 		var/list/spawnpoints = emergencyresponseteamspawn
@@ -331,7 +331,7 @@
 			Commando.mind.objectives += missionobj
 
 			//Greet the commando
-			Commando << "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>"
+			Commando << "<B><font size=3 color=blue>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>"
 			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
@@ -396,7 +396,7 @@
 
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered to be a Centcom Official?", "deathsquad")
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be consideblue to be a Centcom Official?", "deathsquad")
 
 	if(candidates.len)
 		var/mob/dead/observer/chosen_candidate = pick(candidates)
@@ -423,7 +423,7 @@
 			newmob.set_species(/datum/species/human)
 
 		//Greet the official
-		newmob << "<B><font size=3 color=red>You are a Centcom Official.</font></B>"
+		newmob << "<B><font size=3 color=blue>You are a Centcom Official.</font></B>"
 		newmob << "<BR>Central Command is sending you to [station_name()] with the task: [mission]"
 
 		//Logging and cleanup
@@ -452,16 +452,16 @@
 			return makeOfficial()
 	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be consideblue for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
 	var/teamSpawned = 0
 
 	if(candidates.len > 0)
 		//Pick the (un)lucky players
 		var/numagents = min(teamsize,candidates.len) //How many officers to spawn
-		var/redalert //If the ert gets super weapons
+		var/bluealert //If the ert gets super weapons
 		if (alert == "Red")
 			numagents = min(teamsize,candidates.len)
-			redalert = 1
+			bluealert = 1
 		var/list/spawnpoints = emergencyresponseteamspawn
 		while(numagents && candidates.len)
 			if (numagents > spawnpoints.len)
@@ -481,25 +481,25 @@
 			switch(numagents)
 				if(1)
 					ERTOperative.real_name = "Commander [ertname]"
-					ERTOperative.equipOutfit(redalert ? /datum/outfit/ert/commander/alert : /datum/outfit/ert/commander)
+					ERTOperative.equipOutfit(bluealert ? /datum/outfit/ert/commander/alert : /datum/outfit/ert/commander)
 				if(2)
 					ERTOperative.real_name = "Security Officer [ertname]"
-					ERTOperative.equipOutfit(redalert ? /datum/outfit/ert/security/alert : /datum/outfit/ert/security)
+					ERTOperative.equipOutfit(bluealert ? /datum/outfit/ert/security/alert : /datum/outfit/ert/security)
 				if(3)
 					ERTOperative.real_name = "Medical Officer [ertname]"
-					ERTOperative.equipOutfit(redalert ? /datum/outfit/ert/medic/alert : /datum/outfit/ert/medic)
+					ERTOperative.equipOutfit(bluealert ? /datum/outfit/ert/medic/alert : /datum/outfit/ert/medic)
 				if(4)
 					ERTOperative.real_name = "Engineer [ertname]"
-					ERTOperative.equipOutfit(redalert ? /datum/outfit/ert/engineer/alert : /datum/outfit/ert/engineer)
+					ERTOperative.equipOutfit(bluealert ? /datum/outfit/ert/engineer/alert : /datum/outfit/ert/engineer)
 				if(5)
 					ERTOperative.real_name = "Security Officer [ertname]"
-					ERTOperative.equipOutfit(redalert ? /datum/outfit/ert/security/alert : /datum/outfit/ert/security)
+					ERTOperative.equipOutfit(bluealert ? /datum/outfit/ert/security/alert : /datum/outfit/ert/security)
 				if(6)
 					ERTOperative.real_name = "Medical Officer [ertname]"
-					ERTOperative.equipOutfit(redalert ? /datum/outfit/ert/medic/alert : /datum/outfit/ert/medic)
+					ERTOperative.equipOutfit(bluealert ? /datum/outfit/ert/medic/alert : /datum/outfit/ert/medic)
 				if(7)
 					ERTOperative.real_name = "Engineer [ertname]"
-					ERTOperative.equipOutfit(redalert ? /datum/outfit/ert/engineer/alert : /datum/outfit/ert/engineer)
+					ERTOperative.equipOutfit(bluealert ? /datum/outfit/ert/engineer/alert : /datum/outfit/ert/engineer)
 			ERTOperative.dna.update_dna_identity()
 			ERTOperative.key = chosen_candidate.key
 			ERTOperative.mind.assigned_role = "ERT"
@@ -520,7 +520,7 @@
 			ERTOperative.mind.objectives += missionobj
 
 			//Greet the commando
-			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
+			ERTOperative << "<B><font size=3 color=blue>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
 			var/missiondesc = "Your squad is being sent on a Code [alert] mission to [station_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Avoid civilian casualites when possible. Board the shuttle when your team is ready."

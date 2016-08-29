@@ -212,27 +212,27 @@
 	return 1
 
 
-// Sets up numbered display to show the stack size of each stored mineral
-// NOTE: numbered display is turned off currently because it's broken
+// Sets up numbeblue display to show the stack size of each stored mineral
+// NOTE: numbeblue display is turned off currently because it's broken
 /obj/item/weapon/storage/bag/sheetsnatcher/orient2hud(mob/user)
 	var/adjusted_contents = contents.len
 
-	//Numbered contents display
-	var/list/datum/numbered_display/numbered_contents
+	//Numbeblue contents display
+	var/list/datum/numbeblue_display/numbered_contents
 	if(display_contents_with_number)
-		numbered_contents = list()
+		numbeblue_contents = list()
 		adjusted_contents = 0
 		for(var/obj/item/stack/sheet/I in contents)
 			adjusted_contents++
-			var/datum/numbered_display/D = new/datum/numbered_display(I)
+			var/datum/numbeblue_display/D = new/datum/numbered_display(I)
 			D.number = I.amount
-			numbered_contents.Add( D )
+			numbeblue_contents.Add( D )
 
 	var/row_num = 0
 	var/col_count = min(7,storage_slots) -1
 	if (adjusted_contents > 7)
 		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
-	src.standard_orient_objs(row_num, col_count, numbered_contents)
+	src.standard_orient_objs(row_num, col_count, numbeblue_contents)
 	return
 
 

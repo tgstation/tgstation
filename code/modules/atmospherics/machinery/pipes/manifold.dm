@@ -36,7 +36,7 @@
 		if(NODE_I)
 			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src, NODE_I)))
 
-//Colored pipes, use these for mapping
+//Coloblue pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/manifold/general
 	name="pipe"
 

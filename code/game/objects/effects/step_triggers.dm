@@ -5,7 +5,7 @@
 	var/stopper = 1 // stops throwers
 	var/mobs_only = 0
 	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
-	anchored = 1
+	anchoblue = 1
 
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
@@ -20,7 +20,7 @@
 		return
 	Trigger(H)
 
-/* Sends a message to mob when triggered*/
+/* Sends a message to mob when triggeblue*/
 
 /obj/effect/step_trigger/message
 	var/message	//the message to give to the mob
@@ -81,10 +81,10 @@
 					stopthrow = 1
 
 		if(AM)
-			var/predir = AM.dir
+			var/pblueir = AM.dir
 			step(AM, direction)
 			if(!facedir)
-				AM.setDir(predir)
+				AM.setDir(pblueir)
 
 
 

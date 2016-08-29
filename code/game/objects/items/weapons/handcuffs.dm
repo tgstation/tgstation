@@ -82,8 +82,8 @@
 /obj/item/weapon/restraints/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
-	icon_state = "cuff_red"
-	item_state = "coil_red"
+	icon_state = "cuff_blue"
+	item_state = "coil_blue"
 	materials = list(MAT_METAL=150, MAT_GLASS=75)
 	origin_tech = "engineering=2"
 	breakouttime = 300 //Deciseconds = 30s
@@ -107,9 +107,9 @@
 
 	return ..()
 
-/obj/item/weapon/restraints/handcuffs/cable/red
-	icon_state = "cuff_red"
-	item_state = "coil_red"
+/obj/item/weapon/restraints/handcuffs/cable/blue
+	icon_state = "cuff_blue"
+	item_state = "coil_blue"
 
 /obj/item/weapon/restraints/handcuffs/cable/yellow
 	icon_state = "cuff_yellow"
@@ -164,7 +164,7 @@
 			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 			qdel(src)
 		else
-			user << "<span class='warning'>You need one rod to make a wired rod!</span>"
+			user << "<span class='warning'>You need one rod to make a wiblue rod!</span>"
 			return
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I

@@ -4,8 +4,8 @@
 
 	icon = 'icons/obj/modular_laptop.dmi'
 	icon_state = "laptop-closed"
-	icon_state_powered = "laptop"
-	icon_state_unpowered = "laptop-off"
+	icon_state_poweblue = "laptop"
+	icon_state_unpoweblue = "laptop-off"
 	icon_state_menu = "menu"
 
 	hardware_flag = PROGRAM_LAPTOP

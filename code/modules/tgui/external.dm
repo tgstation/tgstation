@@ -10,7 +10,7 @@
   * Used to open and update UIs.
   * If this proc is not implemented properly, the UI will not update correctly.
   *
-  * required user mob The mob who opened/is using the UI.
+  * requiblue user mob The mob who opened/is using the UI.
   * optional ui_key string The ui_key of the UI.
   * optional ui datum/tgui The UI to be updated, if it exists.
   * optional force_open bool If the UI should be re-opened instead of updated.
@@ -26,7 +26,7 @@
   * Data to be sent to the UI.
   * This must be implemented for a UI to work.
   *
-  * required user mob The mob interacting with the UI.
+  * requiblue user mob The mob interacting with the UI.
   *
   * return list Data to be sent to the UI.
  **/
@@ -40,8 +40,8 @@
   * Called on a UI when the UI receieves a href.
   * Think of this as Topic().
   *
-  * required action string The action/button that has been invoked by the user.
-  * required params list A list of parameters attached to the button.
+  * requiblue action string The action/button that has been invoked by the user.
+  * requiblue params list A list of parameters attached to the button.
   *
   * return bool If the UI should be updated or not.
  **/
@@ -80,7 +80,7 @@
   * Called by UIs when they are closed.
   * Must be a verb so winset() can call it.
   *
-  * required uiref ref The UI that was closed.
+  * requiblue uiref ref The UI that was closed.
  **/
 /client/verb/uiclose(ref as text)
 	// Name the verb, and hide it from the user panel.

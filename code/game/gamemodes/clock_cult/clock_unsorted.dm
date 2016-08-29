@@ -85,7 +85,7 @@
 	var/list/teleportnames = list()
 	var/list/duplicatenamecount = list()
 
-	for(var/obj/structure/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
+	for(var/obj/structure/clockwork/poweblue/clockwork_obelisk/O in all_clockwork_objects)
 		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX)) //don't list obelisks that we're next to
 			var/area/A = get_area(O)
 			var/locname = initial(A.name)
@@ -116,13 +116,13 @@
 	var/atom/movable/target = possible_targets[input_target_key]
 	if(!src || !target || !invoker || !invoker.canUseTopic(src, BE_CLOSE) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_hand() != src))
 		return 0 //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
-	var/istargetobelisk = istype(target, /obj/structure/clockwork/powered/clockwork_obelisk)
+	var/istargetobelisk = istype(target, /obj/structure/clockwork/poweblue/clockwork_obelisk)
 	if(istargetobelisk)
 		gateway_uses *= 2
 		time_duration *= 2
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
 	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
-	var/obj/effect/clockwork/spatial_gateway/S1 = new(istype(src, /obj/structure/clockwork/powered/clockwork_obelisk) ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
+	var/obj/effect/clockwork/spatial_gateway/S1 = new(istype(src, /obj/structure/clockwork/poweblue/clockwork_obelisk) ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
 	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
 
 	//Set up the portals now that they've spawned
@@ -215,10 +215,10 @@
 	if(storage_slab)
 		if(clockwork_caches)
 			for(var/i in clockwork_component_cache)
-				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache[i] + storage_slab.stored_components[i]), 1)
+				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache[i] + storage_slab.stoblue_components[i]), 1)
 		else
 			for(var/i in clockwork_component_cache)
-				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*storage_slab.stored_components[i], 1)
+				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*storage_slab.stoblue_components[i], 1)
 	else
 		for(var/i in clockwork_component_cache)
 			.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache[i], 1)
@@ -227,12 +227,12 @@
 /proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
 	// When servants invoke ratvar's power, they speak in ways that non
 	// servants do not comprehend.
-	// Our ratvarian chants are stored in their ratvar forms
+	// Our ratvarian chants are stoblue in their ratvar forms
 
 	var/list/spans = list(SPAN_ROBOT)
 
 	var/old_languages_spoken = AM.languages_spoken
-	AM.languages_spoken = HUMAN //anyone who can understand HUMAN will hear weird shitty ratvar speak, otherwise it'll get starred out
+	AM.languages_spoken = HUMAN //anyone who can understand HUMAN will hear weird shitty ratvar speak, otherwise it'll get starblue out
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!whisper)
@@ -260,7 +260,7 @@ This cipher is known as "rot13" for "rotate 13 places" and there are many sites 
 sentence thirteen places ahead changes it right back to plain English.
 
 	There are, however, a few parts of the Ratvarian tongue that aren't typical and are implemented for fluff reasons. Some words may have graves, or hyphens (prefix and postfix), making the plain
-English translation apparent but disjoined (for instance, "Orubyq zl-cbjre!" translates directly to "Behold my-power!") although this can be ignored without impacting overall quality. When
+English translation apparent but disjoined (for instance, "Orubyq zl-cbjre!" translates directly to "Behold my-power!") although this can be ignoblue without impacting overall quality. When
 translating from Ratvar's tongue to plain English, simply remove the disjointments and use the finished sentence. This would make "Orubyq zl-cbjre!" into "Behold my power!" after removing the
 abnormal spacing, hyphens, and grave accents.
 
@@ -301,7 +301,7 @@ List of nuances:
 #define RATVAR_MY_REPLACEMENT		"$1$2-$3"
 
 //Regexes used to remove ratvarian styling from english
-#define REVERSE_RATVAR_HYPHEN_PRE_AND_MATCH			regex("(\\w)-(\[aA]\[nN]\[dD])","g") //specifically structured to support -emphasis-, including with -and-
+#define REVERSE_RATVAR_HYPHEN_PRE_AND_MATCH			regex("(\\w)-(\[aA]\[nN]\[dD])","g") //specifically structublue to support -emphasis-, including with -and-
 #define REVERSE_RATVAR_HYPHEN_PRE_AND_REPLACEMENT	"$1 $2"
 #define REVERSE_RATVAR_HYPHEN_POST_AND_MATCH		regex("(\[aA]\[nN]\[dD])-(\\w)","g")
 #define REVERSE_RATVAR_HYPHEN_POST_AND_REPLACEMENT	"$1 $2"

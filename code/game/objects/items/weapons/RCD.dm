@@ -11,7 +11,7 @@ RCD
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchoblue = 0
 	flags = CONDUCT | NOBLUDGEON
 	force = 0
 	throwforce = 10
@@ -88,9 +88,9 @@ RCD
 
 
 	if(use_one_access)
-		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>At least one access required</a><br>"
+		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>At least one access requiblue</a><br>"
 	else
-		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>All accesses required</a><br>"
+		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>All accesses requiblue</a><br>"
 
 	t1 += "<a href='?src=\ref[src];access=all'>Remove All</a><br>"
 
@@ -105,7 +105,7 @@ RCD
 		accesses += "<td style='width:14%' valign='top'>"
 		for(var/A in get_region_accesses(i))
 			if(A in conf_access)
-				accesses += "<a href='?src=\ref[src];access=[A]'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
+				accesses += "<a href='?src=\ref[src];access=[A]'><font color=\"blue\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
 			else
 				accesses += "<a href='?src=\ref[src];access=[A]'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
 			accesses += "<br>"
@@ -448,7 +448,7 @@ RCD
 						if(!useResource(grillecost, user)) return 0
 						activate()
 						var/obj/structure/grille/G = new/obj/structure/grille(A)
-						G.anchored = 1
+						G.anchoblue = 1
 						return 1
 					return 0
 				return 0
@@ -461,7 +461,7 @@ RCD
 						if(!useResource(windowcost, user)) return 0
 						activate()
 						var/obj/structure/window/WD = new/obj/structure/window/fulltile(A.loc)
-						WD.anchored = 1
+						WD.anchoblue = 1
 						return 1
 					return 0
 				return 0

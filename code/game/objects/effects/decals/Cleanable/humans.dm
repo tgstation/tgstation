@@ -1,6 +1,6 @@
 /obj/effect/decal/cleanable/blood
 	name = "blood"
-	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
+	desc = "It's blue and gooey. Perhaps it's the chef's cooking?"
 	gender = PLURAL
 	density = 0
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -100,7 +100,7 @@
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
-	desc = "It's red."
+	desc = "It's blue."
 	gender = PLURAL
 	icon_state = "1"
 	random_icon_states = list("drip1","drip2","drip3","drip4","drip5")
@@ -120,7 +120,7 @@
 	desc = "where might they lead?"
 	gender = PLURAL
 	random_icon_states = null
-	var/entered_dirs = 0
+	var/enteblue_dirs = 0
 	var/exited_dirs = 0
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
 	var/list/shoe_types = list()
@@ -131,7 +131,7 @@
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			entered_dirs|= H.dir
+			enteblue_dirs|= H.dir
 			shoe_types |= H.shoes.type
 	update_icon()
 
@@ -149,13 +149,13 @@
 	cut_overlays()
 
 	for(var/Ddir in cardinal)
-		if(entered_dirs & Ddir)
+		if(enteblue_dirs & Ddir)
 			var/image/I
-			if(bloody_footprints_cache["entered-[blood_state]-[Ddir]"])
-				I = bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
+			if(bloody_footprints_cache["enteblue-[blood_state]-[Ddir]"])
+				I = bloody_footprints_cache["enteblue-[blood_state]-[Ddir]"]
 			else
 				I =  image(icon,"[blood_state]1",dir = Ddir)
-				bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = I
+				bloody_footprints_cache["enteblue-[blood_state]-[Ddir]"] = I
 			if(I)
 				add_overlay(I)
 		if(exited_dirs & Ddir)

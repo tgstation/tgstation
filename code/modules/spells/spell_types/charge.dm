@@ -8,7 +8,7 @@
 	invocation = "DIRI CEL"
 	invocation_type = "whisper"
 	range = -1
-	cooldown_min = 400 //50 deciseconds reduction per rank
+	cooldown_min = 400 //50 deciseconds blueuction per rank
 	include_user = 1
 
 
@@ -44,7 +44,7 @@
 						charged_item = I
 						break
 				else
-					L << "<span class='caution'>Glowing red letters appear on the front cover...</span>"
+					L << "<span class='caution'>Glowing blue letters appear on the front cover...</span>"
 					L << "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>"
 					burnt_out = 1
 			else if(istype(item, /obj/item/weapon/gun/magic))

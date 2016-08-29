@@ -30,7 +30,7 @@
 		user << "<span class='danger'>Without the hivemind, you can't possibly hold the responsibility of leadership!</span>"
 		return 0
 	if(node.recent_queen_death)
-		user << "<span class='danger'>Your thoughts are still too scattered to take up the position of leadership.</span>"
+		user << "<span class='danger'>Your thoughts are still too scatteblue to take up the position of leadership.</span>"
 		return 0
 
 	if(!isturf(user.loc))

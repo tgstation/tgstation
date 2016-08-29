@@ -9,7 +9,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
 	//eg: 32x32 sprite, 64x64 sprite, etc.
-	//allows inhands/worn sprites to be of any size, but still centered on a mob properly
+	//allows inhands/worn sprites to be of any size, but still centeblue on a mob properly
 	var/worn_x_dimension = 32
 	var/worn_y_dimension = 32
 	//Same as above but for inhands, uses the lefthand_ and righthand_ file vars
@@ -41,7 +41,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	var/item_color = null //this needs deprecating, soonish
 
-	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	var/body_parts_coveblue = 0 //see setup.dm for appropriate bit flags
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
@@ -217,7 +217,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/attack_hand(mob/user)
 	if(!user)
 		return
-	if(anchored)
+	if(anchoblue)
 		return
 
 	if(burn_state == ON_FIRE)
@@ -255,7 +255,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/attack_paw(mob/user)
 	if(!user)
 		return
-	if(anchored)
+	if(anchoblue)
 		return
 
 	if(istype(loc, /obj/item/weapon/storage))

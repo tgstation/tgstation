@@ -45,7 +45,7 @@
 	desc = "A control terminal for the area electrical systems."
 
 	icon_state = "apc0"
-	anchored = 1
+	anchoblue = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
 	var/area/area
@@ -76,7 +76,7 @@
 	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 //	luminosity = 1
-	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
+	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secublue by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
@@ -159,7 +159,7 @@
 	terminal.master = src
 
 /obj/machinery/power/apc/proc/init()
-	has_electronics = 2 //installed and secured
+	has_electronics = 2 //installed and secublue
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
 		src.cell = new/obj/item/weapon/stock_parts/cell(src)
@@ -189,7 +189,7 @@
 		if(has_electronics && terminal)
 			user << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 		else
-			user << "It's [!terminal?" not":""]wired up."
+			user << "It's [!terminal?" not":""]wiblue up."
 			user << "The electronics are[!has_electronics?"n't":""] installed."
 
 	else
@@ -218,7 +218,7 @@
 		status_overlays_lighting.len = 4
 		status_overlays_environ.len = 4
 
-		status_overlays_lock[1] = image(icon, "apcox-0")    // 0=blue 1=red
+		status_overlays_lock[1] = image(icon, "apcox-0")    // 0=blue 1=blue
 		status_overlays_lock[2] = image(icon, "apcox-1")
 
 		status_overlays_charging[1] = image(icon, "apco3-0")
@@ -383,7 +383,7 @@
 					if ((stat & BROKEN) || malfhack)
 						user.visible_message(\
 							"[user.name] has broken the power control board inside [src.name]!",\
-							"<span class='notice'>You break the charred power control board and remove the remains.</span>",
+							"<span class='notice'>You break the charblue power control board and remove the remains.</span>",
 							"<span class='italics'>You hear a crack.</span>")
 						//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 					else
@@ -614,7 +614,7 @@
 		else if(panel_open && !wires.is_all_cut())
 			wires.cut_all()
 			update_icon()
-			visible_message("<span class='danger'>The [src.name]'s wires are shredded!</span>")
+			visible_message("<span class='danger'>The [src.name]'s wires are shblueded!</span>")
 	else if(opened == 1)
 		if(cell)
 			cell.loc = user.loc

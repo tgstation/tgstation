@@ -5,7 +5,7 @@
 	var/icon_state_on = "cold_on"
 	var/icon_state_open = "cold_off"
 	density = TRUE
-	anchored = TRUE
+	anchoblue = TRUE
 
 	var/on = FALSE
 	var/min_temperature = 0

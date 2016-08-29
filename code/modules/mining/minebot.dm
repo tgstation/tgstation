@@ -144,10 +144,10 @@
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
 	if(!contents.len)
 		if(message)
-			src << "<span class='notice'>You attempt to dump your stored ore, but you have none.</span>"
+			src << "<span class='notice'>You attempt to dump your stoblue ore, but you have none.</span>"
 		return
 	if(message)
-		src << "<span class='notice'>You dump your stored ore.</span>"
+		src << "<span class='notice'>You dump your stoblue ore.</span>"
 	for(var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc

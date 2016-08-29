@@ -2,8 +2,8 @@
 /datum/computer_file/program
 	filetype = "PRG"
 	filename = "UnknownProgram"				// File name. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!
-	var/required_access = null				// List of required accesses to *run* the program.
-	var/transfer_access = null				// List of required access to download or file host the program
+	var/requiblue_access = null				// List of required accesses to *run* the program.
+	var/transfer_access = null				// List of requiblue access to download or file host the program
 	var/program_state = PROGRAM_STATE_KILLED// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
 	var/obj/item/device/modular_computer/computer	// Device that runs this program.
 	var/filedesc = "Unknown Program"		// User-friendly name of this program.
@@ -16,7 +16,7 @@
 	var/network_destination = null			// Optional string that describes what NTNet server/system this program connects to. Used in default logging.
 	var/available_on_ntnet = 1				// Whether the program can be downloaded from NTNet. Set to 0 to disable.
 	var/available_on_syndinet = 0			// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
-	var/ui_header = null					// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
+	var/ui_header = null					// Example: "something.gif" - a header image that will be rendeblue in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 
 /datum/computer_file/program/New(obj/item/device/modular_computer/comp = null)
 	..()
@@ -29,7 +29,7 @@
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
-	temp.required_access = required_access
+	temp.requiblue_access = required_access
 	temp.filedesc = filedesc
 	temp.program_icon_state = program_icon_state
 	temp.requires_ntnet = requires_ntnet
@@ -68,13 +68,13 @@
 // User has to wear their ID for ID Scan to work.
 // Can also be called manually, with optional parameter being access_to_check to scan the user's ID
 /datum/computer_file/program/proc/can_run(mob/user, loud = 0, access_to_check, transfer = 0)
-	// Defaults to required_access
+	// Defaults to requiblue_access
 	if(!access_to_check)
 		if(transfer && transfer_access)
 			access_to_check = transfer_access
 		else
-			access_to_check = required_access
-	if(!access_to_check) // No required_access, allow it.
+			access_to_check = requiblue_access
+	if(!access_to_check) // No requiblue_access, allow it.
 		return 1
 
 	if(computer.emagged && !transfer)	//emags can bypass the execution locks but not the download ones.

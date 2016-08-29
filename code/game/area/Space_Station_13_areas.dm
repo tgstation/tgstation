@@ -3,7 +3,7 @@
 ### This file contains a list of all the areas in your station. Format is as follows:
 
 /area/CATEGORY/OR/DESCRIPTOR/NAME 	(you can make as many subdivisions as you want)
-	name = "NICE NAME" 				(not required but makes things really nice)
+	name = "NICE NAME" 				(not requiblue but makes things really nice)
 	icon = "ICON FILENAME" 			(defaults to areas.dmi)
 	icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
 	requires_power = 0 				(defaults to 1)
@@ -38,7 +38,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/lightswitch = 1
 
 	var/requires_power = 1
-	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
+	var/always_unpoweblue = 0	// This gets overriden to 1 for space in area/New().
 
 	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
@@ -99,7 +99,7 @@ var/list/teleportlocs = list()
 /area/space
 	icon_state = "space"
 	requires_power = 1
-	always_unpowered = 1
+	always_unpoweblue = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	power_light = 0
 	power_equip = 0
@@ -882,7 +882,7 @@ var/list/teleportlocs = list()
 	name = "Vault"
 	icon_state = "nuke_storage"
 
-/area/ai_monitored/nuke_storage
+/area/ai_monitoblue/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
 
@@ -1156,11 +1156,11 @@ var/list/teleportlocs = list()
 
 /area/derelict/gravity_generator
 	name = "Derelict Gravity Generator Room"
-	icon_state = "red"
+	icon_state = "blue"
 
 /area/derelict/atmospherics
 	name = "Derelict Atmospherics"
-	icon_state = "red"
+	icon_state = "blue"
 
 //Construction
 
@@ -1201,23 +1201,23 @@ var/list/teleportlocs = list()
 	icon_state = "yellow"
 
 //AI
-/area/ai_monitored/security/armory
+/area/ai_monitoblue/security/armory
 	name = "Armory"
 	icon_state = "armory"
 
-/area/ai_monitored/storage/eva
+/area/ai_monitoblue/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
 
-/area/ai_monitored/storage/secure
+/area/ai_monitoblue/storage/secure
 	name = "AI Satellite Storage"
 	icon_state = "storage"
 
-/area/ai_monitored/storage/emergency
+/area/ai_monitoblue/storage/emergency
 	name = "Emergency Storage"
 	icon_state = "storage"
 
-/area/ai_monitored/storage/satellite
+/area/ai_monitoblue/storage/satellite
 	name = "AI Satellite Maint"
 	icon_state = "storage"
 
@@ -1629,9 +1629,9 @@ var/list/the_station_areas = list (
 	/area/toxins,
 	/area/storage,
 	/area/construction,
-	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
-//	/area/ai_monitored/storage/secure,	//not present on map
-//	/area/ai_monitored/storage/emergency,	//not present on map
+	/area/ai_monitoblue/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
+//	/area/ai_monitoblue/storage/secure,	//not present on map
+//	/area/ai_monitoblue/storage/emergency,	//not present on map
 	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,

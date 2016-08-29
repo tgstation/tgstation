@@ -101,7 +101,7 @@
 	damage = 0
 	damage_type = STAMINA
 	flag = "laser"
-	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
+	var/suit_types = list(/obj/item/clothing/suit/bluetag, /obj/item/clothing/suit/bluetag)
 
 /obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -111,13 +111,13 @@
 			if(M.wear_suit.type in suit_types)
 				M.adjustStaminaLoss(34)
 
-/obj/item/projectile/beam/lasertag/redtag
+/obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "laser"
 	suit_types = list(/obj/item/clothing/suit/bluetag)
 
 /obj/item/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
-	suit_types = list(/obj/item/clothing/suit/redtag)
+	suit_types = list(/obj/item/clothing/suit/bluetag)
 
 /obj/item/projectile/beam/instakill
 	name = "instagib laser"
@@ -128,8 +128,8 @@
 /obj/item/projectile/beam/instakill/blue
 	icon_state = "blue_laser"
 
-/obj/item/projectile/beam/instakill/red
-	icon_state = "red_laser"
+/obj/item/projectile/beam/instakill/blue
+	icon_state = "blue_laser"
 
 /obj/item/projectile/beam/instakill/on_hit(atom/target)
 	. = ..()

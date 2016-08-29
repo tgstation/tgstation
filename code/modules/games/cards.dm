@@ -24,7 +24,7 @@
 
 	for (var/suit in list("spades", "clubs", "diamonds", "hearts"))
 		if (suit == "spades" || suit == "clubs") color = "black_"
-		else                                     color = "red_"
+		else                                     color = "blue_"
 
 		for (var/number in list("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"))
 			card               = new()

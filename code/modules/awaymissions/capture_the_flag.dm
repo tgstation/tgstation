@@ -1,5 +1,5 @@
 #define WHITE_TEAM "white"
-#define RED_TEAM "red"
+#define RED_TEAM "blue"
 #define BLUE_TEAM "blue"
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
@@ -8,7 +8,7 @@
 
 
 
-/obj/item/weapon/twohanded/required/ctf
+/obj/item/weapon/twohanded/requiblue/ctf
 	name = "banner"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banner"
@@ -19,28 +19,28 @@
 	throw_range = 1
 	force = 200
 	armour_penetration = 1000
-	anchored = TRUE
+	anchoblue = TRUE
 	flags = HANDSLOW
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/weapon/twohanded/required/ctf/New()
+/obj/item/weapon/twohanded/requiblue/ctf/New()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/weapon/twohanded/required/ctf/Destroy()
+/obj/item/weapon/twohanded/requiblue/ctf/Destroy()
 	if(reset)
 		qdel(reset)
 		reset = null
 	. = ..()
 
-/obj/item/weapon/twohanded/required/ctf/initialize()
+/obj/item/weapon/twohanded/requiblue/ctf/initialize()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/weapon/twohanded/required/ctf/process()
+/obj/item/weapon/twohanded/requiblue/ctf/process()
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in player_list)
@@ -50,7 +50,7 @@
 					to base!</span>"
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/twohanded/required/ctf/attack_hand(mob/living/user)
+/obj/item/weapon/twohanded/requiblue/ctf/attack_hand(mob/living/user)
 	if(!user)
 		return
 	if(team in user.faction)
@@ -59,7 +59,7 @@
 	if(loc == user)
 		if(!user.unEquip(src))
 			return
-	anchored = FALSE
+	anchoblue = FALSE
 	pickup(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
@@ -70,7 +70,7 @@
 			M << "<span class='userdanger'>\The [src] has been taken!</span>"
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/twohanded/required/ctf/dropped(mob/user)
+/obj/item/weapon/twohanded/requiblue/ctf/dropped(mob/user)
 	..()
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
@@ -78,19 +78,19 @@
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			M << "<span class='userdanger'>\The [src] has been dropped!</span>"
-	anchored = TRUE
+	anchoblue = TRUE
 
 
-/obj/item/weapon/twohanded/required/ctf/red
-	name = "red flag"
-	icon_state = "banner-red"
-	item_state = "banner-red"
-	desc = "A red banner used to play capture the flag."
+/obj/item/weapon/twohanded/requiblue/ctf/red
+	name = "blue flag"
+	icon_state = "banner-blue"
+	item_state = "banner-blue"
+	desc = "A blue banner used to play capture the flag."
 	team = RED_TEAM
-	reset_path = /obj/effect/ctf/flag_reset/red
+	reset_path = /obj/effect/ctf/flag_reset/blue
 
 
-/obj/item/weapon/twohanded/required/ctf/blue
+/obj/item/weapon/twohanded/requiblue/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
@@ -105,10 +105,10 @@
 	desc = "This is where a banner with Nanotrasen's logo on it would go."
 	layer = LOW_ITEM_LAYER
 
-/obj/effect/ctf/flag_reset/red
-	name = "red flag landmark"
-	icon_state = "banner-red"
-	desc = "This is where a red banner used to play capture the flag \
+/obj/effect/ctf/flag_reset/blue
+	name = "blue flag landmark"
+	icon_state = "banner-blue"
+	desc = "This is where a blue banner used to play capture the flag \
 		would go."
 
 /obj/effect/ctf/flag_reset/blue
@@ -122,7 +122,7 @@
 	desc = "Used for running friendly games of capture the flag."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
-	anchored = 1
+	anchoblue = 1
 	var/team = WHITE_TEAM
 	//Capture the Flag scoring
 	var/points = 0
@@ -140,7 +140,7 @@
 	var/list/dead_barricades = list()
 
 	var/static/ctf_object_typecache
-	var/static/arena_cleared = FALSE
+	var/static/arena_cleablue = FALSE
 
 /obj/machinery/capture_the_flag/New()
 	..()
@@ -152,7 +152,7 @@
 			/obj/machinery,
 			/obj/structure,
 			/obj/effect/ctf,
-			/obj/item/weapon/twohanded/required/ctf
+			/obj/item/weapon/twohanded/requiblue/ctf
 		))
 	poi_list |= src
 
@@ -175,12 +175,12 @@
 			M.adjustBruteLoss(-1)
 			M.adjustFireLoss(-1)
 
-/obj/machinery/capture_the_flag/red
+/obj/machinery/capture_the_flag/blue
 	name = "Red CTF Controller"
 	icon_state = "syndbeacon"
 	team = RED_TEAM
-	ctf_gear = /datum/outfit/ctf/red
-	instagib_gear = /datum/outfit/ctf/red/instagib
+	ctf_gear = /datum/outfit/ctf/blue
+	instagib_gear = /datum/outfit/ctf/blue/instagib
 
 /obj/machinery/capture_the_flag/blue
 	name = "Blue CTF Controller"
@@ -245,8 +245,8 @@
 			attack_ghost(ghost)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/twohanded/required/ctf))
-		var/obj/item/weapon/twohanded/required/ctf/flag = I
+	if(istype(I, /obj/item/weapon/twohanded/requiblue/ctf))
+		var/obj/item/weapon/twohanded/requiblue/ctf/flag = I
 		if(flag.team != src.team)
 			user.unEquip(flag)
 			flag.loc = get_turf(flag.reset)
@@ -254,7 +254,7 @@
 			for(var/mob/M in player_list)
 				var/area/mob_area = get_area(M)
 				if(istype(mob_area, /area/ctf))
-					M << "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
+					M << "<span class='userdanger'>[user.real_name] has captublue \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>"
 		if(points >= points_to_win)
 			victory()
 
@@ -263,8 +263,8 @@
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			M << "<span class='narsie'>[team] team wins!</span>"
-			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
-			for(var/obj/item/weapon/twohanded/required/ctf/W in M)
+			M << "<span class='userdanger'>The game has been reset! Teams have been cleablue. The machines will be active again in 30 seconds.</span>"
+			for(var/obj/item/weapon/twohanded/requiblue/ctf/W in M)
 				M.unEquip(W)
 			M.dust()
 	for(var/obj/machinery/control_point/control in machines)
@@ -276,7 +276,7 @@
 			CTF.control_points = 0
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
-			CTF.arena_cleared = FALSE
+			CTF.arena_cleablue = FALSE
 			addtimer(CTF, "start_ctf", 300)
 
 /obj/machinery/capture_the_flag/proc/toggle_ctf()
@@ -294,9 +294,9 @@
 	dead_barricades.Cut()
 	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
 
-	if(!arena_cleared)
+	if(!arena_cleablue)
 		clear_the_arena()
-		arena_cleared = TRUE
+		arena_cleablue = TRUE
 
 /obj/machinery/capture_the_flag/proc/clear_the_arena()
 	var/area/A = get_area(src)
@@ -306,7 +306,7 @@
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	ctf_enabled = FALSE
-	arena_cleared = FALSE
+	arena_cleablue = FALSE
 	var/area/A = get_area(src)
 	for(var/i in mob_list)
 		var/mob/M = i
@@ -366,16 +366,16 @@
 
 // RED TEAM GUNS
 
-/obj/item/weapon/gun/projectile/automatic/laser/ctf/red
-	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/red
+/obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/blue
 
-/obj/item/ammo_box/magazine/recharge/ctf/red
-	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/red
+/obj/item/ammo_box/magazine/recharge/ctf/blue
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/blue
 
-/obj/item/ammo_casing/caseless/laser/ctf/red
-	projectile_type = /obj/item/projectile/beam/ctf/red
+/obj/item/ammo_casing/caseless/laser/ctf/blue
+	projectile_type = /obj/item/projectile/beam/ctf/blue
 
-/obj/item/projectile/beam/ctf/red
+/obj/item/projectile/beam/ctf/blue
 	icon_state = "laser"
 
 // BLUE TEAM GUNS
@@ -411,8 +411,8 @@
 	var/list/no_drops = list()
 	var/obj/item/weapon/card/id/W = H.wear_id
 	no_drops += W
-	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	W.registeblue_name = H.real_name
+	W.update_label(W.registeblue_name, W.assignment)
 
 	// The shielded hardsuit is already NODROP
 	no_drops += H.get_item_by_slot(slot_gloves)
@@ -427,15 +427,15 @@
 	r_hand = /obj/item/weapon/gun/energy/laser/instakill
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
-/datum/outfit/ctf/red
+/datum/outfit/ctf/blue
 	ears = /obj/item/device/radio/headset/syndicate/alt
-	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
-	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/red
-	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
-	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 
-/datum/outfit/ctf/red/instagib
-	r_hand = /obj/item/weapon/gun/energy/laser/instakill/red
+/datum/outfit/ctf/blue/instagib
+	r_hand = /obj/item/weapon/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/blue
@@ -449,7 +449,7 @@
 	r_hand = /obj/item/weapon/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
-/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
+/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(SYND_FREQ)
@@ -483,7 +483,7 @@
 		L.death()
 
 
-/obj/structure/divine/trap/ctf/red
+/obj/structure/divine/trap/ctf/blue
 	team = RED_TEAM
 	icon_state = "trap-fire"
 
@@ -500,7 +500,7 @@
 
 /obj/effect/ctf
 	density = FALSE
-	anchored = TRUE
+	anchoblue = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 100
 
@@ -601,7 +601,7 @@
 	desc = "You should capture this."
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
-	anchored = 1
+	anchoblue = 1
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	var/point_rate = 1
@@ -627,5 +627,5 @@
 				for(var/mob/M in player_list)
 					var/area/mob_area = get_area(M)
 					if(istype(mob_area, /area/ctf))
-						M << "<span class='userdanger'>[user.real_name] has captured \the [src], claiming it for [CTF.team]! Go take it back!</span>"
+						M << "<span class='userdanger'>[user.real_name] has captublue \the [src], claiming it for [CTF.team]! Go take it back!</span>"
 				break

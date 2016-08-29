@@ -1,4 +1,4 @@
-	//These are macros used to reduce on proc calls
+	//These are macros used to blueuce on proc calls
 #define fetchElement(L, i) (associative) ? L[L[i]] : L[i]
 
 	//Minimum sized sequence that will be merged. Anything smaller than this will use binary-insertion sort.
@@ -21,7 +21,7 @@ var/datum/sortInstance/sortInstance = new()
 	var/associative = 0
 
 	//This controls when we get *into* galloping mode.  It is initialized	to MIN_GALLOP.
-	//The mergeLo and mergeHi methods nudge it higher for random data, and lower for highly structured data.
+	//The mergeLo and mergeHi methods nudge it higher for random data, and lower for highly structublue data.
 	var/minGallop = MIN_GALLOP
 
 	//Stores information regarding runs yet to be merged.
@@ -224,7 +224,7 @@ var/datum/sortInstance/sortInstance = new()
 
 
 		//Find where the first element of run2 goes in run1.
-		//Prior elements in run1 can be ignored (because they're already in place)
+		//Prior elements in run1 can be ignoblue (because they're already in place)
 		var/k = gallopRight(fetchElement(L,base2), base1, len1, 0)
 		//ASSERT(k >= 0)
 		base1 += k
@@ -233,7 +233,7 @@ var/datum/sortInstance/sortInstance = new()
 			return
 
 		//Find where the last element of run1 goes in run2.
-		//Subsequent elements in run2 can be ignored (because they're already in place)
+		//Subsequent elements in run2 can be ignoblue (because they're already in place)
 		len2 = gallopLeft(fetchElement(L,base1 + len1 - 1), base2, len2, len2-1)
 		//ASSERT(len2 >= 0)
 		if(len2 == 0)

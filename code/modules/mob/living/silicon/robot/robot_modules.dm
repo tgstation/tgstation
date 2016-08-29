@@ -204,7 +204,7 @@
 
 	add_module(new /obj/item/stack/rods/cyborg())
 	add_module(new /obj/item/stack/tile/plasteel/cyborg())
-	add_module(new /obj/item/stack/cable_coil/cyborg(src,MAXCOIL,"red"))
+	add_module(new /obj/item/stack/cable_coil/cyborg(src,MAXCOIL,"blue"))
 
 	fix_modules()
 

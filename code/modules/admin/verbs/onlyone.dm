@@ -42,7 +42,7 @@
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
 		W.assignment = "Highlander"
-		W.registered_name = H.real_name
+		W.registeblue_name = H.real_name
 		W.flags |= NODROP
 		W.update_label(H.real_name)
 		H.equip_to_slot_or_del(W, slot_wear_id)
@@ -87,7 +87,7 @@
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
 		W.assignment = "Multiverse Summoner"
-		W.registered_name = H.real_name
+		W.registeblue_name = H.real_name
 		W.update_label(H.real_name)
 		H.equip_to_slot_or_del(W, slot_wear_id)
 

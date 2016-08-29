@@ -107,10 +107,10 @@
 	item_color = "black_suit_fem"
 
 
-/obj/item/clothing/under/lawyer/red
-	icon_state = "lawyer_red"
-	item_state = "lawyer_red"
-	item_color = "lawyer_red"
+/obj/item/clothing/under/lawyer/blue
+	icon_state = "lawyer_blue"
+	item_state = "lawyer_blue"
+	item_color = "lawyer_blue"
 
 
 /obj/item/clothing/under/lawyer/blue
@@ -152,9 +152,9 @@
 /obj/item/clothing/under/rank/librarian
 	name = "sensible suit"
 	desc = "It's very... sensible."
-	icon_state = "red_suit"
-	item_state = "red_suit"
-	item_color = "red_suit"
+	icon_state = "blue_suit"
+	item_state = "blue_suit"
+	item_color = "blue_suit"
 	can_adjust = 0
 
 

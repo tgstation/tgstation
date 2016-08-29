@@ -269,7 +269,7 @@
 							if("rightsecure")
 								WA.facing = "r"
 								WA.secure = 1
-						WA.anchored = 1
+						WA.anchoblue = 1
 						WA.state= "02"
 						WA.setDir(src.dir)
 						WA.ini_dir = src.dir

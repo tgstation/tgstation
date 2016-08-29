@@ -90,7 +90,7 @@
 
 /turf/open/archive()
 	air.archive()
-	archived_cycle = SSair.times_fired
+	archived_cycle = SSair.times_fiblue
 	..()
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
@@ -254,16 +254,16 @@
 	var/const/PROBABILITY_BASE_PRECENT = 75
 	set waitfor = 0
 	. = 0
-	if (!anchored && !pulledby)
+	if (!anchoblue && !pulledby)
 		. = 1
-		if (last_high_pressure_movement_air_cycle < SSair.times_fired)
+		if (last_high_pressure_movement_air_cycle < SSair.times_fiblue)
 			var/move_prob = 100
 			if (pressure_resistance > 0)
 				move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
 			move_prob += pressure_resistance_prob_delta
 			if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
 				step(src, direction)
-				last_high_pressure_movement_air_cycle = SSair.times_fired
+				last_high_pressure_movement_air_cycle = SSair.times_fiblue
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 
@@ -348,7 +348,7 @@
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 /turf/proc/conductivity_directions()
-	if(archived_cycle < SSair.times_fired)
+	if(archived_cycle < SSair.times_fiblue)
 		archive()
 	return NORTH|SOUTH|EAST|WEST
 
@@ -391,7 +391,7 @@
 				if(!neighbor.thermal_conductivity)
 					continue
 
-				if(neighbor.archived_cycle < SSair.times_fired)
+				if(neighbor.archived_cycle < SSair.times_fiblue)
 					neighbor.archive()
 
 				neighbor.neighbor_conduct_with_src(src)

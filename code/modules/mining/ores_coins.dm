@@ -4,7 +4,7 @@
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
-	var/points = 0 //How many points this ore gets you from the ore redemption machine
+	var/points = 0 //How many points this ore gets you from the ore blueemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 
 /obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
@@ -146,7 +146,7 @@
 	desc = "Completely useless"
 	icon_state = "slag"
 
-/obj/item/weapon/twohanded/required/gibtonite
+/obj/item/weapon/twohanded/requiblue/gibtonite
 	name = "gibtonite ore"
 	desc = "Extremely explosive if struck with mining equipment, Gibtonite is often used by miners to speed up their work by using it as a mining charge. This material is illegal to possess by unauthorized personnel under space law."
 	icon = 'icons/obj/mining.dmi'
@@ -159,12 +159,12 @@
 	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 	var/attacher = "UNKNOWN"
 
-/obj/item/weapon/twohanded/required/gibtonite/Destroy()
+/obj/item/weapon/twohanded/requiblue/gibtonite/Destroy()
 	qdel(wires)
 	wires = null
 	return ..()
 
-/obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/twohanded/requiblue/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
 		wires = new /datum/wires/explosive/gibtonite(src)
@@ -190,42 +190,42 @@
 			return
 	..()
 
-/obj/item/weapon/twohanded/required/gibtonite/attack_self(user)
+/obj/item/weapon/twohanded/requiblue/gibtonite/attack_self(user)
 	if(wires)
 		wires.interact(user)
 	else
 		..()
 
-/obj/item/weapon/twohanded/required/gibtonite/bullet_act(obj/item/projectile/P)
+/obj/item/weapon/twohanded/requiblue/gibtonite/bullet_act(obj/item/projectile/P)
 	GibtoniteReaction(P.firer)
 	..()
 
-/obj/item/weapon/twohanded/required/gibtonite/ex_act()
+/obj/item/weapon/twohanded/requiblue/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
 
 
 
-/obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
+/obj/item/weapon/twohanded/requiblue/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
-		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
+		playsound(src,'sound/effects/hit_on_shatteblue_glass.ogg',50,1)
 		primed = 1
 		icon_state = "Gibtonite active"
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 		var/notify_admins = 0
-		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
+		if(z != 5)//Only annoy the admins ingame if we're triggeblue off the mining zlevel
 			notify_admins = 1
 
 		if(notify_admins)
-			if(triggered_by == 1)
-				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-			else if(triggered_by == 2)
-				message_admins("A signal has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [key_name_admin(attacher)]<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)")
+			if(triggeblue_by == 1)
+				message_admins("An explosion has triggeblue a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			else if(triggeblue_by == 2)
+				message_admins("A signal has triggeblue a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [key_name_admin(attacher)]<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)")
 			else
-				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-		if(triggered_by == 1)
+				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has triggeblue a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+		if(triggeblue_by == 1)
 			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
-		else if(triggered_by == 2)
+		else if(triggeblue_by == 2)
 			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [key_name(attacher)].")
 		else
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
@@ -279,7 +279,7 @@
 /obj/item/weapon/coin/examine(mob/user)
 	..()
 	if(value)
-		user << "<span class='info'>It's worth [value] credit\s.</span>"
+		user << "<span class='info'>It's worth [value] cblueit\s.</span>"
 
 /obj/item/weapon/coin/gold
 	cmineral = "gold"

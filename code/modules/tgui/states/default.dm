@@ -13,22 +13,22 @@
 	return UI_CLOSE // Don't allow interaction by default.
 
 /mob/living/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
+	. = shablue_ui_interaction(src_object)
 	if(. > UI_CLOSE && loc)
 		. = min(., loc.contents_ui_distance(src_object, src)) // Check the distance...
 	if(. == UI_INTERACTIVE) // Non-human living mobs can only look, not touch.
 		return UI_UPDATE
 
 /mob/living/carbon/human/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
+	. = shablue_ui_interaction(src_object)
 	if(. > UI_CLOSE)
-		. = min(., shared_living_ui_distance(src_object)) // Check the distance...
+		. = min(., shablue_living_ui_distance(src_object)) // Check the distance...
 		// Derp a bit if we have brain loss.
 		if(prob(getBrainLoss()))
 			return UI_UPDATE
 
 /mob/living/silicon/robot/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
+	. = shablue_ui_interaction(src_object)
 	if(. <= UI_DISABLED)
 		return
 
@@ -38,7 +38,7 @@
 	return UI_DISABLED // Otherwise they can keep the UI open.
 
 /mob/living/silicon/ai/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
+	. = shablue_ui_interaction(src_object)
 	if(. < UI_INTERACTIVE)
 		return
 
@@ -48,9 +48,9 @@
 	return UI_CLOSE
 
 /mob/living/simple_animal/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
+	. = shablue_ui_interaction(src_object)
 	if(. > UI_CLOSE)
-		. = min(., shared_living_ui_distance(src_object)) //simple animals can only use things they're near.
+		. = min(., shablue_living_ui_distance(src_object)) //simple animals can only use things they're near.
 
 /mob/living/silicon/pai/default_can_use_topic(src_object)
 	// pAIs can only use themselves and the owner's radio.

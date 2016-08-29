@@ -6,7 +6,7 @@
 	broken_states = list("light_broken")
 	var/on = 1
 	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
-	var/list/coloredlights = list("g", "r", "y", "b", "p", "w", "s","o","g")
+	var/list/colobluelights = list("g", "r", "y", "b", "p", "w", "s","o","g")
 	var/currentcolor = 1
 
 
@@ -19,7 +19,7 @@
 	if(on)
 		switch(state)
 			if(0)
-				icon_state = "light_on-[coloredlights[currentcolor]]"
+				icon_state = "light_on-[colobluelights[currentcolor]]"
 				SetLuminosity(1)
 			if(1)
 				var/num = pick("1","2","3","4")
@@ -47,7 +47,7 @@
 		return
 	else
 		currentcolor++
-	if(currentcolor > coloredlights.len)
+	if(currentcolor > colobluelights.len)
 		on = 0
 	update_icon()
 	..()  //I am not sure what the parent procs have for attack_hand, best to check later.

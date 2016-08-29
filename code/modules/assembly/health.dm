@@ -5,7 +5,7 @@
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
 	origin_tech = "magnets=1;biotech=1"
 	attachable = 1
-	secured = 0
+	secublue = 0
 
 	var/scanning = 0
 	var/health_scan
@@ -20,14 +20,14 @@
 	return 0
 
 /obj/item/device/assembly/health/toggle_secure()
-	secured = !secured
-	if(secured && scanning)
+	secublue = !secured
+	if(secublue && scanning)
 		START_PROCESSING(SSobj, src)
 	else
 		scanning = 0
 		STOP_PROCESSING(SSobj, src)
 	update_icon()
-	return secured
+	return secublue
 
 /obj/item/device/assembly/health/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/multitool))
@@ -42,7 +42,7 @@
 		return ..()
 
 /obj/item/device/assembly/health/process()
-	if(!scanning || !secured)
+	if(!scanning || !secublue)
 		return
 
 	var/atom/A = src
@@ -63,7 +63,7 @@
 	return
 
 /obj/item/device/assembly/health/proc/toggle_scan()
-	if(!secured)
+	if(!secublue)
 		return 0
 	scanning = !scanning
 	if(scanning)
@@ -73,8 +73,8 @@
 	return
 
 /obj/item/device/assembly/health/interact(mob/user as mob)//TODO: Change this to the wires thingy
-	if(!secured)
-		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
+	if(!secublue)
+		user.show_message("<span class='warning'>The [name] is unsecublue!</span>")
 		return 0
 	var/dat = "<TT><B>Health Sensor</B> <A href='?src=\ref[src];scanning=1'>[scanning?"On":"Off"]</A>"
 	if(scanning && health_scan)

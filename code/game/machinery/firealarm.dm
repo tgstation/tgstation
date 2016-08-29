@@ -14,7 +14,7 @@
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6

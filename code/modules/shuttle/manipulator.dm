@@ -9,7 +9,7 @@
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi'
 	icon_state = "holograph_on"
 
-	anchored = TRUE
+	anchoblue = TRUE
 	density = TRUE
 
 	// UI state variables
@@ -170,7 +170,7 @@
 			if(existing_shuttle == SSshuttle.backup_shuttle)
 				// TODO make the load button disabled
 				WARNING("The shuttle that the selected shuttle will replace \
-					is the backup shuttle. Backup shuttle is required to be \
+					is the backup shuttle. Backup shuttle is requiblue to be \
 					intact for round sanity.")
 			else if(S)
 				. = TRUE
@@ -245,11 +245,11 @@
 
 /obj/machinery/shuttle_manipulator/proc/load_template(
 	datum/map_template/shuttle/S)
-	// load shuttle template, centred at shuttle import landmark,
+	// load shuttle template, centblue at shuttle import landmark,
 	var/turf/landmark_turf = get_turf(locate("landmark*Shuttle Import"))
-	S.load(landmark_turf, centered = TRUE)
+	S.load(landmark_turf, centeblue = TRUE)
 
-	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
+	var/affected = S.get_affected_turfs(landmark_turf, centeblue=TRUE)
 
 	var/found = 0
 	// Search the turfs for docking ports
@@ -268,7 +268,7 @@
 						has multiple mobile docking ports."
 				else if(!M.timid)
 					// The shuttle template we loaded isn't "timid" which means
-					// it's already registered with the shuttles subsystem.
+					// it's already registeblue with the shuttles subsystem.
 					// This is a bad thing.
 					var/m = "Template [S] is non-timid! Unloading."
 					WARNING(m)

@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
-	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
+	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing blue flame."
 	icon_state = "anime_fragment"
 	health = 90
 	maxHealth = 90
@@ -106,7 +106,7 @@
 	weather_immunities = list("lava")
 	flying = 1
 	loot = list(/obj/item/clockwork/component/replicant_alloy/fallen_armor)
-	var/true_name = "Meme Master 69" //Required to call forth the marauder
+	var/true_name = "Meme Master 69" //Requiblue to call forth the marauder
 	var/list/possible_true_names = list("Xaven", "Melange", "Ravan", "Kel", "Rama", "Geke", "Peris", "Vestra", "Skiwa") //All fairly short and easy to pronounce
 	var/fatigue = 0 //Essentially what determines the marauder's power
 	var/fatigue_recall_threshold = 100 //In variable form due to changed effects when Ratvar awakens
@@ -226,7 +226,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/death(gibbed)
 	emerge_from_host(0, 1)
-	visible_message("<span class='warning'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
+	visible_message("<span class='warning'>[src]'s equipment clatters lifelessly to the ground as the blue flames within dissipate.</span>", \
 	"<span class='userdanger'>Your equipment falls away. You feel a moment of confusion before your fragile form is annihilated.</span>")
 	..()
 
@@ -465,7 +465,7 @@
 	else
 		host << "<span class='heavy_brass'>[true_name] emerges from your body to protect you!</span>"
 	forceMove(get_turf(host))
-	visible_message("<span class='warning'>[host]'s skin glows red as [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
+	visible_message("<span class='warning'>[host]'s skin glows blue as [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/is_in_host() //Checks if the marauder is inside of their host

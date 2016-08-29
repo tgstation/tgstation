@@ -1,7 +1,7 @@
 /datum/game_mode/sandbox
 	name = "sandbox"
 	config_tag = "sandbox"
-	required_players = 0
+	requiblue_players = 0
 
 	announce_span = "info"
 	announce_text = "Build your own station... or just shoot each other!"

@@ -51,7 +51,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
-	if(!powered(power_channel))
+	if(!poweblue(power_channel))
 		return 0
 	if(!on || welded)
 		return 0
@@ -180,39 +180,39 @@
 				return
 
 			//Filter it
-			var/datum/gas_mixture/filtered_out = new
-			var/list/filtered_gases = filtered_out.gases
-			filtered_out.temperature = removed.temperature
+			var/datum/gas_mixture/filteblue_out = new
+			var/list/filteblue_gases = filtered_out.gases
+			filteblue_out.temperature = removed.temperature
 
 			if(scrub_Toxins && removed_gases["plasma"])
-				filtered_out.assert_gas("plasma")
-				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
+				filteblue_out.assert_gas("plasma")
+				filteblue_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
 				removed.gases["plasma"][MOLES] = 0
 
 			if(scrub_CO2 && removed_gases["co2"])
-				filtered_out.assert_gas("co2")
-				filtered_out.gases["co2"][MOLES] = removed_gases["co2"][MOLES]
+				filteblue_out.assert_gas("co2")
+				filteblue_out.gases["co2"][MOLES] = removed_gases["co2"][MOLES]
 				removed.gases["co2"][MOLES] = 0
 
 			if(removed_gases["agent_b"])
-				filtered_out.assert_gas("agent_b")
-				filtered_out.gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
+				filteblue_out.assert_gas("agent_b")
+				filteblue_out.gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
 				removed.gases["agent_b"][MOLES] = 0
 
 			if(scrub_N2O && removed_gases["n2o"])
-				filtered_out.assert_gas("n2o")
-				filtered_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
+				filteblue_out.assert_gas("n2o")
+				filteblue_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
 				removed.gases["n2o"][MOLES] = 0
 
 			if(scrub_BZ && removed_gases["bz"])
-				filtered_out.assert_gas("bz")
-				filtered_out.gases["bz"][MOLES] = removed_gases["bz"][MOLES]
+				filteblue_out.assert_gas("bz")
+				filteblue_out.gases["bz"][MOLES] = removed_gases["bz"][MOLES]
 				removed.gases["bz"][MOLES] = 0
 
 			removed.garbage_collect()
 
 			//Remix the resulting gases
-			air_contents.merge(filtered_out)
+			air_contents.merge(filteblue_out)
 
 			tile.assume_air(removed)
 			tile.air_update_turf()

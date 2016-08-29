@@ -103,7 +103,7 @@ var/global/list/station_prefixes = list("", "Imperium", "Heretical", "Cuban",
 	"Automated", "Experimental", "Augmented")
 
 var/global/list/station_names = list("", "Stanford", "Dorf", "Alium",
-	"Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World",
+	"Prefix", "Clowning", "Aegis", "Ishimura", "Scabluey", "Death-World",
 	"Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia",
 	"Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East",
 	"South", "Slant-ways", "Widdershins", "Rimward", "Expensive",

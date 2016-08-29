@@ -111,7 +111,7 @@
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"
-	desc = "It's red."
+	desc = "It's blue."
 	density = 0
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/tomatodecal.dmi'
@@ -147,15 +147,15 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 
-/obj/effect/decal/cleanable/shreds
-	name = "shreds"
-	desc = "The shredded remains of what appears to be clothing."
-	icon_state = "shreds"
+/obj/effect/decal/cleanable/shblues
+	name = "shblues"
+	desc = "The shblueded remains of what appears to be clothing."
+	icon_state = "shblues"
 	gender = PLURAL
 	density = 0
 	layer = ABOVE_OPEN_TURF_LAYER
 
-/obj/effect/decal/cleanable/shreds/New()
+/obj/effect/decal/cleanable/shblues/New()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 	..()

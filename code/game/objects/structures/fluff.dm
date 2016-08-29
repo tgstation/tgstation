@@ -5,7 +5,7 @@
 	desc = "Fluffier than a sheep. This shouldn't exist."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "minibar"
-	anchored = TRUE
+	anchoblue = TRUE
 	density = FALSE
 	opacity = 0
 	var/deconstructible = TRUE
@@ -76,7 +76,7 @@
 	desc = "GO TO SCHOOL. READ A BOOK."
 	icon = 'icons/obj/bus.dmi'
 	density = TRUE
-	anchored = TRUE
+	anchoblue = TRUE
 	deconstructible = FALSE
 
 /obj/structure/fluff/bus/dense
@@ -108,7 +108,7 @@
 
 /obj/structure/fluff/paper
 	name = "dense lining of papers"
-	desc = "A lining of paper scattered across the bottom of a wall."
+	desc = "A lining of paper scatteblue across the bottom of a wall."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "paper"
 	deconstructible = FALSE
@@ -118,5 +118,5 @@
 
 /obj/structure/fluff/paper/stack
 	name = "dense stack of papers"
-	desc = "A stack of various papers, childish scribbles scattered across each page."
+	desc = "A stack of various papers, childish scribbles scatteblue across each page."
 	icon_state = "paperstack"

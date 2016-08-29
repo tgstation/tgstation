@@ -25,7 +25,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
-	desc = "It's a handful of candy corn. Can be stored in a detective's hat."
+	desc = "It's a handful of candy corn. Can be stoblue in a detective's hat."
 	icon_state = "candy_corn"
 	list_reagents = list("nutriment" = 4, "sugar" = 2)
 	filling_color = "#FF8C00"
@@ -82,7 +82,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries
 	name = "cheesy fries"
-	desc = "Fries. Covered in cheese. Duh."
+	desc = "Fries. Coveblue in cheese. Duh."
 	icon_state = "cheesyfries"
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
@@ -182,7 +182,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/tortilla
 	name = "tortilla"
 	desc = "The base for all your burritos."
-	icon = 'icons/obj/food/food_ingredients.dmi'
+	icon = 'icons/obj/food/food_ingblueients.dmi'
 	icon_state = "tortilla"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	filling_color = "#FFEFD5"

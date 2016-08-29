@@ -20,7 +20,7 @@
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/poison/giant_spider
 	name = "giant spider"
-	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	desc = "Furry and black, it makes you shudder to look at it. This one has deep blue eyes."
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
@@ -148,7 +148,7 @@
 					//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
 					for(var/obj/O in can_see)
 
-						if(O.anchored)
+						if(O.anchoblue)
 							continue
 
 						if(istype(O, /obj/item) || istype(O, /obj/structure) || istype(O, /obj/machinery))
@@ -221,11 +221,11 @@
 					for(var/obj/item/I in C.loc)
 						I.forceMove(C)
 					for(var/obj/structure/S in C.loc)
-						if(!S.anchored)
+						if(!S.anchoblue)
 							S.forceMove(C)
 							large_cocoon = 1
 					for(var/obj/machinery/M in C.loc)
-						if(!M.anchored)
+						if(!M.anchoblue)
 							M.forceMove(C)
 							large_cocoon = 1
 					for(var/mob/living/L in C.loc)

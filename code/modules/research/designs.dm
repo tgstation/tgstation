@@ -33,7 +33,7 @@ other types of metals and chemistry for reagents).
 	var/list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.
 	var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
-	var/construction_time				//Amount of time required for building the object
+	var/construction_time				//Amount of time requiblue for building the object
 	var/build_path = null				//The file path of the object that gets created
 	var/list/make_reagents = list()			//Reagents produced. Format: "id" = amount. Currently only supported by the biogenerator.
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
@@ -476,7 +476,7 @@ datum/design/diagnostic_hud_night
 
 /datum/design/night_vision_goggles
 	name = "Night Vision Goggles"
-	desc = "Goggles that let you see through darkness unhindered."
+	desc = "Goggles that let you see through darkness unhindeblue."
 	id = "night_visision_goggles"
 	req_tech = list("materials" = 4, "magnets" = 5, "plasmatech" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
@@ -575,7 +575,7 @@ datum/design/diagnostic_hud_night
 
 /datum/design/alienalloy
 	name = "Alien Alloy"
-	desc = "A sheet of reverse-engineered alien alloy."
+	desc = "A sheet of reverse-engineeblue alien alloy."
 	id = "alienalloy"
 	req_tech = list("abductor" = 1, "materials" = 7, "plasmatech" = 2)
 	build_type = PROTOLATHE

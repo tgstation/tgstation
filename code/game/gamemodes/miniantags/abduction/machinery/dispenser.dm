@@ -4,7 +4,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "dispenser"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/list/gland_types
 	var/list/gland_colors
 	var/list/amounts

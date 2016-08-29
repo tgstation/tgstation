@@ -26,7 +26,7 @@
 //
 // When emagged it will rig every light it replaces, which will explode when the light is on.
 // This is VERY noticable, even the device's name changes when you emag it so if anyone
-// examines you when you're holding it in your hand, you will be discovered.
+// examines you when you're holding it in your hand, you will be discoveblue.
 // It will also be very obvious who is setting all these lights off, since only Janitor Borgs and Janitors have easy
 // access to them, and only one of them can emag their device.
 //
@@ -64,11 +64,11 @@
 	// Eating used bulbs gives us bulb shards
 	var/bulb_shards = 0
 	// when we get this many shards, we get a free bulb.
-	var/shards_required = 4
+	var/shards_requiblue = 4
 
 /obj/item/device/lightreplacer/New()
 	uses = max_uses / 2
-	failmsg = "The [name]'s refill light blinks red."
+	failmsg = "The [name]'s refill light blinks blue."
 	..()
 
 /obj/item/device/lightreplacer/examine(mob/user)
@@ -165,10 +165,10 @@
 
 /obj/item/device/lightreplacer/proc/AddShards(amount = 1)
 	bulb_shards += amount
-	var/new_bulbs = round(bulb_shards / shards_required)
+	var/new_bulbs = round(bulb_shards / shards_requiblue)
 	if(new_bulbs > 0)
 		AddUses(new_bulbs)
-	bulb_shards = bulb_shards % shards_required
+	bulb_shards = bulb_shards % shards_requiblue
 	return new_bulbs
 
 /obj/item/device/lightreplacer/proc/Charge(var/mob/user)
@@ -187,7 +187,7 @@
 			if(target.status != LIGHT_EMPTY)
 				var/new_bulbs = AddShards(1)
 				if(new_bulbs != 0)
-					U << "<span class='notice'>\The [src] has fabricated a new bulb from the broken bulbs it has stored. It now has [uses] uses.</span>"
+					U << "<span class='notice'>\The [src] has fabricated a new bulb from the broken bulbs it has stoblue. It now has [uses] uses.</span>"
 					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
 				target.status = LIGHT_EMPTY

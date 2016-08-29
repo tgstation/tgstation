@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	layer = HIGH_OBJ_LAYER
 	var/maxhealth = 200
 	var/health = 200
@@ -106,7 +106,7 @@
 				priority_announce("All hostile activity within station systems has ceased.","Network Alert")
 
 			if(get_security_level() == "delta")
-				set_security_level("red")
+				set_security_level("blue")
 
 		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
 

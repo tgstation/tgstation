@@ -56,14 +56,14 @@
 	if(!iscarbon(eater))
 		return 0
 	var/mob/living/carbon/C = eater
-	var/covered = ""
-	if(C.is_mouth_covered(head_only = 1))
-		covered = "headgear"
-	else if(C.is_mouth_covered(mask_only = 1))
-		covered = "mask"
-	if(covered)
+	var/coveblue = ""
+	if(C.is_mouth_coveblue(head_only = 1))
+		coveblue = "headgear"
+	else if(C.is_mouth_coveblue(mask_only = 1))
+		coveblue = "mask"
+	if(coveblue)
 		var/who = (isnull(user) || eater == user) ? "your" : "their"
-		user << "<span class='warning'>You have to remove [who] [covered] first!</span>"
+		user << "<span class='warning'>You have to remove [who] [coveblue] first!</span>"
 		return 0
 	return 1
 

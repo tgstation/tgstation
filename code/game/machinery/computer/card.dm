@@ -177,8 +177,8 @@ var/time_last_changed_position = 0
 			target_name = html_encode(modify.name)
 		else
 			target_name = "--------"
-		if(modify && modify.registered_name)
-			target_owner = html_encode(modify.registered_name)
+		if(modify && modify.registeblue_name)
+			target_owner = html_encode(modify.registeblue_name)
 		else
 			target_owner = "--------"
 		if(modify && modify.assignment)
@@ -240,7 +240,7 @@ var/time_last_changed_position = 0
 				carddesc += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
 				carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
 				carddesc += "<input type='hidden' name='choice' value='reg'>"
-				carddesc += "<b>registered name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
+				carddesc += "<b>registeblue name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
 				carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
 				carddesc += "</form>"
 				carddesc += "<b>Assignment:</b> "
@@ -248,7 +248,7 @@ var/time_last_changed_position = 0
 				jobs += "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>" //CHECK THIS
 
 			else
-				carddesc += "<b>registered_name:</b> [target_owner]</span>"
+				carddesc += "<b>registeblue_name:</b> [target_owner]</span>"
 				jobs += "<b>Assignment:</b> [target_rank] (<a href='?src=\ref[src];choice=demote'>Demote</a>)</span>"
 
 			var/accesses = ""
@@ -256,7 +256,7 @@ var/time_last_changed_position = 0
 				accesses += "<h5>Central Command:</h5>"
 				for(var/A in get_all_centcom_access())
 					if(A in modify.access)
-						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</font></a> "
+						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"blue\">[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</font></a> "
 					else
 						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</a> "
 			else
@@ -274,7 +274,7 @@ var/time_last_changed_position = 0
 					accesses += "<td style='width:14%' valign='top'>"
 					for(var/A in get_region_accesses(i))
 						if(A in modify.access)
-							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
+							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"blue\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
 						else
 							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
 						accesses += "<br>"
@@ -307,7 +307,7 @@ var/time_last_changed_position = 0
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)
-				data_core.manifest_modify(modify.registered_name, modify.assignment)
+				data_core.manifest_modify(modify.registeblue_name, modify.assignment)
 				modify.update_label()
 				modify.loc = loc
 				modify.verb_pickup()
@@ -420,9 +420,9 @@ var/time_last_changed_position = 0
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)
-						modify.registered_name = newName
+						modify.registeblue_name = newName
 					else
-						usr << "<span class='error'>Invalid name entered.</span>"
+						usr << "<span class='error'>Invalid name enteblue.</span>"
 						return
 		if ("mode")
 			mode = text2num(href_list["mode_target"])

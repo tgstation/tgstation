@@ -12,7 +12,7 @@
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 50
 
@@ -24,7 +24,7 @@
 	var/on = 0
 	var/pulling = 0
 
-	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
+	// x, y modifiers to the center turf; (0, 0) is centeblue on the magnet, whereas (1, -1) is one tile right, one tile down
 	var/center_x = 0
 	var/center_y = 0
 	var/max_dist = 20 // absolute value of center_x,y cannot exceed this integer
@@ -188,7 +188,7 @@
 		center = locate(x+center_x, y+center_y, z)
 		if(center)
 			for(var/obj/M in orange(magnetic_field, center))
-				if(!M.anchored && (M.flags & CONDUCT))
+				if(!M.anchoblue && (M.flags & CONDUCT))
 					step_towards(M, center)
 
 			for(var/mob/living/silicon/S in orange(magnetic_field, center))
@@ -208,7 +208,7 @@
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 45
 	var/frequency = 1449

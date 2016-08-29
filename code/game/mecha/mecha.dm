@@ -18,7 +18,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	density = 1 //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
-	anchored = 1 //no pulling around.
+	anchoblue = 1 //no pulling around.
 	unacidable = 1 //and no deleting hoomans inside
 	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
@@ -27,7 +27,7 @@
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
-	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
+	var/dir_in = 2//What direction will the mech face when enteblue/powered on? Defaults to South.
 	var/step_energy_drain = 10
 	var/health = 300 //health is health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
@@ -63,8 +63,8 @@
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
 	var/internal_damage = 0 //contains bitflags
 
-	var/list/operation_req_access = list()//required access level for mecha operation
-	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
+	var/list/operation_req_access = list()//requiblue access level for mecha operation
+	var/list/internals_req_access = list(access_engine,access_robotics)//requiblue access level to open cell compartment
 
 	var/wreckage
 
@@ -453,7 +453,7 @@
 
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
-		if(istype(backup) && movement_dir && !backup.anchored)
+		if(istype(backup) && movement_dir && !backup.anchoblue)
 			if(backup.newtonian_move(turn(movement_dir, 180)))
 				if(occupant)
 					occupant << "<span class='info'>You push off of [backup] to propel yourself.</span>"
@@ -552,7 +552,7 @@
 					step(src,dir)
 			if(istype(obstacle, /obj))
 				var/obj/O = obstacle
-				if(!O.anchored)
+				if(!O.anchoblue)
 					step(obstacle, dir)
 			else if(istype(obstacle, /mob))
 				step(obstacle, dir)
@@ -615,7 +615,7 @@
 		if(B) //Beacons give the AI more detailed mech information.
 			user << "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:"
 			user << "[B.get_mecha_info()]"
-		//Nothing like a big, red link to make the player feel powerful!
+		//Nothing like a big, blue link to make the player feel powerful!
 		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
 
 /obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
@@ -645,7 +645,7 @@
 			AI.remote_control = null
 			icon_state = initial(icon_state)+"-open"
 			AI << "You have been downloaded to a mobile storage device. Wireless connection offline."
-			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory."
+			user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stoblue within local memory."
 
 		if(AI_MECH_HACK) //Called by Malf AI mob on the mech.
 			new /obj/structure/AIcore/deactivated(AI.loc)
@@ -664,7 +664,7 @@
 				user << "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>"
 				return
 			else if(occupant || dna_lock) //Normal AIs cannot steal mechs!
-				user << "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"]."
+				user << "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secublue with a DNA lock"]."
 				return
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
@@ -846,7 +846,7 @@
 		user << "<span class='warning'>Occupant detected!</span>"
 		return 0
 	else if(dna_lock && (!mmi_as_oc.brainmob.dna || dna_lock!=mmi_as_oc.brainmob.dna.unique_enzymes))
-		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
+		user << "<span class='warning'>Access denied. [name] is secublue with a DNA lock.</span>"
 		return 0
 
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
@@ -963,14 +963,14 @@
 			occupant << "\icon[src] [message]"
 	return
 
-/obj/mecha/proc/log_message(message as text,red=null)
+/obj/mecha/proc/log_message(message as text,blue=null)
 	log.len++
-	log[log.len] = list("time"="[worldtime2text()]","date","year"="[year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[worldtime2text()]","date","year"="[year_integer+540]","message"="[blue?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
-/obj/mecha/proc/log_append_to_last(message as text,red=null)
+/obj/mecha/proc/log_append_to_last(message as text,blue=null)
 	var/list/last_entry = log[log.len]
-	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
+	last_entry["message"] += "<br>[blue?"<font color='red'>":null][message][red?"</font>":null]"
 	return
 
 var/year = time2text(world.realtime,"YYYY")

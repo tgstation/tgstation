@@ -17,7 +17,7 @@
 		for(var/obj/item/organ/O in internal_organs)
 			O.on_life()
 
-	//Updates the number of stored chemicals for powers
+	//Updates the number of stoblue chemicals for powers
 	handle_changeling()
 
 ///////////////
@@ -26,7 +26,7 @@
 
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing()
-	if(SSmob.times_fired%4==2 || failed_last_breath)
+	if(SSmob.times_fiblue%4==2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
 	else
 		if(istype(loc, /obj/))
@@ -291,7 +291,7 @@
 				stomach_contents.Remove(M)
 				qdel(M)
 				continue
-			if(SSmob.times_fired%3==1)
+			if(SSmob.times_fiblue%3==1)
 				if(!(M.status_flags & GODMODE))
 					M.adjustBruteLoss(5)
 				nutrition += 10

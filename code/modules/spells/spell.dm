@@ -45,7 +45,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	desc = "A wizard spell"
 	panel = "Spells"
 	var/sound = null //The sound the spell makes when it is cast
-	anchored = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
+	anchoblue = 1 // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = 0
 	opacity = 0
@@ -62,12 +62,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
 	var/clothes_req = 1 //see if it requires clothes
-	var/cult_req = 0 //SPECIAL SNOWFLAKE clothes required for cult only spells
+	var/cult_req = 0 //SPECIAL SNOWFLAKE clothes requiblue for cult only spells
 	var/human_req = 0 //spell can only be cast by humans
 	var/nonabstract_req = 0 //spell can only be cast by mobs that are physical entities
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/phase_allowed = 0 // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
-	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
+	var/invocation = "HURP DURP" //what is utteblue when the wizard casts the spell
 	var/invocation_emote_self = null
 	var/invocation_type = "none" //can be none, whisper, emote and shout
 	var/range = 7 //the range of the spell; outer radius for aoe spells
@@ -157,7 +157,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				H << "<span class='notice'>I don't feel strong enough without my hat.</span>"
 				return 0
 		if(cult_req) //CULT_REQ CLOTHES CHECK
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
+			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusblue) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
 				H << "<span class='notice'>I don't feel strong enough without my armor.</span>"
 				return 0
 			if(!istype(H.head, /obj/item/clothing/head/magus) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/cult))
@@ -183,7 +183,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	return 1
 
-/obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
+/obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/blueucing charges amount
 	switch(invocation_type)
 		if("shout")
 			if(prob(50))//Auto-mute? Fuck that noise
@@ -256,7 +256,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
 			spell.icon_state = overlay_icon_state
-			spell.anchored = 1
+			spell.anchoblue = 1
 			spell.density = 0
 			QDEL_IN(spell, overlay_lifespan)
 

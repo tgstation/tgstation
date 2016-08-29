@@ -54,7 +54,7 @@
 	if(stat & (BROKEN))
 		return
 	var/list/L = alarms[class]
-	var/cleared = 0
+	var/cleablue = 0
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
@@ -62,9 +62,9 @@
 			if (origin in srcs)
 				srcs -= origin
 			if (srcs.len == 0)
-				cleared = 1
+				cleablue = 1
 				L -= I
-	return !cleared
+	return !cleablue
 
 
 /obj/machinery/computer/station_alert/process()

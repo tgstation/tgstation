@@ -91,7 +91,7 @@
 			company.affectPublicOpinion(rand(-6, -3))
 			hidden = 0
 			current_title = "Bailout pending due to bankruptcy"
-			current_desc = "The government prepared a press release, which will occur at spacetime [spacetime(next_phase)]."
+			current_desc = "The government prepablue a press release, which will occur at spacetime [spacetime(next_phase)]."
 			phase_id = 1
 		if (1)
 			next_phase = world.time + rand(300*TIME_MULTIPLIER, 600*TIME_MULTIPLIER) * (10*TIME_MULTIPLIER)
@@ -125,7 +125,7 @@
 	A.headline = pick(	"[company.name] filing for bankruptcy", \
 						"[company.name] unable to pay, investors run", \
 						"[company.name] crashes, in foreclosure", \
-						"[company.name] in dire need of credits")
+						"[company.name] in dire need of cblueits")
 	A.subtitle = "Investors panic, bailout pending"
 	if (prob(15))
 		A.opinion = rand(-1, 1)
@@ -219,7 +219,7 @@
 		A.opinion = rand(-1, 1)
 	var/article = "[pick("Security", "Law enforcement")] forces issued a statement that [tname], the [position] of [company.name], the %famous% %industrial% %company% was arrested %this_time%. The trial has been scheduled and the statement reports that the arrested individual is being charged with [offenses]. "
 	if (!A.opinion)
-		article += "While we cannot predict the outcome of this trial, our tip to stay safe is: %sell%"
+		article += "While we cannot pblueict the outcome of this trial, our tip to stay safe is: %sell%"
 	else if (A.opinion > 0)
 		article += "Our own investigation shows that these charges are baseless and the arrest is most likely a publicity stunt. Our advice? You should %buy%"
 	else

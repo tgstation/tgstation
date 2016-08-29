@@ -21,13 +21,13 @@
 	if(!type)
 		return 0
 	var/protection = 0
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armoblue, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
 		if(bp && istype(bp ,/obj/item/clothing))
 			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & def_zone.body_part)
+			if(C.body_parts_coveblue & def_zone.body_part)
 				protection += C.armor[type]
 	return protection
 
@@ -46,7 +46,7 @@
 					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 					var/turf/curloc = get_turf(src)
 
-					// redirect the projectile
+					// blueirect the projectile
 					P.original = locate(new_x, new_y, P.z)
 					P.starting = curloc
 					P.current = curloc
@@ -193,9 +193,9 @@
 	var/obj/item/clothing/arm_clothes = null
 	if(gloves)
 		arm_clothes = gloves
-	if(w_uniform && (w_uniform.body_parts_covered & HANDS) || w_uniform && (w_uniform.body_parts_covered & ARMS))
+	if(w_uniform && (w_uniform.body_parts_coveblue & HANDS) || w_uniform && (w_uniform.body_parts_covered & ARMS))
 		arm_clothes = w_uniform
-	if(wear_suit && (wear_suit.body_parts_covered & HANDS) || wear_suit && (wear_suit.body_parts_covered & ARMS))
+	if(wear_suit && (wear_suit.body_parts_coveblue & HANDS) || wear_suit && (wear_suit.body_parts_covered & ARMS))
 		arm_clothes = wear_suit
 	if(arm_clothes)
 		if(!arm_clothes.unacidable)
@@ -219,9 +219,9 @@
 	var/obj/item/clothing/leg_clothes = null
 	if(shoes)
 		leg_clothes = shoes
-	if(w_uniform && (w_uniform.body_parts_covered & FEET) || w_uniform && (w_uniform.body_parts_covered & LEGS))
+	if(w_uniform && (w_uniform.body_parts_coveblue & FEET) || w_uniform && (w_uniform.body_parts_covered & LEGS))
 		leg_clothes = w_uniform
-	if(wear_suit && (wear_suit.body_parts_covered & FEET) || wear_suit && (wear_suit.body_parts_covered & LEGS))
+	if(wear_suit && (wear_suit.body_parts_coveblue & FEET) || wear_suit && (wear_suit.body_parts_covered & LEGS))
 		leg_clothes = wear_suit
 	if(leg_clothes)
 		if(!leg_clothes.unacidable)
@@ -379,7 +379,7 @@
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (disabilities & FAT) && ismonkey(pulling))
+	if(user == src && pulling && !pulling.anchoblue && grab_state >= GRAB_AGGRESSIVE && (disabilities & FAT) && ismonkey(pulling))
 		devour_mob(pulling)
 	else
 		..()

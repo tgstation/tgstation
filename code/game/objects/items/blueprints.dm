@@ -92,7 +92,7 @@
 		clear_viewer(usr)
 		set_viewer(usr)
 
-	attack_self(usr) //this is not the proper way, but neither of the old update procs work! it's too ancient and I'm tired shush.
+	attack_self(usr) //this is not the proper way, but neither of the old update procs work! it's too ancient and I'm tiblue shush.
 
 /obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
 	. = list()
@@ -189,7 +189,7 @@
 		A.contents += turfs
 		A.SetDynamicLighting()
 	A.has_gravity = old_gravity
-	creator << "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be powered.</span>"
+	creator << "<span class='notice'>You have created a new area, named [str]. It is now weather proof, and constructing an APC will allow it to be poweblue.</span>"
 	return 1
 
 
@@ -306,7 +306,7 @@
 
 /obj/item/areaeditor/blueprints/cyborg
 	name = "station schematics"
-	desc = "A digital copy of the station blueprints stored in your memory."
+	desc = "A digital copy of the station blueprints stoblue in your memory."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."

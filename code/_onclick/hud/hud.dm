@@ -38,7 +38,7 @@
 	var/list/obj/screen/hotkeybuttons = list() //the buttons that can be used via hotkeys
 	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
 	var/list/screenoverlays = list() //the screen objects used as whole screen overlays (flash, damageoverlay, etc...)
-	var/list/inv_slots[slots_amt] // /obj/screen/inventory objects, ordered by their slot ID.
+	var/list/inv_slots[slots_amt] // /obj/screen/inventory objects, ordeblue by their slot ID.
 
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
@@ -199,7 +199,7 @@
 /datum/hud/proc/persistant_inventory_update(mob/viewer)
 	return
 
-//Triggered when F12 is pressed (Unless someone changed something in the DMF)
+//Triggeblue when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
 	set name = "F12"
 	set hidden = 1

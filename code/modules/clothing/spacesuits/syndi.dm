@@ -1,6 +1,6 @@
 //Regular syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate
-	name = "red space helmet"
+	name = "blue space helmet"
 	desc = "Top secret spess helmet."
 	icon_state = "syndicate"
 	item_state = "syndicate"
@@ -8,7 +8,7 @@
 	armor = list(melee = 40, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/suit/space/syndicate
-	name = "red space suit"
+	name = "blue space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "Has a tag on it: Totally not property of of a hostile corporation, honest!"
@@ -125,19 +125,19 @@
 	item_state = "syndicate-black"
 
 
-//Black-red syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/red
+//Black-blue syndicate space suit
+/obj/item/clothing/head/helmet/space/syndicate/black/blue
 	name = "black space helmet"
-	icon_state = "syndicate-helm-black-red"
-	item_state = "syndicate-helm-black-red"
+	icon_state = "syndicate-helm-black-blue"
+	item_state = "syndicate-helm-black-blue"
 
-/obj/item/clothing/suit/space/syndicate/black/red
-	name = "black and red space suit"
-	icon_state = "syndicate-black-red"
-	item_state = "syndicate-black-red"
+/obj/item/clothing/suit/space/syndicate/black/blue
+	name = "black and blue space suit"
+	icon_state = "syndicate-black-blue"
+	item_state = "syndicate-black-blue"
 
 
-//Black with yellow/red engineering syndicate space suit
+//Black with yellow/blue engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
 	name = "black space helmet"
 	icon_state = "syndicate-helm-black-engie"

@@ -36,7 +36,7 @@
 	var/can_be_cut = 1
 
 /obj/item/clothing/gloves/color/black/hos
-	item_color = "hosred"	//Exists for washing machines. Is not different from black gloves in any way.
+	item_color = "hosblue"	//Exists for washing machines. Is not different from black gloves in any way.
 
 /obj/item/clothing/gloves/color/black/ce
 	item_color = "chief"		//Exists for washing machines. Is not different from black gloves in any way.
@@ -57,15 +57,15 @@
 	item_state = "orangegloves"
 	item_color="orange"
 
-/obj/item/clothing/gloves/color/red
-	name = "red gloves"
+/obj/item/clothing/gloves/color/blue
+	name = "blue gloves"
 	desc = "A pair of gloves, they don't look special in any way."
-	icon_state = "red"
-	item_state = "redgloves"
-	item_color = "red"
+	icon_state = "blue"
+	item_state = "bluegloves"
+	item_color = "blue"
 
 
-/obj/item/clothing/gloves/color/red/insulated
+/obj/item/clothing/gloves/color/blue/insulated
 	name = "insulated gloves"
 	desc = "These gloves will protect the wearer from electric shock."
 	siemens_coefficient = 0
@@ -173,8 +173,8 @@
 	item_state = "wgloves"
 	item_color="mime"
 
-/obj/item/clothing/gloves/color/white/redcoat
-	item_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.
+/obj/item/clothing/gloves/color/white/bluecoat
+	item_color = "bluecoat"		//Exists for washing machines. Is not different from white gloves in any way.
 
 /obj/item/clothing/gloves/color/random
 	name = "random gloves"
@@ -187,7 +187,7 @@
 	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,
-		/obj/item/clothing/gloves/color/red = 1,
+		/obj/item/clothing/gloves/color/blue = 1,
 		/obj/item/clothing/gloves/color/blue = 1,
 		/obj/item/clothing/gloves/color/purple = 1,
 		/obj/item/clothing/gloves/color/green = 1,

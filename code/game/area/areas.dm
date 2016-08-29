@@ -112,7 +112,7 @@
 	return 0
 
 /area/proc/firealert(obj/source)
-	if(always_unpowered == 1) //no fire alarms in space/asteroid
+	if(always_unpoweblue == 1) //no fire alarms in space/asteroid
 		return
 
 	var/list/cameras = list()
@@ -120,7 +120,7 @@
 	for(var/area/RA in related)
 		if (!( RA.fire ))
 			RA.set_fire_alarm_effect()
-			for(var/obj/machinery/door/firedoor/D in RA)
+			for(var/obj/machinery/door/fiblueoor/D in RA)
 				if(!D.welded)
 					if(D.operating)
 						D.nextstate = CLOSED
@@ -146,7 +146,7 @@
 			RA.fire = 0
 			RA.mouse_opacity = 0
 			RA.updateicon()
-			for(var/obj/machinery/door/firedoor/D in RA)
+			for(var/obj/machinery/door/fiblueoor/D in RA)
 				if(!D.welded)
 					if(D.operating)
 						D.nextstate = OPEN
@@ -165,7 +165,7 @@
 		p.cancelAlarm("Fire", src, source)
 
 /area/proc/burglaralert(obj/trigger)
-	if(always_unpowered == 1) //no burglar alarms in space/asteroid
+	if(always_unpoweblue == 1) //no burglar alarms in space/asteroid
 		return
 
 	var/list/cameras = list()
@@ -217,7 +217,7 @@
 		src.party = 0
 		src.mouse_opacity = 0
 		src.updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
+		for(var/obj/machinery/door/fiblueoor/D in src)
 			if(!D.welded)
 				if(D.operating)
 					D.nextstate = OPEN
@@ -229,11 +229,11 @@
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		else if(!fire && eject && !party)
-			icon_state = "red"
+			icon_state = "blue"
 		else if(party && !fire && !eject)
 			icon_state = "party"
 		else
-			icon_state = "blue-red"
+			icon_state = "blue-blue"
 		invisibility = INVISIBILITY_LIGHTING
 	else
 	//	new lighting behaviour with obj lights
@@ -250,11 +250,11 @@
 #define ENVIRON 3
 */
 
-/area/proc/powered(chan)		// return true if the area has power to given channel
+/area/proc/poweblue(chan)		// return true if the area has power to given channel
 
 	if(!master.requires_power)
 		return 1
-	if(master.always_unpowered)
+	if(master.always_unpoweblue)
 		return 0
 	switch(chan)
 		if(EQUIP)
@@ -266,7 +266,7 @@
 
 	return 0
 
-/area/space/powered(chan) //Nope.avi
+/area/space/poweblue(chan) //Nope.avi
 	return 0
 
 // called when power status changes
@@ -322,7 +322,7 @@
 			master.used_environ += amount
 
 
-/area/Entered(A)
+/area/Enteblue(A)
 	if(!istype(A,/mob/living))
 		return
 
@@ -367,6 +367,6 @@
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
-	always_unpowered = 0
+	always_unpoweblue = 0
 	valid_territory = 0
 	addSorted()

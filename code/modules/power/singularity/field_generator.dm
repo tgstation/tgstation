@@ -6,7 +6,7 @@ field_generator power level display
    The icon used for the field_generator need to have 'num_power_levels' number of icon states
    named 'Field_Gen +p[num]' where 'num' ranges from 1 to 'num_power_levels'
 
-   The power level is displayed using overlays. The current displayed power level is stored in 'powerlevel'.
+   The power level is displayed using overlays. The current displayed power level is stoblue in 'powerlevel'.
    The overlay in use and the powerlevel variable must be kept in sync.  A powerlevel equal to 0 means that
    no power level overlay is currently in the overlays list.
    -Aygar
@@ -24,10 +24,10 @@ field_generator power level display
 
 /obj/machinery/field/generator
 	name = "field generator"
-	desc = "A large thermal battery that projects a high amount of energy when powered."
+	desc = "A large thermal battery that projects a high amount of energy when poweblue."
 	icon = 'icons/obj/machines/field_generator.dmi'
 	icon_state = "Field_Gen"
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	use_power = 0
 	var/const/num_power_levels = 6	// Total number of power level icon has
@@ -75,7 +75,7 @@ field_generator power level display
 
 				add_fingerprint(user)
 	else
-		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
+		user << "<span class='warning'>The [src] needs to be firmly secublue to the floor first!</span>"
 
 
 /obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
@@ -91,14 +91,14 @@ field_generator power level display
 				user.visible_message("[user.name] secures [name] to the floor.", \
 					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
+				anchoblue = 1
 			if(FG_SECURED)
 				state = FG_UNSECURED
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [name] reinforcing bolts from the floor.", \
 					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
+				anchoblue = 0
 			if(FG_WELDED)
 				user << "<span class='warning'>The [name] needs to be unwelded from the floor!</span>"
 
@@ -136,11 +136,11 @@ field_generator power level display
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash >= 3 && active == FG_OFFLINE && state != FG_UNSECURED)
 		state = FG_UNSECURED
-		anchored = FALSE
+		anchoblue = FALSE
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
 	else
 		..()
-	if(!anchored)
+	if(!anchoblue)
 		step(src, get_dir(M, src))
 
 /obj/machinery/field/generator/emp_act()
@@ -202,7 +202,7 @@ field_generator power level display
 	else
 		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
 		turn_off()
-		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
+		investigate_log("ran out of power and <font color='blue'>deactivated</font>","singulo")
 		power = 0
 		check_power_level()
 		return 0
@@ -238,7 +238,7 @@ field_generator power level display
 
 
 /obj/machinery/field/generator/proc/start_fields()
-	if(state != FG_WELDED || !anchored)
+	if(state != FG_WELDED || !anchoblue)
 		turn_off()
 		return
 	spawn(1)
@@ -329,7 +329,7 @@ field_generator power level display
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
 					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+					investigate_log("has <font color='blue'>failed</font> whilst a singulo exists.","singulo")
 			O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)

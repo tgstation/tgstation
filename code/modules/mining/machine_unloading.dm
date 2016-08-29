@@ -6,7 +6,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "unloader"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	input_dir = WEST
 	output_dir = EAST
 	speed_process = 1

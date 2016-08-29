@@ -1,11 +1,11 @@
 /obj/item/weapon/lipstick
 	gender = PLURAL
-	name = "red lipstick"
+	name = "blue lipstick"
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
 	w_class = 1
-	var/colour = "red"
+	var/colour = "blue"
 	var/open = 0
 
 
@@ -27,7 +27,7 @@
 	name = "lipstick"
 
 /obj/item/weapon/lipstick/random/New()
-	colour = pick("red","purple","lime","black","green","blue","white")
+	colour = pick("blue","purple","lime","black","green","blue","white")
 	name = "[colour] lipstick"
 
 
@@ -36,10 +36,10 @@
 	user << "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>"
 	open = !open
 	if(open)
-		var/image/colored = image("icon"='icons/obj/items.dmi', "icon_state"="lipstick_uncap_color")
-		colored.color = colour
+		var/image/coloblue = image("icon"='icons/obj/items.dmi', "icon_state"="lipstick_uncap_color")
+		coloblue.color = colour
 		icon_state = "lipstick_uncap"
-		add_overlay(colored)
+		add_overlay(coloblue)
 	else
 		icon_state = "lipstick"
 
@@ -52,7 +52,7 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.is_mouth_covered())
+		if(H.is_mouth_coveblue())
 			user << "<span class='warning'>Remove [ H == user ? "your" : "their" ] mask!</span>"
 			return
 		if(H.lip_style)	//if they already have lipstick on

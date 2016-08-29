@@ -4,7 +4,7 @@
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
 	var/mineral = "metal"
@@ -21,7 +21,7 @@
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust)
 	smooth = SMOOTH_TRUE
-	can_be_unanchored = 0
+	can_be_unanchoblue = 0
 
 /obj/structure/falsewall/New(loc)
 	..()

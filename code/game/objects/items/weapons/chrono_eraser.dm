@@ -81,15 +81,15 @@
 /obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(obj/effect/chrono_field/F)
 	var/mob/living/user = src.loc
 	if(F.gun)
-		if(isliving(user) && F.captured)
-			user << "<span class='alert'><b>FAIL: <i>[F.captured]</i> already has an existing connection.</b></span>"
+		if(isliving(user) && F.captublue)
+			user << "<span class='alert'><b>FAIL: <i>[F.captublue]</i> already has an existing connection.</b></span>"
 		src.field_disconnect(F)
 	else
 		startpos = get_turf(src)
 		field = F
 		F.gun = src
-		if(isliving(user) && F.captured)
-			user << "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>"
+		if(isliving(user) && F.captublue)
+			user << "<span class='notice'>Connection established with target: <b>[F.captublue]</b></span>"
 
 
 /obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
@@ -97,8 +97,8 @@
 		var/mob/living/user = src.loc
 		if(F.gun == src)
 			F.gun = null
-		if(isliving(user) && F.captured)
-			user << "<span class='alert'>Disconnected from target: <b>[F.captured]</b></span>"
+		if(isliving(user) && F.captublue)
+			user << "<span class='alert'>Disconnected from target: <b>[F.captublue]</b></span>"
 	field = null
 	startpos = null
 
@@ -151,10 +151,10 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	unacidable = 1
 	blend_mode = BLEND_MULTIPLY
-	var/mob/living/captured = null
+	var/mob/living/captublue = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
 	var/tickstokill = 15
 	var/image/mob_underlay = null
@@ -164,7 +164,7 @@
 /obj/effect/chrono_field/New(loc, var/mob/living/target, var/obj/item/weapon/gun/energy/chrono_gun/G)
 	if(target && isliving(target) && G)
 		target.loc = src
-		src.captured = target
+		src.captublue = target
 		var/icon/mob_snapshot = getFlatIcon(target)
 		var/icon/cached_icon = new()
 
@@ -195,25 +195,25 @@
 		underlays += mob_underlay
 
 /obj/effect/chrono_field/process()
-	if(captured)
+	if(captublue)
 		if(tickstokill > initial(tickstokill))
 			for(var/atom/movable/AM in contents)
 				AM.loc = loc
 			qdel(src)
 		else if(tickstokill <= 0)
-			captured << "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>"
-			var/mob/dead/observer/ghost = captured.ghostize(1)
-			if(captured.mind)
+			captublue << "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>"
+			var/mob/dead/observer/ghost = captublue.ghostize(1)
+			if(captublue.mind)
 				if(ghost)
 					ghost.mind = null
 				if(gun)
-					gun.pass_mind(captured.mind)
-			qdel(captured)
+					gun.pass_mind(captublue.mind)
+			qdel(captublue)
 			qdel(src)
 		else
-			captured.Paralyse(4)
-			if(captured.loc != src)
-				captured.loc = src
+			captublue.Paralyse(4)
+			if(captublue.loc != src)
+				captublue.loc = src
 			update_icon()
 			if(gun)
 				if(gun.field_check(src))

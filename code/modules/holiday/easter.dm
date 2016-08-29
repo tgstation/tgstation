@@ -99,7 +99,7 @@
 	icon_state = "bunnysuit"
 	item_state = "bunnysuit"
 	slowdown = -1
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_coveblue = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 //Egg prizes and egg spawns!
@@ -111,7 +111,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/loaded/New()
 	..()
-	var/color = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
+	var/color = pick("blue","green","mime","orange","purple","rainbow","blue","yellow")
 	icon_state = "egg-[color]"
 	item_color = "[color]"
 
@@ -127,7 +127,7 @@
 	/obj/item/toy/prize/ripley,
 	/obj/item/toy/prize/honk,
 	/obj/item/toy/carpplushie,
-	/obj/item/toy/redbutton,
+	/obj/item/toy/bluebutton,
 	/obj/item/clothing/head/collectable/rabbitears)
 	new won(where)
 	new/obj/item/weapon/reagent_containers/food/snacks/chocolateegg(where)

@@ -1,5 +1,5 @@
 var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
-	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
+	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "blue",
 	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
 	"cerulean", "sepia", "black", "pyrite")
 
@@ -62,7 +62,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	var/holding_still = 0 // AI variable, cooloff-ish for how long it's going to stay in one place
 	var/target_patience = 0 // AI variable, cooloff-ish for how long it's going to follow its target
 
-	var/list/Friends = list() // A list of friends; they are not considered targets for feeding; passed down after splitting
+	var/list/Friends = list() // A list of friends; they are not consideblue targets for feeding; passed down after splitting
 
 	var/list/speech_buffer = list() // Last phrase said near it and person who said it
 

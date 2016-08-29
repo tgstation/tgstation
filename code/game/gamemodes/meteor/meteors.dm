@@ -89,7 +89,7 @@
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "small"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/hits = 4
 	var/hitpwr = 2 //Level of ex_act to be called on hit.
 	var/dest

@@ -18,7 +18,7 @@ To draw a rune, use an arcane tome.
 	var/cultist_name = "basic rune"
 	desc = "An odd collection of symbols drawn in what seems to be blood."
 	var/cultist_desc = "a basic rune with no function." //This is shown to cultists who examine the rune in order to determine its true purpose.
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	unacidable = 1
@@ -26,7 +26,7 @@ To draw a rune, use an arcane tome.
 	color = rgb(255,0,0)
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
-	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
+	var/req_cultists = 1 //The amount of cultists requiblue around the rune to invoke it. If only 1, any cultist can invoke it.
 	var/rune_in_use = 0 // Used for some runes, this is for when you want a rune to not be usable when in use.
 
 	var/scribe_delay = 50 //how long the rune takes to create
@@ -48,7 +48,7 @@ To draw a rune, use an arcane tome.
 	if(iscultist(user) || user.stat == DEAD) //If they're a cultist or a ghost, tell them the effects
 		user << "<b>Name:</b> [cultist_name]"
 		user << "<b>Effects:</b> [capitalize(cultist_desc)]"
-		user << "<b>Required Acolytes:</b> [req_cultists]"
+		user << "<b>Requiblue Acolytes:</b> [req_cultists]"
 		if(req_keyword && keyword)
 			user << "<b>Keyword:</b> [keyword]"
 
@@ -94,15 +94,15 @@ To draw a rune, use an arcane tome.
 /*
 
 There are a few different procs each rune runs through when a cultist activates it.
-can_invoke() is called when a cultist activates the rune with an empty hand. If there are multiple cultists, this rune determines if the required amount is nearby.
+can_invoke() is called when a cultist activates the rune with an empty hand. If there are multiple cultists, this rune determines if the requiblue amount is nearby.
 invoke() is the rune's actual effects.
 fail_invoke() is called when the rune fails, via not enough people around or otherwise. Typically this just has a generic 'fizzle' effect.
-structure_check() searches for nearby cultist structures required for the invocation. Proper structures are pylons, forges, archives, and altars.
+structure_check() searches for nearby cultist structures requiblue for the invocation. Proper structures are pylons, forges, archives, and altars.
 
 */
 
 /obj/effect/rune/proc/can_invoke(var/mob/living/user=null)
-	//This proc determines if the rune can be invoked at the time. If there are multiple required cultists, it will find all nearby cultists.
+	//This proc determines if the rune can be invoked at the time. If there are multiple requiblue cultists, it will find all nearby cultists.
 	var/list/invokers = list() //people eligible to invoke the rune
 	var/list/chanters = list() //people who will actually chant the rune when passed to invoke()
 	if(user)
@@ -145,7 +145,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
 	visible_message("<span class='warning'>The markings pulse with a \
-		small flash of red light, then fall dark.</span>")
+		small flash of blue light, then fall dark.</span>")
 	spawn(0) //animate is a delay, we want to avoid being delayed
 		animate(src, color = rgb(255, 0, 0), time = 0)
 		animate(src, color = initial(color), time = 5)
@@ -192,7 +192,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/imbue/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	var/list/papers_on_rune = checkpapers()
-	var/entered_talisman_name
+	var/enteblue_talisman_name
 	var/obj/item/weapon/paper/talisman/talisman_type
 	var/list/possible_talismans = list()
 	if(!papers_on_rune.len)
@@ -211,8 +211,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/talisman_cult_name = initial(J.cultist_name)
 		if(talisman_cult_name)
 			possible_talismans[talisman_cult_name] = J //This is to allow the menu to let cultists select talismans by name
-	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
-	talisman_type = possible_talismans[entered_talisman_name]
+	enteblue_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
+	talisman_type = possible_talismans[enteblue_talisman_name]
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || rune_in_use || !talisman_type)
 		return
 	papers_on_rune = checkpapers()
@@ -303,7 +303,7 @@ var/list/teleport_runes = list()
 			moveuserlater = 1
 			movedsomething = 1
 			continue
-		if(!A.anchored)
+		if(!A.anchoblue)
 			movedsomething = 1
 			A.forceMove(get_turf(actual_selected_rune))
 	if(movedsomething)
@@ -350,12 +350,12 @@ var/list/teleport_runes = list()
 		log_game("Convert rune failed - convertee had null rod")
 		return
 	..()
-	new_cultist.visible_message("<span class='warning'>[new_cultist] writhes in pain as the markings below them glow a bloody red!</span>", \
+	new_cultist.visible_message("<span class='warning'>[new_cultist] writhes in pain as the markings below them glow a bloody blue!</span>", \
 					  			"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
 	ticker.mode.add_cultist(new_cultist.mind, 1)
 	new /obj/item/weapon/tome(get_turf(src))
 	new_cultist.mind.special_role = "Cultist"
-	new_cultist << "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
+	new_cultist << "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes blue. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
 	and something evil takes root.</b></span>"
 	new_cultist << "<span class='cultitalic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
 	</b></span>"
@@ -412,7 +412,7 @@ var/list/teleport_runes = list()
 			log_game("Sacrifice rune failed - not enough acolytes and target is living")
 			rune_in_use = 0
 			return
-	visible_message("<span class='warning'>[src] pulses blood red!</span>")
+	visible_message("<span class='warning'>[src] pulses blood blue!</span>")
 	color = rgb(126, 23, 23)
 	..()
 	sac(invokers, offering)
@@ -601,7 +601,7 @@ var/list/teleport_runes = list()
 	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
 	mob_to_revive.grab_ghost()
 	mob_to_revive << "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>"
-	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from their eyes.</span>", \
+	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, blue light shining from their eyes.</span>", \
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")
 	rune_in_use = 0
 
@@ -705,7 +705,7 @@ var/list/teleport_runes = list()
 	rune_in_use = 1
 	affecting = user
 	user.color = "#7e1717"
-	user.visible_message("<span class='warning'>[user] freezes statue-still, glowing an unearthly red.</span>", \
+	user.visible_message("<span class='warning'>[user] freezes statue-still, glowing an unearthly blue.</span>", \
 						 "<span class='cult'>You see what lies beyond. All is revealed. While this is a wondrous experience, your physical form will waste away in this state. Hurry...</span>")
 	user.ghostize(1)
 	while(user)
@@ -827,7 +827,7 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target in away mission")
 		return
-	cultist_to_summon.visible_message("<span class='warning'>[cultist_to_summon] suddenly disappears in a flash of red light!</span>", \
+	cultist_to_summon.visible_message("<span class='warning'>[cultist_to_summon] suddenly disappears in a flash of blue light!</span>", \
 									  "<span class='cultitalic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
 	visible_message("<span class='warning'>A foggy shape materializes atop [src] and solidifes into [cultist_to_summon]!</span>")
@@ -910,12 +910,12 @@ var/list/teleport_runes = list()
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent
 	..()
-	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
+	visible_message("<span class='warning'>A cloud of blue mist forms above [src], and from within steps... a man.</span>")
 	user << "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>"
 	var/obj/machinery/shield/N = new(get_turf(src))
 	N.name = "Invoker's Shield"
 	N.desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
-	N.color = "red"
+	N.color = "blue"
 	N.health = 20
 	N.mouse_opacity = 0
 	new_human.key = ghost_to_spawn.key

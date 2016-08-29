@@ -6,7 +6,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	unacidable = 1
 	var/active = 0
 
@@ -100,7 +100,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		return
 	if(linked.len != 8)
 		return
-	if(!powered())
+	if(!poweblue())
 		return
 	if(!awaygate)
 		user << "<span class='notice'>Error: No destination found.</span>"

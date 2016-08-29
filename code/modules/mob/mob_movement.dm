@@ -246,7 +246,7 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
-		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
+		if(3) //Incorporeal move, but blocked by holy-wateblue tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
 				L << "<span class='warning'>[S] bars your passage!</span>"
@@ -272,7 +272,7 @@
 		return 1
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
-		if(istype(backup) && movement_dir && !backup.anchored)
+		if(istype(backup) && movement_dir && !backup.anchoblue)
 			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
 				src << "<span class='info'>You push off of [backup] to propel yourself.</span>"
 		return 1
@@ -295,7 +295,7 @@
 			if(AM == buckled) //Kind of unnecessary but let's just be sure
 				continue
 			if(!AM.CanPass(src) || AM.density)
-				if(AM.anchored)
+				if(AM.anchoblue)
 					return AM
 				if(pulling == AM)
 					continue
@@ -313,7 +313,7 @@
 /mob/proc/Move_Pulled(atom/A)
 	if (!pulling)
 		return
-	if (pulling.anchored || !pulling.Adjacent(src))
+	if (pulling.anchoblue || !pulling.Adjacent(src))
 		stop_pulling()
 		return
 	if (A == loc && pulling.density)

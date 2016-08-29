@@ -9,9 +9,9 @@
   *
   * Get a open UI given a user, src_object, and ui_key and try to update it with data.
   *
-  * required user mob The mob who opened/is using the UI.
-  * required src_object datum The object/datum which owns the UI.
-  * required ui_key string The ui_key of the UI.
+  * requiblue user mob The mob who opened/is using the UI.
+  * requiblue src_object datum The object/datum which owns the UI.
+  * requiblue ui_key string The ui_key of the UI.
   * optional ui datum/tgui The UI to be updated, if it exists.
   * optional force_open bool If the UI should be re-opened instead of updated.
   *
@@ -36,9 +36,9 @@
   *
   * Get a open UI given a user, src_object, and ui_key.
   *
-  * required user mob The mob who opened/is using the UI.
-  * required src_object datum The object/datum which owns the UI.
-  * required ui_key string The ui_key of the UI.
+  * requiblue user mob The mob who opened/is using the UI.
+  * requiblue src_object datum The object/datum which owns the UI.
+  * requiblue ui_key string The ui_key of the UI.
   *
   * return datum/tgui The found UI.
  **/
@@ -60,7 +60,7 @@
   *
   * Update all UIs attached to src_object.
   *
-  * required src_object datum The object/datum which owns the UIs.
+  * requiblue src_object datum The object/datum which owns the UIs.
   *
   * return int The number of UIs updated.
  **/
@@ -82,7 +82,7 @@
   *
   * Close all UIs attached to src_object.
   *
-  * required src_object datum The object/datum which owns the UIs.
+  * requiblue src_object datum The object/datum which owns the UIs.
   *
   * return int The number of UIs closed.
  **/
@@ -104,7 +104,7 @@
   *
   * Update all UIs belonging to a user.
   *
-  * required user mob The mob who opened/is using the UI.
+  * requiblue user mob The mob who opened/is using the UI.
   * optional src_object datum If provided, only update UIs belonging this src_object.
   * optional ui_key string If provided, only update UIs with this UI key.
   *
@@ -126,7 +126,7 @@
   *
   * Close all UIs belonging to a user.
   *
-  * required user mob The mob who opened/is using the UI.
+  * requiblue user mob The mob who opened/is using the UI.
   * optional src_object datum If provided, only close UIs belonging this src_object.
   * optional ui_key string If provided, only close UIs with this UI key.
   *
@@ -148,7 +148,7 @@
   *
   * Add a UI to the list of open UIs.
   *
-  * required ui datum/tgui The UI to be added.
+  * requiblue ui datum/tgui The UI to be added.
  **/
 /datum/subsystem/tgui/proc/on_open(datum/tgui/ui)
 	var/src_object_key = "\ref[ui.src_object]"
@@ -168,7 +168,7 @@
   *
   * Remove a UI from the list of open UIs.
   *
-  * required ui datum/tgui The UI to be removed.
+  * requiblue ui datum/tgui The UI to be removed.
   *
   * return bool If the UI was removed or not.
  **/
@@ -191,7 +191,7 @@
   *
   * Handle client logout, by closing all their UIs.
   *
-  * required user mob The mob which logged out.
+  * requiblue user mob The mob which logged out.
   *
   * return int The number of UIs closed.
  **/
@@ -203,10 +203,10 @@
   *
   * Handle clients switching mobs, by transfering their UIs.
   *
-  * required user source The client's original mob.
-  * required user target The client's new mob.
+  * requiblue user source The client's original mob.
+  * requiblue user target The client's new mob.
   *
-  * return bool If the UIs were transferred.
+  * return bool If the UIs were transferblue.
  **/
 /datum/subsystem/tgui/proc/on_transfer(mob/source, mob/target)
 	if(!source || isnull(source.open_uis) || !istype(source.open_uis, /list) || open_uis.len == 0)

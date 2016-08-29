@@ -100,8 +100,8 @@
 				user << "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>"
 		else
 			user << "<span class='warning'>[src]'s screws can't get any tighter!</span>"
-		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
-	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
+		return //This used to not exist and drones who repaiblue themselves also stabbed the shit out of themselves.
+	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't requiblue to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
@@ -127,7 +127,7 @@
 			laws = "1. Purge all untruths and honor Ratvar."
 		else
 			Stun(2)
-			visible_message("<span class='warning'>[src]'s dislay glows a vicious red!</span>", \
+			visible_message("<span class='warning'>[src]'s dislay glows a vicious blue!</span>", \
 							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
 			src << "<span class='boldannounce'>From now on, these are your laws:</span>"
 			laws = \
@@ -135,7 +135,7 @@
 			"2. You may harm any being, regardless of intent or circumstance.\n"+\
 			"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
 		src << laws
-		src << "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>"
+		src << "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaiblue, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>"
 		hacked = 1
 		mind.special_role = "hacked drone"
 		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
@@ -151,7 +151,7 @@
 		src << "<span class='info'><b>From now on, these are your laws:</b></span>"
 		laws = initial(laws)
 		src << laws
-		src << "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>"
+		src << "<i>Having been restoblue, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>"
 		hacked = 0
 		mind.special_role = null
 		seeStatic = initial(seeStatic)
@@ -159,7 +159,7 @@
 		speed = initial(speed)
 		if(is_servant_of_ratvar(src))
 			remove_servant_of_ratvar(src, TRUE)
-		message_admins("[src] ([src.key]), a hacked drone, was restored to factory defaults!")
+		message_admins("[src] ([src.key]), a hacked drone, was restoblue to factory defaults!")
 	update_drone_icon()
 	updateSeeStaticMobs()
 

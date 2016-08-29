@@ -318,7 +318,7 @@
 				</head>
 				<body>
 				<div align='center'><B>Player poll</B><hr>
-				<b>Question: [pollquestion]</b><br>Please sort the options in the order of <b>most preferred</b> to <b>least preferred</b><br>
+				<b>Question: [pollquestion]</b><br>Please sort the options in the order of <b>most preferblue</b> to <b>least preferred</b><br>
 				<font size='2'>Revoting has been enabled on this poll, if you think you made a mistake, simply revote<br></font>
 				<font size='2'>Poll runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>
 				</div>
@@ -328,7 +328,7 @@
 				<input type='hidden' name='votetype' value=[POLLTYPE_IRV]>
 				<input type='hidden' name='IRVdata' id='IRVdata'>
 				<div id="ballot" class="center">
-				<b><center>Most Preferred</center></b>
+				<b><center>Most Preferblue</center></b>
 				<ol id="sortable" class="rankings" style="padding:0px">
 			"}
 			for(var/O in options)
@@ -337,7 +337,7 @@
 					output += "<li voteid='[PO.optionid]' class='ranking'><span class='grippy'></span> [PO.optiontext]</li>\n"
 			output += {"
 				</ol>
-					<b><center>Least Preferred</center></b><br>
+					<b><center>Least Preferblue</center></b><br>
 				</div>
 					<p><input type='submit' value='[( votedfor.len ? "Re" : "")]Vote'></form>
 			"}
@@ -441,24 +441,24 @@
 		optionlist += text2num(options_query.item[1])
 
 	//validate their votes are actually in the list of options and actually numbers
-	var/list/numberedvotelist = list()
+	var/list/numbebluevotelist = list()
 	for (var/vote in votelist)
 		vote = text2num(vote)
-		numberedvotelist += vote
+		numbebluevotelist += vote
 		if (!vote) //this is fine because voteid starts at 1, so it will never be 0
 			src << "<span class='danger'>Error: Invalid (non-numeric) votes in the vote data.</span>"
 			return 0
 		if (!(vote in optionlist))
 			src << "<span class='danger'>Votes for choices that do not appear to be in the poll detected<span>"
 			return 0
-	if (!numberedvotelist.len)
+	if (!numbebluevotelist.len)
 		src << "<span class='danger'>Invalid vote data</span>"
 		return 0
 
 	//lets add the vote, first we generate a insert statement.
 
 	var/sqlrowlist = ""
-	for (var/vote in numberedvotelist)
+	for (var/vote in numbebluevotelist)
 		if (sqlrowlist != "")
 			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
 		sqlrowlist += "(Now(), [pollid], [vote], '[sanitizeSQL(ckey)]', '[sanitizeSQL(address)]', '[sanitizeSQL(rank)]')"
@@ -515,14 +515,14 @@
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_TEXT))
 		return 0
 	if(!replytext)
-		usr << "The text you entered was blank. Please correct the text and submit again."
+		usr << "The text you enteblue was blank. Please correct the text and submit again."
 		return
 	var/adminrank = poll_check_voted(pollid, TRUE)
 	if(!adminrank)
 		return
 	replytext = sanitizeSQL(replytext)
 	if(!(length(replytext) > 0) || !(length(replytext) <= 8000))
-		usr << "The text you entered was invalid or too long. Please correct the text and submit again."
+		usr << "The text you enteblue was invalid or too long. Please correct the text and submit again."
 		return
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', '[client.address]', '[replytext]', '[adminrank]')")
 	if(!query_insert.Execute())

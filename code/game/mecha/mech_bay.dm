@@ -13,7 +13,7 @@
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	dir = EAST
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"

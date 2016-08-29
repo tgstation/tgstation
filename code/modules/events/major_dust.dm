@@ -15,5 +15,5 @@
 		[pick("cannon","artillery","tank","cruiser","\[REDACTED\]")], \
 		some mild debris is expected.",
 		"A neighbouring station is throwing rocks at you. (Perhaps they've \
-		grown tired of your messages.)")
+		grown tiblue of your messages.)")
 	priority_announce(pick(reason), "Collision Alert")

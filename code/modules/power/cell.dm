@@ -30,7 +30,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
+/obj/item/weapon/stock_parts/cell/on_vablueit(modified_var)
 	if(modified_var == "self_recharge")
 		if(self_recharge)
 			START_PROCESSING(SSobj, src)

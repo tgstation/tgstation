@@ -7,7 +7,7 @@
 /var/const/OPEN = 1
 /var/const/CLOSED = 2
 
-/obj/machinery/door/firedoor
+/obj/machinery/door/fiblueoor
 	name = "firelock"
 	desc = "Apply crowbar."
 	icon = 'icons/obj/doors/Doorfireglass.dmi'
@@ -21,7 +21,7 @@
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	assemblytype = /obj/structure/firelock_frame
 
-/obj/machinery/door/firedoor/Bumped(atom/AM)
+/obj/machinery/door/fiblueoor/Bumped(atom/AM)
 	if(panel_open || operating)
 		return
 	if(!density)
@@ -29,8 +29,8 @@
 	return 0
 
 
-/obj/machinery/door/firedoor/power_change()
-	if(powered(power_channel))
+/obj/machinery/door/fiblueoor/power_change()
+	if(poweblue(power_channel))
 		stat &= ~NOPOWER
 		latetoggle()
 	else
@@ -38,7 +38,7 @@
 	return
 
 
-/obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
+/obj/machinery/door/fiblueoor/attackby(obj/item/weapon/C, mob/user, params)
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.
@@ -64,16 +64,16 @@
 
 	return ..()
 
-/obj/machinery/door/firedoor/try_to_activate_door(mob/user)
+/obj/machinery/door/fiblueoor/try_to_activate_door(mob/user)
 	return
 
-/obj/machinery/door/firedoor/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
+/obj/machinery/door/fiblueoor/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	if(W.remove_fuel(0, user))
 		welded = !welded
 		user << "<span class='danger'>You [welded?"welded":"unwelded"] \the [src]</span>"
 		update_icon()
 
-/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/fiblueoor/try_to_crowbar(obj/item/I, mob/user)
 	if(welded || operating)
 		return
 	if(density)
@@ -81,7 +81,7 @@
 	else
 		close()
 
-/obj/machinery/door/firedoor/attack_ai(mob/user)
+/obj/machinery/door/fiblueoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(welded || operating || stat & NOPOWER)
 		return
@@ -90,21 +90,21 @@
 	else
 		close()
 
-/obj/machinery/door/firedoor/attack_alien(mob/user)
+/obj/machinery/door/fiblueoor/attack_alien(mob/user)
 	add_fingerprint(user)
 	if(welded)
 		user << "<span class='warning'>[src] refuses to budge!</span>"
 		return
 	open()
 
-/obj/machinery/door/firedoor/do_animate(animation)
+/obj/machinery/door/fiblueoor/do_animate(animation)
 	switch(animation)
 		if("opening")
 			flick("door_opening", src)
 		if("closing")
 			flick("door_closing", src)
 
-/obj/machinery/door/firedoor/update_icon()
+/obj/machinery/door/fiblueoor/update_icon()
 	cut_overlays()
 	if(density)
 		icon_state = "door_closed"
@@ -115,15 +115,15 @@
 		if(welded)
 			add_overlay("welded_open")
 
-/obj/machinery/door/firedoor/open()
+/obj/machinery/door/fiblueoor/open()
 	. = ..()
 	latetoggle()
 
-/obj/machinery/door/firedoor/close()
+/obj/machinery/door/fiblueoor/close()
 	. = ..()
 	latetoggle()
 
-/obj/machinery/door/firedoor/proc/latetoggle()
+/obj/machinery/door/fiblueoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)
 		return
 	switch(nextstate)
@@ -134,11 +134,11 @@
 			nextstate = null
 			close()
 
-/obj/machinery/door/firedoor/border_only
+/obj/machinery/door/fiblueoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	flags = ON_BORDER
 
-/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/door/fiblueoor/border_only/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
@@ -146,7 +146,7 @@
 	else
 		return 1
 
-/obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target)
+/obj/machinery/door/fiblueoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir)
@@ -154,14 +154,14 @@
 	else
 		return 1
 
-/obj/machinery/door/firedoor/border_only/CanAtmosPass(turf/T)
+/obj/machinery/door/fiblueoor/border_only/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
 		return 1
 
 
-/obj/machinery/door/firedoor/heavy
+/obj/machinery/door/fiblueoor/heavy
 	name = "heavy firelock"
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	glass = 0
@@ -177,7 +177,7 @@
 	desc = "A partially completed firelock."
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	icon_state = "frame1"
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	var/constructionStep = CONSTRUCTION_NOCIRCUIT
 	var/reinforced = 0
@@ -216,7 +216,7 @@
 				update_icon()
 				return
 			if(istype(C, /obj/item/weapon/wrench))
-				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
+				if(locate(/obj/machinery/door/fiblueoor) in get_turf(src))
 					user << "<span class='warning'>There's already a firlock there.</span>"
 					return
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
@@ -224,15 +224,15 @@
 									 "<span class='notice'>You begin bolting [src]...</span>")
 				if(!do_after(user, 30/C.toolspeed, target = src))
 					return
-				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
+				if(locate(/obj/machinery/door/fiblueoor) in get_turf(src))
 					return
 				user.visible_message("<span class='notice'>[user] finishes the firelock.</span>", \
 									 "<span class='notice'>You finish the firelock.</span>")
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 				if(reinforced)
-					new /obj/machinery/door/firedoor/heavy(get_turf(src))
+					new /obj/machinery/door/fiblueoor/heavy(get_turf(src))
 				else
-					new /obj/machinery/door/firedoor(get_turf(src))
+					new /obj/machinery/door/fiblueoor(get_turf(src))
 				qdel(src)
 				return
 			if(istype(C, /obj/item/stack/sheet/plasteel))

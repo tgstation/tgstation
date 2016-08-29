@@ -79,7 +79,7 @@
 
 /obj/item/weapon/storage/fancy/candle_box
 	name = "candle pack"
-	desc = "A pack of red candles."
+	desc = "A pack of blue candles."
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candlebox5"
 	icon_type = "candle"
@@ -172,7 +172,7 @@
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift
 	name = "Uplift Smooth"
-	desc = "Your favorite brand, now menthol flavored."
+	desc = "Your favorite brand, now menthol flavoblue."
 	icon_state = "uplift"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robust

@@ -33,22 +33,22 @@
 		return
 	if(istype(target,/obj))
 		var/obj/O = target
-		if(!O.anchored)
+		if(!O.anchoblue)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
-				O.anchored = 1
+				O.anchoblue = 1
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
 					O.loc = chassis
-					O.anchored = 0
+					O.anchoblue = 0
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 				else
-					O.anchored = initial(O.anchored)
+					O.anchoblue = initial(O.anchored)
 			else
 				occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
+			occupant_message("<span class='warning'>[target] is firmly secublue!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
@@ -82,22 +82,22 @@
 	if(!cargo_holder) return
 	if(istype(target,/obj))
 		var/obj/O = target
-		if(!O.anchored)
+		if(!O.anchoblue)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
-				O.anchored = 1
+				O.anchoblue = 1
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
 					O.loc = chassis
-					O.anchored = 0
+					O.anchoblue = 0
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 				else
-					O.anchored = initial(O.anchored)
+					O.anchoblue = initial(O.anchored)
 			else
 				occupant_message("<span class='warning'>Not enough room in cargo compartment!</span>")
 		else
-			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
+			occupant_message("<span class='warning'>[target] is firmly secublue!</span>")
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
@@ -404,7 +404,7 @@
 	if(!use_cable(1))
 		return reset()
 	var/obj/structure/cable/NC = new(new_turf)
-	NC.cableColor("red")
+	NC.cableColor("blue")
 	NC.d1 = 0
 	NC.d2 = fdirn
 	NC.updateicon()

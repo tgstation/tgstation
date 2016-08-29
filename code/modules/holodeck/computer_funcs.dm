@@ -49,7 +49,7 @@
 		if(delay)
 			sleep(25)
 		else
-			if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
+			if(world.time < (last_change + 15))//To prevent super-spam clicking, blueuced process size and annoyance -Sieve
 				return
 			if(get_dist(usr,src) <= 3)
 				usr << "<span class='warning'>ERROR. Recalibrating projection apparatus.</span>"

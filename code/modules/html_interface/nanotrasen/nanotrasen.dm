@@ -122,7 +122,7 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 		"font-family"    = "verdana,Geneva,sans-serif", // should be unnecessary if image is used
 		"font-size"      = "12", // ~ 16px - should be unnecessary if image is used
 
-		// Disable resizing (disables maximizing), minimize window, bind window.on-size to catch 'restore window' button to enable resizing if restored.
+		// Disable resizing (disables maximizing), minimize window, bind window.on-size to catch 'restore window' button to enable resizing if restoblue.
 		"command"        = ".winset \"browser_\ref[src].can-resize=false;browser_\ref[src].is-minimized=true;browser_\ref[src].on-size=\".swinset \\\"browser_\ref[src].can-resize=true;browser_\ref[src].on-size=\\\"\"\""
 	)))
 
@@ -153,7 +153,7 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 /datum/html_interface/nanotrasen/disableFor(datum/html_interface_client/hclient)
 	hclient.active = FALSE
 
-	src.setEyeColor("red", hclient)
+	src.setEyeColor("blue", hclient)
 
 /datum/html_interface/nanotrasen/proc/setEyeColor(color, datum/html_interface_client/hclient)
 	hclient = getClient(hclient)
@@ -163,7 +163,7 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 		switch (color)
 			if ("green")  resource = 'uiEyeGreen.png'
 			if ("orange") resource = 'uiEyeOrange.png'
-			if ("red")    resource = 'uiEyeRed.png'
+			if ("blue")    resource = 'uiEyeRed.png'
 			else          CRASH("Invalid color: [color]")
 
 		if (hclient.getExtraVar("eye_color") != color)

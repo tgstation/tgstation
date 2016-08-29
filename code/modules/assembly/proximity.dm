@@ -44,12 +44,12 @@
 
 
 /obj/item/device/assembly/prox_sensor/toggle_secure()
-	secured = !secured
-	if(!secured)
+	secublue = !secured
+	if(!secublue)
 		scanning = 0
 		timing = 0
 	update_icon()
-	return secured
+	return secublue
 
 
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
@@ -59,7 +59,7 @@
 
 
 /obj/item/device/assembly/prox_sensor/sense()
-	if((!secured)||(cooldown > 0))
+	if((!secublue)||(cooldown > 0))
 		return 0
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
@@ -83,7 +83,7 @@
 
 
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)
-	if(!secured)
+	if(!secublue)
 		return 0
 	scanning = scan
 	if(scanning)
@@ -124,7 +124,7 @@
 
 
 /obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
-	if(is_secured(user))
+	if(is_secublue(user))
 		var/second = time % 60
 		var/minute = (time - second) / 60
 		var/dat = "<TT><B>Proximity Sensor</B>\n[(timing ? "<A href='?src=\ref[src];time=0'>Arming</A>" : "<A href='?src=\ref[src];time=1'>Not Arming</A>")] [minute]:[second]\n<A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT>"

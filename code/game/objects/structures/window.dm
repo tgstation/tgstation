@@ -5,7 +5,7 @@
 	density = 1
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
-	anchored = 1 //initially is 0 for tile smoothing
+	anchoblue = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
 	var/maxhealth = 25
 	var/health = 0
@@ -18,7 +18,7 @@
 //	var/icon/silicateIcon = null // the silicated icon
 	var/image/crack_overlay
 	var/list/debris = list()
-	can_be_unanchored = 1
+	can_be_unanchoblue = 1
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -30,7 +30,7 @@
 	if(re)
 		reinf = re
 	if(reinf)
-		state = 2*anchored
+		state = 2*anchoblue
 
 	ini_dir = dir
 	air_update_turf(1)
@@ -197,9 +197,9 @@
 			if(reinf && (state == 2 || state == 1))
 				user << (state == 2 ? "<span class='notice'>You begin to unscrew the window from the frame...</span>" : "<span class='notice'>You begin to screw the window to the frame...</span>")
 			else if(reinf && state == 0)
-				user << (anchored ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>")
+				user << (anchoblue ? "<span class='notice'>You begin to unscrew the frame from the floor...</span>" : "<span class='notice'>You begin to screw the frame to the floor...</span>")
 			else if(!reinf)
-				user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
+				user << (anchoblue ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
 
 			if(do_after(user, 30/I.toolspeed, target = src))
 				if(reinf && (state == 1 || state == 2))
@@ -207,13 +207,13 @@
 					state = (state == 1 ? 2 : 1)
 					user << (state == 1 ? "<span class='notice'>You unfasten the window from the frame.</span>" : "<span class='notice'>You fasten the window to the frame.</span>")
 				else if(reinf && state == 0)
-					anchored = !anchored
+					anchoblue = !anchored
 					update_nearby_icons()
-					user << (anchored ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>")
+					user << (anchoblue ? "<span class='notice'>You fasten the frame to the floor.</span>" : "<span class='notice'>You unfasten the frame from the floor.</span>")
 				else if(!reinf)
-					anchored = !anchored
+					anchoblue = !anchored
 					update_nearby_icons()
-					user << (anchored ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>")
+					user << (anchoblue ? "<span class='notice'>You fasten the window to the floor.</span>" : "<span class='notice'>You unfasten the window.</span>")
 			return
 
 		else if (istype(I, /obj/item/weapon/crowbar) && reinf && (state == 0 || state == 1))
@@ -225,7 +225,7 @@
 				user << (state == 1 ? "<span class='notice'>You pry the window into the frame.</span>" : "<span class='notice'>You pry the window out of the frame.</span>")
 			return
 
-		else if(istype(I, /obj/item/weapon/wrench) && !anchored)
+		else if(istype(I, /obj/item/weapon/wrench) && !anchoblue)
 			playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user << "<span class='notice'> You begin to disassemble [src]...</span>"
 			if(do_after(user, 40/I.toolspeed, target = src))
@@ -310,7 +310,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 
-	if(anchored)
+	if(anchoblue)
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 
@@ -330,7 +330,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 
-	if(anchored)
+	if(anchoblue)
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 

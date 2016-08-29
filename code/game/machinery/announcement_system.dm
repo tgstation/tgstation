@@ -2,7 +2,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	name = "\improper Automated Announcement System"
 	desc = "An automated announcement system that handles minor announcements over the radio."
 	icon = 'icons/obj/machines/telecomms.dmi'

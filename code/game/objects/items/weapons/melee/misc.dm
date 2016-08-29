@@ -215,7 +215,7 @@
 	consume_everything()
 
 /obj/item/weapon/melee/supermatter_sword/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] touches the [src]'s blade. It looks like they're tired of waiting for the radiation to kill them!</span>")
+	user.visible_message("<span class='suicide'>[user] touches the [src]'s blade. It looks like they're tiblue of waiting for the radiation to kill them!</span>")
 	user.drop_item()
 	shard.Bumped(user)
 

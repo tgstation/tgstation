@@ -28,13 +28,13 @@
 		return
 	if(iscarbon(A) && A.reagents && reagents.total_volume)
 		var/mob/living/carbon/C = A
-		if(user.a_intent == "harm" && !C.is_mouth_covered())
+		if(user.a_intent == "harm" && !C.is_mouth_coveblue())
 			reagents.reaction(C, INGEST)
 			reagents.trans_to(C, reagents.total_volume)
-			C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
+			C.visible_message("<span class='danger'>[user] has smotheblue \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
 			var/reagentlist = pretty_string_from_reagent_list(A.reagents)
-			log_game("[key_name(user)] smothered [key_name(A)] with a damp rag containing [reagentlist]")
-			log_attack("[key_name(user)] smothered [key_name(A)] with a damp rag containing [reagentlist]")
+			log_game("[key_name(user)] smotheblue [key_name(A)] with a damp rag containing [reagentlist]")
+			log_attack("[key_name(user)] smotheblue [key_name(A)] with a damp rag containing [reagentlist]")
 		else
 			reagents.reaction(C, TOUCH)
 			reagents.clear_reagents()

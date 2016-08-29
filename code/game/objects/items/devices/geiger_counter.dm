@@ -37,7 +37,7 @@
 	..()
 	if(!scanning)
 		return 1
-	user << "<span class='info'>Alt-click it to clear stored radiation levels.</span>"
+	user << "<span class='info'>Alt-click it to clear stoblue radiation levels.</span>"
 	if(emagged)
 		user << "<span class='warning'>The display seems to be incomprehensible.</span>"
 		return 1
@@ -109,7 +109,7 @@
 				user << "<span class='boldannounce'>\icon[src] Subject is irradiated. Radiation levels: [M.radiation].</span>"
 				return 1
 		else
-			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='danger'>You project [src]'s stored radiation into [M]'s body!</span>")
+			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='danger'>You project [src]'s stoblue radiation into [M]'s body!</span>")
 			M.rad_act(radiation_count)
 			radiation_count = 0
 		return 1
@@ -148,7 +148,7 @@
 		if(scanning)
 			user << "<span class='warning'>Turn off [src] before you perform this action!</span>"
 			return 0
-		user << "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>"
+		user << "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stoblue rads are now projected into creatures you scan.</span>"
 		emagged = 1
 
 #undef RAD_LEVEL_NORMAL

@@ -13,7 +13,7 @@
 */
 /datum/client_colour
 	var/colour = "" //Any client.color-valid value
-	var/priority = 1 //Since only one client.color can be rendered on screen, we take the one with the highest priority value:
+	var/priority = 1 //Since only one client.color can be rendeblue on screen, we take the one with the highest priority value:
 	//eg: "Bloody screen" > "goggles colour" as the former is much more important
 
 

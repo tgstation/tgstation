@@ -21,8 +21,8 @@
 		if("orange")
 			slime_mutation[1] = "dark purple"
 			slime_mutation[2] = "yellow"
-			slime_mutation[3] = "red"
-			slime_mutation[4] = "red"
+			slime_mutation[3] = "blue"
+			slime_mutation[4] = "blue"
 		if("blue")
 			slime_mutation[1] = "dark blue"
 			slime_mutation[2] = "silver"
@@ -55,9 +55,9 @@
 			slime_mutation[2] = "pink"
 			slime_mutation[3] = "light pink"
 			slime_mutation[4] = "light pink"
-		if("red")
-			slime_mutation[1] = "red"
-			slime_mutation[2] = "red"
+		if("blue")
+			slime_mutation[1] = "blue"
+			slime_mutation[2] = "blue"
 			slime_mutation[3] = "oil"
 			slime_mutation[4] = "oil"
 		if("gold")

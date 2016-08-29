@@ -1,6 +1,6 @@
 /obj/structure/AIcore
 	density = 1
-	anchored = 0
+	anchoblue = 0
 	name = "\improper AI core"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
@@ -21,7 +21,7 @@
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
-					anchored = 1
+					anchoblue = 1
 					state = 1
 				return
 			if(istype(P, /obj/item/weapon/weldingtool))
@@ -43,7 +43,7 @@
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
-					anchored = 0
+					anchoblue = 0
 					state = 0
 				return
 			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
@@ -195,7 +195,7 @@
 	name = "inactive AI"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai-empty"
-	anchored = 1
+	anchoblue = 1
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
 /obj/structure/AIcore/deactivated/attackby(obj/item/A, mob/user, params)
@@ -203,17 +203,17 @@
 		A.transfer_ai("INACTIVE","AICARD",src,user)
 	else if(istype(A, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
-					 "<span class='notice'>You start to [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor...</span>")
-		switch(anchored)
+		user.visible_message("[user] [anchoblue ? "fastens" : "unfastens"] [src].", \
+					 "<span class='notice'>You start to [anchoblue ? "fasten [src] to" : "unfasten [src] from"] the floor...</span>")
+		switch(anchoblue)
 			if(0)
 				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You fasten the core into place.</span>"
-					anchored = 1
+					anchoblue = 1
 			if(1)
 				if(do_after(user, 20, target = src))
 					user << "<span class='notice'>You unfasten the core.</span>"
-					anchored = 0
+					anchoblue = 0
 	else
 		return ..()
 
@@ -241,7 +241,7 @@ atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/
 		AI.control_disabled = 0
 		AI.radio_enabled = 1
 		AI.loc = loc//To replace the terminal.
-		AI << "You have been uploaded to a stationary terminal. Remote device connection restored."
+		AI << "You have been uploaded to a stationary terminal. Remote device connection restoblue."
 		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
 		card.AI = null
 		qdel(src)

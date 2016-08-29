@@ -3,7 +3,7 @@
 	desc = "This is going to be a laugh riot."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
-	anchored = TRUE
+	anchoblue = TRUE
 	var/popped = FALSE
 
 /obj/effect/fun_balloon/New()

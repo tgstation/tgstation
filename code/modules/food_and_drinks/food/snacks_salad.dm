@@ -13,7 +13,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad
 	name = "\improper Aesir salad"
-	desc = "Probably too incredible for mortal men to fully enjoy."
+	desc = "Probably too incblueible for mortal men to fully enjoy."
 	icon_state = "aesirsalad"
 	bonus_reagents = list("omnizine" = 2, "vitamin" = 6)
 	list_reagents = list("nutriment" = 8, "omnizine" = 8, "vitamin" = 6)

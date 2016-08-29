@@ -2,7 +2,7 @@
 	name = "\improper IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
@@ -115,7 +115,7 @@
 				if(istype(beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 10
-				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfered of the total volume
+				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfeblue of the total volume
 				beaker.reagents.reaction(attached, INJECT, fraction,0) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()

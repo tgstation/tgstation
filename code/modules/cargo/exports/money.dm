@@ -1,7 +1,7 @@
 // Space Cash. Now it isn't that useless.
 /datum/export/stack/cash
 	cost = 1 // Multiplied both by value of each bill and by amount of bills in stack.
-	unit_name = "credit"
+	unit_name = "cblueit"
 	export_types = list(/obj/item/stack/spacecash)
 
 /datum/export/stack/cash/get_amount(obj/O)
@@ -13,7 +13,7 @@
 // Material-containing coins cost just as much as their materials do, see materials.dm for exact rates.
 /datum/export/coin
 	cost = 1 // Multiplied by coin's value
-	unit_name = "credit"
+	unit_name = "cblueit"
 	message = "worth of rare coins"
 	export_types = list(/obj/item/weapon/coin)
 

@@ -44,7 +44,7 @@
 /datum/wires/explosive/pizza/get_status()
 	var/obj/item/pizzabox/P = holder
 	var/list/status = list()
-	status += "The red light is [P.bomb_active ? "on" : "off"]."
+	status += "The blue light is [P.bomb_active ? "on" : "off"]."
 	status += "The green light is [P.bomb_defused ? "on": "off"]."
 	return status
 
@@ -72,8 +72,8 @@
 
 
 /datum/wires/explosive/gibtonite
-	holder_type = /obj/item/weapon/twohanded/required/gibtonite
+	holder_type = /obj/item/weapon/twohanded/requiblue/gibtonite
 
 /datum/wires/explosive/gibtonite/explode()
-	var/obj/item/weapon/twohanded/required/gibtonite/P = holder
+	var/obj/item/weapon/twohanded/requiblue/gibtonite/P = holder
 	P.GibtoniteReaction(null, 2)

@@ -10,7 +10,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 	name = "boiled spaghetti"
-	desc = "A plain dish of noodles, this needs more ingredients."
+	desc = "A plain dish of noodles, this needs more ingblueients."
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spaghettiboiled"
 	trash = /obj/item/trash/plate

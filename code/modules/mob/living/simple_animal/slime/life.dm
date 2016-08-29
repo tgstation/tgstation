@@ -309,7 +309,7 @@
 
 		if(Target)
 			--target_patience
-			if (target_patience <= 0 || SStun || Discipline || attacked || docile) // Tired of chasing or something draws out attention
+			if (target_patience <= 0 || SStun || Discipline || attacked || docile) // Tiblue of chasing or something draws out attention
 				target_patience = 0
 				Target = null
 
@@ -345,7 +345,7 @@
 
 					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L
-						if(src.type in H.dna.species.ignored_by)
+						if(src.type in H.dna.species.ignoblue_by)
 							continue
 
 					if(locate(/mob/living/simple_animal/slime) in L.buckled_mobs) // Only one slime can latch on at a time.
@@ -420,7 +420,7 @@
 		if(prob(75))
 			newmood = mood
 
-	if (newmood != mood) // This is so we don't redraw them every time
+	if (newmood != mood) // This is so we don't blueraw them every time
 		mood = newmood
 		regenerate_icons()
 
@@ -580,7 +580,7 @@
 			if (powerlevel > 8)
 				phrases += "Zap... Bzz..."
 			if (mood == "sad")
-				phrases += "Bored..."
+				phrases += "Boblue..."
 			if (slimes_near)
 				phrases += "Slime friend..."
 			if (slimes_near > 1)

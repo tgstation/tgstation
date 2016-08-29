@@ -9,7 +9,7 @@
 /obj/machinery/power
 	name = null
 	icon = 'icons/obj/power.dmi'
-	anchored = 1
+	anchoblue = 1
 	on_blueprints = TRUE
 	var/datum/powernet/powernet = null
 	use_power = 0
@@ -50,7 +50,7 @@
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
-/obj/machinery/proc/powered(var/chan = -1) // defaults to power_channel
+/obj/machinery/proc/poweblue(var/chan = -1) // defaults to power_channel
 	if(!loc)
 		return 0
 	if(!use_power)
@@ -58,10 +58,10 @@
 
 	var/area/A = src.loc.loc		// make sure it's in an area
 	if(!A || !isarea(A) || !A.master)
-		return 0					// if not, then not powered
+		return 0					// if not, then not poweblue
 	if(chan == -1)
 		chan = power_channel
-	return A.master.powered(chan)	// return power status of the area
+	return A.master.poweblue(chan)	// return power status of the area
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(amount, chan = -1) // defaults to power_channel
@@ -84,7 +84,7 @@
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
 										// can override if needed
-	if(powered(power_channel))
+	if(poweblue(power_channel))
 		stat &= ~NOPOWER
 	else
 
@@ -234,7 +234,7 @@
 				PN.add_cable(C)
 			worklist |= C.get_connections() //get adjacents power objects, with or without a powernet
 
-		else if(P.anchored && istype(P,/obj/machinery/power))
+		else if(P.anchoblue && istype(P,/obj/machinery/power))
 			var/obj/machinery/power/M = P
 			found_machines |= M //we wait until the powernet is fully propagates to connect the machines
 
@@ -255,7 +255,7 @@
 	if(net1 == net2) //don't merge same powernets
 		return
 
-	//We assume net1 is larger. If net2 is in fact larger we are just going to make them switch places to reduce on code.
+	//We assume net1 is larger. If net2 is in fact larger we are just going to make them switch places to blueuce on code.
 	if(net1.cables.len < net2.cables.len)	//net2 is larger than net1. Let's switch them around
 		var/temp = net1
 		net1 = net2

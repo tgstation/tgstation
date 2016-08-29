@@ -5,7 +5,7 @@
 		when whatever is tunneling comes through."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "medi_holo"
-	anchored = TRUE
+	anchoblue = TRUE
 	density = FALSE
 	layer = RIPPLE_LAYER
 	mouse_opacity = 1

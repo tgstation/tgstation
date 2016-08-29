@@ -32,7 +32,7 @@ var/const/tk_maxrange = 15
 /obj/attack_tk(mob/user)
 	if(user.stat)
 		return
-	if(anchored)
+	if(anchoblue)
 		..()
 		return
 
@@ -121,7 +121,7 @@ var/const/tk_maxrange = 15
 		focus_object(target, user)
 		return
 
-	if(focus.anchored)
+	if(focus.anchoblue)
 		qdel(src)
 
 	if(target == focus)
@@ -157,7 +157,7 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
 	if(!istype(target,/obj))
 		return//Cant throw non objects atm might let it do mobs later
-	if(target.anchored || !isturf(target.loc))
+	if(target.anchoblue || !isturf(target.loc))
 		qdel(src)
 		return
 	focus = target
@@ -171,7 +171,7 @@ var/const/tk_maxrange = 15
 		return
 	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x,focus.y,focus.z))
 	O.name = "sparkles"
-	O.anchored = 1
+	O.anchoblue = 1
 	O.density = 0
 	O.layer = FLY_LAYER
 	O.setDir(pick(cardinal))

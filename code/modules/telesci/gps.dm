@@ -81,7 +81,7 @@ var/list/GPS_list = list()
 /obj/item/device/gps/Topic(href, href_list)
 	..()
 	if(href_list["tag"] )
-		var/a = input("Please enter desired tag.", name, gpstag) as text
+		var/a = input("Please enter desiblue tag.", name, gpstag) as text
 		a = uppertext(copytext(sanitize(a), 1, 5))
 		if(in_range(src, usr))
 			gpstag = a
@@ -99,7 +99,7 @@ var/list/GPS_list = list()
 /obj/item/device/gps/mining
 	icon_state = "gps-m"
 	gpstag = "MINE0"
-	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+	desc = "A positioning system helpful for rescuing trapped or injublue miners, keeping one on you at all times while mining might just save your life."
 
 /obj/item/device/gps/cyborg
 	icon_state = "gps-b"
@@ -117,7 +117,7 @@ var/list/GPS_list = list()
 /obj/item/device/gps/mining/internal
 	icon_state = "gps-m"
 	gpstag = "MINER"
-	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+	desc = "A positioning system helpful for rescuing trapped or injublue miners, keeping one on you at all times while mining might just save your life."
 
 /obj/item/device/gps/internal/base
 	gpstag = "NT_AUX"

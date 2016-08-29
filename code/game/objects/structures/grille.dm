@@ -4,18 +4,18 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	flags = CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
 	var/health = 10
 	var/destroyed = 0
-	var/obj/item/stack/rods/stored
+	var/obj/item/stack/rods/stoblue
 
 /obj/structure/grille/New()
 	..()
-	stored = new/obj/item/stack/rods(src)
-	stored.amount = 2
+	stoblue = new/obj/item/stack/rods(src)
+	stoblue.amount = 2
 
 /obj/structure/grille/ex_act(severity, target)
 	switch(severity)
@@ -119,16 +119,16 @@
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
 	if(!(flags&NODECONSTRUCT))
-		transfer_fingerprints_to(stored)
+		transfer_fingerprints_to(stoblue)
 		var/turf/T = loc
-		stored.loc = T
+		stoblue.loc = T
 	..()
 
 /obj/structure/grille/proc/Break()
 	icon_state = "broken[initial(icon_state)]"
 	density = 0
 	destroyed = 1
-	stored.amount = 1
+	stoblue.amount = 1
 	if(!(flags&NODECONSTRUCT))
 		var/obj/item/stack/rods/newrods = new(loc)
 		transfer_fingerprints_to(newrods)
@@ -140,12 +140,12 @@
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			Deconstruct()
-	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf) || anchored))
+	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf) || anchoblue))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
-			anchored = !anchored
-			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
-								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
+			anchoblue = !anchored
+			user.visible_message("<span class='notice'>[user] [anchoblue ? "fastens" : "unfastens"] [src].</span>", \
+								 "<span class='notice'>You [anchoblue ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
 			return
 	else if(istype(W, /obj/item/stack/rods) && destroyed)
 		var/obj/item/stack/rods/R = W
@@ -167,7 +167,7 @@
 				user << "<span class='warning'>You need at least two sheets of glass for that!</span>"
 				return
 			var/dir_to_set = SOUTHWEST
-			if(!anchored)
+			if(!anchoblue)
 				user << "<span class='warning'>[src] needs to be fastened to the floor first!</span>"
 				return
 			for(var/obj/structure/window/WINDOW in loc)
@@ -175,7 +175,7 @@
 				return
 			user << "<span class='notice'>You start placing the window...</span>"
 			if(do_after(user,20, target = src))
-				if(!src.loc || !anchored) //Grille destroyed or unanchored while waiting
+				if(!src.loc || !anchoblue) //Grille destroyed or unanchored while waiting
 					return
 				for(var/obj/structure/window/WINDOW in loc) //Another window already installed on grille
 					return
@@ -186,7 +186,7 @@
 					WD = new/obj/structure/window/fulltile(loc) //normal window
 				WD.setDir(dir_to_set)
 				WD.ini_dir = dir_to_set
-				WD.anchored = 0
+				WD.anchoblue = 0
 				WD.state = 0
 				ST.use(2)
 				user << "<span class='notice'>You place [WD] on [src].</span>"
@@ -227,7 +227,7 @@
 // returns 1 if shocked, 0 otherwise
 
 /obj/structure/grille/proc/shock(mob/user, prb)
-	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
+	if(!anchoblue || destroyed)		// anchored/destroyed grilles are never connected
 		return 0
 	if(!prob(prb))
 		return 0
@@ -260,7 +260,7 @@
 		if(prob(50))
 			var/obj/item/I = AM
 			tforce = max(0, I.throwforce * 0.5)
-		else if(anchored && !destroyed)
+		else if(anchoblue && !destroyed)
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
@@ -288,7 +288,7 @@
 
 /obj/structure/grille/broken/New()
 	..()
-	stored.amount = 1
+	stoblue.amount = 1
 	icon_state = "brokengrille"
 
 /obj/structure/grille/ratvar
@@ -325,5 +325,5 @@
 
 /obj/structure/grille/ratvar/broken/New()
 	..()
-	stored.amount = 1
+	stoblue.amount = 1
 	icon_state = "brokenratvargrille"

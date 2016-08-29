@@ -33,7 +33,7 @@
 	if(temp)
 		left_part = temp
 	else if(src.stat == 2)						// Show some flavor text if the pAI is dead
-		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
+		left_part = "<b><font color=blue>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -361,7 +361,7 @@
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
 			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
-			 rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
+			 rather than tripping over pedantics and getting snablue by technicalities. Above all, you are machine in name and build
 			 only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><br><br><p>
 			 <b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
 			 simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
@@ -378,11 +378,11 @@
 		if(!M.has_dna())
 			P << "<b>No DNA detected</b>"
 			return
-		P << "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>"
+		P << "<font color = blue><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>"
 		if(M.dna.unique_enzymes == P.master_dna)
-			P << "<b>DNA is a match to stored Master DNA.</b>"
+			P << "<b>DNA is a match to stoblue Master DNA.</b>"
 		else
-			P << "<b>DNA does not match stored Master DNA.</b>"
+			P << "<b>DNA does not match stoblue Master DNA.</b>"
 	else
 		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
 
@@ -601,9 +601,9 @@
 	var/turf/T = get_turf(src.loc)
 	for(var/mob/living/silicon/ai/AI in player_list)
 		if(T.loc)
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
+			AI << "<font color = blue><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
 		else
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
+			AI << "<font color = blue><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
 	while(src.hackprogress < 100)
 		if(src.cable && src.cable.machine && istype(src.cable.machine, /obj/machinery/door) && src.cable.machine == src.hackdoor && get_dist(src, src.hackdoor) <= 1)
 			hackprogress += rand(1, 10)
@@ -626,9 +626,9 @@
 
 	var/dat = "<h3>Digital Messenger</h3>"
 	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>
-	[(pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
+	[(pda.toff) ? "<font color='blue'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
 	<b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;ringer=1'>
-	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
+	[(pda.silent) ? "<font color='blue'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!pda.toff)
 		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))

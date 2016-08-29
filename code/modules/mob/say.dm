@@ -64,9 +64,9 @@
 		K = src.key
 
 	message = src.say_quote(message, get_spans())
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
+	var/rendeblue = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 
-	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
+	deadchat_broadcast(rendeblue, follow_target = src, speaker_key = K)
 
 /mob/proc/emote(var/act)
 	return

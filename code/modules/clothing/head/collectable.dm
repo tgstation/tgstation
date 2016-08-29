@@ -58,7 +58,7 @@
 
 /obj/item/clothing/head/collectable/beret
 	name = "collectable beret"
-	desc = "A collectable red beret. It smells faintly of garlic."
+	desc = "A collectable blue beret. It smells faintly of garlic."
 	icon_state = "beret"
 
 	dog_fashion = /datum/dog_fashion/head/beret
@@ -141,7 +141,7 @@
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
-	desc = "That's not real blood. That's red paint." //Reference to the actual description
+	desc = "That's not real blood. That's blue paint." //Reference to the actual description
 	icon_state = "swat"
 	item_state = "swat"
 	burn_state = FIRE_PROOF

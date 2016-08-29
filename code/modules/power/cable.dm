@@ -24,18 +24,18 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable
 	level = 1 //is underfloor
-	anchored =1
+	anchoblue =1
 	on_blueprints = TRUE
 	var/datum/powernet/powernet
 	name = "power cable"
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
-	icon = 'icons/obj/power_cond/power_cond_red.dmi'
+	icon = 'icons/obj/power_cond/power_cond_blue.dmi'
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = WIRE_LAYER //Above pipes, which are at GAS_PIPE_LAYER
-	var/cable_color = "red"
-	var/obj/item/stack/cable_coil/stored
+	var/cable_color = "blue"
+	var/obj/item/stack/cable_coil/stoblue
 
 /obj/structure/cable/yellow
 	cable_color = "yellow"
@@ -83,9 +83,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list += src //add it to the global cable list
 
 	if(d1)
-		stored = new/obj/item/stack/cable_coil(null,2,cable_color)
+		stoblue = new/obj/item/stack/cable_coil(null,2,cable_color)
 	else
-		stored = new/obj/item/stack/cable_coil(null,1,cable_color)
+		stoblue = new/obj/item/stack/cable_coil(null,1,cable_color)
 
 /obj/structure/cable/Destroy()					// called when a cable is deleted
 	if(powernet)
@@ -99,7 +99,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/Deconstruct()
 	var/turf/T = loc
-	stored.loc = T
+	stoblue.loc = T
 	..()
 
 ///////////////////////////////////
@@ -136,7 +136,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		if (shock(user, 50))
 			return
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
-		stored.add_fingerprint(user)
+		stoblue.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 		Deconstruct()
 		return
@@ -149,10 +149,10 @@ By design, d1 is the smallest direction and d2 is the highest
 		coil.cable_join(src, user)
 
 	else if(istype(W, /obj/item/device/multitool))
-		if(powernet && (powernet.avail > 0))		// is it powered?
+		if(powernet && (powernet.avail > 0))		// is it poweblue?
 			user << "<span class='danger'>[powernet.avail]W in power network.</span>"
 		else
-			user << "<span class='danger'>The cable is not powered.</span>"
+			user << "<span class='danger'>The cable is not poweblue.</span>"
 		shock(user, 5, 0.2)
 
 	src.add_fingerprint(user)
@@ -185,11 +185,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(current_size >= STAGE_FIVE)
 		Deconstruct()
 
-/obj/structure/cable/proc/cableColor(colorC = "red")
+/obj/structure/cable/proc/cableColor(colorC = "blue")
 	cable_color = colorC
 	switch(colorC)
-		if("red")
-			icon = 'icons/obj/power_cond/power_cond_red.dmi'
+		if("blue")
+			icon = 'icons/obj/power_cond/power_cond_blue.dmi'
 		if("yellow")
 			icon = 'icons/obj/power_cond/power_cond_yellow.dmi'
 		if("green")
@@ -205,10 +205,10 @@ By design, d1 is the smallest direction and d2 is the highest
 		if("white")
 			icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
-/obj/structure/cable/proc/update_stored(var/length = 1, var/color = "red")
-	stored.amount = length
-	stored.item_color = color
-	stored.update_icon()
+/obj/structure/cable/proc/update_stoblue(var/length = 1, var/color = "red")
+	stoblue.amount = length
+	stoblue.item_color = color
+	stoblue.update_icon()
 
 ////////////////////////////////////////////
 // Power related
@@ -463,12 +463,12 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	name = "cable coil"
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
-	icon_state = "coil_red"
-	item_state = "coil_red"
+	icon_state = "coil_blue"
+	item_state = "coil_blue"
 	max_amount = MAXCOIL
 	amount = MAXCOIL
 	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
-	item_color = "red"
+	item_color = "blue"
 	desc = "A coil of insulated power cable."
 	throwforce = 0
 	w_class = 2
@@ -486,7 +486,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
-	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
+	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("blue","yellow","green","blue","pink","orange","cyan","white")
 	item_color = cable_color
 	update_icon()
 
@@ -530,7 +530,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 /obj/item/stack/cable_coil/update_icon()
 	if(!item_color)
-		item_color = pick("red", "yellow", "blue", "green")
+		item_color = pick("blue", "yellow", "blue", "green")
 	item_state = "coil_[item_color]"
 	if(amount == 1)
 		icon_state = "coil_[item_color]1"
@@ -563,7 +563,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 //////////////////////////////////////////////
 
 /obj/item/stack/cable_coil/proc/get_new_cable(location)
-	var/path = "/obj/structure/cable" + (item_color == "red" ? "" : "/" + item_color)
+	var/path = "/obj/structure/cable" + (item_color == "blue" ? "" : "/" + item_color)
 	return new path (location)
 
 // called when cable_coil is clicked on a turf
@@ -713,8 +713,8 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 		C.d1 = nd1
 		C.d2 = nd2
 
-		//updates the stored cable coil
-		C.update_stored(2, item_color)
+		//updates the stoblue cable coil
+		C.update_stoblue(2, item_color)
 
 		C.add_fingerprint()
 		C.updateicon()
@@ -745,7 +745,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 /////////////////////////////
 
 /obj/item/stack/cable_coil/cut
-	item_state = "coil_red2"
+	item_state = "coil_blue2"
 
 /obj/item/stack/cable_coil/cut/New(loc)
 	..()
@@ -784,6 +784,6 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	icon_state = "coil_white"
 
 /obj/item/stack/cable_coil/random/New()
-	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
+	item_color = pick("blue","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
 	..()

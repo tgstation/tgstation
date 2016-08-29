@@ -34,7 +34,7 @@
 	gas_type = "o2"
 
 /obj/machinery/atmospherics/components/unary/tank/nitrogen
-	icon_state = "red"
+	icon_state = "blue"
 	gas_type = "n2"
 
 /obj/machinery/atmospherics/components/unary/tank/air

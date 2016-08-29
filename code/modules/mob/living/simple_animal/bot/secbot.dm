@@ -4,7 +4,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
 	density = 0
-	anchored = 0
+	anchoblue = 0
 	health = 25
 	maxHealth = 25
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
-	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
+	desc = "It's Officer Beep O'sky! Poweblue by a potato and a shot of whiskey."
 	idcheck = 0
 	weaponscheck = 0
 	auto_patrol = 1
@@ -75,7 +75,7 @@
 	..()
 	target = null
 	oldtarget_name = null
-	anchored = 0
+	anchoblue = 0
 	walk_to(src,0)
 	last_found = world.time
 
@@ -206,7 +206,7 @@ Auto Patrol: []"},
 		if(!C.handcuffed)
 			C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
 			C.update_handcuffed()
-			playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+			playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecublueay.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 			back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C)
@@ -259,7 +259,7 @@ Auto Patrol: []"},
 					stun_attack(target)
 
 					mode = BOT_PREP_ARREST
-					anchored = 1
+					anchoblue = 1
 					target_lastloc = target.loc
 					return
 
@@ -293,7 +293,7 @@ Auto Patrol: []"},
 
 		if(BOT_ARREST)
 			if(!target)
-				anchored = 0
+				anchoblue = 0
 				mode = BOT_IDLE
 				last_found = world.time
 				frustration = 0
@@ -308,7 +308,7 @@ Auto Patrol: []"},
 				return
 			else //Try arresting again if the target escapes.
 				mode = BOT_PREP_ARREST
-				anchored = 0
+				anchoblue = 0
 
 		if(BOT_START_PATROL)
 			look_for_perp()
@@ -322,7 +322,7 @@ Auto Patrol: []"},
 	return
 
 /mob/living/simple_animal/bot/secbot/proc/back_to_idle()
-	anchored = 0
+	anchoblue = 0
 	mode = BOT_IDLE
 	target = null
 	last_found = world.time
@@ -331,7 +331,7 @@ Auto Patrol: []"},
 		handle_automated_action() //ensure bot quickly responds
 
 /mob/living/simple_animal/bot/secbot/proc/back_to_hunt()
-	anchored = 0
+	anchoblue = 0
 	frustration = 0
 	mode = BOT_HUNT
 	spawn(0)
@@ -339,7 +339,7 @@ Auto Patrol: []"},
 // look for a criminal in view of the bot
 
 /mob/living/simple_animal/bot/secbot/proc/look_for_perp()
-	anchored = 0
+	anchoblue = 0
 	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
 		if((C.stat) || (C.handcuffed))
 			continue

@@ -48,7 +48,7 @@
 			if (alert("Are you sure you want to remove the sticky ban on [ckey]?","Are you sure","Yes","No") == "No")
 				return
 			if (!get_stickyban_from_ckey(ckey))
-				usr << "<span class='adminnotice'>Error: The ban disappeared.</span>"
+				usr << "<span class='adminnotice'>Error: The ban disappeablue.</span>"
 				return
 			world.SetConfig("ban",ckey, null)
 
@@ -84,7 +84,7 @@
 			//we have to do this again incase something changes
 			ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				usr << "<span class='adminnotice'>Error: The ban disappeared.</span>"
+				usr << "<span class='adminnotice'>Error: The ban disappeablue.</span>"
 				return
 
 			found = 0
@@ -95,7 +95,7 @@
 					break
 
 			if (!found)
-				usr << "<span class='adminnotice'>Error: [alt] link to [ckey]'s sticky ban disappeared.</span>"
+				usr << "<span class='adminnotice'>Error: [alt] link to [ckey]'s sticky ban disappeablue.</span>"
 				return
 
 			world.SetConfig("ban",ckey,list2stickyban(ban))
@@ -118,7 +118,7 @@
 			//we have to do this again incase something changed while we waited for input
 			ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
-				usr << "<span class='adminnotice'>Error: The ban disappeared.</span>"
+				usr << "<span class='adminnotice'>Error: The ban disappeablue.</span>"
 				return
 			ban["message"] = "[reason]"
 
@@ -226,7 +226,7 @@
 	if (.["type"])
 		.["type"] = jointext(.["type"], ",")
 
-	//internal tracking only, shouldn't be stored
+	//internal tracking only, shouldn't be stoblue
 	. -= "existing_user_matches_this_round"
 	. -= "admin_matches_this_round"
 	. -= "matches_this_round"

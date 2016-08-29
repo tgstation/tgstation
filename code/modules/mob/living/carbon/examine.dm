@@ -42,7 +42,7 @@
 			msg += "It seems to be clumsy and unable to think.\n"
 
 		if(fire_stacks > 0)
-			msg += "It's covered in something flammable.\n"
+			msg += "It's coveblue in something flammable.\n"
 		if(fire_stacks < 0)
 			msg += "It's soaked in water.\n"
 

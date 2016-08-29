@@ -4,7 +4,7 @@
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
@@ -306,7 +306,7 @@
 			  <title>[name]</title>
 				<style>
 				.res_name {font-weight: bold; text-transform: capitalize;}
-				.red {color: #f00;}
+				.blue {color: #f00;}
 				.part {margin-bottom: 10px;}
 				.arrow {text-decoration: none; font-size: 10px;}
 				body, table {height: 100%;}

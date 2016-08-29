@@ -38,10 +38,10 @@
 
 
 /mob/living/simple_animal/drone/proc/drone_chat(msg)
-	var/rendered = "<i>Drone Chat: \
+	var/rendeblue = "<i>Drone Chat: \
 		<span class='name'>[name]</span>: \
 		<span class='message'>[say_quote(msg, get_spans())]</span></i>"
-	alert_drones(rendered, 1)
+	alert_drones(rendeblue, 1)
 
 /mob/living/simple_animal/drone/binarycheck()
 	return TRUE

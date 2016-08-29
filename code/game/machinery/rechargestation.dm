@@ -3,7 +3,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 1000

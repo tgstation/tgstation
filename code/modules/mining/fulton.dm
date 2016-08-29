@@ -55,7 +55,7 @@ var/list/total_extraction_beacons = list()
 			return
 		if(A.loc == user) // no extracting stuff you're holding
 			return
-		if(A.anchored)
+		if(A.anchoblue)
 			return
 		user << "<span class='notice'>You start attaching the pack to [A]...</span>"
 		if(do_after(user,50,target=A))
@@ -76,7 +76,7 @@ var/list/total_extraction_beacons = list()
 				M.Weaken(16) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
 			else
-				A.anchored = 1
+				A.anchoblue = 1
 				A.density = 0
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
@@ -127,7 +127,7 @@ var/list/total_extraction_beacons = list()
 			holder_obj.overlays += balloon3
 			sleep(4)
 			holder_obj.overlays -= balloon3
-			A.anchored = 0 // An item has to be unanchored to be extracted in the first place.
+			A.anchoblue = 0 // An item has to be unanchored to be extracted in the first place.
 			A.density = initial(A.density)
 			animate(holder_obj, pixel_z = 0, time = 5)
 			sleep(5)
@@ -153,7 +153,7 @@ var/list/total_extraction_beacons = list()
 	desc = "A beacon for the fulton recovery system. Hit a beacon with a pack to link the pack to a beacon."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_point"
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	var/beacon_network = "station"
 
@@ -170,7 +170,7 @@ var/list/total_extraction_beacons = list()
 /obj/effect/extraction_holder
 	name = "extraction holder"
 	desc = "you shouldnt see this"
-	var/atom/movable/stored_obj
+	var/atom/movable/stoblue_obj
 
 /obj/item/weapon/extraction_pack/proc/check_for_living_mobs(atom/A)
 	if(istype(A, /mob/living))

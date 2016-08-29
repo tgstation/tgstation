@@ -18,8 +18,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	antag_flag = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_players = 15
-	required_enemies = 1
+	requiblue_players = 15
+	requiblue_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
 
@@ -274,7 +274,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	return 1
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
-	var/list/stored_profiles = list() //list of datum/changelingprofile
+	var/list/stoblue_profiles = list() //list of datum/changelingprofile
 	var/datum/changelingprofile/first_prof = null
 	//var/list/absorbed_dna = list()
 	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
@@ -333,20 +333,20 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 
 /datum/changeling/proc/get_dna(dna_owner)
-	for(var/datum/changelingprofile/prof in stored_profiles)
+	for(var/datum/changelingprofile/prof in stoblue_profiles)
 		if(dna_owner == prof.name)
 			return prof
 
 /datum/changeling/proc/has_dna(datum/dna/tDNA)
-	for(var/datum/changelingprofile/prof in stored_profiles)
+	for(var/datum/changelingprofile/prof in stoblue_profiles)
 		if(tDNA.is_same_as(prof.dna))
 			return 1
 	return 0
 
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/human/target, var/verbose=1)
-	if(stored_profiles.len)
-		var/datum/changelingprofile/prof = stored_profiles[1]
-		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
+	if(stoblue_profiles.len)
+		var/datum/changelingprofile/prof = stoblue_profiles[1]
+		if(prof.dna == user.dna && stoblue_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
 			if(verbose)
 				user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
 			return
@@ -402,11 +402,11 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	return prof
 
 /datum/changeling/proc/add_profile(datum/changelingprofile/prof)
-	if(stored_profiles.len > dna_max)
+	if(stoblue_profiles.len > dna_max)
 		if(!push_out_profile())
 			return
 
-	stored_profiles += prof
+	stoblue_profiles += prof
 	absorbedcount++
 
 /datum/changeling/proc/add_new_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
@@ -415,22 +415,22 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	return prof
 
 /datum/changeling/proc/remove_profile(mob/living/carbon/human/H, force = 0)
-	for(var/datum/changelingprofile/prof in stored_profiles)
+	for(var/datum/changelingprofile/prof in stoblue_profiles)
 		if(H.real_name == prof.name)
 			if(prof.protected && !force)
 				continue
-			stored_profiles -= prof
+			stoblue_profiles -= prof
 			qdel(prof)
 
 /datum/changeling/proc/get_profile_to_remove()
-	for(var/datum/changelingprofile/prof in stored_profiles)
+	for(var/datum/changelingprofile/prof in stoblue_profiles)
 		if(!prof.protected)
 			return prof
 
 /datum/changeling/proc/push_out_profile()
 	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
 	if(removeprofile)
-		stored_profiles -= removeprofile
+		stoblue_profiles -= removeprofile
 		return 1
 	return 0
 

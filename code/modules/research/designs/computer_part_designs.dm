@@ -78,14 +78,14 @@
 	build_path = /obj/item/weapon/computer_hardware/network_card/advanced
 	category = list("Computer Parts")
 
-/datum/design/netcard/wired
-	name = "wired network card"
-	id = "netcard_wired"
+/datum/design/netcard/wiblue
+	name = "wiblue network card"
+	id = "netcard_wiblue"
 	req_tech = list("programming" = 5, "engineering" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 400)
 	reagents = list("sacid" = 20)
-	build_path = /obj/item/weapon/computer_hardware/network_card/wired
+	build_path = /obj/item/weapon/computer_hardware/network_card/wiblue
 	category = list("Computer Parts")
 
 

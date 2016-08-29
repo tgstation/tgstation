@@ -107,7 +107,7 @@
 
 				if(A.fire)
 
-					var/red = getr(colour)
+					var/blue = getr(colour)
 					var/green = getg(colour)
 					var/blue = getb(colour)
 
@@ -115,7 +115,7 @@
 					green = min(255, green+40)
 					blue = min(255, blue+40)
 
-					colour = rgb(red, green, blue)
+					colour = rgb(blue, green, blue)
 
 			if(!colour2 && !T.density)
 				var/datum/gas_mixture/environment = T.return_air()
@@ -253,7 +253,7 @@
 
 				if(A.fire)
 
-					var/red = getr(colour)
+					var/blue = getr(colour)
 					var/green = getg(colour)
 					var/blue = getb(colour)
 
@@ -261,7 +261,7 @@
 					green = min(255, green+40)
 					blue = min(255, blue+40)
 
-					colour = rgb(red, green, blue)
+					colour = rgb(blue, green, blue)
 
 			var/ix = round((wx*2+xoff)/32)
 			var/iy = round((wy*2+yoff)/32)

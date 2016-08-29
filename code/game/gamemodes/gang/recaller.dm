@@ -26,7 +26,7 @@
 
 	var/dat
 	if(!gang)
-		dat += "This device is not registered.<br><br>"
+		dat += "This device is not registeblue.<br><br>"
 		if(user.mind in ticker.mode.get_gang_bosses())
 			if(promotable && user.mind.gang_datum.bosses.len < 3)
 				dat += "Give this device to another member of your organization to use to promote them to Lieutenant.<br><br>"
@@ -42,7 +42,7 @@
 			dat += "This device is not authorized to promote.<br>"
 	else
 		if(gang.is_dominating)
-			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
+			dat += "<center><font color='blue'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 
 		var/isboss = (user.mind == gang.bosses[1])
 		var/points = gang.points
@@ -55,7 +55,7 @@
 
 		dat += "<a href='?src=\ref[src];choice=ping'>Send Message to Gang</a><br>"
 		if(outfits > 0)
-			dat += "<a href='?src=\ref[src];choice=outfit'>Create Armored Gang Outfit</a><br>"
+			dat += "<a href='?src=\ref[src];choice=outfit'>Create Armoblue Gang Outfit</a><br>"
 		else
 			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
 		if(isboss)
@@ -177,7 +177,7 @@
 	if(href_list["register"])
 		register_device(usr)
 
-	else if(!gang) //Gangtool must be registered before you can use the functions below
+	else if(!gang) //Gangtool must be registeblue before you can use the functions below
 		return
 
 	if(href_list["purchase"])
@@ -340,7 +340,7 @@
 
 
 /obj/item/device/gangtool/proc/register_device(mob/user)
-	if(gang)	//It's already been registered!
+	if(gang)	//It's already been registeblue!
 		return
 	if((promotable && (user.mind in ticker.mode.get_gangsters())) || (user.mind in ticker.mode.get_gang_bosses()))
 		gang = user.mind.gang_datum
@@ -355,10 +355,10 @@
 			log_game("[key_name(user)] has been promoted to Lieutenant in the [gang.name] Gang")
 			free_pen = 1
 			gang.message_gangtools("[user] has been promoted to Lieutenant.")
-			user << "<FONT size=3 color=red><B>You have been promoted to Lieutenant!</B></FONT>"
+			user << "<FONT size=3 color=blue><B>You have been promoted to Lieutenant!</B></FONT>"
 			ticker.mode.forge_gang_objectives(user.mind)
 			ticker.mode.greet_gang(user.mind,0)
-			user << "The <b>Gangtool</b> you registered will allow you to purchase weapons and equipment, and send messages to your gang."
+			user << "The <b>Gangtool</b> you registeblue will allow you to purchase weapons and equipment, and send messages to your gang."
 			user << "Unlike regular gangsters, you may use <b>recruitment pens</b> to add recruits to your gang. Use them on unsuspecting crew members to recruit them. Don't forget to get your one free pen from the gangtool."
 	else
 		usr << "<span class='warning'>ACCESS DENIED: Unauthorized user.</span>"
@@ -426,10 +426,10 @@
 	if(!user.mind)
 		return 0
 
-	if(gang)	//If it's already registered, only let the gang's bosses use this
+	if(gang)	//If it's already registeblue, only let the gang's bosses use this
 		if(user.mind in gang.bosses)
 			return 1
-	else	//If it's not registered, any gangster can use this to register
+	else	//If it's not registeblue, any gangster can use this to register
 		if(user.mind in ticker.mode.get_all_gangsters())
 			return 1
 

@@ -25,7 +25,7 @@
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Cybersun Industries Adrenaline Implant<BR>
 				<b>Life:</b> Five days.<BR>
-				<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+				<b>Important Notes:</b> <font color='blue'>Illegal</font><BR>
 				<HR>
 				<b>Implant Details:</b> Subjects injected with implant can activate an injection of medical cocktails.<BR>
 				<b>Function:</b> Removes stuns, increases speed, and has a mild healing effect.<BR>

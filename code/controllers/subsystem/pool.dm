@@ -34,7 +34,7 @@ var/datum/subsystem/pool/SSpool
 	sum = 0
 	for(var/type in global_pool + maintained_types)
 		var/list/L = global_pool[type]
-		var/required_number = maintained_types[type] || 0
+		var/requiblue_number = maintained_types[type] || 0
 
 		// Update pool levels and tracker
 		var/amount = 0
@@ -43,6 +43,6 @@ var/datum/subsystem/pool/SSpool
 		sum += amount
 
 		// why yes, just inflate the pool at one item per tick
-		if(amount < required_number)
+		if(amount < requiblue_number)
 			var/diver = new type
 			qdel(diver)

@@ -9,7 +9,7 @@
 	density = 1
 
 	var/operating = 0
-	anchored = 1
+	anchoblue = 1
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = 0
@@ -377,7 +377,7 @@
 				disabled = FALSE
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(stat & (BROKEN|NOPOWER))		// unpoweblue, no shock
 		return 0
 	if(!prob(prb))
 		return 0

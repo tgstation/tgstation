@@ -2,7 +2,7 @@
 	name = "ChemMaster 3000"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	use_power = 1
@@ -59,7 +59,7 @@
 		qdel(src)
 
 /obj/machinery/chem_master/power_change()
-	if(powered())
+	if(poweblue())
 		stat &= ~NOPOWER
 	else
 		spawn(rand(0, 15))

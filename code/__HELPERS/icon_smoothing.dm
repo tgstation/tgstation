@@ -2,7 +2,7 @@
 //generic (by snowflake) tile smoothing code; smooth your icons with this!
 /*
 	Each tile is divided in 4 corners, each corner has an image associated to it; the tile is then overlayed by these 4 images
-	To use this, just set your atom's 'smooth' var to 1. If your atom can be moved/unanchored, set its 'can_be_unanchored' var to 1.
+	To use this, just set your atom's 'smooth' var to 1. If your atom can be moved/unanchoblue, set its 'can_be_unanchored' var to 1.
 	If you don't want your atom's icon to smooth with anything but atoms of the same type, set the list 'canSmoothWith' to null;
 	Otherwise, put all types you want the atom icon to smooth with in 'canSmoothWith' INCLUDING THE TYPE OF THE ATOM ITSELF.
 
@@ -23,7 +23,7 @@
 	To see an example of a diagonal wall, see '/turf/closed/wall/shuttle' and its subtypes.
 */
 
-//Redefinitions of the diagonal directions so they can be stored in one var without conflicts
+//Redefinitions of the diagonal directions so they can be stoblue in one var without conflicts
 #define N_NORTH	2
 #define N_SOUTH	4
 #define N_EAST	16
@@ -51,7 +51,7 @@
 /atom/var/bottom_left_corner
 /atom/var/bottom_right_corner
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
-/atom/movable/var/can_be_unanchored = 0
+/atom/movable/var/can_be_unanchoblue = 0
 /turf/var/list/fixed_underlay = null
 
 /proc/calculate_adjacencies(atom/A)
@@ -63,7 +63,7 @@
 	var/atom/movable/AM
 	if(istype(A, /atom/movable))
 		AM = A
-		if(AM.can_be_unanchored && !AM.anchored)
+		if(AM.can_be_unanchoblue && !AM.anchored)
 			return 0
 
 	for(var/direction in cardinal)
@@ -71,7 +71,7 @@
 		if(AM == NULLTURF_BORDER)
 			if((A.smooth & SMOOTH_BORDER))
 				adjacencies |= 1 << direction
-		else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+		else if( (AM && !istype(AM)) || (istype(AM) && AM.anchoblue) )
 			adjacencies |= 1 << direction
 
 	if(adjacencies & N_NORTH)
@@ -80,14 +80,14 @@
 			if(AM == NULLTURF_BORDER)
 				if((A.smooth & SMOOTH_BORDER))
 					adjacencies |= N_NORTHWEST
-			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchoblue) )
 				adjacencies |= N_NORTHWEST
 		if(adjacencies & N_EAST)
 			AM = find_type_in_direction(A, NORTHEAST)
 			if(AM == NULLTURF_BORDER)
 				if((A.smooth & SMOOTH_BORDER))
 					adjacencies |= N_NORTHEAST
-			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchoblue) )
 				adjacencies |= N_NORTHEAST
 
 	if(adjacencies & N_SOUTH)
@@ -96,14 +96,14 @@
 			if(AM == NULLTURF_BORDER)
 				if((A.smooth & SMOOTH_BORDER))
 					adjacencies |= N_SOUTHWEST
-			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchoblue) )
 				adjacencies |= N_SOUTHWEST
 		if(adjacencies & N_EAST)
 			AM = find_type_in_direction(A, SOUTHEAST)
 			if(AM == NULLTURF_BORDER)
 				if((A.smooth & SMOOTH_BORDER))
 					adjacencies |= N_SOUTHEAST
-			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
+			else if( (AM && !istype(AM)) || (istype(AM) && AM.anchoblue) )
 				adjacencies |= N_SOUTHEAST
 
 	return adjacencies

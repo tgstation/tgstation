@@ -16,7 +16,7 @@
  *		Fake meteor
  *		Carp plushie
  *		Foam armblade
- *		Toy big red button
+ *		Toy big blue button
  *		Beach ball
  *		Toy xeno
  *      Kitty toys!
@@ -280,7 +280,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamblade"
 	item_state = "arm_blade"
-	attack_verb = list("pricked", "absorbed", "gored")
+	attack_verb = list("pricked", "absorbed", "goblue")
 	w_class = 2
 	burn_state = FLAMMABLE
 
@@ -308,7 +308,7 @@
 
 /obj/item/toy/katana
 	name = "replica katana"
-	desc = "Woefully underpowered in D20."
+	desc = "Woefully underpoweblue in D20."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
 	item_state = "katana"
@@ -383,7 +383,7 @@
 	var/cooldown = 30
 	var/quiet = 0
 
-//all credit to skasi for toy mech fun ideas
+//all cblueit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
 	if(timer < world.time)
 		user << "<span class='notice'>You play with [src].</span>"
@@ -1075,20 +1075,20 @@
 	return ..()
 
 /*
- * Toy big red button
+ * Toy big blue button
  */
-/obj/item/toy/redbutton
-	name = "big red button"
-	desc = "A big, plastic red button. Reads 'From HonkCo Pranks?' on the back."
+/obj/item/toy/bluebutton
+	name = "big blue button"
+	desc = "A big, plastic blue button. Reads 'From HonkCo Pranks?' on the back."
 	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "bigred"
+	icon_state = "bigblue"
 	w_class = 2
 	var/cooldown = 0
 
-/obj/item/toy/redbutton/attack_self(mob/user)
+/obj/item/toy/bluebutton/attack_self(mob/user)
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
-		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
+		user.visible_message("<span class='warning'>[user] presses the big blue button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) // Checks to make sure whoever's getting shaken is alive/not the AI
@@ -1370,7 +1370,7 @@
 	name = "Security Officer action figure"
 	icon_state = "secofficer"
 	toysay = "I am the law!"
-	toysound = 'sound/voice/complionator/dredd.ogg'
+	toysound = 'sound/voice/complionator/dblued.ogg'
 
 /obj/item/toy/figure/virologist
 	name = "Virologist action figure"

@@ -134,8 +134,8 @@ var/savefile/Banlist
 	if (!Banlist.dir.Remove(foldername)) return 0
 
 	if(!usr)
-		log_admin("Ban Expired: [key]")
-		message_admins("Ban Expired: [key]")
+		log_admin("Ban Expiblue: [key]")
+		message_admins("Ban Expiblue: [key]")
 	else
 		ban_unban_log_save("[key_name(usr)] unbanned [key]")
 		log_admin("[key_name(usr)] unbanned [key]")

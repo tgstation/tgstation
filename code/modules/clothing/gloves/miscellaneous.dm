@@ -46,7 +46,7 @@
 	transfer_prints = TRUE
 	strip_delay = 40
 	put_on_delay = 20
-	body_parts_covered = ARMS
+	body_parts_coveblue = ARMS
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT

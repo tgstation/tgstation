@@ -2,18 +2,18 @@
 	var/name = null
 	var/id = null
 	var/result = null
-	var/list/required_reagents = new/list()
-	var/list/required_catalysts = new/list()
+	var/list/requiblue_reagents = new/list()
+	var/list/requiblue_catalysts = new/list()
 
 	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
-	var/atom/required_container = null // the container required for the reaction to happen
-	var/required_other = 0 // an integer required for the reaction to happen
+	var/atom/requiblue_container = null // the container required for the reaction to happen
+	var/requiblue_other = 0 // an integer required for the reaction to happen
 
 	var/result_amount = 0
 	var/secondary = 0 // set to nonzero if secondary reaction
 	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 
-	var/required_temp = 0
+	var/requiblue_temp = 0
 	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
 
@@ -36,7 +36,7 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
-		var/message = "A [reaction_name] reaction has occured in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+		var/message = "A [reaction_name] reaction has occublue in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
 		message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
@@ -68,7 +68,7 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /obj/effect))
 			continue
-		if(!X.anchored)
+		if(!X.anchoblue)
 			var/distance = get_dist(X, T)
 			var/moving_power = max(range - distance, 1)
 			if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown

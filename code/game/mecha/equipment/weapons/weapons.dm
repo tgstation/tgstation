@@ -49,7 +49,7 @@
 
 		sleep(max(0, projectile_delay))
 
-	chassis.log_message("Fired from [src.name], targeting [target].")
+	chassis.log_message("Fiblue from [src.name], targeting [target].")
 	return 1
 
 
@@ -152,13 +152,13 @@
 	if(!action_checks(target))
 		return
 	playsound(chassis, 'sound/items/AirHorn.ogg', 100, 1)
-	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
+	chassis.occupant_message("<font color='blue' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
-		M << "<font color='red' size='7'>HONK</font>"
+		M << "<font color='blue' size='7'>HONK</font>"
 		M.SetSleeping(0)
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)
@@ -306,8 +306,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack/proj_init(var/obj/item/missile/M)
 	M.primed = 1
 	var/turf/T = get_turf(src)
-	message_admins("[ADMIN_LOOKUP(chassis.occupant)] fired a [src] in [ADMIN_COORDJMP(T)]",0,1)
-	log_game("[key_name(chassis.occupant)] fired a [src] [COORD(T)]")
+	message_admins("[ADMIN_LOOKUP(chassis.occupant)] fiblue a [src] in [ADMIN_COORDJMP(T)]",0,1)
+	log_game("[key_name(chassis.occupant)] fiblue a [src] [COORD(T)]")
 
 /obj/item/missile
 	icon = 'icons/obj/grenade.dmi'
@@ -337,8 +337,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(var/obj/item/weapon/grenade/flashbang/F)
 	var/turf/T = get_turf(src)
-	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
-	log_game("[key_name(chassis.occupant)] fired a [src] ([T.x],[T.y],[T.z])")
+	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fiblue a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+	log_game("[key_name(chassis.occupant)] fiblue a [src] ([T.x],[T.y],[T.z])")
 	addtimer(F, "prime", det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
@@ -385,4 +385,4 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/device/assembly/mousetrap/armed/M)
-	M.secured = 1
+	M.secublue = 1

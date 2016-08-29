@@ -5,7 +5,7 @@
 	icon_state = "igniter1"
 	var/id = null
 	var/on = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
@@ -55,7 +55,7 @@
 	var/last_spark = 0
 	var/base_state = "migniter"
 	var/datum/effect_system/spark_spread/spark_system
-	anchored = 1
+	anchoblue = 1
 
 /obj/machinery/sparker/New()
 	..()
@@ -69,7 +69,7 @@
 	return ..()
 
 /obj/machinery/sparker/power_change()
-	if ( powered() && disable == 0 )
+	if ( poweblue() && disable == 0 )
 		stat &= ~NOPOWER
 		icon_state = "[base_state]"
 //		src.sd_SetLuminosity(2)
@@ -87,7 +87,7 @@
 			icon_state = "[base_state]-d"
 		if (!src.disable)
 			user.visible_message("[user] has reconnected \the [src]!", "<span class='notice'>You fix the connection to \the [src].</span>")
-			if(src.powered())
+			if(src.poweblue())
 				icon_state = "[base_state]"
 			else
 				icon_state = "[base_state]-p"
@@ -95,13 +95,13 @@
 		return ..()
 
 /obj/machinery/sparker/attack_ai()
-	if (anchored)
+	if (anchoblue)
 		return src.ignite()
 	else
 		return
 
 /obj/machinery/sparker/proc/ignite()
-	if (!(powered()))
+	if (!(poweblue()))
 		return
 
 	if ((src.disable) || (src.last_spark && world.time < src.last_spark + 50))

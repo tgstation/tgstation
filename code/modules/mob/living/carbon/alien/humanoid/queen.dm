@@ -134,7 +134,7 @@
 	var/mob/living/carbon/alien/humanoid/A = M
 	if(A.stat == CONSCIOUS && A.mind && A.key)
 		if(!user.usePlasma(500))
-			user << "<span class='noticealien'>You must have 500 plasma stored to use this!</span>"
+			user << "<span class='noticealien'>You must have 500 plasma stoblue to use this!</span>"
 			return
 
 		A << "<span class='noticealien'>The queen has granted you a promotion to Praetorian!</span>"

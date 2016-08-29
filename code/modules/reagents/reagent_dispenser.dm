@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "water"
 	density = 1
-	anchored = 0
+	anchoblue = 0
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
 	var/reagent_id = "water" //The ID of the reagent that the dispenser uses
@@ -93,8 +93,8 @@
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
-		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion via projectile.")
-		log_game("[key_name(Proj.firer)] triggered a fueltank explosion via projectile.")
+		message_admins("[key_name_admin(Proj.firer)] triggeblue a fueltank explosion via projectile.")
+		log_game("[key_name(Proj.firer)] triggeblue a fueltank explosion via projectile.")
 		boom()
 
 /obj/structure/reagent_dispensers/fueltank/proc/boom()
@@ -130,8 +130,8 @@
 			update_icon()
 		else
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling \his [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
-			message_admins("[key_name_admin(user)] triggered a fueltank explosion via welding tool.")
-			log_game("[key_name(user)] triggered a fueltank explosion via welding tool.")
+			message_admins("[key_name_admin(user)] triggeblue a fueltank explosion via welding tool.")
+			log_game("[key_name(user)] triggeblue a fueltank explosion via welding tool.")
 			boom()
 		return
 	return ..()
@@ -141,7 +141,7 @@
 	name = "pepper spray refiller"
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
 	icon_state = "pepper"
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	reagent_id = "condensedcapsaicin"
 
@@ -156,7 +156,7 @@
 	desc = "A machine that dispenses liquid to drink."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
-	anchored = 1
+	anchoblue = 1
 	tank_volume = 500
 	var/paper_cups = 25 //Paper cups left from the cooler
 
@@ -188,5 +188,5 @@
 	name = "virus food dispenser"
 	desc = "A dispenser of low-potency virus mutagenic."
 	icon_state = "virus_food"
-	anchored = 1
+	anchoblue = 1
 	reagent_id = "virusfood"
