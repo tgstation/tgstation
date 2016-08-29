@@ -58,7 +58,7 @@ var/datum/subsystem/persistence/SSpersistence
 /datum/subsystem/persistence/proc/PlaceFreeSatchel()
 	var/satchel_placed = FALSE
 	var/breakout = 0
-	while(!satchel_place && breakout <= 5)
+	while(!satchel_placed && breakout <= 5)
 		for(var/V in shuffle(get_area_turfs(pick(the_station_areas))))
 			var/turf/T = V
 			if(istype(T,/turf/open/floor) && !istype(T,/turf/open/floor/plating/))
