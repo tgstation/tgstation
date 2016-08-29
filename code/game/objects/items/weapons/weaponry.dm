@@ -106,6 +106,7 @@ var/highlander_claymores = 0
 /obj/item/weapon/claymore/highlander/attack(mob/living/target, mob/living/user)
 	var/old_target_stat = target.stat
 	. = ..()
+	bloodthirst_level = max(bloodthirst_level - (target.mind && target.mind.special_role == "highlander" ? 15 : 5), 0)
 	if(target && target.stat == DEAD && old_target_stat != DEAD && target.mind && target.mind.special_role == "highlander")
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
 		bloodthirst_level = 0
@@ -183,7 +184,7 @@ var/highlander_claymores = 0
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
 
 /obj/item/weapon/claymore/highlander/proc/handle_bloodthirst(mob/living/S) //THE BLADE THIRSTS FOR BLOOD AND WILL PUNISH THE WEAK OR PACIFISTIC
-	bloodthirst_level += (1 + notches)
+	bloodthirst_level += (1 + min(notches, 10))
 	if(bloodthirst_level == 30)
 		S << "<span class='warning'>[src] shudders in your hand. It hungers for battle...</span>"
 	if(bloodthirst_level == 60)
