@@ -19,7 +19,7 @@
 	var/heat_proof = 0 // For rglass-windowed airlocks and firedoors
 	var/emergency = 0 // Emergency access override
 	var/sub_door = 0 // 1 if it's meant to go under another door.
-	var/closingLayer =	 CLOSED_DOOR_LAYER
+	var/closingLayer = CLOSED_DOOR_LAYER
 	var/autoclose = 0 //does it automatically close after some time
 	var/safe = 1 //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = 0 //whether the door is bolted or not.
@@ -49,13 +49,18 @@
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
-	if(operating || emagged) return
+	if(operating || emagged)
+		return
+
 	if(isliving(AM))
 		var/mob/living/M = AM
 		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
 		M.last_bumped = world.time
-		if(!check_access(src))
-			bumpopen(M)
+		if(M.restrained())
+			if(req_access_txt != "0")
+				return
+
+		bumpopen(M)
 		return
 
 	if(istype(AM, /obj/mecha))
