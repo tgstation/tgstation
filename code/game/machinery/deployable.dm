@@ -54,6 +54,12 @@
 	else
 		take_damage(M.melee_damage_upper)
 
+/obj/structure/barricade/attack_alien(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	user.visible_message("<span class='danger'>[user] claws at [src]!</span>")
+	take_damage(50)
+
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm" && material == METAL)
 		var/obj/item/weapon/weldingtool/WT = I
