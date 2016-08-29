@@ -628,7 +628,7 @@
 	for(var/thing in contents)
 		if(droppable(thing))
 			. = 1
-			drop(thing)
+			addtimer(src, "drop", 0, FALSE, thing)
 
 /turf/open/chasm/proc/droppable(atom/movable/AM)
 	if(!isliving(AM) && !isobj(AM))
