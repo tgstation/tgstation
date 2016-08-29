@@ -12,22 +12,22 @@
 /obj/structure/reagent_dispensers/ex_act(severity, target)
 	switch(severity)
 		if(1)
-			qdel(src)
+			boom()
 			return
 		if(2)
 			if (prob(50))
-				qdel(src)
+				boom()
 				return
 		if(3)
 			if (prob(5))
-				qdel(src)
+				boom()
 				return
 		else
 	return
 
 /obj/structure/reagent_dispensers/blob_act(obj/effect/blob/B)
 	if(prob(50))
-		qdel(src)
+		boom()
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers))
@@ -48,41 +48,38 @@
 		user << "<span class='danger'>It's empty.</span>"
 
 
+/obj/structure/reagent_dispensers/proc/boom()
+	qdel(src)
+
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
 	desc = "A water tank."
 	icon_state = "water"
 
-/obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-			return
-		if(2)
-			if (prob(50))
-				PoolOrNew(/obj/effect/particle_effect/water, src.loc)
-				qdel(src)
-				return
-		if(3)
-			if (prob(5))
-				PoolOrNew(/obj/effect/particle_effect/water, src.loc)
-				qdel(src)
-				return
-		else
-	return
+/obj/structure/reagent_dispensers/waterank/bullet_act(obj/item/projectile/Proj)
+	..()
+	if(tank_volume && istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
+		boom()
+
+/obj/structure/reagent_dispensers/watertank/boom()
+	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	PoolOrNew(/obj/effect/particle_effect/water, loc)
+	for(var/turf/open/T in view(5,loc))
+		T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
+		for(var/mob/living/L in T)
+			L.adjust_fire_stacks(-20)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/watertank/blob_act(obj/effect/blob/B)
 	if(prob(50))
 		PoolOrNew(/obj/effect/particle_effect/water, loc)
 		qdel(src)
 
-
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
 	desc = "A highly-pressurized water tank made to hold gargantuan amounts of water.."
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 100000
-
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
@@ -97,7 +94,7 @@
 		log_game("[key_name(Proj.firer)] triggered a fueltank explosion via projectile.")
 		boom()
 
-/obj/structure/reagent_dispensers/fueltank/proc/boom()
+/obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
 	qdel(src)
 
