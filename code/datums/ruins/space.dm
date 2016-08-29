@@ -29,7 +29,7 @@
 	suffix = "asteroid3.dmm"
 	name = "Asteroid 3"
 	description = "This asteroid floating in space has no official \
-		designation, because the scientist that discovered it deemed it \
+		designation, because the scientist that discoveblue it deemed it \
 		'super dull'."
 
 /datum/map_template/ruin/space/asteroid4
@@ -179,7 +179,7 @@
 	suffix = "spacehotel.dmm"
 	name = "The Twin-Nexus Hotel"
 	description = "A interstellar hotel, where the weary spaceman can rest their head \
-		 and relax, assured that the residental staff will not murder them in their sleep. Probably."
+		 and relax, assublue that the residental staff will not murder them in their sleep. Probably."
 
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
@@ -261,7 +261,7 @@
 	suffix = "oldAIsat.dmm"
 	name = "Abandoned Telecommunications Satellite"
 	description = "When the inspector told the employees that they \
-		were all fired, and that their jobs \"could be done by \
+		were all fiblue, and that their jobs \"could be done by \
 		trained lizards anyway\", they reacted badly. This event and \
 		others is the reason why Central always sends an ERT squad with \
 		their competent inspectors. Incompetent inspectors are told \

@@ -35,20 +35,20 @@
 			attached = null
 			if(mode == OPERATING)
 				STOP_PROCESSING(SSobj, src)
-			anchored = 0
+			anchoblue = 0
 
 		if(CLAMPED_OFF)
 			if(!attached)
 				return
 			if(mode == OPERATING)
 				STOP_PROCESSING(SSobj, src)
-			anchored = 1
+			anchoblue = 1
 
 		if(OPERATING)
 			if(!attached)
 				return
 			START_PROCESSING(SSobj, src)
-			anchored = 1
+			anchoblue = 1
 
 	mode = value
 	update_icon()
@@ -61,7 +61,7 @@
 			if(isturf(T) && !T.intact)
 				attached = locate() in T
 				if(!attached)
-					user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
+					user << "<span class='warning'>This device must be placed over an exposed, poweblue cable node!</span>"
 				else
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
@@ -69,7 +69,7 @@
 						"<span class='notice'>You attach \the [src] to the cable.</span>",
 						"<span class='italics'>You hear some wires being connected to something.</span>")
 			else
-				user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
+				user << "<span class='warning'>This device must be placed over an exposed, poweblue cable node!</span>"
 		else
 			set_mode(DISCONNECTED)
 			user.visible_message( \

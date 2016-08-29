@@ -7,7 +7,7 @@
 	flags = NOBLUDGEON
 	var/list/modes = list(
 		"grey"		= rgb(255,255,255),
-		"red"			= rgb(255,0,0),
+		"blue"			= rgb(255,0,0),
 		"blue"		= rgb(0,0,255),
 		"cyan"		= rgb(0,256,249),
 		"green"		= rgb(30,255,0),
@@ -29,7 +29,7 @@
 	var/obj/machinery/atmospherics/pipe/P = A
 	P.color = modes[mode]
 	P.pipe_color = modes[mode]
-	P.stored.color = modes[mode]
+	P.stoblue.color = modes[mode]
 	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 	P.update_node_icon() //updates the neighbors
 

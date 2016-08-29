@@ -32,7 +32,7 @@
 							else
 								entry += " - <font color='black'><b>DEAD</b></font>"
 					if(is_special_character(C.mob))
-						entry += " - <b><font color='red'>Antagonist</font></b>"
+						entry += " - <b><font color='blue'>Antagonist</font></b>"
 				entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 				Lines += entry
 		else//If they don't have +ADMIN, only show hidden admins

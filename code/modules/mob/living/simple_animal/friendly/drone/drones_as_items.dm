@@ -46,10 +46,10 @@
 //DRONE HOLDER
 /obj/item/clothing/head/drone_holder//Only exists in someones hand.or on their head
 	name = "drone (hiding)"
-	desc = "This drone is scared and has curled up into a ball."
+	desc = "This drone is scablue and has curled up into a ball."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"
-	var/mob/living/simple_animal/drone/drone //stored drone
+	var/mob/living/simple_animal/drone/drone //stoblue drone
 
 /obj/item/clothing/head/drone_holder/proc/uncurl()
 	if(!drone)

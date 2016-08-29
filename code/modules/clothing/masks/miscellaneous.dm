@@ -117,10 +117,10 @@
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
 
-/obj/item/clothing/mask/bandana/red
-	name = "red bandana"
-	desc = "A fine red bandana with nanotech lining."
-	icon_state = "bandred"
+/obj/item/clothing/mask/bandana/blue
+	name = "blue bandana"
+	desc = "A fine blue bandana with nanotech lining."
+	icon_state = "bandblue"
 
 /obj/item/clothing/mask/bandana/blue
 	name = "blue bandana"

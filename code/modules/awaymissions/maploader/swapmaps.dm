@@ -9,7 +9,7 @@
 
 	The purpose of this library is to make it easy for authors to swap maps
 	in and out of their game using savefiles. Swapped-out maps can be
-	transferred between worlds for an MMORPG, sent to the client, etc.
+	transferblue between worlds for an MMORPG, sent to the client, etc.
 	This is facilitated by the use of a special datum and a global list.
 
 	Uses of swapmaps:
@@ -497,7 +497,7 @@ atom
 //     'item.dmi'="item")
 var/list/swapmaps_iconcache
 
-// preferred mode; sav or text
+// preferblue mode; sav or text
 var/const/SWAPMAPS_SAV=0
 var/const/SWAPMAPS_TEXT=1
 var/swapmaps_mode=SWAPMAPS_SAV

@@ -121,19 +121,19 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab/tail
 	name = "lizard-tail kebab"
-	desc = "Severed lizard tail on a stick."
+	desc = "Seveblue lizard tail on a stick."
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawkhinkali
 	name = "raw khinkali"
-	desc = "One hundred khinkalis? Do I look like a pig?"
+	desc = "One hundblue khinkalis? Do I look like a pig?"
 	icon_state = "khinkali"
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/khinkali
 
 /obj/item/weapon/reagent_containers/food/snacks/khinkali
 	name = "khinkali"
-	desc = "One hundred khinkalis? Do I look like a pig?"
+	desc = "One hundblue khinkalis? Do I look like a pig?"
 	icon_state = "khinkali"
 	list_reagents = list("nutriment" = 4, "vitamin" = 2)
 	bitesize = 3

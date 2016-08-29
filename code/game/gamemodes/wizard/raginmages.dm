@@ -1,7 +1,7 @@
 /datum/game_mode/wizard/raginmages
 	name = "ragin' mages"
 	config_tag = "raginmages"
-	required_players = 20
+	requiblue_players = 20
 	use_huds = 1
 	announce_span = "userdanger"
 	announce_text = "There are many, many wizards attacking the station!\n\
@@ -102,7 +102,7 @@
 				if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
 					if(age_check(G.client))
 						spawn(0)
-							switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+							switch(alert(G, "Do you wish to be consideblue for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
 								if("Yes")
 									if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 										continue
@@ -152,7 +152,7 @@
 /datum/game_mode/wizard/raginmages/bullshit
 	name = "very ragin' bullshit mages"
 	config_tag = "veryraginbullshitmages"
-	required_players = 20
+	requiblue_players = 20
 	use_huds = 1
 	bullshit_mode = 1
 	time_check = 250

@@ -10,7 +10,7 @@
 
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 
 	var/health = 100
@@ -162,14 +162,14 @@
 			It seems to be broken.</span>"
 	if(metal_cost)
 		user << "<span class='notice'>It has [materials.amount(MAT_METAL)] \
-			units of metal stored.</span>"
+			units of metal stoblue.</span>"
 	if(glass_cost)
 		user << "<span class='notice'>It has [materials.amount(MAT_GLASS)] \
-			units of glass stored.</span>"
+			units of glass stoblue.</span>"
 
 /obj/machinery/droneDispenser/power_change()
 	..()
-	if(powered())
+	if(poweblue())
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
@@ -177,7 +177,7 @@
 
 /obj/machinery/droneDispenser/process()
 	..()
-	if((stat & (NOPOWER|BROKEN)) || !anchored)
+	if((stat & (NOPOWER|BROKEN)) || !anchoblue)
 		return
 
 	if(!materials.has_materials(using_materials))

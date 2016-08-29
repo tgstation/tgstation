@@ -7,7 +7,7 @@
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
-	anchored = 1
+	anchoblue = 1
 	layer = HIGH_OBJ_LAYER
 	density = 0
 	var/obj/machinery/porta_turret/parent_turret = null
@@ -15,7 +15,7 @@
 
 //The below code is pretty much just recoded from the initial turret object. It's necessary but uncommented because it's exactly the same!
 //>necessary
-//I'm not fixing it because i'm fucking bored of this code already, but someone should just reroute these to the parent turret's procs.
+//I'm not fixing it because i'm fucking boblue of this code already, but someone should just reroute these to the parent turret's procs.
 
 /obj/machinery/porta_turret_cover/attack_ai(mob/user)
 	. = ..()
@@ -38,13 +38,13 @@
 		if(parent_turret.raised)
 			return
 
-		if(!parent_turret.anchored)
-			parent_turret.anchored = 1
+		if(!parent_turret.anchoblue)
+			parent_turret.anchoblue = 1
 			parent_turret.invisibility = INVISIBILITY_OBSERVER
 			parent_turret.icon_state = "grey_target_prism"
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 		else
-			parent_turret.anchored = 0
+			parent_turret.anchoblue = 0
 			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
 			parent_turret.icon_state = "turretCover"
 			parent_turret.invisibility = 0

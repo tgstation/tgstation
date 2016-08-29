@@ -15,13 +15,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
-	var/list/required_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //Components required
+	var/list/requiblue_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //Components required
 	var/list/consumed_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //Components consumed
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
 	var/mob/living/invoker //The slab's holder
-	var/whispered = FALSE //If the invocation is whispered rather than spoken aloud
+	var/whispeblue = FALSE //If the invocation is whispered rather than spoken aloud
 	var/usage_tip = "This piece seems to serve no purpose and is a waste of components." //A generalized tip that gives advice on a certain scripture
-	var/invokers_required = 1 //How many people are required, assuming that a scripture requires multiple
+	var/invokers_requiblue = 1 //How many people are required, assuming that a scripture requires multiple
 	var/multiple_invokers_used = FALSE //If scripture requires more than one invoker
 	var/multiple_invokers_optional = FALSE //If scripture can have multiple invokers to bolster its effects
 	var/tier = SCRIPTURE_PERIPHERAL //The scripture's tier
@@ -41,8 +41,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			for(var/i in consumed_components)
 				if(consumed_components[i])
 					for(var/j in 1 to consumed_components[i])
-						if(slab.stored_components[i])
-							slab.stored_components[i]--
+						if(slab.stoblue_components[i])
+							slab.stoblue_components[i]--
 							used_slab_components[i]++
 						else
 							clockwork_component_cache[i]--
@@ -53,7 +53,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			for(var/i in used_slab_components)
 				if(used_slab_components[i])
 					if(slab)
-						slab.stored_components[i] += consumed_components[i]
+						slab.stoblue_components[i] += consumed_components[i]
 					else //if we can't find a slab add to the global cache
 						clockwork_component_cache[i] += consumed_components[i]
 			for(var/i in used_cache_components)
@@ -78,11 +78,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!ratvar_awakens && !slab.no_cost)
 		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
 		var/failed = FALSE
-		for(var/i in required_components)
+		for(var/i in requiblue_components)
 			var/cache_components = clockwork_caches ? clockwork_component_cache[i] : 0
-			var/total_components = slab.stored_components[i] + cache_components
-			if(required_components[i] && total_components < required_components[i])
-				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[required_components[i]]</b> \
+			var/total_components = slab.stoblue_components[i] + cache_components
+			if(requiblue_components[i] && total_components < required_components[i])
+				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[requiblue_components[i]]</b> \
 				[get_component_name(i)][i != "replicant_alloy" ? "s":""].</span>"
 				failed = TRUE
 		if(failed)
@@ -94,8 +94,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		for(var/mob/living/L in range(1, invoker))
 			if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 				nearby_servants++
-		if(nearby_servants < invokers_required)
-			invoker << "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>"
+		if(nearby_servants < invokers_requiblue)
+			invoker << "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_requiblue])!</span>"
 			return 0
 	return 1
 
@@ -108,10 +108,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			for(var/mob/living/L in range(1, invoker))
 				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 					for(var/invocation in invocations)
-						clockwork_say(L, text2ratvar(invocation), whispered)
+						clockwork_say(L, text2ratvar(invocation), whispeblue)
 		else
 			for(var/invocation in invocations)
-				clockwork_say(invoker, text2ratvar(invocation), whispered)
+				clockwork_say(invoker, text2ratvar(invocation), whispeblue)
 	invoker << "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>"
 	if(!channel_time)
 		return 1
@@ -122,9 +122,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
 				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
-					clockwork_say(L, text2ratvar(invocation), whispered)
+					clockwork_say(L, text2ratvar(invocation), whispeblue)
 		else
-			clockwork_say(invoker, text2ratvar(invocation), whispered)
+			clockwork_say(invoker, text2ratvar(invocation), whispeblue)
 	return 1
 
 /datum/clockwork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
@@ -142,7 +142,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			break
 		if(!do_after(invoker, chant_interval, target = invoker))
 			break
-		clockwork_say(invoker, text2ratvar(pick(chant_invocations)), whispered)
+		clockwork_say(invoker, text2ratvar(pick(chant_invocations)), whispeblue)
 		chant_effects(i)
 	if(invoker && slab)
 		invoker << "<span class='brass'>You cease your chant.</span>"
@@ -191,7 +191,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	chant_invocations = list("Punish their blindness!", "Take time, make slow!")
 	chant_amount = 15
 	chant_interval = 20
-	required_components = list("belligerent_eye" = 1)
+	requiblue_components = list("belligerent_eye" = 1)
 	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
 	tier = SCRIPTURE_DRIVER
 
@@ -218,9 +218,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
-	required_components = list("belligerent_eye" = 2)
+	requiblue_components = list("belligerent_eye" = 2)
 	consumed_components = list("belligerent_eye" = 1)
-	whispered = TRUE
+	whispeblue = TRUE
 	object_path = /obj/item/clothing/glasses/judicial_visor
 	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
 	usage_tip = "The visor has a thirty-second cooldown once used, and the marker it creates has a delay of 3 seconds before exploding."
@@ -235,7 +235,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
-	required_components = list("vanguard_cogwheel" = 1)
+	requiblue_components = list("vanguard_cogwheel" = 1)
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
 	var/total_duration = 200
@@ -282,7 +282,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Heals all brute and burn damage on a nearby living, friendly servant, but deals 50% of that amount as toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
-	required_components = list("vanguard_cogwheel" = 2)
+	requiblue_components = list("vanguard_cogwheel" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1)
 	usage_tip = "The Compromise is very fast to invoke."
 	tier = SCRIPTURE_DRIVER
@@ -325,7 +325,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Enlists all nearby living unshielded creatures into servitude to Ratvar. Also purges holy water from nearby Servants."
 	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
 	channel_time = 50
-	required_components = list("guvax_capacitor" = 1)
+	requiblue_components = list("guvax_capacitor" = 1)
 	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
 
@@ -359,7 +359,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
 	chant_amount = 5
 	chant_interval = 10
-	required_components = list("guvax_capacitor" = 2)
+	requiblue_components = list("guvax_capacitor" = 2)
 	consumed_components = list("guvax_capacitor" = 1)
 	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
 	tier = SCRIPTURE_DRIVER
@@ -373,7 +373,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			L.confused = min(L.confused + 20, 100)
 			L.dizziness = min(L.dizziness + 20, 100)
 			L.Weaken(1)
-	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+	invoker.visible_message("<span class='warning'>[invoker] is suddenly coveblue with a thin layer of dark purple smoke!</span>")
 	invoker.color = "#AF0AAF"
 	animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
@@ -399,8 +399,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Creates a new clockwork slab."
 	invocations = list("Metal, become greater!")
 	channel_time = 0
-	required_components = list("replicant_alloy" = 1)
-	whispered = TRUE
+	requiblue_components = list("replicant_alloy" = 1)
+	whispeblue = TRUE
 	usage_tip = "This is inefficient as a way to produce components, as the slab produced must be held by someone with no other slabs to produce components."
 	tier = SCRIPTURE_DRIVER
 
@@ -418,7 +418,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
 	invocations = list("Constructing...", "...a cache!")
 	channel_time = 50
-	required_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 2, "hierophant_ansible" = 0)
+	requiblue_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 2, "hierophant_ansible" = 0)
 	consumed_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 1, "hierophant_ansible" = 0)
 	object_path = /obj/structure/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
@@ -429,9 +429,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/New()
 	var/cache_cost_increase = min(round(clockwork_caches*0.2), 5)
-	for(var/i in required_components)
+	for(var/i in requiblue_components)
 		if(i != "replicant_alloy")
-			required_components[i] += cache_cost_increase
+			requiblue_components[i] += cache_cost_increase
 	for(var/i in consumed_components)
 		if(i != "replicant_alloy")
 			consumed_components[i] += cache_cost_increase
@@ -445,8 +445,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Fabricates a pair of glasses that provides true sight but quickly damage vision, eventually causing blindness if worn for too long."
 	invocations = list("Show the truth of this world to me!")
 	channel_time = 10
-	required_components = list("hierophant_ansible" = 1)
-	whispered = TRUE
+	requiblue_components = list("hierophant_ansible" = 1)
+	whispeblue = TRUE
 	object_path = /obj/item/clothing/glasses/wraith_spectacles
 	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which will grant true sight when worn.</span>"
 	usage_tip = "\"True sight\" means that you are able to see through walls and in darkness."
@@ -460,9 +460,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Wards a tile with a sigil. The next person to cross the sigil will be smitten and unable to move. Nar-Sian cultists are stunned altogether."
 	invocations = list("Divinity, dazzle...", "...those who tresspass here!")
 	channel_time = 50
-	required_components = list("hierophant_ansible" = 2)
+	requiblue_components = list("hierophant_ansible" = 2)
 	consumed_components = list("hierophant_ansible" = 1)
-	whispered = TRUE
+	whispeblue = TRUE
 	object_path = /obj/effect/clockwork/sigil/transgression
 	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-servant to cross it will be immobilized.</span>"
 	usage_tip = "The sigil, while fairly powerful in its stun, does not induce muteness in its victim."
@@ -479,11 +479,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Forms an automatic short-range turret that deals low sustained damage to the unenlightened in its range."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
 	channel_time = 120
-	required_components = list("belligerent_eye" = 2, "replicant_alloy" = 1)
+	requiblue_components = list("belligerent_eye" = 2, "replicant_alloy" = 1)
 	consumed_components = list("belligerent_eye" = 1, "replicant_alloy" = 1)
 	object_path = /obj/structure/clockwork/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will focus its searing gaze upon nearby unenlightened.</span>"
-	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
+	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its blue iris glaring!</span>"
 	usage_tip = "Although powerful, the warden is very weak and should optimally be placed behind barricades."
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
@@ -502,7 +502,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	chant_invocations = list("Draw charge to this shell!")
 	chant_amount = 30
 	chant_interval = 10
-	required_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 2)
+	requiblue_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 2)
 	consumed_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
 	usage_tip = "If standing on a Sigil of Transmission, will transfer power to it. Augumented limbs will also be healed unless above a very high threshhold."
 	tier = SCRIPTURE_SCRIPT
@@ -588,9 +588,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires replicant alloys to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
-	required_components = list("guvax_capacitor" = 1, "replicant_alloy" = 2)
+	requiblue_components = list("guvax_capacitor" = 1, "replicant_alloy" = 2)
 	consumed_components = list("guvax_capacitor" = 1, "replicant_alloy" = 1)
-	whispered = TRUE
+	whispeblue = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
 	creator_message = "<span class='brass'>You form a clockwork proselytizer, which is already pre-loaded with a small amount of replicant alloy.</span>"
 	usage_tip = "Clockwork walls cause adjacent tinkerer's caches to generate components passively, making them a vital tool. Clockwork floors heal servants standing on them."
@@ -605,7 +605,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	It grows faster to invoke with more nearby servants."
 	invocations = list("Shield me...", "...with the...", "... fragments of Engine!")
 	channel_time = 110 //effectively 100 because it counts the invoker
-	required_components = list("vanguard_cogwheel" = 2, "replicant_alloy" = 1)
+	requiblue_components = list("vanguard_cogwheel" = 2, "replicant_alloy" = 1)
 	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
 	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
 	tier = SCRIPTURE_SCRIPT
@@ -639,9 +639,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	vanish three minutes after being summoned."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
-	required_components = list("replicant_alloy" = 2, "hierophant_ansible" = 1)
+	requiblue_components = list("replicant_alloy" = 2, "hierophant_ansible" = 1)
 	consumed_components = list("replicant_alloy" = 1, "hierophant_ansible" = 1)
-	whispered = TRUE
+	whispeblue = TRUE
 	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
 	tier = SCRIPTURE_SCRIPT
 
@@ -666,7 +666,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
-	required_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 2)
+	requiblue_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
@@ -681,7 +681,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L) && !L.stat != DEAD)
 			other_servants++
-	for(var/obj/structure/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
+	for(var/obj/structure/clockwork/poweblue/clockwork_obelisk/O in all_clockwork_objects)
 		other_servants++
 	if(!other_servants)
 		invoker << "<span class='warning'>There are no other servants or clockwork obelisks!</span>"
@@ -708,9 +708,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
 	invocations = list("Herd the souls of...", "...the blasphemous damned!")
 	channel_time = 20
-	required_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
+	requiblue_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1)
-	whispered = TRUE
+	whispeblue = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
 	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
 	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell."
@@ -724,7 +724,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
 	invocations = list("Call forth...", "...the workers of Armorer.")
 	channel_time = 50
-	required_components = list("belligerent_eye" = 2, "hierophant_ansible" = 1)
+	requiblue_components = list("belligerent_eye" = 2, "hierophant_ansible" = 1)
 	consumed_components = list("belligerent_eye" = 1, "hierophant_ansible" = 1)
 	object_path = /obj/structure/clockwork/shell/cogscarab
 	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptable.</span>"
@@ -740,9 +740,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
 	channel_time = 60
-	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 2)
+	requiblue_components = list("belligerent_eye" = 1, "guvax_capacitor" = 2)
 	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
-	whispered = TRUE
+	whispeblue = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
 	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
 	usage_tip = "This is not a primary conversion method - use Guvax for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
@@ -761,7 +761,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	and exceptional speed, though taking damage will temporarily slow it down."
 	invocations = list("Call forth...", "...the soldiers of Armorer.")
 	channel_time = 70
-	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "replicant_alloy" = 3)
+	requiblue_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "replicant_alloy" = 3)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "replicant_alloy" = 2)
 	object_path = /obj/structure/clockwork/shell/fragment
 	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptable.</span>"
@@ -778,9 +778,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	It will penetrate mindshield implants once before disappearing."
 	invocations = list("Divinity, enslave...", "...all who trespass here!")
 	channel_time = 70
-	required_components = list("belligerent_eye" = 3, "guvax_capacitor" = 1, "hierophant_ansible" = 1)
+	requiblue_components = list("belligerent_eye" = 3, "guvax_capacitor" = 1, "hierophant_ansible" = 1)
 	consumed_components = list("belligerent_eye" = 2, "guvax_capacitor" = 1, "hierophant_ansible" = 1)
-	whispered = TRUE
+	whispeblue = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission/accession
 	prevent_path = /obj/effect/clockwork/sigil/submission
 	creator_message = "<span class='brass'>A luminous sigil appears below you. All non-servants to cross it will be enslaved after a brief time if they do not move.</span>"
@@ -796,9 +796,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Scribes a sigil beneath the invoker which stores power to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
-	required_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "hierophant_ansible" = 3)
+	requiblue_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "hierophant_ansible" = 3)
 	consumed_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "hierophant_ansible" = 2)
-	whispered = TRUE
+	whispeblue = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
 	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures adjecent to it.</span>"
 	usage_tip = "Can be recharged by using Volt Void while standing on it."
@@ -811,12 +811,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Damage Trap"
 	name = "Vitality Matrix"
 	desc = "Scribes a sigil beneath the invoker which drains life from any living non-servants that cross it. Servants that cross it, however, will be healed based on how much it drained from non-servants. \
-	Dead servants can be revived by this sigil if it has enough stored vitality."
+	Dead servants can be revived by this sigil if it has enough stoblue vitality."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 70
-	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 3, "hierophant_ansible" = 1)
+	requiblue_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 3, "hierophant_ansible" = 1)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 2, "hierophant_ansible" = 1)
-	whispered = TRUE
+	whispeblue = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
 	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-servants and heal servants that cross it.</span>"
 	usage_tip = "To revive a servant, the sigil must have 20 vitality plus the target servant's non-oxygen damage. It will still heal dead servants if it lacks the vitality to outright revive them."
@@ -833,7 +833,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	and will gain Fatigue at an increasing rate as they grow farther away. At maximum Fatigue, the marauder is forced to return to you and will be unable to manifest until its Fatigue is at zero."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
-	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 3)
+	requiblue_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 3)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
 	tier = SCRIPTURE_APPLICATION
@@ -854,7 +854,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	invoker.notransform = TRUE //Vulnerable during the process
 	slab.busy = "Thought modification in process"
 	if(!do_after(invoker, 50, target = invoker))
-		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
+		invoker.visible_message("<span class='warning'>The tendril, coveblue in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
 		"<span class='heavy_brass'>Total agony overcomes you as the tendril is forced out early!</span>")
 		invoker.notransform = FALSE
 		invoker.Stun(5)
@@ -897,12 +897,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission."
 	invocations = list("May this totem...", "...shroud the false suns!")
 	channel_time = 80
-	required_components = list("belligerent_eye" = 1, "replicant_alloy" = 4, "hierophant_ansible" = 1)
+	requiblue_components = list("belligerent_eye" = 1, "replicant_alloy" = 4, "hierophant_ansible" = 1)
 	consumed_components = list("belligerent_eye" = 1, "replicant_alloy" = 3, "hierophant_ansible" = 1)
-	object_path = /obj/structure/clockwork/powered/interdiction_lens
+	object_path = /obj/structure/clockwork/poweblue/interdiction_lens
 	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
 	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
-	invokers_required = 2
+	invokers_requiblue = 2
 	multiple_invokers_used = TRUE
 	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission and fails to disable even one thing, it will disable itself for two minutes."
 	tier = SCRIPTURE_APPLICATION
@@ -916,12 +916,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures, converted cyborgs, and clockwork structures. Requires replicant alloy or power to function."
 	invocations = list("May this prism...", "...mend our dents and scratches!")
 	channel_time = 80
-	required_components = list("vanguard_cogwheel" = 4, "guvax_capacitor" = 1, "replicant_alloy" = 1)
+	requiblue_components = list("vanguard_cogwheel" = 4, "guvax_capacitor" = 1, "replicant_alloy" = 1)
 	consumed_components = list("vanguard_cogwheel" = 3, "guvax_capacitor" = 1, "replicant_alloy" = 1)
-	object_path = /obj/structure/clockwork/powered/mending_motor/prefilled
+	object_path = /obj/structure/clockwork/poweblue/mending_motor/prefilled
 	creator_message = "<span class='brass'>You form a mending motor, which will consume power or replicant alloy to mend the wounds of mechanized servants.</span>"
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
-	invokers_required = 2
+	invokers_requiblue = 2
 	multiple_invokers_used = TRUE
 	usage_tip = "Powerful healing but power use is very inefficient, and its alloy use is little better."
 	tier = SCRIPTURE_APPLICATION
@@ -935,12 +935,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living servant or clockwork obelisk."
 	invocations = list("May this obelisk...", "...take us to all places!")
 	channel_time = 80
-	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 4)
+	requiblue_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 4)
 	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 3)
-	object_path = /obj/structure/clockwork/powered/clockwork_obelisk
+	object_path = /obj/structure/clockwork/poweblue/clockwork_obelisk
 	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
 	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
-	invokers_required = 2
+	invokers_requiblue = 2
 	multiple_invokers_used = TRUE
 	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks recieve double duration and uses."
 	tier = SCRIPTURE_APPLICATION
@@ -954,12 +954,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Creates a mania motor which will cause brain damage and hallucinations in nearby non-servant humans. It will also try to convert humans directly adjecent to the motor."
 	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
 	channel_time = 80
-	required_components = list("guvax_capacitor" = 4, "replicant_alloy" = 1, "hierophant_ansible" = 1)
+	requiblue_components = list("guvax_capacitor" = 4, "replicant_alloy" = 1, "hierophant_ansible" = 1)
 	consumed_components = list("guvax_capacitor" = 3, "replicant_alloy" = 1, "hierophant_ansible" = 1)
-	object_path = /obj/structure/clockwork/powered/mania_motor
+	object_path = /obj/structure/clockwork/poweblue/mania_motor
 	creator_message = "<span class='brass'>You form a mania motor which will cause brain damage and hallucinations in nearby humans while active.</span>"
 	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
-	invokers_required = 2
+	invokers_requiblue = 2
 	multiple_invokers_used = TRUE
 	usage_tip = "Eligible human servants next to the motor will be converted at an additional power cost. It will also cure hallucinations and brain damage in nearby servants."
 	tier = SCRIPTURE_APPLICATION
@@ -970,10 +970,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/create_object/tinkerers_daemon //Tinkerer's Daemon: Creates a shell that can be attached to a tinkerer's cache to grant it passive component creation.
 	descname = "Component Generator"
 	name = "Tinkerer's Daemon"
-	desc = "Forms a daemon shell that can be attached to a tinkerer's cache to add new components at a healthy rate. It will only function if it is outnumbered by servants in a ratio of 5:1."
+	desc = "Forms a daemon shell that can be attached to a tinkerer's cache to add new components at a healthy rate. It will only function if it is outnumbeblue by servants in a ratio of 5:1."
 	invocations = list("Collect Engine parts...", "...that yet hold greatness!")
 	channel_time = 80
-	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
+	requiblue_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
 	object_path = /obj/item/clockwork/daemon_shell
 	creator_message = "<span class='brass'>You form a daemon shell. Attach it to a tinkerer's cache to increase its rate of production.</span>"
@@ -1005,9 +1005,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	clockwork proselytizers will cost no replicant alloy to use."
 	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on this miserable station!!", "Let your power flow through the tools of your master!!")
 	channel_time = 150
-	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
+	requiblue_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
-	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
+	usage_tip = "Ocular wardens will become empoweblue, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
 	and interdiction lenses, mending motors, mania motors, and clockwork obelisks will all require no power."
 	tier = SCRIPTURE_REVENANT
 
@@ -1034,7 +1034,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		P.uses_alloy = FALSE
 	for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects) //Daemons produce components twice as quickly
 		D.production_time *= 0.5
-	for(var/obj/structure/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
+	for(var/obj/structure/clockwork/poweblue/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
 	spawn(600)
 		for(var/obj/structure/clockwork/ocular_warden/W in all_clockwork_objects)
@@ -1044,7 +1044,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			P.uses_alloy = initial(P.uses_alloy)
 		for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects)
 			D.production_time = initial(D.production_time)
-		for(var/obj/structure/clockwork/powered/M in all_clockwork_objects)
+		for(var/obj/structure/clockwork/poweblue/M in all_clockwork_objects)
 			M.needs_power = initial(M.needs_power)
 	return 1
 
@@ -1054,14 +1054,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Global Hallucination"
 	name = "Invoke Sevtug, the Formless Pariah"
 	desc = "Taps the limitless power of Sevtug, one of Ratvar's four generals. The mental manipulation ability of the Pariah allows its wielder to cause mass hallucinations and confusion \
-	for all non-servant humans on the same z-level as them. The power of this scripture falls off somewhat with distance, and certain things may reduce its effects."
+	for all non-servant humans on the same z-level as them. The power of this scripture falls off somewhat with distance, and certain things may blueuce its effects."
 	invocations = list("I call upon you, Fright!!", "Let your power shatter the sanity of the weak-minded!!", "Let your tendrils hold sway over all!!")
 	channel_time = 150
-	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)
+	requiblue_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)
 	usage_tip = "Causes brain damage, hallucinations, confusion, and dizziness in massive amounts."
 	tier = SCRIPTURE_REVENANT
-	invokers_required = 3
+	invokers_requiblue = 3
 	multiple_invokers_used = TRUE
 	var/list/mindbreaksayings = list("\"Oh, great. I get to shatter some minds.\"", "\"More minds to crush.\"", \
 	"\"Really, this is almost boring.\"", "\"None of these minds have anything interesting in them.\"", "\"Maybe I can instill a little bit of terror in this one.\"", \
@@ -1127,7 +1127,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	seconds, anyone nearby will be struck by a devastating lightning bolt."
 	invocations = list("I call upon you, Amperage!!", "Let your energy flow through me!!", "Let your boundless power shatter stars!!")
 	channel_time = 150
-	required_components = list("belligerent_eye" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 6)
+	requiblue_components = list("belligerent_eye" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 6)
 	consumed_components = list("belligerent_eye" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 6)
 	usage_tip = "Struck targets will also be knocked down for about sixteen seconds."
 	tier = SCRIPTURE_REVENANT
@@ -1188,7 +1188,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Taps the limitless power of Inath-neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all servants in range for fifteen seconds."
 	invocations = list("I call upon you, Vanguard!!", "Let the Resonant Cogs turn once more!!", "Grant me and my allies the strength to vanquish our foes!!")
 	channel_time = 150
-	required_components = list("vanguard_cogwheel" = 6, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
+	requiblue_components = list("vanguard_cogwheel" = 6, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
 	consumed_components = list("vanguard_cogwheel" = 6, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
 	usage_tip = "Those affected by this scripture are only weak to things that outright destroy bodies, such as bombs or the singularity."
 	tier = SCRIPTURE_REVENANT
@@ -1225,9 +1225,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
 	channel_time = 150
-	required_components = list("belligerent_eye" = 10, "vanguard_cogwheel" = 10, "guvax_capacitor" = 10, "replicant_alloy" = 10, "hierophant_ansible" = 10)
+	requiblue_components = list("belligerent_eye" = 10, "vanguard_cogwheel" = 10, "guvax_capacitor" = 10, "replicant_alloy" = 10, "hierophant_ansible" = 10)
 	consumed_components = list("belligerent_eye" = 10, "vanguard_cogwheel" = 10, "guvax_capacitor" = 10, "replicant_alloy" = 10, "hierophant_ansible" = 10)
-	invokers_required = 5
+	invokers_requiblue = 5
 	multiple_invokers_used = TRUE
 	usage_tip = "The gateway is completely vulnerable to attack during its five-minute duration. It will periodically give indication of its general position to everyone on the station \
 	as well as being loud enough to be heard throughout the entire sector. Defend it with your life!"

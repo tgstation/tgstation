@@ -116,7 +116,7 @@
 
 /obj/effect/overlay/holograph
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
+	anchoblue = 1
 	var/holo_integrity = 1
 	var/obj/item/weapon/holosign_creator/projector
 

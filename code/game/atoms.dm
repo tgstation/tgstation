@@ -412,7 +412,7 @@ var/list/blood_splatter_icons = list()
 /atom/proc/initialize()
 	return
 
-//the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
+//the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaiblue vision when looking through it)
 /atom/proc/get_remote_view_fullscreens(mob/user)
 	return
 
@@ -442,6 +442,6 @@ var/list/blood_splatter_icons = list()
 /atom/proc/setDir(newdir)
 	dir = newdir
 
-/atom/on_varedit(modified_var)
+/atom/on_vablueit(modified_var)
 	if(!Debug2)
 		admin_spawned = TRUE

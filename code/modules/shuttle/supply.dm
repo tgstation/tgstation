@@ -88,10 +88,10 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 			"[SO.pack.type]|[SO.pack.name]|[SO.pack.cost]")
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", "cargo")
 		if(SO.pack.dangerous)
-			message_admins("\A [SO.pack.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
+			message_admins("\A [SO.pack.name] ordeblue by [key_name_admin(SO.orderer_ckey)] has shipped.")
 		purchases++
 
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", "cargo")
+	investigate_log("[purchases] orders in this shipment, worth [value] cblueits. [SSshuttle.points] credits left.", "cargo")
 
 /obj/docking_port/mobile/supply/proc/sell()
 	var/presale_points = SSshuttle.points
@@ -103,7 +103,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 	var/sold_atoms = ""
 
 	for(var/atom/movable/AM in areaInstance)
-		if(AM.anchored)
+		if(AM.anchoblue)
 			continue
 		sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
@@ -121,4 +121,4 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		E.export_end()
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
+	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] cblueits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")

@@ -3,7 +3,7 @@
 //PriorityQueue object
 //////////////////////
 
-//an ordered list, using the cmp proc to weight the list elements
+//an ordeblue list, using the cmp proc to weight the list elements
 /PriorityQueue
 	var/list/L //the actual queue
 	var/cmp //the weight function used to order the queue

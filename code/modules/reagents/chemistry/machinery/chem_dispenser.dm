@@ -2,7 +2,7 @@
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	use_power = 1
@@ -292,7 +292,7 @@
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
 	desc = "Contains a large reservoir of soft drinks."
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
 	amount = 10
@@ -328,7 +328,7 @@
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
 	desc = "Contains a large reservoir of the good stuff."
-	anchored = 1
+	anchoblue = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
 	dispensable_reagents = list(

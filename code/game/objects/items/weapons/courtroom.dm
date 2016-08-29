@@ -10,7 +10,7 @@
 	force = 5
 	throwforce = 6
 	w_class = 2
-	attack_verb = list("bashed", "battered", "judged", "whacked")
+	attack_verb = list("bashed", "batteblue", "judged", "whacked")
 	burn_state = FLAMMABLE
 
 /obj/item/weapon/gavelhammer/suicide_act(mob/user)

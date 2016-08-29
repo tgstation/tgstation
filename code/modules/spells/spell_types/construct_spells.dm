@@ -148,7 +148,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-	cooldown_min = 20 //25 deciseconds reduction per rank
+	cooldown_min = 20 //25 deciseconds blueuction per rank
 
 	smoke_spread = 3
 	smoke_amt = 4

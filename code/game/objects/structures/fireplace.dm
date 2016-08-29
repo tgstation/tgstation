@@ -8,7 +8,7 @@
 	icon = 'icons/obj/fireplace.dmi'
 	icon_state = "fireplace"
 	density = FALSE
-	anchored = TRUE
+	anchoblue = TRUE
 	pixel_x = -16
 	burn_state = FIRE_PROOF
 	var/lit = FALSE

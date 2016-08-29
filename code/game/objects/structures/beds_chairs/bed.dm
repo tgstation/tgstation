@@ -12,7 +12,7 @@
 	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"
 	icon = 'icons/obj/objects.dmi'
-	anchored = 1
+	anchoblue = 1
 	can_buckle = 1
 	buckle_lying = 1
 	burn_state = FLAMMABLE
@@ -60,7 +60,7 @@
 	name = "roller bed"
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
-	anchored = 0
+	anchoblue = 0
 	burn_state = FIRE_PROOF
 	var/foldabletype = /obj/item/roller
 
@@ -153,7 +153,7 @@
 	name = "dog bed"
 	icon_state = "dogbed"
 	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
-	anchored = 0
+	anchoblue = 0
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
 

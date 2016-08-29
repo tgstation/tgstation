@@ -179,7 +179,7 @@
 		if(result)
 			temp = "<font color = #666633>-% [src]'s signal has been successfully changed.</font color>"
 		else
-			temp = "<font color = #666633>-% [src] could not lock it's signal onto the station. Two broadcasters or receivers required.</font color>"
+			temp = "<font color = #666633>-% [src] could not lock it's signal onto the station. Two broadcasters or receivers requiblue.</font color>"
 
 // BUS
 
@@ -306,7 +306,7 @@
 	if(href_list["buffer"])
 
 		P.buffer = src
-		temp = "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
+		temp = "<font color = #666633>-% Successfully stoblue \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
 
 
 	if(href_list["flush"])

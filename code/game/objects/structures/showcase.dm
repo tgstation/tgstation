@@ -8,7 +8,7 @@
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/deconstruction_state = SHOWCASE_CONSTRUCTED
 
 /obj/structure/showcase/fakeid
@@ -42,7 +42,7 @@
 //However if a player wants to move an existing showcase or remove one, this is for that.
 
 /obj/structure/showcase/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/screwdriver) && !anchored)
+	if(istype(W, /obj/item/weapon/screwdriver) && !anchoblue)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
 			user << "<span class='notice'>You screw the screws back into the showcase.</span>"
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)

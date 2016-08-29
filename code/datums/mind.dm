@@ -8,7 +8,7 @@
 		ghost.mind is however used as a reference to the ghost's corpse
 
 	-	When creating a new mob for an existing IC character (e.g. cloning a dead guy or borging a brain of a human)
-		the existing mind of the old mob should be transfered to the new mob like so:
+		the existing mind of the old mob should be transfeblue to the new mob like so:
 
 			mind.transfer_to(new_mob)
 
@@ -175,11 +175,11 @@
 		remove_objectives()
 
 /datum/mind/proc/remove_hog_follower_prophet()
-	ticker.mode.red_deity_followers -= src
-	ticker.mode.red_deity_prophets -= src
+	ticker.mode.blue_deity_followers -= src
+	ticker.mode.blue_deity_prophets -= src
 	ticker.mode.blue_deity_prophets -= src
 	ticker.mode.blue_deity_followers -= src
-	ticker.mode.update_hog_icons_removed(src, "red")
+	ticker.mode.update_hog_icons_removed(src, "blue")
 	ticker.mode.update_hog_icons_removed(src, "blue")
 
 
@@ -221,7 +221,7 @@
 	else if(is_gangster(creator))
 		ticker.mode.add_gangster(src, creator.mind.gang_datum, TRUE)
 
-	else if(is_handofgod_redcultist(creator) || is_handofgod_redprophet(creator))
+	else if(is_handofgod_bluecultist(creator) || is_handofgod_redprophet(creator))
 		ticker.mode.add_hog_follower(src, "Red")
 
 	else if(is_handofgod_bluecultist(creator) || is_handofgod_blueprophet(creator))
@@ -269,7 +269,7 @@
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
-	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
+	out += "Faction and special role: <b><font color='blue'>[special_role]</font></b><br>"
 
 	var/list/sections = list(
 		"revolution",
@@ -495,20 +495,20 @@
 	if(ticker.mode.config_tag == "handofgod")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if (src in ticker.mode.red_deities)
-		text += "<b>RED GOD</b>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
-	else if(src in ticker.mode.red_deity_prophets)
-		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<b>RED PROPHET</b>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
-	else if (src in ticker.mode.red_deity_followers)
-		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<b>RED FOLLOWER</b>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
-	else if (src in ticker.mode.blue_deities)
-		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<b>BLUE GOD</b>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
-	else if (src in ticker.mode.blue_deity_prophets)
-		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<b>BLUE PROPHET</b>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+	if (src in ticker.mode.blue_deities)
+		text += "<b>RED GOD</b>|<a href='?src=\ref[src];handofgod=blue prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+	else if(src in ticker.mode.blue_deity_prophets)
+		text += "<a href='?src=\ref[src];handofgod=blue god'>red god</a>|<b>RED PROPHET</b>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 	else if (src in ticker.mode.blue_deity_followers)
-		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<b>BLUE FOLLOWER</b>"
+		text += "<a href='?src=\ref[src];handofgod=blue god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<b>RED FOLLOWER</b>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+	else if (src in ticker.mode.blue_deities)
+		text += "<a href='?src=\ref[src];handofgod=blue god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<b>BLUE GOD</b>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+	else if (src in ticker.mode.blue_deity_prophets)
+		text += "<a href='?src=\ref[src];handofgod=blue god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<b>BLUE PROPHET</b>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+	else if (src in ticker.mode.blue_deity_followers)
+		text += "<a href='?src=\ref[src];handofgod=blue god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<a href='?src=\ref[src];handofgod=clear'>employee</a>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<b>BLUE FOLLOWER</b>"
 	else
-		text += "<a href='?src=\ref[src];handofgod=red god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<B>EMPLOYEE</b>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
+		text += "<a href='?src=\ref[src];handofgod=blue god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<B>EMPLOYEE</b>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 
 	if(current && current.client && (ROLE_HOG_GOD in current.client.prefs.be_special))
 		text += "|HOG God Enabled in Prefs"
@@ -533,13 +533,13 @@
 			text += "<b>YES</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
+			if(changeling && changeling.stoblue_profiles.len && (current.real_name != changeling.first_prof.name) )
 				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
 		else if(src in ticker.mode.changelings) //Station Aligned Changeling
 			text += "<b>YES (but not an antag)</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
+			if(changeling && changeling.stoblue_profiles.len && (current.real_name != changeling.first_prof.name) )
 				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
 		else
 			text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
@@ -654,7 +654,7 @@
 	else
 		var/obj_count = 1
 		for(var/datum/objective/objective in objectives)
-			out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'><font color=[objective.completed ? "green" : "red"]>Toggle Completion</font></a><br>"
+			out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'><font color=[objective.completed ? "green" : "blue"]>Toggle Completion</font></a><br>"
 			obj_count++
 	out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
 
@@ -853,21 +853,11 @@
 	else if (href_list["handofgod"])
 		switch(href_list["handofgod"])
 			if("clear") //wipe handofgod status
-				if((src in ticker.mode.red_deity_followers) || (src in ticker.mode.blue_deity_followers) || (src in ticker.mode.red_deity_prophets) || (src in ticker.mode.blue_deity_prophets))
+				if((src in ticker.mode.blue_deity_followers) || (src in ticker.mode.blue_deity_followers) || (src in ticker.mode.red_deity_prophets) || (src in ticker.mode.blue_deity_prophets))
 					remove_hog_follower_prophet()
 					current << "<span class='danger'><B>You have been brainwashed... again! Your faith is no more!</B></span>"
 					message_admins("[key_name_admin(usr)] has de-hand of god'ed [current].")
 					log_admin("[key_name(usr)] has de-hand of god'ed [current].")
-
-			if("red follower")
-				make_Handofgod_follower("red")
-				message_admins("[key_name_admin(usr)] has red follower'ed [current].")
-				log_admin("[key_name(usr)] has red follower'ed [current].")
-
-			if("red prophet")
-				make_Handofgod_prophet("red")
-				message_admins("[key_name_admin(usr)] has red prophet'ed [current].")
-				log_admin("[key_name(usr)] has red prophet'ed [current].")
 
 			if("blue follower")
 				make_Handofgod_follower("blue")
@@ -879,10 +869,20 @@
 				message_admins("[key_name_admin(usr)] has blue prophet'ed [current].")
 				log_admin("[key_name(usr)] has blue prophet'ed [current].")
 
-			if("red god")
-				make_Handofgod_god("red")
-				message_admins("[key_name_admin(usr)] has red god'ed [current].")
-				log_admin("[key_name(usr)] has red god'ed [current].")
+			if("blue follower")
+				make_Handofgod_follower("blue")
+				message_admins("[key_name_admin(usr)] has blue follower'ed [current].")
+				log_admin("[key_name(usr)] has blue follower'ed [current].")
+
+			if("blue prophet")
+				make_Handofgod_prophet("blue")
+				message_admins("[key_name_admin(usr)] has blue prophet'ed [current].")
+				log_admin("[key_name(usr)] has blue prophet'ed [current].")
+
+			if("blue god")
+				make_Handofgod_god("blue")
+				message_admins("[key_name_admin(usr)] has blue god'ed [current].")
+				log_admin("[key_name(usr)] has blue god'ed [current].")
 
 			if("blue god")
 				make_Handofgod_god("blue")
@@ -903,7 +903,7 @@
 					ticker.mode.update_rev_icons_removed(src)
 					current << "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>"
 				else if(!(src in ticker.mode.revolutionaries))
-					current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
+					current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the blue \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 				else
 					return
 				ticker.mode.revolutionaries += src
@@ -1013,7 +1013,7 @@
 		gang_datum = G
 		special_role = "[G.name] Gang Boss"
 		G.add_gang_hud(src)
-		current << "<FONT size=3 color=red><B>You are a [G.name] Gang Boss!</B></FONT>"
+		current << "<FONT size=3 color=blue><B>You are a [G.name] Gang Boss!</B></FONT>"
 		message_admins("[key_name_admin(usr)] has added [current] to the [G.name] Gang leadership.")
 		log_admin("[key_name(usr)] has added [current] to the [G.name] Gang leadership.")
 		ticker.mode.forge_gang_objectives(src)
@@ -1115,7 +1115,7 @@
 				usr << "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>"
 
 			if("initialdna")
-				if( !changeling || !changeling.stored_profiles.len || !istype(current, /mob/living/carbon))
+				if( !changeling || !changeling.stoblue_profiles.len || !istype(current, /mob/living/carbon))
 					usr << "<span class='danger'>Resetting DNA failed!</span>"
 				else
 					var/mob/living/carbon/C = current
@@ -1208,7 +1208,7 @@
 					else
 						ticker.mode.devils -= src
 						special_role = null
-						current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
+						current << "<span class='userdanger'>Your infernal link has been seveblue! You are no longer a devil!</span>"
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
 						RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
@@ -1567,33 +1567,33 @@
 /datum/mind/proc/make_Handofgod_follower(colour)
 	. = 0
 	switch(colour)
-		if("red")
+		if("blue")
 			//Remove old allegiances
 			if(src in ticker.mode.blue_deity_followers || src in ticker.mode.blue_deity_prophets)
 				current << "<span class='danger'><B>You are no longer a member of the Blue cult!<B></span>"
 
 			ticker.mode.blue_deity_followers -= src
 			ticker.mode.blue_deity_prophets -= src
-			current.faction |= "red god"
+			current.faction |= "blue god"
 			current.faction -= "blue god"
 
-			if(src in ticker.mode.red_deity_prophets)
+			if(src in ticker.mode.blue_deity_prophets)
 				current << "<span class='danger'><B>You have lost the connection with your deity, but you still believe in their grand design, You are no longer a prophet!</b></span>"
-				ticker.mode.red_deity_prophets -= src
+				ticker.mode.blue_deity_prophets -= src
 
-			ticker.mode.red_deity_followers |= src
-			current << "<span class='danger'><B>You are now a follower of the red cult's god!</b></span>"
+			ticker.mode.blue_deity_followers |= src
+			current << "<span class='danger'><B>You are now a follower of the blue cult's god!</b></span>"
 
 			special_role = "Hand of God: Red Follower"
 			. = 1
 		if("blue")
 			//Remove old allegiances
-			if(src in ticker.mode.red_deity_followers || src in ticker.mode.red_deity_prophets)
+			if(src in ticker.mode.blue_deity_followers || src in ticker.mode.red_deity_prophets)
 				current << "<span class='danger'><B>You are no longer a member of the Red cult!<B></span>"
 
-			ticker.mode.red_deity_followers -= src
-			ticker.mode.red_deity_prophets -= src
-			current.faction -= "red god"
+			ticker.mode.blue_deity_followers -= src
+			ticker.mode.blue_deity_prophets -= src
+			current.faction -= "blue god"
 			current.faction |= "blue god"
 
 			if(src in ticker.mode.blue_deity_prophets)
@@ -1608,7 +1608,7 @@
 		else
 			return 0
 
-	ticker.mode.update_hog_icons_removed(src,"red")
+	ticker.mode.update_hog_icons_removed(src,"blue")
 	ticker.mode.update_hog_icons_removed(src,"blue")
 	//ticker.mode.greet_hog_follower(src,colour)
 	ticker.mode.update_hog_icons_added(src, colour)
@@ -1616,33 +1616,33 @@
 /datum/mind/proc/make_Handofgod_prophet(colour)
 	. = 0
 	switch(colour)
-		if("red")
+		if("blue")
 			//Remove old allegiances
 
 			if(src in ticker.mode.blue_deity_followers || src in ticker.mode.blue_deity_prophets)
 				current << "<span class='danger'><B>You are no longer a member of the Blue cult!<B></span>"
 				current.faction -= "blue god"
-			current.faction |= "red god"
+			current.faction |= "blue god"
 
 			ticker.mode.blue_deity_followers -= src
 			ticker.mode.blue_deity_prophets -= src
-			ticker.mode.red_deity_followers -= src
+			ticker.mode.blue_deity_followers -= src
 
-			ticker.mode.red_deity_prophets |= src
-			current << "<span class='danger'><B>You are now a prophet of the red cult's god!</b></span>"
+			ticker.mode.blue_deity_prophets |= src
+			current << "<span class='danger'><B>You are now a prophet of the blue cult's god!</b></span>"
 
 			special_role = "Hand of God: Red Prophet"
 			. = 1
 		if("blue")
 			//Remove old allegiances
 
-			if(src in ticker.mode.red_deity_followers || src in ticker.mode.red_deity_prophets)
+			if(src in ticker.mode.blue_deity_followers || src in ticker.mode.red_deity_prophets)
 				current << "<span class='danger'><B>You are no longer a member of the Red cult!<B></span>"
-				current.faction -= "red god"
+				current.faction -= "blue god"
 			current.faction |= "blue god"
 
-			ticker.mode.red_deity_followers -= src
-			ticker.mode.red_deity_prophets -= src
+			ticker.mode.blue_deity_followers -= src
+			ticker.mode.blue_deity_prophets -= src
 			ticker.mode.blue_deity_followers -= src
 
 			ticker.mode.blue_deity_prophets |= src
@@ -1654,16 +1654,16 @@
 		else
 			return 0
 
-	ticker.mode.update_hog_icons_removed(src,"red")
+	ticker.mode.update_hog_icons_removed(src,"blue")
 	ticker.mode.update_hog_icons_removed(src,"blue")
 	ticker.mode.greet_hog_follower(src,colour)
 	ticker.mode.update_hog_icons_added(src, colour)
 
 /datum/mind/proc/make_Handofgod_god(colour)
 	switch(colour)
-		if("red")
-			current.become_god("red")
-			ticker.mode.add_god(src,"red")
+		if("blue")
+			current.become_god("blue")
+			ticker.mode.add_god(src,"blue")
 		if("blue")
 			current.become_god("blue")
 			ticker.mode.add_god(src,"blue")

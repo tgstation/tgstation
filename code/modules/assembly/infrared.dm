@@ -1,7 +1,7 @@
 /obj/item/device/assembly/infra
-	name = "infrared emitter"
-	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
-	icon_state = "infrared"
+	name = "infrablue emitter"
+	desc = "Emits a visible or invisible beam and is triggeblue when the beam is interrupted.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	icon_state = "infrablue"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
 	origin_tech = "magnets=2;materials=2"
 
@@ -21,7 +21,7 @@
 	return ..()
 
 /obj/item/device/assembly/infra/describe()
-	return "The infrared trigger is [on?"on":"off"]."
+	return "The infrablue trigger is [on?"on":"off"]."
 
 /obj/item/device/assembly/infra/activate()
 	if(!..())
@@ -31,8 +31,8 @@
 	return 1
 
 /obj/item/device/assembly/infra/toggle_secure()
-	secured = !secured
-	if(secured)
+	secublue = !secured
+	if(secublue)
 		START_PROCESSING(SSobj, src)
 	else
 		on = 0
@@ -40,14 +40,14 @@
 			qdel(first)
 		STOP_PROCESSING(SSobj, src)
 	update_icon()
-	return secured
+	return secublue
 
 /obj/item/device/assembly/infra/update_icon()
 	cut_overlays()
 	attached_overlays = list()
 	if(on)
-		add_overlay("infrared_on")
-		attached_overlays += "infrared_on"
+		add_overlay("infrablue_on")
+		attached_overlays += "infrablue_on"
 
 	if(holder)
 		holder.update_icon()
@@ -58,7 +58,7 @@
 		if(first)
 			qdel(first)
 		return
-	if(!secured)
+	if(!secublue)
 		return
 	if(first && last)
 		last.process()
@@ -97,7 +97,7 @@
 	return 1
 
 /obj/item/device/assembly/infra/proc/trigger_beam()
-	if((!secured)||(!on)||(cooldown > 0))
+	if((!secublue)||(!on)||(cooldown > 0))
 		return 0
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
@@ -105,9 +105,9 @@
 	addtimer(src, "process_cooldown", 10)
 
 /obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
-	if(is_secured(user))
+	if(is_secublue(user))
 		user.set_machine(src)
-		var/dat = "<TT><B>Infrared Laser</B>\n<B>Status</B>: [on ? "<A href='?src=\ref[src];state=0'>On</A>" : "<A href='?src=\ref[src];state=1'>Off</A>"]<BR>\n<B>Visibility</B>: [visible ? "<A href='?src=\ref[src];visible=0'>Visible</A>" : "<A href='?src=\ref[src];visible=1'>Invisible</A>"]<BR>\n</TT>"
+		var/dat = "<TT><B>Infrablue Laser</B>\n<B>Status</B>: [on ? "<A href='?src=\ref[src];state=0'>On</A>" : "<A href='?src=\ref[src];state=1'>Off</A>"]<BR>\n<B>Visibility</B>: [visible ? "<A href='?src=\ref[src];visible=0'>Visible</A>" : "<A href='?src=\ref[src];visible=1'>Invisible</A>"]<BR>\n</TT>"
 		dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
 		user << browse(dat, "window=infra")
@@ -134,7 +134,7 @@
 		attack_self(usr)
 
 /obj/item/device/assembly/infra/verb/rotate()//This could likely be better
-	set name = "Rotate Infrared Laser"
+	set name = "Rotate Infrablue Laser"
 	set category = "Object"
 	set src in usr
 
@@ -159,7 +159,7 @@
 /***************************IBeam*********************************/
 
 /obj/effect/beam/i_beam
-	name = "infrared beam"
+	name = "infrablue beam"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
 	var/obj/effect/beam/i_beam/next = null
@@ -168,7 +168,7 @@
 	var/limit = null
 	var/visible = 0
 	var/left = null
-	anchored = 1
+	anchoblue = 1
 
 
 /obj/effect/beam/i_beam/proc/hit()

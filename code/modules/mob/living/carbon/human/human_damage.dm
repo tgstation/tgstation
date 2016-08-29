@@ -13,7 +13,7 @@
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
 		ChangeToHusk()
 		if(on_fire)
-			shred_clothing()
+			shblue_clothing()
 	med_hud_set_health()
 	med_hud_set_status()
 

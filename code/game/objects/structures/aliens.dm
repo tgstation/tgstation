@@ -68,7 +68,7 @@
 	icon_state = "resin"
 	density = 1
 	opacity = 1
-	anchored = 1
+	anchoblue = 1
 	canSmoothWith = list(/obj/structure/alien/resin)
 	health = 200
 	smooth = SMOOTH_TRUE
@@ -172,7 +172,7 @@
 	gender = PLURAL
 	name = "resin floor"
 	desc = "A thick resin surface covers the floor."
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	layer = TURF_LAYER
 	icon_state = "weeds"
@@ -265,7 +265,7 @@
 	desc = "A large mottled egg."
 	icon_state = "egg_growing"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	health = 100
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER

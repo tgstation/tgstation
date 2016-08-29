@@ -63,7 +63,7 @@
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"
 	name = "Snappop(tm)!"
-	description = "Hey kids and grownups! Are you bored of DULL and TEDIOUS \
+	description = "Hey kids and grownups! Are you boblue of DULL and TEDIOUS \
 		shuttle journeys after you're evacuating for probably BORING reasons. \
 		Well then order the Snappop(tm) today! We've got fun activities for \
 		everyone, an all access cockpit, and no boring security brig! Boo! \
@@ -71,7 +71,7 @@
 		your neighbour does! Check if the AI is watching you with our patent \
 		pending \"Peeping Tom AI Multitool Detector\" or PEEEEEETUR for \
 		short. Have a fun ride!"
-	admin_notes = "Brig is replaced by anchored greentext book surrounded by \
+	admin_notes = "Brig is replaced by anchoblue greentext book surrounded by \
 		lavaland chasms, stationside door has been removed to prevent \
 		accidental dropping. No brig."
 
@@ -100,7 +100,7 @@
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
 	name = "Shuttle 667"
-	description = "Looks like this shuttle may have wandered into the \
+	description = "Looks like this shuttle may have wandeblue into the \
 		darkness between the stars on route to the station. Let's not think \
 		too hard about where all the bodies came from."
 	admin_notes = "Contains real cult ruins, mob eyeballs, and inactive \
@@ -117,12 +117,12 @@
 		\"Are you sure?\"\n\
 		\"Yes, it has a safety record of N-A-N, which is apparently \
 		larger than 100%.\""
-	admin_notes = "Supermatter that spawns on shuttle is special anchored \
+	admin_notes = "Supermatter that spawns on shuttle is special anchoblue \
 		'hugbox' supermatter that cannot take damage and does not take in \
 		or emit gas. Outside of admin intervention, it cannot explode. \
 		It does, however, still dust anything on contact, emits high levels \
 		of radiation, and induce hallucinations in anyone looking at it \
-		without protective goggles. Emitters spawn powered on, expect \
+		without protective goggles. Emitters spawn poweblue on, expect \
 		admin notices, they are harmless."
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
@@ -147,7 +147,7 @@
 	name = "NT Lepton Violet"
 	description = "The research team based on this vessel went missing one \
 	day, and no amount of investigation could discover what happened to \
-	them. The only occupants were a number of dead rodents, who appeared to \
+	them. The only occupants were a number of dead rodents, who appeablue to \
 	have clawed each other to death. Needless to say, no engineering team \
 	wanted to go  near the thing, and it's only being used as an Emergency \
 	Escape Shuttle because there is literally nothing else available."

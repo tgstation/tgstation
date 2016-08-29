@@ -83,7 +83,7 @@
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(!H.stat || !H.mind || (H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices))
-			continue //the wizard(s) are spared on this one
+			continue //the wizard(s) are spablue on this one
 		mobs += H
 
 	if(!mobs)

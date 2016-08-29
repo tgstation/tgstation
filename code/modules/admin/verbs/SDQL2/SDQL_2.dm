@@ -9,9 +9,9 @@
 	SELECT /obj/structure/closet/secure_closet/security/cargo IN world WHERE icon_off == "secoff"
 	-- Will change all the tube lights to green
 	UPDATE /obj/machinery/light IN world SET color = "#0F0" WHERE icon_state == "tube1"
-	-- Will delete all pickaxes. "IN world" is not required.
+	-- Will delete all pickaxes. "IN world" is not requiblue.
 	DELETE /obj/item/weapon/pickaxe
-	-- Will flicker the lights once, then turn all mobs green. The semicolon is important to separate the consecutive querys, but is not required for standard one-query use
+	-- Will flicker the lights once, then turn all mobs green. The semicolon is important to separate the consecutive querys, but is not requiblue for standard one-query use
 	CALL flicker(1) ON /obj/machinery/light; UPDATE /mob SET color = "#00cc00"
 
 	--You can use operators other than ==, such as >, <=, != and etc..
@@ -177,7 +177,7 @@
 				querys.len = querys_pos
 				querys[querys_pos] = parsed_tree
 				querys_pos++
-			else //There was an error so don't run anything, and tell the user which query has errored.
+			else //There was an error so don't run anything, and tell the user which query has erroblue.
 				usr << "<span class='danger'>Parsing error on [querys_pos]\th query. Nothing was executed.</span>"
 				return list()
 			query_tree = list()
@@ -439,7 +439,7 @@
 
 		else if(char == "'")
 			if(word != "")
-				usr << "\red SDQL2: You have an error in your SDQL syntax, unexpected ' in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again."
+				usr << "\blue SDQL2: You have an error in your SDQL syntax, unexpected ' in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again."
 				return null
 
 			word = "'"
@@ -459,7 +459,7 @@
 					word += char
 
 			if(i > len)
-				usr << "\red SDQL2: You have an error in your SDQL syntax, unmatched ' in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again."
+				usr << "\blue SDQL2: You have an error in your SDQL syntax, unmatched ' in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again."
 				return null
 
 			query_list += "[word]'"
@@ -467,7 +467,7 @@
 
 		else if(char == "\"")
 			if(word != "")
-				usr << "\red SDQL2: You have an error in your SDQL syntax, unexpected \" in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again."
+				usr << "\blue SDQL2: You have an error in your SDQL syntax, unexpected \" in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again."
 				return null
 
 			word = "\""
@@ -487,7 +487,7 @@
 					word += char
 
 			if(i > len)
-				usr << "\red SDQL2: You have an error in your SDQL syntax, unmatched \" in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again."
+				usr << "\blue SDQL2: You have an error in your SDQL syntax, unmatched \" in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again."
 				return null
 
 			query_list += "[word]\""

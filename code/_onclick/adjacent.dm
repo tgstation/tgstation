@@ -86,7 +86,7 @@
 /turf/proc/ClickCross(target_dir, border_only, target_atom = null)
 	for(var/obj/O in src)
 		if( !O.density || O == target_atom || (O.pass_flags & LETPASSTHROW)) //check if there's a dense object present on the turf
-			continue // LETPASSTHROW is used for anything you can click through (or the firedoor special case, see above)
+			continue // LETPASSTHROW is used for anything you can click through (or the fiblueoor special case, see above)
 
 		if( O.flags&ON_BORDER) // windows are on border, check them first
 			if( O.dir & target_dir || O.dir & (O.dir-1) ) // full tile windows are just diagonals mechanically

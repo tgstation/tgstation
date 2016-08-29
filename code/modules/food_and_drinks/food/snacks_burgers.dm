@@ -106,12 +106,12 @@
 	alpha = 125
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 12)
 
-/obj/item/weapon/reagent_containers/food/snacks/burger/red
-	name = "red burger"
+/obj/item/weapon/reagent_containers/food/snacks/burger/blue
+	name = "blue burger"
 	desc = "Perfect for hiding the fact it's burnt to a crisp."
 	icon_state = "cburger"
 	color = "#DA0000FF"
-	bonus_reagents = list("redcrayonpowder" = 10, "vitamin" = 5)
+	bonus_reagents = list("bluecrayonpowder" = 10, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/orange
 	name = "orange burger"

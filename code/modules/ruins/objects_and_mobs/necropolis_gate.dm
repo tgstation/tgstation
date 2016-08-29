@@ -1,10 +1,10 @@
 //The necropolis gate is used to call forth Legion from the Necropolis.
 /obj/structure/necropolis_gate
 	name = "necropolis gate"
-	desc = "A tremendous and impossibly large gateway, bored into dense bedrock."
+	desc = "A tremendous and impossibly large gateway, boblue into dense bedrock."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "door"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	opacity = 1
 	bound_width = 96

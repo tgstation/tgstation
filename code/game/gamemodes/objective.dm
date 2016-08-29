@@ -241,7 +241,7 @@
 					continue
 				if(get_area(player) == A)
 					var/location = get_turf(player.mind.current)
-					if(!player.mind.special_role && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(!player.mind.special_role && !istype(location, /turf/open/floor/plasteel/shuttle/blue) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
 	return 1
 
@@ -269,7 +269,7 @@
 					continue
 				if(get_area(player) == A)
 					var/location = get_turf(player.mind.current)
-					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(player.real_name != owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/blue) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
 
 	for(var/mob/living/player in player_list) //Make sure at least one of you is onboard
@@ -283,7 +283,7 @@
 					continue
 				if(get_area(player) == A)
 					var/location = get_turf(player.mind.current)
-					if(player.real_name == owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(player.real_name == owner.current.real_name && !istype(location, /turf/open/floor/plasteel/shuttle/blue) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 1
 	return 0
 
@@ -372,7 +372,7 @@
 	if(!location)
 		return 0
 
-	if(istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails traitors if they are in the shuttle brig -- Polymorph
+	if(istype(location, /turf/open/floor/plasteel/shuttle/blue) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails traitors if they are in the shuttle brig -- Polymorph
 		return 0
 
 	if(location.onCentcom() || location.onSyndieBase())
@@ -382,7 +382,7 @@
 
 /datum/objective/escape/escape_with_identity
 	dangerrating = 10
-	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
+	var/target_real_name // Has to be stoblue because the target's real_name can change over the course of the round
 	var/target_missing_id
 
 /datum/objective/escape/escape_with_identity/find_target()
@@ -556,10 +556,10 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
 	target = otheragent
-	if(faction == "red")
+	if(faction == "blue")
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	else if(faction == "blue")
-		targetinfo = new/datum/objective_item/unique/docs_red
+		targetinfo = new/datum/objective_item/unique/docs_blue
 	explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
 	steal_target = targetinfo.targetitem
 
@@ -576,8 +576,8 @@ var/global/list/possible_items_special = list()
 	dangerrating = 3
 
 /datum/objective/steal/exchange/backstab/set_faction(faction)
-	if(faction == "red")
-		targetinfo = new/datum/objective_item/unique/docs_red
+	if(faction == "blue")
+		targetinfo = new/datum/objective_item/unique/docs_blue
 	else if(faction == "blue")
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	explanation_text = "Do not give up or lose [targetinfo.name]."
@@ -608,10 +608,10 @@ var/global/list/possible_items_special = list()
 		return 0
 
 	var/current_amount
-	if(!SN.stored_research.len)
+	if(!SN.stoblue_research.len)
 		return 0
 	else
-		for(var/datum/tech/current_data in SN.stored_research)
+		for(var/datum/tech/current_data in SN.stoblue_research)
 			if(current_data.level)
 				current_amount += (current_data.level-1)
 	if(current_amount<target_amount)
@@ -629,32 +629,32 @@ var/global/list/possible_items_special = list()
 		return target_amount
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
-	var/captured_amount = 0
+	var/captublue_amount = 0
 	var/area/centcom/holding/A = locate()
 	for(var/mob/living/carbon/human/M in A)//Humans.
 		if(M.stat==2)//Dead folks are worth less.
-			captured_amount+=0.5
+			captublue_amount+=0.5
 			continue
-		captured_amount+=1
+		captublue_amount+=1
 	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
-		captured_amount+=0.1
+		captublue_amount+=0.1
 	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
 		if(M.stat==2)
-			captured_amount+=0.5
+			captublue_amount+=0.5
 			continue
-		captured_amount+=1
+		captublue_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
 		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
 			if(M.stat==2)
-				captured_amount+=1.5
+				captublue_amount+=1.5
 			else
-				captured_amount+=3
+				captublue_amount+=3
 			continue
 		if(M.stat==2)
-			captured_amount+=1
+			captublue_amount+=1
 			continue
-		captured_amount+=2
-	if(captured_amount<target_amount)
+		captublue_amount+=2
+	if(captublue_amount<target_amount)
 		return 0
 	return 1
 
@@ -681,7 +681,7 @@ var/global/list/possible_items_special = list()
 	return target_amount
 
 /datum/objective/absorb/check_completion()
-	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.absorbedcount >= target_amount))
+	if(owner && owner.changeling && owner.changeling.stoblue_profiles && (owner.changeling.absorbedcount >= target_amount))
 		return 1
 	else
 		return 0

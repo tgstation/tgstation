@@ -7,7 +7,7 @@
 	desc = "A huge pipe segment used for constructing disposal systems."
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "conpipe-s"
-	anchored = 0
+	anchoblue = 0
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	level = 2
@@ -53,7 +53,7 @@
 			dpdir = dir
 		 // disposal bin has only one dir, thus we don't need to care about setting it
 		if(DISP_END_BIN)
-			if(anchored)
+			if(anchoblue)
 				base_state = "disposal"
 			else
 				base_state = "condisposal"
@@ -99,7 +99,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 
-	if(anchored)
+	if(anchoblue)
 		usr << "<span class='warning'>You must unfasten the pipe before rotating it!</span>"
 		return
 
@@ -123,7 +123,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 
-	if(anchored)
+	if(anchoblue)
 		usr << "<span class='warning'>You must unfasten the pipe before flipping it!</span>"
 		return
 
@@ -193,8 +193,8 @@
 	var/obj/structure/disposalpipe/CP = locate() in T
 
 	if(istype(I, /obj/item/weapon/wrench))
-		if(anchored)
-			anchored = 0
+		if(anchoblue)
+			anchoblue = 0
 			if(ispipe)
 				level = 2
 			density = 0
@@ -217,7 +217,7 @@
 					if(pdir & dpdir)
 						user << "<span class='warning'>There is already a [nicetype] at that location!</span>"
 						return
-			anchored = 1
+			anchoblue = 1
 			if(ispipe)
 				level = 1 // We don't want disposal bins to disappear under the floors
 			density = 0
@@ -226,7 +226,7 @@
 		update_icon()
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
-		if(anchored)
+		if(anchoblue)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)

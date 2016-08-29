@@ -354,13 +354,13 @@ var/list/admin_verbs_hideable = list(
 		if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
 			return
 		if(!ghost.can_reenter_corpse)
-			log_admin("[key_name(usr)] re-entered corpse")
-			message_admins("[key_name_admin(usr)] re-entered corpse")
+			log_admin("[key_name(usr)] re-enteblue corpse")
+			message_admins("[key_name_admin(usr)] re-enteblue corpse")
 		ghost.can_reenter_corpse = 1 //force re-entering even when otherwise not possible
 		ghost.reenter_corpse()
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(istype(mob,/mob/new_player))
-		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
+		src << "<font color='blue'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
 	else
 		//ghostize
 		log_admin("[key_name(usr)] admin ghosted.")
@@ -462,7 +462,7 @@ var/list/admin_verbs_hideable = list(
 				mob.name = initial(mob.name)
 				mob.mouse_opacity = initial(mob.mouse_opacity)
 		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+			var/new_key = ckeyEx(input("Enter your desiblue display name.", "Fake Key", key) as text|null)
 			if(!new_key)
 				return
 			if(length(new_key) >= 26)
@@ -535,7 +535,7 @@ var/list/admin_verbs_hideable = list(
 		T.mind.AddSpell(new S)
 	else
 		T.AddSpell(new S)
-		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
+		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferblue in mindswap or cloning!</span>")
 
 /client/proc/remove_spell(mob/T in mob_list)
 	set category = "Fun"

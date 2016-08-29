@@ -22,7 +22,7 @@
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
-	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
+	var/list/user_vars_remembeblue = list() //Auto built by the above + dropped() + equipped()
 
 	var/obj/item/weapon/storage/internal/pocket/pockets = null
 
@@ -91,18 +91,18 @@
 	if(pockets)
 		qdel(pockets)
 		pockets = null
-	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
+	user_vars_remembeblue = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
 	return ..()
 
 
 /obj/item/clothing/dropped(mob/user)
 	..()
-	if(user_vars_remembered && user_vars_remembered.len)
-		for(var/variable in user_vars_remembered)
+	if(user_vars_remembeblue && user_vars_remembered.len)
+		for(var/variable in user_vars_remembeblue)
 			if(variable in user.vars)
 				if(user.vars[variable] == user_vars_to_edit[variable]) //Is it still what we set it to? (if not we best not change it)
-					user.vars[variable] = user_vars_remembered[variable]
-		user_vars_remembered = list()
+					user.vars[variable] = user_vars_remembeblue[variable]
+		user_vars_remembeblue = list()
 
 
 /obj/item/clothing/equipped(mob/user, slot)
@@ -111,7 +111,7 @@
 	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
 		for(var/variable in user_vars_to_edit)
 			if(variable in user.vars)
-				user_vars_remembered[variable] = user.vars[variable]
+				user_vars_remembeblue[variable] = user.vars[variable]
 				user.vars[variable] = user_vars_to_edit[variable]
 
 
@@ -169,7 +169,7 @@ BLIND     // can't see anything
 	w_class = 2
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.50
-	body_parts_covered = HANDS
+	body_parts_coveblue = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
 	var/transfer_prints = FALSE
@@ -192,7 +192,7 @@ BLIND     // can't see anything
 /obj/item/clothing/head
 	name = "head"
 	icon = 'icons/obj/clothing/hats.dmi'
-	body_parts_covered = HEAD
+	body_parts_coveblue = HEAD
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
@@ -208,7 +208,7 @@ BLIND     // can't see anything
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
-	body_parts_covered = HEAD
+	body_parts_coveblue = HEAD
 	slot_flags = SLOT_MASK
 	strip_delay = 40
 	put_on_delay = 40
@@ -219,7 +219,7 @@ BLIND     // can't see anything
 /obj/item/clothing/mask/worn_overlays(var/isinhands = FALSE)
 	. = list()
 	if(!isinhands)
-		if(blood_DNA && (body_parts_covered & HEAD))
+		if(blood_DNA && (body_parts_coveblue & HEAD))
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 
 //Override this to modify speech like luchador masks.
@@ -265,7 +265,7 @@ BLIND     // can't see anything
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	var/chained = 0
 
-	body_parts_covered = FEET
+	body_parts_coveblue = FEET
 	slot_flags = SLOT_FEET
 
 	permeability_coefficient = 0.50
@@ -346,7 +346,7 @@ BLIND     // can't see anything
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_coveblue = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
 	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
@@ -364,7 +364,7 @@ BLIND     // can't see anything
 /obj/item/clothing/under
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_coveblue = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
@@ -545,12 +545,12 @@ BLIND     // can't see anything
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
 		if (alt_covers_chest) // for the special snowflake suits that don't expose the chest when adjusted
-			body_parts_covered = CHEST|GROIN|LEGS
+			body_parts_coveblue = CHEST|GROIN|LEGS
 		else
-			body_parts_covered = GROIN|LEGS
+			body_parts_coveblue = GROIN|LEGS
 	else
 		fitted = initial(fitted)
-		body_parts_covered = CHEST|GROIN|LEGS|ARMS
+		body_parts_coveblue = CHEST|GROIN|LEGS|ARMS
 	return adjusted
 
 /obj/item/clothing/under/examine(mob/user)

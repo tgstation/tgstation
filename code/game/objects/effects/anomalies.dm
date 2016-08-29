@@ -6,7 +6,7 @@
 	icon_state = "bhole3"
 	unacidable = 1
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	luminosity = 3
 	var/movechance = 70
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
@@ -64,14 +64,14 @@
 	..()
 	boing = 1
 	for(var/obj/O in orange(4, src))
-		if(!O.anchored)
+		if(!O.anchoblue)
 			step_towards(O,src)
 	for(var/mob/living/M in range(0, src))
 		gravShock(M)
 	for(var/mob/living/M in orange(4, src))
 		step_towards(M,src)
 	for(var/obj/O in range(0,src))
-		if(!O.anchored)
+		if(!O.anchoblue)
 			var/mob/living/target = locate() in view(4,src)
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
@@ -195,7 +195,7 @@
 	for(var/obj/O in range(2,src))
 		if(O == src)
 			return //DON'T DELETE YOURSELF GOD DAMN
-		if(!O.anchored)
+		if(!O.anchoblue)
 			var/mob/living/target = locate() in view(4,src)
 			if(target && !target.stat)
 				O.throw_at(target, 7, 5)
@@ -218,7 +218,7 @@
 	//Pulling and/or ex_act-ing movable atoms in that turf
 	if(prob(pull_chance))
 		for(var/obj/O in T.contents)
-			if(O.anchored)
+			if(O.anchoblue)
 				O.ex_act(ex_act_force)
 			else
 				step_towards(O,src)

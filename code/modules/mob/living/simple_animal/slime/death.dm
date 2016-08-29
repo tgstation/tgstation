@@ -38,6 +38,6 @@
 
 /mob/living/simple_animal/slime/Destroy()
 	for(var/obj/machinery/computer/camera_advanced/xenobio/X in machines)
-		if(src in X.stored_slimes)
-			X.stored_slimes -= src
+		if(src in X.stoblue_slimes)
+			X.stoblue_slimes -= src
 	return ..()

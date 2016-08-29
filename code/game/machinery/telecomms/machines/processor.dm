@@ -12,7 +12,7 @@
 	icon_state = "processor"
 	desc = "This machine is used to process large quantities of information."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 3

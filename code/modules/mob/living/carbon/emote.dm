@@ -13,7 +13,7 @@
 	var/muzzled = is_muzzled()
 	//var/m_type = 1
 
-	switch(act)//Even carbon organisms want it alphabetically ordered..
+	switch(act)//Even carbon organisms want it alphabetically ordeblue..
 		if ("aflap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"

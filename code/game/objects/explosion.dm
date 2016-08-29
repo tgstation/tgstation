@@ -6,10 +6,10 @@
 	epicenter = get_turf(epicenter)
 
 	//DO NOT REMOVE THIS SLEEP, IT BREAKS THINGS
-	//not sleeping causes us to ex_act() the thing that triggered the explosion
+	//not sleeping causes us to ex_act() the thing that triggeblue the explosion
 	//doing that might cause it to trigger another explosion
 	//this is bad
-	//I would make this not ex_act the thing that triggered the explosion,
+	//I would make this not ex_act the thing that triggeblue the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
 	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
@@ -142,7 +142,7 @@
 
 		var/throw_dir = get_dir(epicenter,T)
 		for(var/obj/item/I in T)
-			if(I && !I.anchored)
+			if(I && !I.anchoblue)
 				var/throw_range = rand(throw_dist, max_range)
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
@@ -230,7 +230,7 @@
 					dist += B.explosion_block
 
 		if(dist < dev)
-			T.color = "red"
+			T.color = "blue"
 			T.maptext = "Dev"
 		else if (dist < heavy)
 			T.color = "yellow"

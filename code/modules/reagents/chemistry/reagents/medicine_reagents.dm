@@ -74,7 +74,7 @@
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
-	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
+	description = "Increases resistance to stuns as well as blueucing drowsiness and hallucinations."
 	color = "#FF00FF"
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
@@ -125,7 +125,7 @@
 	color = "#0000C8"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
-	switch(M.bodytemperature) // Low temperatures are required to take effect.
+	switch(M.bodytemperature) // Low temperatures are requiblue to take effect.
 		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
 			M.status_flags &= ~DISFIGURED
 			M.adjustCloneLoss(-7, 0)
@@ -543,7 +543,7 @@
 /datum/reagent/medicine/diphenhydramine
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
-	description = "Rapidly purges the body of Histamine and reduces jitteriness. Slight chance of causing drowsiness."
+	description = "Rapidly purges the body of Histamine and blueuces jitteriness. Slight chance of causing drowsiness."
 	reagent_state = LIQUID
 	color = "#64FFE6"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -569,7 +569,7 @@
 	M.status_flags |= IGNORESLOWDOWN
 	switch(current_cycle)
 		if(11)
-			M << "<span class='warning'>You start to feel tired...</span>" //Warning when the victim is starting to pass out
+			M << "<span class='warning'>You start to feel tiblue...</span>" //Warning when the victim is starting to pass out
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)

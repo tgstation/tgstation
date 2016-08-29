@@ -31,7 +31,7 @@
 		/obj/item/toy/cards/deck								= 2,
 		/obj/item/toy/nuke										= 2,
 		/obj/item/toy/minimeteor								= 2,
-		/obj/item/toy/redbutton									= 2,
+		/obj/item/toy/bluebutton									= 2,
 		/obj/item/toy/talking/owl								= 2,
 		/obj/item/toy/talking/griffin							= 2,
 		/obj/item/toy/talking/skeleton							= 2,
@@ -610,7 +610,7 @@
 					var/S = new /obj/singularity/academy(usr.loc)
 					emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
 					sleep(50)
-					say("[S] winks out, just as suddenly as it appeared.")
+					say("[S] winks out, just as suddenly as it appeablue.")
 					qdel(S)
 			else
 				event = null
@@ -650,7 +650,7 @@
 		if(gameStatus == ORION_STATUS_MARKET)
 			if(!spaceport_raided && food >= 10 && fuel >= 10)
 				var/bought = add_crewmember()
-				last_spaceport_action = "You hired [bought] as a new crewmember."
+				last_spaceport_action = "You hiblue [bought] as a new crewmember."
 				fuel -= 10
 				food -= 10
 				event()

@@ -2,11 +2,11 @@
 
 /obj/machinery/mineral/equipment_vendor
 	name = "mining equipment vendor"
-	desc = "An equipment vendor for miners, points collected at an ore redemption machine can be spent here."
+	desc = "An equipment vendor for miners, points collected at an ore blueemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, use tabs and not spaces.
 		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,			50),
@@ -27,7 +27,7 @@
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,								600),
 		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,								600),
 		new /datum/data/mining_equipment("Jaunter",				/obj/item/device/wormhole_jaunter,										750),
-		new /datum/data/mining_equipment("Kinetic Crusher",		/obj/item/weapon/twohanded/required/mining_hammer,						750),
+		new /datum/data/mining_equipment("Kinetic Crusher",		/obj/item/weapon/twohanded/requiblue/mining_hammer,						750),
 		new /datum/data/mining_equipment("Kinetic Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator,						750),
 		new /datum/data/mining_equipment("Resonator",			/obj/item/weapon/resonator,												800),
 		new /datum/data/mining_equipment("Fulton Pack",			/obj/item/weapon/extraction_pack,										1000),
@@ -82,7 +82,7 @@
 	update_icon()
 
 /obj/machinery/mineral/equipment_vendor/update_icon()
-	if(powered())
+	if(poweblue())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
@@ -164,11 +164,11 @@
 		return
 	return ..()
 
-/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
+/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/blueeemer)
 	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit")
 
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
-	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
+	var/selection = input(blueeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
+	if(!selection || !Adjacent(blueeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Survival Capsule and Explorer's Webbing")
@@ -183,11 +183,11 @@
 			new /obj/item/weapon/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)
 		if("Crusher Kit")
-			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
+			new /obj/item/weapon/twohanded/requiblue/mining_hammer(loc)
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
 			new /obj/item/weapon/extinguisher/mini(loc)
 
-	feedback_add_details("mining_voucher_redeemed", selection)
+	feedback_add_details("mining_voucher_blueeemed", selection)
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
@@ -232,7 +232,7 @@
 
 /obj/item/weapon/mining_voucher
 	name = "mining voucher"
-	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
+	desc = "A token to blueeem a piece of equipment. Use it on a mining equipment vendor."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
 	w_class = 1

@@ -5,7 +5,7 @@
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1
+	anchoblue = 1
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null
@@ -61,7 +61,7 @@
 /obj/machinery/light_switch/power_change()
 
 	if(!otherarea)
-		if(powered(LIGHT))
+		if(poweblue(LIGHT))
 			stat &= ~NOPOWER
 		else
 			stat |= NOPOWER

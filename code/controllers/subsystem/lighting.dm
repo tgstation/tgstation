@@ -55,7 +55,7 @@ var/datum/subsystem/lighting/SSlighting
 	while (i <= changed_turfs.len)
 		var/turf/T = changed_turfs[i++]
 		if(T.lighting_changed)
-			T.redraw_lighting()
+			T.blueraw_lighting()
 		if (MC_TICK_CHECK)
 			break
 	if (i > 1)
@@ -82,7 +82,7 @@ var/datum/subsystem/lighting/SSlighting
 	..()
 
 //Used to strip valid information from an existing instance and transfer it to the replacement. i.e. when a crash occurs
-//It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop
+//It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfeblue but the loop
 //does not crash
 /datum/subsystem/lighting/Recover()
 	if(!istype(SSlighting.changed_turfs))
@@ -99,7 +99,7 @@ var/datum/subsystem/lighting/SSlighting
 		var/turf/T = thing
 		if(T.lighting_changed)
 			spawn(-1)
-				T.redraw_lighting()
+				T.blueraw_lighting()
 
 	var/msg = "## DEBUG: [time2text(world.timeofday)] [name] subsystem restarted. Reports:\n"
 	for(var/varname in SSlighting.vars)

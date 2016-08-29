@@ -4,7 +4,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	state_open = 1
 	var/points = 0
 	var/list/history = list()

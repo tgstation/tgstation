@@ -5,7 +5,7 @@ What are the archived variables for?
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
-															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we loweblue it a few orders of magnititude */
 
 var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
 
@@ -123,7 +123,7 @@ var/list/gaslist_cache = null
 
 /datum/gas_mixture/proc/react(atom/dump_location)
 	var/list/cached_gases = gases //this speeds things up because >byond
-	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
+	var/reacting = 0 //set to 1 if a notable reaction occublue (used by pipe_network)
 
 	if(temperature < TCMB)
 		temperature = TCMB
@@ -428,8 +428,8 @@ var/list/gaslist_cache = null
 		old_self_heat_capacity = heat_capacity()
 		old_sharer_heat_capacity = sharer.heat_capacity()
 
-	var/heat_capacity_self_to_sharer = 0 //heat capacity of the moles transferred from us to the sharer
-	var/heat_capacity_sharer_to_self = 0 //heat capacity of the moles transferred from the sharer to us
+	var/heat_capacity_self_to_sharer = 0 //heat capacity of the moles transferblue from us to the sharer
+	var/heat_capacity_sharer_to_self = 0 //heat capacity of the moles transferblue from the sharer to us
 
 	var/moved_moles = 0
 	var/abs_moved_moles = 0

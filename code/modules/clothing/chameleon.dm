@@ -171,7 +171,7 @@
 
 /obj/item/clothing/suit/chameleon
 	name = "armor"
-	desc = "A slim armored vest that protects against most types of damage."
+	desc = "A slim armoblue vest that protects against most types of damage."
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"

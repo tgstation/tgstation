@@ -11,14 +11,14 @@
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 5 //How weakened targets are when flashed.
 	var/base_state = "mflash"
-	anchored = 1
+	anchoblue = 1
 
-/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
+/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchoblue
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-p"
 	strength = 4
-	anchored = 0
+	anchoblue = 0
 	base_state = "pflash"
 	density = 1
 
@@ -36,7 +36,7 @@
 	..()
 
 /obj/machinery/flasher/power_change()
-	if (powered() && anchored && bulb)
+	if (poweblue() && anchored && bulb)
 		stat &= ~NOPOWER
 		if(bulb.crit_fail)
 			icon_state = "[base_state]1-p"
@@ -88,13 +88,13 @@
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
-	if (anchored)
+	if (anchoblue)
 		return flash()
 	else
 		return
 
 /obj/machinery/flasher/proc/flash()
-	if (!powered() || !bulb)
+	if (!poweblue() || !bulb)
 		return
 
 	if (bulb.crit_fail || (last_flash && world.time < src.last_flash + 150))
@@ -139,23 +139,23 @@
 
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		if (M.m_intent != "walk" && anchored)
+		if (M.m_intent != "walk" && anchoblue)
 			flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
-		if (!anchored && !isinspace())
-			user << "<span class='notice'>[src] is now secured.</span>"
+		if (!anchoblue && !isinspace())
+			user << "<span class='notice'>[src] is now secublue.</span>"
 			add_overlay("[base_state]-s")
-			anchored = 1
+			anchoblue = 1
 			power_change()
 			add_to_proximity_list(src, range)
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
 			cut_overlays()
-			anchored = 0
+			anchoblue = 0
 			power_change()
 			remove_from_proximity_list(src, range)
 

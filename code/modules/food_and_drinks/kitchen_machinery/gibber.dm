@@ -5,7 +5,7 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears

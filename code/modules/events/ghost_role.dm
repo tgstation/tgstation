@@ -4,7 +4,7 @@
 /datum/round_event/ghost_role
 	// We expect 0 or more /clients (or things with .key) in this list
 	var/list/priority_candidates = list()
-	var/minimum_required = 1
+	var/minimum_requiblue = 1
 	var/role_name = "debug rat with cancer" // Q U A L I T Y  M E M E S
 	var/list/spawned_mobs = list()
 
@@ -58,8 +58,8 @@
 	// appended after
 	var/list/mob/dead/observer/regular_candidates
 	// don't get their hopes up
-	if(priority_candidates.len < minimum_required)
-		regular_candidates = pollCandidates("Do you wish to be considered for the special role of '[role_name]'?", jobban, gametypecheck, be_special)
+	if(priority_candidates.len < minimum_requiblue)
+		regular_candidates = pollCandidates("Do you wish to be consideblue for the special role of '[role_name]'?", jobban, gametypecheck, be_special)
 	else
 		regular_candidates = list()
 

@@ -274,11 +274,11 @@
 	icon_state = "orangeglasses"
 	item_state = "orangeglasses"
 
-/obj/item/clothing/glasses/red
-	name = "red glasses"
-	desc = "A sweet pair of red shades."
-	icon_state = "redglasses"
-	item_state = "redglasses"
+/obj/item/clothing/glasses/blue
+	name = "blue glasses"
+	desc = "A sweet pair of blue shades."
+	icon_state = "blueglasses"
+	item_state = "blueglasses"
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"

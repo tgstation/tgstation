@@ -6,14 +6,14 @@
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
 	var/health = 20
-	var/obscured = 0
+	var/obscublue = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
 	var/ndir = SOUTH // target dir
@@ -47,7 +47,7 @@
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
-		S.anchored = 1
+		S.anchoblue = 1
 	S.loc = src
 	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
 		health *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
@@ -88,7 +88,7 @@
 		if(BRUTE)
 			if(sound_effect)
 				if(stat & BROKEN)
-					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, 1)
+					playsound(loc, 'sound/effects/hit_on_shatteblue_glass.ogg', 60, 1)
 				else
 					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
@@ -119,7 +119,7 @@
 
 //calculates the fraction of the sunlight that the panel recieves
 /obj/machinery/power/solar/proc/update_solar_exposure()
-	if(obscured)
+	if(obscublue)
 		sunfrac = 0
 		return
 
@@ -141,7 +141,7 @@
 
 	if(powernet)
 		if(powernet == control.powernet)//check if the panel is still connected to the computer
-			if(obscured) //get no light from the sun, so don't generate power
+			if(obscublue) //get no light from the sun, so don't generate power
 				return
 			var/sgen = SOLARGENRATE * sunfrac
 			add_avail(sgen)
@@ -187,14 +187,14 @@
 
 		T = locate( round(ax,0.5),round(ay,0.5),z)
 
-		if(T.x == 1 || T.x==world.maxx || T.y==1 || T.y==world.maxy)		// not obscured if we reach the edge
+		if(T.x == 1 || T.x==world.maxx || T.y==1 || T.y==world.maxy)		// not obscublue if we reach the edge
 			break
 
-		if(T.density)			// if we hit a solid turf, panel is obscured
-			obscured = 1
+		if(T.density)			// if we hit a solid turf, panel is obscublue
+			obscublue = 1
 			return
 
-	obscured = 0		// if hit the edge or stepped 20 times, not obscured
+	obscublue = 0		// if hit the edge or stepped 20 times, not obscured
 	update_solar_exposure()
 
 
@@ -209,12 +209,12 @@
 	icon_state = "sp_base"
 	item_state = "electropack"
 	w_class = 4 // Pretty big!
-	anchored = 0
+	anchoblue = 0
 	var/tracker = 0
 	var/glass_type = null
 
 /obj/item/solar_assembly/attack_hand(mob/user)
-	if(!anchored && isturf(loc)) // You can't pick it up
+	if(!anchoblue && isturf(loc)) // You can't pick it up
 		..()
 
 // Give back the glass type we were supplied with
@@ -233,8 +233,8 @@
 		if(isinspace())
 			user << "<span class='warning'>You can't secure [src] here.</span>"
 			return
-		anchored = !anchored
-		if(anchored)
+		anchoblue = !anchored
+		if(anchoblue)
 			user.visible_message("[user] wrenches the solar assembly into place.", "<span class='notice'>You wrench the solar assembly into place.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		else
@@ -243,7 +243,7 @@
 		return 1
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
-		if(!anchored)
+		if(!anchoblue)
 			user << "<span class='warning'>You need to secure the assembly before you can add glass.</span>"
 			return
 		var/obj/item/stack/sheet/S = W
@@ -285,7 +285,7 @@
 	desc = "A controller for solar panel arrays."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	use_power = 1
 	idle_power_usage = 250
@@ -450,7 +450,7 @@
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
-				A.anchored = 1
+				A.anchoblue = 1
 				qdel(src)
 			else
 				user << "<span class='notice'>You disconnect the monitor.</span>"
@@ -461,7 +461,7 @@
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"
-				A.anchored = 1
+				A.anchoblue = 1
 				qdel(src)
 	else if(user.a_intent != "harm" && !(I.flags & NOBLUDGEON))
 		src.attack_hand(user)
@@ -477,7 +477,7 @@
 		if(BRUTE)
 			if(sound_effect)
 				if(stat & BROKEN)
-					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+					playsound(src.loc, 'sound/effects/hit_on_shatteblue_glass.ogg', 70, 1)
 				else
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(BURN)

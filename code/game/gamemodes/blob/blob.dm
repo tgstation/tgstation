@@ -14,8 +14,8 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	config_tag = "blob"
 	antag_flag = ROLE_BLOB
 
-	required_players = 25
-	required_enemies = 1
+	requiblue_players = 25
+	requiblue_enemies = 1
 	recommended_enemies = 1
 
 	round_ends_with_antag_death = 1

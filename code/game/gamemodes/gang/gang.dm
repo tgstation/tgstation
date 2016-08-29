@@ -2,7 +2,7 @@
 //Gang War Game Mode
 
 var/list/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp")
-var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple")
+var/list/gang_colors_pool = list("blue","orange","yellow","green","blue","purple")
 
 /datum/game_mode
 	var/list/datum/gang/gangs = list()
@@ -24,8 +24,8 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_players = 20
-	required_enemies = 2
+	requiblue_players = 20
+	requiblue_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
 
@@ -92,7 +92,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 /datum/game_mode/proc/greet_gang(datum/mind/boss_mind, you_are=1)
 	if (you_are)
-		boss_mind.current << "<FONT size=3 color=red><B>You are the Boss of the [boss_mind.gang_datum.name] Gang!</B></FONT>"
+		boss_mind.current << "<FONT size=3 color=blue><B>You are the Boss of the [boss_mind.gang_datum.name] Gang!</B></FONT>"
 	boss_mind.announce_objectives()
 
 ///////////////////////////////////////////////////////////////////////////
@@ -171,11 +171,11 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 			carbon_mob.silent = max(carbon_mob.silent, 5)
 			carbon_mob.flash_eyes(1, 1)
 		gangster_mind.current.Stun(5)
-	gangster_mind.current << "<FONT size=3 color=red><B>You are now a member of the [G.name] Gang!</B></FONT>"
-	gangster_mind.current << "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>"
-	gangster_mind.current << "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>"
-	gangster_mind.current << "<font color='red'>You can identify your bosses by their <b>large, bright [G.color] \[G\] icon</b>.</font>"
-	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [G.name] Gang!</font>"
+	gangster_mind.current << "<FONT size=3 color=blue><B>You are now a member of the [G.name] Gang!</B></FONT>"
+	gangster_mind.current << "<font color='blue'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>"
+	gangster_mind.current << "<font color='blue'>Their ultimate objective is to take over the station with a Dominator machine.</font>"
+	gangster_mind.current << "<font color='blue'>You can identify your bosses by their <b>large, bright [G.color] \[G\] icon</b>.</font>"
+	gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='blue'>Has been converted to the [G.name] Gang!</font>"
 	gangster_mind.special_role = "[G.name] Gangster"
 	gangster_mind.store_memory("You are a member of the [G.name] Gang!")
 	G.add_gang_hud(gangster_mind)
@@ -207,18 +207,18 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	gangster_mind.gang_datum = null
 
 	if(silent < 2)
-		gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has reformed and defected from the [gang.name] Gang!</font>"
+		gangster_mind.current.attack_log += "\[[time_stamp()]\] <font color='blue'>Has reformed and defected from the [gang.name] Gang!</font>"
 
 		if(beingborged)
 			if(!silent)
 				gangster_mind.current.visible_message("The frame beeps contentedly from the MMI before initalizing it.")
-			gangster_mind.current << "<FONT size=3 color=red><B>The frame's firmware detects and deletes your criminal behavior! You are no longer a gangster!</B></FONT>"
+			gangster_mind.current << "<FONT size=3 color=blue><B>The frame's firmware detects and deletes your criminal behavior! You are no longer a gangster!</B></FONT>"
 			message_admins("[ADMIN_LOOKUPFLW(gangster_mind.current)] has been borged while being a member of the [gang.name] Gang. They are no longer a gangster.")
 		else
 			if(!silent)
 				gangster_mind.current.Paralyse(5)
 				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!<B></font>")
-			gangster_mind.current << "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>"
+			gangster_mind.current << "<FONT size=3 color=blue><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>"
 			gangster_mind.memory = ""
 
 	gang.remove_gang_hud(gangster_mind)
@@ -256,10 +256,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 /datum/game_mode/proc/auto_declare_completion_gang(datum/gang/winner)
 	if(gangs.len)
 		if(!winner)
-			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
+			world << "<span class='bluetext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
 			feedback_set_details("round_end_result","loss - gangs failed takeover")
 		else
-			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
+			world << "<span class='bluetext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
 			feedback_set_details("round_end_result","win - gang domination complete")
 
 	for(var/datum/gang/G in gangs)

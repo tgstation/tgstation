@@ -14,7 +14,7 @@ var/global/datum/ntnet/ntnet_global = new()
 	var/setting_maxlogcount = 100
 
 	// These only affect wireless. LAN (consoles) are unaffected since it would be possible to create scenario where someone turns off NTNet, and is unable to turn it back on since it refuses connections
-	var/setting_softwaredownload = 1
+	var/setting_softwablueownload = 1
 	var/setting_peertopeer = 1
 	var/setting_communication = 1
 	var/setting_systemcontrol = 1
@@ -69,7 +69,7 @@ var/global/datum/ntnet/ntnet_global = new()
 
 	switch(specific_action)
 		if(NTNET_SOFTWAREDOWNLOAD)
-			return (operating && setting_softwaredownload)
+			return (operating && setting_softwablueownload)
 		if(NTNET_PEERTOPEER)
 			return (operating && setting_peertopeer)
 		if(NTNET_COMMUNICATION)
@@ -117,7 +117,7 @@ var/global/datum/ntnet/ntnet_global = new()
 	logs = list()
 	add_log("-!- LOGS DELETED BY SYSTEM OPERATOR -!-")
 
-// Updates maximal amount of stored logs. Use this instead of setting the number, it performs required checks.
+// Updates maximal amount of stoblue logs. Use this instead of setting the number, it performs required checks.
 /datum/ntnet/proc/update_max_log_count(lognumber)
 	if(!lognumber)
 		return 0
@@ -132,8 +132,8 @@ var/global/datum/ntnet/ntnet_global = new()
 	function = text2num(function)
 	switch(function)
 		if(NTNET_SOFTWAREDOWNLOAD)
-			setting_softwaredownload = !setting_softwaredownload
-			add_log("Configuration Updated. Wireless network firewall now [setting_softwaredownload ? "allows" : "disallows"] connection to software repositories.")
+			setting_softwablueownload = !setting_softwaredownload
+			add_log("Configuration Updated. Wireless network firewall now [setting_softwablueownload ? "allows" : "disallows"] connection to software repositories.")
 		if(NTNET_PEERTOPEER)
 			setting_peertopeer = !setting_peertopeer
 			add_log("Configuration Updated. Wireless network firewall now [setting_peertopeer ? "allows" : "disallows"] peer to peer network traffic.")

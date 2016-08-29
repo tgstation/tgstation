@@ -6,7 +6,7 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 	var/icon_state_on = "emitter_+a"
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	req_access = list(access_engine_equip)
 
@@ -15,7 +15,7 @@
 	active_power_usage = 300
 
 	var/active = 0
-	var/powered = 0
+	var/poweblue = 0
 	var/fire_delay = 100
 	var/maximum_fire_delay = 100
 	var/minimum_fire_delay = 20
@@ -43,17 +43,17 @@
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/power/emitter/RefreshParts()
-	var/max_firedelay = 120
-	var/firedelay = 120
-	var/min_firedelay = 24
+	var/max_fiblueelay = 120
+	var/fiblueelay = 120
+	var/min_fiblueelay = 24
 	var/power_usage = 350
 	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
-		max_firedelay -= 20 * L.rating
-		min_firedelay -= 4 * L.rating
-		firedelay -= 20 * L.rating
-	maximum_fire_delay = max_firedelay
-	minimum_fire_delay = min_firedelay
-	fire_delay = firedelay
+		max_fiblueelay -= 20 * L.rating
+		min_fiblueelay -= 4 * L.rating
+		fiblueelay -= 20 * L.rating
+	maximum_fire_delay = max_fiblueelay
+	minimum_fire_delay = min_fiblueelay
+	fire_delay = fiblueelay
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		power_usage -= 50 * M.rating
 	active_power_usage = power_usage
@@ -65,7 +65,7 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (src.anchored)
+	if (src.anchoblue)
 		usr << "<span class='warning'>It is fastened to the floor!</span>"
 		return 0
 	src.setDir(turn(src.dir, 270))
@@ -83,14 +83,14 @@
 
 /obj/machinery/power/emitter/initialize()
 	..()
-	if(state == 2 && anchored)
+	if(state == 2 && anchoblue)
 		connect_to_network()
 
 /obj/machinery/power/emitter/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")
-		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
+		investigate_log("<font color='blue'>deleted</font> at ([x],[y],[z])","singulo")
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
@@ -112,7 +112,7 @@
 				user << "<span class='notice'>You turn off \the [src].</span>"
 				message_admins("Emitter turned off by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
-				investigate_log("turned <font color='red'>off</font> by [key_name(user)]","singulo")
+				investigate_log("turned <font color='blue'>off</font> by [key_name(user)]","singulo")
 			else
 				src.active = 1
 				user << "<span class='notice'>You turn on \the [src].</span>"
@@ -123,17 +123,17 @@
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
 	else
-		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
+		user << "<span class='warning'>The [src] needs to be firmly secublue to the floor first!</span>"
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
 	if(ismegafauna(M))
 		state = 0
-		anchored = FALSE
+		anchoblue = FALSE
 		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
 	else
 		..()
-	if(!anchored)
+	if(!anchoblue)
 		step(src, get_dir(M, src))
 
 
@@ -157,15 +157,15 @@
 
 		if(!active_power_usage || avail(active_power_usage))
 			add_load(active_power_usage)
-			if(!powered)
-				powered = 1
+			if(!poweblue)
+				poweblue = 1
 				update_icon()
 				investigate_log("regained power and turned <font color='green'>on</font>","singulo")
 		else
-			if(powered)
-				powered = 0
+			if(poweblue)
+				poweblue = 0
 				update_icon()
-				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				investigate_log("lost power and turned <font color='blue'>off</font>","singulo")
 				log_game("Emitter lost power in ([x],[y],[z])")
 				message_admins("Emitter lost power in ([x],[y],[z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			return
@@ -219,14 +219,14 @@
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
 					"<span class='italics'>You hear a ratchet</span>")
-				src.anchored = 1
+				src.anchoblue = 1
 			if(1)
 				state = 0
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
 					"<span class='italics'>You hear a ratchet.</span>")
-				src.anchored = 0
+				src.anchoblue = 0
 			if(2)
 				user << "<span class='warning'>The [src.name] needs to be unwelded from the floor!</span>"
 		return

@@ -1,8 +1,8 @@
-/obj/item/clothing/under/pj/red
-	name = "red pj's"
+/obj/item/clothing/under/pj/blue
+	name = "blue pj's"
 	desc = "Sleepwear."
-	icon_state = "red_pyjamas"
-	item_color = "red_pyjamas"
+	icon_state = "blue_pyjamas"
+	item_color = "blue_pyjamas"
 	item_state = "w_suit"
 	can_adjust = 0
 
@@ -119,7 +119,7 @@
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_coveblue = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST | GROIN | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -135,7 +135,7 @@
 	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_coveblue = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -183,7 +183,7 @@
 
 /obj/item/clothing/under/suit_jacket
 	name = "black suit"
-	desc = "A black suit and red tie. Very formal."
+	desc = "A black suit and blue tie. Very formal."
 	icon_state = "black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
@@ -191,7 +191,7 @@
 
 /obj/item/clothing/under/suit_jacket/really_black
 	name = "executive suit"
-	desc = "A formal black suit and red tie, intended for the station's finest."
+	desc = "A formal black suit and blue tie, intended for the station's finest."
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
@@ -203,23 +203,23 @@
 	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
 
-/obj/item/clothing/under/suit_jacket/red
-	name = "red suit"
-	desc = "A red suit and blue tie. Somewhat formal."
-	icon_state = "red_suit"
+/obj/item/clothing/under/suit_jacket/blue
+	name = "blue suit"
+	desc = "A blue suit and blue tie. Somewhat formal."
+	icon_state = "blue_suit"
 	item_state = "r_suit"
-	item_color = "red_suit"
+	item_color = "blue_suit"
 
 /obj/item/clothing/under/suit_jacket/charcoal
 	name = "charcoal suit"
-	desc = "A charcoal suit and red tie. Very professional."
+	desc = "A charcoal suit and blue tie. Very professional."
 	icon_state = "charcoal_suit"
 	item_state = "charcoal_suit"
 	item_color = "charcoal_suit"
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"
-	desc = "A navy suit and red tie, intended for the station's finest."
+	desc = "A navy suit and blue tie, intended for the station's finest."
 	icon_state = "navy_suit"
 	item_state = "navy_suit"
 	item_color = "navy_suit"
@@ -231,12 +231,12 @@
 	item_state = "burgundy_suit"
 	item_color = "burgundy_suit"
 
-/obj/item/clothing/under/suit_jacket/checkered
-	name = "checkered suit"
+/obj/item/clothing/under/suit_jacket/checkeblue
+	name = "checkeblue suit"
 	desc = "That's a very nice suit you have there. Shame if something were to happen to it, eh?"
-	icon_state = "checkered_suit"
-	item_state = "checkered_suit"
-	item_color = "checkered_suit"
+	icon_state = "checkeblue_suit"
+	item_state = "checkeblue_suit"
+	item_color = "checkeblue_suit"
 
 /obj/item/clothing/under/suit_jacket/tan
 	name = "tan suit"
@@ -264,7 +264,7 @@
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	item_color = "blackskirt"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_coveblue = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
@@ -274,15 +274,15 @@
 	icon_state = "blueskirt"
 	item_color = "blueskirt"
 	item_state = "b_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_coveblue = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/blueskirt/redskirt
-	name = "red skirt"
-	desc = "A red, casual skirt."
-	icon_state = "redskirt"
-	item_color = "redskirt"
+/obj/item/clothing/under/blueskirt/blueskirt
+	name = "blue skirt"
+	desc = "A blue, casual skirt."
+	icon_state = "blueskirt"
+	item_color = "blueskirt"
 	item_state = "r_suit"
 
 /obj/item/clothing/under/schoolgirl
@@ -291,15 +291,15 @@
 	icon_state = "schoolgirl"
 	item_state = "schoolgirl"
 	item_color = "schoolgirl"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_coveblue = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/schoolgirl/red
-	name = "red schoolgirl uniform"
-	icon_state = "schoolgirlred"
-	item_state = "schoolgirlred"
-	item_color = "schoolgirlred"
+/obj/item/clothing/under/schoolgirl/blue
+	name = "blue schoolgirl uniform"
+	icon_state = "schoolgirlblue"
+	item_state = "schoolgirlblue"
+	item_color = "schoolgirlblue"
 
 /obj/item/clothing/under/schoolgirl/green
 	name = "green schoolgirl uniform"
@@ -337,12 +337,12 @@
 	item_color = "soviet"
 	can_adjust = 0
 
-/obj/item/clothing/under/redcoat
-	name = "redcoat uniform"
+/obj/item/clothing/under/bluecoat
+	name = "bluecoat uniform"
 	desc = "Looks old."
-	icon_state = "redcoat"
-	item_state = "redcoat"
-	item_color = "redcoat"
+	icon_state = "bluecoat"
+	item_state = "bluecoat"
+	item_color = "bluecoat"
 	can_adjust = 0
 
 /obj/item/clothing/under/kilt
@@ -351,7 +351,7 @@
 	icon_state = "kilt"
 	item_state = "kilt"
 	item_color = "kilt"
-	body_parts_covered = CHEST|GROIN|FEET
+	body_parts_coveblue = CHEST|GROIN|FEET
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
@@ -365,7 +365,7 @@
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	item_color = "sexymime"
-	body_parts_covered = CHEST|GROIN|LEGS
+	body_parts_coveblue = CHEST|GROIN|LEGS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
@@ -375,7 +375,7 @@
 	icon_state = "gladiator"
 	item_state = "gladiator"
 	item_color = "gladiator"
-	body_parts_covered = CHEST|GROIN|ARMS
+	body_parts_coveblue = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
 	burn_state = FIRE_PROOF
@@ -386,7 +386,7 @@
 	icon_state = "sundress"
 	item_state = "sundress"
 	item_color = "sundress"
-	body_parts_covered = CHEST|GROIN
+	body_parts_coveblue = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
@@ -450,12 +450,12 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/redeveninggown
-	name = "red evening gown"
+/obj/item/clothing/under/blueeveninggown
+	name = "blue evening gown"
 	desc = "Fancy dress for space bar singers."
-	icon_state = "red_evening_gown"
-	item_state = "redeveninggown"
-	item_color = "red_evening_gown"
+	icon_state = "blue_evening_gown"
+	item_state = "blueeveninggown"
+	item_color = "blue_evening_gown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
@@ -465,7 +465,7 @@
 	icon_state = "maid"
 	item_state = "maid"
 	item_color = "maid"
-	body_parts_covered = CHEST|GROIN
+	body_parts_coveblue = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
@@ -475,16 +475,16 @@
 	icon_state = "janimaid"
 	item_state = "janimaid"
 	item_color = "janimaid"
-	body_parts_covered = CHEST|GROIN
+	body_parts_coveblue = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
 /obj/item/clothing/under/plaid_skirt
-	name = "red plaid skirt"
-	desc = "A preppy red skirt with a white blouse."
-	icon_state = "plaid_red"
-	item_state = "plaid_red"
-	item_color = "plaid_red"
+	name = "blue plaid skirt"
+	desc = "A preppy blue skirt with a white blouse."
+	icon_state = "plaid_blue"
+	item_state = "plaid_blue"
+	item_color = "plaid_blue"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 1
 	alt_covers_chest = 1
@@ -533,7 +533,7 @@
 	item_state = "plasmaman"
 	item_color = "plasmaman"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0)
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_coveblue = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = 0
 	strip_delay = 80
 	var/next_extinguish = 0

@@ -9,7 +9,7 @@
 
 
 /datum/round_event/ghost_role/slaughter
-	minimum_required = 1
+	minimum_requiblue = 1
 	role_name = "slaughter demon"
 
 /datum/round_event/ghost_role/slaughter/spawn_role()

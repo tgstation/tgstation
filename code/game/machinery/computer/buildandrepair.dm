@@ -1,7 +1,7 @@
 /obj/structure/frame/computer
 	name = "computer frame"
 	icon_state = "0"
-	anchored = 0
+	anchoblue = 0
 	state = 0
 
 /obj/structure/frame/computer/attackby(obj/item/P, mob/user, params)
@@ -13,7 +13,7 @@
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
-					anchored = 1
+					anchoblue = 1
 					state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
@@ -35,7 +35,7 @@
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
-					anchored = 0
+					anchoblue = 0
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard/computer) && !circuit)
 				if(!user.drop_item())

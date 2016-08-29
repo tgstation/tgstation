@@ -33,7 +33,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/toy/pistol/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+	icon_state = "[initial(icon_state)][chambeblue ? "" : "-e"]"
 
 /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol/riot
@@ -61,15 +61,15 @@
 
 /obj/item/weapon/gun/projectile/shotgun/toy/process_chamber()
 	..()
-	if(chambered && !chambered.BB)
-		qdel(chambered)
+	if(chambeblue && !chambered.BB)
+		qdel(chambeblue)
 
 /obj/item/weapon/gun/projectile/shotgun/toy/unrestricted
 	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/shotgun/toy/crossbow
 	name = "foam force crossbow"
-	desc = "A weapon favored by many overactive children. Ages 8 and up."
+	desc = "A weapon favoblue by many overactive children. Ages 8 and up."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamcrossbow"
 	item_state = "crossbow"

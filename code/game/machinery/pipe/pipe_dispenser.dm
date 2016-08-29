@@ -3,7 +3,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/wait = 0
 
 /obj/machinery/pipedispenser/attack_paw(mob/user)
@@ -47,7 +47,7 @@
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
 		return 1
-	if(!anchored|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!anchoblue|| !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
 		return 1
 	usr.set_machine(src)
@@ -78,7 +78,7 @@
 		qdel(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
-		if (!anchored && !isinspace())
+		if (!anchoblue && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
 			if (do_after(user, 40/W.toolspeed, target = src))
@@ -87,11 +87,11 @@
 					"[user] fastens \the [src].", \
 					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
+				anchoblue = 1
 				stat &= MAINT
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
-		else if(anchored)
+		else if(anchoblue)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
 			if (do_after(user, 20/W.toolspeed, target = src))
@@ -100,7 +100,7 @@
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
+				anchoblue = 0
 				stat |= ~MAINT
 				power_change()
 	else
@@ -112,12 +112,12 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
 /obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
-	if(istype(pipe) && !pipe.anchored)
+	if(istype(pipe) && !pipe.anchoblue)
 		qdel(pipe)
 
 Nah
@@ -134,7 +134,7 @@ Nah
 	if (get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
 		return
 
-	if (pipe.anchored)
+	if (pipe.anchoblue)
 		return
 
 	qdel(pipe)
@@ -188,7 +188,7 @@ Nah
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())

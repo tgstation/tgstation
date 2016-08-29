@@ -13,7 +13,7 @@ The console is located at computer/gulag_teleporter.dm
 	icon_state = "implantchair"
 	state_open = 0
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 5000
@@ -21,11 +21,11 @@ The console is located at computer/gulag_teleporter.dm
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer = null
-	var/list/required_items
+	var/list/requiblue_items
 
 /obj/machinery/gulag_teleporter/New()
 	..()
-	required_items = typecacheof(list(
+	requiblue_items = typecacheof(list(
 				/obj/item/weapon/implant,
 				/obj/item/clothing/suit/space/eva/plasmaman,
 				/obj/item/clothing/under/plasmaman,
@@ -73,7 +73,7 @@ The console is located at computer/gulag_teleporter.dm
 	icon_state = initial(icon_state) + (state_open ? "_open" : "")
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
-		icon_state += "_unpowered"
+		icon_state += "_unpoweblue"
 		if((stat & MAINT) || panel_open)
 			icon_state += "_maintenance"
 		return
@@ -135,14 +135,14 @@ The console is located at computer/gulag_teleporter.dm
 // strips and stores all occupant's items
 /obj/machinery/gulag_teleporter/proc/strip_occupant()
 	if(linked_reclaimer)
-		linked_reclaimer.stored_items[occupant] = list()
+		linked_reclaimer.stoblue_items[occupant] = list()
 	for(var/obj/item/W in occupant)
-		if(!is_type_in_typecache(W, required_items) && occupant.unEquip(W))
+		if(!is_type_in_typecache(W, requiblue_items) && occupant.unEquip(W))
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
 				W.forceMove(get_turf(src))
 				continue
 			if(linked_reclaimer)
-				linked_reclaimer.stored_items[occupant] += W
+				linked_reclaimer.stoblue_items[occupant] += W
 				linked_reclaimer.contents += W
 				W.forceMove(linked_reclaimer)
 			else

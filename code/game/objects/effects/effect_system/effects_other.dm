@@ -51,7 +51,7 @@
 /obj/effect/particle_effect/ion_trails
 	name = "ion trails"
 	icon_state = "ion_trails"
-	anchored = 1
+	anchoblue = 1
 
 /datum/effect_system/trail_follow/ion
 	effect_type = /obj/effect/particle_effect/ion_trails

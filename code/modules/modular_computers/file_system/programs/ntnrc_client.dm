@@ -108,16 +108,16 @@
 			if(!channel)
 				return
 			var/mob/living/user = usr
-			var/logname = input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
+			var/logname = input(user,"Enter desiblue logfile name (.log) or leave blank to cancel:")
 			if(!logname || !channel)
 				return 1
 			var/datum/computer_file/data/logfile = new/datum/computer_file/data/logfile()
 			// Now we will generate HTML-compliant file that can actually be viewed/printed.
 			logfile.filename = logname
-			logfile.stored_data = "\[b\]Logfile dump from NTNRC channel [channel.title]\[/b\]\[BR\]"
+			logfile.stoblue_data = "\[b\]Logfile dump from NTNRC channel [channel.title]\[/b\]\[BR\]"
 			for(var/logstring in channel.messages)
-				logfile.stored_data += "[logstring]\[BR\]"
-			logfile.stored_data += "\[b\]Logfile dump completed.\[/b\]"
+				logfile.stoblue_data += "[logstring]\[BR\]"
+			logfile.stoblue_data += "\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
 			if(!computer || !computer.hard_drive || !computer.hard_drive.store_file(logfile))
 				if(!computer)
@@ -127,7 +127,7 @@
 				if(!computer.hard_drive)
 					computer.visible_message("\The [computer] shows an \"I/O Error - Hard drive connection error\" warning.")
 				else	// In 99.9% cases this will mean our HDD is full
-					computer.visible_message("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning.")
+					computer.visible_message("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Requiblue space: [logfile.size]GQ\" warning.")
 		if("PRG_renamechannel")
 			. = 1
 			if(!operator_mode || !channel)

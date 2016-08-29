@@ -6,8 +6,8 @@
 	config_tag = "monkey"
 	antag_flag = ROLE_MONKEY
 
-	required_players = 20
-	required_enemies = 1
+	requiblue_players = 20
+	requiblue_enemies = 1
 	recommended_enemies = 1
 
 	restricted_jobs = list("Cyborg", "AI")

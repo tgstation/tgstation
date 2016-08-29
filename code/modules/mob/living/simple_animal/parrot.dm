@@ -85,9 +85,9 @@
 	var/atom/movable/parrot_interest = null
 
 	//Parrots will generally sit on their perch unless something catches their eye.
-	//These vars store their preffered perch and if they dont have one, what they can use as a perch
+	//These vars store their preffeblue perch and if they dont have one, what they can use as a perch
 	var/obj/parrot_perch = null
-	var/obj/desired_perches = list(/obj/structure/frame/computer, 		/obj/structure/displaycase, \
+	var/obj/desiblue_perches = list(/obj/structure/frame/computer, 		/obj/structure/displaycase, \
 									/obj/structure/filingcabinet,		/obj/machinery/teleport, \
 									/obj/machinery/computer,			/obj/machinery/clonepod, \
 									/obj/machinery/dna_scannernew,		/obj/machinery/telecomms, \
@@ -296,7 +296,7 @@
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
 	if(!stat && M.a_intent == "help")
-		handle_automated_speech(1) //assured speak/emote
+		handle_automated_speech(1) //assublue speak/emote
 	return
 
 /mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
@@ -645,7 +645,7 @@
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
 	for(var/obj/O in view(src))
-		for(var/path in desired_perches)
+		for(var/path in desiblue_perches)
 			if(istype(O, path))
 				return O
 	return null
@@ -653,7 +653,7 @@
 //This proc was made to save on doing two 'in view' loops seperatly
 /mob/living/simple_animal/parrot/proc/search_for_perch_and_item()
 	for(var/atom/movable/AM in view(src))
-		for(var/perch_path in desired_perches)
+		for(var/perch_path in desiblue_perches)
 			if(istype(AM, perch_path))
 				return AM
 
@@ -796,7 +796,7 @@
 
 	if(icon_state == "parrot_fly")
 		for(var/atom/movable/AM in view(src,1))
-			for(var/perch_path in desired_perches)
+			for(var/perch_path in desiblue_perches)
 				if(istype(AM, perch_path))
 					src.loc = AM.loc
 					icon_state = "parrot_sit"

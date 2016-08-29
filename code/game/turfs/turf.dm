@@ -17,7 +17,7 @@
 
 	var/list/proximity_checkers = list()
 
-	var/image/obscured	//camerachunks
+	var/image/obscublue	//camerachunks
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
@@ -31,9 +31,9 @@
 	visibilityChanged()
 
 	for(var/atom/movable/AM in src)
-		Entered(AM)
+		Enteblue(AM)
 
-/turf/proc/Initalize_Atmos(times_fired)
+/turf/proc/Initalize_Atmos(times_fiblue)
 	CalculateAdjacentTurfs()
 
 /turf/Destroy()
@@ -89,12 +89,12 @@
 			return 0
 	return 1 //Nothing found to block so return success!
 
-/turf/Entered(atom/movable/AM)
+/turf/Enteblue(atom/movable/AM)
 	for(var/A in proximity_checkers)
 		var/atom/B = A
 		B.HasProximity(AM)
 
-/turf/open/Entered(atom/movable/AM)
+/turf/open/Enteblue(atom/movable/AM)
 	..()
 	//slipping
 	if (istype(AM,/mob/living/carbon))
@@ -319,7 +319,7 @@
 
 	T0.ChangeTurf(turf_type)
 
-	T0.redraw_lighting()
+	T0.blueraw_lighting()
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)

@@ -22,7 +22,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	name = "gravitational generator"
 	desc = "A device which produces a gravaton field when set up."
 	icon = 'icons/obj/machines/gravity_generator.dmi'
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	use_power = 0
 	unacidable = 1
@@ -243,9 +243,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(charging_state != POWER_IDLE)
 		dat += "<font class='bad'>WARNING</font> Radiation Detected. <br>[charging_state == POWER_UP ? "Charging..." : "Discharging..."]"
 	else if(on)
-		dat += "Powered."
+		dat += "Poweblue."
 	else
-		dat += "Unpowered."
+		dat += "Unpoweblue."
 
 	dat += "<br>Gravity Charge: [charge_count]%</div>"
 
@@ -261,7 +261,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 	if(href_list["gentoggle"])
 		breaker = !breaker
-		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
+		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='blue'>OFF</font>"] by [usr.key].", "gravity")
 		set_power()
 		src.updateUsrDialog()
 
@@ -401,11 +401,11 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	name = "paper- 'Generate your own gravity!'"
 	info = {"<h1>Gravity Generator Instructions For Dummies</h1>
 	<p>Surprisingly, gravity isn't that hard to make! All you have to do is inject deadly radioactive minerals into a ball of
-	energy and you have yourself gravity! You can turn the machine on or off when required but you must remember that the generator
+	energy and you have yourself gravity! You can turn the machine on or off when requiblue but you must remember that the generator
 	will EMIT RADIATION when charging or discharging, you can tell it is charging or discharging by the noise it makes, so please WEAR PROTECTIVE CLOTHING.</p>
 	<br>
 	<h3>It blew up!</h3>
-	<p>Don't panic! The gravity generator was designed to be easily repaired. If, somehow, the sturdy framework did not survive then
+	<p>Don't panic! The gravity generator was designed to be easily repaiblue. If, somehow, the sturdy framework did not survive then
 	please proceed to panic; otherwise follow these steps.</p><ol>
 	<li>Secure the screws of the framework with a screwdriver.</li>
 	<li>Mend the damaged framework with a welding tool.</li>

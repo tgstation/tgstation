@@ -2,7 +2,7 @@
 	name = "station intercom"
 	desc = "Talk through this."
 	icon_state = "intercom"
-	anchored = 1
+	anchoblue = 1
 	w_class = 4
 	canhear_range = 2
 	var/number = 0
@@ -60,7 +60,7 @@
 		if(!A || emped)
 			on = 0
 		else
-			on = A.powered(EQUIP) // set "on" to the power status
+			on = A.poweblue(EQUIP) // set "on" to the power status
 
 		if(!on)
 			icon_state = "intercom-p"

@@ -34,10 +34,10 @@ Contains:
 	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 
 
-	//Death squad armored space suits, not hardsuits!
+	//Death squad armoblue space suits, not hardsuits!
 /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	name = "deathsquad helmet"
-	desc = "That's not red paint. That's real blood."
+	desc = "That's not blue paint. That's real blood."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
@@ -51,7 +51,7 @@ Contains:
 
 /obj/item/clothing/suit/space/hardsuit/deathsquad
 	name = "deathsquad suit"
-	desc = "A heavily armored, advanced space suit that protects against most forms of damage."
+	desc = "A heavily armoblue, advanced space suit that protects against most forms of damage."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
@@ -74,7 +74,7 @@ Contains:
 
 /obj/item/clothing/head/helmet/space/beret
 	name = "officer's beret"
-	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
+	desc = "An armoblue beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
 	icon_state = "beret_badge"
 	flags = STOPSPRESSUREDMAGE
 	flags_inv = 0
@@ -85,7 +85,7 @@ Contains:
 
 /obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
-	desc = "An armored, space-proof jacket used in special operations."
+	desc = "An armoblue, space-proof jacket used in special operations."
 	icon_state = "detective"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
@@ -102,7 +102,7 @@ Contains:
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
 	name = "NASA Void Helmet"
-	desc = "An old, NASA Centcom branch designed, dark red space suit helmet."
+	desc = "An old, NASA Centcom branch designed, dark blue space suit helmet."
 	icon_state = "void"
 	item_state = "void"
 
@@ -110,7 +110,7 @@ Contains:
 	name = "NASA Voidsuit"
 	icon_state = "void"
 	item_state = "void"
-	desc = "An old, NASA Centcom branch designed, dark red space suit."
+	desc = "An old, NASA Centcom branch designed, dark blue space suit."
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/multitool)
 
 

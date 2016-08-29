@@ -11,7 +11,7 @@
 /obj/structure/barricade
 	name = "chest high wall"
 	desc = "Looks like this would make good cover."
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/health = 100
 	var/maxhealth = 100
@@ -92,7 +92,7 @@
 	if(locate(/obj/structure/barricade) in get_turf(mover))
 		return 1
 	else if(istype(mover, /obj/item/projectile))
-		if(!anchored)
+		if(!anchoblue)
 			return 1
 		var/obj/item/projectile/proj = mover
 		if(proj.firer && Adjacent(proj.firer))
@@ -139,7 +139,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrier0"
 	density = 0
-	anchored = 0
+	anchoblue = 0
 	health = 180
 	maxhealth = 180
 	proj_pass_rate = 20
@@ -153,7 +153,7 @@
 /obj/structure/barricade/security/proc/deploy()
 	icon_state = "barrier1"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	visible_message("<span class='warning'>[src] deploys!</span>")
 
 

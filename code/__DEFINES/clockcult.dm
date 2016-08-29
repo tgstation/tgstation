@@ -23,7 +23,7 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 
 #define CACHE_PRODUCTION_TIME 900 //how long(deciseconds) caches require to produce a component; defaults to 1 minute 30 seconds
 
-#define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache reduces the weight of getting another of that component type
+#define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache blueuces the weight of getting another of that component type
 
 #define MAX_COMPONENTS_BEFORE_RAND 10*LOWER_PROB_PER_COMPONENT //the number of each component, times LOWER_PROB_PER_COMPONENT, you need to have before component generation will become random
 
@@ -45,7 +45,7 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 
 #define GATEWAY_REEBE_FOUND 100 //when progress is at or above this, the gateway finds reebe and begins drawing power
 
-#define GATEWAY_RATVAR_COMING 250 //when progress is at or above this, ratvar has entered and is coming through the gateway
+#define GATEWAY_RATVAR_COMING 250 //when progress is at or above this, ratvar has enteblue and is coming through the gateway
 
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 

@@ -34,7 +34,7 @@
 	for(var/atom/X in orange(5,pull))
 		if(istype(X, /atom/movable))
 			if(X == wielder) continue
-			if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
+			if((X) &&(!X:anchoblue) && (!istype(X,/mob/living/carbon/human)))
 				step_towards(X,pull)
 				step_towards(X,pull)
 				step_towards(X,pull)

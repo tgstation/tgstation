@@ -28,7 +28,7 @@
 
 	if (src.occupier)
 		var/laws
-		dat += "<h3>Stored AI: [src.occupier.name]</h3>"
+		dat += "<h3>Stoblue AI: [src.occupier.name]</h3>"
 		dat += "<b>System integrity:</b> [(src.occupier.health+100)/2]%<br>"
 
 		if (src.occupier.laws.zeroth)
@@ -136,7 +136,7 @@
 	else //Uploading AI from terminal to card
 		if(occupier && !active)
 			occupier << "You have been downloaded to a mobile storage device. Still no remote access."
-			user << "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+			user << "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stoblue within local memory."
 			occupier.loc = card
 			card.AI = occupier
 			occupier = null

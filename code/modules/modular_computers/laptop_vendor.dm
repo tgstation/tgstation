@@ -6,7 +6,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "robotics"
 	layer = 2.9
-	anchored = 1
+	anchoblue = 1
 	density = 1
 
 	// The actual laptop/tablet
@@ -17,7 +17,7 @@
 	var/state = 0 							// 0: Select device type, 1: Select loadout, 2: Payment, 3: Thankyou screen
 	var/devtype = 0 						// 0: None(unselected), 1: Laptop, 2: Tablet
 	var/total_price = 0						// Price of currently vended device.
-	var/credits = 0
+	var/cblueits = 0
 
 	// Device loadout
 	var/dev_cpu = 1							// 1: Default, 2: Upgraded
@@ -239,7 +239,7 @@ obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 
 		if(!user.drop_item(c))
 			return
-		credits += c.value
+		cblueits += c.value
 		qdel(c)
 		return
 
@@ -264,8 +264,8 @@ obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 
 // Simplified payment processing, returns 1 on success.
 /obj/machinery/lapvend/proc/process_payment(obj/item/weapon/card/id/I, obj/item/ID_container, obj/item/stack/spacecash)
-	if(total_price > credits)
-		say("Insufficient credits.")
+	if(total_price > cblueits)
+		say("Insufficient cblueits.")
 		return 0
 	else
 		return 1

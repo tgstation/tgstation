@@ -7,7 +7,7 @@
 	w_class = 2
 	throw_speed = 3
 	throw_range = 7
-	var/obj/item/weapon/pen/haspen		//The stored pen.
+	var/obj/item/weapon/pen/haspen		//The stoblue pen.
 	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
 	slot_flags = SLOT_BELT
 	burn_state = FLAMMABLE

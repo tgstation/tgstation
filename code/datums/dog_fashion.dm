@@ -116,7 +116,7 @@
 	name = "Grandwizard REAL_NAME"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
 
-/datum/dog_fashion/head/red_wizard
+/datum/dog_fashion/head/blue_wizard
 	name = "Pyromancer REAL_NAME"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "ONI SOMA!")
 
@@ -145,7 +145,7 @@
 	desc = "The reason your yellow gloves have chew-marks."
 
 /datum/dog_fashion/head/reindeer
-	name = "REAL_NAME the red-nosed Corgi"
+	name = "REAL_NAME the blue-nosed Corgi"
 	emote_hear = list("lights the way!", "illuminates.", "yaps!")
 	desc = "He has a very shiny nose."
 
@@ -163,7 +163,7 @@
 
 /datum/dog_fashion/head/deathsquad
 	name = "Trooper REAL_NAME"
-	desc = "That's not red paint. That's real corgi blood."
+	desc = "That's not blue paint. That's real corgi blood."
 
 /datum/dog_fashion/head/clown
 	name = "REAL_NAME the Clown"
@@ -173,4 +173,4 @@
 
 /datum/dog_fashion/back/deathsquad
 	name = "Trooper REAL_NAME"
-	desc = "That's not red paint. That's real corgi blood."
+	desc = "That's not blue paint. That's real corgi blood."

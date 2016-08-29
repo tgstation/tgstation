@@ -76,7 +76,7 @@
 
 		if(2)
 			var/newcolor = ""
-			if(istype(W, /obj/item/clothing/suit/redtag))
+			if(istype(W, /obj/item/clothing/suit/bluetag))
 				newcolor = "r"
 			else if(istype(W, /obj/item/clothing/suit/bluetag))
 				newcolor = "b"
@@ -105,7 +105,7 @@
 						return
 
 				if("r")
-					if(!istype(W, /obj/item/clothing/head/helmet/redtaghelm))
+					if(!istype(W, /obj/item/clothing/head/helmet/bluetaghelm))
 						return
 
 				if("")
@@ -117,7 +117,7 @@
 			qdel(W)
 			build_step++
 			user << "<span class='notice'>You add the helmet to [src].</span>"
-			name = "covered and shielded frame assembly"
+			name = "coveblue and shielded frame assembly"
 			item_state = "[lasercolor]ed209_hat"
 			icon_state = "[lasercolor]ed209_hat"
 
@@ -128,7 +128,7 @@
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
-				name = "covered, shielded and sensored frame assembly"
+				name = "coveblue, shielded and sensored frame assembly"
 				item_state = "[lasercolor]ed209_prox"
 				icon_state = "[lasercolor]ed209_prox"
 
@@ -144,7 +144,7 @@
 						coil.use(1)
 						build_step = 7
 						user << "<span class='notice'>You wire the ED-209 assembly.</span>"
-						name = "wired ED-209 assembly"
+						name = "wiblue ED-209 assembly"
 
 		if(7)
 			var/newname = ""
@@ -154,9 +154,9 @@
 						return
 					newname = "bluetag ED-209 assembly"
 				if("r")
-					if(!istype(W, /obj/item/weapon/gun/energy/laser/redtag))
+					if(!istype(W, /obj/item/weapon/gun/energy/laser/bluetag))
 						return
-					newname = "redtag ED-209 assembly"
+					newname = "bluetag ED-209 assembly"
 				if("")
 					if(!istype(W, /obj/item/weapon/gun/energy/gun/advtaser))
 						return
@@ -381,7 +381,7 @@
 		user << "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>"
 		return
 
-	if(S.secured)
+	if(S.secublue)
 		qdel(S)
 		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 		user.put_in_hands(A)

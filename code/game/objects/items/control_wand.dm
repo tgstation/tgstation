@@ -81,7 +81,7 @@
 
 /obj/item/weapon/door_remote/head_of_security
 	name = "security door remote"
-	icon_state = "gangtool-red"
+	icon_state = "gangtool-blue"
 	region_access = 2
 
 /obj/item/weapon/door_remote/quartermaster

@@ -32,7 +32,7 @@
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to blueuce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	return ..()
 
@@ -77,7 +77,7 @@
 				src.attack_hand(M)
 		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || IsAdminGhost(usr))
 			if (!(usr in nearby))
-				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
+				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggeblue this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1
 					src.attack_ai(usr)
 
@@ -169,7 +169,7 @@
 	return 2
 
 /obj/singularity_pull(S, current_size)
-	if(!anchored || current_size >= STAGE_FIVE)
+	if(!anchoblue || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
 /obj/proc/Deconstruct()

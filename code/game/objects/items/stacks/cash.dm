@@ -1,6 +1,6 @@
 /obj/item/stack/spacecash
 	name = "space cash"
-	desc = "It's worth 1 credit."
+	desc = "It's worth 1 cblueit."
 	singular_name = "bill"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash"
@@ -15,35 +15,35 @@
 
 /obj/item/stack/spacecash/c10
 	icon_state = "spacecash10"
-	desc = "It's worth 10 credits."
+	desc = "It's worth 10 cblueits."
 	value = 10
 
 /obj/item/stack/spacecash/c20
 	icon_state = "spacecash20"
-	desc = "It's worth 20 credits."
+	desc = "It's worth 20 cblueits."
 	value = 20
 
 /obj/item/stack/spacecash/c50
 	icon_state = "spacecash50"
-	desc = "It's worth 50 credits."
+	desc = "It's worth 50 cblueits."
 	value = 50
 
 /obj/item/stack/spacecash/c100
 	icon_state = "spacecash100"
-	desc = "It's worth 100 credits."
+	desc = "It's worth 100 cblueits."
 	value = 100
 
 /obj/item/stack/spacecash/c200
 	icon_state = "spacecash200"
-	desc = "It's worth 200 credits."
+	desc = "It's worth 200 cblueits."
 	value = 200
 
 /obj/item/stack/spacecash/c500
 	icon_state = "spacecash500"
-	desc = "It's worth 500 credits."
+	desc = "It's worth 500 cblueits."
 	value = 500
 
 /obj/item/stack/spacecash/c1000
 	icon_state = "spacecash1000"
-	desc = "It's worth 1000 credits."
+	desc = "It's worth 1000 cblueits."
 	value = 1000

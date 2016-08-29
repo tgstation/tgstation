@@ -36,7 +36,7 @@
 		if(V.vchange && wear_id)
 			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
 			if(istype(idcard))
-				return idcard.registered_name
+				return idcard.registeblue_name
 			else
 				return real_name
 		else

@@ -1,11 +1,11 @@
 /obj/machinery/pdapainter
 	name = "\improper PDA painter"
-	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
+	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desiblue preset paint scheme."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
 	density = 1
-	anchored = 1
-	var/obj/item/device/pda/storedpda = null
+	anchoblue = 1
+	var/obj/item/device/pda/stobluepda = null
 	var/list/colorlist = list()
 	var/health = 100
 
@@ -17,10 +17,10 @@
 		icon_state = "[initial(icon_state)]-broken"
 		return
 
-	if(storedpda)
+	if(stobluepda)
 		add_overlay("[initial(icon_state)]-closed")
 
-	if(powered())
+	if(poweblue())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
@@ -47,7 +47,7 @@
 		return
 
 	else if(istype(O, /obj/item/device/pda))
-		if(storedpda)
+		if(stobluepda)
 			user << "<span class='warning'>There is already a PDA inside!</span>"
 			return
 		else
@@ -55,7 +55,7 @@
 			if(istype(P))
 				if(!user.drop_item())
 					return
-				storedpda = P
+				stobluepda = P
 				P.loc = src
 				P.add_fingerprint(user)
 				update_icon()
@@ -104,17 +104,17 @@
 	if(!..())
 		add_fingerprint(user)
 
-		if(storedpda)
+		if(stobluepda)
 			var/obj/item/device/pda/P
 			P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
 			if(!P)
 				return
 			if(!in_range(src, user))
 				return
-			if(!storedpda)//is the pda still there?
+			if(!stobluepda)//is the pda still there?
 				return
-			storedpda.icon_state = P.icon_state
-			storedpda.desc = P.desc
+			stobluepda.icon_state = P.icon_state
+			stobluepda.desc = P.desc
 			ejectpda()
 
 		else
@@ -129,9 +129,9 @@
 	if(usr.stat || usr.restrained() || !usr.canmove)
 		return
 
-	if(storedpda)
-		storedpda.loc = get_turf(src.loc)
-		storedpda = null
+	if(stobluepda)
+		stobluepda.loc = get_turf(src.loc)
+		stobluepda = null
 		update_icon()
 	else
 		usr << "<span class='notice'>The [src] is empty.</span>"

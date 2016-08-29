@@ -3,7 +3,7 @@
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
-	anchored = 1
+	anchoblue = 1
 	opacity = 1
 	density = 1
 	layer = OPEN_DOOR_LAYER
@@ -16,7 +16,7 @@
 	var/glass = 0
 	var/welded = 0
 	var/normalspeed = 1
-	var/heat_proof = 0 // For rglass-windowed airlocks and firedoors
+	var/heat_proof = 0 // For rglass-windowed airlocks and fiblueoors
 	var/emergency = 0 // Emergency access override
 	var/sub_door = 0 // 1 if it's meant to go under another door.
 	var/closingLayer = CLOSED_DOOR_LAYER
@@ -341,9 +341,9 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	return
 
 /obj/machinery/door/proc/hostile_lockdown(mob/origin)
-	if(!stat) //So that only powered doors are closed.
+	if(!stat) //So that only poweblue doors are closed.
 		close() //Close ALL the doors!
 
 /obj/machinery/door/proc/disable_lockdown()
-	if(!stat) //Opens only powered doors.
+	if(!stat) //Opens only poweblue doors.
 		open() //Open everything!

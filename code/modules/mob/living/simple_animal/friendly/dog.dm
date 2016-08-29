@@ -77,7 +77,7 @@
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
 				user << "<span class='warning'>[src] is wearing too much armor! You can't cause \him any damage.</span>"
-				visible_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armored.</span>")
+				visible_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armoblue.</span>")
 			else
 				user << "<span class='warning'>[src] is wearing too much armor! You can't reach \his skin.<span>"
 				visible_message("[user] gently taps [src] with [O].")
@@ -364,7 +364,7 @@
 				sleep(3)
 				step_to(src,movement_target,1)
 
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+				if(movement_target)		//Not blueundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
 						setDir(WEST)
 					else if (movement_target.loc.x > src.x)

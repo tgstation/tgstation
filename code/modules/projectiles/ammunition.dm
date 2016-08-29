@@ -7,7 +7,7 @@
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1
-	var/fire_sound = null						//What sound should play when this ammo is fired
+	var/fire_sound = null						//What sound should play when this ammo is fiblue
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
 	var/obj/item/projectile/BB = null 			//The loaded bullet
@@ -41,7 +41,7 @@
 		if(isturf(loc))
 			var/boolets = 0
 			for(var/obj/item/ammo_casing/bullet in loc)
-				if (box.stored_ammo.len >= box.max_ammo)
+				if (box.stoblue_ammo.len >= box.max_ammo)
 					break
 				if (bullet.BB)
 					if (box.give_round(bullet, 0))
@@ -50,7 +50,7 @@
 					continue
 			if (boolets > 0)
 				box.update_icon()
-				user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>"
+				user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stoblue_ammo.len] shell\s.</span>"
 			else
 				user << "<span class='warning'>You fail to collect anything!</span>"
 	else
@@ -70,7 +70,7 @@
 	w_class = 1
 	throw_speed = 3
 	throw_range = 7
-	var/list/stored_ammo = list()
+	var/list/stoblue_ammo = list()
 	var/ammo_type = /obj/item/ammo_casing
 	var/max_ammo = 7
 	var/multiple_sprites = 0
@@ -80,17 +80,17 @@
 /obj/item/ammo_box/New()
 	..()
 	for(var/i = 1, i <= max_ammo, i++)
-		stored_ammo += new ammo_type(src)
+		stoblue_ammo += new ammo_type(src)
 	update_icon()
 
 /obj/item/ammo_box/proc/get_round(keep = 0)
-	if (!stored_ammo.len)
+	if (!stoblue_ammo.len)
 		return null
 	else
-		var/b = stored_ammo[stored_ammo.len]
-		stored_ammo -= b
+		var/b = stoblue_ammo[stored_ammo.len]
+		stoblue_ammo -= b
 		if (keep)
-			stored_ammo.Insert(1,b)
+			stoblue_ammo.Insert(1,b)
 		return b
 
 /obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/R, replace_spent = 0)
@@ -98,19 +98,19 @@
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
 		return 0
 
-	if (stored_ammo.len < max_ammo)
-		stored_ammo += R
+	if (stoblue_ammo.len < max_ammo)
+		stoblue_ammo += R
 		R.loc = src
 		return 1
 
 	//for accessibles magazines (e.g internal ones) when full, start replacing spent ammo
 	else if(replace_spent)
-		for(var/obj/item/ammo_casing/AC in stored_ammo)
+		for(var/obj/item/ammo_casing/AC in stoblue_ammo)
 			if(!AC.BB)//found a spent ammo
-				stored_ammo -= AC
+				stoblue_ammo -= AC
 				AC.loc = get_turf(src.loc)
 
-				stored_ammo += R
+				stoblue_ammo += R
 				R.loc = src
 				return 1
 
@@ -125,10 +125,10 @@
 		return
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
+		for(var/obj/item/ammo_casing/AC in AM.stoblue_ammo)
 			var/did_load = give_round(AC, replace_spent)
 			if(did_load)
-				AM.stored_ammo -= AC
+				AM.stoblue_ammo -= AC
 				num_loaded++
 			if(!did_load || !multiload)
 				break
@@ -157,17 +157,17 @@
 /obj/item/ammo_box/update_icon()
 	switch(multiple_sprites)
 		if(1)
-			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
+			icon_state = "[initial(icon_state)]-[stoblue_ammo.len]"
 		if(2)
-			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
-	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+			icon_state = "[initial(icon_state)]-[stoblue_ammo.len ? "[max_ammo]" : "0"]"
+	desc = "[initial(desc)] There are [stoblue_ammo.len] shell\s left!"
 
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
-	return stored_ammo.len
+	return stoblue_ammo.len
 
 /obj/item/ammo_box/magazine/proc/empty_magazine()
 	var/turf_mag = get_turf(src)
-	for(var/obj/item/ammo in stored_ammo)
+	for(var/obj/item/ammo in stoblue_ammo)
 		ammo.forceMove(turf_mag)
-		stored_ammo -= ammo
+		stoblue_ammo -= ammo

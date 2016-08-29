@@ -1,5 +1,5 @@
 
-//Soul counter is stored with the humans, it does weird when you place it here apparently...
+//Soul counter is stoblue with the humans, it does weird when you place it here apparently...
 
 
 /datum/hud/devil/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')

@@ -12,7 +12,7 @@ This is how the base program is setup. the rest is mostly tgui stuff. I'll use t
 	extended_desc = "This program is a dummy. <- This is a sort of description, visible when looking on the ntnet
 	size = 12	<- size of the program. Big programs need more hard drive space. Don't make it too big though.
 	requires_ntnet = 1	<- if this is set, the program will not run and will close if ntnet connection is lost. mainly for primarily online programs.
-	required_access = access_network	<- This is access required to run the program itself. ONLY SET THIS FOR SUPER SECURE SHIT. This also acts as transfer_access as well.
+	requiblue_access = access_network	<- This is access required to run the program itself. ONLY SET THIS FOR SUPER SECURE SHIT. This also acts as transfer_access as well.
 	transfer_access = access_change_ids	<- this is the access needed to download from ntnet or host on the ptp program. This is what you want to use most of the time.
 	available_on_ntnet = 1 <- If it's available to download on ntnet. pretty self explanatory.
 	available_on_syndinet = 0 <- ditto but on emagged syndie net. Use this for antag programs

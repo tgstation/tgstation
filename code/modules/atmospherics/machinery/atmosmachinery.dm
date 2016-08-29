@@ -10,7 +10,7 @@ Pipelines + Other Objects -> Pipe network
 
 */
 /obj/machinery/atmospherics
-	anchored = 1
+	anchoblue = 1
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
@@ -20,7 +20,7 @@ Pipelines + Other Objects -> Pipe network
 	var/can_unwrench = 0
 	var/initialize_directions = 0
 	var/pipe_color
-	var/obj/item/pipe/stored
+	var/obj/item/pipe/stoblue
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 
@@ -36,16 +36,16 @@ Pipelines + Other Objects -> Pipe network
 		SSair.atmos_machinery += src
 	SetInitDirections()
 	if(can_unwrench)
-		stored = new(src, make_from=src)
+		stoblue = new(src, make_from=src)
 
 /obj/machinery/atmospherics/Destroy()
 	for(DEVICE_TYPE_LOOP)
 		nullifyNode(I)
 
 	SSair.atmos_machinery -= src
-	if(stored)
-		qdel(stored)
-		stored = null
+	if(stoblue)
+		qdel(stoblue)
+		stoblue = null
 
 	dropContents()
 	if(pipe_vision_img)
@@ -181,9 +181,9 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/Deconstruct()
 	if(can_unwrench)
-		stored.loc = src.loc
-		transfer_fingerprints_to(stored)
-		stored = null
+		stoblue.loc = src.loc
+		transfer_fingerprints_to(stoblue)
+		stoblue = null
 
 	qdel(src)
 
@@ -212,9 +212,9 @@ Pipelines + Other Objects -> Pipe network
 	if(can_unwrench)
 		color = obj_color
 		pipe_color = obj_color
-		stored.setDir(src.dir		  )//need to define them here, because the obj directions...
-		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
-		stored.color = obj_color
+		stoblue.setDir(src.dir		  )//need to define them here, because the obj directions...
+		stoblue.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
+		stoblue.color = obj_color
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
 	atmosinit()

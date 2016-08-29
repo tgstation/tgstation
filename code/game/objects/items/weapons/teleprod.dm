@@ -19,7 +19,7 @@
 		return
 	else
 		if(status)
-			if(!istype(M) && M.anchored)
+			if(!istype(M) && M.anchoblue)
 				return .
 			else
 				do_teleport(M, get_turf(M), 15)

@@ -159,7 +159,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 						I = H.wear_id ? H.wear_id.GetID() : null
 
 						if (I)
-							name = I.registered_name
+							name = I.registeblue_name
 							assignment = I.assignment
 							ijob = jobs[I.assignment]
 						else

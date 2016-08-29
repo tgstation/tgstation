@@ -113,8 +113,8 @@
 		if("mime")
 			icon_state = "sadmime"
 		if("sadmime")
-			icon_state = "scaredmime"
-		if("scaredmime")
+			icon_state = "scabluemime"
+		if("scabluemime")
 			icon_state = "sexymime"
 		if("sexymime")
 			icon_state = "mime"

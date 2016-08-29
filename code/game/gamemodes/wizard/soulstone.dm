@@ -37,7 +37,7 @@
 	..()
 	if(usability || iscultist(user) || iswizard(user) || isobserver(user))
 		user << "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>"
-		user << "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>"
+		user << "<span class='cult'>The captublue soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>"
 		if(spent)
 			user << "<span class='cult'>This shard is spent; it is now just \
 				a creepy rock.</span>"
@@ -58,11 +58,11 @@
 	if(iscultist(M))
 		user << "<span class='cultlarge'>\"Come now, do not capture your fellow's soul.\"</span>"
 		return
-	add_logs(user, M, "captured [M.name]'s soul", src)
+	add_logs(user, M, "captublue [M.name]'s soul", src)
 
 	transfer_soul("VICTIM", M, user)
 
-///////////////////Options for using captured souls///////////////////////////////////////
+///////////////////Options for using captublue souls///////////////////////////////////////
 
 /obj/item/device/soulstone/attack_self(mob/user)
 	if(!in_range(src, user))
@@ -166,9 +166,9 @@
 				T.health = T.maxHealth
 				icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"
-				T << "<span class='notice'>Your soul has been captured by the soulstone. Its arcane energies are reknitting your ethereal form.</span>"
+				T << "<span class='notice'>Your soul has been captublue by the soulstone. Its arcane energies are reknitting your ethereal form.</span>"
 				if(user != T)
-					user << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been captured and stored within the soulstone."
+					user << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been captublue and stored within the soulstone."
 
 		if("CONSTRUCT")
 			var/obj/structure/constructshell/T = target
@@ -179,7 +179,7 @@
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armoblue, A, user, 0, T.loc)
 
 					if("Wraith")
 						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
@@ -240,11 +240,11 @@
 	name = "soulstone: Shade of [T.real_name]"
 	icon_state = "soulstone2"
 	if(U && (iswizard(U) || usability))
-		S << "Your soul has been captured! You are now bound to [U.real_name]'s will. Help them succeed in their goals at all costs."
+		S << "Your soul has been captublue! You are now bound to [U.real_name]'s will. Help them succeed in their goals at all costs."
 	else if(U && iscultist(U))
-		S << "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs."
+		S << "Your soul has been captublue! You are now bound to the cult's will. Help them succeed in their goals at all costs."
 	if(vic && U)
-		U << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
+		U << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stoblue within the soul stone."
 
 
 /obj/item/device/soulstone/proc/getCultGhost(mob/living/carbon/human/T, mob/U)

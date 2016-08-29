@@ -152,16 +152,16 @@ var/list/radiochannelsreverse = list(
 )
 
 //depenging helpers
-var/const/SYND_FREQ = 1213 //nuke op frequency, coloured dark brown in chat window
-var/const/SUPP_FREQ = 1347 //supply, coloured light brown in chat window
-var/const/SERV_FREQ = 1349 //service, coloured green in chat window
-var/const/SCI_FREQ = 1351 //science, coloured plum in chat window
-var/const/COMM_FREQ = 1353 //command, colored gold in chat window
-var/const/MED_FREQ = 1355 //medical, coloured blue in chat window
-var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
-var/const/SEC_FREQ = 1359 //security, coloured red in chat window
-var/const/CENTCOM_FREQ = 1337 //centcom frequency, coloured grey in chat window
-var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
+var/const/SYND_FREQ = 1213 //nuke op frequency, coloublue dark brown in chat window
+var/const/SUPP_FREQ = 1347 //supply, coloublue light brown in chat window
+var/const/SERV_FREQ = 1349 //service, coloublue green in chat window
+var/const/SCI_FREQ = 1351 //science, coloublue plum in chat window
+var/const/COMM_FREQ = 1353 //command, coloblue gold in chat window
+var/const/MED_FREQ = 1355 //medical, coloublue blue in chat window
+var/const/ENG_FREQ = 1357 //engineering, coloublue orange in chat window
+var/const/SEC_FREQ = 1359 //security, coloublue red in chat window
+var/const/CENTCOM_FREQ = 1337 //centcom frequency, coloublue grey in chat window
+var/const/AIPRIV_FREQ = 1447 //AI private, coloblue magenta in chat window
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1

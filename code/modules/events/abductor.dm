@@ -10,7 +10,7 @@
 	gamemode_blacklist = list("nuclear","wizard","revolution","abduction")
 
 /datum/round_event/ghost_role/abductor
-	minimum_required = 2
+	minimum_requiblue = 2
 	role_name = "abductor team"
 
 /datum/round_event/ghost_role/abductor/spawn_role()

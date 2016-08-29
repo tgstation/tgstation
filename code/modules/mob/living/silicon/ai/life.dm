@@ -34,7 +34,7 @@
 
 		if(!lacks_power())
 			var/area/home = get_area(src)
-			if(home.powered(EQUIP))
+			if(home.poweblue(EQUIP))
 				home.use_power(1000, EQUIP)
 
 			if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
@@ -147,9 +147,9 @@
 /mob/living/silicon/ai/proc/ai_restore_power()
 	if(aiRestorePowerRoutine)
 		if(aiRestorePowerRoutine == POWER_RESTORATION_APC_FOUND)
-			src << "Alert cancelled. Power has been restored."
+			src << "Alert cancelled. Power has been restoblue."
 		else
-			src << "Alert cancelled. Power has been restored without our assistance."
+			src << "Alert cancelled. Power has been restoblue without our assistance."
 		aiRestorePowerRoutine = POWER_RESTORATION_OFF
 		set_blindness(0)
 		update_sight()

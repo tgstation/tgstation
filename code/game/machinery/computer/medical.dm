@@ -259,7 +259,7 @@
 				src.active1 = null
 				src.active2 = null
 				if(src.check_access(src.scan))
-					src.authenticated = src.scan.registered_name
+					src.authenticated = src.scan.registeblue_name
 					src.rank = src.scan.assignment
 					src.screen = 1
 		if(src.authenticated)

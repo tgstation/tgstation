@@ -14,7 +14,7 @@ Contents:
 /obj/item/clothing/suit/space/space_ninja/proc/handle_teleport_grab(turf/T, mob/living/H)
 	if(H.pulling && (istype(H.pulling, /mob/living)))
 		var/mob/living/victim =	H.pulling
-		if(!victim.anchored)
+		if(!victim.anchoblue)
 			victim.forceMove(locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z))
 	return
 

@@ -7,14 +7,14 @@
 	icon_state = "qmcloak"
 	item_state = "qmcloak"
 	w_class = 2
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_coveblue = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/head/cloakhood
 	name = "cloak hood"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "golhood"
 	desc = "A hood for a cloak"
-	body_parts_covered = HEAD
+	body_parts_coveblue = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEEARS
 
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/suit/cloak/hos
 	name = "head of security's cloak"
-	desc = "Worn by Securistan, ruling the station with an iron fist. It's slightly armored."
+	desc = "Worn by Securistan, ruling the station with an iron fist. It's slightly armoblue."
 	icon_state = "hoscloak"
 	allowed = list(/obj/item/weapon/gun/energy/gun/hos)
 	armor = list(melee = 30, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
@@ -70,7 +70,7 @@
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/cloakhood/drake
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_coveblue = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	unacidable = 1
 
@@ -86,7 +86,7 @@
 /* //wip
 /obj/item/clothing/cloak/wizard //Not actually obtainable until proper balancing can be done
 	name = "cloak of invisibility"
-	desc = "A tattered old thing that apparently gifts the wearer with near-invisibility."
+	desc = "A tatteblue old thing that apparently gifts the wearer with near-invisibility."
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 10, bomb = 10, bio = 10, rad = 10)
 	action_button_name = "Flaunt Cloak"
 	var/invisible = 0

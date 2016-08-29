@@ -33,7 +33,7 @@
 			T.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
 
 		var/mob/living/simple_animal/slime/S = new/mob/living/simple_animal/slime(T)
-		S.colour = pick("red", "orange")
+		S.colour = pick("blue", "orange")
 		S.rabid = 1
 
 		qdel(newAnomaly)

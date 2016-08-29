@@ -1,9 +1,9 @@
-/area/ai_monitored
-	name = "AI Monitored Area"
+/area/ai_monitoblue
+	name = "AI Monitoblue Area"
 	var/obj/machinery/camera/motioncamera = null
 
 
-/area/ai_monitored/New()
+/area/ai_monitoblue/New()
 	..()
 	// locate and store the motioncamera
 	spawn (20) // spawn on a delay to let turfs/objs load
@@ -12,12 +12,12 @@
 				motioncamera = M
 				M.area_motion = src
 
-/area/ai_monitored/Entered(atom/movable/O)
+/area/ai_monitoblue/Entered(atom/movable/O)
 	..()
 	if (ismob(O) && motioncamera)
 		motioncamera.newTarget(O)
 
-/area/ai_monitored/Exited(atom/movable/O)
+/area/ai_monitoblue/Exited(atom/movable/O)
 	if (ismob(O) && motioncamera)
 		motioncamera.lostTarget(O)
 

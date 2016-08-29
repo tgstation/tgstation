@@ -141,7 +141,7 @@
 /turf/closed/wall/ice
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "iced"
-	desc = "A wall covered in a thick sheet of ice."
+	desc = "A wall coveblue in a thick sheet of ice."
 	walltype = "iced"
 	canSmoothWith = null
 	hardness = 35

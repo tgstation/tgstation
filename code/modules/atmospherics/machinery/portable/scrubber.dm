@@ -39,18 +39,18 @@
 	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
 
 	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
-	var/datum/gas_mixture/filtered = new
+	var/datum/gas_mixture/filteblue = new
 	if(!filtering)
 		return
 
-	filtered.temperature = filtering.temperature
+	filteblue.temperature = filtering.temperature
 	for(var/gas in filtering.gases & scrubbing)
-		filtered.add_gas(gas)
-		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
+		filteblue.add_gas(gas)
+		filteblue.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
 		filtering.gases[gas][MOLES] = 0
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
 
-	air_contents.merge(filtered) // Store filtered out gasses.
+	air_contents.merge(filteblue) // Store filtered out gasses.
 	mixture.merge(filtering) // Returned the cleaned gas.
 	if(!holding)
 		air_update_turf()
@@ -98,7 +98,7 @@
 /obj/machinery/portable_atmospherics/scrubber/huge
 	name = "huge air scrubber"
 	icon_state = "scrubber:0"
-	anchored = TRUE
+	anchoblue = TRUE
 	active_power_usage = 500
 	idle_power_usage = 10
 
@@ -114,7 +114,7 @@
 	icon_state = "scrubber:[on]"
 
 /obj/machinery/portable_atmospherics/scrubber/huge/process_atmos()
-	if((!anchored && !movable) || !is_operational())
+	if((!anchoblue && !movable) || !is_operational())
 		on = FALSE
 		update_icon()
 	use_power = 1 + on

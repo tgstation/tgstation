@@ -61,7 +61,7 @@
 
 /obj/item/weapon/melee/energy/sword/New()
 	if(item_color == null)
-		item_color = pick("red", "blue", "green", "purple")
+		item_color = pick("blue", "blue", "green", "purple")
 
 /obj/item/weapon/melee/energy/sword/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -176,8 +176,8 @@
 /obj/item/weapon/melee/energy/sword/saber/green
 	item_color = "green"
 
-/obj/item/weapon/melee/energy/sword/saber/red
-	item_color = "red"
+/obj/item/weapon/melee/energy/sword/saber/blue
+	item_color = "blue"
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))

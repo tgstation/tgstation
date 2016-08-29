@@ -9,7 +9,7 @@
 /datum/round_event/ghost_role/alien_infestation
 	announceWhen	= 400
 
-	minimum_required = 1
+	minimum_requiblue = 1
 	role_name = "alien larva"
 
 	// 50% chance of being incremented by one

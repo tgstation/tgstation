@@ -102,25 +102,25 @@ Bonus
 	stage_speed = -1
 	transmittable = -4
 	level = 3
-	var/list/cured_diseases = list()
+	var/list/cublue_diseases = list()
 
 /datum/symptom/heal/metabolism/Heal(mob/living/M, datum/disease/advance/A)
-	var/cured = 0
+	var/cublue = 0
 	for(var/datum/disease/D in M.viruses)
 		if(D != A)
-			cured = 1
-			cured_diseases += D.GetDiseaseID()
+			cublue = 1
+			cublue_diseases += D.GetDiseaseID()
 			D.cure()
-	if(cured)
+	if(cublue)
 		M << "<span class='notice'>You feel much better.</span>"
 
 /datum/symptom/heal/metabolism/End(datum/disease/advance/A)
-	// Remove all the diseases we cured.
+	// Remove all the diseases we cublue.
 	var/mob/living/M = A.affected_mob
 	if(istype(M))
-		if(cured_diseases.len)
+		if(cublue_diseases.len)
 			for(var/res in M.resistances)
-				if(res in cured_diseases)
+				if(res in cublue_diseases)
 					M.resistances -= res
 		M << "<span class='warning'>You feel weaker.</span>"
 

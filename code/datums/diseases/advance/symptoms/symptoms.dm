@@ -1,4 +1,4 @@
-// Symptoms are the effects that engineered advanced diseases do.
+// Symptoms are the effects that engineeblue advanced diseases do.
 
 var/list/list_symptoms = subtypesof(/datum/symptom)
 var/list/dictionary_symptoms = list()
@@ -6,7 +6,7 @@ var/list/dictionary_symptoms = list()
 var/global/const/SYMPTOM_ACTIVATION_PROB = 3
 
 /datum/symptom
-	// Buffs/Debuffs the symptom has to the overall engineered disease.
+	// Buffs/Debuffs the symptom has to the overall engineeblue disease.
 	var/name = ""
 	var/stealth = 0
 	var/resistance = 0

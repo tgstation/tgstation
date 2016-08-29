@@ -5,7 +5,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
 	speed_process = 1
@@ -28,7 +28,7 @@
 			if (machine.selected_iron==1)
 				dat += "<A href='?src=\ref[src];sel_iron=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += "<A href='?src=\ref[src];sel_iron=yes'><font color='red'>Not smelting</font></A> "
+				dat += "<A href='?src=\ref[src];sel_iron=yes'><font color='blue'>Not smelting</font></A> "
 			dat += "Iron: [machine.ore_iron]<br>"
 		else
 			machine.selected_iron = 0
@@ -38,7 +38,7 @@
 			if (machine.selected_glass==1)
 				dat += "<A href='?src=\ref[src];sel_glass=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += "<A href='?src=\ref[src];sel_glass=yes'><font color='red'>Not smelting</font></A> "
+				dat += "<A href='?src=\ref[src];sel_glass=yes'><font color='blue'>Not smelting</font></A> "
 			dat += "Sand: [machine.ore_glass]<br>"
 		else
 			machine.selected_glass = 0
@@ -48,7 +48,7 @@
 			if (machine.selected_plasma==1)
 				dat += "<A href='?src=\ref[src];sel_plasma=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += "<A href='?src=\ref[src];sel_plasma=yes'><font color='red'>Not smelting</font></A> "
+				dat += "<A href='?src=\ref[src];sel_plasma=yes'><font color='blue'>Not smelting</font></A> "
 			dat += "Plasma: [machine.ore_plasma]<br>"
 		else
 			machine.selected_plasma = 0
@@ -58,7 +58,7 @@
 			if (machine.selected_uranium==1)
 				dat += "<A href='?src=\ref[src];sel_uranium=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += "<A href='?src=\ref[src];sel_uranium=yes'><font color='red'>Not smelting</font></A> "
+				dat += "<A href='?src=\ref[src];sel_uranium=yes'><font color='blue'>Not smelting</font></A> "
 			dat += "Uranium: [machine.ore_uranium]<br>"
 		else
 			machine.selected_uranium = 0
@@ -68,7 +68,7 @@
 			if (machine.selected_gold==1)
 				dat += "<A href='?src=\ref[src];sel_gold=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += "<A href='?src=\ref[src];sel_gold=yes'><font color='red'>Not smelting</font></A> "
+				dat += "<A href='?src=\ref[src];sel_gold=yes'><font color='blue'>Not smelting</font></A> "
 			dat += "Gold: [machine.ore_gold]<br>"
 		else
 			machine.selected_gold = 0
@@ -78,7 +78,7 @@
 			if (machine.selected_silver==1)
 				dat += "<A href='?src=\ref[src];sel_silver=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += "<A href='?src=\ref[src];sel_silver=yes'><font color='red'>Not smelting</font></A> "
+				dat += "<A href='?src=\ref[src];sel_silver=yes'><font color='blue'>Not smelting</font></A> "
 			dat += "Silver: [machine.ore_silver]<br>"
 		else
 			machine.selected_silver = 0
@@ -88,7 +88,7 @@
 			if (machine.selected_diamond==1)
 				dat += "<A href='?src=\ref[src];sel_diamond=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += "<A href='?src=\ref[src];sel_diamond=yes'><font color='red'>Not smelting</font></A> "
+				dat += "<A href='?src=\ref[src];sel_diamond=yes'><font color='blue'>Not smelting</font></A> "
 			dat += "Diamond: [machine.ore_diamond]<br>"
 		else
 			machine.selected_diamond = 0
@@ -98,7 +98,7 @@
 			if (machine.selected_clown==1)
 				dat += "<A href='?src=\ref[src];sel_clown=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += "<A href='?src=\ref[src];sel_clown=yes'><font color='red'>Not smelting</font></A> "
+				dat += "<A href='?src=\ref[src];sel_clown=yes'><font color='blue'>Not smelting</font></A> "
 			dat += "Bananium: [machine.ore_clown]<br>"
 		else
 			machine.selected_clown = 0
@@ -108,7 +108,7 @@
 			if (machine.selected_titanium==1)
 				dat += "<A href='?src=\ref[src];sel_titanium=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += "<A href='?src=\ref[src];sel_titanium=yes'><font color='red'>Not smelting</font></A> "
+				dat += "<A href='?src=\ref[src];sel_titanium=yes'><font color='blue'>Not smelting</font></A> "
 			dat += "Titanium: [machine.ore_titanium]<br>"
 		else
 			machine.selected_titanium = 0
@@ -194,7 +194,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "furnace"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/obj/machinery/mineral/CONSOLE = null
 	var/ore_gold = 0;
 	var/ore_silver = 0;
@@ -330,7 +330,7 @@
 
 			//if a non valid combination is selected
 
-			var/b = 1 //this part checks if all required ores are available
+			var/b = 1 //this part checks if all requiblue ores are available
 
 			if (!(selected_gold || selected_silver ||selected_diamond || selected_uranium | selected_plasma || selected_iron || selected_iron))
 				b = 0

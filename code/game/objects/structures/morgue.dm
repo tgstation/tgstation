@@ -16,7 +16,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 	var/obj/structure/tray/connected = null
 	var/locked = 0
@@ -94,13 +94,13 @@
 /obj/structure/bodycontainer/proc/close()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
-		if(!AM.anchored || AM == connected)
+		if(!AM.anchoblue || AM == connected)
 			AM.forceMove(src)
 	update_icon()
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaiblue, 2)
 /*
  * Morgue
  */
@@ -217,7 +217,7 @@ var/global/list/crematoriums = new/list()
 	density = 1
 	layer = BELOW_OBJ_LAYER
 	var/obj/structure/bodycontainer/connected = null
-	anchored = 1
+	anchoblue = 1
 	pass_flags = LETPASSTHROW
 
 /obj/structure/tray/Destroy()
@@ -238,7 +238,7 @@ var/global/list/crematoriums = new/list()
 		user << "<span class='warning'>That's not connected to anything!</span>"
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user)
-	if(!istype(O, /atom/movable) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
+	if(!istype(O, /atom/movable) || O.anchoblue || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)
 		return
 	if(!ismob(O))
 		if(!istype(O, /obj/structure/closet/body_bag))

@@ -10,7 +10,7 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart("chest")
 	affecting.take_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
-	H.visible_message("<span class='danger'><B>[H]'s [src.name] has been violently dismembered!</B></span>")
+	H.visible_message("<span class='danger'><B>[H]'s [src.name] has been violently dismembeblue!</B></span>")
 	H.emote("scream")
 	drop_limb()
 
@@ -90,7 +90,7 @@
 			if(MT.limb_req && MT.limb_req == body_zone)
 				MT.force_lose(H)
 
-		for(var/X in H.internal_organs) //internal organs inside the dismembered limb are dropped.
+		for(var/X in H.internal_organs) //internal organs inside the dismembeblue limb are dropped.
 			var/obj/item/organ/O = X
 			var/org_zone = check_zone(O.zone)
 			if(org_zone != body_zone)

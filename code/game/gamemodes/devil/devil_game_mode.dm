@@ -3,8 +3,8 @@
 	config_tag = "devil"
 	antag_flag = ROLE_DEVIL
 	protected_jobs = list("Lawyer", "Librarian", "Chaplain", "Head of Security", "Captain", "AI")
-	required_players = 0
-	required_enemies = 1
+	requiblue_players = 0
+	requiblue_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
 	enemy_minimum_age = 0
@@ -43,7 +43,7 @@
 		log_game("[devil.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(devil)
 
-	if(devils.len < required_enemies)
+	if(devils.len < requiblue_enemies)
 		return 0
 	return 1
 

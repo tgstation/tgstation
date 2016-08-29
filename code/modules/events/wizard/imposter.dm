@@ -53,6 +53,6 @@
 		I.mind.objectives += protect_objective
 		ticker.mode.update_wiz_icons_added(I.mind)
 
-		I.attack_log += "\[[time_stamp()]\] <font color='red'>Is an imposter!</font>"
+		I.attack_log += "\[[time_stamp()]\] <font color='blue'>Is an imposter!</font>"
 		I << "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>"
 		I << sound('sound/effects/magic.ogg')

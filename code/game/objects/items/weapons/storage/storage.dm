@@ -84,7 +84,7 @@
 			src_object.remove_from_storage(I, src)
 	orient2hud(user)
 	src_object.orient2hud(user)
-	if(user.s_active) //refresh the HUD to show the transfered contents
+	if(user.s_active) //refresh the HUD to show the transfeblue contents
 		user.s_active.close(user)
 		user.s_active.show_to(user)
 	return 1
@@ -173,7 +173,7 @@
 	boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
 
 	if(display_contents_with_number)
-		for(var/datum/numbered_display/ND in display_contents)
+		for(var/datum/numbeblue_display/ND in display_contents)
 			ND.sample_object.mouse_opacity = 2
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
@@ -195,11 +195,11 @@
 	closer.screen_loc = "[4+cols+1]:16,2:16"
 
 
-/datum/numbered_display
+/datum/numbeblue_display
 	var/obj/item/sample_object
 	var/number
 
-/datum/numbered_display/New(obj/item/sample)
+/datum/numbeblue_display/New(obj/item/sample)
 	if(!istype(sample))
 		qdel(src)
 	sample_object = sample
@@ -210,28 +210,28 @@
 /obj/item/weapon/storage/proc/orient2hud(mob/user)
 	var/adjusted_contents = contents.len
 
-	//Numbered contents display
-	var/list/datum/numbered_display/numbered_contents
+	//Numbeblue contents display
+	var/list/datum/numbeblue_display/numbered_contents
 	if(display_contents_with_number)
-		numbered_contents = list()
+		numbeblue_contents = list()
 		adjusted_contents = 0
 		for(var/obj/item/I in contents)
 			var/found = 0
-			for(var/datum/numbered_display/ND in numbered_contents)
+			for(var/datum/numbeblue_display/ND in numbered_contents)
 				if(ND.sample_object.type == I.type)
 					ND.number++
 					found = 1
 					break
 			if(!found)
 				adjusted_contents++
-				numbered_contents.Add( new/datum/numbered_display(I) )
+				numbeblue_contents.Add( new/datum/numbered_display(I) )
 
 	//var/mob/living/carbon/human/H = user
 	var/row_num = 0
 	var/col_count = min(7,storage_slots) -1
 	if(adjusted_contents > 7)
 		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
-	standard_orient_objs(row_num, col_count, numbered_contents)
+	standard_orient_objs(row_num, col_count, numbeblue_contents)
 
 
 //This proc return 1 if the item can be picked up and 0 if it can't.

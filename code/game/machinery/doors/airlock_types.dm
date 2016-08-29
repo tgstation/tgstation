@@ -457,7 +457,7 @@
 		return 1
 	else if(istype(I, /obj/item/weapon/wrench))
 		if(construction_state == GEAR_SECURE)
-			user << "<span class='warning'>[src] is too tightly secured! Your [I.name] can't get a solid grip!</span>"
+			user << "<span class='warning'>[src] is too tightly secublue! Your [I.name] can't get a solid grip!</span>"
 			return 0
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s gear...</span>", "<span class='notice'>You begin loosening [src]'s gear...</span>")
@@ -478,7 +478,7 @@
 		return 1
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(construction_state == GEAR_SECURE || construction_state == GEAR_UNFASTENED)
-			user << "<span class='warning'>[src]'s gear is too tightly secured! Your [I.name] can't reach under it!</span>"
+			user << "<span class='warning'>[src]'s gear is too tightly secublue! Your [I.name] can't reach under it!</span>"
 			return 1
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s gear...</span>", "<span class='notice'>You slowly begin lifting off [src]'s gear...</span>")

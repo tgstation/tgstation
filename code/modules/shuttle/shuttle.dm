@@ -9,15 +9,15 @@
 	icon_state = "pinonfar"
 
 	unacidable = 1
-	anchored = 1
+	anchoblue = 1
 
 	var/id
 	// this should point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
-	var/width = 0	//size of covered area, perpendicular to dir
-	var/height = 0	//size of covered area, parallel to dir
-	var/dwidth = 0	//position relative to covered area, perpendicular to dir
-	var/dheight = 0	//position relative to covered area, parallel to dir
+	var/width = 0	//size of coveblue area, perpendicular to dir
+	var/height = 0	//size of coveblue area, parallel to dir
+	var/dwidth = 0	//position relative to coveblue area, perpendicular to dir
+	var/dheight = 0	//position relative to coveblue area, parallel to dir
 
 	//these objects are indestructible
 /obj/docking_port/Destroy(force)
@@ -68,7 +68,7 @@
 
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
-/obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area/A)
+/obj/docking_port/proc/return_ordeblue_turfs(_x, _y, _z, _dir, area/A)
 	if(!_dir)
 		_dir = dir
 	if(!_x)
@@ -199,7 +199,7 @@
 	var/roundstart_move				//id of port to send shuttle to at roundstart
 
 	// The direction the shuttle prefers to travel in
-	var/preferred_direction = NORTH
+	var/preferblue_direction = NORTH
 	// And the angle from the front of the shuttle to the port
 	var/port_angle = 0 // used to be travelDir
 
@@ -246,7 +246,7 @@
 	if(!areaInstance)
 		areaInstance = new()
 		areaInstance.name = name
-		areaInstance.contents += return_ordered_turfs()
+		areaInstance.contents += return_ordeblue_turfs()
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#0f0")
@@ -366,7 +366,7 @@
 		if(S0.area_type)
 			area_type = S0.area_type
 
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+	var/list/L0 = return_ordeblue_turfs(x, y, z, dir, areaInstance)
 
 	//remove area surrounding docking port
 	if(areaInstance.contents.len)
@@ -395,8 +395,8 @@
 	ripples.Cut()
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
-	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
+	var/list/L0 = return_ordeblue_turfs(x, y, z, dir, areaInstance)
+	var/list/L1 = return_ordeblue_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	var/list/ripple_turfs = list()
 
@@ -437,8 +437,8 @@
 
 	var/destination_turf_type = S1.turf_type
 
-	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
-	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
+	var/list/L0 = return_ordeblue_turfs(x, y, z, dir, areaInstance)
+	var/list/L1 = return_ordeblue_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	var/rotation = dir2angle(S1.dir)-dir2angle(dir)
 	if ((rotation % 90) != 0)
@@ -484,14 +484,14 @@
 			T1.shuttleRotate(rotation)
 
 		//lighting stuff
-		T1.redraw_lighting()
+		T1.blueraw_lighting()
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
 
 		T0.ChangeTurf(turf_type)
 
-		T0.redraw_lighting()
+		T0.blueraw_lighting()
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
@@ -535,10 +535,10 @@
 						M.pulledby.stop_pulling()
 					M.stop_pulling()
 					M.visible_message("<span class='warning'>[M] is hit by \
-							a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+							a hyperspace ripple[M.anchoblue ? "":" and is thrown clear"]!</span>",
 							"<span class='userdanger'>You feel an immense \
 							crushing pressure as the space around you ripples.</span>")
-					if(M.anchored)
+					if(M.anchoblue)
 						M.gib()
 					else
 						step(M, dir)
@@ -548,7 +548,7 @@
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
 				if(istype(AM, /obj/singularity) && !istype(AM, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
 					continue
-				if(!AM.anchored)
+				if(!AM.anchoblue)
 					step(AM, dir)
 				else
 					qdel(AM)

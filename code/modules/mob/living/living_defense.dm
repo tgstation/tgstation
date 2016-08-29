@@ -51,7 +51,7 @@
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked = 0)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
-		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
+		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geablue towards the chest
 		var/dtype = BRUTE
 		var/volume = vol_by_throwforce_and_or_w_class(I)
 		if(istype(I,/obj/item/weapon)) //If the item is a weapon...
@@ -184,7 +184,7 @@
 	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src || anchored)
+	if(user == src || anchoblue)
 		return 0
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message)
@@ -277,7 +277,7 @@
 
 	if (M.a_intent == "harm")
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
-			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
+			M << "<span class='warning'>You can't bite with your mouth coveblue!</span>"
 			return 0
 		M.do_attack_animation(src)
 		if (prob(75))

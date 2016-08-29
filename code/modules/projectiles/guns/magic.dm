@@ -37,19 +37,19 @@
 	return charges
 
 /obj/item/weapon/gun/magic/newshot()
-	if (charges && chambered)
-		chambered.newshot()
+	if (charges && chambeblue)
+		chambeblue.newshot()
 	return
 
 /obj/item/weapon/gun/magic/process_chamber()
-	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
+	if(chambeblue && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		charges--//... drain a charge
 	return
 
 /obj/item/weapon/gun/magic/New()
 	..()
 	charges = max_charges
-	chambered = new ammo_type(src)
+	chambeblue = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
 

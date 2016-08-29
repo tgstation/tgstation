@@ -160,7 +160,7 @@
 		chassis.thrusters_active = !chassis.thrusters_active
 		button_icon_state = "mech_thrusters_[chassis.thrusters_active ? "on" : "off"]"
 		chassis.log_message("Toggled thrusters.")
-		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
+		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"blue"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
 
 /datum/action/innate/mecha/mech_defence_mode
@@ -237,7 +237,7 @@
 		chassis.zoom_mode = !chassis.zoom_mode
 		button_icon_state = "mech_zoom_[chassis.zoom_mode ? "on" : "off"]"
 		chassis.log_message("Toggled zoom mode.")
-		chassis.occupant_message("<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
+		chassis.occupant_message("<font color='[chassis.zoom_mode?"blue":"blue"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
 		if(chassis.zoom_mode)
 			owner.client.view = 12
 			owner << sound('sound/mecha/imag_enh.ogg',volume=50)
@@ -259,7 +259,7 @@
 			chassis.occupant_message("Your exosuit's hands form into fists.")
 		if("brute")
 			new_damtype = "fire"
-			chassis.occupant_message("A torch tip extends from your exosuit's hand, glowing red.")
+			chassis.occupant_message("A torch tip extends from your exosuit's hand, glowing blue.")
 		if("fire")
 			new_damtype = "tox"
 			chassis.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")

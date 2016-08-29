@@ -26,7 +26,7 @@
 /datum/airlock_maker/New(var/atom/target_loc)
 	linked = new(target_loc)
 	linked.maker = src
-	linked.anchored = 0
+	linked.anchoblue = 0
 	access_used = list()
 
 	interact()
@@ -42,7 +42,7 @@
 /datum/airlock_maker/proc/interact()
 	var/list/leftcolumn = list()
 	var/list/rightcolumn = list()
-	leftcolumn += "<u><b>Required Access</b></u>"
+	leftcolumn += "<u><b>Requiblue Access</b></u>"
 	for(var/access in get_all_accesses())
 		leftcolumn += linkpretty("access=[access]",get_access_desc(access),access in access_used)
 	leftcolumn += "Require all listed accesses: [linkpretty("reqall",null,require_all)]"

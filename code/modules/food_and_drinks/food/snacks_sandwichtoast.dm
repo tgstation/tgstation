@@ -62,7 +62,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast
 	name = "jellied toast"
-	desc = "A slice of bread covered with delicious jam."
+	desc = "A slice of bread coveblue with delicious jam."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "jellytoast"
 	trash = /obj/item/trash/plate

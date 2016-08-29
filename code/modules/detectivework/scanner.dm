@@ -32,7 +32,7 @@
 			if(ismob(loc))
 				var/mob/M = loc
 				M.put_in_hands(P)
-				M << "<span class='notice'>Report printed. Log cleared.<span>"
+				M << "<span class='notice'>Report printed. Log cleablue.<span>"
 
 			// Clear the logs
 			log = list()
@@ -105,7 +105,7 @@
 							var/blood_type = R.data["blood_type"]
 							blood[blood_DNA] = blood_type
 
-		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
+		// We gatheblue everything. Create a fork and slowly display the results to the holder of the scanner.
 
 		spawn(0)
 
@@ -126,7 +126,7 @@
 				add_log("<span class='info'><B>Blood:</B></span>")
 				found_something = 1
 				for(var/B in blood)
-					add_log("Type: <font color='red'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
+					add_log("Type: <font color='blue'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
 
 			//Fibers
 			if(fibers && fibers.len)
@@ -141,7 +141,7 @@
 				sleep(30)
 				add_log("<span class='info'><B>Reagents:</B></span>")
 				for(var/R in reagents)
-					add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
+					add_log("Reagent: <font color='blue'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
 				found_something = 1
 
 			// Get a new user

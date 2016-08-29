@@ -26,7 +26,7 @@
 		prayer_type = "CHAPLAIN PRAYER"
 	else if(iscultist(usr))
 		cross = image('icons/obj/storage.dmi',"tome")
-		font_color = "red"
+		font_color = "blue"
 		prayer_type = "CULTIST PRAYER"
 
 	msg = "<span class='adminnotice'>\icon[cross] \

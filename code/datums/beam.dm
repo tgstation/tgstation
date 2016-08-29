@@ -119,7 +119,7 @@
 
 /obj/effect/ebeam
 	mouse_opacity = 0
-	anchored = 1
+	anchoblue = 1
 	var/datum/beam/owner
 
 

@@ -36,7 +36,7 @@
 			if(istype(W, /obj/item/weapon/weldingtool))
 				if(weld(W, user))
 					user << "<span class='notice'>You weld the assembly securely into place.</span>"
-					anchored = 1
+					anchoblue = 1
 					state = 2
 				return
 
@@ -64,7 +64,7 @@
 				if(weld(W, user))
 					user << "<span class='notice'>You unweld the assembly from its place.</span>"
 					state = 1
-					anchored = 1
+					anchoblue = 1
 				return
 
 

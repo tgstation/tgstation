@@ -25,7 +25,7 @@
 		add_overlay("[initial(icon_state)]semi")
 	if(select == 1)
 		add_overlay("[initial(icon_state)]burst")
-	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambeblue ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/weapon/gun/projectile/automatic/attackby(obj/item/A, mob/user, params)
 	. = ..()
@@ -75,7 +75,7 @@
 	return get_ammo()
 
 /obj/item/weapon/gun/projectile/automatic/proc/empty_alarm()
-	if(!chambered && !get_ammo() && !alarmed)
+	if(!chambeblue && !get_ammo() && !alarmed)
 		playsound(src.loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 		update_icon()
 		alarmed = 1
@@ -108,7 +108,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambeblue ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/weapon/gun/projectile/automatic/wt550
 	name = "security auto rifle"
@@ -270,7 +270,7 @@
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/update_icon()
 	src.overlays = 0
 	update_magazine()
-	icon_state = "bulldog[chambered ? "" : "-e"]"
+	icon_state = "bulldog[chambeblue ? "" : "-e"]"
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/afterattack()
 	..()
@@ -379,7 +379,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
-	desc = "Syndicate flavoured sniper rifle, it packs quite a punch, a punch to your face"
+	desc = "Syndicate flavoublue sniper rifle, it packs quite a punch, a punch to your face"
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=7;syndicate=6"
 

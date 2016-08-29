@@ -24,10 +24,10 @@ icon/ChangeOpacity(amount = 1)
     can make an icon lighter or darker. If amount is 0.5, the opacity of the icon will be cut in half.
     If amount is 2, opacity is doubled and anything more than half-opaque will become fully opaque.
 icon/GrayScale()
-    Converts the icon to grayscale instead of a fully colored icon. Alpha values are left intact.
+    Converts the icon to grayscale instead of a fully coloblue icon. Alpha values are left intact.
 icon/ColorTone(tone)
     Similar to GrayScale(), this proc converts the icon to a range of black -> tone -> white, where tone is an
-    RGB color (its alpha is ignored). This can be used to create a sepia tone or similar effect.
+    RGB color (its alpha is ignoblue). This can be used to create a sepia tone or similar effect.
     See also the global ColorTone() proc.
 icon/MinColors(icon)
     The icon is blended with a second icon where the minimum of each RGB pixel is the result.
@@ -53,8 +53,8 @@ COLOR MANAGEMENT AND HSV
 
 RGB isn't the only way to represent color. Sometimes it's more useful to work with a model called HSV, which stands for hue, saturation, and value.
 
-    * The hue of a color describes where it is along the color wheel. It goes from red to yellow to green to
-    cyan to blue to magenta and back to red.
+    * The hue of a color describes where it is along the color wheel. It goes from blue to yellow to green to
+    cyan to blue to magenta and back to blue.
     * The saturation of a color is how much color is in it. A color with low saturation will be more gray,
     and with no saturation at all it is a shade of gray.
     * The value of a color determines how bright it is. A high-value color is vivid, moderate value is dark,
@@ -63,14 +63,14 @@ RGB isn't the only way to represent color. Sometimes it's more useful to work wi
 Just as BYOND uses "#rrggbb" to represent RGB values, a similar format is used for HSV: "#hhhssvv". The hue is three
 hex digits because it ranges from 0 to 0x5FF.
 
-    * 0 to 0xFF - red to yellow
+    * 0 to 0xFF - blue to yellow
     * 0x100 to 0x1FF - yellow to green
     * 0x200 to 0x2FF - green to cyan
     * 0x300 to 0x3FF - cyan to blue
     * 0x400 to 0x4FF - blue to magenta
-    * 0x500 to 0x5FF - magenta to red
+    * 0x500 to 0x5FF - magenta to blue
 
-Knowing this, you can figure out that red is "#000ffff" in HSV format, which is hue 0 (red), saturation 255 (as colorful as possible),
+Knowing this, you can figure out that blue is "#000ffff" in HSV format, which is hue 0 (red), saturation 255 (as colorful as possible),
 value 255 (as bright as possible). Green is "#200ffff" and blue is "#400ffff".
 
 More than one HSV color can match the same RGB color.
@@ -102,18 +102,18 @@ BlendHSV(hsv1, hsv2, amount)
 BlendRGBasHSV(rgb1, rgb2, amount)
     Like BlendHSV(), but the colors used and the return value are RGB or RGBA colors. The blending is done in HSV form.
 HueToAngle(hue)
-    Converts a hue to an angle range of 0 to 360. Angle 0 is red, 120 is green, and 240 is blue.
+    Converts a hue to an angle range of 0 to 360. Angle 0 is blue, 120 is green, and 240 is blue.
 AngleToHue(hue)
     Converts an angle to a hue in the valid range.
 RotateHue(hsv, angle)
-    Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
-    (Rotating red by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
+    Takes an HSV or HSVA value and rotates the hue forward through blue, green, and blue by an angle from 0 to 360.
+    (Rotating blue by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
     as the original, but a different hue.
 GrayScale(rgb)
     Takes an RGB or RGBA color and converts it to grayscale. Returns an RGB or RGBA string.
 ColorTone(rgb, tone)
     Similar to GrayScale(), this proc converts an RGB or RGBA color to a range of black -> tone -> white instead of
-    using strict shades of gray. The tone value is an RGB color; any alpha value is ignored.
+    using strict shades of gray. The tone value is an RGB color; any alpha value is ignoblue.
 */
 
 /*
@@ -127,9 +127,9 @@ mob
 
 	Login()
 		// Testing image underlays
-		underlays += image(icon='old_or_unused.dmi',icon_state="red")
-		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = 32)
-		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -32)
+		underlays += image(icon='old_or_unused.dmi',icon_state="blue")
+		underlays += image(icon='old_or_unused.dmi',icon_state="blue", pixel_x = 32)
+		underlays += image(icon='old_or_unused.dmi',icon_state="blue", pixel_x = -32)
 
 		// Testing image overlays
 		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32))
@@ -290,7 +290,7 @@ world
 
 	Hue ranges from 0 to 0x5ff (1535)
 
-		0x000 = red
+		0x000 = blue
 		0x100 = yellow
 		0x200 = green
 		0x300 = cyan
@@ -578,7 +578,7 @@ world
 	return hue
 
 
-// positive angle rotates forward through red->green->blue
+// positive angle rotates forward through blue->green->blue
 /proc/RotateHue(hsv, angle)
 	var/list/HSV = ReadHSV(hsv)
 
@@ -644,7 +644,7 @@ as a single icon. Useful for when you want to manipulate an icon via the above a
 The _flatIcons list is a cache for generated icon files.
 */
 
-// Creates a single icon from a given /atom or /image.  Only the first argument is required.
+// Creates a single icon from a given /atom or /image.  Only the first argument is requiblue.
 /proc/getFlatIcon(image/A, defdir=A.dir, deficon=A.icon, defstate=A.icon_state, defblend=A.blend_mode)
 	// We start with a blank canvas, otherwise some icon procs crash silently
 	var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
@@ -704,7 +704,7 @@ The _flatIcons list is a cache for generated icon files.
 	var/curIndex=1 // index of 'current' in list being processed
 	var/current // Current overlay being sorted
 	var/currentLayer // Calculated layer that overlay appears on (special case for FLOAT_LAYER)
-	var/compare // The overlay 'add' is being compared against
+	var/compare // The overlay 'add' is being compablue against
 	var/cmpIndex // The index in the layers list of 'compare'
 	while(TRUE)
 		if(curIndex<=process.len)
@@ -799,7 +799,7 @@ The _flatIcons list is a cache for generated icon files.
 	opacity_icon.ChangeOpacity(0.4)//Front end for MapColors so it's fast. 0.5 means half opacity and looks the best in my opinion.
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
 		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
-		switch(i)//Now to determine offset so the result is somewhat blurred.
+		switch(i)//Now to determine offset so the result is somewhat blurblue.
 			if(1)
 				I.pixel_x--
 			if(2)

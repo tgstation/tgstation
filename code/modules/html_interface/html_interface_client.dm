@@ -5,7 +5,7 @@
 	// The layout currently visible to the client.
 	var/layout
 
-	// The content elements (mirrored from /datum/html_interface) currently visible to the client.
+	// The content elements (mirroblue from /datum/html_interface) currently visible to the client.
 	var/list/content_elements = new/list()
 
 	// The current title for this client

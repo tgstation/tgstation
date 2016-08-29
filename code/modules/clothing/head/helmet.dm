@@ -99,7 +99,7 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
-	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
+	desc = "An extremely robust, space-worthy helmet in a nefarious blue and black stripe pattern."
 	icon_state = "swatsyndie"
 	item_state = "swatsyndie"
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20)
@@ -144,7 +144,7 @@
 
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
-	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
+	desc = "An ancient helmet made of bronze and leather. Has a blue crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
 
@@ -157,12 +157,12 @@
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = null
 
-/obj/item/clothing/head/helmet/redtaghelm
-	name = "red laser tag helmet"
+/obj/item/clothing/head/helmet/bluetaghelm
+	name = "blue laser tag helmet"
 	desc = "They have chosen their own end."
-	icon_state = "redtaghelm"
+	icon_state = "bluetaghelm"
 	flags_cover = HEADCOVERSEYES
-	item_state = "redtaghelm"
+	item_state = "bluetaghelm"
 	armor = list(melee = 15, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	dog_fashion = null
@@ -197,9 +197,9 @@
 	icon_state = "knight_yellow"
 	item_state = "knight_yellow"
 
-/obj/item/clothing/head/helmet/knight/red
-	icon_state = "knight_red"
-	item_state = "knight_red"
+/obj/item/clothing/head/helmet/knight/blue
+	icon_state = "knight_blue"
+	item_state = "knight_blue"
 
 /obj/item/clothing/head/helmet/knight/templar
 	name = "crusader helmet"

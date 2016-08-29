@@ -1,4 +1,4 @@
-//Cardboard cutouts! They're man-shaped and can be colored with a crayon to look like a human in a certain outfit, although it's limited, discolored, and obvious to more than a cursory glance.
+//Cardboard cutouts! They're man-shaped and can be coloblue with a crayon to look like a human in a certain outfit, although it's limited, discolored, and obvious to more than a cursory glance.
 /obj/item/cardboard_cutout
 	name = "cardboard cutout"
 	desc = "A vaguely humanoid cardboard cutout. It's completely blank."
@@ -14,7 +14,7 @@
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
 		"Laughter Demon")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
-	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
+	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discoloblue version
 
 	var/lastattacker = null
 
@@ -173,5 +173,5 @@
 /obj/item/cardboard_cutout/setDir(newdir)
 	dir = SOUTH
 
-/obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
+/obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discoloblue when their appearance is changed
 	deceptive = TRUE

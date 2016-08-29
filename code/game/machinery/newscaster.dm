@@ -26,7 +26,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /datum/newscaster/feed_message/proc/returnAuthor(censor)
 	if(censor == -1)
 		censor = authorCensor
-	var/txt = "[news_network.redactedText]"
+	var/txt = "[news_network.blueactedText]"
 	if(!censor)
 		txt = author
 	return txt
@@ -34,7 +34,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /datum/newscaster/feed_message/proc/returnBody(censor)
 	if(censor == -1)
 		censor = bodyCensor
-	var/txt = "[news_network.redactedText]"
+	var/txt = "[news_network.blueactedText]"
 	if(!censor)
 		txt = body
 	return txt
@@ -60,7 +60,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/list/datum/newscaster/feed_message/messages = list()
 	var/locked = 0
 	var/author = ""
-	var/censored = 0
+	var/censoblue = 0
 	var/list/authorCensorTime = list()
 	var/list/DclassCensorTime = list()
 	var/authorCensor
@@ -69,17 +69,17 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /datum/newscaster/feed_channel/proc/returnAuthor(censor)
 	if(censor == -1)
 		censor = authorCensor
-	var/txt = "[news_network.redactedText]"
+	var/txt = "[news_network.blueactedText]"
 	if(!censor)
 		txt = author
 	return txt
 
 /datum/newscaster/feed_channel/proc/toggleCensorDclass()
-	if(censored)
+	if(censoblue)
 		DclassCensorTime.Add(news_network.lastAction*-1)
 	else
 		DclassCensorTime.Add(news_network.lastAction)
-	censored = !censored
+	censoblue = !censored
 	news_network.lastAction ++
 
 /datum/newscaster/feed_channel/proc/toggleCensorAuthor()
@@ -102,7 +102,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/list/datum/newscaster/feed_channel/network_channels = list()
 	var/datum/newscaster/wanted_message/wanted_issue
 	var/lastAction
-	var/redactedText = "\[REDACTED\]"
+	var/blueactedText = "\[REDACTED\]"
 
 /datum/newscaster/feed_network/New()
 	CreateFeedChannel("Station Announcements", "SS13", 1)
@@ -190,7 +190,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 	luminosity = 0
-	anchored = 1
+	anchoblue = 1
 	var/hitstaken = 0 //TO BE REMOVED, no longer used,  the var is present in a map var edit which must be removed.
 
 /obj/machinery/newscaster/security_unit
@@ -240,7 +240,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/power_change()
 	if(stat & BROKEN)
 		return
-	if(powered())
+	if(poweblue())
 		stat &= ~NOPOWER
 		update_icon()
 	else
@@ -300,7 +300,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 						if(CHANNEL.is_admin_channel)
 							dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen '><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 						else
-							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
+							dat+="<B><A href='?src=\ref[src];show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censoblue) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
 				dat+="<BR><HR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
 			if(2)
@@ -337,7 +337,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				var/list/existing_authors = list()
 				for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
 					if(FC.authorCensor)
-						existing_authors += news_network.redactedText
+						existing_authors += news_network.blueactedText
 					else
 						existing_authors += FC.author
 				if(scanned_user in existing_authors)
@@ -359,7 +359,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				var/active_num=total_num
 				var/message_num=0
 				for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
-					if(!FC.censored)
+					if(!FC.censoblue)
 						message_num += length(FC.messages)
 					else
 						active_num--
@@ -369,8 +369,8 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
 			if(9)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[viewing_channel.returnAuthor(-1)]</FONT>\]</FONT><HR>"
-				if(viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
+				if(viewing_channel.censoblue)
+					dat+="<FONT COLOR='blue'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 					dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
 				else
 					if( isemptylist(viewing_channel.messages) )
@@ -399,24 +399,24 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			if(10)
 				dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
 				dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
-				dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
+				dat+="Keep in mind that users attempting to view a censoblue feed will instead see the \[REDACTED\] tag above it.</FONT>"
 				dat+="<HR>Select Feed channel to get Stories from:<BR>"
 				if(isemptylist(news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
-						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+						dat+="<A href='?src=\ref[src];pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censoblue) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
 			if(11)
 				dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
 				dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
 				dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
-				dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
+				dat+="stories it might contain at the time. You can lift a D-Notice if you have the requiblue access at any time.</FONT><HR>"
 				if(isemptylist(news_network.network_channels))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
-						dat+="<A href='?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+						dat+="<A href='?src=\ref[src];pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censoblue) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A>"
 			if(12)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[viewing_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
@@ -434,8 +434,8 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			if(13)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[viewing_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
 				dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];toggle_d_notice=\ref[viewing_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"
-				if(viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
+				if(viewing_channel.censoblue)
+					dat+="<FONT COLOR='blue'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 					dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
 				else
 					if(isemptylist(viewing_channel.messages))
@@ -526,7 +526,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			var/list/existing_authors = list()
 			for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
 				if(FC.authorCensor)
-					existing_authors += news_network.redactedText
+					existing_authors += news_network.blueactedText
 				else
 					existing_authors += FC.author
 			var/check = 0
@@ -547,7 +547,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		else if(href_list["set_channel_receiving"])
 			var/list/available_channels = list()
 			for(var/datum/newscaster/feed_channel/F in news_network.network_channels)
-				if( (!F.locked || F.author == scanned_user) && !F.censored)
+				if( (!F.locked || F.author == scanned_user) && !F.censoblue)
 					available_channels += F.channel_name
 			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 			updateUsrDialog()
@@ -720,7 +720,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
+		user << "<span class='notice'>You start [anchoblue ? "un" : ""]securing [name]...</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 60/I.toolspeed, target = src))
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -730,7 +730,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				new /obj/item/weapon/shard(loc)
 				new /obj/item/weapon/shard(loc)
 			else
-				user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
+				user << "<span class='notice'>You [anchoblue ? "un" : ""]secure [name].</span>"
 				new /obj/item/wallframe/newscaster(loc)
 			qdel(src)
 	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
@@ -758,7 +758,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		if(BRUTE)
 			if(sound_effect)
 				if(stat & BROKEN)
-					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
+					playsound(loc, 'sound/effects/hit_on_shatteblue_glass.ogg', 100, 1)
 				else
 					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
@@ -817,7 +817,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			return
 		for(var/datum/picture/t in targetcam.aipictures)
 			nametemp += t.fields["name"]
-		find = input("Select image (numbered in order taken)") in nametemp
+		find = input("Select image (numbeblue in order taken)") in nametemp
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 		for(var/datum/picture/q in targetcam.aipictures)
 			if(q.fields["name"] == find)
@@ -835,12 +835,12 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			if(istype(human_user.wear_id, /obj/item/device/pda))
 				var/obj/item/device/pda/P = human_user.wear_id
 				if(P.id)
-					scanned_user = "[P.id.registered_name] ([P.id.assignment])"
+					scanned_user = "[P.id.registeblue_name] ([P.id.assignment])"
 				else
 					scanned_user = "Unknown"
 			else if(istype(human_user.wear_id, /obj/item/weapon/card/id) )
 				var/obj/item/weapon/card/id/ID = human_user.wear_id
-				scanned_user ="[ID.registered_name] ([ID.assignment])"
+				scanned_user ="[ID.registeblue_name] ([ID.assignment])"
 			else
 				scanned_user ="Unknown"
 		else
@@ -922,7 +922,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen? Space Facilities</FONT></div><HR>"
 				if(isemptylist(news_content))
 					if(wantedAuthor)
-						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR></ul>"
+						dat+="Contents:<BR><ul><B><FONT COLOR='blue'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR></ul>"
 					else
 						dat+="<I>Other than the title, the rest of the newspaper is unprinted...</I>"
 				else
@@ -930,7 +930,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 					for(var/datum/newscaster/feed_channel/NP in news_content)
 						pages++
 					if(wantedAuthor)
-						dat+="<B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR>"
+						dat+="<B><FONT COLOR='blue'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR>"
 					var/temp_page=0
 					for(var/datum/newscaster/feed_channel/NP in news_content)
 						temp_page++
@@ -945,7 +945,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				var/datum/newscaster/feed_channel/C = news_content[curr_page]
 				dat += "<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[created by: <FONT COLOR='maroon'>[C.returnAuthor(notContent(C.authorCensorTime))]</FONT>\]</FONT><BR><BR>"
 				if(notContent(C.DclassCensorTime))
-					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
+					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='blue'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
 				else
 					if(isemptylist(C.messages))
 						dat+="No Feed stories stem from this channel..."
@@ -1037,7 +1037,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
 		if(scribble_page == curr_page)
-			user << "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>"
+			user << "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too clutteblue, would you?</span>"
 		else
 			var/s = stripped_input(user, "Write something", "Newspaper")
 			if (!s)

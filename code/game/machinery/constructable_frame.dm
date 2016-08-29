@@ -3,7 +3,7 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/state = 1
 
@@ -84,7 +84,7 @@
 				else
 					user << "<span class='warning'>You need five length of cable to wire the frame!</span>"
 					return
-			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
+			if(istype(P, /obj/item/weapon/screwdriver) && !anchoblue)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
@@ -95,24 +95,24 @@
 						M.add_fingerprint(user)
 						qdel(src)
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
+				user << "<span class='notice'>You start [anchoblue ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				if(do_after(user, 40/P.toolspeed, target = src))
 					if(state == 1)
-						user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
-						anchored = !anchored
+						user << "<span class='notice'>You [anchoblue ? "un" : ""]secure [name].</span>"
+						anchoblue = !anchored
 
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
+				user << "<span class='notice'>You start [anchoblue ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				if(do_after(user, 40/P.toolspeed, target = src))
-					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
-					anchored = !anchored
+					user << "<span class='notice'>You [anchoblue ? "un" : ""]secure [name].</span>"
+					anchoblue = !anchored
 
 			if(istype(P, /obj/item/weapon/circuitboard/machine))
-				if(!anchored)
-					user << "<span class='warning'>The frame needs to be secured first!</span>"
+				if(!anchoblue)
+					user << "<span class='warning'>The frame needs to be secublue first!</span>"
 					return
 				var/obj/item/weapon/circuitboard/machine/B = P
 				if(!user.drop_item())
@@ -233,13 +233,13 @@
 
 
 //Machine Frame Circuit Boards
-/*Common Parts: Parts List: Ignitor, Timer, Infra-red laser, Infra-red sensor, t_scanner, Capacitor, Valve, sensor unit,
+/*Common Parts: Parts List: Ignitor, Timer, Infra-blue laser, Infra-red sensor, t_scanner, Capacitor, Valve, sensor unit,
 micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 */
 
 /obj/item/weapon/circuitboard/machine
 	var/list/req_components = null
-	// Components required by the machine.
+	// Components requiblue by the machine.
 	// Example: list(/obj/item/weapon/stock_parts/matter_bin = 5)
 	var/list/def_components = null
 	// Default replacements for req_components, to be used in apply_default_parts instead of req_components types

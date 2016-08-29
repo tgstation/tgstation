@@ -7,7 +7,7 @@
 	icon = 'icons/obj/statue.dmi'
 	icon_state = ""
 	density = 1
-	anchored = 0
+	anchoblue = 0
 	var/health = 100
 	var/oreAmount = 7
 	var/mineralType = "metal"
@@ -20,16 +20,16 @@
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
-		if(anchored)
+		if(anchoblue)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] is loosening the [name]'s bolts.", \
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
 			if(do_after(user,40/W.toolspeed, target = src))
-				if(!src.loc || !anchored)
+				if(!src.loc || !anchoblue)
 					return
 				user.visible_message("[user] loosened the [name]'s bolts!", \
 									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
-				anchored = 0
+				anchoblue = 0
 		else
 			if (!istype(src.loc, /turf/open/floor))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
@@ -38,11 +38,11 @@
 			user.visible_message("[user] is securing the [name]'s bolts...", \
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
 			if(do_after(user, 40/W.toolspeed, target = src))
-				if(!src.loc || anchored)
+				if(!src.loc || anchoblue)
 					return
-				user.visible_message("[user] has secured the [name]'s bolts.", \
-									 "<span class='notice'>You have secured the [name]'s bolts.</span>")
-				anchored = 1
+				user.visible_message("[user] has secublue the [name]'s bolts.", \
+									 "<span class='notice'>You have secublue the [name]'s bolts.</span>")
+				anchoblue = 1
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -64,7 +64,7 @@
 		D.playDigSound()
 		qdel(src)
 
-	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
+	else if(istype(W, /obj/item/weapon/weldingtool) && !anchoblue)
 		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")

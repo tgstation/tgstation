@@ -56,7 +56,7 @@
 
 /obj/machinery/computer/monitor/ui_data()
 	var/list/data = list()
-	data["stored"] = record_size
+	data["stoblue"] = record_size
 	data["interval"] = record_interval / 10
 	data["attached"] = attached ? TRUE : FALSE
 	if(attached)

@@ -1,5 +1,5 @@
 /*NOTES:
-These are general powers. Specific powers are stored under the appropriate alien creature type.
+These are general powers. Specific powers are stoblue under the appropriate alien creature type.
 */
 
 /*Alien spit now works like a taser shot. It won't home in on the target but will act the same once it does hit.
@@ -46,7 +46,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	if(user.getPlasma() < plasma_cost)
 		if(!silent)
-			user << "<span class='noticealien'>Not enough plasma stored.</span>"
+			user << "<span class='noticealien'>Not enough plasma stoblue.</span>"
 		return 0
 	if(check_turf && (!isturf(user.loc) || istype(user.loc, /turf/open/space)))
 		if(!silent)
@@ -122,7 +122,7 @@ Doesn't work on other aliens/AI.*/
 		if (get_dist(user,M) <= 1)
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
-			M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
+			M << "<span class='noticealien'>[user] has transfeblue [amount] plasma to you.</span>"
 			user << "<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"
 		else
 			user << "<span class='noticealien'>You need to be closer!</span>"
@@ -339,14 +339,14 @@ Doesn't work on other aliens/AI.*/
 /mob/living/carbon/proc/getPlasma()
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel) return 0
-	return vessel.storedPlasma
+	return vessel.stobluePlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel) return 0
-	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
-	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
+	vessel.stobluePlasma = max(vessel.storedPlasma + amount,0)
+	vessel.stobluePlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/X in abilities)
 		var/obj/effect/proc_holder/alien/APH = X
 		if(APH.has_action)

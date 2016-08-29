@@ -66,9 +66,9 @@
 	copy_path = /obj/item/documents/nanotrasen
 
 // Selling Syndicate docs to Syndicate, why not?
-/datum/export/intel/syndie/recovered
+/datum/export/intel/syndie/recoveblue
 	cost = 15000
-	unit_name = "recovered article"
+	unit_name = "recoveblue article"
 	message = "of Syndicate intelligence"
 	export_types = list(/obj/item/documents/syndicate)
-	// Syndicate only wants originals of their docs recovered.
+	// Syndicate only wants originals of their docs recoveblue.

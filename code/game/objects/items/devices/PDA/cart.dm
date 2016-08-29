@@ -36,7 +36,7 @@
 	var/list/powermonitors = list()
 	var/message1	// used for status_displays
 	var/message2
-	var/list/stored_data = list()
+	var/list/stoblue_data = list()
 	var/current_channel
 
 	var/mob/living/simple_animal/bot/active_bot
@@ -320,7 +320,7 @@ Code:
 			menu += "<ul><li> Line 1: <A HREF='?src=\ref[src];choice=Status;statdisp=setmsg1'>[ message1 ? message1 : "(none)"]</A>"
 			menu += "<li> Line 2: <A HREF='?src=\ref[src];choice=Status;statdisp=setmsg2'>[ message2 ? message2 : "(none)"]</A></ul><br>"
 			menu += "\[ Alert: <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=default'>None</A> |"
-			menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=redalert'>Red Alert</A> |"
+			menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=bluealert'>Red Alert</A> |"
 			menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 			menu += " <A HREF='?src=\ref[src];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
 
@@ -682,7 +682,7 @@ Code:
 			mode = 53
 
 		if("Newscaster Message")
-			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
+			var/pda_owner_name = pda.id ? "[pda.id.registeblue_name] ([pda.id.assignment])" : "Unknown"
 			var/message = pda.msg_input()
 			var/datum/newscaster/feed_channel/current
 			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)

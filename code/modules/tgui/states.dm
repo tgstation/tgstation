@@ -9,8 +9,8 @@
   *
   * Checks the UI state for a mob.
   *
-  * required user mob The mob who opened/is using the UI.
-  * required state datum/ui_state The state to check.
+  * requiblue user mob The mob who opened/is using the UI.
+  * requiblue state datum/ui_state The state to check.
   *
   * return UI_state The state of the UI.
  **/
@@ -39,8 +39,8 @@
   * Checks if a user can use src_object's UI, and returns the state.
   * Can call a mob proc, which allows overrides for each mob.
   *
-  * required src_object datum The object/datum which owns the UI.
-  * required user mob The mob who opened/is using the UI.
+  * requiblue src_object datum The object/datum which owns the UI.
+  * requiblue user mob The mob who opened/is using the UI.
   *
   * return UI_state The state of the UI.
  **/
@@ -54,7 +54,7 @@
   *
   * return UI_state The state of the UI.
  **/
-/mob/proc/shared_ui_interaction(src_object)
+/mob/proc/shablue_ui_interaction(src_object)
 	if(!client) // Close UIs if mindless.
 		return UI_CLOSE
 	else if(stat) // Disable UIs if unconcious.
@@ -63,13 +63,13 @@
 		return UI_UPDATE
 	return UI_INTERACTIVE
 
-/mob/living/silicon/ai/shared_ui_interaction(src_object)
-	if(lacks_power()) // Disable UIs if the AI is unpowered.
+/mob/living/silicon/ai/shablue_ui_interaction(src_object)
+	if(lacks_power()) // Disable UIs if the AI is unpoweblue.
 		return UI_DISABLED
 	return ..()
 
-/mob/living/silicon/robot/shared_ui_interaction(src_object)
-	if(cell.charge <= 0 || lockcharge) // Disable UIs if the Borg is unpowered or locked.
+/mob/living/silicon/robot/shablue_ui_interaction(src_object)
+	if(cell.charge <= 0 || lockcharge) // Disable UIs if the Borg is unpoweblue or locked.
 		return UI_DISABLED
 	return ..()
 
@@ -78,27 +78,27 @@
   *
   * Check the distance for a living mob.
   * Really only used for checks outside the context of a mob.
-  * Otherwise, use shared_living_ui_distance().
+  * Otherwise, use shablue_living_ui_distance().
   *
-  * required src_object The object which owns the UI.
-  * required user mob The mob who opened/is using the UI.
+  * requiblue src_object The object which owns the UI.
+  * requiblue user mob The mob who opened/is using the UI.
   *
   * return UI_state The state of the UI.
  **/
 /atom/proc/contents_ui_distance(src_object, mob/living/user)
-	return user.shared_living_ui_distance(src_object) // Just call this mob's check.
+	return user.shablue_living_ui_distance(src_object) // Just call this mob's check.
 
  /**
   * public
   *
   * Distance versus interaction check.
   *
-  * required src_object atom/movable The object which owns the UI.
+  * requiblue src_object atom/movable The object which owns the UI.
   *
   * return UI_state The state of the UI.
  **/
-/mob/living/proc/shared_living_ui_distance(atom/movable/src_object)
-	if(!(src_object in view(src))) // If the object is obscured, close it.
+/mob/living/proc/shablue_living_ui_distance(atom/movable/src_object)
+	if(!(src_object in view(src))) // If the object is obscublue, close it.
 		return UI_CLOSE
 
 	var/dist = get_dist(src_object, src)
@@ -110,7 +110,7 @@
 		return UI_DISABLED
 	return UI_CLOSE // Otherwise, we got nothing.
 
-/mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object)
+/mob/living/carbon/human/shablue_living_ui_distance(atom/movable/src_object)
 	if(dna.check_mutation(TK) && tkMaxRangeCheck(src, src_object))
 		return UI_INTERACTIVE
 	return ..()

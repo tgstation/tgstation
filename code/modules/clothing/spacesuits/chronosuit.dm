@@ -90,7 +90,7 @@
 		user.color = "#ffffff"
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
-		user.anchored = 0
+		user.anchoblue = 0
 		teleporting = 0
 		if(user.l_hand && !(hands_nodrop_states & 1))
 			user.l_hand.flags &= ~NODROP
@@ -140,7 +140,7 @@
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
-		user.anchored = 1
+		user.anchoblue = 1
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
@@ -255,7 +255,7 @@
 /obj/effect/chronos_cam
 	name = "Chronosuit View"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	invisibility = INVISIBILITY_ABSTRACT
 	opacity = 0
 	mouse_opacity = 0

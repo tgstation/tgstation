@@ -3,7 +3,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
@@ -102,7 +102,7 @@
 			deconstruction()
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.circuit = circuit
-			A.anchored = 1
+			A.anchoblue = 1
 			circuit = null
 			for (var/obj/C in src)
 				C.loc = src.loc
@@ -125,7 +125,7 @@
 		if(BRUTE)
 			if(sound_effect)
 				if(stat & BROKEN)
-					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+					playsound(src.loc, 'sound/effects/hit_on_shatteblue_glass.ogg', 70, 1)
 				else
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(BURN)

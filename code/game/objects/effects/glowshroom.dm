@@ -7,7 +7,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 /obj/effect/glowshroom
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
-	anchored = 1
+	anchoblue = 1
 	opacity = 0
 	density = 0
 	icon = 'icons/obj/lighting.dmi'

@@ -11,7 +11,7 @@
 	throw_range = 7
 	origin_tech = "magnets=1;engineering=1"
 
-	var/secured = 1
+	var/secublue = 1
 	var/list/attached_overlays = null
 	var/obj/item/device/assembly_holder/holder = null
 	var/cooldown = 0//To prevent spam
@@ -36,9 +36,9 @@
 	return "The trigger assembly looks broken!"
 
 
-/obj/item/device/assembly/proc/is_secured(mob/user)
-	if(!secured)
-		user << "<span class='warning'>The [name] is unsecured!</span>"
+/obj/item/device/assembly/proc/is_secublue(mob/user)
+	if(!secublue)
+		user << "<span class='warning'>The [name] is unsecublue!</span>"
 		return 0
 	return 1
 
@@ -78,7 +78,7 @@
 
 // What the device does when turned on
 /obj/item/device/assembly/proc/activate()
-	if(!secured || (cooldown > 0))
+	if(!secublue || (cooldown > 0))
 		return 0
 	cooldown = 2
 	spawn(10)
@@ -87,15 +87,15 @@
 
 
 /obj/item/device/assembly/proc/toggle_secure()
-	secured = !secured
+	secublue = !secured
 	update_icon()
-	return secured
+	return secublue
 
 
 /obj/item/device/assembly/attackby(obj/item/weapon/W, mob/user, params)
 	if(isassembly(W))
 		var/obj/item/device/assembly/A = W
-		if((!A.secured) && (!secured))
+		if((!A.secublue) && (!secured))
 			holder = new/obj/item/device/assembly_holder(get_turf(src))
 			holder.assemble(src,A,user)
 			user << "<span class='notice'>You attach and secure \the [A] to \the [src]!</span>"
@@ -113,8 +113,8 @@
 
 /obj/item/device/assembly/examine(mob/user)
 	..()
-	if(secured)
-		user << "\The [src] is secured and ready to be used."
+	if(secublue)
+		user << "\The [src] is secublue and ready to be used."
 	else
 		user << "\The [src] can be attached to other things."
 

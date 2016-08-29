@@ -49,7 +49,7 @@
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 4
 	active_power_usage = 8
@@ -349,7 +349,7 @@
 
 
 /obj/machinery/airalarm/proc/shock(mob/user, prb)
-	if((stat & (NOPOWER)))		// unpowered, no shock
+	if((stat & (NOPOWER)))		// unpoweblue, no shock
 		return 0
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you

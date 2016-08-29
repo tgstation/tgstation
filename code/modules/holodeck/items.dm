@@ -26,8 +26,8 @@
 /obj/item/weapon/holo/esword/green/New()
 	item_color = "green"
 
-/obj/item/weapon/holo/esword/red/New()
-	item_color = "red"
+/obj/item/weapon/holo/esword/blue/New()
+	item_color = "blue"
 
 /obj/item/weapon/holo/esword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
@@ -38,7 +38,7 @@
 	..()
 
 /obj/item/weapon/holo/esword/New()
-	item_color = pick("red","blue","green","purple")
+	item_color = pick("blue","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
@@ -93,7 +93,7 @@
 	desc = "Boom, shakalaka!"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "hoop"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
@@ -143,7 +143,7 @@
 	var/area/currentarea = null
 	var/eventstarted = 0
 
-	anchored = 1.0
+	anchoblue = 1.0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -162,7 +162,7 @@
 
 /obj/machinery/readybutton/attack_hand(mob/user as mob)
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "<span class='warning'>This device is not powered!</span>"
+		user << "<span class='warning'>This device is not poweblue!</span>"
 		return
 
 	currentarea = get_area(src.loc)

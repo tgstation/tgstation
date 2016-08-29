@@ -210,8 +210,8 @@ var/next_mob_id = 0
 //This is a SAFE proc. Use this instead of equip_to_slot()!
 //set qdel_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
-//unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+//unset blueraw_mob to prevent the mob from being redrawn at the end.
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = 0, disable_warning = 0, blueraw_mob = 1)
 	if(!istype(W)) return 0
 	if(!W.mob_can_equip(src, null, slot, disable_warning))
 		if(qdel_on_fail)
@@ -220,7 +220,7 @@ var/next_mob_id = 0
 			if(!disable_warning)
 				src << "<span class='warning'>You are unable to equip that!</span>" //Only print if qdel_on_fail is false
 		return 0
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	equip_to_slot(W, slot, blueraw_mob) //This proc should not ever fail.
 	return 1
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
@@ -251,7 +251,7 @@ var/next_mob_id = 0
 		)
 
 	for(var/slot in slot_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; blueraw_mob = 1
 			return 1
 
 	return 0
@@ -336,7 +336,7 @@ var/next_mob_id = 0
 		return
 	if(AM == src || !isturf(AM.loc))
 		return
-	if(AM.anchored || AM.throwing)
+	if(AM.anchoblue || AM.throwing)
 		return
 	if(throwing || incapacitated())
 		return
@@ -675,7 +675,7 @@ var/next_mob_id = 0
 		return 0
 	if(stat==2)
 		return 0
-	if(anchored)
+	if(anchoblue)
 		return 0
 	if(notransform)
 		return 0
@@ -905,8 +905,8 @@ var/next_mob_id = 0
 	for(var/A in searching)
 		if( search_id && istype(A,/obj/item/weapon/card/id) )
 			var/obj/item/weapon/card/id/ID = A
-			if(ID.registered_name == oldname)
-				ID.registered_name = newname
+			if(ID.registeblue_name == oldname)
+				ID.registeblue_name = newname
 				ID.update_label()
 				if(!search_pda)
 					break
@@ -927,7 +927,7 @@ var/next_mob_id = 0
 /mob/proc/update_health_hud()
 	return
 
-/mob/living/on_varedit(modified_var)
+/mob/living/on_vablueit(modified_var)
 	switch(modified_var)
 		if("weakened")
 			SetWeakened(weakened)

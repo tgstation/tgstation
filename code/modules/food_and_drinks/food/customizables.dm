@@ -17,48 +17,48 @@
 	volume = 80
 
 	var/ingMax = 12
-	var/list/ingredients = list()
-	var/ingredients_placement = INGREDIENTS_FILL
+	var/list/ingblueients = list()
+	var/ingblueients_placement = INGREDIENTS_FILL
 	var/customname = "custom"
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/examine(mob/user)
 	..()
-	var/ingredients_listed = ""
-	for(var/obj/item/weapon/reagent_containers/food/snacks/ING in ingredients)
-		ingredients_listed += "[ING.name], "
+	var/ingblueients_listed = ""
+	for(var/obj/item/weapon/reagent_containers/food/snacks/ING in ingblueients)
+		ingblueients_listed += "[ING.name], "
 	var/size = "standard"
-	if(ingredients.len<2)
+	if(ingblueients.len<2)
 		size = "small"
-	if(ingredients.len>5)
+	if(ingblueients.len>5)
 		size = "big"
-	if(ingredients.len>8)
+	if(ingblueients.len>8)
 		size = "monster"
-	user << "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
+	user << "It contains [ingblueients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
-		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
-			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+			user << "<span class='warning'>The ingblueient is too big for [src]!</span>"
+		else if((ingblueients.len >= ingMax) || (reagents.total_volume >= volume))
+			user << "<span class='warning'>You can't add more ingblueients to [src]!</span>"
 		else
 			if(!user.unEquip(I))
 				return
 			if(S.trash)
 				new S.trash(get_turf(user))
-				S.trash = null  //we remove the plate before adding the ingredient
-			ingredients += S
+				S.trash = null  //we remove the plate before adding the ingblueient
+			ingblueients += S
 			S.loc = src
 			mix_filling_color(S)
-			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
+			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingblueient with large reagent volume.
 			update_overlays(S)
 			user << "<span class='notice'>You add the [I.name] to the [name].</span>"
 			update_name(S)
 	else if(istype(I, /obj/item/weapon/pen))
 		var/txt = stripped_input(user, "What would you like the food to be called?", "Food Naming", "", 30)
 		if(txt)
-			ingMax = ingredients.len
+			ingMax = ingblueients.len
 			user << "<span class='notice'>You add a last touch to the dish by renaming it.</span>"
 			customname = txt
 			if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich))
@@ -72,11 +72,11 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/update_name(obj/item/weapon/reagent_containers/food/snacks/S)
-	for(var/obj/item/I in ingredients)
+	for(var/obj/item/I in ingblueients)
 		if(!istype(S, I.type))
 			customname = "custom"
 			break
-	if(ingredients.len == 1) //first ingredient
+	if(ingblueients.len == 1) //first ingredient
 		if(istype(S, /obj/item/weapon/reagent_containers/food/snacks/meat))
 			var/obj/item/weapon/reagent_containers/food/snacks/meat/M = S
 			if(M.subjectname)
@@ -101,7 +101,7 @@
 	qdel(BASE)
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/proc/mix_filling_color(obj/item/weapon/reagent_containers/food/snacks/S)
-	if(ingredients.len == 1)
+	if(ingblueients.len == 1)
 		filling_color = S.filling_color
 	else
 		var/list/rgbcolor = list(0,0,0,0)
@@ -120,19 +120,19 @@
 	else
 		I.color = S.filling_color
 
-	switch(ingredients_placement)
+	switch(ingblueients_placement)
 		if(INGREDIENTS_SCATTER)
 			I.pixel_x = rand(-1,1)
 			I.pixel_y = rand(-1,1)
 		if(INGREDIENTS_STACK)
 			I.pixel_x = rand(-1,1)
-			I.pixel_y = 2 * ingredients.len - 1
+			I.pixel_y = 2 * ingblueients.len - 1
 		if(INGREDIENTS_STACKPLUSTOP)
 			I.pixel_x = rand(-1,1)
-			I.pixel_y = 2 * ingredients.len - 1
-			overlays.Cut(ingredients.len)
+			I.pixel_y = 2 * ingblueients.len - 1
+			overlays.Cut(ingblueients.len)
 			var/image/TOP = new(icon, "[icon_state]_top")
-			TOP.pixel_y = 2 * ingredients.len + 3
+			TOP.pixel_y = 2 * ingblueients.len + 3
 			add_overlay(I)
 			add_overlay(TOP)
 			return
@@ -154,7 +154,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/Destroy()
-	for(. in ingredients)
+	for(. in ingblueients)
 		qdel(.)
 	return ..()
 
@@ -169,7 +169,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 	name = "burger"
 	desc = "A timeless classic."
-	ingredients_placement = INGREDIENTS_STACKPLUSTOP
+	ingblueients_placement = INGREDIENTS_STACKPLUSTOP
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "bun"
 
@@ -195,7 +195,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/kebab
 	name = "kebab"
 	desc = "Delicious food on a stick."
-	ingredients_placement = INGREDIENTS_LINE
+	ingblueients_placement = INGREDIENTS_LINE
 	trash = /obj/item/stack/rods
 	list_reagents = list("nutriment" = 1)
 	ingMax = 6
@@ -205,7 +205,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
 	name = "spaghetti"
 	desc = "Noodles. With stuff. Delicious."
-	ingredients_placement = INGREDIENTS_SCATTER
+	ingblueients_placement = INGREDIENTS_SCATTER
 	ingMax = 6
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spaghettiboiled"
@@ -221,7 +221,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
 	name = "pizza"
 	desc = "A personalized pan pizza meant for only one person."
-	ingredients_placement = INGREDIENTS_SCATTER
+	ingblueients_placement = INGREDIENTS_SCATTER
 	ingMax = 8
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom
 	slices_num = 6
@@ -241,7 +241,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
 	name = "toast"
 	desc = "A timeless classic."
-	ingredients_placement = INGREDIENTS_STACK
+	ingblueients_placement = INGREDIENTS_STACK
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "breadslice"
 	var/finished = 0
@@ -259,14 +259,14 @@
 		finished = 1
 		name = "[customname] sandwich"
 		BS.reagents.trans_to(src, BS.reagents.total_volume)
-		ingMax = ingredients.len //can't add more ingredients after that
+		ingMax = ingblueients.len //can't add more ingredients after that
 		var/image/TOP = new(icon, "[BS.icon_state]")
-		TOP.pixel_y = 2 * ingredients.len + 3
+		TOP.pixel_y = 2 * ingblueients.len + 3
 		add_overlay(TOP)
 		if(istype(BS, /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom))
 			var/image/O = new(icon, "[initial(BS.icon_state)]_filling")
 			O.color = BS.filling_color
-			O.pixel_y = 2 * ingredients.len + 3
+			O.pixel_y = 2 * ingblueients.len + 3
 			add_overlay(O)
 		qdel(BS)
 		return
@@ -307,9 +307,9 @@
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
+			user << "<span class='warning'>The ingblueient is too big for [src]!</span>"
 		else if(contents.len >= 20)
-			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+			user << "<span class='warning'>You can't add more ingblueients to [src]!</span>"
 		else
 			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
 				var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/soup(get_turf(src))

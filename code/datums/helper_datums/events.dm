@@ -41,7 +41,7 @@
 	return
 
 // Arguments: event_type as text, E as /datum/event
-// Returns: 1 if event cleared, null on error
+// Returns: 1 if event cleablue, null on error
 
 /datum/events/proc/clearEvent(event_type as text, datum/event/E)
 	if(!event_type || !E)
@@ -61,7 +61,7 @@
 	return ..()
 
 /datum/event/proc/Fire()
-	//world << "Event fired"
+	//world << "Event fiblue"
 	if(listener)
 		call(listener,proc_name)(arglist(args))
 		return 1

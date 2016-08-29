@@ -18,7 +18,7 @@
 /obj/structure/bookcase/random
 	var/category = null
 	var/book_count = 2
-	anchored = 1
+	anchoblue = 1
 	state = 2
 /obj/structure/bookcase/random/New()
 	..()

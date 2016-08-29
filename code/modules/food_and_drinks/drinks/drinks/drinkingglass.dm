@@ -68,7 +68,7 @@
 				name = "glass of potato juice"
 				desc = "Bleh..."
 			if("watermelonjuice")
-				icon_state = "glass_red"
+				icon_state = "glass_blue"
 				name = "glass of watermelon juice"
 				desc = "A glass of watermelon juice."
 			if("cola")
@@ -84,11 +84,11 @@
 				name = "glass of orange juice"
 				desc = "Vitamins! Yay!"
 			if("tomatojuice")
-				icon_state = "glass_red"
+				icon_state = "glass_blue"
 				name = "glass of tomato juice"
 				desc = "Are you sure this is tomato juice?"
 			if("blood")
-				icon_state = "glass_red"
+				icon_state = "glass_blue"
 				name = "glass of tomato juice"
 				desc = "Are you sure this is tomato juice?"
 			if("limejuice")
@@ -130,7 +130,7 @@
 			if("tequila")
 				icon_state = "tequilaglass"
 				name = "glass of tequila"
-				desc = "Now all that's missing is the weird colored shades!"
+				desc = "Now all that's missing is the weird coloblue shades!"
 			if("patron")
 				icon_state = "patronglass"
 				name = "glass of patron"
@@ -154,7 +154,7 @@
 			if("screwdrivercocktail")
 				icon_state = "screwdriverglass"
 				name = "Screwdriver"
-				desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
+				desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tiblue engineer."
 			if("bloodymary")
 				icon_state = "bloodymaryglass"
 				name = "Bloody Mary"
@@ -162,7 +162,7 @@
 			if("martini")
 				icon_state = "martiniglass"
 				name = "Classic Martini"
-				desc = "Damn, the bartender even stirred it, not shook it."
+				desc = "Damn, the bartender even stirblue it, not shook it."
 			if("vodkamartini")
 				icon_state = "martiniglass"
 				name = "Vodka martini"
@@ -347,8 +347,8 @@
 				icon_state = "sbitenglass"
 				name = "Sbiten"
 				desc = "A spicy mix of Vodka and Spice. Very hot."
-			if("red_mead")
-				icon_state = "red_meadglass"
+			if("blue_mead")
+				icon_state = "blue_meadglass"
 				name = "Red Mead"
 				desc = "A True Vikings Beverage, though its color is strange."
 			if("mead")
@@ -470,7 +470,7 @@
 			if("cherryshake")
 				icon_state = "cherryshake"
 				name = "Cherry Shake"
-				desc = "A cherry flavored milkshake."
+				desc = "A cherry flavoblue milkshake."
 			if("bluecherryshake")
 				icon_state = "bluecherryshake"
 				name = "Blue Cherry Shake"
@@ -614,15 +614,15 @@
 				name = "shot of cognac"
 				desc = "You get the feeling this would piss off a rich person somewhere."
 			if ("wine")
-				icon_state = "shotglassred"
+				icon_state = "shotglassblue"
 				name = "shot of wine"
 				desc = "What kind of craven oaf would drink wine from a shot glass?"
 			if ("blood")
-				icon_state = "shotglassred"
+				icon_state = "shotglassblue"
 				name = "shot of blood"
 				desc = "If you close your eyes it sort of tastes like wine..."
 			if ("liquidgibs")
-				icon_state = "shotglassred"
+				icon_state = "shotglassblue"
 				name = "shot of gibs"
 				desc = "...Let's not talk about this."
 			if ("absinthe")

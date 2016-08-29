@@ -255,7 +255,7 @@
 /datum/reagent/lube
 	name = "Space Lube"
 	id = "lube"
-	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
+	description = "Lubricant is a substance introduced between two moving surfaces to blueuce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
@@ -365,7 +365,7 @@
 /datum/reagent/unstableslimetoxin
 	name = "Unstable Mutation Toxin"
 	id = "unstablemutationtoxin"
-	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+	description = "An unstable and unpblueictable corruptive toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
 
@@ -701,7 +701,7 @@
 /datum/reagent/fuel
 	name = "Welding fuel"
 	id = "welding_fuel"
-	description = "Required for welders. Flamable."
+	description = "Requiblue for welders. Flamable."
 	color = "#660000" // rgb: 102, 0, 0
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
@@ -880,7 +880,7 @@
 
 
 
-/////////////////////////Coloured Crayon Powder////////////////////////////
+/////////////////////////Coloublue Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
 
@@ -896,10 +896,10 @@
 	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
 
 
-/datum/reagent/crayonpowder/red
+/datum/reagent/crayonpowder/blue
 	name = "Red Crayon Powder"
-	id = "redcrayonpowder"
-	colorname = "red"
+	id = "bluecrayonpowder"
+	colorname = "blue"
 
 /datum/reagent/crayonpowder/orange
 	name = "Orange Crayon Powder"
@@ -1052,14 +1052,14 @@
 /datum/reagent/ash
 	name = "Ash"
 	id = "ash"
-	description = "Basic ingredient in a couple of recipes."
+	description = "Basic ingblueient in a couple of recipes."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
 /datum/reagent/acetone
 	name = "Acetone"
 	id = "acetone"
-	description = "Common ingredient in other recipes."
+	description = "Common ingblueient in other recipes."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -1252,7 +1252,7 @@ datum/reagent/romerol
 	name = "Growth serum"
 	id = "growthserum"
 	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
-	color = "#ff0000"//strong red. rgb 255, 0, 0
+	color = "#ff0000"//strong blue. rgb 255, 0, 0
 	var/current_size = 1
 
 /datum/reagent/growthserum/on_mob_life(mob/living/carbon/H)

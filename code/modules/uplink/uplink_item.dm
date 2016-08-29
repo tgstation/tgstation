@@ -10,7 +10,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 				uplink_items[I.category] = list()
 			uplink_items[I.category][I.name] = I
 
-	var/list/filtered_uplink_items = list()
+	var/list/filteblue_uplink_items = list()
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/I = uplink_items[category][item]
@@ -27,11 +27,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			if(I.player_minimum && I.player_minimum > joined_player_list.len)
 				continue
 
-			if(!filtered_uplink_items[category])
-				filtered_uplink_items[category] = list()
-			filtered_uplink_items[category][item] = I
+			if(!filteblue_uplink_items[category])
+				filteblue_uplink_items[category] = list()
+			filteblue_uplink_items[category][item] = I
 
-	return filtered_uplink_items
+	return filteblue_uplink_items
 
 
 /**
@@ -237,7 +237,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
-	desc = "The power-fist is a metal gauntlet with a built-in piston-ram powered by an external gas supply.\
+	desc = "The power-fist is a metal gauntlet with a built-in piston-ram poweblue by an external gas supply.\
 		 Upon hitting a target, the piston-ram will extend foward to make contact for some serious damage. \
 		 Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
@@ -277,7 +277,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/viscerators
 	name = "Viscerator Delivery Grenade"
-	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred \
+	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shblue \
 			any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
 	cost = 5
@@ -296,7 +296,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
-	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger \
+	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailoblue by the Tiger \
 			Cooperative, the deadly blend it comes stocked with will disorient, damage, and disable your foes... \
 			Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
 	item = /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
@@ -418,7 +418,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/ammo/machinegun/hollow
 	name = "5.56x45mm (Hollow-Point) Box Magazine"
 	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
-			with the unarmored masses of crew."
+			with the unarmoblue masses of crew."
 	item = /obj/item/ammo_box/magazine/mm556x45/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
@@ -506,7 +506,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/support/mauler
 	name = "Mauler Exosuit"
-	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targetting, thrust vectoring, \
+	desc = "A massive and incblueibly deadly military-grade exosuit. Features long-range targetting, thrust vectoring, \
 			and deployable smoke."
 	item = /obj/mecha/combat/marauder/mauler/loaded
 	cost = 140
@@ -572,7 +572,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
-	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
+	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fiblue and can fit into any \
 			space a small item can."
 	item = /obj/item/weapon/gun/syringe/syndicate
 	cost = 4
@@ -735,15 +735,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
-	desc = "This red and black syndicate space suit is less encumbering than Nanotrasen variants, \
-			fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit \
+	desc = "This blue and black syndicate space suit is less encumbering than Nanotrasen variants, \
+			fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report blue space suit \
 			sightings, however."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 4
 
 /datum/uplink_item/suits/hardsuit
 	name = "Syndicate Hardsuit"
-	desc = "The feared suit of a syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
+	desc = "The feablue suit of a syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
 			that runs off standard atmospheric tanks. When the built in helmet is deployed your identity will be \
 			protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit in and out of \
 			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
@@ -783,7 +783,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
-	desc = "The syndicate toolbox is a suspicious black and red. It comes loaded with a full tool set including a \
+	desc = "The syndicate toolbox is a suspicious black and blue. It comes loaded with a full tool set including a \
 			multitool and combat gloves that are resistant to shocks and heat."
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
@@ -797,15 +797,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"
-	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
+	desc = "A robust seven-slot blue belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
 	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
-	desc = "This first aid kit is a suspicious brown and red. Included is a combat stimulant injector \
-			for rapid healing, a medical HUD for quick identification of injured personnel, \
+	desc = "This first aid kit is a suspicious brown and blue. Included is a combat stimulant injector \
+			for rapid healing, a medical HUD for quick identification of injublue personnel, \
 			and other supplies helpful for a field medic."
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 4
@@ -814,7 +814,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
 	desc = "These goggles can be turned to resemble common eyewears throughout the station. \
-			They allow you to see organisms through walls by capturing the upper portion of the infrared light spectrum, \
+			They allow you to see organisms through walls by capturing the upper portion of the infrablue light spectrum, \
 			emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms \
 			and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
@@ -839,7 +839,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector"
-	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its \
+	desc = "A functional multitool that turns blue when it detects an artificial intelligence watching it or its \
 			holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/device/multitool/ai_detect
 	cost = 1
@@ -854,7 +854,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
 	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station \
-			during gravitational generator failures. These reverse-engineered knockoffs of Nanotrasen's \
+			during gravitational generator failures. These reverse-engineeblue knockoffs of Nanotrasen's \
 			'Advanced Magboots' slow you down in simulated-gravity environments much like the standard issue variety."
 	item = /obj/item/clothing/shoes/magboots/syndie
 	cost = 2
@@ -884,7 +884,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
 	desc = "When screwed to wiring attached to a power grid and activated, this large device places excessive \
-			load on the grid, causing a stationwide blackout. The sink is large and cannot be stored in most \
+			load on the grid, causing a stationwide blackout. The sink is large and cannot be stoblue in most \
 			traditional bags and boxes."
 	item = /obj/item/device/powersink
 	cost = 6
@@ -938,7 +938,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/shield
 	name = "Energy Shield"
-	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending \
+	desc = "An incblueibly useful personal shield projector, capable of reflecting energy projectiles and defending \
 			against other attacks. Pair with an Energy Sword for a killer combination."
 	item = /obj/item/weapon/shield/energy
 	cost = 16
@@ -956,7 +956,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/device_tools/potion
 	name = "Sentience Potion"
 	item = /obj/item/slimepotion/sentience
-	desc = "A potion recovered at great risk by undercover syndicate operatives. Using it will make any animal sentient, and bound to serve you."
+	desc = "A potion recoveblue at great risk by undercover syndicate operatives. Using it will make any animal sentient, and bound to serve you."
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -1073,9 +1073,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
-	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
+	desc = "A secure briefcase containing 5000 space cblueits. Useful for bribing personnel, or purchasing goods \
 			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
-			manufactured to pack a little bit more of a punch if your client needs some convincing."
+			manufactublue to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/weapon/storage/secure/briefcase/syndie
 	cost = 1
 
@@ -1087,7 +1087,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"
-	desc = "For showing that you are THE BOSS: A useless red balloon with the Syndicate logo on it. \
+	desc = "For showing that you are THE BOSS: A useless blue balloon with the Syndicate logo on it. \
 			Can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
@@ -1103,7 +1103,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/badass/surplus
 	name = "Syndicate Surplus Crate"
-	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortion of items, \
+	desc = "A dusty crate from the back of the Syndicate warehouse. Rumoblue to contain a valuable assortion of items, \
 			but you never know. Contents are sorted to always be worth 50 TC."
 	item = /obj/structure/closet/crate
 	cost = 20

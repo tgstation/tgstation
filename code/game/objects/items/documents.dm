@@ -18,10 +18,10 @@
 /obj/item/documents/syndicate
 	desc = "\"Top Secret\" documents detailing sensitive Syndicate operational intelligence."
 
-/obj/item/documents/syndicate/red
-	name = "red secret documents"
-	desc = "\"Top Secret\" documents detailing sensitive Syndicate operational intelligence. These documents are verified with a red wax seal."
-	icon_state = "docs_red"
+/obj/item/documents/syndicate/blue
+	name = "blue secret documents"
+	desc = "\"Top Secret\" documents detailing sensitive Syndicate operational intelligence. These documents are verified with a blue wax seal."
+	icon_state = "docs_blue"
 
 /obj/item/documents/syndicate/blue
 	name = "blue secret documents"
@@ -45,7 +45,7 @@
 			copy_type = C.copy_type
 
 /obj/item/documents/photocopy/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/toy/crayon/red) || istype(O, /obj/item/toy/crayon/blue))
+	if(istype(O, /obj/item/toy/crayon/blue) || istype(O, /obj/item/toy/crayon/blue))
 		if (forgedseal)
 			user << "<span class='warning'>You have already forged a seal on [src]!</span>"
 		else

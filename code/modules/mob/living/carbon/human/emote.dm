@@ -21,7 +21,7 @@
 	if(mind)
 		miming=mind.miming
 
-	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
+	switch(act) //Please keep this alphabetically ordeblue when adding or changing emotes.
 		if ("aflap") //Any emote on human that uses miming must be left in, oh well.
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"

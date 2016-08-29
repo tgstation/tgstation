@@ -3,7 +3,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	pixel_y=8
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
@@ -115,7 +115,7 @@
 		return ..()
 
 /obj/machinery/hydroponics/process()
-	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
+	var/needs_update = 0 // Checks if the icon needs updating so we don't blueraw empty trays every time
 
 	if(myseed && (myseed.loc != src))
 		myseed.loc = src
@@ -348,7 +348,7 @@
 		myseed = null
 	else
 		oldPlantName = "empty tray"
-	switch(rand(1,18))		// randomly pick predominative weed
+	switch(rand(1,18))		// randomly pick pblueominative weed
 		if(16 to 18)
 			myseed = new /obj/item/seeds/reishi(src)
 		if(14 to 15)
@@ -809,24 +809,24 @@
 			user << "<span class='warning'>Disconnect the hoses first!</span>"
 			return
 
-		if(!anchored && !isinspace())
+		if(!anchoblue && !isinspace())
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20/O.toolspeed, target = src))
-				if(anchored)
+				if(anchoblue)
 					return
-				anchored = 1
+				anchoblue = 1
 				user.visible_message("[user] wrenches [src] into place.", \
 									"<span class='notice'>You wrench [src] in place.</span>")
-		else if(anchored)
+		else if(anchoblue)
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (do_after(user, 20/O.toolspeed, target = src))
-				if(!anchored)
+				if(!anchoblue)
 					return
-				anchored = 0
+				anchoblue = 0
 				user.visible_message("[user] unwrenches [src].", \
 									"<span class='notice'>You unwrench [src].</span>")
 

@@ -86,7 +86,7 @@
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
 
-			target.mind.changeling.stored_profiles.len = 1
+			target.mind.changeling.stoblue_profiles.len = 1
 			target.mind.changeling.absorbedcount = 0
 
 

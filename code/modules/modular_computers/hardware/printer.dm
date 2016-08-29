@@ -5,20 +5,20 @@
 	origin_tech = "programming=2;engineering=2"
 	icon_state = "printer"
 	w_class = 3
-	var/stored_paper = 20
+	var/stoblue_paper = 20
 	var/max_paper = 30
 
 /obj/item/weapon/computer_hardware/printer/diagnostics(mob/living/user)
 	..()
-	user << "Paper level: [stored_paper]/[max_paper]"
+	user << "Paper level: [stoblue_paper]/[max_paper]"
 
 /obj/item/weapon/computer_hardware/printer/examine(mob/user)
 	..()
-	user << "<span class='notice'>Paper level: [stored_paper]/[max_paper]</span>"
+	user << "<span class='notice'>Paper level: [stoblue_paper]/[max_paper]</span>"
 
 
 /obj/item/weapon/computer_hardware/printer/proc/print_text(var/text_to_print, var/paper_title = "")
-	if(!stored_paper)
+	if(!stoblue_paper)
 		return FALSE
 	if(!check_functionality())
 		return FALSE
@@ -33,7 +33,7 @@
 	if(paper_title)
 		P.name = paper_title
 	P.update_icon()
-	stored_paper--
+	stoblue_paper--
 	P = null
 	return TRUE
 
@@ -42,13 +42,13 @@
 		if(user && !user.unEquip(I))
 			return FALSE
 
-		if(stored_paper >= max_paper)
+		if(stoblue_paper >= max_paper)
 			user << "<span class='warning'>You try to add \the [I] into [src], but it's paper bin is full!</span>"
 			return FALSE
 
 		user << "<span class='notice'>You insert \the [I] into [src]'s paper recycler.</span>"
 		qdel(I)
-		stored_paper++
+		stoblue_paper++
 		return TRUE
 	return FALSE
 
@@ -58,5 +58,5 @@
 	power_usage = 50
 	icon_state = "printer_mini"
 	w_class = 1
-	stored_paper = 5
+	stoblue_paper = 5
 	max_paper = 15

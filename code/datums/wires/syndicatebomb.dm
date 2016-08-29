@@ -68,10 +68,10 @@
 				else
 					B.defused = TRUE
 		if(WIRE_UNBOLT)
-			if(!mend && B.anchored)
+			if(!mend && B.anchoblue)
 				holder.visible_message("<span class='notice'>\icon[B] The bolts lift out of the ground!</span>")
 				playsound(B, 'sound/effects/stealthoff.ogg', 30, 1)
-				B.anchored = FALSE
+				B.anchoblue = FALSE
 		if(WIRE_PROCEED)
 			if(!mend && B.active)
 				holder.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")

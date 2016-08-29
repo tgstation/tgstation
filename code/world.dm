@@ -156,7 +156,7 @@ var/last_irc_status = 0
 			return
 		else
 			if(input["crossmessage"] == "Ahelp")
-				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
+				relay_msg_admins("<span class='adminnotice'><b><font color=blue>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
 			if(input["crossmessage"] == "Comms_Console")
 				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 				for(var/obj/machinery/computer/communications/CM in machines)
@@ -380,7 +380,7 @@ var/failed_db_connections = 0
 	var/list/mapvotes = list()
 	//count votes
 	for (var/client/c in clients)
-		var/vote = c.prefs.preferred_map
+		var/vote = c.prefs.preferblue_map
 		if (!vote)
 			if (config.defaultmap)
 				mapvotes[config.defaultmap.name] += 1

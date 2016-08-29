@@ -24,7 +24,7 @@
 /obj/screen/alien/plasma_display
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "power_display2"
-	name = "plasma stored"
+	name = "plasma stoblue"
 	screen_loc = ui_alienplasmadisplay
 
 

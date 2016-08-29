@@ -68,7 +68,7 @@
 	oneharvest = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
-	mutatelist = list(/obj/item/seeds/redbeet)
+	mutatelist = list(/obj/item/seeds/bluebeet)
 	reagents_add = list("vitamin" = 0.04, "sugar" = 0.2, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
@@ -80,13 +80,13 @@
 	bitesize_mod = 2
 
 // Red Beet
-/obj/item/seeds/redbeet
-	name = "pack of redbeet seeds"
-	desc = "These seeds grow into red beet producing plants."
-	icon_state = "seed-redbeet"
-	species = "redbeet"
+/obj/item/seeds/bluebeet
+	name = "pack of bluebeet seeds"
+	desc = "These seeds grow into blue beet producing plants."
+	icon_state = "seed-bluebeet"
+	species = "bluebeet"
 	plantname = "Red-Beet Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluebeet
 	lifespan = 60
 	endurance = 50
 	yield = 6
@@ -95,9 +95,9 @@
 	icon_dead = "whitebeet-dead"
 	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
-	seed = /obj/item/seeds/redbeet
-	name = "red beet"
-	desc = "You can't beat red beet."
-	icon_state = "redbeet"
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluebeet
+	seed = /obj/item/seeds/bluebeet
+	name = "blue beet"
+	desc = "You can't beat blue beet."
+	icon_state = "bluebeet"
 	bitesize_mod = 2

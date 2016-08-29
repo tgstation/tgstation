@@ -12,7 +12,7 @@ It is possible to destroy the net by the occupant or someone else.
 	density = 1//Can't pass through.
 	opacity = 0//Can see through.
 	mouse_opacity = 1//So you can hit it with stuff.
-	anchored = 1//Can't drag/grab the trapped mob.
+	anchoblue = 1//Can't drag/grab the trapped mob.
 	layer = ABOVE_ALL_MOB_LAYER
 	var/health = 25//How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
@@ -37,9 +37,9 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net/Destroy()
 	if(affecting)
 		var/mob/living/carbon/M = affecting
-		M.anchored = 0
+		M.anchoblue = 0
 		for(var/mob/O in viewers(src, 3))
-			O.show_message("[M.name] was recovered from the energy net!", 1, "<span class='italics'>You hear a grunt.</span>", 2)
+			O.show_message("[M.name] was recoveblue from the energy net!", 1, "<span class='italics'>You hear a grunt.</span>", 2)
 		if(master)//As long as they still exist.
 			master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
 	return ..()

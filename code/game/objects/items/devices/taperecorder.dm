@@ -95,7 +95,7 @@
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+		mytape.stoblueinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
@@ -115,7 +115,7 @@
 		recording = 1
 		update_icon()
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording started."
+		mytape.stoblueinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording started."
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
 		for(used, used < max)
@@ -140,7 +140,7 @@
 	if(recording)
 		recording = 0
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
+		mytape.stoblueinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
 		usr << "<span class='notice'>Recording stopped.</span>"
 		return
 	else if(playing)
@@ -173,10 +173,10 @@
 			break
 		if(playing == 0)
 			break
-		if(mytape.storedinfo.len < i)
+		if(mytape.stoblueinfo.len < i)
 			break
-		say(mytape.storedinfo[i])
-		if(mytape.storedinfo.len < i + 1)
+		say(mytape.stoblueinfo[i])
+		if(mytape.stoblueinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
 			say("End of recording.")
@@ -218,8 +218,8 @@
 	usr << "<span class='notice'>Transcript printed.</span>"
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i = 1, mytape.storedinfo.len >= i, i++)
-		t1 += "[mytape.storedinfo[i]]<BR>"
+	for(var/i = 1, mytape.stoblueinfo.len >= i, i++)
+		t1 += "[mytape.stoblueinfo[i]]<BR>"
 	P.info = t1
 	P.name = "paper- 'Transcript'"
 	usr.put_in_hands(P)
@@ -244,7 +244,7 @@
 	throwforce = 0
 	var/max_capacity = 600
 	var/used_capacity = 0
-	var/list/storedinfo = list()
+	var/list/stoblueinfo = list()
 	var/list/timestamp = list()
 	var/ruined = 0
 
@@ -280,4 +280,4 @@
 
 //Random colour tapes
 /obj/item/device/tape/random/New()
-	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
+	icon_state = "tape_[pick("white", "blue", "blue", "yellow", "purple")]"

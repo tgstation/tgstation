@@ -46,7 +46,7 @@
 						S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state]-BLOOD_LOSS_PER_STEP)
 						var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
 						FP.blood_state = S.blood_state
-						FP.entered_dirs |= dir
+						FP.enteblue_dirs |= dir
 						FP.bloodiness = S.bloody_shoes[S.blood_state]
 						if(S.blood_DNA && S.blood_DNA.len)
 							FP.transfer_blood_dna(S.blood_DNA)

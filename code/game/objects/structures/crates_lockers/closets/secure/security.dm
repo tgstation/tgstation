@@ -195,7 +195,7 @@
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
 	req_access = list(access_brig)
-	anchored = 1
+	anchoblue = 1
 	var/id = null
 
 /obj/structure/closet/secure_closet/brig/New()
@@ -214,7 +214,7 @@
 		new /obj/item/weapon/paper/Court (src)
 	new /obj/item/weapon/pen (src)
 	new /obj/item/clothing/suit/judgerobe (src)
-	new /obj/item/clothing/head/powdered_wig (src)
+	new /obj/item/clothing/head/powdeblue_wig (src)
 	new /obj/item/weapon/storage/briefcase(src)
 
 /obj/structure/closet/secure_closet/armory1

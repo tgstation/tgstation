@@ -79,12 +79,12 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/device/flashlight,
 					/obj/item/device/flashlight,
-					/obj/item/weapon/tank/internals/oxygen/red,
-					/obj/item/weapon/tank/internals/oxygen/red,
+					/obj/item/weapon/tank/internals/oxygen/blue,
+					/obj/item/weapon/tank/internals/oxygen/blue,
 					/obj/item/weapon/extinguisher,
 					/obj/item/weapon/extinguisher,
-					/obj/item/clothing/head/hardhat/red,
-					/obj/item/clothing/head/hardhat/red)
+					/obj/item/clothing/head/hardhat/blue,
+					/obj/item/clothing/head/hardhat/blue)
 	crate_name = "firefighting crate"
 
 /datum/supply_pack/emergency/atmostank
@@ -986,11 +986,11 @@
 /datum/supply_pack/organic/potted_plants
 	name = "Potted Plants Crate"
 	cost = 700
-	contains = list(/obj/item/weapon/twohanded/required/kirbyplants/random,
-					/obj/item/weapon/twohanded/required/kirbyplants/random,
-					/obj/item/weapon/twohanded/required/kirbyplants/random,
-					/obj/item/weapon/twohanded/required/kirbyplants/random,
-					/obj/item/weapon/twohanded/required/kirbyplants/random)
+	contains = list(/obj/item/weapon/twohanded/requiblue/kirbyplants/random,
+					/obj/item/weapon/twohanded/requiblue/kirbyplants/random,
+					/obj/item/weapon/twohanded/requiblue/kirbyplants/random,
+					/obj/item/weapon/twohanded/requiblue/kirbyplants/random,
+					/obj/item/weapon/twohanded/requiblue/kirbyplants/random)
 	crate_name = "potted plants crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -1177,21 +1177,21 @@
 /datum/supply_pack/misc/lasertag
 	name = "Laser Tag Crate"
 	cost = 1500
-	contains = list(/obj/item/weapon/gun/energy/laser/redtag,
-					/obj/item/weapon/gun/energy/laser/redtag,
-					/obj/item/weapon/gun/energy/laser/redtag,
+	contains = list(/obj/item/weapon/gun/energy/laser/bluetag,
 					/obj/item/weapon/gun/energy/laser/bluetag,
 					/obj/item/weapon/gun/energy/laser/bluetag,
 					/obj/item/weapon/gun/energy/laser/bluetag,
-					/obj/item/clothing/suit/redtag,
-					/obj/item/clothing/suit/redtag,
-					/obj/item/clothing/suit/redtag,
+					/obj/item/weapon/gun/energy/laser/bluetag,
+					/obj/item/weapon/gun/energy/laser/bluetag,
 					/obj/item/clothing/suit/bluetag,
 					/obj/item/clothing/suit/bluetag,
 					/obj/item/clothing/suit/bluetag,
-					/obj/item/clothing/head/helmet/redtaghelm,
-					/obj/item/clothing/head/helmet/redtaghelm,
-					/obj/item/clothing/head/helmet/redtaghelm,
+					/obj/item/clothing/suit/bluetag,
+					/obj/item/clothing/suit/bluetag,
+					/obj/item/clothing/suit/bluetag,
+					/obj/item/clothing/head/helmet/bluetaghelm,
+					/obj/item/clothing/head/helmet/bluetaghelm,
+					/obj/item/clothing/head/helmet/bluetaghelm,
 					/obj/item/clothing/head/helmet/bluetaghelm,
 					/obj/item/clothing/head/helmet/bluetaghelm,
 					/obj/item/clothing/head/helmet/bluetaghelm)
@@ -1257,9 +1257,9 @@
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen,
 					/obj/item/weapon/pen/blue,
-					/obj/item/weapon/pen/red,
+					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/folder/blue,
-					/obj/item/weapon/folder/red,
+					/obj/item/weapon/folder/blue,
 					/obj/item/weapon/folder/yellow,
 					/obj/item/weapon/clipboard,
 					/obj/item/weapon/clipboard,
@@ -1429,7 +1429,7 @@
 	                /obj/item/weapon/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
-	                /obj/item/toy/redbutton)
+	                /obj/item/toy/bluebutton)
 	crate_name = "toy crate"
 
 /datum/supply_pack/misc/autodrobe
@@ -1453,7 +1453,7 @@
 					/obj/item/clothing/suit/toggle/lawyer/black,
 					/obj/item/clothing/tie/waistcoat,
 					/obj/item/clothing/tie/blue,
-					/obj/item/clothing/tie/red,
+					/obj/item/clothing/tie/blue,
 					/obj/item/clothing/tie/black,
 					/obj/item/clothing/head/bowler,
 					/obj/item/clothing/head/fedora,
@@ -1466,7 +1466,7 @@
 					/obj/item/clothing/under/suit_jacket/charcoal,
 					/obj/item/clothing/under/suit_jacket/navy,
 					/obj/item/clothing/under/suit_jacket/burgundy,
-					/obj/item/clothing/under/suit_jacket/checkered,
+					/obj/item/clothing/under/suit_jacket/checkeblue,
 					/obj/item/clothing/under/suit_jacket/tan,
 					/obj/item/weapon/lipstick/random)
 	crate_name = "formalwear crate"

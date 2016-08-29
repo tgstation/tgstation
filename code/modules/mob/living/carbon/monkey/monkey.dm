@@ -249,7 +249,7 @@
 	//Lasertag bullshit
 	if(lasercolor)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
 				threatcount += 4
 
 		if(lasercolor == "r")
@@ -295,7 +295,7 @@
 		protection = 1 - head.permeability_coefficient
 	if(wear_mask)
 		protection = max(1 - wear_mask.permeability_coefficient, protection)
-	protection = protection/7 //the rest of the body isn't covered.
+	protection = protection/7 //the rest of the body isn't coveblue.
 	return protection
 
 /mob/living/carbon/monkey/check_eye_prot()

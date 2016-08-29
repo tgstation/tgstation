@@ -1,8 +1,8 @@
 /obj/item/weapon/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "blue"
+	item_state = "toolbox_blue"
 	flags = CONDUCT
 	force = 12
 	throwforce = 12
@@ -20,12 +20,12 @@
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "blue"
+	item_state = "toolbox_blue"
 
 /obj/item/weapon/storage/toolbox/emergency/New()
 	..()
-	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/weapon/crowbar/blue(src)
 	new /obj/item/weapon/weldingtool/mini(src)
 	new /obj/item/weapon/extinguisher/mini(src)
 	if(prob(50))
@@ -55,7 +55,7 @@
 
 /obj/item/weapon/storage/toolbox/electrical/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/color = pick("blue","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
@@ -81,8 +81,8 @@
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool/largetank(src)
-	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/wirecutters(src, "red")
+	new /obj/item/weapon/crowbar/blue(src)
+	new /obj/item/weapon/wirecutters(src, "blue")
 	new /obj/item/device/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
 
@@ -93,7 +93,7 @@
 
 /obj/item/weapon/storage/toolbox/drone/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/color = pick("blue","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)

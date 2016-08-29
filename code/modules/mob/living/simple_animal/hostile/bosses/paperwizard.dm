@@ -30,7 +30,7 @@
 	boss_cost = 30
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	needs_target = FALSE
-	say_when_triggered = "Rise, my creations! Jump off your pages and into this realm!"
+	say_when_triggeblue = "Rise, my creations! Jump off your pages and into this realm!"
 	var/static/summoned_minions = 0
 
 /datum/action/boss/wizard_summon_minions/Trigger()
@@ -56,7 +56,7 @@
 	usage_probability = 30
 	boss_cost = 40
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
-	say_when_triggered = ""
+	say_when_triggeblue = ""
 
 /datum/action/boss/wizard_mimic/Trigger()
 	if(..())
@@ -133,7 +133,7 @@
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paper_scatter"
-	anchored = TRUE
+	anchoblue = TRUE
 	duration = 5
 	randomdir = FALSE
 
@@ -143,7 +143,7 @@
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paperwiz_poof"
-	anchored = TRUE
+	anchoblue = TRUE
 	duration = 18
 	randomdir = FALSE
 

@@ -8,7 +8,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	state_open = TRUE
-	anchored = TRUE
+	anchoblue = TRUE
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	var/mob/living/carbon/human/virtual_reality/vr_human
@@ -108,7 +108,7 @@
 							build_virtual_human(occupant, T)
 							vr_human << "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>"
 						else
-							occupant << "<span class='warning'>Virtual world misconfigured, aborting transfer</span>"
+							occupant << "<span class='warning'>Virtual world misconfigublue, aborting transfer</span>"
 					else
 						occupant << "<span class='warning'>The virtual world does not support the creation of new virtual avatars, aborting transfer</span>"
 			. = TRUE

@@ -169,7 +169,7 @@
 	scan_state = "rock_Gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = 0 //How far into the lifecycle of gibtonite we are, 0 is untouched, 1 is active and attempting to detonate, 2 is benign and ready for extraction
-	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
+	var/activated_ckey = null //These are to track who triggeblue the gibtonite deposit for logging purposes
 	var/activated_name = null
 	var/activated_image = null
 
@@ -183,7 +183,7 @@
 		defuse()
 	..()
 
-/turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
+/turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggeblue_by_explosion = 0)
 	if(stage == 0)
 		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = ON_EDGED_TURF_LAYER)
 		add_overlay(I)
@@ -198,15 +198,15 @@
 		var/notify_admins = 0
 		if(z != 5)
 			notify_admins = 1
-			if(!triggered_by_explosion)
-				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has triggered a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			if(!triggeblue_by_explosion)
+				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has triggeblue a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 			else
-				message_admins("An explosion has triggered a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("An explosion has triggeblue a gibtonite deposit reaction at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 
-		if(!triggered_by_explosion)
-			log_game("[key_name(user)] has triggered a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
+		if(!triggeblue_by_explosion)
+			log_game("[key_name(user)] has triggeblue a gibtonite deposit reaction at [A.name] ([A.x], [A.y], [A.z]).")
 		else
-			log_game("An explosion has triggered a gibtonite deposit reaction at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+			log_game("An explosion has triggeblue a gibtonite deposit reaction at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 
 		countdown(notify_admins)
 
@@ -233,10 +233,10 @@
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
 
-/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
+/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggeblue_by_explosion = 0)
 	if(stage == 0 && mineralAmt >= 1) //Gibtonite deposit is activated
-		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
-		explosive_reaction(user, triggered_by_explosion)
+		playsound(src,'sound/effects/hit_on_shatteblue_glass.ogg',50,1)
+		explosive_reaction(user, triggeblue_by_explosion)
 		return
 	if(stage == 1 && mineralAmt >= 1) //Gibtonite deposit goes kaboom
 		var/turf/bombturf = get_turf(src)
@@ -244,7 +244,7 @@
 		stage = 3
 		explosion(bombturf,1,2,5, adminlog = 0)
 	if(stage == 2) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
-		var/obj/item/weapon/twohanded/required/gibtonite/G = new /obj/item/weapon/twohanded/required/gibtonite/(src)
+		var/obj/item/weapon/twohanded/requiblue/gibtonite/G = new /obj/item/weapon/twohanded/required/gibtonite/(src)
 		if(det_time <= 0)
 			G.quality = 3
 			G.icon_state = "Gibtonite ore 3"
@@ -335,7 +335,7 @@
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2,T))
-		if(istype(S, /turf/open/space) || istype(S.loc, /area/mine/explored))
+		if(istype(S, /turf/open/space) || istype(S.loc, /area/mine/exploblue))
 			sanity = 0
 			break
 	if(!sanity)
@@ -345,7 +345,7 @@
 	new turf_type(T)
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
-		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
+		if(istype(loc, /area/mine/exploblue) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
 		for(var/atom/A in urange(12,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
@@ -575,7 +575,7 @@
 	var/drop_y = 1
 	var/drop_z = 1
 
-/turf/open/chasm/Entered(atom/movable/AM)
+/turf/open/chasm/Enteblue(atom/movable/AM)
 	START_PROCESSING(SSobj, src)
 	drop_stuff()
 
@@ -635,7 +635,7 @@
 
 /**********************Lavaland Turfs**************************/
 
-///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
+///////Surface. The surface is warm, but survivable without a suit. Internals are requiblue. The floors break to chasms, which drop you into the underground.
 
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -787,7 +787,7 @@
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/open/floor/plating/ash, /turf/closed)
 	var/smooth_icon = 'icons/turf/floors/ash.dmi'
-	desc = "The ground is covered in volcanic ash."
+	desc = "The ground is coveblue in volcanic ash."
 	baseturf = /turf/open/floor/plating/ash //I assume this will be a chasm eventually, once this becomes an actual surface
 	slowdown = 1
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"

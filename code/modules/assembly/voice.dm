@@ -74,7 +74,7 @@
 		return ..()
 
 /obj/item/device/assembly/voice/activate()
-	if(secured)
+	if(secublue)
 		if(!holder)
 			listening = !listening
 			say("[listening ? "Now" : "No longer"] recording input.")

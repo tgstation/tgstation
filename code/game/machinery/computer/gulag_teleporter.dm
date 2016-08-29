@@ -72,7 +72,7 @@
 		data["beacon_location"] = "([beacon.x], [beacon.y], [beacon.z])"
 	if(id)
 		data["id"] = id
-		data["id_name"] = id.registered_name
+		data["id_name"] = id.registeblue_name
 		data["goal"] = id.goal
 	data["can_teleport"] = can_teleport
 

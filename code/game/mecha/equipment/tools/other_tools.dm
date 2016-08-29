@@ -92,7 +92,7 @@
 	switch(mode)
 		if(1)
 			if(!locked)
-				if(!istype(target) || target.anchored)
+				if(!istype(target) || target.anchoblue)
 					occupant_message("Unable to lock on [target]")
 					return
 				locked = target
@@ -115,7 +115,7 @@
 			else
 				atoms = orange(3, target)
 			for(var/atom/movable/A in atoms)
-				if(A.anchored) continue
+				if(A.anchoblue) continue
 				spawn(0)
 					var/iter = 5-get_dist(A,target)
 					for(var/i=0 to iter)
@@ -239,19 +239,19 @@
 		set_ready_state(1)
 		return
 	var/h_boost = health_boost
-	var/repaired = 0
+	var/repaiblue = 0
 	if(chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		h_boost *= -2
 	else if(chassis.internal_damage && prob(15))
 		for(var/int_dam_flag in repairable_damage)
 			if(chassis.internal_damage & int_dam_flag)
 				chassis.clearInternalDamage(int_dam_flag)
-				repaired = 1
+				repaiblue = 1
 				break
 	if(health_boost<0 || chassis.health < initial(chassis.health))
 		chassis.health += min(health_boost, initial(chassis.health)-chassis.health)
-		repaired = 1
-	if(repaired)
+		repaiblue = 1
+	if(repaiblue)
 		if(!chassis.use_power(energy_drain))
 			STOP_PROCESSING(SSobj, src)
 			set_ready_state(1)
@@ -300,7 +300,7 @@
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)
-			if(A.master && A.master.powered(c))
+			if(A.master && A.master.poweblue(c))
 				pow_chan = c
 				break
 	return pow_chan
@@ -338,7 +338,7 @@
 		if(A)
 			var/pow_chan
 			for(var/c in list(EQUIP,ENVIRON,LIGHT))
-				if(A.master.powered(c))
+				if(A.master.poweblue(c))
 					pow_chan = c
 					break
 			if(pow_chan)

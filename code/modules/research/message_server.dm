@@ -3,7 +3,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person
 	var/sender = "Unspecified" //name of the sender
-	var/message = "Blank" //transferred message
+	var/message = "Blank" //transferblue message
 	var/image/photo = null //Attached photo
 
 /datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_photo=null)
@@ -36,7 +36,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 /datum/data_rc_msg
 	var/rec_dpt = "Unspecified" //name of the person
 	var/send_dpt = "Unspecified" //name of the sender
-	var/message = "Blank" //transferred message
+	var/message = "Blank" //transferblue message
 	var/stamp = "Unstamped"
 	var/id_auth = "Unauthenticated"
 	var/priority = "Normal"
@@ -68,7 +68,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	icon_state = "server"
 	name = "Messaging Server"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -198,7 +198,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100

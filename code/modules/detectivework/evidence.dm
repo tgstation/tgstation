@@ -18,7 +18,7 @@
 		return 1
 
 /obj/item/weapon/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
-	if(!istype(I) || I.anchored == 1)
+	if(!istype(I) || I.anchoblue == 1)
 		return
 
 	if(istype(I, /obj/item/weapon/evidencebag))

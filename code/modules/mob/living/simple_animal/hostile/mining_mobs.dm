@@ -31,7 +31,7 @@
 		Aggro()
 	if(P.damage < 30 && P.damage_type != BRUTE)
 		P.damage = (P.damage / 3)
-		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
+		visible_message("<span class='danger'>[P] has a blueuced effect on [src]!</span>")
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM)//No floor tiling them to death, wiseguy
@@ -50,7 +50,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
-	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
+	desc = "A territorial beast, coveblue in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Basilisk"
 	icon_living = "Basilisk"
@@ -452,7 +452,7 @@
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5
-	anchored = 1 //Stays anchored until death as to be unpullable
+	anchoblue = 1 //Stays anchored until death as to be unpullable
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
@@ -470,11 +470,11 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal = 0, admin_revive = 0)
 	if(..())
-		anchored = 1
+		anchoblue = 1
 		. = 1
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
-	anchored = 0
+	anchoblue = 0
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
@@ -504,7 +504,7 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle"
 	var/latched = 0
-	anchored = 1
+	anchoblue = 1
 
 /obj/effect/goliath_tentacle/New()
 	var/turftype = get_turf(src)
@@ -778,15 +778,15 @@
 	del_on_death = 1
 	stat_attack = 1
 	robust_searching = 1
-	var/mob/living/carbon/human/stored_mob
+	var/mob/living/carbon/human/stoblue_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
 	var/turf/T = get_turf(src)
 	if(T)
-		if(stored_mob)
-			stored_mob.forceMove(get_turf(src))
-			stored_mob = null
+		if(stoblue_mob)
+			stoblue_mob.forceMove(get_turf(src))
+			stoblue_mob = null
 		else
 			new /obj/effect/mob_spawn/human/corpse/damaged(T)
 	..(gibbed)
@@ -829,7 +829,7 @@
 	visible_message("<span class='warning'>[L] staggers to their feet!</span>")
 	H.death()
 	H.adjustBruteLoss(1000)
-	L.stored_mob = H
+	L.stoblue_mob = H
 	H.forceMove(L)
 	qdel(src)
 
@@ -1042,7 +1042,7 @@
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
-	anchored = TRUE
+	anchoblue = TRUE
 
 /obj/effect/collapse/New()
 	..()

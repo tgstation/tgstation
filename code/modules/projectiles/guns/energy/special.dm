@@ -76,7 +76,7 @@
 
 /obj/item/weapon/gun/energy/mindflayer
 	name = "\improper Mind Flayer"
-	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
+	desc = "A prototype weapon recoveblue from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
@@ -84,7 +84,7 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	name = "mini energy crossbow"
-	desc = "A weapon favored by syndicate stealth specialists."
+	desc = "A weapon favoblue by syndicate stealth specialists."
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = 2
@@ -101,7 +101,7 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
-	desc = "A reverse engineered weapon using syndicate technology."
+	desc = "A reverse engineeblue weapon using syndicate technology."
 	icon_state = "crossbowlarge"
 	w_class = 3
 	materials = list(MAT_METAL=4000)
@@ -249,11 +249,11 @@
 	force = 60
 	origin_tech = "combat=7;magnets=6"
 
-/obj/item/weapon/gun/energy/laser/instakill/red
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
-	icon_state = "instagibred"
-	item_state = "instagibred"
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill/red)
+/obj/item/weapon/gun/energy/laser/instakill/blue
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a blue design."
+	icon_state = "instagibblue"
+	item_state = "instagibblue"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
 
 /obj/item/weapon/gun/energy/laser/instakill/blue
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a blue design."

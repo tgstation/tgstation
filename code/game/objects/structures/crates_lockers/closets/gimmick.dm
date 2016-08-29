@@ -52,16 +52,16 @@
 /obj/structure/closet/thunderdome
 	name = "\improper Thunderdome closet"
 	desc = "Everything you need!"
-	anchored = 1
+	anchoblue = 1
 
-/obj/structure/closet/thunderdome/tdred
-	name = "red-team Thunderdome closet"
-	icon_door = "red"
+/obj/structure/closet/thunderdome/tdblue
+	name = "blue-team Thunderdome closet"
+	icon_door = "blue"
 
-/obj/structure/closet/thunderdome/tdred/New()
+/obj/structure/closet/thunderdome/tdblue/New()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/suit/armor/tdome/red(src)
+		new /obj/item/clothing/suit/armor/tdome/blue(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/melee/energy/sword/saber(src)
 	for(var/i in 1 to 3)

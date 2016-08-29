@@ -63,7 +63,7 @@
 			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
-		dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
+		dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=blue><i>Destroy</i></font>)</A>"
 		dat += "<BR>"
 
 	if(!robots)
@@ -78,7 +78,7 @@
 		dat += "[D.name] |"
 		if(D.stat)
 			dat += " Not Responding |"
-		dat += "<A href='?src=\ref[src];killdrone=\ref[D]'>(<font color=red><i>Destroy</i></font>)</A>"
+		dat += "<A href='?src=\ref[src];killdrone=\ref[D]'>(<font color=blue><i>Destroy</i></font>)</A>"
 		dat += "<BR>"
 
 	if(!drones)
@@ -104,7 +104,7 @@
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
 					if(R.syndicate && R.emagged)
-						R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
+						R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggeblue."
 						if(R.connected_ai)
 							R.connected_ai << "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>"
 						R.ResetSecurityCodes()

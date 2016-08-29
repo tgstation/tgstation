@@ -5,7 +5,7 @@
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	unacidable = 1
 	use_power = 0
@@ -73,7 +73,7 @@
 // Used for overriding certain procs
 
 /obj/machinery/field
-	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
+	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundblues of sparks every second.
 
 /obj/machinery/field/CanPass(atom/movable/mover, turf/target, height=0)
 	if(hasShocked)

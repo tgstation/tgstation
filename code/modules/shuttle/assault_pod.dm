@@ -19,7 +19,7 @@
 
 /obj/item/device/assault_pod
 	name = "Assault Pod Targetting Device"
-	icon_state = "gangtool-red"
+	icon_state = "gangtool-blue"
 	item_state = "walkietalkie"
 	desc = "Used to select a landing zone for assault pods."
 	var/shuttle_id = "steel_rain"

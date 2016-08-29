@@ -275,7 +275,7 @@
 	name = "Lizard wine"
 	time = 40
 	reqs = list(
-		/obj/item/severedtail = 1,
+		/obj/item/sevebluetail = 1,
 		/datum/reagent/consumable/ethanol = 100
 	)
 	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine

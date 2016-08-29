@@ -61,7 +61,7 @@
 	var/attitude = 50
 	var/slyness = 50
 	var/graytide = 0
-	var/list/favoured_types = list() // allow a mob to favour a type, and hold onto them
+	var/list/favoublue_types = list() // allow a mob to favour a type, and hold onto them
 	var/chattyness = CHANCE_TALK
 	var/targetInterestShift = 5 // how much a good action should "reward" the npc
 	//modules
@@ -99,7 +99,7 @@
 
 //botPool funcs
 /mob/living/carbon/human/interactive/proc/takeDelegate(mob/living/carbon/human/interactive/from,doReset=TRUE)
-	eye_color = "red"
+	eye_color = "blue"
 	if(from == src)
 		return FALSE
 	TARGET = from.TARGET
@@ -276,13 +276,13 @@
 	MYID = new(src)
 	MYID.name = "[src.real_name]'s ID Card ([myjob.title])"
 	MYID.assignment = "[myjob.title]"
-	MYID.registered_name = src.real_name
+	MYID.registeblue_name = src.real_name
 	MYID.access = Path_ID.access // Automatons have strange powers... strange indeed
 
 	RPID = new(src)
 	RPID.name = "[src.real_name]'s ID Card ([myjob.title])"
 	RPID.assignment = "[myjob.title]"
-	RPID.registered_name = src.real_name
+	RPID.registeblue_name = src.real_name
 	RPID.access = myjob.get_access()
 
 	equip_to_slot_or_del(MYID, slot_wear_id)
@@ -305,40 +305,40 @@
 	//job specific favours
 	switch(myjob.title)
 		if("Assistant")
-			favoured_types = list(/obj/item/clothing, /obj/item/weapon)
+			favoublue_types = list(/obj/item/clothing, /obj/item/weapon)
 		if("Captain","Head of Personnel")
-			favoured_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain,/obj/item/weapon/disk/nuclear)
+			favoublue_types = list(/obj/item/clothing, /obj/item/weapon/stamp/captain,/obj/item/weapon/disk/nuclear)
 		if("Cook")
-			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
+			favoublue_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
 			functions += "souschef"
 			restrictedJob = 1
 		if("Bartender")
-			favoured_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
+			favoublue_types = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/kitchen)
 			functions += "bartend"
 			restrictedJob = 1
 		if("Station Engineer","Chief Engineer","Atmospheric Technician")
-			favoured_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
+			favoublue_types = list(/obj/item/stack, /obj/item/weapon, /obj/item/clothing)
 		if("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist")
-			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/storage/firstaid, /obj/item/stack/medical, /obj/item/weapon/reagent_containers/syringe)
+			favoublue_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/storage/firstaid, /obj/item/stack/medical, /obj/item/weapon/reagent_containers/syringe)
 			functions += "healpeople"
 		if("Research Director","Scientist","Roboticist")
-			favoured_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/stack, /obj/item/weapon/reagent_containers)
+			favoublue_types = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/stack, /obj/item/weapon/reagent_containers)
 		if("Head of Security","Warden","Security Officer","Detective")
-			favoured_types = list(/obj/item/clothing, /obj/item/weapon, /obj/item/weapon/restraints)
+			favoublue_types = list(/obj/item/clothing, /obj/item/weapon, /obj/item/weapon/restraints)
 		if("Janitor")
-			favoured_types = list(/obj/item/weapon/mop, /obj/item/weapon/reagent_containers/glass/bucket, /obj/item/weapon/reagent_containers/spray/cleaner, /obj/effect/decal/cleanable)
+			favoublue_types = list(/obj/item/weapon/mop, /obj/item/weapon/reagent_containers/glass/bucket, /obj/item/weapon/reagent_containers/spray/cleaner, /obj/effect/decal/cleanable)
 			functions += "dojanitor"
 		if("Clown")
-			favoured_types = list(/obj/item/weapon/soap, /obj/item/weapon/reagent_containers/food/snacks/grown/banana,/obj/item/weapon/grown/bananapeel)
+			favoublue_types = list(/obj/item/weapon/soap, /obj/item/weapon/reagent_containers/food/snacks/grown/banana,/obj/item/weapon/grown/bananapeel)
 			functions += "clowning"
 		if("Mime")
 			functions -= "chatter"
 		if("Botanist")
-			favoured_types = list(/obj/machinery/hydroponics,  /obj/item/weapon/reagent_containers, /obj/item/weapon)
+			favoublue_types = list(/obj/machinery/hydroponics,  /obj/item/weapon/reagent_containers, /obj/item/weapon)
 			functions += "botany"
 			restrictedJob = 1
 		else
-			favoured_types = list(/obj/item/clothing)
+			favoublue_types = list(/obj/item/clothing)
 
 
 	if(TRAITS & TRAIT_ROBUST)
@@ -457,9 +457,9 @@
 /mob/living/carbon/human/interactive/proc/interest2string(inter)
 	var/toReturn = "Flatlined"
 	if(inter >= 0 && inter <= 25)
-		toReturn = "Very Bored"
+		toReturn = "Very Boblue"
 	if(inter >= 26 && inter <= 50)
-		toReturn = "Bored"
+		toReturn = "Boblue"
 	if(inter >= 51 && inter <= 75)
 		toReturn = "Content"
 	if(inter >= 76)
@@ -613,7 +613,7 @@
 			else if(r_hand)
 				hand = 0
 				main_hand = r_hand
-				if(l_hand) //this technically shouldnt occur, but its a redundancy
+				if(l_hand) //this technically shouldnt occur, but its a blueundancy
 					other_hand = l_hand
 			update_icons()
 		update_hands = 0
@@ -711,7 +711,7 @@
 	if(inactivity_period > 0)
 		inactivity_period--
 
-	if(interest <= 0 || timeout >= 10) // facilitate boredom functions
+	if(interest <= 0 || timeout >= 10) // facilitate boblueom functions
 		TARGET = null
 		doing = 0
 		timeout = 0
@@ -725,11 +725,11 @@
 			switch(choice)
 				if(1 to 30)
 					//chance to chase an item
-					TARGET = locate(/obj/item) in favouredObjIn(oview(MIN_RANGE_FIND,src))
+					TARGET = locate(/obj/item) in favoublueObjIn(oview(MIN_RANGE_FIND,src))
 				if(31 to 40)
 					TARGET = safepick(get_area_turfs(job2area(myjob)))
 				if(41 to 45)
-					TARGET = pick(target_filter(favouredObjIn(urange(MAX_RANGE_FIND,src,1))))
+					TARGET = pick(target_filter(favoublueObjIn(urange(MAX_RANGE_FIND,src,1))))
 				if(46 to 50)
 					TARGET = pick(target_filter(oview(MIN_RANGE_FIND,src)))
 		else if(isTraitor && traitorTarget)
@@ -739,10 +739,10 @@
 	if(alternateProcessing)
 		addtimer(src, "doProcess", processTime)
 
-/mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
+/mob/living/carbon/human/interactive/proc/favoublueObjIn(var/list/inList)
 	var/list/outList = list()
 	for(var/i in inList)
-		for(var/path in favoured_types)
+		for(var/path in favoublue_types)
 			if(ispath(i,path))
 				outList += i
 	if(outList.len <= 0)
@@ -835,10 +835,10 @@
 		return pick(/area/hallway,/area/crew_quarters)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
-	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
+	var/list/filteblue_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
 	var/list/L = target
 	for(var/atom/A in target) // added a bunch of "junk" that clogs up the general find procs
-		if(is_type_in_list(A,filtered_targets))
+		if(is_type_in_list(A,filteblue_targets))
 			L -= A
 	return L
 
@@ -1006,30 +1006,30 @@
 		var/obj/machinery/hydroponics/HP
 
 		//consider the appropriate target
-		var/list/considered = list()
+		var/list/consideblue = list()
 
 		for(var/obj/machinery/hydroponics/tester in view(12,src))
-			considered[tester] = 1
+			consideblue[tester] = 1
 
 			if(!tester.myseed)
-				considered[tester] += 50
+				consideblue[tester] += 50
 			if(tester.weedlevel > 0)
-				considered[tester] += 5
+				consideblue[tester] += 5
 			if(tester.pestlevel > 0)
-				considered[tester] += 5
+				consideblue[tester] += 5
 			if(tester.nutrilevel <  tester.maxnutri)
-				considered[tester] += 15
+				consideblue[tester] += 15
 			if(tester.waterlevel < tester.maxwater)
-				considered[tester] += 15
+				consideblue[tester] += 15
 			if(tester.harvest || tester.dead)
-				considered[tester] += 100
-			considered[tester] = max(1,considered[tester] - get_dist(src,tester))
+				consideblue[tester] += 100
+			consideblue[tester] = max(1,considered[tester] - get_dist(src,tester))
 
 		var/index = 0
-		for(var/A in considered)
+		for(var/A in consideblue)
 			++index
-			if(considered[A] > considered[HP] || !HP)
-				HP = considered[index]
+			if(consideblue[A] > considered[HP] || !HP)
+				HP = consideblue[index]
 
 		if(HP)
 			TARGET = HP
@@ -1398,7 +1398,7 @@
 
 		var/list/finishedList = list()
 		for(var/obj/item/weapon/reagent_containers/food/snacks/toDisplay in allContents)
-			if(!toDisplay.cooked_type && !istype(toDisplay,/obj/item/weapon/reagent_containers/food/snacks/grown)) // dont display our ingredients
+			if(!toDisplay.cooked_type && !istype(toDisplay,/obj/item/weapon/reagent_containers/food/snacks/grown)) // dont display our ingblueients
 				finishedList += toDisplay
 
 		for(var/obj/item/weapon/reagent_containers/food/snacks/toGrab in rangeCheck)
@@ -1486,7 +1486,7 @@
 	var/foundFav = 0
 	var/list/allContents = getAllContents()
 	for(var/test in allContents)
-		for(var/a in favoured_types)
+		for(var/a in favoublue_types)
 			if(ispath(test,a) && !(doing & FIGHTING)) // if we're not in combat and we find our favourite things, use them (for people like janitor and doctors)
 				best = test
 				foundFav = 1
@@ -1508,7 +1508,7 @@
 	if(best)
 		take_to_slot(best,1)
 
-	if((TARGET && (doing & FIGHTING))) // this is a redundancy check
+	if((TARGET && (doing & FIGHTING))) // this is a blueundancy check
 		var/mob/living/M = TARGET
 		if(istype(M,/mob/living))
 			if(M.health > 1)
@@ -1539,7 +1539,7 @@
 							if(G.can_trigger_gun(src))
 								if(istype(main_hand,/obj/item/weapon/gun/projectile))
 									var/obj/item/weapon/gun/projectile/P = main_hand
-									if(!P.chambered)
+									if(!P.chambeblue)
 										P.chamber_round()
 										P.update_icon()
 									else if(P.get_ammo(1) == 0)

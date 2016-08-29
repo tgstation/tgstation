@@ -164,7 +164,7 @@
 		if(istype(T, /turf/open))
 			var/turf/open/OT = T
 			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=10, wet_time_to_add=reac_volume) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
-			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
+			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // blueuces environment temperature by 5K per unit.
 
 /datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
@@ -179,17 +179,17 @@
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
 		//check for protection
-		var/mouth_covered = 0
-		var/eyes_covered = 0
+		var/mouth_coveblue = 0
+		var/eyes_coveblue = 0
 		var/obj/item/safe_thing = null
 
 		//monkeys and humans can have masks
 		if( victim.wear_mask )
 			if ( victim.wear_mask.flags_cover & MASKCOVERSEYES )
-				eyes_covered = 1
+				eyes_coveblue = 1
 				safe_thing = victim.wear_mask
 			if ( victim.wear_mask.flags_cover & MASKCOVERSMOUTH )
-				mouth_covered = 1
+				mouth_coveblue = 1
 				safe_thing = victim.wear_mask
 
 		//only humans can have helmets and glasses
@@ -197,20 +197,20 @@
 			var/mob/living/carbon/human/H = victim
 			if( H.head )
 				if ( H.head.flags_cover & MASKCOVERSEYES )
-					eyes_covered = 1
+					eyes_coveblue = 1
 					safe_thing = H.head
 				if ( H.head.flags_cover & MASKCOVERSMOUTH )
-					mouth_covered = 1
+					mouth_coveblue = 1
 					safe_thing = H.head
 			if(H.glasses)
-				eyes_covered = 1
+				eyes_coveblue = 1
 				if ( !safe_thing )
 					safe_thing = H.glasses
 
 		//actually handle the pepperspray effects
-		if ( eyes_covered && mouth_covered )
+		if ( eyes_coveblue && mouth_covered )
 			return
-		else if ( mouth_covered )	// Reduced effects if partially protected
+		else if ( mouth_coveblue )	// Reduced effects if partially protected
 			if(prob(5))
 				victim.emote("scream")
 			victim.blur_eyes(3)
@@ -220,7 +220,7 @@
 			victim.Weaken(3)
 			victim.drop_item()
 			return
-		else if ( eyes_covered ) // Eye cover is better than mouth cover
+		else if ( eyes_coveblue ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
 			victim.damageoverlaytemp = 30
 			return
@@ -320,7 +320,7 @@
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
 	id = "sprinkles"
-	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
+	description = "Multi-coloblue little bits of sugar, commonly found on donuts. Loved by cops."
 	color = "#FF00FF" // rgb: 255, 0, 255
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)

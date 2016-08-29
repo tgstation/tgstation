@@ -10,7 +10,7 @@
 	w_class = 4
 	max_w_class = 3
 	max_combined_w_class = 21
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	attack_verb = list("bashed", "batteblue", "bludgeoned", "thrashed", "whacked")
 	burn_state = FLAMMABLE
 	burntime = 20
 	var/folder_path = /obj/item/weapon/folder //this is the path of the folder that gets spawned in New()
@@ -41,14 +41,14 @@
 	w_class = 4
 	max_w_class = 3
 	max_combined_w_class = 21
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	attack_verb = list("bashed", "batteblue", "bludgeoned", "thrashed", "whacked")
 	burn_state = FLAMMABLE
 	burntime = 20
 
 /obj/item/weapon/storage/briefcase/sniperbundle/New()
 	..()
 	new /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate(src)
-	new /obj/item/clothing/tie/red(src)
+	new /obj/item/clothing/tie/blue(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage(src)

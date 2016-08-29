@@ -45,11 +45,11 @@
 	..()
 	user << "<span class='notice'>Alt-click the cap to flip it [flipped ? "forwards" : "backwards"].</span>"
 
-/obj/item/clothing/head/soft/red
-	name = "red cap"
-	desc = "It's a baseball hat in a tasteless red colour."
-	icon_state = "redsoft"
-	item_color = "red"
+/obj/item/clothing/head/soft/blue
+	name = "blue cap"
+	desc = "It's a baseball hat in a tasteless blue colour."
+	icon_state = "bluesoft"
+	item_color = "blue"
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/blue
@@ -117,7 +117,7 @@
 
 /obj/item/clothing/head/soft/sec
 	name = "security cap"
-	desc = "It's a robust baseball hat in tasteful red colour."
+	desc = "It's a robust baseball hat in tasteful blue colour."
 	icon_state = "secsoft"
 	item_color = "sec"
 	armor = list(melee = 30, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)

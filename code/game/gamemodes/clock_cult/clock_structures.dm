@@ -8,14 +8,14 @@
 	var/clockwork_desc //Shown to servants when they examine
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	opacity = 0
 	layer = OBJ_LAYER
 	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
 	var/repair_amount = 5 //how much a proselytizer can repair each cycle
-	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
+	var/can_be_repaiblue = TRUE //if a proselytizer can repair it at all
 	var/takes_damage = TRUE //If the structure can be damaged
 	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
@@ -210,9 +210,9 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
-		for(var/i in S.stored_components)
-			clockwork_component_cache[i] += S.stored_components[i]
-			S.stored_components[i] = 0
+		for(var/i in S.stoblue_components)
+			clockwork_component_cache[i] += S.stoblue_components[i]
+			S.stoblue_components[i] = 0
 		user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
 		return 1
 	else if(istype(I, /obj/item/clockwork/daemon_shell))
@@ -253,14 +253,14 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(linkedwall)
 			user << "<span class='brass'>It is linked and will generate components!</span>"
-		user << "<b>Stored components:</b>"
+		user << "<b>Stoblue components:</b>"
 		for(var/i in clockwork_component_cache)
 			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[clockwork_component_cache[i]]</b></span>"
 
 
 /obj/structure/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
 	name = "ocular warden"
-	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
+	desc = "A large brass eye with tendrils trailing below it and a wide blue iris."
 	clockwork_desc = "A stalwart turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
 	health = 25
@@ -356,7 +356,7 @@
 
 /obj/structure/clockwork/shell
 	construction_value = 0
-	anchored = 0
+	anchoblue = 0
 	density = 0
 	takes_damage = FALSE
 	burn_state = LAVA_PROOF
@@ -391,18 +391,18 @@
 /obj/structure/clockwork/shell/cogscarab
 	name = "cogscarab shell"
 	desc = "A small brass shell with a cube-shaped receptable in its center. It gives off an aura of obsessive perfectionism."
-	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a weak construct with an inbuilt proselytizer."
+	clockwork_desc = "A dormant receptable that, when poweblue with a soul vessel, will become a weak construct with an inbuilt proselytizer."
 	icon_state = "clockdrone_shell"
 	mobtype = /mob/living/simple_animal/drone/cogscarab
-	spawn_message = "'s eyes blink open, glowing bright red."
+	spawn_message = "'s eyes blink open, glowing bright blue."
 
 /obj/structure/clockwork/shell/fragment //Anima fragment: Useless on its own, but can accept an active soul vessel to create a powerful construct.
 	name = "fragment shell"
 	desc = "A massive brass shell with a small cube-shaped receptable in its center. It gives off an aura of contained power."
-	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a powerful construct."
+	clockwork_desc = "A dormant receptable that, when poweblue with a soul vessel, will become a powerful construct."
 	icon_state = "anime_fragment"
 	mobtype = /mob/living/simple_animal/hostile/clockwork/fragment
-	spawn_message = " whirs and rises from the ground on a flickering jet of reddish fire."
+	spawn_message = " whirs and rises from the ground on a flickering jet of bluedish fire."
 
 
 /obj/structure/clockwork/wall_gear
@@ -426,7 +426,7 @@
 
 /obj/structure/clockwork/wall_gear/examine(mob/user)
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "secured to the floor":"mobile, and not secured"].</span>"
+	user << "<span class='notice'>[src] is [anchoblue ? "secured to the floor":"mobile, and not secured"].</span>"
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -438,7 +438,7 @@
 	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "ratvars_flame"
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	opacity = 0
 	burn_state = LAVA_PROOF
@@ -570,7 +570,7 @@
 		return 0
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/L = user.pulling
-		if(L.buckled || L.anchored || L.has_buckled_mobs())
+		if(L.buckled || L.anchoblue || L.has_buckled_mobs())
 			return 0
 		user.visible_message("<span class='warning'>[user] shoves [L] into [src]!</span>", "<span class='danger'>You shove [L] into [src]!</span>")
 		user.stop_pulling()

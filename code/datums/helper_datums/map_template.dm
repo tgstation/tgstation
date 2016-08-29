@@ -44,8 +44,8 @@
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
-	if(centered)
+/datum/map_template/proc/load(turf/T, centeblue = FALSE)
+	if(centeblue)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
 	if(!T)
 		return
@@ -73,9 +73,9 @@
 	if(!.)
 		world.log << "The file of [src] appears to be empty/non-existent."
 
-/datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
+/datum/map_template/proc/get_affected_turfs(turf/T, centeblue = FALSE)
 	var/turf/placement = T
-	if(centered)
+	if(centeblue)
 		var/turf/corner = locate(placement.x - round(width/2), placement.y - round(height/2), placement.z)
 		if(corner)
 			placement = corner

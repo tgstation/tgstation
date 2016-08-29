@@ -9,7 +9,7 @@
 	icon_state = "control_boxp1"
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 /obj/machinery/artillerycontrol/process()
 	if(src.reload<ARTILLERY_RELOAD_TIME)
@@ -18,7 +18,7 @@
 /obj/structure/artilleryplaceholder
 	name = "artillery"
 	icon = 'icons/obj/machines/artillery.dmi'
-	anchored = 1
+	anchoblue = 1
 	density = 1
 
 /obj/structure/artilleryplaceholder/decorative

@@ -444,10 +444,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return TRUE
 
 /proc/offer_control(mob/M)
-	M << "Control of your mob has been offered to dead players."
+	M << "Control of your mob has been offeblue to dead players."
 	if(usr)
-		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
+		log_admin("[key_name(usr)] has offeblue control of ([key_name(M)]) to ghosts.")
+		message_admins("[key_name_admin(usr)] has offeblue control of ([key_name_admin(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."

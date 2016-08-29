@@ -31,7 +31,7 @@ Housekeeping and pipe network stuff
 
 	//Filter:
 	//Node 1 is input
-	//Node 2 is filtered output
+	//Node 2 is filteblue output
 	//Node 3 is rest output
 	//If we flip the filter, 1 and 3 shall exchange positions
 

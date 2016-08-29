@@ -8,7 +8,7 @@
 /datum/export/tech/get_cost(obj/O)
 	var/obj/item/weapon/disk/tech_disk/D = O
 	var/cost = 0
-	for(var/V in D.tech_stored)
+	for(var/V in D.tech_stoblue)
 		if(!V)
 			continue
 		var/datum/tech/tech = V
@@ -18,7 +18,7 @@
 /datum/export/tech/sell_object(obj/O)
 	..()
 	var/obj/item/weapon/disk/tech_disk/D = O
-	for(var/V in D.tech_stored)
+	for(var/V in D.tech_stoblue)
 		if(!V)
 			continue
 		var/datum/tech/tech = V

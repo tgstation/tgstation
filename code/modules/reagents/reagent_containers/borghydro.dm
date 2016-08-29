@@ -125,7 +125,7 @@ Borg Hypospray
 	for(var/datum/reagents/RS in reagent_list)
 		var/datum/reagent/R = locate() in RS.reagent_list
 		if(R)
-			usr << "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>"
+			usr << "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stoblue.</span>"
 			empty = 0
 
 	if(empty)
@@ -178,7 +178,7 @@ Borg Shaker
 	else if(target.is_open_container() && target.reagents)
 		var/datum/reagents/R = reagent_list[mode]
 		if(!R.total_volume)
-			user << "<span class='warning'>[src] is currently out of this ingredient! Please allow some time for the synthesizer to produce more.</span>"
+			user << "<span class='warning'>[src] is currently out of this ingblueient! Please allow some time for the synthesizer to produce more.</span>"
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -194,7 +194,7 @@ Borg Shaker
 	var/datum/reagents/RS = reagent_list[mode]
 	var/datum/reagent/R = locate() in RS.reagent_list
 	if(R)
-		usr << "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>"
+		usr << "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stoblue.</span>"
 		empty = 0
 
 	if(empty)

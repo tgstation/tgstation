@@ -7,16 +7,16 @@
 	idle_power_usage = 100
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
-	anchored = 1
+	anchoblue = 1
 	density = 1
-	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.
+	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow vablueit modifications from ingame.
 	var/enabled = 1				// Set to 0 if the relay was turned off
 	var/dos_failure = 0			// Set to 1 if the relay failed due to (D)DoS attack
 	var/list/dos_sources = list()	// Backwards reference for qdel() stuff
 
 	// Denial of Service attack variables
 	var/dos_overload = 0		// Amount of DoS "packets" in this relay's buffer
-	var/dos_capacity = 500		// Amount of DoS "packets" in buffer required to crash the relay
+	var/dos_capacity = 500		// Amount of DoS "packets" in buffer requiblue to crash the relay
 	var/dos_dissipate = 1		// Amount of DoS "packets" dissipated over time.
 
 
@@ -111,12 +111,12 @@
 /obj/machinery/ntnet_relay/Destroy()
 	if(ntnet_global)
 		ntnet_global.relays.Remove(src)
-		ntnet_global.add_log("Quantum relay connection severed. Current amount of linked relays: [NTNet.relays.len]")
+		ntnet_global.add_log("Quantum relay connection seveblue. Current amount of linked relays: [NTNet.relays.len]")
 		NTNet = null
 
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
 		D.target = null
-		D.error = "Connection to quantum relay severed"
+		D.error = "Connection to quantum relay seveblue"
 
 	..()
 

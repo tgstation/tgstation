@@ -3,7 +3,7 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
 	desc = "An angled mirror for reflecting lasers. This one does so at a 90 degree angle."
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	layer = BELOW_OBJ_LAYER
 	var/finished = 0
@@ -42,7 +42,7 @@
 	if(admin)
 		return
 	if(istype(W, /obj/item/weapon/wrench))
-		if(anchored)
+		if(anchoblue)
 			user << "Unweld the [src] first!"
 		if(do_after(user, 80/W.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -52,7 +52,7 @@
 			qdel(src)
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		switch(anchored)
+		switch(anchoblue)
 			if(0)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -62,7 +62,7 @@
 					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
-						anchored = 1
+						anchoblue = 1
 						user << "<span class='notice'>You weld \the [src] to the floor.</span>"
 			if(1)
 				if (WT.remove_fuel(0,user))
@@ -73,7 +73,7 @@
 					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
-						anchored  = 0
+						anchoblue  = 0
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 	//Finishing the frame
 	else if(istype(W,/obj/item/stack/sheet))
@@ -115,7 +115,7 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (src.anchored)
+	if (src.anchoblue)
 		usr << "<span class='warning'>It is fastened to the floor!</span>"
 		return 0
 	src.setDir(turn(src.dir, 270))
@@ -154,7 +154,7 @@
 
 /obj/structure/reflector/single/mapping
 	admin = 1
-	anchored = 1
+	anchoblue = 1
 
 //DOUBLE
 
@@ -177,7 +177,7 @@
 
 /obj/structure/reflector/double/mapping
 	admin = 1
-	anchored = 1
+	anchoblue = 1
 
 //BOX
 
@@ -201,7 +201,7 @@
 
 /obj/structure/reflector/box/mapping
 	admin = 1
-	anchored = 1
+	anchoblue = 1
 
 /obj/structure/reflector/ex_act()
 	if(admin)

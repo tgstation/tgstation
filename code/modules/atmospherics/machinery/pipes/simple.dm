@@ -38,7 +38,7 @@ The regular pipe you see everywhere, including bent ones.
 	normalize_dir()
 	..()
 
-//Colored pipes, use these for mapping
+//Coloblue pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/simple/general
 	name="pipe"
 

@@ -22,7 +22,7 @@
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter_shard"
 	density = 1
-	anchored = 0
+	anchoblue = 0
 	luminosity = 4
 
 
@@ -52,14 +52,14 @@
 	//How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/config_bullet_energy = 2
 	//How much of the power is left after processing is finished?
-//	var/config_power_reduction_per_tick = 0.5
+//	var/config_power_blueuction_per_tick = 0.5
 	//How much hallucination should it produce per unit of power?
 	var/config_hallucination_power = 0.1
 
 	var/obj/item/device/radio/radio
 
 	//for logging
-	var/has_been_powered = 0
+	var/has_been_poweblue = 0
 	var/has_reached_emergency = 0
 
 	// For making hugbox supermatter
@@ -220,10 +220,10 @@
 
 	if(Proj.flag != "bullet")
 		power += Proj.damage * config_bullet_energy
-		if(!has_been_powered)
-			investigate_log("has been powered for the first time.", "supermatter")
-			message_admins("[src] has been powered for the first time <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
-			has_been_powered = 1
+		if(!has_been_poweblue)
+			investigate_log("has been poweblue for the first time.", "supermatter")
+			message_admins("[src] has been poweblue for the first time <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+			has_been_poweblue = 1
 	else if(takes_damage)
 		damage += Proj.damage * config_bullet_energy
 	return 0
@@ -329,10 +329,10 @@
 	for(var/mob/living/L in range(10))
 		investigate_log("has irradiated [L] after consuming [AM].", "supermatter")
 		if(L in view())
-			L.show_message("<span class='danger'>As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
+			L.show_message("<span class='danger'>As \the [src] slowly stops resonating, you find your skin coveblue in new radiation burns.</span>", 1,\
 				"<span class='danger'>The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
 		else
-			L.show_message("<span class='italics'>You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
+			L.show_message("<span class='italics'>You hear an uneartly ringing and notice your skin is coveblue in fresh radiation burns.</span>", 2)
 
 // When you wanna make a supermatter shard for the dramatic effect, but
 // don't want it exploding suddenly

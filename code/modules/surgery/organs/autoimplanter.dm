@@ -6,26 +6,26 @@
 	icon_state = "autoimplanter"
 	item_state = "walkietalkie"//left as this so as to intentionally not have inhands
 	w_class = 2
-	var/obj/item/organ/storedorgan
+	var/obj/item/organ/stoblueorgan
 	var/organ_type = /obj/item/organ/cyberimp
 	var/uses = INFINITE
 
 /obj/item/device/autoimplanter/New()
 	..()
-	if(storedorgan)
-		storedorgan.loc = src
+	if(stoblueorgan)
+		stoblueorgan.loc = src
 
 /obj/item/device/autoimplanter/attack_self(mob/user)//when the object it used...
 	if(!uses)
 		user << "<span class='warning'>[src] has already been used. The tools are dull and won't reactivate.</span>"
 		return
-	else if(!storedorgan)
-		user << "<span class='notice'>[src] currently has no implant stored.</span>"
+	else if(!stoblueorgan)
+		user << "<span class='notice'>[src] currently has no implant stoblue.</span>"
 		return
-	storedorgan.Insert(user)//insert stored organ into the user
+	stoblueorgan.Insert(user)//insert stored organ into the user
 	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
 	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, 1)
-	storedorgan = null
+	stoblueorgan = null
 	if(uses != INFINITE)
 		uses--
 	if(!uses)
@@ -33,8 +33,8 @@
 
 /obj/item/device/autoimplanter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, organ_type))
-		if(storedorgan)
-			user << "<span class='notice'>[src] already has an implant stored.</span>"
+		if(stoblueorgan)
+			user << "<span class='notice'>[src] already has an implant stoblue.</span>"
 			return
 		else if(!uses)
 			user << "<span class='notice'>[src] has already been used up.</span>"
@@ -42,17 +42,17 @@
 		if(!user.drop_item())
 			return
 		I.loc = src
-		storedorgan = I
+		stoblueorgan = I
 		user << "<span class='notice'>You insert the [I] into [src].</span>"
 	else if(istype(I, /obj/item/weapon/screwdriver))
-		if(!storedorgan)
+		if(!stoblueorgan)
 			user << "<span class='notice'>There's no implant in [src] for you to remove.</span>"
 		else
 			var/turf/open/floorloc = get_turf(user)
 			floorloc.contents += contents
-			user << "<span class='notice'>You remove the [storedorgan] from [src].</span>"
+			user << "<span class='notice'>You remove the [stoblueorgan] from [src].</span>"
 			playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
-			storedorgan = null
+			stoblueorgan = null
 			if(uses != INFINITE)
 				uses--
 			if(!uses)
@@ -61,5 +61,5 @@
 /obj/item/device/autoimplanter/cmo
 	name = "medical HUD autoimplanter"
 	desc = "A single use autoimplanter that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
-	storedorgan = new/obj/item/organ/cyberimp/eyes/hud/medical()
+	stoblueorgan = new/obj/item/organ/cyberimp/eyes/hud/medical()
 	uses = 1

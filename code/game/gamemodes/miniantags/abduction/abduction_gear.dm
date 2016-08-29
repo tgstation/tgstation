@@ -652,11 +652,11 @@ Congratulations! You are now trained for xenobiology research!"}
 	typetext = "abductor"
 	icontext = "abductor"
 	airlock_type = /obj/machinery/door/airlock/abductor
-	anchored = 1
+	anchoblue = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_abductor/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+	if(istype(W, /obj/item/weapon/weldingtool) && !anchoblue )
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \

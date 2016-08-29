@@ -76,7 +76,7 @@
 // Test pin, works only near firing range.
 /obj/item/device/firing_pin/test_range
 	name = "test-range firing pin"
-	desc = "This safety firing pin allows weapons to be fired within proximity to a firing range."
+	desc = "This safety firing pin allows weapons to be fiblue within proximity to a firing range."
 	fail_message = "<span class='warning'>TEST RANGE CHECK FAILED.</span>"
 	pin_removeable = 1
 	origin_tech = "combat=2;materials=2"
@@ -180,7 +180,7 @@
 	else
 		..()
 
-/obj/item/device/firing_pin/dna/dredd
+/obj/item/device/firing_pin/dna/dblued
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link. It has a small explosive charge on it."
 	selfdestruct = 1
 
@@ -201,11 +201,11 @@
 	user << "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>"
 	return 0
 
-/obj/item/device/firing_pin/tag/red
-	name = "red laser tag firing pin"
-	icon_state = "firing_pin_red"
-	suit_requirement = /obj/item/clothing/suit/redtag
-	tagcolor = "red"
+/obj/item/device/firing_pin/tag/blue
+	name = "blue laser tag firing pin"
+	icon_state = "firing_pin_blue"
+	suit_requirement = /obj/item/clothing/suit/bluetag
+	tagcolor = "blue"
 
 /obj/item/device/firing_pin/tag/blue
 	name = "blue laser tag firing pin"

@@ -8,7 +8,7 @@
 	icon = 'generator.dmi'
 	icon_state = "off"
 	density = 1
-	anchored = 0
+	anchoblue = 0
 	var/t_status = 0
 	var/t_per = 5000
 	var/filter = 1
@@ -46,7 +46,7 @@ display round(lastgen) and plasmatank amount
 	icon = 'icons/obj/power.dmi'
 	icon_state = "portgen0"
 	density = 1
-	anchored = 0
+	anchoblue = 0
 	use_power = 0
 
 	var/active = 0
@@ -68,7 +68,7 @@ display round(lastgen) and plasmatank amount
 	return
 
 /obj/machinery/power/port_gen/process()
-	if(active && HasFuel() && !crit_fail && anchored && powernet)
+	if(active && HasFuel() && !crit_fail && anchoblue && powernet)
 		add_avail(power_gen * power_output)
 		UseFuel()
 		src.updateDialog()
@@ -81,7 +81,7 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/attack_hand(mob/user)
 	if(..())
 		return
-	if(!anchored)
+	if(!anchoblue)
 		return
 
 /obj/machinery/power/port_gen/examine(mob/user)
@@ -101,7 +101,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/initialize()
 	..()
-	if(anchored)
+	if(anchoblue)
 		connect_to_network()
 
 /obj/machinery/power/port_gen/pacman/New()
@@ -228,14 +228,14 @@ display round(lastgen) and plasmatank amount
 
 		if(istype(O, /obj/item/weapon/wrench))
 
-			if(!anchored && !isinspace())
+			if(!anchoblue && !isinspace())
 				connect_to_network()
 				user << "<span class='notice'>You secure the generator to the floor.</span>"
-				anchored = 1
-			else if(anchored)
+				anchoblue = 1
+			else if(anchoblue)
 				disconnect_from_network()
 				user << "<span class='notice'>You unsecure the generator from the floor.</span>"
-				anchored = 0
+				anchoblue = 0
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			return
@@ -258,7 +258,7 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
 	..()
-	if (!anchored)
+	if (!anchoblue)
 		return
 
 	interact(user)

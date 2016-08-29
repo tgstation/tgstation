@@ -18,7 +18,7 @@
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "table"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	layer = TABLE_LAYER
 	climbable = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
@@ -444,7 +444,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	var/health = 20
 

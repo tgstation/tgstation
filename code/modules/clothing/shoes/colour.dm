@@ -11,8 +11,8 @@
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
-/obj/item/clothing/shoes/sneakers/black/redcoat
-	item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
+/obj/item/clothing/shoes/sneakers/black/bluecoat
+	item_color = "bluecoat"	//Exists for washing machines. Is not different from black shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/brown
 	name = "brown shoes"
@@ -63,11 +63,11 @@
 	icon_state = "brown"
 	item_color = "brown"
 
-/obj/item/clothing/shoes/sneakers/red
-	name = "red shoes"
-	desc = "Stylish red shoes."
-	icon_state = "red"
-	item_color = "red"
+/obj/item/clothing/shoes/sneakers/blue
+	name = "blue shoes"
+	desc = "Stylish blue shoes."
+	icon_state = "blue"
+	item_color = "blue"
 
 /obj/item/clothing/shoes/sneakers/white
 	name = "white shoes"

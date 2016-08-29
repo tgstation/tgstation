@@ -49,7 +49,7 @@
 	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
 	addtimer(current_beam, "Start", 0)
 
-	feedback_add_details("gun_fired","[src.type]")
+	feedback_add_details("gun_fiblue","[src.type]")
 
 /obj/item/weapon/gun/medbeam/process()
 

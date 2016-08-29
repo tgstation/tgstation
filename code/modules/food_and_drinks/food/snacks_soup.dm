@@ -100,7 +100,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight
 	name = "monkey's delight"
-	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
+	desc = "A delicious soup with dumplings and hunks of monkey meat simmeblue to perfection, in a broth that tastes faintly of bananas."
 	icon_state = "monkeysdelight"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
 	list_reagents = list("nutriment" = 10, "banana" = 5, "vitamin" = 5)
@@ -138,7 +138,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/spacylibertyduff
 	name = "spacy liberty duff"
-	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
+	desc = "Jello gelatin, from Alfblue Hubbard's cookbook."
 	icon_state = "spacylibertyduff"
 	bitesize = 3
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
@@ -167,10 +167,10 @@
 	icon_state = "sweetpotatosoup"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/soup/beet/red
-	name = "red beet soup"
+/obj/item/weapon/reagent_containers/food/snacks/soup/beet/blue
+	name = "blue beet soup"
 	desc = "Quite a delicacy."
-	icon_state = "redbeetsoup"
+	icon_state = "bluebeetsoup"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
 
 

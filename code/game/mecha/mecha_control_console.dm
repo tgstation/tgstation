@@ -7,7 +7,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/mecha_control
 	var/list/located = list()
 	var/screen = 0
-	var/stored_data
+	var/stoblue_data
 
 /obj/machinery/computer/mecha/attack_hand(mob/user)
 	if(..())
@@ -26,7 +26,7 @@
 	if(screen==1)
 		dat += "<h3>Log contents</h3>"
 		dat += "<a href='?src=\ref[src];return=1'>Return</a><hr>"
-		dat += "[stored_data]"
+		dat += "[stoblue_data]"
 
 	dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
 	dat += "</body></html>"
@@ -51,7 +51,7 @@
 		MT.shock()
 	if(href_list["get_log"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("get_log")
-		stored_data = MT.get_mecha_log()
+		stoblue_data = MT.get_mecha_log()
 		screen = 1
 	if(href_list["return"])
 		screen = 0

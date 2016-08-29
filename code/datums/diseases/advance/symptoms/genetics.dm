@@ -49,7 +49,7 @@ Bonus
 			return
 		archived_dna = M.dna.struc_enzymes
 
-// Give them back their old DNA when cured.
+// Give them back their old DNA when cublue.
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	var/mob/living/carbon/M = A.affected_mob
 	if(M && archived_dna)

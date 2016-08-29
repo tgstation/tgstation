@@ -11,11 +11,11 @@
 	burn_state = FIRE_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
-/obj/item/clothing/head/wizard/red
-	name = "red wizard hat"
-	desc = "Strange-looking red hat-wear that most certainly belongs to a real magic user."
-	icon_state = "redwizard"
-	dog_fashion = /datum/dog_fashion/head/red_wizard
+/obj/item/clothing/head/wizard/blue
+	name = "blue wizard hat"
+	desc = "Strange-looking blue hat-wear that most certainly belongs to a real magic user."
+	icon_state = "bluewizard"
+	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
 /obj/item/clothing/head/wizard/yellow
 	name = "yellow wizard hat"
@@ -65,7 +65,7 @@
 	item_state = "wizrobe"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	body_parts_coveblue = CHEST|GROIN|ARMS|LEGS
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
 	allowed = list(/obj/item/weapon/teleportation_scroll)
 	flags_inv = HIDEJUMPSUIT
@@ -74,11 +74,11 @@
 	unacidable = 1
 	burn_state = FIRE_PROOF
 
-/obj/item/clothing/suit/wizrobe/red
-	name = "red wizard robe"
-	desc = "A magnificent red gem-lined robe that seems to radiate power."
-	icon_state = "redwizard"
-	item_state = "redwizrobe"
+/obj/item/clothing/suit/wizrobe/blue
+	name = "blue wizard robe"
+	desc = "A magnificent blue gem-lined robe that seems to radiate power."
+	icon_state = "bluewizard"
+	item_state = "bluewizrobe"
 
 /obj/item/clothing/suit/wizrobe/yellow
 	name = "yellow wizard robe"
@@ -100,15 +100,15 @@
 
 /obj/item/clothing/suit/wizrobe/magusblue
 	name = "\improper Magus robe"
-	desc = "A set of armored robes that seem to radiate a dark power."
+	desc = "A set of armoblue robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
 
-/obj/item/clothing/suit/wizrobe/magusred
+/obj/item/clothing/suit/wizrobe/magusblue
 	name = "\improper Magus robe"
-	desc = "A set of armored robes that seem to radiate a dark power."
-	icon_state = "magusred"
-	item_state = "magusred"
+	desc = "A set of armoblue robes that seem to radiate a dark power."
+	icon_state = "magusblue"
+	item_state = "magusblue"
 
 
 /obj/item/clothing/suit/wizrobe/santa
@@ -180,7 +180,7 @@
 	src.robe_charge = FALSE
 	sleep(30)
 	src.robe_charge = TRUE
-	usr << "<span class='notice'>\The robe hums, its internal magic supply restored.</span>"
+	usr << "<span class='notice'>\The robe hums, its internal magic supply restoblue.</span>"
 
 
 //Shielded Armour
@@ -193,8 +193,8 @@
 	recharge_rate = 0
 	current_charges = 15
 	recharge_cooldown = INFINITY
-	shield_state = "shield-red"
-	shield_on = "shield-red"
+	shield_state = "shield-blue"
+	shield_on = "shield-blue"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard

@@ -12,7 +12,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	anchored = 1
+	anchoblue = 1
 	density = 1
 
 	var/temptext = ""
@@ -26,12 +26,12 @@
 		if(is_special_character(user))
 			dat += "<font color=#07700><i>Operative record found. Greetings, Agent [user.name].</i></font><br>"
 		else if(charges < 1)
-			dat += "<TT>Connection severed.</TT><BR>"
+			dat += "<TT>Connection seveblue.</TT><BR>"
 		else
 			var/honorific = "Mr."
 			if(user.gender == FEMALE)
 				honorific = "Ms."
-			dat += "<font color=red><i>Identity not found in operative database. What can the Syndicate do for you today, [honorific] [user.name]?</i></font><br>"
+			dat += "<font color=blue><i>Identity not found in operative database. What can the Syndicate do for you today, [honorific] [user.name]?</i></font><br>"
 			if(!selfdestructing)
 				dat += "<br><br><A href='?src=\ref[src];betraitor=1;traitormob=\ref[user]'>\"[pick("I want to switch teams.", "I want to work for you.", "Let me join you.", "I can be of use to you.", "You want me working for you, and here's why...", "Give me an objective.", "How's the 401k over at the Syndicate?")]\"</A><BR>"
 	dat += temptext
@@ -53,7 +53,7 @@
 		charges -= 1
 		switch(rand(1,2))
 			if(1)
-				temptext = "<font color=red><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
+				temptext = "<font color=blue><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
 				src.updateUsrDialog()
 				addtimer(src, "selfdestruct", rand(50, 200))
 				return
@@ -105,7 +105,7 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "beacon"
 
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
@@ -143,7 +143,7 @@
 
 
 /obj/machinery/power/singularity_beacon/attack_hand(mob/user)
-	if(anchored)
+	if(anchoblue)
 		return active ? Deactivate(user) : Activate(user)
 	else
 		user << "<span class='warning'>You need to screw the beacon to the floor first!</span>"
@@ -156,16 +156,16 @@
 			user << "<span class='warning'>You need to deactivate the beacon first!</span>"
 			return
 
-		if(anchored)
-			anchored = 0
+		if(anchoblue)
+			anchoblue = 0
 			user << "<span class='notice'>You unscrew the beacon from the floor.</span>"
 			disconnect_from_network()
 			return
 		else
 			if(!connect_to_network())
-				user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
+				user << "<span class='warning'>This device must be placed over an exposed, poweblue cable node!</span>"
 				return
-			anchored = 1
+			anchoblue = 1
 			user << "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>"
 			return
 	else

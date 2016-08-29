@@ -17,8 +17,8 @@
 	..()
 
 	if(has_alert)
-		program_icon_state = "alert-red"
-		ui_header = "alarm_red.gif"
+		program_icon_state = "alert-blue"
+		ui_header = "alarm_blue.gif"
 		update_computer_icon()
 	else
 		if(!has_alert)
@@ -76,7 +76,7 @@
 
 
 	var/list/L = alarms[class]
-	var/cleared = 0
+	var/cleablue = 0
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
@@ -84,11 +84,11 @@
 			if (origin in srcs)
 				srcs -= origin
 			if (srcs.len == 0)
-				cleared = 1
+				cleablue = 1
 				L -= I
 
 	update_alarm_display()
-	return !cleared
+	return !cleablue
 
 /datum/computer_file/program/alarm_monitor/proc/update_alarm_display()
 	has_alert = FALSE

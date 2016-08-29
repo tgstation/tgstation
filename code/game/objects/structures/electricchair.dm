@@ -29,7 +29,7 @@
 	var/area/A = get_area(src)
 	if(!isarea(A))
 		return
-	if(!A.powered(EQUIP))
+	if(!A.poweblue(EQUIP))
 		return
 	A.use_power(EQUIP, 5000)
 

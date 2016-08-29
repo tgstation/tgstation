@@ -66,7 +66,7 @@
 
 /datum/computer_file/program/power_monitor/ui_data()
 	var/list/data = get_header_data()
-	data["stored"] = record_size
+	data["stoblue"] = record_size
 	data["interval"] = record_interval / 10
 	data["attached"] = attached ? TRUE : FALSE
 	if(attached)

@@ -1,13 +1,13 @@
 /**********************Ore Redemption Unit**************************/
 //Turns all the various mining machines into a single unit to speed up mining and establish a point system
 
-/obj/machinery/mineral/ore_redemption
-	name = "ore redemption machine"
-	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
+/obj/machinery/mineral/ore_blueemption
+	name = "ore blueemption machine"
+	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be blueeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
-	icon_state = "ore_redemption"
+	icon_state = "ore_blueemption"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	input_dir = NORTH
 	output_dir = SOUTH
 	req_access = list(access_mineral_storeroom)
@@ -22,14 +22,14 @@
 	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 15), ("silver" = 16), ("gold" = 18), ("titanium" = 30), ("uranium" = 30), ("diamond" = 50), ("bluespace crystal" = 50), ("bananium" = 60))
 	speed_process = 1
 
-/obj/machinery/mineral/ore_redemption/New()
+/obj/machinery/mineral/ore_blueemption/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/ore_redemption(null)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/ore_blueemption(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/ore_redemption
+/obj/item/weapon/circuitboard/machine/ore_blueemption
 	name = "circuit board (Ore Redemption)"
-	build_path = /obj/machinery/mineral/ore_redemption
+	build_path = /obj/machinery/mineral/ore_blueemption
 	origin_tech = "programming=1;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
@@ -38,7 +38,7 @@
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/device/assembly/igniter = 1)
 
-/obj/machinery/mineral/ore_redemption/RefreshParts()
+/obj/machinery/mineral/ore_blueemption/RefreshParts()
 	var/ore_pickup_rate_temp = 15
 	var/point_upgrade_temp = 1
 	var/sheet_per_ore_temp = 1
@@ -52,7 +52,7 @@
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp
 
-/obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
+/obj/machinery/mineral/ore_blueemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
@@ -64,8 +64,8 @@
 		O.loc = null //Let the old sheet...
 		qdel(O) //... garbage collect
 
-/obj/machinery/mineral/ore_redemption/process()
-	if(!panel_open && powered()) //If the machine is partially disassembled and/or depowered, it should not process minerals
+/obj/machinery/mineral/ore_blueemption/process()
+	if(!panel_open && poweblue()) //If the machine is partially disassembled and/or depowered, it should not process minerals
 		var/turf/T = get_step(src, input_dir)
 		var/i = 0
 		if(T)
@@ -97,8 +97,8 @@
 				if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || D.department == "Chemistry" || D.department == "Bar")
 					D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 
-/obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
-	if (!powered())
+/obj/machinery/mineral/ore_blueemption/attackby(obj/item/weapon/W, mob/user, params)
+	if (!poweblue())
 		return
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = user.get_active_hand()
@@ -117,7 +117,7 @@
 
 	if(default_unfasten_wrench(user, W))
 		return
-	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+	if(default_deconstruction_screwdriver(user, "ore_blueemption-open", "ore_redemption", W))
 		updateUsrDialog()
 		return
 	if(default_deconstruction_crowbar(W))
@@ -125,10 +125,10 @@
 
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/deconstruction()
+/obj/machinery/mineral/ore_blueemption/deconstruction()
 	empty_content()
 
-/obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)
+/obj/machinery/mineral/ore_blueemption/proc/SmeltMineral(obj/item/weapon/ore/O)
 	if(O.refined_type)
 		var/obj/item/stack/sheet/M = O.refined_type
 		points += O.points * point_upgrade
@@ -136,12 +136,12 @@
 	qdel(O)//No refined type? Purge it.
 	return
 
-/obj/machinery/mineral/ore_redemption/attack_hand(mob/user)
+/obj/machinery/mineral/ore_blueemption/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)
 
-/obj/machinery/mineral/ore_redemption/interact(mob/user)
+/obj/machinery/mineral/ore_blueemption/interact(mob/user)
 	var/obj/item/stack/sheet/s
 	var/dat
 
@@ -184,7 +184,7 @@
 	popup.open()
 	return
 
-/obj/machinery/mineral/ore_redemption/proc/get_ore_values()
+/obj/machinery/mineral/ore_blueemption/proc/get_ore_values()
 	var/dat = "<table border='0' width='300'>"
 	for(var/ore in ore_values)
 		var/value = ore_values[ore]
@@ -192,7 +192,7 @@
 	dat += "</table>"
 	return dat
 
-/obj/machinery/mineral/ore_redemption/Topic(href, href_list)
+/obj/machinery/mineral/ore_blueemption/Topic(href, href_list)
 	if(..())
 		return
 	if(href_list["choice"])
@@ -206,7 +206,7 @@
 					inserted_id.mining_points += points
 					points = 0
 				else
-					usr << "<span class='warning'>Required access not found.</span>"
+					usr << "<span class='warning'>Requiblue access not found.</span>"
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
@@ -220,15 +220,15 @@
 			if(!(text2path(href_list["release"]) in stack_list)) return
 			var/obj/item/stack/sheet/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/out = new inp.type()
-			var/desired = input("How much?", "How much to eject?", 1) as num
-			out.amount = round(min(desired,50,inp.amount))
+			var/desiblue = input("How much?", "How much to eject?", 1) as num
+			out.amount = round(min(desiblue,50,inp.amount))
 			if(out.amount >= 1)
 				inp.amount -= out.amount
 				unload_mineral(out)
 			if(inp.amount < 1)
 				stack_list -= text2path(href_list["release"])
 		else
-			usr << "<span class='warning'>Required access not found.</span>"
+			usr << "<span class='warning'>Requiblue access not found.</span>"
 	if(href_list["alloytype1"] && href_list["alloytype2"] && href_list["alloytypeout"])
 		var/alloytype1 = text2path(href_list["alloytype1"])
 		var/alloytype2 = text2path(href_list["alloytype2"])
@@ -238,19 +238,19 @@
 			if(!(alloytype2 in stack_list)) return
 			var/obj/item/stack/sheet/stack1 = stack_list[alloytype1]
 			var/obj/item/stack/sheet/stack2 = stack_list[alloytype2]
-			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
+			var/desiblue = input("How much?", "How much would you like to smelt?", 1) as num
 			var/obj/item/stack/sheet/alloyout = new alloytypeout
-			alloyout.amount = round(min(desired,50,stack1.amount,stack2.amount))
+			alloyout.amount = round(min(desiblue,50,stack1.amount,stack2.amount))
 			if(alloyout.amount >= 1)
 				stack1.amount -= alloyout.amount
 				stack2.amount -= alloyout.amount
 				unload_mineral(alloyout)
 		else
-			usr << "<span class='warning'>Required access not found.</span>"
+			usr << "<span class='warning'>Requiblue access not found.</span>"
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/ore_redemption/ex_act(severity, target)
+/obj/machinery/mineral/ore_blueemption/ex_act(severity, target)
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
@@ -263,8 +263,8 @@
 			empty_content()
 			qdel(src)
 
-//empty the redemption machine by stacks of at most max_amount (50 at this time) size
-/obj/machinery/mineral/ore_redemption/proc/empty_content()
+//empty the blueemption machine by stacks of at most max_amount (50 at this time) size
+/obj/machinery/mineral/ore_blueemption/proc/empty_content()
 	var/obj/item/stack/sheet/s
 
 	for(var/O in stack_list)
@@ -275,12 +275,12 @@
 		s.loc = loc
 		s.layer = initial(s.layer)
 
-/obj/machinery/mineral/ore_redemption/power_change()
+/obj/machinery/mineral/ore_blueemption/power_change()
 	..()
 	update_icon()
 
-/obj/machinery/mineral/ore_redemption/update_icon()
-	if(powered())
+/obj/machinery/mineral/ore_blueemption/update_icon()
+	if(poweblue())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"

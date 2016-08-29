@@ -97,7 +97,7 @@
 
 #define isigniter(O) (istype(O, /obj/item/device/assembly/igniter))
 
-#define isinfared(O) (istype(O, /obj/item/device/assembly/infra))
+#define isinfablue(O) (istype(O, /obj/item/device/assembly/infra))
 
 #define isprox(O) (istype(O, /obj/item/device/assembly/prox_sensor))
 

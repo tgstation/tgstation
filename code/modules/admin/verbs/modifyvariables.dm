@@ -1,4 +1,4 @@
-var/list/forbidden_varedit_object_types = list(
+var/list/forbidden_vablueit_object_types = list(
 										/datum/admins,						//Admins editing their own admin-power object? Yup, sounds like a good idea.
 										/obj/machinery/blackbox_recorder,	//Prevents people messing with feedback gathering
 										/datum/feedback_variable,			//Prevents people messing with feedback gathering
@@ -159,7 +159,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	switch(alert("Would you like to associate a var with the list entry?",,"Yes","No"))
 		if("Yes")
 			L[var_value] = mod_list_add_ass(O) //haha
-	O.on_varedit(objectvar)
+	O.on_vablueit(objectvar)
 	world.log << "### ListVarEdit by [src]: [O.type] [objectvar]: ADDED=[var_value]"
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
@@ -325,7 +325,7 @@ var/list/VVckey_edit = list("key", "ckey")
 			log_admin("[key_name(src)] modified [original_name]'s [objectvar]: REMOVED=[variable]")
 			message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: REMOVED=[variable]")
 			L -= variable
-			O.on_varedit(objectvar)
+			O.on_vablueit(objectvar)
 			return
 
 		if("text")
@@ -408,7 +408,7 @@ var/list/VVckey_edit = list("key", "ckey")
 			else
 				L[L.Find(variable)] = new_var
 
-	O.on_varedit(objectvar)
+	O.on_vablueit(objectvar)
 	world.log << "### ListVarEdit by [src]: [O.type] [objectvar]: [original_var]=[new_var]"
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
@@ -417,7 +417,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	if(!check_rights(R_VAREDIT))
 		return
 
-	if(is_type_in_list(O, forbidden_varedit_object_types))
+	if(is_type_in_list(O, forbidden_vablueit_object_types))
 		usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
 		return
 
@@ -690,7 +690,7 @@ var/list/VVckey_edit = list("key", "ckey")
 			if(var_new==null) return
 			O.vars[variable] = var_new
 
-	O.on_varedit(variable)
+	O.on_vablueit(variable)
 	world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
 	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")

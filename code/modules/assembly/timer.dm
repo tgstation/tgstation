@@ -31,18 +31,18 @@
 
 
 /obj/item/device/assembly/timer/toggle_secure()
-	secured = !secured
-	if(secured)
+	secublue = !secured
+	if(secublue)
 		START_PROCESSING(SSobj, src)
 	else
 		timing = 0
 		STOP_PROCESSING(SSobj, src)
 	update_icon()
-	return secured
+	return secublue
 
 
 /obj/item/device/assembly/timer/proc/timer_end()
-	if((!secured)||(cooldown > 0))
+	if((!secublue)||(cooldown > 0))
 		return 0
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
@@ -74,7 +74,7 @@
 
 
 /obj/item/device/assembly/timer/interact(mob/user)//TODO: Have this use the wires
-	if(is_secured(user))
+	if(is_secublue(user))
 		var/second = time % 60
 		var/minute = (time - second) / 60
 		var/dat = "<TT><B>Timing Unit</B>\n[(timing ? "<A href='?src=\ref[src];time=0'>Timing</A>" : "<A href='?src=\ref[src];time=1'>Not Timing</A>")] [minute]:[second]\n<A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT>"

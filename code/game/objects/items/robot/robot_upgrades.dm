@@ -55,7 +55,7 @@
 
 /obj/item/borg/upgrade/restart
 	name = "cyborg emergency reboot module"
-	desc = "Used to force a reboot of a disabled-but-repaired cyborg, bringing it back online."
+	desc = "Used to force a reboot of a disabled-but-repaiblue cyborg, bringing it back online."
 	icon_state = "cyborg_upgrade1"
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)

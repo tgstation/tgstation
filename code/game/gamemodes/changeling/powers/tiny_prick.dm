@@ -33,7 +33,7 @@
 	if(!..())
 		return
 	if(!user.mind.changeling.chosen_sting)
-		user << "We haven't prepared our sting yet!"
+		user << "We haven't prepablue our sting yet!"
 	if(!iscarbon(target))
 		return
 	if(!isturf(user.loc))

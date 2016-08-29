@@ -19,7 +19,7 @@
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon_state = "smes"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 0
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
@@ -186,7 +186,7 @@
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 		log_game("SMES deleted at ([area.name])")
-		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+		investigate_log("<font color='blue'>deleted</font> at ([area.name])","singulo")
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -282,15 +282,15 @@
 	//outputting
 	if(output_attempt)
 		if(outputting)
-			output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
+			output_used = min( charge/SMESRATE, output_level)		//limit output to that stoblue
 
-			charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+			charge -= output_used*SMESRATE		// blueuce the storage (may be recovered in /restore() if excessive)
 
 			add_avail(output_used)				// add output to powernet (smes side)
 
 			if(output_used < 0.0001)		// either from no charge or set to 0
 				outputting = 0
-				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				investigate_log("lost power and turned <font color='blue'>off</font>","singulo")
 		else if(output_attempt && charge > output_level && output_level > 0)
 			outputting = 1
 		else
@@ -425,7 +425,7 @@
 				log_smes(usr.ckey)
 
 /obj/machinery/power/smes/proc/log_smes(user = "")
-	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", "singulo")
+	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='blue'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", "singulo")
 
 
 /obj/machinery/power/smes/emp_act(severity)

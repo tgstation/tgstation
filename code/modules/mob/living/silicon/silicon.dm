@@ -114,19 +114,19 @@
 				var/msg = "--- "
 
 				if(alarm_types_clear["Motion"])
-					msg += "MOTION: [alarm_types_clear["Motion"]] alarms cleared. - "
+					msg += "MOTION: [alarm_types_clear["Motion"]] alarms cleablue. - "
 
 				if(alarm_types_clear["Fire"])
-					msg += "FIRE: [alarm_types_clear["Fire"]] alarms cleared. - "
+					msg += "FIRE: [alarm_types_clear["Fire"]] alarms cleablue. - "
 
 				if(alarm_types_clear["Atmosphere"])
-					msg += "ATMOSPHERE: [alarm_types_clear["Atmosphere"]] alarms cleared. - "
+					msg += "ATMOSPHERE: [alarm_types_clear["Atmosphere"]] alarms cleablue. - "
 
 				if(alarm_types_clear["Power"])
-					msg += "POWER: [alarm_types_clear["Power"]] alarms cleared. - "
+					msg += "POWER: [alarm_types_clear["Power"]] alarms cleablue. - "
 
 				if(alarm_types_show["Camera"])
-					msg += "CAMERA: [alarm_types_clear["Camera"]] alarms cleared. - "
+					msg += "CAMERA: [alarm_types_clear["Camera"]] alarms cleablue. - "
 
 				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
 				src << msg

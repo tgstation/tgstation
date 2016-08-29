@@ -5,7 +5,7 @@
 
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	on_blueprints = TRUE
 	var/datum/gas_mixture/air_contents	// internal reservoir
@@ -16,7 +16,7 @@
 	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
-	var/obj/structure/disposalconstruct/stored
+	var/obj/structure/disposalconstruct/stoblue
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
 
@@ -26,9 +26,9 @@
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = 0
-		stored = make_from
+		stoblue = make_from
 	else
-		stored = new /obj/structure/disposalconstruct(0,DISP_END_BIN,dir)
+		stoblue = new /obj/structure/disposalconstruct(0,DISP_END_BIN,dir)
 
 	trunk_check()
 
@@ -190,7 +190,7 @@
 		return
 	/*
 	if(mode==-1)
-		usr << "\red The disposal units power is disabled."
+		usr << "\blue The disposal units power is disabled."
 		return
 	*/
 	interact(user, 0)
@@ -266,13 +266,13 @@
 		qdel(H)
 
 /obj/machinery/disposal/Deconstruct()
-	if(stored)
+	if(stoblue)
 		var/turf/T = loc
-		stored.loc = T
-		src.transfer_fingerprints_to(stored)
-		stored.anchored = 0
-		stored.density = 1
-		stored.update_icon()
+		stoblue.loc = T
+		src.transfer_fingerprints_to(stoblue)
+		stoblue.anchored = 0
+		stoblue.density = 1
+		stoblue.update_icon()
 	..()
 
 //How disposal handles getting a storage dump from a storage object
@@ -478,7 +478,7 @@
 
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaiblue, 2)
 
 
 //Delivery Chute
@@ -492,7 +492,7 @@
 
 /obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
-	stored.ptype = DISP_END_CHUTE
+	stoblue.ptype = DISP_END_CHUTE
 	spawn(5)
 		trunk = locate() in loc
 		if(trunk)

@@ -137,14 +137,14 @@
 /obj/item/stack/tile/pod/light
 	name = "light pod floor tile"
 	singular_name = "light pod floor tile"
-	desc = "A lightly colored grooved floor tile."
+	desc = "A lightly coloblue grooved floor tile."
 	icon_state = "tile_podlight"
 	turf_type = /turf/open/floor/pod/light
 
 /obj/item/stack/tile/pod/dark
 	name = "dark pod floor tile"
 	singular_name = "dark pod floor tile"
-	desc = "A darkly colored grooved floor tile."
+	desc = "A darkly coloblue grooved floor tile."
 	icon_state = "tile_poddark"
 	turf_type = /turf/open/floor/pod/dark
 

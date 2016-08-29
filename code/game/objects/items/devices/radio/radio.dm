@@ -222,7 +222,7 @@
 	*/
 
 	/*
-		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
+		be prepablue to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
 
 		//get the frequency you buttface. radios no longer use the SSradio. confusing for future generations, convenient for me.

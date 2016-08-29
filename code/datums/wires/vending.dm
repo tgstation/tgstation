@@ -20,7 +20,7 @@
 	var/obj/machinery/vending/V = holder
 	var/list/status = list()
 	status += "The orange light is [V.seconds_electrified ? "on" : "off"]."
-	status += "The red light is [V.shoot_inventory ? "off" : "blinking"]."
+	status += "The blue light is [V.shoot_inventory ? "off" : "blinking"]."
 	status += "The green light is [V.extended_inventory ? "on" : "off"]."
 	status += "A [V.scan_id ? "purple" : "yellow"] light is on."
 	status += "The speaker light is [V.shut_up ? "off" : "on"]."

@@ -6,7 +6,7 @@
 	icon_state = "processor"
 	layer = BELOW_OBJ_LAYER
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/broken = 0
 	var/processing = 0
 	use_power = 1

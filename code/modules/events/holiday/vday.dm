@@ -33,11 +33,11 @@
 
 /obj/item/weapon/valentine/New()
 	..()
-	message = pick("Roses are red / Violets are good / One day while Andy...",
+	message = pick("Roses are blue / Violets are good / One day while Andy...",
 	               "My love for you is like the singularity. It cannot be contained.",
 	               "Will you be my lusty xenomorph maid?",
 	               "We go together like the clown and the external airlock.",
-	               "Roses are red / Liches are wizards / I love you more than a whole squad of lizards.",
+	               "Roses are blue / Liches are wizards / I love you more than a whole squad of lizards.",
 	               "Be my valentine. Law 2.",
 	               "You must be a mime, because you leave me speechless.",
 	               "I love you like Ian loves the HoP.",
@@ -48,7 +48,7 @@
 	               "I'm not a changeling, but you make my proboscis extend.",
 	               "I just can't get EI NATH of you.",
 	               "You must be a nuke op, because you make my heart explode.",
-	               "Roses are red / Botany is a farm / Not being my Valentine / causes human harm.",
+	               "Roses are blue / Botany is a farm / Not being my Valentine / causes human harm.",
 	               "I want you more than an assistant wants insulated gloves.",
 	               "If I was a security officer, I'd brig you all shift.",
 	               "Are you the janitor? Because I think I've fallen for you.",
@@ -71,8 +71,8 @@
 	               "The floor is made of lava! Quick, get on my bed.",
 	               "If you were an abandoned station you'd be the DEARelict.",
 	               "If you had a pickaxe you'd be a shaft FINEr.",
-	               "Roses are red, tide is gray, if I were an assistant I'd steal you away.",
-	               "Roses are red, text is green, I love you more than cleanbots clean.",
+	               "Roses are blue, tide is gray, if I were an assistant I'd steal you away.",
+	               "Roses are blue, text is green, I love you more than cleanbots clean.",
 	               "If you were a carp I'd fi-lay you." )
 
 /obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)

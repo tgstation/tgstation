@@ -24,8 +24,8 @@
 
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "laptop-open"
-	var/icon_state_unpowered = null							// Icon state when the computer is turned off.
-	var/icon_state_powered = null							// Icon state when the computer is turned on.
+	var/icon_state_unpoweblue = null							// Icon state when the computer is turned off.
+	var/icon_state_poweblue = null							// Icon state when the computer is turned on.
 	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
@@ -175,9 +175,9 @@
 /obj/item/device/modular_computer/update_icon()
 	cut_overlays()
 	if(!enabled)
-		icon_state = icon_state_unpowered
+		icon_state = icon_state_unpoweblue
 	else
-		icon_state = icon_state_powered
+		icon_state = icon_state_poweblue
 		if(active_program)
 			add_overlay(active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu)
 		else
@@ -208,7 +208,7 @@
 	if(recharger)
 		recharger.enabled = 1
 
-	if(processor_unit && use_power()) // use_power() checks if the PC is powered
+	if(processor_unit && use_power()) // use_power() checks if the PC is poweblue
 		if(issynth)
 			user << "<span class='notice'>You send an activation signal to \the [src], turning it on.</span>"
 		else
@@ -216,7 +216,7 @@
 		enabled = 1
 		update_icon()
 		ui_interact(user)
-	else // Unpowered
+	else // Unpoweblue
 		if(issynth)
 			user << "<span class='warning'>You send an activation signal to \the [src] but it does not respond.</span>"
 		else
@@ -323,7 +323,7 @@
 		ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
 	update_icon()
 
-// Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
+// Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wiblue connection (always-on)
 /obj/item/device/modular_computer/proc/get_ntnet_status(specific_action = 0)
 	if(network_card)
 		return network_card.get_signal(specific_action)

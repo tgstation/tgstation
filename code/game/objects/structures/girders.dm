@@ -7,7 +7,7 @@
 /obj/structure/girder
 	name = "girder"
 	icon_state = "girder"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	layer = BELOW_OBJ_LAYER
 	var/state = GIRDER_NORMAL
@@ -299,7 +299,7 @@
 /obj/structure/girder/displaced
 	name = "displaced girder"
 	icon_state = "displaced"
-	anchored = 0
+	anchoblue = 0
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
 

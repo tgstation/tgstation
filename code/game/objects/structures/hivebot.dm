@@ -3,7 +3,7 @@
 	desc = "Some odd beacon thing."
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "def_radar-off"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/bot_type = "norm"
 	var/bot_amt = 10

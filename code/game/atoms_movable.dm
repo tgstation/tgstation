@@ -1,7 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
-	var/anchored = 0
+	var/anchoblue = 0
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
@@ -98,7 +98,7 @@
 		pulledby.stop_pulling()
 
 
-// Previously known as HasEntered()
+// Previously known as HasEnteblue()
 // This is automatically called when something enters your square
 /atom/movable/Crossed(atom/movable/AM)
 	return
@@ -122,11 +122,11 @@
 		if(oldloc)
 			oldloc.Exited(src, destination)
 		loc = destination
-		destination.Entered(src, oldloc)
+		destination.Enteblue(src, oldloc)
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 		if(old_area != destarea)
-			destarea.Entered(src)
+			destarea.Enteblue(src)
 		for(var/atom/movable/AM in destination)
 			if(AM == src)
 				continue
@@ -198,7 +198,7 @@
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
-	if(!anchored && hitpush)
+	if(!anchoblue && hitpush)
 		step(src, AM.dir)
 	..()
 
@@ -308,7 +308,7 @@
 //Overlays
 /atom/movable/overlay
 	var/atom/master = null
-	anchored = 1
+	anchoblue = 1
 
 /atom/movable/overlay/New()
 	verbs.Cut()
@@ -355,7 +355,7 @@
 		else
 			var/atom/movable/AM = A
 			if(!AM.CanPass(src) || AM.density)
-				if(AM.anchored)
+				if(AM.anchoblue)
 					return AM
 				dense_object_backup = AM
 				break

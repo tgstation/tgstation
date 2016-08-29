@@ -7,7 +7,7 @@
 	icon_state = "E-W" //icon_state decides which tube will be built
 	density = 0
 	layer = ABOVE_OBJ_LAYER //same as the built tube
-	anchored = 0
+	anchoblue = 0
 
 /obj/structure/c_transit_tube/examine(mob/user)
 	..()
@@ -156,5 +156,5 @@
 	name = "unattached transit tube pod"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube_pod.dmi'
 	icon_state = "pod"
-	anchored = 0
+	anchoblue = 0
 	density = 0

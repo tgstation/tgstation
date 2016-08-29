@@ -53,8 +53,8 @@
 	origin_tech = null
 
 /obj/item/clothing/shoes/magboots/syndie
-	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."
-	name = "blood-red magboots"
+	desc = "Reverse-engineeblue magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."
+	name = "blood-blue magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
 	origin_tech = "magnets=4;syndicate=2"

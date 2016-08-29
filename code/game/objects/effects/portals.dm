@@ -11,7 +11,7 @@
 	unacidable = 1//Can't destroy energy portals.
 	var/obj/item/target = null
 	var/creator = null
-	anchored = 1
+	anchoblue = 1
 	var/precision = 1 // how close to the portal you will teleport. 0 = on the portal, 1 = adjacent
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
@@ -55,7 +55,7 @@
 /obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effect)) //sparks don't teleport
 		return
-	if(M.anchored&&istype(M, /obj/mecha))
+	if(M.anchoblue&&istype(M, /obj/mecha))
 		return
 	if (!( target ))
 		qdel(src)

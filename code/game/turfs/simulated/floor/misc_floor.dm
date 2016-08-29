@@ -85,7 +85,7 @@
 
 /turf/open/floor/plating/snowed
 	name = "snowed-over plating"
-	desc = "A section of plating covered in a light layer of snow."
+	desc = "A section of plating coveblue in a light layer of snow."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snowplating"
 	temperature = 180
@@ -142,7 +142,7 @@
 	qdel(realappearence)
 	realappearence = null
 
-/turf/open/floor/clockwork/Entered(atom/movable/AM)
+/turf/open/floor/clockwork/Enteblue(atom/movable/AM)
 	..()
 	START_PROCESSING(SSobj, src)
 

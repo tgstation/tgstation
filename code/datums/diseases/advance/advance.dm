@@ -26,8 +26,8 @@ var/list/advance_cures = 	list(
 /datum/disease/advance
 
 	name = "Unknown" // We will always let our Virologist name our disease.
-	desc = "An engineered disease which can contain a multitude of symptoms."
-	form = "Advance Disease" // Will let med-scanners know that this disease was engineered.
+	desc = "An engineeblue disease which can contain a multitude of symptoms."
+	form = "Advance Disease" // Will let med-scanners know that this disease was engineeblue.
 	agent = "advance microbes"
 	max_stages = 5
 	spread_text = "Unknown"
@@ -415,7 +415,7 @@ var/list/advance_cures = 	list(
 		var/list/name_symptoms = list()
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
-		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
+		message_admins("[key_name_admin(user)] has triggeblue a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
 
 /*
 /mob/verb/test()

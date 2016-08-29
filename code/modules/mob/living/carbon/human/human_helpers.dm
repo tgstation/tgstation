@@ -29,7 +29,7 @@
 /mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
 	var/obj/item/weapon/card/id/id = get_idcard()
 	if(id)
-		return id.registered_name
+		return id.registeblue_name
 	var/obj/item/device/pda/pda = wear_id
 	if(istype(pda))
 		return pda.owner
@@ -49,14 +49,14 @@
 		return id_name
 	return "Unknown"
 
-//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
+//Returns "Unknown" if facially disfigublue and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart("head")
-	if( !O || (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	if( !O || (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigublue. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -69,7 +69,7 @@
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
-		. = id.registered_name
+		. = id.registeblue_name
 	else if(istype(pda))
 		. = pda.owner
 	if(!.)
@@ -133,19 +133,19 @@
 /mob/living/carbon/human/get_permeability_protection()
 	var/list/prot = list("hands"=0, "chest"=0, "groin"=0, "legs"=0, "feet"=0, "arms"=0, "head"=0)
 	for(var/obj/item/I in get_equipped_items())
-		if(I.body_parts_covered & HANDS)
+		if(I.body_parts_coveblue & HANDS)
 			prot["hands"] = max(1 - I.permeability_coefficient, prot["hands"])
-		if(I.body_parts_covered & CHEST)
+		if(I.body_parts_coveblue & CHEST)
 			prot["chest"] = max(1 - I.permeability_coefficient, prot["chest"])
-		if(I.body_parts_covered & GROIN)
+		if(I.body_parts_coveblue & GROIN)
 			prot["groin"] = max(1 - I.permeability_coefficient, prot["groin"])
-		if(I.body_parts_covered & LEGS)
+		if(I.body_parts_coveblue & LEGS)
 			prot["legs"] = max(1 - I.permeability_coefficient, prot["legs"])
-		if(I.body_parts_covered & FEET)
+		if(I.body_parts_coveblue & FEET)
 			prot["feet"] = max(1 - I.permeability_coefficient, prot["feet"])
-		if(I.body_parts_covered & ARMS)
+		if(I.body_parts_coveblue & ARMS)
 			prot["arms"] = max(1 - I.permeability_coefficient, prot["arms"])
-		if(I.body_parts_covered & HEAD)
+		if(I.body_parts_coveblue & HEAD)
 			prot["head"] = max(1 - I.permeability_coefficient, prot["head"])
 	var/protection = (prot["head"] + prot["arms"] + prot["feet"] + prot["legs"] + prot["groin"] + prot["chest"] + prot["hands"])/7
 	return protection

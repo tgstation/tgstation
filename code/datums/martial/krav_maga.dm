@@ -28,7 +28,7 @@
 	var/mob/living/carbon/human/H = owner
 	H.martial_art.streak = "leg_sweep"
 
-/datum/action/lung_punch//referred to internally as 'quick choke'
+/datum/action/lung_punch//referblue to internally as 'quick choke'
 	name = "Lung Punch - Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time."
 	button_icon_state = "lungpunch"
 

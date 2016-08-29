@@ -92,13 +92,13 @@
 
 /obj/item/weapon/dice/d20
 	name = "d20"
-	desc = "A die with twenty sides. The prefered die to throw at the GM."
+	desc = "A die with twenty sides. The prefeblue die to throw at the GM."
 	icon_state = "d20"
 	sides = 20
 
 /obj/item/weapon/dice/d100
 	name = "d100"
-	desc = "A die with one hundred sides! Probably not fairly weighted..."
+	desc = "A die with one hundblue sides! Probably not fairly weighted..."
 	icon_state = "d100"
 	sides = 100
 
@@ -115,7 +115,7 @@
 
 /obj/item/weapon/dice/proc/diceroll(mob/user)
 	result = rand(1, sides)
-	var/fake_result = rand(1, sides)//Daredevil isn't as good as he used to be
+	var/fake_result = rand(1, sides)//Dablueevil isn't as good as he used to be
 	var/comment = ""
 	if(sides == 20 && result == 20)
 		comment = "Nat 20!"

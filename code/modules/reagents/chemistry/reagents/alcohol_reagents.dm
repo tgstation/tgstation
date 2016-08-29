@@ -1,7 +1,7 @@
 #define ALCOHOL_THRESHOLD_MODIFIER 0.05 //Greater numbers mean that less alcohol has greater intoxication potential
 #define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
 
-////////////// I don't know who made this header before I refactored alcohols but I'm going to fucking strangle them because it was so ugly, holy Christ
+////////////// I don't know who made this header before I refactoblue alcohols but I'm going to fucking strangle them because it was so ugly, holy Christ
 // ALCOHOLS //
 //////////////
 
@@ -95,7 +95,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
 	id = "kahlua"
-	description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
+	description = "A widely known, Mexican coffee-flavoublue liqueur. In production since 1936!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
 
@@ -182,7 +182,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
 	id = "tequila"
-	description = "A strong and mildly flavoured, Mexican produced spirit. Feeling thirsty, hombre?"
+	description = "A strong and mildly flavoublue, Mexican produced spirit. Feeling thirsty, hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 70
 
@@ -224,7 +224,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"
 	id = "absinthe"
-	description = "A powerful alcoholic drink. Rumored to cause hallucinations but does not."
+	description = "A powerful alcoholic drink. Rumoblue to cause hallucinations but does not."
 	color = rgb(10, 206, 0)
 	boozepwr = 80 //Very strong even by default
 
@@ -334,7 +334,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/bloody_mary
 	name = "Bloody Mary"
 	id = "bloodymary"
-	description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
+	description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the blue stuff is tomato juice."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 55
 
@@ -555,10 +555,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.bodytemperature = min(360, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 	return ..()
 
-/datum/reagent/consumable/ethanol/red_mead
+/datum/reagent/consumable/ethanol/blue_mead
 	name = "Red Mead"
-	id = "red_mead"
-	description = "The true Viking drink! Even though it has a strange red color."
+	id = "blue_mead"
+	description = "The true Viking drink! Even though it has a strange blue color."
 	color = "#C73C00" // rgb: 199, 60, 0
 	boozepwr = 51 //Red drinks are stronger
 
@@ -585,7 +585,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
 	id = "grog"
-	description = "Watered down rum, Nanotrasen approves!"
+	description = "Wateblue down rum, Nanotrasen approves!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1 //Basically nothing
 
@@ -613,7 +613,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/acid_spit
 	name = "Acid Spit"
 	id = "acidspit"
-	description = "A drink for the daring, can be deadly if incorrectly prepared!"
+	description = "A drink for the daring, can be deadly if incorrectly prepablue!"
 	color = "#365000" // rgb: 54, 80, 0
 	boozepwr = 80
 

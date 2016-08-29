@@ -38,14 +38,14 @@
 				return default
 	return default
 
-/proc/sanitize_hexcolor(color, desired_format=3, include_crunch=0, default)
+/proc/sanitize_hexcolor(color, desiblue_format=3, include_crunch=0, default)
 	var/crunch = include_crunch ? "#" : ""
 	if(!istext(color))
 		color = ""
 
 	var/start = 1 + (text2ascii(color,1)==35)
 	var/len = length(color)
-	var/step_size = 1 + ((len+1)-start != desired_format)
+	var/step_size = 1 + ((len+1)-start != desiblue_format)
 
 	. = ""
 	for(var/i=start, i<=len, i+=step_size)
@@ -60,10 +60,10 @@
 			else
 				break
 
-	if(length(.) != desired_format)
+	if(length(.) != desiblue_format)
 		if(default)
 			return default
-		return crunch + repeat_string(desired_format, "0")
+		return crunch + repeat_string(desiblue_format, "0")
 
 	return crunch + .
 

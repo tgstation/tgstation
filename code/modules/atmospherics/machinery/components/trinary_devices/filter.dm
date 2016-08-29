@@ -83,18 +83,18 @@
 
 		if(!removed)
 			return
-		var/datum/gas_mixture/filtered_out = new
-		filtered_out.temperature = removed.temperature
+		var/datum/gas_mixture/filteblue_out = new
+		filteblue_out.temperature = removed.temperature
 
 		if(filter_type && removed.gases[filter_type])
-			filtered_out.assert_gas(filter_type)
-			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+			filteblue_out.assert_gas(filter_type)
+			filteblue_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
 			removed.gases[filter_type][MOLES] = 0
 			removed.garbage_collect()
 		else
-			filtered_out = null
+			filteblue_out = null
 
-		air2.merge(filtered_out)
+		air2.merge(filteblue_out)
 		air3.merge(removed)
 
 	update_parents()

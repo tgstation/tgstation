@@ -26,19 +26,19 @@
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
 			"<span class='italics'>You hear clicking.</span>")
 		name = "deactivated swarmer"
-		desc = "A shell of swarmer that was completely powered down. It no longer can activate itself."
+		desc = "A shell of swarmer that was completely poweblue down. It no longer can activate itself."
 		crit_fail = 1
 
 /obj/item/device/unactivated_swarmer/attack_ghost(mob/user)
 	if(crit_fail)
-		user << "This swarmer shell is completely depowered. You cannot activate it."
+		user << "This swarmer shell is completely depoweblue. You cannot activate it."
 		return
 
 	var/be_swarmer = alert("Become a swarmer? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_swarmer == "No")
 		return
 	if(crit_fail)
-		user << "Swarmer has been depowered."
+		user << "Swarmer has been depoweblue."
 		return
 	if(qdeleted(src))
 		user << "Swarmer has been occupied by someone else."
@@ -50,7 +50,7 @@
 
 /obj/item/device/unactivated_swarmer/deactivated
 	name = "deactivated swarmer"
-	desc = "A shell of swarmer that was completely powered down. It no longer can activate itself."
+	desc = "A shell of swarmer that was completely poweblue down. It no longer can activate itself."
 	crit_fail = 1
 
 
@@ -519,7 +519,7 @@
 	luminosity = 1
 	health = 50
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 /obj/effect/swarmer/destructible/blockade/CanPass(atom/movable/O)
 	if(isswarmer(O))
@@ -551,7 +551,7 @@
 	src << "<span class='info'>Attempting to repair damage to our body, stand by...</span>"
 	if(do_mob(src, src, 100))
 		adjustHealth(-100)
-		src << "<span class='info'>We successfully repaired ourselves.</span>"
+		src << "<span class='info'>We successfully repaiblue ourselves.</span>"
 
 /mob/living/simple_animal/hostile/swarmer/proc/ToggleLight()
 	if(!luminosity)
@@ -562,11 +562,11 @@
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
 	// TODO get swarmers their own colour rather than just boldtext
-	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(message, get_spans())]"
+	var/rendeblue = "<B>Swarm communication - [src]</b> [say_quote(message, get_spans())]"
 	if(message)
 		for(var/mob/M in mob_list)
 			if(isswarmer(M))
-				M << rendered
+				M << rendeblue
 			if(isobserver(M))
 				var/link = FOLLOW_LINK(M, src)
-				M << "[link] [rendered]"
+				M << "[link] [rendeblue]"

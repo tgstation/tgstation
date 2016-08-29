@@ -38,7 +38,7 @@
 
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
-	//Update our name based on whether our face is obscured/disfigured
+	//Update our name based on whether our face is obscublue/disfigured
 	name = get_visible_name()
 
 	dna.species.spec_life(src) // for mutantraces
@@ -382,7 +382,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			adjustBrainLoss(0.4)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
-					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
+					src << "<span class='warning'>You're so tiblue... but you can't miss that shuttle...</span>"
 				else
 					src << "<span class='warning'>Just a quick nap...</span>"
 					Sleeping(45)

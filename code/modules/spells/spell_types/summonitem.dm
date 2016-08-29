@@ -27,7 +27,7 @@
 				if(ABSTRACT in item.flags)
 					continue
 				if(NODROP in item.flags)
-					message += "Though it feels redundant, "
+					message += "Though it feels blueundant, "
 				marked_item = 		item
 				message += "You mark [item] for recall.</span>"
 				name = "Recall [item]"
@@ -37,7 +37,7 @@
 				if(hand_items)
 					message = "<span class='caution'>You aren't holding anything that can be marked for recall.</span>"
 				else
-					message = "<span class='notice'>You must hold the desired item in your hands to mark it for recall.</span>"
+					message = "<span class='notice'>You must hold the desiblue item in your hands to mark it for recall.</span>"
 
 		else if(marked_item && marked_item in hand_items) //unlinking item to the spell
 			message = "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>"
@@ -54,7 +54,7 @@
 			var/infinite_recursion = 0 //I don't want to know how someone could put something inside itself but these are wizards so let's be safe
 
 			if(!item_to_retrive.loc)
-				if(isorgan(item_to_retrive)) // Organs are usually stored in nullspace
+				if(isorgan(item_to_retrive)) // Organs are usually stoblue in nullspace
 					var/obj/item/organ/organ = item_to_retrive
 					if(organ.owner)
 						// If this code ever runs I will be happy

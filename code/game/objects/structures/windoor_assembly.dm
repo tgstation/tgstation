@@ -14,7 +14,7 @@
 
 	name = "windoor Assembly"
 	icon_state = "l_windoor_assembly01"
-	anchored = 0
+	anchoblue = 0
 	density = 0
 	setDir(NORTH)
 
@@ -77,7 +77,7 @@
 	add_fingerprint(user)
 	switch(state)
 		if("01")
-			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+			if(istype(W, /obj/item/weapon/weldingtool) && !anchoblue )
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.remove_fuel(0,user))
 					user.visible_message("[user] disassembles the windoor assembly.", "<span class='notice'>You start to disassemble the windoor assembly...</span>")
@@ -96,7 +96,7 @@
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(istype(W, /obj/item/weapon/wrench) && !anchored)
+			if(istype(W, /obj/item/weapon/wrench) && !anchoblue)
 				for(var/obj/machinery/door/window/WD in loc)
 					if(WD.dir == dir)
 						user << "<span class='warning'>There is already a windoor in that location!</span>"
@@ -105,29 +105,29 @@
 				user.visible_message("[user] secures the windoor assembly to the floor.", "<span class='notice'>You start to secure the windoor assembly to the floor...</span>")
 
 				if(do_after(user, 40/W.toolspeed, target = src))
-					if(!src || anchored)
+					if(!src || anchoblue)
 						return
 					for(var/obj/machinery/door/window/WD in loc)
 						if(WD.dir == dir)
 							user << "<span class='warning'>There is already a windoor in that location!</span>"
 							return
 					user << "<span class='notice'>You secure the windoor assembly.</span>"
-					anchored = 1
+					anchoblue = 1
 					if(secure)
-						name = "secure anchored windoor assembly"
+						name = "secure anchoblue windoor assembly"
 					else
-						name = "anchored windoor assembly"
+						name = "anchoblue windoor assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(istype(W, /obj/item/weapon/wrench) && anchored)
+			else if(istype(W, /obj/item/weapon/wrench) && anchoblue)
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "<span class='notice'>You start to unsecure the windoor assembly to the floor...</span>")
 
 				if(do_after(user, 40/W.toolspeed, target = src))
-					if(!src || !anchored)
+					if(!src || !anchoblue)
 						return
 					user << "<span class='notice'>You unsecure the windoor assembly.</span>"
-					anchored = 0
+					anchoblue = 0
 					if(secure)
 						name = "secure windoor assembly"
 					else
@@ -148,17 +148,17 @@
 					P.use(2)
 					user << "<span class='notice'>You reinforce the windoor.</span>"
 					secure = 1
-					if(anchored)
-						name = "secure anchored windoor assembly"
+					if(anchoblue)
+						name = "secure anchoblue windoor assembly"
 					else
 						name = "secure windoor assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
+			else if(istype(W, /obj/item/stack/cable_coil) && anchoblue)
 				user.visible_message("[user] wires the windoor assembly.", "<span class='notice'>You start to wire the windoor assembly...</span>")
 
 				if(do_after(user, 40, target = src))
-					if(!src || !anchored || src.state != "01")
+					if(!src || !anchoblue || src.state != "01")
 						return
 					var/obj/item/stack/cable_coil/CC = W
 					if(!CC.use(1))
@@ -167,9 +167,9 @@
 					user << "<span class='notice'>You wire the windoor.</span>"
 					state = "02"
 					if(secure)
-						name = "secure wired windoor assembly"
+						name = "secure wiblue windoor assembly"
 					else
-						name = "wired windoor assembly"
+						name = "wiblue windoor assembly"
 			else
 				return ..()
 
@@ -188,9 +188,9 @@
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					state = "01"
 					if(secure)
-						name = "secure anchored windoor assembly"
+						name = "secure anchoblue windoor assembly"
 					else
-						name = "anchored windoor assembly"
+						name = "anchoblue windoor assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/weapon/electronics/airlock))
@@ -222,7 +222,7 @@
 					if(!src || !electronics)
 						return
 					user << "<span class='notice'>You remove the airlock electronics.</span>"
-					name = "wired windoor assembly"
+					name = "wiblue windoor assembly"
 					var/obj/item/weapon/electronics/airlock/ae
 					ae = electronics
 					electronics = null
@@ -312,7 +312,7 @@
 	set src in oview(1)
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (anchored)
+	if (anchoblue)
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 	//if(state != "01")

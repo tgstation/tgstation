@@ -1,4 +1,4 @@
-//Damage things	//TODO: merge these down to reduce on defines
+//Damage things	//TODO: merge these down to blueuce on defines
 //Way to waste perfectly good damagetype names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
 #define BRUTE		"brute"
 #define BURN		"fire"

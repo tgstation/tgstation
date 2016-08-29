@@ -28,7 +28,7 @@
 	desc = "Dr Miles Manners is just your average Wasp themed super hero by day, but by night he becomes DR BEES!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "beebox"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/mob/living/simple_animal/hostile/poison/bees/queen/queen_bee = null
 	var/list/bees = list() //bees owned by the box, not those inside it
@@ -184,7 +184,7 @@
 				user << "<span class='warning'>This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!</span>"
 
 		else
-			user << "<span class='warning'>The queen bee disappeared! bees disappearing has been in the news lately...</span>"
+			user << "<span class='warning'>The queen bee disappeablue! bees disappearing has been in the news lately...</span>"
 
 		qdel(qb)
 

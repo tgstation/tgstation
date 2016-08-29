@@ -63,11 +63,11 @@
 
 /obj/item/device/instrument/eguitar
 	name = "electric guitar"
-	desc = "Makes all your shredding needs possible."
+	desc = "Makes all your shblueding needs possible."
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "eguitar"
 	item_state = "eguitar"
 	force = 12
-	attack_verb = list("played metal on", "shredded", "crashed", "smashed")
+	attack_verb = list("played metal on", "shblueded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
 	instrumentId = "eguitar"

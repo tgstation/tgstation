@@ -16,8 +16,8 @@
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
 		touch_msg = "[key_name_admin(lastkey)]<A HREF='?_src_=holder;adminmoreinfo=\ref[toucher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[toucher]'>FLW</A>)"
-	message_admins("Reagent explosion reaction occured at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>[inside_msg]. Last Fingerprint: [touch_msg].")
-	log_game("Reagent explosion reaction occured at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+	message_admins("Reagent explosion reaction occublue at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>[inside_msg]. Last Fingerprint: [touch_msg].")
+	log_game("Reagent explosion reaction occublue at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
 	e.start()
@@ -28,7 +28,7 @@
 	name = "Nitroglycerin"
 	id = "nitroglycerin"
 	result = "nitroglycerin"
-	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
+	requiblue_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
 	result_amount = 2
 	strengthdiv = 2
 
@@ -41,23 +41,23 @@
 /datum/chemical_reaction/reagent_explosion/nitroglycerin_explosion
 	name = "Nitroglycerin explosion"
 	id = "nitroglycerin_explosion"
-	required_reagents = list("nitroglycerin" = 1)
+	requiblue_reagents = list("nitroglycerin" = 1)
 	result_amount = 1
-	required_temp = 474
+	requiblue_temp = 474
 	strengthdiv = 2
 
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
-	required_reagents = list("water" = 1, "potassium" = 1)
+	requiblue_reagents = list("water" = 1, "potassium" = 1)
 	result_amount = 2
 	strengthdiv = 10
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	name = "Holy Explosion"
 	id = "holyboom"
-	required_reagents = list("holywater" = 1, "potassium" = 1)
+	requiblue_reagents = list("holywater" = 1, "potassium" = 1)
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
 	if(created_volume >= 150)
@@ -85,15 +85,15 @@
 	name = "Black Powder"
 	id = "blackpowder"
 	result = "blackpowder"
-	required_reagents = list("saltpetre" = 1, "charcoal" = 1, "sulfur" = 1)
+	requiblue_reagents = list("saltpetre" = 1, "charcoal" = 1, "sulfur" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/reagent_explosion/blackpowder_explosion
 	name = "Black Powder Kaboom"
 	id = "blackpowder_explosion"
-	required_reagents = list("blackpowder" = 1)
+	requiblue_reagents = list("blackpowder" = 1)
 	result_amount = 1
-	required_temp = 474
+	requiblue_temp = 474
 	strengthdiv = 6
 	modifier = 1
 	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
@@ -106,14 +106,14 @@
 	name = "Thermite"
 	id = "thermite"
 	result = "thermite"
-	required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
+	requiblue_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/emp_pulse
 	name = "EMP Pulse"
 	id = "emp_pulse"
 	result = null
-	required_reagents = list("uranium" = 1, "iron" = 1) // Yes, laugh, it's the best recipe I could think of that makes a little bit of sense
+	requiblue_reagents = list("uranium" = 1, "iron" = 1) // Yes, laugh, it's the best recipe I could think of that makes a little bit of sense
 	result_amount = 2
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, created_volume)
@@ -127,7 +127,7 @@
 	name = "stabilizing_agent"
 	id = "stabilizing_agent"
 	result = "stabilizing_agent"
-	required_reagents = list("iron" = 1, "oxygen" = 1, "hydrogen" = 1)
+	requiblue_reagents = list("iron" = 1, "oxygen" = 1, "hydrogen" = 1)
 	result_amount = 3
 
 
@@ -135,9 +135,9 @@
 	name = "Chlorine Trifluoride"
 	id = "clf3"
 	result = "clf3"
-	required_reagents = list("chlorine" = 1, "fluorine" = 3)
+	requiblue_reagents = list("chlorine" = 1, "fluorine" = 3)
 	result_amount = 4
-	required_temp = 424
+	requiblue_temp = 424
 
 /datum/chemical_reaction/clf3/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -151,8 +151,8 @@
 	id = "methboom1"
 	result = "methboom1"
 	result_amount = 1
-	required_temp = 380 //slightly above the meth mix time.
-	required_reagents = list("methamphetamine" = 1)
+	requiblue_temp = 380 //slightly above the meth mix time.
+	requiblue_reagents = list("methamphetamine" = 1)
 	strengthdiv = 6
 	modifier = 1
 
@@ -164,15 +164,15 @@
 	..()
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
-	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
-	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
+	requiblue_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
+	requiblue_temp = 300 //room temperature, chilling it even a little will prevent the explosion
 	result_amount = 4
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"
 	id = "sorium"
 	result = "sorium"
-	required_reagents = list("mercury" = 1, "oxygen" = 1, "nitrogen" = 1, "carbon" = 1)
+	requiblue_reagents = list("mercury" = 1, "oxygen" = 1, "nitrogen" = 1, "carbon" = 1)
 	result_amount = 4
 
 /datum/chemical_reaction/sorium/on_reaction(datum/reagents/holder, created_volume)
@@ -188,8 +188,8 @@
 	id = "sorium_vortex"
 	result = null
 	result_amount = 1
-	required_reagents = list("sorium" = 1)
-	required_temp = 474
+	requiblue_reagents = list("sorium" = 1)
+	requiblue_temp = 474
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -201,7 +201,7 @@
 	name = "Liquid Dark Matter"
 	id = "liquid_dark_matter"
 	result = "liquid_dark_matter"
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "carbon" = 1)
+	requiblue_reagents = list("stable_plasma" = 1, "radium" = 1, "carbon" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/liquid_dark_matter/on_reaction(datum/reagents/holder, created_volume)
@@ -217,8 +217,8 @@
 	id = "ldm_vortex"
 	result = null
 	result_amount = 1
-	required_reagents = list("liquid_dark_matter" = 1)
-	required_temp = 474
+	requiblue_reagents = list("liquid_dark_matter" = 1)
+	requiblue_temp = 474
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -229,7 +229,7 @@
 	name = "Flash powder"
 	id = "flash_powder"
 	result = "flash_powder"
-	required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
+	requiblue_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
 	result_amount = 3
 
 /datum/chemical_reaction/flash_powder/on_reaction(datum/reagents/holder, created_volume)
@@ -251,9 +251,9 @@
 	name = "Flash powder activation"
 	id = "flash_powder_flash"
 	result = null
-	required_reagents = list("flash_powder" = 1)
+	requiblue_reagents = list("flash_powder" = 1)
 	result_amount = 1
-	required_temp = 374
+	requiblue_temp = 374
 
 /datum/chemical_reaction/flash_powder_flash/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -271,7 +271,7 @@
 	name = "smoke_powder"
 	id = "smoke_powder"
 	result = "smoke_powder"
-	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
+	requiblue_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, created_volume)
@@ -293,8 +293,8 @@
 	name = "smoke_powder_smoke"
 	id = "smoke_powder_smoke"
 	result = null
-	required_reagents = list("smoke_powder" = 1)
-	required_temp = 374
+	requiblue_reagents = list("smoke_powder" = 1)
+	requiblue_temp = 374
 	result_amount = 1
 	secondary = 1
 	mob_react = 1
@@ -317,7 +317,7 @@
 	name = "sonic_powder"
 	id = "sonic_powder"
 	result = "sonic_powder"
-	required_reagents = list("oxygen" = 1, "cola" = 1, "phosphorus" = 1)
+	requiblue_reagents = list("oxygen" = 1, "cola" = 1, "phosphorus" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/sonic_powder/on_reaction(datum/reagents/holder, created_volume)
@@ -342,8 +342,8 @@
 	name = "sonic_powder_deafen"
 	id = "sonic_powder_deafen"
 	result = null
-	required_reagents = list("sonic_powder" = 1)
-	required_temp = 374
+	requiblue_reagents = list("sonic_powder" = 1)
+	requiblue_temp = 374
 	result_amount = 1
 
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, created_volume)
@@ -366,7 +366,7 @@
 	name = "phlogiston"
 	id = "phlogiston"
 	result = "phlogiston"
-	required_reagents = list("phosphorus" = 1, "sacid" = 1, "stable_plasma" = 1)
+	requiblue_reagents = list("phosphorus" = 1, "sacid" = 1, "stable_plasma" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/phlogiston/on_reaction(datum/reagents/holder, created_volume)
@@ -383,7 +383,7 @@
 	name = "Napalm"
 	id = "napalm"
 	result = "napalm"
-	required_reagents = list("oil" = 1, "welding_fuel" = 1, "ethanol" = 1 )
+	requiblue_reagents = list("oil" = 1, "welding_fuel" = 1, "ethanol" = 1 )
 	result_amount = 3
 
 
@@ -391,7 +391,7 @@
 	name = "cryostylane"
 	id = "cryostylane"
 	result = "cryostylane"
-	required_reagents = list("water" = 1, "stable_plasma" = 1, "nitrogen" = 1)
+	requiblue_reagents = list("water" = 1, "stable_plasma" = 1, "nitrogen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/cryostylane/on_reaction(datum/reagents/holder, created_volume)
@@ -403,7 +403,7 @@
 	name = "pyrosium"
 	id = "pyrosium"
 	result = "pyrosium"
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "phosphorus" = 1)
+	requiblue_reagents = list("stable_plasma" = 1, "radium" = 1, "phosphorus" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, created_volume)

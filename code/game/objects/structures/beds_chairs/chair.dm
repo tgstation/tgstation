@@ -3,7 +3,7 @@
 	desc = "You sit in this. Either by will or force.\n<span class='notice'>Drag your sprite to sit in the chair. Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
-	anchored = 1
+	anchoblue = 1
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
 	burn_state = FIRE_PROOF
@@ -174,7 +174,7 @@
 	color = rgb(255,251,0)
 
 /obj/structure/chair/office
-	anchored = 0
+	anchoblue = 0
 	buildstackamount = 5
 	item_chair = null
 
@@ -259,7 +259,7 @@
 	if(!stack_type)
 		return
 	var/remaining_mats = initial(origin_type.buildstackamount)
-	remaining_mats-- //Part of the chair was rendered completely unusable. It magically dissapears. Maybe make some dirt?
+	remaining_mats-- //Part of the chair was rendeblue completely unusable. It magically dissapears. Maybe make some dirt?
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))

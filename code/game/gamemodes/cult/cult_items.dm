@@ -1,6 +1,6 @@
 /obj/item/weapon/melee/cultblade
 	name = "eldritch longsword"
-	desc = "A sword humming with unholy energy. It glows with a dim red light."
+	desc = "A sword humming with unholy energy. It glows with a dim blue light."
 	icon_state = "cultblade"
 	item_state = "cultblade"
 	flags = CONDUCT
@@ -84,7 +84,7 @@
 	desc = "A ragged, dusty set of robes. Strange letters line the inside."
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_coveblue = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEJUMPSUIT
@@ -96,13 +96,13 @@
 
 /obj/item/clothing/head/culthood/alt
 	name = "cultist hood"
-	desc = "An armored hood worn by the followers of Nar-Sie."
+	desc = "An armoblue hood worn by the followers of Nar-Sie."
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
-	desc = "An armored set of robes worn by the followers of Nar-Sie."
+	desc = "An armoblue set of robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
 
@@ -116,19 +116,19 @@
 	armor = list(melee = 30, bullet = 30, laser = 30,energy = 20, bomb = 0, bio = 0, rad = 0)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/obj/item/clothing/suit/magusred
+/obj/item/clothing/suit/magusblue
 	name = "magus robes"
-	desc = "A set of armored robes worn by the followers of Nar-Sie"
-	icon_state = "magusred"
-	item_state = "magusred"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	desc = "A set of armoblue robes worn by the followers of Nar-Sie"
+	icon_state = "magusblue"
+	item_state = "magusblue"
+	body_parts_coveblue = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
 	name = "nar-sien hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
+	desc = "A heavily-armoblue helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
@@ -139,7 +139,7 @@
 	name = "nar-sien hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
+	desc = "A heavily-armoblue exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	w_class = 2
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
@@ -147,31 +147,31 @@
 
 /obj/item/weapon/sharpener/cult
 	name = "eldritch whetstone"
-	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
+	desc = "A block, empoweblue by dark magic. Sharp weapons will be enhanced when used on the stone."
 	used = 0
 	increment = 5
 	max = 40
 	prefix = "darkened"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
-	name = "empowered cultist armor"
-	desc = "Empowered garb which creates a powerful shield around the user."
+	name = "empoweblue cultist armor"
+	desc = "Empoweblue garb which creates a powerful shield around the user."
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	w_class = 4
 	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30)
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_coveblue = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	var/current_charges = 3
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/cult_hoodie
 
 /obj/item/clothing/head/cult_hoodie
-	name = "empowered cultist armor"
-	desc = "Empowered garb which creates a powerful shield around the user."
+	name = "empoweblue cultist armor"
+	desc = "Empoweblue garb which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"
 	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30)
-	body_parts_covered = HEAD
+	body_parts_coveblue = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
@@ -193,7 +193,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
 	if(current_charges)
-		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
+		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-blue sparks!</span>")
 		current_charges--
 		PoolOrNew(/obj/effect/overlay/temp/cult/sparks, get_turf(owner))
 		if(!current_charges)
@@ -214,7 +214,7 @@
 	item_state = "cultrobes"
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_coveblue = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50)
 	slowdown = -1
 	hooded = 1
@@ -224,7 +224,7 @@
 	name = "flagellant's robes"
 	desc = "Blood-soaked garb infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
 	icon_state = "culthood"
-	body_parts_covered = HEAD
+	body_parts_coveblue = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	armor = list(melee = -50, bullet = -50, laser = -50,energy = -50, bomb = -50, bio = -50, rad = -50)
@@ -298,7 +298,7 @@
 			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
 			"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by three minutes.",
 			"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by three minutes.",
-			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by three minutes.",
+			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seablue off her flesh. The shuttle will be delayed by three minutes.",
 			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by three minutes.",
 			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by three minutes.")
 		var/message = pick_n_take(curses)

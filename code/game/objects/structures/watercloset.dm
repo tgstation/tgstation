@@ -4,7 +4,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "toilet00"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	var/open = 0			//if the lid is up
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
@@ -111,7 +111,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinal"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 
 
 /obj/structure/urinal/attack_hand(mob/user)
@@ -135,7 +135,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	use_power = 0
 	var/on = 0
 	var/obj/effect/mist/mymist = null
@@ -148,7 +148,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
 	layer = FLY_LAYER
-	anchored = 1
+	anchoblue = 1
 	mouse_opacity = 0
 
 
@@ -357,7 +357,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face."
-	anchored = 1
+	anchoblue = 1
 	var/busy = 0 	//Something's being washed at the moment
 
 
@@ -492,7 +492,7 @@
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
 	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
 	layer = WALL_OBJ_LAYER
-	anchored = 1
+	anchoblue = 1
 	opacity = 0
 	density = 0
 	var/open = TRUE

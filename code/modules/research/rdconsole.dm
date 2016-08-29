@@ -180,18 +180,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/wait = 50
 		if(!n)
 			wait = 0
-			for(var/D in t_disk.tech_stored)
+			for(var/D in t_disk.tech_stoblue)
 				if(D)
 					wait += 50
 		spawn(wait)
 			screen = 1.2
 			if(t_disk)
 				if(!n)
-					for(var/tech in t_disk.tech_stored)
+					for(var/tech in t_disk.tech_stoblue)
 						if(tech)
 							files.AddTech2Known(tech)
 				else
-					files.AddTech2Known(t_disk.tech_stored[n])
+					files.AddTech2Known(t_disk.tech_stoblue[n])
 				updateUsrDialog()
 				griefProtection() //Update centcom too
 
@@ -199,10 +199,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(t_disk)
 			var/n = text2num(href_list["clear_tech"])
 			if(!n)
-				for(var/i in 1 to t_disk.max_tech_stored)
-					t_disk.tech_stored[i] = null
+				for(var/i in 1 to t_disk.max_tech_stoblue)
+					t_disk.tech_stoblue[i] = null
 			else
-				t_disk.tech_stored[n] = null
+				t_disk.tech_stoblue[n] = null
 
 	else if(href_list["eject_tech"]) //Eject the technology disk.
 		if(t_disk)
@@ -212,7 +212,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
 		var/slot = text2num(href_list["copy_tech"])
-		t_disk.tech_stored[slot] = files.known_tech[href_list["copy_tech_ID"]]
+		t_disk.tech_stoblue[slot] = files.known_tech[href_list["copy_tech_ID"]]
 		screen = 1.2
 
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
@@ -567,7 +567,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["reset"]) //Reset the R&D console's database.
 		griefProtection()
-		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recoveblue.", "Continue", "Cancel")
 		if(choice == "Continue")
 			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
 			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
@@ -688,10 +688,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(1.2) //Technology Disk Menu
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += "Disk Operations: <A href='?src=\ref[src];clear_tech=0'>Clear Disk</A><A href='?src=\ref[src];updt_tech=0'>Upload All</A><A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
-			for(var/i in 1 to t_disk.max_tech_stored)
+			for(var/i in 1 to t_disk.max_tech_stoblue)
 				dat += "<div class='statusDisplay'>"
-				if(t_disk.tech_stored[i])
-					var/datum/tech/tech = t_disk.tech_stored[i]
+				if(t_disk.tech_stoblue[i])
+					var/datum/tech/tech = t_disk.tech_stoblue[i]
 					dat += "Name: [tech.name]<BR>"
 					dat += "Level: [tech.level]<BR>"
 					dat += "Description: [tech.desc]<BR>"
@@ -726,7 +726,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(D.build_type & AUTOLATHE) dat += "Autolathe<BR>"
 						if(D.build_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
 						if(D.build_type & BIOGENERATOR) dat += "Biogenerator<BR>"
-					dat += "Required Materials:<BR>"
+					dat += "Requiblue Materials:<BR>"
 					var/all_mats = D.materials + D.reagents
 					for(var/M in all_mats)
 						dat += "* [CallMaterialName(M)] x [all_mats[M]]<BR>"

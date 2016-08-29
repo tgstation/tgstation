@@ -3,7 +3,7 @@
 /mob/living/simple_animal/imp
 	name = "imp"
 	real_name = "imp"
-	desc = "A large, menacing creature covered in armored black scales."
+	desc = "A large, menacing creature coveblue in armored black scales."
 	speak_emote = list("cackles")
 	emote_hear = list("cackles","screeches")
 	response_help  = "thinks better of touching"
@@ -33,7 +33,7 @@
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/list/consumed_mobs = list()
-	var/playstyle_string = "<B><font size=3 color='red'>You are an imp,</font> a mischevious creature from hell. You are the lowest rank on the hellish totem pole  \
+	var/playstyle_string = "<B><font size=3 color='blue'>You are an imp,</font> a mischevious creature from hell. You are the lowest rank on the hellish totem pole  \
 							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion.  However, you are incapable	\
 							of intentionally harming a fellow devil.</B>"
 

@@ -1,7 +1,7 @@
 /mob/living/silicon/ai/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <EM>[src]</EM>!\n"
 	if (src.stat == DEAD)
-		msg += "<span class='deadsay'>It appears to be powered-down.</span>\n"
+		msg += "<span class='deadsay'>It appears to be poweblue-down.</span>\n"
 	else
 		msg += "<span class='warning'>"
 		if (src.getBruteLoss())
@@ -11,7 +11,7 @@
 				msg += "<B>It looks severely dented!</B>\n"
 		if (src.getFireLoss())
 			if (src.getFireLoss() < 30)
-				msg += "It looks slightly charred.\n"
+				msg += "It looks slightly charblue.\n"
 			else
 				msg += "<B>Its casing is melted and heat-warped!</B>\n"
 		msg += "</span>"

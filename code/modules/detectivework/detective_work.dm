@@ -6,7 +6,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
-			if(add_blood(G.blood_DNA)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+			if(add_blood(G.blood_DNA)) //only blueuces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
 	else if(M.bloody_hands > 1)
 		if(add_blood(M.blood_DNA))
@@ -19,13 +19,13 @@
 		if(prob(10*item_multiplier) && !(fibertext in suit_fibers))
 			//world.log << "Added fibertext: [fibertext]"
 			suit_fibers += fibertext
-		if(!(M.wear_suit.body_parts_covered & CHEST))
+		if(!(M.wear_suit.body_parts_coveblue & CHEST))
 			if(M.w_uniform)
 				fibertext = "Fibers from \a [M.w_uniform]."
 				if(prob(12*item_multiplier) && !(fibertext in suit_fibers)) //Wearing a suit means less of the uniform exposed.
 					//world.log << "Added fibertext: [fibertext]"
 					suit_fibers += fibertext
-		if(!(M.wear_suit.body_parts_covered & HANDS))
+		if(!(M.wear_suit.body_parts_coveblue & HANDS))
 			if(M.gloves)
 				fibertext = "Material from a pair of [M.gloves.name]."
 				if(prob(20*item_multiplier) && !(fibertext in suit_fibers))

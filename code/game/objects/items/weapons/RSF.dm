@@ -10,7 +10,7 @@ RSF
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchoblue = 0
 	flags = NOBLUDGEON
 	var/matter = 0
 	var/mode = 1

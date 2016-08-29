@@ -30,7 +30,7 @@
 
 	for(var/N in nuke_tiles)
 		var/turf/T = N
-		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated red icon state.
+		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated blue icon state.
 
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
@@ -48,7 +48,7 @@
 	name = "doomsday device"
 	icon_state = "nuclearbomb_base"
 	desc = "A weapon which disintegrates all organic life in a large area."
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	verb_exclaim = "blares"
 	var/timing = FALSE
@@ -189,7 +189,7 @@
 		return
 
 	for(var/I in rcd_list)
-		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
+		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spablue.
 			var/obj/item/weapon/rcd/RCD = I
 			RCD.detonate_pulse()
 
@@ -386,7 +386,7 @@
 			client.images += I
 			if(fail)
 				success = 0
-				I.icon_state = "redOverlay"
+				I.icon_state = "blueOverlay"
 			else
 				I.icon_state = "greenOverlay"
 			spawn(30)
@@ -466,7 +466,7 @@
 /datum/AI_Module/large/upgrade_cameras
 	module_name = "Upgrade Camera Network"
 	mod_pick_name = "upgradecam"
-	description = "Install broad-spectrum scanning and electrical redundancy firmware to the camera network, enabling EMP-Proofing and light-amplified X-ray vision." //I <3 pointless technobabble
+	description = "Install broad-spectrum scanning and electrical blueundancy firmware to the camera network, enabling EMP-Proofing and light-amplified X-ray vision." //I <3 pointless technobabble
 	//This used to have motion sensing as well, but testing quickly revealed that giving it to the whole cameranet is PURE HORROR.
 	one_time = 1
 	cost = 35 //Decent price for omniscience!

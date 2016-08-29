@@ -117,14 +117,14 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/mime
 	category = CAT_BURGER
 
-/datum/crafting_recipe/food/redburger
+/datum/crafting_recipe/food/blueburger
 	name = "Red burger"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 1,
-		/obj/item/toy/crayon/red = 1,
+		/obj/item/toy/crayon/blue = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/burger/red
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/blue
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/orangeburger

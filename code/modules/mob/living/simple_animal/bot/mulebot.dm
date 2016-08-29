@@ -15,7 +15,7 @@ var/global/mulebot_count = 0
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	animate_movement=1
 	health = 50
 	maxHealth = 50
@@ -338,7 +338,7 @@ var/global/mulebot_count = 0
 
 // called to load a crate
 /mob/living/simple_animal/bot/mulebot/proc/load(atom/movable/AM)
-	if(load ||  AM.anchored)
+	if(load ||  AM.anchoblue)
 		return
 
 	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
@@ -609,9 +609,9 @@ var/global/mulebot_count = 0
 			// not loaded
 			if(auto_pickup) // find a crate
 				var/atom/movable/AM
-				if(wires.is_cut(WIRE_LOADCHECK)) // if hacked, load first unanchored thing we find
+				if(wires.is_cut(WIRE_LOADCHECK)) // if hacked, load first unanchoblue thing we find
 					for(var/atom/movable/A in get_step(loc, loaddir))
-						if(!A.anchored)
+						if(!A.anchoblue)
 							AM = A
 							break
 				else			// otherwise, look for crates only

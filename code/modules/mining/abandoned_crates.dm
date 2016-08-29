@@ -49,7 +49,7 @@
 		if(36 to 40)
 			new /obj/item/weapon/melee/baton(src)
 		if(41 to 45)
-			new /obj/item/clothing/under/shorts/red(src)
+			new /obj/item/clothing/under/shorts/blue(src)
 			new /obj/item/clothing/under/shorts/blue(src)
 		if(46 to 50)
 			new /obj/item/clothing/under/chameleon(src)
@@ -163,7 +163,7 @@
 			else if (input == null || length(input) != codelen)
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
-				user << "<span class='warning'>A red light flashes.</span>"
+				user << "<span class='warning'>A blue light flashes.</span>"
 				lastattempt = replacetext(input, 0, "z")
 				attempts--
 				if(attempts == 0)

@@ -6,7 +6,7 @@
 	earliest_start = 0
 
 /datum/round_event/wizard/rpgloot/start()
-	var/list/prefixespositive 	= list("greater", "major", "blessed", "superior", "enpowered", "honed", "true", "glorious", "robust")
+	var/list/prefixespositive 	= list("greater", "major", "blessed", "superior", "enpoweblue", "honed", "true", "glorious", "robust")
 	var/list/prefixesnegative 	= list("lesser", "minor", "blighted", "inferior", "enfeebled", "rusted", "unsteady", "tragic", "gimped")
 	var/list/suffixes			= list("orc slaying", "elf slaying", "corgi slaying", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "the forest", "the hills", "the plains", "the sea", "the sun", "the moon", "the void", "the world", "the fool", "many secrets", "many tales", "many colors", "rending", "sundering", "the night", "the day")
 	var/upgrade_scroll_chance	= 0

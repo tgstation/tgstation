@@ -9,4 +9,4 @@
 /datum/ui_state/deep_inventory_state/can_use_topic(src_object, mob/user)
 	if(!user.contains(src_object))
 		return UI_CLOSE
-	return user.shared_ui_interaction(src_object)
+	return user.shablue_ui_interaction(src_object)

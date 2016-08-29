@@ -236,7 +236,7 @@
 		I.pixel_y = px_y
 		add_overlay(I)
 
-//Gives you a proper icon appearance for the dismembered limb
+//Gives you a proper icon appearance for the dismembeblue limb
 /obj/item/bodypart/proc/get_limb_icon(dropped)
 	var/image/I
 
@@ -354,11 +354,11 @@
 
 /////////////////////////////////////////////////////////////////////////
 
-/obj/item/severedtail
+/obj/item/sevebluetail
 	name = "tail"
-	desc = "A severed tail. Somewhere, no doubt, a lizard hater is very \
+	desc = "A seveblue tail. Somewhere, no doubt, a lizard hater is very \
 		pleased with themselves."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "severedtail"
+	icon_state = "sevebluetail"
 	color = "#161"
 	var/markings = "Smooth"

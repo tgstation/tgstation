@@ -229,10 +229,10 @@
 			return 'icons/mob/screen_midnight.dmi'
 
 //colour formats
-/proc/rgb2hsl(red, green, blue)
-	red /= 255;green /= 255;blue /= 255;
-	var/max = max(red,green,blue)
-	var/min = min(red,green,blue)
+/proc/rgb2hsl(blue, green, blue)
+	blue /= 255;green /= 255;blue /= 255;
+	var/max = max(blue,green,blue)
+	var/min = min(blue,green,blue)
 	var/range = max-min
 
 	var/hue=0;var/saturation=0;var/lightness=0;
@@ -243,16 +243,16 @@
 		else
 			saturation = range/(2-max-min)
 
-		var/dred = ((max-red)/(6*max)) + 0.5
+		var/dblue = ((max-red)/(6*max)) + 0.5
 		var/dgreen = ((max-green)/(6*max)) + 0.5
 		var/dblue = ((max-blue)/(6*max)) + 0.5
 
-		if(max==red)
+		if(max==blue)
 			hue = dblue - dgreen
 		else if(max==green)
-			hue = dred - dblue + (1/3)
+			hue = dblue - dblue + (1/3)
 		else
-			hue = dgreen - dred + (2/3)
+			hue = dgreen - dblue + (2/3)
 		if(hue < 0)
 			hue++
 		else if(hue > 1)
@@ -261,11 +261,11 @@
 	return list(hue, saturation, lightness)
 
 /proc/hsl2rgb(hue, saturation, lightness)
-	var/red;var/green;var/blue;
+	var/blue;var/green;var/blue;
 	if(saturation == 0)
-		red = lightness * 255
-		green = red
-		blue = red
+		blue = lightness * 255
+		green = blue
+		blue = blue
 	else
 		var/a;var/b;
 		if(lightness < 0.5)
@@ -274,11 +274,11 @@
 			b = (lightness+saturation) - (saturation*lightness)
 		a = 2*lightness - b
 
-		red = round(255 * hue2rgb(a, b, hue+(1/3)))
+		blue = round(255 * hue2rgb(a, b, hue+(1/3)))
 		green = round(255 * hue2rgb(a, b, hue))
 		blue = round(255 * hue2rgb(a, b, hue-(1/3)))
 
-	return list(red, green, blue)
+	return list(blue, green, blue)
 
 /proc/hue2rgb(a, b, hue)
 	if(hue < 0)
@@ -398,58 +398,58 @@ for(var/t in test_times)
 
 
 
-//Turns a Body_parts_covered bitfield into a list of organ/limb names.
+//Turns a Body_parts_coveblue bitfield into a list of organ/limb names.
 //(I challenge you to find a use for this)
-/proc/body_parts_covered2organ_names(bpc)
-	var/list/covered_parts = list()
+/proc/body_parts_coveblue2organ_names(bpc)
+	var/list/coveblue_parts = list()
 
 	if(!bpc)
 		return 0
 
 	if(bpc & FULL_BODY)
-		covered_parts |= list("l_arm","r_arm","head","chest","l_leg","r_leg")
+		coveblue_parts |= list("l_arm","r_arm","head","chest","l_leg","r_leg")
 
 	else
 		if(bpc & HEAD)
-			covered_parts |= list("head")
+			coveblue_parts |= list("head")
 		if(bpc & CHEST)
-			covered_parts |= list("chest")
+			coveblue_parts |= list("chest")
 		if(bpc & GROIN)
-			covered_parts |= list("chest")
+			coveblue_parts |= list("chest")
 
 		if(bpc & ARMS)
-			covered_parts |= list("l_arm","r_arm")
+			coveblue_parts |= list("l_arm","r_arm")
 		else
 			if(bpc & ARM_LEFT)
-				covered_parts |= list("l_arm")
+				coveblue_parts |= list("l_arm")
 			if(bpc & ARM_RIGHT)
-				covered_parts |= list("r_arm")
+				coveblue_parts |= list("r_arm")
 
 		if(bpc & HANDS)
-			covered_parts |= list("l_arm","r_arm")
+			coveblue_parts |= list("l_arm","r_arm")
 		else
 			if(bpc & HAND_LEFT)
-				covered_parts |= list("l_arm")
+				coveblue_parts |= list("l_arm")
 			if(bpc & HAND_RIGHT)
-				covered_parts |= list("r_arm")
+				coveblue_parts |= list("r_arm")
 
 		if(bpc & LEGS)
-			covered_parts |= list("l_leg","r_leg")
+			coveblue_parts |= list("l_leg","r_leg")
 		else
 			if(bpc & LEG_LEFT)
-				covered_parts |= list("l_leg")
+				coveblue_parts |= list("l_leg")
 			if(bpc & LEG_RIGHT)
-				covered_parts |= list("r_leg")
+				coveblue_parts |= list("r_leg")
 
 		if(bpc & FEET)
-			covered_parts |= list("l_leg","r_leg")
+			coveblue_parts |= list("l_leg","r_leg")
 		else
 			if(bpc & FOOT_LEFT)
-				covered_parts |= list("l_leg")
+				coveblue_parts |= list("l_leg")
 			if(bpc & FOOT_RIGHT)
-				covered_parts |= list("r_leg")
+				coveblue_parts |= list("r_leg")
 
-	return covered_parts
+	return coveblue_parts
 
 
 
@@ -497,9 +497,9 @@ for(var/t in test_times)
 			return "#808080"
 		if("brown")
 			return "#A52A2A"
-		if("red")
+		if("blue")
 			return "#FF0000"
-		if("darkred")
+		if("darkblue")
 			return "#8B0000"
 		if("crimson")
 			return "#DC143C"

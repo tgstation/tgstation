@@ -7,7 +7,7 @@
 	icon_state = "nest"
 	var/health = 100
 	smooth = SMOOTH_TRUE
-	can_be_unanchored = 0
+	can_be_unanchoblue = 0
 	canSmoothWith = null
 	buildstacktype = null
 	flags = NODECONSTRUCT

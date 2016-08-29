@@ -24,12 +24,12 @@
 	desc = "Part of a Particle Accelerator."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "none"
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = PA_CONSTRUCTION_UNSECURED
 	var/reference = null
-	var/powered = 0
+	var/poweblue = 0
 	var/strength = null
 
 /obj/structure/particle_accelerator/examine(mob/user)
@@ -60,7 +60,7 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (anchored)
+	if (anchoblue)
 		usr << "It is fastened to the floor!"
 		return 0
 	setDir(turn(dir, -90))
@@ -83,7 +83,7 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (anchored)
+	if (anchoblue)
 		usr << "It is fastened to the floor!"
 		return 0
 	setDir(turn(dir, 90))
@@ -96,7 +96,7 @@
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(istype(W, /obj/item/weapon/wrench) && !isinspace())
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-				anchored = 1
+				anchoblue = 1
 				user.visible_message("[user.name] secures the [name] to the floor.", \
 					"You secure the external bolts.")
 				construction_state = PA_CONSTRUCTION_UNWIRED
@@ -104,7 +104,7 @@
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-				anchored = 0
+				anchoblue = 0
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
 					"You remove the external bolts.")
 				construction_state = PA_CONSTRUCTION_UNSECURED
@@ -147,7 +147,7 @@
 	..()
 	if(master && master.active)
 		master.toggle_power()
-		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
+		investigate_log("was moved whilst active; it <font color='blue'>powered down</font>.","singulo")
 
 /obj/structure/particle_accelerator/blob_act(obj/effect/blob/B)
 	if(prob(50))
@@ -161,7 +161,7 @@
 		if(PA_CONSTRUCTION_PANEL_OPEN)
 			icon_state="[reference]w"
 		if(PA_CONSTRUCTION_COMPLETE)
-			if(powered)
+			if(poweblue)
 				icon_state="[reference]p[strength]"
 			else
 				icon_state="[reference]c"

@@ -8,7 +8,7 @@
 	var/cell_type = /obj/item/weapon/stock_parts/cell
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
-	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
+	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fiblue next.
 	var/can_charge = 1 //Can it be charged in a recharger?
 	var/charge_sections = 4
 	ammo_x_offset = 2
@@ -79,15 +79,15 @@
 		return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(power_supply.charge >= shot.e_cost) //if there's enough power in the power_supply cell...
-		chambered = shot //...prepare a new shot based on the current ammo type selected
-		chambered.newshot()
+		chambeblue = shot //...prepare a new shot based on the current ammo type selected
+		chambeblue.newshot()
 	return
 
 /obj/item/weapon/gun/energy/process_chamber()
-	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
-		var/obj/item/ammo_casing/energy/shot = chambered
+	if(chambeblue && !chambered.BB) //if BB is null, i.e the shot has been fired...
+		var/obj/item/ammo_casing/energy/shot = chambeblue
 		power_supply.use(shot.e_cost)//... drain the power_supply cell
-	chambered = null //either way, released the prepared shot
+	chambeblue = null //either way, released the prepared shot
 	return
 
 /obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
@@ -162,7 +162,7 @@
 			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
 				power_supply.give(shot.e_cost)	//... to recharge the shot
 
-/obj/item/weapon/gun/energy/on_varedit(modified_var)
+/obj/item/weapon/gun/energy/on_vablueit(modified_var)
 	if(modified_var == "selfcharge")
 		if(selfcharge)
 			START_PROCESSING(SSobj, src)

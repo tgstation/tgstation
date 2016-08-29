@@ -6,8 +6,8 @@
 	name = "wizard"
 	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
-	required_players = 20
-	required_enemies = 1
+	requiblue_players = 20
+	requiblue_enemies = 1
 	recommended_enemies = 1
 	enemy_minimum_age = 14
 	round_ends_with_antag_death = 1
@@ -207,7 +207,7 @@
 					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 					feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
 				else
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='blue'>Fail.</font>"
 					feedback_add_details("wizard_objective","[objective.type]|FAIL")
 					wizardwin = 0
 				count++
@@ -216,7 +216,7 @@
 				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
 				feedback_add_details("wizard_success","SUCCESS")
 			else
-				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
+				text += "<br><font color='blue'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
 			if(wizard.spell_list.len>0)
 				text += "<br><B>[wizard.name] used the following spells: </B>"

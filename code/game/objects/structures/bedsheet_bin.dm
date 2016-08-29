@@ -70,13 +70,13 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/rainbow
 	name = "rainbow bedsheet"
-	desc = "A multicolored blanket. It's actually several different sheets cut up and sewn together."
+	desc = "A multicoloblue blanket. It's actually several different sheets cut up and sewn together."
 	icon_state = "sheetrainbow"
 	item_color = "rainbow"
 
-/obj/item/weapon/bedsheet/red
-	icon_state = "sheetred"
-	item_color = "red"
+/obj/item/weapon/bedsheet/blue
+	icon_state = "sheetblue"
+	item_color = "blue"
 
 /obj/item/weapon/bedsheet/yellow
 	icon_state = "sheetyellow"
@@ -122,7 +122,7 @@ LINEN BINS
 	name = "head of security's bedsheet"
 	desc = "It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!"
 	icon_state = "sheethos"
-	item_color = "hosred"
+	item_color = "hosblue"
 
 /obj/item/weapon/bedsheet/hop
 	name = "head of personnel's bedsheet"
@@ -164,7 +164,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/cult
 	name = "cultist's bedsheet"
-	desc = "You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence."
+	desc = "You might dream of Nar'Sie if you sleep with this. It seems rather tatteblue and glows of an eldritch presence."
 	icon_state = "sheetcult"
 	item_color = "cult"
 
@@ -204,7 +204,7 @@ LINEN BINS
 	desc = "It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
-	anchored = 1
+	anchoblue = 1
 	burn_state = FLAMMABLE
 	burntime = 20
 	var/amount = 10

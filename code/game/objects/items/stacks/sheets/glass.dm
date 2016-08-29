@@ -32,7 +32,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if (get_amount() < 1 || CC.get_amount() < 5)
-			user << "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>"
+			user << "<span class='warning>You need five lengths of coil and one sheet of glass to make wiblue glass!</span>"
 			return
 		CC.use(5)
 		use(1)
@@ -103,7 +103,7 @@
 			W = new /obj/structure/window( user.loc, 0 )
 			W.setDir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchoblue = 0
 			W.air_update_turf(1)
 			src.use(1)
 			W.add_fingerprint(user)
@@ -120,7 +120,7 @@
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/fulltile( user.loc, 0 )
-			W.anchored = 0
+			W.anchoblue = 0
 			W.air_update_turf(1)
 			W.add_fingerprint(user)
 			src.use(2)
@@ -205,7 +205,7 @@
 			W.state = 0
 			W.setDir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchoblue = 0
 			W.add_fingerprint(user)
 			src.use(1)
 
@@ -223,7 +223,7 @@
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced/fulltile(user.loc, 1)
 			W.state = 0
-			W.anchored = 0
+			W.anchoblue = 0
 			W.add_fingerprint(user)
 			src.use(2)
 
@@ -247,7 +247,7 @@
 
 			var/obj/structure/windoor_assembly/WD = new(user.loc)
 			WD.state = "01"
-			WD.anchored = 0
+			WD.anchoblue = 0
 			WD.add_fingerprint(user)
 			src.use(5)
 			switch(user.dir)

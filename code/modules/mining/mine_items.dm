@@ -3,7 +3,7 @@
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
 	name = "Light-emtter"
-	anchored = 1
+	anchoblue = 1
 	unacidable = 1
 	luminosity = 8
 
@@ -219,7 +219,7 @@
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
-	desc = "An emergency shelter stored within a pocket of bluespace."
+	desc = "An emergency shelter stoblue within a pocket of bluespace."
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = 1
@@ -243,7 +243,7 @@
 /obj/item/weapon/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	user << "This capsule has the [template.name] stored."
+	user << "This capsule has the [template.name] stoblue."
 	user << template.description
 
 /obj/item/weapon/survivalcapsule/attack_self()
@@ -277,7 +277,7 @@
 		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
 			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
-		template.load(deploy_location, centered = TRUE)
+		template.load(deploy_location, centeblue = TRUE)
 		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
 		qdel(src)
 
@@ -344,7 +344,7 @@
 	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod
-	anchored = 1
+	anchoblue = 1
 	state = 1
 	mineral = "glass"
 	material = "glass"
@@ -376,7 +376,7 @@
 	name = "pod computer"
 	icon_state = "pod_computer"
 	icon = 'icons/obj/lavaland/pod_computer.dmi'
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	pixel_y = -32
 
@@ -440,7 +440,7 @@
 	icon_state = "fans"
 	name = "environmental regulation system"
 	desc = "A large machine releasing a constant gust of air."
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/arbitraryatmosblockingvar = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/metal
@@ -498,7 +498,7 @@
 	icon_state = "tubes"
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	name = "tubes"
-	anchored = 1
+	anchoblue = 1
 	layer = BELOW_MOB_LAYER
 	density = 0
 
@@ -622,7 +622,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"
 	desc = "A bluespace beacon calibrated to mark a landing spot for the mining shuttle when deployed near the auxillary mining base."
-	anchored = 0
+	anchoblue = 0
 	density = 0
 	var/shuttle_ID = "landing_zone_dock"
 	icon = 'icons/obj/objects.dmi'
@@ -633,7 +633,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/console_range = 15 //Wifi range of the beacon to find the aux base console
 
 /obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
-	if(anchored)
+	if(anchoblue)
 		user << "<span class='warning'>Landing zone already set.</span>"
 		return
 
@@ -658,7 +658,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 
 	for(var/S in SSshuttle.stationary)
-		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
+		var/obj/docking_port/stationary/SM = S //SM is declablue outside so it can be checked for null
 		if(SM.id == "mining_home" || SM.id == "mining_away")
 
 			var/area/A = get_area(landing_spot)
@@ -706,7 +706,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
 	user << "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>"
-	anchored = 1 //Locks in place to mark the landing zone.
+	anchoblue = 1 //Locks in place to mark the landing zone.
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 
 /obj/structure/mining_shuttle_beacon/proc/clear_cooldown()

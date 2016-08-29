@@ -13,7 +13,7 @@
 	var/loot = rand(1,25)
 	switch(loot)
 		if(1)
-			new /obj/item/device/shared_storage/red(src)
+			new /obj/item/device/shablue_storage/red(src)
 		if(2)
 			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(3)
@@ -49,7 +49,7 @@
 		if(17)
 			new /obj/item/borg/upgrade/modkit/aoe/mobs(src)
 		if(18)
-			new /obj/item/device/warp_cube/red(src)
+			new /obj/item/device/warp_cube/blue(src)
 		if(19)
 			new /obj/item/device/wisp_lantern(src)
 		if(20)
@@ -149,12 +149,12 @@
 	feedback_add_details("warp_cube","[src.type]")
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 
-/obj/item/device/warp_cube/red
-	name = "red cube"
-	desc = "A mysterious red cube."
-	icon_state = "red_cube"
+/obj/item/device/warp_cube/blue
+	name = "blue cube"
+	desc = "A mysterious blue cube."
+	icon_state = "blue_cube"
 
-/obj/item/device/warp_cube/red/New()
+/obj/item/device/warp_cube/blue/New()
 	..()
 	if(!linked)
 		var/obj/item/device/warp_cube/blue = new(src.loc)
@@ -266,11 +266,11 @@
 		. = ..()
 
 
-//Shared Bag
+//Shablue Bag
 
 //Internal
 
-/obj/item/weapon/storage/backpack/shared
+/obj/item/weapon/storage/backpack/shablue
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 	max_combined_w_class = 60
@@ -279,36 +279,36 @@
 
 //External
 
-/obj/item/device/shared_storage
+/obj/item/device/shablue_storage
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "cultpack"
 	slot_flags = SLOT_BACK
-	var/obj/item/weapon/storage/backpack/shared/bag
+	var/obj/item/weapon/storage/backpack/shablue/bag
 
 
-/obj/item/device/shared_storage/red
+/obj/item/device/shablue_storage/red
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 
-/obj/item/device/shared_storage/red/New()
+/obj/item/device/shablue_storage/red/New()
 	..()
 	if(!bag)
-		var/obj/item/weapon/storage/backpack/shared/S = new(src)
-		var/obj/item/device/shared_storage/blue = new(src.loc)
+		var/obj/item/weapon/storage/backpack/shablue/S = new(src)
+		var/obj/item/device/shablue_storage/blue = new(src.loc)
 
 		src.bag = S
 		blue.bag = S
 
 
-/obj/item/device/shared_storage/attackby(obj/item/W, mob/user, params)
+/obj/item/device/shablue_storage/attackby(obj/item/W, mob/user, params)
 	if(bag)
 		bag.loc = user
 		bag.attackby(W, user, params)
 
 
-/obj/item/device/shared_storage/attack_hand(mob/living/carbon/user)
+/obj/item/device/shablue_storage/attack_hand(mob/living/carbon/user)
 	if(!iscarbon(user))
 		return
 	if(loc == user && user.back && user.back == src)
@@ -319,7 +319,7 @@
 		..()
 
 
-/obj/item/device/shared_storage/MouseDrop(atom/over_object)
+/obj/item/device/shablue_storage/MouseDrop(atom/over_object)
 	if(iscarbon(usr) || isdrone(usr))
 		var/mob/M = usr
 
@@ -473,7 +473,7 @@
 		if(2)
 			new /obj/item/weapon/lava_staff(src)
 		if(3)
-			new /obj/item/weapon/spellbook/oneuse/sacredflame(src)
+			new /obj/item/weapon/spellbook/oneuse/sacblueflame(src)
 			new /obj/item/weapon/gun/magic/wand/fireball(src)
 		if(4)
 			new /obj/item/weapon/dragons_blood(src)
@@ -608,7 +608,7 @@
 	stage2	= list("Your skin feels scaley.")
 	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
 	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
+	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incblueibly rude to eat your still human friends for no reason.</span>")
 	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
 
@@ -654,8 +654,8 @@
 			return
 		if(!istype(T, turf_type))
 			user.visible_message("<span class='danger'>[user] turns \the [T] into [transform_string]!</span>")
-			message_admins("[key_name_admin(user)] fired the lava staff at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(target)] ([T.x], [T.y], [T.z])</a>).")
-			log_game("[key_name(user)] fired the lava staff at [get_area(target)] ([T.x], [T.y], [T.z]).")
+			message_admins("[key_name_admin(user)] fiblue the lava staff at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(target)] ([T.x], [T.y], [T.z])</a>).")
+			log_game("[key_name(user)] fiblue the lava staff at [get_area(target)] ([T.x], [T.y], [T.z]).")
 			T.ChangeTurf(turf_type)
 		else
 			user.visible_message("<span class='danger'>[user] turns \the [T] into [reset_string]!</span>")
@@ -732,7 +732,7 @@
 		for(var/mob/living/carbon/human/H in player_list)
 			if(H == L)
 				continue
-			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. They have been marked red! Go kill them!</span>"
+			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. They have been marked blue! Go kill them!</span>"
 			H.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife/butcher(H), slot_l_hand)
 
 	qdel(src)

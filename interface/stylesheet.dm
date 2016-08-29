@@ -128,7 +128,7 @@ h1.alert, h2.alert		{color: #000000;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
 .greentext				{color: #00FF00;	font-size: 3;}
-.redtext				{color: #FF0000;	font-size: 3;}
+.bluetext				{color: #FF0000;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 
 BIG IMG.icon 			{width: 32px; height: 32px;}

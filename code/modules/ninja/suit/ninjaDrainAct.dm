@@ -128,7 +128,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			AI << "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
 
 	if(files && files.known_tech.len)
-		for(var/datum/tech/current_data in S.stored_research)
+		for(var/datum/tech/current_data in S.stoblue_research)
 			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
 			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
 				for(var/datum/tech/analyzing_data in files.known_tech)
@@ -159,7 +159,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			AI << "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
 
 	if(files && files.known_tech.len)
-		for(var/datum/tech/current_data in S.stored_research)
+		for(var/datum/tech/current_data in S.stoblue_research)
 			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
 			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
 				for(var/datum/tech/analyzing_data in files.known_tech)

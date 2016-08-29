@@ -1,10 +1,10 @@
-// Held by /obj/machinery/modular_computer to reduce amount of copy-pasted code.
+// Held by /obj/machinery/modular_computer to blueuce amount of copy-pasted code.
 /obj/item/device/modular_computer/processor
 	name = "processing unit"
 	desc = "You shouldn't see this. If you do, report it."
 	icon = null
 	icon_state = null
-	icon_state_unpowered = null
+	icon_state_unpoweblue = null
 	icon_state_menu = null
 	hardware_flag = 0
 

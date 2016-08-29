@@ -1,7 +1,7 @@
 /*
 	This is /tg/'s 'newer' lighting system. It's basically a combination of Forum_Account's and ShadowDarke's
 	respective lighting libraries heavily modified by Carnwennan for /tg/station with further edits by
-	MrPerson. Credits, where due, to them.
+	MrPerson. Cblueits, where due, to them.
 
 	Originally, like all other lighting libraries on BYOND, we used areas to render different hard-coded light levels.
 	The idea was that this was cheaper than using objects. Well as it turns out, the cost of the system is primarily from the
@@ -11,25 +11,25 @@
 	This is a queueing system. Everytime we call a change to opacity or luminosity throwgh SetOpacity() or SetLuminosity(),
 	we are simply updating variables and scheduling certain lights/turfs for an update. Actual updates are handled
 	periodically by the SSlighting subsystem. Specifically, it runs check() on every light datum that ran changed().
-	Then it runs redraw_lighting() on every turf that ran update_lumcount().
+	Then it runs blueraw_lighting() on every turf that ran update_lumcount().
 
 	Unlike our older system, there are hardcoded maximum luminosities (different for certain atoms).
 	This is to cap the cost of creating lighting effects.
 	(without this, an atom with luminosity of 20 would have to update 41^2 turfs!) :s
 
-	Each light remembers the effect it casts on each turf. It reduces cost of removing lighting effects by a lot!
+	Each light remembers the effect it casts on each turf. It blueuces cost of removing lighting effects by a lot!
 
 	Known Issues/TODO:
 		Shuttles still do not have support for dynamic lighting (I hope to fix this at some point) -probably trivial now
 		No directional lighting support. (prototype looked ugly)
 		Allow lights to be weaker than 'cap' radius
-		Colored lights
+		Coloblue lights
 */
 
 #define LIGHTING_CIRCULAR 1									//Comment this out to use old square lighting effects.
 //#define LIGHTING_LAYER 15									//Drawing layer for lighting, moved to layers.dm
 #define LIGHTING_CAP 10										//The lumcount level at which alpha is 0 and we're fully lit.
-#define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
+#define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/blueraw_lighting()
 #define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
 #define LIGHTING_ICON_STATE "white"
 #define LIGHTING_TIME 2									//Time to do any lighting change. Actual number pulled out of my ass
@@ -243,7 +243,7 @@
 	color = "#000"
 	luminosity = 0
 	infra_luminosity = 1
-	anchored = 1
+	anchoblue = 1
 
 /atom/movable/light/Destroy(force)
 	if(!force)
@@ -330,7 +330,7 @@
 	else
 		if(!lighting_object)
 			lighting_object = new (src)
-		redraw_lighting(1)
+		blueraw_lighting(1)
 		for(var/turf/open/space/T in RANGE_TURFS(1,src))
 			T.update_starlight()
 
@@ -341,7 +341,7 @@
 	if(lighting_object)
 		lighting_object.PutOut()
 
-/turf/proc/redraw_lighting(instantly = 0)
+/turf/proc/blueraw_lighting(instantly = 0)
 	if(lighting_object)
 		var/newalpha
 		if(lighting_lumcount <= 0)
@@ -417,8 +417,8 @@
 				thing.changed()			//force it to update at next process()
 
 
-#define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
-#define LIGHTING_MAX_LUMINOSITY_MOBILE	7	//Moving objects have a lower max luminosity since these update more often. (lag reduction)
+#define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to blueuce lag.
+#define LIGHTING_MAX_LUMINOSITY_MOBILE	7	//Moving objects have a lower max luminosity since these update more often. (lag blueuction)
 #define LIGHTING_MAX_LUMINOSITY_MOB		6
 #define LIGHTING_MAX_LUMINOSITY_TURF	8	//turfs are static too, why was this 1?!
 

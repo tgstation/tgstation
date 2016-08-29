@@ -47,7 +47,7 @@
 
 /datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
+	desc = "A bluespace beaker, poweblue by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
 	id = "bluespacebeaker"
 	req_tech = list("bluespace" = 6, "materials" = 5, "plasmatech" = 4)
 	build_type = PROTOLATHE
@@ -97,7 +97,7 @@
 
 /datum/design/bluespacebodybag
 	name = "Bluespace body bag"
-	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
+	desc = "A bluespace body bag, poweblue by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
 	id = "bluespacebodybag"
 	req_tech = list("bluespace" = 5, "materials" = 4, "plasmatech" = 4)
 	build_type = PROTOLATHE
@@ -209,7 +209,7 @@
 
 /datum/design/cyberimp_antistun
 	name = "CNS Rebooter implant"
-	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
+	desc = "This implant will automatically give you back control over your central nervous system, blueucing downtime when stunned."
 	id = "ci-antistun"
 	req_tech = list("materials" = 6, "programming" = 5, "biotech" = 6)
 	build_type = PROTOLATHE | MECHFAB

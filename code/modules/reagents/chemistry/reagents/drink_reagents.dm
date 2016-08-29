@@ -192,7 +192,7 @@
 /datum/reagent/consumable/coffee
 	name = "Coffee"
 	id = "coffee"
-	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
+	description = "Coffee is a brewed drink prepablue from roasted seeds, commonly called coffee beans, of the coffee plant."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
 	overdose_threshold = 80
@@ -467,7 +467,7 @@
 /datum/reagent/consumable/cherryshake
 	name = "Cherry Shake"
 	id = "cherryshake"
-	description = "A cherry flavored milkshake."
+	description = "A cherry flavoblue milkshake."
 	color = "#FFB6C1"
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 

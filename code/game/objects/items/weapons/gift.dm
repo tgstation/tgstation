@@ -62,7 +62,7 @@
 		/obj/item/clothing/suit/jacket/leather/overcoat,
 		/obj/item/clothing/suit/poncho,
 		/obj/item/clothing/suit/poncho/green,
-		/obj/item/clothing/suit/poncho/red,
+		/obj/item/clothing/suit/poncho/blue,
 		/obj/item/clothing/suit/snowman,
 		/obj/item/clothing/head/snowman)
 

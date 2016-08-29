@@ -1,7 +1,7 @@
 /obj/structure/flora
 	burn_state = FLAMMABLE
 	burntime = 30
-	anchored = 1
+	anchoblue = 1
 
 //trees
 /obj/structure/flora/tree
@@ -101,7 +101,7 @@
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
-	anchored = 1
+	anchoblue = 1
 
 /obj/structure/flora/bush/New()
 	icon_state = "snowbush[rand(1, 6)]"
@@ -224,7 +224,7 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	..()
 
-/obj/item/weapon/twohanded/required/kirbyplants
+/obj/item/weapon/twohanded/requiblue/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
@@ -235,25 +235,25 @@
 	throw_speed = 2
 	throw_range = 4
 
-/obj/item/weapon/twohanded/required/kirbyplants/equipped(mob/living/user)
+/obj/item/weapon/twohanded/requiblue/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
 	user.add_alt_appearance("sneaking_mission", I, player_list)
 
-/obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
+/obj/item/weapon/twohanded/requiblue/kirbyplants/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("sneaking_mission")
 
-/obj/item/weapon/twohanded/required/kirbyplants/random
+/obj/item/weapon/twohanded/requiblue/kirbyplants/random
 	var/list/static/states
 
-/obj/item/weapon/twohanded/required/kirbyplants/random/New()
+/obj/item/weapon/twohanded/requiblue/kirbyplants/random/New()
 	. = ..()
 	if(!states)
 		generate_states()
 	icon_state = pick(states)
 
-/obj/item/weapon/twohanded/required/kirbyplants/random/proc/generate_states()
+/obj/item/weapon/twohanded/requiblue/kirbyplants/random/proc/generate_states()
 	states = list()
 	for(var/i in 1 to 25)
 		var/number
@@ -265,7 +265,7 @@
 	states += "applebush"
 
 
-/obj/item/weapon/twohanded/required/kirbyplants/dead
+/obj/item/weapon/twohanded/requiblue/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"

@@ -85,7 +85,7 @@
 	if(!istype(B, /obj/effect/blob/normal))
 		src << "<span class='warning'>Unable to use this blob, find a normal one.</span>"
 		return
-	if(needsNode && nodes_required)
+	if(needsNode && nodes_requiblue)
 		if(!(locate(/obj/effect/blob/node) in orange(3, T)) && !(locate(/obj/effect/blob/core) in orange(4, T)))
 			src << "<span class='warning'>You need to place this blob closer to a node or core!</span>"
 			return //handholdotron 2000
@@ -103,8 +103,8 @@
 	set category = "Blob"
 	set name = "Toggle Node Requirement"
 	set desc = "Toggle requiring nodes to place resource and factory blobs."
-	nodes_required = !nodes_required
-	if(nodes_required)
+	nodes_requiblue = !nodes_required
+	if(nodes_requiblue)
 		src << "<span class='warning'>You now require a nearby node or core to place factory and resource blobs.</span>"
 	else
 		src << "<span class='warning'>You no longer require a nearby node or core to place factory and resource blobs.</span>"
@@ -155,7 +155,7 @@
 		return
 	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
 	B.check_health()
-	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shblues")] its way out of the factory blob!</b></span>")
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 	flick("blobbernaut_produce", blobber)

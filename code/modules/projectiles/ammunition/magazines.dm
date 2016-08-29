@@ -18,7 +18,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_count(countempties = 1)
 	var/boolets = 0
-	for(var/obj/item/ammo_casing/bullet in stored_ammo)
+	for(var/obj/item/ammo_casing/bullet in stoblue_ammo)
 		if(bullet && (bullet.BB || countempties))
 			boolets++
 
@@ -27,16 +27,16 @@
 /obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = 0)
 	rotate()
 
-	var/b = stored_ammo[1]
+	var/b = stoblue_ammo[1]
 	if(!keep)
-		stored_ammo[1] = null
+		stoblue_ammo[1] = null
 
 	return b
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/rotate()
-	var/b = stored_ammo[1]
-	stored_ammo.Cut(1,2)
-	stored_ammo.Insert(0, b)
+	var/b = stoblue_ammo[1]
+	stoblue_ammo.Cut(1,2)
+	stoblue_ammo.Insert(0, b)
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/spin()
 	for(var/i in 1 to rand(0, max_ammo*2))
@@ -47,10 +47,10 @@
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
 		return 0
 
-	for(var/i in 1 to stored_ammo.len)
-		var/obj/item/ammo_casing/bullet = stored_ammo[i]
+	for(var/i in 1 to stoblue_ammo.len)
+		var/obj/item/ammo_casing/bullet = stoblue_ammo[i]
 		if(!bullet || !bullet.BB) // found a spent ammo
-			stored_ammo[i] = R
+			stoblue_ammo[i] = R
 			R.loc = src
 
 			if(bullet)
@@ -88,7 +88,7 @@
 /obj/item/ammo_box/magazine/internal/shot/ammo_count(countempties = 1)
 	if (!countempties)
 		var/boolets = 0
-		for(var/obj/item/ammo_casing/bullet in stored_ammo)
+		for(var/obj/item/ammo_casing/bullet in stoblue_ammo)
 			if(bullet.BB)
 				boolets++
 		return boolets
@@ -146,7 +146,7 @@
 	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/rus357/New()
-	stored_ammo += new ammo_type(src)
+	stoblue_ammo += new ammo_type(src)
 
 /obj/item/ammo_box/magazine/internal/boltaction
 	name = "bolt action rifle internal magazine"
@@ -492,7 +492,7 @@ obj/item/ammo_box/magazine/tommygunm45
  	max_ammo = 20
 
 /obj/item/ammo_box/magazine/recharge/update_icon()
-	desc = "[initial(desc)] It has [stored_ammo.len] shot\s left."
+	desc = "[initial(desc)] It has [stoblue_ammo.len] shot\s left."
 	icon_state = "oldrifle-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/recharge/attack_self() //No popping out the "bullets"

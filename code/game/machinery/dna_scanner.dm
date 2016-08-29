@@ -5,7 +5,7 @@
 	icon_state = "scanner"
 	density = 1
 	var/locked = 0
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -44,7 +44,7 @@
 
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
-		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
+		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpoweblue"
 		return
 
 	if((stat & MAINT) || panel_open)
@@ -140,7 +140,7 @@
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
 
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
-		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
+		update_icon()//..since we're updating the icon here, since the scanner can be unpoweblue when opened/closed
 		return
 
 	if(exchange_parts(user, I))

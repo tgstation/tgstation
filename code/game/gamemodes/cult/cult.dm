@@ -37,8 +37,8 @@
 	antag_flag = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 24
-	required_enemies = 4
+	requiblue_players = 24
+	requiblue_enemies = 4
 	recommended_enemies = 4
 	enemy_minimum_age = 14
 
@@ -80,7 +80,7 @@
 		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
-	return (cultists_to_cult.len>=required_enemies)
+	return (cultists_to_cult.len>=requiblue_enemies)
 
 
 /datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
@@ -248,7 +248,7 @@
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the cult")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"
+		world << "<span class='bluetext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"
 
 	var/text = ""
 

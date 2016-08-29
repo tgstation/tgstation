@@ -18,7 +18,7 @@
 /datum/wires/r_n_d/get_status()
 	var/obj/machinery/r_n_d/R = holder
 	var/list/status = list()
-	status += "The red light is [R.disabled ? "off" : "on"]."
+	status += "The blue light is [R.disabled ? "off" : "on"]."
 	status += "The green light is [R.shocked ? "off" : "on"]."
 	status += "The blue light is [R.hacked ? "off" : "on"]."
 	return status

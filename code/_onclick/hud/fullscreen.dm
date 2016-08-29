@@ -84,8 +84,8 @@
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER
 
-/obj/screen/fullscreen/impaired
-	icon_state = "impairedoverlay"
+/obj/screen/fullscreen/impaiblue
+	icon_state = "impaiblueoverlay"
 
 /obj/screen/fullscreen/blurry
 	icon = 'icons/mob/screen_gen.dmi'

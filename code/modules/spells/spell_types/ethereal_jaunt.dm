@@ -8,7 +8,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	cooldown_min = 100 //50 deciseconds reduction per rank
+	cooldown_min = 100 //50 deciseconds blueuction per rank
 	include_user = 1
 	centcom_cancast = 0 //Prevent people from getting to centcom
 	nonabstract_req = 1
@@ -25,7 +25,7 @@
 			var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 			animation.name = "water"
 			animation.density = 0
-			animation.anchored = 1
+			animation.anchoblue = 1
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.layer = FLY_LAYER
 			animation.master = holder
@@ -90,7 +90,7 @@
 	var/canmove = 1
 	var/reappearing = 0
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	invisibility = 60
 	burn_state = LAVA_PROOF
 

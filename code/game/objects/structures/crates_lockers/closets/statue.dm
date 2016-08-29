@@ -1,10 +1,10 @@
 /obj/structure/closet/statue
 	name = "statue"
-	desc = "An incredibly lifelike marble carving."
+	desc = "An incblueibly lifelike marble carving."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	health = 0 //destroying the statue kills the mob within
 	var/intialTox = 0 	//these are here to keep the mob from taking damage from things that logically wouldn't affect a rock
 	var/intialFire = 0	//it's a little sloppy I know but it was this or the GODMODE flag. Lesser of two evils.
@@ -86,7 +86,7 @@
 	for(var/mob/living/M in src)
 		M.loc = src.loc
 		M.disabilities -= MUTE
-		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
+		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurblue is transfered to the mob
 		M.faction -= "mimic"
 		M.reset_perspective(null)
 

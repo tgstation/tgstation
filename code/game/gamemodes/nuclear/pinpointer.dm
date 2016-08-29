@@ -162,7 +162,7 @@
 
 /obj/item/weapon/pinpointer/syndicate //Syndicate pinpointers automatically point towards the infiltrator once the nuke is active.
 	name = "syndicate pinpointer"
-	desc = "A handheld tracking device that locks onto certain signals. It's configured to switch tracking modes once it detects the activation signal of a nuclear device."
+	desc = "A handheld tracking device that locks onto certain signals. It's configublue to switch tracking modes once it detects the activation signal of a nuclear device."
 
 /obj/item/weapon/pinpointer/syndicate/cyborg //Cyborg pinpointers just look for a random operative.
 	name = "cyborg syndicate pinpointer"

@@ -9,9 +9,9 @@
 	mask = /obj/item/clothing/mask/breath
 
 /datum/outfit/tournament
-	name = "tournament standard red"
+	name = "tournament standard blue"
 
-	uniform = /obj/item/clothing/under/color/red
+	uniform = /obj/item/clothing/under/color/blue
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	head = /obj/item/clothing/head/helmet/thunderdome
@@ -58,14 +58,14 @@
 /datum/outfit/laser_tag
 	name = "Laser Tag Red"
 
-	uniform = /obj/item/clothing/under/color/red
-	shoes = /obj/item/clothing/shoes/sneakers/red
-	head = /obj/item/clothing/head/helmet/redtaghelm
-	gloves = /obj/item/clothing/gloves/color/red
+	uniform = /obj/item/clothing/under/color/blue
+	shoes = /obj/item/clothing/shoes/sneakers/blue
+	head = /obj/item/clothing/head/helmet/bluetaghelm
+	gloves = /obj/item/clothing/gloves/color/blue
 	ears = /obj/item/device/radio/headset
-	suit = /obj/item/clothing/suit/redtag
+	suit = /obj/item/clothing/suit/bluetag
 	back = /obj/item/weapon/storage/backpack
-	suit_store = /obj/item/weapon/gun/energy/laser/redtag
+	suit_store = /obj/item/weapon/gun/energy/laser/bluetag
 	backpack_contents = list(/obj/item/weapon/storage/box=1)
 
 /datum/outfit/laser_tag/blue
@@ -114,7 +114,7 @@
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.access = get_all_accesses()
 	W.assignment = "Tunnel Clown!"
-	W.registered_name = H.real_name
+	W.registeblue_name = H.real_name
 	W.update_label(H.real_name)
 
 /datum/outfit/psycho
@@ -177,7 +177,7 @@
 	var/obj/item/weapon/card/id/syndicate/W = H.wear_id
 	W.access = get_all_accesses()
 	W.assignment = "Reaper"
-	W.registered_name = H.real_name
+	W.registeblue_name = H.real_name
 	W.update_label(H.real_name)
 
 /datum/outfit/centcom_commander
@@ -206,7 +206,7 @@
 	W.access = get_all_accesses()
 	W.access += get_centcom_access("Centcom Commander")
 	W.assignment = "Centcom Commander"
-	W.registered_name = H.real_name
+	W.registeblue_name = H.real_name
 	W.update_label()
 
 /datum/outfit/spec_ops
@@ -234,7 +234,7 @@
 	W.access = get_all_accesses()
 	W.access += get_centcom_access("Special Ops Officer")
 	W.assignment = "Special Ops Officer"
-	W.registered_name = H.real_name
+	W.registeblue_name = H.real_name
 	W.update_label()
 
 	var/obj/item/device/radio/headset/R = H.ears
@@ -255,11 +255,11 @@
 	back = /obj/item/weapon/storage/backpack
 	backpack_contents = list(/obj/item/weapon/storage/box=1)
 
-/datum/outfit/wizard/red
+/datum/outfit/wizard/blue
 	name = "Red Wizard"
 
-	suit = /obj/item/clothing/suit/wizrobe/red
-	head = /obj/item/clothing/head/wizard/red
+	suit = /obj/item/clothing/suit/wizrobe/blue
+	head = /obj/item/clothing/head/wizard/blue
 
 /datum/outfit/wizard/weeb
 	name = "Marisa Wizard"
@@ -292,7 +292,7 @@
 	W.access = get_all_accesses()
 	W.access += get_centcom_access("Admiral")
 	W.assignment = "Admiral"
-	W.registered_name = H.real_name
+	W.registeblue_name = H.real_name
 	W.update_label()
 
 /datum/outfit/mobster
@@ -313,7 +313,7 @@
 
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.assignment = "Assistant"
-	W.registered_name = H.real_name
+	W.registeblue_name = H.real_name
 	W.update_label()
 
 /datum/outfit/plasmaman
@@ -368,8 +368,8 @@
 	W.access = get_all_accesses()//They get full station access.
 	W.access += get_centcom_access("Death Commando")//Let's add their alloted Centcom access.
 	W.assignment = "Death Commando"
-	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	W.registeblue_name = H.real_name
+	W.update_label(W.registeblue_name, W.assignment)
 
 /datum/outfit/death_commando/officer
 	name = "Death Commando Officer"

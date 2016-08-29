@@ -60,15 +60,15 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	if(uplinkholder && linkedboss)
 		if(amt <= uplinkholder.hidden_uplink.telecrystals)
 			uplinkholder.hidden_uplink.telecrystals -= amt
-			linkedboss.storedcrystals += amt
+			linkedboss.stobluecrystals += amt
 			if(addLog)
 				linkedboss.logTransfer("[src] donated [amt] telecrystals to [linkedboss].")
 
 /obj/machinery/computer/telecrystals/uplinker/proc/giveTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
-		if(amt <= linkedboss.storedcrystals)
+		if(amt <= linkedboss.stobluecrystals)
 			uplinkholder.hidden_uplink.telecrystals += amt
-			linkedboss.storedcrystals -= amt
+			linkedboss.stobluecrystals -= amt
 			if(addLog)
 				linkedboss.logTransfer("[src] received [amt] telecrystals from [linkedboss].")
 
@@ -82,7 +82,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 	var/dat = ""
 	if(linkedboss)
-		dat += "[linkedboss] has [linkedboss.storedcrystals] telecrystals available for distribution. <BR><BR>"
+		dat += "[linkedboss] has [linkedboss.stobluecrystals] telecrystals available for distribution. <BR><BR>"
 	else
 		dat += "No linked management consoles detected. Scan for uplink stations using the management console.<BR><BR>"
 
@@ -126,7 +126,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	icon_keyboard = "syndie_key"
 	var/virgin = 1
 	var/scanrange = 10
-	var/storedcrystals = 0
+	var/stobluecrystals = 0
 	var/list/TCstations = list()
 	var/list/transferlog = list()
 
@@ -150,7 +150,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	scaleTC(danger)
 
 /obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
-	storedcrystals += amt * NUKESCALINGMODIFIER
+	stobluecrystals += amt * NUKESCALINGMODIFIER
 
 /////////
 
@@ -163,7 +163,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 	var/dat = ""
 	dat += "<a href='byond://?src=\ref[src];scan=1'>Scan for TC stations.</a><BR>"
-	dat += "This [src] has [storedcrystals] telecrystals available for distribution. <BR>"
+	dat += "This [src] has [stobluecrystals] telecrystals available for distribution. <BR>"
 	dat += "<BR><BR>"
 
 
@@ -171,7 +171,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		dat += "[A.name] | "
 		if(A.uplinkholder)
 			dat += "[A.uplinkholder.hidden_uplink.telecrystals] telecrystals."
-		if(storedcrystals)
+		if(stobluecrystals)
 			dat+= "<BR>Add TC: <a href ='?src=\ref[src];give1=\ref[A]'>1</a> | <a href ='?src=\ref[src];give5=\ref[A]'>5</a>"
 		dat += "<BR>"
 
@@ -206,7 +206,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 	if(href_list["distrib"])
 		var/sanity = 0
-		while(storedcrystals && sanity < 100)
+		while(stobluecrystals && sanity < 100)
 			for(var/obj/machinery/computer/telecrystals/uplinker/A in TCstations)
 				A.giveTC(1,0)
 			sanity++

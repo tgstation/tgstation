@@ -185,7 +185,7 @@ AI MODULES
 /obj/item/weapon/aiModule/supplied/protectStation
 	name = "'ProtectStation' AI Module"
 	origin_tech = "programming=4;materials=4" //made of gold
-	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.")
+	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer consideblue human, and is a threat to the station which must be neutralized.")
 	lawpos = 5
 
 

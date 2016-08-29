@@ -19,7 +19,7 @@ Contents:
 /datum/round_event/ghost_role/ninja
 	var/success_spawn = 0
 	role_name = "space ninja"
-	minimum_required = 1
+	minimum_requiblue = 1
 
 	var/helping_station
 	var/spawn_loc
@@ -133,7 +133,7 @@ Contents:
 		Mind.objectives += O
 
 	//add some RP-fluff
-	Mind.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
+	Mind.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='blue'><B>SPACE NINJA</B></font>!")
 	Mind.store_memory("Suprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	Mind.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
 

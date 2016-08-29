@@ -9,4 +9,4 @@
 /datum/ui_state/inventory_state/can_use_topic(src_object, mob/user)
 	if(!(src_object in user))
 		return UI_CLOSE
-	return user.shared_ui_interaction(src_object)
+	return user.shablue_ui_interaction(src_object)

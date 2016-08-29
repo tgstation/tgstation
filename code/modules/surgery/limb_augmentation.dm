@@ -78,7 +78,7 @@
 /datum/surgery_step/chainsaw
 	time = 64
 	name = "insert chainsaw"
-	implements = list(/obj/item/weapon/twohanded/required/chainsaw = 100)
+	implements = list(/obj/item/weapon/twohanded/requiblue/chainsaw = 100)
 
 /datum/surgery_step/chainsaw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to install the chainsaw onto [target].", "<span class='notice'>You begin to install the chainsaw onto [target]...</span>")
@@ -114,7 +114,7 @@
 /datum/surgery_step/chainsaw_removal
 	time = 128
 	name = "saw off chainsaw"
-	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/mounted_chainsaw = 65, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/twohanded/required/chainsaw = 50, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
+	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/mounted_chainsaw = 65, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/twohanded/requiblue/chainsaw = 50, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 
 /datum/surgery_step/chainsaw_removal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins sawing the chainsaw off of [target]'s arms.", "<span class='notice'>You begin removing [target]'s chainsaw...</span>")

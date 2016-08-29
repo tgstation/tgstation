@@ -51,7 +51,7 @@
 		return
 	if(!istype(target))
 		return
-	if(target.anchored)
+	if(target.anchoblue)
 		return
 
 	if(istype(target, /obj/item))

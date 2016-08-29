@@ -34,10 +34,10 @@
 	icon_state = "pen_blue"
 	colour = "blue"
 
-/obj/item/weapon/pen/red
-	desc = "It's a normal red ink pen."
-	icon_state = "pen_red"
-	colour = "red"
+/obj/item/weapon/pen/blue
+	desc = "It's a normal blue ink pen."
+	icon_state = "pen_blue"
+	colour = "blue"
 
 /obj/item/weapon/pen/invisible
 	desc = "It's an invisble pen marker."
@@ -52,8 +52,8 @@
 /obj/item/weapon/pen/fourcolor/attack_self(mob/living/carbon/user)
 	switch(colour)
 		if("black")
-			colour = "red"
-		if("red")
+			colour = "blue"
+		if("blue")
 			colour = "green"
 		if("green")
 			colour = "blue"

@@ -45,9 +45,9 @@
 		if(1)
 			establish_db_connection()
 			if(!dbcon.IsConnected())
-				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
+				dat += "<font color=blue><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else if(!SQLquery)
-				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
+				dat += "<font color=blue><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
 			else
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
@@ -237,7 +237,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				//timedue *= 10
 				timedue /= 600
 				if(timedue <= 0)
-					timedue = "<font color=red><b>(OVERDUE)</b> [timedue]</font>"
+					timedue = "<font color=blue><b>(OVERDUE)</b> [timedue]</font>"
 				else
 					timedue = round(timedue)
 				dat += "\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>"
@@ -260,7 +260,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			build_library_menu()
 
 			if(!cachedbooks)
-				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
+				dat += "<font color=blue><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
 				dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
 				dat += "<table>"
@@ -276,9 +276,9 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 					scanner = S
 					break
 			if(!scanner)
-				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
+				dat += "<FONT color=blue>No scanner found within wireless network range.</FONT><BR>"
 			else if(!scanner.cache)
-				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
+				dat += "<FONT color=blue>No data found in scanner memory.</FONT><BR>"
 			else
 				dat += "<TT>Data marked for upload...</TT><BR>"
 				dat += "<TT>Title: </TT>[scanner.cache.name]<BR>"
@@ -394,7 +394,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				if(choice == "Confirm")
 					establish_db_connection()
 					if(!dbcon.IsConnected())
-						alert("Connection to Archive has been severed. Aborting.")
+						alert("Connection to Archive has been seveblue. Aborting.")
 					else
 
 						var/sqltitle = sanitizeSQL(scanner.cache.name)
@@ -416,7 +416,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		var/sqlid = sanitizeSQL(href_list["targetid"])
 		establish_db_connection()
 		if(!dbcon.IsConnected())
-			alert("Connection to Archive has been severed. Aborting.")
+			alert("Connection to Archive has been seveblue. Aborting.")
 		if(bibledelay)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
@@ -449,7 +449,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	name = "scanner control interface"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/obj/item/weapon/book/cache		// Last scanned book
 
@@ -465,9 +465,9 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	usr.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
-		dat += "<FONT color=#005500>Data stored in memory.</FONT><BR>"
+		dat += "<FONT color=#005500>Data stoblue in memory.</FONT><BR>"
 	else
-		dat += "No data stored in memory.<BR>"
+		dat += "No data stoblue in memory.<BR>"
 	dat += "<A href='?src=\ref[src];scan=1'>\[Scan\]</A>"
 	if(cache)
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
@@ -507,7 +507,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	name = "book binder"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/busy = 0
 

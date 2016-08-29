@@ -24,8 +24,8 @@
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
-	var/required_players = 0
-	var/required_enemies = 0
+	var/requiblue_players = 0
+	var/requiblue_enemies = 0
 	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/mob/living/living_antag_player = null
@@ -54,11 +54,11 @@
 		if((player.client)&&(player.ready))
 			playerC++
 	if(!Debug2)
-		if(playerC < required_players)
+		if(playerC < requiblue_players)
 			return 0
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!Debug2)
-		if(antag_candidates.len < required_enemies)
+		if(antag_candidates.len < requiblue_enemies)
 			return 0
 		return 1
 	else

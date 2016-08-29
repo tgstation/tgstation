@@ -9,7 +9,7 @@
 	volume = 100
 	throwforce = 15
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
-	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
+	var/const/duration = 13 //Directly relates to the 'weaken' duration. Loweblue by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
@@ -155,7 +155,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey
 	name = "Uncle Git's Special Reserve"
-	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
+	desc = "A premium single-malt whiskey, gently matublue inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
 	list_reagents = list("whiskey" = 100)
 
@@ -173,7 +173,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequila
 	name = "Caccavo Guaranteed Quality Tequila"
-	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
+	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingblueients!"
 	icon_state = "tequilabottle"
 	list_reagents = list("tequila" = 100)
 
@@ -213,7 +213,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua
 	name = "Robert Robust's Coffee Liqueur"
-	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK."
+	desc = "A widely known, Mexican coffee-flavoublue liqueur. In production since 1936, HONK."
 	icon_state = "kahluabottle"
 	list_reagents = list("kahlua" = 100)
 
@@ -243,9 +243,9 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/New()
 	..()
-	redact()
+	blueact()
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/proc/redact()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/proc/blueact()
 	// There was a large fight in the coderbus about a player reference
 	// in absinthe. Ergo, this is why the name generation is now so
 	// complicated. Judge us kindly.
@@ -285,7 +285,7 @@
 	desc = "A potent alcoholic beverage, almost makes you forget the ash in your lungs."
 	icon_state = "absinthepremium"
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium/redact()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium/blueact()
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine
@@ -321,7 +321,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "Tomato Juice"
-	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
+	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that blueness."
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	isGlass = 0

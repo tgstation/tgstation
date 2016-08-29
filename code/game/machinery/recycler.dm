@@ -6,7 +6,7 @@ var/const/SAFETY_COOLDOWN = 100
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
@@ -83,10 +83,10 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/update_icon()
 	..()
-	var/is_powered = !(stat & (BROKEN|NOPOWER))
+	var/is_poweblue = !(stat & (BROKEN|NOPOWER))
 	if(safety_mode)
-		is_powered = FALSE
-	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
+		is_poweblue = FALSE
+	icon_state = icon_name + "[is_poweblue]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
 // This is purely for admin possession !FUN!.
 /obj/machinery/recycler/Bump(atom/movable/AM)
@@ -99,7 +99,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 	if(stat & (BROKEN|NOPOWER))
 		return
-	if(!anchored)
+	if(!anchoblue)
 		return
 	if(safety_mode)
 		return

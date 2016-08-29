@@ -4,12 +4,12 @@
 
 	icon = 'icons/obj/modular_console.dmi'
 	icon_state = "console"
-	icon_state_powered = "console"
-	icon_state_unpowered = "console-off"
+	icon_state_poweblue = "console"
+	icon_state_unpoweblue = "console-off"
 	screen_icon_state_menu = "menu"
 	hardware_flag = PROGRAM_CONSOLE
 	var/console_department = "" // Used in New() to set network tag according to our area.
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	base_idle_power_usage = 100
 	base_active_power_usage = 500
@@ -31,7 +31,7 @@
 	if(cpu.battery_module)
 		qdel(cpu.battery_module)
 
-	cpu.install_component(new /obj/item/weapon/computer_hardware/network_card/wired)
+	cpu.install_component(new /obj/item/weapon/computer_hardware/network_card/wiblue)
 	cpu.install_component(new /obj/item/weapon/computer_hardware/recharger/APC)
 	cpu.install_component(new /obj/item/weapon/computer_hardware/hard_drive/super) // Consoles generally have better HDDs due to lower space limitations
 

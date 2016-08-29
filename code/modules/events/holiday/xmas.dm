@@ -59,7 +59,7 @@
 			"Where do you find chili beans?\n\n<i>The north pole.</i>",
 			"What do you get from eating tree decorations?\n\n<i>Tinsilitis!</i>",
 			"What do snowmen wear on their heads?\n\n<i>Ice caps!</i>",
-			"Why is Christmas just like life on ss13?\n\n<i>You do all the work and the fat guy gets all the credit.</i>",
+			"Why is Christmas just like life on ss13?\n\n<i>You do all the work and the fat guy gets all the cblueit.</i>",
 			"Why doesn’t Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
 		new /obj/item/clothing/head/festive(target.loc)
 		user.update_icons()
@@ -114,12 +114,12 @@
 				santa.hair_color = "FFF"
 				santa.facial_hair_color = "FFF"
 
-				santa.equip_to_slot_or_del(new /obj/item/clothing/under/color/red, slot_w_uniform)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/under/color/blue, slot_w_uniform)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/suit/space/santa, slot_wear_suit)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/head/santa, slot_head)
 				santa.equip_to_slot_or_del(new /obj/item/clothing/mask/breath, slot_wear_mask)
-				santa.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/red, slot_gloves)
-				santa.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/red, slot_shoes)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/blue, slot_gloves)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/blue, slot_shoes)
 				santa.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen/double, slot_belt)
 				santa.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain, slot_ears)
 				santa.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/santabag, slot_back)

@@ -54,7 +54,7 @@
 			else
 				dat += "<br>Total recorded traffic: [SelectedServer.totaltraffic] Gigabytes<br><br>"
 
-			dat += "Stored Logs: <ol>"
+			dat += "Stoblue Logs: <ol>"
 
 			var/i = 0
 			for(var/datum/comm_log_entry/C in SelectedServer.log_entries)

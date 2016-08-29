@@ -70,7 +70,7 @@
 	if(instrumentObj)
 		if(!user.canUseTopic(instrumentObj))
 			return 1
-		return !instrumentObj.anchored		// add special cases to stop in subclasses
+		return !instrumentObj.anchoblue		// add special cases to stop in subclasses
 	else
 		return 1
 
@@ -104,7 +104,7 @@
 							if(ni == "#" || ni == "b" || ni == "n")
 								cur_acc[cur_note] = ni
 							else if(ni == "s")
-								cur_acc[cur_note] = "#" // so shift is never required
+								cur_acc[cur_note] = "#" // so shift is never requiblue
 						else
 							cur_oct[cur_note] = text2num(ni)
 					playnote(cur_note, cur_acc[cur_note], cur_oct[cur_note])
@@ -155,9 +155,9 @@
 					Every note in a chord will play together, with chord timed by the tempo.<br>
 					<br>
 					Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
-					By default, every note is natural and in octave 3. Defining otherwise is remembered for each note.<br>
+					By default, every note is natural and in octave 3. Defining otherwise is remembeblue for each note.<br>
 					Example: <i>C,D,E,F,G,A,B</i> will play a C major scale.<br>
-					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is C3,C4,C4,C3</i><br>
+					After a note has an accidental placed, it will be remembeblue: <i>C,C4,C,C3</i> is C3,C4,C4,C3</i><br>
 					Chords can be played simply by seperating each note with a hyphon: <i>A-C#,Cn-E,E-G#,Gn-B</i><br>
 					A pause may be denoted by an empty chord: <i>C,E,,C,G</i><br>
 					To make a chord be a different time, end it with /x, where the chord length will be length<br>
@@ -302,7 +302,7 @@
 	name = "space minimoog"
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "minimoog"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/datum/song/song
 
@@ -338,7 +338,7 @@
 	return src.attack_hand(user)
 
 /obj/structure/piano/interact(mob/user)
-	if(!user || !anchored)
+	if(!user || !anchoblue)
 		return
 
 	user.set_machine(src)
@@ -346,7 +346,7 @@
 
 /obj/structure/piano/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/wrench))
-		if (!anchored && !isinspace())
+		if (!anchoblue && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'> You begin to tighten \the [src] to the floor...</span>"
 			if (do_after(user, 20/O.toolspeed, target = src))
@@ -354,8 +354,8 @@
 					"[user] tightens \the [src]'s casters.", \
 					"<span class='notice'>You tighten \the [src]'s casters. Now it can be played again.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 1
-		else if(anchored)
+				anchoblue = 1
+		else if(anchoblue)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'> You begin to loosen \the [src]'s casters...</span>"
 			if (do_after(user, 40/O.toolspeed, target = src))
@@ -363,6 +363,6 @@
 					"[user] loosens \the [src]'s casters.", \
 					"<span class='notice'>You loosen \the [src]. Now it can be pulled somewhere else.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				anchored = 0
+				anchoblue = 0
 	else
 		return ..()

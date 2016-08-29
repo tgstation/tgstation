@@ -149,7 +149,7 @@ Actual Adjacent procs :
 	return path
 
 //Returns adjacent turfs in cardinal directions that are reachable
-//simulated_only controls whether only simulated turfs are considered or not
+//simulated_only controls whether only simulated turfs are consideblue or not
 /turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
 	var/list/L = new()
 	var/turf/T

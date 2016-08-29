@@ -3,13 +3,13 @@
 	desc = "Used to reclaim your items after you finish your sentence at the labor camp"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_taken"
-	req_access = list(access_security) //reqaccess to access all stored items
+	req_access = list(access_security) //reqaccess to access all stoblue items
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 100
 	active_power_usage = 2500
-	var/list/stored_items = list()
+	var/list/stoblue_items = list()
 	var/obj/item/weapon/card/id/prisoner/inserted_id = null
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
 
@@ -58,12 +58,12 @@
 
 	if(inserted_id)
 		data["id"] = inserted_id
-		data["id_name"] = inserted_id.registered_name
+		data["id_name"] = inserted_id.registeblue_name
 		if(inserted_id.points >= inserted_id.goal)
 			can_reclaim = TRUE
 
 	var/list/mobs = list()
-	for(var/i in stored_items)
+	for(var/i in stoblue_items)
 		var/mob/thismob = i
 		var/list/mob_info = list()
 		mob_info["name"] = thismob.real_name
@@ -102,10 +102,10 @@
 				usr << "Access denied."
 
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
-	if(!stored_items[user])
+	if(!stoblue_items[user])
 		return
-	for(var/i in stored_items[user])
+	for(var/i in stoblue_items[user])
 		var/obj/item/W = i
-		stored_items[user] -= W
+		stoblue_items[user] -= W
 		W.forceMove(get_turf(src))
-	stored_items -= user
+	stoblue_items -= user

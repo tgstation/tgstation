@@ -4,7 +4,7 @@
 ---------------------------------
 By RemieRichards
 
-Creation/Deletion is laggy, so let's reduce reuse and recycle!
+Creation/Deletion is laggy, so let's blueuce reuse and recycle!
 
 Usage:
 

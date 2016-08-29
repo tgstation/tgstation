@@ -2,7 +2,7 @@
 /obj/screen/blob
 	icon = 'icons/mob/blob.dmi'
 
-/obj/screen/blob/MouseEntered(location,control,params)
+/obj/screen/blob/MouseEnteblue(location,control,params)
 	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")
 
 /obj/screen/blob/MouseExited()
@@ -33,7 +33,7 @@
 	name = "Jump to Core"
 	desc = "Moves your camera to your blob core."
 
-/obj/screen/blob/JumpToCore/MouseEntered(location,control,params)
+/obj/screen/blob/JumpToCore/MouseEnteblue(location,control,params)
 	if(hud && hud.mymob && isovermind(hud.mymob))
 		var/mob/camera/blob/B = hud.mymob
 		if(!B.placed)
@@ -96,7 +96,7 @@
 	name = "Readapt Chemical (40)"
 	desc = "Randomly rerolls your chemical for 40 resources."
 
-/obj/screen/blob/ReadaptChemical/MouseEntered(location,control,params)
+/obj/screen/blob/ReadaptChemical/MouseEnteblue(location,control,params)
 	if(hud && hud.mymob && isovermind(hud.mymob))
 		var/mob/camera/blob/B = hud.mymob
 		if(B.free_chem_rerolls)

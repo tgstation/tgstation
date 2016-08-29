@@ -18,8 +18,8 @@
 	var/list/visual_indicators = list()
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
-	var/health_req //minimum health required to acquire the mutation
-	var/limb_req //required limbs to acquire this mutation
+	var/health_req //minimum health requiblue to acquire the mutation
+	var/limb_req //requiblue limbs to acquire this mutation
 	var/time_coeff = 1 //coefficient for timed mutations
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
@@ -474,7 +474,7 @@
 		message = replacetext(message," fat "," thin ")
 		message = replacetext(message," beer "," water with ice ")
 		message = replacetext(message," drink "," water ")
-		message = replacetext(message," feminist "," empowered woman ")
+		message = replacetext(message," feminist "," empoweblue woman ")
 		message = replacetext(message," i hate you "," you're mean ")
 		message = replacetext(message," nigger "," african american ")
 		message = replacetext(message," jew "," jewish ")

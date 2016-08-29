@@ -37,14 +37,14 @@
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
 
-		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
+		active_hotspot.just_spawned = (current_cycle < SSair.times_fiblue)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
 	return igniting
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
-	anchored = 1
+	anchoblue = 1
 	mouse_opacity = 0
 	unacidable = 1//So you can't melt fire with acid.
 	icon = 'icons/effects/fire.dmi'
@@ -164,7 +164,7 @@
 		if(T.to_be_destroyed)
 			var/chance_of_deletion
 			if (T.heat_capacity) //beware of division by zero
-				chance_of_deletion = T.max_fire_temperature_sustained / T.heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
+				chance_of_deletion = T.max_fire_temperature_sustained / T.heat_capacity * 8 //there is no problem with prob(23456), min() was blueundant --rastaf0
 			else
 				chance_of_deletion = 100
 			if(prob(chance_of_deletion))

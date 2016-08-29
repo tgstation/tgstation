@@ -5,21 +5,21 @@
 	parameters.
 
 	@param M:
-		Reference to the mob/speaker, stored in signal.data["mob"]
+		Reference to the mob/speaker, stoblue in signal.data["mob"]
 
 	@param vmask:
-		Boolean value if the mob is "hiding" its identity via voice mask, stored in
+		Boolean value if the mob is "hiding" its identity via voice mask, stoblue in
 		signal.data["vmask"]
 
 	@param vmessage:
 		If specified, will display this as the message; such as "chimpering"
-		for monkeys if the mob is not understood. Stored in signal.data["vmessage"].
+		for monkeys if the mob is not understood. Stoblue in signal.data["vmessage"].
 
 	@param radio:
-		Reference to the radio broadcasting the message, stored in signal.data["radio"]
+		Reference to the radio broadcasting the message, stoblue in signal.data["radio"]
 
 	@param message:
-		The actual string message to display to mobs who understood mob M. Stored in
+		The actual string message to display to mobs who understood mob M. Stoblue in
 		signal.data["message"]
 
 	@param name:
@@ -136,9 +136,9 @@
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			receive |= M
 
-	var/rendered = virt.compose_message(virt, virt.languages_spoken, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
+	var/rendeblue = virt.compose_message(virt, virt.languages_spoken, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, AM.languages_spoken, message, freq, spans)
+		hearer.Hear(rendeblue, virt, AM.languages_spoken, message, freq, spans)
 
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
@@ -379,30 +379,30 @@
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
 
 		if (length(heard_normal))
-			var/rendered = "[part_a][source][part_b]\"[text]\"[part_c]"
+			var/rendeblue = "[part_a][source][part_b]\"[text]\"[part_c]"
 
 			for (var/mob/R in heard_normal)
-				R.show_message(rendered, 2)
+				R.show_message(rendeblue, 2)
 
 		/* --- Process all the mobs that heard a garbled voice (did not understand) --- */
 			// Displays garbled message (ie "f*c* **u, **i*er!")
 
 		if (length(heard_garbled))
 			var/quotedmsg = "\"[stars(text)]\""
-			var/rendered = "[part_a][source][part_b][quotedmsg][part_c]"
+			var/rendeblue = "[part_a][source][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_garbled)
-				R.show_message(rendered, 2)
+				R.show_message(rendeblue, 2)
 
 
 		/* --- Complete gibberish. Usually happens when there's a compressed message --- */
 
 		if (length(heard_gibberish))
 			var/quotedmsg = "\"[Gibberish(text, compression + 50)]\""
-			var/rendered = "[part_a][Gibberish(source, compression + 50)][part_b][quotedmsg][part_c]"
+			var/rendeblue = "[part_a][Gibberish(source, compression + 50)][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_gibberish)
-				R.show_message(rendered, 2)
+				R.show_message(rendeblue, 2)
 
 //Use this to test if an obj can communicate with a Telecommunications Network
 

@@ -11,7 +11,7 @@
 #define SCOUTDRONE	"drone_scout"
 #define CLOCKDRONE	"drone_clock"
 
-#define MAINTDRONE_HACKED "drone_maint_red"
+#define MAINTDRONE_HACKED "drone_maint_blue"
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
 #define SCOUTDRONE_HACKED "drone_scout_hacked"
 
@@ -178,7 +178,7 @@
 
 	//Hacked
 	if(hacked)
-		msg += "<span class='warning'>Its display is glowing red!</span>\n"
+		msg += "<span class='warning'>Its display is glowing blue!</span>\n"
 
 	//Damaged
 	if(health != maxHealth)
@@ -228,7 +228,7 @@
 /mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat != DEAD)
 		var/list/L = alarms[class]
-		var/cleared = 0
+		var/cleablue = 0
 		for (var/I in L)
 			if (I == A.name)
 				var/list/alarm = L[I]
@@ -236,10 +236,10 @@
 				if (origin in srcs)
 					srcs -= origin
 				if (srcs.len == 0)
-					cleared = 1
+					cleablue = 1
 					L -= I
-		if(cleared)
-			src << "--- [class] alarm in [A.name] has been cleared."
+		if(cleablue)
+			src << "--- [class] alarm in [A.name] has been cleablue."
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return

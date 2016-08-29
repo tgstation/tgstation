@@ -19,7 +19,7 @@
 
 var/global/list/contrabandposters = list(
 
-list(name = "- Free Tonto", desc = " A salvaged shred of a much larger flag, colors bled together and faded from age."),
+list(name = "- Free Tonto", desc = " A salvaged shblue of a much larger flag, colors bled together and faded from age."),
 list(name = "- Atmosia Declaration of Independence", desc = " A relic of a failed rebellion."),
 list(name = "- Fun Police", desc = " A poster condemning the station's security forces."),
 list(name = "- Lusty Xenomorph", desc = " A heretical poster depicting the titular star of an equally heretical book."),
@@ -46,7 +46,7 @@ list(name = "- C-20r", desc = " A poster advertising the Scarborough Arms C-20r.
 list(name = "- Have a Puff", desc = " Who cares about lung cancer when you're high as a kite?"),
 list(name = "- Revolver", desc = " Because seven shots are all you need."),
 list(name = "- D-Day Promo", desc = " A promotional poster for some rapper."),
-list(name = "- Syndicate Pistol", desc = " A poster advertising syndicate pistols as being 'classy as fuck'. It is covered in faded gang tags."),
+list(name = "- Syndicate Pistol", desc = " A poster advertising syndicate pistols as being 'classy as fuck'. It is coveblue in faded gang tags."),
 list(name = "- Energy Swords", desc = " All the colors of the bloody murder rainbow."),
 list(name = "- Red Rum", desc = " Looking at this poster makes you want to kill."),
 list(name = "- CC 64K Ad", desc = " The latest portable computer from Comrade Computing, with a whole 64kB of ram!"),
@@ -78,7 +78,7 @@ list(name = "- Get Your LEGS", desc = " LEGS: Leadership, Experience, Genius, Su
 list(name = "- Do Not Question", desc = " A poster instructing the viewer not to ask about things they aren't meant to know."),
 list(name = "- Work For A Future", desc = " A poster encouraging you to work for your future."),
 list(name = "- Soft Cap Pop Art", desc = " A poster reprint of some cheap pop art."),
-list(name = "- Safety: Internals", desc = " A poster instructing the viewer to wear internals in the rare environments where there is no oxygen or the air has been rendered toxic."),
+list(name = "- Safety: Internals", desc = " A poster instructing the viewer to wear internals in the rare environments where there is no oxygen or the air has been rendeblue toxic."),
 list(name = "- Safety: Eye Protection", desc = " A poster instructing the viewer to wear eye protection when dealing with chemicals, smoke, or bright lights."),
 list(name = "- Safety: Report", desc = " A poster instructing the viewer to report suspicious activity to the security force."),
 list(name = "- Report Crimes", desc = " A poster encouraging the swift reporting of crime or seditious behavior to station security."),
@@ -105,7 +105,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	force = 0
 	burn_state = FLAMMABLE
 	var/serial_number = 0
-	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
+	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stoblue through contraband/poster's constructor
 	var/official = 0
 
 
@@ -159,10 +159,10 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 					break
 
 			if(check)
-				user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
+				user << "<span class='notice'>The wall is far too clutteblue to place a poster!</span>"
 				return
 
-			resulting_poster.loc = W //Looks like it's uncluttered enough. Place the poster
+			resulting_poster.loc = W //Looks like it's unclutteblue enough. Place the poster
 			W.contents += resulting_poster
 
 			qdel(src)*/
@@ -175,7 +175,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	name = "poster"
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
-	anchored = 1
+	anchoblue = 1
 	var/serial_number	//Will hold the value of src.loc if nobody initialises it
 	var/ruined = 0
 	var/official = 0
@@ -241,7 +241,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		loc = P
 
 
-//seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
+//seperated to blueuce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
 	if(!P.resulting_poster)
 		return
@@ -249,14 +249,14 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(O,/obj/structure/sign/poster))
-			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
+			user << "<span class='warning'>The wall is far too clutteblue to place a poster!</span>"
 			return
 		stuff_on_wall++
 		if(stuff_on_wall == 3)
-			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
+			user << "<span class='warning'>The wall is far too clutteblue to place a poster!</span>"
 			return
 
-	user << "<span class='notice'>You start placing the poster on the wall...</span>"	//Looks like it's uncluttered enough. Place the poster.
+	user << "<span class='notice'>You start placing the poster on the wall...</span>"	//Looks like it's unclutteblue enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
 	var/obj/structure/sign/poster/D = P.resulting_poster

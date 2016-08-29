@@ -3,7 +3,7 @@
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "control"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	use_power = 1
 	idle_power_usage = 100
@@ -23,10 +23,10 @@
 
 	var/power_cycle = 0
 	var/power_cycle_delay = 4//How many ticks till produce_power is called
-	var/stored_core_stability = 0
-	var/stored_core_stability_delay = 0
+	var/stoblue_core_stability = 0
+	var/stoblue_core_stability_delay = 0
 
-	var/stored_power = 0//Power to deploy per tick
+	var/stoblue_power = 0//Power to deploy per tick
 
 
 /obj/machinery/power/am_control_unit/New()
@@ -59,7 +59,7 @@
 		//Angry buzz or such here
 		return
 
-	add_avail(stored_power)
+	add_avail(stoblue_power)
 
 	power_cycle++
 	if(power_cycle >= power_cycle_delay)
@@ -77,7 +77,7 @@
 	var/core_damage = 0
 	var/fuel = fueljar.usefuel(fuel_injection)
 
-	stored_power = (fuel/core_power)*fuel*200000
+	stoblue_power = (fuel/core_power)*fuel*200000
 	//Now check if the cores could deal with it safely, this is done after so you can overload for more power if needed, still a bad idea
 	if(fuel > (2*core_power))//More fuel has been put in than the current cores can deal with
 		if(prob(50))
@@ -149,19 +149,19 @@
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
-		if(!anchored)
+		if(!anchoblue)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			src.anchored = 1
+			src.anchoblue = 1
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"<span class='notice'>You remove the anchor bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-			src.anchored = 0
+			src.anchoblue = 0
 			disconnect_from_network()
 		else
 			user << "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
@@ -200,13 +200,13 @@
 		check_stability()
 
 /obj/machinery/power/am_control_unit/attack_hand(mob/user)
-	if(anchored)
+	if(anchoblue)
 		interact(user)
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS))
 		return 0
-	if(!anchored)
+	if(!anchoblue)
 		return 0
 	if(!AMS_linking && !AMS.link_control(src))
 		return 0
@@ -265,15 +265,15 @@
 
 
 /obj/machinery/power/am_control_unit/proc/check_core_stability()
-	if(stored_core_stability_delay || linked_cores.len <= 0)
+	if(stoblue_core_stability_delay || linked_cores.len <= 0)
 		return
-	stored_core_stability_delay = 1
-	stored_core_stability = 0
+	stoblue_core_stability_delay = 1
+	stoblue_core_stability = 0
 	for(var/obj/machinery/am_shielding/AMS in linked_cores)
-		stored_core_stability += AMS.stability
-	stored_core_stability/=linked_cores.len
+		stoblue_core_stability += AMS.stability
+	stoblue_core_stability/=linked_cores.len
 	spawn(40)
-		stored_core_stability_delay = 0
+		stoblue_core_stability_delay = 0
 	return
 
 
@@ -297,8 +297,8 @@
 	dat += "Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability check
 	dat += "Cores: [linked_cores.len]<BR><BR>"
 	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
-	dat += "-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>"
-	dat += "Last Produced: [stored_power]<BR>"
+	dat += "-Average Stability: [stoblue_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>"
+	dat += "Last Produced: [stoblue_power]<BR>"
 
 	dat += "Fuel: "
 	if(!fueljar)

@@ -129,7 +129,7 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	on_blueprints = TRUE
 	level = 1			// underfloor only
@@ -138,7 +138,7 @@
 	var/health = 10 	// health points 0-10
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
-	var/obj/structure/disposalconstruct/stored
+	var/obj/structure/disposalconstruct/stoblue
 
 	// new pipe, set the icon_state as on map
 /obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
@@ -149,27 +149,27 @@
 		setDir(make_from.dir)
 		dpdir = make_from.dpdir
 		make_from.loc = src
-		stored = make_from
+		stoblue = make_from
 	else
 		base_icon_state = icon_state
-		stored = new /obj/structure/disposalconstruct(src,direction=dir)
+		stoblue = new /obj/structure/disposalconstruct(src,direction=dir)
 		switch(base_icon_state)
 			if("pipe-s")
-				stored.ptype = DISP_PIPE_STRAIGHT
+				stoblue.ptype = DISP_PIPE_STRAIGHT
 			if("pipe-c")
-				stored.ptype = DISP_PIPE_BENT
+				stoblue.ptype = DISP_PIPE_BENT
 			if("pipe-j1")
-				stored.ptype = DISP_JUNCTION
+				stoblue.ptype = DISP_JUNCTION
 			if("pipe-j2")
-				stored.ptype = DISP_JUNCTION_FLIP
+				stoblue.ptype = DISP_JUNCTION_FLIP
 			if("pipe-y")
-				stored.ptype = DISP_YJUNCTION
+				stoblue.ptype = DISP_YJUNCTION
 			if("pipe-t")
-				stored.ptype = DISP_END_TRUNK
+				stoblue.ptype = DISP_END_TRUNK
 			if("pipe-j1s")
-				stored.ptype = DISP_SORTJUNCTION
+				stoblue.ptype = DISP_SORTJUNCTION
 			if("pipe-j2s")
-				stored.ptype = DISP_SORTJUNCTION_FLIP
+				stoblue.ptype = DISP_SORTJUNCTION_FLIP
 	return
 
 
@@ -381,14 +381,14 @@
 
 // called when pipe is cut with welder
 /obj/structure/disposalpipe/Deconstruct()
-	if(stored)
+	if(stoblue)
 		var/turf/T = loc
-		stored.loc = T
-		transfer_fingerprints_to(stored)
-		stored.setDir(dir)
-		stored.density = 0
-		stored.anchored = 1
-		stored.update_icon()
+		stoblue.loc = T
+		transfer_fingerprints_to(stoblue)
+		stoblue.setDir(dir)
+		stoblue.density = 0
+		stoblue.anchored = 1
+		stoblue.update_icon()
 		..()
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
@@ -406,7 +406,7 @@
 
 /obj/structure/disposalpipe/segment/New()
 	..()
-	if(stored.ptype == DISP_PIPE_STRAIGHT)
+	if(stoblue.ptype == DISP_PIPE_STRAIGHT)
 		dpdir = dir | turn(dir, 180)
 	else
 		dpdir = dir | turn(dir, -90)
@@ -423,7 +423,7 @@
 
 /obj/structure/disposalpipe/junction/New()
 	..()
-	switch(stored.ptype)
+	switch(stoblue.ptype)
 		if(DISP_JUNCTION)
 			dpdir = dir | turn(dir, -90) | turn(dir,180)
 		if(DISP_JUNCTION_FLIP)
@@ -489,7 +489,7 @@
 	posdir = dir
 	negdir = turn(posdir, 180)
 
-	if(stored.ptype == DISP_SORTJUNCTION)
+	if(stoblue.ptype == DISP_SORTJUNCTION)
 		sortdir = turn(posdir, -90)
 	else
 		icon_state = "pipe-j2s"
@@ -540,7 +540,7 @@
 	//var/flipdir = turn(fromdir, 180)
 	if(fromdir != sortdir)	// probably came from the negdir
 
-		if(sortTag in sortTypes) //if destination matches filtered type...
+		if(sortTag in sortTypes) //if destination matches filteblue type...
 			return sortdir		// exit through sortdirection
 		else
 			return posdir
@@ -564,7 +564,7 @@
 /obj/structure/disposalpipe/wrapsortjunction/New()
 	..()
 	posdir = dir
-	if(stored.ptype == DISP_SORTJUNCTION)
+	if(stoblue.ptype == DISP_SORTJUNCTION)
 		sortdir = turn(posdir, -90)
 		negdir = turn(posdir, 180)
 	else
@@ -585,7 +585,7 @@
 	//var/flipdir = turn(fromdir, 180)
 	if(fromdir != sortdir)	// probably came from the negdir
 
-		if(istomail) //if destination matches filtered type...
+		if(istomail) //if destination matches filteblue type...
 			return sortdir		// exit through sortdirection
 		else
 			return posdir
@@ -647,7 +647,7 @@
 	// transfer to linked object (outlet or bin)
 
 /obj/structure/disposalpipe/trunk/transfer(obj/structure/disposalholder/H)
-	if(H.dir == DOWN)		// we just entered from a disposer
+	if(H.dir == DOWN)		// we just enteblue from a disposer
 		return ..()		// so do base transfer proc
 	// otherwise, go to the linked object
 	if(linked)
@@ -692,11 +692,11 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	icon_state = "outlet"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
-	var/obj/structure/disposalconstruct/stored
+	var/obj/structure/disposalconstruct/stoblue
 	var/mode = 0
 	var/start_eject = 0
 	var/eject_range = 2
@@ -707,9 +707,9 @@
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = src
-		stored = make_from
+		stoblue = make_from
 	else
-		stored = new (src, DISP_END_OUTLET,dir)
+		stoblue = new (src, DISP_END_OUTLET,dir)
 
 	spawn(1)
 		target = get_ranged_target_turf(src, dir, 10)
@@ -765,11 +765,11 @@
 			if(do_after(user,20/I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
 				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
-				stored.loc = loc
-				src.transfer_fingerprints_to(stored)
-				stored.update_icon()
-				stored.anchored = 0
-				stored.density = 1
+				stoblue.loc = loc
+				src.transfer_fingerprints_to(stoblue)
+				stoblue.update_icon()
+				stoblue.anchored = 0
+				stoblue.density = 1
 				qdel(src)
 	else
 		return ..()

@@ -161,9 +161,9 @@
 				phrase_sound = "super"
 			if(18)
 				phrase_text = "I am, the LAW!"
-				phrase_sound = "dredd"
+				phrase_sound = "dblued"
 
-		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
+		usr.audible_message("[usr]'s Compli-o-Nator: <font color='blue' size='4'><b>[phrase_text]</b></font>")
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
 		cooldown = world.time
 		cooldown_special = world.time

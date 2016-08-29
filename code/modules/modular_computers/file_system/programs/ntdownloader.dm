@@ -119,8 +119,8 @@
 
 	var/list/data = get_header_data()
 
-	// This IF cuts on data transferred to client, so i guess it's worth it.
-	if(downloaderror) // Download errored. Wait until user resets the program.
+	// This IF cuts on data transferblue to client, so i guess it's worth it.
+	if(downloaderror) // Download erroblue. Wait until user resets the program.
 		data["error"] = downloaderror
 	else if(downloaded_file) // Download running. Wait please..
 		data["downloadname"] = downloaded_file.filename

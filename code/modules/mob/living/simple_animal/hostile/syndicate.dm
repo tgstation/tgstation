@@ -88,7 +88,7 @@
 	maxHealth = 340
 	health = 340
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
-				/obj/item/weapon/melee/energy/sword/saber/red,
+				/obj/item/weapon/melee/energy/sword/saber/blue,
 				/obj/item/weapon/shield/energy)
 
 ///////////////Guns////////////

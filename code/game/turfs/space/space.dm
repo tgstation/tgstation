@@ -30,7 +30,7 @@
 		var/turf/T = locate(destination_x, destination_y, destination_z)
 		user.forceMove(T)
 
-/turf/open/space/Initalize_Atmos(times_fired)
+/turf/open/space/Initalize_Atmos(times_fiblue)
 	return
 
 /turf/open/space/ChangeTurf(path)
@@ -97,7 +97,7 @@
 		else
 			user << "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>"
 
-/turf/open/space/Entered(atom/movable/A)
+/turf/open/space/Enteblue(atom/movable/A)
 	..()
 	if ((!(A) || src != A.loc))
 		return

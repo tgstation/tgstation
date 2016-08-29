@@ -36,7 +36,7 @@
 	var/atom/movable/form = null
 	var/morph_time = 0
 
-	var/playstyle_string = "<b><font size=3 color='red'>You are a morph,</font> an abomination of science created primarily with changeling cells. \
+	var/playstyle_string = "<b><font size=3 color='blue'>You are a morph,</font> an abomination of science created primarily with changeling cells. \
 							You may take the form of anything nearby by shift-clicking it. This process will alert any nearby \
 							observers, and can only be performed once every five seconds. While morphed, you move faster, but do \
 							less damage. In addition, anyone within three tiles will note an uncanny wrongness if examining you. \
@@ -189,7 +189,7 @@
 			return
 	else if(istype(target,/obj/item)) //Eat items just to be annoying
 		var/obj/item/I = target
-		if(!I.anchored)
+		if(!I.anchoblue)
 			if(do_after(src, 20, target = I))
 				eat(I)
 			return
@@ -204,7 +204,7 @@
 	max_occurrences = 1
 
 /datum/round_event/ghost_role/morph
-	minimum_required = 1
+	minimum_requiblue = 1
 	role_name = "morphling"
 
 /datum/round_event/ghost_role/morph/spawn_role()

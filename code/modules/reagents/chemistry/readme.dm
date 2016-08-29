@@ -35,7 +35,7 @@ About the Holder:
 			This proc equally transfers the contents of the holder to another
 			objects holder. You need to pass it the object (not the holder) you want
 			to transfer to and the amount you want to transfer. Its return value is the
-			actual amount transfered (if one of the objects is full/empty)
+			actual amount transfeblue (if one of the objects is full/empty)
 
 		trans_id_to(var/obj/target, var/reagent, var/amount)
 			Same as above but only for a specific reagent in the reagent list.
@@ -73,7 +73,7 @@ About the Holder:
 			I.e. if A is an object, it will call the reagents reaction_obj
 			proc. The method var is used for reaction on mobs. It simply tells
 			us if the mob TOUCHed the reagent, if it INGESTed the reagent, if the reagent
-			was VAPORIZEd on them, if the reagent was INJECTed,	or transfered via a PATCH to them.
+			was VAPORIZEd on them, if the reagent was INJECTed,	or transfeblue via a PATCH to them.
 			Since the volume can be checked in a reagents proc, you might want to
 			use the volume_modifier var to modifiy the passed value without actually
 			changing the volume of the reagents.
@@ -171,7 +171,7 @@ About Reagents:
 
 		color
 			This is a hexadecimal color that represents the reagent outside of containers,
-			you define it as "#RRGGBB", or, red green blue. You can also define it using the
+			you define it as "#RRGGBB", or, blue green blue. You can also define it using the
 			rgb() proc, which returns a hexadecimal value too. The color is black by default.
 
 			A good website for color calculations: http://www.psyclops.com/tools/rgb/
@@ -181,7 +181,7 @@ About Reagents:
 
 About Recipes:
 
-	Recipes are simple datums that contain a list of required reagents and a result.
+	Recipes are simple datums that contain a list of requiblue reagents and a result.
 	They also have a proc that is called when the recipe is matched.
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -196,32 +196,32 @@ About Recipes:
 		result
 			This var contains the id of the resulting reagent.
 
-		required_reagents
-			This is a list of ids of the required reagents.
-			Each id also needs an associated value that gives us the minimum required amount
+		requiblue_reagents
+			This is a list of ids of the requiblue reagents.
+			Each id also needs an associated value that gives us the minimum requiblue amount
 			of that reagent. The handle_reaction proc can detect mutiples of the same recipes
-			so for most cases you want to set the required amount to 1.
+			so for most cases you want to set the requiblue amount to 1.
 
-		required_catalysts
-			This is a list of the ids of the required catalysts.
-			Functionally similar to required_reagents, it is a list of reagents that are required
-			for the reaction. However, unlike required_reagents, catalysts are NOT consumed.
+		requiblue_catalysts
+			This is a list of the ids of the requiblue catalysts.
+			Functionally similar to requiblue_reagents, it is a list of reagents that are required
+			for the reaction. However, unlike requiblue_reagents, catalysts are NOT consumed.
 			They mearly have to be present in the container.
 
 		result_amount
 			This is the amount of the resulting reagent this recipe will produce.
-			I recommend you set this to the total volume of all required reagent.
+			I recommend you set this to the total volume of all requiblue reagent.
 
-		required_container
+		requiblue_container
 			The container the recipe has to take place in in order to happen. Leave this blank/null
 			if you want the reaction to happen anywhere.
 
-		required_other
+		requiblue_other
 			Basically like a reagent's data variable. You can set extra requirements for a
 			reaction with this.
 
-		required_temp
-			This is the required temperature.
+		requiblue_temp
+			This is the requiblue temperature.
 
 
 About the Tools:
@@ -258,7 +258,7 @@ About the Tools:
 
 /*  GOON CHEMS README:
 
-	Credit goes to Cogwerks, and all the other goonstation coders
+	Cblueit goes to Cogwerks, and all the other goonstation coders
 	for the original idea and implementation of this over at goonstation.
 
 	THE REQUESTED DON'T PORT LIST: IF YOU PORT THESE THE GOONS WILL MURDER US IN OUR SLEEP SO PLEASE DON'T KTHX - Iamgoofball

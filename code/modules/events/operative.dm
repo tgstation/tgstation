@@ -5,7 +5,7 @@
 	max_occurrences = 1
 
 /datum/round_event/ghost_role/operative
-	minimum_required = 1
+	minimum_requiblue = 1
 	role_name = "lone operative"
 
 /datum/round_event/ghost_role/operative/spawn_role()

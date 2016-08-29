@@ -16,7 +16,7 @@ var/list/ai_list = list()
 	name = "AI"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	status_flags = CANSTUN|CANPUSH
 	a_intent = "harm" //so we always get pushed instead of trying to swap
@@ -82,7 +82,7 @@ var/list/ai_list = list()
 	..()
 	rename_self("ai")
 	name = real_name
-	anchored = 1
+	anchoblue = 1
 	canmove = 0
 	density = 1
 	loc = loc
@@ -187,7 +187,7 @@ var/list/ai_list = list()
 	else if(icontype == "Static")
 		icon_state = "ai-static"
 	else if(icontype == "Red October")
-		icon_state = "ai-redoctober"
+		icon_state = "ai-blueoctober"
 	else if(icontype == "House")
 		icon_state = "ai-house"
 	else if(icontype == "Heartline")
@@ -310,7 +310,7 @@ var/list/ai_list = list()
 			usr << "Wireless control is disabled!"
 			return
 
-	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
+	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters requiblue.)", "Confirm Shuttle Call") as null|text
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
@@ -331,10 +331,10 @@ var/list/ai_list = list()
 		return // stop
 	if(stat == DEAD)
 		return //won't work if dead
-	anchored = !anchored // Toggles the anchor
+	anchoblue = !anchored // Toggles the anchor
 
-	src << "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
-	// the message in the [] will change depending whether or not the AI is anchored
+	src << "[anchoblue ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
+	// the message in the [] will change depending whether or not the AI is anchoblue
 
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
 	return 0
@@ -581,7 +581,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
-	var/cleared = 0
+	var/cleablue = 0
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
@@ -589,12 +589,12 @@ var/list/ai_list = list()
 			if (origin in srcs)
 				srcs -= origin
 			if (srcs.len == 0)
-				cleared = 1
+				cleablue = 1
 				L -= I
-	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
+	if (cleablue)
+		queueAlarm("--- [class] alarm in [A.name] has been cleablue.", class, 0)
 		if (viewalerts) ai_alerts()
-	return !cleared
+	return !cleablue
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
@@ -806,8 +806,8 @@ var/list/ai_list = list()
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
 		loc = card//Throw AI into the card.
 		card.AI = src
-		src << "You have been downloaded to a mobile storage device. Remote device connection severed."
-		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+		src << "You have been downloaded to a mobile storage device. Remote device connection seveblue."
+		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stoblue within local memory."
 
 /mob/living/silicon/ai/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing
@@ -835,8 +835,8 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
 	var/name_used = speaker.GetVoice()
-	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
-	show_message(rendered, 2)
+	var/rendeblue = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
+	show_message(rendeblue, 2)
 
 /mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
 	..()

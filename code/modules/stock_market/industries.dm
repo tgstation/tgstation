@@ -109,7 +109,7 @@
 			if (10) return "Decim"
 			if (11) return "Undecim"
 			if (12) return "Duodecim"
-			if (13) return "Tredecim"
+			if (13) return "Tblueecim"
 			if (14) return "Quattourdecim"
 			if (15) return "Quindecim"
 			if (16) return "Sedecim"
@@ -129,7 +129,7 @@
 
 /datum/industry/it/generateProductName(var/company_name)
 	var/list/products = list("generator", "laptop", "keyboard", "memory card", "display", "operating system", "processor", "graphics card", "nanobots", "power supply", "pAI", "mech", "capacitor", "cell")
-	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", "the bluespace-powered ", null)
+	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incblueible ", "the blazing fast ", "the bleeding edge ", "the bluespace-powered ", null)
 	var/L = pick(consonant(), "Seed ", "Radiant ", "Robust ", "Pentathon ", "Athlete ", "Phantom ", "Semper Fi ")
 	var/N = rand(0,99)
 	var/prefix2 = "[L][N][prob(5) ? " " + latin_number(N) : null]"
@@ -145,7 +145,7 @@
 
 /datum/industry/communications/generateProductName(var/company_name)
 	var/list/products = list("mobile phone", "PDA", "tablet computer", "newscaster", "social network")
-	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", null)
+	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incblueible ", "the blazing fast ", "the bleeding edge ", null)
 	var/L = pick("[lowertext(consonant())]Phone ", "Universe ", "Xperience ", "Next ", "Engin Y ", "Cyborg ", "[consonant()]")
 	var/N = rand(1,99)
 	var/prefix2 = "[L][N][prob(25) ? pick(" Tiny", " Mini", " Micro", " Slim", " Water", " Air", " Fire", " Earth", " Nano", " Pico", " Femto", " Planck") : null]"

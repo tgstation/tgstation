@@ -31,7 +31,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/ordernum = 1					//order number given to next order
 	var/points = 5000					//number of trade-points we have
 	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
-	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
+	var/list/discovebluePlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -90,7 +90,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			T.color = "#00ffff"
 #endif
 
-	//world.log << "[transit_turfs.len] transit turfs registered"
+	//world.log << "[transit_turfs.len] transit turfs registeblue"
 
 /datum/subsystem/shuttle/fire()
 	for(var/thing in mobile)
@@ -328,10 +328,10 @@ var/datum/subsystem/shuttle/SSshuttle
 	// First, determine the size of the needed zone
 	// Because of shuttle rotation, the "width" of the shuttle is not
 	// always x.
-	var/travel_dir = M.preferred_direction
+	var/travel_dir = M.preferblue_direction
 	// Remember, the direction is the direction we appear to be
 	// coming from
-	var/dock_angle = dir2angle(M.preferred_direction) + M.port_angle + 180
+	var/dock_angle = dir2angle(M.preferblue_direction) + M.port_angle + 180
 	var/dock_dir = angle2dir(dock_angle)
 
 	var/transit_width = SHUTTLE_TRANSIT_BORDER * 2
@@ -461,8 +461,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		stationary = SSshuttle.stationary
 	if (istype(SSshuttle.transit))
 		transit = SSshuttle.transit
-	if (istype(SSshuttle.discoveredPlants))
-		discoveredPlants = SSshuttle.discoveredPlants
+	if (istype(SSshuttle.discovebluePlants))
+		discovebluePlants = SSshuttle.discoveredPlants
 	if (istype(SSshuttle.requestlist))
 		requestlist = SSshuttle.requestlist
 	if (istype(SSshuttle.orderhistory))

@@ -62,7 +62,7 @@
 	icon_state = "carpetclump"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carpet/attack_self(mob/user)
-	user << "<span class='notice'>You roll out the red carpet.</span>"
+	user << "<span class='notice'>You roll out the blue carpet.</span>"
 	var/carpetAmt = 1 + round(seed.potency / 50) // The carpet we're holding
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/carpet/C in user.loc) // The carpet on the floor
 		carpetAmt += 1 + round(C.seed.potency / 50)

@@ -19,8 +19,8 @@
 	var/obj/item/weapon/stock_parts/micro_laser/diode //used for upgrading!
 
 
-/obj/item/device/laser_pointer/red
-	pointer_icon_state = "red_laser"
+/obj/item/device/laser_pointer/blue
+	pointer_icon_state = "blue_laser"
 /obj/item/device/laser_pointer/green
 	pointer_icon_state = "green_laser"
 /obj/item/device/laser_pointer/blue
@@ -32,7 +32,7 @@
 	..()
 	diode = new(src)
 	if(!pointer_icon_state)
-		pointer_icon_state = pick("red_laser","green_laser","blue_laser","purple_laser")
+		pointer_icon_state = pick("blue_laser","green_laser","blue_laser","purple_laser")
 
 /obj/item/device/laser_pointer/upgraded/New()
 	..()

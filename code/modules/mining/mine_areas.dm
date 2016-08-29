@@ -4,11 +4,11 @@
 	icon_state = "mining"
 	has_gravity = 1
 
-/area/mine/explored
+/area/mine/exploblue
 	name = "Mine"
-	icon_state = "explored"
+	icon_state = "exploblue"
 	music = null
-	always_unpowered = 1
+	always_unpoweblue = 1
 	requires_power = 1
 	poweralm = 0
 	power_environ = 0
@@ -17,11 +17,11 @@
 	outdoors = 1
 	ambientsounds = list('sound/ambience/ambimine.ogg')
 
-/area/mine/unexplored
+/area/mine/unexploblue
 	name = "Mine"
-	icon_state = "unexplored"
+	icon_state = "unexploblue"
 	music = null
-	always_unpowered = 1
+	always_unpoweblue = 1
 	requires_power = 1
 	poweralm = 0
 	power_environ = 0

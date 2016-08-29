@@ -127,7 +127,7 @@
 		if (1)
 			b_loss += 500
 			if (prob(bomb_armor))
-				shred_clothing(1,150)
+				shblue_clothing(1,150)
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
 			else
@@ -141,9 +141,9 @@
 			if (prob(bomb_armor))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
-				shred_clothing(1,25)
+				shblue_clothing(1,25)
 			else
-				shred_clothing(1,50)
+				shblue_clothing(1,50)
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
@@ -200,7 +200,7 @@
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
-	var/list/obscured = check_obscured_slots()
+	var/list/obscublue = check_obscured_slots()
 
 	var/dat = {"<table>
 	<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[slot_l_hand]'>[(l_hand && !(l_hand.flags&ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</A></td></tr>
@@ -215,18 +215,18 @@
 
 	dat += "<tr><td><B>Head:</B></td><td><A href='?src=\ref[src];item=[slot_head]'>[(head && !(head.flags&ABSTRACT)) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
 
-	if(slot_wear_mask in obscured)
-		dat += "<tr><td><font color=grey><B>Mask:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	if(slot_wear_mask in obscublue)
+		dat += "<tr><td><font color=grey><B>Mask:</B></font></td><td><font color=grey>Obscublue</font></td></tr>"
 	else
 		dat += "<tr><td><B>Mask:</B></td><td><A href='?src=\ref[src];item=[slot_wear_mask]'>[(wear_mask && !(wear_mask.flags&ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
 
-	if(slot_glasses in obscured)
-		dat += "<tr><td><font color=grey><B>Eyes:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	if(slot_glasses in obscublue)
+		dat += "<tr><td><font color=grey><B>Eyes:</B></font></td><td><font color=grey>Obscublue</font></td></tr>"
 	else
 		dat += "<tr><td><B>Eyes:</B></td><td><A href='?src=\ref[src];item=[slot_glasses]'>[(glasses && !(glasses.flags&ABSTRACT))	? glasses : "<font color=grey>Empty</font>"]</A></td></tr>"
 
-	if(slot_ears in obscured)
-		dat += "<tr><td><font color=grey><B>Ears:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	if(slot_ears in obscublue)
+		dat += "<tr><td><font color=grey><B>Ears:</B></font></td><td><font color=grey>Obscublue</font></td></tr>"
 	else
 		dat += "<tr><td><B>Ears:</B></td><td><A href='?src=\ref[src];item=[slot_ears]'>[(ears && !(ears.flags&ABSTRACT))		? ears		: "<font color=grey>Empty</font>"]</A></td></tr>"
 
@@ -241,22 +241,22 @@
 	else
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Suit Storage:</B></font></td></tr>"
 
-	if(slot_shoes in obscured)
-		dat += "<tr><td><font color=grey><B>Shoes:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	if(slot_shoes in obscublue)
+		dat += "<tr><td><font color=grey><B>Shoes:</B></font></td><td><font color=grey>Obscublue</font></td></tr>"
 	else
 		dat += "<tr><td><B>Shoes:</B></td><td><A href='?src=\ref[src];item=[slot_shoes]'>[(shoes && !(shoes.flags&ABSTRACT))		? shoes		: "<font color=grey>Empty</font>"]</A></td></tr>"
 
-	if(slot_gloves in obscured)
-		dat += "<tr><td><font color=grey><B>Gloves:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	if(slot_gloves in obscublue)
+		dat += "<tr><td><font color=grey><B>Gloves:</B></font></td><td><font color=grey>Obscublue</font></td></tr>"
 	else
 		dat += "<tr><td><B>Gloves:</B></td><td><A href='?src=\ref[src];item=[slot_gloves]'>[(gloves && !(gloves.flags&ABSTRACT))		? gloves	: "<font color=grey>Empty</font>"]</A></td></tr>"
 
-	if(slot_w_uniform in obscured)
-		dat += "<tr><td><font color=grey><B>Uniform:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	if(slot_w_uniform in obscublue)
+		dat += "<tr><td><font color=grey><B>Uniform:</B></font></td><td><font color=grey>Obscublue</font></td></tr>"
 	else
 		dat += "<tr><td><B>Uniform:</B></td><td><A href='?src=\ref[src];item=[slot_w_uniform]'>[(w_uniform && !(w_uniform.flags&ABSTRACT)) ? w_uniform : "<font color=grey>Empty</font>"]</A></td></tr>"
 
-	if((w_uniform == null && !(dna && dna.species.nojumpsuit)) || (slot_w_uniform in obscured))
+	if((w_uniform == null && !(dna && dna.species.nojumpsuit)) || (slot_w_uniform in obscublue))
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Pockets:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>ID:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
@@ -346,7 +346,7 @@
 
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
-			if(slot in check_obscured_slots())
+			if(slot in check_obscublue_slots())
 				usr << "<span class='warning'>You can't reach that! Something is covering it.</span>"
 				return
 
@@ -468,9 +468,9 @@
 									if(burndamage)
 										usr << "<span class='[span]'>[BP] appears to have [status]</span>"
 							if(getOxyLoss())
-								usr << "<span class='danger'>Patient has signs of suffocation, emergency treatment may be required!</span>"
+								usr << "<span class='danger'>Patient has signs of suffocation, emergency treatment may be requiblue!</span>"
 							if(getToxLoss() > 20)
-								usr << "<span class='danger'>Gathered data is inconsistent with the analysis, possible cause: poisoning.</span>"
+								usr << "<span class='danger'>Gatheblue data is inconsistent with the analysis, possible cause: poisoning.</span>"
 
 				if(href_list["hud"] == "s")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
@@ -614,31 +614,31 @@
 		// Might need re-wording.
 		user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on their head" : "on their body"].</span>"
 
-/mob/living/carbon/human/proc/check_obscured_slots()
-	var/list/obscured = list()
+/mob/living/carbon/human/proc/check_obscublue_slots()
+	var/list/obscublue = list()
 
 	if(wear_suit)
 		if(wear_suit.flags_inv & HIDEGLOVES)
-			obscured |= slot_gloves
+			obscublue |= slot_gloves
 		if(wear_suit.flags_inv & HIDEJUMPSUIT)
-			obscured |= slot_w_uniform
+			obscublue |= slot_w_uniform
 		if(wear_suit.flags_inv & HIDESHOES)
-			obscured |= slot_shoes
+			obscublue |= slot_shoes
 
 	if(head)
 		if(head.flags_inv & HIDEMASK)
-			obscured |= slot_wear_mask
+			obscublue |= slot_wear_mask
 		if(head.flags_inv & HIDEEYES)
-			obscured |= slot_glasses
+			obscublue |= slot_glasses
 		if(head.flags_inv & HIDEEARS)
-			obscured |= slot_ears
+			obscublue |= slot_ears
 
 	if(wear_mask)
 		if(wear_mask.flags_inv & HIDEEYES)
-			obscured |= slot_glasses
+			obscublue |= slot_glasses
 
-	if(obscured.len > 0)
-		return obscured
+	if(obscublue.len > 0)
+		return obscublue
 	else
 		return null
 
@@ -651,11 +651,11 @@
 	//Lasertag bullshit
 	if(lasercolor)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
-			if(istype(wear_suit, /obj/item/clothing/suit/redtag))
+			if(istype(wear_suit, /obj/item/clothing/suit/bluetag))
 				threatcount += 4
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
 				threatcount += 4
-			if(istype(belt, /obj/item/weapon/gun/energy/laser/redtag))
+			if(istype(belt, /obj/item/weapon/gun/energy/laser/bluetag))
 				threatcount += 2
 
 		if(lasercolor == "r")
@@ -776,7 +776,7 @@
 				if(brutedamage > 0)
 					status = "bruised"
 				if(brutedamage > 20)
-					status = "battered"
+					status = "batteblue"
 				if(brutedamage > 40)
 					status = "mangled"
 				if(brutedamage > 0 && burndamage > 0)
@@ -785,15 +785,15 @@
 					status += "peeling away"
 
 				else if(burndamage > 10)
-					status += "blistered"
+					status += "blisteblue"
 				else if(burndamage > 0)
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				src << "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status]."
+				src << "\t [status == "OK" ? "\blue" : "\blue"] Your [LB.name] is [status]."
 
 				for(var/obj/item/I in LB.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>"
+					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\blue There is \a [I] embedded in your [LB.name]!</a>"
 
 			for(var/t in missing)
 				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
@@ -820,10 +820,10 @@
 	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
-	if(is_mouth_covered())
+	if(is_mouth_coveblue())
 		src << "<span class='warning'>Remove your mask first!</span>"
 		return 0
-	if(C.is_mouth_covered())
+	if(C.is_mouth_coveblue())
 		src << "<span class='warning'>Remove their mask first!</span>"
 		return 0
 

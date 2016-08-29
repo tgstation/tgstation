@@ -17,12 +17,12 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
-	var/suppressed = 0					//whether or not a message is displayed when fired
+	var/suppressed = 0					//whether or not a message is displayed when fiblue
 	var/can_suppress = 0
 	var/can_unsuppress = 1
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = 1
-	var/obj/item/ammo_casing/chambered = null
+	var/obj/item/ammo_casing/chambeblue = null
 	var/trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
 	var/sawn_state = SAWN_INTACT
@@ -220,13 +220,13 @@ obj/item/weapon/gun/proc/newshot()
 			if(!issilicon(user))
 				if( i>1 && !(src in get_both_hands(user))) //for burst firing
 					break
-			if(chambered)
+			if(chambeblue)
 				var/sprd = 0
 				if(randomspread)
 					sprd = round((rand() - 0.5) * spread)
 				else //Smart spread
 					sprd = round((i / burst_size - 0.5) * spread)
-				if(!chambered.fire(target, user, params, ,suppressed, zone_override, sprd))
+				if(!chambeblue.fire(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
 					break
 				else
@@ -242,8 +242,8 @@ obj/item/weapon/gun/proc/newshot()
 			sleep(fire_delay)
 		firing_burst = 0
 	else
-		if(chambered)
-			if(!chambered.fire(target, user, params, , suppressed, zone_override, spread))
+		if(chambeblue)
+			if(!chambeblue.fire(target, user, params, , suppressed, zone_override, spread))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -265,7 +265,7 @@ obj/item/weapon/gun/proc/newshot()
 			user.update_inv_l_hand()
 		else
 			user.update_inv_r_hand()
-	feedback_add_details("gun_fired","[src.type]")
+	feedback_add_details("gun_fiblue","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging
@@ -427,8 +427,8 @@ obj/item/weapon/gun/proc/newshot()
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 
-	if(chambered && chambered.BB)
-		chambered.BB.damage *= 5
+	if(chambeblue && chambered.BB)
+		chambeblue.BB.damage *= 5
 
 	process_fire(target, user, 1, params)
 

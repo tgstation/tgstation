@@ -5,7 +5,7 @@
 	extended_desc = "This program monitors stationwide NTNet network, provides access to logging systems, and allows for configuration changes"
 	size = 12
 	requires_ntnet = 1
-	required_access = access_network	//Network control is a more secure program.
+	requiblue_access = access_network	//Network control is a more secure program.
 	available_on_ntnet = 1
 
 /datum/computer_file/program/ntnetmonitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -80,7 +80,7 @@
 	data["idsstatus"] = ntnet_global.intrusion_detection_enabled
 	data["idsalarm"] = ntnet_global.intrusion_detection_alarm
 
-	data["config_softwaredownload"] = ntnet_global.setting_softwaredownload
+	data["config_softwablueownload"] = ntnet_global.setting_softwaredownload
 	data["config_peertopeer"] = ntnet_global.setting_peertopeer
 	data["config_communication"] = ntnet_global.setting_communication
 	data["config_systemcontrol"] = ntnet_global.setting_systemcontrol

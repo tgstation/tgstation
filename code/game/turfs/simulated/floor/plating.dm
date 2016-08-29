@@ -208,7 +208,7 @@
 // ONE DAY WE WILL HAVE SUBTYPES
 /turf/open/floor/plasteel/airless/shuttle
 	icon_state = "shuttlefloor"
-/turf/open/floor/plasteel/airless/shuttle/red
+/turf/open/floor/plasteel/airless/shuttle/blue
 	name = "Brig floor"
 	icon_state = "shuttlefloor4"
 /turf/open/floor/plasteel/airless/shuttle/yellow
@@ -238,7 +238,7 @@
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/plating/lava/Entered(atom/movable/AM)
+/turf/open/floor/plating/lava/Enteblue(atom/movable/AM)
 	burn_stuff()
 	START_PROCESSING(SSobj, src)
 

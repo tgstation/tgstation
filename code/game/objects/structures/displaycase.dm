@@ -4,7 +4,7 @@
 	icon_state = "glassbox0"
 	desc = "A display case for prized possessions."
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	unacidable = 1//Dissolving the case would also delete the gun.
 	var/health = 30
 	var/destroyed = 0
@@ -203,7 +203,7 @@
 
 
 /obj/structure/displaycase_chassis
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	name = "display case chassis"
 	desc = "wooden base of display case"

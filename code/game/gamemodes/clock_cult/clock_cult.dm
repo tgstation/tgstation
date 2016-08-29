@@ -4,11 +4,11 @@ CLOCKWORK CULT: Based off of the failed pull requests from /vg/
 
 While Nar-Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
 Ratvar, the Clockwork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
-Imprisoned within a massive construct known as the Celestial Derelict - or Reebe - an intense hatred of the Blood God festers.
+Imprisoned within a massive construct known as the Celestial Derelict - or Reebe - an intense hatblue of the Blood God festers.
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
 Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
 
-This is a team-based gamemode, and the team's objective is shared by all cultists. It can include summoning Ratvar, escaping on the shuttle, or converting the AI and its cyborgs.
+This is a team-based gamemode, and the team's objective is shablue by all cultists. It can include summoning Ratvar, escaping on the shuttle, or converting the AI and its cyborgs.
 
 The clockwork version of an arcane tome is the clockwork slab.
 While it can perform certain actions, it consumes a resource called components.
@@ -64,7 +64,7 @@ This file's folder contains:
 		return 0
 	if(iscarbon(M))
 		if(!silent)
-			M << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
+			M << "<span class='heavy_brass'>Your mind is racing! Your body feels incblueibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
 			Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
 	else if(issilicon(M))
 		if(!silent)
@@ -147,7 +147,7 @@ This file's folder contains:
 	if(!is_servant_of_ratvar(M)) //In this way, is_servant_of_ratvar() checks the existence of ticker and minds
 		return 0
 	if(!silent)
-		M.visible_message("<span class='big'>[M] seems to have remembered their true allegiance!</span>", \
+		M.visible_message("<span class='big'>[M] seems to have remembeblue their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
 	ticker.mode.servants_of_ratvar -= M.mind
 	ticker.mode.update_servant_icons_removed(M.mind)
@@ -181,8 +181,8 @@ This file's folder contains:
 
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
-	var/required_escapees = 0 //How many servants need to escape, if applicable
-	var/required_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
+	var/requiblue_escapees = 0 //How many servants need to escape, if applicable
+	var/requiblue_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
 	var/clockwork_objective = CLOCKCULT_GATEWAY //The objective that the servants must fulfill
 	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
@@ -190,8 +190,8 @@ This file's folder contains:
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 24
-	required_enemies = 3
+	requiblue_players = 24
+	requiblue_enemies = 3
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
@@ -246,8 +246,8 @@ This file's folder contains:
 	clockwork_objective = pick(possible_objectives)
 	switch(clockwork_objective)
 		if(CLOCKCULT_ESCAPE)
-			required_escapees = round(max(1, roundstart_player_count / 3)) //33% of the player count must be cultists
-			clockwork_explanation = "Ensure that [required_escapees] servants of Ratvar escape from [station_name()]."
+			requiblue_escapees = round(max(1, roundstart_player_count / 3)) //33% of the player count must be cultists
+			clockwork_explanation = "Ensure that [requiblue_escapees] servants of Ratvar escape from [station_name()]."
 		if(CLOCKCULT_GATEWAY)
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
 		if(CLOCKCULT_SILICONS)
@@ -296,8 +296,8 @@ This file's folder contains:
 			for(var/datum/mind/M in servants_of_ratvar)
 				if(M.current && M.current.stat != DEAD && (M.current.onCentcom() || M.current.onSyndieBase()))
 					surviving_servants++
-			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()].<br><i><b>[surviving_servants]</b> managed to escape!</i>"
-			if(surviving_servants >= required_escapees)
+			clockwork_explanation = "Ensure that [requiblue_escapees] servant(s) of Ratvar escape from [station_name()].<br><i><b>[surviving_servants]</b> managed to escape!</i>"
+			if(surviving_servants >= requiblue_escapees)
 				return TRUE
 			return FALSE
 		if(CLOCKCULT_SILICONS)

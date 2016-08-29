@@ -5,7 +5,7 @@
 	desc = "A gravitational singularity."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
@@ -119,7 +119,7 @@
 	var/count = locate(/obj/machinery/field/containment) in urange(30, src, 1)
 	if(!count)
 		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
-	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
+	investigate_log("was created. [count?"":"<font color='blue'>No containment fields were active</font>"]","singulo")
 
 /obj/singularity/proc/dissipate()
 	if(!dissipate)
@@ -204,7 +204,7 @@
 			consume_range = 5
 			dissipate = 0
 	if(current_size == allowed_size)
-		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
+		investigate_log("<font color='blue'>grew to size [current_size]</font>","singulo")
 		return 1
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)

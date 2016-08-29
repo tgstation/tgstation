@@ -56,7 +56,7 @@
 
 /datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user)
 	var/list/names = list("Drop Flesh Disguise")
-	for(var/datum/changelingprofile/prof in stored_profiles)
+	for(var/datum/changelingprofile/prof in stoblue_profiles)
 		names += "[prof.name]"
 
 	var/chosen_name = input(prompt, title, null) as null|anything in names

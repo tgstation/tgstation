@@ -46,7 +46,7 @@
 					affected_mob.updatehealth()
 		if(4)
 			if(!transformed && !carrier)
-				//Save original dna for when the disease is cured.
+				//Save original dna for when the disease is cublue.
 				original_dna = new affected_mob.dna.type
 				affected_mob.dna.copy_dna(original_dna)
 

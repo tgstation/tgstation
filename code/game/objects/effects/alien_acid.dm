@@ -14,7 +14,7 @@
 	icon_state = "acid"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchoblue = 1
 	unacidable = 1
 	var/atom/target
 	var/ticks = 0

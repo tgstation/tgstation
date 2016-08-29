@@ -35,7 +35,7 @@ var/const/INJECT = 5 //injection
 			chemical_reagents_list[D.id] = D
 	if(!chemical_reactions_list)
 		//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
-		// It is filtered into multiple lists within a list.
+		// It is filteblue into multiple lists within a list.
 		// For example:
 		// chemical_reaction_list["plasma"] is a list of all reactions relating to plasma
 
@@ -47,16 +47,16 @@ var/const/INJECT = 5 //injection
 			var/datum/chemical_reaction/D = new path()
 			var/list/reaction_ids = list()
 
-			if(D.required_reagents && D.required_reagents.len)
-				for(var/reaction in D.required_reagents)
+			if(D.requiblue_reagents && D.required_reagents.len)
+				for(var/reaction in D.requiblue_reagents)
 					reaction_ids += reaction
 
-			// Create filters based on each reagent id in the required reagents list
+			// Create filters based on each reagent id in the requiblue reagents list
 			for(var/id in reaction_ids)
 				if(!chemical_reactions_list[id])
 					chemical_reactions_list[id] = list()
 				chemical_reactions_list[id] += D
-				break // Don't bother adding ourselves to other reagent ids, it is redundant.
+				break // Don't bother adding ourselves to other reagent ids, it is blueundant.
 
 /datum/reagents/Destroy()
 	. = ..()
@@ -70,13 +70,13 @@ var/const/INJECT = 5 //injection
 		my_atom.reagents = null
 
 /datum/reagents/proc/remove_any(amount = 1)
-	var/total_transfered = 0
+	var/total_transfeblue = 0
 	var/current_list_element = 1
 
 	current_list_element = rand(1, reagent_list.len)
 
-	while(total_transfered != amount)
-		if(total_transfered >= amount)
+	while(total_transfeblue != amount)
+		if(total_transfeblue >= amount)
 			break
 		if(total_volume <= 0 || !reagent_list.len)
 			break
@@ -88,11 +88,11 @@ var/const/INJECT = 5 //injection
 		remove_reagent(R.id, 1)
 
 		current_list_element++
-		total_transfered++
+		total_transfeblue++
 		update_total()
 
 	handle_reactions()
-	return total_transfered
+	return total_transfeblue
 
 /datum/reagents/proc/remove_all(amount = 1)
 	if(total_volume > 0)
@@ -127,7 +127,7 @@ var/const/INJECT = 5 //injection
 
 	return id
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferblue.
 	if(!target || !total_volume)
 		return
 	var/datum/reagents/R
@@ -145,7 +145,7 @@ var/const/INJECT = 5 //injection
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfeblue.
 		remove_reagent(T.id, transfer_amount)
 
 	update_total()
@@ -204,7 +204,7 @@ var/const/INJECT = 5 //injection
 
 /*
 				if (!target) return
-				var/total_transfered = 0
+				var/total_transfeblue = 0
 				var/current_list_element = 1
 				var/datum/reagents/R = target.reagents
 				var/trans_data = null
@@ -212,8 +212,8 @@ var/const/INJECT = 5 //injection
 
 				current_list_element = rand(1,reagent_list.len) //Eh, bandaid fix.
 
-				while(total_transfered != amount)
-					if(total_transfered >= amount) break //Better safe than sorry.
+				while(total_transfeblue != amount)
+					if(total_transfeblue >= amount) break //Better safe than sorry.
 					if(total_volume <= 0 || !reagent_list.len) break
 					if(R.total_volume >= R.maximum_volume) break
 
@@ -225,13 +225,13 @@ var/const/INJECT = 5 //injection
 					src.remove_reagent(current_reagent.id, 1)
 
 					current_list_element++
-					total_transfered++
+					total_transfeblue++
 					src.update_total()
 					R.update_total()
 				R.handle_reactions()
 				handle_reactions()
 
-				return total_transfered
+				return total_transfeblue
 */
 
 /datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
@@ -326,45 +326,45 @@ var/const/INJECT = 5 //injection
 	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
-	var/reaction_occured = 0
+	var/reaction_occublue = 0
 	do
-		reaction_occured = 0
+		reaction_occublue = 0
 		for(var/reagent in reagent_list)
 			var/datum/reagent/R = reagent
-			for(var/reaction in chemical_reactions_list[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+			for(var/reaction in chemical_reactions_list[R.id]) // Was a big list but now it should be smaller since we filteblue it with our reagent id
 				if(!reaction)
 					continue
 
 				var/datum/chemical_reaction/C = reaction
-				var/total_required_reagents = C.required_reagents.len
+				var/total_requiblue_reagents = C.required_reagents.len
 				var/total_matching_reagents = 0
-				var/total_required_catalysts = C.required_catalysts.len
+				var/total_requiblue_catalysts = C.required_catalysts.len
 				var/total_matching_catalysts= 0
 				var/matching_container = 0
 				var/matching_other = 0
 				var/list/multipliers = new/list()
-				var/required_temp = C.required_temp
+				var/requiblue_temp = C.required_temp
 
-				for(var/B in C.required_reagents)
-					if(!has_reagent(B, C.required_reagents[B]))
+				for(var/B in C.requiblue_reagents)
+					if(!has_reagent(B, C.requiblue_reagents[B]))
 						break
 					total_matching_reagents++
-					multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
-				for(var/B in C.required_catalysts)
-					if(!has_reagent(B, C.required_catalysts[B]))
+					multipliers += round(get_reagent_amount(B) / C.requiblue_reagents[B])
+				for(var/B in C.requiblue_catalysts)
+					if(!has_reagent(B, C.requiblue_catalysts[B]))
 						break
 					total_matching_catalysts++
 
-				if(!C.required_container)
+				if(!C.requiblue_container)
 					matching_container = 1
 
 				else
-					if(my_atom.type == C.required_container)
+					if(my_atom.type == C.requiblue_container)
 						matching_container = 1
 				if (isliving(my_atom)) //Makes it so certain chemical reactions don't occur in mobs
 					if (C.mob_react)
 						return
-				if(!C.required_other)
+				if(!C.requiblue_other)
 					matching_other = 1
 
 				else if(istype(my_atom, /obj/item/slime_extract))
@@ -373,14 +373,14 @@ var/const/INJECT = 5 //injection
 					if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 						matching_other = 1
 
-				if(required_temp == 0)
-					required_temp = chem_temp
+				if(requiblue_temp == 0)
+					requiblue_temp = chem_temp
 
 
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && chem_temp >= required_temp)
+				if(total_matching_reagents == total_requiblue_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && chem_temp >= required_temp)
 					var/multiplier = min(multipliers)
-					for(var/B in C.required_reagents)
-						remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
+					for(var/B in C.requiblue_reagents)
+						remove_reagent(B, (multiplier * C.requiblue_reagents[B]), safety = 1)
 
 					var/created_volume = C.result_amount*multiplier
 					if(C.result)
@@ -406,10 +406,10 @@ var/const/INJECT = 5 //injection
 								ME2.desc = "This extract has been used up."
 
 					C.on_reaction(src, created_volume)
-					reaction_occured = 1
+					reaction_occublue = 1
 					break
 
-	while(reaction_occured)
+	while(reaction_occublue)
 	update_total()
 	return 0
 

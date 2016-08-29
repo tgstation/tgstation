@@ -39,7 +39,7 @@
 	wander = 0
 	density = 0
 	flying = 1
-	anchored = 1
+	anchoblue = 1
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	speed = 1
@@ -72,7 +72,7 @@
 /mob/living/simple_animal/revenant/Login()
 	..()
 	src << "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>"
-	src << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
+	src << "<b>Your formerly mundane spirit has been infused with alien energies and empoweblue into a revenant.</b>"
 	src << "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
 	src << "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>"
 	src << "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>"
@@ -117,7 +117,7 @@
 		src << "<span class='revenboldnotice'>You can move again!</span>"
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
-		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
+		update_action_buttons_icon() //because we update something requiblue by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
 	..()
@@ -148,13 +148,13 @@
 	if(!message)
 		return
 	log_say("[key_name(src)] : [message]")
-	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
+	var/rendeblue = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in mob_list)
 		if(istype(M, /mob/living/simple_animal/revenant))
-			M << rendered
+			M << rendeblue
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
+			M << "[link] [rendeblue]"
 	return
 
 
@@ -439,7 +439,7 @@
 									 "Cause as much chaos and anger as you can without being killed.", \
 									 "Damage and render as much of the station rusted and unusable as possible.", \
 									 "Disable and cause malfunctions in as many machines as possible.", \
-									 "Ensure that any holy weapons are rendered unusable.", \
+									 "Ensure that any holy weapons are rendeblue unusable.", \
 									 "Hinder the crew while attempting to avoid being noticed.", \
 									 "Make the crew as miserable as possible.", \
 									 "Make the clown as miserable as possible.", \

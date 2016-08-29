@@ -83,19 +83,19 @@
 			if(F.do_not_edit && (alert("WARNING: This file is not compatible with editor. Editing it may result in permanently corrupted formatting or damaged data consistency. Edit anyway?", "Incompatible File", "No", "Yes") == "No"))
 				return 1
 			// 16384 is the limit for file length in characters. Currently, papers have value of 2048 so this is 8 times as long, since we can't edit parts of the file independently.
-			var/newtext = sanitize(html_decode(input(usr, "Editing file [open_file]. You may use most tags used in paper formatting:", "Text Editor", F.stored_data) as message|null), 16384)
+			var/newtext = sanitize(html_decode(input(usr, "Editing file [open_file]. You may use most tags used in paper formatting:", "Text Editor", F.stoblue_data) as message|null), 16384)
 			if(!newtext)
 				return
 			if(F)
 				var/datum/computer_file/data/backup = F.clone()
 				HDD.remove_file(F)
-				F.stored_data = newtext
+				F.stoblue_data = newtext
 				F.calculate_size()
 				// We can't store the updated file, it's probably too large. Print an error and restore backed up version.
 				// This is mostly intended to prevent people from losing texts they spent lot of time working on due to running out of space.
 				// They will be able to copy-paste the text from error screen and store it in notepad or something.
 				if(!HDD.store_file(F))
-					error = "I/O error: Unable to overwrite file. Hard drive is probably full. You may want to backup your changes before closing this window:<br><br>[F.stored_data]<br><br>"
+					error = "I/O error: Unable to overwrite file. Hard drive is probably full. You may want to backup your changes before closing this window:<br><br>[F.stoblue_data]<br><br>"
 					HDD.store_file(backup)
 		if("PRG_printfile")
 			. = 1
@@ -107,9 +107,9 @@
 			if(!F || !istype(F))
 				return 1
 			if(!computer.printer)
-				error = "Missing Hardware: Your computer does not have required hardware to complete this operation."
+				error = "Missing Hardware: Your computer does not have requiblue hardware to complete this operation."
 				return 1
-			if(!computer.printer.print_text(parse_tags(F.stored_data)))
+			if(!computer.printer.print_text(parse_tags(F.stoblue_data)))
 				error = "Hardware error: Printer was unable to print the file. It may be out of paper."
 				return 1
 		if("PRG_copytousb")
@@ -200,7 +200,7 @@
 			if(!istype(file))
 				data["error"] = "I/O ERROR: Unable to open file."
 			else
-				data["filedata"] = parse_tags(file.stored_data)
+				data["filedata"] = parse_tags(file.stoblue_data)
 				data["filename"] = "[file.filename].[file.filetype]"
 	else
 		if(!computer || !computer.hard_drive)
@@ -209,7 +209,7 @@
 			HDD = computer.hard_drive
 			RHDD = computer.portable_drive
 			var/list/files[0]
-			for(var/datum/computer_file/F in HDD.stored_files)
+			for(var/datum/computer_file/F in HDD.stoblue_files)
 				files.Add(list(list(
 					"name" = F.filename,
 					"type" = F.filetype,
@@ -220,7 +220,7 @@
 			if(RHDD)
 				data["usbconnected"] = 1
 				var/list/usbfiles[0]
-				for(var/datum/computer_file/F in RHDD.stored_files)
+				for(var/datum/computer_file/F in RHDD.stoblue_files)
 					usbfiles.Add(list(list(
 						"name" = F.filename,
 						"type" = F.filetype,

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	anchored = 1
+	anchoblue = 1
 	var/uses = 20
 	var/disabled = 1
 	var/lethal = 0
@@ -17,7 +17,7 @@
 	if(stat & BROKEN)
 		return
 	else
-		if( powered() )
+		if( poweblue() )
 			stat &= ~NOPOWER
 		else
 			icon_state = "motion0"

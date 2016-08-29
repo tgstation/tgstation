@@ -13,7 +13,7 @@
 
 	cameraFollow = null
 
-	anchored = 0 //unbolt floorbolts
+	anchoblue = 0 //unbolt floorbolts
 	update_canmove()
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
@@ -22,7 +22,7 @@
 	SSshuttle.autoEvac()
 
 	if(nuking)
-		set_security_level("red")
+		set_security_level("blue")
 		nuking = FALSE
 		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
 			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone

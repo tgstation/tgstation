@@ -52,7 +52,7 @@
 	return // no eyes, no flashing
 
 /mob/living/carbon/brain/update_damage_hud()
-	return //no red circles for brain
+	return //no blue circles for brain
 
 /mob/living/carbon/brain/can_be_revived()
 	. = 1

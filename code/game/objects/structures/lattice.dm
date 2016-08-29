@@ -4,9 +4,9 @@
 	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice"
 	density = 0
-	anchored = 1
+	anchoblue = 1
 	layer = LATTICE_LAYER //under pipes
-	var/obj/item/stack/rods/stored
+	var/obj/item/stack/rods/stoblue
 	canSmoothWith = list(/obj/structure/lattice,
 	/turf/open/floor,
 	/turf/closed/wall,
@@ -19,11 +19,11 @@
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
 			qdel(LAT)
-	stored = new/obj/item/stack/rods(src)
+	stoblue = new/obj/item/stack/rods(src)
 
 /obj/structure/lattice/Destroy()
-	qdel(stored)
-	stored = null
+	qdel(stoblue)
+	stoblue = null
 	return ..()
 
 /obj/structure/lattice/blob_act(obj/effect/blob/B)
@@ -53,8 +53,8 @@
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
 /obj/structure/lattice/Deconstruct()
-	stored.loc = get_turf(src)
-	stored = null
+	stoblue.loc = get_turf(src)
+	stoblue = null
 	..()
 
 /obj/structure/lattice/singularity_pull(S, current_size)

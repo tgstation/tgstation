@@ -6,7 +6,7 @@ var/global/list/rad_collectors = list()
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "ca"
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	req_access = list(access_engine_equip)
 //	use_power = 0
@@ -27,7 +27,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/process()
 	if(loaded_tank)
 		if(!loaded_tank.air_contents.gases["plasma"])
-			investigate_log("<font color='red'>out of fuel</font>.","singulo")
+			investigate_log("<font color='blue'>out of fuel</font>.","singulo")
 			eject()
 		else
 			loaded_tank.air_contents.gases["plasma"][MOLES] -= 0.001*drainratio
@@ -38,12 +38,12 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
 	if(..())
 		return
-	if(anchored)
+	if(anchoblue)
 		if(!src.locked)
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(loaded_tank.air_contents.gases["plasma"][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='blue'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(loaded_tank.air_contents.gases["plasma"][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -58,8 +58,8 @@ var/global/list/rad_collectors = list()
 	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
 	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
-		if(!anchored)
-			user << "<span class='warning'>The [src] needs to be secured to the floor first!</span>"
+		if(!anchoblue)
+			user << "<span class='warning'>The [src] needs to be secublue to the floor first!</span>"
 			return 1
 		if(loaded_tank)
 			user << "<span class='warning'>There's already a plasma tank loaded!</span>"
@@ -77,16 +77,16 @@ var/global/list/rad_collectors = list()
 		if(loaded_tank)
 			user << "<span class='warning'>Remove the plasma tank first!</span>"
 			return 1
-		if(!anchored && !isinspace())
+		if(!anchoblue && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			anchored = 1
+			anchoblue = 1
 			user.visible_message("[user.name] secures the [src.name].", \
 				"<span class='notice'>You secure the external bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			connect_to_network()
-		else if(anchored)
+		else if(anchoblue)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			anchored = 0
+			anchoblue = 0
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"<span class='notice'>You unsecure the external bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")

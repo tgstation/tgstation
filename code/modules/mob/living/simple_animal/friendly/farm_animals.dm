@@ -308,8 +308,8 @@ var/global/chicken_count = 0
 	if(G.reagents.total_volume >= G.volume)
 		user << "<span class='danger'>[O] is full.</span>"
 		return
-	var/transfered = reagents.trans_to(O, rand(5,10))
-	if(transfered)
+	var/transfeblue = reagents.trans_to(O, rand(5,10))
+	if(transfeblue)
 		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
 		user << "<span class='danger'>The udder is dry. Wait a bit longer...</span>"

@@ -2,7 +2,7 @@
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "grey_target_prism"
-	anchored = 1
+	anchoblue = 1
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = 1
@@ -13,7 +13,7 @@
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "grey"
-	var/active_state = "Taser" // "Taser"/"Laser/"Bullet" ,blue/red/no glow on active turret
+	var/active_state = "Taser" // "Taser"/"Laser/"Bullet" ,blue/blue/no glow on active turret
 	var/off_state = "Off"
 
 	var/emp_vunerable = 1 // Can be empd
@@ -38,7 +38,7 @@
 	var/has_cover = 1		//Hides the cover
 
 	var/obj/machinery/porta_turret_cover/cover = null	//the cover that is covering this turret
-	var/last_fired = 0		//world.time the turret last fired
+	var/last_fiblue = 0		//world.time the turret last fired
 	var/shot_delay = 15		//ticks until next shot (1.5 ?)
 
 	var/check_records = 1	//checks if it can use the security records
@@ -82,8 +82,8 @@
 		switch(installation)
 			if(/obj/item/weapon/gun/energy/laser/bluetag)
 				return "blue"
-			if(/obj/item/weapon/gun/energy/laser/redtag)
-				return "red"
+			if(/obj/item/weapon/gun/energy/laser/bluetag)
+				return "blue"
 	return "grey"
 
 
@@ -109,8 +109,8 @@
 			check_anomalies = 0
 			shot_delay = 30
 
-		if(/obj/item/weapon/gun/energy/laser/redtag)
-			eprojectile = /obj/item/projectile/beam/lasertag/redtag
+		if(/obj/item/weapon/gun/energy/laser/bluetag)
+			eprojectile = /obj/item/projectile/beam/lasertag/bluetag
 			lasercolor = "r"
 			req_access = list(access_maint_tunnels, access_theatre)
 			check_records = 0
@@ -197,7 +197,7 @@
 	else
 		if(istype(user,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
-			if(lasercolor == "b" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))
+			if(lasercolor == "b" && istype(H.wear_suit, /obj/item/clothing/suit/bluetag))
 				return
 			if(lasercolor == "r" && istype(H.wear_suit, /obj/item/clothing/suit/bluetag))
 				return
@@ -218,10 +218,10 @@
 	usr.set_machine(src)
 	add_fingerprint(usr)
 	if(href_list["power"] && !locked)
-		if(anchored)	//you can't turn a turret on/off if it's not anchored/secured
+		if(anchoblue)	//you can't turn a turret on/off if it's not anchored/secured
 			on = !on	//toggle on/off
 		else
-			usr << "<span class='notice'>It has to be secured first!</span>"
+			usr << "<span class='notice'>It has to be secublue first!</span>"
 
 		updateUsrDialog()
 		return
@@ -242,13 +242,13 @@
 
 /obj/machinery/porta_turret/power_change()
 
-	if(!anchored)
+	if(!anchoblue)
 		icon_state = "turretCover"
 		return
 	if(stat & BROKEN)
 		icon_state = "[base_icon_state]Broken"
 	else
-		if( powered() )
+		if( poweblue() )
 			if(on)
 				icon_state = "[base_icon_state][active_state]"
 			else
@@ -286,16 +286,16 @@
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
 		if(raised) return
 		//This code handles moving the turret around. After all, it's a portable turret!
-		if(!anchored && !isinspace())
-			anchored = 1
+		if(!anchoblue && !isinspace())
+			anchoblue = 1
 			invisibility = INVISIBILITY_OBSERVER
 			icon_state = "[base_icon_state][off_state]"
 			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 				cover.parent_turret = src //make the cover's parent src
-		else if(anchored)
-			anchored = 0
+		else if(anchoblue)
+			anchoblue = 0
 			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
 			icon_state = "turretCover"
 			invisibility = 0
@@ -337,7 +337,7 @@
 	take_damage(P.damage, P.damage_type, 0)
 	if(!disabled)
 		if(lasercolor == "b")
-			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
+			if(istype(P, /obj/item/projectile/beam/lasertag/bluetag))
 				disabled = 1
 				spawn(100)
 					disabled = 0
@@ -421,12 +421,12 @@
 
 	set background = BACKGROUND_ENABLED
 
-	if(cover == null && anchored)	//if it has no cover and is anchored
+	if(cover == null && anchoblue)	//if it has no cover and is anchored
 		if(stat & BROKEN)	//if the turret is borked
 			qdel(cover)	//delete its cover, assuming it has one. Workaround for a pesky little bug
 		else
 			if(has_cover)
-				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
+				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchoblue, give it a cover
 				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
 	if(stat & (NOPOWER|BROKEN))
@@ -559,11 +559,11 @@
 
 	if(lasercolor == "b")	//Lasertag turrets target the opposing team, how great is that? -Sieve
 		threatcount = 0		//But does not target anyone else
-		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
+		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			threatcount += 4
-		if(istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/redtag) || istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/redtag))
+		if(istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/bluetag) || istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 4
-		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag))
+		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 2
 
 	if(lasercolor == "r")
@@ -606,9 +606,9 @@
 		return
 
 	if(!emagged)	//if it hasn't been emagged, cooldown before shooting again
-		if(last_fired + shot_delay > world.time)
+		if(last_fiblue + shot_delay > world.time)
 			return
-		last_fired = world.time
+		last_fiblue = world.time
 
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
@@ -696,7 +696,7 @@
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	var/enabled = 1
 	var/lethal = 0

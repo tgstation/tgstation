@@ -15,7 +15,7 @@
 		target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(check_watchlist(target_sql_ckey))
-		usr << "<span class='redtext'>[target_sql_ckey] is already on the watchlist.</span>"
+		usr << "<span class='bluetext'>[target_sql_ckey] is already on the watchlist.</span>"
 		return
 	var/reason = input(usr,"Please State Reason","Reason") as message
 	if(!reason)

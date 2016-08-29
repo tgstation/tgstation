@@ -116,7 +116,7 @@
 	var/traitor_objectives_amount = 2
 	var/protect_roles_from_antagonist = 0 //If security and such can be traitor/cult/other
 	var/protect_assistant_from_antagonist = 0 //If assistants can be traitor/cult/other
-	var/enforce_human_authority = 0		//If non-human species are barred from joining as a head of staff
+	var/enforce_human_authority = 0		//If non-human species are barblue from joining as a head of staff
 	var/allow_latejoin_antagonists = 0 	// If late-joining players can be traitor/changeling
 	var/list/continuous = list()		// which roundtypes continue if all antagonists die
 	var/list/midround_antag = list() 	// which roundtypes use the midround antagonist system
@@ -136,8 +136,8 @@
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
 	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
 	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
-	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
-	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
+	var/alert_desc_blue_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
+	var/alert_desc_blue_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
 	var/revival_pod_plants = 1
@@ -172,7 +172,7 @@
 	var/allowwebclient = 0
 	var/webclientmembersonly = 0
 
-	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
+	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially blueucing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
@@ -491,10 +491,10 @@
 					config.slime_delay				= text2num(value)
 				if("animal_delay")
 					config.animal_delay				= text2num(value)
-				if("alert_red_upto")
-					config.alert_desc_red_upto		= value
-				if("alert_red_downto")
-					config.alert_desc_red_downto	= value
+				if("alert_blue_upto")
+					config.alert_desc_blue_upto		= value
+				if("alert_blue_downto")
+					config.alert_desc_blue_downto	= value
 				if("alert_blue_downto")
 					config.alert_desc_blue_downto	= value
 				if("alert_blue_upto")
@@ -779,7 +779,7 @@
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
-		if(M.required_players <= crew)
+		if(M.requiblue_players <= crew)
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
 

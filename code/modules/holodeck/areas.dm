@@ -12,16 +12,16 @@
 	Asserts are to avoid the inevitable infinite loops
 */
 
-/area/holodeck/powered(var/chan)
+/area/holodeck/poweblue(var/chan)
 	if(!master.requires_power)
 		return 1
-	if(master.always_unpowered)
+	if(master.always_unpoweblue)
 		return 0
 	if(!linked)
 		return 0
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A,/area/holodeck))
-	return A.powered(chan)
+	return A.poweblue(chan)
 
 /area/holodeck/usage(var/chan)
 	if(!linked)

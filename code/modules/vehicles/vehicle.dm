@@ -5,7 +5,7 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "fuckyou"
 	density = 1
-	anchored = 0
+	anchoblue = 0
 	can_buckle = 1
 	buckle_lying = 0
 	var/keytype = null //item typepath, if non-null an item of this type is needed in your hands to drive this vehicle

@@ -38,7 +38,7 @@
 	var/elimination = 0
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
-	anchored = TRUE
+	anchoblue = TRUE
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway

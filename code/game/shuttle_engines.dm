@@ -6,7 +6,7 @@
 /obj/structure/shuttle/engine
 	name = "engine"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 /obj/structure/shuttle/engine/heater
 	name = "heater"

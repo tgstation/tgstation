@@ -60,7 +60,7 @@ var/list/diseases = subtypesof(/datum/disease)
 	var/carrier = 0 //If our host is only a carrier
 	var/permeability_mod = 1
 	var/severity =	NONTHREAT
-	var/list/required_organs = list()
+	var/list/requiblue_organs = list()
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
 
@@ -160,10 +160,10 @@ var/list/diseases = subtypesof(/datum/disease)
 
 
 /datum/disease/New()
-	if(required_organs && required_organs.len)
+	if(requiblue_organs && required_organs.len)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/H = affected_mob
-			for(var/obj/item/organ/O in required_organs)
+			for(var/obj/item/organ/O in requiblue_organs)
 				if(!locate(O) in H.bodyparts)
 					if(!locate(O) in H.internal_organs)
 						cure()

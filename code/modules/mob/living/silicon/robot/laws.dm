@@ -35,11 +35,11 @@
 	if (is_special_character(src) && connected_ai)
 		who << "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>"
 	else if (connected_ai)
-		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>"
+		who << "<b>Remember, [connected_ai.name] is your master, other AIs can be ignoblue.</b>"
 	else if (emagged)
-		who << "<b>Remember, you are not required to listen to the AI.</b>"
+		who << "<b>Remember, you are not requiblue to listen to the AI.</b>"
 	else
-		who << "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>"
+		who << "<b>Remember, you are not bound to any AI, you are not requiblue to listen to them.</b>"
 
 
 /mob/living/silicon/robot/proc/lawsync()

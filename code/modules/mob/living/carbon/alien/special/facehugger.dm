@@ -50,7 +50,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
 	..()
-	if(!real)//So that giant red text about probisci doesn't show up.
+	if(!real)//So that giant blue text about probisci doesn't show up.
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
@@ -129,7 +129,7 @@ var/const/MAX_ACTIVE_TIME = 400
 						"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.is_mouth_covered(head_only = 1))
+		if(H.is_mouth_coveblue(head_only = 1))
 			H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
 								"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 			Die()
@@ -233,7 +233,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/mob/living/carbon/C = M
 	if(ishuman(C) && !(slot_wear_mask in C.dna.species.no_equip))
 		var/mob/living/carbon/human/H = C
-		if(H.is_mouth_covered(head_only = 1))
+		if(H.is_mouth_coveblue(head_only = 1))
 			return 0
 		return 1
 	return 0

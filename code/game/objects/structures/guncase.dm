@@ -4,7 +4,7 @@
 	desc = "A locker that holds guns."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "shotguncase"
-	anchored = 0
+	anchoblue = 0
 	density = 1
 	opacity = 0
 	var/case_type = null
@@ -63,7 +63,7 @@
 
 /obj/structure/guncase/proc/ShowWindow(mob/user)
 	var/dat = {"<div class='block'>
-				<h3>Stored Guns</h3>
+				<h3>Stoblue Guns</h3>
 				<table align='center'>"}
 	for(var/i = contents.len, i >= 1, i--)
 		var/obj/item/I = contents[i]

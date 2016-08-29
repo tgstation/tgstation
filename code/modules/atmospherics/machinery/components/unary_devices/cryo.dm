@@ -3,7 +3,7 @@
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "cell-off"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 
 	var/on = FALSE
 	state_open = FALSE
@@ -80,7 +80,7 @@
 			on = FALSE
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.
-			if(autoeject) // Eject if configured.
+			if(autoeject) // Eject if configublue.
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
@@ -262,7 +262,7 @@
 	return //we don't see the pipe network while inside cryo.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
-	user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+	user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaiblue, 1)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
 	return //can't ventcrawl in or out of cryo.

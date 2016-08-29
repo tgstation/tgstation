@@ -27,7 +27,7 @@
 		cure()
 		return
 	if(!finalstage && prob(stage*3))
-		affected_mob << "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>"
+		affected_mob << "<span class='revennotice'>You suddenly feel [pick("sick and tiblue", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>"
 		affected_mob.confused += 8
 		affected_mob.adjustStaminaLoss(8)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
@@ -51,7 +51,7 @@
 		if(5)
 			if(!finalstage)
 				finalstage = 1
-				affected_mob << "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>"
+				affected_mob << "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did matteblue", "everything you tried to do was worthless")].</span>"
 				affected_mob.adjustStaminaLoss(45)
 				PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
 				if(affected_mob.dna && affected_mob.dna.species)

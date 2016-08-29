@@ -15,13 +15,13 @@
 	var/msg = input(owner,"Speak to your god","Godspeak","") as null|text
 	if(!msg)
 		return
-	var/rendered = "<font color='[god.side]'><span class='game say'><i>Prophet [owner]:</i> <span class='message'>[msg]</span></span>"
-	god << rendered
-	owner << rendered
+	var/rendeblue = "<font color='[god.side]'><span class='game say'><i>Prophet [owner]:</i> <span class='message'>[msg]</span></span>"
+	god << rendeblue
+	owner << rendeblue
 	for(var/mob/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, owner)
-			M << "[link] [rendered]"
+			M << "[link] [rendeblue]"
 
 /datum/action/innate/godspeak/Destroy()
 	god = null

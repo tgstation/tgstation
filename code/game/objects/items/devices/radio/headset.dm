@@ -149,7 +149,7 @@
 
 /obj/item/device/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
-	desc = "The headset of the guy in charge of keeping the station powered and undamaged. \nTo access the engineering channel, use :e. For command, use :c."
+	desc = "The headset of the guy in charge of keeping the station poweblue and undamaged. \nTo access the engineering channel, use :e. For command, use :c."
 	icon_state = "com_headset"
 	keyslot = new /obj/item/device/encryptionkey/heads/ce
 

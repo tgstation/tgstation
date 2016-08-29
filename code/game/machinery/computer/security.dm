@@ -259,7 +259,7 @@
 	return
 
 /*Revised /N
-I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
+I can't be botheblue to look more of the actual code outside of switch but that probably needs revising too.
 What a mess.*/
 /obj/machinery/computer/secure_data/Topic(href, href_list)
 	. = ..()
@@ -332,7 +332,7 @@ What a mess.*/
 					active1 = null
 					active2 = null
 					if(check_access(scan))
-						authenticated = scan.registered_name
+						authenticated = scan.registeblue_name
 						rank = scan.assignment
 						screen = 1
 //RECORD FUNCTIONS
@@ -540,7 +540,7 @@ What a mess.*/
 				M.fields["blood_type"]	= "?"
 				M.fields["b_dna"]		= "?????"
 				M.fields["mi_dis"]		= "None"
-				M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
+				M.fields["mi_dis_d"]	= "No minor disabilities have been declablue."
 				M.fields["ma_dis"]		= "None"
 				M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
 				M.fields["alg"]			= "None"
@@ -674,7 +674,7 @@ What a mess.*/
 								temp += "<li><a href='?src=\ref[src];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
 							temp += "</ul>"
 						else
-							alert(usr, "You do not have the required rank to do this!")
+							alert(usr, "You do not have the requiblue rank to do this!")
 //TEMPORARY MENU FUNCTIONS
 			else//To properly clear as per clear screen.
 				temp=null

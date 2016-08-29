@@ -24,8 +24,8 @@
 			T.break_tile()
 
 	target << "<span class='userdanger'>You're hit by bluespace artillery!</span>"
-	log_admin("[key_name(target)] has been hit by Bluespace Artillery fired by [key_name(usr)]")
-	message_admins("[ADMIN_LOOKUPFLW(target)] has been hit by Bluespace Artillery fired by [ADMIN_LOOKUPFLW(usr)]")
+	log_admin("[key_name(target)] has been hit by Bluespace Artillery fiblue by [key_name(usr)]")
+	message_admins("[ADMIN_LOOKUPFLW(target)] has been hit by Bluespace Artillery fiblue by [ADMIN_LOOKUPFLW(usr)]")
 
 	if(target.health <= 1)
 		target.gib(1, 1)

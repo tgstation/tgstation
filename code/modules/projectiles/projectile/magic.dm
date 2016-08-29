@@ -102,7 +102,7 @@
 	if(!isturf(target))
 		teleloc = target.loc
 	for(var/atom/movable/stuff in teleloc)
-		if(!stuff.anchored && stuff.loc)
+		if(!stuff.anchoblue && stuff.loc)
 			if(do_teleport(stuff, stuff, 10))
 				teleammount++
 				var/datum/effect_system/smoke_spread/smoke = new
@@ -327,7 +327,7 @@
 
 /obj/item/projectile/magic/animate
 	name = "bolt of animation"
-	icon_state = "red_1"
+	icon_state = "blue_1"
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
@@ -346,7 +346,7 @@
 				S.color = change.color
 				if(H.mind)
 					H.mind.transfer_to(S)
-					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
+					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitoblue, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
 				H = change
 				H.loc = S
 				qdel(src)

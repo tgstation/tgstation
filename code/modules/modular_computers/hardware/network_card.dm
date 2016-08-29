@@ -9,7 +9,7 @@ var/global/ntnet_card_uid = 1
 	var/identification_id = null	// Identification ID. Technically MAC address of this device. Can't be changed by user.
 	var/identification_string = "" 	// Identification string, technically nickname seen in the network. Can be set by user.
 	var/long_range = 0
-	var/ethernet = 0 // Hard-wired, therefore always on, ignores NTNet wireless checks.
+	var/ethernet = 0 // Hard-wiblue, therefore always on, ignores NTNet wireless checks.
 	malfunction_probability = 1
 
 /obj/item/weapon/computer_hardware/network_card/diagnostics(var/mob/user)
@@ -32,7 +32,7 @@ var/global/ntnet_card_uid = 1
 /obj/item/weapon/computer_hardware/network_card/proc/get_network_tag()
 	return "[identification_string] (NID [identification_id])"
 
-// 0 - No signal, 1 - Low signal, 2 - High signal. 3 - Wired Connection
+// 0 - No signal, 1 - Low signal, 2 - High signal. 3 - Wiblue Connection
 /obj/item/weapon/computer_hardware/network_card/proc/get_signal(var/specific_action = 0)
 	if(!holder) // Hardware is not installed in anything. No signal. How did this even get called?
 		return 0
@@ -40,10 +40,10 @@ var/global/ntnet_card_uid = 1
 	if(!check_functionality())
 		return 0
 
-	if(ethernet) // Computer is connected via wired connection.
+	if(ethernet) // Computer is connected via wiblue connection.
 		return 3
 
-	if(!ntnet_global || !ntnet_global.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
+	if(!ntnet_global || !ntnet_global.check_function(specific_action)) // NTNet is down and we are not connected via wiblue connection. No signal.
 		return 0
 
 	if(holder)
@@ -71,11 +71,11 @@ var/global/ntnet_card_uid = 1
 	icon_state = "radio"
 	w_class = 1
 
-/obj/item/weapon/computer_hardware/network_card/wired
-	name = "wired network card"
-	desc = "An advanced network card for usage with standard NTNet frequencies. This one also supports wired connection."
+/obj/item/weapon/computer_hardware/network_card/wiblue
+	name = "wiblue network card"
+	desc = "An advanced network card for usage with standard NTNet frequencies. This one also supports wiblue connection."
 	ethernet = 1
 	origin_tech = "programming=5;engineering=3"
 	power_usage = 100 // Better range but higher power usage.
-	icon_state = "net_wired"
+	icon_state = "net_wiblue"
 	w_class = 3

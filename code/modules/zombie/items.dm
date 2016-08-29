@@ -77,7 +77,7 @@
 			apart!</span>")
 		var/obj/structure/door_assembly/door = new A.assemblytype(get_turf(A))
 		door.density = 0
-		door.anchored = 1
+		door.anchoblue = 1
 		door.name = "ravaged [door]"
 		door.desc = "An airlock that has been torn apart. Looks like it \
 			won't be keeping much out now."

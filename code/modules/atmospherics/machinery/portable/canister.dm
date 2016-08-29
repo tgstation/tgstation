@@ -36,7 +36,7 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
-	icon_state = "red"
+	icon_state = "blue"
 	gas_type = "n2"
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "o2 canister"
@@ -65,7 +65,7 @@
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
-	icon_state = "redws"
+	icon_state = "bluews"
 	gas_type = "n2o"
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"

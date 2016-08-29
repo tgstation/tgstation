@@ -86,7 +86,7 @@
 				/obj/item/clothing/glasses/sunglasses = 1,
 				/obj/item/clothing/gloves/color/fyellow = 1,
 				/obj/item/clothing/head/hardhat = 1,
-				/obj/item/clothing/head/hardhat/red = 1,
+				/obj/item/clothing/head/hardhat/blue = 1,
 				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,
 				/obj/item/clothing/head/ushanka = 1,
 				/obj/item/clothing/head/welding = 1,
@@ -119,7 +119,7 @@
 				/obj/item/weapon/poster/contraband = 1,
 				/obj/item/weapon/poster/legit = 1,
 				/obj/item/weapon/crowbar = 1,
-				/obj/item/weapon/crowbar/red = 1,
+				/obj/item/weapon/crowbar/blue = 1,
 				/obj/item/weapon/extinguisher = 11,
 				//obj/item/weapon/gun/projectile/revolver/russian = 1, //disabled until lootdrop is a proper world proc.
 				/obj/item/weapon/hand_labeler = 1,

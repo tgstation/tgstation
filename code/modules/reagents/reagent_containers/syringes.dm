@@ -134,7 +134,7 @@
 				if(L != user)
 					add_logs(user, L, "injected", src, addition="which had [contained]")
 				else
-					log_attack("<font color='red'>[user.name] ([user.ckey]) injected [L.name] ([L.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
+					log_attack("<font color='blue'>[user.name] ([user.ckey]) injected [L.name] ([L.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 					L.attack_log += "\[[time_stamp()]\] <font color='orange'>Injected themselves ([contained]) with [src.name].</font>"
 
 			var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
@@ -219,7 +219,7 @@
 
 /obj/item/weapon/reagent_containers/syringe/gluttony
 	name = "Gluttony's Blessing"
-	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
+	desc = "A syringe recoveblue from a dread place. It probably isn't wise to use."
 	amount_per_transfer_from_this = 1
 	volume = 1
 	list_reagents = list("gluttonytoxin" = 1)

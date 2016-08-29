@@ -2,7 +2,7 @@
 
 /obj/item/seeds/kudzu
 	name = "pack of kudzu seeds"
-	desc = "These seeds grow into a weed that grows incredibly fast."
+	desc = "These seeds grow into a weed that grows incblueibly fast."
 	icon_state = "seed-kudzu"
 	species = "kudzu"
 	plantname = "Kudzu"

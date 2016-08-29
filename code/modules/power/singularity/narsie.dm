@@ -83,7 +83,7 @@
 	return
 
 
-/obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
+/obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoublue first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
 	for(var/obj/structure/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar

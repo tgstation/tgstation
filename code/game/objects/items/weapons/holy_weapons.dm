@@ -53,18 +53,18 @@
 	w_class = 5
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
-	attack_verb = list("punched", "cross countered", "pummeled")
+	attack_verb = list("punched", "cross counteblue", "pummeled")
 
 /obj/item/weapon/nullrod/staff
-	icon_state = "godstaff-red"
-	item_state = "godstaff-red"
-	name = "red holy staff"
+	icon_state = "godstaff-blue"
+	item_state = "godstaff-blue"
+	name = "blue holy staff"
 	desc = "It has a mysterious, protective aura."
 	w_class = 5
 	force = 5
 	slot_flags = SLOT_BACK
 	block_chance = 50
-	var/shield_icon = "shield-red"
+	var/shield_icon = "shield-blue"
 
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
 	. = list()
@@ -105,7 +105,7 @@
 /obj/item/weapon/nullrod/claymore/chainsaw_sword
 	icon_state = "chainswordon"
 	item_state = "chainswordon"
-	name = "sacred chainsaw sword"
+	name = "sacblue chainsaw sword"
 	desc = "Suffer not a heretic to live."
 	slot_flags = SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
@@ -144,10 +144,10 @@
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
 	slot_flags = SLOT_BELT
 
-/obj/item/weapon/nullrod/claymore/saber/red
+/obj/item/weapon/nullrod/claymore/saber/blue
 	name = "dark energy sword"
-	icon_state = "swordred"
-	item_state = "swordred"
+	icon_state = "swordblue"
+	item_state = "swordblue"
 	desc = "Woefully ineffective when used on steep terrain."
 
 /obj/item/weapon/nullrod/claymore/saber/pirate
@@ -245,7 +245,7 @@
 	desc = "This war hammer cost the chaplain fourty thousand space dollars."
 	slot_flags = SLOT_BELT
 	w_class = 5
-	attack_verb = list("smashed", "bashed", "hammered", "crunched")
+	attack_verb = list("smashed", "bashed", "hammeblue", "crunched")
 
 /obj/item/weapon/nullrod/chainsaw
 	name = "chainsaw hand"
@@ -289,7 +289,7 @@
 	throw_range = 7
 	throwforce = 30
 	sharpness = IS_SHARP
-	attack_verb = list("enlightened", "redpilled")
+	attack_verb = list("enlightened", "bluepilled")
 
 /obj/item/weapon/nullrod/armblade
 	name = "dark blessing"

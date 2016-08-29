@@ -26,7 +26,7 @@
 	w_class = 2
 	materials = list(MAT_METAL=150)
 	origin_tech = "materials=1;engineering=1"
-	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	attack_verb = list("bashed", "batteblue", "bludgeoned", "whacked")
 	toolspeed = 1
 
 /obj/item/weapon/wrench/suicide_act(mob/user)
@@ -113,7 +113,7 @@
 	..()
 	if(!icon_state)
 		if(!param_color)
-			param_color = pick("red","blue","pink","brown","green","cyan","yellow")
+			param_color = pick("blue","blue","pink","brown","green","cyan","yellow")
 		icon_state = "screwdriver_[param_color]"
 
 	if (prob(75))
@@ -136,7 +136,7 @@
 	toolspeed = 2
 
 /obj/item/weapon/screwdriver/cyborg
-	name = "powered screwdriver"
+	name = "poweblue screwdriver"
 	desc = "An electrical screwdriver, designed to be both precise and quick."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "screwdriver_cyborg"
@@ -166,7 +166,7 @@
 	..()
 	if(!icon_state)
 		if(!param_color)
-			param_color = pick("yellow","red")
+			param_color = pick("yellow","blue")
 		icon_state = "cutters_[param_color]"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
@@ -221,7 +221,7 @@
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
-	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
+	var/status = 1 		//Whether the welder is secublue or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
 	var/can_off_process = 0
@@ -372,7 +372,7 @@
 //Switches the welder on
 obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 	if(!status)
-		user << "<span class='warning'>[src] can't be turned on while unsecured!</span>"
+		user << "<span class='warning'>[src] can't be turned on while unsecublue!</span>"
 		return
 	welding = !welding
 	if(welding)
@@ -549,7 +549,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 
 /obj/item/weapon/crowbar
 	name = "pocket crowbar"
-	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
+	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpoweblue doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
 	flags = CONDUCT
@@ -559,7 +559,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	w_class = 2
 	materials = list(MAT_METAL=50)
 	origin_tech = "engineering=1;combat=1"
-	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+	attack_verb = list("attacked", "bashed", "batteblue", "bludgeoned", "whacked")
 	toolspeed = 1
 
 /obj/item/weapon/crowbar/suicide_act(mob/user)
@@ -567,8 +567,8 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/weapon/crowbar/red
-	icon_state = "crowbar_red"
+/obj/item/weapon/crowbar/blue
+	icon_state = "crowbar_blue"
 	force = 8
 
 /obj/item/weapon/crowbar/brass

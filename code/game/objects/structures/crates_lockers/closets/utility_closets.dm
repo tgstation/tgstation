@@ -64,9 +64,9 @@
 
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/weapon/tank/internals/oxygen/red(src)
+	new /obj/item/weapon/tank/internals/oxygen/blue(src)
 	new /obj/item/weapon/extinguisher(src)
-	new /obj/item/clothing/head/hardhat/red(src)
+	new /obj/item/clothing/head/hardhat/blue(src)
 
 /obj/structure/closet/firecloset/full/New()
 	..()
@@ -75,9 +75,9 @@
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/flashlight(src)
-	new /obj/item/weapon/tank/internals/oxygen/red(src)
+	new /obj/item/weapon/tank/internals/oxygen/blue(src)
 	new /obj/item/weapon/extinguisher(src)
-	new /obj/item/clothing/head/hardhat/red(src)
+	new /obj/item/clothing/head/hardhat/blue(src)
 
 /*
  * Tool Closet

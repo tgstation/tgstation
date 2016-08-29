@@ -58,6 +58,6 @@
 					buckled_mob.pixel_x = 10
 					buckled_mob.pixel_y = 5
 
-/obj/vehicle/space/speedbike/red
-	icon_state = "speedbike_red"
-	overlay_state = "cover_red"
+/obj/vehicle/space/speedbike/blue
+	icon_state = "speedbike_blue"
+	overlay_state = "cover_blue"

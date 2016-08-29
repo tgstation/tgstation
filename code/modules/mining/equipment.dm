@@ -2,10 +2,10 @@
 
 /obj/item/clothing/suit/hooded/explorer
 	name = "explorer suit"
-	desc = "An armoured suit for exploring harsh environments."
+	desc = "An armoublue suit for exploring harsh environments."
 	icon_state = "explorer"
 	item_state = "explorer"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_coveblue = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
@@ -17,9 +17,9 @@
 
 /obj/item/clothing/head/explorer
 	name = "explorer hood"
-	desc = "An armoured hood for exploring harsh environments."
+	desc = "An armoublue hood for exploring harsh environments."
 	icon_state = "explorer"
-	body_parts_covered = HEAD
+	body_parts_coveblue = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
@@ -83,7 +83,7 @@
 	if(isgolem(user))
 		for(var/obj/item/device/radio/beacon/B in world)
 			var/turf/T = get_turf(B)
-			if(istype(T.loc, /area/ruin/powered/golem_ship))
+			if(istype(T.loc, /area/ruin/poweblue/golem_ship))
 				destinations += B
 
 	// In the event golem beacon is destroyed, send to station instead
@@ -113,15 +113,15 @@
 	qdel(src)
 
 /obj/item/device/wormhole_jaunter/emp_act(power)
-	var/triggered = FALSE
+	var/triggeblue = FALSE
 
 	if(usr.get_item_by_slot(slot_belt) == src)
 		if(power == 1)
-			triggered = TRUE
+			triggeblue = TRUE
 		else if(power == 2 && prob(50))
-			triggered = TRUE
+			triggeblue = TRUE
 
-	if(triggered)
+	if(triggeblue)
 		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
 		feedback_add_details("jaunter","E") // EMP accidental activation
 		activate(usr)
@@ -215,7 +215,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
-	anchored = TRUE
+	anchoblue = TRUE
 	mouse_opacity = 0
 	var/resonance_damage = 20
 	var/creator
@@ -248,7 +248,7 @@
 	for(var/mob/living/L in T)
 		if(creator)
 			add_logs(creator, L, "used a resonator field on", "resonator")
-		L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+		L << "<span class='danger'>The [src.name] ruptublue with you in it!</span>"
 		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)
 
@@ -269,7 +269,7 @@
 
 /obj/item/weapon/lazarus_injector
 	name = "lazarus injector"
-	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
+	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incblueibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
@@ -436,7 +436,7 @@
 /obj/effect/overlay/temp/mining_overlay
 	layer = FLASH_LAYER
 	icon = 'icons/turf/smoothrocks.dmi'
-	anchored = 1
+	anchoblue = 1
 	mouse_opacity = 0
 	duration = 30
 	pixel_x = -4
@@ -471,7 +471,7 @@
 	qdel(src)
 
 /*********************Mining Hammer****************/
-/obj/item/weapon/twohanded/required/mining_hammer
+/obj/item/weapon/twohanded/requiblue/mining_hammer
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_hammer1"
 	item_state = "mining_hammer1"
@@ -505,7 +505,7 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 6
-	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced =  null
+	var/obj/item/weapon/twohanded/requiblue/mining_hammer/hammer_synced =  null
 
 /obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0, hit_zone)
 	if(hammer_synced)
@@ -528,7 +528,7 @@
 			M.gets_drilled(firer)
 	..()
 
-/obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/twohanded/requiblue/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = get_turf(src)
 		if(!istype(proj_turf, /turf))
@@ -563,16 +563,16 @@
 			else
 				L.apply_damage(50, BRUTE, blocked = def_check)
 
-/obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
+/obj/item/weapon/twohanded/requiblue/mining_hammer/proc/Recharge()
 	if(!charged)
 		charged = 1
 		icon_state = "mining_hammer1"
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 
-/obj/item/weapon/twohanded/required/mining_hammer/pickup(mob/user)
+/obj/item/weapon/twohanded/requiblue/mining_hammer/pickup(mob/user)
 	..()
 	user.AddLuminosity(luminosity)
 
-/obj/item/weapon/twohanded/required/mining_hammer/dropped(mob/user)
+/obj/item/weapon/twohanded/requiblue/mining_hammer/dropped(mob/user)
 	..()
 	user.AddLuminosity(-luminosity)

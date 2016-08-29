@@ -167,7 +167,7 @@
 
 
 /datum/plant_gene/trait/squash
-	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
+	// Allows the plant to be squashed when thrown or slipped on, leaving a coloblue mess and trash type item behind.
 	// Also splashes everything in target turf with reagents and applies other trait effects (teleporting, etc) to the target by on_squash.
 	// For code, see grown.dm
 	name = "Liquid Contents"

@@ -16,7 +16,7 @@
 	name = "divine construction site"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	desc = "An unfinished divine building"
-	anchored = 1
+	anchoblue = 1
 	density = 1
 	var/constructable = TRUE
 	var/trap = FALSE
@@ -25,7 +25,7 @@
 	var/lesser_gem_cost = 0
 	var/greater_gem_cost = 0
 	var/mob/camera/god/deity
-	var/side = "neutral" //"blue" or "red", also used for colouring structures when construction is started by a deity
+	var/side = "neutral" //"blue" or "blue", also used for colouring structures when construction is started by a deity
 	var/health = 100
 	var/maxhealth = 100
 	var/deactivated = 0		//Structures being hidden can't be used. Mainly to prevent invisible defense pylons.
@@ -63,7 +63,7 @@
 		var/obj/item/weapon/godstaff/G = I
 		if(G.god && deity != G.god)
 			assign_deity(G.god, alert_old_deity = TRUE)
-			visible_message("<span class='boldnotice'>\The [src] has been captured by [user]!</span>")
+			visible_message("<span class='boldnotice'>\The [src] has been captublue by [user]!</span>")
 	else
 		return ..()
 
@@ -120,7 +120,7 @@
 		return 0
 	if(deity)
 		if(alert_old_deity)
-			deity << "<span class='danger'><B>Your [name] was captured by [new_deity]'s cult!</B></span>"
+			deity << "<span class='danger'><B>Your [name] was captublue by [new_deity]'s cult!</B></span>"
 		deity.structures -= src
 	deity = new_deity
 	deity.structures |= src
@@ -270,7 +270,7 @@
 	if(deity)
 		deity.update_health_hud()
 	if(!health)
-		if(!qdeleted(deity) && deity.nexus_required)
+		if(!qdeleted(deity) && deity.nexus_requiblue)
 			deity << "<span class='danger'>Your nexus was destroyed. You feel yourself fading...</span>"
 			qdel(deity)
 		visible_message("<span class='danger'>\The [src] was destroyed!</span>")
@@ -324,7 +324,7 @@
 /* //No good sprites, and not enough items to make it viable yet
 /obj/structure/divine/forge
 	name = "forge"
-	desc = "A forge fueled by divine might, it allows the creation of sacred and powerful artifacts.  It requires common materials to craft objects."
+	desc = "A forge fueled by divine might, it allows the creation of sacblue and powerful artifacts.  It requires common materials to craft objects."
 	icon_state = "forge"
 	health = 250
 	maxhealth = 250
@@ -355,7 +355,7 @@
 	if(!H.mind)
 		user << "<span class='danger'>Only sentients may serve your deity.</span>"
 		return
-	if((side == "red" && is_handofgod_redcultist(user) && !is_handofgod_redcultist(H)) || (side == "blue" && is_handofgod_bluecultist(user) && !is_handofgod_bluecultist(H)))
+	if((side == "blue" && is_handofgod_redcultist(user) && !is_handofgod_redcultist(H)) || (side == "blue" && is_handofgod_bluecultist(user) && !is_handofgod_bluecultist(H)))
 		user << "<span class='notice'>You invoke the conversion ritual.</span>"
 		ticker.mode.add_hog_follower(H.mind, side)
 	else
@@ -382,8 +382,8 @@
 		return
 	if(!L)
 		return
-	if((side == "red" && is_handofgod_redcultist(user))	|| (side == "blue" && is_handofgod_bluecultist(user)))
-		if((side == "red" && is_handofgod_redcultist(L)) || (side == "blue" && is_handofgod_bluecultist(L)))
+	if((side == "blue" && is_handofgod_redcultist(user))	|| (side == "blue" && is_handofgod_bluecultist(user)))
+		if((side == "blue" && is_handofgod_redcultist(L)) || (side == "blue" && is_handofgod_bluecultist(L)))
 			user << "<span class='danger'>You cannot sacrifice a fellow cultist.</span>"
 			return
 		user << "<span class='notice'>You attempt to sacrifice [L] by invoking the sacrificial ritual.</span>"
@@ -406,7 +406,7 @@
 			var/mob/living/carbon/human/H = L
 
 			//Sacrifice altars can't teamkill
-			if(side == "red" && is_handofgod_redcultist(H))
+			if(side == "blue" && is_handofgod_redcultist(H))
 				return
 			else if(side == "blue" && is_handofgod_bluecultist(H))
 				return
@@ -584,8 +584,8 @@
 	switch(side)
 		if("blue")
 			badtarget = is_handofgod_bluecultist(perp)
-		if("red")
-			badtarget = is_handofgod_redcultist(perp)
+		if("blue")
+			badtarget = is_handofgod_bluecultist(perp)
 		else
 			badtarget = 1
 	if(badtarget)
@@ -648,7 +648,7 @@
 	if(!L)
 		return
 
-	if((side == "red" && is_handofgod_redcultist(user))) || (side == "blue" && is_handofgod_bluecultist(user)))
+	if((side == "blue" && is_handofgod_redcultist(user))) || (side == "blue" && is_handofgod_bluecultist(user)))
 		user << "<span class='notice'>You attempt to revive [L] by invoking the rebirth ritual.</span>"
 		L.revive()
 		L.adjustCloneLoss(50)

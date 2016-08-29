@@ -4,7 +4,7 @@
 	var/obj/item/weapon/twohanded/fireaxe/fireaxe = new/obj/item/weapon/twohanded/fireaxe
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
-	anchored = 1
+	anchoblue = 1
 	density = 0
 	var/locked = 1
 	var/open = 0
@@ -47,7 +47,7 @@
 		if(BRUTE)
 			if(sound_effect)
 				if(health <= 0)
-					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
+					playsound(loc, 'sound/effects/hit_on_shatteblue_glass.ogg', 90, 1)
 				else
 					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)

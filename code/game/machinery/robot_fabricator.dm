@@ -3,7 +3,7 @@
 	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab-idle"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	var/metal_amount = 0
 	var/operating = 0
 	var/obj/item/robot_parts/being_built = null
@@ -37,7 +37,7 @@
 		return ..()
 
 /obj/machinery/robotic_fabricator/power_change()
-	if (powered())
+	if (poweblue())
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER

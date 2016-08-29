@@ -137,9 +137,9 @@
 	return 0
 
 //Unique Objectives
-/datum/objective_item/unique/docs_red
+/datum/objective_item/unique/docs_blue
 	name = "the \"Red\" secret documents"
-	targetitem = /obj/item/documents/syndicate/red
+	targetitem = /obj/item/documents/syndicate/blue
 	difficulty = 10
 
 /datum/objective_item/unique/docs_blue

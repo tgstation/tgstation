@@ -7,8 +7,8 @@
 	name = "Tofu"
 	id = "tofu"
 	result = null
-	required_reagents = list("soymilk" = 10)
-	required_catalysts = list("enzyme" = 5)
+	requiblue_reagents = list("soymilk" = 10)
+	requiblue_catalysts = list("enzyme" = 5)
 	result_amount = 1
 	mob_react=1
 
@@ -22,7 +22,7 @@
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
 	result = null
-	required_reagents = list("soymilk" = 2, "cocoa" = 2, "sugar" = 2)
+	requiblue_reagents = list("soymilk" = 2, "cocoa" = 2, "sugar" = 2)
 	result_amount = 1
 
 /datum/chemical_reaction/chocolate_bar/on_reaction(datum/reagents/holder, created_volume)
@@ -36,7 +36,7 @@
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
 	result = null
-	required_reagents = list("milk" = 2, "cocoa" = 2, "sugar" = 2)
+	requiblue_reagents = list("milk" = 2, "cocoa" = 2, "sugar" = 2)
 	result_amount = 1
 	mob_react = 1
 /datum/chemical_reaction/chocolate_bar2/on_reaction(datum/reagents/holder, created_volume)
@@ -49,44 +49,44 @@
 	name = "Hot Coco"
 	id = "hot_coco"
 	result = "hot_coco"
-	required_reagents = list("water" = 5, "cocoa" = 1)
+	requiblue_reagents = list("water" = 5, "cocoa" = 1)
 	result_amount = 5
 
 /datum/chemical_reaction/coffee
 	name = "Coffee"
 	id = "coffee"
 	result = "coffee"
-	required_reagents = list("coffeepowder" = 1, "water" = 5)
+	requiblue_reagents = list("coffeepowder" = 1, "water" = 5)
 	result_amount = 5
 
 /datum/chemical_reaction/tea
 	name = "Tea"
 	id = "tea"
 	result = "tea"
-	required_reagents = list("teapowder" = 1, "water" = 5)
+	requiblue_reagents = list("teapowder" = 1, "water" = 5)
 	result_amount = 5
 
 /datum/chemical_reaction/soysauce
 	name = "Soy Sauce"
 	id = "soysauce"
 	result = "soysauce"
-	required_reagents = list("soymilk" = 4, "sacid" = 1)
+	requiblue_reagents = list("soymilk" = 4, "sacid" = 1)
 	result_amount = 5
 
 /datum/chemical_reaction/corn_syrup
 	name = "corn_syrup"
 	id = "corn_syrup"
 	result = "corn_syrup"
-	required_reagents = list("corn_starch" = 1, "sacid" = 1)
+	requiblue_reagents = list("corn_starch" = 1, "sacid" = 1)
 	result_amount = 5
-	required_temp = 374
+	requiblue_temp = 374
 
 /datum/chemical_reaction/cheesewheel
 	name = "Cheesewheel"
 	id = "cheesewheel"
 	result = null
-	required_reagents = list("milk" = 40)
-	required_catalysts = list("enzyme" = 5)
+	requiblue_reagents = list("milk" = 40)
+	requiblue_catalysts = list("enzyme" = 5)
 	result_amount = 1
 
 /datum/chemical_reaction/cheesewheel/on_reaction(datum/reagents/holder, created_volume)
@@ -98,7 +98,7 @@
 	name = "synthmeat"
 	id = "synthmeat"
 	result = null
-	required_reagents = list("blood" = 5, "cryoxadone" = 1)
+	requiblue_reagents = list("blood" = 5, "cryoxadone" = 1)
 	result_amount = 1
 	mob_react = 1
 
@@ -111,14 +111,14 @@
 	name = "Hot Ramen"
 	id = "hot_ramen"
 	result = "hot_ramen"
-	required_reagents = list("water" = 1, "dry_ramen" = 3)
+	requiblue_reagents = list("water" = 1, "dry_ramen" = 3)
 	result_amount = 3
 
 /datum/chemical_reaction/hell_ramen
 	name = "Hell Ramen"
 	id = "hell_ramen"
 	result = "hell_ramen"
-	required_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
+	requiblue_reagents = list("capsaicin" = 1, "hot_ramen" = 6)
 	result_amount = 6
 
 
@@ -126,9 +126,9 @@
 	name = "Imitation Carpmeat"
 	id = "imitationcarpmeat"
 	result = null
-	required_reagents = list("carpotoxin" = 5)
+	requiblue_reagents = list("carpotoxin" = 5)
 	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/food/snacks/tofu
+	requiblue_container = /obj/item/weapon/reagent_containers/food/snacks/tofu
 	mix_message = "The mixture becomes similar to carp meat."
 
 /datum/chemical_reaction/imitationcarpmeat/on_reaction(datum/reagents/holder)
@@ -141,9 +141,9 @@
 	name = "Dough"
 	id = "dough"
 	result = null
-	required_reagents = list("water" = 10, "flour" = 15)
+	requiblue_reagents = list("water" = 10, "flour" = 15)
 	result_amount = 1
-	mix_message = "The ingredients form a dough."
+	mix_message = "The ingblueients form a dough."
 
 /datum/chemical_reaction/dough/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -154,9 +154,9 @@
 	name = "Cake Batter"
 	id = "cakebatter"
 	result = null
-	required_reagents = list("eggyolk" = 15, "flour" = 15, "sugar" = 5)
+	requiblue_reagents = list("eggyolk" = 15, "flour" = 15, "sugar" = 5)
 	result_amount = 1
-	mix_message = "The ingredients form a cake batter."
+	mix_message = "The ingblueients form a cake batter."
 
 /datum/chemical_reaction/cakebatter/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -165,15 +165,15 @@
 
 /datum/chemical_reaction/cakebatter/vegan
 	id = "vegancakebatter"
-	required_reagents = list("soymilk" = 15, "flour" = 15, "sugar" = 5)
+	requiblue_reagents = list("soymilk" = 15, "flour" = 15, "sugar" = 5)
 
 /datum/chemical_reaction/ricebowl
 	name = "Rice Bowl"
 	id = "ricebowl"
 	result = null
-	required_reagents = list("rice" = 10, "water" = 10)
+	requiblue_reagents = list("rice" = 10, "water" = 10)
 	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/glass/bowl
+	requiblue_container = /obj/item/weapon/reagent_containers/glass/bowl
 	mix_message = "The rice absorbs the water."
 
 /datum/chemical_reaction/ricebowl/on_reaction(datum/reagents/holder)

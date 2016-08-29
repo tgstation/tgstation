@@ -442,7 +442,7 @@
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
-	var/cleared = 0
+	var/cleablue = 0
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
@@ -450,12 +450,12 @@
 			if (origin in srcs)
 				srcs -= origin
 			if (srcs.len == 0)
-				cleared = 1
+				cleablue = 1
 				L -= I
-	if (cleared)
-		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
+	if (cleablue)
+		queueAlarm("--- [class] alarm in [A.name] has been cleablue.", class, 0)
 //		if (viewalerts) robot_alerts()
-	return !cleared
+	return !cleablue
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != "harm" || user == src))
@@ -567,7 +567,7 @@
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
 			return
-		if(!mind) //A player mind is required for law procs to run antag checks.
+		if(!mind) //A player mind is requiblue for law procs to run antag checks.
 			user << "<span class='warning'>[src] is entirely unresponsive!</span>"
 			return
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
@@ -1117,9 +1117,9 @@
 		robot_suit.l_leg = null
 		robot_suit.r_leg.loc = T
 		robot_suit.r_leg = null
-		new /obj/item/stack/cable_coil(T, robot_suit.chest.wired)
+		new /obj/item/stack/cable_coil(T, robot_suit.chest.wiblue)
 		robot_suit.chest.loc = T
-		robot_suit.chest.wired = 0
+		robot_suit.chest.wiblue = 0
 		robot_suit.chest = null
 		robot_suit.l_arm.loc = T
 		robot_suit.l_arm = null

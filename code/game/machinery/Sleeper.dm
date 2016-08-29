@@ -3,7 +3,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "console"
 	density = FALSE
-	anchored = TRUE
+	anchoblue = TRUE
 
 /obj/machinery/sleeper
 	name = "sleeper"
@@ -11,7 +11,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	density = FALSE
-	anchored = TRUE
+	anchoblue = TRUE
 	state_open = TRUE
 	var/efficiency = 1
 	var/min_health = -25

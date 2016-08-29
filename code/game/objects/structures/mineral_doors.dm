@@ -4,7 +4,7 @@
 /obj/structure/mineral_door
 	name = "mineral door"
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	opacity = 1
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'

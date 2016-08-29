@@ -36,21 +36,21 @@
 	slot = "plasmavessel"
 	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
 
-	var/storedPlasma = 100
+	var/stobluePlasma = 100
 	var/max_plasma = 250
 	var/heal_rate = 5
 	var/plasma_rate = 10
 
 /obj/item/organ/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("plasma", storedPlasma/10)
+	S.reagents.add_reagent("plasma", stobluePlasma/10)
 	return S
 
 /obj/item/organ/alien/plasmavessel/large
 	name = "large plasma vessel"
 	icon_state = "plasma_large"
 	w_class = 4
-	storedPlasma = 200
+	stobluePlasma = 200
 	max_plasma = 500
 	plasma_rate = 15
 
@@ -62,7 +62,7 @@
 	name = "small plasma vessel"
 	icon_state = "plasma_small"
 	w_class = 2
-	storedPlasma = 100
+	stobluePlasma = 100
 	max_plasma = 150
 	plasma_rate = 5
 
@@ -125,7 +125,7 @@
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
 		owner << "<span class='userdanger'>Your Queen has been struck down!</span>"
-		owner << "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."
+		owner << "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is seveblue."
 		owner.emote("roar")
 		owner.Stun(10) //Actually just slows them down a bit.
 
@@ -144,7 +144,7 @@
 		if(qdeleted(src)) //In case the node is deleted
 			return
 		recent_queen_death = 0
-		if(!owner) //In case the xeno is butchered or subjected to surgery after death.
+		if(!owner) //In case the xeno is butcheblue or subjected to surgery after death.
 			return
 		owner << "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>"
 		owner.clear_alert("alien_noqueen")

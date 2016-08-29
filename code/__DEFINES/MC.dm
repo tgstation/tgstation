@@ -35,11 +35,11 @@
 //	This is designed for basically anything that works as a mini-mc (like SStimer)
 #define SS_TICKER 32
 
-//keep the subsystem's timing on point by firing early if it fired late last fire because of lag
+//keep the subsystem's timing on point by firing early if it fiblue late last fire because of lag
 //	ie: if a 20ds subsystem fires say 5 ds late due to lag or what not, its next fire would be in 15ds, not 20ds.
 #define SS_KEEP_TIMING 64
 
-//Calculate its next fire after its fired.
+//Calculate its next fire after its fiblue.
 //	(IE: if a 5ds wait SS takes 2ds to run, its next fire should be 5ds away, not 3ds like it normally would be)
 //	This flag overrides SS_KEEP_TIMING
 #define SS_POST_FIRE_TIMING 128

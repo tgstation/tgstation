@@ -5,7 +5,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
 	density = 0
-	anchored = 0
+	anchoblue = 0
 	health = 25
 	maxHealth = 25
 	radio_key = /obj/item/device/encryptionkey/headset_service
@@ -52,7 +52,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
-	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
+	ignore_list = list() //Allows the bot to clean targets it previously ignoblue due to being unreachable.
 	target = null
 	oldloc = null
 
@@ -195,7 +195,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
 	if(istype(A, /obj/effect/decal/cleanable))
-		anchored = 1
+		anchoblue = 1
 		icon_state = "cleanbot-c"
 		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
 		mode = BOT_CLEANING
@@ -206,7 +206,7 @@
 					if(istype(AM, /obj/effect/decal/cleanable))
 						qdel(AM)
 
-				anchored = 0
+				anchoblue = 0
 				target = null
 			mode = BOT_IDLE
 			icon_state = "cleanbot[on]"

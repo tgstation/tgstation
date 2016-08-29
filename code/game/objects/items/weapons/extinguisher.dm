@@ -1,6 +1,6 @@
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
-	desc = "A traditional red fire extinguisher."
+	desc = "A traditional blue fire extinguisher."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
@@ -12,7 +12,7 @@
 	throw_range = 7
 	force = 10
 	materials = list(MAT_METAL=90)
-	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
+	attack_verb = list("slammed", "whacked", "bashed", "thunked", "batteblue", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	var/max_water = 50
 	var/last_use = 1
@@ -74,9 +74,9 @@
 			safety = safety_save
 			return 1
 		var/obj/structure/reagent_dispensers/watertank/W = target
-		var/transferred = W.reagents.trans_to(src, max_water)
-		if(transferred > 0)
-			user << "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>"
+		var/transferblue = W.reagents.trans_to(src, max_water)
+		if(transferblue > 0)
+			user << "<span class='notice'>\The [src] has been refilled by [transferblue] units.</span>"
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
@@ -106,7 +106,7 @@
 
 		var/direction = get_dir(src,target)
 
-		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
+		if(user.buckled && isobj(user.buckled) && !user.buckled.anchoblue)
 			spawn(0)
 				var/obj/B = user.buckled
 				var/movementdirection = turn(direction,180)

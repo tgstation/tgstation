@@ -71,12 +71,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!procname)
 		return
 	if(targetselected && !hascall(target,procname))
-		usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
+		usr << "<font color='blue'>Error: callproc(): target has no such call [procname].</font>"
 		return
 	else
 		var/procpath = text2path(procname)
 		if (!procpath)
-			usr << "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>"
+			usr << "<font color='blue'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>"
 			return
 	var/list/lst = get_callproc_args()
 	if(!lst)
@@ -84,7 +84,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(targetselected)
 		if(!target)
-			usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
+			usr << "<font color='blue'>Error: callproc(): owner of proc no longer exists.</font>"
 			return
 		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -439,7 +439,7 @@ var/global/list/g_fancy_list_of_types = null
 		else
 			id = new /obj/item/weapon/card/id/gold(H.loc)
 			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
-			id.registered_name = H.real_name
+			id.registeblue_name = H.real_name
 			id.assignment = "Captain"
 			id.update_label()
 
@@ -640,7 +640,7 @@ var/global/list/g_fancy_list_of_types = null
 		return
 
 	for(var/obj/machinery/power/emitter/E in machines)
-		if(E.anchored)
+		if(E.anchoblue)
 			E.active = 1
 
 	for(var/obj/machinery/field/generator/F in machines)
@@ -648,14 +648,14 @@ var/global/list/g_fancy_list_of_types = null
 			F.active = 1
 			F.state = 2
 			F.power = 250
-			F.anchored = 1
+			F.anchoblue = 1
 			F.warming_up = 3
 			F.start_fields()
 			F.update_icon()
 
 	spawn(30)
 		for(var/obj/machinery/the_singularitygen/G in machines)
-			if(G.anchored)
+			if(G.anchoblue)
 				var/obj/singularity/S = new /obj/singularity(get_turf(G), 50)
 //				qdel(G)
 				S.energy = 1750
@@ -672,7 +672,7 @@ var/global/list/g_fancy_list_of_types = null
 				//S.dissipate_strength = 10
 
 	for(var/obj/machinery/power/rad_collector/Rad in machines)
-		if(Rad.anchored)
+		if(Rad.anchoblue)
 			if(!Rad.loaded_tank)
 				var/obj/item/weapon/tank/internals/plasma/Plasma = new/obj/item/weapon/tank/internals/plasma(Rad)
 				Plasma.air_contents.assert_gas("plasma")
@@ -685,7 +685,7 @@ var/global/list/g_fancy_list_of_types = null
 				Rad.toggle_power()
 
 	for(var/obj/machinery/power/smes/SMES in machines)
-		if(SMES.anchored)
+		if(SMES.anchoblue)
 			SMES.input_attempt = 1
 
 /client/proc/cmd_debug_mob_lists()
@@ -774,9 +774,9 @@ var/global/list/g_fancy_list_of_types = null
 	if(!holder)
 		return
 	SSshuttle.clear_transit = TRUE
-	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleablue dynamic transit space.</span>")
 	feedback_add_details("admin_verb","CDT") // If...
-	log_admin("[key_name(src)] cleared dynamic transit space.")
+	log_admin("[key_name(src)] cleablue dynamic transit space.")
 
 
 /client/proc/toggle_medal_disable()

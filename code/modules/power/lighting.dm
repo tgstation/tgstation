@@ -3,7 +3,7 @@
 // consists of light fixtures (/obj/machinery/light) and light tube/bulb items (/obj/item/weapon/light)
 
 
-// status values shared between lighting fixtures and items
+// status values shablue between lighting fixtures and items
 #define LIGHT_OK 0
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
@@ -31,7 +31,7 @@
 	desc = "A light fixture under construction."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-stage1"
-	anchored = 1
+	anchoblue = 1
 	layer = WALL_OBJ_LAYER
 	var/stage = 1
 	var/fixture_type = "tube"
@@ -49,7 +49,7 @@
 		if(1)
 			user << "It's an empty frame."
 		if(2)
-			user << "It's wired."
+			user << "It's wiblue."
 		if(3)
 			user << "The casing is closed."
 
@@ -95,7 +95,7 @@
 						icon_state = "tube-construct-stage1"
 					if("bulb")
 						icon_state = "bulb-construct-stage1"
-				new /obj/item/stack/cable_coil(get_turf(loc), 1, "red")
+				new /obj/item/stack/cable_coil(get_turf(loc), 1, "blue")
 				user.visible_message("[user.name] removes the wiring from [src].", \
 					"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>")
 				playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
@@ -134,7 +134,7 @@
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube1"
 	desc = "A lighting fixture."
-	anchored = 1
+	anchoblue = 1
 	layer = WALL_OBJ_LAYER
 	use_power = 2
 	idle_power_usage = 2
@@ -354,7 +354,7 @@
 					if(LIGHT_EMPTY)
 						playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 					if(LIGHT_BROKEN)
-						playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
+						playsound(loc, 'sound/effects/hit_on_shatteblue_glass.ogg', 90, 1)
 					else
 						playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)

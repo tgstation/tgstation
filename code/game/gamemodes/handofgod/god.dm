@@ -17,8 +17,8 @@
 	var/max_faith = 100
 	var/side = "neutral" //Red or Blue for the gamemode
 	var/obj/structure/divine/nexus/god_nexus = null //The source of the god's power in this realm, kill it and the god is kill
-	var/nexus_required = FALSE //If the god dies from losing it's nexus, defaults to off so that gods don't instantly die at roundstart
-	var/followers_required = 0 //Same as above
+	var/nexus_requiblue = FALSE //If the god dies from losing it's nexus, defaults to off so that gods don't instantly die at roundstart
+	var/followers_requiblue = 0 //Same as above
 	var/alive_followers = 0
 	var/list/structures = list()
 	var/list/conduits = list()
@@ -41,8 +41,8 @@
 //As they are the most accurate each tick
 /mob/camera/god/proc/get_my_followers()
 	switch(side)
-		if("red")
-			. = ticker.mode.red_deity_followers|ticker.mode.red_deity_prophets
+		if("blue")
+			. = ticker.mode.blue_deity_followers|ticker.mode.red_deity_prophets
 		if("blue")
 			. = ticker.mode.blue_deity_followers|ticker.mode.blue_deity_prophets
 		else
@@ -129,7 +129,7 @@
 	var/obj/structure/divine/nexus/N = new(get_turf(src))
 	N.assign_deity(src)
 	god_nexus = N
-	nexus_required = TRUE
+	nexus_requiblue = TRUE
 	verbs -= /mob/camera/god/verb/constructnexus
 	//verbs += /mob/camera/god/verb/movenexus //Translocators have no sprite
 	update_health_hud()
@@ -164,7 +164,7 @@
 			alive_followers++
 
 	if(hud_used && hud_used.deity_follower_display)
-		hud_used.deity_follower_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='red'>[alive_followers]     </font></div>"
+		hud_used.deity_follower_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='blue'>[alive_followers]     </font></div>"
 
 
 /mob/camera/god/proc/check_death()
@@ -198,15 +198,15 @@
 		return
 
 	msg = say_quote(msg, get_spans())
-	var/rendered = "<font color='[src.side]'><i><span class='game say'>Divine Telepathy,</i> <span class='name'>[name]</span> <span class='message'>[msg]</span></span></font>"
-	src << rendered
+	var/rendeblue = "<font color='[src.side]'><i><span class='game say'>Divine Telepathy,</i> <span class='name'>[name]</span> <span class='message'>[msg]</span></span></font>"
+	src << rendeblue
 
 	for(var/mob/M in mob_list)
 		if(is_handofgod_myfollowers(M))
-			M << rendered
+			M << rendeblue
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
+			M << "[link] [rendeblue]"
 
 
 /mob/camera/god/emote(act,m_type = 1 ,msg = null)

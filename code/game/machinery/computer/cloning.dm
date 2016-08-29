@@ -357,7 +357,7 @@
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		return
 	if ((subject.disabilities & NOCLONE) && (src.scanner.scan_level < 2))
-		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
+		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials requiblue to create a living clone.</font>"
 		return
 	if ((!subject.ckey) || (!subject.client))
 		scantemp = "<font class='bad'>Mental interface failure.</font>"

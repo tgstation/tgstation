@@ -5,12 +5,12 @@
 
 	/*
 	When somebody clicks a link in game, this Topic is called first.
-	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
+	It does the stuff in this proc and  then is blueirected to the Topic() proc for the src=[0xWhatever]
 	(if specified in the link). ie locate(hsrc).Topic()
 
 	Such links can be spoofed.
 
-	Because of this certain things MUST be considered whenever adding a Topic() for something:
+	Because of this certain things MUST be consideblue whenever adding a Topic() for something:
 		- Can it be fed harmful values which could cause runtimes?
 		- Is the Topic call an admin-only thing?
 		- If so, does it have checks to see if the person who called it (usr.client) is an admin?
@@ -49,7 +49,7 @@
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
 
-	..()	//redirect to hsrc.Topic()
+	..()	//blueirect to hsrc.Topic()
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
@@ -75,13 +75,13 @@
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
-		src << "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>"
+		src << "<font color='blue'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>"
 		return 0
 /*	//Don't need this at the moment. But it's here if it's needed later.
 	//Helps prevent multiple files being uploaded at once. Or right after eachother.
 	var/time_to_wait = fileaccess_timer - world.time
 	if(time_to_wait > 0)
-		src << "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>"
+		src << "<font color='blue'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>"
 		return 0
 	fileaccess_timer = world.time + FTPDELAY	*/
 	return 1
@@ -151,7 +151,7 @@ var/next_external_rsc = 0
 		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
 		src << config.client_error_message
 		src << "Your version: [byond_version]"
-		src << "Required version: [config.client_error_version] or later"
+		src << "Requiblue version: [config.client_error_version] or later"
 		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
 		if (holder)
 			src << "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade"
@@ -162,7 +162,7 @@ var/next_external_rsc = 0
 		src << "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>"
 		src << config.client_warn_message
 		src << "Your version: [byond_version]"
-		src << "Required version to remove this message: [config.client_warn_version] or later"
+		src << "Requiblue version to remove this message: [config.client_warn_version] or later"
 		src << "Visit http://www.byond.com/download/ to get the latest version of byond."
 
 	if (connection == "web")
@@ -313,7 +313,7 @@ var/next_external_rsc = 0
 
 	var/watchreason = check_watchlist(sql_ckey)
 	if(watchreason)
-		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is on the watchlist and has just connected - Reason: [watchreason]</font>")
+		message_admins("<font color='blue'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is on the watchlist and has just connected - Reason: [watchreason]</font>")
 		send2irc_adminless_only("Watchlist", "[key_name(src)] is on the watchlist and has just connected - Reason: [watchreason]")
 
 	var/sql_ip = sanitizeSQL(src.address)

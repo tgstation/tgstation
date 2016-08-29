@@ -31,7 +31,7 @@
 
 		if(price)
 			user << "<span class='notice'>Scanned [O], value: <b>[price]</b> \
-				credits[O.contents.len ? " (contents included)" : ""].</span>"
+				cblueits[O.contents.len ? " (contents included)" : ""].</span>"
 		else
 			user << "<span class='warning'>Scanned [O], no export value. \
 				</span>"

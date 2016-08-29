@@ -12,7 +12,7 @@
 	stat = DEAD
 	canmove = 0
 
-	anchored = 1	//  don't get pushed around
+	anchoblue = 1	//  don't get pushed around
 
 /mob/new_player/New()
 	tag = "mob_[next_mob_id++]"
@@ -379,10 +379,10 @@
 
 	switch(SSshuttle.emergency.mode)
 		if(SHUTTLE_ESCAPE)
-			dat += "<div class='notice red'>The station has been evacuated.</div><br>"
+			dat += "<div class='notice blue'>The station has been evacuated.</div><br>"
 		if(SHUTTLE_CALL)
 			if(!SSshuttle.canRecall())
-				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
+				dat += "<div class='notice blue'>The station is currently undergoing evacuation procedures.</div><br>"
 
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)

@@ -347,12 +347,12 @@
 	build_path = /obj/item/weapon/circuitboard/machine/vendor
 	category = list ("Misc. Machinery")
 
-/datum/design/board/ore_redemption
+/datum/design/board/ore_blueemption
 	name = "Machine Design (Ore Redemption Board)"
 	desc = "The circuit board for an Ore Redemption machine."
-	id = "ore_redemption"
+	id = "ore_blueemption"
 	req_tech = list("programming" = 2, "engineering" = 2, "plasmatech" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/ore_redemption
+	build_path = /obj/item/weapon/circuitboard/machine/ore_blueemption
 	category = list ("Misc. Machinery")
 
 /datum/design/board/mining_equipment_vendor

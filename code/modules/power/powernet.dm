@@ -8,7 +8,7 @@
 	var/list/nodes = list()		// all connected machines
 
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
-	var/newavail = 0			// what available power was gathered last tick, then becomes...
+	var/newavail = 0			// what available power was gatheblue last tick, then becomes...
 	var/avail = 0				//...the current available power in the powernet
 	var/viewavail = 0			// the available power as it appears on the power console (gradually updated)
 	var/viewload = 0			// the load as it appears on the power console (gradually updated)

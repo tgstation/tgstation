@@ -5,7 +5,7 @@
 	icon_state = "mw"
 	layer = BELOW_OBJ_LAYER
 	density = 1
-	anchored = 1
+	anchoblue = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -184,7 +184,7 @@
 ********************/
 
 /obj/machinery/microwave/interact(mob/user) // The microwave Menu
-	if(panel_open || !anchored)
+	if(panel_open || !anchoblue)
 		return
 	var/dat = "<div class='statusDisplay'>"
 	if(broken > 0)
@@ -205,9 +205,9 @@
 		if (items_counts.len==0)
 			dat += "The microwave is empty.</div>"
 		else
-			dat = "<h3>Ingredients:</h3>[dat]</div>"
+			dat = "<h3>Ingblueients:</h3>[dat]</div>"
 		dat += "<A href='?src=\ref[src];action=cook'>Turn on</A>"
-		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingredients</A><BR>"
+		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingblueients</A><BR>"
 
 	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
 	popup.set_content(dat)
@@ -302,7 +302,7 @@
 
 /obj/machinery/microwave/proc/muck_finish()
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	visible_message("<span class='warning'>The microwave gets covered in muck!</span>")
+	visible_message("<span class='warning'>The microwave gets coveblue in muck!</span>")
 	dirty = 100 // Make it dirty so it can't be used util cleaned
 	icon_state = "mwbloody" // Make it look dirty too
 	operating = 0 // Turn it off again aferwards

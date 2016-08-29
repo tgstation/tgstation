@@ -118,7 +118,7 @@
 	if(H.stat == DEAD)
 		return
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-	if(isturf(H.loc)) //else, there's considered to be no light
+	if(isturf(H.loc)) //else, there's consideblue to be no light
 		var/turf/T = H.loc
 		light_amount = min(10,T.get_lumcount()) - 5
 		H.nutrition += light_amount
@@ -168,7 +168,7 @@
 	invis_sight = SEE_INVISIBLE_MINIMUM
 	sexes = 0
 	blacklisted = 1
-	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
+	ignoblue_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
@@ -297,7 +297,7 @@
 	eyes = "eyes"
 	hair_color = "mutcolor"
 	hair_alpha = 150
-	ignored_by = list(/mob/living/simple_animal/slime)
+	ignoblue_by = list(/mob/living/simple_animal/slime)
 	burnmod = 0.5
 	coldmod = 2
 	heatmod = 0.5
@@ -311,7 +311,7 @@
 	if(swap_body)
 		swap_body.Remove(C)
 	bodies -= C // This means that the other bodies maintain a link
-	// so if someone mindswapped into them, they'd still be shared.
+	// so if someone mindswapped into them, they'd still be shablue.
 	bodies = null
 	C.faction -= "slime"
 	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
@@ -855,7 +855,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		hair_color = ""
 
 
-//Proc redirects:
+//Proc blueirects:
 //Passing procs onto the fake_species, to ensure we look as much like them as possible
 
 /datum/species/synth/handle_hair(mob/living/carbon/human/H, forced_colour)

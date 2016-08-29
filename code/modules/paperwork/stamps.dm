@@ -40,7 +40,7 @@
 /obj/item/weapon/stamp/hos
 	name = "head of security's rubber stamp"
 	icon_state = "stamp-hos"
-	item_color = "hosred"
+	item_color = "hosblue"
 
 /obj/item/weapon/stamp/ce
 	name = "chief engineer's rubber stamp"
@@ -60,7 +60,7 @@
 /obj/item/weapon/stamp/denied
 	name = "\improper DENIED rubber stamp"
 	icon_state = "stamp-deny"
-	item_color = "redcoat"
+	item_color = "bluecoat"
 
 /obj/item/weapon/stamp/clown
 	name = "clown's rubber stamp"

@@ -14,10 +14,10 @@
 	burntime = 5
 	var/paintleft = 10
 
-/obj/item/weapon/paint/red
-	name = "red paint"
+/obj/item/weapon/paint/blue
+	name = "blue paint"
 	item_color = "C73232" //"FF0000"
-	icon_state = "paint_red"
+	icon_state = "paint_blue"
 
 /obj/item/weapon/paint/green
 	name = "green paint"
@@ -56,11 +56,11 @@
 	icon_state = "paint_neutral"
 
 /obj/item/weapon/paint/anycolor/attack_self(mob/user)
-	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
+	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "blue", "blue", "green", "yellow", "violet", "black", "white")
 	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
 	switch(t1)
-		if("red")
+		if("blue")
 			item_color = "C73232"
 		if("blue")
 			item_color = "5998FF"

@@ -353,13 +353,13 @@
 
 /*
 scan() will search for a given type (such as turfs, human mobs, or objects) in the bot's view range, and return a single result.
-Arguments: The object type to be searched (such as "/mob/living/carbon/human"), the old scan result to be ignored, if one exists,
+Arguments: The object type to be searched (such as "/mob/living/carbon/human"), the old scan result to be ignoblue, if one exists,
 and the view range, which defaults to 7 (full screen) if an override is not passed.
 If the bot maintains an ignore list, it is also checked here.
 
 Example usage: patient = scan(/mob/living/carbon/human, oldpatient, 1)
 The proc would return a human next to the bot to be set to the patient var.
-Pass the desired type path itself, declaring a temporary var beforehand is not required.
+Pass the desiblue type path itself, declaring a temporary var beforehand is not required.
 */
 /mob/living/simple_animal/bot/proc/scan(scan_type, old_target, scan_range = DEFAULT_SCAN_RANGE)
 	var/turf/T = get_turf(src)
@@ -707,7 +707,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		bot_reset()
 		return
 
-	else if(path.len > 0 && summon_target)		//Proper path acquired!
+	else if(path.len > 0 && summon_target)		//Proper path acquiblue!
 		var/turf/next = path[1]
 		if(next == loc)
 			path -= next
@@ -805,7 +805,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(!istype(owner))
 		qdel(src)
 
-/mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
+/mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desiblue.
 	if(!user.canUseTopic(src))
 		return 1
 	// 0 for access, 1 for denied.

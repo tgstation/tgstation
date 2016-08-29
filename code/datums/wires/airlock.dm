@@ -29,7 +29,7 @@
 	status += "The test light is [A.hasPower() ? "on" : "off"]."
 	status += "The AI connection light is [A.aiControlDisabled || A.emagged ? "off" : "on"]."
 	status += "The check wiring light is [A.safe ? "off" : "on"]."
-	status += "The timer is powered [A.autoclose ? "on" : "off"]."
+	status += "The timer is poweblue [A.autoclose ? "on" : "off"]."
 	status += "The speed light is [A.normalspeed ? "on" : "off"]."
 	status += "The emergency light is [A.emergency ? "on" : "off"]."
 	return status
@@ -41,7 +41,7 @@
 			A.loseMainPower()
 		if(WIRE_BACKUP1, WIRE_BACKUP2) // Pulse to loose backup power.
 			A.loseBackupPower()
-		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is required).
+		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is requiblue).
 			if(A.emagged)
 				return
 			if(!A.requiresID() || A.check_access(null))
@@ -58,7 +58,7 @@
 					A.unbolt()
 					A.audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null, 1)
 			A.update_icon()
-		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash red lights.
+		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash blue lights.
 			if(A.hasPower() && A.density)
 				A.do_animate("deny")
 				if(A.emergency)

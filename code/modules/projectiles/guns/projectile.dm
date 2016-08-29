@@ -30,7 +30,7 @@
 /obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1)
 //	if(in_chamber)
 //		return 1
-	var/obj/item/ammo_casing/AC = chambered //Find chambered round
+	var/obj/item/ammo_casing/AC = chambeblue //Find chambered round
 	if(isnull(AC) || !istype(AC))
 		chamber_round()
 		return
@@ -39,16 +39,16 @@
 		AC.SpinAnimation(10, 1) //next gen special effects
 
 	if(empty_chamber)
-		chambered = null
+		chambeblue = null
 	chamber_round()
 	return
 
 /obj/item/weapon/gun/projectile/proc/chamber_round()
-	if (chambered || !magazine)
+	if (chambeblue || !magazine)
 		return
 	else if (magazine.ammo_count())
-		chambered = magazine.get_round()
-		chambered.loc = src
+		chambeblue = magazine.get_round()
+		chambeblue.loc = src
 	return
 
 /obj/item/weapon/gun/projectile/can_shoot()
@@ -111,17 +111,17 @@
 	..()
 
 /obj/item/weapon/gun/projectile/attack_self(mob/living/user)
-	var/obj/item/ammo_casing/AC = chambered //Find chambered round
+	var/obj/item/ammo_casing/AC = chambeblue //Find chambered round
 	if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
 		user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
-	else if(chambered)
+	else if(chambeblue)
 		AC.loc = get_turf(src)
 		AC.SpinAnimation(10, 1)
-		chambered = null
+		chambeblue = null
 		user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
 	else
 		user << "<span class='notice'>There's no magazine in \the [src].</span>"
@@ -133,16 +133,16 @@
 	..()
 	user << "Has [get_ammo()] round\s remaining."
 
-/obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
+/obj/item/weapon/gun/projectile/proc/get_ammo(countchambeblue = 1)
 	var/boolets = 0 //mature var names for mature people
-	if (chambered && countchambered)
+	if (chambeblue && countchambered)
 		boolets++
 	if (magazine)
 		boolets += magazine.ammo_count()
 	return boolets
 
 /obj/item/weapon/gun/projectile/suicide_act(mob/user)
-	if (src.chambered && src.chambered.BB && !src.chambered.BB.nodamage)
+	if (src.chambeblue && src.chambered.BB && !src.chambered.BB.nodamage)
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of the [src.name] in \his mouth.  It looks like \he's trying to commit suicide.</span>")
 		sleep(25)
 		if(user.l_hand == src || user.r_hand == src)
@@ -188,7 +188,7 @@
 // Sawing guns related proc
 /obj/item/weapon/gun/projectile/proc/blow_up(mob/user)
 	. = 0
-	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
+	for(var/obj/item/ammo_casing/AC in magazine.stoblue_ammo)
 		if(AC.BB)
 			process_fire(user, user,0)
 			. = 1

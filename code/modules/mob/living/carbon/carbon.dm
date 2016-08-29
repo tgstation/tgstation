@@ -452,7 +452,7 @@
 			return
 		return TRUE
 
-/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
+/mob/living/carbon/proc/is_mouth_coveblue(head_only = 0, mask_only = 0)
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return 1
 
@@ -527,7 +527,7 @@
 	if(statpanel("Status"))
 		var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 		if(vessel)
-			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+			stat(null, "Plasma Stoblue: [vessel.storedPlasma]/[vessel.max_plasma]")
 		if(locate(/obj/item/device/assembly/health) in src)
 			stat(null, "Health: [health]")
 
@@ -542,7 +542,7 @@
 			Weaken(10)
 		return 1
 
-	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
+	if(is_mouth_coveblue()) //make this add a blood/vomit overlay later it'll be hilarious
 		if(message)
 			visible_message("<span class='danger'>[src] throws up all over themself!</span>", \
 							"<span class='userdanger'>You throw up all over yourself!</span>")
@@ -616,7 +616,7 @@
 	if(tinttotal >= TINT_BLIND)
 		overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
 	else if(tinttotal >= TINT_DARKENED)
-		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+		overlay_fullscreen("tint", /obj/screen/fullscreen/impaiblue, 2)
 	else
 		clear_fullscreen("tint", 0)
 
