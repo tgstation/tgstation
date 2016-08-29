@@ -32,13 +32,16 @@ var/list/status_effects = list() //All status effects affecting literally anyone
 	START_PROCESSING(SSprocessing, src)
 
 /datum/status_effect/process()
+	if(!owner)
+		cancel_effect()
+		return
 	if(duration != -1)
 		duration--
 	tick_interval--
 	if(!tick_interval)
 		tick()
 		tick_interval = initial(tick_interval)
-	if(!owner || !duration)
+	if(!duration)
 		cancel_effect()
 
 /datum/status_effect/proc/cancel_effect()
