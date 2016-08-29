@@ -46,15 +46,24 @@ other types of metals and chemistry for reagents).
 ////////////////////////////////////////
 
 /obj/item/weapon/disk/design_disk
-	name = "Component Design Disk"
+	name = "component design disk"
 	desc = "A disk for storing device design data for construction in lathes."
 	icon_state = "datadisk1"
-	materials = list(MAT_METAL=100, MAT_GLASS=100)
-	var/datum/design/blueprint
+	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	var/list/blueprints = list()
+	var/max_blueprints = 1
 
 /obj/item/weapon/disk/design_disk/New()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
+	for(var/i in 1 to max_blueprints)
+		blueprints += null
+
+/obj/item/weapon/disk/design_disk/adv
+	name = "advanced component design disk"
+	desc = "A disk for storing device design data for construction in lathes. This one has extra storage space."
+	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER = 50)
+	max_blueprints = 5
 
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////
@@ -94,6 +103,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/disk/design_disk
 	category = list("Electronics")
 
+/datum/design/design_disk_adv
+	name = "Advanced Design Storage Disk"
+	desc = "Produce additional disks for storing device designs."
+	id = "design_disk_adv"
+	req_tech = list("programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
+	build_path = /obj/item/weapon/disk/design_disk/adv
+	category = list("Electronics")
+
 /datum/design/tech_disk
 	name = "Technology Data Storage Disk"
 	desc = "Produce additional disks for storing technology data."
@@ -104,6 +123,25 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/disk/tech_disk
 	category = list("Electronics")
 
+/datum/design/tech_disk_adv
+	name = "Advanced Technology Data Storage Disk"
+	desc = "Produce disks with extra storage capacity for storing technology data."
+	id = "tech_disk_adv"
+	req_tech = list("programming" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
+	build_path = /obj/item/weapon/disk/tech_disk/adv
+	category = list("Electronics")
+
+/datum/design/tech_disk_super_adv
+	name = "Quantum Technology Data Storage Disk"
+	desc = "Produce disks with extremely large storage capacity for storing technology data."
+	id = "tech_disk_super_adv"
+	req_tech = list("programming" = 6)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=100, MAT_GOLD=100)
+	build_path = /obj/item/weapon/disk/tech_disk/super_adv
+	category = list("Electronics")
 
 /////////////////////////////////////////
 /////////////////Mining//////////////////

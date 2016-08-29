@@ -140,7 +140,9 @@
 		processing = 1
 		var/obj/item/weapon/disk/design_disk/D = O
 		if(do_after(user, 10, target = src))
-			files.AddDesign2Known(D.blueprint)
+			for(var/B in D.blueprints)
+				if(B)
+					files.AddDesign2Known(B)
 		processing = 0
 		return 1
 	else
