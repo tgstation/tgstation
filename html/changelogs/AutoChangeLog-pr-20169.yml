@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Lava bubbling up from basalt turfs now glows if in sufficient concentration."
-  - rscadd: "Necropolis tendrils now glow."
-  - rscadd: "Lava rivers now have riverbanks, and should overall look much nicer."
