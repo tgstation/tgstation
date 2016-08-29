@@ -372,7 +372,7 @@
 		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
 		for(var/mob/living/simple_animal/hostile/H in urange(12,T)) //prevents mob clumps
-			if(istype(H, /mob/living/simple_animal/hostile/asteroid)
+			if(istype(H, /mob/living/simple_animal/hostile/asteroid))
 				return
 			if(ismegafauna(H) && get_dist(src, H) <= 7)
 				return
