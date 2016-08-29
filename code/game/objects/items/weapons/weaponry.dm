@@ -57,10 +57,12 @@
 var/highlander_claymores = 0
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
+	flags = CONDUCT | NODROP
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
-	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved", "gored") //ONLY THE MOST VISCERAL ATTACK VERBS
+	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
+	var/bloodthirst_level = 0 //HOW THIRSTY WE ARE FOR BLOOD
 
 /obj/item/weapon/claymore/highlander/New()
 	..()
@@ -76,6 +78,8 @@ var/highlander_claymores = 0
 	if(isliving(loc))
 		var/mob/living/L = loc
 		if(L.stat != DEAD)
+			if(!announced)
+				handle_bloodthirst(L)
 			if(announced || admin_spawned || highlander_claymores > 1)
 				return
 			announced = TRUE
@@ -83,6 +87,8 @@ var/highlander_claymores = 0
 			world << "<span class='userdanger'>[L.real_name] IS THE ONLY ONE LEFT STANDING!</span>"
 			world << sound('sound/misc/highlander_only_one.ogg')
 			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING!</span>"
+			for(var/obj/item/weapon/bloodcrawl/B in L)
+				qdel(B)
 
 /obj/item/weapon/claymore/highlander/pickup(mob/living/user)
 	user << "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>"
@@ -101,6 +107,9 @@ var/highlander_claymores = 0
 	. = ..()
 	if(target && target.stat == DEAD && old_target_stat != DEAD && target.mind && target.mind.special_role == "highlander")
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
+		bloodthirst_level = 0
+		if(bloodthirst_level >= 30)
+			user << "<span class='notice'>[src] shakes greedily as it devours [target]'s soul. Its bloodthirst is quenched for the moment...</span>"
 		add_notch(user)
 		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
 		target.dust()
@@ -113,6 +122,7 @@ var/highlander_claymores = 0
 			closest_victim = H
 	if(!closest_victim)
 		user << "<span class='warning'>[src] thrums for a moment and falls dark. Perhaps there's nobody nearby.</span>"
+		return
 	user << "<span class='danger'>[src] thrums and points to the [dir2text(get_dir(user, closest_victim))].</span>"
 
 /obj/item/weapon/claymore/highlander/IsReflect()
@@ -170,6 +180,18 @@ var/highlander_claymores = 0
 
 	name = new_name
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
+
+/obj/item/weapon/claymore/highlander/proc/handle_bloodthirst(mob/living/S) //THE BLADE THIRSTS FOR BLOOD AND WILL PUNISH THE WEAK OR PACIFISTIC
+	bloodthirst_level += (1 + notches)
+	if(bloodthirst_level == 30)
+		S << "<span class='warning'>[src] shudders in your hand. It hungers for battle...</span>"
+	if(bloodthirst_level == 60)
+		S << "<span class='boldwarning'>[src] trembles violently. You feel your own life force draining. Kill someone already!</span>"
+	if(bloodthirst_level == 90)
+		S << "<span class='userdanger'>[src] starts feeding off of your body! Kill someone or it will kill <i>you!</i></span>"
+	if(bloodthirst_level >= 120)
+		S.visible_message("<span class='warning'>[S]'s [name] devours their soul!</span>", "<span class='userdanger'>Your [name] devours your soul!</span>")
+		S.dust() //YOU SHOULD'VE KILLED SOMEONE.
 
 /obj/item/weapon/katana
 	name = "katana"
