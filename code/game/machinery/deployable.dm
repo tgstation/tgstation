@@ -59,7 +59,7 @@
 	user.do_attack_animation(src)
 	user.visible_message("<span class='danger'>[user] claws at [src]!</span>")
 	playsound(user.loc, 'sound/weapons/slash.ogg', 100, 1)
-	take_damage(50)
+	take_damage(50, BRUTE, 0)
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm" && material == METAL)
