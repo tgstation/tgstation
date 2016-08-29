@@ -124,6 +124,12 @@
 	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
+	var/rad_strength_upper = 5
+	var/rad_strength_lower = 1
+	var/rad_strength = 1
+	var/cycles = 0
+	var/delay = 100
+	var/armed = 1
 
 	end_duration = 100
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
@@ -134,20 +140,33 @@
 
 	immunity_type = "rad"
 
+/datum/weather/rad_storm/telegraph()
+	rad_strength = rand(rad_strength_lower, rad_strength_upper)
+	delay = ((weather_duration - 100) / rad_strength)
+	..()
+
 /datum/weather/rad_storm/impact(mob/living/L)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.dna && H.dna.species)
-			if(!(RADIMMUNE in H.dna.species.specflags))
-				if(prob(25))
+	if(armed)
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.dna && H.dna.species)
+				if(!(RADIMMUNE in H.dna.species.specflags))
 					if(prob(25))
-						randmuti(H)
-					if(prob(90))
-						randmutb(H)
-					else
-						randmutg(H)
-					H.domutcheck()
-	L.rad_act(20,1)
+						if(prob(25))
+							randmuti(H)
+						if(prob(90))
+							randmutb(H)
+						else
+							randmutg(H)
+						H.domutcheck()
+		L.rad_act(20,1)
+		armed = 0
+		cycles++
+		if(cycles < rad_strength)
+			addtimer(src, "rearm", delay)
+
+/datum/weather/rad_storm/proc/rearm()
+	armed = 1
 
 /datum/weather/rad_storm/end()
 	if(..())
