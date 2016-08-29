@@ -251,6 +251,7 @@
 #include "code\datums\ruins\lavaland.dm"
 #include "code\datums\ruins\space.dm"
 #include "code\datums\status_effects\buffs.dm"
+#include "code\datums\status_effects\gas.dm"
 #include "code\datums\status_effects\status_effect.dm"
 #include "code\datums\weather\weather.dm"
 #include "code\datums\weather\weather_types.dm"

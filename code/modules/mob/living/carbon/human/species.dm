@@ -1416,6 +1416,7 @@
 			if(-INFINITY to 120)
 				H.throw_alert("temp", /obj/screen/alert/cold, 3)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+				H.apply_status_effect(/datum/status_effect/freon)
 			else
 				H.clear_alert("temp")
 

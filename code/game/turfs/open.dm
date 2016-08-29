@@ -14,7 +14,7 @@
 			if(!I.is_frozen)
 				I.make_frozen_visual(I)
 		already_frozen = TRUE
-	MakeSlippery(TURF_WET_PERMAFROST)
+	MakeSlippery(TURF_WET_PERMAFROST, wet_time_to_add = 5)
 	return
 /turf/open/indestructible
 	name = "floor"
@@ -191,6 +191,8 @@
 				wet_time = max(0, wet_time-10)
 			if(T0C + 100 to INFINITY)
 				wet_time = 0
+	else
+		wet_time = max(0, wet_time-5)
 	if(wet && wet < TURF_WET_ICE && !wet_time)
 		MakeDry(TURF_WET_ICE)
 	if(!wet && wet_time)

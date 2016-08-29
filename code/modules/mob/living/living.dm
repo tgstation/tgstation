@@ -692,6 +692,7 @@
 		var/obj/C = loc
 		C.container_resist(src)
 
+
 	else if(canmove)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll

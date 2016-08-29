@@ -26,8 +26,9 @@ var/list/status_effects = list() //All status effects affecting literally anyone
 /datum/status_effect/proc/start_ticking()
 	if(!src)
 		return
-	on_apply()
-	owner.throw_alert(id, /obj/screen/alert, effect = src)
+	if(owner)
+		on_apply()
+		owner.throw_alert(id, /obj/screen/alert, effect = src)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/status_effect/process()
@@ -53,12 +54,27 @@ var/list/status_effects = list() //All status effects affecting literally anyone
 //////////////////
 // HELPER PROCS //
 //////////////////
-
 /mob/living/proc/apply_status_effect(effect)
-	var/datum/status_effect/S = new effect
-	for(var/datum/status_effect/S2 in status_effects)
-		if(S.unique && S2.unique && S.id == S2.id && S2.owner == src)
-			qdel(S)
+	var/datum/status_effect/S1 = effect
+	for(var/datum/status_effect/S in status_effects)
+		if(initial(S1.unique) && S.id == initial(S1.id) && S.owner == src)
 			return
-	S.owner = src
+	S1 = new effect
+	S1.owner = src
 	return 1
+
+
+/mob/living/proc/remove_status_effect(effect)
+	var/datum/status_effect/S1 = effect
+	for(var/datum/status_effect/S in status_effects)
+		if(initial(S1.id) == S.id && S.owner == src)
+			S.cancel_effect()
+			return
+	return 1
+
+/mob/living/proc/has_status_effect(effect)
+	var/datum/status_effect/S1 = effect
+	for(var/datum/status_effect/S in status_effects)
+		if(initial(S1.id) == S.id && S.owner == src)
+			return 1
+	return 0
