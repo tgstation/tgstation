@@ -230,6 +230,7 @@
 	damage = 70
 	stun = 5
 	weaken = 5
+	dismemberment = 50
 	armour_penetration = 50
 	var/breakthings = TRUE
 
