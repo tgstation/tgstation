@@ -344,6 +344,7 @@ var/const/INJECT = 5 //injection
 				var/matching_other = 0
 				var/list/multipliers = new/list()
 				var/required_temp = C.required_temp
+				var/is_cold_recipe = C.is_cold_recipe
 
 				for(var/B in C.required_reagents)
 					if(!has_reagent(B, C.required_reagents[B]))
@@ -377,7 +378,7 @@ var/const/INJECT = 5 //injection
 					required_temp = chem_temp
 
 
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && chem_temp >= required_temp)
+				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && (is_cold_recipe ? chem_temp <= required_temp : chem_temp >= required_temp))
 					var/multiplier = min(multipliers)
 					for(var/B in C.required_reagents)
 						remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
