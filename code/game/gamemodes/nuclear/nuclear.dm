@@ -321,6 +321,7 @@
 	W.implant(H)
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(H)
 	E.implant(H)
+	H.faction |= "syndicate"
 	H.update_icons()
 
 /datum/outfit/syndicate/full
