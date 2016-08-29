@@ -371,12 +371,13 @@
 	if(prob(30))
 		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
-		for(var/mob/living/simple_animal/hostile/asteroid/A in urange(12,T)) //prevents mob clumps
-			return
-		for(var/mob/living/simple_animal/hostile/megafauna/A in range(7,T))
-			return
-		for(var/mob/living/simple_animal/hostile/spawner/lavaland in range(3,T)) //prevents tendrils spawning in collapse range
-			return
+		for(var/mob/living/simple_animal/hostile/H in urange(12,T)) //prevents mob clumps
+			if(istype(H, /mob/living/simple_animal/hostile/asteroid)
+				return
+			if(ismegafauna(H) && get_dist(src, H) <= 7)
+				return
+			if(istype(H, /mob/living/simple_animal/hostile/spawner/lavaland) && get_dist(src, H) <= 3) //prevents tendrils spawning in collapse range
+				return
 		var/randumb = pickweight(mob_spawn_list)
 		new randumb(T)
 	return
