@@ -49,8 +49,8 @@
 	var/quality = target.force - initial(target.force)
 	if(quality > 9 && prob((quality - 9)*10))
 		user << "<span class='danger'>[target] catches fire!</span>"
-		if(target.burn_state < 0)
-			target.burn_state = 0
+		if(target.burn_state < FLAMMABLE)
+			target.burn_state = FLAMMABLE
 		target.fire_act()
 		qdel(src)
 		return
