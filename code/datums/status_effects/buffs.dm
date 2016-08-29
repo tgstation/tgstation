@@ -57,7 +57,7 @@
 	if(istype(L)) //this is probably more safety than actually needed
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
-		desc += "<br>[vanguard["stuns_absorbed"] * 2] seconds of stuns held back.<br>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2] seconds of stun will affect you."
+		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."
 	..()
 
 /datum/status_effect/vanguard_shield/on_apply()
