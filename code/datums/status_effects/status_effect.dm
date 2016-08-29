@@ -3,31 +3,32 @@
 //When making a new status effect, add a define to status_effects.dm in __DEFINES for ease of use!
 var/list/status_effects = list() //All status effects affecting literally anyone
 /datum/status_effect
-	var/name = "Curse of Mundanity"
-	var/desc = "You don't feel any different..."
 	var/id = "effect" //Used for screen alerts.
-	var/icon_state //Used for displaying the status effect.
 	var/duration = -1 //How long the status effect lasts in SECONDS. Enter -1 for an effect that never ends unless removed through some means.
 	var/tick_interval = 1 //How many seconds between ticks. Leave at 1 for every second.
 	var/mob/living/owner //The mob affected by the status effect.
 	var/cosmetic = FALSE //If the status effect only exists for flavor.
 	var/unique = TRUE //If there can be multiple status effects of this type on one mob.
+	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 
 /datum/status_effect/New()
 	..()
 	status_effects += src
-	spawn(1) //Give us time to set any variables
-		start_ticking()
+	addtimer(src, "start_ticking", 1) //Give us time to set any variables
 
 /datum/status_effect/Destroy()
 	status_effects -= src
-	..()
+	return ..()
 
 /datum/status_effect/proc/start_ticking()
 	if(!src)
 		return
+	if(!owner)
+		qdel(src)
+		return
 	on_apply()
-	owner.throw_alert(id, /obj/screen/alert, effect = src)
+	var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
+	A.attached_effect = src //so the alert can reference us, if it needs to
 	START_PROCESSING(SSprocessing, src)
 
 /datum/status_effect/process()
@@ -37,18 +38,28 @@ var/list/status_effects = list() //All status effects affecting literally anyone
 	if(!tick_interval)
 		tick()
 		tick_interval = initial(tick_interval)
-	if(!duration && duration != -1)
+	if(!owner || !duration)
 		cancel_effect()
 
 /datum/status_effect/proc/cancel_effect()
 	STOP_PROCESSING(SSprocessing, src)
-	owner.clear_alert(id)
-	on_remove()
+	if(owner)
+		owner.clear_alert(id)
+		on_remove()
 	qdel(src)
 
 /datum/status_effect/proc/on_apply() //Called whenever the buff is applied.
 /datum/status_effect/proc/tick() //Called every tick.
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed.
+
+////////////////
+// ALERT HOOK //
+////////////////
+
+/obj/screen/alert/status_effect
+	name = "Curse of Mundanity"
+	desc = "You don't feel any different..."
+	var/datum/status_effect/attached_effect
 
 //////////////////
 // HELPER PROCS //
@@ -61,4 +72,4 @@ var/list/status_effects = list() //All status effects affecting literally anyone
 			qdel(S)
 			return
 	S.owner = src
-	return 1
+	return S

@@ -3,7 +3,7 @@
 //PUBLIC -  call these wherever you want
 
 
-/mob/proc/throw_alert(category, type, severity, obj/new_master, datum/status_effect/effect)
+/mob/proc/throw_alert(category, type, severity, obj/new_master)
 
 /* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
  category is a text string. Each mob may only have one alert per category; the previous one will be replaced
@@ -43,13 +43,7 @@
 		alert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		alert.master = new_master
 	else
-		if(effect)
-			alert.name = effect.name
-			alert.desc = effect.desc
-			alert.icon = 'icons/mob/status_effects.dmi'
-			alert.icon_state = effect.icon_state
-		else
-			alert.icon_state = "[initial(alert.icon_state)][severity]"
+		alert.icon_state = "[initial(alert.icon_state)][severity]"
 		alert.severity = severity
 
 	alerts[category] = alert
