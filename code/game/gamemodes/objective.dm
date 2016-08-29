@@ -30,7 +30,7 @@
 		var/datum/data/record/R = V
 		var/mob/M = R.fields["reference"]
 		if(M && M.mind)
-			. += M
+			. += M.mind
 
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
