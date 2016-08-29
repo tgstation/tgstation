@@ -345,6 +345,7 @@ var/const/INJECT = 5 //injection
 				var/list/multipliers = new/list()
 				var/required_temp = C.required_temp
 				var/is_cold_recipe = C.is_cold_recipe
+				var/meets_temp_requirement = 0
 
 				for(var/B in C.required_reagents)
 					if(!has_reagent(B, C.required_reagents[B]))
@@ -374,11 +375,10 @@ var/const/INJECT = 5 //injection
 					if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 						matching_other = 1
 
-				if(required_temp == 0)
-					required_temp = chem_temp
+				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
+					meets_temp_requirement = 1
 
-
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && (is_cold_recipe ? chem_temp <= required_temp : chem_temp >= required_temp))
+				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
 					var/multiplier = min(multipliers)
 					for(var/B in C.required_reagents)
 						remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
