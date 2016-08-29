@@ -304,16 +304,13 @@
 /turf/open/floor/plating/lava/burn_tile()
 	return
 
-/turf/open/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
-	return
-
 /turf/open/floor/plating/lava/smooth
 	name = "lava"
 	baseturf = /turf/open/floor/plating/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
-	canSmoothWith = list(/turf/closed/mineral, /turf/open/floor/plating/lava/smooth)
+	canSmoothWith = list(/turf/open/floor/plating/lava/smooth)
 
 /turf/open/floor/plating/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"
