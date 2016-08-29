@@ -76,7 +76,8 @@
 		"co2" 			= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
 		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5)
+		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5),
+		"freon"			= new/datum/tlv(-1, -1, 0.2, 0.5),
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -89,6 +90,7 @@
 		"plasma"		= new/datum/tlv(-1, -1, -1, -1),
 		"n2o"			= new/datum/tlv(-1, -1, -1, -1),
 		"bz"			= new/datum/tlv(-1, -1, -1, -1),
+		"freon"			= new/datum/tlv(-1, -1, -1, -1),
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
@@ -101,6 +103,7 @@
 		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"freon"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 	)
 
 //all air alarms in area are connected via magic

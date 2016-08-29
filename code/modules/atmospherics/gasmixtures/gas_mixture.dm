@@ -185,9 +185,11 @@ var/list/gaslist_cache = null
 			if(return_temperature() < 50)
 				if(holder)
 					holder.freon_gas_act()
-			else
-				temperature -= 10
-
+	if(cached_gases["co2"] && cached_gases["freon"])
+		if(cached_gases["co2"][MOLES] > 1 && cached_gases["freon"][MOLES] > 1)
+			cached_gases["freon"][MOLES] -= 1
+			cached_gases["co2"][MOLES] -= 1
+			temperature += 2
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		//world << "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]"

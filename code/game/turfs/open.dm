@@ -14,12 +14,6 @@
 			if(!I.is_frozen)
 				I.make_frozen_visual(I)
 		already_frozen = TRUE
-	freeze_timer++
-	if(freeze_timer >= freeze_max)
-		freeze_timer = 0
-		for(var/obj/IT in contents)
-			if(!IT.is_frozen)
-				IT.make_frozen_visual(IT)
 	MakeSlippery(TURF_WET_PERMAFROST)
 	return
 /turf/open/indestructible
