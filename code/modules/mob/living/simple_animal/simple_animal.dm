@@ -378,10 +378,15 @@
 		return 1
 
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
-	if(damage <= force_threshold || !damage_coeff[damagetype])
+	if(!damage_coeff[damagetype])
+		damage = 0
+	else
+		damage *= damage_coeff[damagetype]
+
+	if(damage >= 0 && damage <= force_threshold)
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 	else
-		adjustBruteLoss(damage)
+		adjustHealth(damage * config.damage_multiplier)
 
 /mob/living/simple_animal/movement_delay()
 	. = ..()
