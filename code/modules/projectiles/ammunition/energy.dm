@@ -11,10 +11,18 @@
 	projectile_type = /obj/item/projectile/beam/laser
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/hitscan
+	hitscan = 1
+	delay = 15
+
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 83
 	select_name = "kill"
+
+/obj/item/ammo_casing/energy/lasergun/hitscan
+	hitscan = 1
+	delay = 15
 
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 100
@@ -22,6 +30,10 @@
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
+
+/obj/item/ammo_casing/energy/laser/practice/hitscan
+	hitscan = 1
+	select_name = "hyper-velocity practice"
 
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/item/projectile/beam/scatter
@@ -45,24 +57,43 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
+/obj/item/ammo_casing/energy/laser/pulse/hitscan
+	hitscan = 1
+
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/item/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"
 
+/obj/item/ammo_casing/energy/laser/bluetag/hitscan
+	hitscan = 1
+	delay = 10
+
 /obj/item/ammo_casing/energy/laser/redtag
 	projectile_type = /obj/item/projectile/beam/lasertag/redtag
 	select_name = "redtag"
+
+/obj/item/ammo_casing/energy/laser/redtag/hitscan
+	hitscan = 1
+	delay = 10
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
 	e_cost = 50
 	fire_sound = 'sound/weapons/laser3.ogg'
 
+/obj/item/ammo_casing/energy/xray/hitscan
+	hitscan = 1
+	delay = 30
+
 /obj/item/ammo_casing/energy/electrode
 	projectile_type = /obj/item/projectile/energy/electrode
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
+
+/obj/item/ammo_casing/energy/electrode/hitscan
+	hitscan = 1
+	delay = 20
 
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
@@ -116,6 +147,10 @@
 	select_name  = "disable"
 	e_cost = 50
 	fire_sound = "sound/weapons/taser2.ogg"
+
+/obj/item/ammo_casing/energy/disabler/hitscan
+	hitscan = 1
+	delay = 10
 
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma
