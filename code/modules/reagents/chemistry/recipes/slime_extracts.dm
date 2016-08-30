@@ -83,12 +83,24 @@
 
 /datum/chemical_reaction/slimemetal/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
-	M.amount = 15
-	M.loc = get_turf(holder.my_atom)
-	var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
-	P.amount = 5
-	P.loc = get_turf(holder.my_atom)
+	var/turf/location = get_turf(holder.my_atom)
+	new /obj/item/stack/sheet/plasteel (location, 5)
+	new /obj/item/stack/sheet/metal (location, 15)
+
+/datum/chemical_reaction/slimeglass
+	name = "Slime Glass"
+	id = "m_glass"
+	result = null
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/metal
+	required_other = 1
+
+/datum/chemical_reaction/slimeglass/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/turf/location = get_turf(holder.my_atom)
+	new /obj/item/stack/sheet/rglass (location, 5)
+	new /obj/item/stack/sheet/glass (location, 15)
 
 //Gold
 /datum/chemical_reaction/slimecrit
@@ -406,9 +418,8 @@
 
 /datum/chemical_reaction/slimeplasma/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/stack/sheet/mineral/plasma/P = new /obj/item/stack/sheet/mineral/plasma
-	P.amount = 3
-	P.loc = get_turf(holder.my_atom)
+	var/turf/location = get_turf(holder.my_atom)
+	new /obj/item/stack/sheet/mineral/plasma (location, 3)
 
 //Red
 
