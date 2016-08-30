@@ -9,6 +9,7 @@
 	var/required_crew = 10
 	var/list/gamemode_blacklist = list()
 	var/completed = FALSE
+	var/report_message = "Complete this goal."
 
 /datum/station_goal/proc/send_report()
 	priority_announce("Priority Nanotrasen directive received.", "Incoming Priority Message", 'sound/AI/commandreport.ogg')
@@ -20,7 +21,7 @@
 	return
 
 /datum/station_goal/proc/get_report()
-	return "Goal instructions go here"
+	return report_message
 
 /datum/station_goal/proc/check_completion()
 	return completed
@@ -30,6 +31,22 @@
 		world << "<b>Station Goal</b> : [name] :  <span class='greenannounce'>Completed!</span>"
 	else
 		world << "<b>Station Goal</b> : [name] : <span class='boldannounce'>Failed!</span>"
+
+/datum/station_goal/Destroy()
+	ticker.mode.station_goals -= src
+	. = ..()
+
+/datum/station_goal/Topic(href, href_list)
+	..()
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	if(href_list["announce"])
+		on_report()
+		send_report()
+	else if(href_list["remove"])
+		qdel(src)
 
 /*
 
