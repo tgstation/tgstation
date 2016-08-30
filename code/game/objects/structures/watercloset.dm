@@ -134,12 +134,11 @@
 		if(!hiddenitem)
 			user << "<span class='notice'>There is nothing in the drain holder.</span>"
 		else
-			var/obj/item/I = hiddenitem
 			if(ishuman(user))
-				user.put_in_hands(I)
+				user.put_in_hands(hiddenitem)
 			else
-				I.forceMove(get_turf(src))
-			user << "<span class='notice'>You fish [I] out of the drain enclosure.</span>"
+				hiddenitem.forceMove(get_turf(src))
+			user << "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>"
 	else
 		..()
 
