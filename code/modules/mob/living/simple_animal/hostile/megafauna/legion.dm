@@ -152,6 +152,7 @@ Difficulty: Medium
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
+	burn_state = LAVA_PROOF
 
 /obj/item/weapon/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)

@@ -214,6 +214,7 @@
 	icon_state = "talisman"
 	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
+	burn_state = LAVA_PROOF
 
 /datum/action/item_action/immortality
 	name = "Immortality"
@@ -492,6 +493,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
+	burn_state = LAVA_PROOF
 
 /obj/item/weapon/melee/ghost_sword/New()
 	..()
@@ -567,6 +569,7 @@
 	desc = "You're not actually going to drink this, are you?"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
+	burn_state = LAVA_PROOF
 
 /obj/item/weapon/dragons_blood/attack_self(mob/living/carbon/human/user)
 	if(!istype(user))
