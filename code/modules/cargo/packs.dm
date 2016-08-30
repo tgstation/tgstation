@@ -820,6 +820,16 @@
 	crate_name = "machine prototype crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/science/tablets
+	name = "Tablet Crate"
+	cost = 5000
+	contains = list(/obj/item/device/modular_computer/tablet/preset/cargo,
+					/obj/item/device/modular_computer/tablet/preset/cargo,
+					/obj/item/device/modular_computer/tablet/preset/cargo,
+					/obj/item/device/modular_computer/tablet/preset/cargo,
+					/obj/item/device/modular_computer/tablet/preset/cargo)
+	crate_name = "tablet crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

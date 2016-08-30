@@ -170,7 +170,7 @@ var/global/nttransfer_uid = 0
 		data["uploading"] = 1
 		data["upload_uid"] = unique_token
 		data["upload_clients"] = connected_clients.len
-		data["haspassword"] = server_password ? 1 : 0
+		data["upload_haspassword"] = server_password ? 1 : 0
 		data["upload_filename"] = "[provided_file.filename].[provided_file.filetype]"
 	else if (upload_menu)
 		var/list/all_files[0]
