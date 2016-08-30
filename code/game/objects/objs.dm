@@ -19,7 +19,7 @@
 	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
 
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
-
+	var/is_frozen = FALSE
 /obj/New()
 	..()
 
@@ -35,6 +35,11 @@
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	return ..()
+/obj/throw_at()
+	..()
+	if(is_frozen)
+		visible_message("<span class = 'danger'><b>[src] shatters into a million pieces!</b></span>")
+		qdel(src)
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)

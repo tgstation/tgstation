@@ -692,6 +692,14 @@
 		var/obj/C = loc
 		C.container_resist(src)
 
+	else if(has_status_effect(/datum/status_effect/freon))
+		src << "You start breaking out of the ice cube!"
+		if(do_mob(src, src, 40))
+			if(has_status_effect(/datum/status_effect/freon))
+				src << "You break out of the ice cube!"
+				remove_status_effect(/datum/status_effect/freon)
+				update_canmove()
+
 	else if(canmove)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll

@@ -20,6 +20,7 @@
 	var/health = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
+	var/starter_temp
 
 	var/update = 0
 	var/static/list/label2types = list(
@@ -38,39 +39,53 @@
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
 	gas_type = "n2"
+
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "o2 canister"
 	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
 	gas_type = "o2"
+
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
 	gas_type = "co2"
+
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
 	gas_type = "plasma"
+
 /obj/machinery/portable_atmospherics/canister/agent_b
 	name = "agent b canister"
 	desc = "Oxygen Agent B. You're not quite sure what it does."
 	gas_type = "agent_b"
+
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
 	icon_state = "purple"
 	gas_type = "bz"
+
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
 	gas_type = "n2o"
+
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
 	desc = "Pre-mixed air."
 	icon_state = "grey"
+
+/obj/machinery/portable_atmospherics/canister/freon
+	name = "freon canister"
+	desc = "Freon. Great for the atmosphere!"
+	icon_state = "freon"
+	gas_type = "freon"
+	starter_temp = 2.7
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
@@ -78,7 +93,6 @@
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
-
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
@@ -94,8 +108,11 @@
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
 		air_contents.add_gas(gas_type)
+		if(starter_temp)
+			air_contents.temperature = starter_temp
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-
+		if(starter_temp)
+			air_contents.temperature = starter_temp
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.add_gases("o2","n2")
 	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
@@ -308,9 +325,22 @@
 					var/plasma = air_contents.gases["plasma"]
 					var/n2o = air_contents.gases["n2o"]
 					var/bz = air_contents.gases["bz"]
-					if(n2o || plasma || bz)
-						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""][(n2o || plasma) && bz ? " & " : ""][bz ? "BZ" : ""]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-						log_admin("[key_name(usr)] opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""][(n2o || plasma) && bz ? " & " : ""][bz ? "BZ" : ""] at [x], [y], [z]")
+					var/freon = air_contents.gases["freon"]
+					if(n2o || plasma || bz || freon)
+						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains the following: (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+						log_admin("[key_name(usr)] opened a canister that contains the following at [x], [y], [z]:")
+						if(plasma)
+							log_admin("Plasma")
+							message_admins("Plasma")
+						if(n2o)
+							log_admin("N2O")
+							message_admins("N2O")
+						if(bz)
+							log_admin("BZ Gas")
+							message_admins("BZ Gas")
+						if(freon)
+							log_admin("Freon")
+							message_admins("Freon")
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, "atmos")

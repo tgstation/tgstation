@@ -230,6 +230,7 @@
 	damage = 70
 	stun = 5
 	weaken = 5
+	dismemberment = 50
 	armour_penetration = 50
 	var/breakthings = TRUE
 
@@ -243,6 +244,7 @@
 	armour_penetration = 0
 	nodamage = 1
 	stun = 0
+	dismemberment = 0
 	weaken = 0
 	breakthings = FALSE
 
@@ -257,6 +259,7 @@
 	armour_penetration = 15
 	damage = 15
 	stun = 0
+	dismemberment = 0
 	weaken = 0
 	breakthings = FALSE
 
@@ -272,6 +275,7 @@
 	name = "penetrator round"
 	damage = 60
 	forcedodge = 1
+	dismemberment = 0 //It goes through you cleanly.
 	stun = 0
 	weaken = 0
 	breakthings = FALSE

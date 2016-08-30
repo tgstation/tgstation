@@ -81,7 +81,7 @@
 			if(I.on_found(user))
 				return
 		if(can_be_inserted(I,0,user))
-			src_object.remove_from_storage(I, src)
+			handle_item_insertion(I, TRUE, user)
 	orient2hud(user)
 	src_object.orient2hud(user)
 	if(user.s_active) //refresh the HUD to show the transfered contents
