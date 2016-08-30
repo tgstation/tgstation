@@ -25,9 +25,11 @@
 
 /obj/machinery/limbgrower/New()
 	..()
+	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/limbgrower(null)
 	B.apply_default_parts(src)
-	create_reagents(0)
+
+
 	reagents.add_reagent("synthflesh",100)
 
 	files = new /datum/research/limbgrower(src)
@@ -124,8 +126,16 @@
 					use_power(power)
 					reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
 					var/B = being_built.build_path
-					var/obj/item/new_part = new B(src)
-					new_part.loc = loc
+
+					if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
+						//instead of creating this body part manually, im going to use the helpers.dm in bodyparts to do it instead
+						var/obj/item/bodypart/L = new B()
+						L.no_update = 1//when attached, the limb won't be affected by the appearance changes of its mob owner.
+						world << "[B] is a path name"
+						world << "[L] is a body part"
+					else
+						var/obj/item/new_part = new B(src)
+						new_part.loc = loc
 					busy = 0
 					src.updateUsrDialog()
 
