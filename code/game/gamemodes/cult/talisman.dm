@@ -56,7 +56,6 @@
 	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
 	dat += "<HR>"
 	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Summons an arcane tome, used to scribe runes and communicate with other cultists.<BR>"
-	dat += "<A href='?src=\ref[src];rune=metal'>Ar'Tee ess!</A> - Provides 5 runed metal.<BR>"
 	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a selected teleportation rune.<BR>"
 	dat += "<A href='?src=\ref[src];rune=emp'>Ta'gh fara'qha fel d'amar det!</A> - Allows you to destroy technology in a short range.<BR>"
 	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
@@ -77,11 +76,6 @@
 				if("newtome")
 					var/obj/item/weapon/tome/T = new(usr)
 					usr.put_in_hands(T)
-				if("metal")
-					if(istype(src, /obj/item/weapon/paper/talisman/supply/weak))
-						usr.visible_message("<span class='cultitalic'>Lesser supply talismans lack the strength to materialize runed metal!</span>")
-						return
-					new /obj/item/stack/sheet/runed_metal(get_turf(usr),5)
 				if("teleport")
 					var/obj/item/weapon/paper/talisman/teleport/T = new(usr)
 					usr.put_in_hands(T)
@@ -337,6 +331,8 @@
 	if(iscultist(user))
 		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
 		log_game("Construct talisman failed - not a valid target")
+	else
+		..()
 
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/target, mob/user, proximity_flag, click_parameters)
 	..()
@@ -348,16 +344,10 @@
 				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				qdel(src)
-		if(istype(target, /obj/item/stack/sheet/plasteel))
-			var/quantity = target.amount
-			var/turf/T = get_turf(target)
-			new /obj/item/stack/sheet/runed_metal(T,quantity)
-			target.use(quantity)
-			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
-			user << sound('sound/effects/magic.ogg',0,1,25)
-			qdel(src)
+			else
+				user << "<span class='warning'>You need more metal to produce a construct shell!</span>"
 		else
-			user << "<span class='warning'>The talisman must be used on metal or plasteel!</span>"
+			user << "<span class='warning'>The talisman must be used on metal!</span>"
 
 
 //Talisman of Shackling: Applies special cuffs directly from the talisman
