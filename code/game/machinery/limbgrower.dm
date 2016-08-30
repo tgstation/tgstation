@@ -133,6 +133,7 @@
 						L.no_update = 1//when attached, the limb won't be affected by the appearance changes of its mob owner.
 						world << "[B] is a path name"
 						world << "[L] is a body part"
+						L.loc = loc;
 					else
 						var/obj/item/new_part = new B(src)
 						new_part.loc = loc
