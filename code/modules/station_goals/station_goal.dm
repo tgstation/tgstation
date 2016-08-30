@@ -49,7 +49,6 @@
 		qdel(src)
 
 /*
-
 //Crew has to create alien intelligence detector
 // Requires a lot of minerals
 // Dish requires a lot of power

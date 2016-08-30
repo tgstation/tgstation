@@ -80,6 +80,7 @@
 
 /obj/machinery/satellite
 	name = "Defunct Satellite"
+	desc = ""
 	icon = 'icons/obj/machines/satellite.dmi'
 	icon_state = "sat_inactive"
 	var/mode = "NTPROBEV0.8"
@@ -93,10 +94,15 @@
 	id = gid++
 
 /obj/machinery/satellite/interact(mob/user)
-	user << "You [active ? "deactivate": "activate"] the [src]"
-	toggle()
+	toggle(user)
 
-/obj/machinery/satellite/proc/toggle()
+/obj/machinery/satellite/proc/toggle(mob/user)
+	if(!active && !isinspace())
+		if(user)
+			user << "<span class='warning'>You can only active the [src] in space.</span>"
+		return FALSE
+	if(user)
+		user << "<span class='notice'>You [active ? "deactivate": "activate"] the [src]</span>"
 	active = !active
 	if(active)
 		animate(src, pixel_y = 2, time = 10, loop = -1)
@@ -111,14 +117,21 @@
 
 /obj/machinery/satellite/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		user << "// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]"
+		user << "<span class='notice>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>"
 	else
 		return ..()
 
 /obj/machinery/satellite/meteor_shield
 	name = "Meteor Shield Satellite"
+	desc = "Meteor Point Defense Satellite"
 	mode = "M-SHIELD"
 	var/kill_range = 10
+	
+/obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
+	for(var/turf/T in getline(src,meteor))
+		if(!istype(T, /turf/open/space))
+			return FALSE
+	return TRUE
 
 /obj/machinery/satellite/meteor_shield/process()
 	if(!active)
@@ -127,12 +140,14 @@
 		if(M.z != z)
 			continue
 		if(get_dist(M,src) > kill_range)
-			return
-		if(!emagged)
+			continue
+		if(!emagged && space_los(M))
+			Beam(get_turf(M),time=5,maxdistance=kill_range)
 			qdel(M)
 
-/obj/machinery/satellite/meteor_shield/toggle()
-	..()
+/obj/machinery/satellite/meteor_shield/toggle(user)
+	if(!..(user))
+		return FALSE
 	if(emagged)
 		if(active)
 			change_meteor_chance(2)
