@@ -1,11 +1,14 @@
 /datum/status_effect/freon
-	name = "Frozen Solid"
-	desc = "You're frozen inside of an ice cube, and cannot move! You can still do stuff, like shooting. Resist out of the cube!"
 	id = "frozen"
-	icon_state = "frozen"
 	duration = 10
 	unique = TRUE
+	alert_type = /obj/screen/alert/status_effect/freon
 	var/icon/cube
+
+/obj/screen/alert/status_effect/freon
+	name = "Frozen Solid"
+	desc = "You're frozen inside of an ice cube, and cannot move! You can still do stuff, like shooting. Resist out of the cube!"
+	icon_state = "frozen"
 
 /datum/status_effect/freon/on_apply()
 	if(!owner.stat)

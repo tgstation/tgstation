@@ -5,12 +5,6 @@
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/image/wet_overlay = null
 
-/turf/open/freon_gas_act()
-	for(var/obj/I in contents)
-		if(!I.is_frozen) // let it go
-			I.make_frozen_visual(I)
-	MakeSlippery(TURF_WET_PERMAFROST, 5)
-	return
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
@@ -73,6 +67,12 @@
 /turf/open/proc/TakeTemperature(temp)
 	air.temperature += temp
 	air_update_turf()
+
+/turf/open/freon_gas_act()
+	for(var/obj/I in contents)
+		if(!I.is_frozen) //let it go
+			I.make_frozen_visual(I)
+	MakeSlippery(TURF_WET_PERMAFROST, 5)
 
 /turf/open/handle_fall(mob/faller, forced)
 	faller.lying = pick(90, 270)
