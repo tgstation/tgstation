@@ -56,7 +56,7 @@
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
-	gender = MALE
+	gender = FEMALE
 	icon_state = "original"
 	icon_living = "original"
 	icon_dead = "original_dead"
