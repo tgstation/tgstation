@@ -90,9 +90,7 @@
 /datum/chemical_reaction/slimeglass
 	name = "Slime Glass"
 	id = "m_glass"
-	result = null
 	required_reagents = list("water" = 1)
-	result_amount = 1
 	required_container = /obj/item/slime_extract/metal
 	required_other = 1
 
