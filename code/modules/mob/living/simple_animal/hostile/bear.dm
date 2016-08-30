@@ -20,6 +20,7 @@
 	response_harm   = "hits"
 	maxHealth = 60
 	health = 60
+	var/armored = FALSE
 
 	melee_damage_lower = 20
 	melee_damage_upper = 30
@@ -54,11 +55,44 @@
 	icon_living = "combatbear"
 	icon_dead = "combatbear_dead"
 	faction = list("russian")
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1, /obj/item/bear_armor = 1)
+	melee_damage_lower = 25
+	melee_damage_upper = 35
+	armour_penetration = 20
 	health = 120
 	maxHealth = 120
 
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
 	return 1	//No drifting in space for space bears!
+
+/mob/living/simple_animal/hostile/bear/update_icons()
+	..()
+	if(armored)
+		var/image/B = "armor_bear"
+		if(B)
+			add_overlay(B)
+
+/obj/item/bear_armor
+	name = "bear combat kit"
+	desc = "A specialized combat set meant specifically for bears, the instructions inside are in cyrillic writing. This seems like an awful idea."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "clown"
+
+/obj/item/bear_armor/afterattack(atom/target, mob/user, proximity_flag)
+	if(istype(target, /mob/living/simple_animal/hostile/bear) && proximity_flag)
+		var/mob/living/simple_animal/hostile/bear/A = target
+		if(A.armored)
+			user << "<span class='warning'>[A] is already wearing a combat kit</span>"
+			return
+		A.armored = TRUE
+		A.maxHealth = 120
+		A.health += 60
+		A.armour_penetration = 20
+		A.melee_damage_lower += 5
+		A.melee_damage_upper += 5
+		A.update_icons()
+		user << "<span class='info'>You apply the combat kit to [A], sharpening its claws and dawning a set of armor!</span>"
+		qdel(src)
 
 
 
