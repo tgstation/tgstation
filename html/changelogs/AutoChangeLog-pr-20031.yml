@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - rscadd: "The game window will now flash in the taskbar on incoming admin pm, and to all admins when an admin help comes in."

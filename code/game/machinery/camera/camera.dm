@@ -105,6 +105,10 @@
 					O << "The screen bursts into static."
 			..()
 
+/obj/machinery/camera/tesla_act(var/power)//EMP proof upgrade also makes it tesla immune
+	if(isEmpProof())
+		return
+	..()
 
 /obj/machinery/camera/blob_act(obj/effect/blob/B)
 	if(B && B.loc == loc)

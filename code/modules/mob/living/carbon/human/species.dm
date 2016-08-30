@@ -804,17 +804,18 @@
 	if(!(RADIMMUNE in specflags))
 		if(H.radiation)
 			if (H.radiation > 100)
+				if(!H.weakened)
+					H.emote("collapse")
 				H.Weaken(10)
 				H << "<span class='danger'>You feel weak.</span>"
-				H.emote("collapse")
-
 			switch(H.radiation)
-
 				if(50 to 75)
 					if(prob(5))
+						if(!H.weakened)
+							H.emote("collapse")
 						H.Weaken(3)
 						H << "<span class='danger'>You feel weak.</span>"
-						H.emote("collapse")
+
 					if(prob(15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
 							H << "<span class='danger'>Your hair starts to \

@@ -401,6 +401,9 @@ var/bomb_set
 		return
 	. = ..()
 
+/obj/machinery/nuclearbomb/tesla_act(var/power)
+	..()
+	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
 /obj/machinery/nuclearbomb/proc/explode()

@@ -264,8 +264,17 @@
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
-				playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
-				tesla_zap(src, 3, C.powernet.avail * 0.08) //ZAP for 1/5000 of the amount of power, which is from 15-25 with 200000W
+				var/mob/living/closest_mob
+				for(var/A in oview(src, 3))
+					if(istype(A, /mob/living))
+						var/dist = get_dist(src, A)
+						if(dist <= 3)
+							closest_mob = A
+				if(closest_mob)
+					var/shock_damage = C.powernet.avail * 0.08
+					src.Beam(closest_mob, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
+					closest_mob.electrocute_act(shock_damage, src, 1, tesla_shock = 1)//ZAP for 1/5000 of the amount of power, which is from 15-25 with 200000W
+					playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 	take_damage(tforce)
 
 /obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)

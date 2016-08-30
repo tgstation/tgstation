@@ -53739,6 +53739,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "ccw" = (
@@ -61367,6 +61368,7 @@
 "csf" = (
 /obj/structure/table,
 /obj/item/device/multitool,
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "csg" = (
@@ -62106,6 +62108,7 @@
 	dir = 6
 	},
 /obj/item/weapon/storage/firstaid/regular,
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "ctF" = (
@@ -65814,6 +65817,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/pen/red,
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/darkbrown/corner{
 	tag = "icon-darkbrowncorners (EAST)";
 	dir = 4

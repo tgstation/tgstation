@@ -302,8 +302,11 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
+	var/equip = SSjob.EquipRank(character, rank, 1)
+	if(isrobot(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
+		character = equip
+
 
 	var/D = pick(latejoin)
 	if(!D)
@@ -319,24 +322,26 @@
 					continue
 
 	character.loc = D
+	ticker.minds += character.mind
 
-	if(character.mind.assigned_role != "Cyborg")
-		data_core.manifest_inject(character)
-		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
-		AnnounceArrival(character, rank)
-		AddEmploymentContract(character)
-	else
-		character.Robotize()
+	var/mob/living/carbon/human/humanc
+	if(ishuman(character))
+		humanc = character	//Let's retypecast the var to be human,
+
+	if(humanc)	//These procs all expect humans
+		data_core.manifest_inject(humanc)
+		AnnounceArrival(humanc, rank)
+		AddEmploymentContract(humanc)
 
 	joined_player_list += character.ckey
 
-	if(config.allow_latejoin_antagonists)
+	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_RECALL, SHUTTLE_IDLE)
-				ticker.mode.make_antag_chance(character)
+				ticker.mode.make_antag_chance(humanc)
 			if(SHUTTLE_CALL)
 				if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
-					ticker.mode.make_antag_chance(character)
+					ticker.mode.make_antag_chance(humanc)
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)

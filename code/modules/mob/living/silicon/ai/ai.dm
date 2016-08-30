@@ -14,11 +14,12 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'//
+	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai"
 	anchored = 1
 	density = 1
 	status_flags = CANSTUN|CANPUSH
+	a_intent = "harm" //so we always get pushed instead of trying to swap
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8
@@ -77,7 +78,7 @@ var/list/ai_list = list()
 
 	var/obj/machinery/camera/portable/builtInCamera
 
-/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
+/mob/living/silicon/ai/New(loc, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	..()
 	rename_self("ai")
 	name = real_name
@@ -917,3 +918,6 @@ var/list/ai_list = list()
 		src << "Hack complete. \The [apc] is now under your \
 			exclusive control."
 		apc.update_icon()
+
+/mob/living/silicon/ai/spawned/New(loc, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
+	..(loc,L,B,1)

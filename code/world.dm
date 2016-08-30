@@ -59,8 +59,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	spawn(10)
 		Master.Setup()
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
+	process_teleport_locs()			//Sets up the wizard teleport locations
 
 	#ifdef MAP_NAME
 	map_name = "[MAP_NAME]"
@@ -227,7 +227,7 @@ var/last_irc_status = 0
 		if(ticker && ticker.round_end_sound)
 			world << sound(ticker.round_end_sound)
 		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
+			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg')) // random end sounds!! - LastyBatsy
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")

@@ -148,7 +148,6 @@
 	item_state = "eng_hardsuit"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
-	pockets = /obj/item/weapon/storage/internal/pocket
 
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
@@ -194,8 +193,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	jetpack = /obj/item/weapon/tank/jetpack/suit
-	pockets = /obj/item/weapon/storage/internal/pocket/big
-
 
 	//Mining hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/mining
@@ -220,8 +217,6 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
-	pockets = /obj/item/weapon/storage/internal/pocket
-
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi
@@ -507,7 +502,6 @@
 	item_state = "clown_hardsuit"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/clown
-	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, slot)
 	if(!..() || !ishuman(M))
@@ -536,10 +530,6 @@
 	var/shield_state = "shield-old"
 	var/shield_on = "shield-old"
 
-/obj/item/clothing/suit/space/hardsuit/shielded/New()
-	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
-	..()
-
 /obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	if(current_charges > 0)
 		var/datum/effect_system/spark_spread/s = new
@@ -547,8 +537,9 @@
 		s.start()
 		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
 		current_charges--
-		recharge_cooldown = world.time + recharge_delay
-		START_PROCESSING(SSobj, src)
+		if(recharge_rate)
+			recharge_cooldown = world.time + recharge_delay
+			START_PROCESSING(SSobj, src)
 		if(current_charges <= 0)
 			owner.visible_message("[owner]'s shield overloads!")
 			shield_state = "broken"
@@ -572,8 +563,6 @@
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/C = loc
 			C.update_inv_wear_suit()
-
-
 
 /obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands)
     . = list()
@@ -651,6 +640,10 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
 
+
+/obj/item/clothing/suit/space/hardsuit/shielded/syndi/New()
+	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+	..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	name = "blood-red hardsuit helmet"

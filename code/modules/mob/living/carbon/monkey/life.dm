@@ -22,17 +22,19 @@
 
 	if (radiation)
 		if (radiation > 100)
+			if(!weakened)
+				emote("collapse")
 			Weaken(10)
 			src << "<span class='danger'>You feel weak.</span>"
-			emote("collapse")
 
 		switch(radiation)
 
 			if(50 to 75)
 				if(prob(5))
+					if(!weakened)
+						emote("collapse")
 					Weaken(3)
 					src << "<span class='danger'>You feel weak.</span>"
-					emote("collapse")
 
 			if(75 to 100)
 				if(prob(1))

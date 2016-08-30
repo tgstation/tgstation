@@ -67,7 +67,10 @@
 	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
 	for(var/H in all_components)
-		qdel(H)
+		var/obj/item/weapon/computer_hardware/CH = H
+		if(CH.holder == src)
+			CH.holder = null
+			qdel(CH)
 	return ..()
 
 // Eject ID card from computer, if it has ID slot with card inside.

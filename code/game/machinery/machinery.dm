@@ -467,10 +467,8 @@ Class Procs:
 /obj/machinery/tesla_act(var/power)
 	..()
 	if(prob(85))
-		emp_act(2)
+		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
-		ex_act(3)
-	else if(prob(90))
-		ex_act(2)
+		emp_act(2)
 	else
-		ex_act(1)
+		ex_act(2)

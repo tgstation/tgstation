@@ -29064,6 +29064,7 @@
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen/red,
 /obj/structure/table,
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bnH" = (
@@ -32563,6 +32564,7 @@
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "buF" = (
@@ -34285,6 +34287,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown{
 	dir = 2
 	},
@@ -40896,6 +40899,7 @@
 /obj/structure/table/reinforced,
 /obj/item/device/destTagger,
 /obj/item/device/destTagger,
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bLG" = (
