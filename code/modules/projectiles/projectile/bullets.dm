@@ -275,6 +275,7 @@
 	name = "penetrator round"
 	damage = 60
 	forcedodge = 1
+	dismemberment = 0 //It goes through you cleanly.
 	stun = 0
 	weaken = 0
 	breakthings = FALSE
