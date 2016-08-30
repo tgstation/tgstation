@@ -1009,10 +1009,26 @@ var/global/list/humanoid_icon_cache = list()
 	dir = newdir
 
 // Used to make the frozen item visuals for Freon.
+var/list/freeze_item_icons = list()
 
-/obj/proc/make_frozen(var/obj/F)
-	if(!F.is_frozen)
-		F.color = "#74BBFB" // fuck you BYOND
+/atom/proc/freeze_icon_index()
+	return "\ref[initial(icon)]-[initial(icon_state)]"
+
+/obj/proc/make_frozen_visual(var/obj/F)
+	if(!F.is_frozen && (initial(icon) && initial(icon_state)))
+		var/index = freeze_icon_index()
+		var/icon/IC
+		var/icon/P = freeze_item_icons[index]
+		if(!P)
+			P = new /icon
+			for(var/iconstate in icon_states(F.icon))
+				var/icon/O = new('icons/effects/freeze.dmi', "ice_cube")
+				IC = new(F.icon, iconstate)
+				O.Blend(IC, ICON_ADD)
+				P.Insert(O, iconstate)
+			freeze_item_icons[index] = P
+		F.icon = P
 		F.name = "frozen [F.name]"
 		F.is_frozen = TRUE
 		return
+	return

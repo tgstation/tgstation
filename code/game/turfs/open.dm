@@ -4,17 +4,12 @@
 	var/wet = 0
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/image/wet_overlay = null
-	var/already_frozen = FALSE
-	var/freeze_timer = 0
-	var/freeze_max = 3
 
 /turf/open/freon_gas_act()
-	if(!already_frozen)
-		for(var/obj/I in contents)
-			if(!I.is_frozen)
-				I.make_frozen_visual(I)
-		already_frozen = TRUE
-	MakeSlippery(TURF_WET_PERMAFROST, wet_time_to_add = 5)
+	for(var/obj/I in contents)
+		if(!I.is_frozen) // let it go
+			I.make_frozen_visual(I)
+	MakeSlippery(TURF_WET_PERMAFROST, 5)
 	return
 /turf/open/indestructible
 	name = "floor"
