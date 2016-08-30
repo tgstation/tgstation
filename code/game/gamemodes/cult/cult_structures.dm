@@ -16,7 +16,7 @@
 
 /obj/structure/cult/pylon
 	name = "pylon"
-	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
+	desc = "A floating crystal that makes you feel slightly uneasy."
 	icon_state = "pylon"
 	luminosity = 5
 
