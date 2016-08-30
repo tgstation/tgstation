@@ -4,6 +4,7 @@
 /mob/living/simple_animal/bot
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
+	gender = NEUTER
 	luminosity = 3
 	stop_automated_movement = 1
 	wander = 0
@@ -864,7 +865,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			else
 				user << "<span class='warning'>[card] is inactive.</span>"
 		else
-			user << "<span class='warning'>The personality slot is locked.</span>"	
+			user << "<span class='warning'>The personality slot is locked.</span>"
 	else
 		user << "<span class='warning'>[src] is not compatible with [card]</span>"
 

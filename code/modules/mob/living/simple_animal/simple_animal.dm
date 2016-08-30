@@ -3,6 +3,7 @@
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
+	gender = PLURAL //placeholder
 
 	status_flags = CANPUSH
 
@@ -87,6 +88,8 @@
 	..()
 	handcrafting = new()
 	verbs -= /mob/verb/observe
+	if(gender == PLURAL)
+		gender = pick(MALE,FEMALE)
 	if(!real_name)
 		real_name = name
 	if(!loc)
