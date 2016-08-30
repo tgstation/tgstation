@@ -1274,6 +1274,7 @@
 #include "code\modules\mining\laborcamp\laborshuttle.dm"
 #include "code\modules\mining\laborcamp\laborstacker.dm"
 #include "code\modules\mining\lavaland\lavaland_areas.dm"
+#include "code\modules\mining\lavaland\lavaland_treasure.dm"
 #include "code\modules\mining\lavaland\necropolis_chests.dm"
 #include "code\modules\mining\lavaland\ruins\gym.dm"
 #include "code\modules\mob\death.dm"

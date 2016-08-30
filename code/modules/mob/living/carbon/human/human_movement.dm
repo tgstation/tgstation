@@ -22,7 +22,7 @@
 			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return ((shoes && shoes.negates_gravity()) || dna.species.negates_gravity())
+	return ((shoes && shoes.negates_gravity()) || dna.species.negates_gravity() || (wear_suit && wear_suit.negates_gravity()))
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()

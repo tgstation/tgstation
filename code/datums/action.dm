@@ -189,6 +189,9 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/toggle_harness
+	name = "Toggle Harness"
+
 /datum/action/item_action/clock
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
