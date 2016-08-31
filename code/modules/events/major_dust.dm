@@ -13,7 +13,5 @@
 		"Nanotrasen Superweapons Division is testing a new prototype \
 		[pick("field","projection","nova","super-colliding","reactive")] \
 		[pick("cannon","artillery","tank","cruiser","\[REDACTED\]")], \
-		some mild debris is expected.",
-		"A neighbouring station is throwing rocks at you. (Perhaps they've \
-		grown tired of your messages.)")
+		some mild debris is expected.")
 	priority_announce(pick(reason), "Collision Alert")
