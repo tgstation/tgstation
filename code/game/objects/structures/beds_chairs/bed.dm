@@ -142,7 +142,7 @@
 				R.user_unbuckle_mob(R.buckled_mobs[1],user)
 
 		loaded = target
-		target.loc = src
+		target.forceMove(src)
 		user.visible_message("[user] collects [loaded].", "<span class='notice'>You collect [loaded].</span>")
 	..()
 
