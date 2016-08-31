@@ -9,6 +9,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	real_name = "Guardian Spirit"
 	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
+	gender = NEUTER
 	bubble_icon = "guardian"
 	response_help  = "passes through"
 	response_disarm = "flails at"

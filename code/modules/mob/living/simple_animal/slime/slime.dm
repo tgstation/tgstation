@@ -10,6 +10,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
 	ventcrawler = 2
+	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
 	languages_spoken = SLIME | HUMAN

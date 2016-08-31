@@ -6,6 +6,7 @@
 	icon_living = "alienh_s"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
+	gender = FEMALE
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "hits"
