@@ -50,7 +50,7 @@
 
 /obj/structure/alien/gelpod
 	name = "gelatinous mound"
-	desc = "A mound of jelly-like substance incasing something inside."
+	desc = "A mound of jelly-like substance encasing something inside."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "gelmound"
 

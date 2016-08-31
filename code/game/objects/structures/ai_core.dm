@@ -115,7 +115,7 @@
 							state = 4
 							icon_state = "4"
 				else
-					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into AI core!</span>"
+					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>"
 				return
 
 			if(istype(P, /obj/item/weapon/aiModule))
