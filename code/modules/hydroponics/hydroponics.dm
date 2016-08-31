@@ -683,6 +683,14 @@
 			return
 		if(alert(user, "This will make [src] self-sustaining but consume [O] forever. Are you sure?", "[name]", "I'm Sure", "Abort") == "Abort" || !user)
 			return
+		if(!Adjacent(user))
+			return
+		if(self_sustaining)
+			user << "<span class='warning'>This [name] is already self-sustaining!</span>"
+			return
+		if(myseed || weedlevel)
+			user << "<span class='warning'>[src] needs to be clear of plants and weeds!</span>"
+			return
 		user.visible_message("<span class='notice'>[user] gently pulls open the soil for [O] and places it inside.</span>", "<span class='notice'>You tenderly root [O] into [src].</span>")
 		user.drop_item()
 		qdel(O)
