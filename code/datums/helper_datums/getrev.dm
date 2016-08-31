@@ -11,7 +11,7 @@ var/global/datum/getrev/revdata = new()
 	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
 		testmerge = file2list("..\\prtestjob.lk")
 	var/testlen = max(testmerge.len - 1, 0)
-	var/regex/head_log = new("(\\w{40}) .+> (\\d{10}).+(?=(\n.*(\\w{40}).*){[testlen]}\\Z)")
+	var/regex/head_log = new("(\\w{40}) .+> (\\d{10}).+(?=(\n.*(\\w{40}).*){[testlen]}\n*\\Z)")
 	head_log.Find(head_file)
 	parentcommit = head_log.group[1]
 	date = unix2date(text2num(head_log.group[2]))

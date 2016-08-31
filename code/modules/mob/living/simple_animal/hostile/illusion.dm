@@ -5,6 +5,7 @@
 	icon_state = "static"
 	icon_living = "static"
 	icon_dead = "null"
+	gender = NEUTER
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	a_intent = "harm"

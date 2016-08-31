@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Metal slimes now spawn a few sheets of glass when injected with water."

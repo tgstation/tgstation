@@ -238,7 +238,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("vanguard_cogwheel" = 1)
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
-	var/total_duration = 200
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
 	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
@@ -247,31 +246,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return 1
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	invoker.add_stun_absorption("vanguard", total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
-	invoker.visible_message("<span class='warning'>[invoker] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
-	spawn(total_duration)
-		if(!invoker)
-			return
-
-		var/vanguard = invoker.stun_absorption["vanguard"]
-		var/stuns_blocked = 0
-		if(vanguard)
-			stuns_blocked = min(vanguard["stuns_absorbed"] * 0.25, 20)
-		if(invoker.stat != DEAD)
-			var/message_to_invoker = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
-			var/otheractiveabsorptions = FALSE
-			for(var/i in invoker.stun_absorption)
-				if(invoker.stun_absorption[i]["end_time"] > world.time && invoker.stun_absorption[i]["priority"] > vanguard["priority"])
-					otheractiveabsorptions = TRUE
-			if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
-				vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
-				invoker.Stun(stuns_blocked)
-				invoker.Weaken(stuns_blocked)
-				message_to_invoker = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
-				if(stuns_blocked >= 15)
-					message_to_invoker += "\n<span class='userdanger'>You faint from the exertion!</span>"
-					invoker.Paralyse(stuns_blocked * 2)
-			invoker.visible_message("<span class='warning'>[invoker]'s glowing aura fades!</span>", message_to_invoker)
+	invoker.apply_status_effect(STATUS_EFFECT_VANGUARD)
 	return 1
 
 

@@ -11,6 +11,7 @@
 	speed = 0
 	maxHealth = 250
 	health = 250
+	gender = NEUTER
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
