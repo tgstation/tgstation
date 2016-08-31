@@ -80,6 +80,22 @@ var/list/hardcoded_gases = list("o2","n2","co2","plasma") //the main four gases,
 	specific_heat = 20
 	name = "BZ"
 
+/datum/gas/electricity //Exists as a code friendly abstraction for static charge.
+	id = "electric"
+	specific_heat = 1
+	name = "Static Charge"
+
+/datum/gas/ozone
+	id = "ozone"
+	specific_heat = 30
+	name = "Ozone"
+
+/datum/gas/ion_plasma
+	id = "ion_plasma"
+	specific_heat = 200
+	name = "Ionized Plasma"
+	gas_overlay = "ionplasma"
+
 /obj/effect/overlay/gas/
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = 0
