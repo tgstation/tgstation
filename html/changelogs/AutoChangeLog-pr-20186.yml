@@ -1,0 +1,5 @@
+author: "phil235"
+delete-after: True
+changes: 
+  - tweak: "Putting packagewrap or hand labeler in a backpack is now done by clicking and dragging."
+  - bugfix: "You can now wrap backpacks and other storage items with packagewrap."
