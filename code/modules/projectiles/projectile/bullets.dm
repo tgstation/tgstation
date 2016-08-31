@@ -172,7 +172,7 @@
 /obj/item/projectile/bullet/dart/New()
 	..()
 	create_reagents(50)
-	reagents.set_reacting(FALSE)
+	reagents.set_noreact()
 
 /obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0, hit_zone)
 	if(iscarbon(target))
@@ -189,7 +189,7 @@
 									   "<span class='userdanger'>You were protected against the [name]!</span>")
 
 	..(target, blocked, hit_zone)
-	reagents.set_reacting(TRUE)
+	reagents.set_noreact(FALSE)
 	reagents.handle_reactions()
 	return 1
 

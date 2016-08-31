@@ -21,7 +21,7 @@
 /obj/machinery/food_cart/New()
 	..()
 	create_reagents(LIQUID_CAPACIY)
-	reagents.set_reacting(FALSE)
+	reagents.set_noreact()
 	mixer = new /obj/item/weapon/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 

@@ -51,7 +51,7 @@
 	name = "Solid Plasma"
 	id = "solidplasma"
 	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -69,7 +69,7 @@
 	id = "soapification"
 	required_reagents = list("liquidgibs" = 10, "lye"  = 10) // requires two scooped gib tiles
 	required_temp = 374
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -81,7 +81,7 @@
 	id = "candlefication"
 	required_reagents = list("liquidgibs" = 5, "oxygen"  = 5) //
 	required_temp = 374
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -92,7 +92,7 @@
 	name = "Meatification"
 	id = "meatification"
 	required_reagents = list("liquidgibs" = 10, "nutriment" = 10, "carbon" = 10)
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -311,7 +311,7 @@
 	name = "Foam"
 	id = "foam"
 	required_reagents = list("fluorosurfactant" = 1, "water" = 1)
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -328,7 +328,7 @@
 	name = "Metal Foam"
 	id = "metalfoam"
 	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "facid" = 1)
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -345,7 +345,7 @@
 	name = "Iron Foam"
 	id = "ironlfoam"
 	required_reagents = list("iron" = 3, "foaming_agent" = 1, "facid" = 1)
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)

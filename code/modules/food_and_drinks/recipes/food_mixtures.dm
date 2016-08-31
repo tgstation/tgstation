@@ -8,7 +8,7 @@
 	id = "tofu"
 	required_reagents = list("soymilk" = 10)
 	required_catalysts = list("enzyme" = 5)
-	mob_react=1
+	no_mob_react=1
 
 /datum/chemical_reaction/tofu/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -32,7 +32,7 @@
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
 	required_reagents = list("milk" = 2, "cocoa" = 2, "sugar" = 2)
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/chocolate_bar2/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -86,7 +86,7 @@
 	name = "synthmeat"
 	id = "synthmeat"
 	required_reagents = list("blood" = 5, "cryoxadone" = 1)
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)

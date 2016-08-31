@@ -10,6 +10,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents
 	var/list/datum/reagent/reagent_list = new/list()
+	var/list/datum/chemical_reaction/reaction_list = new/list() // Used to prevent the same reaction from occuring more than once.
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
@@ -17,13 +18,14 @@ var/const/INJECT = 5 //injection
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
+	var/reacting = 0 // Used to prevent handle_reactions from being called more than once per tick.
 	var/flags
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
 	if(!(flags & REAGENT_NOREACT))
-		START_PROCESSING(SSobj, src)
+		START_PROCESSING(SSfastprocess, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
@@ -60,12 +62,17 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/Destroy()
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSfastprocess, src)
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		qdel(R)
+	for(var/reaction in reaction_list)
+		var/datum/active_reaction/R = reaction_list[reaction]
+		qdel(R)
 	reagent_list.Cut()
 	reagent_list = null
+	reaction_list.Cut()
+	reaction_list = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 
@@ -91,7 +98,7 @@ var/const/INJECT = 5 //injection
 		total_transfered++
 		update_total()
 
-	handle_reactions()
+	set_reacting()
 	return total_transfered
 
 /datum/reagents/proc/remove_all(amount = 1)
@@ -102,7 +109,7 @@ var/const/INJECT = 5 //injection
 			remove_reagent(R.id, R.volume * part)
 
 		update_total()
-		handle_reactions()
+		set_reacting()
 		return amount
 
 /datum/reagents/proc/get_master_reagent_name()
@@ -151,8 +158,8 @@ var/const/INJECT = 5 //injection
 	update_total()
 	R.update_total()
 	if(!no_react)
-		R.handle_reactions()
-		src.handle_reactions()
+		R.set_reacting()
+		src.set_reacting()
 	return amount
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
@@ -173,8 +180,8 @@ var/const/INJECT = 5 //injection
 
 	src.update_total()
 	R.update_total()
-	R.handle_reactions()
-	src.handle_reactions()
+	R.set_reacting()
+	src.set_reacting()
 	return amount
 
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
@@ -198,7 +205,7 @@ var/const/INJECT = 5 //injection
 
 	src.update_total()
 	R.update_total()
-	R.handle_reactions()
+	R.set_reacting()
 	//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
 	return amount
 
@@ -237,7 +244,7 @@ var/const/INJECT = 5 //injection
 /datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
 	if(C)
 		chem_temp = C.bodytemperature
-		handle_reactions()
+		set_reacting()
 	var/need_mob_update = 0
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
@@ -291,25 +298,6 @@ var/const/INJECT = 5 //injection
 		C.update_stamina()
 	update_total()
 
-/datum/reagents/process()
-	if(flags & REAGENT_NOREACT)
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	for(var/reagent in reagent_list)
-		var/datum/reagent/R = reagent
-		R.on_tick()
-
-/datum/reagents/proc/set_reacting(react = TRUE)
-	if(react)
-		// Order is important, process() can remove from processing if
-		// the flag is present
-		flags &= ~(REAGENT_NOREACT)
-		START_PROCESSING(SSobj, src)
-	else
-		STOP_PROCESSING(SSobj, src)
-		flags |= REAGENT_NOREACT
-
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
@@ -322,64 +310,77 @@ var/const/INJECT = 5 //injection
 		R.on_update (A)
 	update_total()
 
+/datum/reagents/process()
+	reacting = 0
+	STOP_PROCESSING(SSfastprocess, src)
+	handle_reactions()
+
+/datum/reagents/proc/set_reacting()
+	if(!reacting)
+		handle_reactions()
+		reacting = 1
+		START_PROCESSING(SSfastprocess, src)
+
+/datum/reagents/proc/set_noreact(on = TRUE)
+	if(on)
+		flags |= REAGENT_NOREACT
+	else
+		flags &= ~(REAGENT_NOREACT)
+		set_reacting()
+
 /datum/reagents/proc/handle_reactions()
 	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
-
 	var/reaction_occured = 0
 	do
 		reaction_occured = 0
 		for(var/reagent in reagent_list)
 			var/datum/reagent/R = reagent
 			for(var/reaction in chemical_reactions_list[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
-				if(!reaction)
+				if(!reaction || reaction in reaction_list) // skip recipe checking if its already reacting.
 					continue
 
 				var/datum/chemical_reaction/C = reaction
 				var/total_required_reagents = C.required_reagents.len
 				var/total_matching_reagents = 0
-				var/total_required_catalysts = C.required_catalysts.len
-				var/total_matching_catalysts= 0
-				var/matching_container = 0
 				var/matching_other = 0
-				var/list/multipliers = new/list()
+				//var/list/multipliers = new/list()
 				var/required_temp = C.required_temp
 				var/is_cold_recipe = C.is_cold_recipe
 				var/meets_temp_requirement = 0
 
 				for(var/B in C.required_reagents)
-					if(!has_reagent(B, C.required_reagents[B]))
+					if(!get_reagent_amount(B) >= C.required_reagents[B])
 						break
 					total_matching_reagents++
-					multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
-				for(var/B in C.required_catalysts)
-					if(!has_reagent(B, C.required_catalysts[B]))
-						break
-					total_matching_catalysts++
+					//multipliers += get_reagent_amount(B) / C.required_reagents[B]
 
-				if(!C.required_container)
-					matching_container = 1
-
-				else
-					if(my_atom.type == C.required_container)
-						matching_container = 1
 				if (isliving(my_atom)) //Makes it so certain chemical reactions don't occur in mobs
-					if (C.mob_react)
+					if (C.no_mob_react)
 						return
+
 				if(!C.required_other)
 					matching_other = 1
+				else if(C.special_reqs(src)) // Now more reusable than ever!
+					matching_other = 1
 
-				else if(istype(my_atom, /obj/item/slime_extract))
-					var/obj/item/slime_extract/M = my_atom
-
-					if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-						matching_other = 1
-
-				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
+				if(required_temp <= 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 					meets_temp_requirement = 1
 
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
-					var/multiplier = min(multipliers)
+				/*var/multiplier = 0
+				if(C.is_ratio)
+					multiplier = min(multipliers)
+				else
+					multiplier = round(min(multipliers))
+
+				if(!multiplier)
+					continue*/
+
+				if(total_matching_reagents == total_required_reagents && matching_other && meets_temp_requirement)
+					if (C.react(src))
+						reaction_occured = 1
+						break
+					/*
 					for(var/B in C.required_reagents)
 						remove_reagent(B, (multiplier * C.required_reagents[B]), safety = 1)
 
@@ -406,10 +407,16 @@ var/const/INJECT = 5 //injection
 								ME2.desc = "This extract has been used up."
 
 					C.on_reaction(src, multiplier)
-					reaction_occured = 1
-					break
+					*/
 
-	while(reaction_occured)
+
+
+	while(reaction_occured && world.tick_usage < CURRENT_TICKLIMIT)
+
+	if(world.tick_usage > CURRENT_TICKLIMIT && !reacting) // Reaction was cut due to tick limitations. Try and process again later.
+		reacting = 1
+		START_PROCESSING(SSfastprocess, src)
+
 	update_total()
 	return 0
 
@@ -509,7 +516,7 @@ var/const/INJECT = 5 //injection
 			my_atom.on_reagent_change()
 			R.on_merge(data)
 			if(!no_react)
-				handle_reactions()
+				set_reacting()
 			return 0
 
 	var/datum/reagent/D = chemical_reagents_list[reagent]
@@ -526,13 +533,13 @@ var/const/INJECT = 5 //injection
 		update_total()
 		my_atom.on_reagent_change()
 		if(!no_react)
-			handle_reactions()
+			set_reacting()
 		return 0
 	else
 		WARNING("[my_atom] attempted to add a reagent called ' [reagent] ' which doesn't exist. ([usr])")
 
 	if(!no_react)
-		handle_reactions()
+		set_reacting()
 
 	return 1
 
@@ -555,7 +562,7 @@ var/const/INJECT = 5 //injection
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
-				handle_reactions()
+				set_reacting()
 			my_atom.on_reagent_change()
 			return 0
 
@@ -581,7 +588,7 @@ var/const/INJECT = 5 //injection
 		if (R.id == reagent)
 			return R.volume
 
-	return 0
+	return -1
 
 /datum/reagents/proc/get_reagents()
 	var/list/names = list()

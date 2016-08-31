@@ -239,7 +239,7 @@
 
 /obj/item/weapon/reagent_containers/syringe/noreact/New()
 	. = ..()
-	reagents.set_reacting(FALSE)
+	reagents.set_noreact()
 
 /obj/item/weapon/reagent_containers/syringe/piercing
 	name = "piercing syringe"

@@ -264,7 +264,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/New()
 	..()
 	create_reagents(max_volume)
-	reagents.set_reacting(FALSE)
+	reagents.set_noreact()
 	syringes = new
 	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
 	processed_reagents = new
@@ -280,7 +280,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/critfail()
 	..()
 	if(reagents)
-		reagents.set_reacting(TRUE)
+		reagents.set_noreact(FALSE)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/can_attach(obj/mecha/medical/M)
 	if(..())

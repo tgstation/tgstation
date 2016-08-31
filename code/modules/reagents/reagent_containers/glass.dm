@@ -173,7 +173,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact/New()
 	..()
-	reagents.set_reacting(FALSE)
+	reagents.set_noreact()
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"

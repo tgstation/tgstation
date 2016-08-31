@@ -120,7 +120,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/New()
 	..()
 	create_reagents(chem_volume)
-	reagents.set_reacting(FALSE) // so it doesn't react until you light it
+	reagents.set_noreact() // so it doesn't react until you light it
 	reagents.add_reagent("nicotine", 15)
 
 /obj/item/clothing/mask/cigarette/Destroy()
@@ -180,7 +180,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	reagents.set_reacting(TRUE)
+	reagents.set_noreact(FALSE)
 	reagents.handle_reactions()
 	icon_state = icon_on
 	item_state = icon_on
