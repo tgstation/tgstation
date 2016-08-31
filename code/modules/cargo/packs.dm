@@ -147,10 +147,26 @@
 	name = "NULL_ENTRY"
 	hidden = TRUE
 	cost = 14000
-	contains = list(/obj/item/weapon/storage/box/syndicate)
+	contains = list()
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 	dangerous = TRUE
+
+/datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
+	var/static/list/uplink_items = get_uplink_items()
+
+	var/crate_value = 50
+	while(crate_value)
+		var/category = pick(uplink_items)
+		var/item = pick(uplink_items[category])
+		var/datum/uplink_item/I = uplink_items[category][item]
+
+		if(!I.surplus || prob(100 - I.surplus))
+			continue
+		if(crate_value < I.cost)
+			continue
+		crate_value -= I.cost
+		new I.item(C)
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////

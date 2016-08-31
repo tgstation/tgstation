@@ -93,7 +93,9 @@
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
-		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion via projectile.")
+		var/boom_message = "[key_name_admin(Proj.firer)] triggered a fueltank explosion via projectile."
+		bombers += boom_message
+		message_admins(boom_message)
 		log_game("[key_name(Proj.firer)] triggered a fueltank explosion via projectile.")
 		boom()
 
@@ -130,7 +132,9 @@
 			update_icon()
 		else
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling \his [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
-			message_admins("[key_name_admin(user)] triggered a fueltank explosion via welding tool.")
+			var/message = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
+			bombers += message
+			message_admins(message)
 			log_game("[key_name(user)] triggered a fueltank explosion via welding tool.")
 			boom()
 		return

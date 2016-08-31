@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Vanguard now has a tooltip showing the amount of stuns you've absorbed and will be affected by."
