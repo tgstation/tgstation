@@ -1,4 +1,4 @@
-//The chests dropped by mob spawner tendrils. Also contains associated loot.
+//The chests dropped by mob spawner tendrils.
 
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
@@ -11,8 +11,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,25)
-	switch(loot)
+	switch(rand(1, 25))
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
 		if(2)
@@ -22,9 +21,9 @@
 		if(4)
 			new /obj/item/weapon/katana/cursed(src)
 		if(5)
-			new /obj/item/clothing/glasses/godeye(src)
+			new /obj/item/clothing/glasses/prismatic_lens(src)
 		if(6)
-			new /obj/item/weapon/reagent_containers/glass/bottle/potion/flight(src)
+			new /obj/item/clothing/suit/gravity_harness(src)
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
@@ -414,44 +413,6 @@
 	generic_pixel_y = 2
 	generic_pixel_x = 1
 	vehicle_move_delay = 1
-
-//Potion of Flight
-/obj/item/weapon/reagent_containers/glass/bottle/potion
-	icon = 'icons/obj/lavaland/artefacts.dmi'
-	icon_state = "potionflask"
-
-/obj/item/weapon/reagent_containers/glass/bottle/potion/flight
-	name = "strange elixir"
-	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
-	list_reagents = list("flightpotion" = 5)
-
-/obj/item/weapon/reagent_containers/glass/bottle/potion/update_icon()
-	if(reagents.total_volume)
-		icon_state = "potionflask"
-	else
-		icon_state = "potionflask_empty"
-
-/datum/reagent/flightpotion
-	name = "Flight Potion"
-	id = "flightpotion"
-	description = "Strange mutagenic compound of unknown origins."
-	reagent_state = LIQUID
-	color = "#FFEBEB"
-
-/datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
-		if(!ishumanbasic(M) || reac_volume < 5) // implying xenohumans are holy
-			if(method == INGEST && show_message)
-				M << "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>"
-			return ..()
-
-		M << "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>"
-		M.set_species(/datum/species/angel)
-		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
-		M.adjustBruteLoss(20)
-		M.emote("scream")
-	..()
-
 
 
 
