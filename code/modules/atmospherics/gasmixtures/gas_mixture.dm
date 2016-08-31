@@ -181,13 +181,16 @@ var/list/gaslist_cache = null
 				//world << "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]]
 			*/
 	if(holder)
-		if(cached_gases["freon"] && cached_gases["o2"])
-			if(cached_gases["freon"][MOLES] >= 3)
-				if(return_temperature() < 50)
-					holder.freon_gas_act()
-					cached_gases["freon"][MOLES] -= 3
-					cached_gases["o2"][MOLES] += 3
-					temperature += 1
+		if(cached_gases["freon"])
+			if(cached_gases["freon"][MOLES] >= MOLES_PLASMA_VISIBLE)
+				if(holder.freon_gas_act())
+					cached_gases["freon"][MOLES] -= MOLES_PLASMA_VISIBLE
+
+		if(cached_gases["water_vapor"])
+			if(cached_gases["water_vapor"][MOLES] >= MOLES_PLASMA_VISIBLE)
+				if(holder.water_vapor_gas_act())
+					cached_gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
+
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		//world << "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]"

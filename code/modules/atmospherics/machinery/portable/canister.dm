@@ -85,7 +85,14 @@
 	desc = "Freon. Great for the atmosphere!"
 	icon_state = "freon"
 	gas_type = "freon"
-	starter_temp = 2.7
+	starter_temp = 120
+
+/obj/machinery/portable_atmospherics/canister/water_vapor
+	name = "water vapor canister"
+	desc = "Water Vapor. We get it, you vape."
+	icon_state = "water_vapor"
+	gas_type = "water_vapor"
+	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
