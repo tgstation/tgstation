@@ -28,18 +28,15 @@
 				icon_state = icon_locked
 				user << "<span class='danger'>You lock the [src.name]!</span>"
 				close_all()
-				return
 			else
 				icon_state = icon_closed
 				user << "<span class='danger'>You unlock the [src.name]!</span>"
-				return
 		else
 			user << "<span class='danger'>Access Denied.</span>"
-			return
-	if(!locked)
-		return ..()
-	else
+	else if(locked && !W.no_direct_insertion)
 		user << "<span class='danger'>It's locked!</span>"
+	else
+		return ..()
 
 /obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
 	if (locked)
