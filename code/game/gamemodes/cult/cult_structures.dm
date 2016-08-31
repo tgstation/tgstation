@@ -1,10 +1,17 @@
+//Just a copy paste from clock_structures, but it gets the job done.
+
 /obj/structure/cult
-	density = 1
-	anchored = 1
 	icon = 'icons/obj/cult.dmi'
-	var/cooldowntime = 0
+	anchored = 1
+	density = 1
+	opacity = 0
+	layer = OBJ_LAYER
+	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
-	var/maxhealth = 100
+	var/takes_damage = TRUE //If the structure can be damaged
+	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
+	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
+	var/cooldowntime = 0
 
 /obj/structure/cult/examine(mob/user)
 	..()
@@ -31,10 +38,93 @@
 		eta = "[round(time, 1)] seconds"
 	return eta
 
+/obj/structure/cult/proc/destroyed()
+	if(!takes_damage)
+		return 0
+	visible_message(break_message)
+	playsound(src, break_sound, 50, 1)
+	qdel(src)
+	return 1
+
+/obj/structure/cult/burn()
+	SSobj.burning -= src
+	if(takes_damage)
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		visible_message("<span class='warning'>[src] is warped by the heat!</span>")
+		take_damage(rand(50, 100), BURN)
+
+/obj/structure/cult/proc/take_damage(amount, damage_type)
+	if(!amount || !damage_type || !damage_type in list(BRUTE, BURN))
+		return 0
+	if(takes_damage)
+		health = max(0, health - amount)
+		if(!health)
+			destroyed()
+		return 1
+	return 0
+
+/obj/structure/cult/ex_act(severity)
+	var/damage = 0
+	switch(severity)
+		if(1)
+			damage = max_health //100% max health lost
+		if(2)
+			damage = max_health * (0.01 * rand(50, 70)) //50-70% max health lost
+		if(3)
+			damage = max_health * (0.01 * rand(10, 30)) //10-30% max health lost
+	if(damage)
+		take_damage(damage, BRUTE)
+
+
+/obj/structure/cult/bullet_act(obj/item/projectile/P)
+	. = ..()
+	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>")
+	playsound(src, P.hitsound, 50, 1)
+	take_damage(P.damage, P.damage_type)
+
+/obj/structure/cult/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
+	user.do_attack_animation(src)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
+	take_damage(damage, damage_type)
+
+/obj/structure/cult/attack_alien(mob/living/user)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
+	attack_generic(user, 15)
+
+/obj/structure/cult/attack_animal(mob/living/simple_animal/M)
+	if(!M.melee_damage_upper && !M.obj_damage)
+		return
+	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+	if(M.obj_damage)
+		attack_generic(M, M.obj_damage, M.melee_damage_type)
+	else
+		attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
+
+/obj/structure/cult/attack_slime(mob/living/simple_animal/slime/user)
+	if(!user.is_adult)
+		return
+	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+	attack_generic(user, rand(10, 15))
+
+/obj/structure/cult/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	if(I.force && takes_damage)
+		playsound(src, I.hitsound, 50, 1)
+		take_damage(I.force, I.damtype)
+
+/obj/structure/cult/mech_melee_attack(obj/mecha/M)
+	if(..())
+		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+		take_damage(M.force, M.damtype)
+
 /obj/structure/cult/talisman
 	name = "altar"
 	desc = "A bloodstained altar dedicated to Nar-Sie."
 	icon_state = "talismanaltar"
+	break_message = "<span class='warning'>There is a thunderous crack as the altar collapses!</span>"
+	max_health = 80
+	health = 80
 
 /obj/structure/cult/talisman/attack_hand(mob/living/user)
 	if(!iscultist(user))
@@ -66,6 +156,9 @@
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
 	luminosity = 3
+	break_message = "<span class='warning'>The wailing of the damned echoes out as the forge is destroyed!</span>"
+	max_health = 100
+	health = 100
 
 /obj/structure/cult/forge/attack_hand(mob/living/user)
 	if(!iscultist(user))
@@ -108,6 +201,9 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	var/last_heal = 0
 	var/corrupt_delay = 50
 	var/last_corrupt = 0
+	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
+	max_health = 50
+	health = 50
 
 /obj/structure/cult/pylon/New()
 	START_PROCESSING(SSfastprocess, src)
@@ -166,6 +262,9 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
 	luminosity = 1
+	break_message = "<span class='warning'>The eldritch texts ignite in unholy fire as the archives burn to ash!</span>"
+	max_health = 60
+	health = 60
 
 /obj/structure/cult/tome/attack_hand(mob/living/user)
 	if(!iscultist(user))
