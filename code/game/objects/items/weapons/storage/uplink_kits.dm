@@ -122,7 +122,7 @@
 			return
 		
 		if("metaops") // 30 tc / Meta breaking is going to be my new job - Yackemflam
-			new /obj/item/clothing/head/helmet/space/hardsuit/syndi(src) // 8tc
+			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8tc
 			new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted(src) // 8tc
 			new /obj/item/weapon/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
