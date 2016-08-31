@@ -81,7 +81,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 			else
 				// Are we in space or something? No cult turfs or
 				// convertable turfs?
-last_corrupt = world.time + corrupt_delay*2
+				last_corrupt = world.time + corrupt_delay*2
 
 /obj/structure/cult/tome
 	name = "archives"
