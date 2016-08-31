@@ -101,6 +101,8 @@ This file contains the arcane tome files.
 	text += "<font color='red'><b>Blood Boil</b></font><br>When invoked, this rune will do a massive amount of damage to all non-cultist viewers, but it will also emit a small explosion upon invocation. \
 	It requires three invokers.<br><br>"
 
+	text += "<font color='red'><b>Drain Life</b></font><br>This rune will drain the life of every living creature above the rune, healing the invoker for each creature drained by it.<br><br>"
+
 	text += "<font color='red'><b>Manifest Spirit</b></font><br>This rune allows you to summon spirits as humanoid fighters. When invoked, a spirit above the rune will be brought to life as a human, wearing nothing, that seeks only to serve you and the Geometer. \
 	However, the spirit's link to reality is fragile - you must remain on top of the rune, and you will slowly take damage. Upon stepping off the rune, all summoned spirits will dissipate, dropping their items to the ground. You may manifest \
 	multiple spirits with one rune, but you will rapidly take damage in doing so.<br><br>"
