@@ -32,7 +32,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "Hierophant"
-	desc = "Stolen from Hyper Light Drifter. Commit number 62."
+	desc = "Stolen from Hyper Light Drifter. Commit number 63."
 	health = 2500
 	maxHealth = 2500
 	attacktext = "clubs"
@@ -209,7 +209,7 @@ Difficulty: Hard
 					var/delay = 6
 					if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
 						addtimer(src, "alldir_blasts", 0, FALSE, target)
-						delay = 8.5 //this attack is mean, give them a little chance to dodge
+						delay = 9 //this attack is mean, give them a little chance to dodge
 					else if(prob(60))
 						addtimer(src, "cardinal_blasts", 0, FALSE, target)
 					else
@@ -404,10 +404,10 @@ Difficulty: Hard
 	friendly_fire_check = is_friendly_fire
 	if(new_speed)
 		speed = new_speed
-	addtimer(src, "seek_target", 0)
+	addtimer(src, "seek_target", 1)
 
 /obj/effect/overlay/temp/hierophant/chaser/proc/get_target_dir()
-	. = get_dir(get_cardinal_step_away(src, target), src)
+	. = get_cardinal_dir(src, target)
 	if(. != previous_moving_dir && . == more_previouser_moving_dir) //we're alternating, recalculate
 		var/list/cardinal_copy = cardinal.Copy()
 		cardinal_copy -= more_previouser_moving_dir
@@ -421,7 +421,7 @@ Difficulty: Hard
 				more_previouser_moving_dir = previous_moving_dir
 				previous_moving_dir = moving_dir
 				moving_dir = get_target_dir()
-				var/standard_target_dir = get_dir(get_cardinal_step_away(src, target), src)
+				var/standard_target_dir = get_cardinal_dir(src, target)
 				if(standard_target_dir != previous_moving_dir && standard_target_dir == more_previouser_moving_dir) //we would be repeating, only move a tile before checking
 					moving = 1
 				else
