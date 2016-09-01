@@ -4,8 +4,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
 	item_state = "flight"
-	no_direct_insertion = 0
-	flags = NOBLUDGEON
 	var/label = null
 	var/labels_left = 30
 	var/mode = 0
@@ -70,7 +68,6 @@
 		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
 		return
 	mode = !mode
-	no_direct_insertion = !no_direct_insertion
 	icon_state = "labeler[mode]"
 	if(mode)
 		user << "<span class='notice'>You turn on [src].</span>"
