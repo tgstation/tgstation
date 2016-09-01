@@ -358,7 +358,6 @@
 			if(istype(target, /obj/item/stack/sheet/plasteel))
 				var/quantity = min(target.amount, uses)
 				uses -= quantity
-				var/turf/T = get_turf(target)
 				new /obj/item/stack/sheet/runed_metal(T,quantity)
 				target.use(quantity)
 				user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
