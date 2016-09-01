@@ -14,7 +14,7 @@
 	plant_type = PLANT_WEED
 	rarity = 30
 	var/list/mutations = list()
-	reagents_add = list("charcoal" = 0.04, "nutriment" = 0.02)
+	reagents_add = list("charcoal" = 0.04, "nutriment" = 0.02, "plantfiber" = 0.1)
 
 /obj/item/seeds/kudzu/Copy()
 	var/obj/item/seeds/kudzu/S = ..()

@@ -56,7 +56,7 @@
 	maturation = 3
 	yield = 4
 	growthstages = 3
-	reagents_add = list("sugar" = 0.25)
+	reagents_add = list("sugar" = 0.25, "plantfiber" = 0.02)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane

@@ -878,6 +878,11 @@
 		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 	return
 
+/datum/reagent/plantfiber
+	name = "Fiber"
+	id = "plantfiber"
+	description = "Also known as cellulose. It helps with constipation."
+	color = "#C0A064" // rgb: 192, 160, 100
 
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
