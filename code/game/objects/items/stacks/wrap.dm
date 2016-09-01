@@ -33,7 +33,18 @@
 	amount = 25
 	max_amount = 25
 	burn_state = FLAMMABLE
-	no_direct_insertion = 1
+
+/obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
+	return 1
+
+/obj/item/weapon/storage/can_be_package_wrapped()
+	return 0
+
+/obj/item/weapon/storage/box/can_be_package_wrapped()
+	return 1
+
+/obj/item/smallDelivery/can_be_package_wrapped()
+	return 0
 
 /obj/item/stack/packageWrap/afterattack(obj/target, mob/user, proximity)
 	if(!proximity)
@@ -45,7 +56,7 @@
 
 	if(istype(target, /obj/item))
 		var/obj/item/I = target
-		if(istype(I, /obj/item/smallDelivery))
+		if(!I.can_be_package_wrapped())
 			return
 		if(user.r_hand == I || user.l_hand == I)
 			if(!user.unEquip(I))

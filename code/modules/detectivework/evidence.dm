@@ -14,8 +14,6 @@
 	evidencebagEquip(I, user)
 
 /obj/item/weapon/evidencebag/attackby(obj/item/I, mob/user, params)
-	if(I.no_direct_insertion)
-		return ..()
 	if(evidencebagEquip(I, user))
 		return 1
 
@@ -62,7 +60,7 @@
 	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
 
 	desc = "An evidence bag containing [I]. [I.desc]"
-	I.forceMove(src)
+	I.loc = src
 	w_class = I.w_class
 	return 1
 
