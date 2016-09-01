@@ -56,7 +56,7 @@
 		return
 	switch(action)
 		if("toggle")
-			toggle(params["id"])
+			toggle(text2num(params["id"]))
 			. = TRUE
 
 /obj/machinery/computer/sat_control/proc/toggle(id)
@@ -115,9 +115,9 @@
 /obj/machinery/satellite/update_icon()
 	icon_state = active ? "sat_active" : "sat_inactive"
 
-/obj/machinery/satellite/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		user << "<span class='notice>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>"
+/obj/machinery/satellite/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/multitool))
+		user << "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>"
 	else
 		return ..()
 
