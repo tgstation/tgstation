@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - bugfix: "fortune cookies will now drop their fortunes when they are eaten."
