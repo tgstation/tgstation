@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - tweak: "You can now open all access doors while restrained."
