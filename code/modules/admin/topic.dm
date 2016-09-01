@@ -2269,5 +2269,6 @@
 			G.name = newname
 			var/description = input("Enter centcom message contents:") as message
 			G.report_message = description
+		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
 		ticker.mode.station_goals += G
 		modify_goals()

@@ -3,6 +3,7 @@
 // Satellites be actived to generate a shield that will block unorganic matter from passing it.
 /datum/station_goal/station_shield
 	name = "Station Shield"
+	var/coverage_goal = 500
 
 /datum/station_goal/station_shield/get_report()
 	return {"The station is located in a zone full of space debris.
@@ -23,15 +24,17 @@
 /datum/station_goal/station_shield/check_completion()
 	if(..())
 		return TRUE
+	if(get_coverage() >= coverage_goal)
+		return TRUE
+	return FALSE
+
+/datum/station_goal/proc/get_coverage()
 	var/list/coverage = list()
 	for(var/obj/machinery/satellite/meteor_shield/A in machines)
 		if(!A.active || A.z != ZLEVEL_STATION)
 			continue
 		coverage |= view(A.kill_range,A)
-	if(coverage.len >= 400)
-		return TRUE
-	return FALSE
-
+	return coverage.len
 
 /obj/item/weapon/circuitboard/machine/computer/sat_control
 	name = "circuit board (Satellite Network Control)"
@@ -75,6 +78,13 @@
 			"mode" = S.mode
 		))
 	data["notice"] = notice
+	
+	
+	var/datum/station_goal/station_shield/G = locate() in ticker.mode.station_goals
+	if(G)
+		data["meteor_shield"] = 1
+		data["meteor_shield_coverage"] = G.get_coverage()
+		data["meteor_shield_coverage_max"] = G.coverage_goal
 	return data
 
 

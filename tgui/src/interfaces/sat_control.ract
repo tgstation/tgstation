@@ -14,3 +14,8 @@
       </ui-section>
 	{{/each}}
 </ui-display>
+{{#if data.meteor_shield}}
+<ui-display title='Station Shield Coverage'>
+  <ui-bar min='0' max='{{data.meteor_shield_coverage_max}}' value='{{data.meteor_shield_coverage}}'>{{100 * data.meteor_shield_coverage / data.meteor_shield_coverage_max}} %</ui-bar>
+<ui-display>
+{{/if}}
