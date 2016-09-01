@@ -193,19 +193,23 @@
 	weaken = 3
 	var/chain
 
-/obj/item/ammo_casing/magic/hook/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+/obj/item/projectile/hook/fire(setAngle)
+	if(firer)
+		chain = Beam(firer, icon_state = "chain", icon = 'icons/obj/lavaland/artefacts.dmi', time = INFINITY, maxdistance = INFINITY)
 	..()
-	var/obj/item/projectile/hook/P = BB
-	spawn(1)
-		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30)
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
-		L.forceMove(get_turf(firer))
-		qdel(chain)
+		if(!L.anchored)
+			L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
+			L.forceMove(get_turf(firer))
+
+/obj/item/projectile/hook/Destroy()
+	qdel(chain)
+	return ..()
+
 
 //Immortality Talisman
 /obj/item/device/immortality_talisman
