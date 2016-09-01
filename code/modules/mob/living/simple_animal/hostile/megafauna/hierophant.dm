@@ -32,7 +32,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "Hierophant"
-	desc = "Stolen from Hyper Light Drifter. Commit number 63."
+	desc = "Stolen from Hyper Light Drifter. Commit number 64."
 	health = 2500
 	maxHealth = 2500
 	attacktext = "clubs"
@@ -189,7 +189,7 @@ Difficulty: Hard
 					//visible_message("<span class='hierophant'>\"Mx ampp rsx iwgeti.\"</span>")
 					var/counter = 1 + round(anger_modifier * 0.08)
 					while(health && target && counter)
-						if(loc == target.loc) //we're on the same tile as them after about a second we can stop now
+						if(loc == target.loc || loc == target) //we're on the same tile as them after about a second we can stop now
 							break
 						counter--
 						blinking = FALSE
@@ -396,7 +396,7 @@ Difficulty: Hard
 	var/tiles_per_step = 1 //how many tiles we move each step
 	var/speed = 3 //how many deciseconds between each step
 	var/currently_seeking = FALSE
-	var/friendly_fire_check = FALSE //if blasts produce apply friendly fire
+	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
 
 /obj/effect/overlay/temp/hierophant/chaser/New(loc, new_caster, new_target, new_speed, is_friendly_fire)
 	..()
@@ -408,7 +408,7 @@ Difficulty: Hard
 
 /obj/effect/overlay/temp/hierophant/chaser/proc/get_target_dir()
 	. = get_cardinal_dir(src, target)
-	if(. != previous_moving_dir && . == more_previouser_moving_dir) //we're alternating, recalculate
+	if((. != previous_moving_dir && . == more_previouser_moving_dir) || . == 0) //we're alternating, recalculate
 		var/list/cardinal_copy = cardinal.Copy()
 		cardinal_copy -= more_previouser_moving_dir
 		. = pick(cardinal_copy)
@@ -422,8 +422,8 @@ Difficulty: Hard
 				previous_moving_dir = moving_dir
 				moving_dir = get_target_dir()
 				var/standard_target_dir = get_cardinal_dir(src, target)
-				if(standard_target_dir != previous_moving_dir && standard_target_dir == more_previouser_moving_dir) //we would be repeating, only move a tile before checking
-					moving = 1
+				if((standard_target_dir != previous_moving_dir && standard_target_dir == more_previouser_moving_dir) || standard_target_dir == 0)
+					moving = 1 //we would be repeating, only move a tile before checking
 				else
 					moving = standard_moving_before_recalc
 			if(moving) //move in the dir we're moving in right now
@@ -516,7 +516,7 @@ Difficulty: Hard
 		if(M.occupant)
 			if(friendly_fire_check && caster && caster.faction_check(M.occupant))
 				continue
-			M.occupant << "<span class='userdanger'>Your [M] is struck by a [name]!</span>"
+			M.occupant << "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>"
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
 		M.take_damage(damage, "fire", 0)
 

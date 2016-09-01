@@ -768,6 +768,7 @@
 	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
 	if(proximity_flag)
 		addtimer(src, "aoe_burst", 0, FALSE, T, user)
+		add_logs(user, target, "fired 3x3 blast at", src)
 	else
 		if(istype(target, /turf/closed/mineral) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
 			addtimer(src, "cardinal_blasts", 0, FALSE, T, user)
@@ -777,8 +778,10 @@
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
 				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, 1.5, friendly_fire_check))
+				add_logs(user, target, "fired a chaser at", src)
 			else
 				addtimer(src, "cardinal_blasts", 0, FALSE, T, user) //otherwise, just do cardinal blast
+				add_logs(user, target, "fired cardinal blast at", src)
 		else
 			user << "<span class='warning'>That target is out of range!</span>" //too far away
 
@@ -811,13 +814,21 @@
 	if(get_dist(user, rune) <= 2) //rune too close abort
 		user << "<span class='warning'>You are too close to the rune to teleport to it!</span>"
 		return
+	if(is_blocked_turf(get_turf(rune)))
+		user << "<span class='warning'>The rune is blocked by something, preventing teleportation!</span>"
+		return
 	teleporting = TRUE //start channel
 	user.update_action_buttons_icon()
 	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
-	timer = world.time + 41
-	if(do_after(user, 37, target = user) && rune)
+	timer = world.time + 50
+	if(do_after(user, 40, target = user) && rune)
 		var/turf/T = get_turf(rune)
 		var/turf/source = get_turf(user)
+		if(is_blocked_turf(T))
+			teleporting = FALSE
+			user << "<span class='warning'>The rune is blocked by something, preventing teleportation!</span>"
+			user.update_action_buttons_icon()
+			return
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, user))
 		playsound(T,'sound/magic/blink.ogg', 200, 1)
@@ -829,6 +840,12 @@
 			if(user)
 				user.update_action_buttons_icon()
 			return
+		if(is_blocked_turf(T))
+			teleporting = FALSE
+			user << "<span class='warning'>The rune is blocked by something, preventing teleportation!</span>"
+			user.update_action_buttons_icon()
+			return
+		add_logs(user, rune, "teleported self from ([source.x],[source.y],[source.z]) to")
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, user))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(source, user))
 		for(var/t in RANGE_TURFS(1, T))
@@ -838,16 +855,16 @@
 			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //but absolutely will hurt enemies
 			B.damage = 30
 		for(var/mob/living/L in range(1, source))
-			addtimer(src, "teleport_mob", 0, FALSE, source, L, T) //regardless, take all mobs near us along
+			addtimer(src, "teleport_mob", 0, FALSE, source, L, T, user) //regardless, take all mobs near us along
 		sleep(6) //at this point the blasts detonate
 	teleporting = FALSE
 	if(user)
 		user.update_action_buttons_icon()
 
-/obj/item/weapon/hierophant_staff/proc/teleport_mob(turf/source, mob/M, turf/target)
+/obj/item/weapon/hierophant_staff/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
 	var/previous_color = M.color
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
-	if(!turf_to_teleport_to)
+	if(!turf_to_teleport_to || is_blocked_turf(turf_to_teleport_to))
 		return
 	animate(M, alpha = 0, color = "660099", time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
@@ -869,6 +886,8 @@
 		return
 	M.density = previous_density
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
+	if(user != M)
+		add_logs(user, M, "teleported", null, "from ([source.x],[source.y],[source.z])")
 
 /obj/item/weapon/hierophant_staff/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
 	if(!T)
