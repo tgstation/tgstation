@@ -31,7 +31,7 @@
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
-	..()
+	return ..()
 
 /obj/item/pizzabox/update_icon()
 	// Description
