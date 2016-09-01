@@ -248,9 +248,10 @@
 	set category = "Robot Commands"
 	set name = "Power Warning"
 
-	if(!cell || !cell.charge)
-		visible_message("The power warning light on <span class='name'>[src]</span> flashes urgently.",\
-						 "You announce you are operating in low power mode.")
-		playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
-	else
-		src << "<span class='warning'>You can only use this emote when you're out of charge.</span>"
+	if(src.stat == CONSCIOUS)
+		if(!cell || !cell.charge)
+			visible_message("The power warning light on <span class='name'>[src]</span> flashes urgently.",\
+							"You announce you are operating in low power mode.")
+			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+		else
+			src << "<span class='warning'>You can only use this emote when you're out of charge.</span>"
