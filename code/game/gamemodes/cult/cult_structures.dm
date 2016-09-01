@@ -2,17 +2,95 @@
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/cult.dmi'
+	var/cooldowntime = 0
+	var/health = 100
+	var/maxhealth = 100
+
+/obj/structure/cult/examine(mob/user)
+	..()
+	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
+	if(iscultist(user) && cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+
+/obj/structure/cult/attackby(obj/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+		anchored = !anchored
+		user << "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>"
+		if(!anchored)
+			icon_state = "[initial(icon_state)]_off"
+		else
+			icon_state = initial(icon_state)
+	else
+		return ..()
+
+/obj/structure/cult/proc/getETA()
+	var/time = (cooldowntime - world.time)/600
+	var/eta = "[round(time, 1)] minutes"
+	if(time <= 1)
+		time = (cooldowntime - world.time)*0.1
+		eta = "[round(time, 1)] seconds"
+	return eta
 
 /obj/structure/cult/talisman
 	name = "altar"
 	desc = "A bloodstained altar dedicated to Nar-Sie."
 	icon_state = "talismanaltar"
 
+/obj/structure/cult/talisman/attack_hand(mob/living/user)
+	if(!iscultist(user))
+		user << "<span class='warning'>You're pretty sure you know exactly what this is used for and you can't seem to touch it.</span>"
+		return
+	if(!anchored)
+		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
+		return
+	if(cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+		return
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
+	var/pickedtype
+	switch(choice)
+		if("Eldritch Whetstone")
+			pickedtype = /obj/item/weapon/sharpener/cult
+		if("Zealot's Blindfold")
+			pickedtype = /obj/item/clothing/glasses/night/cultblind
+		if("Flask of Unholy Water")
+			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		var/obj/item/N = new pickedtype(get_turf(src))
+		user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with an [N]!</span>"
+
+
 /obj/structure/cult/forge
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
 	luminosity = 3
+
+/obj/structure/cult/forge/attack_hand(mob/living/user)
+	if(!iscultist(user))
+		user << "<span class='warning'>The heat radiating from [src] pushes you back.</span>"
+		return
+	if(!anchored)
+		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
+		return
+	if(cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+		return
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
+	var/pickedtype
+	switch(choice)
+		if("Shielded Robe")
+			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
+		if("Flagellant's Robe")
+			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
+		if("Nar-Sien Hardsuit")
+			pickedtype = /obj/item/clothing/suit/space/hardsuit/cult
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		var/obj/item/N = new pickedtype(get_turf(src))
+		user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
+
 
 var/list/blacklisted_pylon_turfs = typecacheof(list(
 	/turf/closed,
@@ -88,6 +166,31 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
 	luminosity = 1
+
+/obj/structure/cult/tome/attack_hand(mob/living/user)
+	if(!iscultist(user))
+		user << "<span class='warning'>All of these books seem to be gibberish.</span>"
+		return
+	if(!anchored)
+		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
+		return
+	if(cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+		return
+	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
+	var/pickedtype
+	switch(choice)
+		if("Supply Talisman")
+			pickedtype = /obj/item/weapon/paper/talisman/supply/weak
+		if("Shuttle Curse")
+			pickedtype = /obj/item/device/shuttle_curse
+		if("Veil Walker Set")
+			pickedtype = /obj/item/device/cult_shift
+			pickedtype = /obj/item/device/flashlight/flare/culttorch
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		var/obj/item/N = new pickedtype(get_turf(src))
+		user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
 
 /obj/effect/gateway
 	name = "gateway"
