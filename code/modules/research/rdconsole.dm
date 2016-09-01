@@ -256,7 +256,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/datum/design/D = files.known_designs[href_list["copy_design_ID"]]
 		if(D)
 			var/autolathe_friendly = 1
-			if(D.reagents.len)
+			if(D.reagents_list.len)
 				autolathe_friendly = 0
 				D.category -= "Imported"
 			else

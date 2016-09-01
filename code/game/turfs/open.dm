@@ -97,6 +97,12 @@
 		qdel(hotspot)
 	return 1
 
+/turf/open/chem_gas_act(var/datum/reagents/gas)
+	for(var/A in contents)
+		gas.reaction(A, VAPOR)
+	gas.reaction(src, VAPOR)
+	return 1
+
 /turf/open/handle_fall(mob/faller, forced)
 	faller.lying = pick(90, 270)
 	if(!forced)
@@ -118,8 +124,8 @@
 				return 0
 		if(!(lube&SLIDE_ICE))
 			C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
-
-		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
+		if(!C.slipping)
+			C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
 		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 

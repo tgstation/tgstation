@@ -424,16 +424,17 @@ var/const/INJECT = 5 //injection
 	for(var/_reagent in reagent_list)
 		var/datum/reagent/R = _reagent
 		if(R.id == reagent)
-			if(istype(my_atom, /mob/living))
+			if(my_atom && istype(my_atom, /mob/living))
 				var/mob/living/M = my_atom
 				R.on_mob_delete(M)
 			qdel(R)
 			reagent_list -= R
 			update_total()
-			my_atom.on_reagent_change()
-			check_ignoreslow(my_atom)
-			check_gofast(my_atom)
-			check_goreallyfast(my_atom)
+			if(my_atom)
+				my_atom.on_reagent_change()
+				check_ignoreslow(my_atom)
+				check_gofast(my_atom)
+				check_goreallyfast(my_atom)
 	return 1
 
 /datum/reagents/proc/check_ignoreslow(mob/M)
@@ -506,7 +507,8 @@ var/const/INJECT = 5 //injection
 		if (R.id == reagent)
 			R.volume += amount
 			update_total()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 			R.on_merge(data)
 			if(!no_react)
 				handle_reactions()
@@ -524,7 +526,8 @@ var/const/INJECT = 5 //injection
 			R.on_new(data)
 
 		update_total()
-		my_atom.on_reagent_change()
+		if(my_atom)
+			my_atom.on_reagent_change()
 		if(!no_react)
 			handle_reactions()
 		return 0
@@ -556,7 +559,8 @@ var/const/INJECT = 5 //injection
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
-			my_atom.on_reagent_change()
+			if(my_atom)
+				my_atom.on_reagent_change()
 			return 0
 
 	return 1
@@ -658,8 +662,9 @@ var/const/INJECT = 5 //injection
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-/atom/proc/create_reagents(max_vol)
+/datum/proc/create_reagents(max_vol)
 	if(reagents)
 		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)
-	reagents.my_atom = src
+	if(istype(src, /atom))
+		reagents.my_atom = src

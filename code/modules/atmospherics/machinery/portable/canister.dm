@@ -94,6 +94,13 @@
 	gas_type = "water_vapor"
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/chem_gas
+	name = "chemical gas canister"
+	desc = "Chemical Gas. Hit this with a beaker with reagents to add the reagent to the gas."
+	icon_state = "black"
+	gas_type = "chem_gas"
+	filled = 1
+
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
 	if(existing_mixture)
@@ -260,6 +267,20 @@
 			take_damage(rand(15, 40), BRUTE, 0)
 
 /obj/machinery/portable_atmospherics/canister/attacked_by(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+		if(air_contents.gases["chem_gas"])
+			if(I.reagents.reagent_list)
+				user << "You scan the beaker with the canister."
+				for(var/R in I.reagents.reagent_list)
+					var/datum/reagent/RI = R
+					if(!air_contents.reagents.has_reagent(RI.id))
+						air_contents.reagents.add_reagent(RI.id, REAGENT_GAS_AMT)
+						say("Injected [RI.name].")
+				say("All new chemicals scanned and injected.")
+				return
+		else
+			say("ERROR: Does not contain chemical mixture gas.")
+			return
 	if(I.force)
 		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
 	investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")

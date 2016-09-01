@@ -8,9 +8,6 @@
 	var/list/blood_DNA
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 
-	///Chemistry.
-	var/datum/reagents/reagents = null
-
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
 	//HUD images that this atom can provide.

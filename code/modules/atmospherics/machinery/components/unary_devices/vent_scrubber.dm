@@ -22,6 +22,7 @@
 	var/scrub_BZ = 0
 	var/scrub_Freon = 1
 	var/scrub_WaterVapor = 1
+	var/scrub_ChemGas = 1
 
 
 	var/volume_rate = 200
@@ -76,6 +77,8 @@
 			amount += idle_power_usage
 		if(scrub_WaterVapor)
 			amount += idle_power_usage
+		if(scrub_ChemGas)
+			amount += idle_power_usage
 	else //scrubbing == SIPHONING
 		amount = active_power_usage
 
@@ -128,6 +131,7 @@
 		"filter_bz" = scrub_BZ,
 		"filter_Freon" = scrub_Freon,
 		"filter_WaterVapor" = scrub_WaterVapor,
+		"filter_ChemGas" = scrub_ChemGas,
 		"sigtype" = "status"
 	)
 
@@ -317,6 +321,11 @@
 		scrub_WaterVapor = text2num(signal.data["water_vapor_scrub"])
 	if("toggle_water_vapor_scrub" in signal.data)
 		scrub_WaterVapor = !scrub_WaterVapor
+
+	if("chem_gas_scrub" in signal.data)
+		scrub_ChemGas = text2num(signal.data["chem_gas_scrub"])
+	if("toggle_chem_gas_scrub" in signal.data)
+		scrub_ChemGas = !scrub_ChemGas
 
 	if("init" in signal.data)
 		name = signal.data["init"]

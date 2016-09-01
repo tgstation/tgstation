@@ -4,6 +4,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
+	var/datum/reagents/reagents = null
 
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
