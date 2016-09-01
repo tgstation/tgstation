@@ -89,9 +89,10 @@
 		return ..()
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
-	if(user.has_dna())
-		if(user.dna.check_mutation(HULK))
-			user << "<span class='warning'>Your meaty hands are too fat to turn on the baton!</span>"
+	if(user.has_dna() && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.check_mutation(HULK))
+			H << "<span class='warning'>Your meaty hands are too fat to turn on the baton!</span>"
 			status = 0
 			return
 	if(bcell && bcell.charge > hitcost)
@@ -176,9 +177,10 @@
 
 /obj/item/weapon/melee/baton/equipped(mob/user, slot)
 	if((slot == slot_l_hand) || (slot == slot_r_hand))
-		if(user.has_dna() && status)
-			if(user.dna.check_mutation(HULK))
-				user << "<span class='warning'>You grip the baton too hard, and accidentally turn it off!</span>"
+		if(user.has_dna() && status && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.dna.check_mutation(HULK))
+				H << "<span class='warning'>You grip the baton too hard, and accidentally turn it off!</span>"
 				status = 0
 	..()
 
