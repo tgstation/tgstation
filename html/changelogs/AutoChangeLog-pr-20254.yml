@@ -1,4 +1,0 @@
-author: "Shadowlight213"
-delete-after: True
-changes: 
-  - bugfix: "Pizza bombs will now delete after exploding."
