@@ -76,6 +76,39 @@ var/const/INJECT = 5 //injection
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 
+// Used for adding/removing reagents from nullspace. Ie. you're creating a new reagent, or deleting the reagent.
+// Much simpler and cleaner than ADD/REMOVE_REAGENT
+/datum/reagents/proc/adjust_volume(reagent_id, amount = 0, temperature = 293)
+	if(!reagent_id || amount == 0)
+		return
+
+	var/finished = 0
+
+	for(var/datum/reagent/R in reagent_list)
+		if(R.id == reagent_id)
+			R.volume += amount
+			finished = 1
+			break
+
+	if(amount)
+		chem_temp = round(((amount * temperature) + (total_volume * chem_temp)) / (total_volume + amount))
+		if(!finished && chemical_reagents_list[reagent_id])
+			var/datum/reagent = chemical_reagents_list[reagent_id]
+			var/datum/reagent/R = new reagent.type()
+			reagent_list += R
+			R.holder = src
+			R.volume = amount
+			R.on_new()
+			finished = 1
+
+	if(!finished)
+		return 0
+
+	my_atom.on_reagent_change()
+	update_total()
+	set_reacting()
+	return 1
+
 /datum/reagents/proc/remove_any(amount = 1)
 	var/total_transfered = 0
 	var/current_list_element = 1
