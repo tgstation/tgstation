@@ -228,10 +228,6 @@
 	return FALSE
 
 
-/*
-/mob/proc/drop_l_hand() //pending re-implementation
-/mob/proc/drop_r_hand()
-*/
 /mob/proc/drop_all_held_items()
 	if(!loc || !loc.allow_drop())
 		return

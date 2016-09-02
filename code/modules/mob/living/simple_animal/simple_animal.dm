@@ -621,7 +621,7 @@
 	if(!dextrous)
 		return ..()
 	if(!selhand)
-		selhand = (selhand % held_items.len)+1
+		selhand = (active_hand_index % held_items.len)+1
 	if(istext(selhand))
 		selhand = lowertext(selhand)
 		if(selhand == "right" || selhand == "r")
@@ -637,7 +637,7 @@
 	if(!dextrous)
 		return ..()
 	if(!hand_index)
-		hand_index = (hand_index % held_items.len)+1
+		hand_index = (active_hand_index % held_items.len)+1
 	var/obj/item/held_item = get_active_held_item()
 	if(held_item)
 		if(istype(held_item, /obj/item/weapon/twohanded))

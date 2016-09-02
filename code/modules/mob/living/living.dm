@@ -783,9 +783,15 @@
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
-		if(what && what == who.get_item_by_slot(where) && Adjacent(who))
-			who.unEquip(what)
-			add_logs(src, who, "stripped", addition="of [what]")
+		if(what && Adjacent(who))
+			if(islist(where))
+				var/list/L = where
+				if(what == who.get_item_for_held_index(L[2]))
+					who.unEquip(what)
+					add_logs(src, who, "stripped", addition="of [what]")
+			if(what == who.get_item_by_slot(where))
+				who.unEquip(what)
+				add_logs(src, who, "stripped", addition="of [what]")
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
@@ -795,14 +801,24 @@
 		src << "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
 		return
 	if(what)
-		if(!what.mob_can_equip(who, src, where, 1))
-			src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
-			return
+		var/list/where_list
+		if(islist(where))
+			where_list = where
+			if(!what.mob_can_equip(who, src, where[1], 1))
+				src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
+				return
+		else
+			if(!what.mob_can_equip(who, src, where, 1))
+				src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
+				return
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.put_on_delay))
 			if(what && Adjacent(who))
 				unEquip(what)
-				who.equip_to_slot_if_possible(what, where, 0, 1)
+				if(where_list)
+					who.put_in_hand(what, where_list[2])
+				else
+					who.equip_to_slot_if_possible(what, where, 0, 1)
 				add_logs(src, who, "equipped", what)
 
 /mob/living/singularity_act()

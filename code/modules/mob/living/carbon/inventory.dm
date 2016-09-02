@@ -1,4 +1,4 @@
-/mob/living/carbon/get_item_by_slot(slot_id, hand_index)
+/mob/living/carbon/get_item_by_slot(slot_id)
 	switch(slot_id)
 		if(slot_back)
 			return back

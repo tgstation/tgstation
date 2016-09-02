@@ -17,8 +17,8 @@
 #define slot_back			1
 #define slot_wear_mask		2
 #define slot_handcuffed		3
-#define slot_hands			4 //wherever you provide a slot for hands you provide slot_hands AND a hand index (1 to held_items.len)
-								//there are various helper procs to find an appropriate index
+#define slot_hands			4 //wherever you provide a slot for hands you provide slot_hands
+								//slot_hands as a slot will pick ANY available hand
 #define slot_belt			5
 #define slot_wear_id		6
 #define slot_ears			7

@@ -458,7 +458,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
 	var/list/out = new
-	for(var/i=1;i<=TOTAL_LAYERS;i++)
+	for(var/i in 1 to TOTAL_LAYERS)
 		if(overlays_standing[i])
 			if(i in unwantedLayers)
 				continue

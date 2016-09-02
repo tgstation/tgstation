@@ -81,7 +81,7 @@
 
 /mob/living/carbon/swap_hand(held_index)
 	if(!held_index)
-		held_index = (held_index % held_items.len)+1
+		held_index = (active_hand_index % held_items.len)+1
 
 	var/obj/item/item_in_hand = src.get_active_held_item()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
@@ -103,7 +103,7 @@
 
 /mob/living/carbon/activate_hand(selhand) //l/r OR 1-held_items.len
 	if(!selhand)
-		selhand = (selhand % held_items.len)+1
+		selhand = (active_hand_index % held_items.len)+1
 
 	if(istext(selhand))
 		selhand = lowertext(selhand)

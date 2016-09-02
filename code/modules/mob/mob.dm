@@ -528,8 +528,13 @@ var/next_mob_id = 0
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
-			var/obj/item/what = get_item_by_slot(slot)
-
+			var/hand_index = text2num(href_list["hand_index"])
+			var/obj/item/what
+			if(hand_index)
+				what = get_item_for_held_index(hand_index)
+				slot = list(slot,hand_index)
+			else
+				what = get_item_by_slot(slot)
 			if(what)
 				usr.stripPanelUnequip(what,src,slot)
 			else
