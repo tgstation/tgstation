@@ -666,8 +666,8 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-
-	..(pressure_difference, direction, pressure_resistance_prob_delta)
+	if(!slipping)
+		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/verb/resist()
 	set name = "Resist"
