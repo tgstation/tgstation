@@ -78,6 +78,7 @@
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5),
 		"freon"			= new/datum/tlv(-1, -1, 0.2, 0.5),
+		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5)
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -91,6 +92,7 @@
 		"n2o"			= new/datum/tlv(-1, -1, -1, -1),
 		"bz"			= new/datum/tlv(-1, -1, -1, -1),
 		"freon"			= new/datum/tlv(-1, -1, -1, -1),
+		"water_vapor"	= new/datum/tlv(-1, -1, -1, -1)
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
@@ -104,6 +106,7 @@
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"freon"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5)
 	)
 
 //all air alarms in area are connected via magic
@@ -237,7 +240,8 @@
 					"filter_toxins"	= info["filter_toxins"],
 					"filter_n2o"	= info["filter_n2o"],
 					"filter_bz"		= info["filter_bz"],
-					"filter_freon"		= info["filter_freon"]
+					"filter_freon"	= info["filter_freon"],
+					"filter_water_vapor"	= info["filter_water_vapor"]
 				))
 		data["mode"] = mode
 		data["modes"] = list()
@@ -293,7 +297,7 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "bz_scrub", "freon_scrub", "widenet", "scrubbing")
+		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "bz_scrub", "freon_scrub","water_vapor_scrub", "widenet", "scrubbing")
 			send_signal(device_id, list("[action]" = text2num(params["val"])))
 			. = TRUE
 		if("excheck")
@@ -410,8 +414,9 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
-					"bz_scrub"	= 1,
-					"freon_scrub"= 1,
+					"bz_scrub"	= 0,
+					"freon_scrub"= 0,
+					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -430,6 +435,7 @@
 					"n2o_scrub" = 1,
 					"bz_scrub"	= 1,
 					"freon_scrub"= 1,
+					"water_vapor_scrub"= 1,
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -460,7 +466,8 @@
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
 					"bz_scrub"	= 0,
-					"freon_scrub"= 1,
+					"freon_scrub"= 0,
+					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))

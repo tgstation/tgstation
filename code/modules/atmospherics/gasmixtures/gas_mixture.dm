@@ -6,7 +6,7 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-
+#define REAGENT_GAS_AMT 2.5
 var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
 
 var/list/gaslist_cache = null
@@ -49,6 +49,7 @@ var/list/gaslist_cache = null
 	src.volume = volume
 	last_share = 0
 	fuel_burnt = 0
+	create_reagents(1000)
 
 //listmos procs
 
@@ -181,13 +182,16 @@ var/list/gaslist_cache = null
 				//world << "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]]
 			*/
 	if(holder)
-		if(cached_gases["freon"] && cached_gases["o2"])
-			if(cached_gases["freon"][MOLES] >= 3)
-				if(return_temperature() < 50)
-					holder.freon_gas_act()
-					cached_gases["freon"][MOLES] -= 3
-					cached_gases["o2"][MOLES] += 3
-					temperature += 1
+		if(cached_gases["freon"])
+			if(cached_gases["freon"][MOLES] >= MOLES_PLASMA_VISIBLE)
+				if(holder.freon_gas_act())
+					cached_gases["freon"][MOLES] -= MOLES_PLASMA_VISIBLE
+
+		if(cached_gases["water_vapor"])
+			if(cached_gases["water_vapor"][MOLES] >= MOLES_PLASMA_VISIBLE)
+				if(holder.water_vapor_gas_act())
+					cached_gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
+
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		//world << "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]"
@@ -330,6 +334,13 @@ var/list/gaslist_cache = null
 
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/giver_gases = giver.gases
+
+	var/list/cached_reagents = giver.reagents.reagent_list
+
+	for(var/R in cached_reagents)
+		var/datum/reagent/RA = R
+		if(!reagents.has_reagent(RA.id))
+			reagents.add_reagent(RA.id, REAGENT_GAS_AMT)
 	//gas transfer
 	for(var/giver_id in giver_gases)
 		assert_gas(giver_id)
@@ -342,7 +353,7 @@ var/list/gaslist_cache = null
 	amount = min(amount, sum) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
-
+	var/list/cached_reagents = reagents.reagent_list
 	var/list/cached_gases = gases
 	var/datum/gas_mixture/removed = new
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
@@ -352,6 +363,12 @@ var/list/gaslist_cache = null
 		removed.add_gas(id)
 		removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
+	for(var/R in cached_reagents)
+		var/datum/reagent/RA = R
+		var/temp_id = RA.id
+		var/mathmemes = QUANTIZE((RA.volume / reagents.total_volume) * amount)
+		reagents.remove_reagent(temp_id, mathmemes)
+		removed.reagents.add_reagent(temp_id, mathmemes)
 	garbage_collect()
 
 	return removed
@@ -360,6 +377,8 @@ var/list/gaslist_cache = null
 	if(ratio <= 0)
 		return null
 	ratio = min(ratio, 1)
+
+	var/list/cached_reagents = reagents.reagent_list
 
 	var/list/cached_gases = gases
 	var/datum/gas_mixture/removed = new
@@ -370,12 +389,21 @@ var/list/gaslist_cache = null
 		removed.add_gas(id)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
+
+	for(var/R in cached_reagents)
+		var/datum/reagent/RA = R
+		var/temp_id = RA.id
+		var/mathmemes = QUANTIZE(RA.volume * ratio)
+		reagents.remove_reagent(temp_id, mathmemes)
+		removed.reagents.add_reagent(temp_id, mathmemes)
+
 	garbage_collect()
 
 	return removed
 
 /datum/gas_mixture/copy()
 	var/list/cached_gases = gases
+	var/list/cached_reagents = reagents.reagent_list
 	var/datum/gas_mixture/copy = new
 	var/list/copy_gases = copy.gases
 
@@ -383,17 +411,27 @@ var/list/gaslist_cache = null
 	for(var/id in cached_gases)
 		copy.add_gas(id)
 		copy_gases[id][MOLES] = cached_gases[id][MOLES]
+	for(var/R in cached_reagents)
+		var/datum/reagent/RA = R
+		copy.reagents.add_reagent(RA.id, REAGENT_GAS_AMT)
 
 	return copy
 
 /datum/gas_mixture/copy_from(datum/gas_mixture/sample)
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/sample_gases = sample.gases
+	var/list/their_reagents = sample.reagents.reagent_list
 
 	temperature = sample.temperature
 	for(var/id in sample_gases)
 		assert_gas(id)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES]
+
+	reagents.clear_reagents()
+	for(var/R in their_reagents)
+		var/datum/reagent/RA = R
+		reagents.add_reagent(RA.id, REAGENT_GAS_AMT)
+
 	//remove all gases not in the sample
 	cached_gases &= sample_gases
 
@@ -427,6 +465,18 @@ var/list/gaslist_cache = null
 
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
+	var/list/our_reagents = reagents.reagent_list
+	var/list/their_reagents = sharer.reagents.reagent_list
+
+	for(var/R in our_reagents)
+		var/datum/reagent/RAO = R
+		if(!sharer.reagents.has_reagent(RAO.id))
+			sharer.reagents.add_reagent(RAO.id, REAGENT_GAS_AMT)
+
+	for(var/RA in their_reagents)
+		var/datum/reagent/RAT = RA
+		if(!reagents.has_reagent(RAT.id))
+			reagents.add_reagent(RAT.id, REAGENT_GAS_AMT)
 
 	var/temperature_delta = temperature_archived - sharer.temperature_archived
 	var/abs_temperature_delta = abs(temperature_delta)
