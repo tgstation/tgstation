@@ -216,8 +216,7 @@
 				add_logs(user, src, "grabbed", addition="aggressively")
 				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
 								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
-				drop_r_hand()
-				drop_l_hand()
+				drop_all_held_items()
 				stop_pulling()
 			if(GRAB_NECK)
 				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\

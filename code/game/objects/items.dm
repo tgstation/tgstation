@@ -229,7 +229,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+				var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
 					H.update_damage_overlays(0)
 				H.updatehealth()
@@ -367,7 +367,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
-	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
+	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
 
 //This proc is executed when someone clicks the on-screen UI button.
@@ -545,11 +545,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(slot_l_hand))
-			success = TRUE
-		else if(src == M.get_item_by_slot(slot_r_hand))
-			success = TRUE
-		else if(src == M.get_item_by_slot(slot_wear_mask))
+		if(src == M.get_item_by_slot(slot_wear_mask))
 			success = TRUE
 		if(success)
 			location = get_turf(M)

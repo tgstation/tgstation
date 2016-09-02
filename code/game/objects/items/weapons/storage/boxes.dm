@@ -47,8 +47,7 @@
 	var/obj/item/I = new foldable(get_turf(src))
 	user.drop_item()
 	user.put_in_hands(I)
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
+	user.update_inv_hands()
 	qdel(src)
 
 /obj/item/weapon/storage/box/attackby(obj/item/W, mob/user, params)

@@ -39,6 +39,7 @@
 	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
 	var/list/screenoverlays = list() //the screen objects used as whole screen overlays (flash, damageoverlay, etc...)
 	var/list/inv_slots[slots_amt] // /obj/screen/inventory objects, ordered by their slot ID.
+	var/list/hand_slots // /obj/screen/inventory/hand objects, assoc list of "[held_index]" = object
 
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
@@ -51,6 +52,7 @@
 	mymob = owner
 	hide_actions_toggle = new
 	hide_actions_toggle.InitialiseIcon(mymob)
+	hand_slots = list()
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -159,10 +161,10 @@
 				screenmob.client.screen += infodisplay
 
 			//These ones are a part of 'static_inventory', 'toggleable_inventory' or 'hotkeybuttons' but we want them to stay
-			if(inv_slots[slot_l_hand])
-				screenmob.client.screen += inv_slots[slot_l_hand]	//we want the hands to be visible
-			if(inv_slots[slot_r_hand])
-				screenmob.client.screen += inv_slots[slot_r_hand]	//we want the hands to be visible
+			for(var/h in hand_slots)
+				var/obj/screen/hand = hand_slots[h]
+				if(hand)
+					screenmob.client.screen += hand
 			if(action_intent)
 				screenmob.client.screen += action_intent		//we want the intent switcher visible
 				action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
@@ -210,3 +212,34 @@
 	else
 		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"
 
+
+//(re)builds the hand ui slots, throwing away old ones
+//not really worth jugglying existing ones so we just scrap+rebuild
+//9/10 this is only called once per mob and only for 2 hands
+/datum/hud/proc/build_hand_slots(ui_style = 'icons/mob/screen_midnight.dmi')
+	for(var/h in hand_slots)
+		var/obj/screen/inventory/hand/H = hand_slots[h]
+		if(H)
+			static_inventory -= H
+	hand_slots = list()
+	var/obj/screen/inventory/hand/hand_box
+	for(var/i in 1 to mymob.held_items.len)
+		hand_box = new /obj/screen/inventory/hand()
+		hand_box.name = mymob.get_held_index_name(i)
+		hand_box.icon = ui_style
+		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"
+		hand_box.screen_loc = ui_hand_position(i)
+		hand_box.held_index = i
+		hand_slots["[i]"] = hand_box
+		hand_box.hud = src
+		static_inventory += hand_box
+		hand_box.update_icon()
+
+	var/i = 1
+	for(var/obj/screen/swap_hand/SH in static_inventory)
+		SH.screen_loc = ui_swaphand_position(mymob,!(i % 2) ? 2: 1)
+		i++
+	for(var/obj/screen/human/equip/E in static_inventory)
+		E.screen_loc = ui_equip_position(mymob)
+
+	show_hud(HUD_STYLE_STANDARD,mymob)

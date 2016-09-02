@@ -61,11 +61,7 @@
 				var/obj/screen/inventory/hand/H = over_object
 				if(!M.unEquip(src))
 					return
-				switch(H.slot_id)
-					if(slot_r_hand)
-						M.put_in_r_hand(src)
-					if(slot_l_hand)
-						M.put_in_l_hand(src)
+				M.put_in_hand(src,H.held_index)
 
 			add_fingerprint(usr)
 
@@ -75,7 +71,7 @@
 		var/obj/item/I = O
 		if(iscarbon(user) || isdrone(user))
 			var/mob/living/L = user
-			if(!L.incapacitated() && I == L.get_active_hand())
+			if(!L.incapacitated() && I == L.get_active_held_item())
 				if(can_be_inserted(I, 0))
 					handle_item_insertion(I, 0 , L)
 
@@ -439,11 +435,11 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.l_store == src && !H.get_active_hand())	//Prevents opening if it's in a pocket.
+		if(H.l_store == src && !H.get_active_held_item())	//Prevents opening if it's in a pocket.
 			H.put_in_hands(src)
 			H.l_store = null
 			return
-		if(H.r_store == src && !H.get_active_hand())
+		if(H.r_store == src && !H.get_active_held_item())
 			H.put_in_hands(src)
 			H.r_store = null
 			return
@@ -542,7 +538,7 @@
 
 /obj/item/weapon/storage/attack_self(mob/user)
 	//Clicking on itself will empty it, if it has the verb to do that.
-	if(user.get_active_hand() == src)
+	if(user.get_active_held_item() == src)
 		if(verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
 			quick_empty()
 

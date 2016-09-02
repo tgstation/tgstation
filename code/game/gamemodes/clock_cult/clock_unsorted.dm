@@ -61,7 +61,7 @@
 	return ..()
 
 /datum/action/innate/function_call/Activate()
-	if(owner.l_hand && owner.r_hand)
+	if(!owner.get_empty_held_indexes())
 		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
 		return 0
 	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
@@ -114,7 +114,7 @@
 		return 0
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !target || !invoker || !invoker.canUseTopic(src, BE_CLOSE) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_hand() != src))
+	if(!src || !target || !invoker || !invoker.canUseTopic(src, BE_CLOSE) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src))
 		return 0 //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
 	var/istargetobelisk = istype(target, /obj/structure/clockwork/powered/clockwork_obelisk)
 	if(istargetobelisk)

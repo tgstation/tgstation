@@ -125,7 +125,7 @@
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
 	if(weapon_weight >= WEAPON_MEDIUM)
-		if(user.get_inactive_hand())
+		if(user.get_inactive_held_item())
 			if(prob(15))
 				if(user.drop_item())
 					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
@@ -171,7 +171,7 @@
 				user.drop_item()
 				return
 
-	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_hand())
+	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
 		user << "<span class='userdanger'>You need both hands free to fire \the [src]!</span>"
 		return
 
@@ -207,7 +207,7 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 	if(weapon_weight)
-		if(user.get_inactive_hand())
+		if(user.get_inactive_held_item())
 			recoil = 4 //one-handed kick
 		else
 			recoil = initial(recoil)
@@ -218,7 +218,7 @@ obj/item/weapon/gun/proc/newshot()
 			if(!user)
 				break
 			if(!issilicon(user))
-				if( i>1 && !(src in get_both_hands(user))) //for burst firing
+				if( i>1 && !(user.is_holding(src))) //for burst firing
 					break
 			if(chambered)
 				var/sprd = 0
@@ -261,10 +261,7 @@ obj/item/weapon/gun/proc/newshot()
 			semicd = 0
 
 	if(user)
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
+		user.update_inv_hands()
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)

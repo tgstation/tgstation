@@ -64,7 +64,7 @@
 		if(stat == DEAD || status_flags & GODMODE)
 			..()
 			return
-		if(user.get_active_hand())
+		if(user.get_active_held_item())
 			user << "<span class='warning'>Your hands are full!</span>"
 			return
 		visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
@@ -77,8 +77,7 @@
 			user << "<span class='warning'>[src] is buckled to [buckled] and cannot be picked up!</span>"
 			return
 		user << "<span class='notice'>You pick [src] up.</span>"
-		drop_l_hand()
-		drop_r_hand()
+		drop_all_held_items()
 		var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
 		DH.updateVisualAppearence(src)
 		DH.drone = src

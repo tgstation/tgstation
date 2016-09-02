@@ -149,10 +149,10 @@
 	if(!(M.status_flags & CANPUSH))
 		return 1
 	//anti-riot equipment is also anti-push
-	if(M.r_hand && (prob(M.r_hand.block_chance * 2)) && !istype(M.r_hand, /obj/item/clothing))
-		return 1
-	if(M.l_hand && (prob(M.l_hand.block_chance * 2)) && !istype(M.l_hand, /obj/item/clothing))
-		return 1
+	for(var/obj/item/I in M.held_items)
+		if(!istype(M, /obj/item/clothing))
+			if(prob(I.block_chance*2))
+				return 1
 
 //Called when we bump onto an obj
 /mob/living/proc/ObjBump(obj/O)
@@ -790,7 +790,7 @@
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
-	what = src.get_active_hand()
+	what = src.get_active_held_item()
 	if(what && (what.flags & NODROP))
 		src << "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
 		return
@@ -869,11 +869,10 @@
 
 	// What icon do we use for the attack?
 	var/image/I
-	if(hand && l_hand) // Attacked with item in left hand.
-		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 0.1)
-	else if(!hand && r_hand) // Attacked with item in right hand.
-		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 0.1)
-	else // Attacked with a fist?
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item)
+		I = image(held_item.icon, A, held_item.icon_state, A.layer + 0.1)
+	else
 		return
 
 	// Who can see the attack?

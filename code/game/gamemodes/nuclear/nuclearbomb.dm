@@ -291,7 +291,7 @@ var/bomb_set
 				. = TRUE
 		if("insert_disk")
 			if(!auth)
-				var/obj/item/I = usr.get_active_hand()
+				var/obj/item/I = usr.get_active_held_item()
 				if(istype(I, /obj/item/weapon/disk/nuclear))
 					usr.drop_item()
 					I.forceMove(src)

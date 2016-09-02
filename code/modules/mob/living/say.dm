@@ -266,14 +266,15 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 /mob/living/proc/radio(message, message_mode, list/spans)
 	switch(message_mode)
 		if(MODE_R_HAND)
-			if (r_hand)
-				r_hand.talk_into(src, message, , spans)
-			return ITALICS | REDUCE_RANGE
-
+			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
+				if (r_hand)
+					r_hand.talk_into(src, message, , spans)
+				return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
-			if (l_hand)
-				l_hand.talk_into(src, message, , spans)
-			return ITALICS | REDUCE_RANGE
+			for(var/obj/item/l_hand in get_held_items_for_side("l", all = TRUE))
+				if (l_hand)
+					l_hand.talk_into(src, message, , spans)
+				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
 			for (var/obj/item/device/radio/intercom/I in view(1, null))

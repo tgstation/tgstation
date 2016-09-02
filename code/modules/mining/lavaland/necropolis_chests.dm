@@ -338,11 +338,7 @@
 				var/obj/screen/inventory/hand/H = over_object
 				if(!M.unEquip(src))
 					return
-				switch(H.slot_id)
-					if(slot_r_hand)
-						M.put_in_r_hand(src)
-					if(slot_l_hand)
-						M.put_in_l_hand(src)
+				M.put_in_hand(src, H.held_index)
 
 			add_fingerprint(usr)
 
@@ -734,6 +730,6 @@
 			if(H == L)
 				continue
 			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. They have been marked red! Go kill them!</span>"
-			H.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife/butcher(H), slot_l_hand)
+			H.put_in_hands_or_del(new /obj/item/weapon/kitchen/knife/butcher(H))
 
 	qdel(src)

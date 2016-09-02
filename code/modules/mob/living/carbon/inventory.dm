@@ -1,4 +1,4 @@
-/mob/living/carbon/get_item_by_slot(slot_id)
+/mob/living/carbon/get_item_by_slot(slot_id, hand_index)
 	switch(slot_id)
 		if(slot_back)
 			return back
@@ -10,10 +10,6 @@
 			return handcuffed
 		if(slot_legcuffed)
 			return legcuffed
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 	return null
 
 
@@ -24,10 +20,9 @@
 	if(!istype(I))
 		return
 
-	if(I == l_hand)
-		l_hand = null
-	else if(I == r_hand)
-		r_hand = null
+	var/index = get_held_index_of_item(I)
+	if(index)
+		held_items[index] = null
 
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
@@ -59,25 +54,22 @@
 		if(slot_legcuffed)
 			legcuffed = I
 			update_inv_legcuffed()
-		if(slot_l_hand)
-			l_hand = I
-			update_inv_l_hand()
-		if(slot_r_hand)
-			r_hand = I
-			update_inv_r_hand()
+		if(slot_hands)
+			put_in_hands(I)
+			update_inv_hands()
 		if(slot_in_backpack)
-			if(I == get_active_hand())
+			if(I == get_active_held_item())
 				unEquip(I)
 			I.loc = back
 		else
 			not_handled = TRUE
-	
+
 	//Item has been handled at this point and equipped callback can be safely called
 	//We cannot call it for items that have not been handled as they are not yet correctly
 	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
 	if(!not_handled)
 		I.equipped(src, slot)
-	
+
 	return not_handled
 
 /mob/living/carbon/unEquip(obj/item/I)

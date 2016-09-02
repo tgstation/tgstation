@@ -260,12 +260,7 @@
 
 			if(active)
 				icon_state = "swordrainbow"
-				// Updating overlays, copied from welder code.
-				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
-				if(user.r_hand == src)
-					user.update_inv_r_hand(0)
-				else if(user.l_hand == src)
-					user.update_inv_l_hand(0)
+				user.update_inv_hands()
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
 	else
@@ -777,11 +772,7 @@
 			var/obj/screen/inventory/hand/H = over_object
 			if(!remove_item_from_storage(M))
 				M.unEquip(src)
-			switch(H.slot_id)
-				if(slot_r_hand)
-					M.put_in_r_hand(src)
-				if(slot_l_hand)
-					M.put_in_l_hand(src)
+			M.put_in_hand(src, H.held_index)
 			usr << "<span class='notice'>You pick up the deck.</span>"
 
 	else
@@ -822,7 +813,7 @@
 	var/mob/living/carbon/human/cardUser = usr
 	var/O = src
 	if(href_list["pick"])
-		if (cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
+		if (cardUser.is_holding(src))
 			var/choice = href_list["pick"]
 			var/obj/item/toy/cards/singlecard/C = new/obj/item/toy/cards/singlecard(cardUser.loc)
 			src.currenthand -= choice
@@ -899,7 +890,7 @@
 /obj/item/toy/cards/singlecard/examine(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
-		if(cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
+		if(cardUser.is_holding(src))
 			cardUser.visible_message("[cardUser] checks \his card.", "<span class='notice'>The card reads: [src.cardname]</span>")
 		else
 			cardUser << "<span class='warning'>You need to have the card in your hand to check it!</span>"

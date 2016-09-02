@@ -178,11 +178,6 @@ var/next_mob_id = 0
 	return
 
 /mob/proc/get_item_by_slot(slot_id)
-	switch(slot_id)
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 	return null
 
 /mob/proc/restrained(ignore_grab)
@@ -193,7 +188,7 @@ var/next_mob_id = 0
 
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
-	var/obj/item/W = get_active_hand()
+	var/obj/item/W = get_active_held_item()
 
 	if(istype(W))
 		if(equip_to_slot_if_possible(W, slot,0,0,0))
@@ -399,16 +394,11 @@ var/next_mob_id = 0
 	if(incapacitated())
 		return
 
-	if(hand)
-		var/obj/item/W = l_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_l_hand()
-	else
-		var/obj/item/W = r_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_r_hand()
+	var/obj/item/I = get_active_held_item()
+	if(I)
+		I.attack_self(src)
+		update_inv_hands()
+
 
 /*
 /mob/verb/dump_source()
@@ -694,8 +684,7 @@ var/next_mob_id = 0
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
 	if(ko || resting || stunned || chokehold)
-		drop_r_hand()
-		drop_l_hand()
+		drop_all_held_items()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
@@ -728,8 +717,7 @@ var/next_mob_id = 0
 
 
 /mob/proc/fall(forced)
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 
 /mob/verb/eastface()
 	set hidden = 1

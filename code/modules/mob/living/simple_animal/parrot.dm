@@ -224,7 +224,7 @@
 		//Adding things to inventory
 		else if(href_list["add_inv"])
 			var/add_to = href_list["add_inv"]
-			if(!usr.get_active_hand())
+			if(!usr.get_active_held_item())
 				usr << "<span class='warning'>You have nothing in your hand to put on its [add_to]!</span>"
 				return
 			switch(add_to)
@@ -233,7 +233,7 @@
 						usr << "<span class='warning'>It's already wearing something!</span>"
 						return
 					else
-						var/obj/item/item_to_add = usr.get_active_hand()
+						var/obj/item/item_to_add = usr.get_active_held_item()
 						if(!item_to_add)
 							return
 
@@ -633,8 +633,10 @@
 				item = I
 		else if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
-				item = C
+			for(var/obj/item/I in C.held_items)
+				if(I.w_class <= 2)
+					item = I
+					break
 		if(item)
 			if(!AStar(src, get_turf(item), /turf/proc/Distance_cardinal))
 				item = null
@@ -668,8 +670,9 @@
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand && C.l_hand.w_class <= 2 || C.r_hand && C.r_hand.w_class <= 2)
-				return C
+			for(var/obj/item/I in C.held_items)
+				if(I.w_class <= 2)
+					return C
 	return null
 
 
@@ -719,11 +722,10 @@
 	var/obj/item/stolen_item = null
 
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.l_hand && C.l_hand.w_class <= 2)
-			stolen_item = C.l_hand
-
-		if(C.r_hand && C.r_hand.w_class <= 2)
-			stolen_item = C.r_hand
+		for(var/obj/item/I in C.held_items)
+			if(I.w_class <= 2)
+				stolen_item = I
+				break
 
 		if(stolen_item)
 			C.unEquip(stolen_item)

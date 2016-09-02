@@ -676,10 +676,9 @@
 	. = ..()
 	// Drop items in hands
 	// If you're a zombie lucky enough to have a NODROP item, then it stays.
-	if(C.unEquip(C.l_hand))
-		C.put_in_l_hand(new /obj/item/zombie_hand(C))
-	if(C.unEquip(C.r_hand))
-		C.put_in_r_hand(new /obj/item/zombie_hand(C))
+	for(var/obj/item/I in C.held_items)
+		C.unEquip(I)
+		C.put_in_hands(new /obj/item/zombie_hand(C))
 
 	// Next, deal with the source of this zombie corruption
 	var/obj/item/organ/body_egg/zombie_infection/infection
@@ -689,13 +688,10 @@
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	var/obj/item/zombie_hand/left = C.l_hand
-	var/obj/item/zombie_hand/right = C.r_hand
-	// Deletion of the hands is handled in the items dropped()
-	if(istype(left))
-		C.unEquip(left, TRUE)
-	if(istype(right))
-		C.unEquip(right, TRUE)
+	for(var/obj/item/I in C.held_items)
+		if(istype(I, /obj/item/zombie_hand))
+			C.unEquip(I, TRUE)
+
 
 // Your skin falls off
 /datum/species/krokodil_addict
@@ -757,7 +753,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
 	H.equipOutfit(O, visualsOnly)
-	H.internal = H.r_hand
+	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
 	return 0
 
@@ -1016,8 +1012,8 @@ SYNDICATE BLACK OPS
 
 	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-	H.accident(H.l_hand)
-	H.accident(H.r_hand)
+	for(var/obj/item/I in H.held_items)
+		H.accident(I)
 
 	var/olddir = H.dir
 

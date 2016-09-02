@@ -47,7 +47,7 @@
 		var/obj/item/I = target
 		if(istype(I, /obj/item/smallDelivery))
 			return
-		if(user.r_hand == I || user.l_hand == I)
+		if(user.is_holding(I))
 			if(!user.unEquip(I))
 				return
 		else if(!isturf(I.loc))

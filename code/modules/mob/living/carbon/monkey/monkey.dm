@@ -249,21 +249,20 @@
 	//Lasertag bullshit
 	if(lasercolor)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/redtag))
 				threatcount += 4
 
 		if(lasercolor == "r")
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/bluetag))
 				threatcount += 4
 
 		return threatcount
 
 	//Check for weapons
 	if(judgebot.weaponscheck)
-		if(judgebot.check_for_weapons(l_hand))
-			threatcount += 4
-		if(judgebot.check_for_weapons(r_hand))
-			threatcount += 4
+		for(var/obj/item/I in held_items)
+			if(judgebot.check_for_weapons(I))
+				threatcount += 4
 
 	//mindshield implants imply trustworthyness
 	if(isloyal(src))

@@ -22,10 +22,6 @@
 			return handcuffed
 		if(slot_legcuffed)
 			return legcuffed
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 		if(slot_belt)
 			return belt
 		if(slot_wear_id)
@@ -113,7 +109,7 @@
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
 		I.equipped(src, slot)
-	
+
 	return not_handled //For future deeper overrides
 
 /mob/living/carbon/human/unEquip(obj/item/I)

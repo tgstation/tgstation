@@ -748,10 +748,8 @@
 				if(H.lip_style)
 					H.lip_style = null
 					H.update_body()
-			if(C.r_hand)
-				C.r_hand.clean_blood()
-			if(C.l_hand)
-				C.l_hand.clean_blood()
+			for(var/obj/item/I in C.held_items)
+				I.clean_blood()
 			if(C.wear_mask)
 				if(C.wear_mask.clean_blood())
 					C.update_inv_wear_mask()

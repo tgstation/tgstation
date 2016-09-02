@@ -133,7 +133,7 @@
 	name = "\improper [name] packet"
 
 /obj/item/weapon/storage/fancy/cigarettes/AltClick(mob/user)
-	if(user.get_active_hand())
+	if(user.get_active_held_item())
 		return
 	for(var/obj/item/weapon/lighter/lighter in src)
 		remove_from_storage(lighter, user.loc)

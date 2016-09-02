@@ -494,24 +494,14 @@
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return 0
 
-	var/R = H.has_right_hand()
-	var/L = H.has_left_hand()
 	var/num_arms = H.get_num_arms()
 	var/num_legs = H.get_num_legs()
 
 	switch(slot)
-		if(slot_l_hand)
-			if(H.l_hand)
-				return 0
-			if(!L)
-				return 0
-			return 1
-		if(slot_r_hand)
-			if(H.r_hand)
-				return 0
-			if(!R)
-				return 0
-			return 1
+		if(slot_hands)
+			if(H.get_empty_held_indexes())
+				return TRUE
+			return FALSE
 		if(slot_wear_mask)
 			if(H.wear_mask)
 				return 0
@@ -881,11 +871,9 @@
 				. += H.shoes.slowdown
 			if(H.back)
 				. += H.back.slowdown
-			if(H.l_hand && (H.l_hand.flags & HANDSLOW))
-				. += H.l_hand.slowdown
-			if(H.r_hand && (H.r_hand.flags & HANDSLOW))
-				. += H.r_hand.slowdown
-
+			for(var/obj/item/I in H.held_items)
+				if(I.flags & HANDSLOW)
+					. += I.slowdown
 			if((H.disabilities & FAT))
 				. += 1.5
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)

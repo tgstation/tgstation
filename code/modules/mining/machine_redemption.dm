@@ -101,7 +101,7 @@
 	if (!powered())
 		return
 	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = user.get_active_hand()
+		var/obj/item/weapon/card/id/I = user.get_active_held_item()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
 				return
@@ -208,7 +208,7 @@
 				else
 					usr << "<span class='warning'>Required access not found.</span>"
 		else if(href_list["choice"] == "insert")
-			var/obj/item/weapon/card/id/I = usr.get_active_hand()
+			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
 			if(istype(I))
 				if(!usr.drop_item())
 					return

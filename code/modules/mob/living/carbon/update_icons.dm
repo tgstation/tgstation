@@ -40,64 +40,43 @@
 		overlays -= overlays_standing[cache_index]
 		overlays_standing[cache_index] = null
 
-/mob/living/carbon/update_inv_r_hand()
-	remove_overlay(R_HAND_LAYER)
-	if (handcuffed)
-		drop_r_hand()
-		return
-	if(r_hand)
-		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			r_hand.screen_loc = ui_rhand
-			client.screen += r_hand
-			if(observers && observers.len)
-				for(var/M in observers)
-					var/mob/dead/observe = M
-					if(observe.client && observe.client.eye == src)
-						observe.client.screen += r_hand
-					else
-						observers -= observe
-						if(!observers.len)
-							observers = null
-							break
 
-
-		var/t_state = r_hand.item_state
-		if(!t_state)
-			t_state = r_hand.icon_state
-
-		var/image/standing = r_hand.build_worn_icon(state = t_state, default_layer = R_HAND_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
-		overlays_standing[R_HAND_LAYER] = standing
-
-	apply_overlay(R_HAND_LAYER)
-
-/mob/living/carbon/update_inv_l_hand()
-	remove_overlay(L_HAND_LAYER)
+/mob/living/carbon/update_inv_hands()
+	remove_overlay(HANDS_LAYER)
 	if(handcuffed)
-		drop_l_hand()
+		drop_all_held_items()
 		return
-	if(l_hand)
+
+	var/list/hands = list()
+	for(var/obj/item/I in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			l_hand.screen_loc = ui_lhand
-			client.screen += l_hand
+			I.screen_loc = ui_hand_position(get_held_index_of_item(I))
+			client.screen += I
 			if(observers && observers.len)
 				for(var/M in observers)
 					var/mob/dead/observe = M
 					if(observe.client && observe.client.eye == src)
-						observe.client.screen += l_hand
+						observe.client.screen += I
 					else
 						observers -= observe
 						if(!observers.len)
 							observers = null
 							break
 
-		var/t_state = l_hand.item_state
+		var/t_state = I.item_state
 		if(!t_state)
-			t_state = l_hand.icon_state
+			t_state = I.icon_state
 
-		var/image/standing = l_hand.build_worn_icon(state = t_state, default_layer = L_HAND_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
-		overlays_standing[L_HAND_LAYER] = standing
+		var/icon_file = I.lefthand_file
+		if(get_held_index_of_item(I) % 2 == 0)
+			icon_file = I.righthand_file
 
-	apply_overlay(L_HAND_LAYER)
+		var/image/standing = I.build_worn_icon(state = t_state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		hands += standing
+
+	overlays_standing[HANDS_LAYER] = hands
+	apply_overlay(HANDS_LAYER)
+
 
 /mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
 	remove_overlay(FIRE_LAYER)
@@ -109,8 +88,7 @@
 /mob/living/carbon/regenerate_icons()
 	if(notransform)
 		return 1
-	update_inv_r_hand()
-	update_inv_l_hand()
+	update_inv_hands()
 	update_inv_handcuffed()
 	update_inv_legcuffed()
 	update_fire()
@@ -154,11 +132,10 @@
 //update whether handcuffs appears on our hud.
 /mob/living/carbon/proc/update_hud_handcuffed()
 	if(hud_used)
-		var/obj/screen/inventory/R = hud_used.inv_slots[slot_r_hand]
-		var/obj/screen/inventory/L = hud_used.inv_slots[slot_l_hand]
-		if(R && L)
-			R.update_icon()
-			L.update_icon()
+		for(var/hand in hud_used.hand_slots)
+			var/obj/screen/inventory/hand/H = hud_used.hand_slots[hand]
+			if(H)
+				H.update_icon()
 
 //update whether our head item appears on our hud.
 /mob/living/carbon/proc/update_hud_head(obj/item/I)

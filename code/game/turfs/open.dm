@@ -100,8 +100,8 @@
 		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-		C.accident(C.l_hand)
-		C.accident(C.r_hand)
+		for(var/obj/item/I in C.held_items)
+			C.accident(I)
 
 		var/olddir = C.dir
 		if(!(lube&SLIDE_ICE))
