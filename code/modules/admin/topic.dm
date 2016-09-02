@@ -1104,6 +1104,10 @@
 			var/edit_log = query_noteedits.item[1]
 			usr << browse(edit_log,"window=noteedits")
 
+	else if(href_list["secretnote"])
+		var/note_id = href_list["secretnote"]
+		toggle_note_secrecy(note_id)
+
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))
 			return
