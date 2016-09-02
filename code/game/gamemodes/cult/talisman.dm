@@ -320,13 +320,13 @@
 		qdel(src)
 
 
-//Talisman of Fabrication: Creates a construct shell out of 25 metal sheets.
+//Talisman of Fabrication: Creates a construct shell out of 25 metal sheets, or converts plasteel into runed metal up to 25 times
 /obj/item/weapon/paper/talisman/construction
 	cultist_name = "Talisman of Construction"
 	cultist_desc = "Use this talisman on at least twenty-five metal sheets to create an empty construct shell"
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
-	uses = 50
+	uses = 25
 
 /obj/item/weapon/paper/talisman/construction/attack_self(mob/living/user)
 	if(iscultist(user))
@@ -337,7 +337,7 @@
 
 /obj/item/weapon/paper/talisman/construction/attack(obj/M,mob/living/user)
 	if(iscultist(user))
-		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
+		user << "<span class='cultitalic'>This talisman will only work on a stack of metal or plasteel sheets!</span>"
 		log_game("Construct talisman failed - not a valid target")
 	else
 		..()
