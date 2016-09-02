@@ -35087,7 +35087,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/portable_atmospherics/canister/water_vapor,
 /mob/living/simple_animal/hostile/lizard{
 	name = "Wags-His-Tail";
 	real_name = "Wags-His-Tail"
@@ -49960,7 +49959,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/loadingarea{
 	dir = 4
 	},
@@ -49969,7 +49967,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bHP" = (
@@ -67519,13 +67516,44 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cmh" = (
-/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 4
 	},
 /area/medical/chemistry)
 "cmi" = (
-/obj/machinery/portable_atmospherics/canister/chem_gas,
+/obj/item/device/assembly/timer{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/device/assembly/timer{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/device/assembly/igniter{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/device/assembly/igniter{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/device/assembly/igniter{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/device/assembly/igniter{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/device/assembly/timer{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/device/assembly/timer{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/whiteyellow{
 	dir = 4
 	},
@@ -68325,22 +68353,6 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
-	},
-/obj/item/device/assembly/igniter{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/item/device/assembly/igniter{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/item/device/assembly/timer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/device/assembly/timer{
-	pixel_x = -3;
-	pixel_y = 3
 	},
 /turf/open/floor/plasteel/whiteyellow{
 	dir = 4
@@ -73095,7 +73107,7 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_y = 32
 	},
-/obj/machinery/portable_atmospherics/canister/chem_gas,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/warning{
 	dir = 5
 	},
@@ -74094,6 +74106,7 @@
 "cxg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
@@ -75357,7 +75370,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
-/obj/machinery/portable_atmospherics/canister/chem_gas,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/warning{
 	dir = 10
 	},
@@ -90633,10 +90646,8 @@
 	},
 /area/shuttle/transport)
 "cZx" = (
-/turf/open/floor/plasteel/warning{
-	dir = 8
-	},
-/area/toxins/storage)
+/turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/abandoned)
 "cZy" = (
 /turf/open/floor/plating/warnplate{
 	dir = 1
@@ -127405,7 +127416,7 @@ cta
 cuf
 cvs
 cwj
-cZx
+cxf
 cxf
 czi
 cud

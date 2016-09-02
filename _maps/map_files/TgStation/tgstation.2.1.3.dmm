@@ -5736,7 +5736,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/chem_gas,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "alY" = (
@@ -7375,9 +7375,13 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/pod_1)
 "apG" = (
-/obj/machinery/portable_atmospherics/canister/water_vapor,
-/turf/open/floor/plasteel,
-/area/janitor)
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	dir = 2;
+	icon_state = "swall_f10";
+	layer = 2
+	},
+/area/shuttle/pod_1)
 "apH" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
@@ -25815,7 +25819,6 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/portable_atmospherics/canister/chem_gas,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bgQ" = (
@@ -29023,7 +29026,12 @@
 "bnD" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/portable_atmospherics/canister/chem_gas,
+/obj/structure/table,
+/obj/item/weapon/book/manual/wiki/chemistry,
+/obj/item/weapon/book/manual/wiki/chemistry{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bnE" = (
@@ -29933,10 +29941,6 @@
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
 /obj/item/stack/packageWrap,
-/obj/item/weapon/book/manual/wiki/chemistry{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bpu" = (
@@ -36605,7 +36609,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/machinery/portable_atmospherics/canister/chem_gas,
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bCY" = (
@@ -37055,7 +37059,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/portable_atmospherics/canister/chem_gas,
+/obj/machinery/portable_atmospherics/canister/freon,
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
@@ -41832,7 +41836,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/machinery/portable_atmospherics/canister/chem_gas,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNQ" = (
@@ -91942,7 +91946,7 @@ aLY
 aLY
 bBx
 bCv
-apG
+bDL
 bFk
 bDs
 bCv
