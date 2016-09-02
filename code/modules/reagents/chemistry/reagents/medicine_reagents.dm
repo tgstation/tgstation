@@ -461,6 +461,7 @@
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 60
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/M)
 	M.adjustOxyLoss(-3*REM, 0)
@@ -468,6 +469,12 @@
 		M.losebreath -= 2
 	..()
 	. = 1
+
+/datum/reagent/medicine/salbutamol/overdose_process(mob/living/M)
+	if(prob(2))
+		M.adjustStaminaLoss(20*REM, 0)
+		..()
+		. = 1
 
 /datum/reagent/medicine/perfluorodecalin
 	name = "Perfluorodecalin"
