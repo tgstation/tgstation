@@ -239,7 +239,7 @@
 	user.mind.transfer_to(SM)
 	SM.languages_spoken = user.languages_spoken
 	SM.languages_understood = user.languages_understood
-	SM.faction = user.faction
+	SM.faction = user.faction.Copy()
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
 	SM << "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>"
