@@ -175,7 +175,24 @@
 		user << "<span class='userdanger'>You need both hands free to fire \the [src]!</span>"
 		return
 
-	process_fire(target,user,1,params)
+	//DUAL WIELDING
+	var/bonus_spread = 0
+	var/obj/item/weapon/gun/off_hand
+	if(ishuman(user) && user.a_intent == "harm")
+		var/mob/living/carbon/human/H = user
+		if(H.r_hand == src && istype(H.l_hand, /obj/item/weapon/gun))
+			off_hand = H.l_hand
+
+		else if(H.l_hand == src && istype(H.r_hand, /obj/item/weapon/gun))
+			off_hand = H.r_hand
+
+	if(off_hand && off_hand.can_trigger_gun(user))
+		bonus_spread = 3 * off_hand.weapon_weight
+		spawn(1)
+			off_hand.newshot()
+			off_hand.process_fire(target,user,1,params, null, bonus_spread)
+
+	process_fire(target,user,1,params, null, bonus_spread)
 
 
 
@@ -200,7 +217,7 @@
 obj/item/weapon/gun/proc/newshot()
 	return
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 1)
 	add_fingerprint(user)
 
 	if(semicd)
@@ -226,6 +243,7 @@ obj/item/weapon/gun/proc/newshot()
 					sprd = round((rand() - 0.5) * spread)
 				else //Smart spread
 					sprd = round((i / burst_size - 0.5) * spread)
+				sprd *= bonus_spread
 				if(!chambered.fire(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
 					break
