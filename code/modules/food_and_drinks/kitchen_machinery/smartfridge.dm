@@ -19,7 +19,7 @@
 /obj/machinery/smartfridge/New()
 	..()
 	create_reagents()
-	reagents.set_reacting(FALSE)
+	reagents.set_noreact()
 
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smartfridge(null)
 	B.apply_default_parts(src)

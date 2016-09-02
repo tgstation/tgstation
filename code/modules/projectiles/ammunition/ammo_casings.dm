@@ -289,7 +289,7 @@
 	..()
 	flags |= OPENCONTAINER
 	create_reagents(30)
-	reagents.set_reacting(FALSE)
+	reagents.set_noreact()
 
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return

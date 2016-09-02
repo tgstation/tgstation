@@ -56,7 +56,7 @@
 	while(product_types.len < 6)
 		product_types.Add(5)
 	create_reagents()
-	reagents.set_reacting(FALSE)
+	reagents.set_noreact()
 	reagents.add_reagent("milk", 5)
 	reagents.add_reagent("flour", 5)
 	reagents.add_reagent("sugar", 5)

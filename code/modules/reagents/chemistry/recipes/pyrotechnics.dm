@@ -270,7 +270,7 @@
 	required_reagents = list("smoke_powder" = 1)
 	required_temp = 374
 	secondary = 1
-	mob_react = 1
+	no_mob_react = 1
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
