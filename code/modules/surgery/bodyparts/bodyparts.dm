@@ -7,6 +7,7 @@
 	icon_state = ""
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	var/mob/living/carbon/human/owner = null
+	var/mob/living/carbon/human/original_owner = null
 	var/status = ORGAN_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
@@ -30,6 +31,7 @@
 	var/px_x = 0
 	var/px_y = 0
 
+	var/limb_species //A path
 	var/state_flags
 
 /obj/item/bodypart/examine(mob/user)
@@ -186,6 +188,11 @@
 	var/mob/living/carbon/human/H
 	if(source)
 		H = source
+		if(!original_owner)
+			original_owner = source
+	else if(original_owner && owner != original_owner) //Foreign limb
+		no_update = 1
+		return
 	else
 		H = owner
 	if(!istype(H))
@@ -195,6 +202,7 @@
 
 	var/datum/species/S = H.dna.species
 	species_id = S.limbs_id
+	limb_species = S.type
 
 	if(S.use_skintones)
 		skin_tone = H.skin_tone
