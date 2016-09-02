@@ -4,7 +4,6 @@
 	var/flags = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
-	var/fingerprintslast = null
 	var/list/blood_DNA
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 
@@ -99,8 +98,6 @@
 /atom/proc/check_eye(mob/user)
 	return
 
-/atom/proc/on_reagent_change()
-	return
 
 /atom/proc/Bumped(AM as mob|obj)
 	return

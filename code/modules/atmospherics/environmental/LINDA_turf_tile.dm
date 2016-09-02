@@ -110,17 +110,10 @@
 /turf/open/proc/tile_graphic()
 	. = new /list
 	var/list/gases = air.gases
-	var/list/reagent_gas_memes = air.reagents.reagent_list
 	for(var/id in gases)
 		var/gas = gases[id]
 		if(gas[GAS_META][META_GAS_OVERLAY] && gas[MOLES] > gas[GAS_META][META_GAS_MOLES_VISIBLE])
-			if(id == "chem_gas")
-				var/obj/effect/overlay/gas/G = gas[GAS_META][META_GAS_OVERLAY]
-				if(reagent_gas_memes.len)
-					G.color = mix_color_from_reagents(reagent_gas_memes)
-				. += G
-			else
-				. += gas[GAS_META][META_GAS_OVERLAY]
+			. += gas[GAS_META][META_GAS_OVERLAY]
 
 /////////////////////////////SIMULATION///////////////////////////////////
 

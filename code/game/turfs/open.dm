@@ -97,12 +97,6 @@
 		qdel(hotspot)
 	return 1
 
-/turf/open/chem_gas_act(var/datum/reagents/gas)
-	for(var/A in contents)
-		gas.reaction(A, VAPOR)
-	gas.reaction(src, VAPOR)
-	return 1
-
 /turf/open/handle_fall(mob/faller, forced)
 	faller.lying = pick(90, 270)
 	if(!forced)

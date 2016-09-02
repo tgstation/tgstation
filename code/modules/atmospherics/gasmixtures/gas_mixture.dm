@@ -192,10 +192,6 @@ var/list/gaslist_cache = null
 				if(holder.water_vapor_gas_act())
 					cached_gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
 
-		if(cached_gases["chem_gas"])
-			if(cached_gases["chem_gas"][MOLES] >= MOLES_PLASMA_VISIBLE)
-				holder.chem_gas_act(reagents)
-
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		//world << "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]"
