@@ -119,8 +119,10 @@
 					step(C, olddir)
 					C.spin(1,1)
 		else if(lube&SLIDE_ICE)
+			C.slipping = TRUE
 			spawn(1)
 				step(C, olddir)
+			C.slipping = FALSE
 		return 1
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
