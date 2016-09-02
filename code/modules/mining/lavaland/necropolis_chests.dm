@@ -4,6 +4,7 @@
 	name = "necropolis chest"
 	desc = "It's watching you closely."
 	icon_state = "necrocrate"
+	burn_state = LAVA_PROOF
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."

@@ -38,7 +38,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters) || I.is_sharp())
-		var/obj/item/stack/sheet/cloth/C = new (loc, 3)
+		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
 		qdel(src)

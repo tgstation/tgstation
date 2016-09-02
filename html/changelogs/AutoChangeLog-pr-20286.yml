@@ -1,0 +1,4 @@
+author: "RemieRichards"
+delete-after: True
+changes: 
+  - bugfix: "Cutting bedsheets with a sharp object/wirecutters no longer puts the resulting cloth INSIDE OF YOU if you're holding it, what a bug."
