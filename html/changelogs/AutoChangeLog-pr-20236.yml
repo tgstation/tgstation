@@ -1,0 +1,5 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - experiment: "Freon has been reworked completely."
+  - rscadd: "Water Vapor has been added to the Janitor's Closet."
