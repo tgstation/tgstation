@@ -32,6 +32,13 @@
 	if(dna.species)
 		set_species(dna.species.type)
 
+	//initialise limbs
+	if(DIGITIGRADE in dna.species.specflags)
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/O = X
+			if(O.body_zone == "r_leg" || O.body_zone == "l_leg")
+				O.use_digitigrade = TRUE
+
 	//initialise organs
 	if(!(NOHUNGER in dna.species.specflags))
 		internal_organs += new /obj/item/organ/appendix

@@ -371,6 +371,15 @@
 		else if ("wings" in mutant_bodyparts)
 			bodyparts_to_add -= "wings_open"
 
+/*	if("digitigrade" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || (H.w_uniform && (H.w_uniform.body_parts_covered & LEGS)))
+			bodyparts_to_add -= "digitigrade_full"
+			bodyparts_to_add += "digitigrade_hidden"
+		else
+			bodyparts_to_add += "digitigrade_full"
+			bodyparts_to_add -= "digitigrade_hidden"
+		for(var/L in LEGS) //Hide the legs since we're rending special ones
+			L.alpha = 0*/
 
 	if(!bodyparts_to_add)
 		return

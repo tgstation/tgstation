@@ -122,6 +122,10 @@
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
 
+//flags for digitigrade outfits: Helps determinesif the outfit needs to be altered for weird legs (usually doesn't)
+
+#define NO_DIGITIGRADE_UNIFORM		0
+#define DIGITIGRADE_UNIFORM			1
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES	1

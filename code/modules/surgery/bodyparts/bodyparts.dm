@@ -10,6 +10,7 @@
 	var/status = ORGAN_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
+	var/use_digitigrade = FALSE //Used for alternate legs, useless elsewhere
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
@@ -252,6 +253,8 @@
 		if(should_draw_greyscale)
 			if(should_draw_gender)
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			else if(use_digitigrade)
+				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_df_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 			else
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
@@ -350,7 +353,6 @@
 	body_part = LEG_RIGHT
 	px_x = 2
 	px_y = 12
-
 
 /////////////////////////////////////////////////////////////////////////
 

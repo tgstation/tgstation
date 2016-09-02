@@ -86,7 +86,7 @@
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = "lizard"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,PIERCEIMMUNE,DIGITIGRADE)
 /*
  PODPEOPLE
 */
