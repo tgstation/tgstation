@@ -384,6 +384,9 @@
 	R.fields["blood_type"] = subject.dna.blood_type
 	R.fields["features"] = subject.dna.features
 	R.fields["factions"] = subject.faction
+
+	DetectForeignDNA(subject, R)
+
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
 	if(!imp)
@@ -399,3 +402,23 @@
 
 	src.records += R
 	scantemp = "Subject successfully scanned."
+
+/obj/machinery/computer/cloning/proc/DetectForeignDNA(mob/living/carbon/human/subject,datum/data/record/R )
+	var/domestic_limbs = 0
+	var/foreign_limbs = 0
+	var/list/foreign_limb_species = list()
+	for(var/A in subject.bodyparts)
+		var/obj/item/bodypart/B = A
+		if(B.status != ORGAN_ORGANIC)
+			continue
+		if(!B.original_owner || B.original_owner == subject)
+			domestic_limbs++
+			continue
+		foreign_limbs++
+		if(B.species_id != subject.dna.species.limbs_id)
+			foreign_limb_species += B.limb_species
+	if(!domestic_limbs && !foreign_limbs) //strictly speaking this person probably shouldn't be clonable but whatever
+		return
+	var/chance_to_assimilate = (foreign_limbs/(domestic_limbs+foreign_limbs))*100
+	if(prob(chance_to_assimilate) && !isemptylist(foreign_limb_species))
+		R.fields["mrace"] = pick(foreign_limb_species)
