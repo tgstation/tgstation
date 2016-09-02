@@ -12,6 +12,7 @@
 #define MOLES			1
 #define ARCHIVE			2
 #define GAS_META		3
+#define SPECIAL			4
 #define META_GAS_SPECIFIC_HEAT	1
 #define META_GAS_NAME			2
 #define META_GAS_OVERLAY		4
@@ -48,6 +49,7 @@
 #define SPACE_HEAT_TRANSFER_COEFFICIENT		0.2		//a hack to partly simulate radiative heat
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1		//a hack for now
+#define ELECTRIC_MOLE_SCALE					1000
 	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
 	//Should not exceed 0.4 else strange heat flow occur
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
@@ -55,6 +57,7 @@
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
 #define FIRE_CARBON_ENERGY_RELEASED			500000	//Amount of heat released per mole of burnt carbon into the tile
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
+#define OZONE_ENERGY_RELEASED 				500000
 #define FIRE_GROWTH_RATE					40000	//For small fires
 #define CARBON_LIFEFORM_FIRE_RESISTANCE 	200+T0C	//Resistance to fire damage
 #define CARBON_LIFEFORM_FIRE_DAMAGE			4		//Fire damage
@@ -70,7 +73,7 @@
 #define MAX_PLASMA_DAMAGE					10
 #define MOLES_PLASMA_VISIBLE				0.5		//Moles in a standard cell after which plasma is visible
 	//Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				3000000
+#define PLASMA_BINDING_ENERGY				300000
 #define MAX_CARBON_EFFICENCY				9
 #define PLASMA_FUSED_COEFFICENT				0.08
 #define CARBON_CATALYST_COEFFICENT			0.01

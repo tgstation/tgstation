@@ -27,6 +27,7 @@ var/list/gaslist_cache = null
 		cached_gas[MOLES] = 0
 		cached_gas[ARCHIVE] = 0
 		cached_gas[GAS_META] = meta_gas_info[id]
+		cached_gas[SPECIAL] = 0
 	else
 		cached_gas = gaslist_cache[id]
 	//Copy() it because only GAS_META is static
@@ -111,10 +112,10 @@ var/list/gaslist_cache = null
 		return total_moles() * R_IDEAL_GAS_EQUATION * temperature / volume
 	return 0
 
-/datum/gas_mixture/proc/return_temperature() //kelvins
+/datum/gas_mixture/proc/return_temperature() //kelvin
 	return temperature
 
-/datum/gas_mixture/proc/return_volume() //liters
+/datum/gas_mixture/proc/return_volume() //litres
 	return max(0, volume)
 
 /datum/gas_mixture/proc/thermal_energy() //joules
@@ -129,65 +130,41 @@ var/list/gaslist_cache = null
 	if(temperature < TCMB)
 		temperature = TCMB
 
-	if(cached_gases["agent_b"] && temperature > 900 && cached_gases["plasma"] && cached_gases["co2"])
-		//agent b converts hot co2 to o2 (endothermic)
-		if(cached_gases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY && cached_gases["co2"][MOLES] > MINIMUM_HEAT_CAPACITY)
-			var/reaction_rate = min(cached_gases["co2"][MOLES]*0.75, cached_gases["plasma"][MOLES]*0.25, cached_gases["agent_b"][MOLES]*0.05)
 
-			cached_gases["co2"][MOLES] -= reaction_rate
+	if(cached_gases["plasma"][MOLES] > 1 && temperature > PLASMA_BINDING_ENERGY)
+		var/reaction_rate = temperature/PLASMA_BINDING_ENERGY
+		assert_gas("ion_plasma")
+		cached_gases["ion_plasma"][MOLES]+=reaction_rate
+		cached_gases["plasma"][MOLES] = min((cached_gases["plasma"][MOLES]-reaction_rate),0)
 
-			assert_gas("o2") //only need to assert oxygen, as this reaction doesn't occur without the other gases existing
-			cached_gases["o2"][MOLES] += reaction_rate
+		garbage_collect()
 
-			cached_gases["agent_b"][MOLES] -= reaction_rate*0.05
-
-			temperature -= (reaction_rate*20000)/heat_capacity()
-
-			garbage_collect()
-
+		reacting = 1
+	if(cached_gases["electric"][MOLES] > MINIMUM_HEAT_CAPACITY)
+		if(electric_act())
 			reacting = 1
-	/*
-	if(thermal_energy() > (PLASMA_BINDING_ENERGY*10))
-		if(cached_gases["plasma"] && cached_gases["co2"] && cached_gases["plasma"][MOLES] > MINIMUM_HEAT_CAPACITY && cached_gases["co2"][MOLES] > MINIMUM_HEAT_CAPACITY && (cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])/total_moles() >= FUSION_PURITY_THRESHOLD)//Fusion wont occur if the level of impurities is too high.
-			//fusion converts plasma and co2 to o2 and n2 (exothermic)
-			//world << "pre [temperature, [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]]
-			var/old_heat_capacity = heat_capacity()
-			var/carbon_efficency = min(cached_gases["plasma"][MOLES]/cached_gases["co2"][MOLES],MAX_CARBON_EFFICENCY)
-			var/reaction_energy = thermal_energy()
-			var/moles_impurities = total_moles()-(cached_gases["plasma"][MOLES]+cached_gases["co2"][MOLES])
-
-			var/plasma_fused = (PLASMA_FUSED_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
-			var/carbon_catalyzed = (CARBON_CATALYST_COEFFICENT*carbon_efficency)*(temperature/PLASMA_BINDING_ENERGY)
-			var/oxygen_added = carbon_catalyzed
-			var/nitrogen_added = (plasma_fused-oxygen_added)-(thermal_energy()/PLASMA_BINDING_ENERGY)
-
-			reaction_energy = max(reaction_energy+((carbon_efficency*cached_gases["plasma"][MOLES])/((moles_impurities/carbon_efficency)+2)*10)+((plasma_fused/(moles_impurities/carbon_efficency))*PLASMA_BINDING_ENERGY),0)
-
-			assert_gases("o2", "n2")
-
-			cached_gases["plasma"][MOLES] -= plasma_fused
-			cached_gases["co2"][MOLES] -= carbon_catalyzed
-			cached_gases["o2"][MOLES] += oxygen_added
-			cached_gases["n2"][MOLES] += nitrogen_added
-
-			garbage_collect()
-
-			if(reaction_energy > 0)
-				reacting = 1
-				var/new_heat_capacity = heat_capacity()
-				if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-					temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
-					//Prevents whatever mechanism is causing it to hit negative temperatures.
-				//world << "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]]
-			*/
+	if(cached_gases["ion_plasma"][MOLES] > MINIMUM_HEAT_CAPACITY && (cached_gases["electric"][MOLES] < MINIMUM_HEAT_CAPACITY))
+		var/old_thermal_energy = thermal_energy()
+		cached_gases["ion_plasma"][SPECIAL]+=cached_gases["ion_plasma"][MOLES]*4000
+		temperature = (old_thermal_energy-(cached_gases["ion_plasma"][MOLES]*4000))/heat_capacity()
+		reacting = 1
+	if(cached_gases["freon"][MOLES] > 2 && cached_gases["ozone"])
+		var/old_heat_capacity = heat_capacity()
+		assert_gas("oxygen")
+		cached_gases["oxygen"]+=1.5*(cached_gases["freon"][MOLES])
+		cached_gases["ozone"] =min((cached_gases["ozone"][MOLES]-cached_gases["freon"][MOLES]),0)
+		var/new_heat_capacity = heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			temperature = (temperature*old_heat_capacity + (cached_gases["freon"][MOLES])*OZONE_ENERGY_RELEASED)/new_heat_capacity
+		garbage_collect()
+		reacting = 1
 	if(holder)
-		if(cached_gases["freon"] && cached_gases["o2"])
-			if(cached_gases["freon"][MOLES] >= 3)
-				if(return_temperature() < 50)
-					holder.freon_gas_act()
-					cached_gases["freon"][MOLES] -= 3
-					cached_gases["o2"][MOLES] += 3
-					temperature += 1
+		if(cached_gases["freon"][MOLES] >= 3 && cached_gases["o2"])
+			if(return_temperature() < 50)
+				holder.freon_gas_act()
+				cached_gases["freon"][MOLES] -= 3
+				cached_gases["o2"][MOLES] += 3
+				temperature += 1
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		//world << "pre [temperature], [cached_gases["o2"][MOLES]], [cached_gases["plasma"][MOLES]]"
@@ -259,6 +236,35 @@ var/list/gaslist_cache = null
 			temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
 
 	return fuel_burnt
+
+/datum/gas_mixture/proc/electric_act()
+	var/cached_gases = gases
+	var/reaction_energy=cached_gases["electric"]*ELECTRIC_MOLE_SCALE
+	var/electricity_used=0
+	if(reaction_energy>5)
+		if(cached_gases["oxygen"][MOLES] > MOLES_PLASMA_VISIBLE)
+			assert_gas("ozone")
+			cached_gases["ozone"][MOLES]+=(reaction_energy*(2/3))
+			cached_gases["oxygen"][MOLES]-=reaction_energy
+			electricity_used += reaction_energy
+	if(reaction_energy>10)
+		if(cached_gases["ion_plasma"][SPECIAL])
+			var/old_thermal_energy=temperature*heat_capacity()
+			cached_gases["ion_plasma"][SPECIAL]-=cached_gases["ion_plasma"][MOLES]*(reaction_energy*(2*ELECTRIC_MOLE_SCALE))
+			temperature = (old_thermal_energy+(cached_gases["ion_plasma"][MOLES]*(reaction_energy*(2*ELECTRIC_MOLE_SCALE))))/heat_capacity()
+			electricity_used += reaction_energy
+
+	if(holder)
+		//
+	cached_gases["electric"][MOLES] = min((cached_gases["electric"][MOLES]-(electricity_used/1000)),0)
+	garbage_collect()
+	return electricity_used
+
+
+
+
+
+
 
 /datum/gas_mixture/proc/archive()
 	//Update archived versions of variables
