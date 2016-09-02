@@ -49,7 +49,7 @@
 
 
 /obj/structure/reagent_dispensers/proc/boom()
-	visible_message("<span class='danger'>\The [src] ruptures!</span>"
+	visible_message("<span class='danger'>\The [src] ruptures!</span>")
 	chem_splash(loc, 5, list(reagents))
 	qdel(src)
 
