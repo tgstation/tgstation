@@ -236,7 +236,7 @@
 		else
 			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
-	if (message && src.stat == CONSCIOUS)
+	if (message && stat == CONSCIOUS)
 		log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
 			visible_message(message)
@@ -248,7 +248,7 @@
 	set category = "Robot Commands"
 	set name = "Power Warning"
 
-	if(src.stat == CONSCIOUS)
+	if(stat == CONSCIOUS)
 		if(!cell || !cell.charge)
 			visible_message("The power warning light on <span class='name'>[src]</span> flashes urgently.",\
 							"You announce you are operating in low power mode.")
