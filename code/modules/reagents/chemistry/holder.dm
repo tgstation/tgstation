@@ -384,7 +384,7 @@ var/const/INJECT = 5 //injection
 
 					var/list/seen = viewers(4, get_turf(my_atom))
 					if(cached_my_atom)
-						if(!istype(cached_my_atom, /mob)) // No bubbling mobs
+						if(!ismob(cached_my_atom)) // No bubbling mobs
 							if(C.mix_sound)
 								playsound(get_turf(cached_my_atom), C.mix_sound, 80, 1)
 							for(var/mob/M in seen)
