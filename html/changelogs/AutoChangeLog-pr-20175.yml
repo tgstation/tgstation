@@ -1,0 +1,5 @@
+author: "bgobandit"
+delete-after: True
+changes: 
+  - tweak: "You can hide small items in urinals now. Use a screwdriver to screw open the drain enclosure."
+  - rscadd: "Every space urinal comes complete with space urinal cake. Do not eat."

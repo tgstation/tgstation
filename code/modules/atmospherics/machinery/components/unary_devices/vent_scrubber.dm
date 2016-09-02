@@ -20,6 +20,7 @@
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
 	var/scrub_BZ = 0
+	var/scrub_Freon = 1
 
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
@@ -68,6 +69,8 @@
 		if(scrub_N2O)
 			amount += idle_power_usage
 		if(scrub_BZ)
+			amount += idle_power_usage
+		if(scrub_Freon)
 			amount += idle_power_usage
 	else //scrubbing == SIPHONING
 		amount = active_power_usage
@@ -119,6 +122,7 @@
 		"filter_toxins" = scrub_Toxins,
 		"filter_n2o" = scrub_N2O,
 		"filter_bz" = scrub_BZ,
+		"filter_Freon" = scrub_Freon,
 		"sigtype" = "status"
 	)
 
@@ -209,6 +213,11 @@
 				filtered_out.gases["bz"][MOLES] = removed_gases["bz"][MOLES]
 				removed.gases["bz"][MOLES] = 0
 
+			if(scrub_Freon && removed_gases["freon"])
+				filtered_out.assert_gas("freon")
+				filtered_out.gases["freon"][MOLES] = removed_gases["freon"][MOLES]
+				removed.gases["freon"][MOLES] = 0
+
 			removed.garbage_collect()
 
 			//Remix the resulting gases
@@ -288,6 +297,11 @@
 		scrub_BZ = text2num(signal.data["bz_scrub"])
 	if("toggle_bz_scrub" in signal.data)
 		scrub_BZ = !scrub_BZ
+
+	if("freon_scrub" in signal.data)
+		scrub_Freon = text2num(signal.data["freon_scrub"])
+	if("toggle_freon_scrub" in signal.data)
+		scrub_Freon = !scrub_Freon
 
 	if("init" in signal.data)
 		name = signal.data["init"]

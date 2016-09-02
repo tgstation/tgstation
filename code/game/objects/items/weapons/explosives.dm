@@ -43,8 +43,8 @@
 				message_say = "[uppertext(user.mind.gang_datum.name)] RULES!"
 	user.say(message_say)
 	target = user
-	message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) suicided with [src.name] at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-	message_admins("[key_name(user)] suicided with [src.name] at ([x],[y],[z])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
+	message_admins("[key_name(user)] suicided with [name] at ([x],[y],[z])")
 	sleep(10)
 	explode(get_turf(user))
 	user.gib(1, 1)
@@ -87,8 +87,10 @@
 		src.target = AM
 		loc = null
 
-		message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [timer] second fuse",0,1)
-		log_game("[key_name(user)] planted [src.name] on [target.name] at ([target.x],[target.y],[target.z]) with [timer] second fuse")
+		var/message = "[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [timer] second fuse"
+		bombers += message
+		message_admins(message,0,1)
+		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(target)] with [timer] second fuse")
 
 		target.add_overlay(image_overlay, 1)
 		user << "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>"

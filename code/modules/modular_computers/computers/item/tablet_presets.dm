@@ -19,3 +19,11 @@
 	install_component(new /obj/item/weapon/computer_hardware/network_card)
 	install_component(new /obj/item/weapon/computer_hardware/card_slot)
 	install_component(new /obj/item/weapon/computer_hardware/printer/mini)
+
+/obj/item/device/modular_computer/tablet/preset/cargo/New()
+	. = ..()
+	install_component(new /obj/item/weapon/computer_hardware/processor_unit/small)
+	install_component(new /obj/item/weapon/computer_hardware/battery(src, /obj/item/weapon/stock_parts/cell/computer))
+	install_component(new /obj/item/weapon/computer_hardware/hard_drive/small)
+	install_component(new /obj/item/weapon/computer_hardware/network_card)
+	install_component(new /obj/item/weapon/computer_hardware/printer/mini)

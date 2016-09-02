@@ -56,11 +56,16 @@ var/datum/subsystem/persistence/SSpersistence
 	return 1
 
 /datum/subsystem/persistence/proc/PlaceFreeSatchel()
-	for(var/V in shuffle(get_area_turfs(pick(the_station_areas))))
-		var/turf/T = V
-		if(istype(T,/turf/open/floor) && !istype(T,/turf/open/floor/plating/))
-			new /obj/item/weapon/storage/backpack/satchel/flat/secret(T)
-			break
+	var/satchel_placed = FALSE
+	var/breakout = 0
+	while(!satchel_placed && breakout <= 5)
+		for(var/V in shuffle(get_area_turfs(pick(the_station_areas))))
+			var/turf/T = V
+			if(istype(T,/turf/open/floor) && !istype(T,/turf/open/floor/plating/))
+				new /obj/item/weapon/storage/backpack/satchel/flat/secret(T)
+				satchel_placed = TRUE
+				break
+		breakout++
 
 /datum/subsystem/persistence/proc/CollectSecretSatchels()
 	for(var/A in new_secret_satchels)

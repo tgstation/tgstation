@@ -178,6 +178,9 @@
 		if("clean_order")
 			reset_order()
 			return 1
+		if("purchase")
+			try_purchase()
+			return 1
 	if((state != 1) && devtype) // Following IFs should only be usable when in the Select Loadout mode
 		return 0
 	switch(action)
@@ -240,37 +243,20 @@ obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 		if(!user.drop_item(c))
 			return
 		credits += c.value
+		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] credits into the [src].</span>")
 		qdel(c)
 		return
 
-
-	var/obj/item/weapon/card/id/D = I.GetID()
-	// Awaiting payment state
-	if(state == 2 && D)
-		if(process_payment(D,I))
-			fabricate_and_recalc_price(1)
-			if((devtype == 1) && fabricated_laptop)
-				fabricated_laptop.forceMove(src.loc)
-				fabricated_laptop = null
-			else if((devtype == 2) && fabricated_tablet)
-				fabricated_tablet.forceMove(src.loc)
-				fabricated_tablet = null
-			say("Enjoy your new product!")
-			state = 3
-			return 1
-		return 0
 	return ..()
 
 
 // Simplified payment processing, returns 1 on success.
-/obj/machinery/lapvend/proc/process_payment(obj/item/weapon/card/id/I, obj/item/ID_container, obj/item/stack/spacecash)
+/obj/machinery/lapvend/proc/process_payment()
 	if(total_price > credits)
 		say("Insufficient credits.")
 		return 0
 	else
 		return 1
-
-	visible_message("<span class='info'>\The [usr] swipes \the [I] through \the [src].</span>")
 
 /obj/machinery/lapvend/ui_data(mob/user)
 
@@ -287,5 +273,24 @@ obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
 		data["hw_cpu"] = dev_cpu
 	if(state == 1 || state == 2)
 		data["totalprice"] = total_price
+		data["credits"] = credits
 
 	return data
+
+
+/obj/machinery/lapvend/proc/try_purchase()
+	// Awaiting payment state
+	if(state == 2)
+		if(process_payment())
+			fabricate_and_recalc_price(1)
+			if((devtype == 1) && fabricated_laptop)
+				fabricated_laptop.forceMove(src.loc)
+				fabricated_laptop = null
+			else if((devtype == 2) && fabricated_tablet)
+				fabricated_tablet.forceMove(src.loc)
+				fabricated_tablet = null
+			credits -= total_price
+			say("Enjoy your new product!")
+			state = 3
+			return 1
+		return 0

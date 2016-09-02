@@ -289,40 +289,35 @@
 
 /obj/structure/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie)
 	var/winner = "Undeclared"
-	var/base_victory_chance = 0
+	var/base_victory_chance = 1
 	while(TRUE)
 		world << 'sound/magic/clockwork/ratvar_attack.ogg'
 		sleep(5.2)
 		for(var/mob/M in mob_list)
-			if(M.client)
-				M.client.color = rgb(150, 100, 0)
-				spawn(1)
-					M.client.color = initial(M.client.color)
+			flash_color(M, flash_color="#966400", flash_time=1)
 			shake_camera(M, 4, 3)
-		var/r_success_modifier = min(ticker.mode.servants_of_ratvar.len * 2, 50) //2% for each cultist
-		var/n_success_modifier = ticker.mode.cult.len * 2
+		var/ratvar_chance = min(ticker.mode.servants_of_ratvar.len, 50)
+		var/narsie_chance = ticker.mode.cult.len
 		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
-			n_success_modifier += 2
-		n_success_modifier = min(n_success_modifier, 50)
-		if(prob(base_victory_chance + r_success_modifier))
+			narsie_chance++
+		ratvar_chance = rand(base_victory_chance, ratvar_chance)
+		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
+		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break
 		sleep(rand(2,5))
 		world << 'sound/magic/clockwork/narsie_attack.ogg'
 		sleep(7.4)
 		for(var/mob/M in mob_list)
-			if(M.client)
-				M.client.color = rgb(200, 0, 0)
-				spawn(1)
-					M.client.color = initial(M.client.color)
+			flash_color(M, flash_color="#C80000", flash_time=1)
 			shake_camera(M, 4, 3)
-		if(prob(base_victory_chance + n_success_modifier))
+		if(narsie_chance > ratvar_chance)
 			winner = "Nar-Sie"
 			break
-		base_victory_chance++ //The clash has a higher chance of resolving each time both gods attack one another
+		base_victory_chance *= 2 //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "REEEEEEEEE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>" //nar-sie get out
+			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>" //nar-sie get out
 			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
 			world << 'sound/magic/demon_dies.ogg'
