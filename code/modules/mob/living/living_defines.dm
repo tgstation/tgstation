@@ -73,5 +73,3 @@
 	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
 	
 	var/slipping = FALSE
-
-	var/slipping = FALSE
