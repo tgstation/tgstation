@@ -200,6 +200,8 @@
 	update_icon()
 
 /obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+	if(S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
+		return
 	var/transfer = get_amount()
 	if(S.is_cyborg)
 		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
