@@ -301,8 +301,9 @@
 			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
 	..()
 
-/datum/reagent/medicine/styptic_powder/overdose_process(mob/living/M)
-	M.adjustBruteLoss(1, 0)
+/datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
+	M.adjustBruteLoss(1*REM, 0)
+	M.adjustFireLoss(1*REM, 0)
 	..()
 	. = 1
 
