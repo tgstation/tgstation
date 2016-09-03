@@ -112,9 +112,9 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(!stat)
-		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1, 0, 1)
 	if(charging)
-		PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
+		PoolOrNew(/obj/effect/overlay/temp/decoy/fading, list(loc,src))
 		DestroySurroundings()
 	. = ..()
 	if(charging)
@@ -136,7 +136,6 @@ Difficulty: Hard
 	var/turf/T = get_turf(target)
 	if(!T)
 		return
-	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, T)
 	charging = 1
 	original_charge_loc = get_turf(src)
 	if(get_dist(src, T) > 7) //the target is far enough away we can charge longer without losing vision
@@ -145,8 +144,12 @@ Difficulty: Hard
 		charge_range = initial(charge_range) //the target is closer we need to do shorter charges to avoid losing vision
 	DestroySurroundings()
 	walk(src, 0)
-	sleep(5)
-	throw_at(T, charge_range, 1, src, 0, 1)
+	setDir(get_dir(src, T))
+	var/obj/effect/overlay/temp/decoy/D = PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
+	D.color = "#FF0000"
+	animate(D, alpha = 0, color = initial(D.color), transform = matrix()*2, time = 7)
+	sleep(7)
+	throw_at(T, charge_range, 1, src, 0)
 	charging = 0
 	Goto(target, move_to_delay, minimum_distance)
 
