@@ -112,7 +112,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(!stat)
-		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1, 0, 1)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	if(charging)
 		PoolOrNew(/obj/effect/overlay/temp/decoy/fading, list(loc,src))
 		DestroySurroundings()
