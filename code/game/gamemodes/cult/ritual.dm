@@ -111,7 +111,7 @@ This file contains the arcane tome files.
 
 	text += "<font color='red'><b>Talisman of Teleportation</b></font><br>The talisman form of the Teleport rune will transport the invoker to a selected Teleport rune once.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Construction</b></font><br>This talisman is the main way of creating construct shells. To use it, one must strike 30 sheets of metal with the talisman. The sheets will then be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
+	text += "<font color='red'><b>Talisman of Construction</b></font><br>This talisman is the main way of creating construct shells. To use it, one must strike 30 sheets of metal with the talisman. The sheets will then be twisted into a construct shell, ready to receive a soul to occupy it.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Tome Summoning</b></font><br>This talisman will produce a single tome at your feet.<br><br>"
 
@@ -217,20 +217,20 @@ This file contains the arcane tome files.
 		if(ticker.mode.name == "cult")
 			var/datum/game_mode/cult/cult_mode = ticker.mode
 			if(!("eldergod" in cult_mode.cult_objectives))
-				user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
+				user << "<span class='warning'>\"This is not the time for the great summons,\" hisses a strange, hollow voice. \"Do not disturb me.\"</span>"
 				return
 			else if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
 				user << "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>"
 				return
 			else if(!cult_mode.eldergod)
-				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
+				user << "<span class='cultlarge'>\"I am already here,\" a voice seethes from nowhere and everywhere.</span>"
 				return
 			var/locname = initial(A.name)
 			if(loc.z && loc.z != ZLEVEL_STATION)
 				user << "<span class='warning'>The Geometer is not interested \
 					in lesser locations; the station is the prize!</span>"
 				return
-			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
+			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, It is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 			if(confirm_final == "No")
 				user << "<span class='cult'>You decide to prepare further before scribing the rune.</span>"
 				return
@@ -246,7 +246,7 @@ This file contains the arcane tome files.
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 			return
-	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
+	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in \his own blood!</span>", \
 						 "<span class='cult'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
 	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
@@ -258,7 +258,7 @@ This file contains the arcane tome files.
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
-	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
+	user.visible_message("<span class='warning'>[user] creates a strange circle in \his own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
 		var/obj/machinery/shield/S = V
@@ -267,3 +267,18 @@ This file contains the arcane tome files.
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>"
 	feedback_add_details("cult_runes_scribed", R.cultist_name)
+
+/obj/item/weapon/tome/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)
+		return
+	if(A.reagents && A.reagents.has_reagent("water"))
+		if(iscultist(user))
+			user << "<span class='notice'>You infuse [A] with the power of Nar-Sie.</span>"
+			var/water2unholy = A.reagents.get_reagent_amount("water")
+			A.reagents.del_reagent("water")
+			A.reagents.add_reagent("unholywater",water2unholy)
+		else // library computer and otherwise spawned tomes
+			user << "<span class='notice'>A strange, fetid scent emanates from [A] as you bring the tome near.</span>"
+			var/water2blood = A.reagents.get_reagent_amount("water")
+			A.reagents.del_reagent("water")
+			A.reagents.add_reagent("blood", water2blood)
