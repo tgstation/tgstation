@@ -7375,13 +7375,8 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/pod_1)
 "apG" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 2;
-	icon_state = "swall_f10";
-	layer = 2
-	},
-/area/shuttle/pod_1)
+/turf/open/floor/plasteel,
+/area/janitor)
 "apH" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
@@ -91940,7 +91935,7 @@ aLY
 aLY
 bBx
 bCv
-bDL
+apG
 bFk
 bDs
 bCv
