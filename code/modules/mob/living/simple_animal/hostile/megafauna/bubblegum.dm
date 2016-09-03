@@ -120,11 +120,6 @@ Difficulty: Hard
 	if(charging)
 		DestroySurroundings()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/has_gravity(turf/T)
-	if(charging && original_charge_loc && target && target.z && original_charge_loc.z == target.z && get_dist(src, original_charge_loc) < charge_range)
-		return 0
-	return ..()
-
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/triple_charge()
 	charge()
 	sleep(10)
@@ -134,19 +129,18 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_turf(target)
-	if(!T)
+	if(!T || T == loc)
 		return
+	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, T)
 	charging = 1
-	original_charge_loc = get_turf(src)
-	charge_range = max(get_dist(src, T) + 5, initial(charge_range)) //always try to overshoot the target by 5 tiles, minimum 10 tiles
 	DestroySurroundings()
 	walk(src, 0)
 	setDir(get_dir(src, T))
 	var/obj/effect/overlay/temp/decoy/D = PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
 	D.color = "#FF0000"
-	animate(D, alpha = 0, color = initial(D.color), transform = matrix()*2, time = 7)
-	sleep(7)
-	throw_at(T, charge_range, 1, src, 0)
+	animate(D, alpha = 0, color = initial(D.color), transform = matrix()*2, time = 5)
+	sleep(5)
+	throw_at(T, get_dist(src, T), 1, src, 0)
 	charging = 0
 	Goto(target, move_to_delay, minimum_distance)
 
