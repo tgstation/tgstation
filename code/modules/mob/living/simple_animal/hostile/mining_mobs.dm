@@ -223,9 +223,8 @@
 		A.admin_spawned = admin_spawned
 		A.GiveTarget(target)
 		A.friends = friends
-		A.faction = faction
+		A.faction = faction.Copy()
 		ranged_cooldown = world.time + ranged_cooldown_time
-	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
