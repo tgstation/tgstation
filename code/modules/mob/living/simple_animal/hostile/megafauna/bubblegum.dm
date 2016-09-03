@@ -138,10 +138,7 @@ Difficulty: Hard
 		return
 	charging = 1
 	original_charge_loc = get_turf(src)
-	if(get_dist(src, T) > 7) //the target is far enough away we can charge longer without losing vision
-		charge_range = 18
-	else
-		charge_range = initial(charge_range) //the target is closer we need to do shorter charges to avoid losing vision
+	charge_range = max(get_dist(src, T) + 5, initial(charge_range)) //always try to overshoot the target by 5 tiles, minimum 10 tiles
 	DestroySurroundings()
 	walk(src, 0)
 	setDir(get_dir(src, T))
