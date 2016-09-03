@@ -544,7 +544,7 @@
 /datum/reagent/fluorine
 	name = "Fluorine"
 	id = "fluorine"
-	description = "A comically-reactive chemical element. The univese does not want this stuff to exist in this form in the slightest."
+	description = "A comically-reactive chemical element. The universe does not want this stuff to exist in this form in the slightest."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -556,21 +556,21 @@
 /datum/reagent/sodium
 	name = "Sodium"
 	id = "sodium"
-	description = "A soft silver metal that can easily be cut with a knife. It's not salt just yet so refrain from putting in on your chips."
+	description = "A soft silver metal that can easily be cut with a knife. It's not salt just yet, so refrain from putting in on your chips."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/phosphorus
 	name = "Phosphorus"
 	id = "phosphorus"
-	description = "A ruddy red powder that burns readily. Though it comes in many colors, the general theme is always the same. "
+	description = "A ruddy red powder that burns readily. Though it comes in many colors, the general theme is always the same."
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
 
 /datum/reagent/lithium
 	name = "Lithium"
 	id = "lithium"
-	description = "A silver metal, it's claim to fame is its remarkabley low density. Using it is a bit too effective in calming oneself down."
+	description = "A silver metal, it's claim to fame is its remarkably low density. Using it is a bit too effective in calming oneself down."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -1010,7 +1010,7 @@
 /datum/reagent/iodine
 	name = "Iodine"
 	id = "iodine"
-	description = "Commonly added to table salt as a nutrient. On its own it tastes far less pleasing.."
+	description = "Commonly added to table salt as a nutrient. On its own it tastes far less pleasing."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -1031,7 +1031,7 @@
 /datum/reagent/bromine
 	name = "Bromine"
 	id = "bromine"
-	description = "A brownish liquid that's highly reactive. Useful for stopping free radicals, but not intend for human consumption."
+	description = "A brownish liquid that's highly reactive. Useful for stopping free radicals, but not intended for human consumption."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -1045,7 +1045,7 @@
 /datum/reagent/ash
 	name = "Ash"
 	id = "ash"
-	description = "Supposedly pheonixes rise from these, but you've never see it."
+	description = "Supposedly pheonixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -1059,7 +1059,7 @@
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
 	id = "colorful_reagent"
-	description = "Throughly sample the rainbow."
+	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
