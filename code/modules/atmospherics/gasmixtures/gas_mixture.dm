@@ -6,7 +6,6 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-#define REAGENT_GAS_AMT 2.5
 var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
 
 var/list/gaslist_cache = null
@@ -333,13 +332,6 @@ var/list/gaslist_cache = null
 
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/giver_gases = giver.gases
-	if(reagents)
-		var/list/cached_reagents = giver.reagents.reagent_list
-	
-		for(var/R in cached_reagents)
-			var/datum/reagent/RA = R
-			if(!reagents.has_reagent(RA.id))
-				reagents.add_reagent(RA.id, REAGENT_GAS_AMT)
 	//gas transfer
 	for(var/giver_id in giver_gases)
 		assert_gas(giver_id)
@@ -361,14 +353,6 @@ var/list/gaslist_cache = null
 		removed.add_gas(id)
 		removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
-	if(reagents)
-		var/list/cached_reagents = reagents.reagent_list
-		for(var/R in cached_reagents)
-			var/datum/reagent/RA = R
-			var/temp_id = RA.id
-			var/mathmemes = QUANTIZE((RA.volume / reagents.total_volume) * amount)
-			reagents.remove_reagent(temp_id, mathmemes)
-			removed.reagents.add_reagent(temp_id, mathmemes)
 	garbage_collect()
 
 	return removed
@@ -387,14 +371,6 @@ var/list/gaslist_cache = null
 		removed.add_gas(id)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
-	if(reagents)
-		var/list/cached_reagents = reagents.reagent_list
-		for(var/R in cached_reagents)
-			var/datum/reagent/RA = R
-			var/temp_id = RA.id
-			var/mathmemes = QUANTIZE(RA.volume * ratio)
-			reagents.remove_reagent(temp_id, mathmemes)
-			removed.reagents.add_reagent(temp_id, mathmemes)
 
 	garbage_collect()
 
@@ -409,11 +385,6 @@ var/list/gaslist_cache = null
 	for(var/id in cached_gases)
 		copy.add_gas(id)
 		copy_gases[id][MOLES] = cached_gases[id][MOLES]
-	if(reagents)
-		var/list/cached_reagents = reagents.reagent_list
-		for(var/R in cached_reagents)
-			var/datum/reagent/RA = R
-			copy.reagents.add_reagent(RA.id, REAGENT_GAS_AMT)
 
 	return copy
 
@@ -425,12 +396,6 @@ var/list/gaslist_cache = null
 	for(var/id in sample_gases)
 		assert_gas(id)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES]
-	if(reagents && sample.reagents)
-		var/list/their_reagents = sample.reagents.reagent_list
-		reagents.clear_reagents()
-		for(var/R in their_reagents)
-			var/datum/reagent/RA = R
-			reagents.add_reagent(RA.id, REAGENT_GAS_AMT)
 
 	//remove all gases not in the sample
 	cached_gases &= sample_gases
@@ -465,19 +430,6 @@ var/list/gaslist_cache = null
 
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
-	if(reagents && sharer.reagents)
-		var/list/our_reagents = reagents.reagent_list
-		var/list/their_reagents = sharer.reagents.reagent_list
-	
-		for(var/R in our_reagents)
-			var/datum/reagent/RAO = R
-			if(!sharer.reagents.has_reagent(RAO.id))
-				sharer.reagents.add_reagent(RAO.id, REAGENT_GAS_AMT)
-	
-		for(var/RA in their_reagents)
-			var/datum/reagent/RAT = RA
-			if(!reagents.has_reagent(RAT.id))
-				reagents.add_reagent(RAT.id, REAGENT_GAS_AMT)
 
 	var/temperature_delta = temperature_archived - sharer.temperature_archived
 	var/abs_temperature_delta = abs(temperature_delta)
