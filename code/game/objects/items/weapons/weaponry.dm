@@ -470,7 +470,7 @@ var/highlander_claymores = 0
 		playsound(get_turf(src), 'sound/weapons/HOMERUN.ogg', 100, 1)
 		homerun_ready = 0
 		return
-	else
+	else if(!target.anchored)
 		target.throw_at(throw_target, rand(1,2), 7, user)
 
 /obj/item/weapon/melee/baseball_bat/ablative
