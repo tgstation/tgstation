@@ -217,7 +217,7 @@
 	. = 1
 
 /datum/reagent/medicine/silver_sulfadiazine/overdose_process(mob/living/M)
-	M.adjustFireLoss(1, 0)
+	M.adjustFireLoss(4, 0)
 	..()
 	. = 1
 
@@ -271,7 +271,7 @@
 	. = 1
 
 /datum/reagent/medicine/styptic_powder/overdose_process(mob/living/M)
-	M.adjustBruteLoss(1, 0)
+	M.adjustBruteLoss(4, 0)
 	..()
 	. = 1
 
@@ -379,6 +379,11 @@
 		if(R != src)
 			M.reagents.remove_reagent(R.id,1)
 	..()
+
+/datum/reagent/medicine/charcoal/overdose_process(mob/living/M)
+	M.adjustToxLoss(4*REM, 0)
+	..()
+	. = 1
 
 /datum/reagent/medicine/omnizine
 	name = "Omnizine"
@@ -494,8 +499,8 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/omnizine/overdose_process(mob/living/M)
-	M.adjustOxyLoss(1.5*REM, 0)
+/datum/reagent/medicine/salbutamol/overdose_process(mob/living/M)
+	M.adjustOxyLoss(6*REM, 0) // Get help, QUICK
 	..()
 	. = 1
 
