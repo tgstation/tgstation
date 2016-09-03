@@ -46,6 +46,8 @@ Difficulty: Hard
 	del_on_death = 1
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	var/charging = 0
+	var/charge_range = 10
+	var/turf/original_charge_loc
 	medal_type = MEDAL_PREFIX
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
@@ -118,6 +120,11 @@ Difficulty: Hard
 	if(charging)
 		DestroySurroundings()
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/has_gravity(turf/T)
+	if(charging && original_charge_loc && target && target.z && original_charge_loc.z == target.z && get_dist(src, original_charge_loc) < charge_range)
+		return 0
+	return ..()
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/triple_charge()
 	charge()
 	sleep(10)
@@ -126,15 +133,22 @@ Difficulty: Hard
 	charge()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
-	var/turf/T = get_step_away(target, src)
-	charging = 1
-	DestroySurroundings()
+	var/turf/T = get_turf(target)
+	if(!T)
+		return
 	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, T)
+	charging = 1
+	original_charge_loc = get_turf(src)
+	if(get_dist(src, T) > 7) //the target is far enough away we can charge longer without losing vision
+		charge_range = 18
+	else
+		charge_range = initial(charge_range) //the target is closer we need to do shorter charges to avoid losing vision
+	DestroySurroundings()
+	walk(src, 0)
 	sleep(5)
-	walk(src,0)
-	throw_at(T, 7, 1, src, 0)
+	throw_at(T, charge_range, 1, src, 0, 1)
 	charging = 0
-	Goto(target,move_to_delay,minimum_distance)
+	Goto(target, move_to_delay, minimum_distance)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
@@ -148,16 +162,15 @@ Difficulty: Hard
 	if(!charging)
 		return ..()
 
-	else if(A)
-		if(isliving(A))
-			var/mob/living/L = A
-			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
-			L.apply_damage(40, BRUTE)
-			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
-			shake_camera(L, 4, 3)
-			shake_camera(src, 2, 3)
-			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-			L.throw_at_fast(throwtarget)
+	else if(isliving(A))
+		var/mob/living/L = A
+		L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
+		L.apply_damage(40, BRUTE)
+		playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
+		shake_camera(L, 4, 3)
+		shake_camera(src, 2, 3)
+		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
+		L.throw_at_fast(throwtarget, 3)
 
 	charging = 0
 

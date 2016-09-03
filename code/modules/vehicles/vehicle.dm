@@ -129,7 +129,7 @@
 
 
 /obj/vehicle/Process_Spacemove(direction)
-	if(has_gravity(src))
+	if(has_gravity())
 		return 1
 
 	if(pulledby)

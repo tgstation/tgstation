@@ -602,7 +602,7 @@
 			. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T)
-	if(!has_gravity(src))
+	if(!has_gravity())
 		return
 	var/blood_exists = 0
 
