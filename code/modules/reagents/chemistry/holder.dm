@@ -19,10 +19,10 @@ var/const/INJECT = 5 //injection
 	var/list/datum/reagent/addiction_list = new/list()
 	var/flags
 
-/datum/reagents/New(maximum=100)
+/datum/reagents/New(maximum=100, owner)
 	maximum_volume = maximum
-
-	if(!(flags & REAGENT_NOREACT))
+	my_atom = owner
+	if(!(flags & REAGENT_NOREACT) && istype(owner, /atom))
 		START_PROCESSING(SSobj, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
@@ -679,5 +679,4 @@ var/const/INJECT = 5 //injection
 /datum/proc/create_reagents(max_vol)
 	if(reagents)
 		qdel(reagents)
-	reagents = new/datum/reagents(max_vol)
-	reagents.my_atom = src
+	reagents = new/datum/reagents(max_vol, src)
