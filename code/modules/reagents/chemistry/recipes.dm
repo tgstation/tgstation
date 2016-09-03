@@ -1,55 +1,56 @@
 /datum/chemical_reaction
-	var/name = null
-	var/id = null
+	var/id = null // Used by reactions/time. Can be left as null in most cases.
 	var/list/results = new/list()
 	var/list/required_reagents = new/list()
-	var/list/required_catalysts = new/list()
 
-	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
-	var/atom/required_container = null // the container required for the reaction to happen
-	var/required_other = 0 // an integer required for the reaction to happen
+	var/required_other = 0 // Whether or not this recipe should use special_reqs.
 
 	var/secondary = 0 // set to nonzero if secondary reaction
 	var/no_mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
 	var/is_cold_recipe = 0 // Set to 1 if you want the recipe to only react when it's BELOW the required temp.
-	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
-	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
 
 // Used to check special requirements of the recipe. Such as slime core uses and required containers.
-/datum/chemical_reaction/proc/special_reqs(datum/reagents/holder)
+/datum/chemical_reaction/proc/special_reqs(datum/chem_holder/holder)
 	if(!istype(holder))
 		return 0
 
-// Called when the recipe is made.
-/datum/chemical_reaction/proc/react(datum/reagents/holder)
+// Called when the recipe is matched.
+/datum/chemical_reaction/proc/react(datum/chem_holder/holder)
 	if(!istype(holder))
 		return 0
+
+
+
+
+
+
+// REACTION CODE HELPERS //
 
 // Consume the required_reagents. Used by most recipes.
-/datum/chemical_reaction/proc/consume_reagents(datum/reagents/holder, multiplier = 1)
+/datum/chemical_reaction/proc/consume_reagents(datum/chem_holder/holder, multiplier = 1)
 	if(!istype(holder) || !multiplier)
 		return 0
 	for(var/reagent in required_reagents)
 		holder.adjust_volume(reagent, -required_reagents[reagent]*multiplier)
 
 // Create the results.
-/datum/chemical_reaction/proc/create_reagents(datum/reagents/holder, multiplier = 1, temperature = 293)
+/datum/chemical_reaction/proc/create_reagents(datum/chem_holder/holder, multiplier = 1, temperature = 293)
 	if(!istype(holder) || !multiplier)
 		return 0
 	for(var/reagent in results)
 		holder.adjust_volume(reagent, results[reagent]*multiplier)
 
 // Get the multiplier for maximum possible reactions based on required reagents. Set ratio_mode to false to force full_integers only.
-/datum/chemical_reaction/proc/get_multiplier(datum/reagents/holder, ratio_mode = TRUE)
+/datum/chemical_reaction/proc/get_multiplier(datum/chem_holder/holder, ratio_mode = TRUE)
 	if(!istype(holder))
 		return 0
 	var/list/multipliers = new/list()
 	for(var/R in required_reagents)
 		var/available = holder.get_reagent_amount(R)
 		var/needs = required_reagents[R]
-		if(isnull(needs)) // More quality of life! If the recipe calls for 1 part, you don't need to explicitly type " = 1
+		if(isnull(needs)) // More quality of life! If the recipe calls for 1 part, you don't need to explicitly type " = 1"
 			needs = 1
 		if(available >= needs)
 			if(needs == 0) // It's a 'perfect' catalyst, and needs only be present. Skip division by zero.
@@ -62,15 +63,18 @@
 	else
 		return round(min(multipliers))
 
-// The basic reaction code. Used by old recipes.
-/datum/chemical_reaction/proc/simple_react(datum/reagents/holder, multiplier = 1)
-	if(!istype(holder) || !multiplier)
+// The basic reaction code. This is the old convert req_reagents to results logic. Set ratio to TRUE to use ratio logic.
+/datum/chemical_reaction/proc/simple_react(datum/chem_holder/holder, ratio = FALSE)
+	if(!istype(holder))
 		return 0
+	var/multiplier = get_multiplier(holder, ratio)
 	consume_reagents(holder, multiplier)
 	create_reagents(holder, multiplier)
+	simple_feedback(holder)
+
 
 // Outputs a feedback message, and plays a sound. Override the defaults with mix_message = "message" or mix_sound = 'sound/path'. Alternatively you can set either argument to null.
-/datum/chemical_reaction/proc/simple_feedback(datum/reagents/holder, mix_message = "The solution begins to bubble.", mix_sound = 'sound/effects/bubbles.ogg')
+/datum/chemical_reaction/proc/simple_feedback(datum/chem_holder/holder, mix_message = "The solution begins to bubble.", mix_sound = 'sound/effects/bubbles.ogg')
 	if(!istype(holder) || istype(holder.my_atom, /mob)) // No bubbling mobs
 		return 0
 	var/list/seen = viewers(4, get_turf(holder.my_atom))
@@ -80,13 +84,11 @@
 		for(var/mob/M in seen)
 			M << "<span class='notice'>\icon[holder.my_atom] [mix_message]</span>"
 
-/datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
-	return
-	//I recommend you set the result amount to the total volume of all components.
 
+// Spawns a bunch of mobs, either friendly or mean depending on the reaction type.
 var/list/chemical_mob_spawn_meancritters = list() // list of possible hostile mobs
 var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
-/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
+/datum/chemical_reaction/proc/chemical_mob_spawn(datum/chem_holder/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
 		if (chemical_mob_spawn_meancritters.len <= 0 || chemical_mob_spawn_nicecritters.len <= 0)
 			for (var/T in typesof(/mob/living/simple_animal))

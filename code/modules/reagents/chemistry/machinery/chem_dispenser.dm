@@ -139,7 +139,7 @@
 		if("dispense")
 			var/reagent = params["reagent"]
 			if(beaker && dispensable_reagents.Find(reagent))
-				var/datum/reagents/R = beaker.reagents
+				var/datum/chem_holder/R = beaker.reagents
 				var/free = R.maximum_volume - R.total_volume
 				var/actual = min(amount, energy * 10, free)
 

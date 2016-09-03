@@ -527,7 +527,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	//Protolathe Materials
 	else if(href_list["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
-		linked_lathe.reagents.del_reagent(href_list["disposeP"])
+		linked_lathe.reagents.del_reagent(href_list["disposeP"]) // CHECKTHIS NULLBEAR ADJUST_REAGENT
 
 	else if(href_list["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
 		linked_lathe.reagents.clear_reagents()

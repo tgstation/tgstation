@@ -63,7 +63,8 @@
 
 	for(var/i = 1, i <= multiplier && slime_check(holder), i++)
 		slime_success(holder)
-		simple_react(holder)
+		consume_reagents(holder, 1)
+		create_reagents(holder, 1)
 	simple_feedback(holder)
 	return 1
 
@@ -103,7 +104,8 @@
 
 	for(var/i = 1, i <= multiplier && slime_check(holder), i++)
 		slime_success(holder)
-		simple_react(holder)
+		consume_reagents(holder, 1)
+		create_reagents(holder, 1)
 	simple_feedback(holder)
 	return 1
 
@@ -121,7 +123,8 @@
 
 	for(var/i = 1, i <= multiplier && slime_check(holder), i++)
 		slime_success(holder)
-		simple_react(holder)
+		consume_reagents(holder, 1)
+		create_reagents(holder, 1)
 	simple_feedback(holdermix_message = "<span class='info'>The mixture rapidly expands and contracts, its appearance shifting into a sickening green.</span>")
 	return 1
 
@@ -327,7 +330,8 @@
 
 	for(var/i = 1, i <= multiplier && slime_check(holder), i++)
 		slime_success(holder)
-		simple_react(holder)
+		consume_reagents(holder, 1)
+		create_reagents(holder, 1)
 	simple_feedback(holder)
 	return 1
 
@@ -445,7 +449,8 @@
 
 	for(var/i = 1, i <= multiplier && slime_check(holder), i++)
 		slime_success(holder)
-		simple_react(holder)
+		consume_reagents(holder, 1)
+		create_reagents(holder, 1)
 	simple_feedback(holder)
 	return 1
 
@@ -544,7 +549,8 @@
 
 	for(var/i = 1, i <= multiplier && slime_check(holder), i++)
 		slime_success(holder)
-		simple_react(holder)
+		consume_reagents(holder, 1)
+		create_reagents(holder, 1)
 	simple_feedback(holder)
 	return 1
 
@@ -685,7 +691,8 @@
 
 	for(var/i = 1, i <= multiplier && slime_check(holder), i++)
 		slime_success(holder)
-		simple_react(holder)
+		consume_reagents(holder, 1)
+		create_reagents(holder, 1)
 	simple_feedback(holder)
 	return 1
 

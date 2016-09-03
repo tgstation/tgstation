@@ -88,5 +88,6 @@
 #define SWARMER 64
 #define RATVAR 128
 
-// Flags for reagents
-#define REAGENT_NOREACT 1
+// Flags for chem_holders
+#define REAGENT_NOREACT 1 // Prevents reagents from reacting.
+#define REAGENT_IGNITER 2 // This holder is an ignition source.

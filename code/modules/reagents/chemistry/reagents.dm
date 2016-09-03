@@ -12,12 +12,14 @@
 	var/name = "Reagent"
 	var/id = "reagent"
 	var/description = ""
-	var/datum/reagents/holder = null
+	var/datum/chem_holder/holder = null
 	var/reagent_state = LIQUID
 	var/list/data
 	var/current_cycle = 0
 	var/volume = 0
+	var/value = 1 // The value of this reagent. Basing it off the chemdispenser energy points (ie. 1 point of value = 0.1 points of chemdispenser energy.)It will eventually be used.
 	var/color = "#000000" // rgb: 0, 0, 0
+	var/alpha = 255 // Not currently used. May eventually be used for gasses and reagent_fillings.
 	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
@@ -106,10 +108,10 @@
 		M << "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>"
 	return
 
-/proc/pretty_string_from_reagent_list(var/list/reagent_list)
+/proc/pretty_string_from_reagents(var/list/reagents)
 	//Convert reagent list to a printable string for logging etc
 	var/result = "| "
-	for (var/datum/reagent/R in reagent_list)
+	for (var/datum/reagent/R in reagents)
 		result += "[R.name], [R.volume] | "
 
 	return result

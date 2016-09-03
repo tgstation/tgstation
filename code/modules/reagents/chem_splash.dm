@@ -5,7 +5,7 @@
 // Extra heat affects the temperature of the mixture, and may cause it to react in different ways.
 
 
-proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
+proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/chem_holder/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
 	if(!istype(epicenter, /turf) || !reactants.len || threatscale <= 0)
 		return
 	var/has_reagents
