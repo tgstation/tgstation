@@ -49,7 +49,6 @@ var/list/gaslist_cache = null
 	src.volume = volume
 	last_share = 0
 	fuel_burnt = 0
-	create_reagents(1000)
 
 //listmos procs
 
