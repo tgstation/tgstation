@@ -46,8 +46,6 @@ Difficulty: Hard
 	del_on_death = 1
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	var/charging = 0
-	var/charge_range = 10
-	var/turf/original_charge_loc
 	medal_type = MEDAL_PREFIX
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
