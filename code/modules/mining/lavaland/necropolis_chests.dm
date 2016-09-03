@@ -663,8 +663,8 @@
 			timer = world.time + create_delay + 1
 			if(do_after(user, create_delay, target = T))
 				user.visible_message("<span class='danger'>[user] turns \the [T] into [transform_string]!</span>")
-				message_admins("[key_name_admin(user)] fired the lava staff at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(target)] ([T.x], [T.y], [T.z])</a>).")
-				log_game("[key_name(user)] fired the lava staff at [get_area(target)] ([T.x], [T.y], [T.z]).")
+				message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
+				log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
 				T.ChangeTurf(turf_type)
 				timer = world.time + create_cooldown
 				qdel(L)
