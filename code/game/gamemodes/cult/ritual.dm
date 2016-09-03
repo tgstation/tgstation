@@ -111,7 +111,7 @@ This file contains the arcane tome files.
 
 	text += "<font color='red'><b>Talisman of Teleportation</b></font><br>The talisman form of the Teleport rune will transport the invoker to a selected Teleport rune once.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Construction</b></font><br>This talisman is the main way of creating construct shells. To use it, one must strike 30 sheets of metal with the talisman. The sheets will then be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
+	text += "<font color='red'><b>Talisman of Construction</b></font><br>This talisman is the main way of creating construct shells. To use it, one must strike 25 sheets of metal with the talisman. The sheets will then be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Tome Summoning</b></font><br>This talisman will produce a single tome at your feet.<br><br>"
 
