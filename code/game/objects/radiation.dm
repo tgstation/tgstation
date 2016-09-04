@@ -31,8 +31,11 @@
 
 /mob/living/rad_act(amount, silent = 0)
 	if(amount)
-		var/message = silent ? null : "Your clothes feel warm."
-		var/blocked = run_armor_check(null, "rad", message, message)
+		var/blocked = getarmor(null, "rad")
+
+		if(!silent)
+			src << "Your skin feels warm."
+
 		apply_effect(amount, IRRADIATE, blocked)
 		for(var/obj/I in src) //Radiation is also applied to items held by the mob
 			I.rad_act(amount)

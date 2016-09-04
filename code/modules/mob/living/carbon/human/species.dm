@@ -849,7 +849,7 @@
 		. -= 2
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
-		if(!has_gravity(H))
+		if(!H.has_gravity())
 			if(FLYING in specflags)
 				. += speedmod
 				return

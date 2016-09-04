@@ -1392,6 +1392,7 @@
 #include "code\modules\mob\living\carbon\monkey\punpun.dm"
 #include "code\modules\mob\living\carbon\monkey\update_icons.dm"
 #include "code\modules\mob\living\silicon\death.dm"
+#include "code\modules\mob\living\silicon\examine.dm"
 #include "code\modules\mob\living\silicon\laws.dm"
 #include "code\modules\mob\living\silicon\login.dm"
 #include "code\modules\mob\living\silicon\say.dm"
