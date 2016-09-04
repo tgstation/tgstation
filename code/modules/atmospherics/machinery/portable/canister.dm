@@ -80,20 +80,6 @@
 	desc = "Pre-mixed air."
 	icon_state = "grey"
 
-/obj/machinery/portable_atmospherics/canister/freon
-	name = "freon canister"
-	desc = "Freon. Great for the atmosphere!"
-	icon_state = "freon"
-	gas_type = "freon"
-	starter_temp = 120
-
-/obj/machinery/portable_atmospherics/canister/water_vapor
-	name = "water vapor canister"
-	desc = "Water Vapor. We get it, you vape."
-	icon_state = "water_vapor"
-	gas_type = "water_vapor"
-	filled = 1
-
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
 	if(existing_mixture)
@@ -332,8 +318,7 @@
 					var/plasma = air_contents.gases["plasma"]
 					var/n2o = air_contents.gases["n2o"]
 					var/bz = air_contents.gases["bz"]
-					var/freon = air_contents.gases["freon"]
-					if(n2o || plasma || bz || freon)
+					if(n2o || plasma || bz)
 						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains the following: (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
 						log_admin("[key_name(usr)] opened a canister that contains the following at [x], [y], [z]:")
 						if(plasma)
@@ -345,9 +330,6 @@
 						if(bz)
 							log_admin("BZ Gas")
 							message_admins("BZ Gas")
-						if(freon)
-							log_admin("Freon")
-							message_admins("Freon")
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, "atmos")

@@ -6,6 +6,7 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+
 var/list/meta_gas_info = meta_gas_list() //see ATMOSPHERICS/gas_types.dm
 
 var/list/gaslist_cache = null
@@ -38,7 +39,6 @@ var/list/gaslist_cache = null
 	var/volume //liters
 	var/last_share
 	var/tmp/fuel_burnt
-	var/atom/holder
 
 /datum/gas_mixture/New(volume = CELL_VOLUME)
 	..()
@@ -179,16 +179,6 @@ var/list/gaslist_cache = null
 					//Prevents whatever mechanism is causing it to hit negative temperatures.
 				//world << "post [temperature], [cached_gases["plasma"][MOLES]], [cached_gases["co2"][MOLES]]
 			*/
-	if(holder)
-		if(cached_gases["freon"])
-			if(cached_gases["freon"][MOLES] >= MOLES_PLASMA_VISIBLE)
-				if(holder.freon_gas_act())
-					cached_gases["freon"][MOLES] -= MOLES_PLASMA_VISIBLE
-
-		if(cached_gases["water_vapor"])
-			if(cached_gases["water_vapor"][MOLES] >= MOLES_PLASMA_VISIBLE)
-				if(holder.water_vapor_gas_act())
-					cached_gases["water_vapor"][MOLES] -= MOLES_PLASMA_VISIBLE
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
@@ -332,6 +322,7 @@ var/list/gaslist_cache = null
 
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/giver_gases = giver.gases
+
 	//gas transfer
 	for(var/giver_id in giver_gases)
 		assert_gas(giver_id)
