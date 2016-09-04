@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Added the 'Drain Life' rune to the runes cultists can make. It will drain life from all creatures on the rune, healing the invoker."
-  - imageadd: "The 'Astral Communion' rune has a new sprite, made by WJohnston."

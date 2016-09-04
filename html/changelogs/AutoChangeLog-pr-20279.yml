@@ -1,6 +1,0 @@
-author: "A-t48"
-delete-after: True
-changes: 
-  - bugfix: "Radiation storms no longer spam \"Your armor softened the blow.\""
-  - bugfix: "Radiation always gives a message that you are being irradiated, regardless of armor level (only an issue if you stripped off all clothing)"
-  - bugfix: "Radiation now displays a message appropriate for all mob types (no longer references clothes)."
