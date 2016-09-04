@@ -165,17 +165,17 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	calculate_rage()
-	if(blinking)
-		return
 	var/target_is_slow = FALSE
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.stat == DEAD && get_dist(src, L) > 2)
+		if(!blinking && L.stat == DEAD && get_dist(src, L) > 2)
 			blink(L)
 			return
 		if(L.movement_delay() > 1.5)
 			target_is_slow = TRUE
 	chaser_speed = max(1, (3 - anger_modifier * 0.04) + target_is_slow * 0.5)
+	if(blinking)
+		return
 	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75) //scale cooldown lower with high anger.
 
 	if(prob(anger_modifier * 0.75)) //major ranged attack
