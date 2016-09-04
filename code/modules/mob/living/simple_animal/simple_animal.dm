@@ -601,7 +601,7 @@
 /mob/living/simple_animal/get_idcard()
 	return access_card
 
-//Dextrous simple mobs can use hands!
+//Dextrous simple mobs can use hands!.3
 /mob/living/simple_animal/create_mob_hud()
 	if(client && !hud_used)
 		if(dextrous)
