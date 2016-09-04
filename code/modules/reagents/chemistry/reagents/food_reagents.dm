@@ -27,9 +27,6 @@
 	overdose_threshold = 200
 
 /datum/reagent/consumable/nutriment/overdose_process(mob/living/M)
-	if(HUMAN.dna.species.id == "slime")
-	return
-	
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(!H.heart_attack)
