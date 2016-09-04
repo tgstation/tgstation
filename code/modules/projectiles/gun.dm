@@ -32,7 +32,7 @@
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
 
-	var/spread = 0						//Spread induced by the gun itself.
+	var/spread = 3						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
 	var/unique_rename = 0 //allows renaming with a pen
@@ -187,7 +187,7 @@
 			off_hand = H.r_hand
 
 	if(off_hand && off_hand.can_trigger_gun(user))
-		bonus_spread = 3 * off_hand.weapon_weight
+		bonus_spread = 12 * off_hand.weapon_weight
 		spawn(1)
 			off_hand.newshot()
 			off_hand.process_fire(target,user,1,params, null, bonus_spread)
@@ -217,18 +217,21 @@
 obj/item/weapon/gun/proc/newshot()
 	return
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 1)
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
 	add_fingerprint(user)
 
 	if(semicd)
 		return
 
-	if(weapon_weight)
+	if(weapon_weight >= WEAPON_MEDIUM)
 		if(user.get_inactive_hand())
 			recoil = 4 //one-handed kick
 		else
 			recoil = initial(recoil)
 
+	var/sprd = 0
+	var/randomized_gun_spread = rand(0,spread)
+	var/randomized_bonus_spread = rand(0, bonus_spread)
 	if(burst_size > 1)
 		firing_burst = 1
 		for(var/i = 1 to burst_size)
@@ -238,12 +241,12 @@ obj/item/weapon/gun/proc/newshot()
 				if( i>1 && !(src in get_both_hands(user))) //for burst firing
 					break
 			if(chambered)
-				var/sprd = 0
 				if(randomspread)
-					sprd = round((rand() - 0.5) * spread)
+					sprd = round((rand() - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
+					world << "sprd is [sprd]"
 				else //Smart spread
-					sprd = round((i / burst_size - 0.5) * spread)
-				sprd *= bonus_spread
+					sprd = round((i / burst_size - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
+					world << "sprd is [sprd]"
 				if(!chambered.fire(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
 					break
@@ -261,7 +264,8 @@ obj/item/weapon/gun/proc/newshot()
 		firing_burst = 0
 	else
 		if(chambered)
-			if(!chambered.fire(target, user, params, , suppressed, zone_override, spread))
+			sprd = round((pick(1,-1)) * (randomized_gun_spread + randomized_bonus_spread))
+			if(!chambered.fire(target, user, params, , suppressed, zone_override, sprd))
 				shoot_with_empty_chamber(user)
 				return
 			else
