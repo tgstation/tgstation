@@ -867,17 +867,14 @@
 		user.update_action_buttons_icon()
 
 /obj/item/weapon/hierophant_staff/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
-	var/previous_color = M.color
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
 	if(!turf_to_teleport_to || is_blocked_turf(turf_to_teleport_to))
 		return
-	animate(M, alpha = 0, color = "660099", time = 2, easing = EASE_OUT) //fade out
+	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
 	if(!M)
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades out!</span>")
-	var/previous_density = M.density
-	M.density = FALSE
 	sleep(2)
 	if(!M)
 		return
@@ -885,11 +882,10 @@
 	sleep(1)
 	if(!M)
 		return
-	animate(M, alpha = 255, color = previous_color, time = 2, easing = EASE_IN) //fade IN
+	animate(M, alpha = 255, time = 2, easing = EASE_IN) //fade IN
 	sleep(1)
 	if(!M)
 		return
-	M.density = previous_density
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
 	if(user != M)
 		add_logs(user, M, "teleported", null, "from ([source.x],[source.y],[source.z])")
