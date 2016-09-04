@@ -370,7 +370,6 @@
 	description = "Heals toxin damage as well as slowly removing any other chemicals the patient has in their bloodstream."
 	reagent_state = LIQUID
 	color = "#000000"
-	overdose_threshold = 0 // It fucking purges all chems in your system
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/M)
