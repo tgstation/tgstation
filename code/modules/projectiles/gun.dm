@@ -32,7 +32,7 @@
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
 
-	var/spread = 3						//Spread induced by the gun itself.
+	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
 	var/unique_rename = 0 //allows renaming with a pen
@@ -243,10 +243,8 @@ obj/item/weapon/gun/proc/newshot()
 			if(chambered)
 				if(randomspread)
 					sprd = round((rand() - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
-					world << "sprd is [sprd]"
 				else //Smart spread
 					sprd = round((i / burst_size - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
-					world << "sprd is [sprd]"
 				if(!chambered.fire(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
 					break
