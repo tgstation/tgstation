@@ -58,15 +58,20 @@ var/datum/subsystem/vote/SSvote
 			greatest_votes = votes
 	//default-vote for everyone who didn't vote
 	if(!config.vote_no_default && choices.len)
-		var/non_voters = (clients.len - total_votes)
-		if(non_voters > 0)
+		var/list/non_voters = directory.Copy()
+		non_voters -= voted
+		for (var/non_voter_ckey in non_voters)
+			var/client/C = non_voters[non_voter_ckey]
+			if (!C || C.is_afk())
+				non_voters -= non_voter_ckey
+		if(non_voters.len > 0)
 			if(mode == "restart")
-				choices["Continue Playing"] += non_voters
+				choices["Continue Playing"] += non_voters.len
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
 			else if(mode == "gamemode")
 				if(master_mode in choices)
-					choices[master_mode] += non_voters
+					choices[master_mode] += non_voters.len
 					if(choices[master_mode] >= greatest_votes)
 						greatest_votes = choices[master_mode]
 	//get all options with that many votes and return them in a list
