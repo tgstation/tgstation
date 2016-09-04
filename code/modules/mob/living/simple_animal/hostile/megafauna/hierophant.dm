@@ -207,10 +207,7 @@ Difficulty: Hard
 				while(health && target && counter)
 					counter--
 					var/delay = 6
-					if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
-						addtimer(src, "alldir_blasts", 0, FALSE, target)
-						delay = 9 //this attack is mean, give them a little chance to dodge
-					else if(prob(60))
+					if(prob(60))
 						addtimer(src, "cardinal_blasts", 0, FALSE, target)
 					else
 						addtimer(src, "diagonal_blasts", 0, FALSE, target)
@@ -246,14 +243,14 @@ Difficulty: Hard
 
 	else if(prob(70 - anger_modifier)) //a cross blast of some type
 		if(prob(anger_modifier)) //at us?
-			if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
+			if(prob(anger_modifier) && health < maxHealth * 0.5) //we're super angry do it at all dirs
 				addtimer(src, "alldir_blasts", 0, FALSE, src)
 			else if(prob(60))
 				addtimer(src, "cardinal_blasts", 0, FALSE, src)
 			else
 				addtimer(src, "diagonal_blasts", 0, FALSE, src)
 		else //at them?
-			if(prob(anger_modifier * 2) && health < maxHealth * 0.5) //we're super angry do it at all dirs
+			if(prob(anger_modifier) && health < maxHealth * 0.5) //we're super angry do it at all dirs
 				addtimer(src, "alldir_blasts", 0, FALSE, target)
 			else if(prob(60))
 				addtimer(src, "cardinal_blasts", 0, FALSE, target)
