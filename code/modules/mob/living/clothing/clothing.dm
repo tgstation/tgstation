@@ -7,9 +7,13 @@
 
 // Work todos:
 // Fucking everything
-// Work on attachment system
+// Attaching seems to work fine, work on detaching
 // Make it so that you can hear shit your host can hear
-//
+// Retract arm blade (on detach automatically, otherwise manually)
+// Disable suit sensors
+// Damage forwarding
+// Disallow adjusting of suit?
+// Blood stuff
 
 ////////////////////////////////////////////////////////
 // Summary
@@ -139,8 +143,8 @@
 	var/obj/item/clothing/under/living/linked_clothes = null
 
 /mob/living/clothing/New()
-	// I guess we want this
-	create_reagents(1000)
+	// I guess we want this?
+	// create_reagents(1000)
 
 	var/datum/action/generic/set_living_clothing_appearance/CC = new(src)
 	CC.Grant(src)
@@ -168,9 +172,6 @@
 	ntransform.Turn(angle)
 	transform = ntransform
 
-/mob/living/clothing/proc/set_appearance_action()
-	set_appearance()
-
 /mob/living/clothing/proc/set_appearance(appearance_name = "")
 	world << "set_appearance"
 	
@@ -193,21 +194,11 @@
 		linked_clothes.item_state = C.item_state
 		linked_clothes.item_color = C.item_color
 
-
-		if(linked_clothes && istype(linked_clothes.loc,/mob/living/carbon/human))
+		if(linked_clothes.loc && istype(linked_clothes.loc,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = linked_clothes.loc
 			H.update_inv_w_uniform()
 		
 	qdel(C)
-
-
-//TODO: how do I properly namespace this??
-/datum/action/generic/set_living_clothing_appearance
-	name = "Change Appearance"
-	desc = "Switch what you want to look like."
-	button_icon_state = "meson"
-	procname = /mob/living/clothing/proc/set_appearance_action
-
 
 /mob/living/clothing/UnarmedAttack(atom/A, proximity)
 	var/mob/living/M = A
@@ -268,7 +259,15 @@
 	target.equip_to_slot_if_possible(U, slot_w_uniform)
 	loc = linked_clothes
 
+	// Setup abilities
+	var/datum/action/generic/grow_blade/GB = new(src)
+	GB.Grant(src)
+
 	return 1
+
+/mob/living/clothing/proc/getHost()
+	if(linked_clothes && linked_clothes.loc && istype(linked_clothes.loc,/mob/living/carbon/human))
+		. = linked_clothes.loc
 
 ////////////////////////////////////////////////////////
 // The clothes item code
@@ -277,3 +276,58 @@
 	desc = "Some clothes - they feel weird to the touch."
 	name = "strange clothing"
 	var/mob/living/clothing/linked_mob = null
+
+////////////////////////////////////////////////////////
+// Abilities code
+
+//TODO: how do I properly namespace this??
+/datum/action/generic/set_living_clothing_appearance
+	name = "Change Appearance"
+	desc = "Switch what you want to look like."
+	button_icon_state = "meson"
+	procname = /mob/living/clothing/proc/set_appearance_action
+
+/mob/living/clothing/proc/set_appearance_action()
+	set_appearance()
+
+/datum/action/generic/grow_blade
+	name = "Grow blade"
+	desc = "Grow a clothing blade"
+	button_icon_state = "meson"
+	procname = /mob/living/clothing/proc/grow_blade_action
+
+/mob/living/clothing/proc/grow_blade_action()
+	var/mob/living/carbon/human/host = getHost()
+
+	if(!host.drop_item())
+		host << "<span class='warning'>The [host.get_active_hand()] is stuck to your host's hand, you cannot grow a blade over it!</span>"
+		return
+	
+	var/limb_regen = 0
+	if(host.hand) //we regen the arm before changing it into the weapon
+		limb_regen = host.regenerate_limb("l_arm", 1)
+	else
+		limb_regen = host.regenerate_limb("r_arm", 1)
+	if(limb_regen)
+		host.visible_message("<span class='warning'>[host]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='hostdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		host.emote("scream")
+
+	var/obj/item/weapon/melee/clothing_arm_blade/W = new(host)
+	host.put_in_hands(W)
+
+	playsound(host, 'sound/effects/blobattack.ogg', 30, 1)
+
+
+/obj/item/weapon/melee/clothing_arm_blade
+	name = "arm blade"
+	desc = "A shape blade made from living fiber."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "arm_blade"
+	item_state = "arm_blade"
+	flags = ABSTRACT | NODROP | DROPDEL
+	w_class = 5.0
+	force = 25
+	throwforce = 0 //Just to be on the safe side
+	throw_range = 0
+	throw_speed = 0
+	sharpness = IS_SHARP
