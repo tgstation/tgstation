@@ -402,6 +402,7 @@ body
 		html += "[html_encode(name)] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
+			name = "[name]"	//Needs to be a string or it will go out of bounds in the internal_byond_list_vars array
 			html += "<ul>"
 			var/index = 1
 			for(var/entry in L)

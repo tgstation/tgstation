@@ -353,7 +353,6 @@ var/list/gaslist_cache = null
 		return null
 	ratio = min(ratio, 1)
 
-
 	var/list/cached_gases = gases
 	var/datum/gas_mixture/removed = new
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
@@ -388,7 +387,6 @@ var/list/gaslist_cache = null
 	for(var/id in sample_gases)
 		assert_gas(id)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES]
-
 
 	//remove all gases not in the sample
 	cached_gases &= sample_gases

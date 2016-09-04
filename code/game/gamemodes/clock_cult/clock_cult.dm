@@ -90,10 +90,11 @@ This file's folder contains:
 		whim without hesitation.</span>")
 	ticker.mode.servants_of_ratvar += M.mind
 	ticker.mode.update_servant_icons_added(M.mind)
+	all_clockwork_mobs += M
+	M.faction |= "ratvar"
 	M.mind.special_role = "Servant of Ratvar"
 	M.languages_spoken |= RATVAR
 	M.languages_understood |= RATVAR
-	all_clockwork_mobs += M
 	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
 	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
 	if(issilicon(M))
@@ -152,6 +153,7 @@ This file's folder contains:
 	ticker.mode.servants_of_ratvar -= M.mind
 	ticker.mode.update_servant_icons_removed(M.mind)
 	all_clockwork_mobs -= M
+	M.faction -= "ratvar"
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
 	M.languages_spoken &= ~RATVAR

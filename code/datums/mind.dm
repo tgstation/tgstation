@@ -238,7 +238,7 @@
 
 	enslaved_to = creator
 
-	current.faction = creator.faction
+	current.faction = creator.faction.Copy()
 
 	if(special_role)
 		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
