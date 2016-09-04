@@ -18,15 +18,10 @@
 
 // Called when the recipe is matched.
 /datum/chemical_reaction/proc/react(datum/chem_holder/holder)
-	if(!istype(holder))
-		return 0
+	simple_react(holder)
 
+// ----------------------------------------------------// REACTION CODE HELPERS //--------------------------------------------------------------- //
 
-
-
-
-
-// REACTION CODE HELPERS //
 
 // Consume the required_reagents. Used by most recipes.
 /datum/chemical_reaction/proc/consume_reagents(datum/chem_holder/holder, multiplier = 1)
@@ -64,13 +59,14 @@
 		return round(min(multipliers))
 
 // The basic reaction code. This is the old convert req_reagents to results logic. Set ratio to TRUE to use ratio logic.
-/datum/chemical_reaction/proc/simple_react(datum/chem_holder/holder, ratio = FALSE)
+/datum/chemical_reaction/proc/simple_react(datum/chem_holder/holder, ratio = FALSE, mix_message = "The solution begins to bubble.", mix_sound = 'sound/effects/bubbles.ogg')
 	if(!istype(holder))
 		return 0
 	var/multiplier = get_multiplier(holder, ratio)
-	consume_reagents(holder, multiplier)
-	create_reagents(holder, multiplier)
-	simple_feedback(holder)
+	if(multiplier)
+		consume_reagents(holder, multiplier)
+		create_reagents(holder, multiplier)
+		simple_feedback(holder, mix_message, mix_sound)
 
 
 // Outputs a feedback message, and plays a sound. Override the defaults with mix_message = "message" or mix_sound = 'sound/path'. Alternatively you can set either argument to null.

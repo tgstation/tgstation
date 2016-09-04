@@ -69,7 +69,8 @@
 /datum/reagent/proc/on_merge(data)
 	return
 
-/datum/reagent/proc/on_update(atom/A)
+// trigger is a string or value that can be called to trigger special stuff. Such as trigger 'itouchedadoor'. Leaving it as null causes it to trigger every process tick.
+/datum/reagent/proc/on_update(atom/A, trigger)
 	return
 
 // Called every time reagent containers process.

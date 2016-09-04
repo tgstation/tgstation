@@ -1,3 +1,5 @@
+#define MIN_REAGENT_VOL 0.005 // The minimum volume of a reagent. Default is 5mU. Used to prevent volumes becoming equal to 1.73e-06 units.
+
 // The big ol' list for defining reagent id's. Sort alphabetically, and by the file the reagent is defined in please.
 // Naming sceme of defines: RID_definename where definename is lowercase and representative of the id, but still short enough that it's faster to use than types are.
 // "actualid" preferably the same as the definename. But can be longer and more descriptive if necessary.

@@ -1,7 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-#define MIN_REAGENT_VOL 0.005 // The minimum volume of a reagent. Used to prevent volumes becoming equal to 1.73e-06 units.
-
 var/const/TOUCH = 1 //splashing
 var/const/INGEST = 2 //ingestion
 var/const/VAPOR = 3 //foam, spray, blob attack
@@ -12,7 +10,7 @@ var/const/INJECT = 5 //injection
 
 /datum/chem_holder
 	var/list/datum/reagent/reagents = new/list()
-	var/list/datum/chemical_reaction/reaction_list = new/list() // Used to prevent the same reaction from occuring more than once.
+	var/list/datum/reaction/reactions = new/list() // Used to prevent the same reaction from occuring more than once.
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
@@ -69,12 +67,8 @@ var/const/INJECT = 5 //injection
 /datum/chem_holder/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
-	for(var/reagent in reagents)
-		var/datum/reagent/R = reagents[reagent]
-		qdel(R)
-	for(var/reaction in reaction_list)
-		var/datum/active_reaction/R = reaction_list[reaction]
-		qdel(R)
+	clear_reagents()
+	clear_reactions()
 	reagents.Cut()
 	reagents = null
 	reaction_list.Cut()
@@ -430,7 +424,12 @@ var/const/INJECT = 5 //injection
 		var/datum/reagent/R = reagents[reagent]
 		reagents -= reagent
 		qdel(R)
-	return 0
+
+/datum/chem_holder/proc/clear_reactions()
+	for(var/reaction in reactions)
+		var/datum/reaction/R = reactions[reaction]
+		reactions -= reaction
+		qdel(R)
 
 // WHY IS THIS HERE?
 /*
