@@ -7375,21 +7375,18 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/pod_1)
 "apG" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 2;
-	icon_state = "swall_f10";
-	layer = 2
-	},
-/area/shuttle/pod_1)
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/turf/open/floor/plasteel,
+/area/janitor)
 "apH" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "apI" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/pod_2)
+/obj/machinery/portable_atmospherics/canister/freon,
+/turf/open/floor/plasteel/floorgrime,
+/area/toxins/storage)
 "apJ" = (
 /turf/closed/wall,
 /area/mining_construction)
@@ -36608,6 +36605,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bCY" = (
@@ -37057,6 +37055,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
@@ -37106,6 +37105,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bEd" = (
@@ -41839,6 +41839,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNR" = (
@@ -41871,6 +41872,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNT" = (
@@ -91940,7 +91942,7 @@ aLY
 aLY
 bBx
 bCv
-bDL
+apG
 bFk
 bDs
 bCv
@@ -105305,8 +105307,8 @@ bAG
 bCa
 bDc
 bEo
-bIC
-bDY
+apI
+bEc
 bIB
 bIB
 bJN
@@ -105820,7 +105822,7 @@ bCc
 bDc
 bEo
 bDj
-bEc
+bDY
 bIA
 bIA
 bJN

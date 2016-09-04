@@ -32,7 +32,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "Hierophant"
-	desc = "Stolen from Hyper Light Drifter. Commit number 64."
+	desc = "Stolen from Hyper Light Drifter."
 	health = 2500
 	maxHealth = 2500
 	attacktext = "clubs"

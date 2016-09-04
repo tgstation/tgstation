@@ -4,6 +4,7 @@
 	icon_state = "faithless"
 	icon_living = "faithless"
 	icon_dead = "faithless_dead"
+	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "passes through"

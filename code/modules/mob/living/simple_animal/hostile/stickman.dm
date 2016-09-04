@@ -5,6 +5,7 @@
 	icon_living = "stickman"
 	icon_dead = "stickman_dead"
 	icon_gib = "syndicate_gib"
+	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"

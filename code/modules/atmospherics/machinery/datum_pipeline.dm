@@ -41,6 +41,7 @@ var/pipenetwarnings = 10
 		addMachineryMember(base)
 	if(!air)
 		air = new
+		air.holder = src
 	var/list/possible_expansions = list(base)
 	while(possible_expansions.len>0)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)

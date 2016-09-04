@@ -31,6 +31,7 @@
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
+	return ..()
 
 /obj/item/pizzabox/update_icon()
 	// Description
@@ -106,7 +107,9 @@
 				bomb_timer = Clamp(Ceiling(bomb_timer / 2), BOMB_TIMER_MIN, BOMB_TIMER_MAX)
 				bomb_defused = FALSE
 
-				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has trapped a [src] with [bomb] set to [bomb_timer * 2] seconds.")
+				var/message = "[ADMIN_LOOKUPFLW(user)] has trapped a [src] with [bomb] set to [bomb_timer * 2] seconds."
+				bombers += message
+				message_admins(message)
 				log_game("[key_name(user)] has trapped a [src] with [bomb] set to [bomb_timer * 2] seconds.")
 				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
 

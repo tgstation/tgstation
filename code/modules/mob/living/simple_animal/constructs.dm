@@ -2,6 +2,7 @@
 	name = "Construct"
 	real_name = "Construct"
 	desc = ""
+	gender = NEUTER
 	speak_emote = list("hisses")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"

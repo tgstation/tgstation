@@ -143,7 +143,7 @@
 	return resources
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
-	if(D.reagents.len) // No reagents storage - no reagent designs.
+	if(D.reagents_list.len) // No reagents storage - no reagent designs.
 		return 0
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return 1

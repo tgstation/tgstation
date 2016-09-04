@@ -20,6 +20,7 @@
 	var/weather_duration_upper = 1500 //See above - this is the highest possible duration
 	var/weather_sound
 	var/weather_overlay
+	var/weather_color = null
 
 	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the wather is over
 	var/end_duration = 300 //In deciseconds, how long the "wind-down" graphic will appear before vanishing entirely
@@ -125,6 +126,7 @@
 		N.layer = overlay_layer
 		N.icon = 'icons/effects/weather_effects.dmi'
 		N.invisibility = 0
+		N.color = weather_color
 		switch(stage)
 			if(STARTUP_STAGE)
 				N.icon_state = telegraph_overlay
@@ -133,6 +135,7 @@
 			if(WIND_DOWN_STAGE)
 				N.icon_state = end_overlay
 			if(END_STAGE)
+				N.color = null
 				N.icon_state = initial(N.icon_state)
 				N.icon = 'icons/turf/areas.dmi'
 				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial

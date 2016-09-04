@@ -223,9 +223,8 @@
 		A.admin_spawned = admin_spawned
 		A.GiveTarget(target)
 		A.friends = friends
-		A.faction = faction
+		A.faction = faction.Copy()
 		ranged_cooldown = world.time + ranged_cooldown_time
-	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
@@ -994,6 +993,7 @@
 	icon_dead = "tendril"
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
+	luminosity = 1
 	health = 250
 	maxHealth = 250
 	max_mobs = 3
@@ -1009,6 +1009,10 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
+	for(var/F in RANGE_TURFS(1, src))
+		if(istype(F, /turf/closed/mineral))
+			var/turf/closed/mineral/M = F
+			M.ChangeTurf(M.turf_type)
 	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
@@ -1039,6 +1043,7 @@
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
+	luminosity = 1
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"

@@ -56,7 +56,7 @@
 	return
 
 /turf/closed/mineral/Spread(turf/T)
-	new src.type(T)
+	T.ChangeTurf(type)
 
 /turf/closed/mineral/random
 	var/mineralSpawnChanceList = list(
@@ -71,7 +71,7 @@
 
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
-		var/turf/T = new path(src)
+		var/turf/T = ChangeTurf(path)
 
 		if(T && istype(T, /turf/closed/mineral))
 			var/turf/closed/mineral/M = T
@@ -265,38 +265,55 @@
 	var/length = 100
 	var/mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
 	var/sanity = 1
+	var/forward_cave_dir = 1
+	var/backward_cave_dir = 2
+	var/going_backwards = TRUE
+	var/has_data = FALSE
+	var/data_having_type = /turf/open/floor/plating/asteroid/airless/cave/has_data
 	turf_type = /turf/open/floor/plating/asteroid/airless
+
+/turf/open/floor/plating/asteroid/airless/cave/has_data //subtype for producing a tunnel with given data
+	has_data = TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 10, /mob/living/simple_animal/hostile/asteroid/goliath/beast = 50, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, /mob/living/simple_animal/hostile/asteroid/hivelord/legion = 30,
 		/mob/living/simple_animal/hostile/spawner/lavaland = 2, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
 		/mob/living/simple_animal/hostile/megafauna/dragon = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = 2)
 
+	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
-/turf/open/floor/plating/asteroid/airless/cave/New(loc, length, go_backwards = 1, exclude_dir = -1)
-	// If length (arg2) isn't defined, get a random length; otherwise assign our length to the length arg.
-	if(!length)
-		src.length = rand(25, 50)
+/turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data //subtype for producing a tunnel with given data
+	has_data = TRUE
+
+/turf/open/floor/plating/asteroid/airless/cave/New(loc)
+	if(!has_data)
+		produce_tunnel_from_data()
+	..()
+
+/turf/open/floor/plating/asteroid/airless/cave/proc/get_cave_data(set_length, exclude_dir = -1)
+	// If set_length (arg1) isn't defined, get a random length; otherwise assign our length to the length arg.
+	if(!set_length)
+		length = rand(25, 50)
 	else
-		src.length = length
+		length = set_length
 
 	// Get our directiosn
-	var/forward_cave_dir = pick(alldirs - exclude_dir)
+	forward_cave_dir = pick(alldirs - exclude_dir)
 	// Get the opposite direction of our facing direction
-	var/backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180)
+	backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180)
 
+/turf/open/floor/plating/asteroid/airless/cave/proc/produce_tunnel_from_data(tunnel_length, excluded_dir = -1)
+	get_cave_data(tunnel_length, excluded_dir)
 	// Make our tunnels
 	make_tunnel(forward_cave_dir)
-	if(go_backwards)
+	if(going_backwards)
 		make_tunnel(backward_cave_dir)
 	// Kill ourselves by replacing ourselves with a normal floor.
 	SpawnFloor(src)
-	..()
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
-
 	var/turf/closed/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
 
@@ -314,13 +331,18 @@
 			if(istype(edge))
 				SpawnFloor(edge)
 
+		if(!sanity)
+			break
+
 		// Move our tunnel forward
 		tunnel = get_step(tunnel, dir)
 
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				new src.type(tunnel, rand(10, 15), 0, dir)
+				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type)
+				C.going_backwards = FALSE
+				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
 				SpawnFloor(tunnel)
 		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
@@ -334,21 +356,27 @@
 
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
-	for(var/turf/S in range(2,T))
-		if(istype(S, /turf/open/space) || istype(S.loc, /area/mine/explored))
+	for(var/S in RANGE_TURFS(1, src))
+		var/turf/NT = S
+		if(!NT || istype(NT, /turf/open/space) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
 			sanity = 0
 			break
 	if(!sanity)
 		return
 
 	SpawnMonster(T)
-	new turf_type(T)
+	T.ChangeTurf(turf_type)
+
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
 		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
-		for(var/atom/A in urange(12,T))//Lowers chance of mob clumps
-			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
+		for(var/mob/living/simple_animal/hostile/H in urange(12,T)) //prevents mob clumps
+			if(istype(H, /mob/living/simple_animal/hostile/asteroid))
+				return
+			if(ismegafauna(H) && get_dist(src, H) <= 7)
+				return
+			if(istype(H, /mob/living/simple_animal/hostile/spawner/lavaland) && get_dist(src, H) <= 3) //prevents tendrils spawning in collapse range
 				return
 		var/randumb = pickweight(mob_spawn_list)
 		new randumb(T)
@@ -439,6 +467,7 @@
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 	var/sand_type = /obj/item/weapon/ore/glass
+	var/floor_variance = 20 //probability floor has a different icon state
 
 /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -452,6 +481,7 @@
 	icon_plating = "basalt"
 	environment_type = "basalt"
 	sand_type = /obj/item/weapon/ore/glass/basalt
+	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -481,8 +511,14 @@
 	var/proper_name = name
 	..()
 	name = proper_name
-	if(prob(20))
+	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
+
+/turf/open/floor/plating/asteroid/basalt/New()
+	..()
+	switch(icon_state)
+		if("basalt1", "basalt2", "basalt3") //5 and 9 are too dark to glow and make the amount of glows in tunnels too high
+			SetLuminosity(1, 1) //this is basically a 3.75% chance that a basalt floor glows
 
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
@@ -556,6 +592,11 @@
 	slowdown = 0
 	return
 
+/turf/open/floor/plating/asteroid/basalt/gets_dug()
+	if(!dug)
+		SetLuminosity(0)
+	..()
+
 /turf/open/floor/plating/asteroid/singularity_act()
 	return
 
@@ -588,7 +629,7 @@
 	for(var/thing in contents)
 		if(droppable(thing))
 			. = 1
-			drop(thing)
+			addtimer(src, "drop", 0, FALSE, thing)
 
 /turf/open/chasm/proc/droppable(atom/movable/AM)
 	if(!isliving(AM) && !isobj(AM))
