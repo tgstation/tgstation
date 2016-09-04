@@ -14,11 +14,15 @@
 // Damage forwarding
 // Disallow adjusting of suit?
 // Blood stuff
+// Interactions between two living clothes
+// Natural protection from facehuggers (allowing it will just cause problems)
+// Interactions with lings? No way this could go bad, ever.
+// Put glow around moving clothes on the ground?
 
 ////////////////////////////////////////////////////////
 // Summary
 //
-// You are an alien living piece of clothing. Find a host (or start off with one?) rip off theif clothes and transform.
+// You are an alien living piece of clothing. Find a host (or start off with one?) rip off their clothes and transform.
 // Your goal is probably to eat other clothing that has been worn. Jumpsuits that people spawn in work, as do clothes worn for longer than 15 minutes.
 // You could always ask your target to give up his clothes, but good luck with that. On the other hand, you only need to leave people naked and unconscious, rather than dead.
 
@@ -83,11 +87,13 @@
 ////////////////////////////////////////////////////////
 // With host (transformed)
 //
+//	Drink Blood
+// 		Pull some blood from your host to fuel your powers
+//
 //  All damage to host except for targeted at head is damage reduced and applied to you.
 //		Spews blood everywhere because you drank it from your host.
 //
 // 	Chem injections instead go to you. Probably have no effect?
-//
 //
 //	All forms have an initial blood cost for the transformation and slowly drain blood
 //
@@ -98,6 +104,10 @@
 //		Gain armblade (steal from ling, gogogo), people get damage if they attack\grab you.
 //		Transforming breaks cuffs.
 //
+// 	TODO: some way of surviving space, as you can't wear spacesuits. 
+//	Blood Oxygenation
+//		Use up stored blood to give your host a thin transparent skin around him (protect against pressure) and oxygen
+//	
 
 ////////////////////////////////////////////////////////
 // the mob code
@@ -181,9 +191,9 @@
 
 	src.appearance_name = appearance_name
 
-	var/appearance = stored_appearances[appearance_name]
+	var/appearance_type = stored_appearances[appearance_name]
 
-	var/obj/item/clothing/C = new appearance()
+	var/obj/item/clothing/C = new appearance_type()
 
 	icon = C.icon
 	icon_state = C.icon_state
