@@ -162,7 +162,6 @@ Difficulty: Hard
 	anger_modifier = Clamp(((maxHealth - health) / 42),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.12)
-	chaser_speed = max(1, (3 - anger_modifier * 0.04) + target_is_slow * 0.5)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	calculate_rage()
@@ -176,6 +175,7 @@ Difficulty: Hard
 			return
 		if(L.movement_delay() > 1.5)
 			target_is_slow = TRUE
+	chaser_speed = max(1, (3 - anger_modifier * 0.04) + target_is_slow * 0.5)
 	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75) //scale cooldown lower with high anger.
 
 	if(prob(anger_modifier * 0.75)) //major ranged attack
