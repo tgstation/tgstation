@@ -24,9 +24,12 @@
 	reagent_state = SOLID
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
-	overdose_threshold = 300
+	overdose_threshold = 200
 
 /datum/reagent/consumable/nutriment/overdose_process(mob/living/M)
+	if(HUMAN.dna.species.id == "slime")
+	return
+	
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(!H.heart_attack)
