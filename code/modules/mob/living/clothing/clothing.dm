@@ -18,6 +18,12 @@
 // Natural protection from facehuggers (allowing it will just cause problems)
 // Interactions with lings? No way this could go bad, ever.
 // Put glow around moving clothes on the ground?
+// Absorb blood from the ground? At the very least, we shouldn't get blood on us, we absorb it.
+// Surgury to remove clothes (ew)
+// Fancy transform effect
+// Sigh, HUD and code for shit that's in your pockets
+// Let your first host name you :) :)
+// All antag code (for later)
 
 ////////////////////////////////////////////////////////
 // Summary
@@ -83,6 +89,10 @@
 //
 //  Eat clothing
 //		Lets you eat clothes. Heals you. Unworn shit works kind of crappily - the more worn the clothing the better.
+//
+//	Give blood
+//		You fucked up. Your host is now unconscious on the floor due to blood lost.
+//		Give some blood back with 50 percent efficiency.
 
 ////////////////////////////////////////////////////////
 // With host (transformed)
@@ -104,18 +114,19 @@
 //		Gain armblade (steal from ling, gogogo), people get damage if they attack\grab you.
 //		Transforming breaks cuffs.
 //
-// 	TODO: some way of surviving space, as you can't wear spacesuits. 
+// 	TODO: some way of surviving space, as you can't wear spacesuits.
 //	Blood Oxygenation
 //		Use up stored blood to give your host a thin transparent skin around him (protect against pressure) and oxygen
-//	
+//
 
 ////////////////////////////////////////////////////////
 // the mob code
 
-/mob/living/clothing
+/mob/living/simple_animal/clothing
 	languages_spoken = HUMAN // TODO: replace with CLOTHING. People you possess gain the ability to speak CLOTHING
 	languages_understood = HUMAN
 
+	status_flags = 0
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
@@ -123,18 +134,20 @@
 
 	blood_volume = 0 // We want this?
 
+	stop_automated_movement = 1
+
 	// Damage vars
-	var/melee_damage_lower = 1
-	var/melee_damage_upper = 1
-	var/obj_damage = 0 //how much damage this simple animal does to objects, if any
-	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
-	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
-	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
-	var/attacktext = "attacks"
-	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
-	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
-	//var/friendly = "nuzzles" //If the mob does no damage with it's attack
-	var/environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
+	melee_damage_lower = 1
+	melee_damage_upper = 1
+	obj_damage = 0 //how much damage this simple animal does to objects, if any
+	armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
+	melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
+	list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
+	attacktext = "attacks"
+	sound/attack_sound = 'sound/weapons/punch1.ogg'
+	//sound/miss_sound = 'sound/weapons/punchmiss.ogg'
+	//friendly = "nuzzles" //If the mob does no damage with it's attack
+	environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
 	// Appearance vars
 	var/appearance_name = "blue schoolgirl uniform"
@@ -149,31 +162,38 @@
 		"blue schoolgirl uniform"
 		)
 
+	var/list/powers_with_host = list(/datum/action/generic/clothes_grow_blade, /datum/action/generic/clothes_drink_blood)
+
+	var/list/current_dynamic_powers = list()
+
 	// Attachment vars
 	var/obj/item/clothing/under/living/linked_clothes = null
 
-/mob/living/clothing/New()
+/mob/living/simple_animal/clothing/New()
 	// I guess we want this?
 	// create_reagents(1000)
 
 	var/datum/action/generic/set_living_clothing_appearance/CC = new(src)
 	CC.Grant(src)
 
+	var/datum/action/generic/clothes_grow_blade/AB = new(src)
+	AB.Grant(src)
+
 	set_appearance(appearance_name)
 
 	..()
 
 // Handle dir change due to clicking around on screen
-/mob/living/clothing/setDir(newDir)
+/mob/living/simple_animal/clothing/setDir(newDir)
 	handleDir(newDir)
 	return ..()
 
 // Handle dir change due to movement
-/mob/living/clothing/Moved(atom/OldLoc, newDir)
+/mob/living/simple_animal/clothing/Moved(atom/OldLoc, newDir)
 	handleDir(newDir)
 	return ..()
 
-/mob/living/clothing/proc/handleDir(newDir)
+/mob/living/simple_animal/clothing/proc/handleDir(newDir)
 	// TODO: we should maybe use icon rotations instead...
 	// TODO: is this mob scalable??
 	//if(newDir != dir)
@@ -182,9 +202,9 @@
 	ntransform.Turn(angle)
 	transform = ntransform
 
-/mob/living/clothing/proc/set_appearance(appearance_name = "")
+/mob/living/simple_animal/clothing/proc/set_appearance(appearance_name = "")
 	world << "set_appearance"
-	
+
 	if(appearance_name == "")
 		appearance_name = input("Select your appearance!", "Living Clothing Appearance", null, null) in stored_apparence_names
 		world << appearance_name
@@ -196,8 +216,9 @@
 	var/obj/item/clothing/C = new appearance_type()
 
 	icon = C.icon
+	icon_living = C.icon_state
 	icon_state = C.icon_state
-	
+
 	if(linked_clothes)
 		linked_clothes.icon = C.icon
 		linked_clothes.icon_state = C.icon_state
@@ -207,17 +228,17 @@
 		if(linked_clothes.loc && istype(linked_clothes.loc,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = linked_clothes.loc
 			H.update_inv_w_uniform()
-		
+
 	qdel(C)
 
-/mob/living/clothing/UnarmedAttack(atom/A, proximity)
+/mob/living/simple_animal/clothing/UnarmedAttack(atom/A, proximity)
 	var/mob/living/M = A
 	if(M)
 		if(TryAttach(M))
 			return
 	..()
 
-/mob/living/clothing/proc/TryAttach(mob/living/M)
+/mob/living/simple_animal/clothing/proc/TryAttach(mob/living/M)
 	if(!isliving(M))
 		return 0
 	if(!ishuman(M))
@@ -270,12 +291,14 @@
 	loc = linked_clothes
 
 	// Setup abilities
-	var/datum/action/generic/grow_blade/GB = new(src)
-	GB.Grant(src)
+	for(var/T in powers_with_host) 
+		//var/datum/action/generic/A = new T()
+		//A.Grant(src)
+		//current_dynamic_powers += A
 
 	return 1
 
-/mob/living/clothing/proc/getHost()
+/mob/living/simple_animal/clothing/proc/getHost()
 	if(linked_clothes && linked_clothes.loc && istype(linked_clothes.loc,/mob/living/carbon/human))
 		. = linked_clothes.loc
 
@@ -285,7 +308,7 @@
 /obj/item/clothing/under/living
 	desc = "Some clothes - they feel weird to the touch."
 	name = "strange clothing"
-	var/mob/living/clothing/linked_mob = null
+	var/mob/living/simple_animal/clothing/linked_mob = null
 
 ////////////////////////////////////////////////////////
 // Abilities code
@@ -295,24 +318,24 @@
 	name = "Change Appearance"
 	desc = "Switch what you want to look like."
 	button_icon_state = "meson"
-	procname = /mob/living/clothing/proc/set_appearance_action
+	procname = /mob/living/simple_animal/clothing/proc/set_appearance_action
 
-/mob/living/clothing/proc/set_appearance_action()
+/mob/living/simple_animal/clothing/proc/set_appearance_action()
 	set_appearance()
 
-/datum/action/generic/grow_blade
+/datum/action/generic/clothes_grow_blade
 	name = "Grow blade"
 	desc = "Grow a clothing blade"
 	button_icon_state = "meson"
-	procname = /mob/living/clothing/proc/grow_blade_action
+	procname = /mob/living/simple_animal/clothing/proc/grow_blade_action
 
-/mob/living/clothing/proc/grow_blade_action()
+/mob/living/simple_animal/clothing/proc/grow_blade_action()
 	var/mob/living/carbon/human/host = getHost()
 
 	if(!host.drop_item())
 		host << "<span class='warning'>The [host.get_active_hand()] is stuck to your host's hand, you cannot grow a blade over it!</span>"
 		return
-	
+
 	var/limb_regen = 0
 	if(host.hand) //we regen the arm before changing it into the weapon
 		limb_regen = host.regenerate_limb("l_arm", 1)
@@ -341,3 +364,40 @@
 	throw_range = 0
 	throw_speed = 0
 	sharpness = IS_SHARP
+
+
+/mob/living/simple_animal/clothing/proc/drink_blood()
+	var/mob/living/carbon/human/host = getHost()
+
+	src << "wat"
+
+	if(host)
+		var/amount_to_take = min(host.blood_volume, 25)
+		if(amount_to_take == 0)
+			// I'd like to husk if you take all your host's blood, but that seems cruel.
+			src << "You can't take any more blood!"
+		else
+			host.blood_volume -= amount_to_take
+			blood_volume += amount_to_take
+			src << "You drink some blood!"
+			host << "Your clothes drink some blood!"
+
+
+/mob/living/simple_animal/clothing/proc/drink_blood_action()
+	drink_blood()
+
+/datum/action/generic/clothes_drink_blood
+	name = "Drink Blood"
+	desc = "Drink the blood of your host"
+	button_icon_state = "meson"
+	procname = /mob/living/simple_animal/clothing/proc/drink_blood_action
+
+/*
+/mob/living/simple_animal/clothing/proc/transform_action()
+	transform()
+
+/datum/action/generic/clothes_transform
+	name = "Transform"
+	desc = "Do some transforming"
+	button_icon_state = "meson"
+	procname = /mob/living/simple_animal/clothing/proc/transform_action*/

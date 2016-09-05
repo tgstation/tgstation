@@ -430,7 +430,7 @@
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
 			if("livingclothing")
-				M.change_mob_type( /mob/living/clothing, null, null, delmob )
+				M.change_mob_type( /mob/living/simple_animal/clothing, null, null, delmob )
 
 
 	/////////////////////////////////////new ban stuff
