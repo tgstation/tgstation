@@ -153,8 +153,6 @@
 	dangerous = TRUE
 
 /datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
-	var/static/list/uplink_items = get_uplink_items()
-
 	var/crate_value = 50
 	while(crate_value)
 		var/category = pick(uplink_items)

@@ -231,16 +231,16 @@
 			if(!info || info["frequency"] != frequency)
 				continue
 			data["scrubbers"] += list(list(
-					"id_tag"		= id_tag,
-					"long_name" 	= sanitize(long_name),
-					"power"			= info["power"],
-					"scrubbing"		= info["scrubbing"],
-					"widenet"		= info["widenet"],
-					"filter_co2"	= info["filter_co2"],
-					"filter_toxins"	= info["filter_toxins"],
-					"filter_n2o"	= info["filter_n2o"],
-					"filter_bz"		= info["filter_bz"],
-					"filter_freon"	= info["filter_freon"],
+					"id_tag"				= id_tag,
+					"long_name" 			= sanitize(long_name),
+					"power"					= info["power"],
+					"scrubbing"				= info["scrubbing"],
+					"widenet"				= info["widenet"],
+					"filter_co2"			= info["filter_co2"],
+					"filter_toxins"			= info["filter_toxins"],
+					"filter_n2o"			= info["filter_n2o"],
+					"filter_bz"				= info["filter_bz"],
+					"filter_freon"			= info["filter_freon"],
 					"filter_water_vapor"	= info["filter_water_vapor"]
 				))
 		data["mode"] = mode

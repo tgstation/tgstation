@@ -126,8 +126,8 @@
 		"filter_toxins" = scrub_Toxins,
 		"filter_n2o" = scrub_N2O,
 		"filter_bz" = scrub_BZ,
-		"filter_Freon" = scrub_Freon,
-		"filter_WaterVapor" = scrub_WaterVapor,
+		"filter_freon" = scrub_Freon,
+		"filter_water_vapor" = scrub_WaterVapor,
 		"sigtype" = "status"
 	)
 
