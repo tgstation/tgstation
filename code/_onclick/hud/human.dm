@@ -80,6 +80,14 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
+/obj/screen/livingclothing
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/screen/livingclothing/blood
+	name = "blood storage"
+	icon_state = "power_display"
+	screen_loc = ui_lingchemdisplay
+
 /mob/living/carbon/human/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))

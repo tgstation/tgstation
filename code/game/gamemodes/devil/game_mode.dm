@@ -112,3 +112,13 @@
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_SOULLESS]
 	hud.leave_hud(soulless_mind.current)
 	set_antag_hud(soulless_mind.current, null)
+
+/datum/game_mode/proc/update_clothing_icons_added(datum/mind/clothing_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CLOTHING]
+	hud.join_hud(clothing_mind.current)
+	set_antag_hud(clothing_mind.current, "clothing")
+
+/datum/game_mode/proc/update_clothing_icons_removed(datum/mind/clothing_mind)
+	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CLOTHING]
+	hud.leave_hud(clothing_mind.current)
+	set_antag_hud(clothing_mind.current, null)

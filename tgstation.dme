@@ -122,6 +122,7 @@
 #include "code\_onclick\hud\guardian.dm"
 #include "code\_onclick\hud\hud.dm"
 #include "code\_onclick\hud\human.dm"
+#include "code\_onclick\hud\living_clothing.dm"
 #include "code\_onclick\hud\monkey.dm"
 #include "code\_onclick\hud\movable_screen_objects.dm"
 #include "code\_onclick\hud\other_mobs.dm"

@@ -24,6 +24,7 @@
 // Sigh, HUD and code for shit that's in your pockets
 // Let your first host name you :) :)
 // All antag code (for later)
+// Fix F12
 
 ////////////////////////////////////////////////////////
 // Summary
@@ -286,10 +287,20 @@
 	loc = linked_clothes
 
 	// Setup abilities
-	for(var/T in powers_with_host) 
+	for(var/T in powers_with_host)
 		var/datum/action/generic/A = new T(src)
 		A.Grant(src)
 		current_dynamic_powers += A
+
+	// Setup HUD
+
+	hud_used.blooddisplay.invisibility = 0
+	hud_used.action_intent.invisibility = INVISIBILITY_ABSTRACT
+	target.hud_used.show_hud(1,src)
+	hud_used.show_hud(1,src,1)
+
+	//hud_used.healthdoll = target.hud_used.healthdoll
+	//hud_used.infodisplay += hud_used.healthdoll
 
 	return 1
 
@@ -382,7 +393,7 @@
 		src << "You drink some blood!"
 		host << "Your clothes drink some blood!"
 
-	if(host.blood_volume < wanted_amount * 3)
+	if(host.blood_volume < BLOOD_VOLUME_OKAY)
 		if(host.stat == CONSCIOUS)
 			src << "You can feel your host's knees buckle."
 		else
@@ -397,6 +408,17 @@
 	desc = "Drink the blood of your host"
 	button_icon_state = "meson"
 	procname = /mob/living/simple_animal/clothing/proc/drink_blood_action
+
+
+////////////////////////////////////////////////////////
+//HUD code
+
+/mob/living/simple_animal/clothing/handle_stat_huds()
+	if(hud_used.blooddisplay)
+		// I guess hide this if we don't have a host. Can't use blood powers, though maybe it will be useful?
+		if(getHost())
+			hud_used.blooddisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(blood_volume)]</font></div>"
+
 
 /*
 /mob/living/simple_animal/clothing/proc/transform_action()

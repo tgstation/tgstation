@@ -15,6 +15,7 @@
 
 	var/obj/screen/ling/chems/lingchemdisplay
 	var/obj/screen/ling/sting/lingstingdisplay
+	var/obj/screen/livingclothing/blood/blooddisplay
 
 	var/obj/screen/blobpwrdisplay
 
@@ -114,15 +115,17 @@
 		hud_used = new /datum/hud(src)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
-/datum/hud/proc/show_hud(version = 0,mob/viewmob)
+/datum/hud/proc/show_hud(version = 0,mob/viewmob,append=0)
 	if(!ismob(mymob))
-		return 0
-	if(!mymob.client)
 		return 0
 
 	var/mob/screenmob = viewmob || mymob
 
-	screenmob.client.screen = list()
+	if(!screenmob.client)
+		return 0
+
+	if(!append)
+		screenmob.client.screen = list()
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version

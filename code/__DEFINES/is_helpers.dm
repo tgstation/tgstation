@@ -19,6 +19,8 @@
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 
+#define islivingclothing(A) (istype(A, /mob/living/simple_animal/clothing))
+
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
 #define isbrain(A) (istype(A, /mob/living/carbon/brain))
