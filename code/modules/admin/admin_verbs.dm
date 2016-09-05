@@ -82,6 +82,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
+	/client/proc/set_dynex_scale,
 	/client/proc/drop_dynex_bomb,
 	/client/proc/cinematic,
 	/client/proc/one_click_antag,
@@ -145,6 +146,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/populate_world,
 	/client/proc/get_dynex_power,		//*debug verbs for dynex explosions.
 	/client/proc/get_dynex_range,		//*debug verbs for dynex explosions.
+	/client/proc/set_dynex_scale,
 	/client/proc/cmd_display_del_log,
 	/client/proc/reset_latejoin_spawns,
 	/client/proc/create_outfits,
@@ -201,6 +203,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/drop_dynex_bomb,
 	/client/proc/get_dynex_range,
 	/client/proc/get_dynex_power,
+	/client/proc/set_dynex_scale,
 	/client/proc/cinematic,
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
@@ -521,7 +524,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/drop_dynex_bomb()
 	set category = "Special Verbs"
-	set name = "Drop Dynamic Bomb"
+	set name = "Drop DynEx Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/ex_power = input("Explosive Power:") as null|num
@@ -537,13 +540,8 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Get the estimated range of a bomb, using explosive power."
 
 	var/ex_power = input("Explosive Power:") as null|num
-	if(!ex_power || ex_power < 1)
-		return
-	if(ex_power < 2)
-		usr << "Estimated Explosive Range: (Devestation: 0, Heavy: 0, Light: 1)"
-	else
-		var/range = round(sqrt(4 * ex_power)) + (1 * DYN_EX_SCALE) - 1
-		usr << "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])"
+	var/range = round((2 * ex_power)**DYN_EX_SCALE)
+	usr << "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])"
 
 /client/proc/get_dynex_power()
 	set category = "Debug"
@@ -551,13 +549,20 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Get the estimated required power of a bomb, to reach a specific range."
 
 	var/ex_range = input("Light Explosion Range:") as null|num
-	if(!ex_range || ex_range < 1)
+	var/power = (0.5 * ex_range)**(DYN_EX_SCALE/1)
+	usr << "Estimated Explosive Power: [power]"
+
+/client/proc/set_dynex_scale()
+	set category = "Debug"
+	set name = "Set DynEx Scale"
+	set desc = "Set the scale multiplier of dynex explosions. The default is 0.5."
+
+	var/ex_scale = input("New DynEx Scale:") as null|num
+	if(!ex_scale)
 		return
-	if(ex_range < 2)
-		usr << "Estimated Explosive Power: 1"
-	else
-		var/power = (ex_range**2) / 4 - (1 * DYN_EX_SCALE) + 1
-		usr << "Estimated Explosive Power: [power]"
+	DYN_EX_SCALE = ex_scale
+	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
+	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
 /client/proc/give_spell(mob/T in mob_list)
 	set category = "Fun"
