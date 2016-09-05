@@ -82,6 +82,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
+	/client/proc/drop_dynex_bomb,
 	/client/proc/cinematic,
 	/client/proc/one_click_antag,
 	/client/proc/send_space_ninja,
@@ -142,6 +143,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/check_bomb_impacts,
 	/proc/machine_upgrade,
 	/client/proc/populate_world,
+	/client/proc/get_dynex_power,		//*debug verbs for dynex explosions.
+	/client/proc/get_dynex_range,		//*debug verbs for dynex explosions.
 	/client/proc/cmd_display_del_log,
 	/client/proc/reset_latejoin_spawns,
 	/client/proc/create_outfits,
@@ -195,6 +198,9 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
+	/client/proc/drop_dynex_bomb,
+	/client/proc/get_dynex_range,
+	/client/proc/get_dynex_power,
 	/client/proc/cinematic,
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
@@ -512,6 +518,46 @@ var/list/admin_verbs_hideable = list(
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/drop_dynex_bomb()
+	set category = "Special Verbs"
+	set name = "Drop Dynamic Bomb"
+	set desc = "Cause an explosion of varying strength at your location."
+
+	var/ex_power = input("Explosive Power:") as null|num
+	var/turf/epicenter = mob.loc
+	if(ex_power && epicenter)
+		dyn_explosion(epicenter, ex_power)
+		message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
+		feedback_add_details("admin_verb","DDXB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/get_dynex_range()
+	set category = "Debug"
+	set name = "Get DynEx Range"
+	set desc = "Get the estimated range of a bomb, using explosive power."
+
+	var/ex_power = input("Explosive Power:") as null|num
+	if(!ex_power || ex_power < 1)
+		return
+	if(ex_power < 2)
+		usr << "Estimated Explosive Range: (Devestation: 0, Heavy: 0, Light: 1)"
+	else
+		var/range = round(sqrt(4 * ex_power)) + (1 * DYN_EX_SCALE) - 1
+		usr << "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])"
+
+/client/proc/get_dynex_power()
+	set category = "Debug"
+	set name = "Get DynEx Power"
+	set desc = "Get the estimated required power of a bomb, to reach a specific range."
+
+	var/ex_range = input("Light Explosion Range:") as null|num
+	if(!ex_range || ex_range < 1)
+		return
+	if(ex_range < 2)
+		usr << "Estimated Explosive Power: 1"
+	else
+		var/power = (ex_range**2) / 4 - (1 * DYN_EX_SCALE) + 1
+		usr << "Estimated Explosive Power: [power]"
 
 /client/proc/give_spell(mob/T in mob_list)
 	set category = "Fun"

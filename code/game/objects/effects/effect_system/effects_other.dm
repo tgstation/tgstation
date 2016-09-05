@@ -116,4 +116,4 @@
 				M.Weaken(rand(1,5))
 		return
 	else
-		explosion_new(location, amount, flashing_factor)
+		dyn_explosion(location, amount, flashing_factor)

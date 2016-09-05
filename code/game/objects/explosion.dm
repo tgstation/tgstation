@@ -246,28 +246,17 @@
 		T.color = null
 		T.maptext = ""
 
-proc/explosion_new(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
+proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
 	if(!power || power < 1)
 		return
 	var/range = 0
 	if(power < 2)
 		range = 1
 	else
-		range = round(sqrt(4 * power))
-	explosion(epicenter, round(range * 0.25), round(range * 0.5), range, flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
+		range = round(sqrt(4 * power)) + (1 * DYN_EX_SCALE) - 1
+	explosion(epicenter, round(range * 0.25), round(range * 0.5), round(range), flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
 
-proc/get_explosion_range(var/power)
-	if(!power || power < 1)
-		return 0
-	if(power && power < 2)
-		return 1
-	return round(sqrt(4 * power))
 
-proc/get_explosion_power(var/range)
-	var/power = 0
-	if(range)
-		power = (range**2) / 4
-	return power
 
 // 1 explosion power is 0,0,1
 // 100 explosion power is maxcap, or 5,10,20
