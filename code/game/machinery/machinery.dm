@@ -313,11 +313,6 @@ Class Procs:
 	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(prob(H.getBrainLoss()))
-			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
-			return 1
 	if(!is_interactable())
 		return 1
 	if(set_machine)
