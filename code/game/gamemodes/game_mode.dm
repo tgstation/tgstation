@@ -282,6 +282,12 @@
 	for(var/V in possible_modes)
 		intercepttext += i_text.build(V)
 
+	if(station_goals.len)
+		intercepttext += "<b>Special Orders for [station_name()]:</b>"
+		for(var/datum/station_goal/G in station_goals)
+			G.on_report()
+			intercepttext += G.get_report()
+
 	print_command_report(intercepttext, "Central Command Status Summary")
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
@@ -551,12 +557,7 @@
 		var/datum/station_goal/picked = pick_n_take(possible)
 		goal_weights += initial(picked.weight)
 		station_goals += new picked
-	addtimer(src, "send_station_goals", rand(1800,3000))
 
-/datum/game_mode/proc/send_station_goals()
-	for(var/V in station_goals)
-		var/datum/station_goal/G = V
-		G.send_report()
 
 /datum/game_mode/proc/declare_station_goal_completion()
 	for(var/V in station_goals)
