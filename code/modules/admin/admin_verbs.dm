@@ -549,7 +549,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Get the estimated required power of a bomb, to reach a specific range."
 
 	var/ex_range = input("Light Explosion Range:") as null|num
-	var/power = (0.5 * ex_range)**(DYN_EX_SCALE/1)
+	var/power = (0.5 * ex_range)**(1/DYN_EX_SCALE)
 	usr << "Estimated Explosive Power: [power]"
 
 /client/proc/set_dynex_scale()

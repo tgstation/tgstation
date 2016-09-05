@@ -259,5 +259,5 @@ proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap =
 // 50 explosion power is a (3, 7, 14) explosion.
 // 25 explosion power is a (2, 5, 10) explosion.
 // 10 explosion power is a (1, 3, 6) explosion.
-// 1 explosion power is a (0, 1, 2) explosion.
-// 0.25 explosion power is a (0, 0, 1) explosion.
+// 5 explosion power is a (0, 1, 3) explosion.
+// 1 explosion power is a (0, 0, 1) explosion.
