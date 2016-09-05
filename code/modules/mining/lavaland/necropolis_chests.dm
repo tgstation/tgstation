@@ -862,6 +862,8 @@
 		for(var/mob/living/L in range(1, source))
 			addtimer(src, "teleport_mob", 0, FALSE, source, L, T, user) //regardless, take all mobs near us along
 		sleep(6) //at this point the blasts detonate
+	else
+		H.timer = world.time
 	teleporting = FALSE
 	if(user)
 		user.update_action_buttons_icon()
