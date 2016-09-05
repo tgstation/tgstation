@@ -810,6 +810,8 @@
 				user.visible_message("<span class='hierophant_warning'>[user] creates a strange rune beneath them!</span>", \
 				"<span class='hierophant'>You create a hierophant rune, which you can teleport yourself and any allies to at any time!</span>\n\
 				<span class='notice'>You can remove the rune to place a new one by striking it with the staff.</span>")
+			else
+				timer = world.time
 		else
 			user << "<span class='warning'>You need to be on solid ground to produce a rune!</span>"
 		return
@@ -863,7 +865,7 @@
 			addtimer(src, "teleport_mob", 0, FALSE, source, L, T, user) //regardless, take all mobs near us along
 		sleep(6) //at this point the blasts detonate
 	else
-		H.timer = world.time
+		timer = world.time
 	teleporting = FALSE
 	if(user)
 		user.update_action_buttons_icon()
