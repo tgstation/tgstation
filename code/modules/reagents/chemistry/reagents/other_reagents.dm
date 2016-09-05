@@ -443,7 +443,7 @@
 /datum/reagent/oxygen
 	name = "Oxygen"
 	id = "oxygen"
-	description = "A colorless, odorless gas."
+	description = "A colorless, odorless gas. Grows on trees but is still pretty valuable."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -460,14 +460,14 @@
 /datum/reagent/copper
 	name = "Copper"
 	id = "copper"
-	description = "A highly ductile metal."
+	description = "A highly ductile metal. Things made out of copper aren't very durable, but it makes a decent material for electrical wiring."
 	reagent_state = SOLID
 	color = "#6E3B08" // rgb: 110, 59, 8
 
 /datum/reagent/nitrogen
 	name = "Nitrogen"
 	id = "nitrogen"
-	description = "A colorless, odorless, tasteless gas."
+	description = "A colorless, odorless, tasteless gas. A simple asphyxiant that can silently displace vital oxygen."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -498,7 +498,7 @@
 /datum/reagent/mercury
 	name = "Mercury"
 	id = "mercury"
-	description = "A chemical element."
+	description = "A curious metal that's a liquid at room temperature. Neurodegenerative and very bad for the mind."
 	color = "#484848" // rgb: 72, 72, 72
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
@@ -512,14 +512,14 @@
 /datum/reagent/sulfur
 	name = "Sulfur"
 	id = "sulfur"
-	description = "A chemical element."
+	description = "A sickly yellow solid mostly known for its nasty smell. It's actually much more helpful than it looks in biochemisty."
 	reagent_state = SOLID
 	color = "#BF8C00" // rgb: 191, 140, 0
 
 /datum/reagent/carbon
 	name = "Carbon"
 	id = "carbon"
-	description = "A chemical element."
+	description = "A crumbly black solid that, while unexciting on an physical level, forms the base of all known life. Kind of a big deal."
 	reagent_state = SOLID
 	color = "#1C1300" // rgb: 30, 20, 0
 
@@ -532,7 +532,7 @@
 /datum/reagent/chlorine
 	name = "Chlorine"
 	id = "chlorine"
-	description = "A chemical element."
+	description = "A pale yellow gas that's well known as an oxidizer. While it forms many harmless molecules in its elemental form it is far from harmless."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -544,7 +544,7 @@
 /datum/reagent/fluorine
 	name = "Fluorine"
 	id = "fluorine"
-	description = "A highly-reactive chemical element."
+	description = "A comically-reactive chemical element. The universe does not want this stuff to exist in this form in the slightest."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -556,21 +556,21 @@
 /datum/reagent/sodium
 	name = "Sodium"
 	id = "sodium"
-	description = "A chemical element."
+	description = "A soft silver metal that can easily be cut with a knife. It's not salt just yet, so refrain from putting in on your chips."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/phosphorus
 	name = "Phosphorus"
 	id = "phosphorus"
-	description = "A chemical element."
+	description = "A ruddy red powder that burns readily. Though it comes in many colors, the general theme is always the same."
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
 
 /datum/reagent/lithium
 	name = "Lithium"
 	id = "lithium"
-	description = "A chemical element."
+	description = "A silver metal, it's claim to fame is its remarkably low density. Using it is a bit too effective in calming oneself down."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 
@@ -865,7 +865,7 @@
 	name = "Carbon Dioxide"
 	id = "co2"
 	reagent_state = GAS
-	description = "A gas commonly produced by burning carbon fuels."
+	description = "A gas commonly produced by burning carbon fuels. You're constantly producing this in your lungs."
 	color = "#B0B0B0" // rgb : 192, 192, 192
 
 /datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
@@ -1010,21 +1010,14 @@
 /datum/reagent/iodine
 	name = "Iodine"
 	id = "iodine"
-	description = "A slippery solution."
-	reagent_state = LIQUID
-	color = "#C8A5DC"
-
-/datum/reagent/fluorine
-	name = "Fluorine"
-	id = "fluorine"
-	description = "A slippery solution."
+	description = "Commonly added to table salt as a nutrient. On its own it tastes far less pleasing."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
 /datum/reagent/carpet
 	name = "Carpet"
 	id = "carpet"
-	description = "A slippery solution."
+	description = "For those that need a more creative way to roll out a red carpet."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -1038,35 +1031,35 @@
 /datum/reagent/bromine
 	name = "Bromine"
 	id = "bromine"
-	description = "A slippery solution."
+	description = "A brownish liquid that's highly reactive. Useful for stopping free radicals, but not intended for human consumption."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
 /datum/reagent/phenol
 	name = "Phenol"
 	id = "phenol"
-	description = "Used for certain medical recipes."
+	description = "An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
 /datum/reagent/ash
 	name = "Ash"
 	id = "ash"
-	description = "Basic ingredient in a couple of recipes."
+	description = "Supposedly pheonixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
 /datum/reagent/acetone
 	name = "Acetone"
 	id = "acetone"
-	description = "Common ingredient in other recipes."
+	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
 	id = "colorful_reagent"
-	description = "A solution."
+	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
@@ -1096,7 +1089,7 @@
 /datum/reagent/hair_dye
 	name = "Quantum Hair Dye"
 	id = "hair_dye"
-	description = "A solution."
+	description = "Has a high chance of making you look like a mad scientist."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
@@ -1144,21 +1137,21 @@
 /datum/reagent/saltpetre
 	name = "Saltpetre"
 	id = "saltpetre"
-	description = "Volatile."
+	description = "Volatile. Controversial. Third Thing."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
 /datum/reagent/lye
 	name = "Lye"
 	id = "lye"
-	description = "Also known as sodium hydroxide."
+	description = "Also known as sodium hydroxide. As a profession making this is somewhat underwhelming."
 	reagent_state = LIQUID
 	color = "#FFFFD6" // very very light yellow
 
 /datum/reagent/drying_agent
 	name = "Drying agent"
 	id = "drying_agent"
-	description = "Can be used to dry things."
+	description = "A desiccant. Can be used to dry things."
 	reagent_state = LIQUID
 	color = "#A70FFF"
 

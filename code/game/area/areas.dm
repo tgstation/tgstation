@@ -348,9 +348,9 @@
 				if(L.&& L.client)
 					L.client.played = 0
 
-/proc/has_gravity(atom/AT, turf/T)
-	if(!T)
-		T = get_turf(AT)
+/atom/proc/has_gravity(turf/T)
+	if(!T || !isturf(T))
+		T = get_turf(src)
 	var/area/A = get_area(T)
 	if(istype(T, /turf/open/space)) // Turf never has gravity
 		return 0

@@ -1,0 +1,5 @@
+author: "A-t48"
+delete-after: True
+changes: 
+  - bugfix: "you can now scrub freon and water vapor"
+  - bugfix: "you can now label canisters as freon and water vapor"

@@ -239,8 +239,8 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
-	burn_stuff()
-	START_PROCESSING(SSobj, src)
+	if(burn_stuff(AM))
+		START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
@@ -257,9 +257,12 @@
 
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
-/turf/open/floor/plating/lava/proc/burn_stuff()
+/turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
-	for(var/thing in contents)
+	var/thing_to_check = src
+	if (AM)
+		thing_to_check = list(AM)
+	for(var/thing in thing_to_check)
 		if(isobj(thing))
 			var/obj/O = thing
 			if(O.burn_state == LAVA_PROOF || O.throwing)
