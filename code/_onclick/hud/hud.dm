@@ -145,7 +145,7 @@
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
 
-			mymob.client.screen += hide_actions_toggle
+			screenmob.client.screen += hide_actions_toggle
 
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
@@ -183,9 +183,9 @@
 
 	hud_version = display_hud_version
 	persistant_inventory_update(screenmob)
-	mymob.update_action_buttons(1)
+	screenmob.update_action_buttons(1)
 	reorganize_alerts()
-	mymob.reload_fullscreen()
+	screenmob.reload_fullscreen()
 
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
