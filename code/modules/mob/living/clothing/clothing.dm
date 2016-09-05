@@ -25,6 +25,7 @@
 // Let your first host name you :) :)
 // All antag code (for later)
 // Fix F12
+// Fix /mob/living/carbon/update_inv_r_hand() to update the screen of the clothes
 
 ////////////////////////////////////////////////////////
 // Summary
@@ -354,27 +355,16 @@
 		host.visible_message("<span class='warning'>[host]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='hostdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		host.emote("scream")
 
-	var/obj/item/weapon/melee/clothing_arm_blade/W = new(host)
+	var/obj/item/weapon/melee/arm_blade/clothing_arm_blade/W = new(host)
 	host.put_in_hands(W)
 
 	playsound(host, 'sound/effects/blobattack.ogg', 30, 1)
 
 
-/obj/item/weapon/melee/clothing_arm_blade
+/obj/item/weapon/melee/arm_blade/clothing_arm_blade
 	name = "arm blade"
 	desc = "A shape blade made from living fiber."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "arm_blade"
-	item_state = "arm_blade"
-	flags = ABSTRACT | NODROP | DROPDEL
-	w_class = 5.0
-	force = 25
-	throwforce = 0 //Just to be on the safe side
-	throw_range = 0
-	throw_speed = 0
-	sharpness = IS_SHARP
-
-
+	
 /mob/living/simple_animal/clothing/proc/drink_blood()
 	var/mob/living/carbon/human/host = getHost()
 
@@ -419,6 +409,12 @@
 		if(getHost())
 			hud_used.blooddisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(blood_volume)]</font></div>"
 
+/*
+/mob/living/simple_animal/clothing/update_health_hud()
+	var/mob/living/carbon/human/host = getHost()
+	if(host)
+		host.update_health_hud()
+*/
 
 /*
 /mob/living/simple_animal/clothing/proc/transform_action()

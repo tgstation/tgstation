@@ -959,7 +959,7 @@
 		. += glasses.tint
 
 /mob/living/carbon/human/update_health_hud()
-	if(!client || !hud_used)
+	if(!hud_used)
 		return
 	if(dna.species.update_health_hud())
 		return

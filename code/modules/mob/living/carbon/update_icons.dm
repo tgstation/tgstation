@@ -46,9 +46,10 @@
 		drop_r_hand()
 		return
 	if(r_hand)
-		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+		if(hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.screen_loc = ui_rhand
-			client.screen += r_hand
+			if(client)
+				client.screen += r_hand
 			if(observers && observers.len)
 				for(var/M in observers)
 					var/mob/dead/observe = M
@@ -76,9 +77,10 @@
 		drop_l_hand()
 		return
 	if(l_hand)
-		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+		if(hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.screen_loc = ui_lhand
-			client.screen += l_hand
+			if(client)
+				client.screen += l_hand
 			if(observers && observers.len)
 				for(var/M in observers)
 					var/mob/dead/observe = M

@@ -9,6 +9,8 @@
 	static_inventory += using
 	action_intent = using
 
+	inventory_shown = 1
+
 	blooddisplay = new()
 	infodisplay += blooddisplay
 
