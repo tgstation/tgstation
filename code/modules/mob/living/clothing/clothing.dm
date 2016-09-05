@@ -176,9 +176,6 @@
 	var/datum/action/generic/set_living_clothing_appearance/CC = new(src)
 	CC.Grant(src)
 
-	var/datum/action/generic/clothes_grow_blade/AB = new(src)
-	AB.Grant(src)
-
 	set_appearance(appearance_name)
 
 	..()
@@ -203,8 +200,6 @@
 	transform = ntransform
 
 /mob/living/simple_animal/clothing/proc/set_appearance(appearance_name = "")
-	world << "set_appearance"
-
 	if(appearance_name == "")
 		appearance_name = input("Select your appearance!", "Living Clothing Appearance", null, null) in stored_apparence_names
 		world << appearance_name
@@ -292,9 +287,9 @@
 
 	// Setup abilities
 	for(var/T in powers_with_host) 
-		//var/datum/action/generic/A = new T()
-		//A.Grant(src)
-		//current_dynamic_powers += A
+		var/datum/action/generic/A = new T(src)
+		A.Grant(src)
+		current_dynamic_powers += A
 
 	return 1
 
@@ -331,6 +326,9 @@
 
 /mob/living/simple_animal/clothing/proc/grow_blade_action()
 	var/mob/living/carbon/human/host = getHost()
+
+	if(!host)
+		return
 
 	if(!host.drop_item())
 		host << "<span class='warning'>The [host.get_active_hand()] is stuck to your host's hand, you cannot grow a blade over it!</span>"
@@ -369,19 +367,27 @@
 /mob/living/simple_animal/clothing/proc/drink_blood()
 	var/mob/living/carbon/human/host = getHost()
 
-	src << "wat"
+	if(!host)
+		return
 
-	if(host)
-		var/amount_to_take = min(host.blood_volume, 25)
-		if(amount_to_take == 0)
-			// I'd like to husk if you take all your host's blood, but that seems cruel.
-			src << "You can't take any more blood!"
+	var/wanted_amount = 25
+
+	var/amount_to_take = min(host.blood_volume, wanted_amount)
+	if(amount_to_take == 0)
+		// I'd like to husk if you take all your host's blood, but that seems cruel.
+		src << "You can't take any more blood!"
+	else
+		host.blood_volume -= amount_to_take
+		blood_volume += amount_to_take
+		src << "You drink some blood!"
+		host << "Your clothes drink some blood!"
+
+	if(host.blood_volume < wanted_amount * 3)
+		if(host.stat == CONSCIOUS)
+			src << "You can feel your host's knees buckle."
 		else
-			host.blood_volume -= amount_to_take
-			blood_volume += amount_to_take
-			src << "You drink some blood!"
-			host << "Your clothes drink some blood!"
-
+			// Less flavourful, but eh.
+			src << "Your host seems low on blood."
 
 /mob/living/simple_animal/clothing/proc/drink_blood_action()
 	drink_blood()
