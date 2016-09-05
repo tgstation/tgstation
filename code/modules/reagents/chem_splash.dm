@@ -10,7 +10,7 @@ proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/chem_holder/reac
 		return
 	var/has_reagents
 	var/total_reagents
-	for(var/datum/reagents/R in reactants)
+	for(var/datum/chem_holder/R in reactants)
 		if(R.total_volume)
 			has_reagents = 1
 			total_reagents += R.total_volume
@@ -18,11 +18,11 @@ proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/chem_holder/reac
 	if(!has_reagents)
 		return
 
-	var/datum/reagents/splash_holder = new/datum/reagents(total_reagents*threatscale)
+	var/datum/reagents/splash_holder = new/datum/chem_holder(total_reagents*threatscale)
 	splash_holder.my_atom = epicenter // For some reason this is setting my_atom to null, and causing runtime errors.
 	var/total_temp = 0
 
-	for(var/datum/reagents/R in reactants)
+	for(var/datum/chem_holder/R in reactants)
 		R.trans_to(splash_holder, R.total_volume, threatscale, 1, 1)
 		total_temp += R.chem_temp
 	splash_holder.chem_temp = (total_temp/reactants.len) + extra_heat // Average temperature of reagents + extra heat.

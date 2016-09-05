@@ -1,5 +1,5 @@
 /datum/chemical_reaction
-	var/id = null // Used by reactions/time. Can be left as null in most cases.
+	var/id = "null" // Used for active_reaction registering and stats counting.
 	var/list/results = new/list()
 	var/list/required_reagents = new/list()
 

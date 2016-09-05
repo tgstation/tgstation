@@ -129,7 +129,7 @@
 /datum/effect_system/foam_spread/New()
 	..()
 	chemholder = PoolOrNew(/obj)
-	var/datum/reagents/R = new/datum/reagents(1000)
+	var/datum/chem_holder/R = new/datum/chem_holder(1000)
 	chemholder.reagents = R
 	R.my_atom = chemholder
 

@@ -33,7 +33,7 @@
 			vent = pick_n_take(vents)
 
 		if(vent && vent.loc)
-			var/datum/reagents/R = new/datum/reagents(50)
+			var/datum/reagents/R = new/datum/chem_holder(50)
 			R.my_atom = vent
 			R.add_reagent(pick(gunk), 50)
 

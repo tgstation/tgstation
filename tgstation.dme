@@ -1697,6 +1697,7 @@
 #include "code\modules\reagents\reagent_containers.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
 #include "code\modules\reagents\chemistry\colors.dm"
+#include "code\modules\reagents\chemistry\defines.dm"
 #include "code\modules\reagents\chemistry\holder.dm"
 #include "code\modules\reagents\chemistry\reactions.dm"
 #include "code\modules\reagents\chemistry\readme.dm"

@@ -6,7 +6,6 @@
 // where all the reagents related to medicine go.
 
 /datum/reagent/medicine
-	name = "Medicine"
 	id = "medicine"
 
 /datum/reagent/medicine/on_mob_life(mob/living/M)
