@@ -121,7 +121,7 @@
 
 	var/mob/screenmob = viewmob || mymob
 
-	if(!screenmob.client)
+	if(!screenmob.client || !screenmob.client.screen)
 		return 0
 
 	if(!append)

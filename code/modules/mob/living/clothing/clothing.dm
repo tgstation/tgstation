@@ -26,6 +26,8 @@
 // All antag code (for later)
 // Fix F12
 // Fix /mob/living/carbon/update_inv_r_hand() to update the screen of the clothes
+//		...looks like a bunch of them are messed up. Disable showing inventory at all, 
+//		unless we move all the if(client) checks and add ourselves as an observer
 
 ////////////////////////////////////////////////////////
 // Summary
@@ -164,7 +166,10 @@
 		"blue schoolgirl uniform"
 		)
 
-	var/list/powers_with_host = list(/datum/action/generic/clothes_grow_blade, /datum/action/generic/clothes_drink_blood)
+	var/list/powers_with_host = list(/datum/action/generic/clothes_grow_blade, 
+		/datum/action/generic/clothes_drink_blood,
+		/datum/action/generic/living_clothing/detach,
+		)
 
 	var/list/current_dynamic_powers = list()
 
@@ -305,6 +310,30 @@
 
 	return 1
 
+/mob/living/simple_animal/clothing/proc/TryDetach()
+	var/mob/living/carbon/human/host = getHost()
+	
+	if(!host)
+		return
+
+	// Force us off of the clothes obj
+	loc = get_turf(src)
+
+	// Force our clothes to drop
+	host.unEquip(linked_clothes, 1)
+	linked_clothes = null
+
+	// Fixup HUD
+	hud_used.blooddisplay.invisibility = INVISIBILITY_ABSTRACT
+	hud_used.action_intent.invisibility = 0
+	hud_used.show_hud(1,src)
+
+	for(var/datum/action/generic/A in current_dynamic_powers)
+		A.Remove(src)
+	
+	current_dynamic_powers.clear()
+
+
 /mob/living/simple_animal/clothing/proc/getHost()
 	if(linked_clothes && linked_clothes.loc && istype(linked_clothes.loc,/mob/living/carbon/human))
 		. = linked_clothes.loc
@@ -316,11 +345,25 @@
 	desc = "Some clothes - they feel weird to the touch."
 	name = "strange clothing"
 	var/mob/living/simple_animal/clothing/linked_mob = null
+	flags = ABSTRACT | NODROP | DROPDEL
+
+// TODO: handle emergency delete code (host got gibbed?)
 
 ////////////////////////////////////////////////////////
 // Abilities code
 
-//TODO: how do I properly namespace this??
+//TODO: properly namespace this shit
+
+
+/datum/action/generic/living_clothing/detach
+	name = "Detach"
+	desc = "Escape containers and your host."
+	button_icon_state = "meson"
+	procname = /mob/living/simple_animal/clothing/proc/detach_action
+
+/mob/living/simple_animal/clothing/proc/detach_action()
+	TryDetach()
+
 /datum/action/generic/set_living_clothing_appearance
 	name = "Change Appearance"
 	desc = "Switch what you want to look like."
