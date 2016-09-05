@@ -26,8 +26,10 @@
 // All antag code (for later)
 // Fix F12
 // Fix /mob/living/carbon/update_inv_r_hand() to update the screen of the clothes
-//		...looks like a bunch of them are messed up. Disable showing inventory at all, 
+//		...looks like a bunch of them are messed up. Disable showing inventory at all,
 //		unless we move all the if(client) checks and add ourselves as an observer
+// TODO: got attacked by poly, attached to host, died because poly. wtf.
+// Store DNA off and use it when spitting blood
 
 ////////////////////////////////////////////////////////
 // Summary
@@ -135,9 +137,7 @@
 	mob_size = MOB_SIZE_SMALL
 
 	ventcrawler = 2
-
-	blood_volume = 0 // We want this?
-
+	
 	stop_automated_movement = 1
 
 	// Damage vars
@@ -146,7 +146,7 @@
 	obj_damage = 0 //how much damage this simple animal does to objects, if any
 	armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
 	melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
-	list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
+	list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
 	attacktext = "attacks"
 	sound/attack_sound = 'sound/weapons/punch1.ogg'
 	//sound/miss_sound = 'sound/weapons/punchmiss.ogg'
@@ -166,7 +166,7 @@
 		"blue schoolgirl uniform"
 		)
 
-	var/list/powers_with_host = list(/datum/action/generic/clothes_grow_blade, 
+	var/list/powers_with_host = list(/datum/action/generic/clothes_grow_blade,
 		/datum/action/generic/clothes_drink_blood,
 		/datum/action/generic/living_clothing/detach,
 		)
@@ -175,6 +175,9 @@
 
 	// Attachment vars
 	var/obj/item/clothing/under/living/linked_clothes = null
+
+/mob/living/simple_animal/clothing/get_blood_id()
+	return "blood"
 
 /mob/living/simple_animal/clothing/New()
 	// I guess we want this?
@@ -185,6 +188,8 @@
 
 	set_appearance(appearance_name)
 
+	// Can hold 500 units of blood
+	create_reagents(500)
 	..()
 
 // Handle dir change due to clicking around on screen
@@ -312,7 +317,7 @@
 
 /mob/living/simple_animal/clothing/proc/TryDetach()
 	var/mob/living/carbon/human/host = getHost()
-	
+
 	if(!host)
 		return
 
@@ -330,9 +335,14 @@
 
 	for(var/datum/action/generic/A in current_dynamic_powers)
 		A.Remove(src)
-	
-	current_dynamic_powers.clear()
 
+	current_dynamic_powers = list()
+
+	src << "You detach from your host!"
+	host << "The clothing detaches from you!"
+
+	// Lose all your stored blood
+	bleed(blood_volume)
 
 /mob/living/simple_animal/clothing/proc/getHost()
 	if(linked_clothes && linked_clothes.loc && istype(linked_clothes.loc,/mob/living/carbon/human))
@@ -407,7 +417,7 @@
 /obj/item/weapon/melee/arm_blade/clothing_arm_blade
 	name = "arm blade"
 	desc = "A shape blade made from living fiber."
-	
+
 /mob/living/simple_animal/clothing/proc/drink_blood()
 	var/mob/living/carbon/human/host = getHost()
 
@@ -416,13 +426,10 @@
 
 	var/wanted_amount = 25
 
-	var/amount_to_take = min(host.blood_volume, wanted_amount)
-	if(amount_to_take == 0)
+	if(host.transfer_blood_to(src, wanted_amount, 1) == 0)
 		// I'd like to husk if you take all your host's blood, but that seems cruel.
 		src << "You can't take any more blood!"
 	else
-		host.blood_volume -= amount_to_take
-		blood_volume += amount_to_take
 		src << "You drink some blood!"
 		host << "Your clothes drink some blood!"
 
