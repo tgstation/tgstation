@@ -237,7 +237,7 @@
 		if(query_convert_time.NextRow())
 			timestamp = query_convert_time.item[1]
 		if(ckey && notetext && timestamp && adminckey && server)
-			add_note(ckey, notetext, timestamp, adminckey, 0, server)
+			add_note(ckey, notetext, timestamp, adminckey, 0, server, 1)
 	notesfile.cd = "/"
 	notesfile.dir.Remove(ckey)
 
