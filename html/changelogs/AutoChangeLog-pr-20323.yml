@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "AFK players will no longer default to continue playing during restart votes."
