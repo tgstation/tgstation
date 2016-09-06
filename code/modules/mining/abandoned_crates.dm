@@ -6,7 +6,7 @@
 	icon_state = "securecrate"
 	var/code = null
 	var/lastattempt = null
-	var/attempts = 10
+	var/attempts = 5
 	var/codelen = 4
 
 /obj/structure/closet/crate/secure/loot/New()
@@ -174,6 +174,18 @@
 /obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
 	boom(user)
 
+/obj/structure/closet/crate/secure/loot/ex_act()
+	boom()
+
+/obj/structure/closet/crate/secure/loot/tesla_act()
+	boom()
+
+/obj/structure/closet/crate/secure/loot/blob_act()
+	boom()
+
+/obj/structure/closet/crate/secure/loot/bullet_act()
+	boom()
+
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src))
 		return
@@ -215,7 +227,8 @@
 		..()
 
 /obj/structure/closet/crate/secure/loot/proc/boom(mob/user)
-	user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
+	if(user)
+		user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
 	for(var/atom/movable/AM in src)
 		qdel(AM)
 	var/turf/T = get_turf(src)
