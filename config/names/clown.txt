@@ -1,3 +1,6 @@
+Apple Bloom
+Applejack
+Babs Seed
 Baby Cakes
 Bo Bo Sassy
 Bonker
@@ -8,6 +11,7 @@ Candy
 Checkers
 Dinky Doodle
 Flop O'Honker
+Fluttershy
 Freckle
 Giggles
 Gigglesworth
@@ -22,7 +26,10 @@ Miss Stockings
 Mr Shoe
 Patches
 Pepinpop
+Pinkie Pie
 Pocket
+Rainbow Dash
+Rarity
 Razzle Dazzle
 Redshirt McBeat
 Ronnie Pace
@@ -33,5 +40,7 @@ Slippy Joe
 Sparkle
 Speckles
 Sprinkledinkle
+Sweetie Belle
 Toodles Sharperton
+Twilight Sparkle
 Ziggy Yoyo
