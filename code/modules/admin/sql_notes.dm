@@ -35,12 +35,12 @@
 	server = sanitizeSQL(server)
 	if(isnull(secret))
 		switch(alert("Hide note from being viewed by players?", "Secret Note?","Yes","No","Cancel"))
-		if("Yes")
-			secret = 1
-		if("No")
-			secret = 0
-		else
-			return
+			if("Yes")
+				secret = 1
+			if("No")
+				secret = 0
+			else
+				return
 	var/DBQuery/query_noteadd = dbcon.NewQuery("INSERT INTO [format_table_name("notes")] (ckey, timestamp, notetext, adminckey, server, secret) VALUES ('[target_sql_ckey]', '[timestamp]', '[notetext]', '[admin_sql_ckey]', '[server]', '[secret]')")
 	if(!query_noteadd.Execute())
 		var/err = query_noteadd.ErrorMsg()
