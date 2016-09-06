@@ -29,6 +29,7 @@
 // Store DNA off and use it when spitting blood
 // TODO: being in a form means you don't need your legs
 // TODO: only allow armblade in blade form
+// Add drop item on HUD. 
 
 ////////////////////////////////////////////////////////
 // Summary
