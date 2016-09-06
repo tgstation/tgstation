@@ -27,8 +27,10 @@
 	var/screen = 1
 
 	var/list/categories = list(
-							"Human",
-							"Lizard",
+							"human",
+							"lizard",
+							"plasaman",
+							"test"
 							)
 
 	var/mob/living/carbon/human/human
@@ -57,9 +59,6 @@
 							/obj/item/weapon/reagent_containers/glass/beaker = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
-/obj/machinery/limbgrower/Destroy()
-	return ..()
-
 /obj/machinery/limbgrower/interact(mob/user)
 	if(!is_operational())
 		return
@@ -87,11 +86,12 @@
 	if (busy)
 		user << "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>"
 		return 1
-/*
+
 	if (ispath(O,/obj/item/weapon/reagent_containers))
-		if(!O.reagents.hasreagent("synthflesh") && O.reagents.reagentlist.length!=1)
+		if(!O.reagents.has_reagent("synthflesh"))
 			user << "<span class=\"alert\">The Limb grower refuses the chemicals, perhaps it only accepts pure synthflesh?</span>"
-*/
+			return 1
+
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", O))
 		updateUsrDialog()
 		return
@@ -146,25 +146,7 @@
 					var/B = being_built.build_path
 					world << "Starting creaton of a limb"
 					if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
-						//i need to create a body part manually using a set specias dna
-						var/obj/item/bodypart/L
-						world << "category start"
-						world << "[selected_category] is the current category"
-						switch(selected_category)
-							if("Human")
-								//Human dna
-								L = new B()
-								world << "Trying to update limb"
-								L.name = "Synthentic Human Limb"
-								L.desc = "A synthentic human limb that will morph on its first use in surgery"
-							else if("Lizard")
-								//Lizard dna
-								L = new B()
-								world << "Trying to update lizard limb"
-								L.name = "Synthentic Lizard Limb"
-								L.desc = "A synthentic lizard limb that will morph on its first use in surgery"
-						L.icon = "human_r_arm_s"
-						L.loc = loc;
+						build_limb(B)
 					busy = 0
 					flick("limbgrower_unfill",src)
 					icon_state = "limbgrower_idleoff"
@@ -176,6 +158,32 @@
 	src.updateUsrDialog()
 
 	return
+
+/obj/machinery/limbgrower/proc/build_limb(var/B)
+	//i need to create a body part manually using a set specias dna
+	var/obj/item/bodypart/L
+	var/selected_part
+	world << "category start"
+	world << "[selected_category] is the current category"
+	L = new B()
+	if(selected_category=="human" || selected_category=="lizard")
+		L.icon = 'icons/mob/human_parts_greyscale.dmi'
+	// gotta check which part of the body it is, so that i can get the correct icon
+	if(ispath(B,/obj/item/bodypart/r_arm))
+		L.icon_state = "[selected_category]_r_arm_s"
+		selected_part = "right arm"
+	else if(ispath(B,/obj/item/bodypart/l_arm))
+		selected_part = "left arm"
+		L.icon_state = "[selected_category]_l_arm_s"
+	else if(ispath(B,/obj/item/bodypart/r_leg))
+		selected_part = "right leg"
+		L.icon_state = "[selected_category]_r_leg_s"
+	else if(ispath(B,/obj/item/bodypart/l_leg))
+		selected_part = "left leg"
+		L.icon_state = "[selected_category]_l_leg_s"
+	L.name = "Synthentic [selected_category] Limb"
+	L.desc = "A synthentic [selected_category] limb that will morph on its first use in surgery. This one is for the [selected_part]"
+	L.loc = loc;
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
@@ -208,6 +216,8 @@
 
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
+		if(!(selected_category in D.category))
+			continue
 
 		if(disabled || !can_build(D))
 			dat += "<span class='linkOff'>[selected_category] [D.name]</span>"
