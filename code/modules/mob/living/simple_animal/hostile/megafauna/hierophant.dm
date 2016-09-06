@@ -45,8 +45,8 @@ Difficulty: Hard
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
 	armour_penetration = 50
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
@@ -87,7 +87,7 @@ Difficulty: Hard
 			did_reset = TRUE
 			//visible_message("<span class='hierophant'>\"Vixyvrmrk xs fewi...\"</span>")
 			blink(spawned_rune)
-			adjustHealth((health - maxHealth) * 0.5) //heal for 50% of our missing health
+			adjustHealth(max((health - maxHealth) * 0.5, 25)) //heal for 50% of our missing health
 			wander = FALSE
 			/*if(health > maxHealth * 0.9)
 				visible_message("<span class='hierophant'>\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\"</span>")
@@ -550,7 +550,9 @@ Difficulty: Hard
 				H.rune = null
 				user.update_action_buttons_icon()
 				qdel(src)
-		else //use this rune instead
+			else
+				H.timer = world.time
+		else
 			user << "<span class='hierophant_warning'>You touch the rune with the staff, but nothing happens.</span>"
 
 	else
