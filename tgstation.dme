@@ -1260,6 +1260,7 @@
 #include "code\modules\library\random_books.dm"
 #include "code\modules\lighting\lighting_system.dm"
 #include "code\modules\materials\materials.dm"
+#include "code\modules\materials\readme.dm"
 #include "code\modules\materials\reactions\basic.dm"
 #include "code\modules\mining\abandoned_crates.dm"
 #include "code\modules\mining\equipment.dm"
