@@ -636,7 +636,9 @@
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/floor/plating/asteroid/basalt
 	var/reset_string = "basalt"
-	var/cooldown = 200
+	var/create_cooldown = 100
+	var/create_delay = 30
+	var/reset_cooldown = 50
 	var/timer = 0
 	var/banned_turfs
 
@@ -658,15 +660,31 @@
 		if(!istype(T))
 			return
 		if(!istype(T, turf_type))
-			user.visible_message("<span class='danger'>[user] turns \the [T] into [transform_string]!</span>")
-			message_admins("[key_name_admin(user)] fired the lava staff at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(target)] ([T.x], [T.y], [T.z])</a>).")
-			log_game("[key_name(user)] fired the lava staff at [get_area(target)] ([T.x], [T.y], [T.z]).")
-			T.ChangeTurf(turf_type)
+			var/obj/effect/overlay/temp/lavastaff/L = PoolOrNew(/obj/effect/overlay/temp/lavastaff, T)
+			L.alpha = 0
+			animate(L, alpha = 255, time = create_delay)
+			user.visible_message("<span class='danger'>[user] points [src] at [T]!</span>")
+			timer = world.time + create_delay + 1
+			if(do_after(user, create_delay, target = T))
+				user.visible_message("<span class='danger'>[user] turns \the [T] into [transform_string]!</span>")
+				message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
+				log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
+				T.ChangeTurf(turf_type)
+				timer = world.time + create_cooldown
+				qdel(L)
+			else
+				timer = world.time
+				qdel(L)
+				return
 		else
 			user.visible_message("<span class='danger'>[user] turns \the [T] into [reset_string]!</span>")
 			T.ChangeTurf(reset_turf_type)
-		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
-		timer = world.time + cooldown
+			timer = world.time + reset_cooldown
+		playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+
+/obj/effect/overlay/temp/lavastaff
+	icon_state = "lavastaff_warn"
+	duration = 50
 
 ///Bubblegum
 
