@@ -1,4 +1,4 @@
-/proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1, server)
+/proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1, server, secret)
 	if(!dbcon.IsConnected())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
@@ -13,7 +13,7 @@
 			log_game("SQL ERROR obtaining ckey from player table. Error : \[[err]\]\n")
 			return
 		if(!query_find_ckey.NextRow())
-			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to add them to the watchlist?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to add a note for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
 				return
 		target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
@@ -33,7 +33,15 @@
 		if (config && config.server_name)
 			server = config.server_name
 	server = sanitizeSQL(server)
-	var/DBQuery/query_noteadd = dbcon.NewQuery("INSERT INTO [format_table_name("notes")] (ckey, timestamp, notetext, adminckey, server) VALUES ('[target_sql_ckey]', '[timestamp]', '[notetext]', '[admin_sql_ckey]', '[server]')")
+	if(isnull(secret))
+		switch(alert("Hide note from being viewed by players?", "Secret Note?","Yes","No","Cancel"))
+		if("Yes")
+			secret = 1
+		if("No")
+			secret = 0
+		else
+			return
+	var/DBQuery/query_noteadd = dbcon.NewQuery("INSERT INTO [format_table_name("notes")] (ckey, timestamp, notetext, adminckey, server, secret) VALUES ('[target_sql_ckey]', '[timestamp]', '[notetext]', '[admin_sql_ckey]', '[server]', '[secret]')")
 	if(!query_noteadd.Execute())
 		var/err = query_noteadd.ErrorMsg()
 		log_game("SQL ERROR adding new note to table. Error : \[[err]\]\n")
