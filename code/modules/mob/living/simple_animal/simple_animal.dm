@@ -3,6 +3,7 @@
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
+	gender = PLURAL //placeholder
 
 	status_flags = CANPUSH
 
@@ -87,6 +88,8 @@
 	..()
 	handcrafting = new()
 	verbs -= /mob/verb/observe
+	if(gender == PLURAL)
+		gender = pick(MALE,FEMALE)
 	if(!real_name)
 		real_name = name
 	if(!loc)
@@ -290,23 +293,23 @@
 
 /mob/living/simple_animal/adjustBruteLoss(amount)
 	if(damage_coeff[BRUTE])
-		. = adjustHealth(amount*damage_coeff[BRUTE])
+		. = adjustHealth(amount * damage_coeff[BRUTE] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustFireLoss(amount)
 	if(damage_coeff[BURN])
-		. = adjustHealth(amount*damage_coeff[BURN])
+		. = adjustHealth(amount * damage_coeff[BURN] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustOxyLoss(amount)
 	if(damage_coeff[OXY])
-		. = adjustHealth(amount*damage_coeff[OXY])
+		. = adjustHealth(amount * damage_coeff[OXY] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustToxLoss(amount)
 	if(damage_coeff[TOX])
-		. = adjustHealth(amount*damage_coeff[TOX])
+		. = adjustHealth(amount * damage_coeff[TOX] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustCloneLoss(amount)
 	if(damage_coeff[CLONE])
-		. = adjustHealth(amount*damage_coeff[CLONE])
+		. = adjustHealth(amount * damage_coeff[CLONE] * config.damage_multiplier)
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return
@@ -378,11 +381,15 @@
 		return 1
 
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
-	if(damage <= force_threshold || !damage_coeff[damagetype])
+	if(!damage_coeff[damagetype])
+		damage = 0
+	else
+		damage *= damage_coeff[damagetype]
+
+	if(damage >= 0 && damage <= force_threshold)
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 	else
-		adjustBruteLoss(damage)
-		updatehealth()
+		adjustHealth(damage * config.damage_multiplier)
 
 /mob/living/simple_animal/movement_delay()
 	. = ..()

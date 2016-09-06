@@ -94,7 +94,6 @@
 	force = round((5 + seed.potency / 2.5), 1)
 
 /obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user)
-	..()
 	if(..())
 		if(prob(50))
 			user.Paralyse(5)

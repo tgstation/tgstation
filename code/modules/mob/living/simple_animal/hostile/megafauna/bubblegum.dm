@@ -35,8 +35,6 @@ Difficulty: Hard
 	icon_dead = ""
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
-	faction = list("mining")
-	weather_immunities = list("lava","ash")
 	speak_emote = list("gurgles")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -44,12 +42,8 @@ Difficulty: Hard
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
-	flying = 1
-	mob_size = MOB_SIZE_LARGE
 	pixel_x = -32
 	del_on_death = 1
-	aggro_vision_range = 18
-	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	var/charging = 0
 	medal_type = MEDAL_PREFIX
@@ -68,7 +62,7 @@ Difficulty: Hard
 	move_to_delay = Clamp(round((health/maxHealth) * 10), 5, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
-	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
+	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	if(charging)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -97,7 +91,7 @@ Difficulty: Hard
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
 		bloodspell.phased = 1
-	new/obj/item/device/gps/internal/bubblegum(src)
+	internal = new/obj/item/device/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
 	if(charging)
@@ -116,9 +110,9 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(!stat)
-		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	if(charging)
-		PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
+		PoolOrNew(/obj/effect/overlay/temp/decoy/fading, list(loc,src))
 		DestroySurroundings()
 	. = ..()
 	if(charging)
@@ -132,13 +126,21 @@ Difficulty: Hard
 	charge()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
-	var/turf/T = get_step_away(target, src)
+	var/turf/T = get_turf(target)
+	if(!T || T == loc)
+		return
+	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, T)
 	charging = 1
 	DestroySurroundings()
-	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, T)
+	walk(src, 0)
+	setDir(get_dir(src, T))
+	var/obj/effect/overlay/temp/decoy/D = PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
+	D.color = "#FF0000"
+	animate(D, alpha = 0, color = initial(D.color), transform = matrix()*2, time = 5)
 	sleep(5)
-	throw_at(T, 7, 1, src, 0)
+	throw_at(T, get_dist(src, T), 1, src, 0)
 	charging = 0
+	Goto(target, move_to_delay, minimum_distance)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
@@ -152,16 +154,15 @@ Difficulty: Hard
 	if(!charging)
 		return ..()
 
-	else if(A)
-		if(isliving(A))
-			var/mob/living/L = A
-			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
-			L.apply_damage(40, BRUTE)
-			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
-			shake_camera(L, 4, 3)
-			shake_camera(src, 2, 3)
-			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-			L.throw_at_fast(throwtarget)
+	else if(isliving(A))
+		var/mob/living/L = A
+		L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
+		L.apply_damage(40, BRUTE)
+		playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
+		shake_camera(L, 4, 3)
+		shake_camera(src, 2, 3)
+		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
+		L.throw_at_fast(throwtarget, 3)
 
 	charging = 0
 

@@ -442,6 +442,22 @@
 
 	return candidates
 
+/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M)
+	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time)
+	if(!M || qdeleted(M))
+		return list()
+	return L
+
+/proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs)
+	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time)
+	var/i=1
+	for(var/v in mobs)
+		if(!v || qdeleted(v))
+			mobs.Cut(i,i+1)
+		else
+			++i
+	return L
+
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)
 		return
@@ -454,3 +470,8 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+/proc/window_flash(var/client_or_usr)
+	if (!client_or_usr)
+		return
+	winset(client_or_usr, "mainwindow", "flash=5")

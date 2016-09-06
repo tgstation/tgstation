@@ -70,7 +70,7 @@
 
 /obj/item/weapon/storage/box/survival_mining/New()
 	..()
-	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
@@ -127,7 +127,7 @@
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
-	desc = "A biohazard alert warning is printed on the box"
+	desc = "A biohazard alert warning is printed on the box."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/syringes/New()
@@ -166,7 +166,7 @@
 
 /obj/item/weapon/storage/box/injectors
 	name = "box of DNA injectors"
-	desc = "This box contains injectors it seems."
+	desc = "This box contains injectors, it seems."
 
 /obj/item/weapon/storage/box/injectors/New()
 	..()
@@ -197,7 +197,7 @@
 
 /obj/item/weapon/storage/box/wall_flash
 	name = "wall-mounted flash kit"
-	desc = "This box contains everything neccesary to build a wall-mounted flash. <B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	desc = "This box contains everything necessary to build a wall-mounted flash. <B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/wall_flash/New()
@@ -342,18 +342,6 @@
 	..()
 	for(var/i = 1; i <= 5; i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src)
-
-
-/obj/item/weapon/storage/box/permits
-	name = "box of construction permits"
-	desc = "A box for containing construction permits, used to officially declare built rooms as additions to the station."
-	icon_state = "id"
-
-/obj/item/weapon/storage/box/permits/New() //There's only a few, so blueprints are still useful beyond setting every room's name to PRIMARY FART STORAGE
-	..()
-	for(var/i in 1 to 3)
-		new /obj/item/areaeditor/permit(src)
-
 
 /obj/item/weapon/storage/box/ids
 	name = "box of spare IDs"
@@ -564,7 +552,7 @@
 
 /obj/item/weapon/storage/box/metalfoam
 	name = "box of metal foam grenades"
-	desc = "To be used to rapidly seal hull breaches"
+	desc = "To be used to rapidly seal hull breaches."
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/metalfoam/New()

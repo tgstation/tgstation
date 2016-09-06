@@ -1,7 +1,7 @@
 "aa" = (/turf/open/space,/area/space)
 "ab" = (/turf/closed/wall,/area/ruin/unpowered{name = "Derelict Cargo Bay"})
 "ac" = (/obj/machinery/door/poddoor{id = "bigderelictshipdock"},/turf/open/floor/plating/airless,/area/ruin/unpowered{name = "Derelict Cargo Bay"})
-"ad" = (/turf/open/floor/plating/asteroid/airless,/area/space)
+"ad" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
 "ae" = (/turf/open/floor/plating,/area/ruin/unpowered{name = "Derelict Cargo Bay"})
 "af" = (/obj/structure/sign/vacuum{pixel_y = 32},/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Bay"})
 "ag" = (/obj/machinery/door/poddoor{id = "bigderelictshipdock"},/turf/open/floor/plating,/area/ruin/unpowered{name = "Derelict Cargo Bay"})
@@ -26,7 +26,7 @@
 "az" = (/obj/structure/table,/obj/item/clothing/head/soft,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Bay"})
 "aA" = (/turf/closed/wall,/area/ruin/unpowered{name = "Derelict Power Storage"})
 "aB" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruin/unpowered{name = "Derelict Power Storage"})
-"aC" = (/turf/closed/mineral,/area/space)
+"aC" = (/turf/closed/mineral,/area/ruin/unpowered/no_grav)
 "aD" = (/obj/machinery/door/poddoor{id = "bigderelictship"},/turf/open/floor/mineral/titanium/yellow,/area/ruin/powered{name = "Derelict Docked Ship"})
 "aE" = (/obj/structure/closet/crate/medical,/obj/item/weapon/storage/firstaid/o2,/turf/open/floor/mineral/titanium/yellow,/area/ruin/powered{name = "Derelict Docked Ship"})
 "aF" = (/obj/structure/closet/crate/medical,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/mineral/titanium/yellow,/area/ruin/powered{name = "Derelict Docked Ship"})
@@ -218,30 +218,32 @@
 "ej" = (/obj/structure/closet/crate,/obj/item/stack/sheet/cloth/ten,/obj/item/stack/sheet/cloth/ten,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
 "ek" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/stack/sheet/cardboard/fifty,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
 "el" = (/obj/machinery/power/apc{cell_type = 0; dir = 4; name = "Cargo Storage APC"; pixel_x = 24; pixel_y = 0},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"em" = (/obj/structure/closet/crate/internals,/obj/item/weapon/storage/toolbox/emergency,/obj/item/clothing/mask/breath,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"en" = (/obj/structure/closet/crate/engineering/electrical,/obj/item/weapon/storage/toolbox/electrical,/obj/item/stack/cable_coil,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eo" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/weapon/crowbar,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"ep" = (/obj/structure/closet/crate/medical,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eq" = (/obj/structure/closet/crate/engineering,/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"er" = (/obj/structure/closet/crate/medical,/obj/item/weapon/storage/firstaid/brute,/obj/item/weapon/storage/firstaid/fire,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"es" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"et" = (/obj/structure/alien/weeds{color = "#4BAE56"; desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."; name = "gelatinous floor"},/obj/structure/alien/gelpod,/turf/open/floor/plating/asteroid,/area/ruin/unpowered{name = "Derelict Outpost"})
-"eu" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (WEST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 8},/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"ev" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (WEST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 8},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"ew" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (WEST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 8},/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"ex" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (NORTHEAST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 5},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"ey" = (/obj/structure/closet/crate,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"ez" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/device/paicard,/obj/machinery/light,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eA" = (/obj/structure/closet/crate,/obj/item/device/pda/clear,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eB" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eC" = (/obj/structure/closet/crate/internals,/obj/item/weapon/tank/internals/emergency_oxygen/engi,/obj/item/weapon/tank/internals/emergency_oxygen/engi,/obj/item/weapon/storage/firstaid/toxin,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eD" = (/obj/structure/closet/crate,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eE" = (/obj/machinery/light,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eF" = (/obj/structure/closet/crate/engineering,/obj/item/device/multitool,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eG" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (SOUTHWEST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 10},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eH" = (/obj/structure/door_assembly/door_assembly_mai{density = 0; desc = "A pried-open airlock. Scratch marks mark the sidings of the door."; name = "pried-open airlock"},/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (EAST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/open/floor/plating,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
-"eI" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (SOUTHEAST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 6},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/open/floor/plating,/area/ruin/unpowered{name = "Derelict Outpost"})
-"eJ" = (/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/ruin/unpowered{name = "Derelict Cargo Bay"})
+"em" = (/turf/closed/wall,/area/ruin/unpowered/no_grav)
+"en" = (/obj/structure/alien/resin/wall{color = "#8EC127"; desc = "Thick material shaped into a wall. Eugh."; icon_state = "smooth"; name = "gelatinous wall"},/turf/open/floor/plating/asteroid,/area/ruin/unpowered/no_grav)
+"eo" = (/obj/structure/closet/crate/internals,/obj/item/weapon/storage/toolbox/emergency,/obj/item/clothing/mask/breath,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"ep" = (/obj/structure/closet/crate/engineering/electrical,/obj/item/weapon/storage/toolbox/electrical,/obj/item/stack/cable_coil,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eq" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/weapon/crowbar,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"er" = (/obj/structure/closet/crate/medical,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"es" = (/obj/structure/closet/crate/engineering,/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"et" = (/obj/structure/closet/crate/medical,/obj/item/weapon/storage/firstaid/brute,/obj/item/weapon/storage/firstaid/fire,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eu" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"ev" = (/obj/structure/alien/weeds{color = "#4BAE56"; desc = "A thick gelatinous surface covers the floor.  Someone get the golashes."; name = "gelatinous floor"},/obj/structure/alien/gelpod,/turf/open/floor/plating/asteroid,/area/ruin/unpowered{name = "Derelict Outpost"})
+"ew" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (WEST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 8},/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"ex" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (WEST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 8},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"ey" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (WEST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 8},/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"ez" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (NORTHEAST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 5},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eA" = (/obj/structure/closet/crate,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eB" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/device/paicard,/obj/machinery/light,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eC" = (/obj/structure/closet/crate,/obj/item/device/pda/clear,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eD" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eE" = (/obj/structure/closet/crate/internals,/obj/item/weapon/tank/internals/emergency_oxygen/engi,/obj/item/weapon/tank/internals/emergency_oxygen/engi,/obj/item/weapon/storage/firstaid/toxin,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eF" = (/obj/structure/closet/crate,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eG" = (/obj/machinery/light,/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eH" = (/obj/structure/closet/crate/engineering,/obj/item/device/multitool,/turf/open/floor/plasteel/delivery,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eI" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (SOUTHWEST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 10},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = ""},/turf/open/floor/plasteel,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eJ" = (/obj/structure/door_assembly/door_assembly_mai{density = 0; desc = "A pried-open airlock. Scratch marks mark the sidings of the door."; name = "pried-open airlock"},/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (EAST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0; tag = ""},/turf/open/floor/plating,/area/ruin/unpowered{name = "Derelict Cargo Storage"})
+"eK" = (/obj/effect/decal/cleanable/blood/old{tag = "icon-trails_1 (SOUTHEAST)"; name = "dried blood trail"; icon_state = "trails_1"; dir = 6},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/open/floor/plating,/area/ruin/unpowered{name = "Derelict Outpost"})
+"eL" = (/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/ruin/unpowered{name = "Derelict Cargo Bay"})
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -269,13 +271,13 @@ adadaCabcTbxabdvdwdxdydzdsdsdvdxdAdAdAdxbUdBaZcRcRdsaZbldCbFblcCbFblblbldDcRcmcm
 adaCaCabbxbxabdmdEcmdsdFdGdGdHdsdscmcRcRaZdIaZcRcRdsaZbldCbFciblbFbFbFbFcmdtcmaa
 aaadaCabdJdKdLdLdLdLdLdLdLdLdLdLdLdLdLdLdLdMdNdndndndOdPdQbFblcCblbldkblcmcRdRad
 aaadaCabbxdSdLdTdUdVdWdXdXdYdZeadWebeceddLeeaZefefefaZcRegcRcRdDcRblcRcmcmcRdRad
-aaadaCabbxeheidWdWejdWdWdWdWdWekdWdWdWeldLeeaZaCaCadcmcRcRcRdDcmcmcmcmcmcRcRdRaa
-aaadadabdpeheidWdWemdWdWeneodWepdWeqeresdLeeaZaCaCadcmcRcRetblcmcRdtcRegbletcmaa
-aaadadabakddeuevevevevevewevevevevevewexdLeeaZaCaCadcmcmcRdDcRcmcRcmcmdRdRcmcmaa
-aaadadabakakdLeyezeAdWeBeCdWdXdXeDeEeFeGeHeIaZaCaCadadcmcmcRegcmcRcmaaaaaaaaaaaa
-aaadadabeJabdLdLdLdLdLdLdLdLdLdLdLdLdLdLdLaRaZadadadadaacmcRcRcRcRcmaaaaaaaaaaaa
-aaadadaZaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaZadadaaaaaacmcmdRdRcmcmaaaaaaaaaaaa
-aaaaadaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZadadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaadaCabbxeheidWdWejdWdWdWdWdWekdWdWdWeldLeeemaCaCadencRcRcRdDcmcmcmcmcmcRcRdRaa
+aaadadabdpeheidWdWeodWdWepeqdWerdWeseteudLeeemaCaCadencRcRevblcmcRdtcRegblevcmaa
+aaadadabakddewexexexexexeyexexexexexeyezdLeeemaCaCadencmcRdDcRcmcRcmcmdRdRcmcmaa
+aaadadabakakdLeAeBeCdWeDeEdWdXdXeFeGeHeIeJeKemaCaCadadcmcmcRegcmcRcmaaaaaaaaaaaa
+aaadadabeLabdLdLdLdLdLdLdLdLdLdLdLdLdLdLdLaRemadadadadaacmcRcRcRcRcmaaaaaaaaaaaa
+aaadadaZaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRemadadaaaaaacmcmdRdRcmcmaaaaaaaaaaaa
+aaaaadaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZaZemadadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaadadadadadadadadaCaCaCaCaCaCaCaCaCaCaCaCadadadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaadadaaaaadadadadadaCaCaCaCaCaCaCadadadadadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaadadadadadadadadadadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

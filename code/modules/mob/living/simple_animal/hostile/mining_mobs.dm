@@ -15,6 +15,7 @@
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -91,7 +92,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
-		if(isliving(target))
+		if(isliving(target) && !target.Adjacent(targets_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
 			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
@@ -222,9 +223,8 @@
 		A.admin_spawned = admin_spawned
 		A.GiveTarget(target)
 		A.friends = friends
-		A.faction = faction
+		A.faction = faction.Copy()
 		ranged_cooldown = world.time + ranged_cooldown_time
-	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
@@ -452,7 +452,6 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	anchored = 1 //Stays anchored until death as to be unpullable
-	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
@@ -994,6 +993,7 @@
 	icon_dead = "tendril"
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
+	luminosity = 1
 	health = 250
 	maxHealth = 250
 	max_mobs = 3
@@ -1009,6 +1009,10 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
+	for(var/F in RANGE_TURFS(1, src))
+		if(istype(F, /turf/closed/mineral))
+			var/turf/closed/mineral/M = F
+			M.ChangeTurf(M.turf_type)
 	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
@@ -1039,6 +1043,7 @@
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
+	luminosity = 1
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"

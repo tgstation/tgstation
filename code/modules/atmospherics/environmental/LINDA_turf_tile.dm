@@ -250,6 +250,8 @@
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+	var/const/PROBABILITY_OFFSET = 25
+	var/const/PROBABILITY_BASE_PRECENT = 75
 	set waitfor = 0
 	. = 0
 	if (!anchored && !pulledby)
@@ -257,9 +259,9 @@
 		if (last_high_pressure_movement_air_cycle < SSair.times_fired)
 			var/move_prob = 100
 			if (pressure_resistance > 0)
-				move_prob = pressure_difference/pressure_resistance*50
+				move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
 			move_prob += pressure_resistance_prob_delta
-			if (prob(move_prob))
+			if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
 				step(src, direction)
 				last_high_pressure_movement_air_cycle = SSair.times_fired
 

@@ -15,7 +15,6 @@
 
 /obj/structure/sign/blob_act(obj/effect/blob/B)
 	qdel(src)
-	return
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench))
@@ -112,12 +111,18 @@
 
 /obj/structure/sign/map/left/dream
 	icon_state = "map-left-DS"
+	desc = "A framed picture of the station.\nClockwise from the top, you see Engineering(<b>yellow</b>), Arrivals(<b>blue and white</b>), Atmospherics(<b>yellow</b>), Security(<b>red</b>), \
+	Cargo(<b>brown</b>), Science(<b>purple</b>), Escape(<b>red and white</b>), and Medbay(<b>blue</b>).\nIn the center of the station, you see the Bridge(<b>dark blue</b>).\n\
+	Around those, you see Hallways/Entrances(<b>light grey</b>), Public Areas(<b>grey</b>), and Maintenance(<b>dark grey</b>)."
 
 /obj/structure/sign/map/right
 	icon_state = "map-right"
 
 /obj/structure/sign/map/right/dream
 	icon_state = "map-right-DS"
+	desc = "A framed picture of the station.\nClockwise from the top, you see Engineering(<b>yellow</b>), Arrivals(<b>blue and white</b>), Atmospherics(<b>yellow</b>), Security(<b>red</b>), \
+	Cargo(<b>brown</b>), Science(<b>purple</b>), Escape(<b>red and white</b>), and Medbay(<b>blue</b>).\nIn the center of the station, you see the Bridge(<b>dark blue</b>).\n\
+	Around those, you see Hallways/Entrances(<b>light grey</b>), Public Areas(<b>grey</b>), and Maintenance(<b>dark grey</b>)."
 
 /obj/structure/sign/securearea
 	name = "\improper SECURE AREA"
@@ -223,7 +228,7 @@
 
 /obj/structure/sign/xenobio
 	name = "\improper XENOBIOLOGY"
-	desc = "A sign labelling an area as a place where xenobiological entites are researched."
+	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"
 
 /obj/structure/sign/directions/science

@@ -23,7 +23,7 @@
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	var/lastfired = 0
-	var/shot_delay = 3 //.3 seconds between shots
+	var/shot_delay = 15
 	var/lasercolor = ""
 	var/disabled = 0//A holder for if it needs to be disabled, if true it will not seach for targets, shoot at targets, or move, currently only used for lasertag
 

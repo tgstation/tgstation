@@ -354,7 +354,7 @@
 		return 1
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
-	var/halfwaycritdeath = (config.health_threshold_crit + config.health_threshold_dead) / 2
+	var/halfwaycritdeath = (HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) / 2
 
 	if(busy)
 		return

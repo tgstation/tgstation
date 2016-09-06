@@ -23,10 +23,6 @@
 		return 0
 	if(issilicon(mind.current) || isbot(mind.current) || isdrone(mind.current))
 		return 0 //can't convert machines, that's ratvar's thing
-	if(isguardian(mind.current))
-		var/mob/living/simple_animal/hostile/guardian/G = mind.current
-		if(!iscultist(G.summoner))
-			return 0 //can't convert it unless the owner is converted
 	if(is_sacrifice_target(mind))
 		return 0
 	if(mind.enslaved_to && !iscultist(mind.enslaved_to))

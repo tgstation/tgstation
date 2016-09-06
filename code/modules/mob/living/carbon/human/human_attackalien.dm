@@ -22,29 +22,18 @@
 			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
 				return 1
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if (prob(30))
-				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
-					"<span class='userdanger'>[M] has wounded [src]!</span>")
-				apply_effect(4, WEAKEN, armor_block)
-				add_logs(M, src, "attacked")
+			add_logs(M, src, "attacked")
 			updatehealth()
 
-		if(M.a_intent == "disarm")
-			var/randn = rand(1, 100)
-			if (randn <= 80)
+		if(M.a_intent == "disarm") //Always drop item in hand, if no item, get stunned instead.
+			if(get_active_hand() && drop_item())
+				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
+						"<span class='userdanger'>[M] disarmed [src]!</span>")
+			else
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				Weaken(5)
 				add_logs(M, src, "tackled")
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")
-			else
-				if (randn <= 99)
-					playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-					drop_item()
-					visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-						"<span class='userdanger'>[M] disarmed [src]!</span>")
-				else
-					playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
-					visible_message("<span class='danger'>[M] has tried to disarm [src]!</span>", \
-						"<span class='userdanger'>[M] has tried to disarm [src]!</span>")
 	return

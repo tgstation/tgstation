@@ -19,7 +19,10 @@
 	dir = EAST
 
 /turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
-	if(!AM)
+	throw_atom(AM)
+
+/turf/open/space/transit/proc/throw_atom(atom/movable/AM)
+	if(!AM || istype(AM, /obj/docking_port))
 		return
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
@@ -53,15 +56,14 @@
 	AM.loc = T
 	AM.newtonian_move(dir)
 
-
-
-
 //Overwrite because we dont want people building rods in space.
 /turf/open/space/transit/attackby()
 	return
 
 /turf/open/space/transit/New()
 	update_icon()
+	for(var/atom/movable/AM in src)
+		throw_atom(AM)
 	..()
 
 /turf/open/space/transit/update_icon()

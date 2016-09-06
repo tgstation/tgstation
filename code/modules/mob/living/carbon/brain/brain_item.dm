@@ -68,7 +68,7 @@
 
 	if(brainmob)
 		if(brainmob.client)
-			if(brainmob.health <= config.health_threshold_dead)
+			if(brainmob.health <= HEALTH_THRESHOLD_DEAD)
 				user << "It's lifeless and severely damaged."
 			else
 				user << "You can feel the small spark of life still left in this one."

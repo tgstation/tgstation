@@ -20,6 +20,9 @@
 	var/image/cross = image('icons/obj/storage.dmi',"bible")
 	var/font_color = "purple"
 	var/prayer_type = "PRAYER"
+	var/deity = "Space Jesus" // y'all need space jesus by default
+	if (ticker && ticker.Bible_deity_name)
+		deity = ticker.Bible_deity_name
 	if(usr.job == "Chaplain")
 		cross = image('icons/obj/storage.dmi',"kingyellow")
 		font_color = "blue"
@@ -28,9 +31,10 @@
 		cross = image('icons/obj/storage.dmi',"tome")
 		font_color = "red"
 		prayer_type = "CULTIST PRAYER"
+		deity = "Nar-Sie"
 
 	msg = "<span class='adminnotice'>\icon[cross] \
-		<b><font color=[font_color]>[prayer_type]: </font>\
+		<b><font color=[font_color]>[prayer_type] (to [deity]): </font>\
 		[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> \
 		[msg]</span>"
 

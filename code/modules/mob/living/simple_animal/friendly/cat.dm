@@ -56,6 +56,7 @@
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
+	gender = FEMALE
 	icon_state = "original"
 	icon_living = "original"
 	icon_dead = "original_dead"
@@ -66,7 +67,6 @@
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
-	gender = NEUTER
 	density = 0
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
@@ -115,7 +115,7 @@
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 	family = list()
 	if(!dead)
-		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
+		for(var/mob/living/simple_animal/pet/cat/kitten/C in mob_list)
 			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
 				continue
 			if(C.type in family)
@@ -134,6 +134,7 @@
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
+	gender = MALE
 	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/Life()
@@ -221,6 +222,7 @@
 	icon_dead = "cak_dead"
 	health = 50
 	maxHealth = 50
+	gender = FEMALE
 	harm_intent_damage = 10
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
 	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)

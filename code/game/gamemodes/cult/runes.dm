@@ -158,7 +158,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/malformed/New()
 	..()
-	icon_state = "[rand(1,6)]"
+	icon_state = "[rand(1,7)]"
 	color = rgb(rand(0,255), rand(0,255), rand(0,255))
 
 /obj/effect/rune/malformed/invoke(var/list/invokers)
@@ -372,7 +372,7 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/sacrifice/New()
 	..()
-	icon_state = "[rand(1,6)]"
+	icon_state = "[rand(1,7)]"
 
 /obj/effect/rune/sacrifice/invoke(var/list/invokers)
 	if(rune_in_use)
@@ -492,7 +492,7 @@ var/list/teleport_runes = list()
 		return
 
 	var/datum/game_mode/cult/cult_mode
-	
+
 	if(ticker.mode.name == "cult")
 		cult_mode = ticker.mode
 
@@ -567,13 +567,17 @@ var/list/teleport_runes = list()
 		log_game("Raise Dead rune failed - no corpses to revive")
 		fail_invoke()
 		return
-	mob_to_sacrifice = input(user, "Choose a corpse to sacrifice.", "Corpse to Sacrifice") as null|anything in potential_sacrifice_mobs
-	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1))
+	if(potential_sacrifice_mobs.len > 1)
+		mob_to_sacrifice = input(user, "Choose a corpse to sacrifice.", "Corpse to Sacrifice") as null|anything in potential_sacrifice_mobs
+	else
+		mob_to_sacrifice = potential_sacrifice_mobs[1]
+	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, TRUE))
 		return
-	mob_to_revive = input(user, "Choose a corpse to revive.", "Corpse to Revive") as null|anything in potential_revive_mobs
-	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1))
-		return
-	if(!validness_checks(mob_to_revive, user, 0))
+	if(potential_revive_mobs.len > 1)
+		mob_to_revive = input(user, "Choose a corpse to revive.", "Corpse to Revive") as null|anything in potential_revive_mobs
+	else
+		mob_to_revive = potential_revive_mobs[1]
+	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, TRUE) || !validness_checks(mob_to_revive, user, FALSE))
 		return
 	rune_in_use = 1
 	if(user.name == "Herbert West")
@@ -671,7 +675,7 @@ var/list/teleport_runes = list()
 	cultist_name = "Astral Communion"
 	cultist_desc = "severs the link between one's spirit and body. This effect is taxing and one's physical body will take damage while this is active."
 	invocation = "Fwe'sh mah erl nyag r'ya!"
-	icon_state = "6"
+	icon_state = "7"
 	color = rgb(126, 23, 23)
 	rune_in_use = 0 //One at a time, please!
 	construct_invoke = 0
@@ -688,7 +692,7 @@ var/list/teleport_runes = list()
 		log_game("Astral Communion rune failed - more than one user")
 		return list()
 	var/turf/T = get_turf(src)
-	if(!user in T.contents)
+	if(!(user in T))
 		user << "<span class='cultitalic'>You must be standing on top of [src]!</span>"
 		log_game("Astral Communion rune failed - user not standing on rune")
 		return list()
@@ -710,8 +714,8 @@ var/list/teleport_runes = list()
 			affecting = null //In case it's assigned to a number or something
 			rune_in_use = 0
 			return
-		affecting.apply_damage(1, BRUTE)
-		if(!(user in T.contents))
+		affecting.apply_damage(0.1, BRUTE)
+		if(!(user in T))
 			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls them back to the rune!</span>")
 			Beam(user,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=2)
 			user.forceMove(get_turf(src)) //NO ESCAPE :^)
@@ -724,19 +728,17 @@ var/list/teleport_runes = list()
 			affecting = null
 			return
 		if(user.stat == UNCONSCIOUS)
-			if(prob(10))
+			if(prob(1))
 				var/mob/dead/observer/G = user.get_ghost()
-				if(G)
-					G << "<span class='cultitalic'>You feel the link between you and your body weakening... you must hurry!</span>"
+				G << "<span class='cultitalic'>You feel the link between you and your body weakening... you must hurry!</span>"
 		if(user.stat == DEAD)
 			user.color = initial(user.color)
 			rune_in_use = 0
 			affecting = null
 			var/mob/dead/observer/G = user.get_ghost()
-			if(G)
-				G << "<span class='cultitalic'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>"
+			G << "<span class='cultitalic'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>"
 			return
-		sleep(10)
+		sleep(1)
 	rune_in_use = 0
 
 
@@ -863,6 +865,44 @@ var/list/teleport_runes = list()
 		L << "<span class='cultitalic'>[src] saps your strength!</span>"
 	qdel(src)
 	explosion(T, -1, 0, 1, 5)
+
+
+//Deals brute damage to all targets on the rune and heals the invoker for each target drained.
+/obj/effect/rune/leeching
+	cultist_name = "Drain Life"
+	cultist_desc = "drains the life of all targets on the rune, restoring life to the user."
+	invocation = "Yu'gular faras desdae. Umathar uf'kal thenar!"
+	icon_state = "3"
+	color = rgb(159, 28, 52)
+
+/obj/effect/rune/leeching/can_invoke(mob/living/user)
+	if(world.time <= user.next_move)
+		return list()
+	var/turf/T = get_turf(src)
+	var/list/potential_targets = list()
+	for(var/mob/living/carbon/M in T.contents - user)
+		if(M.stat != DEAD)
+			potential_targets += M
+	if(!potential_targets.len)
+		user << "<span class='cultitalic'>There must be at least one valid target on the rune!</span>"
+		log_game("Leeching rune failed - no valid targets")
+		return list()
+	return ..()
+
+/obj/effect/rune/leeching/invoke(var/list/invokers)
+	var/mob/living/user = invokers[1]
+	user.changeNext_move(CLICK_CD_CLICK_ABILITY)
+	..()
+	var/turf/T = get_turf(src)
+	for(var/mob/living/carbon/M in T.contents - user)
+		if(M.stat != DEAD)
+			var/drained_amount = rand(10,20)
+			M.apply_damage(drained_amount, BRUTE, "chest")
+			user.adjustBruteLoss(-drained_amount)
+			M << "<span class='cultitalic'>You feel extremely weak.</span>"
+	user.Beam(T,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=5)
+	user.visible_message("<span class='warning'>Blood flows from the rune into [user]!</span>", \
+	"<span class='cult'>Blood flows into you, healing your wounds and revitalizing your spirit.</span>")
 
 
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.

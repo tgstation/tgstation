@@ -36,6 +36,10 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	if(prob(20))
 		set_broken()
 
+/obj/machinery/gravity_generator/tesla_act(var/power)
+	..()
+	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
+
 /obj/machinery/gravity_generator/update_icon()
 	..()
 	icon_state = "[get_status()]_[sprite_number]"
@@ -368,7 +372,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	for(var/mob/M in mob_list)
 		if(M.z != z)
 			continue
-		M.update_gravity(M.mob_has_gravity())
+		M.update_gravity(M.has_gravity())
 		if(M.client)
 			shake_camera(M, 15, 1)
 			M.playsound_local(T, 'sound/effects/alert.ogg', 100, 1, 0.5)

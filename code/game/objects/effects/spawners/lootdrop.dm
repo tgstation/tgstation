@@ -143,7 +143,7 @@
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
 				/obj/item/weapon/relic = 3,
-				/obj/item/weaponcrafting/reciever = 1,
+				/obj/item/weaponcrafting/reciever = 2,
 				/obj/item/clothing/head/cone = 2,
 				/obj/item/weapon/grenade/smokebomb = 2,
 				/obj/item/device/geiger_counter = 3,
@@ -157,7 +157,7 @@
 				/obj/item/clothing/gloves/color/random = 8,
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
-				"" = 4
+				"" = 3
 				)
 
 /obj/effect/spawner/lootdrop/crate_spawner

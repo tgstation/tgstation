@@ -717,7 +717,8 @@
 
 /obj/machinery/turretid/initialize() //map-placed turrets autolink turrets
 	if(control_area && istext(control_area))
-		for(var/area/A in world)
+		for(var/V in sortedAreas)
+			var/area/A = V
 			if(A.name == control_area)
 				control_area = A
 				break
@@ -729,7 +730,7 @@
 		else
 			control_area = CA
 
-	for(var/obj/machinery/porta_turret/T in get_area_all_atoms(control_area))
+	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)

@@ -4,9 +4,14 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
+	var/datum/reagents/reagents = null
+	var/fingerprintslast = null
 
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
+
+/datum/proc/on_reagent_change()
+	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
@@ -262,6 +267,7 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 
 	if(ismob(D))
 		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
+		body += "<option value='?_src_=vars;remove_spell=\ref[D]'>Remove Spell</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give Disease</option>"
 		body += "<option value='?_src_=vars;ninja=\ref[D]'>Make Space Ninja</option>"
 		body += "<option value='?_src_=vars;godmode=\ref[D]'>Toggle Godmode</option>"
@@ -396,6 +402,7 @@ body
 		html += "[html_encode(name)] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
+			name = "[name]"	//Needs to be a string or it will go out of bounds in the internal_byond_list_vars array
 			html += "<ul>"
 			var/index = 1
 			for(var/entry in L)
@@ -561,6 +568,18 @@ body
 
 			src.give_spell(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
+
+		else if(href_list["remove_spell"])
+			if(!check_rights(0))
+				return
+
+			var/mob/M = locate(href_list["remove_spell"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+
+			remove_spell(M)
+			href_list["datumrefresh"] = href_list["remove_spell"]
 
 		else if(href_list["give_disease"])
 			if(!check_rights(0))

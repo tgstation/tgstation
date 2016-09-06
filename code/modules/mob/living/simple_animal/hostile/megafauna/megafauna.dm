@@ -11,17 +11,41 @@
 	environment_smash = 3
 	obj_damage = 75
 	luminosity = 3
+	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
+	flying = 1
 	robust_searching = 1
 	stat_attack = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
+	aggro_vision_range = 18
+	idle_vision_range = 5
+	environment_target_typecache = list(
+	/obj/machinery/door/window,
+	/obj/structure/window,
+	/obj/structure/closet,
+	/obj/structure/table,
+	/obj/structure/grille,
+	/obj/structure/girder,
+	/obj/structure/rack,
+	/obj/structure/barricade,
+	/obj/machinery/field,
+	/obj/machinery/power/emitter)
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
+	var/anger_modifier = 0
+	var/obj/item/device/gps/internal
 	anchored = TRUE
+	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
+	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
+
+/mob/living/simple_animal/hostile/megafauna/Destroy()
+	qdel(internal)
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)

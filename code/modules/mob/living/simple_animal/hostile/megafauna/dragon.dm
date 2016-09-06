@@ -36,8 +36,6 @@ Difficulty: Medium
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/dragon.dmi'
-	faction = list("mining")
-	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -45,30 +43,19 @@ Difficulty: Medium
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
-	flying = 1
-	mob_size = MOB_SIZE_LARGE
 	pixel_x = -16
-	aggro_vision_range = 18
-	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
-	var/anger_modifier = 0
-	var/obj/item/device/gps/internal
 	var/swooping = 0
 	var/swoop_cooldown = 0
 	medal_type = MEDAL_PREFIX
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/New()
 	..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
-	qdel(internal)
-	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == 3)
@@ -148,6 +135,9 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
+	if(swooping)
+		fire_rain()
+		return
 
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth/2)
@@ -155,7 +145,7 @@ Difficulty: Medium
 		else
 			fire_rain()
 
-	else if(prob(10+anger_modifier) && !client && !swooping)
+	else if(prob(10+anger_modifier) && !client)
 		if(health > maxHealth/2)
 			addtimer(src, "swoop_attack", 0)
 		else
@@ -201,7 +191,7 @@ Difficulty: Medium
 	if(stat || swooping)
 		return
 	swoop_cooldown = world.time + 200
-	var/swoop_target
+	var/atom/swoop_target
 	if(manual_target)
 		swoop_target = manual_target
 	else
@@ -222,7 +212,7 @@ Difficulty: Medium
 		fire_rain()
 
 	icon_state = "dragon"
-	if(swoop_target && !qdeleted(swoop_target))
+	if(swoop_target && !qdeleted(swoop_target) && swoop_target.z == src.z)
 		tturf = get_turf(swoop_target)
 	else
 		tturf = get_turf(src)
@@ -271,5 +261,8 @@ Difficulty: Medium
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
+	return
 
 #undef MEDAL_PREFIX

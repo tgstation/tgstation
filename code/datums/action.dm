@@ -13,6 +13,7 @@
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/background_icon_state = "bg_default"
+	var/buttontooltipstyle = ""
 
 	var/icon_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
@@ -23,6 +24,7 @@
 	button = new
 	button.linked_action = src
 	button.name = name
+	button.actiontooltipstyle = buttontooltipstyle
 	if(desc)
 		button.desc = desc
 
@@ -187,8 +189,43 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/toggle_unfriendly_fire
+	name = "Toggle Friendly Fire \[ON\]"
+	desc = "Toggles if the staff causes friendly fire."
+	button_icon_state = "vortex_ff_on"
+
+/datum/action/item_action/toggle_unfriendly_fire/Trigger()
+	if(..())
+		UpdateButtonIcon()
+
+/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon()
+	if(istype(target, /obj/item/weapon/hierophant_staff))
+		var/obj/item/weapon/hierophant_staff/H = target
+		if(H.friendly_fire_check)
+			button_icon_state = "vortex_ff_off"
+			name = "Toggle Friendly Fire \[OFF\]"
+			button.name = name
+		else
+			button_icon_state = "vortex_ff_on"
+			name = "Toggle Friendly Fire \[ON\]"
+			button.name = name
+	..()
+
+/datum/action/item_action/vortex_recall
+	name = "Vortex Recall"
+	desc = "Recall yourself, and anyone nearby, to an attuned hierophant rune at any time.<br>If no such rune exists, will produce a rune at your location."
+	button_icon_state = "vortex_recall"
+
+/datum/action/item_action/vortex_recall/IsAvailable()
+	if(istype(target, /obj/item/weapon/hierophant_staff))
+		var/obj/item/weapon/hierophant_staff/H = target
+		if(H.teleporting)
+			return 0
+	return ..()
+
 /datum/action/item_action/clock
 	background_icon_state = "bg_clock"
+	buttontooltipstyle = "clockcult"
 
 /datum/action/item_action/clock/IsAvailable()
 	if(!is_servant_of_ratvar(owner))

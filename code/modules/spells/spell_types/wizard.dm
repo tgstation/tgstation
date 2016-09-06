@@ -337,7 +337,7 @@
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 2)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
@@ -362,7 +362,7 @@
 		else
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
-				M.Weaken(2)
+				M.Weaken(stun_amt)
 				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
 			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
@@ -384,4 +384,25 @@
 		var/mob/living/carbon/C = user
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
-	..()
+	..(targets, user, 3)
+
+/obj/effect/proc_holder/spell/targeted/sacred_flame
+	name = "Sacred Flame"
+	desc = "Makes everyone around you more flammable, and lights yourself on fire."
+	charge_max = 60
+	clothes_req = 0
+	invocation = "FI'RAN DADISKO"
+	invocation_type = "shout"
+	max_targets = 0
+	range = 6
+	include_user = 1
+	selection_type = "view"
+	action_icon_state = "sacredflame"
+	sound = "sound/magic/Fireball.ogg"
+
+/obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
+	for(var/mob/living/L in targets)
+		L.adjust_fire_stacks(20)
+	if(isliving(user))
+		var/mob/living/U = user
+		U.IgniteMob()

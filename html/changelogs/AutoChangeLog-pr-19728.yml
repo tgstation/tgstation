@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Added the clockcult \"Global Records\" alert, which clock cultists can mouse over to check a variety of information on the clockcult's status, including living servants, number of caches, CV, tinkerer's daemons, if there's an unconverted AI, what clockwork generals can be invoked, and what scripture is unlocked."

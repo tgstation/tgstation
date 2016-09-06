@@ -151,13 +151,16 @@
 /turf/open/floor/engine/cult
 	name = "engraved floor"
 	icon_state = "plating"
-	var/obj/effect/clockwork/overlay/floor/realappearence
+	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
 
 /turf/open/floor/engine/cult/New()
 	..()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
-	realappearence = PoolOrNew(/obj/effect/overlay/cult/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, src)
+	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor/bloodcult, src)
 	realappearence.linked = src
+
+/obj/effect/clockwork/overlay/floor/bloodcult
+	icon_state = "cult"
 
 /turf/open/floor/engine/cult/Destroy()
 	be_removed()
@@ -171,10 +174,6 @@
 /turf/open/floor/engine/cult/proc/be_removed()
 	qdel(realappearence)
 	realappearence = null
-
-/turf/open/floor/engine/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
-	..()
 
 /turf/open/floor/engine/cult/narsie_act()
 	return
@@ -240,8 +239,8 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
-	burn_stuff()
-	START_PROCESSING(SSobj, src)
+	if(burn_stuff(AM))
+		START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
@@ -258,9 +257,12 @@
 
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
-/turf/open/floor/plating/lava/proc/burn_stuff()
+/turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
-	for(var/thing in contents)
+	var/thing_to_check = src
+	if (AM)
+		thing_to_check = list(AM)
+	for(var/thing in thing_to_check)
 		if(isobj(thing))
 			var/obj/O = thing
 			if(O.burn_state == LAVA_PROOF || O.throwing)
@@ -305,16 +307,13 @@
 /turf/open/floor/plating/lava/burn_tile()
 	return
 
-/turf/open/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
-	return
-
 /turf/open/floor/plating/lava/smooth
 	name = "lava"
 	baseturf = /turf/open/floor/plating/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
-	canSmoothWith = list(/turf/closed/mineral, /turf/open/floor/plating/lava/smooth)
+	canSmoothWith = list(/turf/open/floor/plating/lava/smooth)
 
 /turf/open/floor/plating/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"

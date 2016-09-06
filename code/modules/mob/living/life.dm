@@ -8,7 +8,14 @@
 	if (notransform)
 		return
 	if(!loc)
-		return
+		if(client)
+			for(var/obj/effect/landmark/error/E in landmarks_list)
+				loc = E.loc
+				break
+			message_admins("[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished.")
+			log_game("[key_name(src)] was found to have no .loc with an attached client.")
+		else
+			return
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
@@ -36,7 +43,7 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	update_gravity(mob_has_gravity())
+	update_gravity(has_gravity())
 
 	if(machine)
 		machine.check_eye(src)
@@ -45,7 +52,6 @@
 	if(stat != DEAD)
 		handle_disabilities() // eye, ear, brain damages
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
-
 
 
 /mob/living/proc/handle_breathing()
@@ -78,7 +84,7 @@
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 	if(paralysis)
-		AdjustParalysis(-1)
+		AdjustParalysis(-1, 1, 1)
 	if(stunned)
 		AdjustStunned(-1, 1, 1)
 	if(weakened)

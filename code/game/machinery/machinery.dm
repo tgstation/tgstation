@@ -114,6 +114,7 @@ Class Procs:
 	var/global/gl_uid = 1
 	var/panel_open = 0
 	var/state_open = 0
+	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
@@ -189,9 +190,7 @@ Class Procs:
 	update_icon()
 
 /obj/machinery/blob_act(obj/effect/blob/B)
-	if(!density)
-		qdel(src)
-	if(prob(75))
+	if(density && prob(75))
 		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
@@ -468,10 +467,8 @@ Class Procs:
 /obj/machinery/tesla_act(var/power)
 	..()
 	if(prob(85))
-		emp_act(2)
+		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
-		ex_act(3)
-	else if(prob(90))
-		ex_act(2)
+		emp_act(2)
 	else
-		ex_act(1)
+		ex_act(2)

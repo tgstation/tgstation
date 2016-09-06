@@ -67,6 +67,14 @@
 		return 0
 	return L[A.type]
 
+//returns a new list with only atoms that are in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache)
+	. = list()
+	for (var/thing in atoms)
+		var/atom/A = thing
+		if (typecache[A.type])
+			. += A
+
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path)
 	if(ispath(path))

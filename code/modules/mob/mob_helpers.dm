@@ -453,7 +453,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
 	if(M.mind && M.mind.special_role)
 		poll_message = "[poll_message] Status:[M.mind.special_role]."
-	var/list/mob/dead/observer/candidates = pollCandidates(poll_message, "pAI", null, FALSE, 100)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, "pAI", null, FALSE, 100, M)
 	var/mob/dead/observer/theghost = null
 
 	if(candidates.len)

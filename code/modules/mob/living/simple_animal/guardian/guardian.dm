@@ -9,6 +9,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	real_name = "Guardian Spirit"
 	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
+	gender = NEUTER
 	bubble_icon = "guardian"
 	response_help  = "passes through"
 	response_disarm = "flails at"
@@ -152,7 +153,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(summoner)
 			var/resulthealth
 			if(iscarbon(summoner))
-				resulthealth = round((abs(config.health_threshold_dead - summoner.health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
+				resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) * 100)
 			else
 				resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
 			stat(null, "Summoner Health: [resulthealth]%")
@@ -197,7 +198,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(summoner && hud_used && hud_used.healths)
 		var/resulthealth
 		if(iscarbon(summoner))
-			resulthealth = round((abs(config.health_threshold_dead - summoner.health) / abs(config.health_threshold_dead - summoner.maxHealth)) * 100)
+			resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) * 100)
 		else
 			resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#efeeef'>[resulthealth]%</font></div>"
@@ -554,7 +555,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.summoner = user
 	G.key = key
-	G.faction |= user.faction
+	G.mind.enslave_mind_to_creator(user)
 	switch(theme)
 		if("tech")
 			user << "[G.tech_fluff_string]"

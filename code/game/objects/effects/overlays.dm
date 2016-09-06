@@ -143,25 +143,11 @@
 		name = mimiced_atom.name
 		appearance = mimiced_atom.appearance
 		setDir(mimiced_atom.dir)
-	animate(src, alpha = 0, time = duration)
+		mouse_opacity = 0
 
-/obj/effect/overlay/cult
-	mouse_opacity = 0
-	var/atom/linked
-
-/obj/effect/overlay/cult/ex_act()
-	return FALSE
-
-/obj/effect/overlay/cult/Destroy()
-	if(linked)
-		linked = null
+/obj/effect/overlay/temp/decoy/fading/New(loc, atom/mimiced_atom)
 	..()
-	return QDEL_HINT_PUTINPOOL
-
-/obj/effect/overlay/cult/floor
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "cult"
-	layer = TURF_LAYER
+	animate(src, alpha = 0, time = duration)
 
 /obj/effect/overlay/temp/cult
 	randomdir = 0
@@ -202,7 +188,7 @@
 	icon_state = "wallglow"
 	layer = ABOVE_NORMAL_TURF_LAYER
 
-/obj/effect/overlay/temp/cult/turf/open/floor
+/obj/effect/overlay/temp/cult/turf/floor
 	icon_state = "floorglow"
 	duration = 5
 
@@ -268,6 +254,7 @@
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
 	duration = 70
+	luminosity = 6
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()

@@ -26,7 +26,7 @@
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/storage/belt/rapier(src)
+	new /obj/item/weapon/storage/belt/sabre(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/weapon/door_remote/captain(src)
 
@@ -174,6 +174,7 @@
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
+	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)

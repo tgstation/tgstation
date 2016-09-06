@@ -35,8 +35,6 @@ Difficulty: Very Hard
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
-	faction = list("mining")
-	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -44,22 +42,14 @@ Difficulty: Very Hard
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
-	flying = 1
-	mob_size = MOB_SIZE_LARGE
 	pixel_x = -32
-	aggro_vision_range = 18
-	idle_vision_range = 5
 	del_on_death = 1
 	medal_type = MEDAL_PREFIX
 	score_type = COLOSSUS_SCORE
 	loot = list(/obj/machinery/smartfridge/black_box)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
-
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	var/anger_modifier = 0
-	var/obj/item/device/gps/internal
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
 	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
@@ -104,10 +94,6 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
 	..()
 	internal = new/obj/item/device/gps/internal/colossus(src)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
-	qdel(internal)
-	. = ..()
 
 /obj/effect/overlay/temp/at_shield
 	name = "anti-toolbox field"
@@ -284,15 +270,20 @@ Difficulty: Very Hard
 	name = "black box"
 	desc = "A completely indestructible chunk of crystal, rumoured to predate the start of this universe. It looks like you could store things inside it."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "blackbox"
 	icon_on = "blackbox"
 	icon_off = "blackbox"
 	luminosity = 8
-	max_n_of_items = 200
+	max_n_of_items = INFINITY
+	burn_state = LAVA_PROOF
 	pixel_y = -4
 	use_power = 0
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
 	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
+
+/obj/machinery/smartfridge/black_box/update_icon()
+	return
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
@@ -308,6 +299,7 @@ Difficulty: Very Hard
 		return
 	current = src
 	ReadMemory()
+	. = ..()
 
 /obj/machinery/smartfridge/black_box/process()
 	..()

@@ -36,6 +36,7 @@
 		user.visible_message("[user] begins to replace [target]'s [parse_zone(target_zone)].", "<span class ='notice'>You begin to replace [target]'s [parse_zone(target_zone)]...</span>")
 	else
 		user << "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>"
+		return -1
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/L

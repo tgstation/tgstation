@@ -184,14 +184,14 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, POLL_IGNORE_SENTIENCE_POTION, SM) // see poll_ignore.dm
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
 		SM.languages_spoken |= HUMAN
 		SM.languages_understood |= HUMAN
-		SM.faction = user.faction
+		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
 		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
@@ -239,7 +239,7 @@
 	user.mind.transfer_to(SM)
 	SM.languages_spoken = user.languages_spoken
 	SM.languages_understood = user.languages_understood
-	SM.faction = user.faction
+	SM.faction = user.faction.Copy()
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
 	SM << "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>"
@@ -383,6 +383,30 @@
 	if(!uses)
 		qdel(src)
 
+/obj/item/slimepotion/genderchange
+	name = "gender change potion"
+	desc = "An interesting chemical mix that changes the biological gender of what its applied to. Cannot be used on things that lack gender entirely."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potlightpink"
+
+/obj/item/slimepotion/genderchange/attack(mob/living/L, mob/user)
+	if(!istype(L) || L.stat == DEAD)
+		user << "<span class='warning'>The potion can only be used on living things!</span>"
+		return
+
+	if(L.gender != MALE && L.gender != FEMALE)
+		user << "<span class='warning'>The potion can only be used on gendered things!</span>"
+		return
+
+	if(L.gender == MALE)
+		L.gender = FEMALE
+		L.visible_message("<span class='notice'>[L] suddenly looks more feminine!</span>")
+	else
+		L.gender = MALE
+		L.visible_message("<span class='notice'>[L] suddenly looks more masculine!</span>")
+	L.regenerate_icons()
+	qdel(src)
+
 ////////Adamantine Golem stuff I dunno where else to put it
 
 // This will eventually be removed.
@@ -499,31 +523,8 @@
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
 
-	var/golem_becomes_antag = FALSE
-	if(iscultist(user)) //If the golem's master is a part of a team antagonist, immediately make the golem one, too
-		ticker.mode.add_cultist(G.mind)
-		golem_becomes_antag = TRUE
-	else if(is_gangster(user))
-		ticker.mode.add_gangster(G.mind, user.mind.gang_datum, TRUE)
-		golem_becomes_antag = TRUE
-	else if(is_handofgod_redcultist(user) || is_handofgod_redprophet(user))
-		ticker.mode.add_hog_follower(G.mind, "Red")
-		golem_becomes_antag = TRUE
-	else if(is_handofgod_bluecultist(user) || is_handofgod_blueprophet(user))
-		ticker.mode.add_hog_follower(G.mind, "Blue")
-		golem_becomes_antag = TRUE
-	else if(is_revolutionary_in_general(user))
-		ticker.mode.add_revolutionary(G.mind)
-		golem_becomes_antag = TRUE
-	else if(is_servant_of_ratvar(user))
-		add_servant_of_ratvar(G)
-		golem_becomes_antag = TRUE
+	G.mind.enslave_mind_to_creator(user)
 
-	G.mind.enslaved_to = user
-	if(golem_becomes_antag)
-		G << "<span class='userdanger'>Despite your servitude to another cause, your true master remains [user.real_name]. This will never change unless your master's body is destroyed.</span>"
-	if(user.mind.special_role)
-		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
 	log_game("[key_name(G)] was made a golem by [key_name(user)].")
 	log_admin("[key_name(G)] was made a golem by [key_name(user)].")
 	qdel(src)

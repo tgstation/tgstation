@@ -234,7 +234,7 @@
 		Feedstop(0, 0)
 		return
 
-	add_nutrition(rand(7,15))
+	add_nutrition((rand(7,15) * config.damage_multiplier))
 
 	//Heal yourself.
 	adjustBruteLoss(-3)
