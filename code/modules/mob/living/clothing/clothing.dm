@@ -6,8 +6,6 @@
 // TODO: figure out goals better
 
 // Work todos:
-// Fucking everything
-// Attaching seems to work fine, work on detaching
 // Make it so that you can hear shit your host can hear
 // Retract arm blade (on detach automatically, otherwise manually)
 // Disable suit sensors
@@ -18,10 +16,9 @@
 // Natural protection from facehuggers (allowing it will just cause problems)
 // Interactions with lings? No way this could go bad, ever.
 // Put glow around moving clothes on the ground?
-// Absorb blood from the ground? At the very least, we shouldn't get blood on us, we absorb it.
+// Absorb blood that splatters on us
 // Surgury to remove clothes (ew)
 // Fancy transform effect
-// Sigh, HUD and code for shit that's in your pockets
 // Let your first host name you :) :)
 // All antag code (for later)
 // Fix F12
@@ -269,7 +266,7 @@
 	var/mob/living/carbon/human/target = M
 
 	if(target.wear_suit)
-		var/obj/item/clothing/Suit = target.w_uniform
+		var/obj/item/clothing/Suit = target.wear_suit
 		if(Suit.flags & NODROP)
 			return 0
 		target.unEquip(Suit)
@@ -523,8 +520,12 @@
 /mob/living/simple_animal/clothing/handle_stat_huds()
 	if(hud_used.blooddisplay)
 		// I guess hide this if we don't have a host. Can't use blood powers, though maybe it will be useful?
-		if(getHost())
-			hud_used.blooddisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(blood_volume)]</font></div>"
+		var/mob/living/carbon/human/host = getHost()
+		if(host)
+			var/host_blood = host.blood_volume
+			hud_used.blooddisplay.maptext = "<div align='center' valign='center' style='position:relative; top:0px; left:6px'> \
+			<font color='#dd66dd'>[round(blood_volume)]</font><br /> \
+			<font color='#dd6666'>[round(host_blood)]</font></div>"
 
 /*
 /mob/living/simple_animal/clothing/update_health_hud()
