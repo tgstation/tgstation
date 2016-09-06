@@ -121,7 +121,7 @@
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
 			return
 
-		if("metaops") // 30 tc / Meta breaking is going to be my new job
+		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
 			new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/weapon/implanter/explosive(src) // 2 tc
