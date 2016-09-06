@@ -119,7 +119,7 @@
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficent protection."
 	icon_state = "beret_badge"
-	armor = list(melee = 40, bullet = 30, laser = 30,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 30, bullet = 20, laser = 20,energy = 10, bomb = 15, bio = 0, rad = 0)
 	strip_delay = 60
 	dog_fashion = null
 
