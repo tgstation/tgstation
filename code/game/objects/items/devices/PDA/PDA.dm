@@ -778,13 +778,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
 		updateUsrDialog()
 	else if(is_type_in_list(C, contained_item))
-		var/obj/item/weapon/pen/Pen = locate() in src
-		var/obj/item/toy/crayon/Crayon = locate() in src
-		var/obj/item/weapon/lipstick/Lip = locate() in src
-		var/obj/item/device/flashlight/pen/Penlight = locate() in src
-		var/obj/item/clothing/mask/cigarette/Cig = locate() in src
+		var/obj/item/weapon/pen/pen = locate() in src
+		var/obj/item/toy/crayon/crayon = locate() in src
+		var/obj/item/weapon/lipstick/lip = locate() in src
+		var/obj/item/device/flashlight/pen/penlight = locate() in src
+		var/obj/item/clothing/mask/cigarette/cig = locate() in src
 
-		if(Pen || Crayon || Lip || Penlight || Cig)
+		if(pen || crayon || lip || penlight || cig)
 			user << "<span class='warning'>There is already a pen in \the [src]!</span>"
 		else
 			if(!user.unEquip(C))
