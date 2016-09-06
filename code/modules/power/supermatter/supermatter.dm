@@ -118,13 +118,15 @@
 				lastwarning = world.timeofday
 
 		if(damage > explosion_point)
-			for(var/mob/living/mob in living_mob_list)
-				if(istype(mob, /mob/living/carbon/human))
-					//Hilariously enough, running into a closet should make you get hit the hardest.
-					var/mob/living/carbon/human/H = mob
-					H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
-				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
-				mob.rad_act(rads)
+			for(var/mob in living_mob_list)
+				var/mob/living/L = mob
+				if(L.z == z && istype(L))
+					if(istype(mob, /mob/living/carbon/human))
+						//Hilariously enough, running into a closet should make you get hit the hardest.
+						var/mob/living/carbon/human/H = mob
+						H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
+					var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(L, src) + 1) )
+					L.rad_act(rads)
 
 			explode()
 
