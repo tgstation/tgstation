@@ -86,15 +86,15 @@
 	qdel(src)
 
 /obj/machinery/power/supermatter_shard/process()
-	var/turf/L = loc
+	var/turf/T = loc
 
-	if(isnull(L))		// We have a null turf...something is wrong, stop processing this entity.
+	if(isnull(T))		// We have a null turf...something is wrong, stop processing this entity.
 		return PROCESS_KILL
 
-	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
+	if(!istype(T)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
 
-	if(istype(L, /turf/open/space))	// Stop processing this stuff if we've been ejected.
+	if(istype(T, /turf/open/space))	// Stop processing this stuff if we've been ejected.
 		return
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
@@ -120,8 +120,8 @@
 		if(damage > explosion_point)
 			for(var/mob in living_mob_list)
 				var/mob/living/L = mob
-				if(L.z == z && istype(L))
-					if(istype(mob, /mob/living/carbon/human))
+				if(istype(L) && L.z == z)
+					if(ishuman(mob))
 						//Hilariously enough, running into a closet should make you get hit the hardest.
 						var/mob/living/carbon/human/H = mob
 						H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
@@ -131,7 +131,7 @@
 			explode()
 
 	//Ok, get the air from the turf
-	var/datum/gas_mixture/env = L.return_air()
+	var/datum/gas_mixture/env = T.return_air()
 
 	var/datum/gas_mixture/removed
 
