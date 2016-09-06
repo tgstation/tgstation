@@ -119,9 +119,9 @@
 	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
 
 	telegraph_duration = 400
-	telegraph_message = "<span class='danger'>The air begins to grow warm. Seek shelter in maintenance!</span>"
+	telegraph_message = "<span class='danger'>The air begins to grow warm.</span>"
 
-	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Get to maintenance!!</i></span>"
+	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
 	weather_overlay = "ash_storm"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
@@ -144,7 +144,7 @@
 
 /datum/weather/rad_storm/impact(mob/living/L)
 	var/resist = L.getarmor(null, "rad")
-	if(prob(30))
+	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(H.dna && H.dna.species)
