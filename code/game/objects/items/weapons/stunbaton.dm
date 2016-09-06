@@ -198,6 +198,9 @@
 
 /obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/G, mob/user, params)
 	..()
+	if(insulated)
+		user << "The [G] already has an insulated grip!</span>"
+		return 0
 	if(istype(G, /obj/item/clothing/gloves/color/yellow))
 		user << "You wrap [G] around the base of [src], giving it an insulated grip!</span>" //why you'd do this instead of just wearing the gloves i dunno
 		user.unEquip(G)
