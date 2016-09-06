@@ -30,6 +30,8 @@
 //		unless we move all the if(client) checks and add ourselves as an observer
 // TODO: got attacked by poly, attached to host, died because poly. wtf.
 // Store DNA off and use it when spitting blood
+// TODO: being in a form means you don't need your legs
+// TODO: only allow armblade in blade form
 
 ////////////////////////////////////////////////////////
 // Summary
@@ -120,6 +122,9 @@
 //		Gain armblade (steal from ling, gogogo), people get damage if they attack\grab you.
 //		Transforming breaks cuffs.
 //
+// 	Armour form
+//		Increased defense
+//
 // 	TODO: some way of surviving space, as you can't wear spacesuits.
 //	Blood Oxygenation
 //		Use up stored blood to give your host a thin transparent skin around him (protect against pressure) and oxygen
@@ -137,7 +142,7 @@
 	mob_size = MOB_SIZE_SMALL
 
 	ventcrawler = 2
-	
+
 	stop_automated_movement = 1
 
 	// Damage vars
@@ -166,9 +171,11 @@
 		"blue schoolgirl uniform"
 		)
 
-	var/list/powers_with_host = list(/datum/action/generic/clothes_grow_blade,
+	var/list/powers_with_host = list(
 		/datum/action/generic/clothes_drink_blood,
 		/datum/action/generic/living_clothing/detach,
+		/datum/action/generic/clothes_grow_armour,
+		/datum/action/generic/clothes_grow_blade,
 		)
 
 	var/list/current_dynamic_powers = list()
@@ -214,8 +221,7 @@
 /mob/living/simple_animal/clothing/proc/set_appearance(appearance_name = "")
 	if(appearance_name == "")
 		appearance_name = input("Select your appearance!", "Living Clothing Appearance", null, null) in stored_apparence_names
-		world << appearance_name
-
+		
 	src.appearance_name = appearance_name
 
 	var/appearance_type = stored_appearances[appearance_name]
@@ -289,12 +295,18 @@
 	// Create new clothing
 	var/obj/item/clothing/under/living/U = new()
 
+	if(!target.equip_to_slot_if_possible(U, slot_w_uniform))
+		//TODO
+		//target.visible_message("<span class='danger'>[src] tears [Uniform] off of [target]'s body!</span>", \
+		//		"<span class='userdanger'>[src] tears [Uniform] off of [target]'s body!</span>")
+		qdel(U)
+		return
+
 	U.linked_mob = src
 	linked_clothes = U
-
 	set_appearance(appearance_name)
 
-	target.equip_to_slot_if_possible(U, slot_w_uniform)
+
 	loc = linked_clothes
 
 	// Setup abilities
@@ -364,10 +376,12 @@
 
 //TODO: properly namespace this shit
 
+////////////////////////////////////////////////////////
+// Detach
 
 /datum/action/generic/living_clothing/detach
 	name = "Detach"
-	desc = "Escape containers and your host."
+	desc = "Detach from your host."
 	button_icon_state = "meson"
 	procname = /mob/living/simple_animal/clothing/proc/detach_action
 
@@ -382,6 +396,55 @@
 
 /mob/living/simple_animal/clothing/proc/set_appearance_action()
 	set_appearance()
+
+////////////////////////////////////////////////////////
+// Grow Armour
+
+/datum/action/generic/clothes_grow_armour
+	name = "Grow armour"
+	desc = "Grow clothing armour"
+	button_icon_state = "meson"
+	procname = /mob/living/simple_animal/clothing/proc/grow_armour_action
+
+/mob/living/simple_animal/clothing/proc/grow_armour_action()
+	var/mob/living/carbon/human/host = getHost()
+
+	if(!host)
+		return
+/*
+	if(!host.drop_item())
+		host << "<span class='warning'>The [host.get_active_hand()] is stuck to your host's hand, you cannot grow a blade over it!</span>"
+		return
+*/
+
+	var/obj/item/clothing/suit/living_clothing/armour_form/W = new(host)
+
+	if(!host.equip_to_slot_if_possible(W, slot_wear_suit))
+		src << "<span class='warning'>Something is preventing you from transforming!</span>"
+		host << "<span class='warning'>Something is preventing your clothes from transforming!</span>"
+		return
+
+	playsound(host, 'sound/effects/blobattack.ogg', 30, 1)
+
+/obj/item/clothing/suit/living_clothing/armour_form
+	name = "Armour form"
+	desc = "You gain increased defense in this form"
+	icon_state = "knight_grey"
+	item_state = "knight_grey"
+	w_class = 4
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	slowdown = 0.1
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP | DROPDEL
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	// TODO: work this out better - should be full protection, but damage the clothing - will have to override procs
+	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
+
+////////////////////////////////////////////////////////
+// Grow Blade
 
 /datum/action/generic/clothes_grow_blade
 	name = "Grow blade"
@@ -399,6 +462,7 @@
 		host << "<span class='warning'>The [host.get_active_hand()] is stuck to your host's hand, you cannot grow a blade over it!</span>"
 		return
 
+/*
 	var/limb_regen = 0
 	if(host.hand) //we regen the arm before changing it into the weapon
 		limb_regen = host.regenerate_limb("l_arm", 1)
@@ -407,7 +471,7 @@
 	if(limb_regen)
 		host.visible_message("<span class='warning'>[host]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='hostdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		host.emote("scream")
-
+*/
 	var/obj/item/weapon/melee/arm_blade/clothing_arm_blade/W = new(host)
 	host.put_in_hands(W)
 
@@ -417,6 +481,9 @@
 /obj/item/weapon/melee/arm_blade/clothing_arm_blade
 	name = "arm blade"
 	desc = "A shape blade made from living fiber."
+
+////////////////////////////////////////////////////////
+// Drink Blood
 
 /mob/living/simple_animal/clothing/proc/drink_blood()
 	var/mob/living/carbon/human/host = getHost()
