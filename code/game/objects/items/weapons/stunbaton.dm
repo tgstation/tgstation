@@ -10,6 +10,7 @@
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
 	var/stunforce = 7
+	var/insulated = TRUE
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
@@ -132,7 +133,7 @@
 		..()
 
 
-/obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+/obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/living/carbon/human/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
@@ -145,6 +146,17 @@
 	else
 		if(!deductcharge(hitcost))
 			return 0
+	if(!insulated)
+		if(istype(user.gloves, /obj/item/clothing/gloves/color/yellow))
+			return 1
+		else
+			user.visible_message("<span class='danger'>[user]'s [src] shocks them as they prod [L]!</span>", \
+									"<span class='userdanger'>You feel a painful jolt of eletricity down your arm as [src] shocks you!</span>")
+			user.Stun(stunforce)
+			user.Weaken(stunforce)
+			user.apply_effect(STUTTER, stunforce)
+			playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		return 1
 
 	L.Stun(stunforce)
 	L.Weaken(stunforce)
@@ -179,9 +191,26 @@
 	throwforce = 5
 	stunforce = 5
 	hitcost = 2500
+	insulated = FALSE
 	throw_hit_chance = 10
 	slot_flags = null
 	var/obj/item/device/assembly/igniter/sparkler = 0
+
+/obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/G, mob/user, params)
+	..()
+	if(insulated)
+		user << "The [G] already has an insulated grip!</span>"
+		return 0
+	if(istype(G, /obj/item/clothing/gloves/color/yellow))
+		user << "You wrap [G] around the base of [src], giving it an insulated grip!</span>" //why you'd do this instead of just wearing the gloves i dunno
+		user.unEquip(G)
+		qdel(G)
+		src.insulated = TRUE
+	else if(istype(G, /obj/item/clothing/gloves/color/fyellow))
+		user << "You wrap [G] around the base of [src], giving it an insulated grip!</span>"
+		user.unEquip(G)
+		qdel(G)
+		src.insulated = TRUE
 
 /obj/item/weapon/melee/baton/cattleprod/New()
 	..()
