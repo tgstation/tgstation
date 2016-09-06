@@ -129,7 +129,8 @@
  			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
  			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
  			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
- 			new /obj/item/weapon/card/emag(src) // 6 tc
+			new /obj/item/weapon/card/emag(src) // 6 tc
+			return
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
