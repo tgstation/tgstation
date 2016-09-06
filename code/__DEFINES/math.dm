@@ -4,7 +4,7 @@
 #define INFINITY				1e31	//closer then enough
 
 //atmos
-#define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
+#define R_IDEAL_GAS_EQUATION	83.09	//kPa*u/(K*mol*10)
 #define ONE_ATMOSPHERE			101.325	//kPa
 #define T0C						273.15	// 0degC
 #define T20C					293.15	// 20degC

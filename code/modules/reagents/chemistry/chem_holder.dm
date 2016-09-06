@@ -9,15 +9,17 @@ var/const/INJECT = 5 //injection
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/chem_holder
-	var/list/datum/reagent/reagents = new/list()
-	var/list/datum/reaction/reactions = new/list() // Used to prevent the same reaction from occuring more than once.
+	var/list/chemicals = new/list()
+	var/list/reactions = new/list() // Used to prevent the same reaction from occuring more than once.
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
-	var/chem_temp = 150
+	var/thermal_energy = 0 // Make us more like atmos! Yay!
+	var/temperature = 293 // This should be derived from thermal_energy. But I'll include a helper proc.
+	var/heat_capacity = 0 // This is derived from other procs. Should not be touched directly.
 	var/last_tick = 1
 	var/addiction_tick = 1
-	var/list/datum/reagent/addiction_list = new/list()
+	var/list/datum/chemical/addiction_list = new/list()
 	var/reacting = 0 // Used to prevent handle_reactions from being called more than once per tick.
 	var/flags
 
@@ -28,13 +30,15 @@ var/const/INJECT = 5 //injection
 		START_PROCESSING(SSfastprocess, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
-	if(!chemical_reagents_list)
-		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
-		var/paths = subtypesof(/datum/reagent)
-		chemical_reagents_list = list()
+	if(!chemical_list)
+		//Builds the chemical_list[id][type]
+		var/paths = subtypesof(/datum/chemical)
+		chemical_list = list()
 		for(var/path in paths)
-			var/datum/reagent/D = new path()
-			chemical_reagents_list[D.id] = D
+			var/datum/chemical/D = new path()
+			chemical_list[D.id] = D.type
+			qdel(D) // DO WE REALLY NEED TO KEEP THESE INSTANTIATED??
+
 	if(!chemical_reactions_list)
 		//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 		// It is filtered into multiple lists within a list.
@@ -49,9 +53,9 @@ var/const/INJECT = 5 //injection
 			var/datum/chemical_reaction/D = new path()
 			var/list/reaction_ids = list()
 
-			if(D.required_reagents && D.required_reagents.len)
-				for(var/reaction in D.required_reagents)
-					reaction_ids += reaction
+			if(D.required && D.required.len)
+				for(var/requisite in D.required)
+					reaction_ids += requisite
 
 			// Create filters based on each reagent id in the required reagents list
 			for(var/id in reaction_ids)
@@ -61,49 +65,65 @@ var/const/INJECT = 5 //injection
 				break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
 	if(starting_reagents)
-		for(var/reagent in starting_reagents)
-			adjust_volume(reagent, starting_reagents[reagent])
+		for(var/R in starting_reagents)
+			adjust_volume(R, starting_reagents[R])
 
 /datum/chem_holder/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
-	clear_reagents()
+	clear_contents()
 	clear_reactions()
-	reagents.Cut()
-	reagents = null
-	reaction_list.Cut()
-	reaction_list = null
+	chemicals.Cut()
+	chemicals = null
+	reactions.Cut()
+	reactions = null
 	if(my_atom && my_atom.chem_holder == src)
 		my_atom.chem_holder = null
 
-// Used for adding/removing reagents from nullspace. Ie. you're creating a new reagent, or deleting the reagent.
-// Much simpler and cleaner than old ADD/REMOVE_REAGENT procs
-/datum/chem_holder/proc/adjust_volume(reagent_id, amount = 0, temperature = 293)
+// Used for adding/removing reagents from nullspace. Ie. you're creating a new reagent, or deleting the reagent,
+// as opposed to transferring it from/to another chem_holder. Much simpler and cleaner than old ADD/REMOVE_REAGENT procs
+/datum/chem_holder/proc/adjust_volume(id, amount = 0, temperature = 293)
+	if(amount)
+		amount = round(amount, MIN_REAGENT_VOL)
 	if(!reagent_id || amount == 0)
 		return
-	amount = Ceiling(amount, MIN_REAGENT_VOL)
 
-	if(!reagents[reagent]) // If the reagent does not exist, create it.
-		reagents[reagent] = new chemical_reagents_list[reagent]
-		var/datum/reagent/RN = reagents[reagent]
-		RN.holder = src
+	if(!chemicals[id]) // If the reagent does not exist, create it.
+		chemicals[id] = new chemical_list[id](src)
+	var/datum/chemical/C = chemicals[id]
 
-	if(amount)
-		chem_temp = ((amount * temperature) + (total_volume * chem_temp)) / (total_volume + amount)
+	heat_capacity += C.specific_heat*amount
+	adjust_thermal_energy(C.specific_heat * temperature * amount)
 
-	var/datum/reagent/R = reagents[reagent]
-	R.volume += amount
+	var/datum/chemical/C = chemicals[id]
+	C.volume += amount
 
 	update_total()
 	my_atom.on_reagent_change()
 	set_reacting()
-	return R
+	return C
+
+// Advanced proc used for adding or removing thermal energy to the container.
+// Call it with (amount) to increase or decrease it by a set value.
+// Call it with nothing to recalculate the thermal energy based on the current temperature.
+// Set react to TRUE to react immediately afterwards.
+/datum/chem_holder/proc/adjust_thermal_energy(amount, react = FALSE)
+	if(amount && heat_capacity)
+		thermal_energy += amount
+		temperature = thermal_energy/heat_capacity
+	else
+		var/heatcapacity = 0
+		for(var/id in chemicals)
+			var/datum/chemical/C = chemicals[id]
+			heatcapacity += C.volume*C.specific_heat
+		thermal_energy = heat_capacity * temperature
+		cached_gases[id][MOLES] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
 
 // Used for removing reagents from the chem_holder by volume. It will remove an equal percentage of each reagent.
 /datum/chem_holder/proc/remove_amount(amount = 1)
 	if(!amount || !total_volume)
 		return
-	amount = Ceiling(amount, MIN_REAGENT_VOL)
+	amount = round(amount, MIN_REAGENT_VOL)
 	if(amount > total_volume)
 		amount = total_volume
 	var/part = amount / total_volume
