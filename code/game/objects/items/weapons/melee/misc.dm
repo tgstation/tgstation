@@ -2,7 +2,6 @@
 	needs_permit = 1
 
 	var/unique_rename = 0 //allows renaming with a pen
-	var/unique_reskin = 0 //allows one-time reskinning
 
 /obj/item/weapon/melee/examine(mob/user)
 	..()
