@@ -280,7 +280,7 @@
 
 /obj/machinery/power/supermatter_shard/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
-		if(get_dist(R, src) <= 15) // Better than using orange() every process
+		if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
 			R.receive_pulse(power/10)
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
