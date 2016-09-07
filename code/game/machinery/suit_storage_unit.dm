@@ -33,7 +33,7 @@
 
 /obj/machinery/suit_storage_unit/captain
 	suit_type = /obj/item/clothing/suit/space/hardsuit/captain
-	mask_type = /obj/item/clothing/mask/gas
+	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
