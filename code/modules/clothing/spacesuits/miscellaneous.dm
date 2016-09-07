@@ -77,11 +77,8 @@ Contains:
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/swat/process()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/hut = loc
-		hut.say("HUT HUT HUT")
-		if(prob(25))
-			playsound(src, 'sound/misc/huthuthut.ogg', 50, 1)
+	if(prob(25))
+		playsound(src, 'sound/misc/huthuthut.ogg', 50, 1)
 
 /obj/item/clothing/suit/space/swat/dropped(mob/user)
 	. = ..()
