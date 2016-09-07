@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/retaliate/dolphin
 	name = "space dolphin"
-	desc = "Yawn."
+	desc = "That's LIEUTENANT commander to you!" //sounds like a reference but is not
 	icon = 'icons/mob/broadMobs.dmi'
 	icon_state = "dolp"
 	icon_living = "dolp"
