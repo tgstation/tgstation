@@ -72,6 +72,25 @@ Contains:
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20)
 	strip_delay = 120
 
+/obj/item/clothing/suit/space/swat/equipped(mob/user, slot)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/suit/space/swat/process()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/hut = loc
+		hut.say("HUT HUT HUT")
+		if(prob(25))
+			playsound(src, 'sound/misc/huthuthut.ogg', 50, 1)
+
+/obj/item/clothing/suit/space/swat/dropped(mob/user)
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/clothing/suit/space/swat/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
 /obj/item/clothing/head/helmet/space/beret
 	name = "officer's beret"
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
