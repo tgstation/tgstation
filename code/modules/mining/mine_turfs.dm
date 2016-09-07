@@ -864,7 +864,7 @@
 	slowdown = 2
 
 /turf/open/floor/plating/ashplanet/wateryrock/New()
-	icon_state = "[icon_state][rand(1, 4)]"
+	icon_state = "[icon_state][rand(1, 9)]"
 	..()
 
 //Necropolis
