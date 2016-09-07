@@ -1,0 +1,4 @@
+author: "Incoming5643"
+delete-after: True
+changes: 
+  - rscdel: "Wizards can no longer purchase the Cursed Heart from their spellbook."

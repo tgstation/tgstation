@@ -704,38 +704,31 @@
 
 /obj/item/weapon/storage/box/ingredients/wildcard/New()
 	..()
-	for(var/i in 1 to 6)
-		//Pick common ingredients
+	for(var/i in 1 to 7)
 		var/randomFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/chili,
-				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
-				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
-				  			  /obj/item/weapon/reagent_containers/food/snacks/grown/potato,
-				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/tomato,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/potato,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 							  /obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
-						 	  /obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/cherries,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans,
-							  /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
-						 	  /obj/item/weapon/reagent_containers/food/snacks/grown/corn)
-		new randomFood(src)
-	//Pick one random rare ingredient
-	var/randomRareFood = pick(/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
-						      /obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold,
-			 				  /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper,
-							  /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili,
-				 			  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/corn,
+							  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
 							  /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle)
-	new randomRareFood(src)
+		new randomFood(src)
 
 /obj/item/weapon/storage/box/ingredients/fiesta
 	item_state = "fiesta"
 
 /obj/item/weapon/storage/box/ingredients/fiesta/New()
 	..()
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/food/snacks/tortilla(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/tortilla(src)
 	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/corn(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/chili(src)
 
@@ -746,32 +739,80 @@
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/drinks/bottle/wine(src)
 
 /obj/item/weapon/storage/box/ingredients/vegetarian
 	item_state = "vegetarian"
 
 /obj/item/weapon/storage/box/ingredients/vegetarian/New()
 	..()
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/grown/potato(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/corn(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+
+/obj/item/weapon/storage/box/ingredients/american
+	item_state = "american"
+
+/obj/item/weapon/storage/box/ingredients/american/New()
+	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/potato(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/corn(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+
+/obj/item/weapon/storage/box/ingredients/fruity
+	item_state = "fruity"
+
+/obj/item/weapon/storage/box/ingredients/fruity/New()
+	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon(src)
 
 /obj/item/weapon/storage/box/ingredients/sweets
 	item_state = "sweets"
 
 /obj/item/weapon/storage/box/ingredients/sweets/New()
 	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/cherries(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/apple(src)
+
+/obj/item/weapon/storage/box/ingredients/delights
+	item_state = "delights"
+
+/obj/item/weapon/storage/box/ingredients/delights/New()
+	..()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+
+/obj/item/weapon/storage/box/ingredients/grains
+	item_state = "grains"
+
+/obj/item/weapon/storage/box/ingredients/grains/New()
+	..()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(src)
-	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/grown/cherries(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/icecream(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/oat(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/wheat(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod(src)
+	new /obj/item/weapon/reagent_containers/honeycomb(src)
+	new /obj/item/seeds/poppy(src)
 
 /obj/item/weapon/storage/box/ingredients/carnivore
 	item_state = "carnivore"
@@ -780,22 +821,22 @@
 	..()
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/spidereggs(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
 
 /obj/item/weapon/storage/box/ingredients/exotic
 	item_state = "exotic"
 
 /obj/item/weapon/storage/box/ingredients/exotic/New()
 	..()
-	new /obj/item/weapon/reagent_containers/food/condiment/soysauce(src)
 	for(var/i in 1 to 2)
-		new /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage(src)
-		new	/obj/item/weapon/reagent_containers/food/snacks/soydope(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/grown/chili(src)
 
 /obj/item/weapon/storage/box/ingredients/New()
 	..()

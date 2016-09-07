@@ -4,9 +4,14 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
+	var/datum/reagents/reagents = null
+	var/fingerprintslast = null
 
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
+
+/datum/proc/on_reagent_change()
+	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
@@ -397,6 +402,7 @@ body
 		html += "[html_encode(name)] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
+			name = "[name]"	//Needs to be a string or it will go out of bounds in the internal_byond_list_vars array
 			html += "<ul>"
 			var/index = 1
 			for(var/entry in L)

@@ -619,15 +619,18 @@
 
 /turf/open/chasm/Entered(atom/movable/AM)
 	START_PROCESSING(SSobj, src)
-	drop_stuff()
+	drop_stuff(AM)
 
 /turf/open/chasm/process()
 	if(!drop_stuff())
 		STOP_PROCESSING(SSobj, src)
 
-/turf/open/chasm/proc/drop_stuff()
+/turf/open/chasm/proc/drop_stuff(AM)
 	. = 0
-	for(var/thing in contents)
+	var/thing_to_check = src
+	if(AM)
+		thing_to_check = list(AM)
+	for(var/thing in thing_to_check)
 		if(droppable(thing))
 			. = 1
 			addtimer(src, "drop", 0, FALSE, thing)

@@ -1,0 +1,4 @@
+author: "Cheridan"
+delete-after: True
+changes: 
+  - tweak: "Brain damage no longer causes machines to be inoperable."

@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - tweak: "Stunprods no longer fit in your backpack, they go on your back now."

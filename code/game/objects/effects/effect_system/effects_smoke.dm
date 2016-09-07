@@ -9,6 +9,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	opacity = 0
+	layer = FLY_LAYER
 	anchored = 1
 	mouse_opacity = 0
 	animate_movement = 0
@@ -25,6 +26,8 @@
 	var/step = alpha / frames
 	for(var/i = 0, i < frames, i++)
 		alpha -= step
+		if(alpha < 160)
+			opacity = 0 //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
 /obj/effect/particle_effect/smoke/New()

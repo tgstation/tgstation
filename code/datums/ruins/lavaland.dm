@@ -126,6 +126,14 @@
 	// Generates nothing but atmos runtimes and salt
 	cost = 0
 
+/datum/map_template/ruin/lavaland/hierophant
+	name = "Hierophant's Arena"
+	id = "hierophant"
+	description = "A huge fucking bird priest awaits you in this arena."
+	suffix = "lavaland_surface_hierophant.dmm"
+	cost = 0
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/ufo_crash
 	name = "UFO Crash"
 	id = "ufo-crash"

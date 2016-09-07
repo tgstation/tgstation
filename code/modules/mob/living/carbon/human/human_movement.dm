@@ -15,7 +15,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/human/mob_has_gravity()
+/mob/living/carbon/human/has_gravity()
 	. = ..()
 	if(!.)
 		if(mob_negates_gravity())

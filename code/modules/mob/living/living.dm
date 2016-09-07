@@ -602,7 +602,7 @@
 			. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T)
-	if(!has_gravity(src))
+	if(!has_gravity())
 		return
 	var/blood_exists = 0
 
@@ -666,8 +666,8 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-
-	..(pressure_difference, direction, pressure_resistance_prob_delta)
+	if(!slipping)
+		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/verb/resist()
 	set name = "Resist"

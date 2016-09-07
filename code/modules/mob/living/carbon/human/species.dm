@@ -849,7 +849,7 @@
 		. -= 2
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
-		if(!has_gravity(H))
+		if(!H.has_gravity())
 			if(FLYING in specflags)
 				. += speedmod
 				return
@@ -1416,7 +1416,6 @@
 			if(-INFINITY to 120)
 				H.throw_alert("temp", /obj/screen/alert/cold, 3)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-				H.apply_status_effect(/datum/status_effect/freon)
 			else
 				H.clear_alert("temp")
 
