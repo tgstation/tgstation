@@ -1,0 +1,4 @@
+author: "pubby"
+delete-after: True
+changes: 
+  - tweak: "Update ingredient boxes to have more useful ingredients"
