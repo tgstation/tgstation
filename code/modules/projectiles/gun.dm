@@ -187,7 +187,7 @@
 			off_hand = H.r_hand
 
 	if(off_hand && off_hand.can_trigger_gun(user))
-		bonus_spread = 12 * off_hand.weapon_weight
+		bonus_spread = 36 * off_hand.weapon_weight
 		spawn(1)
 			off_hand.newshot()
 			off_hand.process_fire(target,user,1,params, null, bonus_spread)
