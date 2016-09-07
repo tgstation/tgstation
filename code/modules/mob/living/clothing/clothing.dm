@@ -6,6 +6,7 @@
 // TODO: figure out goals better
 
 // Work todos:
+// FUCK TODO: host is a reserved name
 // Make it so that you can hear shit your host can hear
 // Retract arm blade (on detach automatically, otherwise manually)
 // Disable suit sensors
@@ -240,6 +241,8 @@
 			var/mob/living/carbon/human/H = linked_clothes.loc
 			H.update_inv_w_uniform()
 
+	sparkle()
+
 	qdel(C)
 
 /mob/living/simple_animal/clothing/UnarmedAttack(atom/A, proximity)
@@ -320,6 +323,8 @@
 	target.hud_used.show_hud(1,src)
 	hud_used.show_hud(1,src,1)
 
+	transform_effect(target, 1)
+
 	//hud_used.healthdoll = target.hud_used.healthdoll
 	//hud_used.infodisplay += hud_used.healthdoll
 
@@ -353,6 +358,7 @@
 
 	// Lose all your stored blood
 	bleed(blood_volume)
+	sparkle() // we vampire now
 
 /mob/living/simple_animal/clothing/proc/getHost()
 	if(linked_clothes && linked_clothes.loc && istype(linked_clothes.loc,/mob/living/carbon/human))
@@ -422,7 +428,7 @@
 		host << "<span class='warning'>Something is preventing your clothes from transforming!</span>"
 		return
 
-	transform_effect(host)
+	transform_effect(host, 0)
 
 /obj/item/clothing/suit/living_clothing/armour_form
 	name = "Armour form"
@@ -474,7 +480,7 @@
 	host.put_in_hands(W)
 
 	sparkle()
-	
+
 /obj/item/weapon/melee/arm_blade/clothing_arm_blade
 	name = "arm blade"
 	desc = "A shape blade made from living fiber."
@@ -517,18 +523,36 @@
 ////////////////////////////////////////////////////////
 //Effects code
 
-/mob/living/simple_animal/clothing/proc/transform_effect(var/mob/living/carbon/human/host)
+/mob/living/simple_animal/clothing/proc/transform_effect(var/mob/living/carbon/human/host, var/make_naked = 1)
 	var/obj/effect/clothing_transformation/Z = new(get_turf(src.loc))
 	Z.name = "transformation!"
-	Z.desc = "It's shaped an awful lot like [host.name]."
+	Z.desc = "Someone is transforming!"
 	Z.setDir(host.dir)
-	host.forceMove(Z)
 	host.notransform = 1
 	host.status_flags |= GODMODE
 
-	animate(Z,color="#0000ff", time=10)
+	// Make naked for maximum anime
+	var/list/body_layers = list(MUTATIONS_LAYER,BODY_LAYER,DAMAGE_LAYER,UNIFORM_LAYER,ID_LAYER,SHOES_LAYER,GLOVES_LAYER,EARS_LAYER,SUIT_LAYER,GLASSES_LAYER,BELT_LAYER,SUIT_STORE_LAYER,BACK_LAYER,FACEMASK_LAYER,HANDCUFF_LAYER,LEGCUFF_LAYER,L_HAND_LAYER,R_HAND_LAYER)
+
 
 	playsound(host, 'sound/effects/phasein.ogg', 30, 1)
+
+	var/cached_overlays
+	var/cached_overlays_standing
+
+	if(make_naked)
+		cached_overlays = host.overlays.Copy()
+		cached_overlays_standing = host.overlays_standing.Copy()
+		Z.alpha = 0
+		for(var/layer in body_layers)
+			host.remove_overlay(layer)
+		animate(Z, alpha = 255, time=5)
+		spawn(5)
+			host.forceMove(Z)
+			animate(Z, color="#0000ff", time=5)
+	else
+		host.forceMove(Z)
+		animate(Z, color="#0000ff", time=10)
 
 	spawn(10)
 		host.status_flags &= ~GODMODE
@@ -537,6 +561,10 @@
 		host.visible_message("<span class='danger'>[host] transforms!</span>")
 		Z.can_destroy = TRUE
 		sparkle()
+		if(make_naked)
+			host.overlays = cached_overlays
+			host.overlays_standing = cached_overlays_standing
+
 		animate(Z, alpha = 0, time = 5, transform = matrix(0,0,0,0,1,0))
 	//	spawn(5)
 	//		qdel(Z)
