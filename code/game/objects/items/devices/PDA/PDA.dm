@@ -785,7 +785,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		var/obj/item/clothing/mask/cigarette/cig = locate() in src
 
 		if(pen || crayon || lip || penlight || cig)
-			user << "<span class='warning'>There is already a pen in \the [src]!</span>"
+			user << "<span class='warning'>There is already an item in \the [src]!</span>"
 		else
 			if(!user.unEquip(C))
 				return
