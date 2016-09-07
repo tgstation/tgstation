@@ -30,11 +30,13 @@
 	return 1
 
 /mob/living/rad_act(amount, silent = 0)
+	if(istype(/mob/living/silicon))
+		return
 	if(amount)
 		var/blocked = getarmor(null, "rad")
 
 		if(!silent)
-			src << "You feel warm."
+			src << "Your skin feels warm."
 
 		apply_effect(amount, IRRADIATE, blocked)
 		for(var/obj/I in src) //Radiation is also applied to items held by the mob
