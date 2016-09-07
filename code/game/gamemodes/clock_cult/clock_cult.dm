@@ -29,11 +29,12 @@ This file's folder contains:
 	clockcult defines are in __DEFINES/clockcult.dm
 
 Credit where due:
-1. SkowronX from /vg/ for the original idea and code
-2. FuryMcFlurry from /vg/ for many of the assets
-3. PJB3005 from /vg/ for the failed continuation PR
-4. Xhuis from /tg/ for coding the basic gamemode as it is today
-5. ChangelingRain from /tg/ for maintaining the gamemode for months after its release
+1. VelardAmakar from /vg/ for the entire design document, idea, and plan. Thank you very much.
+2. SkowronX from /vg/ for MANY of the assets
+3. FuryMcFlurry from /vg/ for many of the assets
+4. PJB3005 from /vg/ for the failed continuation PR
+5. Xhuis from /tg/ for coding the basic gamemode as it is today
+6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release
 
 */
 
