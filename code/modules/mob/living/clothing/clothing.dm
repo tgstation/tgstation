@@ -29,7 +29,7 @@
 // Store DNA off and use it when spitting blood
 // TODO: being in a form means you don't need your legs
 // TODO: only allow armblade in blade form
-// Add drop item on HUD. 
+// Add drop item on HUD.
 
 ////////////////////////////////////////////////////////
 // Summary
@@ -219,7 +219,7 @@
 /mob/living/simple_animal/clothing/proc/set_appearance(appearance_name = "")
 	if(appearance_name == "")
 		appearance_name = input("Select your appearance!", "Living Clothing Appearance", null, null) in stored_apparence_names
-		
+
 	src.appearance_name = appearance_name
 
 	var/appearance_type = stored_appearances[appearance_name]
@@ -305,7 +305,7 @@
 	set_appearance(appearance_name)
 
 
-	loc = linked_clothes
+	forceMove(linked_clothes)
 
 	// Setup abilities
 	for(var/T in powers_with_host)
@@ -332,7 +332,7 @@
 		return
 
 	// Force us off of the clothes obj
-	loc = get_turf(src)
+	forceMove(get_turf(src))
 
 	// Force our clothes to drop
 	host.unEquip(linked_clothes, 1)
@@ -422,7 +422,7 @@
 		host << "<span class='warning'>Something is preventing your clothes from transforming!</span>"
 		return
 
-	playsound(host, 'sound/effects/blobattack.ogg', 30, 1)
+	transform_effect(host)
 
 /obj/item/clothing/suit/living_clothing/armour_form
 	name = "Armour form"
@@ -473,9 +473,8 @@
 	var/obj/item/weapon/melee/arm_blade/clothing_arm_blade/W = new(host)
 	host.put_in_hands(W)
 
-	playsound(host, 'sound/effects/blobattack.ogg', 30, 1)
-
-
+	sparkle()
+	
 /obj/item/weapon/melee/arm_blade/clothing_arm_blade
 	name = "arm blade"
 	desc = "A shape blade made from living fiber."
@@ -516,15 +515,77 @@
 
 
 ////////////////////////////////////////////////////////
+//Effects code
+
+/mob/living/simple_animal/clothing/proc/transform_effect(var/mob/living/carbon/human/host)
+	var/obj/effect/clothing_transformation/Z = new(get_turf(src.loc))
+	Z.name = "transformation!"
+	Z.desc = "It's shaped an awful lot like [host.name]."
+	Z.setDir(host.dir)
+	host.forceMove(Z)
+	host.notransform = 1
+	host.status_flags |= GODMODE
+
+	animate(Z,color="#0000ff", time=10)
+
+	playsound(host, 'sound/effects/phasein.ogg', 30, 1)
+
+	spawn(10)
+		host.status_flags &= ~GODMODE
+		host.notransform = 0
+		host.forceMove(get_turf(Z))
+		host.visible_message("<span class='danger'>[host] transforms!</span>")
+		Z.can_destroy = TRUE
+		sparkle()
+		animate(Z, alpha = 0, time = 5, transform = matrix(0,0,0,0,1,0))
+	//	spawn(5)
+	//		qdel(Z)
+
+/obj/effect/clothing_transformation
+	icon_state = "blank"
+	icon = 'icons/effects/effects.dmi'
+	burn_state = LAVA_PROOF
+	var/can_destroy = FALSE
+	layer = ABOVE_MOB_LAYER
+	color = "#ff0000"
+
+/obj/effect/clothing_transformation/attackby()
+	return
+
+/obj/effect/clothing_transformation/ex_act()
+	return
+
+/obj/effect/clothing_transformation/singularity_pull()
+	return 0
+
+/obj/effect/clothing_transformation/Destroy(force)
+	if(!can_destroy && !force)
+		return QDEL_HINT_LETMELIVE
+	else
+		. = ..()
+
+
+/mob/living/simple_animal/clothing/proc/sparkle()
+	playsound(src, 'sound/magic/Blind.ogg', 30, 1)
+	PoolOrNew(/obj/effect/overlay/temp/clothing_sparkles, get_turf(src))
+
+/obj/effect/overlay/temp/clothing_sparkles
+	name = "sparkles"
+	icon_state = "ion_fade"
+	duration = 16
+
+
+
+////////////////////////////////////////////////////////
 //HUD code
 
 /mob/living/simple_animal/clothing/handle_stat_huds()
 	if(hud_used.blooddisplay)
-		// I guess hide this if we don't have a host. Can't use blood powers, though maybe it will be useful?
+		// I guess hide this if we don't have a host.
 		var/mob/living/carbon/human/host = getHost()
 		if(host)
 			var/host_blood = host.blood_volume
-			hud_used.blooddisplay.maptext = "<div align='center' valign='center' style='position:relative; top:0px; left:6px'> \
+			hud_used.blooddisplay.maptext = "<div align='center' valign='center' style='position:relative; top:-6px; left:6px'> \
 			<font color='#dd66dd'>[round(blood_volume)]</font><br /> \
 			<font color='#dd6666'>[round(host_blood)]</font></div>"
 
@@ -544,3 +605,4 @@
 	desc = "Do some transforming"
 	button_icon_state = "meson"
 	procname = /mob/living/simple_animal/clothing/proc/transform_action*/
+
