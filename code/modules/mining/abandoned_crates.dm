@@ -6,7 +6,7 @@
 	icon_state = "securecrate"
 	var/code = null
 	var/lastattempt = null
-	var/attempts = 5
+	var/attempts = 10
 	var/codelen = 4
 
 /obj/structure/closet/crate/secure/loot/New()
