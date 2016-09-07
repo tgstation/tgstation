@@ -2255,3 +2255,20 @@
 			SD.r_code = code
 		message_admins("[key_name_admin(usr)] has set the self-destruct \
 			code to \"[code]\".")
+
+	else if(href_list["add_station_goal"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/list/type_choices = typesof(/datum/station_goal)
+		var/picked = input("Choose goal type") in type_choices|null
+		if(!picked)
+			return
+		var/datum/station_goal/G = new picked()
+		if(picked == /datum/station_goal)
+			var/newname = input("Enter goal name:") as text
+			G.name = newname
+			var/description = input("Enter centcom message contents:") as message
+			G.report_message = description
+		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
+		ticker.mode.station_goals += G
+		modify_goals()

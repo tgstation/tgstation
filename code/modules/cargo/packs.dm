@@ -1,4 +1,4 @@
-/datum/supply_pack
+datum/supply_pack
 	var/name = "Crate"
 	var/group = ""
 	var/hidden = FALSE
@@ -9,6 +9,8 @@
 	var/crate_name = "crate"
 	var/crate_type = /obj/structure/closet/crate
 	var/dangerous = FALSE // Should we message admins?
+	var/special = FALSE //Event/Station Goals/Admin enabled packs
+	var/special_enabled = FALSE
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
@@ -1532,3 +1534,58 @@
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
 	crate_name= "art supply crate"
+
+
+/datum/supply_pack/misc/bsa
+	name = "Bluespace Artillery Parts"
+	cost = 15000
+	special = TRUE
+	contains = list(/obj/item/weapon/circuitboard/machine/bsa/front,
+					/obj/item/weapon/circuitboard/machine/bsa/middle,
+					/obj/item/weapon/circuitboard/machine/bsa/back,
+					/obj/item/weapon/circuitboard/machine/computer/bsa_control
+					)
+	crate_name= "bluespace artillery parts crate"
+
+/datum/supply_pack/misc/dna_vault
+	name = "DNA Vault Parts"
+	cost = 12000
+	special = TRUE
+	contains = list(
+					/obj/item/weapon/circuitboard/machine/dna_vault
+					)
+	crate_name= "dna vault parts crate"
+
+/datum/supply_pack/misc/dna_probes
+	name = "DNA Vault Samplers"
+	cost = 3000
+	special = TRUE
+	contains = list(/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe
+					)
+	crate_name= "dna samplers crate"
+
+
+/datum/supply_pack/misc/shield_sat
+	name = "Shield Generator Satellite"
+	cost = 3000
+	special = TRUE
+	contains = list(
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield
+					)
+	crate_name= "shield sat crate"
+
+
+/datum/supply_pack/misc/shield_sat_control
+	name = "Shield System Control Board"
+	cost = 5000
+	special = TRUE
+	contains = list(
+					/obj/item/weapon/circuitboard/machine/computer/sat_control
+					)
+	crate_name= "shield control board crate"
