@@ -49975,7 +49975,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bHQ" = (
@@ -49986,7 +49985,6 @@
 	dir = 2;
 	on = 1
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/black/corner{
 	dir = 2
 	},
@@ -73571,7 +73569,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
@@ -74099,7 +74096,6 @@
 /turf/open/floor/plasteel/bot,
 /area/toxins/storage)
 "cxf" = (
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 8
 	},
@@ -74107,7 +74103,6 @@
 "cxg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
