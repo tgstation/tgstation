@@ -334,6 +334,20 @@
 /obj/structure/table/wood/poker/narsie_act()
 	new /obj/structure/table/wood(src.loc)
 
+/obj/structure/table/wood/fancy
+	name = "fancy table"
+	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
+	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
+	icon_state = "fancy_table"
+	frame = /obj/structure/table_frame
+	framestack = /obj/item/stack/rods
+	buildstack = /obj/item/stack/tile/carpet
+	canSmoothWith = list(/obj/structure/table/wood/fancy)
+
+/obj/structure/table/wood/fancy/burn() //basically made out of metal
+	new frame(loc)
+	qdel(src)
+
 /*
  * Reinforced tables
  */
