@@ -507,6 +507,9 @@
 /turf/open/floor/plating/asteroid/snow/temperatre
 	initial_gas_mix = "TEMP=255.37"
 
+/turf/open/floor/plating/asteroid/snow/atmosphere
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+
 /turf/open/floor/plating/asteroid/New()
 	var/proper_name = name
 	..()
@@ -561,7 +564,6 @@
 			if(istype(src, /turf/open/floor/plating/asteroid))
 				user << "<span class='notice'>You dig a hole.</span>"
 				gets_dug()
-				layer = TURF_LAYER //In the event that our layer was increased to hide things under the surface
 				feedback_add_details("pick_used_mining","[W.type]")
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
