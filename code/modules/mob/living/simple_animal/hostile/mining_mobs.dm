@@ -275,7 +275,6 @@
 	owner.revive(full_heal = 1)
 	qdel(src)
 
-
 /obj/item/organ/hivelord_core/on_life()
 	..()
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
