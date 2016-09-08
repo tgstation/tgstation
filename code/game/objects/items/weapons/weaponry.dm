@@ -85,7 +85,7 @@ var/highlander_claymores = 0
 				return
 			announced = TRUE
 			L.fully_heal()
-			world << "<span class='userdanger'>[L.real_name] IS THE ONLY ONE LEFT STANDING!</span>"
+			world << "<span class='userdanger'>[uppertext(L.real_name)] IS THE ONLY ONE LEFT STANDING!</span>"
 			world << sound('sound/misc/highlander_only_one.ogg')
 			L << "<span class='notice'>YOU ARE THE ONLY ONE LEFT STANDING!</span>"
 			for(var/obj/item/weapon/bloodcrawl/B in L)
@@ -188,12 +188,16 @@ var/highlander_claymores = 0
 	if(bloodthirst_level == 30)
 		S << "<span class='warning'>[src] shudders in your hand. It hungers for battle...</span>"
 	if(bloodthirst_level == 60)
-		S << "<span class='boldwarning'>[src] trembles violently. You feel your own life force draining. Kill someone already!</span>"
+		S << "<span class='boldwarning'>[src] trembles violently. Kill someone already!</span>"
 	if(bloodthirst_level == 90)
-		S << "<span class='userdanger'>[src] starts feeding off of your body! Kill someone or it will kill <i>you!</i></span>"
+		S << "<span class='userdanger'>[src] starts shaking viciously! Shed blood or it'll give you away!</span>"
 	if(bloodthirst_level >= 120)
-		S.visible_message("<span class='warning'>[S]'s [name] devours their soul!</span>", "<span class='userdanger'>Your [name] devours your soul!</span>")
-		S.dust() //YOU SHOULD'VE KILLED SOMEONE.
+		var/turf/T = get_turf(S)
+		for(var/mob/M in player_list - S)
+			if(M.z == T.z)
+				M << "<span class='userdanger'>THERE IS A COWARD WHO DOES NOT FIGHT TO THE [uppertext(dir2text(get_dir(M, T)))]. THEIR NAME IS [uppertext(S.real_name)] - SLAUGHTER THEM.</span>"
+		S << "<span class='notice'>you fucked up</span>"
+		bloodthirst_level = 100
 
 /obj/item/weapon/katana
 	name = "katana"
