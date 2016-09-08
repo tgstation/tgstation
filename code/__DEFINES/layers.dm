@@ -2,7 +2,9 @@
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
-#define ABOVE_OPEN_TURF_LAYER 2.01
+#define MID_TURF_LAYER 2.02
+#define HIGH_TURF_LAYER 2.03
+#define ABOVE_OPEN_TURF_LAYER 2.04
 #define CLOSED_TURF_LAYER 2.05
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define LATTICE_LAYER 2.2
