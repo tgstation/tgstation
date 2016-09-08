@@ -1,6 +1,29 @@
 /obj/item/weapon/melee
 	needs_permit = 1
 
+<<<<<<< HEAD
+=======
+	var/unique_rename = 0 //allows renaming with a pen
+
+/obj/item/weapon/melee/examine(mob/user)
+	..()
+	if(unique_rename)
+		user << "<span class='notice'>Use a pen on it to rename it.</span>"
+
+/obj/item/weapon/melee/attackby(obj/item/I, mob/user, params)
+	if(unique_rename)
+		if(istype(I, /obj/item/weapon/pen))
+			rename_weapon(user)
+	..()
+
+/obj/item/weapon/melee/proc/rename_weapon(mob/M)
+	var/input = stripped_input(M,"What do you want to name the weapon?", ,"", MAX_NAME_LEN)
+
+	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+		name = input
+		M << "You name the weapon [input]. Say hello to your new friend."
+		return
+>>>>>>> 04bb24d27a666b5821c9c053014095c032095f9d
 
 /obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
