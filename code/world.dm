@@ -1,5 +1,5 @@
 /world
-	name = "no memes allowed"
+	name = "all memes allowed"
 	mob = /mob/new_player
 	turf = /turf/open/space
 	area = /area/space
