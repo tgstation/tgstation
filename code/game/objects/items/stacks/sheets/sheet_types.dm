@@ -224,7 +224,14 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
  * Runed Metal
  */
 
-var/global/list/datum/stack_recipe/runed_metal_recipes = list ()
+var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
+	new/datum/stack_recipe("runed door", /obj/machinery/door/airlock/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("runed girder", /obj/structure/girder/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 3, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("archives", /obj/structure/cult/tome, 3, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("altar", /obj/structure/cult/talisman, 3, time = 40, one_per_turf = 1, on_floor = 1), \
+	)
 
 /obj/item/stack/sheet/runed_metal
 	name = "runed metal"

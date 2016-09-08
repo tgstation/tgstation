@@ -43668,7 +43668,7 @@
 /turf/open/floor/plasteel/cult,
 /area/library)
 "bIQ" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/weapon/book/codex_gigas,
 /turf/open/floor/plasteel/cult,

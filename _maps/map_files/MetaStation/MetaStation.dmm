@@ -55652,7 +55652,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bSh" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/machinery/newscaster{
 	pixel_x = -30;
 	pixel_y = 0

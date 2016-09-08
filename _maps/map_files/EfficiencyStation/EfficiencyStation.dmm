@@ -36381,7 +36381,7 @@
 /turf/open/floor/plasteel,
 /area/storage/art)
 "buT" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/weapon/book/codex_gigas,
 /turf/open/floor/plasteel/cult,
 /area/library)
