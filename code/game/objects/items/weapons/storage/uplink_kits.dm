@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "lordsingulo" = 1, "darklord" = 1, "Sniper" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "lordsingulo" = 1, "darklord" = 1, "sniper" = 1, "metaops" = 1)))
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -112,13 +112,24 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 			return
 
-		if("Sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
-			new /obj/item/weapon/gun/projectile/automatic/sniper_rifle(src)
+		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
+			new /obj/item/weapon/gun/projectile/automatic/sniper_rifle(src) // 12 tc
 			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
+			return
+
+		if("metaops") // 30 tc
+			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
+			new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
+			new /obj/item/weapon/implanter/explosive(src) // 2 tc
+			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
+			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
+			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
+			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
+			new /obj/item/weapon/card/emag(src) // 6 tc
 			return
 
 /obj/item/weapon/storage/box/syndie_kit
@@ -138,7 +149,6 @@
 
 /*/obj/item/weapon/storage/box/syndie_kit/imp_compress
 	name = "Compressed Matter Implant (with injector)"
-
 /obj/item/weapon/storage/box/syndie_kit/imp_compress/New()
 	new /obj/item/weapon/implanter/compressed(src)
 	..()
