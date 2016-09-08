@@ -409,35 +409,46 @@
 	results = list("grappa" = 10)
 	required_reagents = list ("wine" = 10, "enzyme" = 0)
 
+/datum/chemical_reaction/grappa/react(datum/reagents/holder)
+	simple_react(holder, ratio = FALSE) // Otherwise you can't make wine.
+
 /datum/chemical_reaction/whiskey_sour
 	id = "whiskey_sour"
 	results = list("whiskey_sour" = 3)
 	required_reagents = list("whiskey" = 1, "lemonjuice" = 1, "sugar" = 1)
-	mix_message = "The mixture darkens to a rich gold hue."
-	mix_sound = null
+
+/datum/chemical_reaction/whiskey_sour/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "The mixture darkens to a rich gold hue.", mix_sound = null)
 
 /datum/chemical_reaction/fetching_fizz
 	id = "fetching_fizz"
 	results = list("fetching_fizz" = 3)
 	required_reagents = list("nuka_cola" = 1, "iron" = 1) //Manufacturable from only the mining station
-	mix_message = "The mixture slightly vibrates before settling."
+
+/datum/chemical_reaction/fetching_fizz/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "The mixture slightly vibrates before settling.")
 
 /datum/chemical_reaction/hearty_punch
 	id = "hearty_punch"
 	results = list("hearty_punch" = 1)  //Very little, for balance reasons
 	required_reagents = list("bravebull" = 5, "syndicatebomb" = 5, "absinthe" = 5)
-	mix_message = "The mixture darkens to a healthy crimson."
-	mix_sound = null
 	required_temp = 315 //Piping hot!
+
+/datum/chemical_reaction/hearty_punch/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "The mixture darkens to a healthy crimson.", mix_sound = null)
 
 /datum/chemical_reaction/bacchus_blessing
 	id = "bacchus_blessing"
 	results = list("bacchus_blessing" = 4)
 	required_reagents = list("hooch" = 1, "absinthe" = 1, "manlydorf" = 1, "syndicatebomb" = 1)
-	mix_message = "<span class='warning'>The mixture turns to a sickening froth.</span>"
+
+/datum/chemical_reaction/bacchus_blessing/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "<span class='warning'>The mixture turns to a sickening froth.</span>")
 
 /datum/chemical_reaction/arnold_palmer
 	id = "arnold_palmer"
 	results = list("arnold_palmer" = 2)
 	required_reagents = list("tea" = 1, "lemonjuice" = 1)
-	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
+
+/datum/chemical_reaction/arnold_palmer/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange.")

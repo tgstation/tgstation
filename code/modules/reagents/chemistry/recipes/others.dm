@@ -43,7 +43,7 @@
 	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
 	no_mob_react = 1
 
-/datum/chemical_reaction/plasmasolidification/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/plasma(location)
@@ -59,7 +59,7 @@
 	required_temp = 374
 	no_mob_react = 1
 
-/datum/chemical_reaction/soapification/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/weapon/soap/homemade(location)
@@ -70,7 +70,7 @@
 	required_temp = 374
 	no_mob_react = 1
 
-/datum/chemical_reaction/candlefication/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/candle(location)
@@ -80,7 +80,7 @@
 	required_reagents = list("liquidgibs" = 10, "nutriment" = 10, "carbon" = 10)
 	no_mob_react = 1
 
-/datum/chemical_reaction/meatification/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct(location)
@@ -152,12 +152,11 @@
 /datum/chemical_reaction/mix_virus
 	id = "mixvirus"
 	results = list("blood" = 1)
-	required_reagents = list("virusfood" = 1)
-	required_catalysts = list("blood" = 1)
+	required_reagents = list("virusfood" = 1, "blood" = 0)
 	var/level_min = 0
 	var/level_max = 2
 
-/datum/chemical_reaction/mix_virus/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/mix_virus/on_reaction(datum/reagents/holder, created_volume)
 
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	if(B && B.data)
@@ -236,7 +235,7 @@
 	id = "remvirus"
 	required_reagents = list("synaptizine" = 1, "blood" = 0)
 
-/datum/chemical_reaction/mix_virus/rem_virus/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/mix_virus/rem_virus/on_reaction(datum/reagents/holder, created_volume)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	if(B && B.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
@@ -258,7 +257,7 @@
 	required_reagents = list("fluorosurfactant" = 1, "water" = 1)
 	no_mob_react = 1
 
-/datum/chemical_reaction/foam/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
 		M << "<span class='danger'>The solution spews out foam!</span>"
@@ -274,7 +273,7 @@
 	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "facid" = 1)
 	no_mob_react = 1
 
-/datum/chemical_reaction/metalfoam/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 
 	for(var/mob/M in viewers(5, location))
@@ -290,7 +289,7 @@
 	required_reagents = list("iron" = 3, "foaming_agent" = 1, "facid" = 1)
 	no_mob_react = 1
 
-/datum/chemical_reaction/ironfoam/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
 		M << "<span class='danger'>The solution spews out a metallic foam!</span>"
@@ -380,7 +379,7 @@
 	required_reagents = list("strange_reagent" = 1, "synthflesh" = 1, "blood" = 1)
 	required_temp = 374
 
-/datum/chemical_reaction/life/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
 	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life") // Lol.
 
 /datum/chemical_reaction/corgium
@@ -388,7 +387,7 @@
 	required_reagents = list("nutriment" = 1, "colorful_reagent" = 1, "strange_reagent" = 1, "blood" = 1)
 	required_temp = 374
 
-/datum/chemical_reaction/corgium/on_reaction(datum/chem_holder/holder, created_volume)
+/datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = rand(1, created_volume), i <= created_volume, i++) // More lulz.
 		new /mob/living/simple_animal/pet/dog/corgi(location)

@@ -4,18 +4,18 @@
 	required_other = 1
 	var/slimecore = null
 
-/datum/chemical_reaction/slime/special_reqs(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/special_reqs(datum/reagents/holder)
 	..()
 	if(slime_check() && slimecore && istype(holder.my_atom, slimecore))
 		return 1
 
-/datum/chemical_reaction/slime/proc/slime_check(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/proc/slime_check(datum/reagents/holder)
 	if(istype(holder.my_atom, slimecore))
 		var/obj/item/slime_extract/M = holder.my_atom
 		if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 			return 1
 
-/datum/chemical_reaction/slime/proc/slime_success(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/proc/slime_success(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/slime_extract/M = holder.my_atom
 	var/list/seen = viewers(4, get_turf(M))
@@ -33,7 +33,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/grey
 
-/datum/chemical_reaction/slime/greyplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/greyplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -55,7 +55,7 @@
 	required_reagents = list("water" = 5)
 	slimecore = /obj/item/slime_extract/grey
 
-/datum/chemical_reaction/slime/greywater/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/greywater/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -73,7 +73,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/grey
 
-/datum/chemical_reaction/slime/greyblood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/greyblood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -96,7 +96,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/green
 
-/datum/chemical_reaction/slime/greenplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/greenplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -115,7 +115,7 @@
 	required_reagents = list("radium" = 1)
 	slimecore = /obj/item/slime_extract/green
 
-/datum/chemical_reaction/slime/greenradium/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/greenradium/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -135,7 +135,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/metal
 
-/datum/chemical_reaction/slime/metalplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/metalplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -154,7 +154,7 @@
 	required_reagents = list("water" = 1)
 	slimecore = /obj/item/slime_extract/metal
 
-/datum/chemical_reaction/slime/metalwater/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/metalwater/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -175,7 +175,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/gold
 
-/datum/chemical_reaction/slime/goldplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/goldplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -194,7 +194,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/gold
 
-/datum/chemical_reaction/slime/goldplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/goldplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -213,7 +213,7 @@
 	required_reagents = list("water" = 1)
 	slimecore = /obj/item/slime_extract/gold
 
-/datum/chemical_reaction/slime/goldwater/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/goldwater/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -234,7 +234,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/silver
 
-/datum/chemical_reaction/slime/silverplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/silverplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -286,7 +286,7 @@
 	required_reagents = list("water" = 1)
 	slimecore = /obj/item/slime_extract/silver
 
-/datum/chemical_reaction/slime/silverwater/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/silverwater/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -322,7 +322,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/blue
 
-/datum/chemical_reaction/slime/blueplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/blueplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -340,7 +340,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/blue
 
-/datum/chemical_reaction/slime/blueblood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/blueblood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -362,7 +362,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/darkblue
 
-/datum/chemical_reaction/slime/darkblueplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/darkblueplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -377,7 +377,7 @@
 	simple_feedback(holder)
 	return 1
 
-/datum/chemical_reaction/slime/darkblueplasma/proc/freeze(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/darkblueplasma/proc/freeze(datum/reagents/holder)
 	if(holder && holder.my_atom)
 		var/turf/location = get_turf(holder.my_atom)
 		playsound(location, 'sound/effects/phasein.ogg', 100, 1)
@@ -390,7 +390,7 @@
 	required_reagents = list("water" = 1)
 	slimecore = /obj/item/slime_extract/darkblue
 
-/datum/chemical_reaction/slime/darkbluewater/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/darkbluewater/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -411,7 +411,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/orange
 
-/datum/chemical_reaction/slime/orangeplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/orangeplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -426,7 +426,7 @@
 	simple_feedback(holder)
 	return 1
 
-/datum/chemical_reaction/slime/orangeplasma/proc/burn(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/orangeplasma/proc/burn(datum/reagents/holder)
 	if(holder && holder.my_atom)
 		var/turf/location = get_turf(holder.my_atom)
 		for(var/atom/A in range(location, 5))
@@ -441,7 +441,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/orange
 
-/datum/chemical_reaction/slime/orangeblood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/orangeblood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -461,7 +461,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/yellow
 
-/datum/chemical_reaction/slime/yellowplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/yellowplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -480,7 +480,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/yellow
 
-/datum/chemical_reaction/slime/yellowblood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/yellowblood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -499,7 +499,7 @@
 	required_reagents = list("water" = 1)
 	slimecore = /obj/item/slime_extract/yellow
 
-/datum/chemical_reaction/slime/yellowwater/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/yellowwater/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -521,7 +521,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/purple
 
-/datum/chemical_reaction/slime/purpleplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/purpleplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -541,7 +541,7 @@
 	required_reagents = list("sugar" = 1)
 	slimecore = /obj/item/slime_extract/purple
 
-/datum/chemical_reaction/slime/purplesugar/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/purplesugar/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -561,7 +561,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/darkpurple
 
-/datum/chemical_reaction/slime/darkpurpleplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/darkpurpleplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -582,7 +582,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/red
 
-/datum/chemical_reaction/slime/redplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/redplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -601,7 +601,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/red
 
-/datum/chemical_reaction/slime/redblood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/redblood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -622,7 +622,7 @@
 	required_reagents = list("water" = 1)
 	slimecore = /obj/item/slime_extract/red
 
-/datum/chemical_reaction/slime/redwater/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/redwater/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -643,7 +643,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/pink
 
-/datum/chemical_reaction/slime/pinkplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/pinkplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -659,9 +659,9 @@
 
 /datum/chemical_reaction/slime/pinkblood
 	required_reagents = list("blood" = 1)
-	required_container = /obj/item/slime_extract/pink
+	slimecore = /obj/item/slime_extract/pink
 
-/datum/chemical_reaction/slime/pinkblood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/pinkblood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -683,7 +683,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/black
 
-/datum/chemical_reaction/slime/blackplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/blackplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -703,7 +703,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/oil
 
-/datum/chemical_reaction/slime/oilplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/oilplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -728,7 +728,7 @@
 	simple_feedback(holder)
 	return 1
 
-/datum/chemical_reaction/slime/oilplasma/proc/boom(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/oilplasma/proc/boom(datum/reagents/holder)
 	if(holder && holder.my_atom)
 		explosion(get_turf(holder.my_atom), 1 ,3, 6)
 
@@ -739,7 +739,7 @@
 	slimecore = /obj/item/slime_extract/lightpink
 	required_reagents = list("plasma" = 1)
 
-/datum/chemical_reaction/slime/pinkplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/pinkplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -760,7 +760,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/adamantine
 
-/datum/chemical_reaction/slime/adamantineplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/adamantineplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -783,7 +783,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/bluespace
 
-/datum/chemical_reaction/slime/bluespaceplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/bluespaceplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -803,7 +803,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/bluespace
 
-/datum/chemical_reaction/slime/bluespaceblood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/bluespaceblood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -824,7 +824,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/cerulean
 
-/datum/chemical_reaction/slime/ceruleanplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/ceruleanplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -843,7 +843,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/cerulean
 
-/datum/chemical_reaction/slime/ceruleanblood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/ceruleanblood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -864,7 +864,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/sepia
 
-/datum/chemical_reaction/slime/sepiaplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/sepiaplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -885,7 +885,7 @@
 	required_reagents = list("water" = 1)
 	slimecore = /obj/item/slime_extract/sepia
 
-/datum/chemical_reaction/slime/sepiawater/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/sepiawater/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -905,7 +905,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/sepia
 
-/datum/chemical_reaction/slime/sepiablood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/sepiablood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -926,7 +926,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/pyrite
 
-/datum/chemical_reaction/slime/pyriteplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/pyriteplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -949,7 +949,7 @@
 	required_reagents = list("plasma" = 1)
 	slimecore = /obj/item/slime_extract/rainbow
 
-/datum/chemical_reaction/slime/rainbowplasma/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/rainbowplasma/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)
@@ -970,7 +970,7 @@
 	required_reagents = list("blood" = 1)
 	slimecore = /obj/item/slime_extract/rainbow
 
-/datum/chemical_reaction/slime/rainbowblood/react(datum/chem_holder/holder)
+/datum/chemical_reaction/slime/rainbowblood/react(datum/reagents/holder)
 	..()
 	var/multiplier = get_multiplier(holder, FALSE)
 	if(!multiplier)

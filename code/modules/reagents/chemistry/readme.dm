@@ -184,7 +184,7 @@ About Recipes:
 	Recipes are simple datums that contain a list of required reagents and a result.
 	They also have a proc that is called when the recipe is matched.
 
-		on_reaction(var/datum/chem_holder/holder, var/created_volume)
+		on_reaction(var/datum/reagents/holder, var/created_volume)
 			This proc is called when the recipe is matched.
 			You'll want to add explosions etc here.
 			To find the location you'll have to do something
@@ -226,7 +226,7 @@ About the Tools:
 	By default, all atom have a reagents var - but its empty. if you want to use an object for the chem.
 	system you'll need to add something like this in its new proc:
 
-		var/datum/chem_holder/R = new/datum/chem_holder(100) <<<<< create a new datum , 100 is the maximum_volume of the new holder datum.
+		var/datum/reagents/R = new/datum/reagents(100) <<<<< create a new datum , 100 is the maximum_volume of the new holder datum.
 		reagents = R <<<<< assign the new datum to the objects reagents var
 		R.my_atom = src <<<<< set the holders my_atom to src so that we know where we are.
 

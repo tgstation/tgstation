@@ -9,7 +9,7 @@
 	required_reagents = list("diphenhydramine" = 1, "ammonia" = 1, "lithium" = 1, "sacid" = 1, "welding_fuel" = 1)
 	required_temp = 390
 
-/datum/chemical_reaction/crank/react(datum/chem_holder/holder)
+/datum/chemical_reaction/crank/react(datum/reagents/holder)
 	simple_react(holder, mix_message = "The mixture violently reacts, leaving behind a few crystalline shards.")
 
 /datum/chemical_reaction/krokodil
@@ -18,7 +18,7 @@
 	required_reagents = list("diphenhydramine" = 1, "morphine" = 1, "cleaner" = 1, "potassium" = 1, "phosphorus" = 1, "welding_fuel" = 1)
 	required_temp = 380
 
-/datum/chemical_reaction/krokodil/react(datum/chem_holder/holder)
+/datum/chemical_reaction/krokodil/react(datum/reagents/holder)
 	simple_react(holder, mix_message = "The mixture dries into a pale blue powder.")
 
 /datum/chemical_reaction/methamphetamine
@@ -27,7 +27,7 @@
 	required_reagents = list("ephedrine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1)
 	required_temp = 374
 
-/datum/chemical_reaction/methamphetamine/react(datum/chem_holder/holder)
+/datum/chemical_reaction/methamphetamine/react(datum/reagents/holder)
 	simple_react(holder)
 
 /datum/chemical_reaction/bath_salts

@@ -29,7 +29,7 @@
 	required_reagents = list("ash" = 1, "sodiumchloride" = 1)
 	required_temp = 380
 
-/datum/chemical_reaction/charcoal/react(datum/chem_holder/holder)
+/datum/chemical_reaction/charcoal/react(datum/reagents/holder)
 	simple_react(holder, mix_message = "The mixture yields a fine black powder.")
 
 /datum/chemical_reaction/silver_sulfadiazine
@@ -62,7 +62,7 @@
 	results = list("styptic_powder" = 4)
 	required_reagents = list("aluminium" = 1, "hydrogen" = 1, "oxygen" = 1, "sacid" = 1)
 
-/datum/chemical_reaction/styptic_powder/react(datum/chem_holder/holder)
+/datum/chemical_reaction/styptic_powder/react(datum/reagents/holder)
 	simple_react(holder, mix_message = "The solution yields an astringent powder.")
 
 /datum/chemical_reaction/calomel
@@ -102,7 +102,7 @@
 	required_reagents = list("hydrogen" = 1, "fluorine" = 1, "oil" = 1)
 	required_temp = 370
 
-/datum/chemical_reaction/perfluorodecalin/react(datum/chem_holder/holder)
+/datum/chemical_reaction/perfluorodecalin/react(datum/reagents/holder)
 	simple_react(holder, mix_message = "The mixture rapidly turns into a dense pink liquid.")
 
 /datum/chemical_reaction/ephedrine
@@ -110,7 +110,7 @@
 	results = list("ephedrine" = 4)
 	required_reagents = list("sugar" = 1, "oil" = 1, "hydrogen" = 1, "diethylamine" = 1)
 
-/datum/chemical_reaction/ephedrine/react(datum/chem_holder/holder)
+/datum/chemical_reaction/ephedrine/react(datum/reagents/holder)
 	simple_react(holder, mix_message = "The solution fizzes and gives off toxic fumes.")
 
 /datum/chemical_reaction/diphenhydramine
@@ -118,7 +118,7 @@
 	results = list("diphenhydramine" = 4)
 	required_reagents = list("oil" = 1, "carbon" = 1, "bromine" = 1, "diethylamine" = 1, "ethanol" = 1)
 
-/datum/chemical_reaction/diphenhydramine/react(datum/chem_holder/holder)
+/datum/chemical_reaction/diphenhydramine/react(datum/reagents/holder)
 	simple_react(holder, mix_message = "The mixture dries into a pale blue powder.")
 
 /datum/chemical_reaction/oculine
@@ -126,7 +126,7 @@
 	results = list("oculine" = 3)
 	required_reagents = list("charcoal" = 1, "carbon" = 1, "hydrogen" = 1)
 
-/datum/chemical_reaction/oculine/react(datum/chem_holder/holder)
+/datum/chemical_reaction/oculine/react(datum/reagents/holder)
 	simple_react(holder, mix_message = "The mixture sputters loudly and becomes a pale pink color.")
 
 /datum/chemical_reaction/atropine
@@ -149,7 +149,7 @@
 	results = list("mannitol" = 3)
 	required_reagents = list("sugar" = 1, "hydrogen" = 1, "water" = 1)
 
-/datum/chemical_reaction/mannitol/react(datum/chem_holder/holder)
+/datum/chemical_reaction/mannitol/react(datum/reagents/holder)
 	simple_react(holder, mix_message = "The solution slightly bubbles, becoming thicker.")
 
 /datum/chemical_reaction/mutadone

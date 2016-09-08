@@ -251,7 +251,7 @@
 /datum/effect_system/smoke_spread/chem/New()
 	..()
 	chemholder = PoolOrNew(/obj)
-	var/datum/chem_holder/R = new/datum/chem_holder(500)
+	var/datum/reagents/R = new/datum/reagents(500)
 	chemholder.reagents = R
 	R.my_atom = chemholder
 

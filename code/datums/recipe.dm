@@ -40,7 +40,7 @@
 	var/time = 100 // 1/10 part of second
 
 
-/datum/recipe/proc/check_reagents(datum/chem_holder/avail_reagents) //1=precisely, 0=insufficiently, -1=superfluous
+/datum/recipe/proc/check_reagents(datum/reagents/avail_reagents) //1=precisely, 0=insufficiently, -1=superfluous
 	. = 1
 	for (var/r_r in reagents)
 		var/aval_r_amnt = avail_reagents.get_reagent_amount(r_r)

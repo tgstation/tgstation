@@ -12,33 +12,33 @@
 	var/is_cold_recipe = 0 // Set to 1 if you want the recipe to only react when it's BELOW the required temp.
 
 // Used to check special requirements of the recipe. Such as slime core uses and required containers.
-/datum/chemical_reaction/proc/special_reqs(datum/chem_holder/holder)
+/datum/chemical_reaction/proc/special_reqs(datum/reagents/holder)
 	if(!istype(holder))
 		return 0
 
 // Called when the recipe is matched.
-/datum/chemical_reaction/proc/react(datum/chem_holder/holder)
+/datum/chemical_reaction/proc/react(datum/reagents/holder)
 	simple_react(holder)
 
 // ----------------------------------------------------// REACTION CODE HELPERS //--------------------------------------------------------------- //
 
 
 // Consume the required_reagents. Used by most recipes.
-/datum/chemical_reaction/proc/consume_reagents(datum/chem_holder/holder, multiplier = 1)
+/datum/chemical_reaction/proc/consume_reagents(datum/reagents/holder, multiplier = 1)
 	if(!istype(holder) || !multiplier)
 		return 0
 	for(var/reagent in required_reagents)
 		holder.adjust_volume(reagent, -required_reagents[reagent]*multiplier)
 
 // Create the results.
-/datum/chemical_reaction/proc/create_reagents(datum/chem_holder/holder, multiplier = 1, temperature = 293)
+/datum/chemical_reaction/proc/create_reagents(datum/reagents/holder, multiplier = 1, temperature = 293)
 	if(!istype(holder) || !multiplier)
 		return 0
 	for(var/reagent in results)
 		holder.adjust_volume(reagent, results[reagent]*multiplier)
 
 // Get the multiplier for maximum possible reactions based on required reagents. Set ratio_mode to false to force full_integers only.
-/datum/chemical_reaction/proc/get_multiplier(datum/chem_holder/holder, ratio_mode = TRUE)
+/datum/chemical_reaction/proc/get_multiplier(datum/reagents/holder, ratio_mode = TRUE)
 	if(!istype(holder))
 		return 0
 	var/list/multipliers = new/list()
@@ -59,7 +59,7 @@
 		return round(min(multipliers))
 
 // The basic reaction code. This is the old convert req_reagents to results logic. Set ratio to TRUE to use ratio logic.
-/datum/chemical_reaction/proc/simple_react(datum/chem_holder/holder, ratio = FALSE, mix_message = "The solution begins to bubble.", mix_sound = 'sound/effects/bubbles.ogg')
+/datum/chemical_reaction/proc/simple_react(datum/reagents/holder, ratio = TRUE, mix_message = "The solution begins to bubble.", mix_sound = 'sound/effects/bubbles.ogg')
 	if(!istype(holder))
 		return 0
 	var/multiplier = get_multiplier(holder, ratio)
@@ -70,7 +70,7 @@
 
 
 // Outputs a feedback message, and plays a sound. Override the defaults with mix_message = "message" or mix_sound = 'sound/path'. Alternatively you can set either argument to null.
-/datum/chemical_reaction/proc/simple_feedback(datum/chem_holder/holder, mix_message = "The solution begins to bubble.", mix_sound = 'sound/effects/bubbles.ogg')
+/datum/chemical_reaction/proc/simple_feedback(datum/reagents/holder, mix_message = "The solution begins to bubble.", mix_sound = 'sound/effects/bubbles.ogg')
 	if(!istype(holder) || istype(holder.my_atom, /mob)) // No bubbling mobs
 		return 0
 	var/list/seen = viewers(4, get_turf(holder.my_atom))
@@ -84,7 +84,7 @@
 // Spawns a bunch of mobs, either friendly or mean depending on the reaction type.
 var/list/chemical_mob_spawn_meancritters = list() // list of possible hostile mobs
 var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
-/datum/chemical_reaction/proc/chemical_mob_spawn(datum/chem_holder/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
+/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
 		if (chemical_mob_spawn_meancritters.len <= 0 || chemical_mob_spawn_nicecritters.len <= 0)
 			for (var/T in typesof(/mob/living/simple_animal))

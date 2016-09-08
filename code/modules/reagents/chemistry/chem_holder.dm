@@ -8,35 +8,33 @@ var/const/INJECT = 5 //injection
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-/datum/chem_holder
-	var/list/chemicals = new/list()
+/datum/reagents
+	var/list/reagents = new/list()
 	var/list/reactions = new/list() // Used to prevent the same reaction from occuring more than once.
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
-	var/thermal_energy = 0 // Make us more like atmos! Yay!
-	var/temperature = 293 // This should be derived from thermal_energy. But I'll include a helper proc.
-	var/heat_capacity = 0 // This is derived from other procs. Should not be touched directly.
+	var/chem_temp = 293 // The temperature of the holder.
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/chemical/addiction_list = new/list()
 	var/reacting = 0 // Used to prevent handle_reactions from being called more than once per tick.
 	var/flags
 
-/datum/chem_holder/New(maximum=100, list/starting_reagents = new/list())
+/datum/reagents/New(maximum=100, list/starting_reagents = new/list())
 	maximum_volume = maximum
 
 	if(!(flags & REAGENT_NOREACT))
 		START_PROCESSING(SSfastprocess, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
-	if(!chemical_list)
+	if(!chemical_reagents_list)
 		//Builds the chemical_list[id][type]
-		var/paths = subtypesof(/datum/chemical)
-		chemical_list = list()
+		var/paths = subtypesof(/datum/reagent)
+		chemical_reagents_list = list()
 		for(var/path in paths)
-			var/datum/chemical/D = new path()
-			chemical_list[D.id] = D.type
+			var/datum/reagent/D = new path()
+			chemical_reagents_list[D.id] = D.type
 			qdel(D) // DO WE REALLY NEED TO KEEP THESE INSTANTIATED??
 
 	if(!chemical_reactions_list)
@@ -53,8 +51,8 @@ var/const/INJECT = 5 //injection
 			var/datum/chemical_reaction/D = new path()
 			var/list/reaction_ids = list()
 
-			if(D.required && D.required.len)
-				for(var/requisite in D.required)
+			if(D.required_reagents && D.required_reagents.len)
+				for(var/requisite in D.required_reagents)
 					reaction_ids += requisite
 
 			// Create filters based on each reagent id in the required reagents list
@@ -68,34 +66,30 @@ var/const/INJECT = 5 //injection
 		for(var/R in starting_reagents)
 			adjust_volume(R, starting_reagents[R])
 
-/datum/chem_holder/Destroy()
+/datum/reagents/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
 	clear_contents()
 	clear_reactions()
-	chemicals.Cut()
-	chemicals = null
+	reagents.Cut()
+	reagents = null
 	reactions.Cut()
 	reactions = null
-	if(my_atom && my_atom.chem_holder == src)
-		my_atom.chem_holder = null
+	if(my_atom && my_atom.reagents == src)
+		my_atom.reagents = null
 
 // Used for adding/removing reagents from nullspace. Ie. you're creating a new reagent, or deleting the reagent,
-// as opposed to transferring it from/to another chem_holder. Much simpler and cleaner than old ADD/REMOVE_REAGENT procs
-/datum/chem_holder/proc/adjust_volume(id, amount = 0, temperature = 293)
+// as opposed to transferring it from/to another reagents. Much simpler and cleaner than old ADD/REMOVE_REAGENT procs
+/datum/reagents/proc/adjust_volume(id, amount = 0, temperature = 293)
 	if(amount)
 		amount = round(amount, MIN_REAGENT_VOL)
-	if(!reagent_id || amount == 0)
+	if(!id || amount == 0)
 		return
 
-	if(!chemicals[id]) // If the reagent does not exist, create it.
-		chemicals[id] = new chemical_list[id](src)
-	var/datum/chemical/C = chemicals[id]
+	if(!reagents[id]) // If the reagent does not exist, create it.
+		reagents[id] = new chemical_reagents_list[id](src)
+	var/datum/reagent/C = reagents[id]
 
-	heat_capacity += C.specific_heat*amount
-	adjust_thermal_energy(C.specific_heat * temperature * amount)
-
-	var/datum/chemical/C = chemicals[id]
 	C.volume += amount
 
 	update_total()
@@ -103,24 +97,8 @@ var/const/INJECT = 5 //injection
 	set_reacting()
 	return C
 
-// Advanced proc used for adding or removing thermal energy to the container.
-// Call it with (amount) to increase or decrease it by a set value.
-// Call it with nothing to recalculate the thermal energy based on the current temperature.
-// Set react to TRUE to react immediately afterwards.
-/datum/chem_holder/proc/adjust_thermal_energy(amount, react = FALSE)
-	if(amount && heat_capacity)
-		thermal_energy += amount
-		temperature = thermal_energy/heat_capacity
-	else
-		var/heatcapacity = 0
-		for(var/id in chemicals)
-			var/datum/chemical/C = chemicals[id]
-			heatcapacity += C.volume*C.specific_heat
-		thermal_energy = heat_capacity * temperature
-		cached_gases[id][MOLES] * cached_gases[id][GAS_META][META_GAS_SPECIFIC_HEAT]
-
-// Used for removing reagents from the chem_holder by volume. It will remove an equal percentage of each reagent.
-/datum/chem_holder/proc/remove_amount(amount = 1)
+// Used for removing reagents from the reagents by volume. It will remove an equal percentage of each reagent.
+/datum/reagents/proc/remove_amount(amount = 1)
 	if(!amount || !total_volume)
 		return
 	amount = round(amount, MIN_REAGENT_VOL)
@@ -139,7 +117,7 @@ var/const/INJECT = 5 //injection
 	return removed_reagents // a list of removed reagents, and their respective totals.
 
 // Gets the master reagent. (reagent with the most volume.)
-/datum/chem_holder/proc/get_master_reagent()
+/datum/reagents/proc/get_master_reagent()
 	var/datum/reagent/master
 	var/max_volume = 0
 	for(var/reagent in reagents)
@@ -149,18 +127,18 @@ var/const/INJECT = 5 //injection
 			master = R
 	return master
 
-/datum/chem_holder/proc/get_master_reagent_name()
+/datum/reagents/proc/get_master_reagent_name()
 	var/datum/reagent/master = get_master_reagent()
 	if(master)
 		return master.name
 
-/datum/chem_holder/proc/get_master_reagent_id()
+/datum/reagents/proc/get_master_reagent_id()
 	var/datum/reagent/master = get_master_reagent()
 	if(master)
 		return master.id
 
 // Transfers 'amount' reagents from this container to another container.
-/datum/chem_holder/proc/transfer(datum/chem_holder/target, amount = 1, preserve_data=1)
+/datum/reagents/proc/transfer(datum/reagents/target, amount = 1, preserve_data=1)
 	if(!istype(target) || !amount || total_volume <= 0)
 		return
 
@@ -183,7 +161,7 @@ var/const/INJECT = 5 //injection
 	return amount
 
 // Transfers 'amount' reagents from this container to another container, without deleting the original reagents.
-/datum/chem_holder/proc/copy_to(datum/chem_holder/target, amount = 1, preserve_data=1)
+/datum/reagents/proc/copy_to(datum/reagents/target, amount = 1, preserve_data=1)
 	if(!istype(target) || !amount || total_volume <= 0)
 		return
 
@@ -204,7 +182,7 @@ var/const/INJECT = 5 //injection
 	return amount
 
 // Transfers 'amount' of a single reagent from this container to another container.
-/datum/chem_holder/proc/transfer_id(datum/chem_holder/target, reagent_id, amount = 1, preserve_data=1)
+/datum/reagents/proc/transfer_id(datum/reagents/target, reagent_id, amount = 1, preserve_data=1)
 	if(!istype(target) || !amount || total_volume <= 0 || !reagent_id)
 		return
 
@@ -226,7 +204,7 @@ var/const/INJECT = 5 //injection
 	return amount
 
 // Transfers 'amount' of a single reagent from this container to another container. Without deleting the original reagent.
-/datum/chem_holder/proc/copy_id_to(datum/chem_holder/target, reagent_id, amount = 1, preserve_data=1)
+/datum/reagents/proc/copy_id_to(datum/reagents/target, reagent_id, amount = 1, preserve_data=1)
 	if(!istype(target) || !amount || total_volume <= 0 || !reagent_id)
 		return
 
@@ -247,7 +225,7 @@ var/const/INJECT = 5 //injection
 	return amount
 
 // This really shouldn't exist here, so im going to move it, eventually.
-/datum/chem_holder/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
+/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
 	if(!istype(C))
 		return
 	chem_temp = C.bodytemperature
@@ -300,47 +278,42 @@ var/const/INJECT = 5 //injection
 		C.update_stamina()
 	update_total()
 
-/datum/chem_holder/proc/conditional_update_move(atom/A, Running = 0)
+/datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		R.on_move (A, Running)
 	update_total()
 
-/datum/chem_holder/proc/conditional_update(atom/A, trigger = null)
+/datum/reagents/proc/conditional_update(atom/A, trigger = null)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		R.on_update (A, trigger)
 	update_total()
 
 // Attempt to react, and remove yourself from the processing queue if no reactions took place.
-/datum/chem_holder/process()
-	reacting = 2
+/datum/reagents/process()
 	handle_reactions()
-	if(reacting == 2)
-		STOP_PROCESSING(SSfastprocess, src)
-		reacting = 0
+	STOP_PROCESSING(SSfastprocess, src)
+	reacting = 0
 	if(flags & REAGENT_IGNITER)
 		flags &= ~(REAGENT_IGNITER)
 
-// Flag this chem_holder as 'ready' to react. It will react once this tick, and again every two ticks if it still needs to react.
-/datum/chem_holder/proc/set_reacting()
-	if(reacting == 2) // Caused by secondary reaction step. Prevents reacting more than once per tick.
-		reacting = 1
+// Flag this reagents as 'ready' to react. It will react once this tick, and again every two ticks if it still needs to react.
+/datum/reagents/proc/set_reacting()
 	if(!reacting)
 		reacting = 1
 		START_PROCESSING(SSfastprocess, src)
-		handle_reactions()
 
-// Set this chem_holder to NOREACT mode, preventing it from reacting. Set to false to do inverse.
-/datum/chem_holder/proc/set_noreact(on = TRUE)
+// Set this reagents to NOREACT mode, preventing it from reacting. Set to false to do inverse.
+/datum/reagents/proc/set_noreact(on = TRUE)
 	if(on)
 		flags |= REAGENT_NOREACT
 	else
 		flags &= ~(REAGENT_NOREACT)
 		set_reacting()
 
-// Set this chem_holder to IGNITER mode, causing it to trigger some special reactions for a short time.
-/datum/chem_holder/proc/set_igniting(on = TRUE)
+// Set this reagents to IGNITER mode, causing it to trigger some special reactions for a short time.
+/datum/reagents/proc/set_igniting(on = TRUE)
 	if(on)
 		flags |= REAGENT_IGNITER
 		set_reacting()
@@ -348,7 +321,7 @@ var/const/INJECT = 5 //injection
 		flags &= ~(REAGENT_IGNITER)
 
 // Check if any reactions are able to take place. And if so, react them.
-/datum/chem_holder/proc/handle_reactions()
+/datum/reagents/proc/handle_reactions()
 	reacting = 0
 	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
@@ -401,21 +374,21 @@ var/const/INJECT = 5 //injection
 	update_total()
 
 /*
-/datum/chem_holder/proc/check_ignoreslow(mob/M)
+/datum/reagents/proc/check_ignoreslow(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
-/datum/chem_holder/proc/check_gofast(mob/M)
+/datum/reagents/proc/check_gofast(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
 
-/datum/chem_holder/proc/check_goreallyfast(mob/M)
+/datum/reagents/proc/check_goreallyfast(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
@@ -423,7 +396,7 @@ var/const/INJECT = 5 //injection
 			M.status_flags &= ~GOTTAGOREALLYFAST
 */
 
-/datum/chem_holder/proc/update_total()
+/datum/reagents/proc/update_total()
 	total_volume = 0
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagents[reagent]
@@ -439,13 +412,13 @@ var/const/INJECT = 5 //injection
 
 	return 0
 
-/datum/chem_holder/proc/clear_reagents()
+/datum/reagents/proc/clear_reagents()
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagents[reagent]
 		reagents -= reagent
 		qdel(R)
 
-/datum/chem_holder/proc/clear_reactions()
+/datum/reagents/proc/clear_reactions()
 	for(var/reaction in reactions)
 		var/datum/reaction/R = reactions[reaction]
 		reactions -= reaction
@@ -453,7 +426,7 @@ var/const/INJECT = 5 //injection
 
 // WHY IS THIS HERE?
 /*
-/datum/chem_holder/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
+/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
 	if(isliving(A))
 		var/touch_protection = 0
 		if(method == VAPOR)
@@ -473,14 +446,14 @@ var/const/INJECT = 5 //injection
 */
 
 // returns the amount of a reagent. Replaces both get_reagent_amount and has_reagent
-/datum/chem_holder/proc/get_volume(id)
+/datum/reagents/proc/get_volume(id)
 	var/datum/reagent/R = reagents[id]
 	if(R)
 		return R.volume
 	return -1
 
 // Returns a string of all reagent names. Ie. "Water, Oxygen, Silicon"
-/datum/chem_holder/proc/get_reagents()
+/datum/reagents/proc/get_reagents()
 	var/list/names = list()
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagents[reagent]
@@ -489,7 +462,7 @@ var/const/INJECT = 5 //injection
 	return jointext(names, ",")
 
 /* nullbear is moving this to recipes.
-/datum/chem_holder/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
+/datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount)) return 1
 
 	var/has_removed_reagent = 0
@@ -513,21 +486,21 @@ var/const/INJECT = 5 //injection
 */
 
 //two helper functions to preserve data across reactions (needed for xenoarch)
-/datum/chem_holder/proc/get_data(reagent_id)
+/datum/reagents/proc/get_data(reagent_id)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
 			//world << "proffering a data-carrying reagent ([reagent_id])"
 			return R.data
 
-/datum/chem_holder/proc/set_data(reagent_id, new_data)
+/datum/reagents/proc/set_data(reagent_id, new_data)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
 			//world << "reagent data set ([reagent_id])"
 			R.data = new_data
 
-/datum/chem_holder/proc/trans_data(datum/reagent/copy_from, datum/reagent/copy_to, delta_vol)
+/datum/reagents/proc/trans_data(datum/reagent/copy_from, datum/reagent/copy_to, delta_vol)
 	if(!copy_from || !copy_to || !copy_from.data)
 		return null
 	if(!istype(copy_from.data, /list))
@@ -547,5 +520,5 @@ var/const/INJECT = 5 //injection
 /atom/proc/create_reagents(max_vol, list/starting_reagents)
 	if(reagents)
 		qdel(reagents)
-	reagents = new/datum/chem_holder(max_vol, starting_reagents)
+	reagents = new/datum/reagents(max_vol, starting_reagents)
 	reagents.my_atom = src
