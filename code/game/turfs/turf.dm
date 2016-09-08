@@ -177,7 +177,7 @@
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
 		if(!S.air)
-			return
+			continue
 		var/list/S_gases = S.air.gases
 		for(var/id in S_gases)
 			total.assert_gas(id)
