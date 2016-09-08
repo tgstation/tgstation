@@ -16,7 +16,7 @@
 		src << "<span class='danger'><big><b>No way for you, dick.</b></big></span>"
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = strip_html_properly(sanitize(msg))
 	if(!msg)
 		return
 
