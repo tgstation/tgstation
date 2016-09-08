@@ -4,6 +4,7 @@
 /area/template_noop)
 "b" = (
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -36,12 +37,14 @@
 	triggerer_only = 1
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "h" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -49,6 +52,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -65,6 +69,7 @@
 /obj/effect/decal/remains/human,
 /obj/item/weapon/melee/cultblade,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -73,12 +78,14 @@
 /obj/item/clothing/shoes/cult,
 /obj/item/clothing/suit/cultrobes,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
 "m" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -95,6 +102,7 @@
 	triggerer_only = 1
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -117,6 +125,7 @@
 	name = "ohfuck"
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -133,6 +142,7 @@
 	triggerer_only = 1
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -142,6 +152,7 @@
 /obj/item/clothing/suit/cultrobes,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
@@ -158,6 +169,7 @@
 	triggerer_only = 1
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)

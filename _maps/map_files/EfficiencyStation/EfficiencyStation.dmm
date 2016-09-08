@@ -34136,7 +34136,7 @@
 	name = "Private Study";
 	req_access_txt = "37"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bqq" = (
 /obj/structure/cable{
@@ -35086,13 +35086,13 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bsg" = (
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bsh" = (
 /obj/structure/cable{
@@ -35658,7 +35658,7 @@
 /obj/effect/landmark/start{
 	name = "Librarian"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bts" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -35669,7 +35669,7 @@
 	pixel_x = 27
 	},
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "btt" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -36383,7 +36383,7 @@
 "buT" = (
 /obj/structure/destructible/cult/tome,
 /obj/item/weapon/book/codex_gigas,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "buU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -36398,7 +36398,7 @@
 	},
 /obj/item/weapon/pen/invisible,
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "buV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,

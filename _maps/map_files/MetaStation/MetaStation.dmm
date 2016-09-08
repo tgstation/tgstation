@@ -54759,9 +54759,7 @@
 	name = "Private Study";
 	req_access_txt = "37"
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bQz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -55659,15 +55657,11 @@
 	},
 /obj/item/clothing/under/suit_jacket/red,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bSi" = (
 /obj/structure/chair/comfy/brown,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bSj" = (
 /obj/effect/landmark{
@@ -55680,9 +55674,7 @@
 	pixel_x = 30;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bSk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -56428,9 +56420,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen/invisible,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bTy" = (
 /obj/item/device/taperecorder{
@@ -56441,17 +56431,13 @@
 	pixel_y = -25
 	},
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bTz" = (
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bTA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
