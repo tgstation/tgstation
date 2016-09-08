@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - tweak: "Legion implants now have a full heal when implanted instead of passive heal + spawn tentacles. The healing also goes off when you enter crit."
