@@ -71,6 +71,7 @@ Contains:
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20)
 	strip_delay = 120
+	var/hut_sound = 'sound/misc/huthuthut.ogg' // Sound used for process()
 
 /obj/item/clothing/suit/space/swat/equipped(mob/user, slot)
 	. = ..()
@@ -78,7 +79,7 @@ Contains:
 
 /obj/item/clothing/suit/space/swat/process()
 	if(prob(25))
-		playsound(src, 'sound/misc/huthuthut.ogg', 50, 1)
+		playsound(src, hut_sound, 50, 1)
 
 /obj/item/clothing/suit/space/swat/dropped(mob/user)
 	. = ..()
