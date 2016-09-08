@@ -243,7 +243,6 @@
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/inert = 0
 	var/preserved = 0
-	var/list/spawned_brood = list()
 
 /obj/item/organ/hivelord_core/New()
 	..()
@@ -273,56 +272,13 @@
 	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
-	var/spawn_amount = 1
-	if(!inert)
-		spawn_amount++
-
-	for(var/a in spawned_brood)
-		if(!istype(a, /mob/living/simple_animal/hostile/asteroid/hivelordbrood) || qdeleted(a))
-			spawned_brood -= a
-			continue
-	spawn_amount -= spawned_brood.len
-
-	for(var/i = 1 to spawn_amount)
-		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/B = new (owner.loc)
-		B.link_host(owner)
-		spawned_brood |= B
-
+	owner.revive(full_heal = 1)
+	qdel(src)
 
 /obj/item/organ/hivelord_core/on_life()
 	..()
-	if(owner)
-		owner.adjustBruteLoss(-1)
-		owner.adjustFireLoss(-1)
-		owner.adjustOxyLoss(-2)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		CHECK_DNA_AND_SPECIES(H)
-		if(NOBLOOD in H.dna.species.specflags)
-			return
-
-		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume += 2 // Fast blood regen
-
-/obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
-	if(proximity_flag && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(inert)
-			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
-			return
-		else
-			if(H.stat == DEAD)
-				user << "<span class='notice'>[src] are useless on the dead.</span>"
-				return
-			if(H != user)
-				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
-				feedback_add_details("hivelord_core","[src.type]|used|other")
-			else
-				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
-				feedback_add_details("hivelord_core","[src.type]|used|self")
-			H.revive(full_heal = 1)
-			qdel(src)
-	..()
+	if(owner.health < HEALTH_THRESHOLD_CRIT)
+		ui_action_click()
 
 /obj/item/organ/hivelord_core/prepare_eat()
 	return null
