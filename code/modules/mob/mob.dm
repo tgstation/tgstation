@@ -422,8 +422,9 @@ var/next_mob_id = 0
 */
 
 /mob/verb/memory()
-	set name = "Notes"
+	set name = "Notes Memory"
 	set category = "IC"
+	set desc = "View your character's notes memory."
 	if(mind)
 		mind.show_memory(src)
 	else

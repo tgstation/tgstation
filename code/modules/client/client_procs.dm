@@ -405,7 +405,7 @@ var/next_external_rsc = 0
 	if (query_get_notes.NextRow())
 		if (query_get_notes.item[1] == adminckey)
 			return
-	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, logged = 0)
+	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, 0, null, 0)
 
 
 /client/proc/check_ip_intel()
