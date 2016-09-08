@@ -5835,14 +5835,20 @@
 /area/awaymission/errorroom)
 "tm" = (
 /obj/item/rupee,
-/turf/open/floor/plating/ashplanet/wateryrock,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/awaymission/errorroom)
 "tn" = (
-/turf/open/floor/plating/ashplanet/wateryrock,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/awaymission/errorroom)
 "to" = (
 /obj/effect/landmark/error,
-/turf/open/floor/plating/ashplanet/wateryrock,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/awaymission/errorroom)
 "tp" = (
 /obj/structure/signpost/salvation{
@@ -5850,7 +5856,9 @@
 	icon_state = "ladder10";
 	invisibility = 100
 	},
-/turf/open/floor/plating/ashplanet/wateryrock,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/awaymission/errorroom)
 "tq" = (
 /obj/structure/closet/cardboard,
