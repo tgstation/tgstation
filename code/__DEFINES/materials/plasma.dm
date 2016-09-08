@@ -1,6 +1,7 @@
 // Basic Plasma Materials.
 
-// Pure Plasma Gas. Extremely dangerous. It's worth a ton of money, and is a very efficient catalyst.
+// Plasma (CP4), it has similar properties as to methane (CH4) but is much more dangerous.
+// It burns at 10,000C, but isn't anywhere near as dangerous or reactive as purified plasma.
 #define MAT_plasma "plasma"
 /datum/mat/plasma
 	id = MAT_plasma
@@ -24,6 +25,19 @@
 	state = SOLID
 	desc = "An extremely flammable, toxic, and reactive purple material known to interact with bluespace."
 	robustness = 50 // Not very sound, structurally. But you could use it.
+
+// Pure Plasma Gas (P2), it has similar properties as to hydrogen (H2) but is much more dangerous.
+// Reacts with oxygen to make a really big boom. Autoignites at 400C. It burns at temperatures high enough to achieve fusion of some materials.
+#define MAT_pure_plasma "pure_plasma"
+/datum/mat/pure_plasma
+	id = MAT_pure_plasma
+	name = "Enriched Plasma"
+	specific heat = 6000
+	state = PLASMA
+	value = 50
+	desc = "An extremely volatile and explosive gas."
+	color = "#BB22CC"
+	alpha = 255
 
 // Plasma-Hydrogen Gas. Still dangerous, just not AS dangerous. It's also good for stretching out your resources.
 #define MAT_hplasma "hplasma"

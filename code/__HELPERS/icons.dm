@@ -1008,6 +1008,29 @@ var/global/list/humanoid_icon_cache = list()
 /image/proc/setDir(newdir)
 	dir = newdir
 
+// Input a list of colors and amounts. list("#FFFFFF" = 0, "#000000" = 0)
+/proc/mix_colors_from_list(list/colorlist) // Get a single blended color.
+	if(!istype(colorlist))
+		return
+
+	var/color
+	var/vol_counter = 0
+	var/vol_temp
+
+	for(var/C in colorlist)
+		vol_temp = colorlist[C]
+		vol_counter += vol_temp
+
+		if(!color)
+			color = C
+
+		else if (length(color) >= length(C))
+			color = BlendRGB(color, C, vol_temp/vol_counter)
+		else
+			color = BlendRGB(C, color, vol_temp/vol_counter)
+
+	return color
+
 // Used to make the frozen item visuals for Freon.
 var/list/freeze_item_icons = list()
 

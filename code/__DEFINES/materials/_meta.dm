@@ -2,6 +2,7 @@
 #define MOLES			1
 #define ARCHIVE			2
 #define MAT_META		3
+#define MAT_DATA		4
 
 #define META_MAT_NAME			1 // The name of the material.
 #define META_MAT_SPECIFIC_HEAT	2 // The specific heat of the material. Affects how much energy it costs to heat it up.
@@ -43,7 +44,7 @@
 /datum/mat
 	var/id = ""
 	var/name = ""
-	var/specific_heat = 20 // The default specific heat is 20.
+	var/specific_heat = 25 // The default specific heat is 25.
 	var/state = SOLID
 	var/value = 0
 	var/desc = ""

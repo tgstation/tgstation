@@ -4,7 +4,7 @@
 /datum/mat/hydrogen
 	id = MAT_hydro
 	name = "Hydrogen"
-	specific_heat = 300
+	specific_heat = 350
 	state = GAS
 	value = 10
 	desc = "A highly combustible, colourless, odorless, gas."
@@ -14,6 +14,21 @@
 	id = MAT_liq_hydro
 	state = LIQUID
 	desc = "A highly flammable, colourless, cryogenic liquid."
+
+#define MAT_methane "ch4"
+/datum/nat/methane
+	id = MAT_methane
+	name = "Methane"
+	specific_heat = 100
+	state = GAS
+	value = 15
+	desc = "A highly combustible, colourless gas."
+
+#define MAT_liq_methane "liq_ch4"
+/datum/nat/methane/liquid
+	id = MAT_liq_methane
+	state = LIQUID
+	desc = "A highly combustible, colourless liquid."
 
 #define MAT_oxy "o2"
 /datum/mat/oxygen
@@ -48,7 +63,7 @@
 /datum/mat/water
 	id = MAT_h2o
 	name = "Water"
-	specific_heat = 80
+	specific_heat = 100
 	state = LIQUID
 	value = 5
 	desc = "A wettening thirst-quenching substance like none ever seen before!"
