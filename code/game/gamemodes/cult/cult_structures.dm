@@ -29,6 +29,17 @@
 	if(can_see_cult && cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 
+/obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+		if(health < max_health)
+			health = min(max_health, health + 5)
+			Beam(M, icon_state="sendbeam", icon='icons/effects/effects.dmi', time=4)
+			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
+				"<span class='cult'>You repair <b>[src]</b>, leaving it at <b>[health]/[max_health]</b> stability.</span>")
+		else
+			M << "<span class='cult'>You cannot repair [src], as it is undamaged!</span>"
+	else
+		..()
 
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
