@@ -404,7 +404,7 @@ var/const/INJECT = 5 //injection
 			reagents -= reagent
 			qdel(R)
 		else
-			R.volume = Round(R.volume, MIN_REAGENT_VOL)
+			R.volume = round(R.volume, MIN_REAGENT_VOL)
 			total_volume += R.volume
 
 	if(total_volume > maximum_volume) // Eventually proper spillover effects should be added.
