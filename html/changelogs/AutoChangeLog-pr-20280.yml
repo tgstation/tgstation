@@ -1,0 +1,4 @@
+author: "Jordie0608"
+delete-after: True
+changes: 
+  - rscadd: "Notes can now be tagged as secret to be hidden from player viewed notes."
