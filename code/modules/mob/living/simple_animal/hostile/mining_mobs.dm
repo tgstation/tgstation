@@ -280,6 +280,26 @@
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		ui_action_click()
 
+/obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
+	if(proximity_flag && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(inert)
+			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
+			return
+		else
+			if(H.stat == DEAD)
+				user << "<span class='notice'>[src] are useless on the dead.</span>"
+				return
+			if(H != user)
+				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
+				feedback_add_details("hivelord_core","[src.type]|used|other")
+			else
+				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				feedback_add_details("hivelord_core","[src.type]|used|self")
+			H.revive(full_heal = 1)
+			qdel(src)
+	..()
+
 /obj/item/organ/hivelord_core/prepare_eat()
 	return null
 
