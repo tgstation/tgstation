@@ -51,7 +51,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/image/photo = null //Scanned photo
 
 	var/list/contained_item = list(/obj/item/weapon/pen, /obj/item/toy/crayon, /obj/item/weapon/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	var/obj/item/inserted_item
+	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion/removal
 
 /obj/item/device/pda/pickup(mob/user)
 	..()
@@ -76,7 +76,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
-	new /obj/item/weapon/pen(src)
+	inserted_item =	new /obj/item/weapon/pen(src)
 
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -704,15 +704,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if(issilicon(usr))
 		return
-	var/obj/item/weapon/pen/O = locate() in src //Needed, otherwise cannot remove default pen in PDA
 
 	if (usr.canUseTopic(src))
-		if(is_type_in_list(inserted_item, contained_item) || O)
-			if(inserted_item || O)
+		if(is_type_in_list(inserted_item, contained_item))
+			if(inserted_item)
 				if(istype(loc, /mob))
 					var/mob/M = loc
-					M.put_in_hands(inserted_item || O)
-					usr << "<span class='notice'>You remove \the [inserted_item || O] from \the [src].</span>"
+					M.put_in_hands(inserted_item)
+					usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
 					inserted_item = null
 					return
 				inserted_item.forceMove()
