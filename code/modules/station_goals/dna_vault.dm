@@ -7,7 +7,7 @@
 #define VAULT_NOBREATH "Lung Enhancement"
 #define VAULT_FIREPROOF "Thermal Regulation"
 #define VAULT_STUNTIME "Neural Repathing"
-#define VAULT_ARMOUR "Bone Reinforcment"
+#define VAULT_ARMOUR "Bone Reinforcement"
 
 /datum/station_goal/dna_vault
 	name = "DNA Vault"
