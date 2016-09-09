@@ -109,9 +109,9 @@ var/highlander_claymores = 0
 	bloodthirst_level = max(bloodthirst_level - (target.mind && target.mind.special_role == "highlander" ? 15 : 5), 0)
 	if(target && target.stat == DEAD && old_target_stat != DEAD && target.mind && target.mind.special_role == "highlander")
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
-		bloodthirst_level = 0
 		if(bloodthirst_level >= 30)
 			user << "<span class='notice'>[src] shakes greedily as it devours [target]'s soul. Its bloodthirst is quenched for the moment...</span>"
+		bloodthirst_level = 0
 		add_notch(user)
 		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
 		target.dust()
