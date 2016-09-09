@@ -27,6 +27,15 @@ This file's folder contains:
 	clock_unsorted.dm: Anything else with no place to be
 
 	clockcult defines are in __DEFINES/clockcult.dm
+
+Credit where due:
+1. VelardAmakar from /vg/ for the entire design document, idea, and plan. Thank you very much.
+2. SkowronX from /vg/ for MANY of the assets
+3. FuryMcFlurry from /vg/ for many of the assets
+4. PJB3005 from /vg/ for the failed continuation PR
+5. Xhuis from /tg/ for coding the basic gamemode as it is today
+6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release
+
 */
 
 ///////////
