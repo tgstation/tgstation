@@ -71,7 +71,7 @@
 		user.do_attack_animation(src)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		qdel(src)
+		deconstruct()
 
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
@@ -118,21 +118,27 @@
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			dismantle(user)
+			dismantle(user, TRUE)
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
-		dismantle(user)
+		dismantle(user, TRUE)
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		D.playDigSound()
-		dismantle(user)
+		dismantle(user, TRUE)
 	else
 		return ..()
 
-/obj/structure/falsewall/proc/dismantle(mob/user)
+/obj/structure/falsewall/proc/dismantle(mob/user, girder)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
-	new girder_type(loc)
-	new mineral(loc, mineral_amount)
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+	deconstruct(girder)
+
+/obj/structure/falsewall/proc/deconstruct(girder)
+	if(girder)
+		new girder_type(loc)
+	if(mineral_amount)
+		for(var/i in 1 to mineral_amount)
+			new mineral(loc)
 	qdel(src)
 
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
