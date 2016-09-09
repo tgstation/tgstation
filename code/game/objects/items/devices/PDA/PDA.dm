@@ -49,7 +49,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	var/image/photo = null //Scanned photo
+
 	var/list/contained_item = list(/obj/item/weapon/pen, /obj/item/toy/crayon, /obj/item/weapon/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	var/obj/item/inserted_item
 
 /obj/item/device/pda/pickup(mob/user)
 	..()
@@ -700,23 +702,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set name = "Remove Pen"
 	set src in usr
 
-	var/obj/item/inserted_item = loc
-
 	if(issilicon(usr))
 		return
+	var/obj/item/weapon/pen/O = locate() in src //Needed, otherwise cannot remove default pen in PDA
 
-	var/i
 	if (usr.canUseTopic(src))
-		for(i = 1, i <= contained_item.len, i++)
-			inserted_item = locate(contained_item[i]) in src	//If items are in the PDA
-			if(inserted_item)
-				if (istype(loc, /mob))
+		if(is_type_in_list(inserted_item, contained_item) || O)
+			if(inserted_item || O)
+				if(istype(loc, /mob))
 					var/mob/M = loc
-					M.put_in_hands(inserted_item)
-					usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
+					M.put_in_hands(inserted_item || O)
+					usr << "<span class='notice'>You remove \the [inserted_item || O] from \the [src].</span>"
+					inserted_item = null
 					return
 				inserted_item.forceMove()
-	usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
+		usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
@@ -777,20 +777,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
 		updateUsrDialog()
-	else if(is_type_in_list(C, contained_item))
-		var/obj/item/weapon/pen/Pen = locate() in src
-		var/obj/item/toy/crayon/Crayon = locate() in src
-		var/obj/item/weapon/lipstick/Lip = locate() in src
-		var/obj/item/device/flashlight/pen/Penlight = locate() in src
-		var/obj/item/clothing/mask/cigarette/Cig = locate() in src
-
-		if(Pen || Crayon || Lip || Penlight || Cig)
-			user << "<span class='warning'>There is already a pen in \the [src]!</span>"
+	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
+		if(inserted_item)
+			user << "<span class='warning'>There is already an item in \the [src]!</span>"
 		else
 			if(!user.unEquip(C))
 				return
 			C.loc = src
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+			inserted_item = C
 	else if(istype(C, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
