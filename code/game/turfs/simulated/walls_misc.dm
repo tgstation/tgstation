@@ -124,7 +124,7 @@
 			O.loc = src
 
 /turf/closed/wall/clockwork/break_wall()
-	new sheet_type(get_turf(src))
+	new sheet_type(src)
 	return new/obj/structure/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
