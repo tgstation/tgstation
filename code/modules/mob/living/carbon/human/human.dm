@@ -25,8 +25,8 @@
 	bodyparts += r_arm
 	l_arm.held_index = 1
 	r_arm.held_index = 2
-	hand_organs += l_arm
-	hand_organs += r_arm
+	hand_bodyparts += l_arm
+	hand_bodyparts += r_arm
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/O = X
 		O.owner = src

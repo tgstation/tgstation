@@ -395,13 +395,13 @@
 /mob/living/carbon/human/change_number_of_hands(amt)
 	var/old_limbs = held_items.len
 	if(amt < old_limbs)
-		for(var/i in hand_organs.len to amt step -1)
-			var/obj/item/bodypart/BP = hand_organs[i]
+		for(var/i in hand_bodyparts.len to amt step -1)
+			var/obj/item/bodypart/BP = hand_bodyparts[i]
 			BP.dismember()
-			hand_organs[i] = null
-		hand_organs.len = amt
+			hand_bodyparts[i] = null
+		hand_bodyparts.len = amt
 	else if(amt > old_limbs)
-		hand_organs.len = amt
+		hand_bodyparts.len = amt
 		for(var/i in old_limbs+1 to amt)
 			var/path = /obj/item/bodypart/l_arm
 			if(!(i % 2))
@@ -411,5 +411,5 @@
 			BP.owner = src
 			BP.held_index = i
 			bodyparts += BP
-			hand_organs[i] = BP
+			hand_bodyparts[i] = BP
 	..() //Don't redraw hands until we have organs for them
