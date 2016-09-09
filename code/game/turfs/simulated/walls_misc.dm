@@ -3,7 +3,6 @@
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
-	walltype = "cult"
 	builtin_sheet = null
 	canSmoothWith = null
 
@@ -144,7 +143,6 @@
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
-	walltype = "iced"
 	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
@@ -154,7 +152,6 @@
 	desc = "A rusted metal wall."
 	icon = 'icons/turf/walls/rusty_wall.dmi'
 	icon_state = "arust"
-	walltype = "arust"
 	hardness = 45
 
 /turf/closed/wall/r_wall/rust
@@ -162,26 +159,22 @@
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	icon_state = "rrust"
-	walltype = "rrust"
 	hardness = 15
 
 /turf/closed/wall/shuttle
 	name = "wall"
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	walltype = "shuttle"
 	smooth = SMOOTH_FALSE
 
 /turf/closed/wall/shuttle/syndie
 	icon_state = "wall3"
-	walltype = "syndieshuttle"
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 
 /turf/closed/wall/shuttle/smooth
 	name = "wall"
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle"
-	walltype = "shuttle"
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle, /obj/machinery/door/airlock/glass, /obj/machinery/door/airlock/shuttle)

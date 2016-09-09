@@ -133,13 +133,13 @@
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 	deconstruct(girder)
 
-/obj/structure/falsewall/proc/deconstruct(girder)
+/obj/structure/falsewall/deconstruct(girder)
 	if(girder)
 		new girder_type(loc)
 	if(mineral_amount)
 		for(var/i in 1 to mineral_amount)
 			new mineral(loc)
-	qdel(src)
+	..()
 
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
