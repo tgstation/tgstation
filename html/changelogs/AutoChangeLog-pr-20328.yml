@@ -1,5 +1,0 @@
-author: "Ergovisavi"
-delete-after: True
-changes: 
-  - rscadd: "Adds new loot for the colossus, the \"Anomalous Crystal\""
-  - tweak: "Enabled colossus spawning again"
