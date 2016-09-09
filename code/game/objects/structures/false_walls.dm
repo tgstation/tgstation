@@ -19,6 +19,7 @@
 	/turf/closed/wall,
 	/turf/closed/wall/r_wall,
 	/obj/structure/falsewall,
+	/obj/structure/falsewall/brass,
 	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust,
@@ -28,7 +29,6 @@
 
 /obj/structure/falsewall/New(loc)
 	..()
-	queue_smooth_neighbors(src)
 	air_update_turf(1)
 
 /obj/structure/falsewall/Destroy()
