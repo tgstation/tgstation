@@ -148,6 +148,13 @@
 	icon_state = "tile_poddark"
 	turf_type = /turf/open/floor/pod/dark
 
+/obj/item/stack/tile/brass
+	name = "brass floor tile"
+	singular_name = "brass floor tile"
+	desc = "A brass floor tile. It vibrates slightly."
+	icon_state = "tile_brass"
+	turf_type = /turf/open/floor/clockwork
+
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
