@@ -52,7 +52,7 @@
 	if(..())
 		return TRUE
 	for(var/obj/machinery/dna_vault/V in machines)
-		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna >= human_count)
+		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna.len >= human_count)
 			return TRUE
 	return FALSE
 
