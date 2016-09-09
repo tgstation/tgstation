@@ -44,6 +44,7 @@
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
+	sheet_type = /obj/item/stack/sheet/brass
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/clockwork/cache/linkedcache
 
@@ -123,6 +124,7 @@
 			O.loc = src
 
 /turf/closed/wall/clockwork/break_wall()
+	new sheet_type(get_turf(src))
 	return new/obj/structure/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
