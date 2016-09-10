@@ -24,7 +24,6 @@
 	..()
 	initial_state = icon_state
 	air_update_turf(1)
-	return
 
 /obj/structure/mineral_door/Destroy()
 	density = 0
@@ -40,7 +39,6 @@
 	..()
 	if(!state)
 		return TryToSwitchState(user)
-	return
 
 /obj/structure/mineral_door/attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
 	if(isAI(user)) //so the AI can't open it
@@ -146,8 +144,6 @@
 	hardness -= Proj.damage
 	..()
 	CheckHardness()
-	return
-
 
 /obj/structure/mineral_door/proc/CheckHardness()
 	if(hardness <= 0)
@@ -156,7 +152,7 @@
 /obj/structure/mineral_door/proc/Dismantle(devastated = 0)
 	var/turf/T = get_turf(src)
 	if(!devastated)
-		for(var/i in 1 to sheeyAmount)
+		for(var/i in 1 to sheetAmount)
 			new sheetType(T)
 	else
 		for(var/i in 3 to sheetAmount)
@@ -176,8 +172,6 @@
 		if(3)
 			hardness -= 0.1
 			CheckHardness()
-	return
-
 
 
 /obj/structure/mineral_door/iron
