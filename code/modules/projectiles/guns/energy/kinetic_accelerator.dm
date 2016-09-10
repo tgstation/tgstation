@@ -243,18 +243,19 @@
 			if(number_of_denied >= maximum_of_type)
 				. = FALSE
 				break
-	if(.)
-		if(KA.get_remaining_mod_capacity() >= cost)
+	if(KA.get_remaining_mod_capacity() >= cost)
+		if(.)
 			user << "<span class='notice'>You install the modkit.</span>"
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			user.unEquip(src)
 			forceMove(KA)
 			KA.modkits += src
 		else
-			user << "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>"
-			. = FALSE
+			user << "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>"
 	else
-		user << "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>"
+		user << "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>"
+		. = FALSE
+
 
 
 /obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
