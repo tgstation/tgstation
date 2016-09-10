@@ -706,16 +706,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	if (usr.canUseTopic(src))
-		if(is_type_in_list(inserted_item, contained_item))
-			if(inserted_item)
-				if(istype(loc, /mob))
-					var/mob/M = loc
-					M.put_in_hands(inserted_item)
-					usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
-					inserted_item = null
-					return
-				inserted_item.forceMove()
-		usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
+		if(inserted_item)
+			if(ismob(loc))
+				var/mob/M = loc
+				M.put_in_hands(inserted_item)
+				usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
+				inserted_item = null
+				return
+			inserted_item.forceMove(loc)
+	usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
 
 /obj/item/device/pda/proc/id_check(mob/user, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
@@ -782,7 +781,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else
 			if(!user.unEquip(C))
 				return
-			C.loc = src
+			C.forceMove(src)
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
 			inserted_item = C
 	else if(istype(C, /obj/item/weapon/photo))
