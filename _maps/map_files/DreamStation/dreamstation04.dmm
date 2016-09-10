@@ -42441,7 +42441,7 @@
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bGN" = (
 /obj/structure/table/wood,
@@ -42459,7 +42459,7 @@
 	pixel_y = 20;
 	tag = "NORTH"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bGO" = (
 /obj/structure/table/wood,
@@ -42469,7 +42469,7 @@
 	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/pen/invisible,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bGP" = (
 /obj/structure/table,
@@ -43659,19 +43659,19 @@
 /turf/open/floor/wood,
 /area/library)
 "bIO" = (
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bIP" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bIQ" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/weapon/book/codex_gigas,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bIR" = (
 /obj/structure/filingcabinet/chestdrawer/wheeled,
@@ -44499,7 +44499,7 @@
 	name = "Private Study";
 	req_access_txt = "37"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bKs" = (
 /obj/structure/cable/green{

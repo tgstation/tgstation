@@ -9,7 +9,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "ad" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "ae" = (
@@ -71,7 +71,7 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/awaymission/wwvault)
 "aq" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/awaymission/wwvault)
 "ar" = (
@@ -131,7 +131,7 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/awaymission/wwvault)
 "aB" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/circuit/off,
 /area/awaymission/wwvault)
 "aC" = (
