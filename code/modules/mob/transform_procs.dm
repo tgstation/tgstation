@@ -7,6 +7,8 @@
 	var/list/implants = list()
 	var/list/int_organs = list()
 
+
+
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
@@ -17,9 +19,19 @@
 			int_organs += I
 			I.Remove(src, 1)
 
+	var/list/missing_bodyparts_zones = get_missing_limbs()
+
+	var/obj/item/cavity_object
+
+	var/obj/item/bodypart/chest/CH = get_bodypart("chest")
+	if(CH.cavity_item)
+		cavity_object = CH.cavity_item
+		CH.cavity_item = null
+
 	if(tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (src.contents-implants-int_organs))
+		for(var/obj/item/W in (contents-implants-cavity_object))
 			unEquip(W)
+
 
 	//Make mob invisible and spawn animation
 	notransform = 1
@@ -90,11 +102,30 @@
 			var/obj/item/organ/I = X
 			I.Insert(O, 1)
 
+	var/obj/item/bodypart/chest/torso = O.get_bodypart("chest")
+	if(cavity_object)
+		torso.cavity_item = cavity_object //cavity item is given to the new chest
+		cavity_object.loc = O
+
+	for(var/missing_zone in missing_bodyparts_zones)
+		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)
+		BP.drop_limb(1)
+		if(!(tr_flags & TR_KEEPORGANS)) //we didn't already get rid of the organs of the newly spawned mob
+			for(var/X in O.internal_organs)
+				var/obj/item/organ/G = X
+				if(BP.body_zone == check_zone(G.zone))
+					if(mind && mind.changeling && istype(G, /obj/item/organ/brain))
+						continue //so headless changelings don't lose their brain when transforming
+					qdel(G) //we lose the organs in the missing limbs
+		qdel(BP)
+
 	//transfer mind and delete old mob
 	if(mind)
 		mind.transfer_to(O)
 		if(O.mind.changeling)
 			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+
+
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a monkey.</B>"
 
@@ -128,9 +159,18 @@
 			int_organs += I
 			I.Remove(src, 1)
 
+	var/list/missing_bodyparts_zones = get_missing_limbs()
+
+	var/obj/item/cavity_object
+
+	var/obj/item/bodypart/chest/CH = get_bodypart("chest")
+	if(CH.cavity_item)
+		cavity_object = CH.cavity_item
+		CH.cavity_item = null
+
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (src.contents-implants-int_organs))
+		for(var/obj/item/W in (contents-implants-cavity_object))
 			unEquip(W)
 			if (client)
 				client.screen -= W
@@ -138,6 +178,8 @@
 				W.loc = loc
 				W.dropped(src)
 				W.layer = initial(W.layer)
+
+
 
 	//Make mob invisible and spawn animation
 	notransform = 1
@@ -211,6 +253,24 @@
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
 			I.Insert(O, 1)
+
+
+	var/obj/item/bodypart/chest/torso = get_bodypart("chest")
+	if(cavity_object)
+		torso.cavity_item = cavity_object //cavity item is given to the new chest
+		cavity_object.loc = O
+
+	for(var/missing_zone in missing_bodyparts_zones)
+		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)
+		BP.drop_limb(1)
+		if(!(tr_flags & TR_KEEPORGANS)) //we didn't already get rid of the organs of the newly spawned mob
+			for(var/X in O.internal_organs)
+				var/obj/item/organ/G = X
+				if(BP.body_zone == check_zone(G.zone))
+					if(mind && mind.changeling && istype(G, /obj/item/organ/brain))
+						continue //so headless changelings don't lose their brain when transforming
+					qdel(G) //we lose the organs in the missing limbs
+		qdel(BP)
 
 	if(mind)
 		mind.transfer_to(O)

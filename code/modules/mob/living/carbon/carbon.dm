@@ -665,6 +665,7 @@
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	if(admin_revive)
+		regenerate_limbs()
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)

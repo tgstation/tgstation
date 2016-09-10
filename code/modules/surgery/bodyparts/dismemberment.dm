@@ -8,6 +8,8 @@
 	if(!owner)
 		return 0
 	var/mob/living/carbon/C = owner
+	if(!dismemberable)
+		return 0
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
@@ -42,6 +44,8 @@
 	if(!owner)
 		return 0
 	var/mob/living/carbon/C = owner
+	if(!dismemberable)
+		return 0
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
