@@ -1,5 +1,5 @@
 /datum/round_event_control/false_war
-	name = "False Nuke Ops War Declaration
+	name = "False Nuke Ops War Declaration"
 	typepath = /datum/round_event/false_war
 	weight = 10
 	min_players = 30
