@@ -7,42 +7,24 @@
 /////////////////////////////////// STUNNED ////////////////////////////////////
 
 /mob/proc/Stun(amount, updating = 1, ignore_canstun = 0)
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(updating)
-			update_canmove()
+	return
 
 /mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(amount,0)
-		if(updating)
-			update_canmove()
+	return
 
 /mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0)
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(stunned + amount,0)
-		if(updating)
-			update_canmove()
+	return
 
 /////////////////////////////////// WEAKENED ////////////////////////////////////
 
 /mob/proc/Weaken(amount, updating = 1, ignore_canweaken = 0)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(max(weakened,amount),0)
-		if(updating)
-			update_canmove()	//updates lying, canmove and icons
+	return
 
 /mob/proc/SetWeakened(amount, updating = 1, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount,0)
-		if(updating)
-			update_canmove()	//updates lying, canmove and icons
+	return
 
 /mob/proc/AdjustWeakened(amount, updating = 1, ignore_canweaken = 0)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(weakened + amount,0)
-		if(updating)
-			update_canmove()	//updates lying, canmove and icons
+	return
 
 /////////////////////////////////// PARALYSIS ////////////////////////////////////
 
