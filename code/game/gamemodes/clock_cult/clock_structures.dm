@@ -372,7 +372,7 @@
 
 /obj/structure/destructible/clockwork/wall_gear/examine(mob/user)
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "secured to the floor":"mobile, and not secured"].</span>"
+	user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -612,7 +612,7 @@
 	name = "clockwork wall"
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
 	icon_state = "clockwork_wall"
-	canSmoothWith = list(/obj/effect/clockwork/overlay/wall)
+	canSmoothWith = list(/obj/effect/clockwork/overlay/wall, /obj/structure/falsewall/brass)
 	smooth = SMOOTH_TRUE
 	layer = CLOSED_TURF_LAYER
 
