@@ -325,7 +325,4 @@
 	SSair.add_to_active(T0,1)
 
 /turf/proc/is_transition_turf()
-	if(istype(src, /turf/open/space))
-		var/turf/open/space/S = src
-		if(S.destination_x || S.destination_y || S.destination_z)
-			return 1
+	return
