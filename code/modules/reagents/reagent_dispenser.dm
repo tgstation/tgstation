@@ -49,6 +49,8 @@
 
 
 /obj/structure/reagent_dispensers/proc/boom()
+	visible_message("<span class='danger'>\The [src] ruptures!</span>")
+	chem_splash(loc, 5, list(reagents))
 	qdel(src)
 
 /obj/structure/reagent_dispensers/watertank
@@ -56,19 +58,10 @@
 	desc = "A water tank."
 	icon_state = "water"
 
-/obj/structure/reagent_dispensers/waterank/bullet_act(obj/item/projectile/Proj)
+/obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(tank_volume && istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
 		boom()
-
-/obj/structure/reagent_dispensers/watertank/boom()
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-	PoolOrNew(/obj/effect/particle_effect/water, loc)
-	for(var/turf/open/T in view(5,loc))
-		T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
-		for(var/mob/living/L in T)
-			L.adjust_fire_stacks(-20)
-	qdel(src)
 
 /obj/structure/reagent_dispensers/watertank/blob_act(obj/effect/blob/B)
 	if(prob(50))

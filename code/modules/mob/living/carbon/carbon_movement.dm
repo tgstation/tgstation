@@ -11,7 +11,8 @@ var/const/GALOSHES_DONT_HELP = 4
 var/const/SLIDE_ICE = 8
 
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
-	add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
+	if(!(lube&SLIDE_ICE))
+		add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
 	return loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 

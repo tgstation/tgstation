@@ -2,10 +2,16 @@
 
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
-	name = "Light-emtter"
+	name = "Light emitter"
 	anchored = 1
 	unacidable = 1
-	luminosity = 8
+	invisibility = 101
+	var/set_luminosity = 8
+	var/set_cap = 0
+
+/obj/effect/light_emitter/New()
+	..()
+	SetLuminosity(set_luminosity, set_cap)
 
 /**********************Miner Lockers**************************/
 
@@ -535,8 +541,14 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			say("<span class='danger'>Launch sequence activated! Prepare for drop!</span>")
 			playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, 0)
 			launch_warning = FALSE
-		feedback_add_details("colonies_dropped") //Number of times a base has been dropped!
 	..()
+
+
+
+/obj/machinery/computer/shuttle/auxillary_base/onShuttleMove(turf/T1, rotation)
+	..()
+	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
+		feedback_add_details("colonies_dropped", "[x]|[y]|[z]") //Number of times a base has been dropped!
 
 /obj/machinery/computer/shuttle/auxillary_base/proc/set_mining_mode()
 	if(z == ZLEVEL_MINING) //The console switches to controlling the mining shuttle once landed.

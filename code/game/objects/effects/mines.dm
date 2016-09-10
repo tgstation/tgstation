@@ -55,7 +55,7 @@
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
 	if(isliving(victim) && victim.client)
 		victim << "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>"
-		del(victim.client)
+		qdel(victim.client)
 
 
 /obj/effect/mine/gas

@@ -191,7 +191,7 @@ Difficulty: Medium
 	if(stat || swooping)
 		return
 	swoop_cooldown = world.time + 200
-	var/swoop_target
+	var/atom/swoop_target
 	if(manual_target)
 		swoop_target = manual_target
 	else
@@ -212,7 +212,7 @@ Difficulty: Medium
 		fire_rain()
 
 	icon_state = "dragon"
-	if(swoop_target && !qdeleted(swoop_target))
+	if(swoop_target && !qdeleted(swoop_target) && swoop_target.z == src.z)
 		tturf = get_turf(swoop_target)
 	else
 		tturf = get_turf(src)

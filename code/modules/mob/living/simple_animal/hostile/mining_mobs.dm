@@ -223,9 +223,8 @@
 		A.admin_spawned = admin_spawned
 		A.GiveTarget(target)
 		A.friends = friends
-		A.faction = faction
+		A.faction = faction.Copy()
 		ranged_cooldown = world.time + ranged_cooldown_time
-	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
@@ -244,7 +243,6 @@
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/inert = 0
 	var/preserved = 0
-	var/list/spawned_brood = list()
 
 /obj/item/organ/hivelord_core/New()
 	..()
@@ -274,36 +272,13 @@
 	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
-	var/spawn_amount = 1
-	if(!inert)
-		spawn_amount++
-
-	for(var/a in spawned_brood)
-		if(!istype(a, /mob/living/simple_animal/hostile/asteroid/hivelordbrood) || qdeleted(a))
-			spawned_brood -= a
-			continue
-	spawn_amount -= spawned_brood.len
-
-	for(var/i = 1 to spawn_amount)
-		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/B = new (owner.loc)
-		B.link_host(owner)
-		spawned_brood |= B
-
+	owner.revive(full_heal = 1)
+	qdel(src)
 
 /obj/item/organ/hivelord_core/on_life()
 	..()
-	if(owner)
-		owner.adjustBruteLoss(-1)
-		owner.adjustFireLoss(-1)
-		owner.adjustOxyLoss(-2)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		CHECK_DNA_AND_SPECIES(H)
-		if(NOBLOOD in H.dna.species.specflags)
-			return
-
-		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume += 2 // Fast blood regen
+	if(owner.health < HEALTH_THRESHOLD_CRIT)
+		ui_action_click()
 
 /obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
@@ -733,6 +708,7 @@
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
+	flying = TRUE
 	robust_searching = 1
 	loot = list()
 	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)

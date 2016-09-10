@@ -4,9 +4,14 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
+	var/datum/reagents/reagents = null
+	var/fingerprintslast = null
 
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
+
+/datum/proc/on_reagent_change()
+	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
@@ -384,19 +389,20 @@ body
 	else if (isfile(value))
 		html += "[html_encode(name)] = <span class='value'>'[value]'</span>"
 
+	else if (istype(value, /client))
+		var/client/C = value
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [C] [C.type]"
+
 	else if (istype(value, /datum))
 		var/datum/D = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /client))
-		var/client/C = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [C] [C.type]"
-//
 	else if (istype(value, /list))
 		var/list/L = value
 		html += "[html_encode(name)] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
+			name = "[name]"	//Needs to be a string or it will go out of bounds in the internal_byond_list_vars array
 			html += "<ul>"
 			var/index = 1
 			for(var/entry in L)
@@ -523,8 +529,8 @@ body
 				return
 
 			var/D = locate(href_list["datumedit"])
-			if(!istype(D,/datum) && !istype(D,/client))
-				usr << "This can only be used on instances of types /client or /datum"
+			if(!istype(D,/datum))
+				usr << "This can only be used on datums"
 				return
 
 			modify_variables(D, href_list["varnameedit"], 1)
@@ -534,8 +540,8 @@ body
 				return
 
 			var/D = locate(href_list["datumchange"])
-			if(!istype(D,/datum) && !istype(D,/client))
-				usr << "This can only be used on instances of types /client or /datum"
+			if(!istype(D,/datum))
+				usr << "This can only be used on datums"
 				return
 
 			modify_variables(D, href_list["varnamechange"], 0)

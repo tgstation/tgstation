@@ -859,7 +859,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 				bot_name = name
 				name = paicard.pai.name
-				faction = user.faction
+				faction = user.faction.Copy()
 				add_logs(user, paicard.pai, "uploaded to [bot_name],")
 				return 1
 			else

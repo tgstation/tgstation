@@ -1137,3 +1137,19 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	H.regenerate_icons()
 
 #undef ON_PURRBATION
+
+/client/proc/modify_goals()
+	set category = "Debug"
+	set name = "Modify station goals"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	holder.modify_goals()
+
+/datum/admins/proc/modify_goals()
+	var/dat = ""
+	for(var/datum/station_goal/S in ticker.mode.station_goals)
+		dat += "[S.name] - <a href='?src=\ref[S];announce=1'>Announce</a> | <a href='?src=\ref[S];remove=1'>Remove</a><br>"
+	dat += "<br><a href='?src=\ref[src];add_station_goal=1'>Add New Goal</a>"
+	usr << browse(dat, "window=goals;size=400x400")

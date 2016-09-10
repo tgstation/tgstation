@@ -235,7 +235,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aJ" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/weapon/dice/d20/fate,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
@@ -3429,7 +3429,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "jw" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -3438,7 +3438,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/awaymission/academy/academyaft)
 "jy" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
