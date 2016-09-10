@@ -14,4 +14,4 @@
 	priority_announce("[syndicate_name()] [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")] has declared his intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them.", title = "Declaration of War", sound = 'sound/machines/Alarm.ogg')
 
 /datum/round_event/false_war/start()
-  config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
+	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
