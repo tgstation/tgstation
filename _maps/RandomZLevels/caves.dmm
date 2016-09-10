@@ -92,7 +92,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "an" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -108,7 +108,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "ap" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
@@ -151,7 +151,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "au" = (
-/obj/structure/cult/talisman,
+/obj/structure/destructible/cult/talisman,
 /obj/effect/decal/remains/human,
 /obj/item/stack/sheet/runed_metal{
 	amount = 25
@@ -199,7 +199,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "ay" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/weapon/tome,
 /obj/item/stack/sheet/runed_metal{
 	amount = 25
@@ -260,7 +260,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "aE" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/stack/sheet/runed_metal{
 	amount = 25
 	},
@@ -497,7 +497,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "ba" = (
-/obj/structure/cult/talisman,
+/obj/structure/destructible/cult/talisman,
 /obj/item/weapon/plasma_fist_scroll,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
@@ -700,7 +700,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bv" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -745,7 +745,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "bA" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/device/necromantic_stone,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
@@ -781,7 +781,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bE" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;

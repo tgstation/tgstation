@@ -35,8 +35,7 @@
 			user << "<span class='warning'>You need one plasteel sheet to do this!</span>"
 			return
 		user << "<span class='notice'>You start adding [P] to [src]...</span>"
-		if(do_after(user, 50, target = src))
-			P.use(1)
+		if(do_after(user, 50, target = src) && P.use(1))
 			new /obj/structure/table/reinforced(src.loc)
 			qdel(src)
 	else if(istype(I, /obj/item/stack/sheet/metal))
@@ -45,8 +44,7 @@
 			user << "<span class='warning'>You need one metal sheet to do this!</span>"
 			return
 		user << "<span class='notice'>You start adding [M] to [src]...</span>"
-		if(do_after(user, 20, target = src))
-			M.use(1)
+		if(do_after(user, 20, target = src) && M.use(1))
 			new /obj/structure/table(src.loc)
 			qdel(src)
 	else if(istype(I, /obj/item/stack/sheet/glass))
@@ -55,9 +53,7 @@
 			user << "<span class='warning'>You need one glass sheet to do this!</span>"
 			return
 		user << "<span class='notice'>You start adding [G] to [src]...</span>"
-		if(do_after(user, 20, target = src))
-			G.use(1)
-
+		if(do_after(user, 20, target = src) && G.use(1))
 			new /obj/structure/table/glass(src.loc)
 			qdel(src)
 	else if(istype(I, /obj/item/stack/sheet/mineral/silver))
@@ -66,9 +62,17 @@
 			user << "<span class='warning'>You need one silver sheet to do this!</span>"
 			return
 		user << "<span class='notice'>You start adding [S] to [src]...</span>"
-		if(do_after(user, 20, target = src))
-			S.use(1)
+		if(do_after(user, 20, target = src) && S.use(1))
 			new /obj/structure/table/optable(src.loc)
+			qdel(src)
+	else if(istype(I, /obj/item/stack/tile/carpet))
+		var/obj/item/stack/tile/carpet/C = I
+		if(C.get_amount() < 1)
+			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [C] to [src]...</span>"
+		if(do_after(user, 20, target = src) && C.use(1))
+			new /obj/structure/table/wood/fancy(src.loc)
 			qdel(src)
 	else
 		return ..()
@@ -101,8 +105,7 @@
 			user << "<span class='warning'>You need one wood sheet to do this!</span>"
 			return
 		user << "<span class='notice'>You start adding [W] to [src]...</span>"
-		if(do_after(user, 20, target = src))
-			W.use(1)
+		if(do_after(user, 20, target = src) && W.use(1))
 			new /obj/structure/table/wood(src.loc)
 			qdel(src)
 		return
@@ -112,8 +115,7 @@
 			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
 			return
 		user << "<span class='notice'>You start adding [C] to [src]...</span>"
-		if(do_after(user, 20, target = src))
-			C.use(1)
+		if(do_after(user, 20, target = src) && C.use(1))
 			new /obj/structure/table/wood/poker(src.loc)
 			qdel(src)
 	else

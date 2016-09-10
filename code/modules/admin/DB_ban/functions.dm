@@ -132,7 +132,7 @@
 
 	if(kickbannedckey)
 		if(banned_mob && banned_mob.client && banned_mob.client.ckey == banckey)
-			del(banned_mob.client)
+			qdel(banned_mob.client)
 
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")

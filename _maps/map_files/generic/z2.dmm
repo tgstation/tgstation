@@ -2524,7 +2524,7 @@
 	},
 /area/centcom/evac)
 "hL" = (
-/obj/structure/cult/talisman{
+/obj/structure/destructible/cult/talisman{
 	desc = "A altar dedicated to the Wizard's Federation"
 	},
 /obj/item/weapon/kitchen/knife/ritual,
@@ -3969,7 +3969,7 @@
 	},
 /area/wizard_station)
 "mp" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /turf/open/floor/plasteel/cult,
 /area/wizard_station)
 "mq" = (
@@ -4195,7 +4195,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "mW" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "mX" = (
@@ -4612,7 +4612,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
 "oo" = (
-/obj/structure/cult/forge{
+/obj/structure/destructible/cult/forge{
 	desc = "A engine used in powering the wizards ship";
 	name = "magma engine"
 	},
@@ -5797,7 +5797,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "sb" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "sc" = (
@@ -5835,14 +5835,23 @@
 /area/awaymission/errorroom)
 "tm" = (
 /obj/item/rupee,
-/turf/open/floor/mineral/abductor,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0
+	},
 /area/awaymission/errorroom)
 "tn" = (
-/turf/open/floor/mineral/abductor,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0
+	},
 /area/awaymission/errorroom)
 "to" = (
 /obj/effect/landmark/error,
-/turf/open/floor/mineral/abductor,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0
+	},
 /area/awaymission/errorroom)
 "tp" = (
 /obj/structure/signpost/salvation{
@@ -5850,7 +5859,10 @@
 	icon_state = "ladder10";
 	invisibility = 100
 	},
-/turf/open/floor/mineral/abductor,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0
+	},
 /area/awaymission/errorroom)
 "tq" = (
 /obj/structure/closet/cardboard,

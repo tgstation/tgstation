@@ -45,7 +45,7 @@
 	explosion_block = 2
 	sheet_type = /obj/item/stack/sheet/brass
 	var/obj/effect/clockwork/overlay/wall/realappearence
-	var/obj/structure/clockwork/cache/linkedcache
+	var/obj/structure/destructible/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/New()
 	..()
@@ -124,7 +124,7 @@
 
 /turf/closed/wall/clockwork/break_wall()
 	new sheet_type(src)
-	return new/obj/structure/clockwork/wall_gear(src)
+	return new/obj/structure/destructible/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
 	for(var/i in 1 to 2)

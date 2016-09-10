@@ -319,6 +319,6 @@
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
 	icon_state = "clockwork_wall"
 	mineral_amount = 1
-	girder_type = /obj/structure/clockwork/wall_gear/displaced
+	girder_type = /obj/structure/destructible/clockwork/wall_gear/displaced
 	walltype = /turf/closed/wall/clockwork
 	mineral = /obj/item/stack/sheet/brass
