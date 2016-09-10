@@ -301,27 +301,34 @@
 
 
 //AoE blasts
+/obj/item/borg/upgrade/modkit/aoe
+	modifier = 0
+
 /obj/item/borg/upgrade/modkit/aoe/modify_projectile(obj/item/projectile/kinetic/K)
 	K.name = "kinetic explosion"
 	if(!K.turf_aoe && !K.mob_aoe)
 		K.hit_overlays += /obj/effect/overlay/temp/explosion/fast
+	K.mob_aoe += modifier
 
 /obj/item/borg/upgrade/modkit/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
+	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
 
 /obj/item/borg/upgrade/modkit/aoe/turfs/modify_projectile(obj/item/projectile/kinetic/K)
 	..()
 	K.turf_aoe = TRUE
 
+/obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
+	name = "offensive mining explosion"
+	desc = "Causes the kinetic accelerator to destroy rock and damage mobs in an AoE."
+	maximum_of_type = 3
+	modifier = 0.25
+
 /obj/item/borg/upgrade/modkit/aoe/mobs
 	name = "offensive explosion"
 	desc = "Causes the kinetic accelerator to damage mobs in an AoE."
-	modifier = 0.25
-
-/obj/item/borg/upgrade/modkit/aoe/mobs/modify_projectile(obj/item/projectile/kinetic/K)
-	..()
-	K.mob_aoe += modifier
+	modifier = 0.166
 
 
 //Indoors
