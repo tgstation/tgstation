@@ -61,7 +61,7 @@
 		if(do_after(user, harvest_time, target = src))
 			harvest(user)
 	else
-		..()
+		return ..()
 
 /obj/structure/flora/ash/attack_hand(mob/user)
 	if(!harvested && !needs_sharp_harvest)
@@ -165,7 +165,7 @@
 
 /obj/item/ash_flora/attackby(obj/item/weapon/W, mob/user, params)
 	if(!standard_prep || !W.sharpness || !prepare(user))
-		..()
+		return ..()
 
 /obj/item/ash_flora/proc/prepare(mob/user)
 	if(!prepared)
