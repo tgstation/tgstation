@@ -141,11 +141,11 @@
 			if(!(RADIMMUNE in H.dna.species.specflags))
 				if(prob(25))
 					if(prob(25))
-						randmuti(H)
+						H.randmuti()
 					if(prob(90))
-						randmutb(H)
+						H.randmutb()
 					else
-						randmutg(H)
+						H.randmutg()
 					H.domutcheck()
 	L.rad_act(20,1)
 

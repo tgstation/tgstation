@@ -14,7 +14,8 @@
 
 		handle_blood()
 
-		for(var/obj/item/organ/O in internal_organs)
+		for(var/X in internal_organs)
+			var/obj/item/organ/O = X
 			O.on_life()
 
 	//Updates the number of stored chemicals for powers

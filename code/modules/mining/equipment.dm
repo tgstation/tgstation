@@ -507,7 +507,7 @@
 	range = 6
 	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced =  null
 
-/obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0, hit_zone)
+/obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
 	if(hammer_synced)
 		if(hammer_synced.mark == target)
 			return ..()

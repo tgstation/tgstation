@@ -26,7 +26,8 @@
 			organ.implant(C)
 
 		if("drop organ/implant", "remove organ/implant")
-			for(var/obj/item/organ/I in C.internal_organs)
+			for(var/X in C.internal_organs)
+				var/obj/item/organ/I = X
 				organs["[I.name] ([I.type])"] = I
 
 			for(var/obj/item/weapon/implant/I in C)

@@ -167,9 +167,9 @@
 		for(var/A in bad_se_blocks)
 			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
 	if(efficiency > 5 && prob(20))
-		randmutvg(H)
+		H.randmutvg()
 	if(efficiency < 3 && prob(50))
-		var/mob/M = randmutb(H)
+		var/mob/M = H.randmutb()
 		if(ismob(M))
 			H = M
 
@@ -324,7 +324,7 @@
 
 	if (mess) //Clean that mess and dump those gibs!
 		mess = FALSE
-		gibs(loc)
+		new /obj/effect/gibspawner/generic(loc)
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		icon_state = "pod_0"
 		return
@@ -337,7 +337,7 @@
 		occupant.grab_ghost()
 		occupant << "<span class='notice'><b>There is a bright flash!</b><br>\
 			<i>You feel like a new being.</i></span>"
-		occupant.flash_eyes()
+		occupant.flash_act()
 
 	var/turf/T = get_turf(src)
 	occupant.forceMove(T)

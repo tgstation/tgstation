@@ -1,7 +1,4 @@
 
-/mob/living/silicon/robot/spawn_gibs()
-	robogibs(loc, viruses)
-
 /mob/living/silicon/robot/gib_animation()
 	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-r"))
 

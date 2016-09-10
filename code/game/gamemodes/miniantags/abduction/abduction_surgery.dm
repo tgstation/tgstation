@@ -23,9 +23,9 @@
 	var/list/organ_types = list(/obj/item/organ/heart)
 
 /datum/surgery_step/extract_organ/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	for(var/obj/item/I in target.internal_organs)
-		if(I.type in organ_types)
-			IC = I
+	for(var/atom/A in target.internal_organs)
+		if(A.type in organ_types)
+			IC = A
 			break
 	user.visible_message("[user] starts to remove [target]'s organs.", "<span class='notice'>You start to remove [target]'s organs...</span>")
 

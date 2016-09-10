@@ -392,7 +392,7 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
+		if(istype(M, /mob/living/brain)) //Ignore brains
 			continue
 
 		if(M.stat == CONSCIOUS)
