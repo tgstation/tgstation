@@ -73,7 +73,7 @@
 	icon_state = "pulse1_bl"
 	var/life = 20
 
-/obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = 0, hit_zone)
+/obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = 0)
 	life -= 10
 	if(life > 0)
 		. = -1

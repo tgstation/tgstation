@@ -228,10 +228,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
-				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
-					H.update_damage_overlays(0)
-				H.updatehealth()
+				var/hit_hand = "[user.hand ? "l" : "r" ]_arm"
+				H.apply_damage(5, BURN, hit_hand)
 				return
 		else
 			extinguish()
@@ -454,11 +452,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		)
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
-		if(affecting.take_damage(7))
-			U.update_damage_overlays(0)
+		U.apply_damage(7, BRUTE, affecting)
 
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 

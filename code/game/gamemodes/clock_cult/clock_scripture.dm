@@ -546,10 +546,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			var/mob/living/carbon/human/H = invoker
 			for(var/X in H.bodyparts)
 				var/obj/item/bodypart/BP = X
-				if(ratvar_awakens || BP.status == ORGAN_ROBOTIC && total_power_drained < augument_damage_threshhold) //if ratvar is alive, it won't damage and will always heal augumented limbs
-					BP.heal_damage(power_damage, power_damage, 1) //heals one point of burn and brute for every ~100W drained on augumented limbs
+				if(ratvar_awakens || BP.status == BODYPART_ROBOTIC && total_power_drained < augument_damage_threshhold) //if ratvar is alive, it won't damage and will always heal augumented limbs
+					if(BP.heal_damage(power_damage, power_damage, 1, 0)) //heals one point of burn and brute for every ~100W drained on augumented limbs
+						H.update_damage_overlays()
 				else
-					BP.take_damage(0, power_damage)
+					if(BP.take_damage(0, power_damage))
+						H.update_damage_overlays()
 		else if(isanimal(invoker))
 			var/mob/living/simple_animal/A = invoker
 			A.adjustHealth(-power_damage) //if a simple animal is using volt void, just heal it

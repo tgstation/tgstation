@@ -41,7 +41,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			if(prob(4))
 				owner << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
-					owner.take_organ_damage(1)
+					owner.take_bodypart_damage(1)
 			if(prob(4))
 				owner << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))

@@ -108,7 +108,7 @@
 	target = user
 	sleep(10)
 	prime()
-	user.gib(no_brain = 1)
+	user.gib(1, 1, 1)
 
 /obj/item/weapon/grenade/plastic/update_icon()
 	if(nadeassembly)

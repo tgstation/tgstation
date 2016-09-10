@@ -253,7 +253,7 @@
 		else
 			target.Weaken(10)
 			target.Stun(10)
-			target.flash_eyes(1,1)
+			target.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = target
 				S.emp_act(1)
@@ -316,7 +316,7 @@
 				target << "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>"
 				target.emote("scream")
 				target.confused = max(0, target.confused + 3)
-				target.flash_eyes()
+				target.flash_act()
 		qdel(src)
 
 

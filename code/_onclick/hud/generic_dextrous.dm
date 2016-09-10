@@ -79,3 +79,12 @@
 			D.r_hand.screen_loc = null
 		if(D.l_hand)
 			D.l_hand.screen_loc = null
+
+
+//Dextrous simple mobs can use hands!
+/mob/living/simple_animal/create_mob_hud()
+	if(client && !hud_used)
+		if(dextrous)
+			hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
+		else
+			..()
