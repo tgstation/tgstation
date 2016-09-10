@@ -156,10 +156,10 @@
 /obj/structure/mineral_door/proc/Dismantle(devastated = 0)
 	var/turf/T = get_turf(src)
 	if(!devastated)
-		for(var/i in 1 to oreAmount)
+		for(var/i in 1 to sheeyAmount)
 			new sheetType(T)
 	else
-		for(var/i in 3 to oreAmount)
+		for(var/i in 3 to sheetAmount)
 			new sheetType(T)
 	qdel(src)
 
