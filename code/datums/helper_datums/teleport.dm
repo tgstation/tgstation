@@ -106,6 +106,8 @@
 		if(!center)
 			center = destination
 		for(var/turf/T in range(precision,center))
+			if(T.is_transition_turf())
+				continue // Avoid picking these.
 			var/area/A = T.loc
 			if(!A.noteleport)
 				posturfs.Add(T)
@@ -114,7 +116,7 @@
 	else
 		destturf = get_turf(destination)
 
-	if(!destturf || !curturf)
+	if(!destturf || !curturf || destturf.is_transition_turf())
 		return 0
 
 	var/area/A = get_area(curturf)
