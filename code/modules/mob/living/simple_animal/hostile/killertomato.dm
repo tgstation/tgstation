@@ -4,6 +4,7 @@
 	icon_state = "tomato"
 	icon_living = "tomato"
 	icon_dead = "tomato_dead"
+	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5
 	maxHealth = 30

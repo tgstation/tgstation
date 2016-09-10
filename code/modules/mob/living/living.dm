@@ -443,7 +443,7 @@
 			. += config.walk_speed
 
 /mob/living/proc/makeTrail(turf/T)
-	if(!has_gravity(src))
+	if(!has_gravity())
 		return
 	var/blood_exists = 0
 
@@ -507,8 +507,8 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-
-	..(pressure_difference, direction, pressure_resistance_prob_delta)
+	if(!slipping)
+		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -532,6 +532,14 @@
 	else if(isobj(loc))
 		var/obj/C = loc
 		C.container_resist(src)
+
+	else if(has_status_effect(/datum/status_effect/freon))
+		src << "You start breaking out of the ice cube!"
+		if(do_mob(src, src, 40))
+			if(has_status_effect(/datum/status_effect/freon))
+				src << "You break out of the ice cube!"
+				remove_status_effect(/datum/status_effect/freon)
+				update_canmove()
 
 	else if(canmove)
 		if(on_fire)

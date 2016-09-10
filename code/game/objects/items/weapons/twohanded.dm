@@ -107,6 +107,11 @@
 		unwield(M)
 		return
 
+/obj/item/weapon/twohanded/equipped(mob/user, slot)
+	..()
+	if(slot != slot_l_hand && slot != slot_r_hand && wielded)
+		unwield(user)
+
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
 	name = "offhand"
@@ -151,9 +156,6 @@
 		wield(user)
 	else
 		unwield(user)
-
-
-/obj/item/weapon/twohanded/
 
 /*
  * Fireaxe

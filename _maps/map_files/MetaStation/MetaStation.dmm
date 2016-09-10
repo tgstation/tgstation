@@ -35087,6 +35087,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/portable_atmospherics/canister/water_vapor,
 /mob/living/simple_animal/hostile/lizard{
 	name = "Wags-His-Tail";
 	real_name = "Wags-His-Tail"
@@ -74101,9 +74102,6 @@
 /area/toxins/storage)
 "cxg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/start{
-	name = "Scientist"
-	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/warning{
 	dir = 4
@@ -75376,6 +75374,9 @@
 "czj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start{
+	name = "Scientist"
+	},
 /turf/open/floor/plasteel/warning{
 	dir = 6
 	},

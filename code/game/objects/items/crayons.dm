@@ -337,6 +337,7 @@
 			if(!can_claim_for_gang(user, target))
 				return
 			tag_for_gang(user, target)
+			affected_turfs += target
 		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)

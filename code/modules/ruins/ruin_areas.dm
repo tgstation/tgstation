@@ -19,6 +19,8 @@
 
 
 //Areas
+/area/ruin/unpowered/hierophant
+	name = "Hierophant's Arena"
 
 /area/ruin/unpowered/no_grav/way_home
 	name = "\improper Salvation"

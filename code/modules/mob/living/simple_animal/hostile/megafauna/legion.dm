@@ -110,6 +110,8 @@ Difficulty: Medium
 		L.update_transform()
 		update_transform()
 
+		L.faction = faction.Copy()
+
 		L.GiveTarget(target)
 
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")

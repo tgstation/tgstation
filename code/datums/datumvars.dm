@@ -4,9 +4,14 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
+	var/datum/reagents/reagents = null
+	var/fingerprintslast = null
 
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
+	return
+
+/datum/proc/on_reagent_change()
 	return
 
 /client/proc/debug_variables(datum/D in world)
@@ -526,8 +531,8 @@ body
 				return
 
 			var/D = locate(href_list["datumedit"])
-			if(!istype(D,/datum) && !istype(D,/client))
-				usr << "This can only be used on instances of types /client or /datum"
+			if(!istype(D,/datum))
+				usr << "This can only be used on datums"
 				return
 
 			modify_variables(D, href_list["varnameedit"], 1)
@@ -537,8 +542,8 @@ body
 				return
 
 			var/D = locate(href_list["datumchange"])
-			if(!istype(D,/datum) && !istype(D,/client))
-				usr << "This can only be used on instances of types /client or /datum"
+			if(!istype(D,/datum))
+				usr << "This can only be used on datums"
 				return
 
 			modify_variables(D, href_list["varnamechange"], 0)

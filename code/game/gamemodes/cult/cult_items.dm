@@ -185,7 +185,7 @@
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
-			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
+			user << "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>"
 			user << "<span class='userdanger'>The armor squeezes at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
@@ -239,7 +239,7 @@
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
-			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
+			user << "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>"
 			user << "<span class='userdanger'>The robes squeeze at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
