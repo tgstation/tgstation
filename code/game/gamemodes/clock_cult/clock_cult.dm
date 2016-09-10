@@ -346,7 +346,7 @@ Credit where due:
 		else
 			var/half_victory = FALSE
 			if(clockwork_objective == CLOCKCULT_GATEWAY)
-				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+				var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
 				if(G)
 					half_victory = TRUE
 			if(half_victory)

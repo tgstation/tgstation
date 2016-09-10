@@ -983,7 +983,7 @@
 	icon_state = "tinkerers_daemon"
 	w_class = 3
 	var/specific_component //The type of component that the daemon is set to produce in particular, if any
-	var/obj/structure/clockwork/cache/cache //The cache the daemon is feeding
+	var/obj/structure/destructible/clockwork/cache/cache //The cache the daemon is feeding
 	var/production_time = 0 //Progress towards production of the next component in seconds
 	var/production_cooldown = 200 //How many deciseconds it takes to produce a new component
 	var/component_slowdown_mod = 2 //how many deciseconds are added to the cooldown when producing a component for each of that component type
@@ -999,7 +999,7 @@
 	return ..()
 
 /obj/item/clockwork/tinkerers_daemon/process()
-	if(!cache || !istype(loc, /obj/structure/clockwork/cache))
+	if(!cache || !istype(loc, /obj/structure/destructible/clockwork/cache))
 		visible_message("<span class='warning'>[src] shuts down!</span>")
 		new/obj/item/clockwork/daemon_shell(get_turf(src))
 		qdel(src)
