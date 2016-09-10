@@ -285,8 +285,7 @@
 		\
 		Examine the slab for component amount information.<br><br>\
 		\
-		A complete list of scripture, its effects, and its requirements can be found below. <i>Note that anything above a driver always consumes the components listed unless otherwise \
-		specified.</i><br><br>"
+		A complete list of scripture, its effects, and its requirements can be found below. <br><br>"
 		var/text_to_add = ""
 		var/drivers = "<font color=#BE8700 size=3><b>[SCRIPTURE_DRIVER]</b></font>"
 		var/scripts = "<font color=#BE8700 size=3><b>[SCRIPTURE_SCRIPT]</b></font><br><i>These scriptures require at least five servants and a tinkerer's cache.</i>"
@@ -299,87 +298,33 @@
 			var/list/req_comps = S2.required_components
 			var/list/cons_comps = S2.consumed_components
 			qdel(S2)
-			switch(initial(S.tier))
-				if(SCRIPTURE_DRIVER)
-					drivers += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
-				if(SCRIPTURE_SCRIPT)
-					scripts += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
-				if(SCRIPTURE_APPLICATION)
-					applications += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
-				if(SCRIPTURE_REVENANT)
-					revenant += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
-				if(SCRIPTURE_JUDGEMENT)
-					judgement += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
+			if(initial(S.tier) != SCRIPTURE_PERIPHERAL)
+				var/scripture_text = "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
+				\
+				<b>Component Requirement: </b>\
+				[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
+				<b>Component Cost: </b>\
+				[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
+				<b>Tip:</b> [initial(S.usage_tip)]<br>"
+				switch(initial(S.tier))
+					if(SCRIPTURE_DRIVER)
+						drivers += scripture_text
+					if(SCRIPTURE_SCRIPT)
+						scripts += scripture_text
+					if(SCRIPTURE_APPLICATION)
+						applications += scripture_text
+					if(SCRIPTURE_REVENANT)
+						revenant += scripture_text
+					if(SCRIPTURE_JUDGEMENT)
+						judgement += scripture_text
 		text_to_add += "[drivers]<br>[scripts]<br>[applications]<br>[revenant]<br>[judgement]<br>"
 		text_to_add += "<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 		text += text_to_add
@@ -407,7 +352,7 @@
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
 	if(!message || !user || !user.canUseTopic(src))
 		return 0
-	clockwork_say(user, text2ratvar("Servants, hear my words. [message]"), TRUE)
+	clockwork_say(user, text2ratvar("Servants, hear my words. [html_decode(message)]"), TRUE)
 	titled_hierophant_message(user, message)
 	return 1
 
