@@ -217,8 +217,6 @@
 /mob/living/carbon/proc/update_hud_back(obj/item/I)
 	return
 
-/mob/living/carbon/proc/update_hud_gloves(obj/item/I)
-	return
 
 
 //Overlays for the worn overlay so you can overlay while you overlay

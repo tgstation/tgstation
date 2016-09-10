@@ -160,7 +160,7 @@ There are several things that need to be remembered:
 	apply_overlay(ID_LAYER)
 
 
-/mob/living/carbon/update_inv_gloves()
+/mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 
 	if(get_num_arms() <2)
@@ -178,7 +178,11 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(gloves)
-		update_hud_gloves(gloves)
+		gloves.screen_loc = ui_gloves
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)
+				client.screen += gloves
+		update_observer_view(gloves,1)
 		var/t_state = gloves.item_state
 		if(!t_state)
 			t_state = gloves.icon_state
@@ -418,12 +422,6 @@ There are several things that need to be remembered:
 		client.screen += I
 	update_observer_view(I)
 
-/mob/living/carbon/human/update_hud_gloves(obj/item/I)
-	I.screen_loc = ui_gloves
-	if(client && hud_used && hud_used.hud_shown)
-		if(hud_used.inventory_shown)
-			client.screen += I
-	update_observer_view(I,1)
 
 
 

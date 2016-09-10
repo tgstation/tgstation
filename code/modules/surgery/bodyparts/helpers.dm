@@ -27,8 +27,6 @@
 /mob/living/carbon/alien/larva/has_active_hand()
 	return 1
 
-/mob/living/brain/has_active_hand()
-	return 1
 
 /mob/proc/has_left_hand()
 	return 1
@@ -43,8 +41,6 @@
 /mob/living/carbon/alien/larva/has_left_hand()
 	return 1
 
-/mob/living/brain/has_left_hand()
-	return 1
 
 /mob/proc/has_right_hand()
 	return 1
@@ -59,8 +55,6 @@
 /mob/living/carbon/alien/larva/has_right_hand()
 	return 1
 
-/mob/living/brain/has_right_hand()
-	return 1
 
 
 //Limb numbers
@@ -76,6 +70,7 @@
 		if(affecting.body_part == ARM_LEFT)
 			.++
 
+
 //sometimes we want to ignore that we don't have the required amount of arms.
 /mob/proc/get_arm_ignore()
 	return 0
@@ -83,7 +78,7 @@
 /mob/living/carbon/alien/larva/get_arm_ignore()
 	return 1 //so we can still handcuff larvas.
 
-//sometimes we want to ignore that we don't have the required amount of arms.
+
 /mob/proc/get_num_legs()
 	return 2
 
