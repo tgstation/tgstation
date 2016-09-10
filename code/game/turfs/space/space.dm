@@ -38,7 +38,7 @@
 
 /turf/open/space/TakeTemperature(temp)
 
-/turf/open/space/proc/RemoveLattice()
+/turf/open/space/RemoveLattice()
 	return
 
 /turf/open/space/AfterChange()
