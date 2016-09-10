@@ -45,7 +45,6 @@
 	item_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
-	dog_fashion = /datum/dog_fashion/back/hos
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
