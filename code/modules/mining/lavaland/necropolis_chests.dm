@@ -829,7 +829,7 @@
 		else
 			user << "<span class='warning'>You need to be on solid ground to produce a rune!</span>"
 		return
-	if(src != user.l_hand && src != user.r_hand) //you need to hold the staff to teleport
+	if(!user.is_holding(src)) //you need to hold the staff to teleport
 		user << "<span class='warning'>You need to hold the staff in your hands to [rune ? "teleport with it":"create a rune"]!</span>"
 		return
 	if(get_dist(user, rune) <= 2) //rune too close abort

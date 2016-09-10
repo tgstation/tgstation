@@ -109,7 +109,7 @@
 
 /obj/item/weapon/twohanded/equipped(mob/user, slot)
 	..()
-	if(slot != slot_l_hand && slot != slot_r_hand && wielded)
+	if(!user.is_holding(src) && wielded)
 		unwield(user)
 
 ///////////OFFHAND///////////////
