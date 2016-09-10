@@ -195,7 +195,7 @@
 
 /obj/item/projectile/hook/fire(setAngle)
 	if(firer)
-		chain = Beam(firer, icon_state = "chain", icon = 'icons/obj/lavaland/artefacts.dmi', time = INFINITY, maxdistance = INFINITY)
+		chain = Beam(firer, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
 	..()
 
 /obj/item/projectile/hook/on_hit(atom/target)
