@@ -58,6 +58,10 @@
 	name = "Captain REAL_NAME"
 	desc = "Probably better than the last captain."
 
+/datum/dog_fashion/head/hos
+	name = "Commissar REAL_NAME"
+	desc = "Suffer not the xeno to bark."
+
 /datum/dog_fashion/head/kitty
 	name = "Runtime"
 	emote_see = list("coughs up a furball", "stretches")
