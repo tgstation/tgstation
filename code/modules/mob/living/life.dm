@@ -43,7 +43,7 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	update_gravity(has_gravity())
+	update_gravity(mob_has_gravity())
 
 	if(machine)
 		machine.check_eye(src)

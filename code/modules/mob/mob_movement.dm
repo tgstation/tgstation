@@ -303,6 +303,9 @@
 				break
 	. = dense_object_backup
 
+/mob/proc/mob_has_gravity()
+	return has_gravity()
+
 /mob/proc/mob_negates_gravity()
 	return 0
 
