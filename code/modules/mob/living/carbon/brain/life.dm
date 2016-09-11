@@ -54,7 +54,7 @@
 /mob/living/carbon/brain/handle_disabilities()
 	return
 
-/mob/living/carbon/brain/handle_changeling()
+/mob/living/carbon/brain/handle_stat_huds()
 	return
 
 

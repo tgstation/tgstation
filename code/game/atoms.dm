@@ -225,25 +225,6 @@ var/list/blood_splatter_icons = list()
 /atom/proc/blood_splatter_index()
 	return "\ref[initial(icon)]-[initial(icon_state)]"
 
-//returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
-/mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != "blood")
-		return
-	return list("ANIMAL DNA" = "Y-")
-
-/mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != "blood")
-		return
-	var/list/blood_dna = list()
-	if(dna)
-		blood_dna[dna.unique_enzymes] = dna.blood_type
-	else
-		blood_dna["UNKNOWN DNA"] = "X*"
-	return blood_dna
-
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
-
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
 	// Returns 0 if we have that blood already

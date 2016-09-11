@@ -17,9 +17,6 @@
 		for(var/obj/item/organ/O in internal_organs)
 			O.on_life()
 
-	//Updates the number of stored chemicals for powers
-	handle_changeling()
-
 ///////////////
 // BREATHING //
 ///////////////
@@ -215,15 +212,16 @@
 /mob/living/carbon/proc/handle_blood()
 	return
 
-/mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used && hud_used.lingchemdisplay)
-		if(mind.changeling)
-			mind.changeling.regenerate(src)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
-
+/mob/living/carbon/handle_stat_huds()
+	if(mind && hud_used)
+		if(hud_used.lingchemdisplay)
+			if(mind.changeling)
+				mind.changeling.regenerate(src)
+				hud_used.lingchemdisplay.invisibility = 0
+				hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
+			else
+				hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
+					
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)

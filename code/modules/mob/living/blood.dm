@@ -76,7 +76,7 @@
 			bleed(bleed_rate)
 
 //Makes a blood drop, leaking amt units of blood from the mob
-/mob/living/carbon/proc/bleed(amt)
+/mob/living/proc/bleed(amt)
 	if(blood_volume)
 		blood_volume = max(blood_volume - amt, 0)
 		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
@@ -88,7 +88,6 @@
 /mob/living/carbon/human/bleed(amt)
 	if(!(NOBLOOD in dna.species.specflags))
 		..()
-
 
 
 /mob/living/proc/restore_blood()
@@ -112,6 +111,9 @@
 	if(blood_volume < amount)
 		amount = blood_volume
 
+	if(amount == 0)
+		return 0
+
 	var/blood_id = get_blood_id()
 	if(!blood_id)
 		return 0
@@ -120,20 +122,20 @@
 
 	var/list/blood_data = get_blood_data(blood_id)
 
-	if(iscarbon(AM))
-		var/mob/living/carbon/C = AM
-		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
+	if(isliving(AM))
+		var/mob/living/M = AM
+		if(blood_id == M.get_blood_id())//both mobs have the same blood substance
 			if(blood_id == "blood") //normal blood
 				if(blood_data["viruses"])
 					for(var/datum/disease/D in blood_data["viruses"])
 						if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 							continue
-						C.ForceContractDisease(D)
-				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-					C.reagents.add_reagent("toxin", amount * 0.5)
+						M.ForceContractDisease(D)
+				if(!(blood_data["blood_type"] in get_safe_blood(M.get_blood_type())))
+					M.reagents.add_reagent("toxin", amount * 0.5)
 					return 1
 
-			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
+			M.blood_volume = min(M.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
 			return 1
 
 	AM.reagents.add_reagent(blood_id, amount, blood_data, bodytemperature)
@@ -216,6 +218,10 @@
 			return list("O-", "O+")
 		if("L")
 			return list("L")
+		// Living clothes can accept any blood type
+		if("S*")
+			return list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "S*", "X*")
+
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
@@ -261,7 +267,7 @@
 	var/obj/effect/decal/cleanable/xenoblood/B = locate() in T.contents
 	if(!B)
 		B = new(T)
-	B.blood_DNA["UNKNOWN DNA"] = "X*"
+	// No need to set blood_DNA, it's done at construction
 
 /mob/living/silicon/robot/add_splatter_floor(turf/T, small_drip)
 	if(!T)
@@ -269,3 +275,35 @@
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
 	if(!B)
 		B = new(T)
+
+// TODO: Move hardcoded strings to defines
+
+/mob/living/proc/get_dna_enzymes()
+	return "ANIMAL DNA"
+
+/mob/living/carbon/get_dna_enzymes()
+	// Humans, monkeys, etc
+	if(dna)
+		return dna.unique_enzymes
+	// Aliens and others
+	return "UNKNOWN DNA"
+
+/mob/living/proc/get_blood_type()
+	return "Y-"
+
+/mob/living/simple_animal/clothing/get_blood_type()
+	return "S*"
+
+/mob/living/carbon/get_blood_type()
+	// Humans, monkeys, etc
+	if(dna)
+		return dna.blood_type
+	// Aliens and others
+	return "X*"
+
+//returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
+/mob/living/proc/get_blood_dna_list()
+	if(get_blood_id() != "blood")
+		return
+
+	return list(get_dna_enzymes() = get_blood_type())

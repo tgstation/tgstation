@@ -156,6 +156,7 @@ var/global/BSACooldown = 0
 			body += "<A href='?_src_=holder;simplemake=constructbuilder;mob=\ref[M]'>Artificer</A> , "
 			body += "<A href='?_src_=holder;simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
 			body += "<A href='?_src_=holder;simplemake=shade;mob=\ref[M]'>Shade</A>"
+			body += "<A href='?_src_=holder;simplemake=livingclothing;mob=\ref[M]'>Living Clothes</A>"
 			body += "<br>"
 
 	if (M.client)

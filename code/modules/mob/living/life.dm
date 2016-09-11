@@ -53,6 +53,11 @@
 		handle_disabilities() // eye, ear, brain damages
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 
+	//Updates the number of stored chemicals for powers and blood for living clothes
+	handle_stat_huds()
+	
+/mob/living/proc/handle_stat_huds()
+	return
 
 /mob/living/proc/handle_breathing()
 	return

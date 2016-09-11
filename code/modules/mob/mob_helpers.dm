@@ -305,7 +305,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	set name = "a-intent"
 	set hidden = 1
 
-	if(ishuman(src) || isalienadult(src) || isbrain(src))
+	if(ishuman(src) || isalienadult(src) || isbrain(src) || islivingclothing(src))
 		switch(input)
 			if("help", "disarm", "grab", "harm")
 				a_intent = input
