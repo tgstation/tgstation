@@ -412,7 +412,7 @@ var/next_mob_id = 0
 */
 
 /mob/verb/memory()
-	set name = "Notes Memory"
+	set name = "Notes"
 	set category = "IC"
 	set desc = "View your character's notes memory."
 	if(mind)
