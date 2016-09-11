@@ -239,6 +239,10 @@
 	H.bodyparts += src
 	if(held_index)
 		H.hand_bodyparts += src
+		if(H.hud_used)
+			var/obj/screen/inventory/hand/hand = H.hud_used.hand_slots["[held_index]"]
+			if(hand)
+				hand.update_icon()
 
 	if(special) //non conventional limb attachment
 		for(var/X in H.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
@@ -255,21 +259,6 @@
 	H.update_hair()
 	H.update_damage_overlays()
 	H.update_canmove()
-
-
-/obj/item/bodypart/r_arm/attach_limb(mob/living/carbon/human/H, special)
-	..()
-	if(H.hud_used)
-		var/obj/screen/inventory/hand/R = H.hud_used.hand_slots["[held_index]"]
-		if(R)
-			R.update_icon()
-
-/obj/item/bodypart/l_arm/attach_limb(mob/living/carbon/human/H, special)
-	..()
-	if(H.hud_used)
-		var/obj/screen/inventory/hand/L = H.hud_used.hand_slots["[held_index]"]
-		if(L)
-			L.update_icon()
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/human/H, special)
 	//Transfer some head appearance vars over
