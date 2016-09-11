@@ -245,7 +245,7 @@
 
 	var/mob/screenmob = viewer || R
 
-	if(screenmob.hud_used.hud_shown)
+	if(hud_shown)
 		if(R.module_state_1)
 			R.module_state_1.screen_loc = ui_inv1
 			screenmob.client.screen += R.module_state_1
