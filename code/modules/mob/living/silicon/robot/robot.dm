@@ -24,6 +24,7 @@
 	var/obj/screen/inv3 = null
 	var/obj/screen/lamp_button = null
 	var/obj/screen/thruster_button = null
+	var/obj/screen/hands = null
 
 	var/shown_robot_modules = 0	//Used to determine whether they have the module menu shown or not
 	var/obj/screen/robot_modules_background
@@ -715,7 +716,7 @@
 	if (M.a_intent =="disarm")
 		if(!(lying))
 			M.do_attack_animation(src)
-			if(get_active_hand())
+			if(get_active_held_item())
 				uneq_active()
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 				"<span class='userdanger'>[M] has disabled [src]'s active module!</span>")
@@ -777,13 +778,13 @@
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
+		if(check_access(H.get_active_held_item()) || check_access(H.wear_id))
 			return 1
 	else if(istype(M, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(istype(george.get_active_hand(), /obj/item))
-			return check_access(george.get_active_hand())
+		if(istype(george.get_active_held_item(), /obj/item))
+			return check_access(george.get_active_held_item())
 	return 0
 
 /mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
@@ -1033,7 +1034,7 @@
 
 	if(incapacitated())
 		return
-	var/obj/item/W = get_active_hand()
+	var/obj/item/W = get_active_held_item()
 	if(W)
 		W.attack_self(src)
 

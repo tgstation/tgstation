@@ -80,10 +80,8 @@
 		if(!usr.canUseTopic(src))
 			return
 		if(ishuman(usr))
-			if(!usr.get_active_hand())
-				usr.put_in_hands(O)
-			else
-				O.loc = get_turf(src)
+			if(!usr.put_in_hands(O))
+				O.forceMove(get_turf(src))
 			update_icon()
 
 /obj/structure/guncase/shotgun

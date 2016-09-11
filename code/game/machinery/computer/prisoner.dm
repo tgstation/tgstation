@@ -93,7 +93,7 @@
 
 		if(href_list["id"])
 			if(href_list["id"] =="insert" && !inserted_id)
-				var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
+				var/obj/item/weapon/card/id/prisoner/I = usr.get_active_held_item()
 				if(istype(I))
 					if(!usr.drop_item())
 						return

@@ -177,7 +177,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /mob/proc/bible_check() //The bible, if held, might protect against certain things
 	var/obj/item/weapon/storage/book/bible/B = locate() in src
-	if(B && (l_hand == B || r_hand == B))
+	if(is_holding(B))
 		return B
 	return 0
 

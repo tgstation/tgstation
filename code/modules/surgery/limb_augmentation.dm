@@ -84,7 +84,7 @@
 	user.visible_message("[user] begins to install the chainsaw onto [target].", "<span class='notice'>You begin to install the chainsaw onto [target]...</span>")
 
 /datum/surgery_step/chainsaw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.l_hand && target.r_hand)
+	if(!target.get_empty_held_indexes())
 		user << "<span class='warning'>You can't fit the chainsaw in while [target]'s hands are full!</span>"
 		return 0
 	else
@@ -104,9 +104,7 @@
 	requires_organic_bodypart = 0
 
 /datum/surgery/chainsaw_removal/can_start(mob/user, mob/living/carbon/target)
-	var/list/hands = get_both_hands(target)
-	var/M = locate(/obj/item/weapon/mounted_chainsaw) in hands
-	if(M)
+	if(target.is_holding_item_of_type(/obj/item/weapon/mounted_chainsaw))
 		return 1//can continue surgery
 	else
 		return 0//surgery will never be available
@@ -120,8 +118,7 @@
 	user.visible_message("[user] begins sawing the chainsaw off of [target]'s arms.", "<span class='notice'>You begin removing [target]'s chainsaw...</span>")
 
 /datum/surgery_step/chainsaw_removal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/list/hands = get_both_hands(target)
-	for(var/obj/item/weapon/mounted_chainsaw/V in hands)
+	for(var/obj/item/weapon/mounted_chainsaw/V in target.held_items)
 		target.unEquip(V, 1)
 		user.visible_message("[user] carefully saws [target]'s arm free of the chainsaw.", "<span class='notice'>You remove the chainsaw.</span>")
 		return 1

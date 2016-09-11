@@ -149,10 +149,10 @@
 	if(!(M.status_flags & CANPUSH))
 		return 1
 	//anti-riot equipment is also anti-push
-	if(M.r_hand && (prob(M.r_hand.block_chance * 2)) && !istype(M.r_hand, /obj/item/clothing))
-		return 1
-	if(M.l_hand && (prob(M.l_hand.block_chance * 2)) && !istype(M.l_hand, /obj/item/clothing))
-		return 1
+	for(var/obj/item/I in M.held_items)
+		if(!istype(M, /obj/item/clothing))
+			if(prob(I.block_chance*2))
+				return 1
 
 //Called when we bump onto an obj
 /mob/living/proc/ObjBump(obj/O)
@@ -783,26 +783,42 @@
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
-		if(what && what == who.get_item_by_slot(where) && Adjacent(who))
-			who.unEquip(what)
-			add_logs(src, who, "stripped", addition="of [what]")
+		if(what && Adjacent(who))
+			if(islist(where))
+				var/list/L = where
+				if(what == who.get_item_for_held_index(L[2]))
+					who.unEquip(what)
+					add_logs(src, who, "stripped", addition="of [what]")
+			if(what == who.get_item_by_slot(where))
+				who.unEquip(what)
+				add_logs(src, who, "stripped", addition="of [what]")
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
-	what = src.get_active_hand()
+	what = src.get_active_held_item()
 	if(what && (what.flags & NODROP))
 		src << "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
 		return
 	if(what)
-		if(!what.mob_can_equip(who, src, where, 1))
-			src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
-			return
+		var/list/where_list
+		if(islist(where))
+			where_list = where
+			if(!what.mob_can_equip(who, src, where[1], 1))
+				src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
+				return
+		else
+			if(!what.mob_can_equip(who, src, where, 1))
+				src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
+				return
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.put_on_delay))
 			if(what && Adjacent(who))
 				unEquip(what)
-				who.equip_to_slot_if_possible(what, where, 0, 1)
+				if(where_list)
+					who.put_in_hand(what, where_list[2])
+				else
+					who.equip_to_slot_if_possible(what, where, 0, 1)
 				add_logs(src, who, "equipped", what)
 
 /mob/living/singularity_act()
@@ -869,11 +885,10 @@
 
 	// What icon do we use for the attack?
 	var/image/I
-	if(hand && l_hand) // Attacked with item in left hand.
-		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 0.1)
-	else if(!hand && r_hand) // Attacked with item in right hand.
-		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 0.1)
-	else // Attacked with a fist?
+	var/obj/item/held_item = get_active_held_item()
+	if(held_item)
+		I = image(held_item.icon, A, held_item.icon_state, A.layer + 0.1)
+	else
 		return
 
 	// Who can see the attack?

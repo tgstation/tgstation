@@ -90,13 +90,15 @@
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
 	user.set_machine(src)
-	var/dat = {"
+	var/list/dat = list()
+	dat += {"
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
-	<HR>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>
-	<BR><A href='?src=\ref[src];pouches=1'>Empty Pouches</A>"}
+	<HR>"}
+	for(var/i in 1 to held_items.len)
+		var/obj/item/I = get_item_for_held_index(i)
+		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a>"
+	dat += "<BR><A href='?src=\ref[src];pouches=1'>Empty Pouches</A>"
 
 	if(handcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
@@ -107,7 +109,7 @@
 	<BR>
 	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
-	user << browse(dat, "window=mob\ref[src];size=325x500")
+	user << browse(dat.Join(), "window=mob\ref[src];size=325x500")
 	onclose(user, "mob\ref[src]")
 
 
@@ -155,8 +157,7 @@
 	return 0.8
 
 /mob/living/carbon/alien/humanoid/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 	for(var/atom/movable/A in stomach_contents)
 		stomach_contents.Remove(A)
 		new_xeno.stomach_contents.Add(A)

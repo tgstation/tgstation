@@ -17,12 +17,12 @@
 
 /obj/item/zombie_hand/equipped(mob/user, slot)
 	. = ..()
-	switch(slot)
-		// Yes, these intentionally don't match
-		if(slot_l_hand)
-			icon_state = icon_right
-		if(slot_r_hand)
-			icon_state = icon_left
+	//these are intentionally inverted
+	var/i = user.get_held_index_of_item(src)
+	if(!(i % 2))
+		icon_state = icon_left
+	else
+		icon_state = icon_right
 
 /obj/item/zombie_hand/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()

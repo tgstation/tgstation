@@ -51,8 +51,7 @@
 /mob/living/carbon/true_devil/death(gibbed)
 	stat = DEAD
 	..(gibbed)
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 	spawn (0)
 		mind.devilinfo.beginResurrectionCheck(src)
 
@@ -61,18 +60,12 @@
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
 
 	//Left hand items
-	if(l_hand && !(l_hand.flags&ABSTRACT))
-		if(l_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in its left hand!</span>\n"
-		else
-			msg += "It is holding \icon[l_hand] \a [l_hand] in its left hand.\n"
-
-	//Right hand items
-	if(r_hand && !(r_hand.flags&ABSTRACT))
-		if(r_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in its right hand!</span>\n"
-		else
-			msg += "It is holding \icon[r_hand] \a [r_hand] in its right hand.\n"
+	for(var/obj/item/I in held_items)
+		if(!(I.flags & ABSTRACT))
+			if(I.blood_DNA)
+				msg += "<span class='warning'>It is holding \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+			else
+				msg += "It is holding \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Braindead
 	if(!client && stat != DEAD)
