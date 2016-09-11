@@ -13,25 +13,44 @@ var/datum/subsystem/minimap/SSminimap
 	NEW_SS_GLOBAL(SSminimap)
 
 /datum/subsystem/minimap/Initialize(timeofday)
-	if(!config.generate_minimaps)
-		world << "Minimap generation disabled... Skipping"
-		return
 	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
-	if(hash == trim(file2text(hash_path())))
-		return ..()
-
-	for(var/z in z_levels)
-		generate(z)
-		register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
-	fdel(hash_path())
-	text2file(hash, hash_path())
+	if(config.generate_minimaps)
+		if(hash == trim(file2text(hash_path())))
+			world.log << "Hash check [hash]"
+			for(var/z in z_levels)	//We have these files cached, let's register them
+				register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
+			return ..()
+		for(var/z in z_levels)
+			generate(z)
+			register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
+		fdel(hash_path())
+		text2file(hash, hash_path())
+	else
+		world << "Minimap generation disabled. Loading from cache..."
+		var/fileloc = 0
+		if(hash == trim(file2text(hash_path())))//Let's see if we have a map cached that we can use
+			fileloc = 0
+		else
+			for(var/z in z_levels)
+				if(!isfile(file(map_path(z,1))))	//Let's make sure we have a backup file for this map.
+					world << "Failed to load backup minimap file on zlevel [z]. Aborting"	//We couldn't find something. Bail to prevent issues with null files
+					return
+				fileloc = 1	//No map image cached with the current map, and we have a backup. Let's fall back to it.
+		for(var/z in z_levels)
+			register_asset("minimap_[z].png", fcopy_rsc(map_path(z,fileloc)))
 	..()
 
-/datum/subsystem/minimap/proc/hash_path()
-	return "data/minimaps/[MAP_NAME].md5"
+/datum/subsystem/minimap/proc/hash_path(backup)
+	if(backup)
+		return "icons/minimaps/[MAP_NAME].md5"
+	else
+		return "data/minimaps/[MAP_NAME].md5"
 
-/datum/subsystem/minimap/proc/map_path(z)
-	return "data/minimaps/[MAP_NAME]_[z].png"
+/datum/subsystem/minimap/proc/map_path(z,backup)
+	if(backup)
+		return "icons/minimaps/[MAP_NAME]_[z].png"
+	else
+		return "data/minimaps/[MAP_NAME]_[z].png"
 
 /datum/subsystem/minimap/proc/send(client/client)
 	for(var/z in z_levels)
