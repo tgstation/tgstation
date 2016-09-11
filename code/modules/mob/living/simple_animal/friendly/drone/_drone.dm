@@ -25,6 +25,7 @@
 	gender = NEUTER
 	health = 30
 	maxHealth = 30
+	harm_intent_damage = 5
 	unsuitable_atmos_damage = 0
 	wander = 0
 	speed = 0
