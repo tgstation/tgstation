@@ -237,6 +237,8 @@
 	loc = null
 	owner = H
 	H.bodyparts += src
+	if(held_index)
+		H.hand_bodyparts += src
 
 	if(special) //non conventional limb attachment
 		for(var/X in H.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
