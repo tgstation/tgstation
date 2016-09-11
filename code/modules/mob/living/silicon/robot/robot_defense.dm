@@ -9,7 +9,7 @@
 	if (M.a_intent =="disarm")
 		if(!(lying))
 			M.do_attack_animation(src)
-			if(get_active_hand())
+			if(get_active_held_item())
 				uneq_active()
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 				"<span class='userdanger'>[M] has disabled [src]'s active module!</span>")

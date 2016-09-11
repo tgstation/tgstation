@@ -180,7 +180,7 @@
 		return ..()
 	if(!ismob(A))
 		A.attack_hand(src)
-		update_hand_icons()
+		update_inv_hands()
 
 
 /*

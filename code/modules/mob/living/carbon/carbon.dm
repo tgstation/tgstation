@@ -434,6 +434,11 @@
 
 	add_abilities_to_panel()
 
+/mob/living/carbon/attack_ui(slot)
+	if(!has_hand_for_held_index(active_hand_index))
+		return 0
+	return ..()
+
 /mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
 	if(nutrition < 100 && !blood)
 		if(message)
@@ -724,6 +729,13 @@
 		O.owner = src
 		bodyparts.Remove(X)
 		bodyparts.Add(O)
+		if(O.body_part == ARM_LEFT)
+			O.held_index = 1
+			hand_bodyparts += O
+		else if(O.body_part == ARM_RIGHT)
+			O.held_index = 2
+			hand_bodyparts += O
+
 
 /mob/living/carbon/proc/create_internal_organs()
 	for(var/X in internal_organs)

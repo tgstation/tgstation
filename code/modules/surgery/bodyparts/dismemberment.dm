@@ -84,8 +84,8 @@
 		update_limb(1)
 	C.bodyparts -= src
 	if(held_index)
-		H.unEquip(owner.get_item_for_held_index(held_index), 1)
-		H.hand_bodyparts[held_index] = null
+		C.unEquip(owner.get_item_for_held_index(held_index), 1)
+		C.hand_bodyparts[held_index] = null
 
 	owner = null
 
@@ -245,6 +245,13 @@
 	loc = null
 	owner = C
 	C.bodyparts += src
+	if(held_index)
+		C.hand_bodyparts += src
+		if(C.hud_used)
+			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
+			if(hand)
+				hand.update_icon()
+		C.update_inv_gloves()
 
 	if(special) //non conventional limb attachment
 		for(var/X in C.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
@@ -263,21 +270,6 @@
 	C.update_canmove()
 
 
-/obj/item/bodypart/r_arm/attach_limb(mob/living/carbon/C, special)
-	..()
-	if(H.hud_used)
-		var/obj/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
-		if(R)
-			R.update_icon()
-	C.update_inv_gloves()
-
-/obj/item/bodypart/l_arm/attach_limb(mob/living/carbon/C, special)
-	..()
-	if(H.hud_used)
-		var/obj/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
-		if(L)
-			L.update_icon()
-	C.update_inv_gloves()
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
 	//Transfer some head appearance vars over

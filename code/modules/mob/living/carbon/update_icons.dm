@@ -49,8 +49,8 @@
 	update_fire()
 
 
-/mob/living/carbon/update_inv_r_hand()
-	remove_overlay(R_HAND_LAYER)
+/mob/living/carbon/update_inv_hands()
+	remove_overlay(HANDS_LAYER)
 	if (handcuffed)
 		drop_all_held_items()
 		return

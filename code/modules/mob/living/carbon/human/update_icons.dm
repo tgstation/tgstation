@@ -513,27 +513,6 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 
-
-/////////////////////
-// Limb Icon Cache //
-/////////////////////
-/*
-	Called from update_body_parts() these procs handle the limb icon cache.
-	the limb icon cache adds an icon_render_key to a human mob, it represents:
-	- skin_tone (if applicable)
-	- gender
-	- limbs (stores as the limb name and whether it is removed/fine, organic/robotic)
-	These procs only store limbs as to increase the number of matching icon_render_keys
-	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
-	See RemieRichards on irc.rizon.net #coderbus
-*/
-
-var/global/list/limb_icon_cache = list()
-
-/mob/living/carbon/human
-	var/icon_render_key = ""
-
-
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
 	. = "[dna.species.limbs_id]"

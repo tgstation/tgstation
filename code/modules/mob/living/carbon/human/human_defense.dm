@@ -231,7 +231,7 @@
 			apply_damage(damage, BRUTE, affecting, armor_block)
 
 		if(M.a_intent == "disarm") //Always drop item in hand, if no item, get stunned instead.
-			if(get_active_hand() && drop_item())
+			if(get_active_held_item() && drop_item())
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 						"<span class='userdanger'>[M] disarmed [src]!</span>")

@@ -108,11 +108,6 @@
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
 
-/mob/living/carbon/human/attack_ui(slot)
-	if(!has_hand_for_held_index(active_hand_index))
-		return 0
-	return ..()
-
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)

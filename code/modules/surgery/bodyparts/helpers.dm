@@ -10,7 +10,7 @@
 		if(L.body_zone == zone)
 			return L
 
-/mob/living/carbon/human/has_hand_for_held_index(i)
+/mob/living/carbon/has_hand_for_held_index(i)
 	if(i)
 		var/obj/item/bodypart/L = hand_bodyparts[i]
 		if(L)
@@ -49,9 +49,6 @@
 
 //Limb numbers
 /mob/proc/get_num_arms()
-	return 2
-
-/mob/proc/get_num_legs()
 	return 2
 
 /mob/living/carbon/get_num_arms()
