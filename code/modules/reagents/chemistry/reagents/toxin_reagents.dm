@@ -657,24 +657,6 @@
 		. = 1
 	return ..() || .
 
-/datum/reagent/toxin/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
-	name = "Teslium"
-	id = "teslium"
-	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly."
-	reagent_state = LIQUID
-	color = "#20324D" //RGB: 32, 50, 77
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 0
-	var/shock_timer = 0
-
-/datum/reagent/toxin/teslium/on_mob_life(mob/living/M)
-	shock_timer++
-	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
-		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, 1)
-	..()
-
 
 //ACID
 
