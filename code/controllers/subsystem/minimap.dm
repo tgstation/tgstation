@@ -16,7 +16,6 @@ var/datum/subsystem/minimap/SSminimap
 	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
 	if(config.generate_minimaps)
 		if(hash == trim(file2text(hash_path())))
-			world.log << "Hash check [hash]"
 			for(var/z in z_levels)	//We have these files cached, let's register them
 				register_asset("minimap_[z].png", fcopy_rsc(map_path(z)))
 			return ..()
@@ -26,19 +25,31 @@ var/datum/subsystem/minimap/SSminimap
 		fdel(hash_path())
 		text2file(hash, hash_path())
 	else
-		world << "Minimap generation disabled. Loading from cache..."
+		world << "<span class='boldannounce'>Minimap generation disabled. Loading from cache...</span>"
 		var/fileloc = 0
-		if(hash == trim(file2text(hash_path())))//Let's see if we have a map cached that we can use
+		if(check_files(0))	//Let's first check if we have maps cached in the data folder. NOTE: This will override the backup files even if this map is older.
+			world.log << "cache"
+			if(hash != trim(file2text(hash_path())))
+				world << "<span class='boldannounce'>Loaded cached minimap is outdated. There may be minor discrepancies in layout.</span>"	//Disclaimer against players saying map is wrong.
 			fileloc = 0
 		else
-			for(var/z in z_levels)
-				if(!isfile(file(map_path(z,1))))	//Let's make sure we have a backup file for this map.
-					world << "Failed to load backup minimap file on zlevel [z]. Aborting"	//We couldn't find something. Bail to prevent issues with null files
-					return
-				fileloc = 1	//No map image cached with the current map, and we have a backup. Let's fall back to it.
+			if(!check_files(1))
+				world << "<span class='boldannounce'>Failed to load backup minimap file. Aborting.</span>"	//We couldn't find something. Bail to prevent issues with null files
+				return
+			fileloc = 1	//No map image cached with the current map, and we have a backup. Let's fall back to it.
+			world << "<span class='boldannounce'>No cached minimaps detected. Backup files loaded.</span>"
 		for(var/z in z_levels)
 			register_asset("minimap_[z].png", fcopy_rsc(map_path(z,fileloc)))
 	..()
+
+/datum/subsystem/minimap/proc/check_files(backup)	// If the backup argument is true, looks in the icons folder. If false looks in the data folder.
+	for(var/z in z_levels)
+		if(!fexists(file(map_path(z,backup))))	//Let's make sure we have a file for this map
+			if(backup)
+				world.log << "Failed to find backup file for map [MAP_NAME] on zlevel [z]."
+			return FALSE
+	return TRUE
+
 
 /datum/subsystem/minimap/proc/hash_path(backup)
 	if(backup)
