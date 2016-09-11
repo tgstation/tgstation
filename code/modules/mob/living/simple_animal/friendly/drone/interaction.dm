@@ -60,7 +60,7 @@
 			return
 
 
-	if(ishuman(user))
+	if(ishuman(user) && can_be_hat)
 		if(stat == DEAD || status_flags & GODMODE)
 			..()
 			return
