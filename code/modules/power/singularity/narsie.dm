@@ -50,7 +50,7 @@
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	if(istype(target, /obj/structure/clockwork/massive/ratvar))
+	if(istype(target, /obj/structure/destructible/clockwork/massive/ratvar))
 		move(get_dir(src, target)) //Oh, it's you again.
 	else
 		move()
@@ -86,7 +86,7 @@
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
-	for(var/obj/structure/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
+	for(var/obj/structure/destructible/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
 		if(enemy.z != z)
 			continue
 		acquire(enemy)

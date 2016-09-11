@@ -53,7 +53,7 @@
 	var/mob/living/carbon/C = user
 	if(C.gloves)
 		return 0
-	var/hit_zone = (C.hand ? "l_":"r_") + "arm"
+	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
 	if(affecting)
 		if(affecting.take_damage(0, force))

@@ -83,7 +83,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && src.loc == held_mob)
-		if( (held_mob.l_hand == src) || (held_mob.r_hand == src))
+		if(held_mob.is_holding(src))
 			if(hasvar(held_mob,"gloves") && held_mob:gloves)
 				return
 			held_mob.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT

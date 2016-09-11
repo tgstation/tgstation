@@ -37,10 +37,8 @@
 		if(istype(I.loc,/obj/item/weapon/storage))	//in a container.
 			var/obj/item/weapon/storage/U = I.loc
 			U.remove_from_storage(I, src)
-		else if(user.l_hand == I)					//in a hand
-			user.drop_l_hand()
-		else if(user.r_hand == I)					//in a hand
-			user.drop_r_hand()
+		if(user.is_holding(I))
+			user.unEquip(I)
 		else
 			return
 

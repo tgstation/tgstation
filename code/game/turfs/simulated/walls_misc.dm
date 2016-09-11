@@ -45,7 +45,7 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	var/obj/effect/clockwork/overlay/wall/realappearence
-	var/obj/structure/clockwork/cache/linkedcache
+	var/obj/structure/destructible/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/New()
 	..()
@@ -123,7 +123,7 @@
 			O.loc = src
 
 /turf/closed/wall/clockwork/break_wall()
-	return new/obj/structure/clockwork/wall_gear(src)
+	return new/obj/structure/destructible/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
 	for(var/i in 1 to 2)

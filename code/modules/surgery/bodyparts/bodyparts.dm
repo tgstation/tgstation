@@ -17,6 +17,7 @@
 	var/burn_dam = 0
 	var/max_damage = 0
 	var/list/embedded_objects = list()
+	var/held_index = 0 //are we a hand? if so, which one!
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -329,7 +330,6 @@
 	standing += I
 
 	return standing
-
 
 
 /obj/item/bodypart/chest

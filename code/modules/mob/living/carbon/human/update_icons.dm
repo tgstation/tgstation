@@ -334,8 +334,7 @@ There are several things that need to be remembered:
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(wear_suit.breakouttime) //suit is restraining
-			drop_l_hand()
-			drop_r_hand()
+			drop_all_held_items()
 
 	update_hair()
 	update_mutant_bodyparts()
@@ -389,7 +388,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
 	var/list/out = new
-	for(var/i=1;i<=TOTAL_LAYERS;i++)
+	for(var/i in 1 to TOTAL_LAYERS)
 		if(overlays_standing[i])
 			if(i in unwantedLayers)
 				continue
@@ -480,12 +479,62 @@ generate/load female uniform sprites matching all previously decided variables
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
+	//Handle held offsets
+	var/mob/M = loc
+	if(istype(M))
+		var/list/L = get_held_offsets()
+		if(L)
+			standing.pixel_x += L["x"] //+= because of center()ing
+			standing.pixel_y += L["y"]
+
 	standing.alpha = alpha
 	standing.color = color
 
 	return standing
 
 
+/obj/item/proc/get_held_offsets()
+	var/list/L
+	if(ismob(loc))
+		var/mob/M = loc
+		L = M.get_item_offsets_for_index(M.get_held_index_of_item(src))
+	return L
+
+
+//Can't think of a better way to do this, sadly
+/mob/proc/get_item_offsets_for_index(i)
+	switch(i)
+		if(3) //odd = left hands
+			return list("x" = 0, "y" = 16)
+		if(4) //even = right hands
+			return list("x" = 0, "y" = 16)
+		else //No offsets or Unwritten number of hands
+			return list("x" = 0, "y" = 0)
+
+
+
+
+/////////////////////
+// Limb Icon Cache //
+/////////////////////
+/*
+	Called from update_body_parts() these procs handle the limb icon cache.
+	the limb icon cache adds an icon_render_key to a human mob, it represents:
+	- skin_tone (if applicable)
+	- gender
+	- limbs (stores as the limb name and whether it is removed/fine, organic/robotic)
+	These procs only store limbs as to increase the number of matching icon_render_keys
+	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
+	See RemieRichards on irc.rizon.net #coderbus
+*/
+
+var/global/list/limb_icon_cache = list()
+
+/mob/living/carbon/human
+	var/icon_render_key = ""
+
+
+//produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
 	. = "[dna.species.limbs_id]"
 

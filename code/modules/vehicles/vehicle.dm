@@ -52,7 +52,7 @@
 //KEYS
 /obj/vehicle/proc/keycheck(mob/user)
 	if(keytype)
-		if(istype(user.l_hand, keytype) || istype(user.r_hand, keytype))
+		if(user.is_holding_item_of_type(keytype))
 			return 1
 	else
 		return 1

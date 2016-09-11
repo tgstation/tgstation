@@ -102,7 +102,7 @@
 		if(/datum/action/item_action/clock/guvax)
 			if(!nonhuman_usable && !ishuman(user))
 				return
-			if(src == user.get_active_hand())
+			if(src == user.get_active_held_item())
 				var/datum/clockwork_scripture/guvax/convert = new
 				convert.slab = src
 				convert.invoker = user
@@ -112,7 +112,7 @@
 		if(/datum/action/item_action/clock/vanguard)
 			if(!nonhuman_usable && !ishuman(user))
 				return
-			if(src == user.get_active_hand())
+			if(src == user.get_active_held_item())
 				var/datum/clockwork_scripture/vanguard/antistun = new
 				antistun.slab = src
 				antistun.invoker = user
@@ -197,7 +197,7 @@
 		return 0
 	switch(action)
 		if("Recital")
-			if(user.get_active_hand() != src)
+			if(user.get_active_held_item() != src)
 				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 				return
 			recite_scripture(user)
@@ -236,7 +236,7 @@
 		var/datum/clockwork_scripture/C = S
 		if("[initial(C.name)] ([initial(C.descname)])" == chosen_scripture)
 			scripture_to_recite = new C
-	if(!scripture_to_recite || user.get_active_hand() != src)
+	if(!scripture_to_recite || user.get_active_held_item() != src)
 		return 0
 	tiers_of_scripture = scripture_unlock_check()
 	if(!ratvar_awakens && !no_cost && !tiers_of_scripture[scripture_to_recite.tier])
@@ -517,7 +517,7 @@
 				user << "<span class='warning'>[src] is still gathering power!</span>"
 				return 0
 			var/mob/living/carbon/C = user
-			if(C.l_hand && C.r_hand)
+			if(!user.get_empty_held_indexes())
 				C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
 				return 0
 			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. <b>Direct it at a tile at any range</b> to unleash it, or use the action button again to dispel it.</i></span>")
@@ -983,7 +983,7 @@
 	icon_state = "tinkerers_daemon"
 	w_class = 3
 	var/specific_component //The type of component that the daemon is set to produce in particular, if any
-	var/obj/structure/clockwork/cache/cache //The cache the daemon is feeding
+	var/obj/structure/destructible/clockwork/cache/cache //The cache the daemon is feeding
 	var/production_time = 0 //Progress towards production of the next component in seconds
 	var/production_cooldown = 200 //How many deciseconds it takes to produce a new component
 	var/component_slowdown_mod = 2 //how many deciseconds are added to the cooldown when producing a component for each of that component type
@@ -999,7 +999,7 @@
 	return ..()
 
 /obj/item/clockwork/tinkerers_daemon/process()
-	if(!cache || !istype(loc, /obj/structure/clockwork/cache))
+	if(!cache || !istype(loc, /obj/structure/destructible/clockwork/cache))
 		visible_message("<span class='warning'>[src] shuts down!</span>")
 		new/obj/item/clockwork/daemon_shell(get_turf(src))
 		qdel(src)

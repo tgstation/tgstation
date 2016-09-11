@@ -137,9 +137,7 @@
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
 		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"right pocket" = slot_r_store
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	var/where2 = mob.equip_in_one_of_slots(C, slots)

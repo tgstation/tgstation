@@ -137,7 +137,9 @@
 	qdel(wizard_mob.wear_suit)
 	qdel(wizard_mob.head)
 	qdel(wizard_mob.shoes)
-	qdel(wizard_mob.r_hand)
+	for(var/obj/item/I in wizard_mob.held_items)
+		wizard_mob.unEquip(I)
+		qdel(I)
 	qdel(wizard_mob.r_store)
 	qdel(wizard_mob.l_store)
 
@@ -152,7 +154,7 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
 	var/obj/item/weapon/spellbook/spellbook = new /obj/item/weapon/spellbook(wizard_mob)
 	spellbook.owner = wizard_mob
-	wizard_mob.equip_to_slot_or_del(spellbook, slot_r_hand)
+	wizard_mob.put_in_hands_or_del(spellbook)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
 	wizard_mob << "The spellbook is bound to you, and others cannot use it."

@@ -83,6 +83,10 @@
 	if(!no_update)
 		update_limb(1)
 	C.bodyparts -= src
+	if(held_index)
+		H.unEquip(owner.get_item_for_held_index(held_index), 1)
+		H.hand_bodyparts[held_index] = null
+
 	owner = null
 
 	for(var/X in C.surgeries) //if we had an ongoing surgery on that limb, we stop it.
@@ -153,11 +157,9 @@
 			C.handcuffed = null
 			C.update_handcuffed()
 		if(C.hud_used)
-			var/obj/screen/inventory/R = C.hud_used.inv_slots[slot_r_hand]
+			var/obj/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
 			if(R)
 				R.update_icon()
-		if(C.r_hand)
-			C.unEquip(C.r_hand, 1)
 		if(C.gloves)
 			C.unEquip(C.gloves, 1)
 		C.update_inv_gloves() //to remove the bloody hands overlay
@@ -173,11 +175,9 @@
 			C.handcuffed = null
 			C.update_handcuffed()
 		if(C.hud_used)
-			var/obj/screen/inventory/L = C.hud_used.inv_slots[slot_l_hand]
+			var/obj/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
 			if(L)
 				L.update_icon()
-		if(C.l_hand)
-			C.unEquip(C.l_hand, 1)
 		if(C.gloves)
 			C.unEquip(C.gloves, 1)
 		C.update_inv_gloves() //to remove the bloody hands overlay
@@ -265,16 +265,16 @@
 
 /obj/item/bodypart/r_arm/attach_limb(mob/living/carbon/C, special)
 	..()
-	if(C.hud_used)
-		var/obj/screen/inventory/R = C.hud_used.inv_slots[slot_r_hand]
+	if(H.hud_used)
+		var/obj/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
 		if(R)
 			R.update_icon()
 	C.update_inv_gloves()
 
 /obj/item/bodypart/l_arm/attach_limb(mob/living/carbon/C, special)
 	..()
-	if(C.hud_used)
-		var/obj/screen/inventory/L = C.hud_used.inv_slots[slot_l_hand]
+	if(H.hud_used)
+		var/obj/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
 		if(L)
 			L.update_icon()
 	C.update_inv_gloves()

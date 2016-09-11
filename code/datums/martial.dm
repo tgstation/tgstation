@@ -333,8 +333,7 @@
 	else
 		A.start_pulling(D, 1)
 		if(A.pulling)
-			D.drop_r_hand()
-			D.drop_l_hand()
+			D.drop_all_held_items()
 			D.stop_pulling()
 			add_logs(A, D, "grabbed", addition="aggressively")
 			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab

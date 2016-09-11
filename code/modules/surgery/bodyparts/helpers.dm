@@ -10,47 +10,37 @@
 		if(L.body_zone == zone)
 			return L
 
-//Mob has their active hand
-/mob/proc/has_active_hand()
-	return 1
+/mob/living/carbon/human/has_hand_for_held_index(i)
+	if(i)
+		var/obj/item/bodypart/L = hand_bodyparts[i]
+		if(L)
+			return L
+	return FALSE
 
-/mob/living/carbon/has_active_hand()
-	var/obj/item/bodypart/L
-	if(hand)
-		L = get_bodypart("l_arm")
-	else
-		L = get_bodypart("r_arm")
-	if(!L)
-		return 0
-	return 1
 
-/mob/living/carbon/alien/larva/has_active_hand()
-	return 1
 
 
 /mob/proc/has_left_hand()
-	return 1
+	return TRUE
 
 /mob/living/carbon/has_left_hand()
-	var/obj/item/bodypart/L
-	L = get_bodypart("l_arm")
-	if(!L)
-		return 0
-	return 1
+	for(var/obj/item/bodypart/L in hand_bodyparts)
+		if(!(L.held_index % 2))
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/alien/larva/has_left_hand()
 	return 1
 
 
 /mob/proc/has_right_hand()
-	return 1
+	return TRUE
 
 /mob/living/carbon/has_right_hand()
-	var/obj/item/bodypart/L
-	L = get_bodypart("r_arm")
-	if(!L)
-		return 0
-	return 1
+	for(var/obj/item/bodypart/L in hand_bodyparts)
+		if(L.held_index % 2)
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/alien/larva/has_right_hand()
 	return 1
@@ -59,6 +49,9 @@
 
 //Limb numbers
 /mob/proc/get_num_arms()
+	return 2
+
+/mob/proc/get_num_legs()
 	return 2
 
 /mob/living/carbon/get_num_arms()

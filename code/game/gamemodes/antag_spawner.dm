@@ -84,7 +84,7 @@
 		if("healing")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null))
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/magic/staff/healing(M), slot_r_hand)
+			M.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing(M))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 		if("robeless")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))

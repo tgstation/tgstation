@@ -22,10 +22,6 @@
 			return handcuffed
 		if(slot_legcuffed)
 			return legcuffed
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 		if(slot_belt)
 			return belt
 		if(slot_wear_id)

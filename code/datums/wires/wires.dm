@@ -310,7 +310,7 @@ var/list/wire_color_directory = list()
 		return
 	var/target_wire = params["wire"]
 	var/mob/living/L = usr
-	var/obj/item/I = L.get_active_hand()
+	var/obj/item/I = L.get_active_held_item()
 	switch(action)
 		if("cut")
 			if(istype(I, /obj/item/weapon/wirecutters) || IsAdminGhost(usr))

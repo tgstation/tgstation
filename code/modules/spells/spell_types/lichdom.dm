@@ -43,7 +43,7 @@
 	for(var/mob/M in targets)
 		var/list/hand_items = list()
 		if(iscarbon(M))
-			hand_items = list(M.get_active_hand(),M.get_inactive_hand())
+			hand_items = list(M.get_active_held_item(),M.get_inactive_held_item())
 
 		if(marked_item && !stat_allowed) //sanity, shouldn't happen without badminry
 			marked_item = null

@@ -439,8 +439,9 @@
 		else
 			user << "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>"
 
-			var/hit_hand = "[user.hand ? "l" : "r" ]_arm"
-			H.apply_damage(5, BURN, hit_hand)
+			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+			if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
+				H.update_damage_overlays()
 			return				// if burned, don't remove the light
 	else
 		user << "<span class='notice'>You remove the light [fitting].</span>"
