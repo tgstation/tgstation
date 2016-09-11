@@ -160,3 +160,7 @@
 		data["downloadable_programs"] = all_entries
 
 	return data
+
+/datum/computer_file/program/ntnetdownload/kill_program(forced)
+	abort_file_download()
+	return ..(forced)
