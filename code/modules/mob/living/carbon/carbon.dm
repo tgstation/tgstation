@@ -25,7 +25,7 @@
 				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
 							 "<span class='warning'>You hear something rumbling.</span>", 4,\
 							  "<span class='userdanger'>Something is rumbling inside your stomach!</span>")
-			var/obj/item/I = user.get_active_hand()
+			var/obj/item/I = user.get_active_held_item()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
@@ -79,38 +79,41 @@
 		return shock_damage
 
 
-/mob/living/carbon/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
+/mob/living/carbon/swap_hand(held_index)
+	if(!held_index)
+		held_index = (active_hand_index % held_items.len)+1
+
+	var/obj/item/item_in_hand = src.get_active_held_item()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
 			if(item_in_hand:wielded == 1)
 				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
 				return
-	src.hand = !( src.hand )
-	if(hud_used && hud_used.inv_slots[slot_l_hand] && hud_used.inv_slots[slot_r_hand])
+	var/oindex = active_hand_index
+	active_hand_index = held_index
+	if(hud_used)
 		var/obj/screen/inventory/hand/H
-		H = hud_used.inv_slots[slot_l_hand]
-		H.update_icon()
-		H = hud_used.inv_slots[slot_r_hand]
-		H.update_icon()
-	/*if (!( src.hand ))
-		src.hands.setDir(NORTH)
-	else
-		src.hands.setDir(SOUTH)*/
-	return
+		H = hud_used.hand_slots["[oindex]"]
+		if(H)
+			H.update_icon()
+		H = hud_used.hand_slots["[held_index]"]
+		if(H)
+			H.update_icon()
 
-/mob/living/carbon/activate_hand(selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
+
+/mob/living/carbon/activate_hand(selhand) //l/r OR 1-held_items.len
+	if(!selhand)
+		selhand = (active_hand_index % held_items.len)+1
 
 	if(istext(selhand))
 		selhand = lowertext(selhand)
-
 		if(selhand == "right" || selhand == "r")
-			selhand = 0
+			selhand = 2
 		if(selhand == "left" || selhand == "l")
 			selhand = 1
 
-	if(selhand != src.hand)
-		swap_hand()
+	if(selhand != active_hand_index)
+		swap_hand(selhand)
 	else
 		mode() // Activate held item
 
@@ -215,7 +218,7 @@
 		return
 
 	var/atom/movable/thrown_thing
-	var/obj/item/I = src.get_active_hand()
+	var/obj/item/I = src.get_active_held_item()
 
 	if(!I)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
@@ -253,9 +256,11 @@
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags&ABSTRACT)) 			? head 		: "Nothing"]</A>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[(l_hand && !(l_hand.flags&ABSTRACT))		? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[(r_hand && !(r_hand.flags&ABSTRACT))		? r_hand	: "Nothing"]</A>"}
+	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>"}
+
+	for(var/i in 1 to held_items.len)
+		var/obj/item/I = get_item_for_held_index(i)
+		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags & ABSTRACT)) ? I : "Nothing"]</a>"
 
 	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[back ? back : "Nothing"]</A>"
 
@@ -733,8 +738,7 @@
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()
 	if(handcuffed)
-		drop_r_hand()
-		drop_l_hand()
+		drop_all_held_items()
 		stop_pulling()
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 	else

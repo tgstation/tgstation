@@ -7,10 +7,14 @@
 		msg += "It has \icon[src.head] \a [src.head] on its head. \n"
 	if (wear_mask)
 		msg += "It has \icon[src.wear_mask] \a [src.wear_mask] on its face.\n"
-	if (l_hand)
-		msg += "It has \icon[src.l_hand] \a [src.l_hand] in its left hand.\n"
-	if (r_hand)
-		msg += "It has \icon[src.r_hand] \a [src.r_hand] in its right hand.\n"
+
+	for(var/obj/item/I in held_items)
+		if(!(I.flags & ABSTRACT))
+			if(I.blood_DNA)
+				msg += "<span class='warning'>It has \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+			else
+				msg += "It has \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+
 	if (back)
 		msg += "It has \icon[src.back] \a [src.back] on its back.\n"
 	if (stat == DEAD)

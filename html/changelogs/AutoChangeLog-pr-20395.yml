@@ -1,0 +1,5 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - rscdel: "The surplus crate and random item will now only contain items allowed by the gamemode"
+  - rscdel: "removes sleeping carp scroll from surplus crates"

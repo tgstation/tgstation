@@ -72,25 +72,19 @@
 	if(wear_suit)
 		if(wear_suit.IsReflect(def_zone) == 1)
 			return 1
-	if(l_hand)
-		if(l_hand.IsReflect(def_zone) == 1)
-			return 1
-	if(r_hand)
-		if(r_hand.IsReflect(def_zone) == 1)
+	for(var/obj/item/I in held_items)
+		if(I.IsReflect(def_zone) == 1)
 			return 1
 	return 0
 
 /mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, attack_type = MELEE_ATTACK, armour_penetration = 0)
 	var/block_chance_modifier = round(damage / -3)
 
-	if(l_hand && !istype(l_hand, /obj/item/clothing))
-		var/final_block_chance = l_hand.block_chance - (Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-		if(l_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
-			return 1
-	if(r_hand && !istype(r_hand, /obj/item/clothing))
-		var/final_block_chance = r_hand.block_chance - (Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)) + block_chance_modifier //Need to reset the var so it doesn't carry over modifications between attempts
-		if(r_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
-			return 1
+	for(var/obj/item/I in held_items)
+		if(!istype(I, /obj/item/clothing))
+			var/final_block_chance = I.block_chance - (Clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			if(I.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+				return 1
 	if(wear_suit)
 		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
@@ -262,10 +256,8 @@
 		inventory_items_to_kill += back
 	if(belt)
 		inventory_items_to_kill += belt
-	if(r_hand)
-		inventory_items_to_kill += r_hand
-	if(l_hand)
-		inventory_items_to_kill += l_hand
+
+	inventory_items_to_kill += held_items
 
 	for(var/obj/item/I in inventory_items_to_kill)
 		I.acid_act(acidpwr, acid_volume_left)

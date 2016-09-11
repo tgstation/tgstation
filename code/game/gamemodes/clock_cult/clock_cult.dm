@@ -27,6 +27,15 @@ This file's folder contains:
 	clock_unsorted.dm: Anything else with no place to be
 
 	clockcult defines are in __DEFINES/clockcult.dm
+
+Credit where due:
+1. VelardAmakar from /vg/ for the entire design document, idea, and plan. Thank you very much.
+2. SkowronX from /vg/ for MANY of the assets
+3. FuryMcFlurry from /vg/ for many of the assets
+4. PJB3005 from /vg/ for the failed continuation PR
+5. Xhuis from /tg/ for coding the basic gamemode as it is today
+6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release
+
 */
 
 ///////////
@@ -337,7 +346,7 @@ This file's folder contains:
 		else
 			var/half_victory = FALSE
 			if(clockwork_objective == CLOCKCULT_GATEWAY)
-				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+				var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
 				if(G)
 					half_victory = TRUE
 			if(half_victory)

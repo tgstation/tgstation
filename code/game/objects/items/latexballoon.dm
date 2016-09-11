@@ -16,8 +16,7 @@
 		return
 	icon_state = "latexballon_blow"
 	item_state = "latexballon"
-	user.update_inv_r_hand()
-	user.update_inv_l_hand()
+	user.update_inv_hands()
 	user << "<span class='notice'>You blow up [src] with [tank].</span>"
 	air_contents = tank.remove_air_volume(3)
 
@@ -29,8 +28,7 @@
 	item_state = "lgloves"
 	if(istype(src.loc, /mob/living))
 		var/mob/living/user = src.loc
-		user.update_inv_r_hand()
-		user.update_inv_l_hand()
+		user.update_inv_hands()
 	loc.assume_air(air_contents)
 
 /obj/item/latexballon/ex_act(severity, target)

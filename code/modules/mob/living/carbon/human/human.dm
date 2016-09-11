@@ -18,8 +18,15 @@
 	verbs += /mob/living/proc/lay_down
 
 	//initialize limbs first
-	bodyparts = newlist(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
-					 /obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
+	bodyparts = newlist(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
+	var/obj/item/bodypart/l_arm/l_arm = new()
+	var/obj/item/bodypart/r_arm/r_arm = new()
+	bodyparts += l_arm
+	bodyparts += r_arm
+	l_arm.held_index = 1
+	r_arm.held_index = 2
+	hand_bodyparts += l_arm
+	hand_bodyparts += r_arm
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/O = X
 		O.owner = src
@@ -193,7 +200,7 @@
 	..()
 
 /mob/living/carbon/human/attack_ui(slot)
-	if(!get_bodypart(hand ? "l_arm" : "r_arm"))
+	if(!has_hand_for_held_index(active_hand_index))
 		return 0
 	return ..()
 
@@ -201,11 +208,13 @@
 	user.set_machine(src)
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
 	var/list/obscured = check_obscured_slots()
+	var/list/dat = list()
 
-	var/dat = {"<table>
-	<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[slot_l_hand]'>[(l_hand && !(l_hand.flags&ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</A></td></tr>
-	<tr><td><B>Right Hand:</B></td><td><A href='?src=\ref[src];item=[slot_r_hand]'>[(r_hand && !(r_hand.flags&ABSTRACT)) ? r_hand : "<font color=grey>Empty</font>"]</A></td></tr>
-	<tr><td>&nbsp;</td></tr>"}
+	dat += "<table>"
+	for(var/i in 1 to held_items.len)
+		var/obj/item/I = get_item_for_held_index(i)
+		dat += "<tr><td><B>[get_held_index_name(i)]:</B></td><td><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td>&nbsp;</td></tr>"
 
 	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[slot_back]'>[(back && !(back.flags&ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A>"
 	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
@@ -279,7 +288,7 @@
 	"}
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 510)
-	popup.set_content(dat)
+	popup.set_content(dat.Join())
 	popup.open()
 
 // called when something steps onto a human
@@ -354,7 +363,7 @@
 			var/pocket_side = href_list["pockets"]
 			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
 			var/obj/item/pocket_item = (pocket_id == slot_r_store ? r_store : l_store)
-			var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
+			var/obj/item/place_item = usr.get_active_held_item() // Item to place in the pocket, if it's empty
 
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
@@ -653,7 +662,7 @@
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
 			if(istype(wear_suit, /obj/item/clothing/suit/redtag))
 				threatcount += 4
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/redtag))
 				threatcount += 4
 			if(istype(belt, /obj/item/weapon/gun/energy/laser/redtag))
 				threatcount += 2
@@ -661,7 +670,7 @@
 		if(lasercolor == "r")
 			if(istype(wear_suit, /obj/item/clothing/suit/bluetag))
 				threatcount += 4
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/bluetag))
 				threatcount += 4
 			if(istype(belt, /obj/item/weapon/gun/energy/laser/bluetag))
 				threatcount += 2
@@ -676,10 +685,9 @@
 	//Check for weapons
 	if(judgebot.weaponscheck)
 		if(!idcard || !(access_weapons in idcard.access))
-			if(judgebot.check_for_weapons(l_hand))
-				threatcount += 4
-			if(judgebot.check_for_weapons(r_hand))
-				threatcount += 4
+			for(var/obj/item/I in held_items)
+				if(judgebot.check_for_weapons(I))
+					threatcount += 4
 			if(judgebot.check_for_weapons(belt))
 				threatcount += 2
 
@@ -739,8 +747,7 @@
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	if(current_size >= STAGE_THREE)
-		var/list/handlist = list(l_hand, r_hand)
-		for(var/obj/item/hand in handlist)
+		for(var/obj/item/hand in held_items)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"

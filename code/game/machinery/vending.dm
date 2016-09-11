@@ -426,7 +426,7 @@
 			return
 
 		coin.loc = loc
-		if(!usr.get_active_hand())
+		if(!usr.get_active_held_item())
 			usr.put_in_hands(coin)
 		usr << "<span class='notice'>You remove [coin] from [src].</span>"
 		coin = null

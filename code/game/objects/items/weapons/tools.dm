@@ -363,8 +363,7 @@
 		//mob icon update
 		if(ismob(loc))
 			var/mob/M = loc
-			M.update_inv_r_hand(0)
-			M.update_inv_l_hand(0)
+			M.update_inv_hands(0)
 
 		return 0
 	return 1

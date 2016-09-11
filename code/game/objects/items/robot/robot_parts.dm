@@ -107,7 +107,7 @@
 				var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 				B.loc = get_turf(src)
 				user << "<span class='notice'>You arm the robot frame.</span>"
-				if (user.get_inactive_hand()==src)
+				if (user.get_inactive_held_item()==src)
 					user.unEquip(src)
 					user.put_in_inactive_hand(B)
 				qdel(src)
@@ -300,7 +300,7 @@
 		return
 
 	var/mob/living/living_user = usr
-	var/obj/item/item_in_hand = living_user.get_active_hand()
+	var/obj/item/item_in_hand = living_user.get_active_held_item()
 	if(!istype(item_in_hand, /obj/item/device/multitool))
 		living_user << "<span class='warning'>You need a multitool!</span>"
 		return

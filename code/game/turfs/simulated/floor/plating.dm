@@ -242,6 +242,10 @@
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
+/turf/open/floor/plating/lava/hitby(atom/movable/AM)
+	if(burn_stuff(AM))
+		START_PROCESSING(SSobj, src)
+
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
 		STOP_PROCESSING(SSobj, src)

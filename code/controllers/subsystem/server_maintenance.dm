@@ -17,7 +17,7 @@ var/datum/subsystem/server_maint/SSserver
 				if(!istype(C.mob, /mob/dead))
 					log_access("AFK: [key_name(C)]")
 					C << "<span class='danger'>You have been inactive for more than 10 minutes and have been disconnected.</span>"
-					del(C)
+					qdel(C)
 
 	if(config.sql_enabled)
 		sql_poll_players()

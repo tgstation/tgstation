@@ -261,12 +261,12 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 /mob/proc/domutcheck()
 	return
 
-/mob/living/carbon/domutcheck()
+/mob/living/carbon/domutcheck(force_powers=0) //Set force_powers to 1 to bypass the power chance
 	if(!has_dna())
 		return
 
 	for(var/datum/mutation/human/A in good_mutations | bad_mutations | not_good_mutations)
-		if(ismob(A.check_block(src)))
+		if(ismob(A.check_block(src, force_powers)))
 			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
 
 	update_mutations_overlay()

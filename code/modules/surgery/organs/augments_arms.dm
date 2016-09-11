@@ -85,8 +85,7 @@
 	holder.w_class = 5
 	holder.materials = null
 
-	var/arm_slot = (zone == "r_arm" ? slot_r_hand : slot_l_hand)
-	var/obj/item/arm_item = owner.get_item_by_slot(arm_slot)
+	var/obj/item/arm_item = owner.get_active_held_item()
 
 	if(arm_item)
 		if(!owner.unEquip(arm_item))
@@ -95,13 +94,13 @@
 		else
 			owner << "<span class='notice'>You drop [arm_item] to activate [src]!</span>"
 
-	if(zone == "r_arm" ? !owner.put_in_r_hand(holder) : !owner.put_in_l_hand(holder))
+	var/result = (zone == "r_arm" ? owner.put_in_r_hand(holder) : owner.put_in_l_hand(holder))
+	if(!result)
 		owner << "<span class='warning'>Your [src] fails to activate!</span>"
 		return
 
 	// Activate the hand that now holds our item.
-	if(zone == "r_arm" ? owner.hand : !owner.hand)
-		owner.swap_hand()
+	owner.swap_hand(result)//... or the 1st hand if the index gets lost somehow
 
 	owner.visible_message("<span class='notice'>[owner] extends [holder] from \his [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='notice'>You extend [holder] from your [zone == "r_arm" ? "right" : "left"] arm.</span>",
@@ -114,8 +113,7 @@
 		return
 
 	// You can emag the arm-mounted implant by activating it while holding emag in it's hand.
-	var/arm_slot = (zone == "r_arm" ? slot_r_hand : slot_l_hand)
-	if(istype(owner.get_item_by_slot(arm_slot), /obj/item/weapon/card/emag) && emag_act())
+	if(istype(owner.get_active_held_item(), /obj/item/weapon/card/emag) && emag_act())
 		return
 
 	if(!holder || (holder in src))

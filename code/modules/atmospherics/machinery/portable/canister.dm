@@ -31,6 +31,8 @@
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
+		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
+		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
 

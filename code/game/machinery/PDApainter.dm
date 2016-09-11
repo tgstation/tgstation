@@ -51,7 +51,7 @@
 			user << "<span class='warning'>There is already a PDA inside!</span>"
 			return
 		else
-			var/obj/item/device/pda/P = user.get_active_hand()
+			var/obj/item/device/pda/P = user.get_active_held_item()
 			if(istype(P))
 				if(!user.drop_item())
 					return

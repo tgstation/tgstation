@@ -116,13 +116,12 @@
 				return 0
 		if(!(lube&SLIDE_ICE))
 			C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
-		if(!C.slipping)
 			C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
 		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-		C.accident(C.l_hand)
-		C.accident(C.r_hand)
+		for(var/obj/item/I in C.held_items)
+			C.accident(I)
 
 		var/olddir = C.dir
 		if(!(lube&SLIDE_ICE))

@@ -439,7 +439,7 @@
 		else
 			user << "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>"
 
-			var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 			if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
 				H.update_damage_overlays(0)
 			H.updatehealth()

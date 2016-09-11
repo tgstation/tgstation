@@ -41,6 +41,8 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
+	var/list/datum/station_goal/station_goals = list()
+
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	world << "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>"
@@ -87,6 +89,7 @@
 	if(report)
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
+	generate_station_goals()
 	start_state = new /datum/station_state()
 	start_state.count(1)
 	return 1
@@ -278,6 +281,12 @@
 	var/datum/intercept_text/i_text = new /datum/intercept_text
 	for(var/V in possible_modes)
 		intercepttext += i_text.build(V)
+
+	if(station_goals.len)
+		intercepttext += "<b>Special Orders for [station_name()]:</b>"
+		for(var/datum/station_goal/G in station_goals)
+			G.on_report()
+			intercepttext += G.get_report()
 
 	print_command_report(intercepttext, "Central Command Status Summary")
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
@@ -532,3 +541,25 @@
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 	ticker.mode.remove_hog_follower(newborgie, 0)
 	remove_servant_of_ratvar(newborgie.current, TRUE)
+
+
+/datum/game_mode/proc/generate_station_goals()
+	var/list/possible = list()
+	for(var/T in subtypesof(/datum/station_goal))
+		var/datum/station_goal/G = T
+		if(config_tag in initial(G.gamemode_blacklist))
+			continue
+		//if(num_players() < initial(G.required_crew))
+		//	continue
+		possible += T
+	var/goal_weights = 0
+	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		goal_weights += initial(picked.weight)
+		station_goals += new picked
+
+
+/datum/game_mode/proc/declare_station_goal_completion()
+	for(var/V in station_goals)
+		var/datum/station_goal/G = V
+		G.print_result()
