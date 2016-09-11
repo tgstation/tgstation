@@ -64,6 +64,7 @@ var/highlander_claymores = 0
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
 	var/bloodthirst_level = 0 //HOW THIRSTY WE ARE FOR BLOOD
+	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
 /obj/item/weapon/claymore/highlander/New()
 	..()
@@ -73,6 +74,10 @@ var/highlander_claymores = 0
 /obj/item/weapon/claymore/highlander/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	highlander_claymores--
+	if(nuke_disk)
+		visible_message("<span class='warning'>The nuke disk is vulnerable!</span>")
+		nuke_disk.loc = get_turf(src)
+		nuke_disk = null
 	return ..()
 
 /obj/item/weapon/claymore/highlander/process()
@@ -102,6 +107,8 @@ var/highlander_claymores = 0
 /obj/item/weapon/claymore/highlander/examine(mob/user)
 	..()
 	user << "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
+	if(nuke_disk)
+		user << "<span class='boldwarning'>It's holding the nuke disk!</span>"
 
 /obj/item/weapon/claymore/highlander/attack(mob/living/target, mob/living/user)
 	var/old_target_stat = target.stat
