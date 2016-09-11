@@ -83,9 +83,9 @@
 	required_temp = 474
 	ex_power = 0.16
 	modifier = 1
-	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
 
-/datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/reagent_explosion/blackpowder_explosion/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>")
 	sleep(rand(50,100))
 	..()
 

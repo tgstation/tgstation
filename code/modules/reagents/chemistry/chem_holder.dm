@@ -69,7 +69,7 @@ var/const/INJECT = 5 //injection
 /datum/reagents/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
-	clear_contents()
+	clear_reagents()
 	clear_reactions()
 	reagents.Cut()
 	reagents = null
@@ -330,7 +330,7 @@ var/const/INJECT = 5 //injection
 		reaction_occured = 0
 		for(var/reagent in reagents)
 			var/datum/reagent/R = reagents[reagent]
-			for(var/reaction in chemical_reactions_list[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+			for(var/datum/chemical_reaction/reaction in chemical_reactions_list[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
 				if(!reaction || reactions[reaction.id]) // skip recipe checking if its already reacting.
 					continue
 

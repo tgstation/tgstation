@@ -75,8 +75,14 @@
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 
+/datum/chemical_reaction/teslium/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>")
+
 /datum/chemical_reaction/heparin
 	id = "Heparin"
 	results = list("heparin" = 4)
 	required_reagents = list("formaldehyde" = 1, "sodium" = 1, "chlorine" = 1, "lithium" = 1)
 	mix_message = "<span class='danger'>The mixture thins and loses all color.</span>"
+
+/datum/chemical_reaction/heparin/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "<span class='danger'>The mixture thins and loses all color.</span>")

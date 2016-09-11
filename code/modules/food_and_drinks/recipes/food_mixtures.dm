@@ -94,7 +94,9 @@
 /datum/chemical_reaction/imitationcarpmeat
 	id = "imitationcarpmeat"
 	required_reagents = list("carpotoxin" = 5)
-	mix_message = "The mixture becomes similar to carp meat."
+
+/datum/chemical_reaction/imitationcarpmeat/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "The mixture becomes similar to carp meat.")
 
 /datum/chemical_reaction/imitationcarpmeat/special_reqs(datum/reagents/holder)
 	if(istype(holder.my_atom, /obj/item/weapon/reagent_containers/food/snacks/tofu))
@@ -109,7 +111,9 @@
 /datum/chemical_reaction/dough
 	id = "dough"
 	required_reagents = list("water" = 10, "flour" = 15)
-	mix_message = "The ingredients form a dough."
+
+/datum/chemical_reaction/dough/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "The ingredients form a dough.")
 
 /datum/chemical_reaction/dough/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -119,7 +123,9 @@
 /datum/chemical_reaction/cakebatter
 	id = "cakebatter"
 	required_reagents = list("eggyolk" = 15, "flour" = 15, "sugar" = 5)
-	mix_message = "The ingredients form a cake batter."
+
+/datum/chemical_reaction/cakebatter/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "The ingredients form a cake batter.")
 
 /datum/chemical_reaction/cakebatter/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -133,7 +139,10 @@
 /datum/chemical_reaction/ricebowl
 	id = "ricebowl"
 	required_reagents = list("rice" = 10, "water" = 10)
-	mix_message = "The rice absorbs the water."
+
+
+/datum/chemical_reaction/ricebowl/react(datum/reagents/holder)
+	simple_react(holder, mix_message = "The rice absorbs the water.")
 
 /datum/chemical_reaction/ricebowl/special_reqs(datum/reagents/holder)
 	if(istype(holder, /obj/item/weapon/reagent_containers/glass/bowl))
