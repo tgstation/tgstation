@@ -207,7 +207,7 @@
 		holder.handle_reactions()
 	..()
 
-/datum/reagent/toxin/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
+/datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
 	name = "Teslium"
 	id = "teslium"
 	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow to come into contact with water."
@@ -216,7 +216,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/shock_timer = 0
 
-/datum/reagent/toxin/teslium/on_mob_life(mob/living/M)
+/datum/reagent/teslium/on_mob_life(mob/living/M)
 	shock_timer++
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
