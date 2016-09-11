@@ -22,7 +22,7 @@
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
-#define isbrain(A) (istype(A, /mob/living/carbon/brain))
+#define isbrain(A) (istype(A, /mob/living/brain))
 
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 

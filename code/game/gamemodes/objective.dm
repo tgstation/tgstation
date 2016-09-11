@@ -528,13 +528,13 @@ var/global/list/possible_items = list()
 
 /datum/objective/steal/give_special_equipment()
 	if(owner && owner.current && targetinfo)
-		if(istype(owner.current, /mob/living/carbon/human))
+		if(ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
 			var/list/slots = list ("backpack" = slot_in_backpack)
 			for(var/eq_path in targetinfo.special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
-				H.update_icons()
+
 
 var/global/list/possible_items_special = list()
 /datum/objective/steal/special //ninjas are so special they get their own subtype good for them

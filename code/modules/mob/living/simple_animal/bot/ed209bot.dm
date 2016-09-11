@@ -376,9 +376,9 @@ Auto Patrol[]"},
 		G.update_icon()
 
 	if(prob(50))
-		new /obj/item/robot_parts/l_leg(Tsec)
+		new /obj/item/bodypart/l_leg/robot(Tsec)
 		if(prob(25))
-			new /obj/item/robot_parts/r_leg(Tsec)
+			new /obj/item/bodypart/r_leg/robot(Tsec)
 	if(prob(25))//50% chance for a helmet OR vest
 		if(prob(50))
 			new /obj/item/clothing/head/helmet(Tsec)

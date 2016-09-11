@@ -1344,8 +1344,8 @@
 /area/turret_protected/aisat_interior)
 "acv" = (
 /obj/structure/table,
-/obj/item/robot_parts/robot_suit,
-/obj/item/robot_parts/head,
+/obj/item/robot_suit,
+/obj/item/bodypart/head/robot,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/bluegrid,
 /area/turret_protected/aisat_interior)
@@ -1418,9 +1418,9 @@
 /area/turret_protected/aisat_interior)
 "acF" = (
 /obj/structure/table,
-/obj/item/robot_parts/l_arm,
-/obj/item/robot_parts/chest,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/l_arm/robot,
+/obj/item/bodypart/chest/robot,
+/obj/item/bodypart/l_arm/robot,
 /obj/structure/cable/blue{
 	tag = "icon-2-8";
 	icon_state = "2-8"
@@ -1443,7 +1443,7 @@
 /area/turret_protected/aisat_interior)
 "acI" = (
 /obj/structure/table,
-/obj/item/robot_parts/r_arm,
+/obj/item/bodypart/r_arm/robot,
 /obj/structure/cable/blue{
 	tag = "icon-2-4";
 	icon_state = "2-4"
@@ -1511,7 +1511,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/item/device/assembly/flash/handheld,
-/obj/item/robot_parts/r_leg,
+/obj/item/bodypart/r_leg/robot,
 /turf/open/floor/plasteel/black,
 /area/turret_protected/aisat_interior)
 "acP" = (
@@ -1575,7 +1575,7 @@
 /area/turret_protected/aisat_interior)
 "acU" = (
 /obj/structure/table,
-/obj/item/robot_parts/l_leg,
+/obj/item/bodypart/l_leg/robot,
 /obj/structure/cable/blue{
 	tag = "icon-4-8";
 	icon_state = "4-8"
@@ -3189,8 +3189,8 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/robot_parts/r_arm,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/r_arm/robot,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "agA" = (
@@ -16264,7 +16264,7 @@
 /area/maintenance/fore)
 "aIo" = (
 /obj/structure/rack,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/l_arm/robot,
 /obj/item/stack/sheet/metal{
 	amount = 2
 	},
@@ -17026,7 +17026,7 @@
 "aJN" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil/green,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/l_arm/robot,
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold,
 /obj/item/weapon/reagent_containers/food/drinks/mug/coco,
 /turf/open/floor/plating,
@@ -18024,7 +18024,7 @@
 /area/maintenance/port)
 "aMb" = (
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aMc" = (
@@ -63145,7 +63145,7 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "cvz" = (
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/l_arm/robot,
 /obj/structure/closet,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/effect/spawner/lootdrop/maintenance,

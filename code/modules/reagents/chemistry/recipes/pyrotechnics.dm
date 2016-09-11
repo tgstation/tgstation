@@ -218,7 +218,7 @@
 	s.set_up(2, 1, location)
 	s.start()
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		if(C.flash_eyes())
+		if(C.flash_act())
 			if(get_dist(C, location) < 4)
 				C.Weaken(5)
 			else
@@ -237,7 +237,7 @@
 	s.set_up(2, 1, location)
 	s.start()
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		if(C.flash_eyes())
+		if(C.flash_act())
 			if(get_dist(C, location) < 4)
 				C.Weaken(5)
 			else
@@ -297,16 +297,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		if(C.check_ear_prot())
-			continue
-		C.show_message("<span class='warning'>BANG</span>", 2)
-		C.Stun(5)
-		C.Weaken(5)
-		C.setEarDamage(C.ear_damage + rand(0, 5), max(C.ear_deaf,15))
-		if(C.ear_damage >= 15)
-			C << "<span class='warning'>Your ears start to ring badly!</span>"
-		else if(C.ear_damage >= 5)
-			C << "<span class='warning'>Your ears start to ring!</span>"
+		C.soundbang_act(1, 5, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
@@ -318,17 +309,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		if(C.check_ear_prot())
-			continue
-		C.show_message("<span class='warning'>BANG</span>", 2)
-		C.Stun(5)
-		C.Weaken(5)
-		C.setEarDamage(C.ear_damage + rand(0, 5), max(C.ear_deaf,15))
-		if(C.ear_damage >= 15)
-			C << "<span class='warning'>Your ears start to ring badly!</span>"
-		else if(C.ear_damage >= 5)
-			C << "<span class='warning'>Your ears start to ring!</span>"
-
+		C.soundbang_act(1, 5, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	name = "phlogiston"

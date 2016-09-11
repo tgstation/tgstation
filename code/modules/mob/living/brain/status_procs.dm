@@ -4,35 +4,30 @@
 
 /////////////////////////////////// EAR DAMAGE ////////////////////////////////////
 
-/mob/living/carbon/brain/adjustEarDamage()
+/mob/living/brain/adjustEarDamage()
 	return
 
-/mob/living/carbon/brain/setEarDamage() // no ears to damage or heal
+/mob/living/brain/setEarDamage() // no ears to damage or heal
 	return
 
 /////////////////////////////////// EYE_BLIND ////////////////////////////////////
 
-/mob/living/carbon/brain/blind_eyes() // no eyes to damage or heal
+/mob/living/brain/blind_eyes() // no eyes to damage or heal
 	return
 
-/mob/living/carbon/brain/adjust_blindness()
+/mob/living/brain/adjust_blindness()
 	return
 
-/mob/living/carbon/brain/set_blindness()
+/mob/living/brain/set_blindness()
 	return
 
 /////////////////////////////////// EYE_BLURRY ////////////////////////////////////
 
-/mob/living/carbon/brain/blur_eyes()
+/mob/living/brain/blur_eyes()
 	return
 
-/mob/living/carbon/brain/adjust_blurriness()
+/mob/living/brain/adjust_blurriness()
 	return
 
-/mob/living/carbon/brain/set_blurriness()
-	return
-
-/////////////////////////////////// BLIND DISABILITY ////////////////////////////////////
-
-/mob/living/carbon/brain/become_blind()
+/mob/living/brain/set_blurriness()
 	return
