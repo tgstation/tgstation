@@ -135,8 +135,7 @@ Difficulty: Hard
 	walk(src, 0)
 	setDir(get_dir(src, T))
 	var/obj/effect/overlay/temp/decoy/D = PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
-	D.color = "#FF0000"
-	animate(D, alpha = 0, color = initial(D.color), transform = matrix()*2, time = 5)
+	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 5)
 	sleep(5)
 	throw_at(T, get_dist(src, T), 1, src, 0)
 	charging = 0
