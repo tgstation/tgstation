@@ -40,6 +40,9 @@
 			new /obj/item/clothing/mask/breath(src)
 	
 		if ("shit")
+		        new /obj/item/weapon/gun/energy/pulse/pistol(src)
+		        new /obj/item/clothing/mask/gas(src)
+		        new /obj/item/weapon/gun/magic/wand/resurrection(src)
 
 		if ("nothing")
 			// doot
