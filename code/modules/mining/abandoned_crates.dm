@@ -11,7 +11,7 @@
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
-	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "z")
+	var/list/digits = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 	code = ""
 	for(var/i = 0, i < codelen, i++)
 		var/dig = pick(digits)
