@@ -243,10 +243,10 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 	//per type stuff:
 	if(closest_tesla_coil)
-		closest_tesla_coil.tesla_act(power)
+		closest_tesla_coil.tesla_act(power, TRUE)
 
 	else if(closest_grounding_rod)
-		closest_grounding_rod.tesla_act(power)
+		closest_grounding_rod.tesla_act(power, TRUE)
 
 	else if(closest_mob)
 		var/shock_damage = Clamp(round(power/400), 10, 90) + rand(-5, 5)
@@ -259,10 +259,10 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 			tesla_zap(closest_mob, 5, power / 1.5)
 
 	else if(closest_machine)
-		closest_machine.tesla_act(power)
+		closest_machine.tesla_act(power, TRUE)
 
 	else if(closest_blob)
-		closest_blob.tesla_act(power)
+		closest_blob.tesla_act(power, TRUE)
 
 	else if(closest_structure)
-		closest_structure.tesla_act(power)
+		closest_structure.tesla_act(power, TRUE)
