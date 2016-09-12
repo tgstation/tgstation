@@ -14,6 +14,8 @@
 	severity = BIOHAZARD
 	var/stagedamage = 0 //Highest stage reached.
 	var/finalstage = 0 //Because we're spawning off the cure in the final stage, we need to check if we've done the final stage's effects.
+	var/oldcolor = ""
+	var/color_change_cooldown = 0
 
 /datum/disease/revblight/cure()
 	if(affected_mob)
@@ -21,6 +23,13 @@
 		if(affected_mob.dna && affected_mob.dna.species)
 			affected_mob.dna.species.handle_mutant_bodyparts(affected_mob)
 	..()
+
+/datum/disease/revblight/process()
+	..()
+	if(affected_mob && old_color != "" && world.time > color_change_cooldown)
+		affected_mob.color = old_color
+		old_colour = ""
+		cure()
 
 /datum/disease/revblight/stage_act()
 	if(!finalstage && affected_mob.lying && prob(stage*6))
@@ -58,11 +67,8 @@
 					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
 					affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
 					affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>")
-					var/old_color = affected_mob.color
+					old_color = affected_mob.color
 					affected_mob.color = "#1d2953"
-					spawn(100)
-						if(affected_mob)
-							affected_mob.color = old_color
-						cure()
+					color_change_cooldown = world.time + 100
 		else
 			return
