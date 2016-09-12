@@ -62,6 +62,6 @@
 					affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>")
 					old_color = affected_mob.color
 					affected_mob.color = "#1d2953"
-					addtimer(src, "cure", 60, FALSE)
+					addtimer(src, "cure", 100, FALSE)
 		else
 			return
