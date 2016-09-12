@@ -1,0 +1,4 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - experiment: "Minimaps will now try to load from a cache or backup file if minimap generation is disabled."
