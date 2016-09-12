@@ -1,0 +1,14 @@
+author: "phil235"
+delete-after: True
+changes: 
+  - rscadd: "Monkeys can be dismembered."
+  - rscadd: "Humans, monkeys and aliens can drop limbs when they are gibbed."
+  - rscadd: "Roboticists can remove flashes, wires and power cells that they inserted in robot head or torso by using a crowbar on it."
+  - rscadd: "visual wounds appear on a monkey's bodyparts when injured, exactly like humans."
+  - rscadd: "Using a health analyzer on a monkey or alien shows the injuries to each bodypart."
+  - rscadd: "Monkeys can become husks."
+  - bugfix: "Human-monkey transformations now respect missing limbs. No more limb regrowth by becoming a monkey."
+  - bugfix: "Changeling's regenerate ability also work while in monkey form."
+  - bugfix: "Alien larva has its own gib and dust animation."
+  - bugfix: "A bodypart that looks wounded still looks bloody when dismembered."
+  - bugfix: "Amputation surgery now works on robotic limbs, and monkeys."
