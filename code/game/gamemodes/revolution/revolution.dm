@@ -137,15 +137,11 @@
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
 		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"right pocket" = slot_r_store
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	var/where2 = mob.equip_in_one_of_slots(C, slots)
 	mob.equip_in_one_of_slots(R,slots)
-
-	mob.update_icons()
 
 	if (!where2)
 		mob << "The Syndicate were unfortunately unable to get you a chameleon security HUD."
@@ -250,7 +246,7 @@
 	if(iscarbon(rev_mind.current))
 		var/mob/living/carbon/carbon_mob = rev_mind.current
 		carbon_mob.silent = max(carbon_mob.silent, 5)
-		carbon_mob.flash_eyes(1, 1)
+		carbon_mob.flash_act(1, 1)
 	rev_mind.current.Stun(5)
 	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"

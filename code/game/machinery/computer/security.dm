@@ -295,13 +295,13 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if(scan)
-					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_held_item())
 						usr.put_in_hands(scan)
 					else
 						scan.loc = get_turf(src)
 					scan = null
 				else
-					var/obj/item/I = usr.get_active_hand()
+					var/obj/item/I = usr.get_active_held_item()
 					if(istype(I, /obj/item/weapon/card/id))
 						if(!usr.drop_item())
 							return
@@ -740,8 +740,8 @@ What a mess.*/
 		if(selection)
 			P = new()
 			P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
-	else if(istype(user.get_active_hand(), /obj/item/weapon/photo))
-		P = user.get_active_hand()
+	else if(istype(user.get_active_held_item(), /obj/item/weapon/photo))
+		P = user.get_active_held_item()
 	return P
 
 /obj/machinery/computer/secure_data/emp_act(severity)

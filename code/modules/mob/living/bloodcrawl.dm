@@ -27,7 +27,7 @@
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
-		if(C.l_hand || C.r_hand)
+		for(var/obj/item/I in C.held_items)
 			//TODO make it toggleable to either forcedrop the items, or deny
 			//entry when holding them
 			// literally only an option for carbons though

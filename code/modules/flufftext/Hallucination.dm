@@ -324,14 +324,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		return
 
 	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(get_turf(target),target)
-	if(clone.l_hand)
-		if(!(locate(clone.l_hand) in non_fakeattack_weapons))
-			clone_weapon = clone.l_hand.name
-			F.weap = clone.l_hand
-	else if (clone.r_hand)
-		if(!(locate(clone.r_hand) in non_fakeattack_weapons))
-			clone_weapon = clone.r_hand.name
-			F.weap = clone.r_hand
+	for(var/obj/item/I in clone.held_items)
+		if(!(locate(I) in non_fakeattack_weapons))
+			clone_weapon = I.name
+			F.weap = I
 
 	F.name = clone.name
 	F.my_target = target
@@ -619,9 +615,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 			//src << "Traitor Items"
 			if(!halitem)
 				halitem = new
-				var/list/slots_free = list(ui_lhand,ui_rhand)
-				if(l_hand) slots_free -= ui_lhand
-				if(r_hand) slots_free -= ui_rhand
+				var/obj/item/l_hand = get_item_for_held_index(1)
+				var/obj/item/r_hand = get_item_for_held_index(2)
+				var/l = ui_hand_position(get_held_index_of_item(l_hand))
+				var/r = ui_hand_position(get_held_index_of_item(r_hand))
+				var/list/slots_free = list(l,r)
+				if(l_hand) slots_free -= l
+				if(r_hand) slots_free -= r
 				if(istype(src,/mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
 					if(!H.belt) slots_free += ui_belt

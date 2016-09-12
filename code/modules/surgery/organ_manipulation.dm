@@ -77,7 +77,7 @@
 				organs[O.name] = O
 
 			I = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
-			if(I && user && target && user.Adjacent(target) && user.get_active_hand() == tool)
+			if(I && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				I = organs[I]
 				if(!I) return -1
 				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",

@@ -622,7 +622,7 @@ Difficulty: Very Hard
 	if(isliving(target) && target != src)
 		var/mob/living/L = target
 		if(L.stat < DEAD)
-			L.heal_overall_damage(heal_power, heal_power, 1)
+			L.heal_overall_damage(heal_power, heal_power)
 			PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
 
 /mob/living/simple_animal/hostile/lightgeist/Life()

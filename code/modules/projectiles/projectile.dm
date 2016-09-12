@@ -63,14 +63,26 @@
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	qdel(src)
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
+//to get the correct limb (if any) for the projectile hit message
+/mob/living/proc/check_limb_hit(hit_zone)
+	if(has_limbs)
+		return hit_zone
+
+/mob/living/carbon/check_limb_hit(hit_zone)
+	if(get_bodypart(hit_zone))
+		return hit_zone
+	else //when a limb is missing the damage is actually passed to the chest
+		return "chest"
+
+/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	if(!isliving(target))
 		return 0
 	var/mob/living/L = target
 	if(blocked != 100) // not completely blocked
 		var/organ_hit_text = ""
-		if(L.has_limbs)
-			organ_hit_text = " in \the [parse_zone(def_zone)]"
+		var/limb_hit = L.check_limb_hit(def_zone)//to get the correct message info.
+		if(limb_hit)
+			organ_hit_text = " in \the [parse_zone(limb_hit)]"
 		if(suppressed)
 			playsound(loc, hitsound, 5, 1, -1)
 			L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"

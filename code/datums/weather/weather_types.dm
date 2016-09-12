@@ -150,15 +150,14 @@
 			if(H.dna && H.dna.species)
 				if(!(RADIMMUNE in H.dna.species.specflags))
 					if(prob(max(0,100-resist)))
-						randmuti(H)
+						H.randmuti()
 						if(prob(50))
 							if(prob(90))
-								randmutb(H)
+								H.randmutb()
 							else
-								randmutg(H)
+								H.randmutg()
 							H.domutcheck()
 		L.rad_act(20,1)
-
 /datum/weather/rad_storm/end()
 	if(..())
 		return

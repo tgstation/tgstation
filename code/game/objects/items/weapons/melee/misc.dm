@@ -67,7 +67,7 @@
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, "head")
 		else
-			user.take_organ_damage(2*force)
+			user.take_bodypart_damage(2*force)
 		return
 	if(isrobot(target))
 		..()
@@ -124,7 +124,7 @@
 		if (B && !qdeleted(B))
 			H.internal_organs -= B
 			qdel(B)
-		gibs(H.loc, H.viruses, H.dna)
+		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
 		return (BRUTELOSS)
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
