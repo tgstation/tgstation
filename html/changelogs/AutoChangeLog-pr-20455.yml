@@ -1,0 +1,4 @@
+author: "Nanotrasen Anti-Cheese Committee"
+delete-after: True
+changes: 
+  - bugfix: "A glitch in the hydroponics tray firmware allowed it to retain plant growth even after the plant was removed, resulting in the next planted seed being grown instantaneously. This is no longer possible."
