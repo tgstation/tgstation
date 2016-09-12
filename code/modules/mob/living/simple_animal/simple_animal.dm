@@ -300,6 +300,7 @@
 			visible_message("<span class='danger'>\The [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
+		stat = DEAD
 		qdel(src)
 	else
 		health = 0

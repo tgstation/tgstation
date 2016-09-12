@@ -241,5 +241,5 @@
 		i++
 	for(var/obj/screen/human/equip/E in static_inventory)
 		E.screen_loc = ui_equip_position(mymob)
-
-	show_hud(HUD_STYLE_STANDARD,mymob)
+	if(mymob.hud_used)
+		show_hud(HUD_STYLE_STANDARD,mymob)

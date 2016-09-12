@@ -25,7 +25,7 @@
 
 /mob/living/carbon/has_left_hand()
 	for(var/obj/item/bodypart/L in hand_bodyparts)
-		if(!(L.held_index % 2))
+		if(L.held_index % 2)
 			return TRUE
 	return FALSE
 
@@ -38,7 +38,7 @@
 
 /mob/living/carbon/has_right_hand()
 	for(var/obj/item/bodypart/L in hand_bodyparts)
-		if(L.held_index % 2)
+		if(!(L.held_index % 2))
 			return TRUE
 	return FALSE
 

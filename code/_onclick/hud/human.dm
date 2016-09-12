@@ -358,7 +358,7 @@
 	var/mob/living/carbon/human/H = mymob
 
 	var/mob/screenmob = viewer || H
-
+	world << "DEBUG phil235 viewer: [viewer] ; H: [H] ; screenmob:[screenmob]"
 	if(screenmob.hud_used.hud_shown)
 		if(H.s_store)
 			H.s_store.screen_loc = ui_sstore1
