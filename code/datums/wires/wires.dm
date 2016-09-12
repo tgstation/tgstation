@@ -6,7 +6,7 @@ var/list/wire_colors = list(
 	"gold",
 	"grey",
 	"green",
-	"pink",
+	"magenta",
 	"orange",
 	"pink",
 	"purple",
