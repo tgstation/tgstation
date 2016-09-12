@@ -48,28 +48,6 @@ There are several things that need to be remembered:
 
 */
 
-//DAMAGE OVERLAYS
-//constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
-/mob/living/carbon/human/update_damage_overlays()
-	remove_overlay(DAMAGE_LAYER)
-
-	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
-	overlays_standing[DAMAGE_LAYER]	= standing
-
-	var/dmgoverlaytype = ""
-	if(dna.species.exotic_damage_overlay)
-		dmgoverlaytype = dna.species.exotic_damage_overlay + "_"
-
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(BP.brutestate)
-			standing.overlays	+= "[dmgoverlaytype][BP.body_zone]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
-		if(BP.burnstate)
-			standing.overlays	+= "[dmgoverlaytype][BP.body_zone]_0[BP.burnstate]"
-
-	apply_overlay(DAMAGE_LAYER)
-
-
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair()
 	dna.species.handle_hair(src)
@@ -79,46 +57,13 @@ There are several things that need to be remembered:
 	dna.species.handle_mutant_bodyparts(src)
 
 
-/mob/living/carbon/human/proc/update_body()
+/mob/living/carbon/human/update_body()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
-	update_body_parts()
+	..()
 
 /mob/living/carbon/human/update_fire()
 	..("Standing")
-
-/mob/living/carbon/human/proc/update_body_parts()
-	//CHECK FOR UPDATE
-	var/oldkey = icon_render_key
-	icon_render_key = generate_icon_render_key()
-	if(oldkey == icon_render_key)
-		return
-
-	remove_overlay(BODYPARTS_LAYER)
-
-	//LOAD ICONS
-	if(limb_icon_cache[icon_render_key])
-		load_limb_from_cache()
-		update_damage_overlays()
-		update_mutant_bodyparts()
-		update_hair()
-		return
-
-	//GENERATE NEW LIMBS
-	var/list/new_limbs = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(!BP.no_update)
-			BP.update_limb()
-		var/image/temp = BP.get_limb_icon()
-		if(temp)
-			new_limbs += temp
-	if(new_limbs.len)
-		overlays_standing[BODYPARTS_LAYER] = new_limbs
-		limb_icon_cache[icon_render_key] = new_limbs
-
-	apply_overlay(BODYPARTS_LAYER)
-	update_damage_overlays()
 
 
 /* --------------------------------------- */
@@ -219,9 +164,16 @@ There are several things that need to be remembered:
 	remove_overlay(GLOVES_LAYER)
 
 	if(get_num_arms() <2)
+		if(!gloves && blood_DNA)
+			if(has_left_hand())
+				overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands_left", "layer"=-GLOVES_LAYER)
+				apply_overlay(GLOVES_LAYER)
+			else if(has_right_hand())
+				overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands_right", "layer"=-GLOVES_LAYER)
+				apply_overlay(GLOVES_LAYER)
 		return
 
-	if(client && hud_used)
+	if(client && hud_used && hud_used.inv_slots[slot_gloves])
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_gloves]
 		inv.update_icon()
 
@@ -244,7 +196,6 @@ There are several things that need to be remembered:
 			overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands", "layer"=-GLOVES_LAYER)
 
 	apply_overlay(GLOVES_LAYER)
-
 
 
 /mob/living/carbon/human/update_inv_glasses()
@@ -336,18 +287,9 @@ There are several things that need to be remembered:
 	apply_overlay(SUIT_STORE_LAYER)
 
 
-
 /mob/living/carbon/human/update_inv_head()
-	remove_overlay(HEAD_LAYER)
-	if(!get_bodypart("head")) //Decapitated
-		return
 	..()
-	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_head]
-		inv.update_icon()
-
 	update_mutant_bodyparts()
-
 
 /mob/living/carbon/human/update_inv_belt()
 	remove_overlay(BELT_LAYER)
@@ -382,16 +324,16 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
-		wear_suit.screen_loc = ui_oclothing	//TODO //Todo what?
+		wear_suit.screen_loc = ui_oclothing
 		if(client && hud_used && hud_used.hud_shown)
-			if(hud_used.inventory_shown)					//if the inventory is open ...
-				client.screen += wear_suit						//Either way, add the item to the HUD
+			if(hud_used.inventory_shown)
+				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
 
 		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
 		overlays_standing[SUIT_LAYER]	= standing
 
-		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
+		if(wear_suit.breakouttime) //suit is restraining
 			drop_all_held_items()
 
 	update_hair()
@@ -423,22 +365,10 @@ There are several things that need to be remembered:
 			update_observer_view(r_store)
 
 
-
 /mob/living/carbon/human/update_inv_wear_mask()
-	remove_overlay(FACEMASK_LAYER)
-	if(!get_bodypart("head")) //Decapitated
-		return
 	..()
-	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_wear_mask]
-		inv.update_icon()
-	update_mutant_bodyparts()
+	update_mutant_bodyparts() //e.g. upgate needed because mask now hides lizard snout
 
-/mob/living/carbon/human/update_inv_handcuffed()
-	remove_overlay(HANDCUFF_LAYER)
-	if(handcuffed)
-		overlays_standing[HANDCUFF_LAYER] = image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
-		apply_overlay(HANDCUFF_LAYER)
 
 /mob/living/carbon/human/update_inv_legcuffed()
 	remove_overlay(LEGCUFF_LAYER)
@@ -490,6 +420,8 @@ There are several things that need to be remembered:
 	if(client && hud_used && hud_used.hud_shown)
 		client.screen += I
 	update_observer_view(I)
+
+
 
 
 /*
@@ -581,31 +513,8 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 
-
-
-
-/////////////////////
-// Limb Icon Cache //
-/////////////////////
-/*
-	Called from update_body_parts() these procs handle the limb icon cache.
-	the limb icon cache adds an icon_render_key to a human mob, it represents:
-	- skin_tone (if applicable)
-	- gender
-	- limbs (stores as the limb name and whether it is removed/fine, organic/robotic)
-	These procs only store limbs as to increase the number of matching icon_render_keys
-	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
-	See RemieRichards on irc.rizon.net #coderbus
-*/
-
-var/global/list/limb_icon_cache = list()
-
-/mob/living/carbon/human
-	var/icon_render_key = ""
-
-
 //produces a key based on the human's limbs
-/mob/living/carbon/human/proc/generate_icon_render_key()
+/mob/living/carbon/human/generate_icon_render_key()
 	. = "[dna.species.limbs_id]"
 
 	if(dna.check_mutation(HULK))
@@ -624,7 +533,7 @@ var/global/list/limb_icon_cache = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		. += "-[BP.body_zone]"
-		if(BP.status == ORGAN_ORGANIC)
+		if(BP.status == BODYPART_ORGANIC)
 			. += "-organic"
 		else
 			. += "-robotic"
@@ -632,16 +541,14 @@ var/global/list/limb_icon_cache = list()
 	if(disabilities & HUSK)
 		. += "-husk"
 
-
-//change the human's icon to the one matching it's key
-/mob/living/carbon/human/proc/load_limb_from_cache()
-	if(limb_icon_cache[icon_render_key])
-		remove_overlay(BODYPARTS_LAYER)
-		overlays_standing[BODYPARTS_LAYER] = limb_icon_cache[icon_render_key]
-		apply_overlay(BODYPARTS_LAYER)
+/mob/living/carbon/human/load_limb_from_cache()
+	..()
+	update_mutant_bodyparts()
+	update_hair()
 
 
-/mob/living/carbon/human/proc/update_observer_view(var/obj/item/I,var/inventory)
+
+/mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M

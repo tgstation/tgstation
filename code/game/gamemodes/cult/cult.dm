@@ -150,7 +150,6 @@
 		return 0
 	else
 		mob << "<span class='danger'>You have a [item_name] in your [where]."
-		mob.update_icons()
 		if(where == "backpack")
 			var/obj/item/weapon/storage/B = mob.back
 			B.orient2hud(mob)

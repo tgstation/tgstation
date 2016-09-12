@@ -27,7 +27,7 @@
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	if(prob(50))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -44,7 +44,7 @@
 
 /datum/reagent/consumable/vitamin/on_mob_life(mob/living/M)
 	if(prob(50))
-		M.heal_organ_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	if(M.satiety < 600)
 		M.satiety += 30
@@ -325,7 +325,7 @@
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
 	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
-		M.heal_organ_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
 
@@ -457,5 +457,5 @@
 /datum/reagent/consumable/honey/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar",3)
 	if(prob(20))
-		M.heal_organ_damage(3,1)
+		M.heal_bodypart_damage(3,1)
 	..()

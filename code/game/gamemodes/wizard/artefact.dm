@@ -357,7 +357,7 @@ var/global/list/multiverse = list()
 		if("cyborg")
 			for(var/X in M.bodyparts)
 				var/obj/item/bodypart/affecting = X
-				affecting.change_bodypart_status(ORGAN_ROBOTIC)
+				affecting.change_bodypart_status(BODYPART_ROBOTIC)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.put_in_hands_or_del(sword)
 
@@ -460,7 +460,6 @@ var/global/list/multiverse = list()
 		else
 			return
 
-	M.update_icons()
 	M.update_body_parts()
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id

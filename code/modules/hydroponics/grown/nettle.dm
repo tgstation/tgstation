@@ -51,16 +51,13 @@
 	if(!iscarbon(user))
 		return 0
 	var/mob/living/carbon/C = user
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = C
-		if(H.gloves)
-			return 0
-		var/organ = (H.held_index_to_dir(H.active_hand_index) == "l" ? "l_":"r_") + "arm"
-		var/obj/item/bodypart/affecting = H.get_bodypart(organ)
-		if(affecting && affecting.take_damage(0, force))
-			H.update_damage_overlays(0)
-	else
-		C.take_organ_damage(0,force)
+	if(C.gloves)
+		return 0
+	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
+	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
+	if(affecting)
+		if(affecting.take_damage(0, force))
+			C.update_damage_overlays()
 	C << "<span class='userdanger'>The nettle burns your bare hand!</span>"
 	return 1
 

@@ -2,13 +2,13 @@
 	if(!istype(M))
 		return
 
-	var/mob/living/carbon/human/H
+	var/mob/living/carbon/C
 	var/obj/item/bodypart/affecting
 	var/selected_zone = user.zone_selected
 
-	if(istype(M, /mob/living/carbon/human))
-		H = M
-		affecting = H.get_bodypart(check_zone(selected_zone))
+	if(istype(M, /mob/living/carbon))
+		C = M
+		affecting = C.get_bodypart(check_zone(selected_zone))
 
 	if(!M.lying && !isslime(M))	//if they're prone or a slime
 		return
@@ -29,9 +29,9 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					continue
-				if(S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
 					continue
-			else if(H && S.requires_bodypart) //human with no limb in surgery zone when we need a limb
+			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue
 			if(!S.can_start(user, M))
 				continue
@@ -49,14 +49,14 @@
 					return //during the input() another surgery was started at the same location.
 
 			//we check that the surgery is still doable after the input() wait.
-			if(H)
-				affecting = H.get_bodypart(check_zone(selected_zone))
+			if(C)
+				affecting = C.get_bodypart(check_zone(selected_zone))
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
 					return
-			else if(H && S.requires_bodypart)
+			else if(C && S.requires_bodypart)
 				return
 			if(!S.can_start(user, M))
 				return

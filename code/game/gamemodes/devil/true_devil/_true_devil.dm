@@ -22,13 +22,20 @@
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
+	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
+					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
+
+
 
 /mob/living/carbon/true_devil/New()
-	internal_organs += new /obj/item/organ/brain/
+	create_bodyparts() //initialize bodyparts
+
+	create_internal_organs()
+	..()
+
+/mob/living/carbon/true_devil/create_internal_organs()
+	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
-	for(var/X in internal_organs)
-		var/obj/item/organ/I = X
-		I.Insert(src)
 	..()
 
 
@@ -95,10 +102,16 @@
 /mob/living/carbon/true_devil/assess_threat()
 	return 666
 
-/mob/living/carbon/true_devil/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(mind && has_bane(BANE_LIGHT))
 		mind.disrupt_spells(-500)
 		return ..() //flashes don't stop devils UNLESS it's their bane.
+
+/mob/living/carbon/true_devil/soundbang_act()
+	return 0
+
+/mob/living/carbon/true_devil/get_ear_protection()
+	return 2
 
 
 /mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone)
@@ -119,9 +132,6 @@
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
 	return TRUE
-
-/mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
-	A.attack_hand(src)
 
 /mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -201,3 +211,13 @@
 			b_loss *=2
 		adjustBruteLoss(b_loss)
 	return ..()
+
+
+/mob/living/carbon/true_devil/update_body() //we don't use the bodyparts layer for devils.
+	return
+
+/mob/living/carbon/true_devil/update_body_parts()
+	return
+
+/mob/living/carbon/true_devil/update_damage_overlays() //devils don't have damage overlays.
+	return

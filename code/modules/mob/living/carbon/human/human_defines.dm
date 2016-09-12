@@ -30,11 +30,7 @@ var/global/default_martial_art = new/datum/martial_art
 	//Equipment slots
 	var/obj/item/wear_suit = null
 	var/obj/item/w_uniform = null
-	var/obj/item/shoes = null
 	var/obj/item/belt = null
-	var/obj/item/gloves = null
-	var/obj/item/clothing/glasses/glasses = null
-	var/obj/item/ears = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
@@ -53,5 +49,3 @@ var/global/default_martial_art = new/datum/martial_art
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
 	var/datum/personal_crafting/handcrafting
-
-	var/list/hand_bodyparts = list() //a collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)

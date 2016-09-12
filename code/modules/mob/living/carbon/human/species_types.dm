@@ -146,9 +146,9 @@
 				H.Weaken(5)
 				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
-					randmutb(H)
+					H.randmutb()
 				else
-					randmutg(H)
+					H.randmutg()
 				H.domutcheck()
 			else
 				H.adjustFireLoss(rand(5,15))
@@ -642,6 +642,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
+	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 
 /*
  ZOMBIES
@@ -730,6 +731,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	burnmod = 2
 	heatmod = 2
 	speedmod = 1
+	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -781,7 +783,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
-	exotic_damage_overlay = "synth"
+	damage_overlay_type = "synth"
 	limbs_id = "synth"
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off

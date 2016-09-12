@@ -97,7 +97,7 @@
 		var/mob/living/carbon/C = target
 		if(C.status_flags & CANWEAKEN)
 			C.do_jitter_animation(500)
-			C.take_organ_damage(20, 0) //The process is extremely painful
+			C.take_bodypart_damage(20, 0) //The process is extremely painful
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 		spawn(10)

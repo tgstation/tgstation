@@ -137,12 +137,13 @@
 	retal = 1
 	retal_target = user
 
-/mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
+/mob/living/carbon/human/interactive/bullet_act(obj/item/projectile/P, def_zone)
 	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
 	if(potentialAssault)
 		retal = 1
 		retal_target = potentialAssault
 	..()
+
 
 /client/proc/resetSNPC(var/mob/A in SSnpc.botPool_l)
 	set name = "Reset SNPC"
@@ -296,9 +297,9 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-			BP.change_bodypart_status(ORGAN_ROBOTIC)
+			BP.change_bodypart_status(BODYPART_ROBOTIC)
 	update_icons()
-	update_damage_overlays(0)
+	update_damage_overlays()
 	functions = list("nearbyscan","combat","shitcurity","chatter") // stop customize adding multiple copies of a function
 	//job specific favours
 	switch(myjob.title)
@@ -421,10 +422,6 @@
 	var/mob/living/carbon/C = locate(/mob/living/carbon) in view(MIN_RANGE_FIND,src)
 	if(C)
 		retalTarget(C)
-
-/mob/living/carbon/human/interactive/bullet_act(obj/item/projectile/P, def_zone)
-	..(P,def_zone)
-	retalTarget(P.firer)
 
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M)
 	..(M)

@@ -5810,7 +5810,7 @@
 	pixel_x = -5;
 	pixel_y = -2
 	},
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
