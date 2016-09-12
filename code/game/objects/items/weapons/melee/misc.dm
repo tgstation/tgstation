@@ -1,6 +1,7 @@
 /obj/item/weapon/melee
 	needs_permit = 1
 
+
 /obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
@@ -27,6 +28,7 @@
 	icon_state = "sabre"
 	item_state = "sabre"
 	flags = CONDUCT
+	unique_rename = 1
 	force = 15
 	throwforce = 10
 	w_class = 4
