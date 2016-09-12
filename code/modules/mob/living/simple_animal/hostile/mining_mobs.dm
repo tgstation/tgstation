@@ -833,7 +833,7 @@
 	desc = "[src] has become inert, it crackles no more and is useless for \
 		healing injuries."
 
-/obj/item/organ/hivelord_core/legion/preserved(implanted = 1)
+/obj/item/organ/hivelord_core/legion/preserved(implanted = 0)
 	..(implanted)
 	desc = "[src] has been stabilized. It no longer crackles with power, but it's healing properties are preserved indefinitely."
 
