@@ -283,7 +283,7 @@
 		intercepttext += i_text.build(V)
 
 	if(station_goals.len)
-		intercepttext += "<b>Special Orders for [station_name()]:</b>"
+		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
 		for(var/datum/station_goal/G in station_goals)
 			G.on_report()
 			intercepttext += G.get_report()

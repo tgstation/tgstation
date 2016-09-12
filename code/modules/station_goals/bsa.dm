@@ -7,7 +7,7 @@
 
 /datum/station_goal/bluespace_cannon/get_report()
 	return {"Our military presence is inadequate in your sector.
-	 We need you to construct BSA-[rand(0-99)] Artillery position aboard your station.
+	 We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.
 
 	 Base parts should be availible for shipping by your cargo shuttle.
 	 -Nanotrasen Naval Command"}
@@ -218,7 +218,7 @@
 	var/notice
 	var/target
 	use_power = 0
-	circuit = /obj/machinery/computer/bsa_control
+	circuit = /obj/item/weapon/circuitboard/machine/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	var/area_aim = FALSE //should also show areas for targeting
