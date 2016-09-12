@@ -98,8 +98,8 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.dna.species.id == "pod")
-			randmuti(C)
-			randmut(C)
+			C.randmuti()
+			C.randmut()
 			C.updateappearance()
 			C.domutcheck()
 

@@ -52,7 +52,7 @@
 //KEYS
 /obj/vehicle/proc/keycheck(mob/user)
 	if(keytype)
-		if(istype(user.l_hand, keytype) || istype(user.r_hand, keytype))
+		if(user.is_holding_item_of_type(keytype))
 			return 1
 	else
 		return 1
@@ -94,12 +94,14 @@
 /obj/vehicle/relaymove(mob/user, direction)
 	if(user.incapacitated())
 		unbuckle_mob(user)
+		return
 
+	if(world.time < next_vehicle_move)
+		return
+	next_vehicle_move = world.time + vehicle_move_delay
 	if(keycheck(user))
-		if(!Process_Spacemove(direction) || world.time < next_vehicle_move || !isturf(loc))
+		if(!Process_Spacemove(direction) || !isturf(loc))
 			return
-		next_vehicle_move = world.time + vehicle_move_delay
-
 		step(src, direction)
 
 		handle_vehicle_layer()

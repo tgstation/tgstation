@@ -134,7 +134,7 @@
 		var/mob/living/silicon/robot/R = occupant
 		restock_modules()
 		if(repairs)
-			R.heal_organ_damage(repairs, repairs - 1)
+			R.heal_bodypart_damage(repairs, repairs - 1)
 		if(R.cell)
 			R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
 

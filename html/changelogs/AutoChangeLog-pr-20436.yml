@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "The Recollection function of the clockwork slab is much more useful and easier to parse."
+  - wip: "Tweaked the Recital menus for scripture so the scripture are all in the proper order. This might fuck you up if you were used to the incorrect order, but you'll get used to it."

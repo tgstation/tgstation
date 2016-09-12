@@ -44,7 +44,7 @@
 
 				var/list/flashers = list()
 				for(var/mob/living/carbon/C in viewers(TO, null))
-					if(C.flash_eyes())
+					if(C.flash_act())
 						flashers += C
 
 				var/y_distance = TO.y - FROM.y

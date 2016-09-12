@@ -90,8 +90,7 @@
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 	if(usr.attack_ui(slot_id))
-		usr.update_inv_l_hand(0)
-		usr.update_inv_r_hand(0)
+		usr.update_inv_hands()
 	return 1
 
 /obj/screen/inventory/update_icon()
@@ -108,13 +107,15 @@
 	var/image/active_overlay
 	var/image/handcuff_overlay
 	var/image/blocked_overlay
+	var/held_index = 0
 
 /obj/screen/inventory/hand/update_icon()
 	..()
+
 	if(!active_overlay)
 		active_overlay = image("icon"=icon, "icon_state"="hand_active")
 	if(!handcuff_overlay)
-		var/state = (slot_id == slot_r_hand) ? "markus" : "gabrielle"
+		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
 		handcuff_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"=state)
 	if(!blocked_overlay)
 		blocked_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"="blocked")
@@ -126,17 +127,14 @@
 			var/mob/living/carbon/C = hud.mymob
 			if(C.handcuffed)
 				add_overlay(handcuff_overlay)
-			if(slot_id == slot_r_hand)
-				if(!C.has_right_hand())
-					add_overlay(blocked_overlay)
-			else if(slot_id == slot_l_hand)
-				if(!C.has_left_hand())
+
+			if(held_index)
+				if(!C.has_hand_for_held_index(held_index))
 					add_overlay(blocked_overlay)
 
-		if(slot_id == slot_l_hand && hud.mymob.hand)
+		if(held_index == hud.mymob.active_hand_index)
 			add_overlay(active_overlay)
-		else if(slot_id == slot_r_hand && !hud.mymob.hand)
-			add_overlay(active_overlay)
+
 
 /obj/screen/inventory/hand/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -150,11 +148,7 @@
 
 	if(ismob(usr))
 		var/mob/M = usr
-		switch(name)
-			if("right hand", "r_hand")
-				M.activate_hand("r")
-			if("left hand", "l_hand")
-				M.activate_hand("l")
+		M.swap_hand(held_index)
 	return 1
 
 /obj/screen/close
@@ -239,12 +233,10 @@
 					C << "<span class='warning'>You are not wearing an internals mask!</span>"
 					return
 
-		if(istype(C.l_hand, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
-			C.internal = C.l_hand
-		else if(istype(C.r_hand, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
-			C.internal = C.r_hand
+		var/obj/item/I = C.is_holding_item_of_type(/obj/item/weapon/tank)
+		if(I)
+			C << "<span class='notice'>You are now running on internals from the [I] on your [C.get_held_index_name(C.get_held_index_of_item(I))].</span>"
+			C.internal = I
 		else if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(istype(H.s_store, /obj/item/weapon/tank))
@@ -328,7 +320,7 @@
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
 	if(master)
-		var/obj/item/I = usr.get_active_hand()
+		var/obj/item/I = usr.get_active_held_item()
 		if(I)
 			master.attackby(I, usr, params)
 	return 1

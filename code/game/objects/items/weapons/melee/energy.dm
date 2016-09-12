@@ -81,7 +81,7 @@
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>"
-		user.take_organ_damage(5,5)
+		user.take_bodypart_damage(5,5)
 	active = !active
 	if (active)
 		force = force_on
@@ -202,12 +202,7 @@
 
 			if(active)
 				icon_state = "swordrainbow"
-				// Updating overlays, copied from welder code.
-				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
-				if(user.r_hand == src)
-					user.update_inv_r_hand(0)
-				else if(user.l_hand == src)
-					user.update_inv_l_hand(0)
+				user.update_inv_hands()
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
 	else

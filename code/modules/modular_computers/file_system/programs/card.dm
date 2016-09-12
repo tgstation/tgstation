@@ -169,7 +169,7 @@
 							data_core.manifest_modify(id_card.registered_name, id_card.assignment)
 							computer.proc_eject_id(user, 1)
 						else
-							var/obj/item/I = usr.get_active_hand()
+							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))
 								if(!usr.drop_item())
 									return
@@ -185,7 +185,7 @@
 							minor = 0
 							computer.proc_eject_id(user, 2)
 						else
-							var/obj/item/I = usr.get_active_hand()
+							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))
 								if(!usr.drop_item())
 									return

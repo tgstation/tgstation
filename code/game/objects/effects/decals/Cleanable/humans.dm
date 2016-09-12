@@ -77,6 +77,10 @@
 /obj/effect/decal/cleanable/blood/gibs/body
 	random_icon_states = list("gibhead", "gibtorso")
 
+/obj/effect/decal/cleanable/blood/gibs/torso
+	random_icon_states = list("gibtorso")
+
+
 /obj/effect/decal/cleanable/blood/gibs/limb
 	random_icon_states = list("gibleg", "gibarm")
 
@@ -87,16 +91,19 @@
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
 	set waitfor = 0
 	var/direction = pick(directions)
-	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
-		sleep(3)
+	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
+		sleep(2)
 		if (i > 0)
 			var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 			for(var/datum/disease/D in src.viruses)
 				var/datum/disease/ND = D.Copy(1)
 				b.viruses += ND
 				ND.holder = b
-		if (step_to(src, get_step(src, direction), 0))
+		if (!step_to(src, get_step(src, direction), 0))
 			break
+
+/obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
+	return //gibs can stack, so gibspawner can work properly
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"

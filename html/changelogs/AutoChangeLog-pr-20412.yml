@@ -1,0 +1,4 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - bugfix: "Tesla shocks from grilles will no longer do thousands and thousands of damage. They now properly deal burn damage that is equal to the current power in the powernet divided by 5000."

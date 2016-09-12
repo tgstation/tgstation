@@ -80,11 +80,10 @@ var/global/posibrain_notif_cooldown = 0
 	name = "[initial(name)] ([C])"
 	brainmob.name = C.real_name
 	brainmob.real_name = C.real_name
-	brainmob.dna = C.dna
 	if(C.has_dna())
-		if(!brainmob.dna)
-			brainmob.dna = new /datum/dna(brainmob)
-		C.dna.copy_dna(brainmob.dna)
+		if(!brainmob.stored_dna)
+			brainmob.stored_dna = new /datum/dna/stored(brainmob)
+		C.dna.copy_dna(brainmob.stored_dna)
 	brainmob.timeofhostdeath = C.timeofdeath
 	brainmob.stat = CONSCIOUS
 	if(brainmob.mind)

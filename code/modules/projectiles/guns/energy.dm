@@ -139,7 +139,7 @@
 	if (src.can_shoot())
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of the [src.name] in \his mouth.  It looks like \he's trying to commit suicide.</span>")
 		sleep(25)
-		if(user.l_hand == src || user.r_hand == src)
+		if(user.is_holding(src))
 			user.visible_message("<span class='suicide'>[user] melts \his face off with the [src.name]!</span>")
 			playsound(loc, fire_sound, 50, 1, -1)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]

@@ -156,6 +156,7 @@ datum/supply_pack
 
 /datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
 	var/crate_value = 50
+	var/list/uplink_items = get_uplink_items(ticker.mode)
 	while(crate_value)
 		var/category = pick(uplink_items)
 		var/item = pick(uplink_items[category])

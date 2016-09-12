@@ -98,16 +98,12 @@
 		throw_item(A)
 		return
 
-	var/obj/item/W = get_active_hand()
+	var/obj/item/W = get_active_held_item()
 
 
 	if(W == A)
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand(0)
-		else
-			update_inv_r_hand(0)
-		return
+		update_inv_hands()
 
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
 	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
