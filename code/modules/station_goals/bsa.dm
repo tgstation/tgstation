@@ -218,7 +218,7 @@
 	var/notice
 	var/target
 	use_power = 0
-	circuit = /obj/machinery/computer/bsa_control
+	circuit = /obj/item/weapon/circuitboard/machine/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	var/area_aim = FALSE //should also show areas for targeting
