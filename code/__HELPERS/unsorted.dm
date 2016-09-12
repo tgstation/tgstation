@@ -1348,17 +1348,23 @@ proc/pick_closest_path(value)
 	CRASH(msg)
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
+
+//Increases delay as the server gets more overloaded,
+//as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
+#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+
 /proc/stoplag()
-	. = 1
+	. = round(1*DELTA_CALC)
 	sleep(world.tick_lag)
 	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += 2
-		sleep(world.tick_lag*2)
+		. += round(2*DELTA_CALC)
+		sleep(world.tick_lag*2*DELTA_CALC)
 		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += 4
-			sleep(world.tick_lag*4)
+			. += round(4*DELTA_CALC)
+			sleep(world.tick_lag*4*DELTA_CALC)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
+#undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
