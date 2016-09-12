@@ -194,13 +194,13 @@
 	name = "raw piece of bacon"
 	desc = "A raw piece of bacon."
 	icon_state = "bacon"
-	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon/bacon
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/bacon
 	bitesize = 2
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#B22222"
 	var/meat_type = "meat"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon/bacon
+/obj/item/weapon/reagent_containers/food/snacks/meat/bacon
 	name = "piece of bacon"
 	desc = "A delicious piece of bacon."
 	icon_state = "baconcooked"
