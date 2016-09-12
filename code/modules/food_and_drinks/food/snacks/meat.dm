@@ -198,7 +198,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#B22222"
-	var/meat_type = "meat"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/bacon
 	name = "piece of bacon"
