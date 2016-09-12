@@ -210,6 +210,9 @@ var/global/datum/crewmonitor/crewmonitor = new
 	for (z in src.interfaces)
 		if (src.interfaces[z] == hi) break
 
+	if(hclient.client.mob && IsAdminGhost(hclient.client.mob))
+		return TRUE
+
 	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))
 		if (isAI(hclient.client.mob)) return TRUE
 		else if (isrobot(hclient.client.mob))
