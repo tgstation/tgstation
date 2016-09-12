@@ -190,6 +190,23 @@
 	icon_state = "meatwheat_clump"
 	bitesize = 4
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
+	name = "raw piece of bacon"
+	desc = "A raw piece of bacon."
+	icon_state = "bacon"
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon/bacon
+	bitesize = 2
+	list_reagents = list("nutriment" = 1)
+	filling_color = "#B22222"
+	var/meat_type = "meat"
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon/bacon
+	name = "piece of bacon"
+	desc = "A delicious piece of bacon."
+	icon_state = "baconcooked"
+	list_reagents = list("nutriment" = 2)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
 
@@ -272,7 +289,6 @@
 	name = "raw spider cutlet"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
 
-
 //Cooked cutlets
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet
@@ -299,4 +315,3 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
 	name = "spider cutlet"
-
