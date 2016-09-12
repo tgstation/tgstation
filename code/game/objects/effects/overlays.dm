@@ -42,13 +42,21 @@
 
 	timerid = QDEL_IN(src, duration)
 
-/obj/effect/overlay/temp/bloodsplatter
+/obj/effect/overlay/temp/dir_setting
+	randomdir = FALSE
+
+/obj/effect/overlay/temp/dir_setting/New(loc, set_dir)
+	if(set_dir)
+		setDir(set_dir)
+	..()
+
+/obj/effect/overlay/temp/dir_setting/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
 	duration = 5
 	randomdir = FALSE
 	layer = BELOW_MOB_LAYER
 
-/obj/effect/overlay/temp/bloodsplatter/New(loc, set_dir)
+/obj/effect/overlay/temp/dir_setting/bloodsplatter/New(loc, set_dir)
 	if(set_dir in diagonals)
 		icon_state = "splatter[pick(1, 2, 6)]"
 	else
@@ -80,7 +88,6 @@
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-	setDir(set_dir)
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 
@@ -122,29 +129,56 @@
 	randomdir = 0
 	duration = 6
 
-/obj/effect/overlay/temp/ninja
+/obj/effect/overlay/temp/dir_setting/ninja
 	name = "ninja shadow"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "uncloak"
-	randomdir = 0
 	duration = 9
 
-/obj/effect/overlay/temp/ninja/New(loc, set_dir)
-	..()
-	setDir(set_dir)
-
-/obj/effect/overlay/temp/ninja/cloak
+/obj/effect/overlay/temp/dir_setting/ninja/cloak
 	icon_state = "cloak"
 
-/obj/effect/overlay/temp/ninja/shadow
+/obj/effect/overlay/temp/dir_setting/ninja/shadow
 	icon_state = "shadow"
 
-/obj/effect/overlay/temp/ninja/phase
+/obj/effect/overlay/temp/dir_setting/ninja/phase
 	name = "ninja energy"
 	icon_state = "phasein"
 
-/obj/effect/overlay/temp/ninja/phase/out
+/obj/effect/overlay/temp/dir_setting/ninja/phase/out
 	icon_state = "phaseout"
+
+/obj/effect/overlay/temp/dir_setting/wraith
+	name = "blood"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "phase_shift2"
+	duration = 12
+
+/obj/effect/overlay/temp/dir_setting/wraith/out
+	icon_state = "phase_shift"
+
+/obj/effect/overlay/temp/wizard
+	name = "water"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "reappear"
+	duration = 5
+
+/obj/effect/overlay/temp/wizard/out
+	icon_state = "liquify"
+	duration = 12
+
+/obj/effect/overlay/temp/monkeyify
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "h2monkey"
+	duration = 22
+
+/obj/effect/overlay/temp/monkeyify/humanify
+	icon_state = "monkey2h"
+
+/obj/effect/overlay/temp/borgflash
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "blspell"
+	duration = 5
 
 /obj/effect/overlay/temp/guardian
 	randomdir = 0
@@ -182,17 +216,12 @@
 	name = "blood sparks"
 	icon_state = "bloodsparkles"
 
-/obj/effect/overlay/temp/cult/phase
+/obj/effect/overlay/temp/dir_setting/cult/phase
 	name = "phase glow"
 	duration = 7
 	icon_state = "cultin"
 
-/obj/effect/overlay/temp/cult/phase/New(loc, set_dir)
-	..()
-	if(set_dir)
-		setDir(set_dir)
-
-/obj/effect/overlay/temp/cult/phase/out
+/obj/effect/overlay/temp/dir_setting/cult/phase/out
 	icon_state = "cultout"
 
 /obj/effect/overlay/temp/cult/sac

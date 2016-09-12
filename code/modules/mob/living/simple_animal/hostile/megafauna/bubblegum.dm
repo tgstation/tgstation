@@ -197,7 +197,7 @@ Difficulty: Hard
 	for(var/turf/J in getline(src,E))
 		if(!range)
 			break
-		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(previousturf, get_dir(previousturf, J)))
+		PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(previousturf, get_dir(previousturf, J)))
 		if(!previousturf.CanAtmosPass(J))
 			break
 		playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
