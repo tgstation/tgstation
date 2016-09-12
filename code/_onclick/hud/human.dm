@@ -95,9 +95,9 @@
 	using.icon = ui_style
 	static_inventory += using
 
-	using = new/obj/screen/talk_wheel
-	using.icon = ui_style
-	static_inventory += using
+	talk_wheel_icon = new/obj/screen/talk_wheel //phil235 make it a reference var of hud_used.
+	talk_wheel_icon.icon = ui_style
+	static_inventory += talk_wheel_icon
 
 	using = new /obj/screen/inventory/area_creator
 	using.icon = ui_style
@@ -356,6 +356,8 @@
 		if(H.wear_mask)	screenmob.client.screen -= H.wear_mask
 		if(H.head)		screenmob.client.screen -= H.head
 
+
+
 /datum/hud/human/persistant_inventory_update(mob/viewer)
 	if(!mymob)
 		return
@@ -404,6 +406,11 @@
 		for(var/obj/item/I in H.held_items)
 			I.screen_loc = null
 			H.client.screen -= I
+
+	if(talk_wheel_icon.toggled)
+		H.client.screen |= talk_wheel_icon.talk_boxes
+	else
+		H.client.screen -= talk_wheel_icon.talk_boxes
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"

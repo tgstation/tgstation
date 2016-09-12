@@ -33,6 +33,8 @@
 	var/obj/screen/throw_icon
 	var/obj/screen/module_store_icon
 
+	var/obj/screen/talk_wheel/talk_wheel_icon
+
 	var/list/static_inventory = list() //the screen objects which are static
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
 	var/list/obj/screen/hotkeybuttons = list() //the buttons that can be used via hotkeys

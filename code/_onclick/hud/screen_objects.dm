@@ -49,17 +49,20 @@
 /obj/screen/talk_wheel
 	name = "talk wheel"
 	layer = HUD_LAYER
-	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "talk_wheel"
+	screen_loc = "11:6,2:-11"
 	var/obj/screen/talk/talk_boxes
 	var/toggled = 0
 
 /obj/screen/talk_wheel/New()
 	..()
 	talk_boxes = new ()
-	talk_boxes.name = "talk option"
-	talk_boxes.icon_state = "block"
-	talk_boxes.screen_loc = "11:4,2:-12"
-	talk_boxes.layer = HUD_LAYER
+	talk_boxes.wheel = src
+
+/obj/screen/talk_wheel/Destroy()
+	qdel(talk_boxes)
+	talk_boxes = null
+	return ..()
 
 /obj/screen/talk_wheel/Click()
 	if(world.time <= usr.next_move)
@@ -76,14 +79,98 @@
 
 /obj/screen/talk
 	name = "talk option"
-	icon_state = "block"
-	screen_loc = "7:0,7:0"
+	icon_state = "x3"
+	screen_loc = "8,8"
 	layer = HUD_LAYER
+	mouse_opacity = 2
+	var/talk_cooldown = 0
+	var/obj/screen/talk_wheel/wheel
 
-/obj/screen/talk/Click()
+/obj/screen/talk/New()
+	..()
+	var/image/I = image("icon" = icon, "icon_state" = "talk_help")
+	I.pixel_x = -32
+	I.pixel_y = 32
+	add_overlay(I)
+	var/image/J = image("icon" = icon, "icon_state" = "talk_hello")
+	J.pixel_x = 0
+	J.pixel_y = 32
+	add_overlay(J)
+	var/image/K = image("icon" = icon, "icon_state" = "talk_bye")
+	K.pixel_x = 32
+	K.pixel_y = 32
+	add_overlay(K)
+	var/image/L = image("icon" = icon, "icon_state" = "talk_come")
+	L.pixel_x = -32
+	L.pixel_y = 0
+	add_overlay(L)
+	var/image/N = image("icon" = icon, "icon_state" = "talk_thx")
+	N.pixel_x = 32
+	N.pixel_y = 0
+	add_overlay(N)
+	var/image/O = image("icon" = icon, "icon_state" = "talk_out")
+	O.pixel_x = -32
+	O.pixel_y = -32
+	add_overlay(O)
+	var/image/P = image("icon" = icon, "icon_state" = "talk_stop")
+	P.pixel_x = 0
+	P.pixel_y = -32
+	add_overlay(P)
+	var/image/Q = image("icon" = icon, "icon_state" = "talk_yes_no")
+	Q.pixel_x = 32
+	Q.pixel_y = -32
+	add_overlay(Q)
+
+
+
+/obj/screen/talk/Destroy()
+	wheel = null
+	return ..()
+
+/obj/screen/talk/Click(location, control,params)
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.say("Hello world")
+		var/word_spoken = ""
+		var/list/PL = params2list(params)
+		var/icon_x = text2num(PL["icon-x"])
+		var/icon_y = text2num(PL["icon-y"])
+
+		switch(icon_y)
+			if(1 to 32)
+				switch(icon_x)
+					if(1 to 32)
+						usr.client.screen -= src
+						wheel.toggled = !wheel.toggled
+						return
+					if(33 to 64)
+						word_spoken = pick("Thanks.", "Thanks!", "Thank you.")
+					else
+						word_spoken = pick("Come.", "Follow me.")
+			if(33 to 64)
+				switch(icon_x)
+					if(1 to 32)
+						word_spoken = pick("Hi.", "Hello.")
+					if(33 to 64)
+						word_spoken = pick("Bye.", "Goodbye.")
+					else
+						word_spoken = pick("Help!", "Help me!")
+			else
+				switch(icon_x)
+					if(1 to 32)
+						word_spoken = pick("Stop!", "Halt!")
+					if(33 to 64)
+						if(icon_y < -16)
+							word_spoken = "No."
+						else
+							word_spoken = "Yes."
+					else
+						word_spoken = pick("Go away!", "Out!", "Get out!")
+
+		if(word_spoken && talk_cooldown < world.time)
+			talk_cooldown = world.time + 10
+			H.say(word_spoken)
+
+
 
 /obj/screen/inventory/craft
 	name = "crafting menu"
