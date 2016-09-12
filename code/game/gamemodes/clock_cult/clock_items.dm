@@ -223,7 +223,7 @@
 		else
 			user << "<span class='warning'>That section of scripture is still locked!</span>"
 			return 0
-	for(var/S in subtypesof(/datum/clockwork_scripture))
+	for(var/S in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
 		var/datum/clockwork_scripture/C = S
 		if(initial(C.tier) == scripture_tier)
 			available_scriptures += "[initial(C.name)] ([initial(C.descname)])"
@@ -265,121 +265,73 @@
 		universe and Reebe (the Celestial Derelict) can be created and utilized. This is typically done via the creation of a slab akin to the one you are holding right now. The slabs tap into the \
 		tidal flow of energy and information keeping Reebe sealed and presents it as meaningless images to preserve sanity. This slab can utilize the power in many different ways.<br><br>\
 		\
-		This is done through <b>Components</b> - pieces of the Justiciar's body that have since fallen off in the countless years since his imprisonment. Ratvar's unfortunate condition results \
-		in the fragmentation of his body. These components still house great power on their own, and can slowly be drawn from Reebe by links capable of doing so. The most basic of these links lies \
-		in the clockwork slab, which will slowly generate components over time - one component of a random type is produced every 1 minute and 30 seconds, plus 30 seconds per each servant above 5, \
-		which is obviously inefficient. There are other ways to create these components through scripture and certain structures.<br><br>\
+		This is done through <b><font color=#BE8700>Components</font></b> - pieces of the Justiciar's body that have since fallen off in the countless years since his imprisonment. Ratvar's unfortunate condition results \
+		in the fragmentation of his body. These components still house great power on their own, and can slowly be drawn from Reebe by links capable of doing so.<br>\
+		The most basic of these links lies in the clockwork slab, which will slowly generate components over time - one component of a random type is produced every 1 minute and 30 seconds, plus 30 seconds per each servant above 5, \
+		which is obviously inefficient. There are other, more efficient, ways to create these components through scripture and certain structures.<br><br>\
 		\
-		In addition to their ability to pull components, slabs also possess other functionalities...<br><br>\
+		In addition to their ability to generate components, slabs also possess other functionalities...<br><br>\
 		\
-		The first functionality of the slab is Recital. This allows you to consume components either from your slab or from the global cache (more on that in the scripture list) to perform \
-		effects usually considered magical in nature. Effects vary considerably - you might drain the power of nearby APCs, cause mass confusion, or force people to walk. Nevertheless, scripture \
-		is extremely important to a successful takeover.<br><br>\
+		The first functionality of the slab is <b><font color=#BE8700>Recital</font></b>. This allows you to consume components either from your slab or from the global cache (more on that in the scripture list) to perform \
+		effects usually considered magical in nature.<br>\
+		Effects vary considerably, including mass conversion, construction of various structures, or causing a massive global hallucination. Nevertheless, scripture is extremely important to a successful takeover.<br><br>\
 		\
-		The second functionality of the clockwork slab is Recollection, which will display this guide.<br><br>\
+		The second functionality of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide.<br><br>\
 		\
 		The third to fifth functionalities are several buttons in the top left while holding the slab, from left to right, they are:<br>\
-		Hierophant Network, which allows communication to other servants.<br>\
-		Guvax, which simply allows you to quickly invoke the Guvax scripture.<br>\
-		Vanguard, which, like Guvax, simply allows you to quickly invoke the Vanguard scripture.<br><br>\
+		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other servants.<br>\
+		<b><font color=#AF0AAF>Guvax</font></b>, which simply allows you to quickly invoke the Guvax scripture.<br>\
+		<b><font color=#1E8CE1>Vanguard</font></b>, which, like Guvax, simply allows you to quickly invoke the Vanguard scripture.<br><br>\
 		\
 		Examine the slab for component amount information.<br><br>\
 		\
-		A complete list of scripture, its effects, and its requirements can be found below. <i>Note that anything above a driver always consumes the components listed unless otherwise \
-		specified.</i><br><br>"
+		A complete list of scripture, its effects, and its requirements can be found below.<br>\
+		Key:<br><font color=#6E001A>BE</font> = Belligerent Eyes<br>\
+		<font color=#1E8CE1>VC</font> = Vanguard Cogwheels<br>\
+		<font color=#AF0AAF>GC</font> = Guvax Capacitors<br>\
+		<font color=#5A6068>RA</font> = Replicant Alloy<br>\
+		<font color=#DAAA18>HA</font> = Hierophant Ansibles<br>"
 		var/text_to_add = ""
-		var/drivers = "<font color=#BE8700 size=3><b>[SCRIPTURE_DRIVER]</b></font>"
-		var/scripts = "<font color=#BE8700 size=3><b>[SCRIPTURE_SCRIPT]</b></font><br><i>These scriptures require at least five servants and a tinkerer's cache.</i>"
-		var/applications = "<font color=#BE8700 size=3><b>[SCRIPTURE_APPLICATION]</b></font><br><i>These scriptures require at least eight servants, three tinkerer's caches, and 100CV.</i>"
-		var/revenant = "<font color=#BE8700 size=3><b>[SCRIPTURE_REVENANT]</b></font><br><i>These scriptures require at least ten servants and 200CV.</i>"
-		var/judgement = "<font color=#BE8700 size=3><b>[SCRIPTURE_REVENANT]</b></font><br><i>These scriptures require at least twelve servants and 300CV. In addition, there may not be any active non-servant AIs.</i>"
-		for(var/V in subtypesof(/datum/clockwork_scripture))
+		var/drivers = "<br><font color=#BE8700 size=3><b>[SCRIPTURE_DRIVER]</b></font><br><i>These scriptures are always unlocked.</i><br>"
+		var/scripts = "<br><font color=#BE8700 size=3><b>[SCRIPTURE_SCRIPT]</b></font><br><i>These scriptures require at least five servants and a tinkerer's cache.</i><br>"
+		var/applications = "<font color=#BE8700 size=3><b>[SCRIPTURE_APPLICATION]</b></font><br><i>These scriptures require at least eight servants, three tinkerer's caches, and 100CV.</i><br>"
+		var/revenant = "<br><font color=#BE8700 size=3><b>[SCRIPTURE_REVENANT]</b></font><br><i>These scriptures require at least ten servants and 200CV.</i><br>"
+		var/judgement = "<br><font color=#BE8700 size=3><b>[SCRIPTURE_JUDGEMENT]</b></font><br><i>These scriptures require at least twelve servants and 300CV. In addition, there may not be any active non-servant AIs.</i><br>"
+		for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
 			var/datum/clockwork_scripture/S = V
 			var/datum/clockwork_scripture/S2 = new V
 			var/list/req_comps = S2.required_components
 			var/list/cons_comps = S2.consumed_components
 			qdel(S2)
-			switch(initial(S.tier))
-				if(SCRIPTURE_DRIVER)
-					drivers += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
-				if(SCRIPTURE_SCRIPT)
-					scripts += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
-				if(SCRIPTURE_APPLICATION)
-					applications += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
-				if(SCRIPTURE_REVENANT)
-					revenant += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
-				if(SCRIPTURE_JUDGEMENT)
-					judgement += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
-					\
-					<b>Component Requirement: </b>\
-					[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Component Cost: </b>\
-					[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
-					[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
-					[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
-					[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
-					[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
-					<b>Tip:</b> [initial(S.usage_tip)]<br>"
+			if(initial(S.tier) != SCRIPTURE_PERIPHERAL)
+				var/scripture_text = "<br><b><font color=#BE8700>[initial(S.name)]</font>:</b><br>[initial(S.desc)]<br><b>Invocation Time:</b> <b>[initial(S.channel_time) / 10]</b> seconds<br>\
+				<b>Component Requirement: </b>\
+				[req_comps["belligerent_eye"] ?  "<font color=#6E001A><b>[req_comps["belligerent_eye"]]</b> BE</font>" : ""] \
+				[req_comps["vanguard_cogwheel"] ? "<font color=#1E8CE1><b>[req_comps["vanguard_cogwheel"]]</b> VC</font>" : ""] \
+				[req_comps["guvax_capacitor"] ? "<font color=#AF0AAF><b>[req_comps["guvax_capacitor"]]</b> GC</font>" : ""] \
+				[req_comps["replicant_alloy"] ? "<font color=#5A6068><b>[req_comps["replicant_alloy"]]</b> RA</font>" : ""] \
+				[req_comps["hierophant_ansible"] ? "<font color=#DAAA18><b>[req_comps["hierophant_ansible"]]</b> HA</font>" : ""]<br>"
+				for(var/i in cons_comps)
+					if(cons_comps[i])
+						scripture_text += "<b>Component Cost: </b>\
+						[cons_comps["belligerent_eye"] ?  "<font color=#6E001A><b>[cons_comps["belligerent_eye"]]</b> BE</font>" : ""] \
+						[cons_comps["vanguard_cogwheel"] ? "<font color=#1E8CE1><b>[cons_comps["vanguard_cogwheel"]]</b> VC</font>" : ""] \
+						[cons_comps["guvax_capacitor"] ? "<font color=#AF0AAF><b>[cons_comps["guvax_capacitor"]]</b> GC</font>" : ""] \
+						[cons_comps["replicant_alloy"] ? "<font color=#5A6068><b>[cons_comps["replicant_alloy"]]</b> RA</font>" : ""] \
+						[cons_comps["hierophant_ansible"] ? "<font color=#DAAA18><b>[cons_comps["hierophant_ansible"]]</b> HA</font>" : ""]<br>"
+						break //we want this to only show up if the scripture has a cost of some sort
+				scripture_text += "<b>Tip:</b> [initial(S.usage_tip)]<br>"
+				switch(initial(S.tier))
+					if(SCRIPTURE_DRIVER)
+						drivers += scripture_text
+					if(SCRIPTURE_SCRIPT)
+						scripts += scripture_text
+					if(SCRIPTURE_APPLICATION)
+						applications += scripture_text
+					if(SCRIPTURE_REVENANT)
+						revenant += scripture_text
+					if(SCRIPTURE_JUDGEMENT)
+						judgement += scripture_text
 		text_to_add += "[drivers]<br>[scripts]<br>[applications]<br>[revenant]<br>[judgement]<br>"
 		text_to_add += "<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
 		text += text_to_add
@@ -407,7 +359,7 @@
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
 	if(!message || !user || !user.canUseTopic(src))
 		return 0
-	clockwork_say(user, text2ratvar("Servants, hear my words. [message]"), TRUE)
+	clockwork_say(user, text2ratvar("Servants, hear my words. [html_decode(message)]"), TRUE)
 	titled_hierophant_message(user, message)
 	return 1
 
