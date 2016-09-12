@@ -791,8 +791,8 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		else
 			qdel(photo)
 		photo = null
-	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
-		photo = user.get_active_hand()
+	if(istype(user.get_active_held_item(), /obj/item/weapon/photo))
+		photo = user.get_active_held_item()
 		if(!user.drop_item())
 			return
 		photo.loc = src

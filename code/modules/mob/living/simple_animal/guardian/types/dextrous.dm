@@ -28,17 +28,13 @@
 	if(dextrous)
 		var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 		msg += "[desc]\n"
-		if(l_hand && !(l_hand.flags&ABSTRACT))
-			if(l_hand.blood_DNA)
-				msg += "<span class='warning'>It is holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in its left hand!</span>\n"
-			else
-				msg += "It is holding \icon[l_hand] \a [l_hand] in its left hand.\n"
 
-		if(r_hand && !(r_hand.flags&ABSTRACT))
-			if(r_hand.blood_DNA)
-				msg += "<span class='warning'>It is holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in its right hand!</span>\n"
-			else
-				msg += "It is holding \icon[r_hand] \a [r_hand] in its right hand.\n"
+		for(var/obj/item/I in held_items)
+			if(!(I.flags & ABSTRACT))
+				if(I.blood_DNA)
+					msg += "<span class='warning'>It has \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+				else
+					msg += "It has \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 		if(internal_storage && !(internal_storage.flags&ABSTRACT))
 			if(internal_storage.blood_DNA)
@@ -53,14 +49,12 @@
 /mob/living/simple_animal/hostile/guardian/dextrous/Recall()
 	if(loc == summoner || cooldown > world.time)
 		return 0
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 	return ..() //lose items, then return
 
 /mob/living/simple_animal/hostile/guardian/dextrous/snapback()
 	if(summoner && !(get_dist(get_turf(summoner),get_turf(src)) <= range))
-		drop_l_hand()
-		drop_r_hand()
+		drop_all_held_items()
 		..() //lose items, then return
 
 //SLOT HANDLING BULLSHIT FOR INTERNAL STORAGE

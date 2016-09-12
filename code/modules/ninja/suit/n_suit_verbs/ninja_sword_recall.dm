@@ -32,9 +32,6 @@
 			if(energyKatana in C.stomach_contents)
 				C.stomach_contents -= energyKatana
 
-			if(energyKatana in C.internal_organs)
-				C.internal_organs -= energyKatana
-
 		energyKatana.loc = get_turf(energyKatana)
 
 		if(inview) //If we can see the katana, throw it towards ourselves, damaging people as we go.

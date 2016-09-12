@@ -144,19 +144,13 @@
 /mob/living/simple_animal/drone/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 
-	//Left hand items
-	if(l_hand && !(l_hand.flags&ABSTRACT))
-		if(l_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in its left hand!</span>\n"
-		else
-			msg += "It is holding \icon[l_hand] \a [l_hand] in its left hand.\n"
-
-	//Right hand items
-	if(r_hand && !(r_hand.flags&ABSTRACT))
-		if(r_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in its right hand!</span>\n"
-		else
-			msg += "It is holding \icon[r_hand] \a [r_hand] in its right hand.\n"
+	//Hands
+	for(var/obj/item/I in held_items)
+		if(!(I.flags & ABSTRACT))
+			if(I.blood_DNA)
+				msg += "<span class='warning'>It has \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+			else
+				msg += "It has \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.flags&ABSTRACT))
@@ -244,14 +238,14 @@
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
 
-/mob/living/simple_animal/drone/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(affect_silicon)
 		return ..()
 
 /mob/living/simple_animal/drone/mob_negates_gravity()
 	return 1
 
-/mob/living/simple_animal/drone/mob_has_gravity()
+/mob/living/simple_animal/drone/has_gravity()
 	return ..() || mob_negates_gravity()
 
 /mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)

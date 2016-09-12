@@ -228,10 +228,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+				var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
-					H.update_damage_overlays(0)
-				H.updatehealth()
+					H.update_damage_overlays()
+
 				return
 		else
 			extinguish()
@@ -396,7 +396,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
-	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
+	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
 
 //This proc is executed when someone clicks the on-screen UI button.
@@ -454,11 +454,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		)
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
-		if(affecting.take_damage(7))
-			U.update_damage_overlays(0)
+		U.apply_damage(7, BRUTE, affecting)
 
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
@@ -574,11 +573,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(slot_l_hand))
-			success = TRUE
-		else if(src == M.get_item_by_slot(slot_r_hand))
-			success = TRUE
-		else if(src == M.get_item_by_slot(slot_wear_mask))
+		if(src == M.get_item_by_slot(slot_wear_mask))
 			success = TRUE
 		if(success)
 			location = get_turf(M)

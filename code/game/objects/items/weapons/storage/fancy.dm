@@ -42,9 +42,23 @@
 		else
 			user << "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left."
 
-/obj/item/weapon/storage/fancy/CtrlClick(mob/user)
+/obj/item/weapon/storage/fancy/attack_self(mob/user)
 	fancy_open = !fancy_open
 	update_icon()
+
+/obj/item/weapon/storage/fancy/content_can_dump(atom/dest_object, mob/user)
+	. = ..()
+	if(.)
+		fancy_open = TRUE
+		update_icon()
+
+/obj/item/weapon/storage/fancy/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
+	fancy_open = TRUE
+	return ..()
+
+/obj/item/weapon/storage/fancy/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
+	fancy_open = TRUE
+	return ..()
 
 /*
  * Donut Box
@@ -88,6 +102,10 @@
 	throwforce = 2
 	slot_flags = SLOT_BELT
 	spawn_type = /obj/item/candle
+	fancy_open = TRUE
+
+/obj/item/weapon/storage/fancy/candle_box/attack_self(mob_user)
+	return
 
 ////////////
 //CIG PACK//
@@ -115,7 +133,7 @@
 	name = "\improper [name] packet"
 
 /obj/item/weapon/storage/fancy/cigarettes/AltClick(mob/user)
-	if(user.get_active_hand())
+	if(user.get_active_held_item())
 		return
 	for(var/obj/item/weapon/lighter/lighter in src)
 		remove_from_storage(lighter, user.loc)

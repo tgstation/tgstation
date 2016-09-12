@@ -337,7 +337,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/carbon/human/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/brain/M in sortmob)
+	for(var/mob/living/brain/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/carbon/alien/M in sortmob)
 		moblist.Add(M)
@@ -966,12 +966,9 @@ var/list/WALLITEMS_INVERSE = list(
 	tY = max(1, min(origin.y + 7 - tY, world.maxy))
 	return locate(tX, tY, tZ)
 
-/proc/IsValidSrc(A)
-	if(istype(A, /datum))
-		var/datum/B = A
-		return !qdeleted(B)
-	if(istype(A, /client))
-		return 1
+/proc/IsValidSrc(datum/D)
+	if(istype(D))
+		return !qdeleted(D)
 	return 0
 
 

@@ -150,7 +150,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(10))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	return ..() || .
 
@@ -681,7 +681,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/M)
 	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
-		M.heal_organ_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	return ..() || .
 
@@ -695,7 +695,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/M)
 	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
-		M.heal_organ_damage(1,1)
+		M.heal_bodypart_damage(1,1)
 		. = 1
 	return ..() || .
 

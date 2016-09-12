@@ -238,7 +238,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("vanguard_cogwheel" = 1)
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
-	var/total_duration = 200
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
 	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
@@ -247,31 +246,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return 1
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	invoker.add_stun_absorption("vanguard", total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
-	invoker.visible_message("<span class='warning'>[invoker] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
-	spawn(total_duration)
-		if(!invoker)
-			return
-
-		var/vanguard = invoker.stun_absorption["vanguard"]
-		var/stuns_blocked = 0
-		if(vanguard)
-			stuns_blocked = min(vanguard["stuns_absorbed"] * 0.25, 20)
-		if(invoker.stat != DEAD)
-			var/message_to_invoker = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
-			var/otheractiveabsorptions = FALSE
-			for(var/i in invoker.stun_absorption)
-				if(invoker.stun_absorption[i]["end_time"] > world.time && invoker.stun_absorption[i]["priority"] > vanguard["priority"])
-					otheractiveabsorptions = TRUE
-			if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
-				vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
-				invoker.Stun(stuns_blocked)
-				invoker.Weaken(stuns_blocked)
-				message_to_invoker = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
-				if(stuns_blocked >= 15)
-					message_to_invoker += "\n<span class='userdanger'>You faint from the exertion!</span>"
-					invoker.Paralyse(stuns_blocked * 2)
-			invoker.visible_message("<span class='warning'>[invoker]'s glowing aura fades!</span>", message_to_invoker)
+	invoker.apply_status_effect(STATUS_EFFECT_VANGUARD)
 	return 1
 
 
@@ -420,7 +395,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 50
 	required_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 2, "hierophant_ansible" = 0)
 	consumed_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 1, "hierophant_ansible" = 0)
-	object_path = /obj/structure/clockwork/cache
+	object_path = /obj/structure/destructible/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
 	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches very efficient."
@@ -481,7 +456,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 120
 	required_components = list("belligerent_eye" = 2, "replicant_alloy" = 1)
 	consumed_components = list("belligerent_eye" = 1, "replicant_alloy" = 1)
-	object_path = /obj/structure/clockwork/ocular_warden
+	object_path = /obj/structure/destructible/clockwork/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will focus its searing gaze upon nearby unenlightened.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
 	usage_tip = "Although powerful, the warden is very weak and should optimally be placed behind barricades."
@@ -489,7 +464,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	one_per_tile = TRUE
 
 /datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
-	for(var/obj/structure/clockwork/ocular_warden/W in range(3, invoker))
+	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(3, invoker))
 		invoker << "<span class='alloy'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
 		return 0
 	return ..()
@@ -571,10 +546,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			var/mob/living/carbon/human/H = invoker
 			for(var/X in H.bodyparts)
 				var/obj/item/bodypart/BP = X
-				if(ratvar_awakens || BP.status == ORGAN_ROBOTIC && total_power_drained < augument_damage_threshhold) //if ratvar is alive, it won't damage and will always heal augumented limbs
-					BP.heal_damage(power_damage, power_damage, 1) //heals one point of burn and brute for every ~100W drained on augumented limbs
+				if(ratvar_awakens || BP.status == BODYPART_ROBOTIC && total_power_drained < augument_damage_threshhold) //if ratvar is alive, it won't damage and will always heal augumented limbs
+					if(BP.heal_damage(power_damage, power_damage, 1, 0)) //heals one point of burn and brute for every ~100W drained on augumented limbs
+						H.update_damage_overlays()
 				else
-					BP.take_damage(0, power_damage)
+					if(BP.take_damage(0, power_damage))
+						H.update_damage_overlays()
 		else if(isanimal(invoker))
 			var/mob/living/simple_animal/A = invoker
 			A.adjustHealth(-power_damage) //if a simple animal is using volt void, just heal it
@@ -681,7 +658,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L) && !L.stat != DEAD)
 			other_servants++
-	for(var/obj/structure/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
+	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
 		other_servants++
 	if(!other_servants)
 		invoker << "<span class='warning'>There are no other servants or clockwork obelisks!</span>"
@@ -726,7 +703,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 50
 	required_components = list("belligerent_eye" = 2, "hierophant_ansible" = 1)
 	consumed_components = list("belligerent_eye" = 1, "hierophant_ansible" = 1)
-	object_path = /obj/structure/clockwork/shell/cogscarab
+	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
 	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptable.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
@@ -763,7 +740,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 70
 	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "replicant_alloy" = 3)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "replicant_alloy" = 2)
-	object_path = /obj/structure/clockwork/shell/fragment
+	object_path = /obj/structure/destructible/clockwork/shell/fragment
 	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptable.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
@@ -899,7 +876,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 80
 	required_components = list("belligerent_eye" = 1, "replicant_alloy" = 4, "hierophant_ansible" = 1)
 	consumed_components = list("belligerent_eye" = 1, "replicant_alloy" = 3, "hierophant_ansible" = 1)
-	object_path = /obj/structure/clockwork/powered/interdiction_lens
+	object_path = /obj/structure/destructible/clockwork/powered/interdiction_lens
 	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
 	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
 	invokers_required = 2
@@ -918,7 +895,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 80
 	required_components = list("vanguard_cogwheel" = 4, "guvax_capacitor" = 1, "replicant_alloy" = 1)
 	consumed_components = list("vanguard_cogwheel" = 3, "guvax_capacitor" = 1, "replicant_alloy" = 1)
-	object_path = /obj/structure/clockwork/powered/mending_motor/prefilled
+	object_path = /obj/structure/destructible/clockwork/powered/mending_motor/prefilled
 	creator_message = "<span class='brass'>You form a mending motor, which will consume power or replicant alloy to mend the wounds of mechanized servants.</span>"
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
 	invokers_required = 2
@@ -937,7 +914,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 80
 	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 4)
 	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 3)
-	object_path = /obj/structure/clockwork/powered/clockwork_obelisk
+	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
 	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
 	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
 	invokers_required = 2
@@ -956,7 +933,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 80
 	required_components = list("guvax_capacitor" = 4, "replicant_alloy" = 1, "hierophant_ansible" = 1)
 	consumed_components = list("guvax_capacitor" = 3, "replicant_alloy" = 1, "hierophant_ansible" = 1)
-	object_path = /obj/structure/clockwork/powered/mania_motor
+	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
 	creator_message = "<span class='brass'>You form a mania motor which will cause brain damage and hallucinations in nearby humans while active.</span>"
 	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
 	invokers_required = 2
@@ -1027,24 +1004,24 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	hierophant_message("<span class='nezbere'>[text2ratvar("Armorer: \"I heed your call, champions. May your artifacts bring ruin upon the heathens that oppose our master!")]\"</span>", FALSE, invoker)
 	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
-	for(var/obj/structure/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
+	for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
 		W.damage_per_tick *= 1.5
 		W.sight_range *= 2
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
 		P.uses_alloy = FALSE
 	for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects) //Daemons produce components twice as quickly
 		D.production_time *= 0.5
-	for(var/obj/structure/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
+	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
 	spawn(600)
-		for(var/obj/structure/clockwork/ocular_warden/W in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
 			W.damage_per_tick = initial(W.damage_per_tick)
 			W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
 			P.uses_alloy = initial(P.uses_alloy)
 		for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects)
 			D.production_time = initial(D.production_time)
-		for(var/obj/structure/clockwork/powered/M in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
 			M.needs_power = initial(M.needs_power)
 	return 1
 
@@ -1245,7 +1222,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(ratvar_awakens)
 			invoker << "<span class='big_brass'>\"I am already here, idiot.\"</span>"
 			return 0
-		for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			invoker << "<span class='userdanger'>There is already a gateway at [gate_area.map_name]!</span>"
 			return 0
@@ -1299,7 +1276,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
 	sleep(10)
 	if(check_special_requirements())
-		var/obj/structure/clockwork/massive/celestial_gateway/CG = new/obj/structure/clockwork/massive/celestial_gateway(T)
+		var/obj/structure/destructible/clockwork/massive/celestial_gateway/CG = new/obj/structure/destructible/clockwork/massive/celestial_gateway(T)
 		if(ticker && ticker.mode && ticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
 			CG.ratvar_portal = FALSE
 			hierophant_message("<span class='big_brass'>This newly constructed gateway will not free Ratvar, \

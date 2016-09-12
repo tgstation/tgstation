@@ -60,8 +60,8 @@
 
 /datum/personal_crafting/proc/get_environment(mob/user)
 	. = list()
-	. += user.r_hand
-	. += user.l_hand
+	for(var/obj/item/I in user.held_items)
+		. += I
 	if(!istype(user.loc, /turf))
 		return
 	var/list/L = block(get_step(user, SOUTHWEST), get_step(user, NORTHEAST))
@@ -110,7 +110,6 @@
 	return 1
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
-	for(var/A in R.parts)
 	var/list/contents = get_surroundings(user)
 	var/send_feedback = 1
 	if(check_contents(R, contents))

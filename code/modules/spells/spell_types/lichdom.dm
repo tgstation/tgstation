@@ -43,7 +43,7 @@
 	for(var/mob/M in targets)
 		var/list/hand_items = list()
 		if(iscarbon(M))
-			hand_items = list(M.get_active_hand(),M.get_inactive_hand())
+			hand_items = list(M.get_active_held_item(),M.get_inactive_held_item())
 
 		if(marked_item && !stat_allowed) //sanity, shouldn't happen without badminry
 			marked_item = null
@@ -92,7 +92,8 @@
 					var/mob/living/carbon/C = old_body
 					for(var/obj/item/W in C)
 						C.unEquip(W)
-					for(var/obj/item/organ/I in C.internal_organs)
+					for(var/X in C.internal_organs)
+						var/obj/item/organ/I = X
 						I.Remove(C)
 						I.forceMove(body_turf)
 				var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))

@@ -337,6 +337,7 @@
 			if(!can_claim_for_gang(user, target))
 				return
 			tag_for_gang(user, target)
+			affected_turfs += target
 		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)
@@ -639,7 +640,7 @@
 		if(C.client)
 			C.blur_eyes(3)
 			C.blind_eyes(1)
-		if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS.
+		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
 			C.confused = max(C.confused, 3)
 			C.Weaken(3)
 		if(ishuman(C) && actually_paints)

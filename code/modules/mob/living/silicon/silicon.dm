@@ -142,34 +142,6 @@
 /mob/living/silicon/drop_item()
 	return
 
-/mob/living/silicon/emp_act(severity)
-	switch(severity)
-		if(1)
-			src.take_organ_damage(20)
-		if(2)
-			src.take_organ_damage(10)
-	src << "<span class='userdanger'>*BZZZT*</span>"
-	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
-	flash_eyes(affect_silicon = 1)
-	..()
-
-/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
-	blocked = (100-blocked)/100
-	if(!damage || (blocked <= 0))
-		return 0
-	switch(damagetype)
-		if(BRUTE)
-			adjustBruteLoss(damage * blocked)
-		if(BURN)
-			adjustFireLoss(damage * blocked)
-		else
-			return 1
-	updatehealth()
-	return 1
-
-/mob/living/silicon/proc/damage_mob(brute = 0, fire = 0, tox = 0)
-	return
-
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
 		user << "<span class='alert'>Their outer shell is too tough.</span>"
@@ -177,35 +149,6 @@
 
 /mob/living/silicon/IsAdvancedToolUser()
 	return 1
-
-/mob/living/silicon/bullet_act(obj/item/projectile/Proj)
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src)
-	return 2
-
-/mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
-	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
-/*
-	if(!effect || (blocked >= 2))
-		return 0
-	switch(effecttype)
-		if(STUN)
-			stunned = max(stunned,(effect/(blocked+1)))
-		if(WEAKEN)
-			weakened = max(weakened,(effect/(blocked+1)))
-		if(PARALYZE)
-			paralysis = max(paralysis,(effect/(blocked+1)))
-		if(IRRADIATE)
-			radiation += min((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
-		if(STUTTER)
-			stuttering = max(stuttering,(effect/(blocked+1)))
-		if(EYE_BLUR)
-			blur_eyes(effect/(blocked+1))
-		if(DROWSY)
-			drowsyness = max(drowsyness,(effect/(blocked+1)))
-	updatehealth()
-	return 1*/
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
@@ -421,86 +364,9 @@
 			src << "Sensor augmentations disabled."
 
 
-/mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(..()) //if harm or disarm intent
-		var/damage = 20
-		if (prob(90))
-			add_logs(M, src, "attacked")
-			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-							"<span class='userdanger'>[M] has slashed at [src]!</span>")
-			if(prob(8))
-				flash_eyes(affect_silicon = 1)
-			add_logs(M, src, "attacked")
-			adjustBruteLoss(damage)
-			updatehealth()
-		else
-			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
-							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
-
-/mob/living/silicon/attack_animal(mob/living/simple_animal/M)
-	if(..())
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		switch(M.melee_damage_type)
-			if(BRUTE)
-				adjustBruteLoss(damage)
-			if(BURN)
-				adjustFireLoss(damage)
-			if(TOX)
-				adjustToxLoss(damage)
-			if(OXY)
-				adjustOxyLoss(damage)
-			if(CLONE)
-				adjustCloneLoss(damage)
-			if(STAMINA)
-				adjustStaminaLoss(damage)
-		updatehealth()
-
-/mob/living/silicon/attack_paw(mob/living/user)
-	return attack_hand(user)
-
-/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.a_intent == "help")
-		visible_message("[L.name] rubs its head against [src].")
-
-/mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
-	if(user.a_intent == "harm")
-		..(user, 1)
-		adjustBruteLoss(rand(10, 15))
-		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
-				"<span class='userdanger'>[user] has punched [src]!</span>")
-		return 1
-	return 0
-
-/mob/living/silicon/attack_hand(mob/living/carbon/human/M)
-	switch(M.a_intent)
-		if ("help")
-			M.visible_message("[M] pets [src].", \
-							"<span class='notice'>You pet [src].</span>")
-		if("grab")
-			grabbedby(M)
-		else
-			M.do_attack_animation(src)
-			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
-			visible_message("<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", \
-						"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>")
-	return 0
-
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)
-
-/mob/living/silicon/grippedby(mob/living/user)
-	return
-
-/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
-	if(affect_silicon)
-		return ..()
-
-/mob/living/silicon/check_ear_prot()
-	return 1
 
 /mob/living/silicon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -516,6 +382,3 @@
 
 /mob/living/silicon/is_literate()
 	return 1
-
-/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
-	return 0

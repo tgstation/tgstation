@@ -23,5 +23,9 @@
       action='filter' params='{"mode": "n2o"}'>N2O</ui-button>
 	<ui-button state='{{data.filter_type == "bz" ? "selected" : null}}'
       action='filter' params='{"mode": "bz"}'>BZ</ui-button>	
+	<ui-button state='{{data.filter_type == "freon" ? "selected" : null}}'
+      action='filter' params='{"mode": "freon"}'>Freon</ui-button>	
+	<ui-button state='{{data.filter_type == "water_vapor" ? "selected" : null}}'
+      action='filter' params='{"mode": "water_vapor"}'>Water Vapor</ui-button>	
 	</ui-section>
 </ui-display>

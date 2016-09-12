@@ -6,6 +6,7 @@
 	icon_state = "eyeball"
 	icon_living = "eyeball"
 	icon_gib = ""
+	gender = NEUTER
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"

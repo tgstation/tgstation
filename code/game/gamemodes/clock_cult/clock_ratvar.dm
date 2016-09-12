@@ -1,22 +1,22 @@
-/obj/structure/clockwork/massive //For objects that are typically very large
+/obj/structure/destructible/clockwork/massive //For objects that are typically very large
 	name = "massive construct"
 	desc = "A very large construction."
 	layer = MASSIVE_OBJ_LAYER
 	density = FALSE
 	burn_state = LAVA_PROOF
 
-/obj/structure/clockwork/massive/New()
+/obj/structure/destructible/clockwork/massive/New()
 	..()
 	poi_list += src
 
-/obj/structure/clockwork/massive/Destroy()
+/obj/structure/destructible/clockwork/massive/Destroy()
 	poi_list -= src
 	return ..()
 
-/obj/structure/clockwork/massive/singularity_pull(S, current_size)
+/obj/structure/destructible/clockwork/massive/singularity_pull(S, current_size)
 	return
 
-/obj/structure/clockwork/massive/celestial_gateway //The gateway to Reebe, from which Ratvar emerges
+/obj/structure/destructible/clockwork/massive/celestial_gateway //The gateway to Reebe, from which Ratvar emerges
 	name = "Gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
@@ -36,7 +36,7 @@
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
 
-/obj/structure/clockwork/massive/celestial_gateway/New()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/New()
 	..()
 	glow = new(get_turf(src))
 	countdown = new(src)
@@ -45,7 +45,7 @@
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>", FALSE, src)
 
-/obj/structure/clockwork/massive/celestial_gateway/Destroy()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
@@ -59,7 +59,7 @@
 		countdown = null
 	. = ..()
 
-/obj/structure/clockwork/massive/celestial_gateway/destroyed()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/destroyed()
 	countdown.stop()
 	visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
 	world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50)
@@ -71,23 +71,23 @@
 	qdel(src)
 	return 1
 
-/obj/structure/clockwork/massive/celestial_gateway/proc/make_glow()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
 	if(!glow)
 		glow = PoolOrNew(/obj/effect/clockwork/overlay/gateway_glow, get_turf(src))
 		glow.linked = src
 
-/obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
 	var/damage = max((health * 0.70) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE)
 
-/obj/structure/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	. = "IMMINENT"
 	if(!health)
 		. = "DETONATING"
 	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
 		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)][s_on_time ? "S":""]"
 
-/obj/structure/clockwork/massive/celestial_gateway/process()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!progress_in_seconds || prob(7))
 		for(var/M in mob_list)
 			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
@@ -129,7 +129,7 @@
 				QDEL_IN(src, 3)
 				clockwork_gateway_activated = TRUE
 				if(ratvar_portal)
-					new/obj/structure/clockwork/massive/ratvar(startpoint)
+					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
 					world << "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
@@ -153,7 +153,7 @@
 						if(M.stat == CONSCIOUS)
 							clockwork_say(M, text2ratvar(pick("Purge all untruths and honor Engine!", "All glory to Engine's light!", "Engine's power is unmatched!")))
 
-/obj/structure/clockwork/massive/celestial_gateway/examine(mob/user)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/examine(mob/user)
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon
 	..()
 	icon_state = initial(icon_state)
@@ -183,7 +183,7 @@
 	layer = MASSIVE_OBJ_LAYER
 
 
-/obj/structure/clockwork/massive/ratvar
+/obj/structure/destructible/clockwork/massive/ratvar
 	name = "Ratvar, the Clockwork Justiciar"
 	desc = "<span class='userdanger'>What is what is what are what real what is all a lie all a lie it's all a lie why how can what is</span>"
 	clockwork_desc = "<span class='large_brass'><b><i>Ratvar, the Clockwork Justiciar, your master eternal.</i></b></span>"
@@ -197,7 +197,7 @@
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
 
-/obj/structure/clockwork/massive/ratvar/New()
+/obj/structure/destructible/clockwork/massive/ratvar/New()
 	..()
 	ratvar_awakens++
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
@@ -211,7 +211,7 @@
 	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.1)
 
 
-/obj/structure/clockwork/massive/ratvar/Destroy()
+/obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	ratvar_awakens--
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
@@ -220,7 +220,7 @@
 	return ..()
 
 
-/obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
+/obj/structure/destructible/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
 	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No")
 	if(alertresult == "No" || !O)
 		return 0
@@ -229,17 +229,17 @@
 	R.key = O.key
 
 
-/obj/structure/clockwork/massive/ratvar/Bump(atom/A)
+/obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	forceMove(T)
 	T.ratvar_act()
 
 
-/obj/structure/clockwork/massive/ratvar/Process_Spacemove()
+/obj/structure/destructible/clockwork/massive/ratvar/Process_Spacemove()
 	return clashing
 
 
-/obj/structure/clockwork/massive/ratvar/process()
+/obj/structure/destructible/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
 		return
 	for(var/I in circlerangeturfs(src, proselytize_range))
@@ -273,7 +273,7 @@
 			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
 	step(src, dir_to_step_in)
 
-/obj/structure/clockwork/massive/ratvar/narsie_act()
+/obj/structure/destructible/clockwork/massive/ratvar/narsie_act()
 	if(clashing)
 		return 0
 	clashing = TRUE
@@ -287,42 +287,37 @@
 		break
 	return 1
 
-/obj/structure/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie)
+/obj/structure/destructible/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie)
 	var/winner = "Undeclared"
-	var/base_victory_chance = 0
+	var/base_victory_chance = 1
 	while(TRUE)
 		world << 'sound/magic/clockwork/ratvar_attack.ogg'
 		sleep(5.2)
 		for(var/mob/M in mob_list)
-			if(M.client)
-				M.client.color = rgb(150, 100, 0)
-				spawn(1)
-					M.client.color = initial(M.client.color)
+			flash_color(M, flash_color="#966400", flash_time=1)
 			shake_camera(M, 4, 3)
-		var/r_success_modifier = min(ticker.mode.servants_of_ratvar.len * 2, 50) //2% for each cultist
-		var/n_success_modifier = ticker.mode.cult.len * 2
+		var/ratvar_chance = min(ticker.mode.servants_of_ratvar.len, 50)
+		var/narsie_chance = ticker.mode.cult.len
 		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
-			n_success_modifier += 2
-		n_success_modifier = min(n_success_modifier, 50)
-		if(prob(base_victory_chance + r_success_modifier))
+			narsie_chance++
+		ratvar_chance = rand(base_victory_chance, ratvar_chance)
+		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
+		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break
 		sleep(rand(2,5))
 		world << 'sound/magic/clockwork/narsie_attack.ogg'
 		sleep(7.4)
 		for(var/mob/M in mob_list)
-			if(M.client)
-				M.client.color = rgb(200, 0, 0)
-				spawn(1)
-					M.client.color = initial(M.client.color)
+			flash_color(M, flash_color="#C80000", flash_time=1)
 			shake_camera(M, 4, 3)
-		if(prob(base_victory_chance + n_success_modifier))
+		if(narsie_chance > ratvar_chance)
 			winner = "Nar-Sie"
 			break
-		base_victory_chance++ //The clash has a higher chance of resolving each time both gods attack one another
+		base_victory_chance *= 2 //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "REEEEEEEEE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>" //nar-sie get out
+			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>" //nar-sie get out
 			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
 			world << 'sound/magic/demon_dies.ogg'

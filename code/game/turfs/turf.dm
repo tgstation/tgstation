@@ -108,8 +108,8 @@
 					M.confused = max(M.confused, 8)
 			if(TURF_WET_ICE)
 				M.slip(0, 6, null, (SLIDE|GALOSHES_DONT_HELP))
-			if(TURF_WET_ICE || TURF_WET_PERMAFROST)
-				M.slip(0, 4, null, (SLIDE|NO_SLIP_WHEN_WALKING))
+			if(TURF_WET_PERMAFROST)
+				M.slip(0, 6, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
 			if(TURF_WET_SLIDE)
 				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
 
@@ -176,6 +176,8 @@
 
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
+		if(!S.air)
+			continue
 		var/list/S_gases = S.air.gases
 		for(var/id in S_gases)
 			total.assert_gas(id)
@@ -192,7 +194,7 @@
 		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
 
 	air.temperature /= turf_count
-
+	air.holder = src
 	SSair.add_to_active(src)
 
 /turf/proc/ReplaceWithLattice()

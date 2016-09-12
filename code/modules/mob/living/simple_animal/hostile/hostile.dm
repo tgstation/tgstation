@@ -74,6 +74,11 @@
 				AIStatus = AI_IDLE				// otherwise we go idle
 	return 1
 
+/mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
+	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
+		FindTarget(list(user), 1)
+	return ..()
+
 /mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
 		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
@@ -251,12 +256,6 @@
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
 
-/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
-	target = A
-	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
-		..()
-	else
-		AttackingTarget()
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	target.attack_animal(src)

@@ -13,7 +13,7 @@
 	return (!mover.density || !density || lying)
 
 
-//The byond version of these verbs wait for the next tick before acting. 
+//The byond version of these verbs wait for the next tick before acting.
 //	instant verbs however can run mid tick or even during the time between ticks.
 /client/verb/moveup()
 	set name = ".moveup"
@@ -55,7 +55,7 @@
 
 
 /client/Northwest()
-	if(!usr.get_active_hand())
+	if(!usr.get_active_held_item())
 		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
 		return
 	usr.drop_item()
@@ -302,9 +302,6 @@
 				dense_object_backup = AM
 				break
 	. = dense_object_backup
-
-/mob/proc/mob_has_gravity(turf/T)
-	return has_gravity(src, T)
 
 /mob/proc/mob_negates_gravity()
 	return 0

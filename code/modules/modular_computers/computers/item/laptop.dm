@@ -55,12 +55,7 @@
 		if(!M.restrained() && !M.stat)
 			if(!isturf(loc) || !Adjacent(M))
 				return
-
-			switch(H.slot_id)
-				if(slot_r_hand)
-					M.put_in_r_hand(src)
-				if(slot_l_hand)
-					M.put_in_l_hand(src)
+			M.put_in_hand(src, H.held_index)
 
 /obj/item/device/modular_computer/laptop/attack_hand(mob/user)
 	if(screen_on && isturf(loc))

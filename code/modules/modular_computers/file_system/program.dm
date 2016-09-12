@@ -77,7 +77,7 @@
 	if(!access_to_check) // No required_access, allow it.
 		return 1
 
-	if(computer.emagged && !transfer)	//emags can bypass the execution locks but not the download ones.
+	if(!transfer && computer && computer.emagged)	//emags can bypass the execution locks but not the download ones.
 		return 1
 
 	if(IsAdminGhost(user))
@@ -89,7 +89,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/h = user
 		var/obj/item/weapon/card/id/I = h.get_idcard()
-		var/obj/item/weapon/card/id/C = h.get_active_hand()
+		var/obj/item/weapon/card/id/C = h.get_active_held_item()
 		if(C)
 			C = C.GetID()
 		if(!(C && istype(C)))

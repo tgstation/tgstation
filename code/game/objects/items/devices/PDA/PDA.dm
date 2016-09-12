@@ -708,7 +708,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(O)
 			if (istype(loc, /mob))
 				var/mob/M = loc
-				if(M.get_active_hand() == null)
+				if(M.get_active_held_item() == null)
 					M.put_in_hands(O)
 					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
 					return
@@ -721,14 +721,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if (id)
 			remove_id()
 		else
-			var/obj/item/I = user.get_active_hand()
+			var/obj/item/I = user.get_active_held_item()
 			if (istype(I, /obj/item/weapon/card/id))
 				if(!user.unEquip(I))
 					return 0
 				I.loc = src
 				id = I
 	else
-		var/obj/item/weapon/card/I = user.get_active_hand()
+		var/obj/item/weapon/card/I = user.get_active_held_item()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			if(!user.unEquip(I))
 				return 0

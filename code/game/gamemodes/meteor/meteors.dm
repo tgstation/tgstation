@@ -118,11 +118,13 @@
 			get_hit()
 
 /obj/effect/meteor/Destroy()
+	meteor_list -= src
 	walk(src,0) //this cancels the walk_towards() proc
 	. = ..()
 
 /obj/effect/meteor/New()
 	..()
+	meteor_list += src
 	if(SSaugury)
 		SSaugury.register_doom(src, threat)
 	SpinAnimation()

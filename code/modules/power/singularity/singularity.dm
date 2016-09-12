@@ -392,7 +392,7 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
+		if(istype(M, /mob/living/brain)) //Ignore brains
 			continue
 
 		if(M.stat == CONSCIOUS)
@@ -416,11 +416,9 @@
 
 
 /obj/singularity/proc/pulse()
-
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
-		if(get_dist(R, src) <= 15) // Better than using orange() every process
+		if(R.z == z && get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
-	return
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)

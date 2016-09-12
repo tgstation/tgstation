@@ -109,6 +109,7 @@
 	if(isEmpProof())
 		return
 	..()
+	qdel(src)//to prevent bomb testing camera from exploding over and over forever
 
 /obj/machinery/camera/blob_act(obj/effect/blob/B)
 	if(B && B.loc == loc)

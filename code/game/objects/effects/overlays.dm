@@ -144,6 +144,9 @@
 		appearance = mimiced_atom.appearance
 		setDir(mimiced_atom.dir)
 		mouse_opacity = 0
+
+/obj/effect/overlay/temp/decoy/fading/New(loc, atom/mimiced_atom)
+	..()
 	animate(src, alpha = 0, time = duration)
 
 /obj/effect/overlay/temp/cult
