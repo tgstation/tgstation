@@ -95,6 +95,10 @@
 	using.icon = ui_style
 	static_inventory += using
 
+	using = new/obj/screen/talk_wheel
+	using.icon = ui_style
+	static_inventory += using
+
 	using = new /obj/screen/inventory/area_creator
 	using.icon = ui_style
 	static_inventory += using

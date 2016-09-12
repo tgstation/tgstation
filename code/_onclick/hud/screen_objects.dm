@@ -46,6 +46,45 @@
 		M.swap_hand()
 	return 1
 
+/obj/screen/talk_wheel
+	name = "talk wheel"
+	layer = HUD_LAYER
+	screen_loc = "CENTER-7,CENTER-7"
+	var/obj/screen/talk/talk_boxes
+	var/toggled = 0
+
+/obj/screen/talk_wheel/New()
+	..()
+	talk_boxes = new ()
+	talk_boxes.name = "talk option"
+	talk_boxes.icon_state = "block"
+	talk_boxes.screen_loc = "11:4,2:-12"
+	talk_boxes.layer = HUD_LAYER
+
+/obj/screen/talk_wheel/Click()
+	if(world.time <= usr.next_move)
+		return
+	if(usr.incapacitated())
+		return
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(toggled)
+			H.client.screen -= talk_boxes
+		else
+			H.client.screen |= talk_boxes
+		toggled = !toggled
+
+/obj/screen/talk
+	name = "talk option"
+	icon_state = "block"
+	screen_loc = "7:0,7:0"
+	layer = HUD_LAYER
+
+/obj/screen/talk/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.say("Hello world")
+
 /obj/screen/inventory/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen_midnight.dmi'
