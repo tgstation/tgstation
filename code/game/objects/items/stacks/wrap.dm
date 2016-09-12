@@ -58,7 +58,7 @@
 		var/obj/item/I = target
 		if(!I.can_be_package_wrapped())
 			return
-		if(user.r_hand == I || user.l_hand == I)
+		if(user.is_holding(I))
 			if(!user.unEquip(I))
 				return
 		else if(!isturf(I.loc))

@@ -3,7 +3,7 @@
 	name = "Cyborg Endoskeleton"
 	id = "borg_suit"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/robot_suit
+	build_path = /obj/item/robot_suit
 	materials = list(MAT_METAL=15000)
 	construction_time = 500
 	category = list("Cyborg")
@@ -12,7 +12,7 @@
 	name = "Cyborg Torso"
 	id = "borg_chest"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/chest
+	build_path = /obj/item/bodypart/chest/robot
 	materials = list(MAT_METAL=40000)
 	construction_time = 350
 	category = list("Cyborg")
@@ -21,7 +21,7 @@
 	name = "Cyborg Head"
 	id = "borg_head"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/head
+	build_path = /obj/item/bodypart/head/robot
 	materials = list(MAT_METAL=5000)
 	construction_time = 350
 	category = list("Cyborg")
@@ -30,7 +30,7 @@
 	name = "Cyborg Left Arm"
 	id = "borg_l_arm"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/l_arm
+	build_path = /obj/item/bodypart/l_arm/robot
 	materials = list(MAT_METAL=10000)
 	construction_time = 200
 	category = list("Cyborg")
@@ -39,7 +39,7 @@
 	name = "Cyborg Right Arm"
 	id = "borg_r_arm"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/r_arm
+	build_path = /obj/item/bodypart/r_arm/robot
 	materials = list(MAT_METAL=10000)
 	construction_time = 200
 	category = list("Cyborg")
@@ -48,7 +48,7 @@
 	name = "Cyborg Left Leg"
 	id = "borg_l_leg"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/l_leg
+	build_path = /obj/item/bodypart/l_leg/robot
 	materials = list(MAT_METAL=10000)
 	construction_time = 200
 	category = list("Cyborg")
@@ -57,7 +57,7 @@
 	name = "Cyborg Right Leg"
 	id = "borg_r_leg"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/r_leg
+	build_path = /obj/item/bodypart/r_leg/robot
 	materials = list(MAT_METAL=10000)
 	construction_time = 200
 	category = list("Cyborg")

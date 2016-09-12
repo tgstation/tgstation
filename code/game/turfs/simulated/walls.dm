@@ -182,7 +182,7 @@
 			if(do_after(user, slicing_duration/W.toolspeed, target = src))
 				if( !istype(src, /turf/closed/wall) || !user || !WT || !WT.isOn() || !T )
 					return 1
-				if( user.loc == T && user.get_active_hand() == WT )
+				if( user.loc == T && user.get_active_held_item() == WT )
 					user << "<span class='notice'>You remove the outer plating.</span>"
 					dismantle_wall()
 					return 1
@@ -192,7 +192,7 @@
 		if(do_after(user, slicing_duration*0.6, target = src))  // plasma cutter is faster than welding tool
 			if( !istype(src, /turf/closed/wall) || !user || !W || !T )
 				return 1
-			if( user.loc == T && user.get_active_hand() == W )
+			if( user.loc == T && user.get_active_held_item() == W )
 				user << "<span class='notice'>You remove the outer plating.</span>"
 				dismantle_wall()
 				visible_message("The wall was sliced apart by [user]!", "<span class='italics'>You hear metal being sliced apart.</span>")
@@ -205,7 +205,7 @@
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		if( !istype(src, /turf/closed/wall) || !user || !W || !T )
 			return 1
-		if( user.loc == T && user.get_active_hand() == W )
+		if( user.loc == T && user.get_active_held_item() == W )
 			D.playDigSound()
 			dismantle_wall()
 			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")

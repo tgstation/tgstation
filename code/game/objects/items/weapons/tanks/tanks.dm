@@ -114,7 +114,7 @@
 		H.hair_style = "Bald"
 		H.update_hair()
 		H.bleed_rate = 5
-		gibs(H.loc, H.viruses, H.dna)
+		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
 
 	return (BRUTELOSS)

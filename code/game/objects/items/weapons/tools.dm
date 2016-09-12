@@ -298,7 +298,7 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
+	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != "harm")
 		if(src.remove_fuel(1))
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
@@ -347,7 +347,7 @@
 		reagents.remove_reagent("welding_fuel", amount)
 		check_fuel()
 		if(M)
-			M.flash_eyes(light_intensity)
+			M.flash_act(light_intensity)
 		return TRUE
 	else
 		if(M)
@@ -363,8 +363,7 @@
 		//mob icon update
 		if(ismob(loc))
 			var/mob/M = loc
-			M.update_inv_r_hand(0)
-			M.update_inv_l_hand(0)
+			M.update_inv_hands(0)
 
 		return 0
 	return 1

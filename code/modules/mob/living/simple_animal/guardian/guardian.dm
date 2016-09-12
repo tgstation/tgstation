@@ -187,8 +187,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return 1
 
 /mob/living/simple_animal/hostile/guardian/death()
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 	..()
 	if(summoner)
 		summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
@@ -243,11 +242,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return FALSE
 
 	. = TRUE
-	if(I == l_hand)
-		l_hand = null
-	else if(I == r_hand)
-		r_hand = null
-	update_inv_hands()
+	var/index = get_held_index_of_item(I)
+	if(index)
+		held_items[index] = null
+		update_inv_hands()
 
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
@@ -267,9 +265,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		overlays -= guardian_overlays[cache_index]
 		guardian_overlays[cache_index] = null
 
-/mob/living/simple_animal/hostile/guardian/proc/update_inv_hands()
+/mob/living/simple_animal/hostile/guardian/update_inv_hands()
 	remove_overlay(GUARDIAN_HANDS_LAYER)
 	var/list/hands_overlays = list()
+	var/obj/item/l_hand = get_item_for_held_index(1)
+	var/obj/item/r_hand = get_item_for_held_index(2)
 
 	if(r_hand)
 		var/r_state = r_hand.item_state
@@ -282,7 +282,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
-			r_hand.screen_loc = ui_rhand
+			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
 
 	if(l_hand)
@@ -296,18 +296,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER
-			l_hand.screen_loc = ui_lhand
+			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 
 	if(hands_overlays.len)
 		guardian_overlays[GUARDIAN_HANDS_LAYER] = hands_overlays
 	apply_overlay(GUARDIAN_HANDS_LAYER)
-
-/mob/living/simple_animal/hostile/guardian/update_inv_l_hand()
-	update_inv_hands()
-
-/mob/living/simple_animal/hostile/guardian/update_inv_r_hand()
-	update_inv_hands()
 
 /mob/living/simple_animal/hostile/guardian/regenerate_icons()
 	update_inv_hands()

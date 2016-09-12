@@ -38,7 +38,7 @@
 		if(do_after(user, 50, target = src))
 			if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 				return 1
-			if( user.loc == T && user.get_active_hand() == W )
+			if( user.loc == T && user.get_active_held_item() == W )
 				D.playDigSound()
 				visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 				dismantle_wall()
@@ -80,7 +80,7 @@
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 1 && user.loc == T && user.get_active_hand() == W )
+					if( d_state == 1 && user.loc == T && user.get_active_held_item() == W )
 						src.d_state = 2
 						update_icon()
 						user << "<span class='notice'>You remove the support lines.</span>"
@@ -111,7 +111,7 @@
 						if( !istype(src, /turf/closed/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
 							return 0
 
-						if( d_state == 2 && user.loc == T && user.get_active_hand() == WT )
+						if( d_state == 2 && user.loc == T && user.get_active_held_item() == WT )
 							src.d_state = 3
 							update_icon()
 							user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
@@ -126,7 +126,7 @@
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 2 && user.loc == T && user.get_active_hand() == W )
+					if( d_state == 2 && user.loc == T && user.get_active_held_item() == W )
 						src.d_state = 3
 						update_icon()
 						user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
@@ -142,7 +142,7 @@
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 3 && user.loc == T && user.get_active_hand() == W )
+					if( d_state == 3 && user.loc == T && user.get_active_held_item() == W )
 						src.d_state = 4
 						update_icon()
 						user << "<span class='notice'>You pry off the cover.</span>"
@@ -158,7 +158,7 @@
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 4 && user.loc == T && user.get_active_hand() == W )
+					if( d_state == 4 && user.loc == T && user.get_active_held_item() == W )
 						src.d_state = 5
 						update_icon()
 						user << "<span class='notice'>You remove the bolts anchoring the support rods.</span>"
@@ -176,7 +176,7 @@
 						if( !istype(src, /turf/closed/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
 							return 1
 
-						if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
+						if( d_state == 5 && user.loc == T && user.get_active_held_item() == WT )
 							src.d_state = 6
 							update_icon()
 							user << "<span class='notice'>You slice through the support rods.</span>"
@@ -191,7 +191,7 @@
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
+					if( d_state == 5 && user.loc == T && user.get_active_held_item() == W )
 						src.d_state = 6
 						update_icon()
 						user << "<span class='notice'>You slice through the support rods.</span>"
@@ -207,7 +207,7 @@
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
-					if( user.loc == T && user.get_active_hand() == W )
+					if( user.loc == T && user.get_active_held_item() == W )
 						user << "<span class='notice'>You pry off the outer sheath.</span>"
 						dismantle_wall()
 				return 1

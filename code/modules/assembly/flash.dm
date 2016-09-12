@@ -85,7 +85,7 @@
 	if(user && targeted)
 		if(M.weakeyes)
 			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
-		if(M.flash_eyes(1, 1))
+		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
@@ -100,7 +100,7 @@
 			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
 			M << "<span class='danger'>[user] fails to blind you with the flash!</span>"
 	else
-		if(M.flash_eyes())
+		if(M.flash_act())
 			M.confused += power
 
 /obj/item/device/assembly/flash/attack(mob/living/M, mob/user)
@@ -117,7 +117,7 @@
 		update_icon(1)
 		M.Weaken(6)
 		R.confused += 5
-		R.flash_eyes(affect_silicon = 1)
+		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return 1
 
