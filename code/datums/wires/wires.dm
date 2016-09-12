@@ -14,8 +14,6 @@ var/list/wire_colors = list( // http://www.crockford.com/wrrrld/color.html
 	"crimson",
 	"cyan",
 	"deeppink",
-	"deepskyblue",
-	"dimgray",
 	"dodgerblue",
 	"firebrick",
 	"forestgreen",
@@ -78,7 +76,7 @@ var/list/wire_colors = list( // http://www.crockford.com/wrrrld/color.html
 	"wheat",
 	"white",
 	"yellow",
-	"yellowgreen",
+	"yellowgreen"
 )
 var/list/wire_color_directory = list()
 
