@@ -834,7 +834,7 @@
 		healing injuries."
 
 /obj/item/organ/hivelord_core/legion/preserved(implanted = 0)
-	..(implanted)
+	..()
 	desc = "[src] has been stabilized. It no longer crackles with power, but it's healing properties are preserved indefinitely."
 
 /obj/item/weapon/legion_skull
