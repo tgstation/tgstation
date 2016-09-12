@@ -122,6 +122,30 @@
 	randomdir = 0
 	duration = 6
 
+/obj/effect/overlay/temp/ninja
+	name = "ninja shadow"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "uncloak"
+	randomdir = 0
+	duration = 9
+
+/obj/effect/overlay/temp/ninja/New(loc, set_dir)
+	..()
+	setDir(set_dir)
+
+/obj/effect/overlay/temp/ninja/cloak
+	icon_state = "cloak"
+
+/obj/effect/overlay/temp/ninja/shadow
+	icon_state = "shadow"
+
+/obj/effect/overlay/temp/ninja/phase
+	name = "ninja energy"
+	icon_state = "phasein"
+
+/obj/effect/overlay/temp/ninja/phase/out
+	icon_state = "phaseout"
+
 /obj/effect/overlay/temp/guardian
 	randomdir = 0
 

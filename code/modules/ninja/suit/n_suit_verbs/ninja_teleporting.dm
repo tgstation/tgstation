@@ -31,22 +31,19 @@ Contents:
 		var/turf/destination = get_teleport_loc(H.loc,H,9,1,3,1,0,1)
 		var/turf/mobloc = get_turf(H.loc)//Safety
 
-		if(destination&&istype(mobloc, /turf))//So we don't teleport out of containers
-			spawn(0)
-				playsound(H.loc, "sparks", 50, 1)
-				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,H.dir)
+		if(destination && isturf(mobloc))//So we don't teleport out of containers
+			playsound(H.loc, "sparks", 50, 1)
+			PoolOrNew(/obj/effect/overlay/temp/ninja/phase/out, list(get_turf(H), H.dir))
 
 			handle_teleport_grab(destination, H)
 			H.loc = destination
 
-			spawn(0)
-				spark_system.start()
-				playsound(H.loc, 'sound/effects/phasein.ogg', 25, 1)
-				playsound(H.loc, "sparks", 50, 1)
-				anim(H.loc,H,'icons/mob/mob.dmi',,"phasein",,H.dir)
+			spark_system.start()
+			playsound(H.loc, 'sound/effects/phasein.ogg', 25, 1)
+			playsound(H.loc, "sparks", 50, 1)
+			PoolOrNew(/obj/effect/overlay/temp/ninja/phase, list(get_turf(H), H.dir))
 
-			spawn(0)
-				destination.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
+			destination.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
 			s_coold = 1
 		else
 			H << "<span class='danger'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>"
@@ -63,22 +60,19 @@ Contents:
 	if(!ninjacost(200,N_STEALTH_CANCEL))
 		var/mob/living/carbon/human/H = affecting
 		var/turf/mobloc = get_turf(H.loc)//To make sure that certain things work properly below.
-		if((!T.density)&&istype(mobloc, /turf))
-			spawn(0)
-				playsound(H.loc, 'sound/effects/sparks4.ogg', 50, 1)
-				anim(mobloc,src,'icons/mob/mob.dmi',,"phaseout",,H.dir)
+		if(T.density && isturf(mobloc))
+			playsound(H.loc, "sparks", 50, 1)
+			PoolOrNew(/obj/effect/overlay/temp/ninja/phase/out, list(get_turf(H), H.dir))
 
 			handle_teleport_grab(T, H)
 			H.loc = T
 
-			spawn(0)
-				spark_system.start()
-				playsound(H.loc, 'sound/effects/phasein.ogg', 25, 1)
-				playsound(H.loc, 'sound/effects/sparks2.ogg', 50, 1)
-				anim(H.loc,H,'icons/mob/mob.dmi',,"phasein",,H.dir)
+			spark_system.start()
+			playsound(H.loc, 'sound/effects/phasein.ogg', 25, 1)
+			playsound(H.loc, "sparks", 50, 1)
+			PoolOrNew(/obj/effect/overlay/temp/ninja/phase, list(get_turf(H), H.dir))
 
-			spawn(0)//Any living mobs in teleport area are gibbed.
-				T.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
+			T.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
 			s_coold = 1
 		else
 			H << "<span class='danger'>You cannot teleport into solid walls or from solid matter</span>"
