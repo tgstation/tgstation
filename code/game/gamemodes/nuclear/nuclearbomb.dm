@@ -430,12 +430,14 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
-	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
 	var/area/A = get_area(bomb_location)
+	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
 		if(istype(A, /area/space))
 			off_station = 1
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
 			off_station = 1
+	else if(istype(A, /area/syndicate_mothership) || (istype(A,/area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
+		off_station = 3
 	else
 		off_station = 2
 
