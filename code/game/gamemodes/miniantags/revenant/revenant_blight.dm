@@ -62,7 +62,7 @@
 					affected_mob.color = "#1d2953"
 					spawn(100)
 						if(affected_mob)
-							affected_mob = old_color
+							affected_mob.color = old_color
 						cure()
 		else
 			return
