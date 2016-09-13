@@ -1,0 +1,9 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Added brass, producible by proselytizing rods, metal, or plasteel, or by using Replicant Alloy in-hand, and usable to construct a variety of cult-y brass objects."
+  - tweak: "Objects constructable with brass include; wall gears, pinion airlocks, brass windoors, brass windows, brass table frames and tables, and brass floor tiles."
+  - rscadd: "Cogscarabs can convert brass sheets into liquified alloy with their proselytizer."
+  - tweak: "You can use brass sheets on wall gears to produce clockwork walls, or, if the gear is unanchored, false clockwork walls."
+  - bugfix: "Fixed a bug preventing you from converting grilles into ratvar grilles."
+  - experiment: "Please note that conservation of mass exists."
