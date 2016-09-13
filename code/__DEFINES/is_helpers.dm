@@ -4,6 +4,8 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
+#define is_cleanable(A, H) (istype(A, /obj/effect/decal/cleanable) || (istype(A, /obj/effect/rune) && H)) //if something is cleanable, only true on runes if the source is also H(oly)
+
 // MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))

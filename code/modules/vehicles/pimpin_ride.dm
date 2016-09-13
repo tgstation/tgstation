@@ -47,7 +47,7 @@
 		if(isturf(tile))
 			tile.clean_blood()
 			for(var/A in tile)
-				if(is_cleanable(A))
+				if(is_cleanable(A, FALSE))
 					qdel(A)
 	. = ..()
 
