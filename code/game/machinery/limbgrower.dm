@@ -45,7 +45,7 @@
 	B.apply_default_parts(src)
 
 
-	reagents.add_reagent("synthflesh",100)
+	reagents.add_reagent("synthflesh",50)
 
 	files = new /datum/research/limbgrower(src)
 
@@ -88,7 +88,10 @@
 
 	if (ispath(O,/obj/item/weapon/reagent_containers))
 		if(!O.reagents.has_reagent("synthflesh"))
-			user << "<span class=\"alert\">The Limb grower refuses the chemicals, perhaps it only accepts pure synthflesh?</span>"
+			user << "<span class=\"alert\">The Limb grower refuses the chemicals, perhaps it only accepts synthflesh?</span>"
+			return 1
+		else
+			O.reagents.isolate_reagent("synthflesh")
 			return 1
 
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", O))
@@ -215,8 +218,6 @@
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
 		if(!(selected_category in D.category))
-			world << "this cat was [selected_category]"
-			world << "D cat was [D.category]"
 			continue
 		if(disabled || !can_build(D))
 			dat += "<span class='linkOff'>[D.name]</span>"
@@ -241,7 +242,10 @@
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
+	if(emag==1)
+		return
 	for(var/datum/design/D in files.possible_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
 			files.AddDesign2Known(D)
 	usr << "A warning flashes onto the screen, stating that safety overrides have been deactivited"
+	emag = 1
