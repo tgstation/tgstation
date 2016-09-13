@@ -35,7 +35,8 @@
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	return ..()
-/obj/throw_at()
+
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	..()
 	if(is_frozen)
 		visible_message("<span class = 'danger'><b>[src] shatters into a million pieces!</b></span>")

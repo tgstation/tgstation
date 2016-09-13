@@ -1,6 +1,13 @@
 /mob/living/carbon/movement_delay()
 	. = ..()
-	. += grab_state * 3
+	. += grab_state * 3 //can't go fast while grabbing something.
+
+	if(!get_leg_ignore()) //ignore the fact we lack legs
+		var/leg_amount = get_num_legs()
+		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
+		if(!leg_amount)
+			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
+
 	if(legcuffed)
 		. += legcuffed.slowdown
 
@@ -11,7 +18,8 @@ var/const/GALOSHES_DONT_HELP = 4
 var/const/SLIDE_ICE = 8
 
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
-	add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
+	if(!(lube&SLIDE_ICE))
+		add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
 	return loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 

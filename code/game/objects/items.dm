@@ -93,7 +93,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	// Needs to be in /obj/item because corgis can wear a lot of
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
-	var/no_direct_insertion = 0 //items that require MouseDrop() to be inserted in a storage item. e.g. packageWrap
 
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
@@ -229,10 +228,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+				var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
-					H.update_damage_overlays(0)
-				H.updatehealth()
+					H.update_damage_overlays()
+
 				return
 		else
 			extinguish()
@@ -296,7 +295,37 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	return 0 //always call afterattack
+	if(istype(W,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
+		if(S.use_to_pickup)
+			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
+				if(isturf(src.loc))
+					var/list/rejections = list()
+					var/success = 0
+					var/failure = 0
+
+					for(var/obj/item/I in src.loc)
+						if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
+							failure = 1
+							continue
+						if(I.type in rejections) // To limit bag spamming: any given type only complains once
+							continue
+						if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
+							rejections += I.type	// therefore full bags are still a little spammy
+							failure = 1
+							continue
+
+						success = 1
+						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+					if(success && !failure)
+						user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
+					else if(success)
+						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
+					else
+						user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
+
+			else if(S.can_be_inserted(src))
+				S.handle_item_insertion(src)
 
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
@@ -367,7 +396,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
-	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
+	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
 
 //This proc is executed when someone clicks the on-screen UI button.
@@ -425,11 +454,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		)
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
-		if(affecting.take_damage(7))
-			U.update_damage_overlays(0)
+		U.apply_damage(7, BRUTE, affecting)
 
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
@@ -508,7 +536,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		itempush = 0 //too light to push anything
 	return A.hitby(src, 0, itempush)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	thrownby = thrower
 	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
@@ -545,11 +573,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(slot_l_hand))
-			success = TRUE
-		else if(src == M.get_item_by_slot(slot_r_hand))
-			success = TRUE
-		else if(src == M.get_item_by_slot(slot_wear_mask))
+		if(src == M.get_item_by_slot(slot_wear_mask))
 			success = TRUE
 		if(success)
 			location = get_turf(M)

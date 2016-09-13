@@ -60,7 +60,7 @@
 		nadeassembly.attack_self(user)
 		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
-	if(user.get_active_hand() == src)
+	if(user.get_active_held_item() == src)
 		newtime = Clamp(newtime, 10, 60000)
 		det_time = newtime
 		user << "Timer set for [det_time] seconds."
@@ -108,7 +108,7 @@
 	target = user
 	sleep(10)
 	prime()
-	user.gib(no_brain = 1)
+	user.gib(1, 1, 1)
 
 /obj/item/weapon/grenade/plastic/update_icon()
 	if(nadeassembly)

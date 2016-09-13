@@ -271,9 +271,9 @@
 						if(dist <= 3)
 							closest_mob = A
 				if(closest_mob)
-					var/shock_damage = C.powernet.avail * 0.08
-					src.Beam(closest_mob, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
-					closest_mob.electrocute_act(shock_damage, src, 1, tesla_shock = 1)//ZAP for 1/5000 of the amount of power, which is from 15-25 with 200000W
+					var/shock_damage = C.powernet.avail * 0.0002//setting shock damage for later. equals 1/5000 the power in the grid
+					src.Beam(closest_mob, icon_state="lightning[rand(1,12)]", time=5)
+					closest_mob.electrocute_act(shock_damage, src, 1)//ZAP, damage should be about 40 with 200000W
 					playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 	take_damage(tforce)
 

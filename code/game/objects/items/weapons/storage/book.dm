@@ -114,15 +114,27 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 
 		usr << browse(null, "window=editicon") // Close window
 
-/obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/heal_amt = 10
-		for(var/obj/item/bodypart/affecting in H.bodyparts)
-			if(affecting.status == ORGAN_ORGANIC) //No Bible can heal a robotic arm!
-				if(affecting.heal_damage(heal_amt, heal_amt, 0))
-					H.update_damage_overlays(0)
-	return
+/obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
+	for(var/X in H.bodyparts)
+		var/obj/item/bodypart/BP = X
+		if(BP.status == BODYPART_ROBOTIC)
+			user << "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>"
+			return 0
+
+	var/heal_amt = 10
+	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1)
+
+	if(hurt_limbs.len)
+		for(var/X in hurt_limbs)
+			var/obj/item/bodypart/affecting = X
+			if(affecting.heal_damage(heal_amt, heal_amt))
+				H.update_damage_overlays()
+		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
+		H << "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>"
+		playsound(src.loc, "punch", 25, 1, -1)
+	return 1
+
+
 
 /obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user)
 
@@ -137,51 +149,40 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		return
 	if(!chaplain)
 		user << "<span class='danger'>The book sizzles in your hands.</span>"
-		user.take_organ_damage(0,10)
+		user.take_bodypart_damage(0,10)
 		return
 
 	if (user.disabilities & CLUMSY && prob(50))
 		user << "<span class='danger'>The [src] slips out of your hand and hits your head.</span>"
-		user.take_organ_damage(10)
+		user.take_bodypart_damage(10)
 		user.Paralyse(20)
 		return
 
-	if (M.stat !=2)
-		if(M.mind && (M.mind.assigned_role == "Chaplain"))
+	var/smack = 1
+
+	if (M.stat != DEAD)
+		if(chaplain && user == M)
 			user << "<span class='warning'>You can't heal yourself!</span>"
 			return
-		if ((istype(M, /mob/living/carbon/human) && prob(60)))
-			bless(M)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				var/message_halt = 0
-				for(var/obj/item/bodypart/affecting in H.bodyparts)
-					if(affecting.status == ORGAN_ORGANIC)
-						if(message_halt == 0)
-							M.visible_message("<span class='notice'>[user] heals [M] with the power of [src.deity_name]!</span>")
-							M << "<span class='boldnotice'>May the power of [src.deity_name] compel you to be healed!</span>"
-							playsound(src.loc, "punch", 25, 1, -1)
-							message_halt = 1
-					else
-						user << "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>"
-						return
 
+		if(ishuman(M) && prob(60) && bless(M, user))
+			smack = 0
+		else if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(!istype(C.head, /obj/item/clothing/head/helmet))
+				C.adjustBrainLoss(10)
+				C << "<span class='danger'>You feel dumber.</span>"
 
-
-
-		else
-			if(ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
-				M.adjustBrainLoss(10)
-				M << "<span class='danger'>You feel dumber.</span>"
+		if(smack)
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 					"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 			playsound(src.loc, "punch", 25, 1, -1)
 			add_logs(user, M, "attacked", src)
 
-	else if(M.stat == 2)
+	else
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
-	return
+
 
 /obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)

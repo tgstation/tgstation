@@ -1,3 +1,28 @@
+/obj/item/weapon
+
+	var/unique_rename = 0 //allows renaming with a pen
+
+/obj/item/weapon/examine(mob/user)
+	..()
+	if(unique_rename)
+		user << "<span class='notice'>Use a pen on it to rename it.</span>"
+
+/obj/item/weapon/attackby(obj/item/I, mob/user, params)
+	if(unique_rename)
+		if(istype(I, /obj/item/weapon/pen))
+			rename_weapon(user)
+	..()
+
+/obj/item/weapon/proc/rename_weapon(mob/M)
+	var/input = stripped_input(M,"What do you want to name the weapon?", ,"", MAX_NAME_LEN)
+
+	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+		name = input
+		M << "You name the weapon [input]. Say hello to your new friend."
+		return
+
+
+
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -470,7 +495,7 @@ var/highlander_claymores = 0
 		playsound(get_turf(src), 'sound/weapons/HOMERUN.ogg', 100, 1)
 		homerun_ready = 0
 		return
-	else
+	else if(!target.anchored)
 		target.throw_at(throw_target, rand(1,2), 7, user)
 
 /obj/item/weapon/melee/baseball_bat/ablative

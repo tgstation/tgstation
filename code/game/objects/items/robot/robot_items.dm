@@ -294,14 +294,10 @@
 		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
 			"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
 			"<span class='danger'>The siren pierces your hearing!</span>")
-		for(var/mob/living/M in get_hearers_in_view(9, user))
-			if(iscarbon(M))
-				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M
-					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-						continue
+		for(var/mob/living/carbon/M in get_hearers_in_view(9, user))
+			if(M.get_ear_protection() == 0)
 				M.confused += 6
-			M << "<font color='red' size='7'>HUMAN HARM</font>"
+		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
@@ -312,35 +308,20 @@
 		return
 
 	if(safety == 0)
-		for(var/mob/living/M in get_hearers_in_view(9, user))
-			if(iscarbon(M))
-				var/earsafety = 0
-				if(istype(M, /mob/living/carbon/alien))
-					continue
-				if(ishuman(M))
-					var/mob/living/carbon/human/S = M
-					if(istype(S.ears, /obj/item/clothing/ears/earmuffs))
-						continue
-					if(S.check_ear_prot())
-						earsafety = 1
-				if(earsafety)
-					M.confused += 5
-					M.stuttering += 10
-					M.adjustEarDamage(0, 5)
-					M.Jitter(10)
-					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
-						"<span class='userdanger'>You hear a sharp screech, before your thoughts are interrupted and you find yourself extremely disorientated.</span>", \
-						"<span class='danger'>You hear a sonic screech and suddenly can't seem to walk straight!")
-				else
-					M.Weaken(2)
-					M.confused += 10
-					M.stuttering += 15
-					M.adjustEarDamage(0, 20)
-					M.Jitter(25)
-					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
-						"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
-						"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
-			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
+		for(var/mob/living/carbon/C in get_hearers_in_view(9, user))
+			var/bang_effect = C.soundbang_act(2, 0, 0, 5)
+			switch(bang_effect)
+				if(1)
+					C.confused += 5
+					C.stuttering += 10
+					C.Jitter(10)
+				if(2)
+					C.Weaken(2)
+					C.confused += 10
+					C.stuttering += 15
+					C.Jitter(25)
+
+		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")

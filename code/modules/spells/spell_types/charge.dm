@@ -14,7 +14,7 @@
 
 /obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in targets)
-		var/list/hand_items = list(L.get_active_hand(),L.get_inactive_hand())
+		var/list/hand_items = list(L.get_active_held_item(),L.get_inactive_held_item())
 		var/charged_item = null
 		var/burnt_out = 0
 

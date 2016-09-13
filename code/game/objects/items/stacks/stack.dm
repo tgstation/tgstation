@@ -111,7 +111,7 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.restrained() || usr.stat || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
+	if (usr.restrained() || usr.stat || !usr.is_holding(src))
 		return
 	if (href_list["make"])
 		if (src.get_amount() < 1) qdel(src) //Never should happen
@@ -200,6 +200,8 @@
 	update_icon()
 
 /obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+	if(S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
+		return
 	var/transfer = get_amount()
 	if(S.is_cyborg)
 		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
@@ -222,7 +224,7 @@
 	return ..()
 
 /obj/item/stack/attack_hand(mob/user)
-	if (user.get_inactive_hand() == src)
+	if (user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return
 		change_stack(user,1)

@@ -1,6 +1,7 @@
 /obj/item/weapon/melee
 	needs_permit = 1
 
+
 /obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
@@ -27,6 +28,7 @@
 	icon_state = "sabre"
 	item_state = "sabre"
 	flags = CONDUCT
+	unique_rename = 1
 	force = 15
 	throwforce = 10
 	w_class = 4
@@ -67,7 +69,7 @@
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, "head")
 		else
-			user.take_organ_damage(2*force)
+			user.take_bodypart_damage(2*force)
 		return
 	if(isrobot(target))
 		..()
@@ -124,7 +126,7 @@
 		if (B && !qdeleted(B))
 			H.internal_organs -= B
 			qdel(B)
-		gibs(H.loc, H.viruses, H.dna)
+		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
 		return (BRUTELOSS)
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)

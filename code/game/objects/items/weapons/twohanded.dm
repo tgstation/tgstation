@@ -49,7 +49,7 @@
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
-	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
+	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
 	return
@@ -60,7 +60,7 @@
 	if(istype(user,/mob/living/carbon/monkey) )
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
-	if(user.get_inactive_hand())
+	if(user.get_inactive_held_item())
 		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
 	if(user.get_num_arms() < 2)
@@ -87,7 +87,7 @@
 	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
+		var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
 		if(istype(O))
 			O.unwield(user)
 	return	unwield(user)
@@ -106,6 +106,11 @@
 	if(..())
 		unwield(M)
 		return
+
+/obj/item/weapon/twohanded/equipped(mob/user, slot)
+	..()
+	if(!user.is_holding(src) && wielded)
+		unwield(user)
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
@@ -135,7 +140,7 @@
 	return ..()
 
 /obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
-	var/obj/item/weapon/twohanded/required/H = user.get_inactive_hand()
+	var/obj/item/weapon/twohanded/required/H = user.get_inactive_held_item()
 	if(get_dist(src,user) > 1)
 		return 0
 	if(H != null)
@@ -147,13 +152,10 @@
 
 /obj/item/weapon/twohanded/required/equipped(mob/user, slot)
 	..()
-	if(slot == slot_l_hand || slot == slot_r_hand)
+	if(slot == slot_hands)
 		wield(user)
 	else
 		unwield(user)
-
-
-/obj/item/weapon/twohanded/
 
 /*
  * Fireaxe
@@ -254,7 +256,7 @@
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
 	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on \the [src].</span>"
 	if (force_wielded)
-		user.take_organ_damage(20,25)
+		user.take_bodypart_damage(20,25)
 	else
 		user.adjustStaminaLoss(25)
 
@@ -431,9 +433,8 @@
 	else
 		hitsound = "swing_hit"
 
-	if(src == user.get_active_hand()) //update inhands
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+	if(src == user.get_active_held_item()) //update inhands
+		user.update_inv_hands()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

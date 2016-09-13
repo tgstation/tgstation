@@ -83,13 +83,11 @@
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/obj/item/bodypart/affecting = H.get_bodypart("chest")
-		affecting.take_damage(drill_damage)
-		H.update_damage_overlays(0)
+		H.apply_damage(drill_damage, BRUTE, "chest")
 	else if(target.stat == DEAD && target.butcher_results)
 		target.harvest(chassis) // Butcher the mob with our drill.
 	else
-		target.take_organ_damage(drill_damage)
+		target.take_bodypart_damage(drill_damage)
 
 	if(target)
 		target.Paralyse(10)

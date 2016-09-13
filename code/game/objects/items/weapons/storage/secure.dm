@@ -36,30 +36,31 @@
 		if (istype(W, /obj/item/weapon/screwdriver))
 			if (do_after(user, 20/W.toolspeed, target = src))
 				src.open =! src.open
-				user << "<span class='notice'>You [open ? "open" : "close"] the service panel.</span>"
+				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
-		else if ((istype(W, /obj/item/device/multitool)) && open && (!l_hacking))
-			user << "<span class='danger'>Now attempting to reset internal memory, please hold.</span>"
-			l_hacking = 1
+		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
+			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
+			src.l_hacking = 1
 			if (do_after(usr, 100/W.toolspeed, target = src))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
 					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
 					sleep(80)
-					l_setshort = 0
-					l_hacking = 0
+					src.l_setshort = 0
+					src.l_hacking = 0
 				else
-					user << "<span class='danger'>Unable to reset internal memory.</span>"
-					l_hacking = 0
+					user.show_message("<span class='danger'>Unable to reset internal memory.</span>", 1)
+					src.l_hacking = 0
 			else
-				l_hacking = 0
-		else if(!W.no_direct_insertion)
-			user << "<span class='danger'>It's locked!</span>"
+				src.l_hacking = 0
+			return
+		//At this point you have exhausted all the special things to do when locked
+		// ... but it's still locked.
+		return
 
-	else
-		// -> storage/attackby() what with handle insertion, etc
-		return ..()
+	// -> storage/attackby() what with handle insertion, etc
+	return ..()
 
 /obj/item/weapon/storage/secure/emag_act(mob/user)
 	if(locked)
@@ -97,7 +98,7 @@
 
 /obj/item/weapon/storage/secure/Topic(href, href_list)
 	..()
-	if (usr.incapacitated() || get_dist(src, usr) > 1)
+	if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
 		return
 	if (href_list["type"])
 		if (href_list["type"] == "E")

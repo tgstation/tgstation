@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stunned, weakened, paralysis, sleeping, resting, jitteriness, dizziness, ear damage,
-// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
+// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, NEARSIGHT disability, and HUSK disability.
 
 /mob/living/carbon/damage_eyes(amount)
 	if(amount>0)
@@ -77,3 +77,18 @@
 		disabilities |= NEARSIGHT
 		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
 		return 1
+
+/mob/living/carbon/cure_husk()
+	if(disabilities & HUSK)
+		disabilities &= ~HUSK
+		status_flags &= ~DISFIGURED
+		update_body()
+		return 1
+
+/mob/living/carbon/become_husk()
+	if(disabilities & HUSK)
+		return
+	disabilities |= HUSK
+	status_flags |= DISFIGURED	//makes them unknown
+	update_body()
+	return 1

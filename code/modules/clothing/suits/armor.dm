@@ -279,7 +279,7 @@
 		for(var/mob/living/M in view(6, owner))
 			if(M == owner)
 				continue
-			owner.Beam(M,icon_state="lightning[rand(1, 12)]",icon='icons/effects/effects.dmi',time=5)
+			owner.Beam(M,icon_state="lightning[rand(1, 12)]",time=5)
 			M.adjustFireLoss(25)
 			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration

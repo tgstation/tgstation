@@ -214,10 +214,14 @@
 	else
 		..()
 
+/obj/structure/closet/crate/secure/loot/burn()
+	SSobj.burning -= src
+	boom()
+
 /obj/structure/closet/crate/secure/loot/proc/boom(mob/user)
-	user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
+	if(user)
+		user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
 	for(var/atom/movable/AM in src)
 		qdel(AM)
-	var/turf/T = get_turf(src)
-	explosion(T, -1, -1, 1, 1)
+	explosion(get_turf(src), 0, 1, 5, 5)
 	qdel(src)

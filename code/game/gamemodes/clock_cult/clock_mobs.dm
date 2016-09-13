@@ -261,7 +261,7 @@
 	if(amount > 0)
 		combattimer = world.time + initial(combattimer)
 		for(var/mob/living/L in view(2, src))
-			if(istype(L.l_hand, /obj/item/weapon/nullrod) || istype(L.r_hand, /obj/item/weapon/nullrod)) //hand-held holy weapons increase the damage it takes
+			if(L.is_holding_item_of_type(/obj/item/weapon/nullrod))
 				src << "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>"
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break

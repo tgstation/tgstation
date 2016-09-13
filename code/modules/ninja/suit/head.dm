@@ -9,3 +9,4 @@
 	strip_delay = 12
 	unacidable = 1
 	blockTracking = 1//Roughly the only unique thing about this helmet.
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR

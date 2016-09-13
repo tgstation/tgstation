@@ -15,7 +15,7 @@
 						H << "<span class='warning'>You may not use an energy net through solid obstacles!</span>"
 						return
 				spawn(0)
-					H.Beam(C,"n_beam",,15)
+					H.Beam(C,"n_beam",time=15)
 				H.say("Get over here!")
 				var/obj/effect/energy_net/E = new /obj/effect/energy_net(C.loc)
 				H.visible_message("<span class='danger'>[H] caught [C] with an energy net!</span>","<span class='notice'>You caught [C] with an energy net!</span>")

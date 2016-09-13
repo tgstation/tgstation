@@ -1,0 +1,4 @@
+author: "Ergovisavi"
+delete-after: True
+changes: 
+  - bugfix: "Fixes lockers, bodybags, etc, giving you ash storm / radiation storm protection"

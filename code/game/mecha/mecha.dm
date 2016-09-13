@@ -845,7 +845,7 @@
 	else if(occupant)
 		user << "<span class='warning'>Occupant detected!</span>"
 		return 0
-	else if(dna_lock && (!mmi_as_oc.brainmob.dna || dna_lock!=mmi_as_oc.brainmob.dna.unique_enzymes))
+	else if(dna_lock && (!mmi_as_oc.brainmob.stored_dna || dna_lock!=mmi_as_oc.brainmob.stored_dna.unique_enzymes))
 		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
 		return 0
 
@@ -905,8 +905,8 @@
 	if(ishuman(occupant))
 		mob_container = occupant
 		RemoveActions(occupant, human_occupant=1)
-	else if(istype(occupant, /mob/living/carbon/brain))
-		var/mob/living/carbon/brain/brain = occupant
+	else if(istype(occupant, /mob/living/brain))
+		var/mob/living/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
 	else if(isAI(occupant) && forced) //This should only happen if there are multiple AIs in a round, and at least one is Malf.

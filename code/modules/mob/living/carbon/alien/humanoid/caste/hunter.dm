@@ -6,7 +6,7 @@
 	icon_state = "alienh_s"
 	var/obj/screen/leap_icon = null
 
-/mob/living/carbon/alien/humanoid/hunter/New()
+/mob/living/carbon/alien/humanoid/hunter/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
 
@@ -45,7 +45,7 @@
 	if(leaping || stat || buckled || lying)
 		return
 
-	if(!has_gravity(src) || !has_gravity(A))
+	if(!has_gravity() || !A.has_gravity())
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return

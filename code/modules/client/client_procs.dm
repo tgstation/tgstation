@@ -156,7 +156,7 @@ var/next_external_rsc = 0
 		if (holder)
 			src << "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade"
 		else
-			del(src)
+			qdel(src)
 			return 0
 	else if (byond_version < config.client_warn_version)	//We have words for this client.
 		src << "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>"
@@ -168,11 +168,11 @@ var/next_external_rsc = 0
 	if (connection == "web")
 		if (!config.allowwebclient)
 			src << "Web client is disabled"
-			del(src)
+			qdel(src)
 			return 0
 		if (config.webclientmembersonly && !IsByondMember())
 			src << "Sorry, but the web client is restricted to byond members only."
-			del(src)
+			qdel(src)
 			return 0
 
 	if( (world.address == address || !address) && !host )
@@ -194,7 +194,7 @@ var/next_external_rsc = 0
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			src << "Sorry but the server is currently not accepting connections from never before seen players."
-			del(src)
+			qdel(src)
 			return 0
 
 		if (config.notify_new_player_age >= 0)
@@ -259,6 +259,8 @@ var/next_external_rsc = 0
 	clients -= src
 	return ..()
 
+/client/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db()
 	if (IsGuestKey(src.key))
@@ -352,7 +354,7 @@ var/next_external_rsc = 0
 
 			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
 
-			del(src)
+			qdel(src)
 			return TRUE
 		else
 			if (cidcheck_failedckeys[ckey])
@@ -381,7 +383,7 @@ var/next_external_rsc = 0
 
 			//teeheehee (in case the above method doesn't work, its not 100% reliable.)
 			src << "<pre class=\"system system\">Network connection shutting down due to read error.</pre>"
-			del(src)
+			qdel(src)
 			return TRUE
 
 /client/proc/note_randomizer_user()
@@ -405,7 +407,7 @@ var/next_external_rsc = 0
 	if (query_get_notes.NextRow())
 		if (query_get_notes.item[1] == adminckey)
 			return
-	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, logged = 0)
+	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, 0, null, 0)
 
 
 /client/proc/check_ip_intel()

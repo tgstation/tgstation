@@ -31,6 +31,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 120
+	unacidable = 1
 	var/draining = 0
 	var/candrain = 0
 	var/mindrain = 200

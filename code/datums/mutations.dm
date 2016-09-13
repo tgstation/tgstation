@@ -48,9 +48,9 @@
 	if(hex2num(getblock(se_string, dna_block)) >= lowest_value)
 		return 1
 
-/datum/mutation/human/proc/check_block(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/check_block(mob/living/carbon/human/owner, force_powers=0)
 	if(check_block_string(owner.dna.struc_enzymes))
-		if(prob(get_chance))
+		if(prob(get_chance)||force_powers)
 			. = on_acquiring(owner)
 	else
 		. = on_losing(owner)
@@ -187,7 +187,7 @@
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())
 		if(prob(1))
-			owner.heal_organ_damage(0,1)   //Is this really needed?
+			owner.heal_bodypart_damage(0,1)   //Is this really needed?
 
 /datum/mutation/human/x_ray
 
@@ -252,11 +252,11 @@
 	var/mob/new_mob
 	if(prob(95))
 		if(prob(50))
-			new_mob = randmutb(owner)
+			new_mob = owner.randmutb()
 		else
-			new_mob = randmuti(owner)
+			new_mob = owner.randmuti()
 	else
-		new_mob = randmutg(owner)
+		new_mob = owner.randmutg()
 	if(new_mob && ismob(new_mob))
 		owner = new_mob
 	. = owner

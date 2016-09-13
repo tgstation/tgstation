@@ -342,16 +342,24 @@
 	base_state = "clockwork"
 	shards = 0
 	rods = 0
+	var/made_glow = FALSE
 
 /obj/machinery/door/window/clockwork/New(loc, set_dir)
 	..()
-	var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
 	if(set_dir)
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
+		setDir(set_dir)
 		E.setDir(set_dir)
-	else
-		E.setDir(dir)
-	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+		made_glow = TRUE
+	debris += new/obj/item/stack/sheet/brass(src)
 	change_construction_value(2)
+
+/obj/machinery/door/window/clockwork/setDir(direct)
+	if(!made_glow)
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+		E.setDir(direct)
+		made_glow = TRUE
+	..()
 
 /obj/machinery/door/window/clockwork/Destroy()
 	change_construction_value(-2)

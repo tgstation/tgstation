@@ -14,8 +14,6 @@
 	evidencebagEquip(I, user)
 
 /obj/item/weapon/evidencebag/attackby(obj/item/I, mob/user, params)
-	if(I.no_direct_insertion)
-		return ..()
 	if(evidencebagEquip(I, user))
 		return 1
 
@@ -39,10 +37,8 @@
 		if(istype(I.loc,/obj/item/weapon/storage))	//in a container.
 			var/obj/item/weapon/storage/U = I.loc
 			U.remove_from_storage(I, src)
-		else if(user.l_hand == I)					//in a hand
-			user.drop_l_hand()
-		else if(user.r_hand == I)					//in a hand
-			user.drop_r_hand()
+		if(user.is_holding(I))
+			user.unEquip(I)
 		else
 			return
 
@@ -62,7 +58,7 @@
 	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
 
 	desc = "An evidence bag containing [I]. [I.desc]"
-	I.forceMove(src)
+	I.loc = src
 	w_class = I.w_class
 	return 1
 

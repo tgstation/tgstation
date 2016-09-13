@@ -7,6 +7,11 @@
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = /obj/item/weapon/circuitboard/computer/crew
+	var/monitor = null	//For VV debugging purposes
+
+/obj/machinery/computer/crew/New()
+	monitor = crewmonitor
+	return ..()
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
@@ -103,6 +108,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 			src.update(z, TRUE)
 		else
 			hi = src.interfaces["[z]"]
+			src.update(z,TRUE)
 
 		// Debugging purposes
 		mob << browse_rsc(file("code/game/machinery/computer/crew.js"), "crew.js")
@@ -203,6 +209,9 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 	for (z in src.interfaces)
 		if (src.interfaces[z] == hi) break
+
+	if(hclient.client.mob && IsAdminGhost(hclient.client.mob))
+		return TRUE
 
 	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))
 		if (isAI(hclient.client.mob)) return TRUE
