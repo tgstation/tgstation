@@ -179,7 +179,7 @@
 
 /obj/item/projectile/energy/shock_revolver/fire(setAngle)
 	if(firer)
-		chain = Beam(firer, icon_state = "lightning[rand(1, 12)]", icon = 'icons/effects/effects.dmi', time = INFINITY, maxdistance = INFINITY)
+		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
 /obj/item/projectile/energy/shock_revolver/on_hit(atom/target)
@@ -189,3 +189,4 @@
 
 /obj/item/projectile/energy/shock_revolver/Destroy()
 	qdel(chain)
+	return ..()

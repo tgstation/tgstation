@@ -54,7 +54,7 @@
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
-				var/datum/beam/B = Beam(target,icon_state="drain_life",icon='icons/effects/effects.dmi',time=46)
+				var/datum/beam/B = Beam(target,icon_state="drain_life",time=46)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					qdel(B)
 					change_essence_amount(essence_drained, 0, target)
@@ -220,7 +220,7 @@
 		for(var/mob/living/carbon/human/M in view(shock_range, L))
 			if(M == user)
 				continue
-			L.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
+			L.Beam(M,icon_state="purple_lightning",time=5)
 			M.electrocute_act(shock_damage, L, safety=1)
 			var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
 			z.set_up(4, 0, M)

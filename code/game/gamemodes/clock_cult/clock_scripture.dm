@@ -1170,7 +1170,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			for(var/mob/living/L in view(7, invoker))
 				if(is_servant_of_ratvar(L))
 					continue
-				invoker.Beam(L, icon_state = "nzcrentrs_power", icon = 'icons/effects/beam.dmi', time = 10)
+				invoker.Beam(L, icon_state = "nzcrentrs_power", time = 10)
 				var/randdamage = rand(40, 60)
 				if(iscarbon(L))
 					L.electrocute_act(randdamage, "Nzcrentr's power", 1, randdamage)

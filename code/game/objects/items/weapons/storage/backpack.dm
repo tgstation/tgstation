@@ -58,7 +58,7 @@
 					playsound(src, alt_sound, 40, 1)
 				else
 					playsound(src, pshoom, 40, 1)
-				user.Beam(dest_object,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+				user.Beam(dest_object,icon_state="rped_upgrade",time=5)
 				return 1
 		user << "The [src.name] buzzes."
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
