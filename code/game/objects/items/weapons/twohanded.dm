@@ -245,6 +245,11 @@
 		return
 	if((wielded) && prob(50))
 		addtimer(src, "jedi_spin", 0, TRUE, user)
+	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	user.Stun(3)
+	user.Weaken(3)
+	user.apply_effect(STUTTER, 3)
+
 
 /obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
 	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
