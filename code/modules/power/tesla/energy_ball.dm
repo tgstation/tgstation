@@ -152,7 +152,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		var/mob/living/carbon/C = A
 		C.dust()
 
-/proc/tesla_zap(var/atom/source, zap_range = 3, power, var/explosive = FALSE)
+/proc/tesla_zap(atom/source, zap_range = 3, power, explosive = FALSE)
 	. = source.dir
 	if(power < 1000)
 		return

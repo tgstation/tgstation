@@ -459,7 +459,7 @@ Class Procs:
 	. = 1
 
 
-/obj/machinery/tesla_act(var/power, var/explosive)
+/obj/machinery/tesla_act(power, explosive)
 	..()
 	if(prob(85) && explosive)
 		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
