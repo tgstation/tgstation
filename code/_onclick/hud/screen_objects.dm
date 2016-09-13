@@ -67,7 +67,7 @@
 /obj/screen/talk_wheel/Click()
 	if(world.time <= usr.next_move)
 		return
-	if(usr.incapacitated())
+	if(usr.stat)
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -129,6 +129,8 @@
 
 /obj/screen/talk/Click(location, control,params)
 	if(ishuman(usr))
+		if(usr.stat)
+			return
 		var/mob/living/carbon/human/H = usr
 		var/word_spoken = ""
 		var/list/PL = params2list(params)

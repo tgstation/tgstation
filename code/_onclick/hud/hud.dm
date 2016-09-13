@@ -66,6 +66,9 @@
 	qdel(module_store_icon)
 	module_store_icon = null
 
+	qdel(talk_wheel_icon)
+	talk_wheel_icon = null
+
 	if(static_inventory.len)
 		for(var/thing in static_inventory)
 			qdel(thing)
