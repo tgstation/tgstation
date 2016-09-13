@@ -1,6 +1,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	materials = list(MAT_GLASS = 250)
+	var/color_tint = "" //colors your vision when worn
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
@@ -31,6 +32,7 @@
 	item_state = "nvgmeson"
 	origin_tech = "magnets=4;engineering=5;plasmatech=4"
 	darkness_view = 8
+	color_tint = TINT_COLOR_GREEN
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"
@@ -65,6 +67,7 @@
 	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	color_tint = TINT_COLOR_GREEN
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"

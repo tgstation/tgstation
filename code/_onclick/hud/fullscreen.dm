@@ -106,3 +106,18 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
+
+/obj/screen/fullscreen/color_vision
+	icon = 'icons/mob/screen_gen.dmi'
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	icon_state = "flash"
+	alpha = 80
+
+/obj/screen/fullscreen/color_vision/green
+	color = "#00ff00"
+
+/obj/screen/fullscreen/color_vision/red
+	color = "#ff0000"
+
+/obj/screen/fullscreen/color_vision/blue
+	color = "#0000ff"

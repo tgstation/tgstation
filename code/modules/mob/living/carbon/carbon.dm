@@ -531,6 +531,17 @@
 		see_invisible = see_override
 
 
+/mob/living/carbon/proc/update_color_tint(tintcolor)
+	switch(tintcolor)
+		if(TINT_COLOR_GREEN)
+			overlay_fullscreen("color_tint", /obj/screen/fullscreen/color_vision/green)
+		if(TINT_COLOR_RED)
+			overlay_fullscreen("color_tint", /obj/screen/fullscreen/color_vision/red)
+		if(TINT_COLOR_BLUE)
+			overlay_fullscreen("color_tint", /obj/screen/fullscreen/color_vision/blue)
+		else
+			clear_fullscreen("color_tint", 0)
+
 //to recalculate and update the mob's total tint from tinted equipment it's wearing.
 /mob/living/carbon/proc/update_tint()
 	if(!tinted_weldhelh)

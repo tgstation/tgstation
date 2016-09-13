@@ -42,6 +42,7 @@
 	origin_tech = "magnets=4;biotech=4;plasmatech=4;engineering=5"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	color_tint = TINT_COLOR_GREEN
 
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "Diagnostic HUD"
@@ -58,6 +59,7 @@
 	origin_tech = "magnets=4;powerstorage=4;plasmatech=4;engineering=5"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	color_tint = TINT_COLOR_GREEN
 
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
@@ -96,6 +98,7 @@
 	origin_tech = "magnets=4;combat=4;plasmatech=4;engineering=5"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	color_tint = TINT_COLOR_GREEN
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "HUD gar glasses"

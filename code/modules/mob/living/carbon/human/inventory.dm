@@ -69,6 +69,8 @@
 		if(slot_glasses)
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
+			if(G.color_tint)
+				update_color_tint(G.color_tint)
 			if(G.tint)
 				update_tint()
 			if(G.vision_correction)
@@ -144,6 +146,8 @@
 	else if(I == glasses)
 		glasses = null
 		var/obj/item/clothing/glasses/G = I
+		if(G.color_tint)
+			update_color_tint()
 		if(G.tint)
 			update_tint()
 		if(G.vision_correction)
