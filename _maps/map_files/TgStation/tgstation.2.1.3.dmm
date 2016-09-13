@@ -38457,13 +38457,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGS" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-/obj/item/weapon/reagent_containers/syringe,
+/obj/machinery/limbgrower,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGT" = (
@@ -39207,6 +39201,17 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/reagent_containers/syringe{
+	step_y = 31
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/morphine{
+	step_y = 31
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+	step_y = 31;
+	pixel_x = 7;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIn" = (
