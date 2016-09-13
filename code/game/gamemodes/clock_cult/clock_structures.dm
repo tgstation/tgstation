@@ -220,10 +220,10 @@
 			else if(istype(target,/obj/mecha))
 				var/sending_message = FALSE
 				if(mech_damage_cycle > 1)
-					mech_damage_cycle--
+					mech_damage_cycle = 0
+					sending_message = TRUE
 				else
 					mech_damage_cycle++
-					sending_message = TRUE
 				var/obj/mecha/M = target
 				M.take_directional_damage(damage_per_tick, "fire", get_dir(src, M), 0, 1, sending_message)
 			setDir(get_dir(get_turf(src), get_turf(target)))
