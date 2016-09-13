@@ -128,13 +128,13 @@
 	else
 		return ..()
 
-/obj/structure/falsewall/proc/dismantle(mob/user, girder)
+/obj/structure/falsewall/proc/dismantle(mob/user, drop_girder)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
-	deconstruct(girder)
+	deconstruct(drop_girder)
 
-/obj/structure/falsewall/deconstruct(girder)
-	if(girder)
+/obj/structure/falsewall/deconstruct(drop_girder)
+	if(drop_girder)
 		new girder_type(loc)
 	if(mineral_amount)
 		for(var/i in 1 to mineral_amount)
