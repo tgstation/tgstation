@@ -108,16 +108,9 @@
 	centcom_cancast = 0 //Stop people from getting to centcom
 	action_icon_state = "phaseshift"
 	action_background_icon_state = "bg_demon"
-
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
-	animation.icon_state = "phase_shift"
-	animation.setDir(target.dir)
-	flick("phase_shift",animation)
-
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_reappear(atom/movable/overlay/animation, mob/living/target)
-	animation.icon_state = "phase_shift2"
-	animation.setDir(target.dir)
-	flick("phase_shift2",animation)
+	jaunt_in_time = 12
+	jaunt_in_type = /obj/effect/overlay/temp/dir_setting/wraith
+	jaunt_out_type = /obj/effect/overlay/temp/dir_setting/wraith/out
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_steam(mobloc)
 	return

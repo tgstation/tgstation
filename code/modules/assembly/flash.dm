@@ -173,25 +173,14 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	cyborg_flash_animation(user)
+	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	cyborg_flash_animation(user)
+	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return
-
-/obj/item/device/assembly/flash/cyborg/proc/cyborg_flash_animation(mob/living/user)
-	var/atom/movable/overlay/animation = new(user.loc)
-	animation.layer = user.layer + 1
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = user
-	flick("blspell", animation)
-	sleep(5)
-	qdel(animation)
-
 
 /obj/item/device/assembly/flash/memorizer
 	name = "memorizer"
