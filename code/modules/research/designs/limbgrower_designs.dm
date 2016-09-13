@@ -39,5 +39,5 @@
 	id = "armblade"
 	build_type = LIMBGROWER
 	reagents = list("synthflesh" = 75)
-	build_path = /obj/item/weapon/melee/arm_blade
+	build_path = /obj/item/weapon/melee/synthetic_arm_blade
 	category = list("special")

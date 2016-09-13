@@ -179,8 +179,8 @@
 	else if(ispath(B,/obj/item/bodypart/l_leg))
 		selected_part = "left leg"
 		L.icon_state = "[selected_category]_l_leg_s"
-	L.name = "Synthentic [selected_category] Limb"
-	L.desc = "A synthentic [selected_category] limb that will morph on its first use in surgery. This one is for the [selected_part]"
+	L.name = "Synthetic [selected_category] Limb"
+	L.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [selected_part]"
 	L.loc = loc;
 
 /obj/machinery/limbgrower/RefreshParts()
