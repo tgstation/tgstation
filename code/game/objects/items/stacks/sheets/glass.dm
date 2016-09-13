@@ -46,7 +46,7 @@
 			RG.add_fingerprint(user)
 			var/obj/item/stack/sheet/glass/G = src
 			src = null
-			var/replace = (user.get_inactive_hand()==G)
+			var/replace = (user.get_inactive_held_item()==G)
 			V.use(1)
 			G.use(1)
 			if (!G && replace)
@@ -311,19 +311,16 @@
 		return
 	if(istype(A, /obj/item/weapon/storage))
 		return
-
+	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
-			var/organ = (H.hand ? "l_" : "r_") + "arm"
-			var/obj/item/bodypart/affecting = H.get_bodypart(organ)
-			if(affecting && affecting.take_damage(force / 2))
-				H.update_damage_overlays(0)
+			H.apply_damage(force*0.5, BRUTE, hit_hand)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
 		M << "<span class='warning'>[src] cuts into your hand!</span>"
-		M.adjustBruteLoss(force / 2)
+		M.apply_damage(force*0.5, BRUTE, hit_hand)
 
 
 /obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)

@@ -88,11 +88,12 @@
 					else
 						process_sheet(O)
 						i++
-		if(i > 0)
-			var/msg = "Now available in the cargo Bay: \n"
+		if(i > 0 && z == ZLEVEL_STATION)
+			var/area/orm_area = get_area(src)
+			var/msg = "Now available in [orm_area.map_name]:"
 			for(var/s in stack_list) // Making an announcement for cargo
 				var/obj/item/stack/sheet/mats = stack_list[s]
-				msg += "[capitalize(mats.name)]: [mats.amount] sheets \n"
+				msg += "\n[capitalize(mats.name)]: [mats.amount] sheets"
 			for(var/obj/machinery/requests_console/D in allConsoles)
 				if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || D.department == "Chemistry" || D.department == "Bar")
 					D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
@@ -101,7 +102,7 @@
 	if (!powered())
 		return
 	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = user.get_active_hand()
+		var/obj/item/weapon/card/id/I = user.get_active_held_item()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
 				return
@@ -208,7 +209,7 @@
 				else
 					usr << "<span class='warning'>Required access not found.</span>"
 		else if(href_list["choice"] == "insert")
-			var/obj/item/weapon/card/id/I = usr.get_active_hand()
+			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
 			if(istype(I))
 				if(!usr.drop_item())
 					return

@@ -37,19 +37,16 @@
 			return
 
 		// this must come before the screen objects only block, dunno why it wasn't before
-		if(over_object == M && (ClickAccessible(M, depth=STORAGE_VIEW_DEPTH) || Adjacent(M)))
+		if(over_object == M && (src.ClickAccessible(M, depth=STORAGE_VIEW_DEPTH) || Adjacent(M)))
 			orient2hud(M)
 			if(M.s_active)
 				M.s_active.close(M)
 			show_to(M)
 			return
 
-		if(!M.incapacitated())
+		if(!M.restrained() && !M.stat)
 			if(!istype(over_object, /obj/screen))
-				if(no_direct_insertion && istype(over_object, /obj/item/weapon/storage))
-					return ..()
-				else
-					return content_can_dump(over_object, M)
+				return content_can_dump(over_object, M)
 
 			if(loc != usr || (loc && loc.loc == usr))
 				return
@@ -61,11 +58,7 @@
 				var/obj/screen/inventory/hand/H = over_object
 				if(!M.unEquip(src))
 					return
-				switch(H.slot_id)
-					if(slot_r_hand)
-						M.put_in_r_hand(src)
-					if(slot_l_hand)
-						M.put_in_l_hand(src)
+				M.put_in_hand(src,H.held_index)
 
 			add_fingerprint(usr)
 
@@ -75,7 +68,7 @@
 		var/obj/item/I = O
 		if(iscarbon(user) || isdrone(user))
 			var/mob/living/L = user
-			if(!L.incapacitated() && I == L.get_active_hand())
+			if(!L.incapacitated() && I == L.get_active_held_item())
 				if(can_be_inserted(I, 0))
 					handle_item_insertion(I, 0 , L)
 
@@ -128,7 +121,7 @@
 	is_seeing |= user
 
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin)
+/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	close_all()
 	return ..()
 
@@ -386,47 +379,20 @@
 		remove_from_storage(Item, src.loc, burn)
 
 //This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/I, mob/user, params)
-	if(I.no_direct_insertion)
-		return 0
-	if(can_be_inserted(I, 0))
-		handle_item_insertion(I, 0, user)
-		return 1 //no afterattack
+/obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
+	..()
+	if(istype(W, /obj/item/weapon/hand_labeler))
+		var/obj/item/weapon/hand_labeler/labeler = W
+		if(labeler.mode)
+			return 0
+	. = 1 //no afterattack
+	if(isrobot(user))
+		return	//Robots can't interact with storage items.
 
-
-/obj/item/weapon/storage/afterattack(atom/A, mob/user, proximity, params)
-	if(!proximity || !istype(A, /obj/item))
+	if(!can_be_inserted(W, 0 , user))
 		return
-	var/obj/item/W = A
-	if(use_to_pickup)
-		if(collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
-			if(isturf(W.loc))
-				var/list/rejections = list()
-				var/success = 0
-				var/failure = 0
 
-				for(var/obj/item/I in W.loc)
-					if(collection_mode == 2 && !istype(I, W.type)) // We're only picking up items of the target type
-						failure = 1
-						continue
-					if(I.type in rejections) // To limit bag spamming: any given type only complains once
-						continue
-					if(!can_be_inserted(I, 0))
-						rejections += I.type	// therefore full bags are still a little spammy
-						failure = 1
-						continue
-
-					success = 1
-					handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-				if(success && !failure)
-					user << "<span class='notice'>You put everything [preposition] [src].</span>"
-				else if(success)
-					user << "<span class='notice'>You put some things [preposition] [src].</span>"
-				else
-					user << "<span class='warning'>You fail to pick anything up with [src]!</span>"
-
-		else if(can_be_inserted(W, 0))
-			handle_item_insertion(W)
+	handle_item_insertion(W, 0 , user)
 
 
 /obj/item/weapon/storage/attack_hand(mob/user)
@@ -439,11 +405,11 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.l_store == src && !H.get_active_hand())	//Prevents opening if it's in a pocket.
+		if(H.l_store == src && !H.get_active_held_item())	//Prevents opening if it's in a pocket.
 			H.put_in_hands(src)
 			H.l_store = null
 			return
-		if(H.r_store == src && !H.get_active_hand())
+		if(H.r_store == src && !H.get_active_held_item())
 			H.put_in_hands(src)
 			H.r_store = null
 			return
@@ -467,7 +433,7 @@
 	set name = "Switch Gathering Method"
 	set category = "Object"
 
-	if(usr.incapacitated())
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 
 	collection_mode = (collection_mode+1)%3
@@ -484,7 +450,7 @@
 	set name = "Empty Contents"
 	set category = "Object"
 
-	if((!ishuman(usr) && (loc != usr)) || usr.incapacitated())
+	if((!ishuman(usr) && (loc != usr)) || usr.stat || usr.restrained() ||!usr.canmove)
 		return
 
 	do_quick_empty()
@@ -542,7 +508,7 @@
 
 /obj/item/weapon/storage/attack_self(mob/user)
 	//Clicking on itself will empty it, if it has the verb to do that.
-	if(user.get_active_hand() == src)
+	if(user.get_active_held_item() == src)
 		if(verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
 			quick_empty()
 

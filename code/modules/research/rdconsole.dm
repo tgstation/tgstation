@@ -256,7 +256,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/datum/design/D = files.known_designs[href_list["copy_design_ID"]]
 		if(D)
 			var/autolathe_friendly = 1
-			if(D.reagents.len)
+			if(D.reagents_list.len)
 				autolathe_friendly = 0
 				D.category -= "Imported"
 			else
@@ -426,16 +426,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			enough_materials = 0
 			g2g = 0
 		else
-			for(var/R in being_built.reagents)
-				if(!linked_lathe.reagents.has_reagent(R, being_built.reagents[R]*coeff))
+			for(var/R in being_built.reagents_list)
+				if(!linked_lathe.reagents.has_reagent(R, being_built.reagents_list[R]*coeff))
 					linked_lathe.say("Not enough reagents to complete prototype.")
 					enough_materials = 0
 					g2g = 0
 
 		if(enough_materials)
 			linked_lathe.materials.use_amount(efficient_mats, amount)
-			for(var/R in being_built.reagents)
-				linked_lathe.reagents.remove_reagent(R, being_built.reagents[R]*coeff)
+			for(var/R in being_built.reagents_list)
+				linked_lathe.reagents.remove_reagent(R, being_built.reagents_list[R]*coeff)
 
 		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 		spawn(32*coeff*amount**0.8)
@@ -499,16 +499,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			enough_materials = 0
 			g2g = 0
 		else
-			for(var/R in being_built.reagents)
-				if(!linked_imprinter.reagents.has_reagent(R, being_built.reagents[R]/coeff))
+			for(var/R in being_built.reagents_list)
+				if(!linked_imprinter.reagents.has_reagent(R, being_built.reagents_list[R]/coeff))
 					linked_imprinter.say("Not enough reagents to complete prototype.")
 					enough_materials = 0
 					g2g = 0
 
 		if(enough_materials)
 			linked_imprinter.materials.use_amount(efficient_mats)
-			for(var/R in being_built.reagents)
-				linked_imprinter.reagents.remove_reagent(R, being_built.reagents[R]/coeff)
+			for(var/R in being_built.reagents_list)
+				linked_imprinter.reagents.remove_reagent(R, being_built.reagents_list[R]/coeff)
 
 		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 		spawn(16)
@@ -727,7 +727,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(D.build_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
 						if(D.build_type & BIOGENERATOR) dat += "Biogenerator<BR>"
 					dat += "Required Materials:<BR>"
-					var/all_mats = D.materials + D.reagents
+					var/all_mats = D.materials + D.reagents_list
 					for(var/M in all_mats)
 						dat += "* [CallMaterialName(M)] x [all_mats[M]]<BR>"
 					dat += "Operations: <A href='?src=\ref[src];updt_design=[i]'>Upload to Database</A> <A href='?src=\ref[src];clear_design=[i]'>Clear Slot</A>"
@@ -848,7 +848,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/c = 50
 				var/t
 
-				var/all_materials = D.materials + D.reagents
+				var/all_materials = D.materials + D.reagents_list
 				for(var/M in all_materials)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
@@ -882,7 +882,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/temp_material
 				var/c = 50
 				var/t
-				var/all_materials = D.materials + D.reagents
+				var/all_materials = D.materials + D.reagents_list
 				for(var/M in all_materials)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
@@ -967,7 +967,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/temp_materials
 				var/check_materials = 1
 
-				var/all_materials = D.materials + D.reagents
+				var/all_materials = D.materials + D.reagents_list
 
 				for(var/M in all_materials)
 					temp_materials += " | "
@@ -993,7 +993,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/design/D in matching_designs)
 				var/temp_materials
 				var/check_materials = 1
-				var/all_materials = D.materials + D.reagents
+				var/all_materials = D.materials + D.reagents_list
 				for(var/M in all_materials)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))

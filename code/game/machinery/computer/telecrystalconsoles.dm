@@ -34,7 +34,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		user << "<span class='notice'>The [src] already has an uplink in it.</span>"
 		return
 	if(O.hidden_uplink)
-		var/obj/item/I = user.get_active_hand()
+		var/obj/item/I = user.get_active_held_item()
 		if(!user.drop_item())
 			return
 		uplinkholder = I

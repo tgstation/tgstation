@@ -105,7 +105,7 @@
 
 /obj/item/rupee/Crossed(mob/M)
 	if(M.put_in_hands(src))
-		if(src != M.get_active_hand())
+		if(src != M.get_active_held_item())
 			M.swap_hand()
 		equip_to_best_slot(M)
 	..()

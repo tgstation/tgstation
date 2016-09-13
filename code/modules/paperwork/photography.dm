@@ -245,17 +245,17 @@
 			else
 				continue
 
-		var/holding = null
+		var/list/holding = list()
 
 		if(istype(M, /mob/living))
 			var/mob/living/L = M
-			if(L.l_hand || L.r_hand)
-				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
-				if(L.r_hand)
-					if(holding)
-						holding += " and \a [L.r_hand]"
-					else
-						holding = "They are holding \a [L.r_hand]"
+
+			for(var/obj/item/I in L.held_items)
+				if(!holding)
+					holding += "They are holding \a [I]"
+				else
+					holding += " and \a [I]"
+			holding = holding.Join()
 
 			if(!mob_detail)
 				mob_detail = "You can see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "

@@ -52,7 +52,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/reagent_containers/glass/bucket/bucket = H.l_hand
+	var/obj/item/weapon/reagent_containers/glass/bucket/bucket = H.get_item_for_held_index(1)
 	bucket.reagents.add_reagent("water",70)
 
 /datum/outfit/laser_tag
@@ -159,10 +159,10 @@
 		return
 
 	//Could use a type
-	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = H.l_hand
+	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = H.get_item_for_held_index(1)
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
-	for(var/i=3, i>0, i--)
+	for(var/i = 3 to 0 step -1)
 		sec_briefcase.handle_item_insertion(new /obj/item/stack/spacecash/c1000,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/projectile/revolver/mateba,1)

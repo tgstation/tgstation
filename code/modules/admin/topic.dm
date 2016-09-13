@@ -234,7 +234,7 @@
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob.")
 
 		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid )
-		add_note(banckey, banreason, null, usr.ckey, 0)
+		add_note(banckey, banreason, null, usr.ckey, 0, null, 0)
 
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
@@ -535,7 +535,7 @@
 				DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance")
 				if(M.client)
 					jobban_buildcache(M.client)
-				add_note(M.ckey, "Appearance banned - [reason]", null, usr.ckey, 0)
+				add_note(M.ckey, "Appearance banned - [reason]", null, usr.ckey, 0, null, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				M << "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>"
 				M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -981,7 +981,7 @@
 							msg = job
 						else
 							msg += ", [job]"
-					add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
+					add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0, null, 0)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes.</span>")
 					M << "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>"
 					M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -1004,7 +1004,7 @@
 								msg = job
 							else
 								msg += ", [job]"
-						add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
+						add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0, null, 0)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg].</span>")
 						M << "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.ckey] from: [msg].</BIG></span>"
 						M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -1054,7 +1054,7 @@
 			log_admin("[key_name(usr)] kicked [key_name(M)].")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] kicked [key_name_admin(M)].</span>")
 			//M.client = null
-			del(M.client)
+			qdel(M.client)
 
 	//Player Notes
 	else if(href_list["addnote"])
@@ -1104,6 +1104,10 @@
 			var/edit_log = query_noteedits.item[1]
 			usr << browse(edit_log,"window=noteedits")
 
+	else if(href_list["secretnote"])
+		var/note_id = href_list["secretnote"]
+		toggle_note_secrecy(note_id)
+
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))
 			return
@@ -1137,7 +1141,7 @@
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("<span class='adminnotice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
 
-				del(M.client)
+				qdel(M.client)
 				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				var/reason = input(usr,"Please State Reason.","Reason") as message
@@ -1162,7 +1166,7 @@
 				feedback_inc("ban_perma",1)
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
-				del(M.client)
+				qdel(M.client)
 				//qdel(M)
 			if("Cancel")
 				return
@@ -1735,17 +1739,15 @@
 			usr << "This can only be used on instances of type /mob/living/carbon/human."
 			return
 
-		H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_l_hand )
-		if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
-			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_r_hand )
-			if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
-				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
-				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
-				return
-			else
-				H.update_inv_r_hand()//To ensure the icon appears in the HUD
+		var/obj/item/weapon/reagent_containers/food/snacks/cookie/cookie = new(H)
+		if(H.put_in_hands(cookie))
+			H.update_inv_hands()
 		else
-			H.update_inv_l_hand()
+			qdel(cookie)
+			log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+			message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+			return
+
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
 		feedback_inc("admin_cookies_spawned",1)
@@ -2255,3 +2257,20 @@
 			SD.r_code = code
 		message_admins("[key_name_admin(usr)] has set the self-destruct \
 			code to \"[code]\".")
+
+	else if(href_list["add_station_goal"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/list/type_choices = typesof(/datum/station_goal)
+		var/picked = input("Choose goal type") in type_choices|null
+		if(!picked)
+			return
+		var/datum/station_goal/G = new picked()
+		if(picked == /datum/station_goal)
+			var/newname = input("Enter goal name:") as text
+			G.name = newname
+			var/description = input("Enter centcom message contents:") as message
+			G.report_message = description
+		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
+		ticker.mode.station_goals += G
+		modify_goals()

@@ -1,4 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes: 
-  - tweak: "NULL Crate in cargo was added again because people are fucking idiots so if we're going to have this stupid fucking crate might as well make it not fucking garbo"

@@ -257,7 +257,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(prob(50))
-		new /obj/item/robot_parts/l_arm(Tsec)
+		new /obj/item/bodypart/l_arm/robot(Tsec)
 
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)

@@ -147,7 +147,7 @@
 				return
 			else
 				// insert cell
-				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
+				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_held_item()
 				if(istype(C))
 					if(!user.drop_item())
 						return

@@ -12,8 +12,6 @@
 	desc = "A wall with gold plating. Swag!"
 	icon = 'icons/turf/walls/gold_wall.dmi'
 	icon_state = "gold"
-	walltype = "gold"
-	mineral = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	//var/electro = 1
 	//var/shocked = null
@@ -25,8 +23,6 @@
 	desc = "A wall with silver plating. Shiny!"
 	icon = 'icons/turf/walls/silver_wall.dmi'
 	icon_state = "silver"
-	walltype = "silver"
-	mineral = "silver"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	//var/electro = 0.75
 	//var/shocked = null
@@ -37,8 +33,6 @@
 	desc = "A wall with diamond plating. You monster."
 	icon = 'icons/turf/walls/diamond_wall.dmi'
 	icon_state = "diamond"
-	walltype = "diamond"
-	mineral = "diamond"
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
 	explosion_block = 3
@@ -52,8 +46,6 @@
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
-	walltype = "bananium"
-	mineral = "bananium"
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	canSmoothWith = list(/turf/closed/wall/mineral/clown, /obj/structure/falsewall/clown)
 
@@ -62,8 +54,6 @@
 	desc = "A wall with sandstone plating. Rough."
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
 	icon_state = "sandstone"
-	walltype = "sandstone"
-	mineral = "sandstone"
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	explosion_block = 0
 	canSmoothWith = list(/turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
@@ -73,8 +63,6 @@
 	desc = "A wall with uranium plating. This is probably a bad idea."
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-	walltype = "uranium"
-	mineral = "uranium"
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	canSmoothWith = list(/turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium)
 
@@ -107,8 +95,6 @@
 	desc = "A wall with plasma plating. This is definitely a bad idea."
 	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = "plasma"
-	walltype = "plasma"
-	mineral = "plasma"
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	thermal_conductivity = 0.04
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
@@ -148,8 +134,6 @@
 	desc = "A wall with wooden plating. Stiff."
 	icon = 'icons/turf/walls/wood_wall.dmi'
 	icon_state = "wood"
-	walltype = "wood"
-	mineral = "wood"
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
 	explosion_block = 0
@@ -160,8 +144,6 @@
 	desc = "A wall with rough metal plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron"
-	walltype = "iron"
-	mineral = "rods"
 	sheet_type = /obj/item/stack/rods
 	canSmoothWith = list(/turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron)
 
@@ -170,8 +152,6 @@
 	desc = "A wall made of densely packed snow blocks."
 	icon = 'icons/turf/walls/snow_wall.dmi'
 	icon_state = "snow"
-	walltype = "snow"
-	mineral = "snow"
 	hardness = 80
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
@@ -181,8 +161,6 @@
 	desc = "A wall with alien alloy plating."
 	icon = 'icons/turf/walls/abductor_wall.dmi'
 	icon_state = "abductor"
-	walltype = "abductor"
-	mineral = "abductor"
 	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	slicing_duration = 200   //alien wall takes twice as much time to slice
@@ -193,7 +171,6 @@
 	name = "wall"
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	walltype = "shuttle"
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_FALSE
 
@@ -202,7 +179,6 @@
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle"
-	walltype = "shuttle"
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine, /obj/structure/shuttle/engine/heater, )
@@ -245,7 +221,6 @@
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"
 	desc = "An evil wall of plasma and titanium."
-	walltype = "syndieshuttle"
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall3"
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium

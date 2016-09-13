@@ -14,26 +14,6 @@ Contains:
  - Carp hardsuit
 */
 
-	//Captain's space suit, not hardsuits because no flashlight!
-/obj/item/clothing/head/helmet/space/captain
-	name = "captain's space helmet"
-	icon_state = "capspace"
-	item_state = "capspacehelmet"
-	desc = "A special helmet designed for only the most fashionable of military figureheads."
-	flags_inv = HIDEFACE|HIDEEARS|HIDEHAIR
-	permeability_coefficient = 0.01
-	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
-
-/obj/item/clothing/suit/space/captain
-	name = "captain's space suit"
-	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
-	icon_state = "caparmor"
-	item_state = "capspacesuit"
-	w_class = 4
-	allowed = list(/obj/item/weapon/tank/internals, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
-	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
-
-
 	//Death squad armored space suits, not hardsuits!
 /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	name = "deathsquad helmet"

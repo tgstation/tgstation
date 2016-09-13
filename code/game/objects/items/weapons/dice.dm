@@ -108,10 +108,10 @@
 /obj/item/weapon/dice/attack_self(mob/user)
 	diceroll(user)
 
-/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user, spin=1)
+/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(!..())
 		return
-	diceroll(user)
+	diceroll(thrower)
 
 /obj/item/weapon/dice/proc/diceroll(mob/user)
 	result = rand(1, sides)

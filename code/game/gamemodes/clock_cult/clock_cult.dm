@@ -27,6 +27,15 @@ This file's folder contains:
 	clock_unsorted.dm: Anything else with no place to be
 
 	clockcult defines are in __DEFINES/clockcult.dm
+
+Credit where due:
+1. VelardAmakar from /vg/ for the entire design document, idea, and plan. Thank you very much.
+2. SkowronX from /vg/ for MANY of the assets
+3. FuryMcFlurry from /vg/ for many of the assets
+4. PJB3005 from /vg/ for the failed continuation PR
+5. Xhuis from /tg/ for coding the basic gamemode as it is today
+6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release
+
 */
 
 ///////////
@@ -90,10 +99,11 @@ This file's folder contains:
 		whim without hesitation.</span>")
 	ticker.mode.servants_of_ratvar += M.mind
 	ticker.mode.update_servant_icons_added(M.mind)
+	all_clockwork_mobs += M
+	M.faction |= "ratvar"
 	M.mind.special_role = "Servant of Ratvar"
 	M.languages_spoken |= RATVAR
 	M.languages_understood |= RATVAR
-	all_clockwork_mobs += M
 	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
 	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
 	if(issilicon(M))
@@ -152,6 +162,7 @@ This file's folder contains:
 	ticker.mode.servants_of_ratvar -= M.mind
 	ticker.mode.update_servant_icons_removed(M.mind)
 	all_clockwork_mobs -= M
+	M.faction -= "ratvar"
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
 	M.languages_spoken &= ~RATVAR
@@ -335,7 +346,7 @@ This file's folder contains:
 		else
 			var/half_victory = FALSE
 			if(clockwork_objective == CLOCKCULT_GATEWAY)
-				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+				var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
 				if(G)
 					half_victory = TRUE
 			if(half_victory)

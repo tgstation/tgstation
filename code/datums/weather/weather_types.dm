@@ -118,7 +118,7 @@
 	name = "radiation storm"
 	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
 
-	telegraph_duration = 600
+	telegraph_duration = 400
 	telegraph_message = "<span class='danger'>The air begins to grow warm.</span>"
 
 	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
@@ -137,28 +137,48 @@
 
 	immunity_type = "rad"
 
+/datum/weather/rad_storm/telegraph()
+	..()
+	status_alarm("alert")
+
+
 /datum/weather/rad_storm/impact(mob/living/L)
-	if(prob(20))
+	var/resist = L.getarmor(null, "rad")
+	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(H.dna && H.dna.species)
 				if(!(RADIMMUNE in H.dna.species.specflags))
-					if(prob(50))
-						randmuti(H)
-						if(prob(90))
-							randmutb(H)
-						else
-							randmutg(H)
-						H.domutcheck()
+					if(prob(max(0,100-resist)))
+						H.randmuti()
+						if(prob(50))
+							if(prob(90))
+								H.randmutb()
+							else
+								H.randmutg()
+							H.domutcheck()
 		L.rad_act(20,1)
-
-	L.adjustToxLoss(4)
-
-
-
-
-
 /datum/weather/rad_storm/end()
 	if(..())
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
+	status_alarm()
+
+
+/datum/weather/rad_storm/proc/status_alarm(command)	//Makes the status displays show the radiation warning for those who missed the announcement.
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
+
+	if(!frequency)
+		return
+
+	var/datum/signal/status_signal = new
+	var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
+	status_signal.source = virt
+	status_signal.transmission_method = 1
+	status_signal.data["command"] = "shuttle"
+
+	if(command == "alert")
+		status_signal.data["command"] = "alert"
+		status_signal.data["picture_state"] = "radiation"
+
+	frequency.post_signal(src, status_signal)

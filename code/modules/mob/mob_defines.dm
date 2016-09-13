@@ -11,7 +11,6 @@
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
 
-	var/obj/screen/hands = null
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
@@ -38,7 +37,6 @@
 
 	var/next_move = null
 	var/notransform = null	//Carbon
-	var/hand = null
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
 	var/ear_deaf = 0		//Carbon
@@ -62,7 +60,6 @@
 	var/timeofdeath = 0//Living
 	var/cpr_time = 1//Carbon
 
-
 	var/bodytemperature = 310.055	//98.7 F
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
@@ -79,8 +76,12 @@
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
-	var/obj/item/l_hand = null//Living
-	var/obj/item/r_hand = null//Living
+
+	//Hands
+	var/active_hand_index = 1
+	var/list/held_items = list(null, null) //len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand and 1 empty hand.
+	//held_items[active_hand_index] is the actively held item, but please use get_active_held_item() instead, because OOP
+
 	var/obj/item/weapon/storage/s_active = null//Carbon
 
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
