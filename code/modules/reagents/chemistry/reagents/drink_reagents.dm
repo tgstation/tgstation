@@ -24,7 +24,7 @@
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/M)
 	if(M.getFireLoss() && prob(20))
-		M.heal_organ_damage(0,1, 0)
+		M.heal_bodypart_damage(0,1, 0)
 		. = 1
 	..()
 
@@ -95,7 +95,7 @@
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/M)
 	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
-		M.heal_organ_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
 
@@ -106,7 +106,7 @@
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/M)
 	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
-		M.heal_organ_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
 
@@ -155,13 +155,13 @@
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
 	var/datum/dna/Mdna = M.has_dna()
 	if(Mdna && Mdna.species && (Mdna.species.id == "plasmaman" || Mdna.species.id == "skeleton"))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
 
@@ -173,7 +173,7 @@
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
 
@@ -185,7 +185,7 @@
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
 
@@ -411,7 +411,7 @@
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 	..()
 	. = 1
 
@@ -429,7 +429,7 @@
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 	..()
 	. = 1
 

@@ -34,11 +34,11 @@
 	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
-		randmuti(M)
+		M.randmuti()
 		if(prob(98))
-			randmutb(M)
+			M.randmutb()
 		else
-			randmutg(M)
+			M.randmutg()
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -118,7 +118,7 @@
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_organ_damage(5*REM,0, 0)
+		M.heal_bodypart_damage(5*REM,0, 0)
 		. = 1
 	..()
 

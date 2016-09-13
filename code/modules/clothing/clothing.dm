@@ -44,12 +44,7 @@
 		var/obj/screen/inventory/hand/H = over_object
 		if(!M.unEquip(src))
 			return
-		switch(H.slot_id)
-			if(slot_r_hand)
-				M.put_in_r_hand(src)
-			if(slot_l_hand)
-				M.put_in_l_hand(src)
-
+		M.put_in_hand(src, H.held_index)
 		add_fingerprint(usr)
 
 /obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin)

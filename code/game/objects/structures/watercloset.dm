@@ -294,10 +294,8 @@
 		var/mob/living/carbon/M = L
 		. = 1
 		check_heat(M)
-		if(M.r_hand)
-			M.r_hand.clean_blood()
-		if(M.l_hand)
-			M.l_hand.clean_blood()
+		for(var/obj/item/I in M.held_items)
+			I.clean_blood()
 		if(M.back)
 			if(M.back.clean_blood())
 				M.update_inv_back(0)

@@ -315,7 +315,7 @@ var/time_last_changed_position = 0
 				region_access = null
 				head_subordinates = null
 			else
-				var/obj/item/I = usr.get_active_hand()
+				var/obj/item/I = usr.get_active_held_item()
 				if (istype(I, /obj/item/weapon/card/id))
 					if(!usr.drop_item())
 						return
@@ -329,7 +329,7 @@ var/time_last_changed_position = 0
 				scan.verb_pickup()
 				scan = null
 			else
-				var/obj/item/I = usr.get_active_hand()
+				var/obj/item/I = usr.get_active_held_item()
 				if (istype(I, /obj/item/weapon/card/id))
 					if(!usr.drop_item())
 						return

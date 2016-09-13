@@ -55,7 +55,7 @@
 
 
 /client/Northwest()
-	if(!usr.get_active_hand())
+	if(!usr.get_active_held_item())
 		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
 		return
 	usr.drop_item()

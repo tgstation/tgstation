@@ -22,10 +22,6 @@
 			return handcuffed
 		if(slot_legcuffed)
 			return legcuffed
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 		if(slot_belt)
 			return belt
 		if(slot_wear_id)
@@ -113,7 +109,7 @@
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
 		I.equipped(src, slot)
-	
+
 	return not_handled //For future deeper overrides
 
 /mob/living/carbon/human/unEquip(obj/item/I)
@@ -204,7 +200,16 @@
 
 
 //Cycles through all clothing slots and tests them for destruction
-/mob/living/carbon/human/proc/shred_clothing(bomb,shock)
+/mob/living/carbon/proc/shred_clothing(bomb,shock)
+	if(back)
+		back.shred(bomb,shock-20,src)
+	if(head)
+		head.shred(bomb,shock,src)
+	if(wear_mask)
+		wear_mask.shred(bomb,shock,src)
+
+
+/mob/living/carbon/human/shred_clothing(bomb,shock)
 	var/covered_parts = 0	//The body parts that are protected by exterior clothing/armor
 	var/head_absorbed = 0	//How much of the shock the headgear absorbs when it is shredded. -1=it survives
 	var/suit_absorbed = 0	//How much of the shock the exosuit absorbs when it is shredded. -1=it survives

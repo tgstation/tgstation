@@ -3,7 +3,7 @@
 	real_name = "Unknown"
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
-	icon_state = "caucasian1_m_s"
+	icon_state = "caucasian_m_s"
 
 
 
@@ -18,11 +18,7 @@
 	verbs += /mob/living/proc/lay_down
 
 	//initialize limbs first
-	bodyparts = newlist(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
-					 /obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/O = X
-		O.owner = src
+	create_bodyparts()
 
 	//initialize dna. for spawned humans; overwritten by other code
 	create_dna(src)
@@ -33,26 +29,22 @@
 		set_species(dna.species.type)
 
 	//initialise organs
-	if(!(NOHUNGER in dna.species.specflags))
-		internal_organs += new /obj/item/organ/appendix
-
-	if(!(NOBREATH in dna.species.specflags))
-		internal_organs += new /obj/item/organ/lungs
-
-	if(!(NOBLOOD in dna.species.specflags))
-		internal_organs += new /obj/item/organ/heart
-
-	internal_organs += new /obj/item/organ/brain
-
-	//Note: Additional organs are generated/replaced on the dna.species level
-
-	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src)
+	create_internal_organs()
 
 	martial_art = default_martial_art
 
 	handcrafting = new()
 
+	..()
+
+/mob/living/carbon/human/create_internal_organs()
+	if(!(NOHUNGER in dna.species.specflags))
+		internal_organs += new /obj/item/organ/appendix
+	if(!(NOBREATH in dna.species.specflags))
+		internal_organs += new /obj/item/organ/lungs
+	if(!(NOBLOOD in dna.species.specflags))
+		internal_organs += new /obj/item/organ/heart
+	internal_organs += new /obj/item/organ/brain
 	..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
@@ -116,96 +108,17 @@
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
 
-/mob/living/carbon/human/ex_act(severity, ex_target)
-	var/b_loss = null
-	var/f_loss = null
-	var/bomb_armor = getarmor(null, "bomb")
-	if(istype(ex_target, /datum/spacevine_mutation) && isvineimmune(src))
-		return
-
-	switch (severity)
-		if (1)
-			b_loss += 500
-			if (prob(bomb_armor))
-				shred_clothing(1,150)
-				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
-				throw_at(target, 200, 4)
-			else
-				gib()
-				return
-
-		if (2)
-			b_loss += 60
-
-			f_loss += 60
-			if (prob(bomb_armor))
-				b_loss = b_loss/1.5
-				f_loss = f_loss/1.5
-				shred_clothing(1,25)
-			else
-				shred_clothing(1,50)
-
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
-				adjustEarDamage(30, 120)
-			if (prob(70))
-				Paralyse(10)
-
-		if(3)
-			b_loss += 30
-			if (prob(bomb_armor))
-				b_loss = b_loss/2
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
-				adjustEarDamage(15,60)
-			if (prob(50))
-				Paralyse(10)
-
-	take_overall_damage(b_loss,f_loss)
-	//attempt to dismember bodyparts
-	if(severity <= 2 || !bomb_armor)
-		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
-		for(var/X in bodyparts)
-			var/obj/item/bodypart/BP = X
-			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
-				BP.brute_dam = BP.max_damage
-				BP.dismember()
-				max_limb_loss--
-				if(!max_limb_loss)
-					break
-	..()
-
-/mob/living/carbon/human/blob_act(obj/effect/blob/B)
-	if(stat == DEAD)
-		return
-	show_message("<span class='userdanger'>The blob attacks you!</span>")
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
-	return
-
-/mob/living/carbon/human/bullet_act()
-	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
-		if(!prob(martial_art.deflection_chance))
-			return ..()
-		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-			src.visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-			playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
-			return 0
-	..()
-
-/mob/living/carbon/human/attack_ui(slot)
-	if(!get_bodypart(hand ? "l_arm" : "r_arm"))
-		return 0
-	return ..()
-
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
 	var/list/obscured = check_obscured_slots()
+	var/list/dat = list()
 
-	var/dat = {"<table>
-	<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[slot_l_hand]'>[(l_hand && !(l_hand.flags&ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</A></td></tr>
-	<tr><td><B>Right Hand:</B></td><td><A href='?src=\ref[src];item=[slot_r_hand]'>[(r_hand && !(r_hand.flags&ABSTRACT)) ? r_hand : "<font color=grey>Empty</font>"]</A></td></tr>
-	<tr><td>&nbsp;</td></tr>"}
+	dat += "<table>"
+	for(var/i in 1 to held_items.len)
+		var/obj/item/I = get_item_for_held_index(i)
+		dat += "<tr><td><B>[get_held_index_name(i)]:</B></td><td><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td>&nbsp;</td></tr>"
 
 	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[slot_back]'>[(back && !(back.flags&ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A>"
 	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
@@ -279,7 +192,7 @@
 	"}
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 510)
-	popup.set_content(dat)
+	popup.set_content(dat.Join())
 	popup.open()
 
 // called when something steps onto a human
@@ -290,35 +203,6 @@
 		MB.RunOver(src)
 
 	spreadFire(AM)
-
-//Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0)
-	if(tesla_shock)
-		var/total_coeff = 1
-		if(gloves)
-			var/obj/item/clothing/gloves/G = gloves
-			if(G.siemens_coefficient <= 0)
-				total_coeff -= 0.5
-		if(wear_suit)
-			var/obj/item/clothing/suit/S = wear_suit
-			if(S.siemens_coefficient <= 0)
-				total_coeff -= 0.95
-		siemens_coeff = total_coeff
-	else if(!safety)
-		var/gloves_siemens_coeff = 1
-		if(gloves)
-			var/obj/item/clothing/gloves/G = gloves
-			gloves_siemens_coeff = G.siemens_coefficient
-		siemens_coeff = gloves_siemens_coeff
-	if(heart_attack)
-		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			heart_attack = 0
-			if(stat == CONSCIOUS)
-				src << "<span class='notice'>You feel your heart beating again!</span>"
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)
-	if(.)
-		electrocution_animation(40)
-
 
 
 /mob/living/carbon/human/Topic(href, href_list)
@@ -354,7 +238,7 @@
 			var/pocket_side = href_list["pockets"]
 			var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
 			var/obj/item/pocket_item = (pocket_id == slot_r_store ? r_store : l_store)
-			var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
+			var/obj/item/place_item = usr.get_active_held_item() // Item to place in the pocket, if it's empty
 
 			var/delay_denominator = 1
 			if(pocket_item && !(pocket_item.flags&ABSTRACT))
@@ -653,7 +537,7 @@
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
 			if(istype(wear_suit, /obj/item/clothing/suit/redtag))
 				threatcount += 4
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/redtag))
 				threatcount += 4
 			if(istype(belt, /obj/item/weapon/gun/energy/laser/redtag))
 				threatcount += 2
@@ -661,7 +545,7 @@
 		if(lasercolor == "r")
 			if(istype(wear_suit, /obj/item/clothing/suit/bluetag))
 				threatcount += 4
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/bluetag))
 				threatcount += 4
 			if(istype(belt, /obj/item/weapon/gun/energy/laser/bluetag))
 				threatcount += 2
@@ -676,10 +560,9 @@
 	//Check for weapons
 	if(judgebot.weaponscheck)
 		if(!idcard || !(access_weapons in idcard.access))
-			if(judgebot.check_for_weapons(l_hand))
-				threatcount += 4
-			if(judgebot.check_for_weapons(r_hand))
-				threatcount += 4
+			for(var/obj/item/I in held_items)
+				if(judgebot.check_for_weapons(I))
+					threatcount += 4
 			if(judgebot.check_for_weapons(belt))
 				threatcount += 2
 
@@ -726,21 +609,9 @@
 	update_body()
 	update_hair()
 
-/mob/living/carbon/human/singularity_act()
-	var/gain = 20
-	if(mind)
-		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer") )
-			gain = 100
-		if(mind.assigned_role == "Clown")
-			gain = rand(-300, 300)
-	investigate_log("([key_name(src)]) has been consumed by the singularity.","singulo") //Oh that's where the clown ended up!
-	gib()
-	return(gain)
-
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	if(current_size >= STAGE_THREE)
-		var/list/handlist = list(l_hand, r_hand)
-		for(var/obj/item/hand in handlist)
+		for(var/obj/item/hand in held_items)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
@@ -748,71 +619,6 @@
 	if(mob_negates_gravity())
 		return
 	..()
-
-
-/mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
-	if(!istype(M))
-		return
-
-	if(health >= 0)
-		if(src == M)
-			visible_message( \
-				"[src] examines \himself.", \
-				"<span class='notice'>You check yourself for injuries.</span>")
-
-			var/list/missing = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
-			for(var/X in bodyparts)
-				var/obj/item/bodypart/LB = X
-				missing -= LB.body_zone
-				var/status = ""
-				var/brutedamage = LB.brute_dam
-				var/burndamage = LB.burn_dam
-				if(hallucination)
-					if(prob(30))
-						brutedamage += rand(30,40)
-					if(prob(30))
-						burndamage += rand(30,40)
-
-				if(brutedamage > 0)
-					status = "bruised"
-				if(brutedamage > 20)
-					status = "battered"
-				if(brutedamage > 40)
-					status = "mangled"
-				if(brutedamage > 0 && burndamage > 0)
-					status += " and "
-				if(burndamage > 40)
-					status += "peeling away"
-
-				else if(burndamage > 10)
-					status += "blistered"
-				else if(burndamage > 0)
-					status += "numb"
-				if(status == "")
-					status = "OK"
-				src << "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status]."
-
-				for(var/obj/item/I in LB.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>"
-
-			for(var/t in missing)
-				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
-
-			if(bleed_rate)
-				src << "<span class='danger'>You are bleeding!</span>"
-			if(staminaloss)
-				if(staminaloss > 30)
-					src << "<span class='info'>You're completely exhausted.</span>"
-				else
-					src << "<span class='info'>You feel fatigued.</span>"
-		else
-			if(wear_suit)
-				wear_suit.add_fingerprint(M)
-			else if(w_uniform)
-				w_uniform.add_fingerprint(M)
-
-			..()
-
 
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
 	CHECK_DNA_AND_SPECIES(C)
@@ -1003,7 +809,6 @@
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
-	CHECK_DNA_AND_SPECIES(src)
 
 	if(admin_revive)
 		regenerate_limbs()

@@ -78,12 +78,9 @@ STI KALY - blind
 	else
 		var/mob/living/carbon/H = affected_mob
 		if(prob(chance))
-			if(!istype(H.r_hand, /obj/item/weapon/staff))
-				H.drop_r_hand()
-				H.put_in_r_hand( new /obj/item/weapon/staff(H) )
-			return
-	return
-
+			var/obj/item/weapon/staff/S = new(H)
+			if(!H.put_in_hands(S))
+				qdel(S)
 
 
 /datum/disease/wizarditis/proc/teleport()

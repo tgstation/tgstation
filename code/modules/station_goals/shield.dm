@@ -152,7 +152,7 @@
 		if(get_dist(M,src) > kill_range)
 			continue
 		if(!emagged && space_los(M))
-			Beam(get_turf(M),time=5,maxdistance=kill_range)
+			Beam(get_turf(M),icon_state="sat_beam",time=5,maxdistance=kill_range)
 			qdel(M)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)

@@ -34,7 +34,7 @@ var/datum/subsystem/mapping/SSmapping
 			else
 				space_zlevels += i
 
-	seedRuins(space_zlevels, rand(8,16), /area/space, space_ruins_templates)
+	seedRuins(space_zlevels, config.space_budget, /area/space, space_ruins_templates)
 
 	// Set up Z-level transistions.
 	setup_map_transitions()

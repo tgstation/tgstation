@@ -85,7 +85,7 @@
 	update_icon()
 
 /obj/item/pizzabox/attack_hand(mob/user)
-	if(user.get_inactive_hand() != src)
+	if(user.get_inactive_held_item() != src)
 		..()
 		return
 	if(open)

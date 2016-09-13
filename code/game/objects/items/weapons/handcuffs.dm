@@ -30,12 +30,12 @@
 		return
 
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2)
+		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
 			playsound(loc, cuffsound, 30, 1, -2)
-			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				apply_cuffs(C,user)
 				user << "<span class='notice'>You handcuff [C].</span>"
 				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))

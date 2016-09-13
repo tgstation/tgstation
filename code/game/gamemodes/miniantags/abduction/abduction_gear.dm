@@ -59,8 +59,7 @@
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.overlays = disguise.overlays
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
+		M.update_inv_hands()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
@@ -460,11 +459,11 @@ Congratulations! You are now trained for xenobiology research!"}
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2)
+		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()

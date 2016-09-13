@@ -1,4 +1,4 @@
-/mob/living/gib(no_brain, no_organs)
+/mob/living/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying
 	if(stat != DEAD)
 		death(1)
@@ -8,20 +8,27 @@
 
 	if(!prev_lying)
 		gib_animation()
-	if(!no_organs)
-		spill_organs(no_brain)
-	spawn_gibs()
+
+
+	spill_organs(no_brain, no_organs, no_bodyparts)
+
+	if(!no_bodyparts)
+		spread_bodyparts(no_brain, no_organs)
+
+	spawn_gibs(no_bodyparts)
 	qdel(src)
 
 /mob/living/proc/gib_animation()
 	return
 
 /mob/living/proc/spawn_gibs()
-	gibs(loc, viruses)
+	new /obj/effect/gibspawner/generic(loc, viruses)
 
-/mob/living/proc/spill_organs(no_brain)
+/mob/living/proc/spill_organs()
 	return
 
+/mob/living/proc/spread_bodyparts()
+	return
 
 /mob/living/dust()
 	death(1)

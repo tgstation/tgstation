@@ -49,6 +49,7 @@
 			for(var/A in tile)
 				if(is_cleanable(A))
 					qdel(A)
+	. = ..()
 
 
 /obj/vehicle/janicart/examine(mob/user)

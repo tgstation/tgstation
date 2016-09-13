@@ -76,11 +76,11 @@
 
 		var/obj/item/slot_item_ID = H.get_item_by_slot(slot_wear_id)
 		qdel(slot_item_ID)
-		var/obj/item/slot_item_hand = H.get_item_by_slot(slot_r_hand)
+		var/obj/item/slot_item_hand = H.get_item_for_held_index(2)
 		H.unEquip(slot_item_hand)
 
 		var /obj/item/weapon/multisword/multi = new(H)
-		H.equip_to_slot_or_del(multi, slot_r_hand)
+		H.put_in_hands_or_del(multi)
 
 		var/obj/item/weapon/card/id/W = new(H)
 		W.icon_state = "centcom"

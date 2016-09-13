@@ -172,7 +172,7 @@
 		prepared = TRUE
 		user << "<span class='notice'>You prepare [src].</span>"
 		var/obj/item/ash_flora/A = new prepared_type(get_turf(src))
-		if(src in get_both_hands(user))
+		if(user.is_holding(src))
 			user.unEquip(src, TRUE)
 			user.put_in_hands(A)
 		qdel(src)
