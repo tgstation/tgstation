@@ -174,7 +174,7 @@
 /obj/structure/destructible/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
 	name = "ocular warden"
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
-	clockwork_desc = "A stalwart turret that will deal sustained damage to any non-faithful it sees."
+	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
 	health = 25
 	max_health = 25
@@ -187,7 +187,7 @@
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
-	var/mech_damage_cycle = 0 //only hits every few cycles so mechs have a chance against it
+	var/mech_damage_cycle = 0 //so that people in mechs don't get murderspammed with messages
 
 /obj/structure/destructible/clockwork/ocular_warden/New()
 	..()
@@ -218,12 +218,14 @@
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
 			else if(istype(target,/obj/mecha))
-				if(mech_damage_cycle)
-					var/obj/mecha/M = target
-					M.take_directional_damage(damage_per_tick, "fire", get_dir(src, M), 0) //does about half of standard damage to mechs * whatever their fire armor is
+				var/sending_message = FALSE
+				if(mech_damage_cycle > 1)
 					mech_damage_cycle--
 				else
 					mech_damage_cycle++
+					sending_message = TRUE
+				var/obj/mecha/M = target
+				M.take_directional_damage(damage_per_tick, "fire", get_dir(src, M), 0, 1, sending_message)
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
