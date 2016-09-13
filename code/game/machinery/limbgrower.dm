@@ -22,15 +22,15 @@
 
 	var/datum/design/being_built
 	var/datum/research/files
-	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
+	var/emag = 0 //Gives access to other cool stuff
 
 	var/list/categories = list(
 							"human",
 							"lizard",
-							"plasaman",
-							"test"
+							"plasmaman",
+							"special"
 							)
 
 	var/mob/living/carbon/human/human
@@ -48,12 +48,11 @@
 	reagents.add_reagent("synthflesh",100)
 
 	files = new /datum/research/limbgrower(src)
-	matching_designs = list()
 
 /obj/item/weapon/circuitboard/machine/limbgrower
 	name = "circuit board (Limb Grower)"
 	build_path = /obj/machinery/limbgrower
-	origin_tech = "engineering=1;programming=1"
+	origin_tech = "programming=2;biotech=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/reagent_containers/glass/beaker = 2,
@@ -144,7 +143,6 @@
 					use_power(power)
 					reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
 					var/B = being_built.build_path
-					world << "Starting creaton of a limb"
 					if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
 						build_limb(B)
 					busy = 0
@@ -163,8 +161,6 @@
 	//i need to create a body part manually using a set specias dna
 	var/obj/item/bodypart/L
 	var/selected_part
-	world << "category start"
-	world << "[selected_category] is the current category"
 	L = new B()
 	if(selected_category=="human" || selected_category=="lizard")
 		L.icon = 'icons/mob/human_parts_greyscale.dmi'
@@ -201,6 +197,8 @@
 	dat += "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
+		if(C=="special" && !emag)	//Only want to show special when console is emagged
+			continue
 
 		dat += "<td><A href='?src=\ref[src];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
 		dat += "</tr><tr>"
@@ -217,12 +215,13 @@
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
 		if(!(selected_category in D.category))
+			world << "this cat was [selected_category]"
+			world << "D cat was [D.category]"
 			continue
-
 		if(disabled || !can_build(D))
-			dat += "<span class='linkOff'>[selected_category] [D.name]</span>"
+			dat += "<span class='linkOff'>[D.name]</span>"
 		else
-			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[selected_category] [D.name]</a>"
+			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
 		dat += "[get_design_cost(D)]<br>"
 
 	dat += "</div>"
@@ -240,3 +239,9 @@
 	if(D.reagents["synthflesh"])
 		dat += "[D.reagents["synthflesh"] * prod_coeff] Synthetic flesh "
 	return dat
+
+/obj/machinery/limbgrower/emag_act(mob/user)
+	for(var/datum/design/D in files.possible_designs)
+		if((D.build_type & LIMBGROWER) && ("special" in D.category))
+			files.AddDesign2Known(D)
+	usr << "A warning flashes onto the screen, stating that safety overrides have been deactivited"
