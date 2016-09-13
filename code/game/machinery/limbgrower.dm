@@ -1,5 +1,6 @@
 #define LIMBGROWER_MAIN_MENU       1
 #define LIMBGROWER_CATEGORY_MENU   2
+#define LIMBGROWER_CHEMICAL_MENU   3
 //use these for the menu system
 
 
@@ -69,10 +70,9 @@
 			dat = main_win(user)
 		if(LIMBGROWER_CATEGORY_MENU)
 			dat = category_win(user,selected_category)
-			/*
-		if(LIMBGROWER_SEARCH_MENU)
-			dat = search_win(user)
-*/
+		if(LIMBGROWER_CHEMICAL_MENU)
+			dat = chemical_win(user)
+
 	var/datum/browser/popup = new(user, "Limb Grower", name, 400, 500)
 	popup.set_content(dat)
 	popup.open()
@@ -85,14 +85,6 @@
 	if (busy)
 		user << "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>"
 		return 1
-
-	if (ispath(O,/obj/item/weapon/reagent_containers))
-		if(!O.reagents.has_reagent("synthflesh"))
-			user << "<span class=\"alert\">The Limb grower refuses the chemicals, perhaps it only accepts synthflesh?</span>"
-			return 1
-		else
-			O.reagents.isolate_reagent("synthflesh")
-			return 1
 
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", O))
 		updateUsrDialog()
@@ -125,6 +117,9 @@
 		if(href_list["category"])
 			selected_category = href_list["category"]
 
+		if(href_list["disposeI"])  //Get rid of a reagent incase you add the wrong one by mistake
+			reagents.del_reagent(href_list["disposeI"])
+
 		if(href_list["make"])
 
 			/////////////////
@@ -148,6 +143,10 @@
 					var/B = being_built.build_path
 					if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
 						build_limb(B)
+					else
+						//Just build whatever it is
+						var/obj/L = new B()
+						L.loc = loc;
 					busy = 0
 					flick("limbgrower_unfill",src)
 					icon_state = "limbgrower_idleoff"
@@ -196,6 +195,7 @@
 
 /obj/machinery/limbgrower/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Limb Grower Menu:</h3><br>"
+	dat += "<A href='?src=\ref[src];menu=[LIMBGROWER_CHEMICAL_MENU]'>Chemical Storage</A>"
 	dat += materials_printout()
 	dat += "<table style='width:100%' align='center'><tr>"
 
@@ -224,6 +224,19 @@
 		else
 			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
 		dat += "[get_design_cost(D)]<br>"
+
+	dat += "</div>"
+	return dat
+
+
+/obj/machinery/limbgrower/proc/chemical_win(mob/user)
+	var/dat = "<A href='?src=\ref[src];menu=[LIMBGROWER_MAIN_MENU]'>Return to main menu</A>"
+	dat += "<div class='statusDisplay'><h3>Browsing Chemical Storage:</h3><br>"
+	dat += materials_printout()
+
+	for(var/datum/reagent/R in reagents.reagent_list)
+		dat += "[R.name]: [R.volume]"
+		dat += "<A href='?src=\ref[src];disposeI=[R.id]'>Purge</A><BR>"
 
 	dat += "</div>"
 	return dat
