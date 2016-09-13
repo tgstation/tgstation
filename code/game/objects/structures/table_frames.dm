@@ -138,7 +138,8 @@
 		if(do_after(user, 20, target = src) && W.use(1))
 			new /obj/structure/table/reinforced/brass(src.loc)
 			qdel(src)
-	return 1
+	else
+		return ..()
 
 /obj/structure/table_frame/brass/narsie_act()
 	..()
