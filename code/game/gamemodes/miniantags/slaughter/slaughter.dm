@@ -40,7 +40,6 @@
 							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
 
 	loot = list(/obj/effect/decal/cleanable/blood, \
-				/obj/effect/decal/cleanable/blood/innards, \
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
 	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
@@ -58,12 +57,6 @@
 		speed = 1
 	else
 		speed = 0
-
-/obj/effect/decal/cleanable/blood/innards
-	icon = 'icons/obj/surgery.dmi'
-	name = "pile of viscera"
-	desc = "A repulsive pile of guts and gore."
-	random_icon_states = list("innards")
 
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()

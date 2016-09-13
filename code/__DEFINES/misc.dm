@@ -481,7 +481,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define INVENTORY_DEPTH		3
 #define STORAGE_VIEW_DEPTH	2
 
-
+#define is_cleanable(A, H) (istype(A, /obj/effect/decal/cleanable) || (istype(A, /obj/effect/rune) && H)) //if something is cleanable, only true on runes if the source is also H(oly)
 
 // Medal names
 

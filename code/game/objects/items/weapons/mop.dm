@@ -1,5 +1,3 @@
-#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune))
-
 /obj/item/weapon/mop
 	desc = "The world of janitalia wouldn't be complete without a mop."
 	name = "mop"
@@ -23,10 +21,11 @@
 
 
 obj/item/weapon/mop/proc/clean(turf/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
+	var/holyness = reagents.has_reagent("holywater", 1)
+	if(reagents.has_reagent("water", 1) || holyness || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
 		A.clean_blood()
 		for(var/obj/effect/O in A)
-			if(is_cleanable(O))
+			if(is_cleanable(O, holyness))
 				qdel(O)
 		if(istype(A, /turf/closed))
 			var/turf/closed/C = A
@@ -42,16 +41,14 @@ obj/item/weapon/mop/proc/clean(turf/A)
 		user << "<span class='warning'>Your mop is dry!</span>"
 		return
 
-	var/turf/turf = A
-	if(is_cleanable(A))
-		turf = A.loc
+	var/turf/T = get_turf(A)
 
-	if(istype(turf))
-		user.visible_message("[user] begins to clean \the [turf] with [src].", "<span class='notice'>You begin to clean \the [turf] with [src]...</span>")
+	if(T)
+		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
 
-		if(do_after(user, src.mopspeed, target = turf))
+		if(do_after(user, src.mopspeed, target = T))
 			user << "<span class='notice'>You finish mopping.</span>"
-			clean(turf)
+			clean(T)
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
