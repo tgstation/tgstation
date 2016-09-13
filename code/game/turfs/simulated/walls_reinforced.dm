@@ -6,8 +6,6 @@
 	opacity = 1
 	density = 1
 
-	walltype = "rwall"
-
 	var/d_state = 0
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel

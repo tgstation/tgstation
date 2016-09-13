@@ -1069,7 +1069,15 @@
 /obj/item/clockwork/component/replicant_alloy/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user))
-		user << "<span class='alloy'>Can be used to fuel Clockwork Proselytizers and Mending Motors.</span>"
+		user << "<span class='alloy'>Can be used to fuel Clockwork Proselytizers and Mending Motors, or shaped into brass sheets.</span>"
+
+/obj/item/clockwork/component/replicant_alloy/attack_self(mob/user)
+	if(is_servant_of_ratvar(user))
+		var/obj/item/stack/sheet/brass/B = new /obj/item/stack/sheet/brass(get_turf(src), 10)
+		user.unEquip(src, TRUE)
+		user.put_in_hands(B)
+		user << "<span class='brass'>You shape the alloy into some brass sheets.</span>"
+		qdel(src)
 
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"
