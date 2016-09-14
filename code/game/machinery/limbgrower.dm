@@ -1,5 +1,6 @@
 #define LIMBGROWER_MAIN_MENU       1
 #define LIMBGROWER_CATEGORY_MENU   2
+#define LIMBGROWER_CHEMICAL_MENU   3
 //use these for the menu system
 
 
@@ -22,43 +23,32 @@
 
 	var/datum/design/being_built
 	var/datum/research/files
-	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
+	var/emag = FALSE //Gives access to other cool stuff
 
 	var/list/categories = list(
-							"Human",
-							"Lizard",
+							"human",
+							"lizard",
+							"plasmaman",
+							"special"
 							)
-
-	var/mob/living/carbon/human/human
-
-
 
 /obj/machinery/limbgrower/New()
 	..()
 	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/limbgrower(null)
-	human = new /mob/living/carbon/human()
 	B.apply_default_parts(src)
-
-
-	reagents.add_reagent("synthflesh",100)
-
 	files = new /datum/research/limbgrower(src)
-	matching_designs = list()
 
 /obj/item/weapon/circuitboard/machine/limbgrower
 	name = "circuit board (Limb Grower)"
 	build_path = /obj/machinery/limbgrower
-	origin_tech = "engineering=1;programming=1"
+	origin_tech = "programming=2;biotech=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/reagent_containers/glass/beaker = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1)
-
-/obj/machinery/limbgrower/Destroy()
-	return ..()
 
 /obj/machinery/limbgrower/interact(mob/user)
 	if(!is_operational())
@@ -71,10 +61,9 @@
 			dat = main_win(user)
 		if(LIMBGROWER_CATEGORY_MENU)
 			dat = category_win(user,selected_category)
-			/*
-		if(LIMBGROWER_SEARCH_MENU)
-			dat = search_win(user)
-*/
+		if(LIMBGROWER_CHEMICAL_MENU)
+			dat = chemical_win(user)
+
 	var/datum/browser/popup = new(user, "Limb Grower", name, 400, 500)
 	popup.set_content(dat)
 	popup.open()
@@ -86,12 +75,8 @@
 /obj/machinery/limbgrower/attackby(obj/item/O, mob/user, params)
 	if (busy)
 		user << "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>"
-		return 1
-/*
-	if (ispath(O,/obj/item/weapon/reagent_containers))
-		if(!O.reagents.hasreagent("synthflesh") && O.reagents.reagentlist.length!=1)
-			user << "<span class=\"alert\">The Limb grower refuses the chemicals, perhaps it only accepts pure synthflesh?</span>"
-*/
+		return
+
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", O))
 		updateUsrDialog()
 		return
@@ -99,19 +84,11 @@
 	if(exchange_parts(user, O))
 		return
 
-	if(panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar(O)
-			return 1
+	if(panel_open && default_deconstruction_crowbar(O))
+		return
 
 	if(user.a_intent == "harm") //so we can hit the machine
 		return ..()
-
-	if(stat)
-		return 1
-
-	if(O.flags & HOLOGRAM)
-		return 1
 
 /obj/machinery/limbgrower/Topic(href, href_list)
 	if(..())
@@ -122,6 +99,9 @@
 
 		if(href_list["category"])
 			selected_category = href_list["category"]
+
+		if(href_list["disposeI"])  //Get rid of a reagent incase you add the wrong one by mistake
+			reagents.del_reagent(href_list["disposeI"])
 
 		if(href_list["make"])
 
@@ -140,42 +120,52 @@
 				use_power(power)
 				flick("limbgrower_fill",src)
 				icon_state = "limbgrower_idleon"
-				spawn(32*prod_coeff)
-					use_power(power)
-					reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
-					var/B = being_built.build_path
-					world << "Starting creaton of a limb"
-					if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
-						//i need to create a body part manually using a set specias dna
-						var/obj/item/bodypart/L
-						world << "category start"
-						world << "[selected_category] is the current category"
-						switch(selected_category)
-							if("Human")
-								//Human dna
-								L = new B()
-								world << "Trying to update limb"
-								L.name = "Synthentic Human Limb"
-								L.desc = "A synthentic human limb that will morph on its first use in surgery"
-							else if("Lizard")
-								//Lizard dna
-								L = new B()
-								world << "Trying to update lizard limb"
-								L.name = "Synthentic Lizard Limb"
-								L.desc = "A synthentic lizard limb that will morph on its first use in surgery"
-						L.icon = "human_r_arm_s"
-						L.loc = loc;
-					busy = 0
-					flick("limbgrower_unfill",src)
-					icon_state = "limbgrower_idleoff"
-					src.updateUsrDialog()
+				addtimer(src, "build_item",32*prod_coeff)
 
 	else
 		usr << "<span class=\"alert\">The limb grower is busy. Please wait for completion of previous operation.</span>"
 
-	src.updateUsrDialog()
-
+	updateUsrDialog()
 	return
+
+/obj/machinery/limbgrower/proc/build_item()
+	if(reagents.has_reagent("synthflesh", being_built.reagents["synthflesh"]*prod_coeff))	//sanity check, if this happens we are in big trouble
+		reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
+		var/B = being_built.build_path
+		if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
+			build_limb(B)
+		else
+			//Just build whatever it is
+			new B(loc)
+	else
+		usr << "<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>"
+	busy = 0
+	flick("limbgrower_unfill",src)
+	icon_state = "limbgrower_idleoff"
+	updateUsrDialog()
+
+/obj/machinery/limbgrower/proc/build_limb(var/B)
+	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
+	var/obj/item/bodypart/L
+	var/selected_part
+	L = new B(loc)
+	if(selected_category=="human" || selected_category=="lizard")
+		L.icon = 'icons/mob/human_parts_greyscale.dmi'
+	// gotta check which part of the body it is, so that i can get the correct icon
+	if(ispath(B,/obj/item/bodypart/r_arm))
+		L.icon_state = "[selected_category]_r_arm_s"
+		selected_part = "right arm"
+	else if(ispath(B,/obj/item/bodypart/l_arm))
+		selected_part = "left arm"
+		L.icon_state = "[selected_category]_l_arm_s"
+	else if(ispath(B,/obj/item/bodypart/r_leg))
+		selected_part = "right leg"
+		L.icon_state = "[selected_category]_r_leg_s"
+	else if(ispath(B,/obj/item/bodypart/l_leg))
+		selected_part = "left leg"
+		L.icon_state = "[selected_category]_l_leg_s"
+	L.name = "Synthetic [selected_category] Limb"
+	L.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [selected_part]"
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
@@ -189,10 +179,13 @@
 
 /obj/machinery/limbgrower/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Limb Grower Menu:</h3><br>"
+	dat += "<A href='?src=\ref[src];menu=[LIMBGROWER_CHEMICAL_MENU]'>Chemical Storage</A>"
 	dat += materials_printout()
 	dat += "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
+		if(C=="special" && !emag)	//Only want to show special when console is emagged
+			continue
 
 		dat += "<td><A href='?src=\ref[src];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
 		dat += "</tr><tr>"
@@ -208,12 +201,26 @@
 
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
-
+		if(!(selected_category in D.category))
+			continue
 		if(disabled || !can_build(D))
-			dat += "<span class='linkOff'>[selected_category] [D.name]</span>"
+			dat += "<span class='linkOff'>[D.name]</span>"
 		else
-			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[selected_category] [D.name]</a>"
+			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
 		dat += "[get_design_cost(D)]<br>"
+
+	dat += "</div>"
+	return dat
+
+
+/obj/machinery/limbgrower/proc/chemical_win(mob/user)
+	var/dat = "<A href='?src=\ref[src];menu=[LIMBGROWER_MAIN_MENU]'>Return to main menu</A>"
+	dat += "<div class='statusDisplay'><h3>Browsing Chemical Storage:</h3><br>"
+	dat += materials_printout()
+
+	for(var/datum/reagent/R in reagents.reagent_list)
+		dat += "[R.name]: [R.volume]"
+		dat += "<A href='?src=\ref[src];disposeI=[R.id]'>Purge</A><BR>"
 
 	dat += "</div>"
 	return dat
@@ -230,3 +237,12 @@
 	if(D.reagents["synthflesh"])
 		dat += "[D.reagents["synthflesh"] * prod_coeff] Synthetic flesh "
 	return dat
+
+/obj/machinery/limbgrower/emag_act(mob/user)
+	if(emag==TRUE)
+		return
+	for(var/datum/design/D in files.possible_designs)
+		if((D.build_type & LIMBGROWER) && ("special" in D.category))
+			files.AddDesign2Known(D)
+	usr << "A warning flashes onto the screen, stating that safety overrides have been deactivated"
+	emag = TRUE
