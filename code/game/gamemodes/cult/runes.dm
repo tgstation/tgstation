@@ -867,9 +867,9 @@ var/list/wall_runes = list()
 	..()
 	rune_in_use = TRUE
 	var/turf/T = get_turf(src)
-	visible_message("<span class='warning'>[src] turns a bright, glowing white!</span>")
+	visible_message("<span class='warning'>[src] turns a bright, glowing orange!</span>")
 	SetLuminosity(6)
-	color = "#FFFDF4"
+	color = "#FC9B54"
 	for(var/M in invokers)
 		var/mob/living/L = M
 		L.apply_damage(10, BRUTE, pick("l_arm", "r_arm"))
@@ -883,18 +883,18 @@ var/list/wall_runes = list()
 			L << "<span class='cultlarge'>Your blood boils in your veins!</span>"
 			if(is_servant_of_ratvar(L))
 				L << "<span class='userdanger'>You feel an unholy darkness dimming the Justiciar's light!</span>"
+	animate(src, color = "#FCB56D", time = 4)
+	sleep(4)
+	if(!src)
+		return
+	do_area_burn(T, 0.5)
 	animate(src, color = "#FFDF80", time = 5)
 	sleep(5)
 	if(!src)
 		return
-	do_area_burn(T, 0.5)
-	animate(src, color = "#FCB56D", time = 5)
-	sleep(5)
-	if(!src)
-		return
 	do_area_burn(T, 1)
-	animate(src, color = "#FC9B54", time = 5)
-	sleep(5)
+	animate(src, color = "#FFFDF4", time = 6)
+	sleep(6)
 	if(!src)
 		return
 	do_area_burn(T, 1.5)
