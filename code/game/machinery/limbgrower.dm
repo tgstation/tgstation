@@ -25,7 +25,7 @@
 	var/datum/research/files
 	var/selected_category
 	var/screen = 1
-	var/emag = 0 //Gives access to other cool stuff
+	var/emag = FALSE //Gives access to other cool stuff
 
 	var/list/categories = list(
 							"human",
@@ -128,7 +128,7 @@
 				use_power(power)
 				flick("limbgrower_fill",src)
 				icon_state = "limbgrower_idleon"
-				addtimer(src, "buildItem", 32*prod_coeff)
+				addtimer(src, "buildItem", prod_coeff)
 
 	else
 		usr << "<span class=\"alert\">The limb grower is busy. Please wait for completion of previous operation.</span>"
@@ -143,18 +143,17 @@
 		build_limb(B)
 	else
 		//Just build whatever it is
-		var/obj/L = new B()
-		L.loc = loc;
+		var/obj/L = new B(loc)
 	busy = 0
 	flick("limbgrower_unfill",src)
 	icon_state = "limbgrower_idleoff"
 	updateUsrDialog()
 
 /obj/machinery/limbgrower/proc/build_limb(var/B)
-	//i need to create a body part manually using a set specias dna
+	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
 	var/obj/item/bodypart/L
 	var/selected_part
-	L = new B()
+	L = new B(loc)
 	if(selected_category=="human" || selected_category=="lizard")
 		L.icon = 'icons/mob/human_parts_greyscale.dmi'
 	// gotta check which part of the body it is, so that i can get the correct icon
@@ -172,7 +171,6 @@
 		L.icon_state = "[selected_category]_l_leg_s"
 	L.name = "Synthetic [selected_category] Limb"
 	L.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [selected_part]"
-	L.loc = loc;
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
@@ -246,10 +244,10 @@
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
-	if(emag==1)
+	if(emag==TRUE)
 		return
 	for(var/datum/design/D in files.possible_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
 			files.AddDesign2Known(D)
 	usr << "A warning flashes onto the screen, stating that safety overrides have been deactivated"
-	emag = 1
+	emag = TRUE
