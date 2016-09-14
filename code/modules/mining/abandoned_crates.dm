@@ -164,6 +164,7 @@
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
 				user << "<span class='warning'>A red light flashes.</span>"
+				lastattempt = input
 				attempts--
 				if(attempts == 0)
 					boom(user)
