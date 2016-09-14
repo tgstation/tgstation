@@ -753,6 +753,7 @@ var/list/wall_runes = list()
 
 /obj/effect/rune/wall/invoke(var/list/invokers)
 	if(recharging)
+		fail_invoke()
 		return
 	var/mob/living/user = invokers[1]
 	..()
@@ -762,7 +763,7 @@ var/list/wall_runes = list()
 	if(density)
 		spread_density()
 	user.visible_message("<span class='warning'>[user] [iscarbon(user) ? "places their hands on":"stares intently at"] [src], and [density ? "the air above it begins to shimmer" : "the shimmer above it fades"].</span>", \
-						 "<span class='cultitalic'>You channel your life energy into [src], [density ? "preventing" : "allowing"] passage above it.</span>")
+						 "<span class='cultitalic'>You channel your life energy into [src], [density ? "temporarily preventing" : "allowing"] passage above it.</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
@@ -770,7 +771,7 @@ var/list/wall_runes = list()
 /obj/effect/rune/wall/proc/spread_density()
 	for(var/R in wall_runes)
 		var/obj/effect/rune/wall/W = R
-		if(W.z == z && get_dist(src, W) <= 2 && !W.density)
+		if(W.z == z && get_dist(src, W) <= 2 && !W.density && !W.recharging)
 			W.density = TRUE
 			W.update_state()
 			W.spread_density()
