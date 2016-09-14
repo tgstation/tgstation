@@ -144,7 +144,7 @@
 			build_limb(B)
 		else
 			//Just build whatever it is
-			var/obj/L = new B(loc)
+			new B(loc)
 	else
 		usr << "<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>"
 	busy = 0
