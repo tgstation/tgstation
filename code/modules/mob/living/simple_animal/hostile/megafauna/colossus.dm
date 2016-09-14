@@ -220,7 +220,8 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
-	for(var/turf/turf in range(1, target))
+	var/turf/T = get_turf(target)
+	for(var/turf/turf in range(1, T))
 		shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
