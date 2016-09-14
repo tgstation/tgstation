@@ -372,21 +372,21 @@
 	mix_sound = 'sound/machines/defib_zap.ogg'
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, created_volume)
-	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 3000/8000/15000. Tesla revolvers have a power of 10000 for comparison.
+	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
 	var/T2 = created_volume * 50
 	var/T3 = created_volume * 120
 	sleep(10)
 	if(created_volume >= 75)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		tesla_zap(holder.my_atom, 7, T1)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	sleep(10)
 	if(created_volume >= 40)
 		tesla_zap(holder.my_atom, 7, T2)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	sleep(10)
 	if(created_volume >= 10)
 		tesla_zap(holder.my_atom, 7, T3)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
