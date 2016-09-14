@@ -325,7 +325,7 @@ var/list/teleport_runes = list()
 
 
 //Rite of Offering: Converts or sacrifices a target.
-/obj/effect/rune/offer
+/obj/effect/rune/convert
 	cultist_name = "Offer"
 	cultist_desc = "offers a noncultist above it to Nar-Sie, either converting them or sacrificing them."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
@@ -335,7 +335,7 @@ var/list/teleport_runes = list()
 	allow_excess_invokers = 1
 	rune_in_use = FALSE
 
-/obj/effect/rune/offer/invoke(var/list/invokers)
+/obj/effect/rune/convert/invoke(var/list/invokers)
 	if(rune_in_use)
 		return
 	var/list/myriad_targets = list()
@@ -352,19 +352,22 @@ var/list/teleport_runes = list()
 	color = rgb(126, 23, 23)
 	..()
 	var/mob/living/L = pick(myriad_targets)
-	if(is_servant_of_ratvar(L))
-		L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
-		"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
-		<span class='large_brass'>\"Give up and you will feel pain unlike anything you've ever felt!\"</span>")
-		L.Weaken(4)
-	else if(L.stat != DEAD && is_convertable_to_cult(L.mind))
-		do_convert(L, invokers)
+	var/is_clock = is_servant_of_ratvar(L)
+	var/is_convertable = is_convertable_to_cult(L.mind)
+	if(L.stat != DEAD && (is_clock || is_convertable))
+		if(is_clock)
+			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
+			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
+			<span class='large_brass'>\"Give up and you will feel pain unlike anything you've ever felt!\"</span>")
+			L.Weaken(4)
+		else if(is_convertable)
+			do_convert(L, invokers)
 	else
 		do_sacrifice(L, invokers)
 	color = initial(color)
 	rune_in_use = FALSE
 
-/obj/effect/rune/offer/proc/do_convert(mob/living/convertee, list/invokers)
+/obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
 		for(var/M in invokers)
 			M << "<span class='warning'>You need more invokers to convert [convertee]!</span>"
@@ -392,7 +395,7 @@ var/list/teleport_runes = list()
 	</b></span>"
 	return 1
 
-/obj/effect/rune/offer/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
+/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
 	if((((ishuman(sacrificial) || isrobot(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			M << "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>"
