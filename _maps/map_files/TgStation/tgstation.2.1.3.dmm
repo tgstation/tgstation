@@ -37871,7 +37871,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bFJ" = (
@@ -38550,7 +38549,6 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bHf" = (
@@ -41814,7 +41812,6 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNQ" = (
@@ -90902,7 +90899,7 @@ bJs
 bKy
 bLM
 bLM
-alX
+bNQ
 bOV
 bQk
 bRt
@@ -106060,7 +106057,7 @@ bDc
 bEo
 bDf
 bEb
-bIC
+apI
 bGY
 bJN
 bMp
