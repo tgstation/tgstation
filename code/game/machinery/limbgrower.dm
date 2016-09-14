@@ -84,19 +84,11 @@
 	if(exchange_parts(user, O))
 		return
 
-	if(panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			default_deconstruction_crowbar(O)
-			return
+	if(panel_open && default_deconstruction_crowbar(O))
+		return
 
 	if(user.a_intent == "harm") //so we can hit the machine
 		return ..()
-
-	if(stat)
-		return
-
-	if(O.flags & HOLOGRAM)
-		return
 
 /obj/machinery/limbgrower/Topic(href, href_list)
 	if(..())
