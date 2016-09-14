@@ -27,6 +27,7 @@ To draw a rune, use an arcane tome.
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
+	var/req_cultists_text //if we have a description override for required cultists to invoke
 	var/rune_in_use = 0 // Used for some runes, this is for when you want a rune to not be usable when in use.
 
 	var/scribe_delay = 50 //how long the rune takes to create
@@ -48,7 +49,7 @@ To draw a rune, use an arcane tome.
 	if(iscultist(user) || user.stat == DEAD) //If they're a cultist or a ghost, tell them the effects
 		user << "<b>Name:</b> [cultist_name]"
 		user << "<b>Effects:</b> [capitalize(cultist_desc)]"
-		user << "<b>Required Acolytes:</b> [req_cultists]"
+		user << "<b>Required Acolytes:</b> [req_cultists_text ? "[req_cultists_text]":"[req_cultists]"]"
 		if(req_keyword && keyword)
 			user << "<b>Keyword:</b> [keyword]"
 
@@ -328,6 +329,7 @@ var/list/teleport_runes = list()
 /obj/effect/rune/convert
 	cultist_name = "Offer"
 	cultist_desc = "offers a noncultist above it to Nar-Sie, either converting them or sacrificing them."
+	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
 	color = rgb(255, 255, 255)
@@ -399,20 +401,14 @@ var/list/teleport_runes = list()
 	if((((ishuman(sacrificial) || isrobot(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			M << "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>"
-		log_game("Offer rune failed - not enough acolytes and target is living or target")
-		return 0
-	var/sacrifice_fulfilled
-	if(istype(sacrificial, /mob/living/simple_animal/pet/dog))
-		for(var/M in invokers)
-			var/mob/living/L = M
-			L << "<span class='cultlarge'>\"Even I have standards, such as they are!\"</span>"
-			if(L.reagents)
-				L.reagents.add_reagent("hell_water", 2)
+		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
+		return FALSE
+	var/sacrifice_fulfilled = FALSE
 
 	if(sacrificial.mind)
 		sacrificed.Add(sacrificial.mind)
 		if(is_sacrifice_target(sacrificial.mind))
-			sacrifice_fulfilled = 1
+			sacrifice_fulfilled = TRUE
 
 	PoolOrNew(/obj/effect/overlay/temp/cult/sac, get_turf(src))
 	for(var/M in invokers)
@@ -424,22 +420,20 @@ var/list/teleport_runes = list()
 			else
 				M << "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>"
 
+	var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
 	if(sacrificial.mind)
-		var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
 		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
-		if(!stone.transfer_soul("FORCE", sacrificial, usr)) //If it cannot be added
-			qdel(stone)
-		if(stone)
-			stone.invisibility = 0
-			return 1
+		stone.transfer_soul("FORCE", sacrificial, usr)
+		stone.invisibility = 0
 
-	if(isrobot(sacrificial))
-		playsound(sacrificial, 'sound/magic/Disable_Tech.ogg', 100, 1)
-		sacrificial.dust() //To prevent the MMI from remaining
-	else
-		playsound(sacrificial, 'sound/magic/Disintegrate.ogg', 100, 1)
-		sacrificial.gib()
-	return 1
+	if(sacrificial)
+		if(isrobot(sacrificial))
+			playsound(sacrificial, 'sound/magic/Disable_Tech.ogg', 100, 1)
+			sacrificial.dust() //To prevent the MMI from remaining
+		else
+			playsound(sacrificial, 'sound/magic/Disintegrate.ogg', 100, 1)
+			sacrificial.gib()
+	return TRUE
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar-Sie upon the station.
 /obj/effect/rune/narsie
@@ -889,44 +883,33 @@ var/list/wall_runes = list()
 			L << "<span class='cultlarge'>Your blood boils in your veins!</span>"
 			if(is_servant_of_ratvar(L))
 				L << "<span class='userdanger'>You feel an unholy darkness dimming the Justiciar's light!</span>"
-	animate(src, color = "#FFDF80", time = 3)
-	sleep(3)
+	animate(src, color = "#FFDF80", time = 5)
+	sleep(5)
 	if(!src)
 		return
-	for(var/mob/living/L in viewers(T))
-		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/weapon/nullrod/N = L.null_rod_check()
-			if(N)
-				continue
-			L.take_overall_damage(tick_damage*0.5, tick_damage*0.5)
-			if(is_servant_of_ratvar(L))
-				L.adjustStaminaLoss(tick_damage*0.5)
-	animate(src, color = "#FCB56D", time = 3)
-	sleep(3)
+	do_area_burn(T, 0.5)
+	animate(src, color = "#FCB56D", time = 5)
+	sleep(5)
 	if(!src)
 		return
-	for(var/mob/living/L in viewers(T))
-		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/weapon/nullrod/N = L.null_rod_check()
-			if(N)
-				continue
-			L.take_overall_damage(tick_damage, tick_damage)
-			if(is_servant_of_ratvar(L))
-				L.adjustStaminaLoss(tick_damage*0.5)
-	animate(src, color = "#FC9B54", time = 3)
-	sleep(3)
+	do_area_burn(T, 1)
+	animate(src, color = "#FC9B54", time = 5)
+	sleep(5)
 	if(!src)
 		return
-	for(var/mob/living/L in viewers(T))
-		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/weapon/nullrod/N = L.null_rod_check()
-			if(N)
-				continue
-			L.take_overall_damage(tick_damage*1.5, tick_damage*1.5)
-			if(is_servant_of_ratvar(L))
-				L.adjustStaminaLoss(tick_damage*0.5)
+	do_area_burn(T, 1.5)
 	PoolOrNew(/obj/effect/hotspot, T)
 	qdel(src)
+
+/obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
+	for(var/mob/living/L in viewers(T))
+		if(!iscultist(L) && L.blood_volume)
+			var/obj/item/weapon/nullrod/N = L.null_rod_check()
+			if(N)
+				continue
+			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
+			if(is_servant_of_ratvar(L))
+				L.adjustStaminaLoss(tick_damage*0.5)
 
 
 //Deals brute damage to all targets on the rune and heals the invoker for each target drained.
