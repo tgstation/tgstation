@@ -146,7 +146,7 @@
 			//Just build whatever it is
 			var/obj/L = new B(loc)
 	else
-		user << "<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>"
+		usr << "<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>"
 	busy = 0
 	flick("limbgrower_unfill",src)
 	icon_state = "limbgrower_idleoff"
