@@ -23,7 +23,7 @@ To draw a rune, use an arcane tome.
 	icon_state = "1"
 	unacidable = 1
 	layer = ABOVE_NORMAL_TURF_LAYER
-	color = rgb(255,0,0)
+	color = "#FF0000"
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
@@ -191,7 +191,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "transforms paper into powerful magic talismans."
 	invocation = "H'drak v'loso, mir'kanas verbot!"
 	icon_state = "3"
-	color = rgb(0, 0, 255)
+	color = "#0000FF"
 
 /obj/effect/rune/imbue/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
@@ -332,7 +332,7 @@ var/list/teleport_runes = list()
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
-	color = rgb(255, 255, 255)
+	color = "#FFFFFF"
 	req_cultists = 1
 	allow_excess_invokers = 1
 	rune_in_use = FALSE
@@ -351,7 +351,7 @@ var/list/teleport_runes = list()
 		return
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
-	color = rgb(126, 23, 23)
+	color = "#7D1717"
 	..()
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
@@ -442,7 +442,7 @@ var/list/teleport_runes = list()
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
 	req_cultists = 9
 	icon = 'icons/effects/96x96.dmi'
-	color = rgb(125,23,23)
+	color = "#7D1717"
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
@@ -491,7 +491,7 @@ var/list/teleport_runes = list()
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)
-		color = rgb(255, 0, 0)
+		color = "#FF0000"
 	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 	if(cult_mode)
 		cult_mode.eldergod = 0
@@ -517,7 +517,7 @@ var/list/teleport_runes = list()
 	cultist_desc = "requires two corpses, one on the rune and one adjacent to the rune. The one on the rune is brought to life, the other is turned to ash."
 	invocation = null //Depends on the name of the user - see below
 	icon_state = "1"
-	color = rgb(200, 0, 0)
+	color = "#C80000"
 
 /obj/effect/rune/raise_dead/invoke(var/list/invokers)
 	var/turf/T = get_turf(src)
@@ -623,7 +623,7 @@ var/list/teleport_runes = list()
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	icon_state = "5"
 	allow_excess_invokers = 1
-	color = rgb(77, 148, 255)
+	color = "#4D94FF"
 
 /obj/effect/rune/emp/invoke(var/list/invokers)
 	var/turf/E = get_turf(src)
@@ -653,7 +653,7 @@ var/list/teleport_runes = list()
 	cultist_desc = "severs the link between one's spirit and body. This effect is taxing and one's physical body will take damage while this is active."
 	invocation = "Fwe'sh mah erl nyag r'ya!"
 	icon_state = "7"
-	color = rgb(126, 23, 23)
+	color = "#7D1717"
 	rune_in_use = 0 //One at a time, please!
 	construct_invoke = 0
 	var/mob/living/affecting = null
@@ -726,7 +726,7 @@ var/list/wall_runes = list()
 	cultist_desc = "when invoked, makes a temporary invisible wall to block passage. Can be invoked again to reverse this."
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "1"
-	color = rgb(255, 0, 0)
+	color = "#C80000"
 	var/density_timer
 	var/recharging = FALSE
 
@@ -753,7 +753,6 @@ var/list/wall_runes = list()
 
 /obj/effect/rune/wall/invoke(var/list/invokers)
 	if(recharging)
-		fail_invoke()
 		return
 	var/mob/living/user = invokers[1]
 	..()
@@ -781,8 +780,9 @@ var/list/wall_runes = list()
 	if(density)
 		recharging = TRUE
 		density = FALSE
-		color = "#696969"
 		update_state()
+		color = "#696969"
+		animate(src, color = initial(color), time = 50, easing = EASE_IN)
 		addtimer(src, "recharge", 50)
 
 /obj/effect/rune/wall/proc/recharge()
@@ -797,8 +797,10 @@ var/list/wall_runes = list()
 		I.alpha = 60
 		I.color = "#701414"
 		add_overlay(I)
+		color = "#FF0000"
 	else
 		cut_overlays()
+		color = "#C80000"
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon
@@ -808,7 +810,7 @@ var/list/wall_runes = list()
 	req_cultists = 2
 	allow_excess_invokers = 1
 	icon_state = "5"
-	color = rgb(0, 255, 0)
+	color = "#00FF00"
 
 /obj/effect/rune/summon/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
@@ -853,7 +855,7 @@ var/list/wall_runes = list()
 	cultist_desc = "boils the blood of non-believers who can see the rune, rapidly dealing extreme amounts of damage. Requires 3 invokers."
 	invocation = "Dedo ol'btoh!"
 	icon_state = "4"
-	color = rgb(200, 0, 0)
+	color = "#C80000"
 	req_cultists = 3
 	construct_invoke = 0
 	var/tick_damage = 25
@@ -919,7 +921,7 @@ var/list/wall_runes = list()
 	cultist_desc = "drains the life of all targets on the rune, restoring life to the user."
 	invocation = "Yu'gular faras desdae. Umathar uf'kal thenar!"
 	icon_state = "3"
-	color = rgb(159, 28, 52)
+	color = "#9F1C34"
 
 /obj/effect/rune/leeching/can_invoke(mob/living/user)
 	if(world.time <= user.next_move)
@@ -958,7 +960,7 @@ var/list/wall_runes = list()
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
 	construct_invoke = 0
-	color = rgb(200, 0, 0)
+	color = "#C80000"
 
 /obj/effect/rune/manifest/New(loc)
 	..()
