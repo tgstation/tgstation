@@ -50,5 +50,5 @@
 	if((!clockcult_user || !occupant || occupant && !is_servant_of_ratvar(occupant)) && cell && cell.charge)
 		. += min(cell.charge, 500)
 		cell.charge = max(0, cell.charge - 500)
-		occupant << "<span class='userdanger'>Power loss detected!</span>"
+		occupant_message("<span class='userdanger'>Power loss detected!</span>")
 		spark_system.start()
