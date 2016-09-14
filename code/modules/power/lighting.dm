@@ -534,7 +534,7 @@
 	else
 		flicker()
 
-/obj/machinery/light/tesla_act(power, explosive)
+/obj/machinery/light/tesla_act(power, explosive = FALSE)
 	if(explosive)
 		explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
 	qdel(src)
