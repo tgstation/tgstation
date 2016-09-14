@@ -38436,6 +38436,7 @@
 /area/medical/sleeper)
 "bGS" = (
 /obj/machinery/limbgrower,
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGT" = (

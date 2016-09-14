@@ -34,20 +34,11 @@
 							"special"
 							)
 
-	var/mob/living/carbon/human/human
-
-
-
 /obj/machinery/limbgrower/New()
 	..()
 	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/limbgrower(null)
-	human = new /mob/living/carbon/human()
 	B.apply_default_parts(src)
-
-
-	reagents.add_reagent("synthflesh",50)
-
 	files = new /datum/research/limbgrower(src)
 
 /obj/item/weapon/circuitboard/machine/limbgrower
@@ -84,7 +75,7 @@
 /obj/machinery/limbgrower/attackby(obj/item/O, mob/user, params)
 	if (busy)
 		user << "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>"
-		return 1
+		return
 
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", O))
 		updateUsrDialog()
@@ -96,16 +87,16 @@
 	if(panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			default_deconstruction_crowbar(O)
-			return 1
+			return
 
 	if(user.a_intent == "harm") //so we can hit the machine
 		return ..()
 
 	if(stat)
-		return 1
+		return
 
 	if(O.flags & HOLOGRAM)
-		return 1
+		return
 
 /obj/machinery/limbgrower/Topic(href, href_list)
 	if(..())
@@ -137,27 +128,27 @@
 				use_power(power)
 				flick("limbgrower_fill",src)
 				icon_state = "limbgrower_idleon"
-				spawn(32*prod_coeff)
-					use_power(power)
-					reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
-					var/B = being_built.build_path
-					if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
-						build_limb(B)
-					else
-						//Just build whatever it is
-						var/obj/L = new B()
-						L.loc = loc;
-					busy = 0
-					flick("limbgrower_unfill",src)
-					icon_state = "limbgrower_idleoff"
-					src.updateUsrDialog()
+				addtimer(src, "buildItem", 32*prod_coeff)
 
 	else
 		usr << "<span class=\"alert\">The limb grower is busy. Please wait for completion of previous operation.</span>"
 
-	src.updateUsrDialog()
-
+	updateUsrDialog()
 	return
+
+/obj/machinery/limbgrower/proc/build_item()
+	reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
+	var/B = being_built.build_path
+	if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
+		build_limb(B)
+	else
+		//Just build whatever it is
+		var/obj/L = new B()
+		L.loc = loc;
+	busy = 0
+	flick("limbgrower_unfill",src)
+	icon_state = "limbgrower_idleoff"
+	updateUsrDialog()
 
 /obj/machinery/limbgrower/proc/build_limb(var/B)
 	//i need to create a body part manually using a set specias dna
@@ -260,5 +251,5 @@
 	for(var/datum/design/D in files.possible_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
 			files.AddDesign2Known(D)
-	usr << "A warning flashes onto the screen, stating that safety overrides have been deactivited"
+	usr << "A warning flashes onto the screen, stating that safety overrides have been deactivated"
 	emag = 1
