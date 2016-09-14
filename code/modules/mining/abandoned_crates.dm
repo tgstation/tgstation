@@ -11,7 +11,7 @@
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
-	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "z")
+	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
 	for(var/i = 0, i < codelen, i++)
 		var/dig = pick(digits)
@@ -164,7 +164,6 @@
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
 				user << "<span class='warning'>A red light flashes.</span>"
-				lastattempt = replacetext(input, 0, "z")
 				attempts--
 				if(attempts == 0)
 					boom(user)
