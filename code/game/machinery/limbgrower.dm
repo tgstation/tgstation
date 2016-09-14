@@ -128,7 +128,7 @@
 				use_power(power)
 				flick("limbgrower_fill",src)
 				icon_state = "limbgrower_idleon"
-				addtimer(src, "buildItem", prod_coeff)
+				addtimer(src, "build_item",32*prod_coeff)
 
 	else
 		usr << "<span class=\"alert\">The limb grower is busy. Please wait for completion of previous operation.</span>"
@@ -137,13 +137,16 @@
 	return
 
 /obj/machinery/limbgrower/proc/build_item()
-	reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
-	var/B = being_built.build_path
-	if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
-		build_limb(B)
+	if(reagents.has_reagent("synthflesh", being_built.reagents["synthflesh"]*prod_coeff))	//sanity check, if this happens we are in big trouble
+		reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
+		var/B = being_built.build_path
+		if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
+			build_limb(B)
+		else
+			//Just build whatever it is
+			var/obj/L = new B(loc)
 	else
-		//Just build whatever it is
-		var/obj/L = new B(loc)
+		user << "<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>"
 	busy = 0
 	flick("limbgrower_unfill",src)
 	icon_state = "limbgrower_idleoff"
