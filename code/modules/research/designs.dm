@@ -579,6 +579,6 @@ datum/design/diagnostic_hud_night
 	id = "alienalloy"
 	req_tech = list("abductor" = 1, "materials" = 7, "plasmatech" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 12000, MAT_PLASMA = 12000)
+	materials = list(MAT_METAL = 4000, MAT_PLASMA = 4000)
 	build_path = /obj/item/stack/sheet/mineral/abductor
 	category = list("Stock Parts")
