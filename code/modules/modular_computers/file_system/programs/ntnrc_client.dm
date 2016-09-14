@@ -28,7 +28,7 @@
 			if(!channel)
 				return 1
 			var/mob/living/user = usr
-			var/message = sanitize(input(user, "Enter message or leave blank to cancel: "))
+			var/message = reject_bad_text(input(user, "Enter message or leave blank to cancel: "))
 			if(!message || !channel)
 				return
 			channel.add_message(message, username)
@@ -51,7 +51,7 @@
 
 			if(C.password)
 				var/mob/living/user = usr
-				var/password = sanitize(input(user,"Access Denied. Enter password:"))
+				var/password = reject_bad_text(input(user,"Access Denied. Enter password:"))
 				if(C && (password == C.password))
 					C.add_client(src)
 					channel = C
@@ -66,7 +66,7 @@
 		if("PRG_newchannel")
 			. = 1
 			var/mob/living/user = usr
-			var/channel_title = sanitize(input(user,"Enter channel name or leave blank to cancel:"))
+			var/channel_title = reject_bad_text(input(user,"Enter channel name or leave blank to cancel:"))
 			if(!channel_title)
 				return
 			var/datum/ntnet_conversation/C = new/datum/ntnet_conversation()
@@ -133,7 +133,7 @@
 			if(!operator_mode || !channel)
 				return 1
 			var/mob/living/user = usr
-			var/newname = sanitize(input(user, "Enter new channel name or leave blank to cancel:"))
+			var/newname = reject_bad_text(input(user, "Enter new channel name or leave blank to cancel:"))
 			if(!newname || !channel)
 				return
 			channel.add_status_message("Channel renamed from [channel.title] to [newname] by operator.")
