@@ -55,12 +55,13 @@
 	duration = 5
 	randomdir = FALSE
 	layer = BELOW_MOB_LAYER
+	var/splatter_type = "splatter"
 
 /obj/effect/overlay/temp/dir_setting/bloodsplatter/New(loc, set_dir)
 	if(set_dir in diagonals)
-		icon_state = "splatter[pick(1, 2, 6)]"
+		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
-		icon_state = "splatter[pick(3, 4, 5)]"
+		icon_state = "[splatter_type][pick(3, 4, 5)]"
 	..()
 	var/target_pixel_x = 0
 	var/target_pixel_y = 0
@@ -90,44 +91,37 @@
 			layer = ABOVE_MOB_LAYER
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
+/obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter
+	splatter_type = "xsplatter"
 
-/obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
-	name = "healing glow"
-	icon_state = "heal"
-	duration = 15
+/obj/effect/overlay/temp/dir_setting/firing_effect
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect"
+	mouse_opacity = 0
+	density = 0
+	duration = 2
 
-/obj/effect/overlay/temp/heal/New(loc, colour)
+/obj/effect/overlay/temp/dir_setting/firing_effect/setDir(newdir)
+	switch(newdir)
+		if(NORTH)
+			layer = BELOW_MOB_LAYER
+			pixel_x = rand(-3,3)
+			pixel_y = rand(4,6)
+		if(SOUTH)
+			pixel_x = rand(-3,3)
+			pixel_y = rand(-1,1)
+		else
+			pixel_x = rand(-1,1)
+			pixel_y = rand(-1,1)
 	..()
-	pixel_x = rand(-12, 12)
-	pixel_y = rand(-9, 0)
-	if(colour)
-		color = colour
 
-/obj/effect/overlay/temp/kinetic_blast
-	name = "kinetic explosion"
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "kinetic_blast"
-	layer = ABOVE_ALL_MOB_LAYER
-	duration = 4
+/obj/effect/overlay/temp/dir_setting/firing_effect/energy
+	icon_state = "firing_effect_energy"
+	duration = 3
 
-/obj/effect/overlay/temp/explosion
-	name = "explosion"
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "explosion"
-	pixel_x = -32
-	pixel_y = -32
-	duration = 8
-
-/obj/effect/overlay/temp/explosion/fast
-	icon_state = "explosionfast"
-	duration = 4
-
-/obj/effect/overlay/temp/blob
-	name = "blob"
-	icon_state = "blob_attack"
-	alpha = 140
-	randomdir = 0
-	duration = 6
+/obj/effect/overlay/temp/dir_setting/firing_effect/magic
+	icon_state = "shieldsparkles"
+	duration = 3
 
 /obj/effect/overlay/temp/dir_setting/ninja
 	name = "ninja shadow"
@@ -392,6 +386,82 @@
 
 /obj/effect/overlay/temp/sparkle/tailsweep
 	icon_state = "tailsweep"
+
+
+/obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
+	name = "healing glow"
+	icon_state = "heal"
+	duration = 15
+
+/obj/effect/overlay/temp/heal/New(loc, colour)
+	..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)
+	if(colour)
+		color = colour
+
+/obj/effect/overlay/temp/kinetic_blast
+	name = "kinetic explosion"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "kinetic_blast"
+	layer = ABOVE_ALL_MOB_LAYER
+	duration = 4
+
+/obj/effect/overlay/temp/explosion
+	name = "explosion"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "explosion"
+	pixel_x = -32
+	pixel_y = -32
+	duration = 8
+
+/obj/effect/overlay/temp/explosion/fast
+	icon_state = "explosionfast"
+	duration = 4
+
+/obj/effect/overlay/temp/blob
+	name = "blob"
+	icon_state = "blob_attack"
+	alpha = 140
+	randomdir = 0
+	duration = 6
+
+/obj/effect/overlay/temp/impact_effect
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "impact_bullet"
+	mouse_opacity = 0
+	density = 0
+	duration = 5
+
+/obj/effect/overlay/temp/impact_effect/New(loc, atom/target, obj/item/projectile/P)
+	if(target == P.original) //the projectile hit the target originally clicked
+		pixel_x = P.p_x + target.pixel_x - 16 + rand(-4,4)
+		pixel_y = P.p_y + target.pixel_y - 16 + rand(-4,4)
+	else
+		pixel_x = target.pixel_x + rand(-4,4)
+		pixel_y = target.pixel_y + rand(-4,4)
+	..()
+
+/obj/effect/overlay/temp/impact_effect/red_laser
+	icon_state = "impact_laser"
+	duration = 4
+
+/obj/effect/overlay/temp/impact_effect/blue_laser
+	icon_state = "impact_laser_blue"
+	duration = 4
+
+/obj/effect/overlay/temp/impact_effect/green_laser
+	icon_state = "impact_laser_green"
+	duration = 4
+
+/obj/effect/overlay/temp/impact_effect/purple_laser
+	icon_state = "impact_laser_purple"
+	duration = 4
+
+/obj/effect/overlay/temp/impact_effect/ion
+	icon_state = "shieldsparkles"
+	duration = 6
+
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

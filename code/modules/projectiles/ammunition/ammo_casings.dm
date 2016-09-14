@@ -309,6 +309,7 @@
 
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
+	firing_effect_type = null
 
 
 /obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet)
@@ -345,6 +346,7 @@
  	icon_state = "s-casing-live"
  	projectile_type = /obj/item/projectile/beam
  	fire_sound = 'sound/weapons/Laser.ogg'
+ 	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/energy
 
 /obj/item/ammo_casing/caseless/laser/gatling
 	projectile_type = /obj/item/projectile/beam/weak
