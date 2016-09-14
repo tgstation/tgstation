@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Megafauna will now use ranged attacks even if they don't have direct vision on their target."
