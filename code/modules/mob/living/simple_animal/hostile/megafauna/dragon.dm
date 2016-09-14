@@ -166,6 +166,7 @@ Difficulty: Medium
 		addtimer(src, "fire_wall", 0, FALSE, d)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
+	var/list/hit_things = list(src)
 	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
 	var/turf/previousturf = get_turf(src)
@@ -175,10 +176,10 @@ Difficulty: Medium
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)
 		J.hotspot_expose(700,50,1)
-		for(var/mob/living/L in J)
-			if(L != src)
-				L.adjustFireLoss(20)
-				L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+		for(var/mob/living/L in J.contents - hit_things)
+			L.adjustFireLoss(20)
+			L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+			hit_things += L
 		previousturf = J
 		sleep(1)
 
