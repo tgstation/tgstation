@@ -13,6 +13,7 @@
 	strip_delay = 60
 	burn_state = FIRE_PROOF
 	flags_cover = HEADCOVERSEYES
+	acid_resistance = 1000
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 

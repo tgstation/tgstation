@@ -276,8 +276,9 @@
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
-/mob/living/acid_act(acidpwr, toxpwr, acid_volume)
-	take_bodypart_damage(min(10*toxpwr, acid_volume * toxpwr))
+/mob/living/acid_act(acidpwr, acid_volume)
+	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
+	return 1
 
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)

@@ -60,13 +60,18 @@
 /obj/effect/decal/cleanable/cobweb/fire_act()
 	qdel(src)
 
-/obj/effect/decal/cleanable/molten_item
+/obj/effect/decal/cleanable/molten_object
 	name = "gooey grey mass"
 	desc = "It looks like a melted... something."
 	density = 0
 	layer = OBJ_LAYER
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
+	acid_state = UNACIDABLE
+
+/obj/effect/decal/cleanable/molten_object/large
+	name = "big gooey grey mass"
+	icon_state = "big_molten"
 
 /obj/effect/decal/cleanable/cobweb2
 	name = "cobweb"

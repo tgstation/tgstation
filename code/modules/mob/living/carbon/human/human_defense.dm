@@ -432,10 +432,10 @@
 					src.Stun(5)
 	..()
 
-/mob/living/carbon/human/acid_act(acidpwr, toxpwr, acid_volume)
+/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
-	var/acidity = min(acidpwr*acid_volume/200, toxpwr)
+	var/acidity = acidpwr * min(acid_volume*0.005, 0.1)
 	var/acid_volume_left = acid_volume
 	var/acid_decay = 100/acidpwr // how much volume we lose per item we try to melt. 5 for fluoro, 10 for sulphuric
 
@@ -447,21 +447,22 @@
 		head_clothes = wear_mask
 	if(head)
 		head_clothes = head
-	if(head_clothes)
-		if(!head_clothes.unacidable)
-			head_clothes.acid_act(acidpwr, acid_volume_left)
-			acid_volume_left = max(acid_volume_left - acid_decay, 0) //We remove some of the acid volume.
-			update_inv_glasses()
-			update_inv_wear_mask()
-			update_inv_head()
+	if(!bodyzone_hit || bodyzone_hit == "head") //only if we didn't specify a zone or if that zone is the head.
+		if(head_clothes)
+			if(head_clothes.acid_state != UNACIDABLE)
+				head_clothes.acid_act(acidpwr, acid_volume_left)
+				acid_volume_left = max(acid_volume_left - acid_decay, 0) //We remove some of the acid volume.
+				update_inv_glasses()
+				update_inv_wear_mask()
+				update_inv_head()
+			else
+				src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
 		else
-			src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
-	else
-		. = get_bodypart("head")
-		if(.)
-			damaged += .
-		if(ears)
-			inventory_items_to_kill += ears
+			. = get_bodypart("head")
+			if(.)
+				damaged += .
+			if(ears)
+				inventory_items_to_kill += ears
 
 	//CHEST//
 	var/obj/item/clothing/chest_clothes = null
@@ -469,26 +470,27 @@
 		chest_clothes = w_uniform
 	if(wear_suit)
 		chest_clothes = wear_suit
-	if(chest_clothes)
-		if(!chest_clothes.unacidable)
-			chest_clothes.acid_act(acidpwr, acid_volume_left)
-			acid_volume_left = max(acid_volume_left - acid_decay, 0)
-			update_inv_w_uniform()
-			update_inv_wear_suit()
+	if(!bodyzone_hit || bodyzone_hit == "head")
+		if(chest_clothes)
+			if(chest_clothes.acid_state != UNACIDABLE)
+				chest_clothes.acid_act(acidpwr, acid_volume_left)
+				acid_volume_left = max(acid_volume_left - acid_decay, 0)
+				update_inv_w_uniform()
+				update_inv_wear_suit()
+			else
+				src << "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>"
 		else
-			src << "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>"
-	else
-		. = get_bodypart("chest")
-		if(.)
-			damaged += .
-		if(wear_id)
-			inventory_items_to_kill += wear_id
-		if(r_store)
-			inventory_items_to_kill += r_store
-		if(l_store)
-			inventory_items_to_kill += l_store
-		if(s_store)
-			inventory_items_to_kill += s_store
+			. = get_bodypart("chest")
+			if(.)
+				damaged += .
+			if(wear_id)
+				inventory_items_to_kill += wear_id
+			if(r_store)
+				inventory_items_to_kill += r_store
+			if(l_store)
+				inventory_items_to_kill += l_store
+			if(s_store)
+				inventory_items_to_kill += s_store
 
 
 	//ARMS & HANDS//
@@ -499,48 +501,51 @@
 		arm_clothes = w_uniform
 	if(wear_suit && (wear_suit.body_parts_covered & HANDS) || wear_suit && (wear_suit.body_parts_covered & ARMS))
 		arm_clothes = wear_suit
-	if(arm_clothes)
-		if(!arm_clothes.unacidable)
-			arm_clothes.acid_act(acidpwr, acid_volume_left)
-			acid_volume_left = max(acid_volume_left - acid_decay, 0)
-			update_inv_gloves()
-			update_inv_w_uniform()
-			update_inv_wear_suit()
+
+	if(!bodyzone_hit || bodyzone_hit == "l_arm" || bodyzone_hit == "r_arm")
+		if(arm_clothes)
+			if(arm_clothes.acid_state != UNACIDABLE)
+				arm_clothes.acid_act(acidpwr, acid_volume_left)
+				acid_volume_left = max(acid_volume_left - acid_decay, 0)
+				update_inv_gloves()
+				update_inv_w_uniform()
+				update_inv_wear_suit()
+			else
+				src << "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
 		else
-			src << "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
-	else
-		. = get_bodypart("r_arm")
-		if(.)
-			damaged += .
-		. = get_bodypart("l_arm")
-		if(.)
-			damaged += .
+			. = get_bodypart("r_arm")
+			if(.)
+				damaged += .
+			. = get_bodypart("l_arm")
+			if(.)
+				damaged += .
 
 
 	//LEGS & FEET//
 	var/obj/item/clothing/leg_clothes = null
 	if(shoes)
 		leg_clothes = shoes
-	if(w_uniform && (w_uniform.body_parts_covered & FEET) || w_uniform && (w_uniform.body_parts_covered & LEGS))
+	if(w_uniform && ((w_uniform.body_parts_covered & FEET) || (bodyzone_hit != "feet" && (w_uniform.body_parts_covered & LEGS))))
 		leg_clothes = w_uniform
-	if(wear_suit && (wear_suit.body_parts_covered & FEET) || wear_suit && (wear_suit.body_parts_covered & LEGS))
+	if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (bodyzone_hit != "feet" && (wear_suit.body_parts_covered & LEGS))))
 		leg_clothes = wear_suit
-	if(leg_clothes)
-		if(!leg_clothes.unacidable)
-			leg_clothes.acid_act(acidpwr, acid_volume_left)
-			acid_volume_left = max(acid_volume_left - acid_decay, 0)
-			update_inv_shoes()
-			update_inv_w_uniform()
-			update_inv_wear_suit()
+	if(!bodyzone_hit || bodyzone_hit == "l_leg" || bodyzone_hit == "r_leg")
+		if(leg_clothes)
+			if(leg_clothes.acid_state != UNACIDABLE)
+				leg_clothes.acid_act(acidpwr, acid_volume_left)
+				acid_volume_left = max(acid_volume_left - acid_decay, 0)
+				update_inv_shoes()
+				update_inv_w_uniform()
+				update_inv_wear_suit()
+			else
+				src << "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
 		else
-			src << "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
-	else
-		. = get_bodypart("r_leg")
-		if(.)
-			damaged += .
-		. = get_bodypart("l_leg")
-		if(.)
-			damaged += .
+			. = get_bodypart("r_leg")
+			if(.)
+				damaged += .
+			. = get_bodypart("l_leg")
+			if(.)
+				damaged += .
 
 
 	//DAMAGE//
@@ -560,17 +565,18 @@
 
 	//MELTING INVENTORY ITEMS//
 	//these items are all outside of armour visually, so melt regardless.
-	if(back)
-		inventory_items_to_kill += back
-	if(belt)
-		inventory_items_to_kill += belt
+	if(!bodyzone_hit)
+		if(back)
+			inventory_items_to_kill += back
+		if(belt)
+			inventory_items_to_kill += belt
 
-	inventory_items_to_kill += held_items
+		inventory_items_to_kill += held_items
 
 	for(var/obj/item/I in inventory_items_to_kill)
 		I.acid_act(acidpwr, acid_volume_left)
 		acid_volume_left = max(acid_volume_left - acid_decay, 0)
-
+	return 1
 
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20

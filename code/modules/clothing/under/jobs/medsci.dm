@@ -8,6 +8,7 @@
 	item_state = "lb_suit"
 	item_color = "director"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 10, rad = 0)
+	acid_resistance = 750
 	can_adjust = 0
 
 /obj/item/clothing/under/rank/research_director/alt
@@ -48,6 +49,7 @@
 	item_color = "chemistrywhite"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	acid_resistance = 1300
 
 /*
  * Medical

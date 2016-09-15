@@ -52,6 +52,7 @@
 	origin_tech = "magnets=2;engineering=1"
 	scan_reagents = 1 //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
+	acid_state = ACID_PROOF
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot == slot_glasses)

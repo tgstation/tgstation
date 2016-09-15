@@ -7,7 +7,7 @@
 	flags = THICKMATERIAL
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE
-	unacidable = 1
+	acid_state = ACID_PROOF
 	burn_state = FIRE_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -27,7 +27,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	strip_delay = 70
 	put_on_delay = 70
-	unacidable = 1
+	acid_state = ACID_PROOF
 	burn_state = FIRE_PROOF
 
 //Standard biosuit, orange stripe

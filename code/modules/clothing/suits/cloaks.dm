@@ -28,6 +28,7 @@
 	icon_state = "hoscloak"
 	allowed = list(/obj/item/weapon/gun/energy/gun/hos)
 	armor = list(melee = 30, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
+	acid_resistance = 1200
 
 /obj/item/clothing/suit/cloak/qm
 	name = "quartermaster's cloak"
@@ -72,7 +73,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	unacidable = 1
+	acid_state = ACID_PROOF
 
 /obj/item/clothing/head/cloakhood/drake
 	name = "drake helm"
@@ -81,7 +82,7 @@
 	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	unacidable = 1
+	acid_state = ACID_PROOF
 
 /* //wip
 /obj/item/clothing/cloak/wizard //Not actually obtainable until proper balancing can be done

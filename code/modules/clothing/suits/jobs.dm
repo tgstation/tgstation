@@ -85,6 +85,7 @@
 	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
+	acid_resistance = 900
 
 /obj/item/clothing/suit/det_suit/grey
 	name = "noir trenchcoat"

@@ -9,6 +9,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
 	togglename = "buttons"
 	pockets = /obj/item/weapon/storage/internal/pocket
+	acid_resistance = 1000
 
 /obj/item/clothing/suit/toggle/labcoat/cmo
 	name = "chief medical officer's labcoat"

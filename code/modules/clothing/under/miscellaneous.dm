@@ -143,6 +143,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
 	burn_state = FIRE_PROOF
+	acid_state = ACID_PROOF
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -539,6 +540,7 @@
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
+	acid_resistance = 4000
 
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)

@@ -21,7 +21,7 @@ To draw a rune, use an arcane tome.
 	anchored = 1
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
-	unacidable = 1
+	acid_state = UNACIDABLE
 	layer = ABOVE_NORMAL_TURF_LAYER
 	color = rgb(255,0,0)
 
@@ -780,7 +780,7 @@ var/list/teleport_runes = list()
 		I.color = "#701414"
 		overlays += I
 	else
-		overlays.Cut()
+		cut_overlays()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))

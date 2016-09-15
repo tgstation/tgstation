@@ -170,7 +170,7 @@
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/robot_debris,
 		/obj/effect/decal/cleanable/crayon,
-		/obj/effect/decal/cleanable/molten_item,
+		/obj/effect/decal/cleanable/molten_object,
 		/obj/effect/decal/cleanable/tomato_smudge,
 		/obj/effect/decal/cleanable/egg_smudge,
 		/obj/effect/decal/cleanable/pie_smudge,

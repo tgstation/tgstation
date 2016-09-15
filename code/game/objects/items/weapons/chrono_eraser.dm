@@ -152,7 +152,7 @@
 	icon_state = "chronofield"
 	density = 0
 	anchored = 1
-	unacidable = 1
+	acid_state = UNACIDABLE
 	blend_mode = BLEND_MULTIPLY
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null

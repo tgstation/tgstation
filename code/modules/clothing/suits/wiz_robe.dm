@@ -7,7 +7,7 @@
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
 	strip_delay = 50
 	put_on_delay = 50
-	unacidable = 1
+	acid_state = ACID_PROOF
 	burn_state = FIRE_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
@@ -36,6 +36,7 @@
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	acid_state = ACIDABLE
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
 /obj/item/clothing/head/wizard/marisa
@@ -71,7 +72,7 @@
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
 	put_on_delay = 50
-	unacidable = 1
+	acid_state = ACID_PROOF
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/suit/wizrobe/red
@@ -125,7 +126,7 @@
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	unacidable = 0
+	acid_state = ACIDABLE
 	burn_state = FLAMMABLE
 
 /obj/item/clothing/head/wizard/marisa/fake
@@ -135,7 +136,7 @@
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	unacidable = 0
+	acid_state = ACIDABLE
 	burn_state = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
@@ -146,7 +147,7 @@
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	unacidable = 0
+	acid_state = ACIDABLE
 	burn_state = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/paper
@@ -200,6 +201,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
 	slowdown = 0
+	acid_state = ACID_PROOF
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
@@ -210,6 +212,7 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
 	actions_types = null //No inbuilt light
+	acid_state = ACID_PROOF
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
 	return

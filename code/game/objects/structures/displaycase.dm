@@ -5,7 +5,7 @@
 	desc = "A display case for prized possessions."
 	density = 1
 	anchored = 1
-	unacidable = 1//Dissolving the case would also delete the gun.
+	acid_state = ACID_PROOF//Dissolving the case would also delete the gun.
 	var/health = 30
 	var/destroyed = 0
 	var/obj/item/showpiece = null

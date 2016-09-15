@@ -5,6 +5,7 @@
 	volume = 50
 	flags = OPENCONTAINER
 	spillable = 1
+	acid_state = ACID_PROOF
 
 
 /obj/item/weapon/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
@@ -227,6 +228,7 @@
 	flags = OPENCONTAINER
 	flags_inv = HIDEHAIR
 	slot_flags = SLOT_HEAD
+	acid_state = ACIDABLE
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
 		slot_back, slot_wear_id,\

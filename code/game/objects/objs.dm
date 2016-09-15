@@ -2,7 +2,6 @@
 	languages_spoken = HUMAN
 	languages_understood = HUMAN
 	var/crit_fail = 0
-	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
 	var/throwforce = 0
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
@@ -13,6 +12,12 @@
 	var/burn_state = FIRE_PROOF // LAVA_PROOF | FIRE_PROOF | FLAMMABLE | ON_FIRE
 	var/burntime = 10 //How long it takes to burn to ashes, in seconds
 	var/burn_world_time //What world time the object will burn up completely
+
+	var/acid_state = ACIDABLE //UNACIDABLE|ACID_PROOOF|ACIDABLE
+	var/acid_resistance = 3000 //the obj's 'health' when attacked by acid
+	var/acid_level = 0 //how much acid is on that obj
+	var/unacidable = 0//phil235 TO BE REMOVED, ONLY HERE TO NOT HAVE ERROR ON MAP.
+
 	var/being_shocked = 0
 
 	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
@@ -20,6 +25,7 @@
 
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/is_frozen = FALSE
+
 /obj/New()
 	..()
 
@@ -188,6 +194,45 @@
 	var/turf/T = get_turf(src)
 	return T.storage_contents_dump_act(src_object, user)
 
+
+var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "icon_state" = "acid")
+
+/obj/acid_act(acidpwr, acid_volume)
+	if(acid_state != UNACIDABLE && acid_volume)
+		if(!acid_level)
+			SSobj.aciding += src
+			add_overlay(acid_overlay, 1)
+		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
+		if(acid_level < acid_cap)
+			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
+		return 1
+
+/obj/proc/acid_processing_effect()
+	. = 1
+	if(acid_state != ACID_PROOF)
+		if(prob(33))
+			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		acid_resistance -= min(5 + 2* round(sqrt(acid_level)), 300)
+	if(acid_resistance <= 0)
+		acid_melt()
+	else
+		acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
+		if(!acid_level)
+			return 0
+
+/obj/proc/acid_melt()
+	empty_object_contents(0, src.loc)
+	var/obj/effect/decal/cleanable/molten_object/I
+	if(density)
+		I = new /obj/effect/decal/cleanable/molten_object/large(loc)
+	else
+		I = new (loc)
+	I.pixel_x = rand(-16,16)
+	I.pixel_y = rand(-16,16)
+	I.desc = "Looks like this was \an [src] some time ago."
+	SSobj.aciding -= src
+	qdel(src)
+
 /obj/fire_act(global_overlay=1)
 	if(!burn_state)
 		burn_state = ON_FIRE
@@ -230,3 +275,10 @@
 
 /obj/proc/check_uplink_validity()
 	return 1
+
+/obj/examine(mob/user)
+	..()
+	if(acid_resistance < initial(acid_resistance) * 0.5)
+		user << "It looks really melted!"
+	else if(acid_resistance < initial(acid_resistance))
+		user << "It looks slightly melted..."

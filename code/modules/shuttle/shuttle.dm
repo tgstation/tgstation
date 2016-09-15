@@ -8,7 +8,7 @@
 	//icon = 'icons/dirsquare.dmi'
 	icon_state = "pinonfar"
 
-	unacidable = 1
+	acid_state = UNACIDABLE
 	anchored = 1
 
 	var/id

@@ -4,7 +4,7 @@
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "bhole3"
-	unacidable = 1
+	acid_state = UNACIDABLE
 	density = 0
 	anchored = 1
 	luminosity = 3

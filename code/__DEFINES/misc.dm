@@ -346,6 +346,11 @@ var/list/bloody_footprints_cache = list()
 #define FLAMMABLE 0
 #define ON_FIRE 1
 
+//Acid stuff, for acid_state
+#define UNACIDABLE -1
+#define ACID_PROOF 0
+#define ACIDABLE 1
+
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"

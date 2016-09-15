@@ -10,6 +10,7 @@
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	burn_state = FIRE_PROOF
+	acid_resistance = 1000
 
 	dog_fashion = /datum/dog_fashion/head
 

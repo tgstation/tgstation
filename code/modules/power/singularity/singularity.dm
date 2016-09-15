@@ -9,7 +9,7 @@
 	density = 1
 	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
-	unacidable = 1 //Don't comment this out.
+	acid_state = UNACIDABLE //Don't comment this out.
 	appearance_flags = 0
 	var/current_size = 1
 	var/allowed_size = 1

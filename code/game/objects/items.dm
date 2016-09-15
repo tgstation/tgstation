@@ -3,6 +3,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
+	acid_resistance = 500
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -221,20 +222,29 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return
 
 	if(burn_state == ON_FIRE)
-		var/mob/living/carbon/human/H = user
-		if(istype(H))
-			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
+		var/mob/living/carbon/C = user
+		if(istype(C))
+			if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 				extinguish()
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
-					H.update_damage_overlays()
-
+					C.update_damage_overlays()
 				return
 		else
 			extinguish()
+
+	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
+		var/mob/living/carbon/C = user
+		if(istype(C))
+			if(!C.gloves || (C.gloves.acid_state != UNACIDABLE && C.gloves.acid_state != ACID_PROOF))
+				user << "<span class='warning'>The acid on [src] burns your hand!</span>"
+				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
+					C.update_damage_overlays()
+
 
 	if(istype(loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
@@ -500,35 +510,11 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		throw_at_fast(S,14,3, spin=0)
 	else ..()
 
-/obj/item/acid_act(acidpwr, acid_volume)
-	. = 1
-	if(unacidable)
-		return
-
-	var/meltingpwr = acid_volume*acidpwr
-	var/melting_threshold = 100
-	if(meltingpwr <= melting_threshold) // so a single unit can't melt items. You need 5.1+ unit for fluoro and 10.1+ for sulphuric
-		return
-	for(var/V in armor)
-		if(armor[V] > 0)
-			.-- //it survives the acid...
-			break
-	if(. && prob(min(meltingpwr/10,90))) //chance to melt depends on acid power and volume.
-		var/turf/T = get_turf(src)
-		if(T)
-			var/obj/effect/decal/cleanable/molten_item/I = new (T)
-			I.pixel_x = rand(-16,16)
-			I.pixel_y = rand(-16,16)
-			I.desc = "Looks like this was \an [src] some time ago."
-		if(istype(src,/obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = src
-			S.do_quick_empty() //melted storage item drops its content.
-		qdel(src)
-	else
-		for(var/armour_value in armor) //but is weakened
-			armor[armour_value] = max(armor[armour_value]-min(acidpwr,meltingpwr/10),0)
-		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
-			desc += " it looks slightly melted..." //needs a space at the start, formatting
+/obj/item/acid_processing_effect()
+	if(acid_state != ACID_PROOF)
+		for(var/armour_value in armor)
+			armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
+	. = ..()
 
 /obj/item/throw_impact(atom/A)
 	var/itempush = 1

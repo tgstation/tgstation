@@ -122,6 +122,7 @@
 	item_color = "sec"
 	armor = list(melee = 30, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
+	acid_resistance = 1000
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/emt

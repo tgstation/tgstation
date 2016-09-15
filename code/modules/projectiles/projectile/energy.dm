@@ -68,7 +68,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dragnetfield"
 	anchored = 1
-	unacidable = 1
+	acid_state = UNACIDABLE
 
 /obj/effect/nettingportal/New()
 	..()

@@ -25,7 +25,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	anchored = 1
 	density = 1
 	use_power = 0
-	unacidable = 1
+	acid_state = ACID_PROOF
 	var/sprite_number = 0
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
