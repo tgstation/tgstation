@@ -45,7 +45,7 @@
 	if(BB.firer)
 		firing_dir = BB.firer.dir
 	if(!BB.suppressed && firing_effect_type)
-		new firing_effect_type(get_turf(src), firing_dir)
+		PoolOrNew(firing_effect_type, list(get_turf(src), firing_dir))
 
 	if(targloc == curloc)
 		if(target) //if the target is right on our location we go straight to bullet_act()

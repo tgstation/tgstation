@@ -97,8 +97,6 @@
 /obj/effect/overlay/temp/dir_setting/firing_effect
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "firing_effect"
-	mouse_opacity = 0
-	density = 0
 	duration = 2
 
 /obj/effect/overlay/temp/dir_setting/firing_effect/setDir(newdir)
@@ -429,8 +427,6 @@
 /obj/effect/overlay/temp/impact_effect
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "impact_bullet"
-	mouse_opacity = 0
-	density = 0
 	duration = 5
 
 /obj/effect/overlay/temp/impact_effect/New(loc, atom/target, obj/item/projectile/P)
