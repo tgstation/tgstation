@@ -16,7 +16,7 @@
 	var/icon_state_on = ''
 	var/item_state_on = ''
 	icon = 'icons/obj/clothing/flightsuit.dmi'
-	w_class = 4
+	w_class = 4a
 	slot_flags = SLOT_BACK
 	burn_state = FIRE_PROOF
 	var/deployed = 0
