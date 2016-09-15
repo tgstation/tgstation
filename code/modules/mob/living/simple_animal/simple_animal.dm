@@ -104,10 +104,14 @@
 /mob/living/simple_animal/Life()
 	if(..()) //alive
 		if(!ckey)
-			handle_automated_movement()
-			handle_automated_action()
-			handle_automated_speech()
-		return 1
+			if(stat != DEAD)
+				handle_automated_movement()
+			if(stat != DEAD)
+				handle_automated_action()
+			if(stat != DEAD)
+				handle_automated_speech()
+		if(stat != DEAD)
+			return 1
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -302,6 +306,7 @@
 		ghostize()
 		stat = DEAD
 		qdel(src)
+		return
 	else
 		health = 0
 		icon_state = icon_dead

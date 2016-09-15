@@ -54,6 +54,10 @@
 	environment_target_typecache = typecacheof(environment_target_typecache)
 
 
+/mob/living/simple_animal/hostile/Destroy()
+	targets_from = null
+	return ..()
+
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
 	if(!.) //dead
@@ -226,7 +230,7 @@
 		else
 			Goto(target,move_to_delay,minimum_distance)
 		if(target)
-			if(isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
+			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				AttackingTarget()
 			return 1
 		return 0
