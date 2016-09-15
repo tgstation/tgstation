@@ -135,7 +135,7 @@
 		if("ninja") // 33 tc worth
 			new /obj/item/weapon/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/weapon/implanter/adrenalin(src) // 8 tc
-			new /obj/item/weapon/throwing_star(src) // 5 tc for all 5
+			new /obj/item/weapon/throwing_star(src) // ~5 tc for all 6
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/throwing_star(src)
