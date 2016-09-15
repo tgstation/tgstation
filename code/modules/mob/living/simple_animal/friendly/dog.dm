@@ -13,6 +13,15 @@
 	speak_chance = 1
 	turns_per_move = 10
 
+/mob/living/simple_animal/pet/dog/say(message)
+	. = ..()
+	if(.)
+		if(prob(2))
+			playsound(loc, "sound/voice/speech/arf.ogg", 50, 1, 1)
+		else
+			playsound(loc, "sound/voice/speech/bark.ogg", 50, 1, 1)
+
+
 //Corgis and pugs are now under one dog subtype
 
 /mob/living/simple_animal/pet/dog/corgi
