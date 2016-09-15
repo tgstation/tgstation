@@ -23841,14 +23841,6 @@
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai_upload)
 "bcf" = (
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/power/terminal{
 	icon_state = "term";
 	dir = 1
@@ -57979,11 +57971,6 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
 "cvN" = (
@@ -57992,9 +57979,6 @@
 	d2 = 4;
 	icon_state = "1-4";
 	tag = "90Curve"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
