@@ -131,12 +131,12 @@
 /obj/machinery/limbgrower/proc/build_item()
 	if(reagents.has_reagent("synthflesh", being_built.reagents["synthflesh"]*prod_coeff))	//sanity check, if this happens we are in big trouble
 		reagents.remove_reagent("synthflesh",being_built.reagents["synthflesh"]*prod_coeff)
-		var/B = being_built.build_path
-		if(ispath(B, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
-			build_limb(B)
+		var/buildpath = being_built.build_path
+		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spatgheti code, but i need to initilise a limb somehow
+			build_limb(buildpath)
 		else
 			//Just build whatever it is
-			new B(loc)
+			new buildpath(loc)
 	else
 		usr << "<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>"
 	busy = 0
@@ -144,28 +144,16 @@
 	icon_state = "limbgrower_idleoff"
 	updateUsrDialog()
 
-/obj/machinery/limbgrower/proc/build_limb(var/B)
+/obj/machinery/limbgrower/proc/build_limb(buildpath)
 	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
-	var/obj/item/bodypart/L
-	var/selected_part
-	L = new B(loc)
-	if(selected_category=="human" || selected_category=="lizard")
-		L.icon = 'icons/mob/human_parts_greyscale.dmi'
-	// gotta check which part of the body it is, so that i can get the correct icon
-	if(ispath(B,/obj/item/bodypart/r_arm))
-		L.icon_state = "[selected_category]_r_arm_s"
-		selected_part = "right arm"
-	else if(ispath(B,/obj/item/bodypart/l_arm))
-		selected_part = "left arm"
-		L.icon_state = "[selected_category]_l_arm_s"
-	else if(ispath(B,/obj/item/bodypart/r_leg))
-		selected_part = "right leg"
-		L.icon_state = "[selected_category]_r_leg_s"
-	else if(ispath(B,/obj/item/bodypart/l_leg))
-		selected_part = "left leg"
-		L.icon_state = "[selected_category]_l_leg_s"
-	L.name = "Synthetic [selected_category] Limb"
-	L.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [selected_part]"
+	var/obj/item/bodypart/limb
+	limb = new buildpath(loc)
+	if(selected_category=="human" || selected_category=="lizard") // Doing this because plasmamen have their limbs in a different icon file
+		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
+	else
+		limb.icon = 'icons/mob/human_parts.dmi'
+	// Set this limb up using the specias name and body zone
+	limb.icon_state = "[selected_category]_[limb.body_zone]_s"
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
