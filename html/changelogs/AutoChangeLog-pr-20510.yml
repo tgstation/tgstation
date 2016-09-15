@@ -1,0 +1,4 @@
+author: "Papa Bones"
+delete-after: True
+changes: 
+  - tweak: "BZ gas is no longer available on Box and Metastation layouts."
