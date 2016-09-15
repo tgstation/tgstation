@@ -196,7 +196,7 @@
 	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
 
 	if(nuke_off_station == 3)
-		feedback_set_details("round_end_result","loss - syndicated nuked - disk secured")
+		feedback_set_details("round_end_result","loss - syndicate nuked - disk secured")
 		world << "<FONT size = 3><B>Humiliating Syndicate Defeat</B></FONT>"
 		world << "<B>The crew of [station_name()] gave [syndicate_name()] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"
 
