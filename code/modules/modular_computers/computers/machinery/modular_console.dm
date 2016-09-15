@@ -22,14 +22,18 @@
 /obj/machinery/modular_computer/console/buildable/New()
 	..()
 	// User-built consoles start as empty frames.
-	qdel(cpu.recharger)
-	qdel(cpu.network_card)
-	qdel(cpu.hard_drive)
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/network_card = cpu.all_components["NET"]
+	var/obj/item/weapon/computer_hardware/hard_drive/recharger = cpu.all_components["CHARGER"]
+	qdel(recharger)
+	qdel(network_card)
+	qdel(hard_drive)
 
 /obj/machinery/modular_computer/console/New()
 	..()
-	if(cpu.battery_module)
-		qdel(cpu.battery_module)
+	var/obj/item/weapon/computer_hardware/battery/battery_module = cpu.all_components["CELL"]
+	if(battery_module)
+		qdel(battery_module)
 
 	cpu.install_component(new /obj/item/weapon/computer_hardware/network_card/wired)
 	cpu.install_component(new /obj/item/weapon/computer_hardware/recharger/APC)

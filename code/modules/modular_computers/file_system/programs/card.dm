@@ -167,7 +167,7 @@
 					if("id")
 						if(id_card)
 							data_core.manifest_modify(id_card.registered_name, id_card.assignment)
-							computer.proc_eject_id(user, 1)
+							computer.card_slot.try_eject(, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))
@@ -183,7 +183,7 @@
 							region_access = null
 							authenticated = 0
 							minor = 0
-							computer.proc_eject_id(user, 2)
+							computer.card_slot.try_eject(, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))

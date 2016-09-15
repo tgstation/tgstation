@@ -14,8 +14,8 @@
 	if(..())
 		return 1
 
-	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.hard_drive
-	var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.portable_drive
+	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.all_components["HDD"]
 
 	switch(action)
 		if("PRG_openfile")
@@ -185,17 +185,16 @@
 /datum/computer_file/program/filemanager/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	var/obj/item/weapon/computer_hardware/hard_drive/HDD
-	var/obj/item/weapon/computer_hardware/hard_drive/portable/RHDD
+	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/portable/RHDD = computer.all_components["SDD"]
 	if(error)
 		data["error"] = error
 	if(open_file)
 		var/datum/computer_file/data/file
 
-		if(!computer || !computer.hard_drive)
+		if(!computer || !HDD)
 			data["error"] = "I/O ERROR: Unable to access hard drive."
 		else
-			HDD = computer.hard_drive
 			file = HDD.find_file_by_name(open_file)
 			if(!istype(file))
 				data["error"] = "I/O ERROR: Unable to open file."
@@ -203,11 +202,9 @@
 				data["filedata"] = parse_tags(file.stored_data)
 				data["filename"] = "[file.filename].[file.filetype]"
 	else
-		if(!computer || !computer.hard_drive)
+		if(!computer || !HDD)
 			data["error"] = "I/O ERROR: Unable to access hard drive."
 		else
-			HDD = computer.hard_drive
-			RHDD = computer.portable_drive
 			var/list/files[0]
 			for(var/datum/computer_file/F in HDD.stored_files)
 				files.Add(list(list(

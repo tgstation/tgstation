@@ -7,6 +7,8 @@
 		if(recharger.use_power(amount))
 			return TRUE
 
+	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components["CELL"]
+
 	if(battery_module && battery_module.battery && battery_module.battery.charge)
 		var/obj/item/weapon/stock_parts/cell/cell = battery_module.battery
 		if(cell.use(amount * CELLRATE))
@@ -17,6 +19,7 @@
 	return FALSE
 
 /obj/item/device/modular_computer/proc/give_power(amount)
+	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components["CELL"]
 	if(battery_module && battery_module.battery)
 		return battery_module.battery.give(amount)
 	return 0

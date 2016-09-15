@@ -36,10 +36,6 @@
 	var/max_damage = 100		// Damage level at which the computer breaks apart.
 
 	// Important hardware (must be installed for computer to work)
-	var/obj/item/weapon/computer_hardware/processor_unit/processor_unit				// CPU. Without it the computer won't run. Better CPUs can run more programs at once.
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive						// Hard Drive component of this computer. Stores programs and files.
-
-	var/obj/item/weapon/computer_hardware/battery/battery_module					// Power cell connector. Power cell can be recharged.
 																					// OR
 	var/obj/item/weapon/computer_hardware/recharger/recharger 						// Recharger. Can be used to recharge power cell or power the PC without it.
 
@@ -49,9 +45,9 @@
 	var/obj/item/weapon/computer_hardware/printer/printer							// Printer component of this computer, for your everyday paperwork needs.
 	var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive		// Portable data storage
 
-	var/list/all_components = list()
+	var/list/all_components							// List of "connection ports" in this computer and the components with which they are plugged
 
-	var/list/idle_threads = list()							// Idle programs on background. They still receive process calls but can't be interacted with.
+	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
 
 
@@ -62,6 +58,9 @@
 	if(!physical)
 		physical = src
 	..()
+
+	all_components = list("CPU" = 0, "HDD" = 0, "CELL" = 0, "CHARGER" = 0, "NET" = 0, "CARD" = 0, "PRINT" = 0, "DISK" = 0)
+	idle_threads = list()
 
 /obj/item/device/modular_computer/Destroy()
 	kill_program(forced = TRUE)
@@ -74,7 +73,7 @@
 	return ..()
 
 // Eject ID card from computer, if it has ID slot with card inside.
-/obj/item/device/modular_computer/verb/eject_id()
+/obj/item/device/modular_computer/proc/eject_id()
 	set name = "Eject ID"
 	set category = "Object"
 	set src in view(1)
@@ -82,11 +81,11 @@
 	if(issilicon(usr))
 		return
 
-	if (usr.canUseTopic(src))
-		proc_eject_id(usr)
+	if(usr.canUseTopic(src))
+		card_slot.try_eject(, usr)
 
 // Eject ID card from computer, if it has ID slot with card inside.
-/obj/item/device/modular_computer/verb/eject_disk()
+/obj/item/device/modular_computer/proc/eject_disk()
 	set name = "Eject Data Disk"
 	set category = "Object"
 	set src in view(1)
@@ -94,30 +93,10 @@
 	if(issilicon(usr))
 		return
 
-	if (usr.canUseTopic(src))
-		proc_eject_disk(usr)
-
-/obj/item/device/modular_computer/proc/proc_eject_id(mob/user, slot)
-	if(!user)
-		user = usr
-
-	if(!card_slot)
-		user << "<span class='warning'>\The [src] does not have an ID card slot!</span>"
-		return
-
-	card_slot.try_eject(slot, user)
-
-/obj/item/device/modular_computer/proc/proc_eject_disk(mob/user)
-	if(!user)
-		user = usr
-
-	if(!portable_drive)
-		user << "<span class='warning'>There is no data disk in \the [src]!</span>"
-		return
-
-	var/obj/item/I = portable_drive
-	if(uninstall_component(portable_drive, user))
-		I.verb_pickup()
+	if(usr.canUseTopic(src))
+		var/obj/item/I = portable_drive
+		if(uninstall_component(portable_drive, usr))
+			I.verb_pickup()
 
 /obj/item/device/modular_computer/AltClick(mob/user)
 	..()
@@ -126,9 +105,11 @@
 
 	if(user.canUseTopic(src))
 		if(portable_drive)
-			proc_eject_disk(user)
+			var/obj/item/I = portable_drive
+			if(uninstall_component(portable_drive, user))
+				I.verb_pickup()
 		else if(card_slot)
-			proc_eject_id(user)
+			card_slot.try_eject(, user)
 
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
@@ -211,7 +192,7 @@
 	if(recharger)
 		recharger.enabled = 1
 
-	if(processor_unit && use_power()) // use_power() checks if the PC is powered
+	if(all_components["CPU"] && use_power()) // use_power() checks if the PC is powered
 		if(issynth)
 			user << "<span class='notice'>You send an activation signal to \the [src], turning it on.</span>"
 		else
@@ -264,6 +245,8 @@
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/device/modular_computer/proc/get_header_data()
 	var/list/data = list()
+
+	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components["CELL"]
 
 	if(battery_module && battery_module.battery)
 		switch(battery_module.battery.percent())

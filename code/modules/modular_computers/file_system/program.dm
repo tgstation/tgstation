@@ -162,7 +162,7 @@
 				return 1
 			if("PC_minimize")
 				var/mob/user = usr
-				if(!computer.active_program || !computer.processor_unit)
+				if(!computer.active_program || !computer.all_components["CPU"])
 					return
 
 				computer.idle_threads.Add(computer.active_program)
