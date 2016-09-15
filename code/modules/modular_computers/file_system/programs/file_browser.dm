@@ -16,6 +16,7 @@
 
 	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components["HDD"]
 	var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/printer/printer = computer.all_components["PRINT"]
 
 	switch(action)
 		if("PRG_openfile")
@@ -106,10 +107,10 @@
 			var/datum/computer_file/data/F = HDD.find_file_by_name(open_file)
 			if(!F || !istype(F))
 				return 1
-			if(!computer.printer)
+			if(!printer)
 				error = "Missing Hardware: Your computer does not have required hardware to complete this operation."
 				return 1
-			if(!computer.printer.print_text(parse_tags(F.stored_data)))
+			if(!printer.print_text(parse_tags(F.stored_data)))
 				error = "Hardware error: Printer was unable to print the file. It may be out of paper."
 				return 1
 		if("PRG_copytousb")

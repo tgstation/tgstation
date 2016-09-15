@@ -3,6 +3,8 @@
 	if(check_power_override())
 		return TRUE
 
+	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components["CHARGE"]
+
 	if(recharger && recharger.check_functionality())
 		if(recharger.use_power(amount))
 			return TRUE
@@ -37,6 +39,7 @@
 
 // Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
 /obj/item/device/modular_computer/proc/handle_power()
+	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components["CHARGE"]
 	if(recharger)
 		recharger.process()
 

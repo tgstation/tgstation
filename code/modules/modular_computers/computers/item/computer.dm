@@ -36,14 +36,8 @@
 	var/max_damage = 100		// Damage level at which the computer breaks apart.
 
 	// Important hardware (must be installed for computer to work)
-																					// OR
-	var/obj/item/weapon/computer_hardware/recharger/recharger 						// Recharger. Can be used to recharge power cell or power the PC without it.
 
 	// Optional hardware (improves functionality, but is not critical for computer to work)
-	var/obj/item/weapon/computer_hardware/network_card/network_card					// Network Card component of this computer. Allows connection to NTNet.
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot						// ID Card slot component of this computer.
-	var/obj/item/weapon/computer_hardware/printer/printer							// Printer component of this computer, for your everyday paperwork needs.
-	var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive		// Portable data storage
 
 	var/list/all_components							// List of "connection ports" in this computer and the components with which they are plugged
 
@@ -59,14 +53,14 @@
 		physical = src
 	..()
 
-	all_components = list("CPU" = 0, "HDD" = 0, "CELL" = 0, "CHARGER" = 0, "NET" = 0, "CARD" = 0, "PRINT" = 0, "DISK" = 0)
+	all_components = list()
 	idle_threads = list()
 
 /obj/item/device/modular_computer/Destroy()
 	kill_program(forced = TRUE)
 	STOP_PROCESSING(SSobj, src)
 	for(var/H in all_components)
-		var/obj/item/weapon/computer_hardware/CH = H
+		var/obj/item/weapon/computer_hardware/CH = all_components[H]
 		if(CH.holder == src)
 			CH.holder = null
 			qdel(CH)
@@ -80,7 +74,7 @@
 
 	if(issilicon(usr))
 		return
-
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components["CARD"]
 	if(usr.canUseTopic(src))
 		card_slot.try_eject(, usr)
 
@@ -94,9 +88,9 @@
 		return
 
 	if(usr.canUseTopic(src))
-		var/obj/item/I = portable_drive
+		var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive = all_components["SDD"]
 		if(uninstall_component(portable_drive, usr))
-			I.verb_pickup()
+			portable_drive.verb_pickup()
 
 /obj/item/device/modular_computer/AltClick(mob/user)
 	..()
@@ -104,21 +98,24 @@
 		return
 
 	if(user.canUseTopic(src))
+		var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components["CARD"]
+		var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive = all_components["SDD"]
 		if(portable_drive)
-			var/obj/item/I = portable_drive
 			if(uninstall_component(portable_drive, user))
-				I.verb_pickup()
+				portable_drive.verb_pickup()
 		else if(card_slot)
 			card_slot.try_eject(, user)
 
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/device/modular_computer/GetAccess()
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components["CARD"]
 	if(card_slot)
 		return card_slot.GetAccess()
 	return ..()
 
 /obj/item/device/modular_computer/GetID()
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components["CARD"]
 	if(card_slot)
 		return card_slot.GetID()
 	return ..()
@@ -189,6 +186,7 @@
 		return
 
 	// If we have a recharger, enable it automatically. Lets computer without a battery work.
+	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components["CHARGE"]
 	if(recharger)
 		recharger.enabled = 1
 
@@ -247,6 +245,7 @@
 	var/list/data = list()
 
 	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components["CELL"]
+	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components["CHARGE"]
 
 	if(battery_module && battery_module.battery)
 		switch(battery_module.battery.percent())
@@ -311,6 +310,7 @@
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/device/modular_computer/proc/get_ntnet_status(specific_action = 0)
+	var/obj/item/weapon/computer_hardware/network_card/network_card = all_components["NET"]
 	if(network_card)
 		return network_card.get_signal(specific_action)
 	else
@@ -319,6 +319,7 @@
 /obj/item/device/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
 		return FALSE
+	var/obj/item/weapon/computer_hardware/network_card/network_card = all_components["NET"]
 	return ntnet_global.add_log(text, network_card)
 
 /obj/item/device/modular_computer/proc/shutdown_computer(loud = 1)
@@ -335,7 +336,7 @@
 /obj/item/device/modular_computer/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	// Insert items into the components
 	for(var/h in all_components)
-		var/obj/item/weapon/computer_hardware/H = h
+		var/obj/item/weapon/computer_hardware/H = all_components[h]
 		if(H.try_insert(W, user))
 			return
 

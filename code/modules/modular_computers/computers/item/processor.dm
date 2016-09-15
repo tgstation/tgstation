@@ -23,6 +23,8 @@
 		CRASH("Inapropriate type passed to obj/item/device/modular_computer/processor/New()! Aborting.")
 		return
 	// Obtain reference to machinery computer
+	all_components = list()
+	idle_threads = list()
 	machinery_computer = comp
 	machinery_computer.cpu = src
 	hardware_flag = machinery_computer.hardware_flag

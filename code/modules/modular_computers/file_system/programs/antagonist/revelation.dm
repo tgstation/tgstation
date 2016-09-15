@@ -21,6 +21,7 @@
 		computer.update_icon()
 		var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components["HDD"]
 		var/obj/item/weapon/computer_hardware/battery/battery_module = computer.all_components["CELL"]
+		var/obj/item/weapon/computer_hardware/recharger/recharger = computer.all_components["CHARGE"]
 		qdel(hard_drive)
 		computer.take_damage(25, 10, 1, 1)
 		if(battery_module && prob(25))
@@ -29,8 +30,8 @@
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()
 
-		if(computer.recharger && prob(50))
-			qdel(computer.recharger)
+		if(recharger && prob(50))
+			qdel(recharger)
 			computer.visible_message("<span class='notice'>\The [computer]'s recharger explodes in rain of sparks.</span>")
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()

@@ -34,7 +34,7 @@
 	if(H.holder != src) // Not our component at all.
 		return FALSE
 
-	all_components[H.device_type] = null
+	all_components.Remove(H.device_type)
 
 	user << "<span class='notice'>You remove \the [H] from \the [src].</span>"
 

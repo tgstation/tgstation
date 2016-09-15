@@ -87,6 +87,11 @@
 		return 1
 
 	if(ishuman(user))
+		var/obj/item/weapon/card/id/D
+		var/obj/item/weapon/computer_hardware/card_slot/card_slot
+		if(computer && card_slot)
+			card_slot = computer.all_components["CARD"]
+			D = card_slot.GetID()
 		var/mob/living/carbon/human/h = user
 		var/obj/item/weapon/card/id/I = h.get_idcard()
 		var/obj/item/weapon/card/id/C = h.get_active_held_item()
@@ -95,7 +100,7 @@
 		if(!(C && istype(C)))
 			C = null
 
-		if(!I && !C)
+		if(!I && !C && !D)
 			if(loud)
 				user << "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>"
 			return 0
@@ -105,6 +110,9 @@
 				return 1
 		else if(C)
 			if(access_to_check in C.GetAccess())
+				return 1
+		else if(D)
+			if(access_to_check in D.GetAccess())
 				return 1
 		if(loud)
 			user << "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>"

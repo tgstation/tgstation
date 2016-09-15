@@ -2,7 +2,7 @@
 	critical = 1
 	enabled = 1
 	var/charge_rate = 100
-	device_type = "CHARGER"
+	device_type = "CHARGE"
 
 /obj/item/weapon/computer_hardware/recharger/proc/use_power(amount, charging=0)
 	if(charging)

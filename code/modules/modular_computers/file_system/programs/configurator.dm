@@ -53,7 +53,7 @@
 
 	var/list/all_entries[0]
 	for(var/I in movable.all_components)
-		var/obj/item/weapon/computer_hardware/H = I
+		var/obj/item/weapon/computer_hardware/H = movable.all_components[I]
 		all_entries.Add(list(list(
 		"name" = H.name,
 		"desc" = H.desc,
