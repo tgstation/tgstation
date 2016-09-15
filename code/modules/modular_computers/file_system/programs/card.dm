@@ -108,6 +108,8 @@
 	if(computer)
 		card_slot = computer.all_components["CARD"]
 		printer = computer.all_components["PRINT"]
+		if(!card_slot)
+			return
 
 	var/obj/item/weapon/card/id/user_id_card = null
 	var/mob/user = usr

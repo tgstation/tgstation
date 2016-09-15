@@ -50,7 +50,7 @@
 // Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
 /obj/item/device/modular_computer/proc/find_hardware_by_name(name)
 	for(var/i in all_components)
-		var/obj/O = i
+		var/obj/O = all_components[i]
 		if(O.name == name)
 			return O
 	return null
