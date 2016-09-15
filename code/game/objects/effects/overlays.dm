@@ -291,7 +291,7 @@
 
 /obj/effect/overlay/temp/emp/pulse
 	name = "emp pulse"
-	icon_state = "emp pulse"
+	icon_state = "emppulse"
 	duration = 8
 	randomdir = 0
 
