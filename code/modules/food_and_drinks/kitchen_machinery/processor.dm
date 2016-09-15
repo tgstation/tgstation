@@ -90,6 +90,10 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
+/datum/food_processor_process/bacon
+	input = /obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet
+	output = /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
+
 /datum/food_processor_process/sweetpotato
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/sweet
 	output = /obj/item/weapon/reagent_containers/food/snacks/yakiimo
