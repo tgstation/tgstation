@@ -54,7 +54,7 @@
 			fabricated_laptop = new /obj/item/device/modular_computer/laptop/buildable(src)
 			fabricated_laptop.install_component(new /obj/item/weapon/computer_hardware/battery)
 		total_price = 99
-		var/obj/item/weapon/computer_hardware/battery/battery_module = fabricated_laptop.all_components["CELL"]
+		var/obj/item/weapon/computer_hardware/battery/battery_module = fabricated_laptop.all_components[MC_CELL]
 		switch(dev_cpu)
 			if(1)
 				if(fabricate)
@@ -116,7 +116,7 @@
 			fabricated_tablet.install_component(new /obj/item/weapon/computer_hardware/battery)
 			fabricated_tablet.install_component(new /obj/item/weapon/computer_hardware/processor_unit/small)
 		total_price = 199
-		var/obj/item/weapon/computer_hardware/battery/battery_module = fabricated_tablet.all_components["CELL"]
+		var/obj/item/weapon/computer_hardware/battery/battery_module = fabricated_tablet.all_components[MC_CELL]
 		switch(dev_battery)
 			if(1) // Basic(300C)
 				if(fabricate)

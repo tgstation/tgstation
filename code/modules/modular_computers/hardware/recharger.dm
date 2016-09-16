@@ -11,7 +11,7 @@
 
 /obj/item/weapon/computer_hardware/recharger/process()
 	..()
-	var/obj/item/weapon/computer_hardware/battery/battery_module = holder.all_components["CELL"]
+	var/obj/item/weapon/computer_hardware/battery/battery_module = holder.all_components[MC_CELL]
 	if(!holder || !battery_module || !battery_module.battery)
 		return
 

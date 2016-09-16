@@ -24,7 +24,7 @@
 
 	// We are still here, that means there is no program loaded. Load the BIOS/ROM/OS/whatever you want to call it.
 	// This screen simply lists available programs and user may select them.
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
 		physical.visible_message("<span class='danger'>\The [src] beeps three times, it's screen displaying \"DISK ERROR\" warning.</span>")
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
@@ -42,7 +42,7 @@
 /obj/item/device/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["programs"] = list()
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
 		var/running = 0
 		if(P in idle_threads)
@@ -57,7 +57,7 @@
 /obj/item/device/modular_computer/ui_act(action, params)
 	if(..())
 		return
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	switch(action)
 		if("PC_exit")
 			kill_program()
@@ -67,7 +67,7 @@
 			return 1
 		if("PC_minimize")
 			var/mob/user = usr
-			if(!active_program || !all_components["CPU"])
+			if(!active_program || !all_components[MC_CPU])
 				return
 
 			idle_threads.Add(active_program)
@@ -115,7 +115,7 @@
 				update_icon()
 				return
 
-			var/obj/item/weapon/computer_hardware/processor_unit/PU = all_components["CPU"]
+			var/obj/item/weapon/computer_hardware/processor_unit/PU = all_components[MC_CPU]
 
 			if(idle_threads.len >= PU.max_idle_programs+1)
 				user << "<span class='danger'>\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error.</span>"

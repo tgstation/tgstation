@@ -66,7 +66,7 @@ var/global/nttransfer_uid = 0
 
 // Finishes download and attempts to store the file on HDD
 /datum/computer_file/program/nttransfer/proc/finish_download()
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 	if(!computer || !hard_drive || !hard_drive.store_file(downloaded_file))
 		error = "I/O Error:  Unable to save file. Check your hard drive and try again."
 	finalize_download()
@@ -137,7 +137,7 @@ var/global/nttransfer_uid = 0
 			server_password = pass
 			return 1
 		if("PRG_uploadfile")
-			var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components["HDD"]
+			var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 			for(var/datum/computer_file/F in hard_drive.stored_files)
 				if("[F.uid]" == params["id"])
 					if(F.unsendable)
@@ -176,7 +176,7 @@ var/global/nttransfer_uid = 0
 		data["upload_filename"] = "[provided_file.filename].[provided_file.filetype]"
 	else if (upload_menu)
 		var/list/all_files[0]
-		var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components["HDD"]
+		var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 		for(var/datum/computer_file/F in hard_drive.stored_files)
 			all_files.Add(list(list(
 			"uid" = F.uid,

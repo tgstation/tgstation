@@ -74,7 +74,7 @@
 
 	if(issilicon(usr))
 		return
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components["CARD"]
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	if(usr.canUseTopic(src))
 		card_slot.try_eject(, usr)
 
@@ -88,7 +88,7 @@
 		return
 
 	if(usr.canUseTopic(src))
-		var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive = all_components["SDD"]
+		var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 		if(uninstall_component(portable_drive, usr))
 			portable_drive.verb_pickup()
 
@@ -98,8 +98,8 @@
 		return
 
 	if(user.canUseTopic(src))
-		var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components["CARD"]
-		var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive = all_components["SDD"]
+		var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+		var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 		if(portable_drive)
 			if(uninstall_component(portable_drive, user))
 				portable_drive.verb_pickup()
@@ -109,13 +109,13 @@
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/device/modular_computer/GetAccess()
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components["CARD"]
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	if(card_slot)
 		return card_slot.GetAccess()
 	return ..()
 
 /obj/item/device/modular_computer/GetID()
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components["CARD"]
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	if(card_slot)
 		return card_slot.GetID()
 	return ..()
@@ -190,7 +190,7 @@
 	if(recharger)
 		recharger.enabled = 1
 
-	if(all_components["CPU"] && use_power()) // use_power() checks if the PC is powered
+	if(all_components[MC_CPU] && use_power()) // use_power() checks if the PC is powered
 		if(issynth)
 			user << "<span class='notice'>You send an activation signal to \the [src], turning it on.</span>"
 		else
@@ -244,7 +244,7 @@
 /obj/item/device/modular_computer/proc/get_header_data()
 	var/list/data = list()
 
-	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components["CELL"]
+	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components[MC_CELL]
 	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components["CHARGE"]
 
 	if(battery_module && battery_module.battery)
@@ -310,7 +310,7 @@
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/device/modular_computer/proc/get_ntnet_status(specific_action = 0)
-	var/obj/item/weapon/computer_hardware/network_card/network_card = all_components["NET"]
+	var/obj/item/weapon/computer_hardware/network_card/network_card = all_components[MC_NET]
 	if(network_card)
 		return network_card.get_signal(specific_action)
 	else
@@ -319,7 +319,7 @@
 /obj/item/device/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
 		return FALSE
-	var/obj/item/weapon/computer_hardware/network_card/network_card = all_components["NET"]
+	var/obj/item/weapon/computer_hardware/network_card/network_card = all_components[MC_NET]
 	return ntnet_global.add_log(text, network_card)
 
 /obj/item/device/modular_computer/proc/shutdown_computer(loud = 1)

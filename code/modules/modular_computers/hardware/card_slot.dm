@@ -5,7 +5,7 @@
 	icon_state = "card_mini"
 	w_class = 1
 	origin_tech = "programming=2"
-	device_type = "CARD"
+	device_type = MC_CARD
 
 	var/obj/item/weapon/card/id/stored_card = null
 	var/obj/item/weapon/card/id/stored_card2 = null

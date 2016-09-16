@@ -90,7 +90,7 @@
 		var/obj/item/weapon/card/id/D
 		var/obj/item/weapon/computer_hardware/card_slot/card_slot
 		if(computer && card_slot)
-			card_slot = computer.all_components["CARD"]
+			card_slot = computer.all_components[MC_CARD]
 			D = card_slot.GetID()
 		var/mob/living/carbon/human/h = user
 		var/obj/item/weapon/card/id/I = h.get_idcard()
@@ -170,7 +170,7 @@
 				return 1
 			if("PC_minimize")
 				var/mob/user = usr
-				if(!computer.active_program || !computer.all_components["CPU"])
+				if(!computer.active_program || !computer.all_components[MC_CPU])
 					return
 
 				computer.idle_threads.Add(computer.active_program)

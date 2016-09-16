@@ -88,7 +88,7 @@
 
 
 /datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components["CARD"]
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	var/obj/item/weapon/card/id/id_card = card_slot.stored_card
 	var/list/formatted = list()
 	for(var/job in jobs)
@@ -106,8 +106,8 @@
 	var/obj/item/weapon/computer_hardware/card_slot/card_slot
 	var/obj/item/weapon/computer_hardware/printer/printer
 	if(computer)
-		card_slot = computer.all_components["CARD"]
-		printer = computer.all_components["PRINT"]
+		card_slot = computer.all_components[MC_CARD]
+		printer = computer.all_components[MC_PRINT]
 		if(!card_slot)
 			return
 
@@ -305,8 +305,8 @@
 	var/obj/item/weapon/computer_hardware/printer/printer
 
 	if(computer)
-		card_slot = computer.all_components["CARD"]
-		printer = computer.all_components["PRINT"]
+		card_slot = computer.all_components[MC_CARD]
+		printer = computer.all_components[MC_PRINT]
 
 	data["mmode"] = mod_mode
 
@@ -448,7 +448,7 @@
 
 /datum/computer_file/program/card_mod/proc/authorized()
 	if(!authenticated && computer)
-		var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components["CARD"]
+		var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 		if(card_slot)
 			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
 			if(auth_card)

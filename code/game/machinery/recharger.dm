@@ -132,7 +132,7 @@
 
 		if(istype(charging, /obj/item/device/modular_computer))
 			var/obj/item/device/modular_computer/C = charging
-			var/obj/item/weapon/computer_hardware/battery/battery_module = C.all_components["CELL"]
+			var/obj/item/weapon/computer_hardware/battery/battery_module = C.all_components[MC_CELL]
 			if(battery_module)
 				var/obj/item/weapon/computer_hardware/battery/B = battery_module
 				if(B.battery)

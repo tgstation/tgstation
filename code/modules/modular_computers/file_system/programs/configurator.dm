@@ -29,8 +29,8 @@
 
 /datum/computer_file/program/computerconfig/ui_data(mob/user)
 	movable = computer
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = movable.all_components["HDD"]
-	var/obj/item/weapon/computer_hardware/battery/battery_module = movable.all_components["CELL"]
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = movable.all_components[MC_HDD]
+	var/obj/item/weapon/computer_hardware/battery/battery_module = movable.all_components[MC_CELL]
 	if(!istype(movable))
 		movable = null
 

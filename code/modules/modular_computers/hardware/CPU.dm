@@ -11,7 +11,7 @@
 	malfunction_probability = 1
 	origin_tech = "programming=3;engineering=2"
 	var/max_idle_programs = 2 // 2 idle, + 1 active = 3 as said in description.
-	device_type = "CPU"
+	device_type = MC_CPU
 
 /obj/item/weapon/computer_hardware/processor_unit/on_remove(obj/item/device/modular_computer/MC, mob/user)
 	MC.shutdown_computer()

@@ -6,7 +6,7 @@
 	critical = 1
 	w_class = 1
 	origin_tech = "programming=1;engineering=1"
-	device_type = "HDD"
+	device_type = MC_HDD
 	var/max_capacity = 128
 	var/used_capacity = 0
 	var/list/stored_files = list()		// List of stored files on this drive. DO NOT MODIFY DIRECTLY!

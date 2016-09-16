@@ -30,7 +30,7 @@
 	 desc = "A stationary computer. This one comes preloaded with engineering programs."
 
 /obj/machinery/modular_computer/console/preset/engineering/install_programs()
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/power_monitor())
 	hard_drive.store_file(new/datum/computer_file/program/alarm_monitor())
 
@@ -40,7 +40,7 @@
 	 desc = "A stationary computer. This one comes preloaded with research programs."
 
 /obj/machinery/modular_computer/console/preset/research/install_programs()
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
 	hard_drive.store_file(new/datum/computer_file/program/nttransfer())
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
@@ -54,7 +54,7 @@
 	 _has_printer = 1
 
 /obj/machinery/modular_computer/console/preset/command/install_programs()
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	hard_drive.store_file(new/datum/computer_file/program/card_mod())
 
@@ -64,6 +64,6 @@
 	 desc = "A stationary computer. This one comes preloaded with generic programs."
 
 /obj/machinery/modular_computer/console/preset/civilian/install_programs()
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components["HDD"]
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	hard_drive.store_file(new/datum/computer_file/program/nttransfer())
