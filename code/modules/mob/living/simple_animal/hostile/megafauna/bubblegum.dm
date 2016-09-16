@@ -10,8 +10,8 @@ Bubblegum's footsteps are heralded by shaking booms, proving its tremendous size
 It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
 
 It tries to strike at its target through any bloodpools under them; if it fails to do that, it will spray blood and then attempt to warp to a bloodpool near the target.
-If it fails to warp to a target, it may summon up to 5 slaughterlings from the blood around it.
-If it does not summon 5 slaughterlings, it will instead charge at its target, dealing massive damage to anything it hits and spraying a stream of blood. At half health, it will charge three times.
+If it fails to warp to a target, it may summon up to 6 slaughterlings from the blood around it.
+If it does not summon all 6 slaughterlings, it will instead charge at its target, dealing massive damage to anything it hits and spraying a stream of blood. At half health, it will charge three times.
 
 When Bubblegum dies, it leaves behind a chest that can contain three things:
  1. A slaughter demon spawner
@@ -321,13 +321,14 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/slaughterlings()
 	visible_message("<span class='danger'>[src] summons a shoal of slaughterlings!</span>")
-	var/max_amount = 5
+	var/max_amount = 6
 	for(var/H in get_pools(get_turf(src), 1))
 		if(!max_amount)
 			break
-		max_amount++
+		max_amount--
 		var/obj/effect/decal/cleanable/blood/B = H
 		new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter(B.loc)
+	return max_amount
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter
 	name = "slaughterling"
