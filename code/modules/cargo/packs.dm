@@ -452,6 +452,27 @@ datum/supply_pack
 	crate_name = "fuel tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/engineering/oxygen
+	name = "Oxygen Canister"
+	cost = 1500
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	crate_name = "oxygen canister crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/engineering/nitrogen
+	name = "Nitrogen Canister"
+	cost = 2000
+	contains = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
+	crate_name = "nitrogen canister crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/engineering/carbon_dio
+	name = "Carbon Dioxide Canister"
+	cost = 3000
+	contains = list(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
+	crate_name = "carbon dioxide canister crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"
 	contains = list(/obj/item/weapon/storage/toolbox/electrical,
@@ -829,6 +850,33 @@ datum/supply_pack
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
 
+/datum/supply_pack/science/plasma_canister
+	name = "Plasma Canister"
+	cost = 3000
+	access = access_rd
+	contains = list(/obj/machinery/portable_atmospherics/canister/toxins)
+	crate_name = "plasma canister crate"
+	crate_type = /obj/structure/closet/crate/secure
+	dangerous = TRUE
+
+/datum/supply_pack/science/bz_canister
+	name = "BZ Canister"
+	cost = 4000
+	access = access_rd
+	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
+	crate_name = "bz canister crate"
+	crate_type = /obj/structure/closet/crate/secure
+	dangerous = TRUE
+
+/datum/supply_pack/science/freon_canister
+	name = "Freon Canister"
+	cost = 6000
+	access = access_rd
+	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
+	crate_name = "freon canister crate"
+	crate_type = /obj/structure/closet/crate/secure
+	dangerous = TRUE
+
 /datum/supply_pack/science/research
 	name = "Machine Prototype Crate"
 	cost = 8000
@@ -1199,6 +1247,13 @@ datum/supply_pack
 	cost = 1200
 	contains = list(/obj/structure/reagent_dispensers/watertank/high)
 	crate_name = "high-capacity water tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/misc/water_vapor
+	name = "Water Vapor Canister"
+	cost = 2500
+	contains = list(/obj/machinery/portable_atmospherics/canister/water_vapor)
+	crate_name = "water vapor canister crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/lasertag
