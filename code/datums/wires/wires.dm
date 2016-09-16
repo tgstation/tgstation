@@ -17,6 +17,7 @@ var/list/wire_colors = list(
 	"yellow",
 )
 var/list/wire_color_directory = list()
+var/list/wire_name_directory = list()
 
 /proc/is_wire_tool(obj/item/I)
 	if(istype(I, /obj/item/device/multitool))
@@ -35,6 +36,7 @@ var/list/wire_color_directory = list()
 /datum/wires
 	var/atom/holder = null // The holder (atom that contains these wires).
 	var/holder_type = null // The holder's typepath (used to make wire colors common to all holders).
+	var/proper_name = "Unknown" // The display name for the wire set shown in station blueprints. Not used if randomize is true or it's an item NT wouldn't know about (Explosives/Nuke)
 
 	var/list/wires = list() // List of wires.
 	var/list/cut_wires = list() // List of wires that have been cut.
@@ -55,6 +57,7 @@ var/list/wire_color_directory = list()
 		if(!wire_color_directory[holder_type])
 			randomize()
 			wire_color_directory[holder_type] = colors
+			wire_name_directory[holder_type] = proper_name
 		else
 			colors = wire_color_directory[holder_type]
 

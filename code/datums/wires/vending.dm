@@ -1,5 +1,6 @@
 /datum/wires/vending
 	holder_type = /obj/machinery/vending
+	proper_name = "Vending Unit"
 
 /datum/wires/vending/New(atom/holder)
 	wires = list(

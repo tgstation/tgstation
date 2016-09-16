@@ -153,15 +153,17 @@
 	return AREA_STATION
 
 /proc/view_wires(mob/user)
-	var/message = "<span class='notice'>You examine the wire colour reference</span>"
+	var/message = "<span class='notice'>You examine the wire legend.</span>"
 	var/list/local_wires = wire_color_directory
+	var/list/local_names = wire_name_directory
 	for(var/device in local_wires)
-		if(device == "syndicatebomb" || device == "explosive")
+		if(device == "explosive")
 			continue
-		message += "<b>[device]:</b><p>"
-		for(var/W in local_wires[device])
-			var/wire_name = local_wires[device][W]
-			message += "<p><span style='color: [W]'>[W]</span>: [wire_name]</p>"
+		var/set_name = local_names[device]
+		message += "<b>[set_name]:</b><p>"
+		for(var/Col in local_wires[device])
+			var/wire_name = local_wires[device][Col]
+			message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
 		message += "</p>"
 	user << message
 
