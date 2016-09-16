@@ -46,134 +46,6 @@
 		M.swap_hand()
 	return 1
 
-/obj/screen/talk_wheel
-	name = "talk wheel"
-	layer = HUD_LAYER
-	icon_state = "talk_wheel"
-	screen_loc = "11:6,2:-11"
-	var/obj/screen/talk/talk_boxes
-	var/toggled = 0
-
-/obj/screen/talk_wheel/New()
-	..()
-	talk_boxes = new ()
-	talk_boxes.wheel = src
-
-/obj/screen/talk_wheel/Destroy()
-	qdel(talk_boxes)
-	talk_boxes = null
-	return ..()
-
-/obj/screen/talk_wheel/Click()
-	if(world.time <= usr.next_move)
-		return
-	if(usr.stat)
-		return
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if(toggled)
-			H.client.screen -= talk_boxes
-		else
-			H.client.screen |= talk_boxes
-		toggled = !toggled
-
-/obj/screen/talk
-	name = "talk option"
-	icon_state = "x3"
-	screen_loc = "8,8"
-	layer = HUD_LAYER
-	mouse_opacity = 2
-	var/talk_cooldown = 0
-	var/obj/screen/talk_wheel/wheel
-
-/obj/screen/talk/New()
-	..()
-	var/image/I = image("icon" = icon, "icon_state" = "talk_help")
-	I.pixel_x = -32
-	I.pixel_y = 32
-	add_overlay(I)
-	var/image/J = image("icon" = icon, "icon_state" = "talk_hello")
-	J.pixel_x = 0
-	J.pixel_y = 32
-	add_overlay(J)
-	var/image/K = image("icon" = icon, "icon_state" = "talk_bye")
-	K.pixel_x = 32
-	K.pixel_y = 32
-	add_overlay(K)
-	var/image/L = image("icon" = icon, "icon_state" = "talk_come")
-	L.pixel_x = -32
-	L.pixel_y = 0
-	add_overlay(L)
-	var/image/N = image("icon" = icon, "icon_state" = "talk_thx")
-	N.pixel_x = 32
-	N.pixel_y = 0
-	add_overlay(N)
-	var/image/O = image("icon" = icon, "icon_state" = "talk_out")
-	O.pixel_x = -32
-	O.pixel_y = -32
-	add_overlay(O)
-	var/image/P = image("icon" = icon, "icon_state" = "talk_stop")
-	P.pixel_x = 0
-	P.pixel_y = -32
-	add_overlay(P)
-	var/image/Q = image("icon" = icon, "icon_state" = "talk_yes_no")
-	Q.pixel_x = 32
-	Q.pixel_y = -32
-	add_overlay(Q)
-
-
-
-/obj/screen/talk/Destroy()
-	wheel = null
-	return ..()
-
-/obj/screen/talk/Click(location, control,params)
-	if(ishuman(usr))
-		if(usr.stat)
-			return
-		var/mob/living/carbon/human/H = usr
-		var/word_spoken = ""
-		var/list/PL = params2list(params)
-		var/icon_x = text2num(PL["icon-x"])
-		var/icon_y = text2num(PL["icon-y"])
-
-		switch(icon_y)
-			if(1 to 32)
-				switch(icon_x)
-					if(1 to 32)
-						usr.client.screen -= src
-						wheel.toggled = !wheel.toggled
-						return
-					if(33 to 64)
-						word_spoken = pick("Thanks.", "Thanks!", "Thank you.")
-					else
-						word_spoken = pick("Come.", "Follow me.")
-			if(33 to 64)
-				switch(icon_x)
-					if(1 to 32)
-						word_spoken = pick("Hi.", "Hello.")
-					if(33 to 64)
-						word_spoken = pick("Bye.", "Goodbye.")
-					else
-						word_spoken = pick("Help!", "Help me!")
-			else
-				switch(icon_x)
-					if(1 to 32)
-						word_spoken = pick("Stop!", "Halt!")
-					if(33 to 64)
-						if(icon_y < -16)
-							word_spoken = "No."
-						else
-							word_spoken = "Yes."
-					else
-						word_spoken = pick("Go away!", "Out!", "Get out!")
-
-		if(word_spoken && talk_cooldown < world.time)
-			talk_cooldown = world.time + 10
-			H.say(word_spoken)
-
-
-
 /obj/screen/inventory/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -608,3 +480,139 @@
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
+
+
+
+/obj/screen/wheel
+	name = "wheel"
+	layer = HUD_LAYER
+	icon_state = ""
+	screen_loc = null //if you make a new wheel, remember to give it a screen_loc
+	var/list/buttons_names = list() //list of the names for each button, its length is the amount of buttons.
+	var/toggled = 0 //wheel is hidden/shown
+	var/wheel_buttons_type //the type of buttons used with this wheel.
+	var/list/buttons_list = list()
+
+/obj/screen/wheel/New()
+	..()
+	build_options()
+
+
+//we create the buttons for the wheel and place them in a square spiral fashion.
+/obj/screen/wheel/proc/build_options()
+	var/obj/screen/wheel_button/close_wheel/CW = new ()
+	buttons_list += CW //the close option
+	CW.wheel = src
+
+	var/list/offset_x_list = list()
+	var/list/offset_y_list = list()
+	var/num = 1
+	var/N = 1
+	var/M = 0
+	var/sign = -1
+	my_loop:
+		while(offset_y_list.len < buttons_names.len)
+			for(var/i=1, i<=num, i++)
+				offset_y_list += N
+				offset_x_list += M
+				if(offset_y_list.len == buttons_names.len)
+					break my_loop
+			if(N != 0)
+				N = 0
+				M = -sign
+			else
+				N = sign
+				M = 0
+				sign = -sign
+				num++
+
+	var/screenx = 8
+	var/screeny = 8
+	for(var/i = 1, i <= buttons_names.len, i++)
+		var/obj/screen/wheel_button/WB = new wheel_buttons_type()
+		WB.wheel = src
+		buttons_list += WB
+		screenx += offset_x_list[i]
+		screeny += offset_y_list[i]
+		WB.screen_loc = "[screenx], [screeny]"
+		set_button(WB, i)
+
+/obj/screen/wheel/proc/set_button(obj/screen/wheel_button/WB, button_number)
+	WB.name = buttons_names[button_number]
+	return
+
+/obj/screen/wheel/Destroy()
+	for(var/obj/screen/S in buttons_list)
+		qdel(S)
+	return ..()
+
+/obj/screen/wheel/Click()
+	if(world.time <= usr.next_move)
+		return
+	if(usr.stat)
+		return
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(toggled)
+			L.client.screen -= buttons_list
+		else
+			L.client.screen |= buttons_list
+		toggled = !toggled
+
+
+/obj/screen/wheel/talk
+	name = "talk wheel"
+	icon_state = "talk_wheel"
+	screen_loc = "11:6,2:-11"
+	wheel_buttons_type = /obj/screen/wheel_button/talk
+	buttons_names = list("help","hello","bye","stop","thanks","come","out", "yes", "no")
+	var/list/word_messages = list(list("Help!","Help me!"), list("Hello.", "Hi."), list("Bye.", "Goodbye."),\
+									list("Stop!", "Halt!"), list("Thanks.", "Thanks!", "Thank you."), \
+									list("Come.", "Follow me."), list("Out!", "Go away!", "Get out!"), \
+									list("Yes.", "Affirmative."), list("No.", "Negative"))
+
+/obj/screen/wheel/talk/set_button(obj/screen/wheel_button/WB, button_number)
+	..()
+	var/obj/screen/wheel_button/talk/T = WB //we already know what type the button is exactly.
+	T.icon_state = "talk_[T.name]"
+	T.word_messages = word_messages[button_number]
+
+
+/obj/screen/wheel_button
+	name = "default wheel button"
+	screen_loc = "8,8"
+	layer = HUD_LAYER
+	mouse_opacity = 2
+	var/obj/screen/wheel/wheel
+
+/obj/screen/wheel_button/Destroy()
+	wheel = null
+	return ..()
+
+/obj/screen/wheel_button/close_wheel
+	name = "close wheel"
+	icon_state = "x3"
+
+/obj/screen/wheel_button/close_wheel/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		L.client.screen -= wheel.buttons_list
+		wheel.toggled = !wheel.toggled
+
+
+/obj/screen/wheel_button/talk
+	name = "talk option"
+	icon_state = "talk_help"
+	var/talk_cooldown = 0
+	var/list/word_messages = list()
+
+/obj/screen/wheel_button/talk/Click(location, control,params)
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(L.stat)
+			return
+
+		if(word_messages.len && talk_cooldown < world.time)
+			talk_cooldown = world.time + 10
+			L.say(pick(word_messages))
+
