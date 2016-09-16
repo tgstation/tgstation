@@ -19,11 +19,10 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 
-/atom/movable/New(loc)
+/atom/movable/New()
 	..()
 	if(loc)
-		var/atom/A = loc
-		A.Entered(src)
+		loc.Entered(src)
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
