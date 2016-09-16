@@ -64,22 +64,22 @@
 			if (sprite_changed_for_emote)
 				src << "You are currently brimming with emotion!"
 			else
-				sprite_changed_for_emote = 1	//so we don't attempt to swap the sprite twice in proc/change_icon because I don't know what may happen if we do
+				sprite_changed_for_emote = TRUE	//so we don't attempt to swap the sprite twice in proc/change_icon because I don't know what may happen if we do
 				if (caste == "h")	//for hunter xenos
-					var/list/sprites = list("blush",
-										"check_these_pecs", "claw",
-										"dunno",
-										"handstand", "heart_left", "heart_right",
-										"meditate",
-										"point",
-										"sass", "shh", "splits",
-										"taken_aback", "thinker", "tired",
-										"waiting",
-										"you_got_it")
+					var/list/sprites = list("Blush" = "blush",
+											"Check these pecs" = "check_these_pecs", "Claw" = "claw",
+											"Dunno" = "dunno",
+											"Handstand" = "handstand", "Heart left half" = "heart_left", "Heart right half" = "heart_right",
+											"Meditate" = "meditate",
+											"Point" = "point",
+											"Sass" = "sass", "Shh" = "shh", "Splits" = "splits",
+											"Taken aback" = "taken_aback", "The thinker" = "thinker", "Tired sprawl" = "tired",
+											"Waiting" = "waiting",
+											"You got it" = "you_got_it")
 
 					var/input = input("Select an emote!", "Emote", null, null) as null|anything in sprites
 
-					change_icon(input)
+					change_icon(sprites[input])
 				else	//for xenos without special, emotional sprites
 					src << "It seems you're incapable of advanced emotions."
 
@@ -122,4 +122,4 @@
 	spawn(emote_length)
 		icon = original_icon
 		icon_state = original_icon_state
-		sprite_changed_for_emote = 0
+		sprite_changed_for_emote = FALSE
