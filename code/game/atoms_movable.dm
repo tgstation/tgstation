@@ -22,7 +22,7 @@
 /atom/movable/New(loc)
 	..()
 	if(loc)
-		var/atom/movable/A = loc
+		var/atom/A = loc
 		A.Entered(src)
 
 /atom/movable/Move(atom/newloc, direct = 0)
