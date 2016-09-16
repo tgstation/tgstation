@@ -30,7 +30,6 @@
 		return 0
 	return ..()
 
-
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "mutationtoxin")
 		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
@@ -43,6 +42,9 @@
 	if(H)
 		H.endTailWag()
 
+/datum/species/human/space_move()
+	if(FLYING in specflags)
+		return 1
 /*
  LIZARDPEOPLE
 */
