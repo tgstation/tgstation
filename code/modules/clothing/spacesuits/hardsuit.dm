@@ -494,6 +494,7 @@
 	desc = "A special hardsuit helmet designed for only the most fashionable of military figureheads."
 	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 	actions_types = list()
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR //we want to see the mask
 
 /obj/item/clothing/head/helmet/space/hardsuit/captain/attack_self()
 	return //Sprites required for flashlight
