@@ -3,6 +3,7 @@
 	level = 1
 
 	var/intact = 1
+	var/can_be_dirty = TRUE //Note that this only used at roundstart to cause random dirtiness.
 	var/turf/baseturf = /turf/open/space
 
 	var/temperature = T20C

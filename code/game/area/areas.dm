@@ -23,6 +23,7 @@
 									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
 									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+	var/can_be_dirty = TRUE //Set this to FALSE to prevent an area from being made dirty at all
 
 /area/New()
 	icon_state = ""
