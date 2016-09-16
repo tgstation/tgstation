@@ -68,6 +68,12 @@
 		"<span class='notice'>[holder] snaps back into your [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 
+	if(istype(holder, /obj/item/device/assembly/flash))
+		var/obj/item/device/assembly/flash/F = holder
+		F.times_used = 0
+		F.crit_fail = 0
+		F.update_icon()
+
 	owner.unEquip(holder, 1)
 	holder.loc = src
 	holder = null
@@ -178,3 +184,33 @@
 		items_list += new /obj/item/weapon/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0
+
+/obj/item/organ/cyberimp/arm/esword
+	name = "arm-mounted energy blade"
+	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated enregy."
+	icon_state = "implant-toolkit"
+	contents = newlist(/obj/item/weapon/melee/energy/blade)
+
+/obj/item/organ/cyberimp/arm/medibeam
+	name = "integrated medical beamgun"
+	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
+	icon_state = "implant-toolkit"
+	contents = newlist(/obj/item/weapon/gun/medbeam)
+
+/obj/item/organ/cyberimp/arm/flash
+	name = "integrated high-intensity photon projector" //Why not
+	desc = "An integrated projector mounted onto a user's arm, that is able to be used as a powerful flash."
+	icon_state = "implant-toolkit"
+	contents = newlist(/obj/item/device/assembly/flash)
+
+/obj/item/organ/cyberimp/arm/baton
+	name = "arm electrification implant"
+	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
+	icon_state = "implant-toolkit"
+	contents = newlist(/obj/item/borg/stun)
+
+/obj/item/organ/cyberimp/arm/combat
+	name = "combat cybernetics implant"
+	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
+	icon_state = "implant-toolkit"
+	contents = newlist(/obj/item/weapon/melee/energy/blade, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash)

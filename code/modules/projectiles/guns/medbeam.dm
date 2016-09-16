@@ -13,6 +13,7 @@
 	var/active = 0
 	var/datum/beam/current_beam = null
 	var/mounted = 0 //Denotes if this is a handheld or mounted version
+	var/healpower = 4
 
 	weapon_weight = WEAPON_MEDIUM
 
@@ -108,8 +109,10 @@
 /obj/item/weapon/gun/medbeam/proc/on_beam_tick(var/mob/living/target)
 	if(target.health != target.maxHealth)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
-	target.adjustBruteLoss(-4)
-	target.adjustFireLoss(-4)
+	target.adjustBruteLoss(-healpower)
+	target.adjustFireLoss(-healpower)
+	target.adjustToxLoss(-healpower)
+	target.adjustOxyLoss(-healpower)
 	return
 
 /obj/item/weapon/gun/medbeam/proc/on_beam_release(var/mob/living/target)
