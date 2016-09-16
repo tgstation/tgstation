@@ -156,6 +156,8 @@
 	var/message = "<span class='notice'>You examine the wire colour reference</span>"
 	var/list/local_wires = wire_color_directory
 	for(var/device in local_wires)
+		if(device == "syndicatebomb" || device == "explosive")
+			continue
 		message += "<b>[device]:</b><p>"
 		for(var/W in local_wires[device])
 			var/wire_name = local_wires[device][W]
