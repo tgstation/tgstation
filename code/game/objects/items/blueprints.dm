@@ -160,10 +160,13 @@
 		if(device == "explosive")
 			continue
 		var/set_name = local_names[device]
-		message += "<b>[set_name]:</b><p>"
+		if(set_name == "Unknown")
+			continue
+		message += "<p><b>[set_name]:</b>"
 		for(var/Col in local_wires[device])
 			var/wire_name = local_wires[device][Col]
-			message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
+			if(!findtext(wire_name, "__dud"))
+				message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
 		message += "</p>"
 	user << message
 

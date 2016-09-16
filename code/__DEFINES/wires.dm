@@ -39,5 +39,5 @@
 #define WIRE_TX "Transmit"
 #define WIRE_UNBOLT "Unbolt"
 #define WIRE_ZAP "High Voltage Circuit"
-#define WIRE_ZAP1 "zap1"
-#define WIRE_ZAP2 "zap2"
+#define WIRE_ZAP1 "High Voltage Circuit 1"
+#define WIRE_ZAP2 "High Voltage Circuit 2"
