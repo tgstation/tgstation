@@ -372,7 +372,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	for(var/mob/M in mob_list)
 		if(M.z != z)
 			continue
-		M.update_gravity(M.has_gravity())
+		M.update_gravity(M.mob_has_gravity())
 		if(M.client)
 			shake_camera(M, 15, 1)
 			M.playsound_local(T, 'sound/effects/alert.ogg', 100, 1, 0.5)

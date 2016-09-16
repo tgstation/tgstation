@@ -125,7 +125,21 @@
 	name = "brass table frame"
 	desc = "Four pieces of brass arranged in a square. It's slightly warm to the touch."
 	icon_state = "brass_frame"
-	framestackamount = 0
+	framestack = /obj/item/stack/sheet/brass
+	framestackamount = 1
+
+/obj/structure/table_frame/brass/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/sheet/brass))
+		var/obj/item/stack/sheet/brass/W = I
+		if(W.get_amount() < 1)
+			user << "<span class='warning'>You need one brass sheet to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [W] to [src]...</span>"
+		if(do_after(user, 20, target = src) && W.use(1))
+			new /obj/structure/table/reinforced/brass(src.loc)
+			qdel(src)
+	else
+		return ..()
 
 /obj/structure/table_frame/brass/narsie_act()
 	..()

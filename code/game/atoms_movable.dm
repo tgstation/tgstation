@@ -305,26 +305,6 @@
 			throw_impact(AM)
 			return 1
 
-//Overlays
-/atom/movable/overlay
-	var/atom/master = null
-	anchored = 1
-
-/atom/movable/overlay/New()
-	verbs.Cut()
-
-/atom/movable/overlay/attackby(a, b, c)
-	if (src.master)
-		return src.master.attackby(a, b, c)
-
-/atom/movable/overlay/attack_paw(a, b, c)
-	if (src.master)
-		return src.master.attack_paw(a, b, c)
-
-/atom/movable/overlay/attack_hand(a, b, c)
-	if (src.master)
-		return src.master.attack_hand(a, b, c)
-
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m

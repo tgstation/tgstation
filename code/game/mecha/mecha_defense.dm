@@ -9,7 +9,7 @@
 	return 1 //always return non-0
 
 
-/obj/mecha/proc/take_damage(amount, type="brute", booster_deflection_modifier = 1, booster_damage_modifier = 1)
+/obj/mecha/proc/take_damage(amount, type="brute", booster_deflection_modifier = 1, booster_damage_modifier = 1, send_message = 1)
 	if(prob(deflect_chance * booster_deflection_modifier))
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
 		log_append_to_last("Armor saved.")
@@ -19,18 +19,19 @@
 		damage = damage * booster_damage_modifier
 		health -= damage
 		update_health()
-		occupant_message("<span class='userdanger'>Taking damage!</span>")
+		if(send_message)
+			occupant_message("<span class='userdanger'>Taking damage!</span>")
 		log_append_to_last("Took [damage] points of damage. Damage type: \"[type]\".",1)
 	return 1
 
 
-/obj/mecha/proc/take_directional_damage(amount, type="brute", adir = 0, booster_deflection_modifier = 1, booster_damage_modifier = 1)
+/obj/mecha/proc/take_directional_damage(amount, type="brute", adir = 0, booster_deflection_modifier = 1, booster_damage_modifier = 1, send_message = 1)
 	var/facing_modifier = get_armour_facing(dir2angle(adir) - dir2angle(src))
 
 	booster_damage_modifier /= facing_modifier
 	booster_deflection_modifier *= facing_modifier
 
-	return take_damage(amount, type, booster_deflection_modifier, booster_damage_modifier)
+	return take_damage(amount, type, booster_deflection_modifier, booster_damage_modifier, send_message)
 
 
 /obj/mecha/proc/absorbDamage(damage,damage_type)

@@ -21,7 +21,7 @@
 	anchors += locate(x+2,y-2,z)
 
 	for(var/turf/T in anchors)
-		var/datum/beam/B = Beam(T,"vine",'icons/effects/spacevines.dmi',INFINITY, 5,/obj/effect/ebeam/vine)
+		var/datum/beam/B = Beam(T, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 		B.sleep_time = 10 //these shouldn't move, so let's slow down updates to 1 second (any slower and the deletion of the vines would be too slow)
 	addtimer(src, "bear_fruit", growth_time)
 
@@ -98,15 +98,15 @@
 							if(A.density && A != L)
 								continue grasping
 					if(prob(grasp_chance))
-						L << "<span class='userdanger'>\the [src] has you entangled!</span>"
-						grasping[L] = Beam(L,"vine",'icons/effects/spacevines.dmi',INFINITY, 5,/obj/effect/ebeam/vine)
+						L << "<span class='userdanger'>\The [src] has you entangled!</span>"
+						grasping[L] = Beam(L, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 
 						break //only take 1 new victim per cycle
 
 
 /mob/living/simple_animal/hostile/venus_human_trap/OpenFire(atom/the_target)
 	var/dist = get_dist(src,the_target)
-	Beam(the_target,"vine",'icons/effects/spacevines.dmi',dist*2, dist+2,/obj/effect/ebeam/vine)
+	Beam(the_target, "vine", time=dist*2, maxdistance=dist+2, beam_type=/obj/effect/ebeam/vine)
 	the_target.attack_animal(src)
 
 

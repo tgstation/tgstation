@@ -352,3 +352,44 @@
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // also cools the fuck down
 	return
+
+/datum/chemical_reaction/teslium
+	name = "Teslium"
+	id = "teslium"
+	results = list("teslium" = 3)
+	required_reagents = list("stable_plasma" = 1, "silver" = 1, "blackpowder" = 1)
+	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
+	required_temp = 400
+
+/datum/chemical_reaction/reagent_explosion/teslium_lightning
+	name = "Teslium Destabilization"
+	id = "teslium_lightning"
+	required_reagents = list("teslium" = 1, "water" = 1)
+	results = list("destabilized_teslium" = 1)
+	strengthdiv = 100
+	modifier = -100
+	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
+	mix_sound = 'sound/machines/defib_zap.ogg'
+
+/datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, created_volume)
+	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
+	var/T2 = created_volume * 50
+	var/T3 = created_volume * 120
+	sleep(10)
+	if(created_volume >= 75)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
+		tesla_zap(holder.my_atom, 7, T1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+	sleep(10)
+	if(created_volume >= 40)
+		tesla_zap(holder.my_atom, 7, T2)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+	sleep(10)
+	if(created_volume >= 10)
+		tesla_zap(holder.my_atom, 7, T3)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
+	id = "teslium_lightning2"
+	required_temp = 474
+	required_reagents = list("teslium" = 1)

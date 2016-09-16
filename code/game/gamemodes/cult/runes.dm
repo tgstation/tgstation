@@ -586,7 +586,7 @@ var/list/teleport_runes = list()
 		user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
 	..()
 	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice]'s body rises into the air, connected to [mob_to_revive] by a glowing tendril!</span>")
-	mob_to_revive.Beam(mob_to_sacrifice,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=20)
+	mob_to_revive.Beam(mob_to_sacrifice,icon_state="sendbeam",time=20)
 	sleep(20)
 	if(!mob_to_sacrifice || !in_range(mob_to_sacrifice, src))
 		rune_in_use = 0
@@ -717,7 +717,7 @@ var/list/teleport_runes = list()
 		affecting.apply_damage(0.1, BRUTE)
 		if(!(user in T))
 			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls them back to the rune!</span>")
-			Beam(user,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=2)
+			Beam(user,icon_state="drainbeam",time=2)
 			user.forceMove(get_turf(src)) //NO ESCAPE :^)
 		if(user.key)
 			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow around them dimming.</span>", \
@@ -900,7 +900,7 @@ var/list/teleport_runes = list()
 			M.apply_damage(drained_amount, BRUTE, "chest")
 			user.adjustBruteLoss(-drained_amount)
 			M << "<span class='cultitalic'>You feel extremely weak.</span>"
-	user.Beam(T,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=5)
+	user.Beam(T,icon_state="drainbeam",time=5)
 	user.visible_message("<span class='warning'>Blood flows from the rune into [user]!</span>", \
 	"<span class='cult'>Blood flows into you, healing your wounds and revitalizing your spirit.</span>")
 

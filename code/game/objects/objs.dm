@@ -35,7 +35,8 @@
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	return ..()
-/obj/throw_at()
+
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	..()
 	if(is_frozen)
 		visible_message("<span class = 'danger'><b>[src] shatters into a million pieces!</b></span>")
@@ -215,10 +216,10 @@
 		if(burn)
 			Item.fire_act() //Set them on fire, too
 
-/obj/proc/tesla_act(var/power)
+/obj/proc/tesla_act(power, explosive = FALSE)
 	being_shocked = 1
 	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced)
+	tesla_zap(src, 3, power_bounced, explosive)
 	addtimer(src, "reset_shocked", 10)
 
 /obj/proc/reset_shocked()

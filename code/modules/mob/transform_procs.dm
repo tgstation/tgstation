@@ -41,14 +41,9 @@
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
-	var/atom/movable/overlay/animation = new( loc )
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-	flick("h2monkey", animation)
+	PoolOrNew(/obj/effect/overlay/temp/monkeyify, get_turf(src))
 	sleep(22)
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
-	qdel(animation)
 
 	// hash the original name?
 	if(tr_flags & TR_HASHNAME)
@@ -188,16 +183,11 @@
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
-	var/atom/movable/overlay/animation = new( loc )
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-	flick("monkey2h", animation)
+	PoolOrNew(/obj/effect/overlay/temp/monkeyify/humanify, get_turf(src))
 	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)
-	qdel(animation)
 
 	dna.transfer_identity(O)
 	O.updateappearance(mutcolor_update=1)
