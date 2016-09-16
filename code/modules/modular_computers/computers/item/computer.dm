@@ -246,17 +246,6 @@
 
 	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components[MC_CELL]
 	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-
-	if(card_slot)
-		if(card_slot.stored_card)
-			data["PC_idcard1"] = "idcard.gif"
-		else
-			data["PC_idcard1"] = "no_id.gif"
-		if(card_slot.stored_card)
-			data["PC_idcard2"] = "idcard.gif"
-		else
-			data["PC_idcard2"] = "no_id.gif"
 
 	if(battery_module && battery_module.battery)
 		switch(battery_module.battery.percent())
