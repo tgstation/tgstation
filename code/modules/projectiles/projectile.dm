@@ -50,6 +50,7 @@
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
+	var/impact_effect_type //what type of impact effect to show when hitting something
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -75,10 +76,23 @@
 		return "chest"
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
+		if(impact_effect_type)
+			PoolOrNew(impact_effect_type, list(target_loca, target, src))
 		return 0
 	var/mob/living/L = target
 	if(blocked != 100) // not completely blocked
+		if(damage && L.blood_volume && damage_type == BRUTE)
+			if(isalien(L))
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter, list(target_loca, dir))
+			else
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(target_loca, dir))
+			if(prob(33))
+				L.add_splatter_floor(target_loca)
+		else if(impact_effect_type)
+			PoolOrNew(impact_effect_type, list(target_loca, target, src))
+
 		var/organ_hit_text = ""
 		var/limb_hit = L.check_limb_hit(def_zone)//to get the correct message info.
 		if(limb_hit)
