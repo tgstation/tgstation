@@ -31,4 +31,4 @@
 #define MC_NET "NET"
 #define MC_PRINT "PRINT"
 #define MC_CELL "CELL"
-#define MC_CHARGER "CHARGER"
+#define MC_CHARGE "CHARGE"
