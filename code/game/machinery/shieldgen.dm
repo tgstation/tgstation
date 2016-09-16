@@ -6,7 +6,7 @@
 		density = 1
 		opacity = 0
 		anchored = 1
-		unacidable = 1
+		acid_state = UNACIDABLE
 		var/const/max_health = 200
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
@@ -478,7 +478,7 @@
 		icon_state = "shieldwall"
 		anchored = 1
 		density = 1
-		unacidable = 1
+		acid_state = UNACIDABLE
 		luminosity = 3
 		var/needs_power = 0
 		var/active = 1

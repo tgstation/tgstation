@@ -363,3 +363,11 @@
 				holding = null
 				. = TRUE
 	update_icon()
+
+/obj/machinery/portable_atmospherics/canister/acid_melt()
+	var/turf/T = get_turf(src)
+	if(T)
+		T.assume_air(air_contents)
+		air_update_turf()
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	..()

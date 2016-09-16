@@ -142,16 +142,22 @@
 		apply_damage(damage, BRUTE, affecting)
 
 
-/mob/living/carbon/monkey/acid_act(acidpwr, toxpwr, acid_volume)
-	if(wear_mask)
-		if(!wear_mask.unacidable)
-			wear_mask.acid_act(acidpwr)
-			update_inv_wear_mask()
-		else
-			src << "<span class='warning'>Your mask protects you from the acid.</span>"
-		return
-
-	take_bodypart_damage(min(6*toxpwr, acid_volume * acidpwr/10))
+/mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
+	. = 1
+	if(!bodyzone_hit || bodyzone_hit == "head")
+		if(wear_mask)
+			if(wear_mask.acid_state != UNACIDABLE)
+				wear_mask.acid_act(acidpwr)
+			else
+				src << "<span class='warning'>Your mask protects you from the acid.</span>"
+			return
+		if(head)
+			if(head.acid_state != UNACIDABLE)
+				head.acid_act(acidpwr)
+			else
+				src << "<span class='warning'>Your hat protects you from the acid.</span>"
+			return
+	take_bodypart_damage(acidpwr * min(0.6, acid_volume*0.1))
 
 
 /mob/living/carbon/monkey/ex_act(severity, target)

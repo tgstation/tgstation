@@ -27,6 +27,7 @@
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
+	acid_resistance = 1100
 
 /obj/item/clothing/mask/gas/welding/attack_self()
 	toggle()

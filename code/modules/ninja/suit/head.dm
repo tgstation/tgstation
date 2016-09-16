@@ -7,6 +7,6 @@
 	item_state = "s-ninja_mask"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 25)
 	strip_delay = 12
-	unacidable = 1
+	acid_state = ACID_PROOF
 	blockTracking = 1//Roughly the only unique thing about this helmet.
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR

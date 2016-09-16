@@ -3,7 +3,7 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
 	anchored = 1
-	unacidable = 1
+	acid_state = UNACIDABLE
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/landmark/New()

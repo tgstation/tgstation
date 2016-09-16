@@ -27,6 +27,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	burn_state = FIRE_PROOF
+	acid_resistance = 1200
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()

@@ -80,7 +80,7 @@
 	holder = item
 
 	holder.flags |= NODROP
-	holder.unacidable = 1
+	holder.acid_state = UNACIDABLE
 	holder.slot_flags = null
 	holder.w_class = 5
 	holder.materials = null

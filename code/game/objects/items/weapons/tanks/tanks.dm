@@ -102,6 +102,14 @@
 
 		qdel(src)
 
+/obj/item/weapon/tank/acid_melt()
+	var/turf/T = get_turf(src)
+	if(T)
+		T.assume_air(air_contents)
+		air_update_turf()
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	..()
+
 /obj/item/weapon/tank/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")

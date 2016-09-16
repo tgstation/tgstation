@@ -446,7 +446,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	siemens_coefficient = 0
-	unacidable = 1
+	acid_state = UNACIDABLE
 	flags = ABSTRACT | NODROP
 
 
@@ -465,7 +465,7 @@
 	item_color = "dermal"
 	name = "golem's head"
 	desc = "a golem's head"
-	unacidable = 1
+	acid_state = UNACIDABLE
 	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
@@ -474,7 +474,7 @@
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "golem"
-	unacidable = 1
+	acid_state = UNACIDABLE
 	layer = TURF_LAYER
 
 /obj/effect/golemrune/New()
@@ -541,7 +541,7 @@
 	layer = FLY_LAYER
 	pixel_x = -64
 	pixel_y = -64
-	unacidable = 1
+	acid_state = UNACIDABLE
 	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/list/stopped_atoms = list()

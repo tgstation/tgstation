@@ -122,3 +122,6 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 1, damage_pwr = 5, deafen_pwr = 15)
 	return 0
+
+/mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
+	return 0//aliens are immune to acid.

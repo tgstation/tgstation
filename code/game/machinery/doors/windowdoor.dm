@@ -3,6 +3,7 @@
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
+	acid_state = ACID_PROOF
 	var/base_state = "left"
 	var/health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	visible = 0

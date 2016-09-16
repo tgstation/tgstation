@@ -21,6 +21,7 @@
 	strip_delay = 70
 	burn_state = FIRE_PROOF
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
+	acid_resistance = 1000
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -35,7 +36,7 @@
 	icon_state = "wizard"
 	strip_delay = 50
 	put_on_delay = 50
-	unacidable = 1
+	acid_state = ACID_PROOF
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."

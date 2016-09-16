@@ -8,6 +8,7 @@
 	strip_delay = 60
 	put_on_delay = 40
 	burn_state = FIRE_PROOF
+	acid_resistance = 1000
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -17,6 +18,7 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
 	dog_fashion = /datum/dog_fashion/back
+	acid_resistance = 1500
 
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "An armored vest that protects against most types of damage."
@@ -37,6 +39,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
+	acid_resistance = 2000
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchoat"
@@ -156,7 +159,7 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	actions_types = list(/datum/action/item_action/toggle)
-	unacidable = 1
+	acid_state = ACID_PROOF
 	hit_reaction_chance = 50
 
 
@@ -341,6 +344,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
+	acid_resistance = 2000
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -354,6 +358,7 @@
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
+	acid_resistance = 2000
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -362,6 +367,7 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
+	acid_resistance = 2000
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "thunderdome suit"

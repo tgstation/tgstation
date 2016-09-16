@@ -67,6 +67,7 @@
 	put_on_delay = 70
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	burn_state = FIRE_PROOF
+	acid_resistance = 1000
 
 /obj/item/clothing/suit/bomb_suit
 	name = "bomb suit"
@@ -88,6 +89,7 @@
 	strip_delay = 70
 	put_on_delay = 70
 	burn_state = FIRE_PROOF
+	acid_resistance = 1000
 
 
 /obj/item/clothing/head/bomb_hood/security

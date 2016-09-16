@@ -400,7 +400,7 @@
 	icon_state = "ui_light"
 	mouse_opacity = 0
 	layer = MOB_LAYER
-	unacidable = 1
+	acid_state = UNACIDABLE
 
 /obj/effect/overlay/temp/swarmer //temporary swarmer visual feedback objects
 	icon = 'icons/mob/swarmer.dmi'

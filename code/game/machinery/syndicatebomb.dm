@@ -9,7 +9,7 @@
 	anchored = 0
 	density = 0
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
-	unacidable = 1
+	acid_state = ACID_PROOF
 
 	var/minimum_timer = 60
 	var/timer_set = 60

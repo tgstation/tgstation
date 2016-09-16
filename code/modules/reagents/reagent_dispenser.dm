@@ -53,6 +53,9 @@
 	chem_splash(loc, 5, list(reagents))
 	qdel(src)
 
+/obj/structure/reagent_dispensers/acid_melt()
+	boom()
+
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
 	desc = "A water tank."

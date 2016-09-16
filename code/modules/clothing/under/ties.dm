@@ -367,3 +367,4 @@
 	icon_state = "talisman"
 	item_color = "talisman"
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5) //Faith is the best armor.
+	acid_resistance = 750

@@ -331,6 +331,7 @@ BLIND     // can't see anything
 	put_on_delay = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	burn_state = FIRE_PROOF
+	acid_resistance = 1000
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -353,6 +354,7 @@ BLIND     // can't see anything
 	strip_delay = 80
 	put_on_delay = 80
 	burn_state = FIRE_PROOF
+	acid_resistance = 1000
 
 //Under clothing
 

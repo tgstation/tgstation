@@ -4,7 +4,7 @@
 /obj/effect/light_emitter
 	name = "Light emitter"
 	anchored = 1
-	unacidable = 1
+	acid_state = UNACIDABLE
 	invisibility = 101
 	var/set_luminosity = 8
 	var/set_cap = 0

@@ -5,7 +5,7 @@
 	density = 0
 	anchored = 1
 	flags = ABSTRACT
-	unacidable = 1
+	acid_state = UNACIDABLE
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
