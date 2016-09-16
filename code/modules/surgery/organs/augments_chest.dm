@@ -197,3 +197,50 @@
 
 	toggle(silent=1)
 	return 0
+
+/obj/item/organ/cyberimp/chest/armor
+	name = "Subdermal armor matrix"
+	desc = "A matrix of nanomachines that form a subdermal shell in the owner's body. This will let them resist forces that would normally tear limbs cleanly off, and act as protection against trauma"
+	var/addarmor = 30
+	var/mob/living/carbon/human/lastowner = null	//Just incase someone somehow removes it and tries to keep the benefits.
+	var/engaged = FALSE
+	var/short = FALSE
+	actions_types = list(/datum/action/item_action/organ_action/toggle)
+
+/obj/item/organ/cyberimp/chest/armor/proc/engage()
+	if(short)
+		owner << "<span class='warning'>Your subdermal armor matrix simply buzzes. It seems to have shorted out for the moment!</span>"
+		return 0
+	if(lastowner)
+		disengage()
+	if(!owner)
+		return
+	lastowner = owner
+	owner.species.specflags += NODISMEMBER
+	owner.species.armor += armor
+	engaged = TRUE
+	owner << "<span class='notice'>You suddenly feel stronger as a subdermal armor shell forms in your body!</span>"
+
+/obj/item/organ/cyberimp/chest/armor/proc/disengage()
+	lastowner.species.specflags -= NODISMEMBER
+	lastowner.species.armor -= armor
+	lastowner << "<span class='warning'>You suddenly feel vulnerable as your subdermal shell disintergrates!</span>"
+	engaged = FALSE
+	lastowner = null
+
+/obj/item/organ/cyberimp/chest/armor/emp_act()
+	if(!engaged)
+		return 0
+	lastowner << "<span class='ownerdanger'>You feel a shock as your subdermal armor implant shorts out, scrambling the nanomachines!</span>"
+	short = TRUE
+	addtimer(src, "fix", 150)
+	disengage()
+
+/obj/item/organ/cyberimp/chest/armor/ui_action_click()
+	if(engaged)
+		disengage()
+	else
+		engage()
+
+/obj/item/organ/cyberimp/chest/armor/proc/fix()
+	short = FALSE
