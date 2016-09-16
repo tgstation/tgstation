@@ -185,8 +185,8 @@ Difficulty: Hard
 				PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/rightthumb, target_two_turf)
 				bloodgrab(target_two_turf)
 			else
-				PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/rightsmack, target_one_turf)
-				bloodsmack(target_one_turf)
+				PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/rightsmack, target_two_turf)
+				bloodsmack(target_two_turf)
 
 		if(target_one.stat != CONSCIOUS || prob(10))
 			PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftpaw, target_one_turf)
