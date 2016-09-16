@@ -67,6 +67,7 @@
 	if(get_area_type() == AREA_STATION)
 		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 		. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
+		. += "<p><a href='?src=\ref[src];view_legend=1'>View wire colour legend</a></p>"
 	if(!viewing)
 		. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
 	else
@@ -84,6 +85,8 @@
 		if(get_area_type()!=AREA_STATION)
 			return
 		edit_area()
+	if(href_list["view_legend"])
+		view_wires(usr)
 	if(href_list["view_blueprints"])
 		set_viewer(usr, "<span class='notice'>You flip the blueprints over to view the complex information diagram.</span>")
 	if(href_list["hide_blueprints"])
@@ -148,6 +151,17 @@
 		if ( istype(A,type) )
 			return AREA_SPECIAL
 	return AREA_STATION
+
+/proc/view_wires(mob/user)
+	var/message = "<span class='notice'>You examine the wire colour reference</span>"
+	var/list/local_wires = wire_color_directory
+	for(var/device in local_wires)
+		message += "<b>[device]:</b><p>"
+		for(var/W in local_wires[device])
+			var/wire_name = local_wires[device][W]
+			message += "<p><span style='color: [W]'>[W]</span>: [wire_name]</p>"
+		message += "</p>"
+	user << message
 
 /proc/create_area(mob/living/creator)
 	var/res = detect_room(get_turf(creator))
