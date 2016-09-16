@@ -204,6 +204,26 @@
 		if("harm")
 			wuv(-1, M)
 
+/mob/living/simple_animal/pet/cat/attack_alien(mob/living/carbon/alien/humanoid/M)	//what the xeno was after all along in Alien
+	//. = ..()	//I assume this is needed
+	if(M.a_intent == "help" && M.caste == "h")
+		visible_message("<span class='name'>[M]</span> picks up and hugs <span class='name'>[src]</span>.")
+		src.Move(M)
+
+		M.sprite_changed_for_emote = 1
+		var/original_icon = M.icon
+		var/original_icon_state = M.icon_state
+
+		M.icon = 'icons/mob/alien_emotes.dmi'
+		M.icon_state = "cat_cuddle"
+
+		spawn(M.emote_length)
+			M.icon = original_icon
+			M.icon_state = original_icon_state
+			M.sprite_changed_for_emote = 0
+
+			src.forceMove(M.loc)
+
 /mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
 	if(change)
 		if(change > 0)
