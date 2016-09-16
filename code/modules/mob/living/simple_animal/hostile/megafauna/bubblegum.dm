@@ -305,7 +305,7 @@ Difficulty: Hard
 	var/turf/previousturf = get_turf(src)
 	var/turf/J = previousturf
 	var/targetdir = get_dir(src, target)
-	if(target.loc = loc)
+	if(target.loc == loc)
 		targetdir = dir
 	face_atom(target)
 	new /obj/effect/decal/cleanable/blood(J)
