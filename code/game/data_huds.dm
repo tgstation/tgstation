@@ -62,8 +62,11 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	for(var/datum/disease/D in viruses)
-		if((!(D.visibility_flags & HIDDEN_SCANNER)) && (D.severity != NONTHREAT))
-			return 1
+		if(!(D.visibility_flags & HIDDEN_SCANNER))
+			if (D.severity == NONTHREAT) //a buffing virus gets an icon
+				return 2
+			else
+				return 1
 	return 0
 
 //helper for getting the appropriate health status
@@ -160,8 +163,10 @@
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (status_flags & FAKEDEATH))
 		holder.icon_state = "huddead"
-	else if(check_virus())
+	else if(check_virus() == 1)
 		holder.icon_state = "hudill"
+	else if(check_virus() == 2)
+		holder.icon_state = "hudbuff"
 	else
 		holder.icon_state = "hudhealthy"
 
