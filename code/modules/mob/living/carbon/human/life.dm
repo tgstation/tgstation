@@ -29,19 +29,25 @@
 	if (notransform)
 		return
 
-	if(..())
+	if(..()) //not dead
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_life(src)
 
+	if(stat != DEAD)
 		//heart attack stuff
 		handle_heart()
 
+	if(stat != DEAD)
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
 	dna.species.spec_life(src) // for mutantraces
+
+	if(stat != DEAD)
+		return 1
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
