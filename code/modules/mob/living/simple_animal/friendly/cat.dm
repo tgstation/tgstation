@@ -222,7 +222,8 @@
 			M.sprite_changed_for_emote = FALSE
 
 			src.forceMove(M.loc)
-	else return ..()
+	else
+		return ..()
 
 /mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
 	if(change)
