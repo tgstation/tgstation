@@ -190,3 +190,7 @@
 	item_state = "nullrod"
 
 /obj/item/device/assembly/flash/handheld //this is now the regular pocket flashes
+
+/obj/item/device/assembly/flash/armimplant
+	name = "photon projector"
+	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocals fix the flashbulb if it ever burns out."

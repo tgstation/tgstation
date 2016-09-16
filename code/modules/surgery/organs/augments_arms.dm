@@ -68,8 +68,9 @@
 		"<span class='notice'>[holder] snaps back into your [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 
-	if(istype(holder, /obj/item/device/assembly/flash))
+	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
 		var/obj/item/device/assembly/flash/F = holder
+		F.SetLuminosity(0)
 		F.times_used = 0
 		F.crit_fail = 0
 		F.update_icon()
@@ -90,6 +91,10 @@
 	holder.slot_flags = null
 	holder.w_class = 5
 	holder.materials = null
+
+	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
+		var/obj/item/device/assembly/flash/F = holder
+		F.SetLuminosity(7)
 
 	var/obj/item/arm_item = owner.get_active_held_item()
 
@@ -201,7 +206,7 @@
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm, that is able to be used as a powerful flash."
 	icon_state = "implant-toolkit"
-	contents = newlist(/obj/item/device/assembly/flash)
+	contents = newlist(/obj/item/device/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
@@ -213,4 +218,4 @@
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
 	icon_state = "implant-toolkit"
-	contents = newlist(/obj/item/weapon/melee/energy/blade, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash)
+	contents = newlist(/obj/item/weapon/melee/energy/blade, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
