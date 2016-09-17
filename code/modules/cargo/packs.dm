@@ -473,6 +473,14 @@ datum/supply_pack
 	crate_name = "carbon dioxide canister crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/science/nitrous_oxide_canister
+	name = "Nitrous Oxide Canister"
+	cost = 3000
+	access = access_atmospherics
+	contains = list(/obj/machinery/portable_atmospherics/canister/nitrous_oxide)
+	crate_name = "nitrous oxide canister crate"
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"
 	contains = list(/obj/item/weapon/storage/toolbox/electrical,
@@ -847,15 +855,6 @@ datum/supply_pack
 	contains = list(/obj/item/device/transfer_valve,
 					/obj/item/device/transfer_valve)
 	crate_name = "tank transfer valves crate"
-	crate_type = /obj/structure/closet/crate/secure
-	dangerous = TRUE
-
-/datum/supply_pack/science/plasma_canister
-	name = "Plasma Canister"
-	cost = 3000
-	access = access_rd
-	contains = list(/obj/machinery/portable_atmospherics/canister/toxins)
-	crate_name = "plasma canister crate"
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
 
