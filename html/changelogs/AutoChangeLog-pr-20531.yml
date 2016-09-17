@@ -1,0 +1,5 @@
+author: "Ergovisavi"
+delete-after: True
+changes: 
+  - rscadd: "Added a nightvision toggle to Shadowpeople"
+  - tweak: "Made several anomalous crystal variants more easily identified/easier to see the effects thereof, and removed the \"magic\" activation possibility (replaced with the \"bomb\" flag)"
