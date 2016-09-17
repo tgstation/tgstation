@@ -1,0 +1,4 @@
+author: "phil235"
+delete-after: True
+changes: 
+  - rscadd: "Wearing colored glasses colors your vision. This option can be enabled/disabled by alt-clicking any glasses with such feature."
