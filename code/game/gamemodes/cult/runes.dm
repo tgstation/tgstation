@@ -355,11 +355,11 @@ var/list/teleport_runes = list()
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
 	color = "#7D1717"
-	..()
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
 	var/is_convertable = is_convertable_to_cult(L.mind)
 	if(L.stat != DEAD && (is_clock || is_convertable))
+		invocation = "Mah'weyh pleggh at e'ntrath!"
 		if(is_clock)
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
 			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
@@ -368,7 +368,9 @@ var/list/teleport_runes = list()
 		else if(is_convertable)
 			do_convert(L, invokers)
 	else
+		invocation = "Barhah hra zar'garis!"
 		do_sacrifice(L, invokers)
+	..()
 	animate(src, color = initial(color), time = 5)
 	rune_in_use = FALSE
 
