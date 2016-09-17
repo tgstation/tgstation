@@ -421,7 +421,7 @@
 
 /obj/item/weapon/storage/belt/sabre
 	name = "sabre sheath"
-	desc = "An ornate sheath designed to hold an officer's blade."
+	desc = "An ornate sheath designed to hold an officer's blade. Alt-Click to quickly draw the sheathed blade."
 	icon_state = "sheath"
 	item_state = "sheath"
 	storage_slots = 1
