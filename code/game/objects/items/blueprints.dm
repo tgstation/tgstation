@@ -69,9 +69,9 @@
 		if(get_area_type() == AREA_STATION)
 			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
 			. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
+		. += "<p><a href='?src=\ref[src];view_legend=1'>View wire colour legend</a></p>"
 		if(!viewing)
 			. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
-			. += "<p><a href='?src=\ref[src];view_legend=1'>View wire colour legend</a></p>"
 		else
 			. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
 			. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
