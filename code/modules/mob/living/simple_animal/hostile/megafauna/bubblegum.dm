@@ -294,7 +294,6 @@ Difficulty: Hard
 	DA.transform = matrix()*2
 	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 5)
 	sleep(5)
-	qdel(D)
 	qdel(DA)
 
 	var/obj/effect/decal/cleanable/blood/found_bloodpool
