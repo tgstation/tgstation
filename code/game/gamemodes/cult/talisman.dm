@@ -349,8 +349,8 @@
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/target, mob/user, proximity_flag, click_parameters)
 	..()
 	if(proximity_flag && iscultist(user))
+		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/metal))
-			var/turf/T = get_turf(target)
 			if(target.use(25))
 				new /obj/structure/constructshell(T)
 				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
