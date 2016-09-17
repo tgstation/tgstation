@@ -48,7 +48,7 @@
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/borg/upgrade/modkit/aoe/mobs(src)
+			new /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
