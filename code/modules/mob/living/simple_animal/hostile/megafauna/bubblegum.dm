@@ -74,17 +74,14 @@ Difficulty: Hard
 		if(warped && prob(100 - anger_modifier))
 			return
 
-	if(prob(95 - anger_modifier) || slaughterlings())
+	if(prob(90 - anger_modifier) || slaughterlings())
 		if(health > maxHealth * 0.5 || client)
-			if(prob(70 - anger_modifier) || warped)
-				addtimer(src, "charge", 0)
-			else
-				addtimer(src, "warp_charge", 0)
+			addtimer(src, "charge", 0)
 		else
 			if(prob(70) || warped)
 				addtimer(src, "triple_charge", 0)
 			else
-				addtimer(src, "double_warp_charge", 0)
+				addtimer(src, "warp_charge", 0)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/New()
@@ -123,10 +120,6 @@ Difficulty: Hard
 		playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	if(charging)
 		DestroySurroundings()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/double_warp_charge()
-	warp_charge()
-	warp_charge()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/warp_charge()
 	blood_warp()
@@ -210,17 +203,21 @@ Difficulty: Hard
 			PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/rightsmack, target_two_turf)
 			bloodsmack(target_two_turf)
 
-	if(target_one.stat != CONSCIOUS || prob(10))
-		PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftpaw, target_one_turf)
-		PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftthumb, target_one_turf)
-		bloodgrab(target_one_turf)
-	else
-		PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftsmack, target_one_turf)
-		bloodsmack(target_one_turf)
+	var/list/pools = get_pools(get_turf(target_one), 0)
+	if(pools.len)
+		target_one_turf = get_turf(target_one)
+		if(target_one.stat != CONSCIOUS || prob(10))
+			PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftpaw, target_one_turf)
+			PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftthumb, target_one_turf)
+			bloodgrab(target_one_turf)
+		else
+			PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/leftsmack, target_one_turf)
+			bloodsmack(target_one_turf)
 
 	if(!target_two && target_one)
 		var/list/pools = get_pools(get_turf(target_one), 0)
 		if(pools.len)
+			target_one_turf = get_turf(target_one)
 			if(target_one.stat != CONSCIOUS || prob(10))
 				PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/rightpaw, target_one_turf)
 				PoolOrNew(/obj/effect/overlay/temp/bubblegum_hands/rightthumb, target_one_turf)
@@ -233,6 +230,7 @@ Difficulty: Hard
 	sleep(2.5)
 	for(var/mob/living/L in T)
 		if(!faction_check(L))
+			L << "<span class='userdanger'>[src] rends you!</span>"
 			playsound(T, attack_sound, 100, 1, -1)
 			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
@@ -242,13 +240,14 @@ Difficulty: Hard
 	sleep(6)
 	for(var/mob/living/L in T)
 		if(!faction_check(L))
+			L << "<span class='userdanger'>[src] drags you through the blood!</span>"
 			playsound(T, 'sound/magic/enter_blood.ogg', 100, 1, -1)
 			var/turf/targetturf = get_step(src, dir)
 			L.forceMove(targetturf)
 			playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, 1, -1)
 			if(L.stat != CONSCIOUS)
-				sleep(2)
-				devour(L)
+				addtimer(src, "devour", 2, FALSE, L)
+	sleep(1)
 
 /obj/effect/overlay/temp/bubblegum_hands
 	icon = 'icons/effects/bubblegum.dmi'
