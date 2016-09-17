@@ -359,16 +359,16 @@
 				qdel(src)
 			else
 				user << "<span class='warning'>You need more metal to produce a construct shell!</span>"
-			if(istype(target, /obj/item/stack/sheet/plasteel))
-				var/quantity = min(target.amount, uses)
-				uses -= quantity
-				new /obj/item/stack/sheet/runed_metal(T,quantity)
-				target.use(quantity)
-				user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
-				user << sound('sound/effects/magic.ogg',0,1,25)
-				invoke(user, 1)
-				if(uses <= 0)
-					qdel(src)
+		else if(istype(target, /obj/item/stack/sheet/plasteel))
+			var/quantity = min(target.amount, uses)
+			uses -= quantity
+			new /obj/item/stack/sheet/runed_metal(T,quantity)
+			target.use(quantity)
+			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
+			user << sound('sound/effects/magic.ogg',0,1,25)
+			invoke(user, 1)
+			if(uses <= 0)
+				qdel(src)
 		else
 			user << "<span class='warning'>The talisman must be used on metal or plasteel!</span>"
 

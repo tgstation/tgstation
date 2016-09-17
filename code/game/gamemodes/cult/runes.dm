@@ -757,7 +757,6 @@ var/list/wall_runes = list()
 	var/mob/living/user = invokers[1]
 	..()
 	density = !density
-	air_update_turf(1)
 	update_state()
 	if(density)
 		spread_density()
@@ -791,6 +790,7 @@ var/list/wall_runes = list()
 
 /obj/effect/rune/wall/proc/update_state()
 	deltimer(density_timer)
+	air_update_turf(1)
 	if(density)
 		var/image/I = image(layer = ABOVE_MOB_LAYER, icon = 'icons/effects/effects.dmi', icon_state = "barriershimmer")
 		I.appearance_flags = RESET_COLOR
