@@ -153,6 +153,7 @@
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
+		user << "<span class='notice'>Deca-code locks have a 4-digit code using numbers from 0-9 with no repeat digits</span>"
 		var/input = input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, 1))
 			if (input == code)
