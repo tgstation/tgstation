@@ -60,20 +60,17 @@
 				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 
-		if ("special")	//visual emotes with their own special sprites
+		if ("special")	//visual emotes with their own special sprites - DO NOT BE BLIND LIKE A CERTAIN SOMEONE WHO SHOULD HAVE ASKED WHAT EACH SPRITE WAS
 			if (sprite_changed_for_emote)
 				src << "You are currently brimming with emotion!"
 			else
 				sprite_changed_for_emote = TRUE	//so we don't attempt to swap the sprite twice in proc/change_icon because I don't know what may happen if we do
 				if (caste == "h")	//for hunter xenos
 					var/list/sprites = list("Blush" = "blush",
-											"Check these pecs" = "check_these_pecs", "Claw" = "claw",
 											"Dunno" = "dunno",
-											"Handstand" = "handstand", "Heart left half" = "heart_left", "Heart right half" = "heart_right",
-											"Meditate" = "meditate",
-											"Point" = "point",
-											"Sass" = "sass", "Shh" = "shh", "Splits" = "splits",
-											"Taken aback" = "taken_aback", "The thinker" = "thinker", "Tired sprawl" = "tired",
+											"Heart left half" = "heart_left", "Heart right half" = "heart_right",
+											"Sass" = "sass",
+											"The thinker" = "thinker",
 											"Waiting" = "waiting",
 											"You got it" = "you_got_it")
 

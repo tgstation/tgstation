@@ -206,23 +206,27 @@
 
 /mob/living/simple_animal/pet/cat/attack_alien(mob/living/carbon/alien/humanoid/M)	//what the xeno was after all along in Alien
 	if(M.a_intent == "help" && M.caste == "h")
-		visible_message("<span class='name'>[M]</span> picks up and hugs <span class='name'>[src]</span>.")
-		src.Move(M)
+		if (icon_state == "cat")
+			visible_message("<span class='name'>[M]</span> picks up and hugs <span class='name'>[src]</span>.")
+			src.Move(M)
 
-		M.sprite_changed_for_emote = TRUE
-		var/original_icon = M.icon
-		var/original_icon_state = M.icon_state
+			M.sprite_changed_for_emote = TRUE
+			var/original_icon = M.icon
+			var/original_icon_state = M.icon_state
 
-		M.icon = 'icons/mob/alien_emotes.dmi'
-		M.icon_state = "cat_cuddle"
+			M.icon = 'icons/mob/alien_emotes.dmi'
+			M.icon_state = "cat_cuddle"
 
-		spawn(M.emote_length)
-			M.icon = original_icon
-			M.icon_state = original_icon_state
-			M.sprite_changed_for_emote = FALSE
+			spawn(M.emote_length)
+				M.icon = original_icon
+				M.icon_state = original_icon_state
+				M.sprite_changed_for_emote = FALSE
 
-			src.forceMove(M.loc)
-	else return ..()
+				src.forceMove(M.loc)
+		else
+			M << "It looks wrong... why would you pick that one up?"
+	else
+		return ..()
 
 /mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
 	if(change)
