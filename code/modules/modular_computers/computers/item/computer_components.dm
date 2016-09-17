@@ -26,7 +26,6 @@
 	H.forceMove(src)
 	H.holder = src
 	H.on_install(src, user)
-	return H
 
 
 // Uninstalls component.
@@ -44,7 +43,6 @@
 	if(enabled && !use_power())
 		shutdown_computer()
 	update_icon()
-	return H
 
 
 // Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null

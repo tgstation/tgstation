@@ -117,7 +117,7 @@
 
 			var/obj/item/weapon/computer_hardware/processor_unit/PU = all_components[MC_CPU]
 
-			if(idle_threads.len >= PU.max_idle_programs+1)
+			if(idle_threads.len > PU.max_idle_programs)
 				user << "<span class='danger'>\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error.</span>"
 				return
 

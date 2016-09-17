@@ -55,3 +55,17 @@
 	..()
 	machinery_computer.update_icon()
 	return
+
+/obj/item/device/modular_computer/processor/add_verb(path)
+	switch(path)
+		if(MC_CARD)
+			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_id
+		if(MC_SDD)
+			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_disk
+
+/obj/item/device/modular_computer/processor/remove_verb(path)
+	switch(path)
+		if(MC_CARD)
+			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_id
+		if(MC_SDD)
+			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_disk

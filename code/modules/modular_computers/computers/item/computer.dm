@@ -66,6 +66,21 @@
 			qdel(CH)
 	return ..()
 
+
+/obj/item/device/modular_computer/proc/add_verb(var/path)
+	switch(path)
+		if(MC_CARD)
+			verbs += /obj/item/device/modular_computer/proc/eject_id
+		if(MC_SDD)
+			verbs += /obj/item/device/modular_computer/proc/eject_disk
+
+/obj/item/device/modular_computer/proc/remove_verb(path)
+	switch(path)
+		if(MC_CARD)
+			verbs -= /obj/item/device/modular_computer/proc/eject_id
+		if(MC_SDD)
+			verbs -= /obj/item/device/modular_computer/proc/eject_disk
+
 // Eject ID card from computer, if it has ID slot with card inside.
 /obj/item/device/modular_computer/proc/eject_id()
 	set name = "Eject ID"

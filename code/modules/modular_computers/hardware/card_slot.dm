@@ -31,11 +31,10 @@
 	return ..()
 
 /obj/item/weapon/computer_hardware/card_slot/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
-	M.verbs += /obj/item/device/modular_computer/proc/eject_id
+	M.add_verb(device_type)
 
 /obj/item/weapon/computer_hardware/card_slot/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
-	..()
-	M.verbs -= /obj/item/device/modular_computer/proc/eject_id
+	M.remove_verb(device_type)
 
 /obj/item/weapon/computer_hardware/card_slot/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
