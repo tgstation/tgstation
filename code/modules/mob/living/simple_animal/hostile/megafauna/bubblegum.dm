@@ -11,13 +11,13 @@ It acts as a melee creature, chasing down and attacking its target while also us
 
 It tries to strike at its target through any bloodpools under them; if it fails to do that, it will spray blood and then attempt to warp to a bloodpool near the target.
 If it fails to warp to a target, it may summon up to 6 slaughterlings from the blood around it.
-If it does not summon all 6 slaughterlings, it will instead charge at its target, dealing massive damage to anything it hits and spraying a stream of blood. At half health, it will charge three times.
+If it does not summon all 6 slaughterlings, it will instead charge at its target, dealing massive damage to anything it hits and spraying a stream of blood.
+At half health, it will either charge three times or warp, then charge, instead of doing a single charge.
 
 When Bubblegum dies, it leaves behind a chest that can contain three things:
- 1. A slaughter demon spawner
- 2. A bottle that, when activated, drives everyone nearby into a frenzy
- 3. A contract that marks for death the chosen target
- 4. A spellblade that can slice off limbs at range
+ 1. A bottle that, when activated, drives everyone nearby into a frenzy
+ 2. A contract that marks for death the chosen target
+ 3. A spellblade that can slice off limbs at range
 
 Difficulty: Hard
 
