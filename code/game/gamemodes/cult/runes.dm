@@ -360,6 +360,7 @@ var/list/teleport_runes = list()
 	var/is_convertable = is_convertable_to_cult(L.mind)
 	if(L.stat != DEAD && (is_clock || is_convertable))
 		invocation = "Mah'weyh pleggh at e'ntrath!"
+		..()
 		if(is_clock)
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
 			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
@@ -369,8 +370,8 @@ var/list/teleport_runes = list()
 			do_convert(L, invokers)
 	else
 		invocation = "Barhah hra zar'garis!"
+		..()
 		do_sacrifice(L, invokers)
-	..()
 	animate(src, color = initial(color), time = 5)
 	rune_in_use = FALSE
 
