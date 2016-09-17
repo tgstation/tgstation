@@ -439,10 +439,9 @@
 		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
 		)
 		user.put_in_hands(I)
-		update_icon(I)
+		update_icon()
 	else
 		user << "[src] is empty."
-	return
 
 /obj/item/weapon/storage/belt/sabre/update_icon()
 	icon_state = "sheath"
