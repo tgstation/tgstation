@@ -431,6 +431,19 @@
 		/obj/item/weapon/melee/sabre
 		)
 
+
+
+/obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
+	if(contents.len)
+		var/obj/item/I = contents[1]
+		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
+		)
+		user.put_in_hands(I)
+		update_icon(I)
+	else
+		user << "[src] is empty."
+	return
+
 /obj/item/weapon/storage/belt/sabre/update_icon()
 	icon_state = "sheath"
 	item_state = "sheath"
@@ -441,6 +454,7 @@
 		var/mob/living/L = loc
 		L.regenerate_icons()
 	..()
+
 
 /obj/item/weapon/storage/belt/sabre/New()
 	..()
