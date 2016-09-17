@@ -109,7 +109,7 @@ Acts like a normal vent, but has an input AND output.
 
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 				//removed can be null if there is no air in the location
-				if(!removed))
+				if(!removed)
 					return FALSE
 
 				air2.merge(removed)
