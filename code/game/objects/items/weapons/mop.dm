@@ -21,11 +21,10 @@
 
 
 obj/item/weapon/mop/proc/clean(turf/A)
-	var/holyness = reagents.has_reagent("holywater", 1)
-	if(reagents.has_reagent("water", 1) || holyness || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
+	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
 		A.clean_blood()
 		for(var/obj/effect/O in A)
-			if(is_cleanable(O, holyness))
+			if(is_cleanable(O))
 				qdel(O)
 		if(istype(A, /turf/closed))
 			var/turf/closed/C = A
