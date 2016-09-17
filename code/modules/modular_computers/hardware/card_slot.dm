@@ -5,6 +5,7 @@
 	icon_state = "card_mini"
 	w_class = 1
 	origin_tech = "programming=2"
+	device_type = MC_CARD
 
 	var/obj/item/weapon/card/id/stored_card = null
 	var/obj/item/weapon/card/id/stored_card2 = null
@@ -28,6 +29,12 @@
 	else if(stored_card2)
 		return stored_card2
 	return ..()
+
+/obj/item/weapon/computer_hardware/card_slot/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
+	M.add_verb(device_type)
+
+/obj/item/weapon/computer_hardware/card_slot/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
+	M.remove_verb(device_type)
 
 /obj/item/weapon/computer_hardware/card_slot/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
