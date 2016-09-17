@@ -51,7 +51,7 @@
 		return
 	*/
 
-	if(!can_be_dirty)
+	if(!(flags & CAN_BE_DIRTY))
 		return
 
 	if(locate(/obj/structure/grille) in contents)
@@ -65,7 +65,7 @@
 		return
 	*/
 
-	if(A && !A.can_be_dirty)
+	if(A && !(A.flags & CAN_BE_DIRTY))
 		return
 
 	//The code below here isn't exactly optimal, but because of the individual decals that each area uses it's still applicable.

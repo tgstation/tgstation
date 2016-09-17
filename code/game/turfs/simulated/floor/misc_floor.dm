@@ -29,7 +29,7 @@
 /turf/open/floor/plating/beach
 	name = "beach"
 	icon = 'icons/misc/beach.dmi'
-	can_be_dirty = FALSE
+	flags = 0
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
 	contents_explosion(severity, target)

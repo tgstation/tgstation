@@ -33,7 +33,7 @@
 	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
-	can_be_dirty = FALSE
+	flags = 0
 	var/ore_type = /obj/item/weapon/ore/glass
 
 /turf/open/floor/grass/New()
@@ -94,7 +94,7 @@
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
-	can_be_dirty = FALSE
+	flags = 0
 
 /turf/open/floor/carpet/New()
 	..()
