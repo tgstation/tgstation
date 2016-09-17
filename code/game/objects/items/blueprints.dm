@@ -54,6 +54,7 @@
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	var/list/image/showing = list()
 	var/client/viewing
+	var/legend = 0	//Viewing the wire legend
 
 
 /obj/item/areaeditor/blueprints/Destroy()
@@ -63,16 +64,25 @@
 
 /obj/item/areaeditor/blueprints/attack_self(mob/user)
 	. = ..()
-	var/area/A = get_area()
-	if(get_area_type() == AREA_STATION)
-		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
-		. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
-		. += "<p><a href='?src=\ref[src];view_legend=1'>View wire colour legend</a></p>"
-	if(!viewing)
-		. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
+	if(!legend)
+		var/area/A = get_area()
+		if(get_area_type() == AREA_STATION)
+			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
+			. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
+		if(!viewing)
+			. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
+			. += "<p><a href='?src=\ref[src];view_legend=1'>View wire colour legend</a></p>"
+		else
+			. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
+			. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
 	else
-		. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
-		. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
+		if(legend == 1)
+			. += "<a href='?src=\ref[src];exit_legend=1'><< Back</a>"
+			. += view_wire_devices(user);
+		else
+			//legend is a wireset
+			. += "<a href='?src=\ref[src];view_legend=1'><< Back</a>"
+			. += view_wire_set(user, legend)
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
 	popup.open()
@@ -85,8 +95,12 @@
 		if(get_area_type()!=AREA_STATION)
 			return
 		edit_area()
+	if(href_list["exit_legend"])
+		legend = 0;
 	if(href_list["view_legend"])
-		view_wires(usr)
+		legend = 1;
+	if(href_list["view_wireset"])
+		legend = href_list["view_wireset"];
 	if(href_list["view_blueprints"])
 		set_viewer(usr, "<span class='notice'>You flip the blueprints over to view the complex information diagram.</span>")
 	if(href_list["hide_blueprints"])
@@ -125,6 +139,7 @@
 /obj/item/areaeditor/blueprints/dropped(mob/user)
 	..()
 	clear_viewer()
+	legend = 0
 
 
 /obj/item/areaeditor/proc/get_area()
@@ -152,23 +167,35 @@
 			return AREA_SPECIAL
 	return AREA_STATION
 
-/proc/view_wires(mob/user)
-	var/message = "<span class='notice'>You examine the wire legend.</span>"
+/obj/item/areaeditor/blueprints/proc/view_wire_devices(mob/user)
+	var/message = "<br>You examine the wire legend.<br>"
+	var/list/local_wires = wire_color_directory
+	var/list/local_names = wire_name_directory
+	for(var/wireset in local_wires)
+		if(wireset == "explosive")
+			continue
+		var/setname = local_names[wireset]
+		if(setname == "Unknown")
+			continue
+		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[setname]</a>"
+	message += "</p>"
+	return message
+
+/obj/item/areaeditor/blueprints/proc/view_wire_set(mob/user, wireset)
+	//for some reason you can't use wireset directly as a derefencer so this is the next best :/
 	var/list/local_wires = wire_color_directory
 	var/list/local_names = wire_name_directory
 	for(var/device in local_wires)
-		if(device == "explosive")
-			continue
-		var/set_name = local_names[device]
-		if(set_name == "Unknown")
-			continue
-		message += "<p><b>[set_name]:</b>"
-		for(var/Col in local_wires[device])
-			var/wire_name = local_wires[device][Col]
-			if(!findtext(wire_name, "__dud"))
-				message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
-		message += "</p>"
-	user << message
+		if("[device]" == wireset)	//I know... don't change it...
+			var/setname = local_names[device]
+			var/message = "<p><b>[setname]:</b>"
+			for(var/Col in local_wires[device])
+				var/wire_name = local_wires[device][Col]
+				if(!findtext(wire_name, "__dud"))	//don't show duds
+					message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
+			message += "</p>"
+			return message
+	return ""
 
 /proc/create_area(mob/living/creator)
 	var/res = detect_room(get_turf(creator))
