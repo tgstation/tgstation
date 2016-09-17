@@ -331,7 +331,8 @@ Difficulty: Hard
 		playsound(previousturf,'sound/effects/splat.ogg', 100, 1, -1)
 		if(!J || !previousturf.CanAtmosPass(J))
 			break
-		new /obj/effect/decal/cleanable/blood(J)
+		var/obj/effect/decal/cleanable/blood/B = new /obj/effect/decal/cleanable/blood(J)
+		B.bloodiness = 0
 		previousturf = J
 		sleep(1)
 
