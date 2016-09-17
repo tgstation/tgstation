@@ -129,7 +129,6 @@ Difficulty: Hard
 	warp_charge()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/warp_charge()
-	charging = 1
 	blood_warp()
 	charge()
 
