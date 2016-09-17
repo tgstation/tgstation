@@ -215,7 +215,7 @@ Difficulty: Hard
 			bloodsmack(target_one_turf)
 
 	if(!target_two && target_one)
-		var/list/pools = get_pools(get_turf(target_one), 0)
+		pools = get_pools(get_turf(target_one), 0)
 		if(pools.len)
 			target_one_turf = get_turf(target_one)
 			if(target_one.stat != CONSCIOUS || prob(10))
