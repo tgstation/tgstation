@@ -206,7 +206,7 @@
 
 /mob/living/simple_animal/pet/cat/attack_alien(mob/living/carbon/alien/humanoid/M)	//what the xeno was after all along in Alien
 	if(M.a_intent == "help" && M.caste == "h")
-		if (icon_state == "cat")
+		if (icon_state == "cat" || icon_state == "cat_rest" || icon_state == "cat_sit")
 			visible_message("<span class='name'>[M]</span> picks up and hugs <span class='name'>[src]</span>.")
 			src.Move(M)
 
