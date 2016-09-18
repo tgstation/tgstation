@@ -5,6 +5,7 @@ datum/supply_pack
 	var/contraband = FALSE
 	var/cost = 700 // Minimum cost, or infinite points are possible.
 	var/access = FALSE
+	var/access_any = FALSE
 	var/list/contains = null
 	var/crate_name = "crate"
 	var/crate_type = /obj/structure/closet/crate
@@ -17,6 +18,8 @@ datum/supply_pack
 	C.name = crate_name
 	if(access)
 		C.req_access = list(access)
+	if(access_any)
+		C.req_one_access = access_any
 
 	fill(C)
 
@@ -861,7 +864,7 @@ datum/supply_pack
 /datum/supply_pack/science/bz_canister
 	name = "BZ Canister"
 	cost = 4000
-	access = access_rd
+	access_any = list(access_rd, access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "bz canister crate"
 	crate_type = /obj/structure/closet/crate/secure
@@ -870,7 +873,7 @@ datum/supply_pack
 /datum/supply_pack/science/freon_canister
 	name = "Freon Canister"
 	cost = 6000
-	access = access_rd
+	access_any = list(access_rd, access_atmospherics)
 	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
 	crate_name = "freon canister crate"
 	crate_type = /obj/structure/closet/crate/secure
