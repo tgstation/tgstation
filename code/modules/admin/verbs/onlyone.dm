@@ -8,6 +8,9 @@ var/highlander = FALSE
 	world << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
 	world << sound('sound/misc/highlander.ogg')
 
+	for(var/obj/item/weapon/disk/nuclear/N in poi_list)
+		N.relocate() //Gets it out of bags and such
+
 	for(var/mob/living/carbon/human/H in player_list)
 		if(H.stat == DEAD || !(H.client))
 			continue
@@ -43,6 +46,8 @@ var/highlander = FALSE
 	equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(src), slot_head)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(src), slot_shoes)
 	equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), slot_l_store)
+	for(var/obj/item/weapon/pinpointer/P in src)
+		P.attack_self(src)
 	var/obj/item/weapon/card/id/W = new(src)
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()
