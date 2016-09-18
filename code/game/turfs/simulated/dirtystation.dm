@@ -4,7 +4,6 @@
 //Conspicuously not-recent versions of suspicious cleanables
 
 //This file was made not awful by Xhuis on September 13, 2016
-//Legacy code preserved so people can see what NOT to do
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -45,12 +44,6 @@
 	if(prob(66))	//fastest possible exit 2/3 of the time
 		return
 
-	//What is object-oriented programming? istype() chains are baaad unless it's an attackby. Now turf has a "dirtiness" variable that determines this kind of thing.
-	/*
-	if(istype(src, /turf/open/floor/carpet) || istype(src, /turf/open/floor/grass) || istype(src, /turf/open/floor/plating/beach) || istype(src, /turf/open/floor/holofloor)|| istype(src, /turf/open/floor/plating/ironsand))
-		return
-	*/
-
 	if(!(flags & CAN_BE_DIRTY))
 		return
 
@@ -58,12 +51,6 @@
 		return
 
 	var/area/A = get_area(src)
-
-	//See above. These areas use a variable now too.
-	/*
-	if(!istype(A) || istype(A, /area/centcom) || istype(A, /area/holodeck) || istype(A, /area/library) || istype(A, /area/janitor) || istype(A, /area/chapel) || istype(A, /area/mine/explored) || istype(A, /area/mine/unexplored) || istype(A, /area/solar) || istype(A, /area/atmos) || istype(A, /area/medical/virology))
-		return
-	*/
 
 	if(A && !(A.flags & CAN_BE_DIRTY))
 		return
