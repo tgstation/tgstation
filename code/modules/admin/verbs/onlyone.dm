@@ -57,7 +57,7 @@ var/highlander = FALSE
 	if(!highlander)
 		H1.admin_spawned = TRUE //To prevent announcing
 	put_in_hands(H1)
-	H1.pickup(src)
+	H1.pickup(src) //For the stun shielding
 
 	var/obj/item/weapon/bloodcrawl/antiwelder = new(src)
 	antiwelder.name = "compulsion of honor"
