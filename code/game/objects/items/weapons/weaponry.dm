@@ -75,8 +75,8 @@ var/highlander_claymores = 0
 	STOP_PROCESSING(SSobj, src)
 	highlander_claymores--
 	if(nuke_disk)
-		visible_message("<span class='warning'>The nuke disk is vulnerable!</span>")
-		nuke_disk.loc = get_turf(src)
+		nuke_disk.forceMove(get_turf(src))
+		nuke_disk.visible_message("<span class='warning'>The nuke disk is vulnerable!</span>")
 		nuke_disk = null
 	return ..()
 

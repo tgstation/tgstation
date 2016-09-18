@@ -91,7 +91,7 @@ var/bomb_set
 	if (istype(I, /obj/item/weapon/disk/nuclear))
 		if(!user.drop_item())
 			return
-		I.loc = src
+		I.forceMove(src)
 		auth = I
 		add_fingerprint(user)
 		return
@@ -508,7 +508,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 		loc = H
 		H.nuke_disk = src
 		return 1
-	..()
+	return ..()
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is \

@@ -59,11 +59,11 @@ var/highlander = FALSE
 	put_in_hands(H1)
 	H1.pickup(src)
 
-	var/obj/item/weapon/bloodcrawl/ANTIWELDER = new(src)
-	ANTIWELDER.name = "compulsion of honor"
-	ANTIWELDER.desc = "You are unable to hold anything in this hand until you're the last one left!"
-	ANTIWELDER.icon_state = "bloodhand_right"
-	put_in_hands(ANTIWELDER)
+	var/obj/item/weapon/bloodcrawl/antiwelder = new(src)
+	antiwelder.name = "compulsion of honor"
+	antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
+	antiwelder.icon_state = "bloodhand_right"
+	put_in_hands(antiwelder)
 
 	src << "<span class='boldannounce'>Your [H1.name] cries out for blood. Join in the slaughter, lest you be claimed yourself...\n\
 	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>"
