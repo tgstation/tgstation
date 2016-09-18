@@ -785,7 +785,7 @@
 			if(isturf(tile))
 				tile.clean_blood()
 				for(var/A in tile)
-					if(iscleanable(A))
+					if(is_cleanable(A))
 						qdel(A)
 					else if(istype(A, /obj/item))
 						var/obj/item/cleaned_item = A
