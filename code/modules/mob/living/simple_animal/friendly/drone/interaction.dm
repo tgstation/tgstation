@@ -52,7 +52,7 @@
 
 
 /mob/living/simple_animal/drone/attack_hand(mob/user)
-	if(ishuman(user))
+	if(ishuman(user) && can_be_hat)
 		if(stat == DEAD || status_flags & GODMODE)
 			..()
 			return
@@ -75,6 +75,8 @@
 		DH.drone = src
 		user.put_in_hands(DH)
 		forceMove(DH)
+	else
+		..()
 
 
 

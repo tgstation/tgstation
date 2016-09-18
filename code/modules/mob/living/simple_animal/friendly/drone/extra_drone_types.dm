@@ -112,6 +112,7 @@
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
 	seeStatic = 0
 	hacked = TRUE
+	can_be_hat = FALSE
 	visualAppearence = CLOCKDRONE
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
@@ -144,4 +145,4 @@
 	return //we don't get hacked or give a shit about it
 
 /mob/living/simple_animal/drone/cogscarab/drone_chat(msg)
-	titled_hierophant_message(src, msg, "heavy_alloy") //HIEROPHANT DRONES
+	titled_hierophant_message(src, msg, "nezbere", "brass", "Construct") //HIEROPHANT DRONES
