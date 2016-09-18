@@ -305,6 +305,9 @@
 	if(del_on_death)
 		ghostize()
 		stat = DEAD
+		//Prevent infinite loops if the mob Destroy() is overriden in such
+		//a manner as to cause a call to death() again
+		del_on_death = FALSE
 		qdel(src)
 		return
 	else
