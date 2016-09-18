@@ -88,7 +88,7 @@
 
 	clean_blood()
 	for(var/obj/effect/O in src)
-		if(istype(O, /obj/effect/decal/cleanable))
+		if(iscleanable(O))
 			qdel(O)
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in src)

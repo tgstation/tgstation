@@ -47,7 +47,7 @@
 		if(isturf(tile))
 			tile.clean_blood()
 			for(var/A in tile)
-				if(istype(A, /obj/effect/decal/cleanable))
+				if(iscleanable(A))
 					qdel(A)
 	. = ..()
 
