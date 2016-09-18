@@ -11,7 +11,7 @@
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
-	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "z")
+	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
 	for(var/i = 0, i < codelen, i++)
 		var/dig = pick(digits)
@@ -153,6 +153,7 @@
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
+		user << "<span class='notice'>Deca-code locks have a 4-digit code using numbers from 0-9 with no repeat digits</span>"
 		var/input = input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, 1))
 			if (input == code)
@@ -164,7 +165,7 @@
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
 				user << "<span class='warning'>A red light flashes.</span>"
-				lastattempt = replacetext(input, 0, "z")
+				lastattempt = input
 				attempts--
 				if(attempts == 0)
 					boom(user)
@@ -204,6 +205,7 @@
 						++bulls
 					else if(a)
 						++cows
+				user << "<span class='notice'>The last code used was [lastattempt]</span>"
 				user << "<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
 			return
 	return ..()
