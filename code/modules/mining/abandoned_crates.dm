@@ -11,12 +11,12 @@
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
-	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "z")
+	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
 	for(var/i = 0, i < codelen, i++)
 		var/dig = pick(digits)
 		code += dig
-		digits -= dig  //Player can enter codes with matching digits, but there are never matching digits in the answer
+		digits -= dig  //there are never matching digits in the answer
 
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
@@ -153,18 +153,26 @@
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
-		var/input = input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "") as text
+		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, 1))
+			var/list/sanitised = list()
+			var/sanitycheck = 1
+			for(var/i=1,i<=length(input),i++) //put the guess into a list
+				sanitised += text2num(copytext(input,i,i+1))
+			for(var/i=1,i<=(length(input)-1),i++) //compare each digit in the guess to all those following it
+				for(var/j=(i+1),j<=length(input),j++)
+					if(sanitised[i] == sanitised[j])
+						sanitycheck = null //if a digit is repeated, reject the input
 			if (input == code)
 				user << "<span class='notice'>The crate unlocks!</span>"
 				locked = 0
 				cut_overlays()
 				add_overlay("securecrateg")
-			else if (input == null || length(input) != codelen)
+			else if (input == null || sanitycheck == null || length(input) != codelen)
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
 				user << "<span class='warning'>A red light flashes.</span>"
-				lastattempt = replacetext(input, 0, "z")
+				lastattempt = input
 				attempts--
 				if(attempts == 0)
 					boom(user)
@@ -192,19 +200,21 @@
 				user << "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>"
 			if(lastattempt != null)
 				var/list/guess = list()
+				var/list/answer = list()
 				var/bulls = 0
 				var/cows = 0
-				for(var/i = 1, i < codelen + 1, i++)
-					var/a = copytext(lastattempt, i, i+1) //Stuff the code into the list
-					guess += a
-					guess[a] = i
-				for(var/i in guess) //Go through list and count matches
-					var/a = findtext(code, i)
-					if(a == guess[i])
-						++bulls
-					else if(a)
+				for(var/i=1,i<=length(lastattempt),i++)
+					guess += text2num(copytext(lastattempt,i,i+1))
+				for(var/i=1,i<=length(lastattempt),i++)
+					answer += text2num(copytext(code,i,i+1))
+				for(var/i = 1, i < codelen + 1, i++) // Go through list and count matches
+					if( answer.Find(guess[i],1,codelen+1))
 						++cows
-				user << "<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
+					if( answer[i] == guess[i])
+						++bulls
+						--cows
+
+				user << "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
 			return
 	return ..()
 
