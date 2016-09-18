@@ -45,6 +45,16 @@
 	build_path = /obj/item/device/mmi/posibrain
 	category = list("Misc", "Medical Designs")
 
+/datum/design/defibupgrade
+	name = "Defibrillator Hyper-Conductor"
+	desc = "Can upgrade a defibrillator to allow it to revive decayed corpses."
+	id = "defib_upgrade"
+	req_tech = list("materials" = 6, "biotech" = 6, "powerstorage" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1500, MAT_GOLD = 3000, MAT_TITANIUM = 2000)
+	build_path = /obj/item/defibupgrade
+	category = list("Medical Designs")
+
 /datum/design/bluespacebeaker
 	name = "Bluespace Beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
