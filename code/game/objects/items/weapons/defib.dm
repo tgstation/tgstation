@@ -18,6 +18,7 @@
 	var/obj/item/weapon/twohanded/shockpaddles/paddles
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/combat = 0 //can we revive through space suits?
+	var/frankenstein = 0 //can we revive over the time limit?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 
 /obj/item/weapon/defibrillator/New() //starts without a cell for rnd
@@ -32,6 +33,11 @@
 	bcell = new(src)
 	update_icon()
 	return
+
+/obj/item/weapon/defibrillator/loaded/examine(mob/user)
+	..()
+	if (frankenstein)
+		user << "<span class='notice'>The defibrillator is upgraded with a hyper-conductor module.</span>"
 
 /obj/item/weapon/defibrillator/update_icon()
 	update_power()
@@ -53,6 +59,8 @@
 		add_overlay("[initial(icon_state)]-paddles")
 	if(powered)
 		add_overlay("[initial(icon_state)]-powered")
+	if(frankenstein)
+		add_overlay("[initial(icon_state)]-hyper")
 	if(!bcell)
 		add_overlay("[initial(icon_state)]-nocell")
 	if(!safety)
@@ -125,6 +133,12 @@
 			bcell = null
 			user << "<span class='notice'>You remove the cell from [src].</span>"
 			update_icon()
+
+	else if(istype(W, /obj/item/defibupgrade))
+		frankenstein = 1
+		qdel(W)
+		user << "<span class='notice'>You install the hyper-conductor upgrade into [src].</span>"
+		update_icon()
 	else
 		return ..()
 
@@ -499,7 +513,7 @@
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existance.  Further attempts futile.</span>"
-				else if (tplus > tlimit)
+				else if ((!req_defib && tplus > tlimit) || (req_defib && !(defib.frankenstein) && tplus > tlimit))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!H.getorgan(/obj/item/organ/heart))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
@@ -515,6 +529,23 @@
 				if(failed)
 					user.visible_message(failed)
 					playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+				else if (req_defib && defib.frankenstein) //If the defib is upgraded
+					revivecost *= 5 //big shocks are expensive
+					var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
+					var/mobhealth = H.health
+					H.setOxyLoss(0, 0)
+					H.setToxLoss(0, 0)
+					if (!(H.health > halfwaycritdeath))
+						H.adjustFireLoss((mobhealth - halfwaycritdeath) * (total_burn / overall_damage), 0)
+						H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage), 0)
+					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
+					playsound(get_turf(src), 'sound/magic/lightningbolt.ogg', 50, 0)
+					H.revive()
+					H.electrocute_act(0, "hyper-charged defibrillator", 1, 1) //and here's the proper shock
+					H.emote("gasp")
+					if(tplus > tloss)
+						H.setBrainLoss( max(0, min(50, ((tlimit - tplus) / tlimit * 100)))) //electroshock therapy
+					add_logs(user, M, "revived", defib)
 				else
 					//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 					if (H.health > halfwaycritdeath)
@@ -533,9 +564,12 @@
 					if(tplus > tloss)
 						H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))
 					add_logs(user, M, "revived", defib)
+
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
+					if (defib.frankenstein)
+						revivecost /= 5 //back to normal cost or we'll multiply by 5 exry time
 				update_icon()
 				if(req_defib)
 					defib.cooldowncheck(user)
@@ -564,3 +598,10 @@
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = 0
+
+obj/item/defibupgrade
+	name = "hyper-conductor upgrade"
+	desc = "An upgrade for defibrillators."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "defibkit"
+	origin_tech = "materials=4;powerstorage=4;biotech=5"
