@@ -45,6 +45,7 @@ Difficulty: Hard
 	pixel_x = -32
 	del_on_death = 1
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
+	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = 0
 	medal_type = MEDAL_PREFIX
 	score_type = BUBBLEGUM_SCORE
@@ -56,6 +57,12 @@ Difficulty: Hard
 	gpstag = "Bloody Signal"
 	desc = "You're not quite sure how a signal can be bloody."
 	invisibility = 100
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount)
+	if(amount > 0 && prob(33))
+		var/obj/effect/decal/cleanable/blood/B = new /obj/effect/decal/cleanable/blood(loc)
+		B.bloodiness = 20
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
@@ -317,7 +324,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray()
 	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
-	var/range = 5 + round(anger_modifier * 0.35)
+	var/range = 6 + round(anger_modifier * 0.4)
 	var/turf/previousturf = get_turf(src)
 	var/turf/J = previousturf
 	var/targetdir = get_dir(src, target)
