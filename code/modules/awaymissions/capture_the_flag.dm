@@ -470,7 +470,6 @@
 	health = INFINITY
 	maxhealth = INFINITY
 	var/team = WHITE_TEAM
-	constructable = FALSE
 	time_between_triggers = 1
 	alpha = 255
 
@@ -481,7 +480,6 @@
 	if(!(src.team in L.faction))
 		L << "<span class='danger'><B>Stay out of the enemy spawn!</B></span>"
 		L.death()
-
 
 /obj/structure/divine/trap/ctf/red
 	team = RED_TEAM

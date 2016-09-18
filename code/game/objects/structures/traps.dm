@@ -8,7 +8,6 @@
 	health = 20
 	maxhealth = 20
 	trap = TRUE
-	autocolours = FALSE
 	var/last_trigger = 0
 	var/time_between_triggers = 600 //takes a minute to recharge
 
@@ -24,7 +23,6 @@
 		trap_effect(L)
 		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
-
 /obj/structure/divine/trap/examine(mob/user)
 	..()
 	if(!isliving(user)) //bad ghosts, stop trying to powergame from beyond the grave
@@ -37,12 +35,10 @@
 /obj/structure/divine/trap/proc/trap_effect(mob/living/L)
 	return
 
-
 /obj/structure/divine/trap/stun
 	name = "shock trap"
 	desc = "A trap that will shock you, it will burn your flesh and render you immobile, You'd better avoid it."
 	icon_state = "trap-shock"
-
 
 /obj/structure/divine/trap/stun/trap_effect(mob/living/L)
 	L << "<span class='danger'><B>You are paralyzed from the intense shock!</B></span>"
