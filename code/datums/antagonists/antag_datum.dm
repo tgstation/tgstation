@@ -3,6 +3,7 @@
 	var/mob/living/owner //who's our owner and accordingly an antagonist
 	var/some_flufftext = "yer an antag larry"
 	var/prevented_antag_datum_type //the type of antag datum that this datum can't coexist with; should probably be a list
+	var/silent_update = FALSE //if we suppress messages during on_gain, apply_innate_effects, remove_innate_effects, and on_remove
 
 /datum/antagonist/New()
 	if(!prevented_antag_datum_type)
@@ -27,7 +28,7 @@
 
 /datum/antagonist/proc/on_gain() //on initial gain of antag datum, do this. should only be called once per datum
 	apply_innate_effects()
-	if(some_flufftext)
+	if(!silent_update && some_flufftext)
 		owner << some_flufftext
 
 /datum/antagonist/proc/apply_innate_effects() //applies innate effects to the owner, may be called multiple times due to mind transferral, but should only be called once per mob

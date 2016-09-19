@@ -43,24 +43,21 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/living/M)
-	return M && istype(M) && M.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
+	return istype(M) && M.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
 
 /proc/is_eligible_servant(mob/living/M)
 	if(!istype(M))
 		return 0
 	if(M.mind)
+		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+			return 0
 		if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
 			return 0
-		if(ishuman(M))
-			if(M.mind.assigned_role in list("Captain", "Chaplain"))
-				return 0
-	if(iscultist(M) || isconstruct(M))
+	else
 		return 0
-	if(ishuman(M))
-		if(isloyal(M))
-			return 0
-		return 1
-	if(isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+	if(iscultist(M) || isconstruct(M) || isloyal(M))
+		return 0
+	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
 		return 1
 	return 0
 
@@ -73,7 +70,6 @@ Credit where due:
 /proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
 	var/datum/antagonist/clockcultist/clock_datum = L.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
 	if(!clock_datum)
-		world << "wait shit what"
 		return FALSE
 	clock_datum.silent_update = silent
 	clock_datum.on_remove()

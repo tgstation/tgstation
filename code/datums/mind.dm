@@ -235,7 +235,7 @@
 		ticker.mode.add_revolutionary(src)
 
 	else if(is_servant_of_ratvar(creator))
-		add_servant_of_ratvar(src)
+		add_servant_of_ratvar(current)
 
 	else if(is_nuclear_operative(creator))
 		make_Nuke(null, null, 0, FALSE)

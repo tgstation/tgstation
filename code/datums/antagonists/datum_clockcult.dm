@@ -1,12 +1,16 @@
 //CLOCKCULT PROOF OF CONCEPT
 
 /datum/antagonist/clockcultist
-	var/silent_update = FALSE
 	prevented_antag_datum_type = /datum/antagonist/clockcultist
 	some_flufftext = null
+	var/datum/action/innate/hierophant/hierophant_network = new()
 
 /datum/antagonist/clockcultist/silent
 	silent_update = TRUE
+
+/datum/antagonist/clockcultist/Destroy()
+	qdel(hierophant_network)
+	..()
 
 /datum/antagonist/clockcultist/can_be_owned(mob/living/new_body)
 	. = ..()
@@ -37,6 +41,8 @@
 	if(ticker && ticker.mode && owner.mind)
 		ticker.mode.servants_of_ratvar += owner.mind
 		ticker.mode.update_servant_icons_added(owner.mind)
+		if(jobban_isbanned(owner, ROLE_SERVANT_OF_RATVAR))
+			addtimer(ticker.mode, "replace_jobbaned_player", 0, FALSE, owner, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR)
 	if(owner.mind)
 		owner.mind.special_role = "Servant of Ratvar"
 	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
@@ -75,23 +81,21 @@
 		S.laws.associate(S)
 		S.update_icons()
 		S.show_laws()
-		var/datum/action/innate/hierophant/H = new()
-		H.Grant(S)
-		H.title = "Silicon"
-		H.span_for_name = "nezbere"
+		hierophant_network.Grant(S)
+		hierophant_network.title = "Silicon"
+		hierophant_network.span_for_name = "nezbere"
 	else if(isbrain(owner))
-		var/datum/action/innate/hierophant/H = new()
-		H.Grant(owner)
-		H.title = "Vessel"
-		H.span_for_name = "nezbere"
-		H.span_for_message = "alloy"
+		hierophant_network.Grant(owner)
+		hierophant_network.title = "Vessel"
+		hierophant_network.span_for_name = "nezbere"
+		hierophant_network.span_for_message = "alloy"
 	else if(isclockmob(owner))
-		var/datum/action/innate/hierophant/H = new()
-		H.Grant(owner)
-		H.title = "Construct"
-		H.span_for_name = "nezbere"
+		hierophant_network.Grant(owner)
+		hierophant_network.title = "Construct"
+		hierophant_network.span_for_name = "nezbere"
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	cache_check(owner)
+	..()
 
 /datum/antagonist/clockcultist/remove_innate_effects()
 	all_clockwork_mobs -= owner
@@ -103,8 +107,6 @@
 	owner.clear_alert("nocache")
 	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
 		qdel(F)
-	for(var/datum/action/innate/hierophant/H in owner.actions) //Removes any communication actions
-		qdel(H)
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
 		if(isrobot(S))
@@ -113,6 +115,7 @@
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
+	..()
 
 /datum/antagonist/clockcultist/on_remove()
 	if(!silent_update)
