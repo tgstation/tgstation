@@ -12,7 +12,7 @@
 		return FALSE
 	for(var/i in antag_datums)
 		var/datum/antag_datum/D = i
-		if(check_subtypes
+		if(check_subtypes)
 			if(istype(D, type))
 				return D
 		else
