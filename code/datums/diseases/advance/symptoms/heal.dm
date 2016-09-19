@@ -34,6 +34,7 @@ Bonus
 	return
 
 /datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
+	PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#66FF99"))
 	var/get_damage = (sqrt(20+A.totalStageSpeed())*(1+rand()))
 	M.adjustToxLoss(-get_damage)
 	return 1
@@ -72,6 +73,7 @@ Bonus
 	return
 
 /datum/symptom/aptx/proc/Apoptosis(mob/living/M, datum/disease/advance/A)
+	PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#00FF00"))
 	var/get_damage = (sqrt(20+A.totalStageSpeed())*(2+rand()))
 	M.adjustToxLoss(-get_damage)
 	return 1
@@ -152,6 +154,7 @@ Bonus
 	level = 5
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#00FFFF")
 	var/stage_speed = max( 20 + A.totalStageSpeed(), 0)
 	var/stealth_amount = max( 16 + A.totalStealth(), 0)
 	var/amt_healed = (sqrt(stage_speed*(3+rand())))-(sqrt(stealth_amount*rand()))
