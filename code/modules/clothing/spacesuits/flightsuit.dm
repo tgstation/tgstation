@@ -14,12 +14,12 @@
 	name = "flight pack"
 	desc = "An advanced back-worn system that has dual miniature jet engines for flight in a pressurized environment, as well as a set of ion thrusters for operation in EVA. Contains an internal self-recharging high-current capacitor for short, powerful boosts."
 
-	icon_state = ''
-	item_state = ''
-	var/icon_state_on = ''
-	var/item_state_on = ''
-	var/icon_state_boosting = ''
-	var/item_state_boosting = ''
+	icon_state = "flightpack"
+	item_state = "flightpack_mob"
+	var/icon_state_on = "flightpack_on"
+	var/item_state_on = "flightpack_on_mob"
+	var/icon_state_boost = "flightpack_boost"
+	var/item_state_boost = "flightpack_boost_mob"
 	icon = 'icons/obj/clothing/flightsuit.dmi'
 
 	w_class = 4
@@ -286,10 +286,9 @@
 /obj/item/clothing/shoes/flightshoes
 	name = "flight shoes"
 	desc = "A pair of specialized boots that contain stabilizers and sensors nessacary for flight gear to work" //Apparently you need these to detect mob movement.
-	icon_state = ''
-	item_state = ''
-	var/item_state_actve = ''
-	var/icon_state_active = ''
+	icon_state = "flightshoes"
+	item_state = "flightshoes_mob"
+	icon = 'icons/obj/clothing/flightsuit.dmi'
 	var/obj/item/clothing/suit/space/hardsuit/flightsuit/suit = null
 	var/obj/item/weapon/flightpack/pack = null
 	var/mob/living/carbon/human/wearer = null
@@ -348,9 +347,9 @@
 /obj/item/clothing/suit/space/hardsuit/flightsuit
 	name = "flight suit"
 	desc = "An advanced suit that allows the user flight via two high powered miniature jet engines on a deployable back-mounted unit."
-	icon_state = ''
-	item_state = ''
-	item_color = "flight"
+	icon_state = "flightsuit"
+	item_state = "flightsuit_mob"
+	icon = 'icons/obj/clothing/flightsuit'
 	strip_delay = 30
 	var/locked_strip_delay = 80
 	w_class = 4
@@ -535,7 +534,7 @@
 	desc = "A sealed helmet attached to a flight suit for EVA usage scenerios."
 	icon_state = ""
 	item_state = ""
-	item_color = "flight"
+	icon = 'icons/obj/clothing/flightsuit.dmi
 	burn_state = FIRE_PROOF
 	acid_state = ACID_PROOF
 	brightness_on = 7
