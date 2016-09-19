@@ -540,7 +540,6 @@
 	ticker.mode.remove_revolutionary(newborgie, 0)
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 	ticker.mode.remove_hog_follower(newborgie, 0)
-	remove_servant_of_ratvar(newborgie.current, TRUE)
 
 
 /datum/game_mode/proc/generate_station_goals()
