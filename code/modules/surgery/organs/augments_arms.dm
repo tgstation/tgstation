@@ -71,9 +71,6 @@
 	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
 		var/obj/item/device/assembly/flash/F = holder
 		F.SetLuminosity(0)
-		F.times_used = 0
-		F.crit_fail = 0
-		F.update_icon()
 
 	owner.unEquip(holder, 1)
 	holder.loc = src
@@ -205,6 +202,12 @@
 	desc = "An integrated projector mounted onto a user's arm, that is able to be used as a powerful flash."
 	contents = newlist(/obj/item/device/assembly/flash/armimplant)
 
+/obj/item/organ/cyberimp/arm/flash/New()
+	..()
+	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
+		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+		F.I = src
+
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
@@ -214,6 +217,12 @@
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
 	contents = newlist(/obj/item/weapon/melee/energy/blade, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+
+/obj/item/organ/cyberimp/arm/combat/New()
+	..()
+	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
+		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+		F.I = src
 
 /obj/item/organ/cyberimp/arm/surgery
 	name = "surgical toolset implant"
