@@ -110,6 +110,8 @@
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
 	target.adjustBruteLoss(-4)
 	target.adjustFireLoss(-4)
+	target.adjustToxLoss(-3)
+	target.adjustOxyLoss(-3)
 	return
 
 /obj/item/weapon/gun/medbeam/proc/on_beam_release(var/mob/living/target)
