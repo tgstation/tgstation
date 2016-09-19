@@ -3,7 +3,7 @@
 	name = "food processor"
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "processor"
+	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = 1
 	anchored = 1
@@ -189,7 +189,7 @@
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
-	if(default_deconstruction_screwdriver(user, "processor1", "processor", O))
+	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
 		return
 
 	if(exchange_parts(user, O))
