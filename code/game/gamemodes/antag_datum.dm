@@ -21,15 +21,20 @@
 	return FALSE
 
 /datum/antagonist
-	var/mob/living/owner
+	var/mob/living/owner //who's our owner and accordingly an antagonist
 	var/some_flufftext = "yer an antag larry"
+	var/prevented_antag_datum_type //the type of antag datum that this datum can't coexist with; should probably be a list
+
+/datum/antagonist/New()
+	if(!prevented_antag_datum_type)
+		prevented_antag_datum_type = type
 
 /datum/antagonist/Destroy()
 	owner = null
 	return ..()
 
 /datum/antagonist/proc/can_be_owned(mob/living/new_body)
-	return new_body && !new_body.has_antag_datum(type, TRUE)
+	return new_body && !new_body.has_antag_datum(prevented_antag_datum_type, TRUE)
 
 /datum/antagonist/proc/give_to_body(mob/living/new_body) //tries to give an antag datum to a mob. cancels out if it can't be owned by the new body
 	if(new_body && can_be_owned(new_body))
@@ -46,10 +51,10 @@
 	if(some_flufftext)
 		owner << some_flufftext
 
-/datum/antagonist/proc/apply_innate_effects() //applies innate effects to the owner, may be called multiple times due to mind transferral
+/datum/antagonist/proc/apply_innate_effects() //applies innate effects to the owner, may be called multiple times due to mind transferral, but should only be called once per mob
 	//antag huds would go here if antag huds were less completely unworkable as-is
 
-/datum/antagonist/proc/remove_innate_effects() //removes innate effects from the owner, may be called multiple times due to mind transferral
+/datum/antagonist/proc/remove_innate_effects() //removes innate effects from the owner, may be called multiple times due to mind transferral, but should only be called once per mob
 	//also antag huds but see above antag huds a shit
 
 /datum/antagonist/proc/on_remove() //totally removes the antag datum from the owner; can only be called once per owner
@@ -70,6 +75,7 @@
 
 /datum/antagonist/clockcultist
 	var/silent_update = FALSE
+	prevented_antag_datum_type = /datum/antagonist/clockcultist
 	some_flufftext = null
 
 /datum/antagonist/clockcultist/silent
