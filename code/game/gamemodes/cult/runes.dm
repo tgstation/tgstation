@@ -337,6 +337,9 @@ var/list/teleport_runes = list()
 	allow_excess_invokers = 1
 	rune_in_use = FALSE
 
+/obj/effect/rune/convert/do_invoke_glow()
+	return
+
 /obj/effect/rune/convert/invoke(var/list/invokers)
 	if(rune_in_use)
 		return
@@ -352,11 +355,12 @@ var/list/teleport_runes = list()
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
 	color = "#7D1717"
-	..()
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
 	var/is_convertable = is_convertable_to_cult(L.mind)
 	if(L.stat != DEAD && (is_clock || is_convertable))
+		invocation = "Mah'weyh pleggh at e'ntrath!"
+		..()
 		if(is_clock)
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
 			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
@@ -365,8 +369,10 @@ var/list/teleport_runes = list()
 		else if(is_convertable)
 			do_convert(L, invokers)
 	else
+		invocation = "Barhah hra zar'garis!"
+		..()
 		do_sacrifice(L, invokers)
-	color = initial(color)
+	animate(src, color = initial(color), time = 5)
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
@@ -383,8 +389,8 @@ var/list/teleport_runes = list()
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
-		convertee.adjustBruteLoss(-brutedamage)
-		convertee.adjustFireLoss(-burndamage)
+		convertee.adjustBruteLoss(-(brutedamage * 0.75))
+		convertee.adjustFireLoss(-(burndamage * 0.75))
 	convertee.visible_message("<span class='warning'>[convertee] writhes in pain \
 	[brutedamage || burndamage ? "even as their wounds heal and close" : "as the markings below them glow a bloody red"]!</span>", \
  	"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
@@ -478,6 +484,7 @@ var/list/teleport_runes = list()
 			M << "<span class='warning'>Nar-Sie does not respond!</span>"
 		fail_invoke()
 		log_game("Summon Nar-Sie rune failed - gametype is not cult")
+		return
 
 	if(locate(/obj/singularity/narsie) in poi_list)
 		for(var/M in invokers)
@@ -681,7 +688,7 @@ var/list/teleport_runes = list()
 	var/turf/T = get_turf(src)
 	rune_in_use = 1
 	affecting = user
-	user.color = "#7e1717"
+	user.color = "#7D1717"
 	user.visible_message("<span class='warning'>[user] freezes statue-still, glowing an unearthly red.</span>", \
 						 "<span class='cult'>You see what lies beyond. All is revealed. While this is a wondrous experience, your physical form will waste away in this state. Hurry...</span>")
 	user.ghostize(1)
