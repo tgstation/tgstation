@@ -433,7 +433,10 @@
 
 
 
+
 /obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
+	if(isalien(user) || user.incapacitated() || user.lying)
+		return
 	if(contents.len)
 		var/obj/item/I = contents[1]
 		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
