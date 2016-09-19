@@ -4,14 +4,14 @@
 /mob/living/proc/gain_antag_datum(datum_type)
 	if(!islist(antag_datums))
 		antag_datums = list()
-	var/datum/antag_datum/D = new datum_type()
+	var/datum/antagonist/D = new datum_type()
 	. = D.give_to_body(src)
 
 /mob/living/proc/has_antag_datum(type, check_subtypes)
 	if(!islist(antag_datums))
 		return FALSE
 	for(var/i in antag_datums)
-		var/datum/antag_datum/D = i
+		var/datum/antagonist/D = i
 		if(check_subtypes)
 			if(istype(D, type))
 				return D
@@ -20,18 +20,18 @@
 				return D
 	return FALSE
 
-/datum/antag_datum
+/datum/antagonist
 	var/mob/living/owner
 	var/some_flufftext = "yer an antag larry"
 
-/datum/antag_datum/Destroy()
+/datum/antagonist/Destroy()
 	owner = null
 	return ..()
 
-/datum/antag_datum/proc/can_be_owned(mob/living/new_body)
+/datum/antagonist/proc/can_be_owned(mob/living/new_body)
 	return new_body && !new_body.has_antag_datum(type, TRUE)
 
-/datum/antag_datum/proc/give_to_body(mob/living/new_body) //tries to give an antag datum to a mob. cancels out if it can't be owned by the new body
+/datum/antagonist/proc/give_to_body(mob/living/new_body) //tries to give an antag datum to a mob. cancels out if it can't be owned by the new body
 	if(new_body && can_be_owned(new_body))
 		new_body.antag_datums += src
 		owner = new_body
@@ -41,23 +41,23 @@
 		qdel(src)
 		. = FALSE
 
-/datum/antag_datum/proc/on_gain() //on initial gain of antag datum, do this. should only be called once per datum
+/datum/antagonist/proc/on_gain() //on initial gain of antag datum, do this. should only be called once per datum
 	apply_innate_effects()
 	if(some_flufftext)
 		owner << some_flufftext
 
-/datum/antag_datum/proc/apply_innate_effects() //applies innate effects to the owner, may be called multiple times due to mind transferral
+/datum/antagonist/proc/apply_innate_effects() //applies innate effects to the owner, may be called multiple times due to mind transferral
 	//antag huds would go here if antag huds were less completely unworkable as-is
 
-/datum/antag_datum/proc/remove_innate_effects() //removes innate effects from the owner, may be called multiple times due to mind transferral
+/datum/antagonist/proc/remove_innate_effects() //removes innate effects from the owner, may be called multiple times due to mind transferral
 	//also antag huds but see above antag huds a shit
 
-/datum/antag_datum/proc/on_remove() //totally removes the antag datum from the owner; can only be called once per owner
+/datum/antagonist/proc/on_remove() //totally removes the antag datum from the owner; can only be called once per owner
 	remove_innate_effects()
 	owner.antag_datums -= src
 	qdel(src)
 
-/datum/antag_datum/proc/transfer_to_new_body(mob/living/new_body)
+/datum/antagonist/proc/transfer_to_new_body(mob/living/new_body)
 	remove_innate_effects()
 	if(!islist(new_body.antag_datums))
 		new_body.antag_datums = list()
@@ -68,19 +68,19 @@
 
 //CLOCKCULT PROOF OF CONCEPT
 
-/datum/antag_datum/clockcultist
+/datum/antagonist/clockcultist
 	var/silent_update = FALSE
 	some_flufftext = null
 
-/datum/antag_datum/clockcultist/silent
+/datum/antagonist/clockcultist/silent
 	silent_update = TRUE
 
-/datum/antag_datum/clockcultist/can_be_owned(mob/living/new_body)
+/datum/antagonist/clockcultist/can_be_owned(mob/living/new_body)
 	. = ..()
 	if(.)
 		. = is_eligible_servant(new_body)
 
-/datum/antag_datum/clockcultist/give_to_body(mob/living/new_body)
+/datum/antagonist/clockcultist/give_to_body(mob/living/new_body)
 	if(!silent_update)
 		if(iscarbon(new_body))
 			new_body << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
@@ -100,7 +100,7 @@
 			new_body.visible_message("<span class='warning'>[new_body] seems to resist an unseen force!</span>")
 			new_body << "<span class='warning'><b>And yet, you somehow push it all away.</b></span>"
 
-/datum/antag_datum/clockcultist/on_gain()
+/datum/antagonist/clockcultist/on_gain()
 	if(ticker && ticker.mode && owner.mind)
 		ticker.mode.servants_of_ratvar += owner.mind
 		ticker.mode.update_servant_icons_added(owner.mind)
@@ -116,7 +116,7 @@
 		owner << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	..()
 
-/datum/antag_datum/clockcultist/apply_innate_effects()
+/datum/antagonist/clockcultist/apply_innate_effects()
 	all_clockwork_mobs += owner
 	owner.faction |= "ratvar"
 	owner.languages_spoken |= RATVAR
@@ -160,7 +160,7 @@
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	cache_check(owner)
 
-/datum/antag_datum/clockcultist/remove_innate_effects()
+/datum/antagonist/clockcultist/remove_innate_effects()
 	all_clockwork_mobs -= owner
 	owner.faction -= "ratvar"
 	owner.languages_spoken &= ~RATVAR
@@ -181,7 +181,7 @@
 		S.update_icons()
 		S.show_laws()
 
-/datum/antag_datum/clockcultist/on_remove()
+/datum/antagonist/clockcultist/on_remove()
 	if(!silent_update)
 		owner.visible_message("<span class='big'>[owner] seems to have remembered their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")

@@ -43,7 +43,7 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/living/M)
-	return M && istype(M) && M.has_antag_datum(/datum/antag_datum/clockcultist, TRUE)
+	return M && istype(M) && M.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
 
 /proc/is_eligible_servant(mob/living/M)
 	if(!istype(M))
@@ -65,13 +65,13 @@ Credit where due:
 	return 0
 
 /proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
-	var/update_type = /datum/antag_datum/clockcultist
+	var/update_type = /datum/antagonist/clockcultist
 	if(silent)
-		update_type = /datum/antag_datum/clockcultist/silent
+		update_type = /datum/antagonist/clockcultist/silent
 	. = L.gain_antag_datum(update_type)
 
 /proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
-	var/datum/antag_datum/clockcultist/clock_datum = L.has_antag_datum(/datum/antag_datum/clockcultist, TRUE)
+	var/datum/antagonist/clockcultist/clock_datum = L.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
 	if(!clock_datum)
 		world << "wait shit what"
 		return FALSE
