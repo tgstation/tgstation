@@ -203,3 +203,9 @@
 	desc = "It's still warm. The steam coming off of it looks like baseball."
 	icon_state = "baseball"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/baconburger
+	name = "bacon burger"
+	desc = "The perfect combination of all things American."
+	icon_state = "baconburger"
+	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)

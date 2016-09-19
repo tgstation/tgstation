@@ -313,11 +313,6 @@ Class Procs:
 	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(prob(H.getBrainLoss()))
-			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
-			return 1
 	if(!is_interactable())
 		return 1
 	if(set_machine)
@@ -464,9 +459,9 @@ Class Procs:
 	. = 1
 
 
-/obj/machinery/tesla_act(var/power)
+/obj/machinery/tesla_act(power, explosive = FALSE)
 	..()
-	if(prob(85))
+	if(prob(85) && explosive)
 		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
 		emp_act(2)

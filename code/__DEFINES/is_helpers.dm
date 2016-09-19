@@ -4,6 +4,8 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
+#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
+
 // MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
@@ -16,12 +18,13 @@
 #define ispodperson(A) (is_species(A, /datum/species/podperson))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
+#define isshadowperson(A) (is_species(A, /datum/species/shadow))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
-#define isbrain(A) (istype(A, /mob/living/carbon/brain))
+#define isbrain(A) (istype(A, /mob/living/brain))
 
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 

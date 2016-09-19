@@ -81,33 +81,17 @@
 	if(wear_id)
 		return wear_id.GetID()
 
-///checkeyeprot()
-///Returns a number between -1 to 2
-/mob/living/carbon/human/check_eye_prot()
-	var/number = ..()
-	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
-		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
-		number += HFP.flash_protect
-	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
-		var/obj/item/clothing/glasses/GFP = src.glasses
-		number += GFP.flash_protect
-	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
-		var/obj/item/clothing/mask/MFP = src.wear_mask
-		number += MFP.flash_protect
-	return number
-
-/mob/living/carbon/human/check_ear_prot()
-	if((ears && (ears.flags & EARBANGPROTECT)) || (head && (head.flags & HEADBANGPROTECT)))
-		return 1
 
 /mob/living/carbon/human/abiotic(full_body = 0)
-	if(full_body && ((l_hand && !( src.l_hand.flags&NODROP )) || (r_hand && !( src.r_hand.flags&NODROP )) || (back && !(back.flags&NODROP)) || (wear_mask && !(wear_mask.flags&NODROP)) || (head && !(head.flags&NODROP)) || (shoes && !(shoes.flags&NODROP)) || (w_uniform && !(w_uniform.flags&NODROP)) || (wear_suit && !(wear_suit.flags&NODROP)) || (glasses && !(glasses.flags&NODROP)) || (ears && !(ears.flags&NODROP)) || (gloves && !(gloves.flags&NODROP)) ) )
-		return 1
+	var/abiotic_hands = FALSE
+	for(var/obj/item/I in held_items)
+		if(!(I.flags & NODROP))
+			abiotic_hands = TRUE
+			break
+	if(full_body && abiotic_hands && ((back && !(back.flags&NODROP)) || (wear_mask && !(wear_mask.flags&NODROP)) || (head && !(head.flags&NODROP)) || (shoes && !(shoes.flags&NODROP)) || (w_uniform && !(w_uniform.flags&NODROP)) || (wear_suit && !(wear_suit.flags&NODROP)) || (glasses && !(glasses.flags&NODROP)) || (ears && !(ears.flags&NODROP)) || (gloves && !(gloves.flags&NODROP)) ) )
+		return TRUE
+	return abiotic_hands
 
-	if( (src.l_hand && !(src.l_hand.flags&NODROP)) || (src.r_hand && !(src.r_hand.flags&NODROP)) )
-		return 1
-
-	return 0
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such

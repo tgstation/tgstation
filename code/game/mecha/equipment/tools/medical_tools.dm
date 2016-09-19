@@ -343,7 +343,7 @@
 						mechsyringe.icon = initial(mechsyringe.icon)
 						mechsyringe.reagents.reaction(M, INJECT)
 						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
-						M.take_organ_damage(2)
+						M.take_bodypart_damage(2)
 						add_logs(originaloccupant, M, "shot", "syringegun")
 					break
 				else if(mechsyringe.loc == trg)

@@ -3,7 +3,7 @@
 //PUBLIC -  call these wherever you want
 
 
-/mob/proc/throw_alert(category, type, severity, obj/new_master, datum/status_effect/effect)
+/mob/proc/throw_alert(category, type, severity, obj/new_master)
 
 /* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
  category is a text string. Each mob may only have one alert per category; the previous one will be replaced
@@ -43,13 +43,7 @@
 		alert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		alert.master = new_master
 	else
-		if(effect)
-			alert.name = effect.name
-			alert.desc = effect.desc
-			alert.icon = 'icons/mob/status_effects.dmi'
-			alert.icon_state = effect.icon_state
-		else
-			alert.icon_state = "[initial(alert.icon_state)][severity]"
+		alert.icon_state = "[initial(alert.icon_state)][severity]"
 		alert.severity = severity
 
 	alerts[category] = alert
@@ -290,7 +284,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			desc += "No Tinkerer's Daemons.<br>"
-		for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
 			if(G.ratvar_portal)
@@ -305,8 +299,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
 			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
 			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-				desc += "Generals available:<br><b>[inathneq_available ? "<font color=#1E8CE1>INATH-NEQ</font><br>":""][sevtug_available ? "<font color=#AF0AAF>SEVTUG</font><br>":""]\
-				[nezbere_available ? "<font color=#5A6068>NEZBERE</font><br>":""][nezcrentr_available ? "<font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
+				desc += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
+				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
 			else
 				desc += "Generals available: <b>NONE</b><br>"
 		else

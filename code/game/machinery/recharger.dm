@@ -132,8 +132,9 @@
 
 		if(istype(charging, /obj/item/device/modular_computer))
 			var/obj/item/device/modular_computer/C = charging
-			if(C.battery_module)
-				var/obj/item/weapon/computer_hardware/battery/B = C.battery_module
+			var/obj/item/weapon/computer_hardware/battery/battery_module = C.all_components[MC_CELL]
+			if(battery_module)
+				var/obj/item/weapon/computer_hardware/battery/B = battery_module
 				if(B.battery)
 					if(B.battery.charge < B.battery.maxcharge)
 						B.battery.give(B.battery.chargerate * recharge_coeff)

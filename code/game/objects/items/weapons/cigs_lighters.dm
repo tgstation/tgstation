@@ -193,8 +193,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_wear_mask()
-		M.update_inv_l_hand()
-		M.update_inv_r_hand()
+		M.update_inv_hands()
 
 
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
@@ -472,7 +471,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
-	if(user.r_hand == src || user.l_hand == src)
+	if(user.is_holding(src))
 		if(!lit)
 			lit = 1
 			update_icon()
@@ -486,7 +485,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				if(prob(75))
 					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
 				else
-					var/hitzone = user.r_hand == src ? "r_hand" : "l_hand"
+					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? "r_hand" : "l_hand"
 					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 

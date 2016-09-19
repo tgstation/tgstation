@@ -54,7 +54,7 @@
 	else
 		return ..()
 	if(full)
-		user << "<span class='notice'>[src] can't hold anymore of [I].</span>"
+		user << "<span class='notice'>[src] can't hold any more of [I].</span>"
 		return
 
 	if(!user.drop_item())

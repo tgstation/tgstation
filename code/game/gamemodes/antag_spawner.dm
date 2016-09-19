@@ -84,7 +84,7 @@
 		if("healing")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null))
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/magic/staff/healing(M), slot_r_hand)
+			M.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing(M))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 		if("robeless")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
@@ -165,7 +165,7 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	M.mind.make_Nuke(null, nuke_code = null, 0, FALSE)
+	M.mind.make_Nuke(null, null, 0, FALSE)
 	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname

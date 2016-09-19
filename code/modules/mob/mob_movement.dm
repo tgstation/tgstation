@@ -13,7 +13,7 @@
 	return (!mover.density || !density || lying)
 
 
-//The byond version of these verbs wait for the next tick before acting. 
+//The byond version of these verbs wait for the next tick before acting.
 //	instant verbs however can run mid tick or even during the time between ticks.
 /client/verb/moveup()
 	set name = ".moveup"
@@ -55,7 +55,7 @@
 
 
 /client/Northwest()
-	if(!usr.get_active_hand())
+	if(!usr.get_active_held_item())
 		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
 		return
 	usr.drop_item()
@@ -236,14 +236,12 @@
 				L.loc = locate(locx,locy,mobloc.z)
 				var/limit = 2//For only two trailing shadows.
 				for(var/turf/T in getline(mobloc, L.loc))
-					spawn(0)
-						anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
+					PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(T, L.dir))
 					limit--
 					if(limit<=0)
 						break
 			else
-				spawn(0)
-					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(mobloc, L.dir))
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
 		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
@@ -303,8 +301,8 @@
 				break
 	. = dense_object_backup
 
-/mob/proc/mob_has_gravity(turf/T)
-	return has_gravity(src, T)
+/mob/proc/mob_has_gravity()
+	return has_gravity()
 
 /mob/proc/mob_negates_gravity()
 	return 0

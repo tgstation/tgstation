@@ -3,7 +3,7 @@
 /obj/effect/step_trigger
 	var/affect_ghosts = 0
 	var/stopper = 1 // stops throwers
-	var/mobs_only = 0
+	var/mobs_only = FALSE
 	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
 	anchored = 1
 
@@ -25,6 +25,7 @@
 /obj/effect/step_trigger/message
 	var/message	//the message to give to the mob
 	var/once = 1
+	mobs_only = TRUE
 
 /obj/effect/step_trigger/message/Trigger(mob/M)
 	if(M.client)

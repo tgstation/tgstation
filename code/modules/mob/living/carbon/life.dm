@@ -9,16 +9,19 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(..())
-		. = 1
-
+	if(..()) //not dead
 		handle_blood()
 
-		for(var/obj/item/organ/O in internal_organs)
+	if(stat != DEAD)
+		for(var/X in internal_organs)
+			var/obj/item/organ/O = X
 			O.on_life()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+
+	if(stat != DEAD)
+		return 1
 
 ///////////////
 // BREATHING //
@@ -384,8 +387,6 @@
 	var/body_temperature_difference = 310.15 - bodytemperature
 	switch(bodytemperature)
 		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
-			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
-				nutrition -= 2
 			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		if(260.15 to 310.15)
 			bodytemperature += max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))

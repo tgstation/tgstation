@@ -2,6 +2,7 @@
 	name = "Shade"
 	real_name = "Shade"
 	desc = "A bound spirit"
+	gender = NEUTER
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
@@ -42,7 +43,7 @@
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
 		if(health < maxHealth)
 			adjustHealth(-25)
-			Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
+			Beam(M,icon_state="sendbeam",time=4)
 			M.visible_message("<span class='danger'>[M] heals \the <b>[src]</b>.</span>", \
 					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 		else

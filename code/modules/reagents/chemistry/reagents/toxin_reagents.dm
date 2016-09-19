@@ -34,11 +34,11 @@
 	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
-		randmuti(M)
+		M.randmuti()
 		if(prob(98))
-			randmutb(M)
+			M.randmutb()
 		else
-			randmutg(M)
+			M.randmutg()
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -118,7 +118,7 @@
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_organ_damage(5*REM,0, 0)
+		M.heal_bodypart_damage(5*REM,0, 0)
 		. = 1
 	..()
 
@@ -656,24 +656,6 @@
 		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
 		. = 1
 	return ..() || .
-
-/datum/reagent/toxin/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
-	name = "Teslium"
-	id = "teslium"
-	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly."
-	reagent_state = LIQUID
-	color = "#20324D" //RGB: 32, 50, 77
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 0
-	var/shock_timer = 0
-
-/datum/reagent/toxin/teslium/on_mob_life(mob/living/M)
-	shock_timer++
-	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
-		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, 1)
-	..()
 
 
 //ACID

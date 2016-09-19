@@ -35,6 +35,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/init_time
 	var/tickdrift = 0
 
+	var/sleep_delta
+
 	var/make_runtime = 0
 
 	// Has round started? (So we know what subsystems to run)
@@ -280,6 +282,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 		iteration++
 		last_run = world.time
+		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
 		sleep(world.tick_lag * (processing + sleep_delta))
 
 

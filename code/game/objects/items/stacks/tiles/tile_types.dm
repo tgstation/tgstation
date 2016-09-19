@@ -51,7 +51,7 @@
 							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
-				var/replace = (user.get_inactive_hand()==R)
+				var/replace = (user.get_inactive_held_item()==R)
 				R.use(4)
 				if (!R && replace)
 					user.put_in_hands(new_item)
@@ -64,7 +64,7 @@
 							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
-				var/replace = (user.get_inactive_hand()==R)
+				var/replace = (user.get_inactive_held_item()==R)
 				R.use(4)
 				if (!R && replace)
 					user.put_in_hands(new_item)
@@ -147,6 +147,13 @@
 	desc = "A darkly colored grooved floor tile."
 	icon_state = "tile_poddark"
 	turf_type = /turf/open/floor/pod/dark
+
+/obj/item/stack/tile/brass
+	name = "brass floor tile"
+	singular_name = "brass floor tile"
+	desc = "A brass floor tile. It vibrates slightly."
+	icon_state = "tile_brass"
+	turf_type = /turf/open/floor/clockwork
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel

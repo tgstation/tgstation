@@ -38,7 +38,11 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 
 #define REPLICANT_WALL_MINUS_FLOOR REPLICANT_ALLOY_UNIT*0.4 //amount of alloy in a clockwork wall, determines the cost of clockwork wall production
 
+#define REPLICANT_GEAR REPLICANT_ALLOY_UNIT*0.3 //amount of alloy in a wall gear, minus the brass from the wall
+
 #define REPLICANT_WALL_TOTAL REPLICANT_WALL_MINUS_FLOOR+REPLICANT_FLOOR //how much alloy is in a clockwork wall and the floor under it
+
+#define RATVAR_ALLOY_CHECK "ratvar?" //when passed into can_use_alloy(), converts it into a check for if ratvar has woken/the proselytizer is debug
 
 //Ark defines
 #define GATEWAY_SUMMON_RATE 2 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 2 per tick

@@ -73,19 +73,13 @@
 		else
 			msg += "[t_He] [t_has] \icon[back] \a [back] on [t_his] back.\n"
 
-	//left hand
-	if(l_hand && !(l_hand.flags&ABSTRACT))
-		if(l_hand.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in [t_his] left hand!</span>\n"
-		else
-			msg += "[t_He] [t_is] holding \icon[l_hand] \a [l_hand] in [t_his] left hand.\n"
-
-	//right hand
-	if(r_hand && !(r_hand.flags&ABSTRACT))
-		if(r_hand.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in [t_his] right hand!</span>\n"
-		else
-			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
+	//Hands
+	for(var/obj/item/I in held_items)
+		if(!(I.flags & ABSTRACT))
+			if(I.blood_DNA)
+				msg += "<span class='warning'>[t_He] [t_is] holding \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in [t_his] [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+			else
+				msg += "[t_He] [t_is] holding \icon[I] \a [I] in [t_his] [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//gloves
 	if(gloves && !(slot_gloves in obscured))
@@ -197,18 +191,26 @@
 		for(var/obj/item/I in BP.embedded_objects)
 			msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [BP.name]!</B>\n"
 
-	//stores how many left limbs are missing
+	//stores missing limbs
 	var/l_limbs_missing = 0
+	var/r_limbs_missing = 0
 	for(var/t in missing)
 		if(t=="head")
 			msg += "<span class='deadsay'><B>[capitalize(t_his)] [parse_zone(t)] is missing!</B><span class='warning'>\n"
 			continue
 		if(t == "l_arm" || t == "l_leg")
 			l_limbs_missing++
+		else if(t == "r_arm" || t == "r_leg")
+			r_limbs_missing++
+
 		msg += "<B>[capitalize(t_his)] [parse_zone(t)] is missing!</B>\n"
 
-	if(l_limbs_missing >= 2)
+	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
 		msg += "[t_He] looks all right now.\n"
+	else if(l_limbs_missing == 0 && r_limbs_missing >= 2)
+		msg += "[t_He] really keeps to the left.\n"
+	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
+		msg += "[t_He] doesn't seem all there.\n"
 
 	if(temp)
 		if(temp < 30)

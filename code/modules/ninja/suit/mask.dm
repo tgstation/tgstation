@@ -16,3 +16,4 @@ Contents:
 	icon_state = "s-ninja"
 	item_state = "s-ninja_mask"
 	strip_delay = 120
+	unacidable = 1

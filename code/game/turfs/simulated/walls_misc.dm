@@ -3,7 +3,6 @@
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
-	walltype = "cult"
 	builtin_sheet = null
 	canSmoothWith = null
 
@@ -44,8 +43,9 @@
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
+	sheet_type = /obj/item/stack/sheet/brass
 	var/obj/effect/clockwork/overlay/wall/realappearence
-	var/obj/structure/clockwork/cache/linkedcache
+	var/obj/structure/destructible/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/New()
 	..()
@@ -123,7 +123,8 @@
 			O.loc = src
 
 /turf/closed/wall/clockwork/break_wall()
-	return new/obj/structure/clockwork/wall_gear(src)
+	new sheet_type(src)
+	return new/obj/structure/destructible/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
 	for(var/i in 1 to 2)
@@ -142,7 +143,6 @@
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
-	walltype = "iced"
 	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
@@ -152,7 +152,6 @@
 	desc = "A rusted metal wall."
 	icon = 'icons/turf/walls/rusty_wall.dmi'
 	icon_state = "arust"
-	walltype = "arust"
 	hardness = 45
 
 /turf/closed/wall/r_wall/rust
@@ -160,26 +159,22 @@
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	icon_state = "rrust"
-	walltype = "rrust"
 	hardness = 15
 
 /turf/closed/wall/shuttle
 	name = "wall"
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall"
-	walltype = "shuttle"
 	smooth = SMOOTH_FALSE
 
 /turf/closed/wall/shuttle/syndie
 	icon_state = "wall3"
-	walltype = "syndieshuttle"
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 
 /turf/closed/wall/shuttle/smooth
 	name = "wall"
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle"
-	walltype = "shuttle"
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle, /obj/machinery/door/airlock/glass, /obj/machinery/door/airlock/shuttle)

@@ -114,7 +114,7 @@
 		if (get_dist(src, L) > range)
 			continue
 
-		if(L.flash_eyes(affect_silicon = 1))
+		if(L.flash_act(affect_silicon = 1))
 			L.Weaken(strength)
 			if(L.weakeyes)
 				L.Weaken(strength * 1.5)

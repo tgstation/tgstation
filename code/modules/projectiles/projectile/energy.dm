@@ -143,6 +143,7 @@
 	damage = 20
 	damage_type = CLONE
 	irradiate = 10
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
 
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
@@ -164,27 +165,22 @@
 /obj/item/projectile/energy/bolt/large
 	damage = 20
 
-/obj/item/ammo_casing/energy/plasma
-	projectile_type = /obj/item/projectile/plasma
-	select_name = "plasma burst"
-	fire_sound = 'sound/weapons/pulse.ogg'
-
-/obj/item/ammo_casing/energy/plasma/adv
-	projectile_type = /obj/item/projectile/plasma/adv
-
 /obj/item/projectile/energy/shock_revolver
 	name = "shock bolt"
 	icon_state = "purple_laser"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
 	var/chain
 
-/obj/item/ammo_casing/energy/shock_revolver/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+/obj/item/projectile/energy/shock_revolver/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
-	var/obj/item/projectile/hook/P = BB
-	spawn(1)
-		P.chain = P.Beam(user,icon_state="purple_lightning",icon = 'icons/effects/effects.dmi',time=1000, maxdistance = 30)
 
 /obj/item/projectile/energy/shock_revolver/on_hit(atom/target)
 	. = ..()
 	if(isliving(target))
 		tesla_zap(src, 3, 10000)
+
+/obj/item/projectile/energy/shock_revolver/Destroy()
 	qdel(chain)
+	return ..()

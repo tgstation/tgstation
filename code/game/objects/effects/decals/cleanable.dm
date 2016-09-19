@@ -1,4 +1,6 @@
 /obj/effect/decal/cleanable
+	gender = PLURAL
+	layer = ABOVE_NORMAL_TURF_LAYER
 	var/list/random_icon_states = list()
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints

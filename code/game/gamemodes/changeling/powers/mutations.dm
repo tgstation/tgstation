@@ -21,32 +21,28 @@
 	var/weapon_name_simple
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
-	if(check_weapon(user, user.r_hand, 1))
-		return
-	if(check_weapon(user, user.l_hand, 0))
-		return
+	for(var/obj/item/I in user.held_items)
+		if(check_weapon(user, I))
+			return
 	..(user, target)
 
-/obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item, right_hand=1)
+/obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
 	if(istype(hand_item, weapon_type))
 		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 		qdel(hand_item)
 		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
-		if(right_hand)
-			user.update_inv_r_hand()
-		else
-			user.update_inv_l_hand()
+		user.update_inv_hands()
 		return 1
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
 	if(!user.drop_item())
-		user << "<span class='warning'>The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>"
+		user << "<span class='warning'>The [user.get_active_held_item()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>"
 		return
 	var/limb_regen = 0
-	if(user.hand) //we regen the arm before changing it into the weapon
-		limb_regen = user.regenerate_limb("l_arm", 1)
-	else
+	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
 		limb_regen = user.regenerate_limb("r_arm", 1)
+	else
+		limb_regen = user.regenerate_limb("l_arm", 1)
 	if(limb_regen)
 		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		user.emote("scream")
@@ -56,8 +52,9 @@
 	return W
 
 /obj/effect/proc_holder/changeling/weapon/on_refund(mob/user)
-	check_weapon(user, user.r_hand, 1)
-	check_weapon(user, user.l_hand, 0)
+	for(var/obj/item/I in user.held_items)
+		check_weapon(user, I)
+
 
 //Parent to space suits and armor.
 /obj/effect/proc_holder/changeling/suit

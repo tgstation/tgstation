@@ -22,7 +22,6 @@
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
-	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
 	animal_species = /mob/living/simple_animal/pet/dog
@@ -148,14 +147,14 @@
 
 		switch(add_to)
 			if("head")
-				place_on_head(usr.get_active_hand(),usr)
+				place_on_head(usr.get_active_held_item(),usr)
 
 			if("back")
 				if(inventory_back)
 					usr << "<span class='warning'>It's already wearing something!</span>"
 					return
 				else
-					var/obj/item/item_to_add = usr.get_active_hand()
+					var/obj/item/item_to_add = usr.get_active_held_item()
 
 					if(!item_to_add)
 						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")

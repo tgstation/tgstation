@@ -270,7 +270,7 @@
 			src.menu = 4
 
 		else if (src.menu == 4)
-			var/obj/item/weapon/card/id/C = usr.get_active_hand()
+			var/obj/item/weapon/card/id/C = usr.get_active_held_item()
 			if (istype(C)||istype(C, /obj/item/device/pda))
 				if(src.check_access(C))
 					src.temp = "[src.active_record.fields["name"]] => Record deleted."

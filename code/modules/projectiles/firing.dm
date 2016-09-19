@@ -40,6 +40,13 @@
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
 	BB.ammo_casing = src
+
+	var/firing_dir
+	if(BB.firer)
+		firing_dir = BB.firer.dir
+	if(!BB.suppressed && firing_effect_type)
+		PoolOrNew(firing_effect_type, list(get_turf(src), firing_dir))
+
 	if(targloc == curloc)
 		if(target) //if the target is right on our location we go straight to bullet_act()
 			target.bullet_act(BB, BB.def_zone)

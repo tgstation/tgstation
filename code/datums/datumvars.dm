@@ -4,9 +4,14 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
+	var/datum/reagents/reagents = null
+	var/fingerprintslast = null
 
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
+
+/datum/proc/on_reagent_change()
+	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
@@ -274,11 +279,11 @@ var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRU
 		if(iscarbon(D))
 			body += "<option value>---</option>"
 			body += "<option value='?_src_=vars;editorgans=\ref[D]'>Modify organs</option>"
+			body += "<option value='?_src_=vars;editbodypart=\ref[D]'>Modify bodypart</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
 		if(ishuman(D))
 			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
-			body += "<option value='?_src_=vars;removebodypart=\ref[D]'>Remove Body Part</option>"
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
@@ -384,19 +389,20 @@ body
 	else if (isfile(value))
 		html += "[html_encode(name)] = <span class='value'>'[value]'</span>"
 
+	else if (istype(value, /client))
+		var/client/C = value
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [C] [C.type]"
+
 	else if (istype(value, /datum))
 		var/datum/D = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /client))
-		var/client/C = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [C] [C.type]"
-//
 	else if (istype(value, /list))
 		var/list/L = value
 		html += "[html_encode(name)] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
+			name = "[name]"	//Needs to be a string or it will go out of bounds in the internal_byond_list_vars array
 			html += "<ul>"
 			var/index = 1
 			for(var/entry in L)
@@ -523,8 +529,8 @@ body
 				return
 
 			var/D = locate(href_list["datumedit"])
-			if(!istype(D,/datum) && !istype(D,/client))
-				usr << "This can only be used on instances of types /client or /datum"
+			if(!istype(D,/datum))
+				usr << "This can only be used on datums"
 				return
 
 			modify_variables(D, href_list["varnameedit"], 1)
@@ -534,8 +540,8 @@ body
 				return
 
 			var/D = locate(href_list["datumchange"])
-			if(!istype(D,/datum) && !istype(D,/client))
-				usr << "This can only be used on instances of types /client or /datum"
+			if(!istype(D,/datum))
+				usr << "This can only be used on datums"
 				return
 
 			modify_variables(D, href_list["varnamechange"], 0)
@@ -892,25 +898,51 @@ body
 				var/newtype = species_list[result]
 				H.set_species(newtype)
 
-		else if(href_list["removebodypart"])
+		else if(href_list["editbodypart"])
 			if(!check_rights(R_SPAWN))
 				return
 
-			var/mob/living/carbon/human/H = locate(href_list["removebodypart"])
-			if(!istype(H))
-				usr << "This can only be done to instances of type /mob/living/carbon/human"
+			var/mob/living/carbon/C = locate(href_list["editbodypart"])
+			if(!istype(C))
+				usr << "This can only be done to instances of type /mob/living/carbon"
 				return
 
-			var/result = input(usr, "Please choose which body part to remove","Remove Body Part") as null|anything in list("head", "l_arm", "r_arm", "l_leg", "r_leg")
+			var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
+			if(!edit_action)
+				return
+			var/list/limb_list = list("head", "l_arm", "r_arm", "l_leg", "r_leg")
+			if(edit_action == "augment")
+				limb_list += "chest"
+			var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in limb_list
 
-			if(!H)
+			if(!C)
 				usr << "Mob doesn't exist anymore"
 				return
 
 			if(result)
-				var/obj/item/bodypart/BP = H.get_bodypart(result)
-				if(BP)
-					BP.drop_limb()
+				var/obj/item/bodypart/BP = C.get_bodypart(result)
+				switch(edit_action)
+					if("remove")
+						if(BP)
+							BP.drop_limb()
+						else
+							usr << "[C] doesn't have such bodypart."
+					if("add")
+						if(BP)
+							usr << "[C] already has such bodypart."
+						else
+							if(!C.regenerate_limb(result))
+								usr << "[C] cannot have such bodypart."
+					if("augment")
+						if(ishuman(C))
+							if(BP)
+								BP.change_bodypart_status(BODYPART_ROBOTIC, 1)
+							else
+								usr << "[C] doesn't have such bodypart."
+						else
+							usr << "Only humans can be augmented."
+
+
 
 		else if(href_list["purrbation"])
 			if(!check_rights(R_SPAWN))
@@ -979,3 +1011,4 @@ body
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
 				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
 				href_list["datumrefresh"] = href_list["mobToDamage"]
+

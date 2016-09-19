@@ -228,7 +228,7 @@
 
 /obj/structure/sign/xenobio
 	name = "\improper XENOBIOLOGY"
-	desc = "A sign labelling an area as a place where xenobiological entites are researched."
+	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"
 
 /obj/structure/sign/directions/science

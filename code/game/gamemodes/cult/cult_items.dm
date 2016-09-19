@@ -185,7 +185,7 @@
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
-			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
+			user << "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>"
 			user << "<span class='userdanger'>The armor squeezes at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
@@ -239,7 +239,7 @@
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
-			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
+			user << "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>"
 			user << "<span class='userdanger'>The robes squeeze at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
@@ -345,14 +345,14 @@
 		if(uses <= 0)
 			icon_state ="shifter_drained"
 		playsound(mobloc, "sparks", 50, 1)
-		PoolOrNew(/obj/effect/overlay/temp/cult/phase/out, list(mobloc, C.dir))
+		PoolOrNew(/obj/effect/overlay/temp/dir_setting/cult/phase/out, list(mobloc, C.dir))
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
 		C.forceMove(destination)
 		if(pulled)
 			C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 
-		PoolOrNew(/obj/effect/overlay/temp/cult/phase, list(destination, C.dir))
+		PoolOrNew(/obj/effect/overlay/temp/dir_setting/cult/phase, list(destination, C.dir))
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
 		playsound(destination, "sparks", 50, 1)
 
