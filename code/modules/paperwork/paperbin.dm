@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	pressure_resistance = 8
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	var/amount = 30					//How much paper is in the bin.
 	var/list/papers = list()	//List of papers put in the bin for reference.
 
@@ -29,6 +29,7 @@
 	amount = 0
 	extinguish()
 	update_icon()
+	SSfire_burning.processing -= src
 
 /obj/item/weapon/paper_bin/MouseDrop(atom/over_object)
 	var/mob/living/M = usr

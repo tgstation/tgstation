@@ -152,7 +152,7 @@ Pipelines + Other Objects -> Pipe network
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 				if(unsafe_wrenching)
 					unsafe_pressure_release(user, internal_pressure)
-				Deconstruct()
+				deconstruct()
 	else
 		return ..()
 
@@ -179,7 +179,7 @@ Pipelines + Other Objects -> Pipe network
 	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
 	user.throw_at(target, range, speed)
 
-/obj/machinery/atmospherics/Deconstruct()
+/obj/machinery/atmospherics/deconstruct()
 	if(can_unwrench)
 		stored.loc = src.loc
 		transfer_fingerprints_to(stored)
@@ -208,7 +208,7 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/construction(pipe_type, obj_color)
+/obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
 	if(can_unwrench)
 		color = obj_color
 		pipe_color = obj_color
@@ -226,7 +226,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
 
 
 //Find a connecting /obj/machinery/atmospherics in specified direction

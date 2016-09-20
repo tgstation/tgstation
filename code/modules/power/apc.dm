@@ -48,6 +48,8 @@
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
+	health = 50
+	armor = list(melee = 50, bullet = 20, laser = 10, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -93,7 +95,7 @@
 	var/global/list/status_overlays_equipment
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
-	var/health = 50
+
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
@@ -555,16 +557,14 @@
 	else
 		return ..()
 
-/obj/machinery/power/apc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	..()
+/obj/machinery/power/apc/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if((malfhack || (stat & BROKEN)) && !opened)
-		if(damage < 10)
-			return
-		health -= damage
-		if(health <= 0)
-			opened = 2
-			visible_message("<span class='warning'>The APC cover is knocked down!</span>")
-			update_icon()
+		. = ..()
+
+/obj/machinery/power/apc/obj_destruction()
+	opened = 2
+	visible_message("<span class='warning'>The APC cover is knocked down!</span>")
+	update_icon()
 
 /obj/machinery/power/apc/emag_act(mob/user)
 	if(!emagged && !malfhack)
@@ -602,7 +602,7 @@
 	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	..()
+	..() //phil235
 	if(malfhack || (stat & BROKEN))
 		return
 	if(opened == 0)
@@ -1084,7 +1084,7 @@
 	addtimer(src, "reset", 600, FALSE, APC_RESET_EMP)
 	..()
 
-/obj/machinery/power/apc/ex_act(severity, target)
+/obj/machinery/power/apc/ex_act(severity, target) //phil235
 	..()
 	if(!qdeleted(src))
 		switch(severity)
@@ -1095,7 +1095,7 @@
 				if(prob(25))
 					set_broken()
 
-/obj/machinery/power/apc/blob_act(obj/effect/blob/B)
+/obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
 
 /obj/machinery/power/apc/disconnect_terminal()

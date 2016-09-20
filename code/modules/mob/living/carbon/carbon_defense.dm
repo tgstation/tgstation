@@ -147,7 +147,7 @@
 	return dam_zone
 
 
-/mob/living/carbon/blob_act(obj/effect/blob/B)
+/mob/living/carbon/blob_act(obj/structure/blob/B)
 	if (stat == DEAD)
 		return
 	else

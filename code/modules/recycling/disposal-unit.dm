@@ -54,7 +54,7 @@
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
 
 /obj/machinery/disposal/initialize()
 	// this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
@@ -91,7 +91,7 @@
 					if(!W.isOn())
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
-					Deconstruct()
+					deconstruct()
 			return
 
 	if(user.a_intent != "harm")
@@ -265,7 +265,7 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-/obj/machinery/disposal/Deconstruct()
+/obj/machinery/disposal/deconstruct()
 	if(stored)
 		var/turf/T = loc
 		stored.loc = T

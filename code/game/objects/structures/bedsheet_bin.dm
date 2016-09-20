@@ -17,7 +17,7 @@ LINEN BINS
 	throw_range = 2
 	w_class = 1
 	item_color = "white"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 
@@ -205,8 +205,9 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = 0
+	health = 70
+	maxhealth = 70
 	var/amount = 10
 	var/list/sheets = list()
 	var/obj/item/hidden = null
@@ -240,7 +241,7 @@ LINEN BINS
 	amount = 0
 	extinguish()
 	update_icon()
-	return
+	SSfire_burning.processing -= src
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/bedsheet))

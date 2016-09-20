@@ -18,6 +18,9 @@
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
+	health = 400
+	maxhealth = 400
+	broken_health = 100
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
@@ -251,7 +254,7 @@
 		if(copier_empty())
 			if(istype(O,/obj/item/weapon/paper/contract/infernal))
 				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
-				burn_state = ON_FIRE
+				resistance_flags |= ON_FIRE //phil235 ????
 			else
 				if(!user.drop_item())
 					return
@@ -303,31 +306,10 @@
 	else
 		return ..()
 
-/obj/machinery/photocopier/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				qdel(src)
-			else
-				if(toner > 0)
-					new /obj/effect/decal/cleanable/oil(get_turf(src))
-					toner = 0
-		else
-			if(prob(50))
-				if(toner > 0)
-					new /obj/effect/decal/cleanable/oil(get_turf(src))
-					toner = 0
-
-
-/obj/machinery/photocopier/blob_act(obj/effect/blob/B)
-	if(prob(50))
-		qdel(src)
-	else
-		if(toner > 0)
-			new /obj/effect/decal/cleanable/oil(get_turf(src))
-			toner = 0
+/obj/machinery/photocopier/obj_break(damage_flag)
+	if(toner > 0)
+		new /obj/effect/decal/cleanable/oil(get_turf(src))
+		toner = 0
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.

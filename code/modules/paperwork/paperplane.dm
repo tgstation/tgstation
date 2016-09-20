@@ -7,8 +7,9 @@
 	throw_speed = 1
 	throwforce = 0
 	w_class = 1
-	burn_state = FLAMMABLE
-	burntime = 4
+	resistance_flags = 0
+	health = 10
+	maxhealth = 10
 
 	var/obj/item/weapon/paper/internalPaper
 	var/list/stamped = list()
@@ -79,7 +80,6 @@
 
 		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
 			return
-		internalPaper.burntime = 1 //its already pretty burnt out
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()

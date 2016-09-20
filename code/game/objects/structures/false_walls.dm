@@ -65,7 +65,7 @@
 	air_update_turf(1)
 	opening = 0
 
-/obj/structure/falsewall/attack_animal(mob/living/simple_animal/user)
+/obj/structure/falsewall/attack_animal(mob/living/simple_animal/user) //phil235
 	if(user.environment_smash)
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)

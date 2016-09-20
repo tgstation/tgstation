@@ -363,7 +363,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/collapse
 	var/image/down
 
-	var/health = 100
+	health = 100
 
 /obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/living/user, params)
 	step_away(src,my_target,2)
@@ -373,7 +373,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
 							"<span class='danger'>[my_target] has attacked [src]!</span>")
 
-	src.health -= P.force
+	src.health -= P.force//phil235
 
 /obj/effect/fake_attacker/Crossed(mob/M, somenumber)
 	if(M == my_target)

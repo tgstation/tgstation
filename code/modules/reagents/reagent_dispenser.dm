@@ -25,7 +25,7 @@
 		else
 	return
 
-/obj/structure/reagent_dispensers/blob_act(obj/effect/blob/B)
+/obj/structure/reagent_dispensers/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		boom()
 
@@ -53,6 +53,9 @@
 	chem_splash(loc, 5, list(reagents))
 	qdel(src)
 
+/obj/structure/reagent_dispensers/obj_destruction()
+	boom()
+
 /obj/structure/reagent_dispensers/acid_melt()
 	boom()
 
@@ -66,7 +69,7 @@
 	if(tank_volume && istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
 		boom()
 
-/obj/structure/reagent_dispensers/watertank/blob_act(obj/effect/blob/B)
+/obj/structure/reagent_dispensers/watertank/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		PoolOrNew(/obj/effect/particle_effect/water, loc)
 		qdel(src)
@@ -96,7 +99,7 @@
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
 	qdel(src)
 
-/obj/structure/reagent_dispensers/fueltank/blob_act(obj/effect/blob/B)
+/obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
 	boom()
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
@@ -177,7 +180,7 @@
 	icon_state = "beer"
 	reagent_id = "beer"
 
-/obj/structure/reagent_dispensers/beerkeg/blob_act(obj/effect/blob/B)
+/obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
 	explosion(src.loc,0,3,5,7,10)
 
 

@@ -62,11 +62,10 @@
 
 	return 0
 
-/atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
-	if(do_attack_animation)
-		hulk.changeNext_move(CLICK_CD_MELEE)
-		add_logs(hulk, src, "punched", "hulk powers")
-		hulk.do_attack_animation(src)
+/atom/proc/attack_hulk(mob/living/carbon/human/hulk)
+	hulk.changeNext_move(CLICK_CD_MELEE)
+	add_logs(hulk, src, "punched", "hulk powers")
+	hulk.do_attack_animation(src)
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -208,7 +207,7 @@
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/atom/proc/blob_act(obj/effect/blob/B)
+/atom/proc/blob_act(obj/structure/blob/B)
 	return
 
 /atom/proc/fire_act()
@@ -439,3 +438,6 @@ var/list/blood_splatter_icons = list()
 /atom/on_varedit(modified_var)
 	if(!Debug2)
 		admin_spawned = TRUE
+
+/atom/proc/mech_melee_attack(obj/mecha/M)
+	return

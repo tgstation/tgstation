@@ -24,7 +24,9 @@
 	var/lasercolor = ""		//Something to do with lasertag turrets, blame Sieve for not adding a comment.
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
-	var/health = 80			//the turret's health
+	health = 80				//the turret's health
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+
 	var/locked = 1			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
 
@@ -315,12 +317,6 @@
 	else
 		return ..()
 
-/obj/machinery/porta_turret/attacked_by(obj/item/I, mob/user)
-	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
-	take_damage(I.force * 0.5, I.damtype)
-
-
 /obj/machinery/porta_turret/emag_act(mob/user)
 	if(!emagged)
 		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
@@ -334,7 +330,6 @@
 
 /obj/machinery/porta_turret/bullet_act(obj/item/projectile/P)
 	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
 	if(!disabled)
 		if(lasercolor == "b")
 			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
@@ -364,45 +359,19 @@
 
 	..()
 
-/obj/machinery/porta_turret/ex_act(severity, target)
-	if(severity >= 3)	//turret dies if an explosion touches it!
-		die()
-	else
-		qdel(src)
-
-/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.melee_damage_upper == 0)
-		user.emote("[user.friendly] [src]")
-	else
-		user.do_attack_animation(src)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		take_damage(damage)
-
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		else
-			return
+	. = ..()
+	if(.) //damage received
+		if(prob(30))
+			spark_system.start()
+		if(on && !attacked && !emagged)
+			attacked = 1
+			spawn(60)
+				attacked = 0
+
+/obj/machinery/porta_turret/obj_destruction()
 	if(!(stat & BROKEN))
-		if(damage > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
-			if(prob(30))
-				spark_system.start()
-			if(on && !attacked && !emagged)
-				attacked = 1
-				spawn(60)
-					attacked = 0
-		health -= damage
-		if(health <= 0)
-			die()
+		die()
 
 /obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
 	health = 0

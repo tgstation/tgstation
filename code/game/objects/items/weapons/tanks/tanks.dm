@@ -91,7 +91,7 @@
 
 	user << "<span class='notice'>It feels [descriptive].</span>"
 
-/obj/item/weapon/tank/blob_act(obj/effect/blob/B)
+/obj/item/weapon/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		var/turf/location = get_turf(src)
 		if(!location)
@@ -102,13 +102,20 @@
 
 		qdel(src)
 
+/obj/item/weapon/tank/obj_destruction()
+	tank_leak()
+	qdel(src)
+
 /obj/item/weapon/tank/acid_melt()
+	tank_leak()
+	..()
+
+/obj/item/weapon/tank/proc/tank_leak()
 	var/turf/T = get_turf(src)
 	if(T)
 		T.assume_air(air_contents)
 		air_update_turf()
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-	..()
 
 /obj/item/weapon/tank/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user

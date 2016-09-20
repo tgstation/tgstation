@@ -26,8 +26,8 @@
 	var/greater_gem_cost = 0
 	var/mob/camera/god/deity
 	var/side = "neutral" //"blue" or "red", also used for colouring structures when construction is started by a deity
-	var/health = 100
-	var/maxhealth = 100
+	health = 100
+	maxhealth = 100
 	var/deactivated = 0		//Structures being hidden can't be used. Mainly to prevent invisible defense pylons.
 	var/autocolours = TRUE //do we colour to our side?
 
@@ -67,53 +67,9 @@
 	else
 		return ..()
 
-/obj/structure/divine/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype, 1)
-
-/obj/structure/divine/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
-	if(!health)
-		visible_message("<span class='danger'>\The [src] was destroyed!</span>")
-		qdel(src)
-
-
-/obj/structure/divine/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
-
-
-/obj/structure/divine/attack_alien(mob/living/carbon/alien/humanoid/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	add_hiddenprint(user)
-	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	take_damage(20, BRUTE, 0)
-
-/obj/machinery/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper > 0 || M.obj_damage)
-		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
-		"<span class='danger'>You smash against the [src.name].</span>")
-		if(M.obj_damage)
-			take_damage(M.obj_damage, M.melee_damage_type, 1)
-		else
-			take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
-
+/obj/structure/divine/obj_destruction()
+	visible_message("<span class='danger'>\The [src] was destroyed!</span>")
+	qdel(src)
 
 /obj/structure/divine/proc/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
 	if(!new_deity)
@@ -254,27 +210,16 @@
 	return
 
 /obj/structure/divine/nexus/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
+	. = ..()
 	if(deity)
 		deity.update_health_hud()
-	if(!health)
-		if(!qdeleted(deity) && deity.nexus_required)
-			deity << "<span class='danger'>Your nexus was destroyed. You feel yourself fading...</span>"
-			qdel(deity)
-		visible_message("<span class='danger'>\The [src] was destroyed!</span>")
-		qdel(src)
+
+/obj/structure/divine/nexus/obj_destruction()
+	if(!qdeleted(deity) && deity.nexus_required)
+		deity << "<span class='danger'>Your nexus was destroyed. You feel yourself fading...</span>"
+		qdel(deity)
+	visible_message("<span class='danger'>\The [src] was destroyed!</span>")
+	qdel(src)
 
 
 /obj/structure/divine/nexus/New()
@@ -321,17 +266,6 @@
 	if(deity)
 		deity.conduits += src
 
-/* //No good sprites, and not enough items to make it viable yet
-/obj/structure/divine/forge
-	name = "forge"
-	desc = "A forge fueled by divine might, it allows the creation of sacred and powerful artifacts.  It requires common materials to craft objects."
-	icon_state = "forge"
-	health = 250
-	maxhealth = 250
-	density = 0
-	maxhealth = 250
-	metal_cost = 40
-*/
 
 /obj/structure/divine/convertaltar
 	name = "conversion altar"
@@ -613,49 +547,5 @@
 		name = "shrine to [new_deity.name]"
 		desc = "A shrine dedicated to [new_deity.name]"
 
-
-
-
-//Functional, but need sprites
-/*
-/obj/structure/divine/translocator
-	name = "translocator"
-	desc = "A powerful structure, made with a greater gem.  It allows a deity to move their nexus to where this stands"
-	icon_state = "translocator"
-	health = 100
-	maxhealth = 100
-	metal_cost = 20
-	glass_cost = 20
-	greater_gem_cost = 1
-
-
-/obj/structure/divine/lazarusaltar
-	name = "lazarus altar"
-	desc = "A very powerful altar capable of bringing life back to the recently deceased, made with a greater gem.  It can revive anyone and will heal virtually all wounds, but they are but a shell of their former self."
-	icon_state = "lazarusaltar"
-	density = 0
-	health = 100
-	maxhealth = 100
-	metal_cost = 20
-	greater_gem_cost = 1
-
-
-/obj/structure/divine/lazarusaltar/attack_hand(mob/living/user)
-	var/mob/living/L = locate() in get_turf(src)
-	if(!is_handofgod_culstist(user))
-		user << "<span class='notice'>You try to use it, but unfortunately you don't know any rituals.</span>"
-		return
-	if(!L)
-		return
-
-	if((side == "red" && is_handofgod_redcultist(user))) || (side == "blue" && is_handofgod_bluecultist(user)))
-		user << "<span class='notice'>You attempt to revive [L] by invoking the rebirth ritual.</span>"
-		L.revive()
-		L.adjustCloneLoss(50)
-		L.adjustStaminaLoss(100)
-	else
-		user << "<span class='notice'>You attempt to revive [L] by invoking the rebirth ritual.</span>"
-		user << "<span class='danger'>But the altar ignores your words...</span>"
-*/
 
 

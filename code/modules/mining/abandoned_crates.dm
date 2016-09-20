@@ -215,7 +215,7 @@
 		..()
 
 /obj/structure/closet/crate/secure/loot/burn()
-	SSobj.burning -= src
+	SSfire_burning.processing -= src
 	boom()
 
 /obj/structure/closet/crate/secure/loot/proc/boom(mob/user)

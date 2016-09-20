@@ -1,14 +1,11 @@
 
-/obj/effect
-	icon = 'icons/effects/effects.dmi'
-
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
-	acid_state = UNACIDABLE//Can't destroy energy portals.
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF//Can't destroy energy portals.
 	var/obj/item/target = null
 	var/creator = null
 	anchored = 1

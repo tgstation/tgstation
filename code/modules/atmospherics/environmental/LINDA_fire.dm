@@ -46,7 +46,7 @@
 /obj/effect/hotspot
 	anchored = 1
 	mouse_opacity = 0
-	acid_state = UNACIDABLE//So you can't melt fire with acid.
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF//So you can't melt fire with acid.
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER

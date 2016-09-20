@@ -24,6 +24,12 @@
 	power_change()
 	update_icon()
 
+/obj/machinery/computer/Destroy()
+	if(circuit)
+		qdel(circuit)
+		circuit = null
+	return ..()
+
 /obj/machinery/computer/initialize()
 	power_change()
 
@@ -31,28 +37,6 @@
 	if(stat & (NOPOWER|BROKEN))
 		return 0
 	return 1
-
-/obj/machinery/computer/emp_act(severity)
-	if(severity == 1)
-		take_damage(rand(15,30), BRUTE, 0)
-	else
-		take_damage(rand(15,25), BRUTE, 0)
-	..()
-
-/obj/machinery/computer/ex_act(severity, target)
-	if(target == src)
-		qdel(src)
-		return
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(25))
-				qdel(src)
-			else
-				take_damage(rand(20,30), BRUTE, 0)
-		if(3)
-			take_damage(rand(10,30), BRUTE, 0)
 
 /obj/machinery/computer/ratvar_act()
 	if(!clockwork)
@@ -69,10 +53,6 @@
 		icon_keyboard = initial(icon_keyboard)
 		icon_state = initial(icon_state)
 		update_icon()
-
-/obj/machinery/computer/bullet_act(obj/item/projectile/P)
-	take_damage(P.damage, P.damage_type, 0)
-	..()
 
 /obj/machinery/computer/update_icon()
 	cut_overlays()
@@ -99,28 +79,11 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
 		if(do_after(user, 20/I.toolspeed, target = src))
-			deconstruction()
-			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-			A.circuit = circuit
-			A.anchored = 1
-			circuit = null
-			for (var/obj/C in src)
-				C.loc = src.loc
-			if (stat & BROKEN)
-				user << "<span class='notice'>The broken glass falls out.</span>"
-				new /obj/item/weapon/shard(src.loc)
-				new /obj/item/weapon/shard(src.loc)
-				A.state = 3
-				A.icon_state = "3"
-			else
-				user << "<span class='notice'>You disconnect the monitor.</span>"
-				A.state = 4
-				A.icon_state = "4"
-			qdel(src)
+			deconstruct(user)
 	else
 		return ..()
 
-/obj/machinery/computer/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -131,11 +94,45 @@
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	computer_health = max(computer_health - damage, 0)
+
+/obj/machinery/computer/obj_break()
 	if(circuit) //no circuit, no breaking
-		if(!computer_health && !(stat & BROKEN))
+		if(!(stat & BROKEN))
 			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 			stat |= BROKEN
 			update_icon()
+
+/obj/machinery/computer/acid_melt()
+	if(!(flags & NODECONSTRUCT))
+		SSacid.processing -= src
+		var/turf/T = get_turf(src)
+		var/remaining_acid = acid_level
+		deconstruct()
+		for(var/atom/movable/AM in T) //the acid that is still unused drops on the other things on the same turf.
+			if(AM == src)
+				continue
+			AM.acid_act(10, 0.1 * remaining_acid/T.contents.len)
+	else
+		..()
+
+/obj/machinery/computer/deconstruct(mob/user)
+	on_deconstruction()
+	var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+	A.circuit = circuit
+	A.anchored = 1
+	circuit = null
+	for(var/obj/C in src)
+		C.forceMove(loc)
+	if(stat & BROKEN)
+		if(user)
+			user << "<span class='notice'>The broken glass falls out.</span>"
+		new /obj/item/weapon/shard(src.loc)
+		new /obj/item/weapon/shard(src.loc)
+		A.state = 3
+		A.icon_state = "3"
+	else
+		if(user)
+			user << "<span class='notice'>You disconnect the monitor.</span>"
+		A.state = 4
+		A.icon_state = "4"
+	qdel(src)

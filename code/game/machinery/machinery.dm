@@ -149,9 +149,8 @@ Class Procs:
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
-	if(use_power && stat == 0)
+	if(use_power && !stat)
 		use_power(7500/severity)
-
 		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 	..()
 
@@ -189,7 +188,7 @@ Class Procs:
 	updateUsrDialog()
 	update_icon()
 
-/obj/machinery/blob_act(obj/effect/blob/B)
+/obj/machinery/blob_act(obj/structure/blob/B)
 	if(density && prob(75))
 		qdel(src)
 
@@ -240,49 +239,20 @@ Class Procs:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/machinery/mech_melee_attack(obj/mecha/M)
-	M.do_attack_animation(src)
-	if(M.damtype == BRUTE || M.damtype == BURN)
-		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-		take_damage(M.force*2, M.damtype) // multiplied by 2 so we can hit machines hard but not be overpowered against mobs.
-		return 1
-	return 0
 
-/obj/machinery/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype, 1)
-
-/obj/machinery/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
-				if(damage)
+				if(damage_amount)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 				else
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			if(sound_effect)
+			if(damage_amount && sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-
-/obj/machinery/attack_alien(mob/living/carbon/alien/humanoid/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	add_hiddenprint(user)
-	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	take_damage(20, BRUTE, 0)
-
-/obj/machinery/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper || M.obj_damage)
-		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
-		"<span class='danger'>You smash against the [src.name].</span>")
-		if(M.obj_damage)
-			take_damage(M.obj_damage, M.melee_damage_type, 1)
-		else
-			take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
-
+	..()
+	//phil235
 
 /obj/machinery/attack_paw(mob/living/user)
 	if(user.a_intent != "harm")
@@ -292,7 +262,7 @@ Class Procs:
 		user.do_attack_animation(src)
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>",\
 		"<span class='danger'>You smash against the [src.name] with your paws.</span>")
-		take_damage(4, BRUTE, 1)
+		take_damage(4, BRUTE, "melee", 1)
 
 
 /obj/machinery/attack_ai(mob/user)
@@ -343,15 +313,41 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
-		deconstruction()
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
-		transfer_fingerprints_to(M)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			I.loc = loc
+		deconstruct()
+
+/obj/machinery/deconstruct()
+	on_deconstruction()
+	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
+	transfer_fingerprints_to(M)
+	M.state = 2
+	M.icon_state = "box_1"
+	for(var/obj/item/I in component_parts)
+		I.forceMove(loc)
+	qdel(src)
+
+/obj/machinery/obj_break()
+	stat |= BROKEN
+
+/obj/machinery/obj_destruction()
+	stat |= BROKEN
+	if(!(flags & NODECONSTRUCT))
+		deconstruct()
+	else
 		qdel(src)
+
+/obj/machinery/acid_melt()
+	if(!(flags & NODECONSTRUCT))
+		SSacid.processing -= src
+		var/turf/T = get_turf(src)
+		var/remaining_acid = acid_level
+		deconstruct()
+		for(var/atom/movable/AM in T) //the acid that is still unused drops on the other things on the same turf.
+			if(AM == src)
+				continue
+			AM.acid_act(10, 0.1 * remaining_acid/T.contents.len)
+	else
+		..()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
@@ -433,11 +429,11 @@ Class Procs:
 		display_parts(user)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
-/obj/machinery/proc/construction()
+/obj/machinery/proc/on_construction()
 	return
 
 //called on deconstruction before the final deletion
-/obj/machinery/proc/deconstruction()
+/obj/machinery/proc/on_deconstruction()
 	return
 
 /obj/machinery/allow_drop()

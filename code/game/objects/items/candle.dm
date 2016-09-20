@@ -38,6 +38,7 @@
 /obj/item/candle/fire_act()
 	if(!src.lit)
 		light() //honk
+	..()
 
 /obj/item/candle/proc/light(show_message)
 	if(!src.lit)

@@ -6,9 +6,10 @@
 	icon_state = "fireaxe"
 	anchored = 1
 	density = 0
+	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 	var/locked = 1
 	var/open = 0
-	var/health = 60
+	health = 60
 
 /obj/structure/fireaxecabinet/New()
 	..()
@@ -40,9 +41,7 @@
 	..()
 	take_damage(I.force, I.damtype)
 
-/obj/structure/fireaxecabinet/proc/take_damage(damage, damage_type, sound_effect = 1)
-	if(open)
-		return
+/obj/structure/fireaxecabinet/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -53,36 +52,20 @@
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	if(damage < 10)
+
+/obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	if(open)
 		return
-	if(health > 0)
-		health -= damage
-		update_icon()
-		if(health <= 0)
-			playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
-
-
-/obj/structure/fireaxecabinet/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50) && fireaxe)
-				fireaxe.loc = src.loc
-				qdel(src)
-			else
-				take_damage(rand(30,70), BRUTE, 0)
-		if(3)
-			take_damage(rand(10,30), BRUTE, 0)
-
-/obj/structure/fireaxecabinet/bullet_act(obj/item/projectile/P)
 	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
+	if(. && health > 0)
+		update_icon()
 
+/obj/structure/fireaxecabinet/obj_destruction()
+	update_icon()
+	if(health <= 0)
+		playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
 
-/obj/structure/fireaxecabinet/blob_act(obj/effect/blob/B)
+/obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
 	if(fireaxe)
 		fireaxe.forceMove(loc)
 	qdel(src)

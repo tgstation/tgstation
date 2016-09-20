@@ -1,6 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
@@ -117,7 +117,7 @@
 	w_class = 1
 	throwforce = 0
 	slot_flags = SLOT_EARS
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -127,7 +127,7 @@
 	flags = EARBANGPROTECT
 	strip_delay = 15
 	put_on_delay = 25
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 //Glasses
 /obj/item/clothing/glasses
@@ -145,7 +145,7 @@
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20
 	put_on_delay = 25
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -172,10 +172,12 @@ BLIND     // can't see anything
 	put_on_delay = 40
 
 
-/obj/item/clothing/gloves/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(blood_DNA)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+		if(health < maxhealth*0.5)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 
 
@@ -193,10 +195,12 @@ BLIND     // can't see anything
 	var/can_toggle = null
 
 
-/obj/item/clothing/head/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/head/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(blood_DNA)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
+		if(health < maxhealth*0.5)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
 
 //Mask
@@ -211,11 +215,14 @@ BLIND     // can't see anything
 	var/adjusted_flags = null
 
 
-/obj/item/clothing/mask/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
-		if(blood_DNA && (body_parts_covered & HEAD))
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+		if(body_parts_covered & HEAD)
+			if(blood_DNA)
+				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+			if(health < maxhealth*0.5)
+				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 
 //Override this to modify speech like luchador masks.
 /obj/item/clothing/mask/proc/speechModification(message)
@@ -268,7 +275,7 @@ BLIND     // can't see anything
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
-/obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		var/bloody = 0
@@ -278,6 +285,8 @@ BLIND     // can't see anything
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
 
 		if(bloody)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
+		if(health < maxhealth * 0.5)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 
 
@@ -298,17 +307,19 @@ BLIND     // can't see anything
 	name = "suit"
 	var/fire_resist = T0C+100
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 
 
-/obj/item/clothing/suit/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
+		if(health < maxhealth * 0.5)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")//phil235 need sprites
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
@@ -320,7 +331,7 @@ BLIND     // can't see anything
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	item_state = "spaceold"
 	permeability_coefficient = 0.01
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 0, acid = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -330,8 +341,7 @@ BLIND     // can't see anything
 	strip_delay = 50
 	put_on_delay = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	burn_state = FIRE_PROOF
-	acid_resistance = 1000
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -345,7 +355,7 @@ BLIND     // can't see anything
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
 	slowdown = 1
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 0, acid = 70)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -353,8 +363,7 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
 	put_on_delay = 80
-	burn_state = FIRE_PROOF
-	acid_resistance = 1000
+	resistance_flags = FIRE_PROOF
 
 //Under clothing
 
@@ -364,7 +373,7 @@ BLIND     // can't see anything
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_ICLOTHING
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/random_sensor = 1
@@ -374,13 +383,14 @@ BLIND     // can't see anything
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/obj/item/clothing/tie/hastie = null
 
-/obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
 
 	if(!isinhands)
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
-
+		if(health < maxhealth * 0.5)
+			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
 		if(hastie)
 			var/tie_color = hastie.item_color
 			if(!tie_color)

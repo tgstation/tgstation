@@ -30,10 +30,9 @@
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
-	// Damage of the chassis. If the chassis takes too much damage it will break apart.
-	var/damage = 0				// Current damage level
-	var/broken_damage = 50		// Damage level at which the computer ceases to operate
-	var/max_damage = 100		// Damage level at which the computer breaks apart.
+	health = 100
+	armor = list(melee = 0, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 0, acid = 0)
+
 
 	// Important hardware (must be installed for computer to work)
 	var/obj/item/weapon/computer_hardware/processor_unit/processor_unit				// CPU. Without it the computer won't run. Better CPUs can run more programs at once.
@@ -170,9 +169,9 @@
 
 /obj/item/device/modular_computer/examine(mob/user)
 	..()
-	if(damage > broken_damage)
+	if(health <= broken_health)
 		user << "<span class='danger'>It is heavily damaged!</span>"
-	else if(damage)
+	else if(health < maxhealth)
 		user << "<span class='warning'>It is damaged.</span>"
 
 /obj/item/device/modular_computer/update_icon()
@@ -186,7 +185,7 @@
 		else
 			add_overlay(icon_state_menu)
 
-	if(damage > broken_damage)
+	if(health <= broken_health)
 		add_overlay("bsod")
 		add_overlay("broken")
 
@@ -200,7 +199,7 @@
 
 /obj/item/device/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
-	if(damage > broken_damage)
+	if(health <= broken_health)
 		if(issynth)
 			user << "<span class='warning'>You send an activation signal to \the [src], but it responds with an error code. It must be damaged.</span>"
 		else
@@ -231,7 +230,7 @@
 		last_power_usage = 0
 		return 0
 
-	if(damage > broken_damage)
+	if(health <= broken_health)
 		shutdown_computer()
 		return 0
 
@@ -377,13 +376,14 @@
 			user << "<span class='warning'>\The [W] is off.</span>"
 			return
 
-		if(!damage)
+		if(health == maxhealth)
 			user << "<span class='warning'>\The [src] does not require repairs.</span>"
 			return
 
 		user << "<span class='notice'>You begin repairing damage to \the [src]...</span>"
-		if(WT.remove_fuel(round(damage/75)) && do_after(usr, damage/10))
-			damage = 0
+		var/dmg = round(maxhealth - health)
+		if(WT.remove_fuel(round(dmg/75)) && do_after(usr, dmg/10))
+			health = maxhealth
 			user << "<span class='notice'>You repair \the [src].</span>"
 		return
 

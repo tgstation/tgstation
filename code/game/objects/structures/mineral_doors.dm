@@ -243,5 +243,6 @@
 	openSound = 'sound/effects/doorcreaky.ogg'
 	closeSound = 'sound/effects/doorcreaky.ogg'
 	sheetType = /obj/item/stack/sheet/mineral/wood
-	burn_state = FLAMMABLE
-	burntime = 30
+	resistance_flags = 0
+	health = 200
+	maxhealth = 200

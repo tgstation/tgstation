@@ -13,7 +13,7 @@
 	var/broken = FALSE
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
-	var/health = 100
+	health = 100
 	var/breakout_time = 2
 	var/lastbang
 	var/can_weld_shut = TRUE

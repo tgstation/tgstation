@@ -30,7 +30,7 @@
 
 	var/base_icon_state = "darkmatter_shard"
 
-	var/damage = 0
+	var/damage = 0 //phil235
 	var/damage_archived = 0
 	var/safe_alert = "Crystalline hyperstructure returning to safe operating levels."
 	var/warning_point = 50
@@ -241,7 +241,7 @@
 	qdel(src)
 	return(gain)
 
-/obj/machinery/power/supermatter_shard/blob_act(obj/effect/blob/B)
+/obj/machinery/power/supermatter_shard/blob_act(obj/structure/blob/B)
 	if(B && !istype(loc, /turf/open/space)) //does nothing in space
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 		damage += B.health * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
@@ -320,7 +320,7 @@
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		power += 200
-	else if(isobj(AM) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
+	else if(isobj(AM) && (!istype(AM, /obj/effect) || istype(AM, /obj/structure/blob)))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 

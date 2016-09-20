@@ -15,7 +15,7 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
-/obj/structure/blob_act(obj/effect/blob/B)
+/obj/structure/blob_act(obj/structure/blob/B)
 	if(density && prob(50))
 		qdel(src)
 
@@ -27,13 +27,6 @@
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()
-
-/obj/structure/mech_melee_attack(obj/mecha/M)
-	M.do_attack_animation(src)
-	if(M.damtype == BRUTE || M.damtype == BURN)
-		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-		return 1
-	return 0
 
 /obj/structure/attack_hand(mob/user)
 	. = ..()
@@ -51,10 +44,6 @@
 /obj/structure/ui_act(action, params)
 	..()
 	add_fingerprint(usr)
-
-/obj/structure/proc/deconstruct(forced = FALSE)
-	qdel(src)
-
 
 /obj/structure/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
@@ -97,3 +86,8 @@
 				user << "<span class='warning'>You fail to climb onto [src].</span>"
 			density = 1
 	structureclimber = null
+
+
+/obj/structure/obj_break(damage_flag)
+	if(damage_flag != "fire" && damage_flag != "acid")
+		deconstruct()

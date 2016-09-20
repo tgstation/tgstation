@@ -135,7 +135,9 @@
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0// dir will contain dominant direction for junction pipes
-	var/health = 10 	// health points 0-10
+	health = 200
+	maxhealth = 200
+	broken_health = 30
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
 	var/obj/structure/disposalconstruct/stored
@@ -288,17 +290,35 @@
 	qdel(H)
 	return
 
+
+// pipe affected by explosion //phil235
+/obj/structure/disposalpipe/ex_act(severity, target)
+
+	//pass on ex_act to our contents before calling it on ourself
+	var/obj/structure/disposalholder/H = locate() in src
+	if(H)
+		H.contents_explosion(severity, target)
+	..()
+
+
+
+/obj/structure/disposalpipe/obj_break()
+	expel_and_break(1)
+
+/obj/structure/disposalpipe/obj_destruction()
+	expel_and_break(0)
+
+
 // call to break the pipe
 // will expel any holder inside at the time
 // then delete the pipe
 // remains : set to leave broken pipe pieces in place
-/obj/structure/disposalpipe/proc/broken(remains = 0)
+/obj/structure/disposalpipe/proc/expel_and_break(remains)
 	if(remains)
 		for(var/D in cardinal)
 			if(D & dpdir)
 				var/obj/structure/disposalpipe/broken/P = new(src.loc)
 				P.setDir(D)
-
 	src.invisibility = INVISIBILITY_MAXIMUM	// make invisible (since we won't delete the pipe immediately)
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
@@ -322,37 +342,6 @@
 	spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
 		qdel(src)
 
-
-// pipe affected by explosion
-/obj/structure/disposalpipe/ex_act(severity, target)
-
-	//pass on ex_act to our contents before calling it on ourself
-	var/obj/structure/disposalholder/H = locate() in src
-	if(H)
-		H.contents_explosion(severity, target)
-
-	switch(severity)
-		if(1)
-			broken(0)
-			return
-		if(2)
-			health -= rand(5,15)
-			healthcheck()
-			return
-		if(3)
-			health -= rand(0,15)
-			healthcheck()
-			return
-
-
-// test health for brokenness
-/obj/structure/disposalpipe/proc/healthcheck()
-	if(health < -2)
-		broken(0)
-	else if(health<1)
-		broken(1)
-	return
-
 //attack by item
 //weldingtool: unfasten and convert to obj/disposalconstruct
 
@@ -370,7 +359,7 @@
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
 					if(!src || !W.isOn()) return
-					Deconstruct()
+					deconstruct()
 					user << "<span class='notice'>You slice the disposal pipe.</span>"
 	else
 		return ..()
@@ -380,7 +369,7 @@
 	. = 1
 
 // called when pipe is cut with welder
-/obj/structure/disposalpipe/Deconstruct()
+/obj/structure/disposalpipe/deconstruct()
 	if(stored)
 		var/turf/T = loc
 		stored.loc = T
@@ -393,7 +382,7 @@
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
 
 // *** TEST verb
 //client/verb/dispstop()
@@ -679,11 +668,10 @@
 /obj/structure/disposalpipe/broken/New()
 	..()
 	update()
-	return
 
 // the disposal outlet machine
 
-/obj/structure/disposalpipe/broken/Deconstruct()
+/obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
 
 /obj/structure/disposaloutlet

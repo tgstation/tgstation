@@ -49,7 +49,7 @@
 
 /obj/item/device/taperecorder/fire_act()
 	mytape.ruin() //Fires destroy the tape
-	return()
+	..()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
@@ -250,6 +250,7 @@
 
 /obj/item/device/tape/fire_act()
 	ruin()
+	..()
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)

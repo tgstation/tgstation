@@ -12,7 +12,8 @@
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
 
-	var/health = 50
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	health = 50
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -111,9 +112,9 @@
 	..()
 	qdel(src)//to prevent bomb testing camera from exploding over and over forever
 
-/obj/machinery/camera/blob_act(obj/effect/blob/B)
+/obj/machinery/camera/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
-		take_damage(health, BRUTE, 0)
+		take_damage(health, BRUTE, "melee", 0)
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(src.invuln)
@@ -252,23 +253,20 @@
 
 	return ..()
 
-/obj/machinery/camera/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/camera/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
-				if(damage)
-					playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+				if(damage_amount)
+					playsound(src, 'sound/weapons/smash.ogg', 50, 1) //phil235 very common, make it obj/play_attack_sound ?
 				else
 					playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	if(damage < 10) //camera has a damage resistance threshold
-		return
-	health = max(0, health - damage)
-	if(!health && status)
+
+/obj/machinery/camera/obj_destruction()
+	if(status)
 		triggerCameraAlarm()
 		toggle_cam(null, 0)
 
@@ -402,7 +400,7 @@
 
 /obj/machinery/camera/bullet_act(obj/item/projectile/P)
 	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
+	take_damage(P.damage, P.damage_type, P.flag, 0)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf

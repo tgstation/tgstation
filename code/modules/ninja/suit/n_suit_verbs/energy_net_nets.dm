@@ -14,13 +14,13 @@ It is possible to destroy the net by the occupant or someone else.
 	mouse_opacity = 1//So you can hit it with stuff.
 	anchored = 1//Can't drag/grab the trapped mob.
 	layer = ABOVE_ALL_MOB_LAYER
-	var/health = 25//How much health it has.
+	health = 25//How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
 
 
-/obj/effect/energy_net/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/effect/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -28,11 +28,6 @@ It is possible to destroy the net by the occupant or someone else.
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-		else
-			return
-	health -= damage
-	if(health <=0)
-		qdel(src)
 
 /obj/effect/energy_net/Destroy()
 	if(affecting)
@@ -100,34 +95,8 @@ It is possible to destroy the net by the occupant or someone else.
 	return
 
 
-
-/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
-	. = ..()
-	take_damage(Proj.damage, Proj.damage_type)
-
-
-
-/obj/effect/energy_net/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			qdel(src)
-		if(3)
-			take_damage(rand(10,25), BRUTE, 0)
-
-/obj/effect/energy_net/blob_act(obj/effect/blob/B)
+/obj/effect/energy_net/blob_act(obj/structure/blob/B)
 	qdel(src)
-
-/obj/effect/energy_net/hitby(atom/movable/AM)
-	..()
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 10
-	else if(isobj(AM))
-		var/obj/O = AM
-		tforce = O.throwforce
-	take_damage(tforce)
 
 
 /obj/effect/energy_net/attack_hulk(mob/living/carbon/human/user)
@@ -142,20 +111,10 @@ It is possible to destroy the net by the occupant or someone else.
 	return attack_hand()
 
 
-
-/obj/effect/energy_net/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-	user.visible_message("<span class='danger'>[user] slices the energy net apart!</span>", \
-						 "\green You slice the energy net to pieces.")
-	qdel(src)
-
-
-
-/obj/effect/energy_net/attacked_by(obj/item/weapon/W, mob/user)
-	..()
-	take_damage(W.force, W.damtype)
+/obj/effect/energy_net/attacked_by(obj/item/weapon/W, mob/user) //phil235 structure?
+	if(W.force)
+		user.visible_message("<span class='danger'>[user] has hit [src] with [W]!</span>", "<span class='danger'>You hit [src] with [W]!</span>")
+	take_damage(W.force, W.damtype, "melee", 1)
 
 
 

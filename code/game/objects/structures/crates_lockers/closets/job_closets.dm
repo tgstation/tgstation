@@ -119,8 +119,9 @@
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = 0
+	health = 70
+	maxhealth = 70
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"

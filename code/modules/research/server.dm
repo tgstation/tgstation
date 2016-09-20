@@ -3,7 +3,7 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
 	var/datum/research/files
-	var/health = 100
+	health = 100
 	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
 	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
 	var/id_with_upload_string = ""		//String versions for easy editing in map editor.
@@ -90,7 +90,7 @@
 	..()
 
 
-/obj/machinery/r_n_d/server/blob_act(obj/effect/blob/B)
+/obj/machinery/r_n_d/server/blob_act(obj/structure/blob/B)
 	griefProtection()
 	..()
 
@@ -129,7 +129,7 @@
 				air_update_turf()
 
 //called when the server is deconstructed.
-/obj/machinery/r_n_d/server/deconstruction()
+/obj/machinery/r_n_d/server/on_deconstruction()
 	griefProtection()
 	..()
 

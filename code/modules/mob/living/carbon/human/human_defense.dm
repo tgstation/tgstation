@@ -17,8 +17,8 @@
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, type)
-	if(!type)
+/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
+	if(!d_type)
 		return 0
 	var/protection = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
@@ -28,7 +28,7 @@
 		if(bp && istype(bp ,/obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
-				protection += C.armor[type]
+				protection += C.armor[d_type]
 	return protection
 
 ///checkeyeprot()
@@ -138,7 +138,7 @@
 					L.embedded_objects |= I
 					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 					I.loc = src
-					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
+					L.receive_damage(I.w_class*I.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.name]!</span>")
 					hitpush = 0
 					skipcatch = 1 //can't catch the now embedded item
@@ -178,6 +178,7 @@
 		visible_message("<span class='danger'>[user] has [hulk_verb]ed [src]!</span>", \
 								"<span class='userdanger'>[user] has [hulk_verb]ed [src]!</span>")
 		adjustBruteLoss(15)
+		damage_clothes(15, BRUTE, "melee")
 		return 1
 
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
@@ -189,7 +190,8 @@
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-
+	if(!affecting)
+		affecting = get_bodypart("chest")
 	if(M.a_intent == "help")
 		..() //shaking
 		return 0
@@ -202,6 +204,7 @@
 			var/damage = rand(1, 3)
 			if(stat != DEAD)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
+				damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 		return 1
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -220,6 +223,8 @@
 					"<span class='userdanger'>[M] has lunged at [src]!</span>")
 				return 0
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
+			if(!affecting)
+				affecting = get_bodypart("chest")
 			var/armor_block = run_armor_check(affecting, "melee","","",10)
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
@@ -229,6 +234,7 @@
 			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
 				return 1
 			apply_damage(damage, BRUTE, affecting, armor_block)
+			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 		if(M.a_intent == "disarm") //Always drop item in hand, if no item, get stunned instead.
 			if(get_active_held_item() && drop_item())
@@ -252,8 +258,11 @@
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
+			if(!affecting)
+				affecting = get_bodypart("chest")
 			var/armor_block = run_armor_check(affecting, "melee")
 			apply_damage(damage, BRUTE, affecting, armor_block)
+			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
@@ -265,9 +274,11 @@
 		if(!dam_zone) //Dismemberment successful
 			return 1
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
+		if(!affecting)
+			affecting = get_bodypart("chest")
 		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
-
+		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
@@ -284,8 +295,11 @@
 			return 1
 
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
+		if(!affecting)
+			affecting = get_bodypart("chest")
 		var/armor_block = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor_block)
+		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
@@ -296,15 +310,18 @@
 		var/obj/item/bodypart/temp = get_bodypart(pick("chest", "chest", "chest", "head"))
 		if(temp)
 			var/update = 0
+			var/dmg = rand(M.force/2, M.force)
 			switch(M.damtype)
 				if("brute")
 					if(M.force > 20)
 						Paralyse(1)
-					update |= temp.take_damage(rand(M.force/2, M.force), 0)
+					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+					damage_clothes(dmg, BRUTE, "melee", temp.body_zone)
 				if("fire")
-					update |= temp.take_damage(0, rand(M.force/2, M.force))
+					update |= temp.receive_damage(0, dmg)
 					playsound(src, 'sound/items/Welder.ogg', 50, 1)
+					damage_clothes(dmg, BURN, "melee", temp.body_zone)
 				if("tox")
 					M.mech_toxin_damage(src)
 				else
@@ -332,7 +349,6 @@
 		if (1)
 			b_loss += 500
 			if (prob(bomb_armor))
-				shred_clothing(1,150)
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
 			else
@@ -346,9 +362,6 @@
 			if (prob(bomb_armor))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
-				shred_clothing(1,25)
-			else
-				shred_clothing(1,50)
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
@@ -365,6 +378,7 @@
 				Paralyse(8)
 
 	take_overall_damage(b_loss,f_loss)
+
 	//attempt to dismember bodyparts
 	if(severity <= 2 || !bomb_armor)
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
@@ -378,7 +392,7 @@
 					break
 	..()
 
-/mob/living/carbon/human/blob_act(obj/effect/blob/B)
+/mob/living/carbon/human/blob_act(obj/structure/blob/B)
 	if(stat == DEAD)
 		return
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
@@ -425,10 +439,10 @@
 				informed = 1
 			switch(severity)
 				if(1)
-					L.take_damage(0,10)
+					L.receive_damage(0,10)
 					src.Stun(10)
 				if(2)
-					L.take_damage(0,5)
+					L.receive_damage(0,5)
 					src.Stun(5)
 	..()
 
@@ -440,16 +454,16 @@
 	var/acid_decay = 100/acidpwr // how much volume we lose per item we try to melt. 5 for fluoro, 10 for sulphuric
 
 	//HEAD//
-	var/obj/item/clothing/head_clothes = null
-	if(glasses)
-		head_clothes = glasses
-	if(wear_mask)
-		head_clothes = wear_mask
-	if(head)
-		head_clothes = head
 	if(!bodyzone_hit || bodyzone_hit == "head") //only if we didn't specify a zone or if that zone is the head.
+		var/obj/item/clothing/head_clothes = null
+		if(glasses)
+			head_clothes = glasses
+		if(wear_mask)
+			head_clothes = wear_mask
+		if(head)
+			head_clothes = head
 		if(head_clothes)
-			if(head_clothes.acid_state != UNACIDABLE)
+			if(!(head_clothes.resistance_flags & UNACIDABLE))
 				head_clothes.acid_act(acidpwr, acid_volume_left)
 				acid_volume_left = max(acid_volume_left - acid_decay, 0) //We remove some of the acid volume.
 				update_inv_glasses()
@@ -465,14 +479,14 @@
 				inventory_items_to_kill += ears
 
 	//CHEST//
-	var/obj/item/clothing/chest_clothes = null
-	if(w_uniform)
-		chest_clothes = w_uniform
-	if(wear_suit)
-		chest_clothes = wear_suit
-	if(!bodyzone_hit || bodyzone_hit == "head")
+	if(!bodyzone_hit || bodyzone_hit == "chest")
+		var/obj/item/clothing/chest_clothes = null
+		if(w_uniform)
+			chest_clothes = w_uniform
+		if(wear_suit)
+			chest_clothes = wear_suit
 		if(chest_clothes)
-			if(chest_clothes.acid_state != UNACIDABLE)
+			if(!(chest_clothes.resistance_flags & UNACIDABLE))
 				chest_clothes.acid_act(acidpwr, acid_volume_left)
 				acid_volume_left = max(acid_volume_left - acid_decay, 0)
 				update_inv_w_uniform()
@@ -494,17 +508,17 @@
 
 
 	//ARMS & HANDS//
-	var/obj/item/clothing/arm_clothes = null
-	if(gloves)
-		arm_clothes = gloves
-	if(w_uniform && (w_uniform.body_parts_covered & HANDS) || w_uniform && (w_uniform.body_parts_covered & ARMS))
-		arm_clothes = w_uniform
-	if(wear_suit && (wear_suit.body_parts_covered & HANDS) || wear_suit && (wear_suit.body_parts_covered & ARMS))
-		arm_clothes = wear_suit
-
 	if(!bodyzone_hit || bodyzone_hit == "l_arm" || bodyzone_hit == "r_arm")
+		var/obj/item/clothing/arm_clothes = null
+		if(gloves)
+			arm_clothes = gloves
+		if(w_uniform && ((w_uniform.body_parts_covered & HANDS) || (w_uniform.body_parts_covered & ARMS)))
+			arm_clothes = w_uniform
+		if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
+			arm_clothes = wear_suit
+
 		if(arm_clothes)
-			if(arm_clothes.acid_state != UNACIDABLE)
+			if(!(arm_clothes.resistance_flags & UNACIDABLE))
 				arm_clothes.acid_act(acidpwr, acid_volume_left)
 				acid_volume_left = max(acid_volume_left - acid_decay, 0)
 				update_inv_gloves()
@@ -522,16 +536,16 @@
 
 
 	//LEGS & FEET//
-	var/obj/item/clothing/leg_clothes = null
-	if(shoes)
-		leg_clothes = shoes
-	if(w_uniform && ((w_uniform.body_parts_covered & FEET) || (bodyzone_hit != "feet" && (w_uniform.body_parts_covered & LEGS))))
-		leg_clothes = w_uniform
-	if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (bodyzone_hit != "feet" && (wear_suit.body_parts_covered & LEGS))))
-		leg_clothes = wear_suit
-	if(!bodyzone_hit || bodyzone_hit == "l_leg" || bodyzone_hit == "r_leg")
+	if(!bodyzone_hit || bodyzone_hit == "l_leg" || bodyzone_hit == "r_leg" || bodyzone_hit == "feet")
+		var/obj/item/clothing/leg_clothes = null
+		if(shoes)
+			leg_clothes = shoes
+		if(w_uniform && ((w_uniform.body_parts_covered & FEET) || (bodyzone_hit != "feet" && (w_uniform.body_parts_covered & LEGS))))
+			leg_clothes = w_uniform
+		if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (bodyzone_hit != "feet" && (wear_suit.body_parts_covered & LEGS))))
+			leg_clothes = wear_suit
 		if(leg_clothes)
-			if(leg_clothes.acid_state != UNACIDABLE)
+			if(!(leg_clothes.resistance_flags & UNACIDABLE))
 				leg_clothes.acid_act(acidpwr, acid_volume_left)
 				acid_volume_left = max(acid_volume_left - acid_decay, 0)
 				update_inv_shoes()
@@ -550,11 +564,11 @@
 
 	//DAMAGE//
 	for(var/obj/item/bodypart/affecting in damaged)
-		affecting.take_damage(acidity, 2*acidity)
+		affecting.receive_damage(acidity, 2*acidity)
 
 		if(affecting.name == "head")
 			if(prob(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
-				affecting.take_damage(acidity, 2*acidity)
+				affecting.receive_damage(acidity, 2*acidity)
 				emote("scream")
 				facial_hair_style = "Shaved"
 				hair_style = "Bald"

@@ -39,10 +39,12 @@
 
 /obj/effect/particle_effect/foam/proc/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
-	if(metal)
-		var/obj/structure/foamedmetal/M = new(src.loc)
-		M.metal = metal
-		M.updateicon()
+	switch(metal)
+		if(1)
+			new /obj/structure/foamedmetal(src.loc)
+		if(2)
+			new /obj/structure/foamedmetal/iron(src.loc)
+
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
 
@@ -175,7 +177,8 @@
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
-	var/metal = 1		// 1=aluminium, 2=iron
+	health = 20
+	maxhealth = 20
 
 /obj/structure/foamedmetal/New()
 	..()
@@ -187,76 +190,19 @@
 	air_update_turf(1)
 	return ..()
 
-
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
 	..()
 	move_update_air(T)
 
-
-/obj/structure/foamedmetal/proc/updateicon()
-	if(metal == 1)
-		icon_state = "metalfoam"
-	else
-		icon_state = "ironfoam"
-
-
-/obj/structure/foamedmetal/ex_act(severity, target)
+/obj/structure/foamedmetal/blob_act(obj/structure/blob/B)
 	qdel(src)
-
-
-/obj/structure/foamedmetal/blob_act(obj/effect/blob/B)
-	qdel(src)
-
-
-/obj/structure/foamedmetal/bullet_act()
-	..()
-	if(metal==1 || prob(50))
-		qdel(src)
-
 
 /obj/structure/foamedmetal/attack_paw(mob/user)
 	attack_hand(user)
 
-
-/obj/structure/foamedmetal/attack_animal(mob/living/simple_animal/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
+/obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
-	if(user.environment_smash >= 1)
-		user.do_attack_animation(src)
-		user << "<span class='notice'>You smash apart the foam wall.</span>"
-		qdel(src)
-
-/obj/structure/foamedmetal/attack_hulk(mob/living/carbon/human/user)
-	..(user, 1)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
-	if(prob(75 - metal*25))
-		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
-						"<span class='danger'>You smash through the metal foam wall!</span>")
-		qdel(src)
-	return 1
-
-/obj/structure/foamedmetal/attack_alien(mob/living/carbon/alien/humanoid/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
-	if(prob(75 - metal*25))
-		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
-						"<span class='danger'>You smash through the metal foam wall!</span>")
-		qdel(src)
-
-/obj/structure/foamedmetal/attack_slime(mob/living/simple_animal/slime/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
-	if(!user.is_adult)
-		attack_hand(user)
-		return
-	if(prob(75 - metal*25))
-		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
-						"<span class='danger'>You smash through the metal foam wall!</span>")
-		qdel(src)
 
 /obj/structure/foamedmetal/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -264,19 +210,15 @@
 	user << "<span class='warning'>You hit the metal foam but bounce off it!</span>"
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
 
-
-/obj/structure/foamedmetal/attacked_by(obj/item/I, mob/living/user)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1) //the item attack sound is muffled by the foam.
-	if(prob(I.force*20 - metal*25))
-		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
-						"<span class='danger'>You smash through the foamed metal with \the [I]!</span>")
-		qdel(src)
-	else
-		user << "<span class='warning'>You hit the metal foam to no effect!</span>"
-
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return !density
 
 
 /obj/structure/foamedmetal/CanAtmosPass()
 	return !density
+
+
+/obj/structure/foamedmetal/iron
+	health = 50
+	maxhealth = 50
+	icon_state = "ironfoam"

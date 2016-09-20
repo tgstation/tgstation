@@ -1,6 +1,6 @@
 /obj/effect/overlay
 	name = "overlay"
-	acid_state = UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
 
 /obj/effect/overlay/singularity_act()
@@ -23,7 +23,6 @@
 	icon_state = "nothing"
 	anchored = 1
 	layer = ABOVE_MOB_LAYER
-	burn_state = LAVA_PROOF
 	mouse_opacity = 0
 	var/duration = 10 //in deciseconds
 	var/randomdir = TRUE

@@ -9,7 +9,7 @@
 
 /obj/effect/beam
 	name = "beam"
-	acid_state = UNACIDABLE//Just to be sure.
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF//Just to be sure.
 	var/def_zone
 	pass_flags = PASSTABLE
 

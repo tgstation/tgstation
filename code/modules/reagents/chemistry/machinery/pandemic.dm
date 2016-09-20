@@ -8,6 +8,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/pandemic
 	use_power = 1
 	idle_power_usage = 20
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/temp_html = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -284,7 +285,7 @@
 	else
 		return ..()
 
-/obj/machinery/computer/pandemic/deconstruction()
+/obj/machinery/computer/pandemic/on_deconstruction()
 	if(beaker)
 		beaker.loc = get_turf(src)
 	..()

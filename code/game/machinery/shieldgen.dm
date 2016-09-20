@@ -6,9 +6,9 @@
 		density = 1
 		opacity = 0
 		anchored = 1
-		acid_state = UNACIDABLE
+		resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 		var/const/max_health = 200
-		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
+		health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
 /obj/machinery/shield/New()
 	src.setDir(pick(1,2,3,4))
@@ -33,41 +33,17 @@
 /obj/machinery/shield/CanAtmosPass(turf/T)
 	return !density
 
-/obj/machinery/shield/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type)
-
-/obj/machinery/shield/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			take_damage(rand(180,260), BRUTE, 0)
-		if(2)
-			take_damage(rand(150,230), BRUTE, 0)
-		if(3)
-			take_damage(rand(80,150), BRUTE, 0)
-
 /obj/machinery/shield/emp_act(severity)
 	switch(severity)
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(50, BRUTE, 0)
+			take_damage(50, BRUTE, "energy", 0)
 
-/obj/machinery/shield/blob_act(obj/effect/blob/B)
+/obj/machinery/shield/blob_act(obj/structure/blob/B)
 	qdel(src)
 
-
-/obj/machinery/shield/hitby(AM as mob|obj)
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else
-		var/obj/O = AM
-		tforce = O.throwforce
-	..()
-	take_damage(tforce)
-
-/obj/machinery/shield/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BURN)
 			if(sound_effect)
@@ -75,14 +51,14 @@
 		if(BRUTE)
 			if(sound_effect)
 				playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
-		else
-			return
-	opacity = 1
-	spawn(20)
-		opacity = 0
-	health -= damage
-	if(health <= 0)
-		qdel(src)
+
+/obj/machinery/shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(.) //damage was dealt
+		opacity = 1
+		spawn(20)
+			opacity = 0
+
 
 /obj/machinery/shieldgen
 		name = "anti-breach shielding projector"
@@ -95,7 +71,7 @@
 		pressure_resistance = 2*ONE_ATMOSPHERE
 		req_access = list(access_engine)
 		var/const/max_health = 100
-		var/health = max_health
+		health = max_health
 		var/active = 0
 		var/list/deployed_shields = list()
 		var/locked = 0
@@ -137,45 +113,24 @@
 			qdel(pick(deployed_shields))
 
 
-/obj/machinery/shieldgen/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/shieldgen/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
-				if(damage)
+				if(damage_amount)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 				else
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		else
-			return
-	health = max(health - damage, 0)
-	if(health <= 0 && !(stat && BROKEN))
+
+
+/obj/machinery/shieldgen/obj_destruction()
+	if(!(stat && BROKEN))
 		stat |= BROKEN
+		locked = pick(0,1)
 		update_icon()
-
-/obj/machinery/shieldgen/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(33))
-				qdel(src)
-			else
-				take_damage(rand(80,120), BRUTE, 0)
-		if(3)
-			take_damage(rand(40,80), BRUTE, 0)
-
-/obj/machinery/shieldgen/emp_act(severity)
-	switch(severity)
-		if(1)
-			health = 0
-			stat |= BROKEN
-			locked = pick(0,1)
-			update_icon()
-		if(2)
-			take_damage(rand(80,120), BRUTE, 0)
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
 	if(locked)
@@ -263,7 +218,7 @@
 
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
-/obj/machinery/shieldwallgen
+/obj/machinery/shieldwallgen //phil235 shitcode
 		name = "shield generator"
 		desc = "A shield generator."
 		icon = 'icons/obj/stationobjs.dmi'
@@ -478,7 +433,7 @@
 		icon_state = "shieldwall"
 		anchored = 1
 		density = 1
-		acid_state = UNACIDABLE
+		resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 		luminosity = 3
 		var/needs_power = 0
 		var/active = 1

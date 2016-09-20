@@ -6,6 +6,7 @@
 	icon_state = "mixer0b"
 	use_power = 1
 	idle_power_usage = 40
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/target_temperature = 300
 	var/heater_coefficient = 0.10
@@ -68,7 +69,7 @@
 		return
 	return ..()
 
-/obj/machinery/chem_heater/deconstruction()
+/obj/machinery/chem_heater/on_deconstruction()
 	eject_beaker()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \

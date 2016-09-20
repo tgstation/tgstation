@@ -15,8 +15,9 @@
 	anchored = 1
 	can_buckle = 1
 	buckle_lying = 1
-	burn_state = FLAMMABLE
-	burntime = 30
+	resistance_flags = 0
+	health = 100
+	maxhealth = 100
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
 
@@ -31,20 +32,8 @@
 /obj/structure/bed/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
 	if(M.environment_smash)
 		deconstruct()
-
-/obj/structure/bed/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-			return
-		if(2)
-			if(prob(70))
-				deconstruct()
-				return
-		if(3)
-			if(prob(50))
-				deconstruct()
-				return
+	else
+		..()
 
 /obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
@@ -61,7 +50,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	var/foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)

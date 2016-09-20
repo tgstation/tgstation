@@ -3,7 +3,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	acid_resistance = 500
 	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
@@ -20,6 +19,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
+
+	health = 100
+	maxhealth = 100
 
 	var/hitsound = null
 	var/throwhitsound = null
@@ -48,7 +50,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden_uplink = null
@@ -118,15 +119,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		qdel(X)
 	return ..()
 
-/obj/item/blob_act(obj/effect/blob/B)
+/obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
-
-/obj/item/ex_act(severity, target)
-	if(severity == 1 || target == src)
-		qdel(src)
-	if(!qdeleted(src))
-		contents_explosion(severity, target)
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -221,7 +216,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(anchored)
 		return
 
-	if(burn_state == ON_FIRE)
+	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
 		if(istype(C))
 			if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
@@ -230,7 +225,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
 				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
+				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 					C.update_damage_overlays()
 				return
 		else
@@ -239,10 +234,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
 		var/mob/living/carbon/C = user
 		if(istype(C))
-			if(!C.gloves || (C.gloves.acid_state != UNACIDABLE && C.gloves.acid_state != ACID_PROOF))
+			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
 				user << "<span class='warning'>The acid on [src] burns your hand!</span>"
 				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
+				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 					C.update_damage_overlays()
 
 
@@ -509,12 +504,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(current_size >= STAGE_FOUR)
 		throw_at_fast(S,14,3, spin=0)
 	else ..()
-
-/obj/item/acid_processing_effect()
-	if(acid_state != ACID_PROOF)
-		for(var/armour_value in armor)
-			armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
-	. = ..()
 
 /obj/item/throw_impact(atom/A)
 	var/itempush = 1

@@ -8,7 +8,10 @@
 	flags = CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
-	var/health = 10
+	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
+	health = 10
+	maxhealth = 10
+	broken_health = 2
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
 
@@ -17,23 +20,12 @@
 	stored = new/obj/item/stack/rods(src)
 	stored.amount = 2
 
-/obj/structure/grille/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		else
-			take_damage(rand(5,10), BRUTE, 0)
-
 /obj/structure/grille/ratvar_act()
 	if(destroyed)
 		new /obj/structure/grille/ratvar/broken(src.loc)
 	else
 		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
-
-/obj/structure/grille/blob_act(obj/effect/blob/B)
-	if(!destroyed)
-		Break()
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user))
@@ -44,9 +36,8 @@
 	attack_hand(user)
 
 /obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
-	..(user, 1)
+	..()
 	shock(user, 70)
-	take_damage(5)
 
 /obj/structure/grille/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -55,7 +46,7 @@
 						 "<span class='danger'>You hit [src].</span>", \
 						 "<span class='italics'>You hear twisting metal.</span>")
 	if(!shock(user, 70))
-		take_damage(rand(1,2))
+		take_damage(rand(1,2), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
@@ -64,36 +55,8 @@
 						 "<span class='danger'>You mangle [src].</span>", \
 						 "<span class='italics'>You hear twisting metal.</span>")
 	if(!shock(user, 70))
-		take_damage(5)
+		take_damage(5, BRUTE, "melee", 1)
 
-/obj/structure/grille/attack_slime(mob/living/simple_animal/slime/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(!user.is_adult)
-		return
-
-	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
-						 "<span class='danger'>You smash against [src].</span>", \
-						 "<span class='italics'>You hear twisting metal.</span>")
-	take_damage(rand(1,2))
-
-/obj/structure/grille/attack_animal(var/mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	if(!M.melee_damage_upper && !M.obj_damage || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
-		return
-	M.do_attack_animation(src)
-	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
-					  "<span class='danger'>You smash against [src].</span>", \
-					  "<span class='italics'>You hear twisting metal.</span>")
-	if(M.obj_damage)
-		take_damage(M.obj_damage, M.melee_damage_type)
-	else
-		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type)
-
-
-/obj/structure/grille/mech_melee_attack(obj/mecha/M)
-	if(..())
-		take_damage(M.force * 0.5, M.damtype)
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
@@ -111,35 +74,13 @@
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSGRILLE)
 
-/obj/structure/grille/bullet_act(var/obj/item/projectile/Proj)
-	. = ..()
-	take_damage(Proj.damage*0.3, Proj.damage_type)
-
-/obj/structure/grille/Deconstruct()
-	if(!loc) //if already qdel'd somehow, we do nothing
-		return
-	if(!(flags&NODECONSTRUCT))
-		transfer_fingerprints_to(stored)
-		var/turf/T = loc
-		stored.loc = T
-	..()
-
-/obj/structure/grille/proc/Break()
-	icon_state = "broken[initial(icon_state)]"
-	density = 0
-	destroyed = 1
-	stored.amount = 1
-	if(!(flags&NODECONSTRUCT))
-		var/obj/item/stack/rods/newrods = new(loc)
-		transfer_fingerprints_to(newrods)
-
 /obj/structure/grille/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			Deconstruct()
+			deconstruct()
 	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -196,31 +137,39 @@
 	else if(istype(W, /obj/item/weapon/shard) || !shock(user, 70))
 		return ..()
 
-
-/obj/structure/grille/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force * 0.3, I.damtype)
-
-/obj/structure/grille/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
-		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/welder.ogg', 80, 1)
 		if(BRUTE)
 			if(sound_effect)
-				if(damage)
+				if(damage_amount)
 					playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 				else
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		else
-			return
-	health -= damage
-	if(health <= 0)
-		if(!destroyed)
-			Break()
-		else
-			if(health <= -6)
-				Deconstruct()
+		if(BURN)
+			if(sound_effect)
+				playsound(loc, 'sound/items/welder.ogg', 80, 1)
+
+
+/obj/structure/grille/obj_destruction()
+	deconstruct()
+
+/obj/structure/grille/deconstruct()
+	if(!loc) //if already qdel'd somehow, we do nothing
+		return
+	if(!(flags&NODECONSTRUCT))
+		transfer_fingerprints_to(stored)
+		var/turf/T = loc
+		stored.loc = T
+	..()
+
+/obj/structure/grille/obj_break()
+	icon_state = "broken[initial(icon_state)]"
+	density = 0
+	destroyed = 1
+	stored.amount = 1
+	if(!(flags&NODECONSTRUCT))
+		var/obj/item/stack/rods/newrods = new(loc)
+		transfer_fingerprints_to(newrods)
 
 
 // shock user with probability prb (if all connections & power are working)
@@ -248,19 +197,12 @@
 /obj/structure/grille/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!destroyed)
 		if(exposed_temperature > T0C + 1500)
-			take_damage(1)
+			take_damage(1, BURN, "fire")
 	..()
 
 /obj/structure/grille/hitby(AM as mob|obj)
-	..()
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 5
-	else if(isobj(AM))
-		if(prob(50))
-			var/obj/item/I = AM
-			tforce = max(0, I.throwforce * 0.5)
-		else if(anchored && !destroyed)
+	if(isobj(AM))
+		if(prob(50) && anchored && !destroyed)
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
@@ -275,7 +217,7 @@
 					src.Beam(closest_mob, icon_state="lightning[rand(1,12)]", time=5)
 					closest_mob.electrocute_act(shock_damage, src, 1)//ZAP, damage should be about 40 with 200000W
 					playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
-	take_damage(tforce)
+	return ..()
 
 /obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
@@ -283,7 +225,7 @@
 /obj/structure/grille/broken // Pre-broken grilles for map placement
 	icon_state = "brokengrille"
 	density = 0
-	health = 0
+	health = 2
 	destroyed = 1
 
 /obj/structure/grille/broken/New()

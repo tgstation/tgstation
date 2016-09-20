@@ -17,7 +17,8 @@
 	var/gas_type = ""
 	var/release_pressure = ONE_ATMOSPHERE
 
-	var/health = 100
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
+	health = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
@@ -181,9 +182,9 @@
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
-		take_damage(5, BRUTE, 0)
+		take_damage(5, BURN, 0, 1)
 
-/obj/machinery/portable_atmospherics/canister/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/portable_atmospherics/canister/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -196,25 +197,34 @@
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
+
+/obj/machinery/portable_atmospherics/canister/obj_destruction()
 	if(stat & BROKEN)
 		return
-	health = max( health - damage, 0)
-	if(!health)
-		disconnect()
-		var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
-		var/turf/T = get_turf(src)
-		T.assume_air(expelled_gas)
-		air_update_turf()
+	canister_break()
 
-		stat |= BROKEN
-		density = 0
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-		update_icon()
-		investigate_log("was destroyed.", "atmos")
+/obj/machinery/portable_atmospherics/canister/acid_melt()
+	if(!(stat & BROKEN))
+		canister_break()
+	..()
 
-		if(holding)
-			holding.loc = T
-			holding = null
+
+/obj/machinery/portable_atmospherics/canister/proc/canister_break()
+	disconnect()
+	var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
+	var/turf/T = get_turf(src)
+	T.assume_air(expelled_gas)
+	air_update_turf()
+
+	stat |= BROKEN
+	density = 0
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	update_icon()
+	investigate_log("was destroyed.", "atmos")
+
+	if(holding)
+		holding.forceMove(T)
+		holding = null
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
@@ -235,38 +245,15 @@
 		air_update_turf() // Update the environment if needed.
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/blob_act(obj/effect/blob/B)
-	take_damage(100, BRUTE, 0)
-
-/obj/machinery/portable_atmospherics/canister/burn()
-	take_damage(health, BURN, 1)
-	..()
-
-/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage / 2, P.damage_type, 0)
-
-/obj/machinery/portable_atmospherics/canister/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			if((stat & BROKEN) || prob(30))
-				qdel(src)
-			else
-				take_damage(100, BRUTE, 0)
-		if(2)
-			if(stat & BROKEN)
-				qdel(src)
-			else
-				take_damage(rand(40, 110), BRUTE, 0)
-		if(3)
-			take_damage(rand(15, 40), BRUTE, 0)
+/obj/machinery/portable_atmospherics/canister/blob_act(obj/structure/blob/B)
+	take_damage(100, BRUTE, "melee", 0)
 
 /obj/machinery/portable_atmospherics/canister/attacked_by(obj/item/I, mob/user)
 	if(I.force)
 		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
 	investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
 	add_fingerprint(user)
-	take_damage(I.force, I.damtype, 1)
+	take_damage(I.force, I.damtype, "melee", 1)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
@@ -363,11 +350,3 @@
 				holding = null
 				. = TRUE
 	update_icon()
-
-/obj/machinery/portable_atmospherics/canister/acid_melt()
-	var/turf/T = get_turf(src)
-	if(T)
-		T.assume_air(air_contents)
-		air_update_turf()
-	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-	..()

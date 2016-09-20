@@ -3,9 +3,10 @@
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
-	acid_state = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/base_state = "left"
-	var/health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 	visible = 0
 	flags = ON_BORDER
 	opacity = 0
@@ -159,7 +160,7 @@
 	src.operating = 0
 	return 1
 
-/obj/machinery/door/window/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -167,10 +168,9 @@
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health = max(0, src.health - damage)
-	if(health <= 0)
+
+
+/obj/machinery/door/window/obj_destruction()
 		shatter()
 
 /obj/machinery/door/window/proc/shatter()
@@ -181,18 +181,6 @@
 			debris -= fragment
 	qdel(src)
 
-/obj/machinery/door/window/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(25))
-				shatter()
-			else
-				take_damage(120, BRUTE, 0)
-		if(3)
-			take_damage(60, BRUTE, 0)
-
 /obj/machinery/door/window/narsie_act()
 	color = "#7D1919"
 
@@ -200,26 +188,10 @@
 	new/obj/machinery/door/window/clockwork(src.loc, dir)
 	qdel(src)
 
-/obj/machinery/door/window/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(round(P.damage / 2), P.damage_type, 0)
-
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		take_damage(round(exposed_volume / 200), BURN, 0)
+		take_damage(round(exposed_volume / 200), BURN, 0, 0)
 	..()
-
-//When an object is thrown at the window
-/obj/machinery/door/window/hitby(atom/movable/AM)
-	..()
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else if(isobj(AM))
-		var/obj/O = AM
-		tforce = O.throwforce
-	take_damage(tforce)
-
 
 
 /obj/machinery/door/window/attack_ai(mob/user)
@@ -319,7 +291,7 @@
 		if("deny")
 			flick("[src.base_state]deny", src)
 
-/obj/machinery/door/window/attack_hulk(mob/user)
+/obj/machinery/door/window/attack_hulk(mob/user) //phil235
 	..(user, 1)
 	user.visible_message("<span class='danger'>[user] smashes through the windoor!</span>", \
 						"<span class='danger'>You tear through the windoor!</span>")

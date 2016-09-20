@@ -6,8 +6,9 @@
 	density = 1
 	anchored = 1
 	layer = HIGH_OBJ_LAYER
-	var/maxhealth = 200
-	var/health = 200
+	maxhealth = 200
+	health = 200
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 	var/datum/gang/gang
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
@@ -60,31 +61,31 @@
 	if(!.)
 		STOP_PROCESSING(SSmachine, src)
 
-/obj/machinery/dominator/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/dominator/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 		if(BRUTE)
 			if(sound_effect)
-				if(damage)
+				if(damage_amount)
 					playsound(src, 'sound/effects/bang.ogg', 50, 1)
 				else
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		else
-			return
-	health -= damage
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-	if(health > (maxhealth/2))
-		if(prob(damage*2))
+/obj/machinery/dominator/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(.)
+		if(health > (maxhealth/2))
+			if(prob(damage_amount*2))
+				spark_system.start()
+		else if(!(stat & BROKEN))
 			spark_system.start()
-	else if(!(stat & BROKEN))
-		spark_system.start()
-		add_overlay("damage")
+			add_overlay("damage")
 
+/obj/machinery/dominator/obj_destruction()
 	if(!(stat & BROKEN))
-		if(health <= 0)
-			set_broken()
+		set_broken()
 
 	if(health <= -100)
 		new /obj/item/stack/sheet/plasteel(src.loc)
@@ -129,34 +130,11 @@
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
-	take_damage(100, BURN, 0)
+	take_damage(100, BURN, "energy", 0)
 	..()
 
-/obj/machinery/dominator/ex_act(severity, target)
-	if(target == src)
-		qdel(src)
-		return
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			take_damage(120, BRUTE, 0)
-		if(3)
-			take_damage(30, BRUTE, 0)
-	return
-
-/obj/machinery/dominator/bullet_act(obj/item/projectile/P)
-	. = ..()
-	if(P.damage)
-		var/damage_amount = P.damage
-		if(P.forcedodge)
-			damage_amount *= 0.5
-		visible_message("<span class='danger'>[src] was hit by [P].</span>")
-		take_damage(damage_amount, P.damage_type, 0)
-
-
-/obj/machinery/dominator/blob_act(obj/effect/blob/B)
-	take_damage(110, BRUTE, 0)
+/obj/machinery/dominator/blob_act(obj/structure/blob/B)
+	take_damage(110, BRUTE, "melee", 0)
 
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating || (stat & BROKEN))
@@ -206,14 +184,6 @@
 		for(var/datum/gang/G in ticker.mode.gangs)
 			if(G != gang)
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
-
-/obj/machinery/dominator/attack_hulk(mob/user)
-	..(user, 1)
-	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
-	"<span class='danger'>You punch [src].</span>",\
-	"<span class='italics'>You hear metal being slammed.</span>")
-	take_damage(5)
-	return 1
 
 /obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
 	add_fingerprint(user)

@@ -9,12 +9,13 @@
 	var/damtype = "brute"
 	var/force = 0
 
-	var/burn_state = FIRE_PROOF // LAVA_PROOF | FIRE_PROOF | FLAMMABLE | ON_FIRE
-	var/burntime = 10 //How long it takes to burn to ashes, in seconds
-	var/burn_world_time //What world time the object will burn up completely
+	var/list/armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	var/health = 10000
+	var/maxhealth = 10000
+	var/broken_health = 0 //0 if we have no special broken behavior //phil235 ?
 
-	var/acid_state = ACIDABLE //UNACIDABLE|ACID_PROOOF|ACIDABLE
-	var/acid_resistance = 3000 //the obj's 'health' when attacked by acid
+	var/resistance_flags = FIRE_PROOF // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+
 	var/acid_level = 0 //how much acid is on that obj
 	var/unacidable = 0//phil235 TO BE REMOVED, ONLY HERE TO NOT HAVE ERROR ON MAP.
 
@@ -25,6 +26,7 @@
 
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/is_frozen = FALSE
+
 
 /obj/New()
 	..()
@@ -158,15 +160,6 @@
 /obj/proc/hide(h)
 	return
 
-/obj/ex_act(severity, target)
-	if(severity == 1 || target == src)
-		qdel(src)
-	else if(severity == 2)
-		if(prob(50))
-			qdel(src)
-	if(!qdeleted(src))
-		..()
-
 //If a mob logouts/logins in side of an object you can use this proc
 /obj/proc/on_log()
 	..()
@@ -174,18 +167,10 @@
 		var/obj/Loc=loc
 		Loc.on_log()
 
-/obj/singularity_act()
-	ex_act(1)
-	if(src && !qdeleted(src))
-		qdel(src)
-	return 2
 
 /obj/singularity_pull(S, current_size)
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
-
-/obj/proc/Deconstruct()
-	qdel(src)
 
 /obj/get_spans()
 	return ..() | SPAN_ROBOT
@@ -193,82 +178,6 @@
 /obj/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	var/turf/T = get_turf(src)
 	return T.storage_contents_dump_act(src_object, user)
-
-
-var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "icon_state" = "acid")
-
-/obj/acid_act(acidpwr, acid_volume)
-	if(acid_state != UNACIDABLE && acid_volume)
-		if(!acid_level)
-			SSobj.aciding += src
-			add_overlay(acid_overlay, 1)
-		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
-		if(acid_level < acid_cap)
-			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
-		return 1
-
-/obj/proc/acid_processing_effect()
-	. = 1
-	if(acid_state != ACID_PROOF)
-		if(prob(33))
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		acid_resistance -= min(5 + 2* round(sqrt(acid_level)), 300)
-	if(acid_resistance <= 0)
-		acid_melt()
-	else
-		acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
-		if(!acid_level)
-			return 0
-
-/obj/proc/acid_melt()
-	empty_object_contents(0, src.loc)
-	var/obj/effect/decal/cleanable/molten_object/I
-	if(density)
-		I = new /obj/effect/decal/cleanable/molten_object/large(loc)
-	else
-		I = new (loc)
-	I.pixel_x = rand(-16,16)
-	I.pixel_y = rand(-16,16)
-	I.desc = "Looks like this was \an [src] some time ago."
-	SSobj.aciding -= src
-	qdel(src)
-
-/obj/fire_act(global_overlay=1)
-	if(!burn_state)
-		burn_state = ON_FIRE
-		SSobj.burning += src
-		burn_world_time = world.time + burntime*rand(10,20)
-		if(global_overlay)
-			add_overlay(fire_overlay)
-		return 1
-
-/obj/proc/burn()
-	empty_object_contents(1, src.loc)
-	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
-	A.desc = "Looks like this used to be a [name] some time ago."
-	SSobj.burning -= src
-	qdel(src)
-
-/obj/proc/extinguish()
-	if(burn_state == ON_FIRE)
-		burn_state = FLAMMABLE
-		overlays -= fire_overlay
-		SSobj.burning -= src
-
-/obj/proc/empty_object_contents(burn = 0, new_loc = src.loc)
-	for(var/obj/item/Item in contents) //Empty out the contents
-		Item.loc = new_loc
-		if(burn)
-			Item.fire_act() //Set them on fire, too
-
-/obj/proc/tesla_act(var/power)
-	being_shocked = 1
-	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced)
-	addtimer(src, "reset_shocked", 10)
-
-/obj/proc/reset_shocked()
-	being_shocked = 0
 
 /obj/proc/CanAStarPass()
 	. = !density
@@ -278,7 +187,16 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 /obj/examine(mob/user)
 	..()
-	if(acid_resistance < initial(acid_resistance) * 0.5)
-		user << "It looks really melted!"
-	else if(acid_resistance < initial(acid_resistance))
-		user << "It looks slightly melted..."
+	if(!(resistance_flags & INDESTRUCTIBLE))
+		if(resistance_flags & ON_FIRE)
+			user << "<span class='warning'>It's on fire!</span>"
+		var/healthpercent = (health/maxhealth) * 100
+		switch(healthpercent)
+			if(100 to INFINITY)
+				user <<  "It seems pristine and undamaged."
+			if(50 to 100)
+				user <<  "It looks slightly damaged."
+			if(25 to 50)
+				user <<  "It appears heavily damaged."
+			if(0 to 25)
+				user <<  "It's falling apart!"

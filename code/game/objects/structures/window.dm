@@ -7,8 +7,8 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
-	var/maxhealth = 25
-	var/health = 0
+	maxhealth = 25
+	health = 0
 	var/ini_dir = null
 	var/state = 0
 	var/reinf = 0
@@ -19,7 +19,7 @@
 	var/image/crack_overlay
 	var/list/debris = list()
 	can_be_unanchored = 1
-	acid_state = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -53,21 +53,8 @@
 		debris += new /obj/item/stack/rods(src, rods)
 
 
-/obj/structure/window/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
-
-/obj/structure/window/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			shatter()
-		if(3)
-			take_damage(rand(25,75), BRUTE, 0)
-
-/obj/structure/window/blob_act(obj/effect/blob/B)
-	take_damage(rand(75,150), BRUTE, 0)
+/obj/structure/window/blob_act(obj/structure/blob/B)
+	take_damage(rand(75,150), BRUTE, "melee", 0)
 
 /obj/structure/window/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
@@ -117,9 +104,7 @@
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = I.throwforce
-	if(reinf)
-		tforce *= 0.25
-	take_damage(tforce)
+	take_damage(tforce, BRUTE, "melee", 1)
 
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -134,7 +119,7 @@
 	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 	user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 	add_fingerprint(user)
-	take_damage(50)
+	take_damage(50, BRUTE, "melee", 1)
 	return 1
 
 /obj/structure/window/attack_hand(mob/user)
@@ -149,31 +134,10 @@
 	return attack_hand(user)
 
 
-/obj/structure/window/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE)	//used by attack_alien, attack_animal, and attack_slime
+/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
-	take_damage(damage, damage_type)
-
-/obj/structure/window/attack_alien(mob/living/user)
-	attack_generic(user, 15)
-
-/obj/structure/window/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper && !M.obj_damage)
-		return
-	if(M.obj_damage)
-		attack_generic(M, M.obj_damage, M.melee_damage_type)
-	else
-		attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
-
-
-/obj/structure/window/attack_slime(mob/living/simple_animal/slime/user)
-	if(!user.is_adult)
-		return
-	attack_generic(user, rand(10, 15))
-
+	..()
 
 /obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))
@@ -257,14 +221,10 @@
 			return
 	return ..()
 
-
-/obj/structure/window/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
-
 /obj/structure/window/mech_melee_attack(obj/mecha/M)
-	if(..())
-		take_damage(M.force, M.damtype)
+	if(!can_be_reached())
+		return
+	..()
 
 
 /obj/structure/window/proc/can_be_reached(mob/user)
@@ -275,22 +235,13 @@
 					return 0
 	return 1
 
-/obj/structure/window/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	if(reinf)
-		damage *= 0.5
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
-	update_nearby_icons()
-	if(health <= 0)
-		shatter()
+/obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(.) //received damage
+		update_nearby_icons()
+
+/obj/structure/window/obj_destruction()
+	shatter()
 
 /obj/structure/window/proc/shatter()
 	if(qdeleted(src))
@@ -435,6 +386,7 @@
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
 	maxhealth = 50
 	explosion_block = 1
 
@@ -495,6 +447,7 @@
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 1

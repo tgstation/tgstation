@@ -13,12 +13,21 @@
 	gender = PLURAL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
+	stackable = 1
 
 /obj/effect/decal/cleanable/ash/New()
 	..()
 	reagents.add_reagent("ash", 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+
+/obj/effect/decal/cleanable/ash/large
+	name = "large pile of ashes"
+	icon_state = "ash" //phil235 need new icon
+
+/obj/effect/decal/cleanable/ash/large/New()
+	..()
+	reagents.add_reagent("ash", 30) //double the amount of ash.
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -55,7 +64,6 @@
 	density = 0
 	layer = OBJ_LAYER
 	icon_state = "cobweb1"
-	burntime = 1
 
 /obj/effect/decal/cleanable/cobweb/fire_act()
 	qdel(src)
@@ -67,7 +75,8 @@
 	layer = OBJ_LAYER
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
-	acid_state = UNACIDABLE
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	stackable = 1
 
 /obj/effect/decal/cleanable/molten_object/large
 	name = "big gooey grey mass"
@@ -159,10 +168,11 @@
 	gender = PLURAL
 	density = 0
 	layer = ABOVE_OPEN_TURF_LAYER
+	stackable = 1
 
 /obj/effect/decal/cleanable/shreds/New()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 	..()
 
 /obj/effect/decal/cleanable/salt

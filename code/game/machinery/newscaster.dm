@@ -175,6 +175,8 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	health = 60
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -186,7 +188,6 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/obj/item/weapon/photo/photo = null
 	var/channel_name = ""
 	var/c_locked=0
-	var/health = 60
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 	luminosity = 0
@@ -256,9 +257,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			if(prob(50))
 				qdel(src)
 			else
-				take_damage(rand(40,80), BRUTE, 0)
+				take_damage(rand(40,80), BRUTE, "bomb", 0)
 		else
-			take_damage(rand(20,40), BRUTE, 0)
+			take_damage(rand(20,40), BRUTE, "bomb", 0)
 
 /obj/machinery/newscaster/attack_ai(mob/user)
 	return attack_hand(user)
@@ -753,7 +754,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	else
 		return ..()
 
-/obj/machinery/newscaster/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -766,10 +767,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
-	if(damage < 15) //so it can't be broken with a small weapon.
-		return
+
+/obj/machinery/newscaster/obj_destruction()
 	if(!(stat & BROKEN))
-		health -= damage
 		if(health <= 0)
 			stat |= BROKEN
 			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
@@ -780,7 +780,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(user.a_intent != "harm")
 		user << "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>"
 	else
-		take_damage(5)
+		take_damage(5, BRUTE, "melee")
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	if(photo)

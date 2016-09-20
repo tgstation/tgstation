@@ -41,21 +41,22 @@
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
-	if(takes_damage)
+	if(!(resistance_flags & INDESTRUCTIBLE)) //phil235
 		var/servant_message = "It is at <b>[health]/[max_health]</b> integrity"
 		var/other_message = "It seems pristine and undamaged"
 		var/heavily_damaged = FALSE
 		var/healthpercent = (health/max_health) * 100
-		if(healthpercent >= 100)
-			other_message = "It seems pristine and undamaged"
-		else if(healthpercent >= 50)
-			other_message = "It looks slightly dented"
-		else if(healthpercent >= 25)
-			other_message = "It appears heavily damaged"
-			heavily_damaged = TRUE
-		else if(healthpercent >= 0)
-			other_message = "It's falling apart"
-			heavily_damaged = TRUE
+		switch(healthpercent)
+			if(100 to INFINITY)
+				other_message = "It seems pristine and undamaged"
+			if(50 to 100)
+				other_message = "It looks slightly dented"
+			if(25 to 50)
+				other_message = "It appears heavily damaged"
+				heavily_damaged = TRUE
+			if(0 to 25)
+				other_message = "It's falling apart"
+				heavily_damaged = TRUE
 		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/destructible/clockwork/cache //Tinkerer's cache: Stores components for later use.
@@ -89,11 +90,10 @@
 		cache_check(i)
 	return ..()
 
-/obj/structure/destructible/clockwork/cache/destroyed()
-	if(takes_damage)
-		for(var/I in src)
-			var/atom/movable/A = I
-			A.forceMove(get_turf(src)) //drop any daemons we have
+/obj/structure/destructible/clockwork/cache/obj_destruction()
+	for(var/I in src)
+		var/atom/movable/A = I
+		A.forceMove(get_turf(src)) //drop any daemons we have
 	return ..()
 
 /obj/structure/destructible/clockwork/cache/process()
@@ -182,7 +182,7 @@
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF|FIRE_PROOF
 	var/damage_per_tick = 2.5
 	var/sight_range = 3
 	var/atom/movable/target
@@ -220,7 +220,7 @@
 			else if(istype(target,/obj/mecha))
 				if(mech_damage_cycle)
 					var/obj/mecha/M = target
-					M.take_directional_damage(damage_per_tick, "fire", get_dir(src, M), 0) //does about half of standard damage to mechs * whatever their fire armor is
+					M.take_damage(damage_per_tick, BURN, "melee", 1, get_dir(src, M)) //does about half of standard damage to mechs * whatever their fire armor is
 					mech_damage_cycle--
 				else
 					mech_damage_cycle++
@@ -248,10 +248,10 @@
 		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check() && !B)
 			. += L
 		else if(B)
-			if(B.burn_state != ON_FIRE)
+			if(!(B.resistance_flags & ON_FIRE))
 				L << "<span class='warning'>Your [B.name] bursts into flames!</span>"
 			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
-				if(BI.burn_state != ON_FIRE)
+				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
@@ -271,8 +271,8 @@
 	construction_value = 0
 	anchored = 0
 	density = 0
-	takes_damage = FALSE
-	burn_state = LAVA_PROOF
+//phil235	takes_damage = FALSE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF
 	var/mobtype = /mob/living/simple_animal/hostile/clockwork
 	var/spawn_message = " is an error and you should yell at whoever spawned this shell."
 
@@ -387,7 +387,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/clockwork/New()
 	..()
@@ -695,8 +695,9 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
-	burn_state = FIRE_PROOF
-	burntime = 1
+	resistance_flags = FIRE_PROOF
+	health = 10 //phil235 that obj had a burntime despite being an effect???
+	maxhealth = 10
 	var/affects_servants = FALSE
 	var/stat_affected = CONSCIOUS
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"

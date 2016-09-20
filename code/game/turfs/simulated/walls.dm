@@ -80,7 +80,7 @@
 		..()
 	return
 
-/turf/closed/wall/blob_act(obj/effect/blob/B)
+/turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		dismantle_wall()
 
@@ -266,3 +266,7 @@
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/turf/closed/wall/acid_melt()
+	dismantle_wall(1)
+

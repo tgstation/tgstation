@@ -17,7 +17,7 @@
 		return
 	if(isobj(target))
 		var/obj/target_obj = target
-		if(target_obj.acid_state == UNACIDABLE)
+		if(target_obj.resistance_flags & UNACIDABLE)
 			return
 	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \

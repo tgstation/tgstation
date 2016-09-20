@@ -15,22 +15,17 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	acid_state = UNACIDABLE
-	var/acid_type = "alienacid"
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/turf/target
-	var/target_strength = 60 //phil235 roughly 1 minute for alien acid on wall, if 1 process per second
 
 
-/obj/effect/acid/New(loc, acid_pwr, acid_amt, acid_id)
+/obj/effect/acid/New(loc, acid_pwr, acid_amt)
 	..(loc)
 
 	target = get_turf(src)
 
-	if(acid_id)
-		acid_type = acid_id
-
 	if(acid_amt)
-		acid_level = min(acid_amt*acid_pwr, 12000)
+		acid_level = min(acid_amt*acid_pwr, 12000) //capped so the acid effect doesn't last a half hour on the floor.
 
 	//handle APCs and newscasters and stuff nicely
 	pixel_x = target.pixel_x + rand(-4,4)
@@ -45,26 +40,57 @@
 	return ..()
 
 /obj/effect/acid/process()
+	. = 1
 	if(!target)
 		qdel(src)
+		return 0
 
-	if(acid_type == "alienacid") //only alien acid can melt turfs
-		if(prob(50))
+	if(prob(5))
+		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+
+	for(var/obj/O in target)
+		if(prob(20) && !(resistance_flags & UNACIDABLE))
+			if(O.acid_level < acid_level*0.3)
+				var/acid_used = min(acid_level*0.05, 20)
+				O.acid_act(10, acid_used)
+				acid_level = max(0, acid_level - acid_used*10)
+
+	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
+	if(acid_level <= 0)
+		qdel(src)
+		return 0
+
+/obj/effect/acid/Crossed(AM as mob|obj)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(FLYING in H.dna.species.specflags)
+				return
+		else if(isanimal(L))
+			var/mob/living/simple_animal/SA = L
+			if(SA.flying)
+				return
+		if(L.m_intent != "walk" && prob(40))
+			var/acid_used = min(acid_level*0.05, 20)
+			if(L.acid_act(10, acid_used, "feet"))
+				acid_level = max(0, acid_level - acid_used*10)
+				playsound(L, 'sound/weapons/sear.ogg', 50, 1)
+				L << "<span class='userdanger'>[src] burns you!</span>"
+
+/obj/effect/acid/alien
+	var/target_strength = 60 //phil235 roughly 1 minute for alien acid on wall, if 1 process per second
+
+
+/obj/effect/acid/alien/process()
+	. = ..()
+	if(.)
+		if(prob(45))
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		target_strength--
 		if(target_strength <= 0)
 			target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
-			if(istype(target, /turf/closed/mineral))
-				var/turf/closed/mineral/M = target
-				M.ChangeTurf(M.baseturf)
-
-			else if(istype(target, /turf/open/floor))
-				var/turf/open/floor/F = target
-				F.ChangeTurf(F.baseturf)
-
-			else if(istype(target, /turf/closed/wall))
-				var/turf/closed/wall/W = target
-				W.dismantle_wall(1)
+			target.acid_melt()
 			qdel(src)
 		else
 
@@ -77,27 +103,3 @@
 					visible_message("<span class='warning'>[target] is struggling to withstand the acid!</span>")
 				if(8)
 					visible_message("<span class='warning'>[target] begins to crumble under the acid!</span>")
-	else if(prob(5))
-		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-
-	for(var/obj/O in target)
-		if(prob(20) && O.acid_state != UNACIDABLE)
-			if(O.acid_level < acid_level*0.3)
-				var/acid_used = min(acid_level*0.05, 20)
-				O.acid_act(10, acid_used)
-				acid_level = max(0, acid_level - acid_used*10)
-
-	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
-	if(acid_level <= 0)
-		STOP_PROCESSING(SSobj, src)
-		qdel(src)
-
-/obj/effect/acid/Crossed(AM as mob|obj)
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(L.m_intent != "walk" && prob(40))
-			var/acid_used = min(acid_level*0.05, 20)
-			if(L.acid_act(10, acid_used, "feet"))
-				acid_level = max(0, acid_level - acid_used*10)
-				playsound(L, 'sound/weapons/sear.ogg', 50, 1)
-				L << "<span class='userdanger'>[src] burns you!</span>"

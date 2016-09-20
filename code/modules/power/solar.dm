@@ -12,7 +12,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
-	var/health = 20
+	health = 20
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
@@ -69,21 +69,7 @@
 	else
 		return ..()
 
-/obj/machinery/power/solar/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type)
-
-/obj/machinery/power/solar/hitby(AM as mob|obj)
-	..()
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 20
-	else if(isobj(AM))
-		var/obj/item/I = AM
-		tforce = I.throwforce
-	take_damage(tforce)
-
-/obj/machinery/power/solar/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -94,18 +80,22 @@
 		if(BURN)
 			if(sound_effect)
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
-	if(health <= 0)
-		playsound(src, "shatter", 70, 1)
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/weapon/shard(src.loc)
-		qdel(src)
-	else if(health <= 10)
-		if(!(stat & BROKEN))
-			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
-			set_broken()
+
+
+/obj/machinery/power/solar/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(.)
+		if(health <= 10)
+			if(!(stat & BROKEN))
+				playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+				set_broken()
+
+/obj/machinery/power/solar/obj_destruction()
+	playsound(src, "shatter", 70, 1)
+	new /obj/item/weapon/shard(src.loc)
+	new /obj/item/weapon/shard(src.loc)
+	qdel(src)
+
 
 /obj/machinery/power/solar/update_icon()
 	..()
@@ -155,15 +145,6 @@
 	unset_control()
 	update_icon()
 
-
-/obj/machinery/power/solar/ex_act(severity, target)
-	..()
-	if(!qdeleted(src))
-		switch(severity)
-			if(2)
-				take_damage(rand(10,20), BRUTE, 0)
-			if(3)
-				take_damage(rand(5,15), BRUTE, 0)
 
 /obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc, S, 0)
@@ -289,7 +270,7 @@
 	density = 1
 	use_power = 1
 	idle_power_usage = 250
-	var/health = 25
+	health = 25
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0
@@ -468,11 +449,7 @@
 	else
 		return ..()
 
-/obj/machinery/power/solar_control/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type)
-
-/obj/machinery/power/solar_control/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flage = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -483,10 +460,9 @@
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
-	if(health <= 0 && !(stat & BROKEN))
+
+/obj/machinery/power/solar_control/obj_destruction()
+	if(!(stat & BROKEN))
 		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 		stat |= BROKEN
 		update_icon()
@@ -527,18 +503,8 @@
 	stat |= BROKEN
 	update_icon()
 
-
-/obj/machinery/power/solar_control/ex_act(severity, target)
-	..()
-	if(!qdeleted(src))
-		switch(severity)
-			if(2)
-				take_damage(rand(20,30), BRUTE, 0)
-			if(3)
-				take_damage(rand(10,20), BRUTE, 0)
-
-/obj/machinery/power/solar_control/blob_act(obj/effect/blob/B)
-	if (prob(75))
+/obj/machinery/power/solar_control/blob_act(obj/structure/blob/B)
+	if (prob(75))//phil235
 		set_broken()
 		src.density = 0
 

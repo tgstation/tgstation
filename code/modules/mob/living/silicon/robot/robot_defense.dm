@@ -150,7 +150,7 @@
 				update_icons()
 
 
-/mob/living/silicon/robot/blob_act(obj/effect/blob/B)
+/mob/living/silicon/robot/blob_act(obj/structure/blob/B)
 	if (stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()

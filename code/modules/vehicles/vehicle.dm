@@ -8,6 +8,9 @@
 	anchored = 0
 	can_buckle = 1
 	buckle_lying = 0
+	health = 500
+	maxhealth = 500
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF
 	var/keytype = null //item typepath, if non-null an item of this type is needed in your hands to drive this vehicle
 	var/next_vehicle_move = 0 //used for move delays
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower

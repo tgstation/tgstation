@@ -2,7 +2,7 @@
 	name = "manifest"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x"
-	acid_state = UNACIDABLE//Just to be sure.
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF//Just to be sure.
 
 /obj/effect/manifest/New()
 	src.invisibility = INVISIBILITY_ABSTRACT

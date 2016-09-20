@@ -155,7 +155,7 @@
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
-			C.Deconstruct()
+			C.deconstruct()
 
 	queue_smooth_neighbors(src)
 
@@ -212,7 +212,7 @@
 		M.adjustBruteLoss(damage)
 		M.Paralyse(damage/5)
 	for(var/obj/mecha/M in src)
-		M.take_damage(damage*2, "brute")
+		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
 	flags |= NOJAUNT
@@ -330,7 +330,7 @@
 	return
 
 
-/turf/acid_act(acidpwr, acid_volume, acid_id)
+/turf/acid_act(acidpwr, acid_volume)
 	. = 1
 	var/has_acid_effect = 0
 	for(var/obj/O in src)
@@ -341,5 +341,9 @@
 			continue
 		O.acid_act(acidpwr, acid_volume)
 	if(!has_acid_effect)
-		new /obj/effect/acid(src, acidpwr, acid_volume, acid_id)
+		new /obj/effect/acid(src, acidpwr, acid_volume)
+
+
+/turf/proc/acid_melt()
+	return
 

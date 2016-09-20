@@ -9,6 +9,8 @@
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 100, acid = 0)
+
 	var/secondsElectrified = 0
 	var/shockedby = list()
 	var/visible = 1
@@ -107,28 +109,6 @@
 /obj/machinery/door/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-
-/obj/machinery/door/attack_paw(mob/user)
-	if(user.a_intent != "harm")
-		return src.attack_hand(user)
-	else
-		attack_generic(user, 5)
-
-/obj/machinery/door/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE)
-	if(operating)
-		return
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='danger'>[user] smashes against the [src.name]!</span>", \
-				"<span class='userdanger'>You smash against the [src.name]!</span>")
-	take_damage(damage, damage_type)
-
-/obj/machinery/door/attack_slime(mob/living/simple_animal/slime/S)
-	if(!S.is_adult)
-		attack_generic(S, 0)
-	else
-		attack_generic(S, 25)
-
 /obj/machinery/door/attack_hand(mob/user)
 	return try_to_activate_door(user)
 
@@ -172,7 +152,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	else
 		return ..()
 
-/obj/machinery/door/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -184,8 +164,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-
-/obj/machinery/door/blob_act(obj/effect/blob/B)
+/obj/machinery/door/blob_act(obj/structure/blob/B)
 	if(prob(60))
 		qdel(src)
 

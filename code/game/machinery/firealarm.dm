@@ -15,13 +15,16 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	anchored = 1
+	health = 500
+	maxhealth = 500
+	broken_health = 50
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
-	var/health = 50
+	health = 50
 
 
 /obj/machinery/firealarm/New(loc, dir, building)
@@ -63,13 +66,10 @@
 		else
 			add_overlay("overlay_fire")
 
-/obj/machinery/firealarm/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
-
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50 / severity))
 		alarm()
+	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
 	if(!emagged)
@@ -82,6 +82,7 @@
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(!emagged && detecting && !stat && temperature > T0C + 200)
 		alarm()
+	..()
 
 /obj/machinery/firealarm/proc/alarm()
 	if(!is_operational())
@@ -204,26 +205,19 @@
 					return
 	return ..()
 
-/obj/machinery/firealarm/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
+
+/obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(.) //damage received
+		if(health > 0 && !(stat & BROKEN) && buildstage != 0)
+			if(prob(33))
+				alarm()
+
+/obj/machinery/firealarm/obj_break()
 	if(!(stat & BROKEN) && buildstage != 0) //can't break the electronics if there isn't any inside.
-		health -= damage
-		if(health <= 0)
-			stat |= BROKEN
-			update_icon()
-		else if(prob(33))
-			alarm()
+		stat |= BROKEN
+		update_icon()
+
 
 /*
  * Party button

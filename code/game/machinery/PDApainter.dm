@@ -7,7 +7,7 @@
 	anchored = 1
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
-	var/health = 100
+	health = 100
 
 
 /obj/machinery/pdapainter/update_icon()
@@ -81,21 +81,8 @@
 	else
 		return ..()
 
-/obj/machinery/pdapainter/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
+/obj/machinery/pdapainter/obj_destruction()
 	if(!(stat & BROKEN))
-		health -= damage
 		if(health <= 0)
 			stat |= BROKEN
 			update_icon()

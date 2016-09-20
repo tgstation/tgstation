@@ -6,7 +6,7 @@
 	force = 40
 	throwforce = 20
 	armour_penetration = 50
-	acid_state = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/item/weapon/katana/energy/afterattack(atom/target, mob/user, proximity_flag, click_parameters)

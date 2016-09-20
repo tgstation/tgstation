@@ -9,35 +9,28 @@
 
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
-	var/health = 100
+	health = 100
 
 /obj/structure/alien/attacked_by(obj/item/I, mob/user)
-	..()
+	user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
 	var/damage = I.force
 	switch(I.damtype)
 		if(BRUTE)
-			damage *= 0.25
+			damage *= 0.25 //phil235 moved to take_damage? or reduction is just for item attack and not other attacks
 		if(BURN)
 			damage *= 2
-		else
-			damage = 0 //stamina damage does no damage
-	take_damage(damage, I.damtype)
+	take_damage(damage, I.damtype, "melee")
 
-/obj/structure/alien/proc/take_damage(amount, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/alien/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
+			if(damage_amount && sound_effect)
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		if(BURN)
-			if(sound_effect)
+			if(damage_amount && sound_effect)
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health = max(health - amount, 0)
-	if(!health)
-		Break()
-
-/obj/structure/alien/proc/Break()
+//phil235
+/obj/structure/alien/obj_destruction()
 	qdel(src)
 
 /obj/structure/alien/bullet_act(obj/item/projectile/P)
@@ -54,7 +47,7 @@
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "gelmound"
 
-/obj/structure/alien/gelpod/Break()
+/obj/structure/alien/gelpod/obj_destruction()
 	new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
 	qdel(src)
 
@@ -119,7 +112,7 @@
 		if(3)
 			take_damage(50, BRUTE, 0)
 
-/obj/structure/alien/blob_act(obj/effect/blob/B)
+/obj/structure/alien/blob_act(obj/structure/blob/B)
 	take_damage(50, BRUTE, 0)
 
 /obj/structure/alien/resin/hitby(atom/movable/AM)
@@ -334,7 +327,7 @@
 	remove_from_proximity_list(src, 1)
 	..()
 
-/obj/structure/alien/egg/Break()
+/obj/structure/alien/egg/obj_destruction()
 	if(status != BURST && status != BURSTING)
 		Burst()
 	else if(status == BURST)

@@ -2,6 +2,7 @@
 	var/list/random_icon_states = list()
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
+	var/stackable = 0 //can you place two of these on a same tile or do we need to merge them into just one?
 
 /obj/effect/decal/cleanable/New()
 	if (random_icon_states && length(src.random_icon_states) > 0)
@@ -16,7 +17,8 @@
 
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
-	qdel(C)
+	if(!stackable) //if not stackable, there can be only one...
+		qdel(C)
 
 /obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))
@@ -42,6 +44,8 @@
 			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
 			src.reagents.handle_reactions()
 			user << "<span class='notice'>You heat [src] with [W]!</span>"
+	else
+		return ..()
 
 /obj/effect/decal/cleanable/ex_act()
 	if(reagents)

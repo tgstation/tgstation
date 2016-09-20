@@ -8,7 +8,7 @@
 	icon_state = ""
 	density = 1
 	anchored = 0
-	var/health = 100
+	health = 100
 	var/oreAmount = 7
 	var/mineralType = "metal"
 
@@ -78,10 +78,6 @@
 	else
 		return ..()
 
-/obj/structure/statue/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
-
 /obj/structure/statue/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
@@ -91,26 +87,20 @@
 /obj/structure/statue/CanAtmosPass()
 	return !density
 
-/obj/structure/statue/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
-
-/obj/structure/statue/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/statue/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
-				if(damage)
+				if(damage_amount)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 				else
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		else
-			return
-	health -= damage
-	if(health <= 0)
-		Dismantle(1)
+
+/obj/structure/statue/obj_destruction()
+	Dismantle(1)
 
 /obj/structure/statue/proc/Dismantle(devastated = 0)
 	if(!devastated)
@@ -132,15 +122,6 @@
 			for(var/i = 3, i <= oreAmount, i++)
 				new ore(get_turf(src))
 	qdel(src)
-
-/obj/structure/statue/ex_act(severity = 1)
-	switch(severity)
-		if(1)
-			Dismantle(1)
-		if(2)
-			take_damage(rand(60,110), BRUTE, 0)
-		if(3)
-			take_damage(10, BRUTE, 0)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////

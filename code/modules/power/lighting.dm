@@ -116,7 +116,7 @@
 				return
 	return ..()
 
-/obj/machinery/light_construct/blob_act(obj/effect/blob/B)
+/obj/machinery/light_construct/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
 
@@ -136,6 +136,7 @@
 	desc = "A lighting fixture."
 	anchored = 1
 	layer = WALL_OBJ_LAYER
+	health = 20
 	use_power = 2
 	idle_power_usage = 2
 	active_power_usage = 20
@@ -152,7 +153,6 @@
 								// this is used to calc the probability the light burns out
 
 	var/rigged = 0				// true if rigged to explode
-	var/health = 20
 
 // the smaller bulb light fixture
 
@@ -346,7 +346,7 @@
 			if(prob(12))
 				electrocute_mob(user, get_area(src), src, 0.3)
 
-/obj/machinery/light/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/light/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -360,11 +360,9 @@
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
-	if(health <= 0)
-		broken()
+
+/obj/machinery/light/obj_destruction()
+	broken()
 
 
 // returns whether this light has power
@@ -392,20 +390,6 @@
 /obj/machinery/light/attack_ai(mob/user)
 	src.flicker(1)
 	return
-
-/obj/machinery/light/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
-
-/obj/machinery/light/hitby(AM as mob|obj)
-	..()
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else if(isobj(AM))
-		var/obj/item/I = AM
-		tforce = I.throwforce
-	take_damage(tforce)
 
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
@@ -440,7 +424,7 @@
 			user << "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>"
 
 			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-			if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
+			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 				H.update_damage_overlays()
 			return				// if burned, don't remove the light
 	else
@@ -525,7 +509,7 @@
 				if(prob(25))
 					broken()
 
-/obj/machinery/light/blob_act(obj/effect/blob/B)
+/obj/machinery/light/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		broken()
 		qdel(src)

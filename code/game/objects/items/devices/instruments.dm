@@ -1,8 +1,9 @@
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/device/instrument
 	name = "generic instrument"
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = 0
+	health = 100
+	maxhealth = 100
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "ogg"

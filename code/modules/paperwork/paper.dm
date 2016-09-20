@@ -17,8 +17,9 @@
 	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
-	burn_state = FLAMMABLE
-	burntime = 5
+	resistance_flags = 0
+	health = 20
+	maxhealth = 20
 	dog_fashion = /datum/dog_fashion/head
 
 	var/info		//What's actually written on the paper.
@@ -40,7 +41,7 @@
 
 /obj/item/weapon/paper/update_icon()
 
-	if(burn_state == ON_FIRE)
+	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
 		return
 	if(info)
@@ -283,7 +284,7 @@
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
 
-	if(burn_state == ON_FIRE)
+	if(resistance_flags & ON_FIRE)
 		return
 
 	if(is_blind(user))

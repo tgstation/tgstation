@@ -109,6 +109,7 @@ In all, this is a lot like the monkey code. /N
 	switch (severity)
 		if (1)
 			gib()
+			return
 
 		if (2)
 			take_overall_damage(60, 60)

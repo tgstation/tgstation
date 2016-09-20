@@ -71,51 +71,19 @@
 	else
 		return ..()
 
-/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
-
-/obj/structure/mirror/ex_act(severity)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				qdel(src)
-			else
-				take_damage(5)
-		if(3)
-			if(prob(75))
-				take_damage(5)
-
-/obj/structure/mirror/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 		if(BURN)
 		else
 			return
-	if(!shattered)
-		if(damage)
-			shatter()
-	else if(sound_effect)
+	if(sound_effect)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
-/obj/structure/mirror/proc/attack_generic(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	take_damage(5)
 
-/obj/structure/mirror/attack_alien(mob/living/user)
-	attack_generic(user)
-
-/obj/structure/mirror/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper && !M.obj_damage)
-		return
-	attack_generic(M)
-
-/obj/structure/mirror/attack_slime(mob/living/user)
-	attack_generic(user)
+/obj/structure/mirror/obj_destruction()
+	if(!shattered)
+		shatter()
 
 /obj/structure/mirror/magic
 	name = "magic mirror"

@@ -5,8 +5,8 @@
 	desc = "A display case for prized possessions."
 	density = 1
 	anchored = 1
-	acid_state = ACID_PROOF//Dissolving the case would also delete the gun.
-	var/health = 30
+	resistance_flags = FIRE_PROOF | ACID_PROOF//Dissolving the case would also delete the gun.
+	health = 30
 	var/destroyed = 0
 	var/obj/item/showpiece = null
 	var/alert = 0
@@ -48,7 +48,7 @@
 		showpiece.loc = src.loc
 		showpiece = null
 
-/obj/structure/displaycase/blob_act(obj/effect/blob/B)
+/obj/structure/displaycase/blob_act(obj/structure/blob/B)
 	take_damage(30)
 
 /obj/structure/displaycase/hitby(atom/movable/AM)
@@ -57,7 +57,7 @@
 		var/obj/item/I = AM
 		take_damage(I.throwforce * 0.2)
 
-/obj/structure/displaycase/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -65,10 +65,9 @@
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health = max( health - damage, 0)
-	if(!health && !destroyed)
+
+/obj/structure/displaycase/obj_destruction()
+	if(!destroyed)
 		density = 0
 		destroyed = 1
 		new /obj/item/weapon/shard( src.loc )

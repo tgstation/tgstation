@@ -117,7 +117,8 @@
 /obj/effect/overlay/holograph
 	icon = 'icons/effects/effects.dmi'
 	anchored = 1
-	var/holo_integrity = 1
+	health = 1
+	armor = list(melee = 0, bullet = 50, laser = 50, energy = 50, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/obj/item/weapon/holosign_creator/projector
 
 /obj/effect/overlay/holograph/New(loc, source_projector)
@@ -133,10 +134,11 @@
 	return ..()
 
 /obj/effect/overlay/holograph/attacked_by(obj/item/I, mob/user)
-	..()
-	take_damage(I.force * 0.5, I.damtype)
+	if(I.force)
+		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
+	take_damage(I.force , I.damtype, "melee", 1)
 
-/obj/effect/overlay/holograph/blob_act(obj/effect/blob/B)
+/obj/effect/overlay/holograph/blob_act(obj/structure/blob/B)
 	qdel(src)
 
 /obj/effect/overlay/holograph/attack_animal(mob/living/simple_animal/M)
@@ -162,26 +164,27 @@
 	else
 		attack_generic(2, S)
 
-/obj/effect/overlay/holograph/proc/attack_generic(damage_amount, mob/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	user.visible_message("<span class='danger'>[user] hits [src].</span>", \
-						 "<span class='danger'>You hit [src].</span>" )
-	take_damage(damage_amount)
-
-/obj/effect/overlay/holograph/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+//phil235
+/obj/effect/overlay/holograph/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
-			if(damage && sound_effect)
+			if(damage_amount && sound_effect)
 				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 		if(BURN)
-			if(damage && sound_effect)
+			if(damage_amount && sound_effect)
 				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 		else
 			return
-	holo_integrity -= damage
-	if(holo_integrity <= 0)
-		qdel(src)
+	if(!(resistance_flags & INDESTRUCTIBLE))
+		var/armor_protection = 0
+		//BURN, TOX, OXY, CLONE?
+		if(damage_flag)
+			armor_protection = armor[damage_flag]
+		damage_amount = round(damage_amount * (100 - armor_protection)/100, 0.1)
+		if(damage_amount >= 1)
+			health -= damage_amount
+			if(health <= 0)
+				qdel(src)
 
 /obj/effect/overlay/holograph/hitby(atom/movable/AM)
 	..()
@@ -208,7 +211,7 @@
 	icon_state = "holosign_sec"
 	pass_flags = LETPASSTHROW
 	density = 1
-	holo_integrity = 4
+	health = 4
 
 /obj/effect/overlay/holograph/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!density)
@@ -229,7 +232,7 @@
 	name = "Energy Field"
 	desc = "A fragile energy field that blocks movement"
 	density = 1
-	holo_integrity = 1
+	health = 1
 
 /obj/effect/overlay/holograph/barrier/cyborg/CanPass()
 	return 0
@@ -237,7 +240,7 @@
 /obj/effect/overlay/holograph/barrier/cyborg/hacked
 	name = "Charged Energy Field"
 	desc = "A powerful energy field that blocks movement. Energy arcs off it"
-	holo_integrity = 3
+	health = 3
 	var/shockcd = 0
 
 /obj/effect/overlay/holograph/barrier/cyborg/hacked/proc/cooldown()

@@ -9,21 +9,22 @@
 /obj/structure/destructible/cult/examine(mob/user)
 	var/can_see_cult = iscultist(user) || isobserver(user)
 	..()
-	if(takes_damage)
+	if(!(resistance_flags & INDESTRUCTIBLE)) //phil235 moved to structure?
 		var/cultist_message = "It is at <b>[health]/[max_health]</b> stability"
 		var/other_message = "It seems extremely stable"
 		var/heavily_damaged = FALSE
 		var/healthpercent = (health/max_health) * 100
-		if(healthpercent >= 100)
-			other_message = "It seems extremely stable"
-		else if(healthpercent >= 50)
-			other_message = "It looks slightly unstable"
-		else if(healthpercent >= 25)
-			other_message = "It appears very unstable"
-			heavily_damaged = TRUE
-		else if(healthpercent >= 0)
-			other_message = "It's glowing faintly and is extremely unstable"
-			heavily_damaged = TRUE
+		switch(healthpercent)
+			if(100 to INFINITY)
+				other_message = "It seems extremely stable"
+			if(50 to 100)
+				other_message = "It looks slightly unstable"
+			if(25 to 50)
+				other_message = "It appears very unstable"
+				heavily_damaged = TRUE
+			if(0 to 25)
+				other_message = "It's glowing faintly and is extremely unstable"
+				heavily_damaged = TRUE
 		user << "<span class='cult'>[heavily_damaged ? "<b>":""][can_see_cult ? "[cultist_message]":"[other_message]"][heavily_damaged ? "!</b>":"."]</span>"
 	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if(can_see_cult && cooldowntime > world.time)
@@ -238,5 +239,5 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
 	density = 1
-	acid_state = UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = 1

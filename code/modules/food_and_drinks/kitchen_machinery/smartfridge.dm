@@ -49,11 +49,11 @@
 	else
 		return ..()
 
-/obj/machinery/smartfridge/construction()
+/obj/machinery/smartfridge/on_construction()
 	for(var/datum/A in contents)
 		qdel(A)
 
-/obj/machinery/smartfridge/deconstruction()
+/obj/machinery/smartfridge/on_deconstruction()
 	for(var/atom/movable/A in contents)
 		A.loc = loc
 

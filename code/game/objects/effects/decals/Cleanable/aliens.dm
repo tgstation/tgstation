@@ -34,9 +34,6 @@
 		if (!step_to(src, get_step(src, direction), 0))
 			break
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/replace_decal(obj/effect/decal/cleanable/C)
-	return //gibs can stack, so gibspawner can work properly
-
 /obj/effect/decal/cleanable/xenoblood/xsplatter
 	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
 
@@ -47,6 +44,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xgib1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
+	stackable = 1
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
 	return

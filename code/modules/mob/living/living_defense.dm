@@ -81,7 +81,7 @@
 			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 							"<span class='userdanger'>[src] has been hit by [I].</span>")
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-			apply_damage(I.throwforce, dtype, zone, armor, I)
+			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
 				add_logs(I.thrownby, src, "hit", I)
 		else
@@ -337,3 +337,6 @@
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()
 	return 0
+
+/mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+	return

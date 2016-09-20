@@ -3,7 +3,7 @@
 	desc = "A very large construction."
 	layer = MASSIVE_OBJ_LAYER
 	density = FALSE
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF|FIRE_PROOF
 
 /obj/structure/destructible/clockwork/massive/New()
 	..()
@@ -59,13 +59,13 @@
 		countdown = null
 	. = ..()
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/destroyed()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/obj_destruction()
 	countdown.stop()
 	visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
 	world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50)
 	make_glow()
 	glow.icon_state = "clockwork_gateway_disrupted"
-	takes_damage = FALSE
+	resistance_flags |= INDESTRUCTIBLE
 	sleep(27)
 	explosion(src, 1, 3, 8, 8)
 	qdel(src)
@@ -116,7 +116,7 @@
 		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
 			if(!purpose_fulfilled)
 				countdown.stop()
-				takes_damage = FALSE
+//phil235				takes_damage = FALSE
 				purpose_fulfilled = TRUE
 				make_glow()
 				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
@@ -191,7 +191,7 @@
 	icon_state = "ratvar"
 	pixel_x = -235
 	pixel_y = -248
-	takes_damage = FALSE
+//phil235	takes_damage = FALSE
 	appearance_flags = 0
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE

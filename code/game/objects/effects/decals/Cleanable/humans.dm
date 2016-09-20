@@ -57,13 +57,11 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
+	stackable = 1
 
 /obj/effect/decal/cleanable/blood/gibs/New()
 	..()
 	reagents.add_reagent("liquidgibs", 5)
-
-/obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
-	return
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -101,9 +99,6 @@
 				ND.holder = b
 		if (!step_to(src, get_step(src, direction), 0))
 			break
-
-/obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
-	return //gibs can stack, so gibspawner can work properly
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"

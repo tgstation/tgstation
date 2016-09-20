@@ -198,7 +198,7 @@
 
 
 
-
+/*
 //Cycles through all clothing slots and tests them for destruction
 /mob/living/carbon/proc/shred_clothing(bomb,shock)
 	if(back)
@@ -264,7 +264,7 @@
 	var/shredded
 
 	if(!bomb)
-		if(burn_state != -1)
+		if(!(resistance_flags & FIRE_PROOF))
 			shredded = 1 //No heat protection, it burns
 		else
 			shredded = -1 //Heat protection = Fireproof
@@ -288,7 +288,7 @@
 		else
 			burn()
 
-	return shredded
+	return shredded*/
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null

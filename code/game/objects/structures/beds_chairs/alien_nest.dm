@@ -5,7 +5,7 @@
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest"
-	var/health = 100
+	health = 100
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
 	canSmoothWith = null
@@ -81,11 +81,7 @@
 		M.layer = initial(M.layer)
 		overlays -= nest_overlay
 
-/obj/structure/bed/nest/attacked_by(obj/item/I, mob/user)
-	..()
-	take_damage(I.force, I.damtype)
-
-/obj/structure/bed/nest/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -93,10 +89,4 @@
 		if(BURN)
 			if(sound_effect)
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
-	if(health <=0)
-		density = 0
-		qdel(src)
 
