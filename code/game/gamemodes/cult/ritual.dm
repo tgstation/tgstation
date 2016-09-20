@@ -67,16 +67,12 @@ This file contains the arcane tome files.
 	invoking it and choosing which talisman you desire, the paper will be converted, after some delay into a talisman.<br><br>"
 
 	text += "<font color='red'><b>Teleport</b></font><br>This rune is unique in that it requires a keyword before the scribing can begin. When invoked, it will find any other Teleport runes; \
-	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
+	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune, provided the selected rune is unblocked.<br><br>"
 
-	text += "<font color='red'><b>Convert</b></font><br>This rune is critical to the success of the cult. It will allow you to convert normal crew members into cultists. \
-	To do this, simply place the crew member upon the rune and invoke it. This rune requires two invokers to use. If the target to be converted is mindshield-implanted or a certain assignment, they will \
-	be unable to be converted. People the Geometer wishes sacrificed will also be ineligible for conversion, and anyone with a shielding presence like the null rod will not be converted.<br> \
-	Successful conversions will produce a tome for the new cultist.<br><br>"
-
-	text += "<font color='red'><b>Sacrifice</b></font><br><b>This rune is necessary to achieve your goals.</b> Simply place any dead creature upon the rune and invoke it (this will not \
-	target cultists!). If this creature has a mind, a soulstone will be created and the creature's soul transported to it. Sacrificing the dead can be done alone, but sacrificing living crew <b>or your cult's target</b> will require 3 cultists. \
-	Soulstones used on construct shells will move that soul into a powerful construct of your choice.<br><br>"
+	text += "<font color='red'><b>Offer</b></font><br><b>This rune is necessary to achieve your goals.</b> Placing a noncultist above it will convert them if it can and sacrifice them otherwise. \
+	It requires two invokers to convert a target and three to sacrifice a living target or the sacrifice target.<br>\
+	Successful conversions will produce a tome for the new cultist, in addition to healing them.<br> \
+	Successful sacrifices will please the Geometer, can complete your objective if it sacrificed the sacrifice target, and will attempt to place the target into a soulstone.<br><br>"
 
 	text += "<font color='red'><b>Raise Dead</b></font><br>This rune requires two corpses. To perform the ritual, place the corpse you wish to revive onto \
 	the rune and the offering body adjacent to it. When the rune is invoked, the body to be sacrificed will turn to dust, the life force flowing into the revival target. Assuming the target is not moved \
@@ -91,14 +87,14 @@ This file contains the arcane tome files.
 	The body will also take constant damage while in this form, and may even die. The user's spirit will contain their consciousness, and will allow them to freely wander the station as a ghost. This may \
 	also be used to commune with the dead.<br><br>"
 
-	text += "<font color='red'><b>Form Barrier</b></font><br>While simple, this rune serves an important purpose in defense and hindering passage. When invoked, the \
-	rune will draw a small amount of life force from the user and make the space above the rune completely dense, rendering it impassable to all but the most complex means. The rune may be invoked again to \
-	undo this effect and allow passage again.<br><br>"
+	text += "<font color='red'><b>Form Barrier</b></font><br>While simple, this rune serves an important purpose in defense and hindering passage. When invoked, the rune will draw a small amount of blood from the user \
+	and make the space above the rune completely dense, rendering it impassable for about a minute and a half. This effect will spread to other nearby Barrier Runes. \
+	The rune may be invoked again to undo this effect and allow passage again.<br><br>"
 
 	text += "<font color='red'><b>Summon Cultist</b></font><br>This rune allows the cult to free other cultists with ease. When invoked, it will allow the user to summon a single cultist to the rune from \
 	any location. It requires two invokers, and will damage each invoker slightly.<br><br>"
 
-	text += "<font color='red'><b>Blood Boil</b></font><br>When invoked, this rune will do a massive amount of damage to all non-cultist viewers, but it will also emit a small explosion upon invocation. \
+	text += "<font color='red'><b>Blood Boil</b></font><br>When invoked, this rune will rapidly do a massive amount of damage to all non-cultist viewers, but it will also emit a burst of flame once it finishes. \
 	It requires three invokers.<br><br>"
 
 	text += "<font color='red'><b>Drain Life</b></font><br>This rune will drain the life of every living creature above the rune, healing the invoker for each creature drained by it.<br><br>"

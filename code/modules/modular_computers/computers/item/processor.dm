@@ -23,6 +23,8 @@
 		CRASH("Inapropriate type passed to obj/item/device/modular_computer/processor/New()! Aborting.")
 		return
 	// Obtain reference to machinery computer
+	all_components = list()
+	idle_threads = list()
 	machinery_computer = comp
 	machinery_computer.cpu = src
 	hardware_flag = machinery_computer.hardware_flag
@@ -53,3 +55,17 @@
 	..()
 	machinery_computer.update_icon()
 	return
+
+/obj/item/device/modular_computer/processor/add_verb(path)
+	switch(path)
+		if(MC_CARD)
+			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_id
+		if(MC_SDD)
+			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_disk
+
+/obj/item/device/modular_computer/processor/remove_verb(path)
+	switch(path)
+		if(MC_CARD)
+			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_id
+		if(MC_SDD)
+			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_disk

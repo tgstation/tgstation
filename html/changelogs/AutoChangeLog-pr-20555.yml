@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Canisters of any type of gas are now orderable in cargo. Dangerous experimental gases will require Research Director approval."

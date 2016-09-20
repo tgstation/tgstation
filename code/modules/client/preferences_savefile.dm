@@ -97,7 +97,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ignoring = list()
 	if(current_version < 15)
 		toggles |= SOUND_ANNOUNCEMENTS
-	
+
 
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -123,7 +123,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			joblessrole = BERANDOMJOB
 		else
 			joblessrole = BEASSISTANT
-		
+
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -171,6 +171,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
 	S["inquisitive_ghost"]	>> inquisitive_ghost
+	S["uses_glasses_colour"]>> uses_glasses_colour
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -222,6 +223,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
 	S["inquisitive_ghost"]	<< inquisitive_ghost
+	S["uses_glasses_colour"]<< uses_glasses_colour
 
 	return 1
 
