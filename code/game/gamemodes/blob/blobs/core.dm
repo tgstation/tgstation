@@ -63,7 +63,8 @@
 
 /obj/effect/blob/core/Life()
 	if(!overmind)
-		create_overmind()
+		if(!qdeleted(src))
+			addtimer(src, "create_overmind", 0)
 	else
 		if(resource_delay <= world.time)
 			resource_delay = world.time + 10 // 1 second
@@ -91,7 +92,7 @@
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = get_candidates(ROLE_BLOB)
+		candidates = pollCandidatesForMob("Do you want to play as a blob overmind?", ROLE_BLOB, null, ROLE_BLOB, 50, src) //we're technically not a mob but behave similarly
 		if(candidates.len)
 			C = pick(candidates)
 	else
