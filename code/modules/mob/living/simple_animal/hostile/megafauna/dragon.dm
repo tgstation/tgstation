@@ -258,6 +258,7 @@ Difficulty: Medium
 	name = "lesser ash drake"
 	maxHealth = 300
 	health = 300
+	faction = list("neutral")
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)

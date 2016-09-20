@@ -337,6 +337,7 @@
 #include "code\game\gamemodes\clock_cult\clock_items.dm"
 #include "code\game\gamemodes\clock_cult\clock_machines.dm"
 #include "code\game\gamemodes\clock_cult\clock_mobs.dm"
+#include "code\game\gamemodes\clock_cult\clock_powerdrain.dm"
 #include "code\game\gamemodes\clock_cult\clock_proselytizer.dm"
 #include "code\game\gamemodes\clock_cult\clock_ratvar.dm"
 #include "code\game\gamemodes\clock_cult\clock_scripture.dm"

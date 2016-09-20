@@ -109,7 +109,7 @@ var/global/nttransfer_uid = 0
 			if(!remote || !remote.provided_file)
 				return
 			if(remote.server_password)
-				var/pass = sanitize(input(usr, "Code 401 Unauthorized. Please enter password:", "Password required"))
+				var/pass = reject_bad_text(input(usr, "Code 401 Unauthorized. Please enter password:", "Password required"))
 				if(pass != remote.server_password)
 					error = "Incorrect Password"
 					return
@@ -127,7 +127,7 @@ var/global/nttransfer_uid = 0
 			provided_file = null
 			return 1
 		if("PRG_setpassword")
-			var/pass = sanitize(input(usr, "Enter new server password. Leave blank to cancel, input 'none' to disable password.", "Server security", "none"))
+			var/pass = reject_bad_text(input(usr, "Enter new server password. Leave blank to cancel, input 'none' to disable password.", "Server security", "none"))
 			if(!pass)
 				return
 			if(pass == "none")
