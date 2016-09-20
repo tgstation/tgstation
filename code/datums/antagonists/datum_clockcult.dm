@@ -19,14 +19,12 @@
 
 /datum/antagonist/clockcultist/give_to_body(mob/living/new_body)
 	if(!silent_update)
-		if(iscarbon(new_body))
-			new_body << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
-			Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
-		else if(issilicon(new_body))
-			new_body << "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, lies in \
-			exile, derelict and forgotten in an unseen realm.</span>"
+		if(issilicon(new_body))
+			new_body << "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, \
+			lies in exile, derelict and forgotten in an unseen realm.</span>"
 		else
-			new_body << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
+			new_body << "<span class='heavy_brass'>[iscarbon(new_body) ? "Your mind is racing! Your body feels incredibly light! ":""]Your world glows a brilliant yellow! All at once it comes to you. \
+			Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
 	. = ..()
 	if(!silent_update && new_body)
 		if(.)
