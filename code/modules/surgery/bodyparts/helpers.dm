@@ -236,3 +236,24 @@
 			. = "fff4e6"
 		if("orange")
 			. = "ffc905"
+
+/mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/O = X
+		var/obj/item/bodypart/N
+		if(O.use_digitigrade)
+			if(O.body_part == LEG_LEFT)
+				if(swap_back)
+					N = new /obj/item/bodypart/l_leg/
+				else
+					N = new /obj/item/bodypart/l_leg/digitigrade
+			else if(O.body_part == LEG_RIGHT)
+				if(swap_back)
+					N = new /obj/item/bodypart/r_leg/
+				else
+					N = new /obj/item/bodypart/r_leg/digitigrade
+		if(!N)
+			continue
+		O.drop_limb(1)
+		qdel(O)
+		N.attach_limb(src)

@@ -164,40 +164,16 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-	if(("legs" in C.dna.features) && C.dna.features["legs"] == "Digitigrade Legs")
+	if(C.dna.features["legs"] == "Digitigrade Legs")
 		specflags += DIGITIGRADE
 	if(DIGITIGRADE in specflags)
-		for(var/X in C.bodyparts)
-			var/obj/item/bodypart/O = X
-			var/obj/item/bodypart/N
-			if(!O.use_digitigrade)
-				if(O.body_zone == "l_leg")
-					N = new /obj/item/bodypart/l_leg/digitigrade
-				else if(O.body_zone == "r_leg")
-					N = new /obj/item/bodypart/r_leg/digitigrade
-			if(!N)
-				continue
-			O.drop_limb(1)
-			qdel(O)
-			N.attach_limb(C)
+		C.Digitigrade_Leg_Swap(0)
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 	if(DIGITIGRADE in specflags)
-		for(var/X in C.bodyparts)
-			var/obj/item/bodypart/O = X
-			var/obj/item/bodypart/N
-			if(O.use_digitigrade)
-				if(O.body_zone == "l_leg")
-					N = new /obj/item/bodypart/l_leg/
-				else if(O.body_zone == "r_leg")
-					N = new /obj/item/bodypart/r_leg/
-			if(!N)
-				continue
-			O.drop_limb(1)
-			qdel(O)
-			N.attach_limb(C)
+		C.Digitigrade_Leg_Swap(1)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
@@ -732,7 +708,6 @@
 
 /datum/species/proc/after_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H.update_mutant_bodyparts()
-	return
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == exotic_blood)
