@@ -404,7 +404,7 @@ BLIND     // can't see anything
 		var/mob/living/carbon/human/H = user
 		if(DIGITIGRADE in H.dna.species.specflags)
 			adjusted = DIGITIGRADE_STYLE
-		else if(adjusted = DIGITIGRADE_STYLE)
+		else if(adjusted == DIGITIGRADE_STYLE)
 			adjusted = NORMAL_STYLE
 
 
