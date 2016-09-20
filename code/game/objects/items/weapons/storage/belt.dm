@@ -435,7 +435,7 @@
 
 
 /obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
-	if(isalien(user) || user.incapacitated() || user.lying)
+	if(!ishuman(user) || user.incapacitated() || user.lying)
 		return
 	if(contents.len)
 		var/obj/item/I = contents[1]
