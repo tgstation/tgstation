@@ -91,9 +91,35 @@
 /mob/living/carbon/human/breathe()
 	if(!dna.species.breathe(src))
 		..()
-
+#define HUMAN_MAX_OXYLOSS 3
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	dna.species.check_breath(breath, src)
+
+	var/L = getorganslot("lungs")
+
+	if(!L)
+		if(health >= HEALTH_THRESHOLD_CRIT)
+			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
+		else if(!(NOCRITDAMAGE in dna.species.specflags))
+			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
+
+		failed_last_breath = 1
+		/*	//TODO: make this a general "no lungs" thing
+		if(safe_oxygen_min)
+			throw_alert("oxy", /obj/screen/alert/oxy)
+		else if(safe_toxins_min)
+			throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+		else if(safe_co2_min)
+			throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+		*/
+		return 0
+	else
+		if(istype(L,/obj/item/organ/lungs))
+			var/obj/item/organ/lungs/lun = L
+			lun.check_breath(breath,src)
+
+#undef HUMAN_MAX_OXYLOSS
+#undef HUMAN_CRIT_MAX_OXYLOSS
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	dna.species.handle_environment(environment, src)

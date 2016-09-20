@@ -68,7 +68,7 @@
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 
 	var/mob/living/list/ignored_by = list()	// list of mobs that will ignore this species
-
+	var/list/breathlevels = null
 	//Breathing!
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_oxygen_max = 0
@@ -97,6 +97,9 @@
 
 
 /datum/species/New()
+
+	breathlevels = list("safe_oxygen_min" = safe_oxygen_min,"safe_oxygen_max" = safe_oxygen_max,"safe_co2_min" = safe_co2_min,"safe_co2_max" = safe_co2_max,
+	"safe_toxins_min" = safe_toxins_min,"safe_toxins_max" = safe_toxins_max,"SA_para_min" = SA_para_min,"SA_sleep_min" = SA_sleep_min,"BZ_trip_balls_min" = BZ_trip_balls_min)
 	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
 		limbs_id = id
 	..()
@@ -150,6 +153,8 @@
 	else if((!(NOBREATH in specflags)) && (!lungs))
 		lungs = new()
 		lungs.Insert(C)
+	if(lungs)
+		lungs.breathlevels = breathlevels
 
 	if((NOHUNGER in specflags) && appendix)
 		appendix.Remove(C)
