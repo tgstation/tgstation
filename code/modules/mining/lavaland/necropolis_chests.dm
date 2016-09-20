@@ -704,15 +704,13 @@
 
 /obj/structure/closet/crate/necropolis/bubblegum/New()
 	..()
-	var/loot = rand(1,4)
+	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
-			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
-		if(2)
 			new /obj/item/mayhem(src)
-		if(3)
+		if(2)
 			new /obj/item/blood_contract(src)
-		if(4)
+		if(3)
 			new /obj/item/weapon/gun/magic/staff/spellblade(src)
 
 /obj/item/blood_contract
