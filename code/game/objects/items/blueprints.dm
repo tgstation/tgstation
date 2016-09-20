@@ -172,11 +172,7 @@
 	var/list/local_wires = wire_color_directory
 	var/list/local_names = wire_name_directory
 	for(var/wireset in local_wires)
-		if(wireset == "explosive")
-			continue
 		var/setname = local_names[wireset]
-		if(setname == "Unknown")
-			continue
 		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[setname]</a>"
 	message += "</p>"
 	return message
