@@ -1,0 +1,4 @@
+author: "phil235"
+delete-after: True
+changes: 
+  - experiment: "adds a talk button next to the crafting button. Clicking it makes a \"wheel\" appear around you with short predetermined messages that you click to say them. This lets you say common responses without having to type in the chat bar. Current messages available are:  \"Hi\", \"Bye\", \"Thanks\", \"Come\", \"Help\", \"Stop\", \"Get out\", \"Yes\", and \"No\". The talk button can be activated with the hotkey \"H\" or \"CTRL+H\""
