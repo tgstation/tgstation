@@ -87,7 +87,7 @@ Difficulty: Hard
 			did_reset = TRUE
 			//visible_message("<span class='hierophant'>\"Vixyvrmrk xs fewi...\"</span>")
 			blink(spawned_rune)
-			adjustHealth(max((health - maxHealth) * 0.5, 25)) //heal for 50% of our missing health
+			adjustHealth(min((health - maxHealth) * 0.5, -50)) //heal for 50% of our missing health
 			wander = FALSE
 			/*if(health > maxHealth * 0.9)
 				visible_message("<span class='hierophant'>\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\"</span>")

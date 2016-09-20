@@ -95,6 +95,11 @@
 	using.icon = ui_style
 	static_inventory += using
 
+	using = new/obj/screen/wheel/talk
+	using.icon = ui_style
+	wheels += using
+	static_inventory += using
+
 	using = new /obj/screen/inventory/area_creator
 	using.icon = ui_style
 	static_inventory += using
@@ -352,9 +357,12 @@
 		if(H.wear_mask)	screenmob.client.screen -= H.wear_mask
 		if(H.head)		screenmob.client.screen -= H.head
 
+
+
 /datum/hud/human/persistant_inventory_update(mob/viewer)
 	if(!mymob)
 		return
+	..()
 	var/mob/living/carbon/human/H = mymob
 
 	var/mob/screenmob = viewer || H
@@ -394,11 +402,12 @@
 	if(hud_version != HUD_STYLE_NOHUD)
 		for(var/obj/item/I in H.held_items)
 			I.screen_loc = ui_hand_position(H.get_held_index_of_item(I))
-			H.client.screen += I
+			screenmob.client.screen += I
 	else
 		for(var/obj/item/I in H.held_items)
 			I.screen_loc = null
-			H.client.screen -= I
+			screenmob.client.screen -= I
+
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"

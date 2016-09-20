@@ -332,6 +332,9 @@
 		data_core.manifest_inject(humanc)
 		AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
+		if(highlander)
+			humanc << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
+			humanc.make_scottish()
 
 	joined_player_list += character.ckey
 

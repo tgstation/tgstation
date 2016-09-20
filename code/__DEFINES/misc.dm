@@ -482,7 +482,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define STORAGE_VIEW_DEPTH	2
 
 
-
 // Medal names
 
 #define BOSS_KILL_MEDAL "Killer"

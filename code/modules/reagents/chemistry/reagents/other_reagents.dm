@@ -188,11 +188,9 @@
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds
-		if(iscultist(M) || is_handofgod_cultist(M) || is_handofgod_prophet(M) || is_servant_of_ratvar(M))
+		if(iscultist(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
 				ticker.mode.remove_cultist(M.mind, 1, 1)
-			else if(is_handofgod_cultist(M) || is_handofgod_prophet(M))
-				ticker.mode.remove_hog_follower(M.mind)
 			else if(is_servant_of_ratvar(M))
 				remove_servant_of_ratvar(M)
 			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??

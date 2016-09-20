@@ -672,7 +672,8 @@
 	if(B)
 		B.damaged_brain = 0
 	for(var/datum/disease/D in viruses)
-		D.cure(0)
+		if (D.severity != NONTHREAT)
+			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
 		handcuffed = initial(handcuffed)
