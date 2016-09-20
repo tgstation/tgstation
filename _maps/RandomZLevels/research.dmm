@@ -4907,7 +4907,7 @@
 /turf/open/floor/mineral/plasma,
 /area/space)
 "nd" = (
-/obj/structure/divine/healingfountain/anyone,
+/obj/structure/healingfountain,
 /turf/open/floor/mineral/plasma,
 /area/space)
 "ne" = (
