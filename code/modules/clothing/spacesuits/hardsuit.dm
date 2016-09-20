@@ -86,8 +86,6 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
-	if(world.time <= user.next_move)
-		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	..()
 
