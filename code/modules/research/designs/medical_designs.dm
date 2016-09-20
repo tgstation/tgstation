@@ -152,6 +152,17 @@
 	build_path = /obj/item/organ/cyberimp/arm/toolset
 	category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_surgical
+	name = "Surgical Toolkit implant"
+	desc = "A full kit of surgical tools that can be implanted into a human's arm."
+	id = "ci-surgical"
+	req_tech = list("materials" = 4, "engineering" = 4, "biotech" = 5, "powerstorage" = 4, "programming" = 3)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (MAT_METAL = 2500, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_SILVER = 750)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/surgery
+	category = list("Misc", "Medical Designs")
+
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
