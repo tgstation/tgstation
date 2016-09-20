@@ -1,0 +1,5 @@
+author: "Mekhi"
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen has been experimenting on cybernetics for a while, and rumors are they have a few combat prototypes available..."
+  - experiment: "New arm implants: Energy-blade projector, implanted medical beamgun, stun-arm implant (Like the borg version), flash implant that is automatically-regenerating and doubles as a powerful flashlight. There is also one with all four items in one. Also, a surgery toolkit implant. Adminspawn only for the moment."
