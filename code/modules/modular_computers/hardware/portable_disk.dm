@@ -7,6 +7,14 @@
 	critical = 0
 	max_capacity = 16
 	origin_tech = "programming=1"
+	device_type = MC_SDD
+
+/obj/item/weapon/computer_hardware/hard_drive/portable/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
+	M.add_verb(device_type)
+
+/obj/item/weapon/computer_hardware/hard_drive/portable/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
+	..()
+	M.remove_verb(device_type)
 
 /obj/item/weapon/computer_hardware/hard_drive/portable/install_default_programs()
 	return // Empty by default

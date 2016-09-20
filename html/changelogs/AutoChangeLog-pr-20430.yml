@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Miners can now buy KA AoE damage mods from the mining vendor for 2000 points per mod."

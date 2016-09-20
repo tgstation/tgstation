@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Positive viruses are now recognized by medical HUDs with a special icon."
+  - tweak: "fully_heal no longer removes nonharmful viruses. This affects legion souls, staffs of healing, and changeling's revive."

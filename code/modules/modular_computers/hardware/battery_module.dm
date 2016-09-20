@@ -6,6 +6,7 @@
 	malfunction_probability = 1
 	origin_tech = "powerstorage=1;engineering=1"
 	var/obj/item/weapon/stock_parts/cell/battery = null
+	device_type = MC_CELL
 
 /obj/item/weapon/computer_hardware/battery/New(loc, battery_type = null)
 	if(battery_type)

@@ -62703,6 +62703,8 @@
 	network = list("SS13","Medbay")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/limbgrower,
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},

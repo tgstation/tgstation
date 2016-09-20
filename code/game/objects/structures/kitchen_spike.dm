@@ -20,6 +20,22 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
 			transfer_fingerprints_to(F)
 			qdel(src)
+	else if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(!WT.remove_fuel(0, user))
+			return
+		user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
+		playsound(src.loc, "sound/items/Welder.ogg", 40, 1)
+		if(do_after(user, 40/WT.toolspeed, 1, target = src))
+			if(!WT.isOn())
+				return
+			playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
+			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+							"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
+							"<span class='italics'>You hear welding.</span>")
+			new /obj/item/stack/sheet/metal(src.loc, 4)
+			qdel(src)
+		return
 	else
 		return ..()
 
