@@ -3,7 +3,7 @@
 	thermal_conductivity = 0
 	broken_states = list("engine")
 	burnt_states = list("engine")
-	flags = 0
+	flags = NONE
 
 /turf/open/floor/holofloor/attackby()
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
