@@ -433,13 +433,13 @@ var/bomb_set
 	var/area/A = get_area(bomb_location)
 	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
 		if(istype(A, /area/space))
-			off_station = 1
+			off_station = NUKE_MISS_STATION
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
-			off_station = 1
+			off_station = NUKE_MISS_STATION
 	else if(istype(A, /area/syndicate_mothership) || (istype(A,/area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
-		off_station = 3
+		off_station = NUKE_SYNDICATE_BASE
 	else
-		off_station = 2
+		off_station = NUKE_NEAR_MISS
 
 	if(ticker.mode && ticker.mode.name == "nuclear emergency")
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
