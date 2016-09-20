@@ -199,23 +199,23 @@
 	var/obj/item/organ/cyberimp/arm/flash/I = null
 
 /obj/item/device/assembly/flash/armimplant/burn_out()
-	if(I)
+	if(I && I.owner)
 		I.owner << "<span class='warning'>Your photon projector implant overheats and deactivates!</span>"
 		I.Retract()
-	overheat = 1
+	overheat = FALSE
 	addtimer(src, "cooldown", flashcd * 2)
 
 /obj/item/device/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
-		if(I)
-			if(I.owner)
-				I.owner << "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>"
-		return 0
-	overheat = 1
+		if(I && I.owner)
+			I.owner << "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>"
+		return FALSE
+	overheat = TRUE
 	addtimer(src, "cooldown", flashcd)
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	update_icon(1)
-	return 1
+	return TRUE
+
 
 /obj/item/device/assembly/flash/armimplant/proc/cooldown()
-	overheat = 0
+	overheat = FALSE
