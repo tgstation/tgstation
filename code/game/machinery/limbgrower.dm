@@ -138,7 +138,7 @@
 			//Just build whatever it is
 			new buildpath(loc)
 	else
-		usr << "<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>"
+		src.visible_message("<span class=\"error\"> Something went very wrong and there isnt enough synthflesh anymore!</span>")
 	busy = 0
 	flick("limbgrower_unfill",src)
 	icon_state = "limbgrower_idleoff"
@@ -234,5 +234,5 @@
 	for(var/datum/design/D in files.possible_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
 			files.AddDesign2Known(D)
-	usr << "A warning flashes onto the screen, stating that safety overrides have been deactivated"
+	user << "A warning flashes onto the screen, stating that safety overrides have been deactivated"
 	emag = TRUE
