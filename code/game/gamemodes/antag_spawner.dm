@@ -149,7 +149,7 @@
 	if(!(check_usability(user)))
 		return
 
-	var/list/nuke_candidates = pollCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowercase(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150)
+	var/list/nuke_candidates = pollCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150)
 	if(nuke_candidates.len)
 		used = 1
 		var/client/C = pick(nuke_candidates)
