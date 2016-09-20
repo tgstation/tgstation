@@ -79,10 +79,11 @@ a.updated {
 			dat += "You currently own <b>[mystocks]</b> shares in this company. There are [S.available_shares] purchasable shares on the market currently.<br>"
 			if (S.bankrupt)
 				dat += "You cannot buy or sell shares in a bankrupt company!<br><br>"
-			if borrow => 2
+			if borrow >= 2
 				dat += "You cannot borrow anymore unless you pay back the other companies you borrowed from!<br><br>"
 			else
 				dat += "<a href='?src=\ref[src];buyshares=\ref[S]'>Buy shares</a> | <a href='?src=\ref[src];sellshares=\ref[S]'>Sell shares</a><br><br>"
+				borrow + 1
 			dat += "<b>Prominent products:</b><br>"
 			for (var/prod in S.products)
 				dat += "<i>[prod]</i><br>"
