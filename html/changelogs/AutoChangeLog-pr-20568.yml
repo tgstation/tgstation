@@ -1,4 +1,0 @@
-author: "Nicho1010"
-delete-after: True
-changes: 
-  - bugfix: "Fixed lattices appearing after exploding lava"

@@ -1,7 +1,0 @@
-author: "Screemonster"
-delete-after: True
-changes: 
-  - tweak: "Abandoned crates no longer accept impossible guesses."
-  - tweak: "Lets players know that all the digits in the code must be unique."
-  - tweak: "Reads the last guess back on the multitool along with the correct/incorrect guess readout."
-  - bugfix: "multitool output on crates no longer returns nonsense values."
