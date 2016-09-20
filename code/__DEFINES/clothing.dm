@@ -122,10 +122,20 @@
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
 
-//flags for digitigrade outfits: Helps determinesif the outfit needs to be altered for weird legs (usually doesn't)
+//flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort it
 
-#define NO_DIGITIGRADE_UNIFORM		0
-#define DIGITIGRADE_UNIFORM			1
+#define NORMAL_STYLE		0
+#define ALT_STYLE			1
+#define DIGITIGRADE_STYLE 	2
+
+//flags for outfits that have mutantrace variants (try not to use this): Currently only needed if you're trying to add tight fitting bootyshorts
+
+#define NO_MUTANTRACE_VARIATION		0
+#define MUTANTRACE_VARIATION		1
+
+#define NOT_DIGITIGRADE				0
+#define FULL_DIGITIGRADE			1
+#define SQUISHED_DIGITIGRADE		2
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES	1

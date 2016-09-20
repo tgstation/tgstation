@@ -364,14 +364,14 @@ BLIND     // can't see anything
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
-	var/digitigrade = NO_DIGITIGRADE_UNIFORM // For use in alternate clothing styles for lizards with weird legs. Shorts only really.
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/random_sensor = 1
 	var/sensor_mode = 0	/* 1 = Report living/dead, 2 = Report detailed damages, 3 = Report location */
 	var/can_adjust = 1
-	var/adjusted = 0
+	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/obj/item/clothing/tie/hastie = null
+	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 /obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
 	. = list()
@@ -394,8 +394,19 @@ BLIND     // can't see anything
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
-	adjusted = 0
+	adjusted = NORMAL_STYLE
 	..()
+
+/obj/item/clothing/under/equipped(mob/user, slot)
+	..()
+
+	if(mutantrace_variation && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(DIGITIGRADE in H.dna.species.specflags)
+			adjusted = DIGITIGRADE_STYLE
+		else if(adjusted = DIGITIGRADE_STYLE)
+			adjusted = NORMAL_STYLE
+
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(!attachTie(I, user))
@@ -536,6 +547,8 @@ BLIND     // can't see anything
 	usr.update_inv_w_uniform()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
+	if(adjusted == DIGITIGRADE_STYLE)
+		return
 	adjusted = !adjusted
 	if(adjusted)
 		if(fitted != FEMALE_UNIFORM_TOP)
@@ -551,7 +564,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(src.adjusted)
+	if(src.adjusted == ALT_STYLE)
 		user << "Alt-click on [src] to wear it normally."
 	else
 		user << "Alt-click on [src] to wear it casually."

@@ -31,7 +31,7 @@
 	icon_state = "cargotech"
 	item_state = "lb_suit"
 	item_color = "cargo"
-	digitigrade = DIGITIGRADE_UNIFORM
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 
 /obj/item/clothing/under/rank/chaplain
