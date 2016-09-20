@@ -68,6 +68,10 @@
 		"<span class='notice'>[holder] snaps back into your [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 
+	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
+		var/obj/item/device/assembly/flash/F = holder
+		F.SetLuminosity(0)
+
 	owner.unEquip(holder, 1)
 	holder.loc = src
 	holder = null
@@ -84,6 +88,10 @@
 	holder.slot_flags = null
 	holder.w_class = 5
 	holder.materials = null
+
+	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
+		var/obj/item/device/assembly/flash/F = holder
+		F.SetLuminosity(7)
 
 	var/obj/item/arm_item = owner.get_active_held_item()
 
@@ -178,3 +186,45 @@
 		items_list += new /obj/item/weapon/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0
+
+/obj/item/organ/cyberimp/arm/esword
+	name = "arm-mounted energy blade"
+	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated enregy."
+	contents = newlist(/obj/item/weapon/melee/energy/blade)
+
+/obj/item/organ/cyberimp/arm/medibeam
+	name = "integrated medical beamgun"
+	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
+	contents = newlist(/obj/item/weapon/gun/medbeam)
+
+/obj/item/organ/cyberimp/arm/flash
+	name = "integrated high-intensity photon projector" //Why not
+	desc = "An integrated projector mounted onto a user's arm, that is able to be used as a powerful flash."
+	contents = newlist(/obj/item/device/assembly/flash/armimplant)
+
+/obj/item/organ/cyberimp/arm/flash/New()
+	..()
+	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
+		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+		F.I = src
+
+/obj/item/organ/cyberimp/arm/baton
+	name = "arm electrification implant"
+	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
+	contents = newlist(/obj/item/borg/stun)
+
+/obj/item/organ/cyberimp/arm/combat
+	name = "combat cybernetics implant"
+	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
+	contents = newlist(/obj/item/weapon/melee/energy/blade, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+
+/obj/item/organ/cyberimp/arm/combat/New()
+	..()
+	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
+		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+		F.I = src
+
+/obj/item/organ/cyberimp/arm/surgery
+	name = "surgical toolset implant"
+	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm"
+	contents = newlist(/obj/item/weapon/retractor, /obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, /obj/item/weapon/circular_saw, /obj/item/weapon/surgical_drapes)
