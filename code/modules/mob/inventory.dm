@@ -266,6 +266,7 @@
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
+		I.appearance_flags &= ~NO_CLIENT_COLOR
 		I.forceMove(loc)
 		I.dropped(src)
 	return TRUE
