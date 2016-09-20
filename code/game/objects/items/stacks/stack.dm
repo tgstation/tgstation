@@ -233,7 +233,7 @@
 		..()
 	return
 
-/obj/item/stack/AltClick(mob/user)
+/obj/item/stack/AltClick(mob/living/user)
 	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
