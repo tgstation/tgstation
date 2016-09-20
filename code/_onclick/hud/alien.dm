@@ -70,6 +70,11 @@
 		H.leap_icon.screen_loc = ui_alien_storage_r
 		static_inventory += H.leap_icon
 
+	using = new/obj/screen/wheel/talk
+	using.screen_loc = ui_alien_talk_wheel
+	wheels += using
+	static_inventory += using
+
 	using = new /obj/screen/drop()
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.screen_loc = ui_drop_throw
