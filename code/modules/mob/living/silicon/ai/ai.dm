@@ -767,7 +767,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/can_buckle()
 	return 0
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = FALSE, no_dexterity = FALSE)
 	if(stat)
 		return
 	if(be_close && !in_range(M, src))

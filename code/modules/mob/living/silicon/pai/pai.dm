@@ -99,7 +99,7 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/canUseTopic(atom/movable/M)
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close = FALSE, no_dexterity = FALSE)
 	return 1
 /*
 // Debug command - Maybe should be added to admin verbs later

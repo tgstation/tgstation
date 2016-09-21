@@ -381,7 +381,7 @@
 		return 1
 	return 0
 
-/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close = FALSE, no_dexterity = FALSE)
 	if(incapacitated())
 		return 0
 	if(no_dextery || dextrous)

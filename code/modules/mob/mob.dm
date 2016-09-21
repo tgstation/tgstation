@@ -857,7 +857,7 @@ var/next_mob_id = 0
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic()
+/mob/proc/canUseTopic(atom/movable/M, be_close = FALSE, no_dexterity = FALSE)
 	return
 
 /mob/proc/faction_check(mob/target)
