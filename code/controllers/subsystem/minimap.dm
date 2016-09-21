@@ -113,7 +113,9 @@ var/datum/subsystem/minimap/SSminimap
 		obj = locate(/obj/structure/window) in tile
 		if(obj)
 			obj_icons += new /icon('icons/obj/smooth_structures/window.dmi', "window", SOUTH)
-
+		obj = locate(/obj/structure/table) in tile
+		if(obj)
+			obj_icons += new /icon('icons/obj/smooth_structures/table.dmi', "table", SOUTH)
 		for(var/I in obj_icons)
 			var/icon/obj_icon = I
 			tile_icon.Blend(obj_icon, ICON_OVERLAY)
