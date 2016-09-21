@@ -169,7 +169,7 @@
 	id = "ci-flash"
 	req_tech = list("materials" = 5, "combat" = 4, "biotech" = 5, "magnets" = 5, "powerstorage" = 4)
 	build_type = PROTOLATHE | MECHFAB
-	materials = list (MAT_METAL = 4000, MAT_GLASS = 4000, MAT_SILVER = 2250, MAT_GOLD = 2500, MAT_URANIUM = 1500, MAT_PLASMA = 1500)
+	materials = list (MAT_METAL = 4000, MAT_GLASS = 7000, MAT_SILVER = 4500, MAT_GOLD = 4500, MAT_URANIUM = 2500, MAT_PLASMA = 3000, MAT_DIAMOND = 500)
 	construction_time = 200
 	build_path = /obj/item/organ/cyberimp/arm/flash
 	category = list("Misc", "Weapons")
