@@ -277,7 +277,7 @@ var/const/INJECT = 5 //injection
 		return
 
 	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+		var/datum/reagent/R = cached_reagents[reagent]
 		R.on_tick()
 
 /datum/reagents/proc/set_reacting(react = TRUE)
