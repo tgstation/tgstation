@@ -60,7 +60,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount)
 	if(amount > 0 && prob(33))
-		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/gibs/bubblegum/blood(loc)
+		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(33))
 			step(B, pick(cardinal))
 		else
