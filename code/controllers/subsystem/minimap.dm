@@ -120,7 +120,7 @@ var/datum/subsystem/minimap/SSminimap
 
 		obj = locate(/obj/structure) in tile
 		if(obj)
-			obj_icons += getFlatIcon(obj)
+			obj_icons += new /icon(obj.icon, obj.icon_state, obj.dir, 1, 0)
 		obj = locate(/obj/machinery) in tile
 		if(obj)
 			obj_icons += new /icon(obj.icon, obj.icon_state, obj.dir, 1, 0)
