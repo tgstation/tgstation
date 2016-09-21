@@ -62,9 +62,10 @@
 		overmind.update_health_hud()
 
 /obj/effect/blob/core/Life()
+	if(qdeleted(src))
+		return
 	if(!overmind)
-		if(!qdeleted(src))
-			addtimer(src, "create_overmind", 0)
+		create_overmind()
 	else
 		if(resource_delay <= world.time)
 			resource_delay = world.time + 10 // 1 second
