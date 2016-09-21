@@ -822,7 +822,7 @@
 /mob/living/canUseTopic(atom/movable/M, be_close = FALSE, no_dexterity = FALSE)
 	if(incapacitated())
 		return
-	if(no_dextery)
+	if(no_dexterity)
 		if(be_close && in_range(M, src))
 			return 1
 	else
