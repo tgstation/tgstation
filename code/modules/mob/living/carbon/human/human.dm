@@ -206,7 +206,7 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(usr.canUseTopic(src, be_close=TRUE, no_dexterity=TRUE))
 
 		if(href_list["embedded_object"])
 			var/obj/item/I = locate(href_list["embedded_object"])

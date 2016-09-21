@@ -526,7 +526,7 @@ var/next_mob_id = 0
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(usr.canUseTopic(src, be_close=TRUE, no_dexterity=TRUE))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			var/hand_index = text2num(href_list["hand_index"])

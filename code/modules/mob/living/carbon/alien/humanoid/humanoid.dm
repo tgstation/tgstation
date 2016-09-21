@@ -60,7 +60,7 @@
 /mob/living/carbon/alien/humanoid/Topic(href, href_list)
 	..()
 	//strip panel
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(usr.canUseTopic(src, be_close=TRUE, no_dexterity=TRUE))
 		if(href_list["pouches"])
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")

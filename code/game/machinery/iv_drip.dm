@@ -56,7 +56,7 @@
 			add_overlay(filling)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
-	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
+	if(!ishuman(usr) || !usr.canUseTopic(src,be_close=TRUE))
 		return
 
 	if(attached)
