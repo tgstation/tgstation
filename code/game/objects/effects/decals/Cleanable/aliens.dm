@@ -42,6 +42,7 @@
 	desc = "Gnarly..."
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xgib1"
+	layer = LOW_OBJ_LAYER
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
