@@ -187,7 +187,7 @@
 			var/message = "<p><b>[setname]:</b>"
 			for(var/Col in local_wires[device])
 				var/wire_name = local_wires[device][Col]
-				if(!findtext(wire_name, "__dud"))	//don't show duds
+				if(!findtext(wire_name, WIRE_DUD_PREFIX))	//don't show duds
 					message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
 			message += "</p>"
 			return message

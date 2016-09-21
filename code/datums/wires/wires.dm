@@ -69,7 +69,7 @@ var/list/wire_name_directory = list()
 
 /datum/wires/proc/add_duds(duds)
 	while(duds)
-		var/dud = "__dud[--duds]"
+		var/dud = WIRE_DUD_PREFIX + "[--duds]"
 		if(dud in wires)
 			continue
 		wires += dud
