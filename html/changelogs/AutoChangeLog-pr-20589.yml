@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "The food processor's sprite's maintenance panel is no longer open while closed and vice/versa"

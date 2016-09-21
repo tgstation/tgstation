@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - tweak: "Tesla arcs no longer lose power when passing through a coil that isn't connected to a grid"
