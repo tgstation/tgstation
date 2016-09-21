@@ -229,6 +229,7 @@
 	throw_range = 1
 	w_class = 4//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
+	sharpness = IS_SHARP
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/weapon/melee/energy/blade/New()
