@@ -54,7 +54,7 @@
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	var/list/image/showing = list()
 	var/client/viewing
-	var/legend = 0	//Viewing the wire legend
+	var/legend = FALSE	//Viewing the wire legend
 
 
 /obj/item/areaeditor/blueprints/Destroy()
@@ -76,7 +76,7 @@
 			. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
 			. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
 	else
-		if(legend == 1)
+		if(legend == TRUE)
 			. += "<a href='?src=\ref[src];exit_legend=1'><< Back</a>"
 			. += view_wire_devices(user);
 		else
@@ -96,9 +96,9 @@
 			return
 		edit_area()
 	if(href_list["exit_legend"])
-		legend = 0;
+		legend = FALSE;
 	if(href_list["view_legend"])
-		legend = 1;
+		legend = TRUE;
 	if(href_list["view_wireset"])
 		legend = href_list["view_wireset"];
 	if(href_list["view_blueprints"])
@@ -169,24 +169,18 @@
 
 /obj/item/areaeditor/blueprints/proc/view_wire_devices(mob/user)
 	var/message = "<br>You examine the wire legend.<br>"
-	var/list/local_wires = wire_color_directory
-	var/list/local_names = wire_name_directory
-	for(var/wireset in local_wires)
-		var/setname = local_names[wireset]
-		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[setname]</a>"
+	for(var/wireset in wire_color_directory)
+		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[wire_name_directory[wireset]]</a>"
 	message += "</p>"
 	return message
 
 /obj/item/areaeditor/blueprints/proc/view_wire_set(mob/user, wireset)
 	//for some reason you can't use wireset directly as a derefencer so this is the next best :/
-	var/list/local_wires = wire_color_directory
-	var/list/local_names = wire_name_directory
-	for(var/device in local_wires)
+	for(var/device in wire_color_directory)
 		if("[device]" == wireset)	//I know... don't change it...
-			var/setname = local_names[device]
-			var/message = "<p><b>[setname]:</b>"
-			for(var/Col in local_wires[device])
-				var/wire_name = local_wires[device][Col]
+			var/message = "<p><b>[wire_name_directory[device]]:</b>"
+			for(var/Col in wire_color_directory[device])
+				var/wire_name = wire_color_directory[device][Col]
 				if(!findtext(wire_name, WIRE_DUD_PREFIX))	//don't show duds
 					message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
 			message += "</p>"
