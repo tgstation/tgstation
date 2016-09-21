@@ -82,6 +82,7 @@
 		hierophant_network.Grant(S)
 		hierophant_network.title = "Silicon"
 		hierophant_network.span_for_name = "nezbere"
+		hierophant_network.span_for_message = "brass"
 	else if(isbrain(owner))
 		hierophant_network.Grant(owner)
 		hierophant_network.title = "Vessel"
@@ -91,6 +92,7 @@
 		hierophant_network.Grant(owner)
 		hierophant_network.title = "Construct"
 		hierophant_network.span_for_name = "nezbere"
+		hierophant_network.span_for_message = "brass"
 	owner.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	cache_check(owner)
 	..()
