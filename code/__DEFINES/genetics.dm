@@ -84,6 +84,14 @@
 #define ORGAN_ORGANIC   1
 #define ORGAN_ROBOTIC   2
 
+#define BODYPART_ORGANIC   1
+#define BODYPART_ROBOTIC   2
+
+#define MONKEY_BODYPART "monkey"
+#define ALIEN_BODYPART "alien"
+#define LARVA_BODYPART "larva"
+#define DEVIL_BODYPART "devil"
+
 //Nutrition levels for humans. No idea where else to put it
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550

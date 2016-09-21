@@ -101,17 +101,21 @@
 		client.screen += client.void
 	..()
 
-/mob/living/simple_animal/updatehealth()
-	..()
-	health = Clamp(health, 0, maxHealth)
-
 /mob/living/simple_animal/Life()
 	if(..()) //alive
 		if(!ckey)
-			handle_automated_movement()
-			handle_automated_action()
-			handle_automated_speech()
-		return 1
+			if(stat != DEAD)
+				handle_automated_movement()
+			if(stat != DEAD)
+				handle_automated_action()
+			if(stat != DEAD)
+				handle_automated_speech()
+		if(stat != DEAD)
+			return 1
+
+/mob/living/simple_animal/updatehealth()
+	..()
+	health = Clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/update_stat()
 	if(status_flags & GODMODE)
@@ -251,10 +255,6 @@
 	if(icon_gib)
 		new /obj/effect/overlay/temp/gib_animation/animal(loc, icon_gib)
 
-/mob/living/simple_animal/blob_act(obj/effect/blob/B)
-	adjustBruteLoss(20)
-	return
-
 /mob/living/simple_animal/say_quote(input)
 	var/ending = copytext(input, length(input))
 	if(speak_emote && speak_emote.len && ending != "?" && ending != "!")
@@ -271,125 +271,7 @@
 		act = "me"
 	..(act, m_type, message)
 
-/mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
-	if(..())
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		attack_threshold_check(damage,M.melee_damage_type)
-		return 1
 
-/mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
-	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src)
-	return 0
-
-/mob/living/simple_animal/proc/adjustHealth(amount)
-	if(status_flags & GODMODE)
-		return 0
-	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
-	updatehealth()
-	return amount
-
-/mob/living/simple_animal/adjustBruteLoss(amount)
-	if(damage_coeff[BRUTE])
-		. = adjustHealth(amount * damage_coeff[BRUTE] * config.damage_multiplier)
-
-/mob/living/simple_animal/adjustFireLoss(amount)
-	if(damage_coeff[BURN])
-		. = adjustHealth(amount * damage_coeff[BURN] * config.damage_multiplier)
-
-/mob/living/simple_animal/adjustOxyLoss(amount)
-	if(damage_coeff[OXY])
-		. = adjustHealth(amount * damage_coeff[OXY] * config.damage_multiplier)
-
-/mob/living/simple_animal/adjustToxLoss(amount)
-	if(damage_coeff[TOX])
-		. = adjustHealth(amount * damage_coeff[TOX] * config.damage_multiplier)
-
-/mob/living/simple_animal/adjustCloneLoss(amount)
-	if(damage_coeff[CLONE])
-		. = adjustHealth(amount * damage_coeff[CLONE] * config.damage_multiplier)
-
-/mob/living/simple_animal/adjustStaminaLoss(amount)
-	return
-
-/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
-	..()
-	switch(M.a_intent)
-
-		if("help")
-			if (health > 0)
-				visible_message("<span class='notice'>[M] [response_help] [src].</span>")
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-
-		if("grab")
-			grabbedby(M)
-
-		if("harm", "disarm")
-			M.do_attack_animation(src)
-			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
-			playsound(loc, attacked_sound, 25, 1, -1)
-			attack_threshold_check(harm_intent_damage)
-			add_logs(M, src, "attacked")
-			updatehealth()
-			return 1
-
-/mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
-	if(..()) //successful monkey bite.
-		if(stat != DEAD)
-			var/damage = rand(1, 3)
-			attack_threshold_check(damage)
-			return 1
-	if (M.a_intent == "help")
-		if (health > 0)
-			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-
-	return
-
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(..()) //if harm or disarm intent.
-		if(M.a_intent == "disarm")
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
-					"<span class='userdanger'>[M] [response_disarm] [name]!</span>")
-			add_logs(M, src, "disarmed")
-		else
-			var/damage = rand(15, 30)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-					"<span class='userdanger'>[M] has slashed at [src]!</span>")
-			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			attack_threshold_check(damage)
-			add_logs(M, src, "attacked")
-		return 1
-
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
-	if(..()) //successful larva bite
-		var/damage = rand(5, 10)
-		if(stat != DEAD)
-			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			attack_threshold_check(damage)
-		return 1
-
-/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime attack
-		var/damage = rand(15, 25)
-		if(M.is_adult)
-			damage = rand(20, 35)
-		attack_threshold_check(damage)
-		return 1
-
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
-	if(!damage_coeff[damagetype])
-		damage = 0
-	else
-		damage *= damage_coeff[damagetype]
-
-	if(damage >= 0 && damage <= force_threshold)
-		visible_message("<span class='warning'>[src] looks unharmed.</span>")
-	else
-		adjustHealth(damage * config.damage_multiplier)
 
 /mob/living/simple_animal/movement_delay()
 	. = ..()
@@ -422,7 +304,12 @@
 			visible_message("<span class='danger'>\The [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
+		stat = DEAD
+		//Prevent infinite loops if the mob Destroy() is overriden in such
+		//a manner as to cause a call to death() again
+		del_on_death = FALSE
 		qdel(src)
+		return
 	else
 		health = 0
 		icon_state = icon_dead
@@ -430,28 +317,6 @@
 		density = 0
 		lying = 1
 	..()
-
-/mob/living/simple_animal/ex_act(severity, target)
-	..()
-	var/bomb_armor = getarmor(null, "bomb")
-	switch (severity)
-		if (1)
-			if(prob(bomb_armor))
-				adjustBruteLoss(500)
-			else
-				gib()
-				return
-		if (2)
-			var/bloss = 60
-			if(prob(bomb_armor))
-				bloss = bloss / 1.5
-			adjustBruteLoss(bloss)
-
-		if(3)
-			var/bloss = 30
-			if(prob(bomb_armor))
-				bloss = bloss / 1.5
-			adjustBruteLoss(bloss)
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -467,9 +332,6 @@
 	return 1
 
 /mob/living/simple_animal/handle_fire()
-	return
-
-/mob/living/simple_animal/update_fire()
 	return
 
 /mob/living/simple_animal/IgniteMob()
@@ -599,14 +461,6 @@
 /mob/living/simple_animal/get_idcard()
 	return access_card
 
-//Dextrous simple mobs can use hands!
-/mob/living/simple_animal/create_mob_hud()
-	if(client && !hud_used)
-		if(dextrous)
-			hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
-		else
-			..()
-
 /mob/living/simple_animal/OpenCraftingMenu()
 	if(dextrous)
 		handcrafting.ui_interact(src)
@@ -655,13 +509,6 @@
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
 			H.update_icon()
-
-/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
-	if(!dextrous)
-		return ..()
-	if(!ismob(A))
-		A.attack_hand(src)
-		update_inv_hands()
 
 /mob/living/simple_animal/put_in_hands(obj/item/I)
 	..()

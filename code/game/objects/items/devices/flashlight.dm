@@ -61,7 +61,7 @@
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(M.flash_eyes(visual = 1))
+			if(M.flash_act(visual = 1))
 				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
@@ -77,7 +77,7 @@
 				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
 					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
 				else //they're okay!
-					if(C.flash_eyes(visual = 1))
+					if(C.flash_act(visual = 1))
 						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()

@@ -15,74 +15,18 @@
 	var/custom_pixel_y_offset = 0
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
 	var/drooling = 0 //For Neruotoxic spit overlays
+	bodyparts = list(/obj/item/bodypart/chest/alien, /obj/item/bodypart/head/alien, /obj/item/bodypart/l_arm/alien,
+					 /obj/item/bodypart/r_arm/alien, /obj/item/bodypart/r_leg/alien, /obj/item/bodypart/l_leg/alien)
+
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	..()
 
-
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
 	. += move_delay_add + config.alien_delay + sneaking	//move_delay_add is used to slow aliens with stuns
-
-/mob/living/carbon/alien/humanoid/emp_act(severity)
-	if(r_store) r_store.emp_act(severity)
-	if(l_store) l_store.emp_act(severity)
-	..()
-
-/mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
-	if(user.a_intent == "harm")
-		..(user, 1)
-		adjustBruteLoss(15)
-		var/hitverb = "punched"
-		if(mob_size < MOB_SIZE_LARGE)
-			step_away(src,user,15)
-			sleep(1)
-			step_away(src,user,15)
-			hitverb = "slammed"
-		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] has [hitverb] [src]!</span>", \
-		"<span class='userdanger'>[user] has [hitverb] [src]!</span>")
-		return 1
-
-/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
-	if(..())
-		switch(M.a_intent)
-			if ("harm")
-				var/damage = rand(1, 9)
-				if (prob(90))
-					playsound(loc, "punch", 25, 1, -1)
-					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-							"<span class='userdanger'>[M] has punched [src]!</span>")
-					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of weakening an alien.
-						Paralyse(2)
-						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
-								"<span class='userdanger'>[M] has weakened [src]!</span>")
-					adjustBruteLoss(damage)
-					add_logs(M, src, "attacked")
-					updatehealth()
-				else
-					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-					visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
-
-			if ("disarm")
-				if (!lying)
-					if (prob(5))
-						Paralyse(2)
-						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						add_logs(M, src, "pushed")
-						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
-							"<span class='userdanger'>[M] has pushed down [src]!</span>")
-					else
-						if (prob(50))
-							drop_item()
-							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [src]!</span>")
-						else
-							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
 
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
 	. = handcuffed
@@ -150,9 +94,6 @@
 	else
 		return initial(pixel_x)
 
-/mob/living/carbon/alien/humanoid/check_ear_prot()
-	return 1
-
 /mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8
 
@@ -179,9 +120,3 @@ proc/get_alien_type(var/alienpath)
 	if(breath && breath.total_moles() > 0 && !sneaking)
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, 0, -5)
 	..()
-
-/mob/living/carbon/alien/humanoid/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && grab_state >= GRAB_AGGRESSIVE && !pulling.anchored && iscarbon(pulling))
-		devour_mob(pulling, devour_time = 60)
-	else
-		..()

@@ -191,18 +191,26 @@
 		for(var/obj/item/I in BP.embedded_objects)
 			msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [BP.name]!</B>\n"
 
-	//stores how many left limbs are missing
+	//stores missing limbs
 	var/l_limbs_missing = 0
+	var/r_limbs_missing = 0
 	for(var/t in missing)
 		if(t=="head")
 			msg += "<span class='deadsay'><B>[capitalize(t_his)] [parse_zone(t)] is missing!</B><span class='warning'>\n"
 			continue
 		if(t == "l_arm" || t == "l_leg")
 			l_limbs_missing++
+		else if(t == "r_arm" || t == "r_leg")
+			r_limbs_missing++
+
 		msg += "<B>[capitalize(t_his)] [parse_zone(t)] is missing!</B>\n"
 
-	if(l_limbs_missing >= 2)
+	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
 		msg += "[t_He] looks all right now.\n"
+	else if(l_limbs_missing == 0 && r_limbs_missing >= 2)
+		msg += "[t_He] really keeps to the left.\n"
+	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
+		msg += "[t_He] doesn't seem all there.\n"
 
 	if(temp)
 		if(temp < 30)

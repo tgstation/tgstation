@@ -375,7 +375,6 @@
 	if (equipped_slot)
 		where = "In your [equipped_slot]"
 	mob << "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>"
-	mob.update_icons()
 
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]

@@ -499,8 +499,8 @@ var/next_mob_id = 0
 		return
 
 	var/mob/mob_eye = creatures[eye_name]
-
-	if(client && mob_eye)
+	//Istype so we filter out points of interest that are not mobs
+	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
 		if(isobserver(src))
 			src.client.screen = list()

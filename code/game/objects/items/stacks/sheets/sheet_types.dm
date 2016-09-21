@@ -6,6 +6,7 @@
  *		Cloth
  *		Cardboard
  *		Runed Metal (cult)
+ *		Brass (clockwork cult)
  */
 
 /*
@@ -60,6 +61,10 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	throwforce = 10
 	flags = CONDUCT
 	origin_tech = "materials=1"
+
+/obj/item/stack/sheet/metal/ratvar_act()
+	new /obj/item/stack/sheet/brass(loc, amount)
+	qdel(src)
 
 /obj/item/stack/sheet/metal/narsie_act()
 	if(prob(20))
@@ -236,10 +241,14 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 /obj/item/stack/sheet/runed_metal
 	name = "runed metal"
 	desc = "Sheets of cold metal with shifting inscriptions writ upon them."
-	singular_name = "runed metal"
+	singular_name = "runed metal sheet"
 	icon_state = "sheet-runed"
 	icon = 'icons/obj/items.dmi'
 	sheettype = "runed"
+
+/obj/item/stack/sheet/runed_metal/ratvar_act()
+	new /obj/item/stack/sheet/brass(loc, amount)
+	qdel(src)
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -258,6 +267,36 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 
 /obj/item/stack/sheet/runed_metal/New(var/loc, var/amount=null)
 	recipes = runed_metal_recipes
+	return ..()
+
+/*
+ * Metal
+ */
+var/global/list/datum/stack_recipe/brass_recipes = list ( \
+	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 30, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork/brass, 5, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork, 2, time = 30, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("brass window", /obj/structure/window/reinforced/clockwork/fulltile, 2, time = 30, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("brass floor tile", /obj/item/stack/tile/brass, 1, 1, 50) \
+)
+
+/obj/item/stack/sheet/brass
+	name = "brass"
+	desc = "Sheets made out of brass."
+	singular_name = "brass sheet"
+	icon_state = "sheet-brass"
+	throwforce = 10
+
+/obj/item/stack/sheet/brass/narsie_act()
+	if(prob(20))
+		new /obj/item/stack/sheet/runed_metal(loc, amount)
+		qdel(src)
+
+/obj/item/stack/sheet/brass/New(var/loc, var/amount=null)
+	recipes = brass_recipes
 	return ..()
 
 /obj/item/stack/sheet/lessergem

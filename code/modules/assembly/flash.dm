@@ -85,7 +85,7 @@
 	if(user && targeted)
 		if(M.weakeyes)
 			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
-		if(M.flash_eyes(1, 1))
+		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
@@ -100,7 +100,7 @@
 			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
 			M << "<span class='danger'>[user] fails to blind you with the flash!</span>"
 	else
-		if(M.flash_eyes())
+		if(M.flash_act())
 			M.confused += power
 
 /obj/item/device/assembly/flash/attack(mob/living/M, mob/user)
@@ -117,7 +117,7 @@
 		update_icon(1)
 		M.Weaken(6)
 		R.confused += 5
-		R.flash_eyes(affect_silicon = 1)
+		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return 1
 
@@ -173,25 +173,14 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	cyborg_flash_animation(user)
+	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	cyborg_flash_animation(user)
+	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return
-
-/obj/item/device/assembly/flash/cyborg/proc/cyborg_flash_animation(mob/living/user)
-	var/atom/movable/overlay/animation = new(user.loc)
-	animation.layer = user.layer + 1
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = user
-	flick("blspell", animation)
-	sleep(5)
-	qdel(animation)
-
 
 /obj/item/device/assembly/flash/memorizer
 	name = "memorizer"
@@ -201,3 +190,32 @@
 	item_state = "nullrod"
 
 /obj/item/device/assembly/flash/handheld //this is now the regular pocket flashes
+
+/obj/item/device/assembly/flash/armimplant
+	name = "photon projector"
+	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocals fix the flashbulb if it ever burns out."
+	var/flashcd = 20
+	var/overheat = 0
+	var/obj/item/organ/cyberimp/arm/flash/I = null
+
+/obj/item/device/assembly/flash/armimplant/burn_out()
+	if(I && I.owner)
+		I.owner << "<span class='warning'>Your photon projector implant overheats and deactivates!</span>"
+		I.Retract()
+	overheat = FALSE
+	addtimer(src, "cooldown", flashcd * 2)
+
+/obj/item/device/assembly/flash/armimplant/try_use_flash(mob/user = null)
+	if(overheat)
+		if(I && I.owner)
+			I.owner << "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>"
+		return FALSE
+	overheat = TRUE
+	addtimer(src, "cooldown", flashcd)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	update_icon(1)
+	return TRUE
+
+
+/obj/item/device/assembly/flash/armimplant/proc/cooldown()
+	overheat = FALSE

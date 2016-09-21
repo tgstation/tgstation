@@ -94,12 +94,14 @@
 /obj/vehicle/relaymove(mob/user, direction)
 	if(user.incapacitated())
 		unbuckle_mob(user)
+		return
 
+	if(world.time < next_vehicle_move)
+		return
+	next_vehicle_move = world.time + vehicle_move_delay
 	if(keycheck(user))
-		if(!Process_Spacemove(direction) || world.time < next_vehicle_move || !isturf(loc))
+		if(!Process_Spacemove(direction) || !isturf(loc))
 			return
-		next_vehicle_move = world.time + vehicle_move_delay
-
 		step(src, direction)
 
 		handle_vehicle_layer()

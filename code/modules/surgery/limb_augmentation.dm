@@ -16,17 +16,17 @@
 
 /datum/surgery_step/add_limb
 	name = "replace limb"
-	implements = list(/obj/item/robot_parts = 100)
+	implements = list(/obj/item/bodypart = 100)
 	time = 32
 	var/obj/item/bodypart/L = null // L because "limb"
 
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/robot_parts/aug = tool
-	if(istype(aug) && aug.body_zone != target_zone)
+	var/obj/item/bodypart/aug = tool
+	if(aug.status != BODYPART_ROBOTIC && aug.body_zone != target_zone)
 		user << "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>"
 		return -1
-	L = surgery.organ
+	L = surgery.operated_bodypart
 	if(L)
 		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
 	else
@@ -45,15 +45,13 @@
 
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(L)
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
-			L.change_bodypart_status(ORGAN_ROBOTIC, 1)
-			user.drop_item()
-			qdel(tool)
-			H.update_damage_overlays(0)
-			H.updatehealth()
-			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
+		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
+		L.change_bodypart_status(BODYPART_ROBOTIC, 1)
+		user.drop_item()
+		qdel(tool)
+		target.update_damage_overlays()
+		target.updatehealth()
+		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"
 	return 1

@@ -1,4 +1,0 @@
-author: "RemieRichards"
-delete-after: True
-changes: 
-  - rscadd: "Added the functionality for mobs to have multiple hands, this might have broken some things, so please report any weirdness"

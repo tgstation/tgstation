@@ -245,7 +245,13 @@
 	return
 
 
+//////////////////////////////// HUSK DISABILITY ///////////////////////////:
 
+/mob/proc/cure_husk()
+	return
+
+/mob/proc/become_husk()
+	return
 
 
 

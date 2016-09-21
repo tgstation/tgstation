@@ -174,7 +174,7 @@
 /obj/structure/destructible/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
 	name = "ocular warden"
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
-	clockwork_desc = "A stalwart turret that will deal sustained damage to any non-faithful it sees."
+	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
 	health = 25
 	max_health = 25
@@ -187,7 +187,7 @@
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
-	var/mech_damage_cycle = 0 //only hits every few cycles so mechs have a chance against it
+	var/mech_damage_cycle = 0 //so that people in mechs don't get murderspammed with messages
 
 /obj/structure/destructible/clockwork/ocular_warden/New()
 	..()
@@ -218,12 +218,14 @@
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
 			else if(istype(target,/obj/mecha))
-				if(mech_damage_cycle)
-					var/obj/mecha/M = target
-					M.take_directional_damage(damage_per_tick, "fire", get_dir(src, M), 0) //does about half of standard damage to mechs * whatever their fire armor is
-					mech_damage_cycle--
+				var/sending_message = FALSE
+				if(mech_damage_cycle > 1)
+					mech_damage_cycle = 0
+					sending_message = TRUE
 				else
 					mech_damage_cycle++
+				var/obj/mecha/M = target
+				M.take_directional_damage(damage_per_tick, "fire", get_dir(src, M), 0, 1, sending_message)
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
@@ -331,15 +333,48 @@
 	/obj/item/clockwork/alloy_shards/medium = 4, \
 	/obj/item/clockwork/alloy_shards/small = 2) //slightly more debris than the default, totals 26 alloy
 
+/obj/structure/destructible/clockwork/wall_gear/displaced
+	anchored = FALSE
+
 /obj/structure/destructible/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, I, 10)
+		return 1
+	else if(istype(I, /obj/item/stack/sheet/brass))
+		var/obj/item/stack/sheet/brass/W = I
+		if(W.get_amount() < 1)
+			user << "<span class='warning'>You need one brass sheet to do this!</span>"
+			return
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/closed/wall))
+			user << "<span class='warning'>There is already a wall present!</span>"
+			return
+		if(!istype(T, /turf/open/floor))
+			user << "<span class='warning'>A floor must be present to build a [anchored ? "false ":""]wall!</span>"
+			return
+		if(locate(/obj/structure/falsewall) in T.contents)
+			user << "<span class='warning'>There is already a false wall present!</span>"
+			return
+		user << "<span class='notice'>You start adding [W] to [src]...</span>"
+		if(do_after(user, 20, target = src))
+			var/brass_floor = FALSE
+			if(istype(T, /turf/open/floor/clockwork)) //if the floor is already brass, costs less to make(conservation of masssssss)
+				brass_floor = TRUE
+			if(W.use(2 - brass_floor))
+				if(anchored)
+					T.ChangeTurf(/turf/closed/wall/clockwork)
+				else
+					T.ChangeTurf(/turf/open/floor/clockwork)
+					new /obj/structure/falsewall/brass(T)
+				qdel(src)
+			else
+				user << "<span class='warning'>You need more brass to make a [anchored ? "false ":""]wall!</span>"
 		return 1
 	return ..()
 
 /obj/structure/destructible/clockwork/wall_gear/examine(mob/user)
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "secured to the floor":"mobile, and not secured"].</span>"
+	user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -579,7 +614,7 @@
 	name = "clockwork wall"
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
 	icon_state = "clockwork_wall"
-	canSmoothWith = list(/obj/effect/clockwork/overlay/wall)
+	canSmoothWith = list(/obj/effect/clockwork/overlay/wall, /obj/structure/falsewall/brass)
 	smooth = SMOOTH_TRUE
 	layer = CLOSED_TURF_LAYER
 
@@ -711,10 +746,10 @@
 	color = "#FAE48C"
 
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)
-	var/target_flashed = L.flash_eyes()
+	var/target_flashed = L.flash_act()
 	for(var/mob/living/M in viewers(5, src))
 		if(!is_servant_of_ratvar(M) && M != L)
-			M.flash_eyes()
+			M.flash_act()
 	if(iscultist(L))
 		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
 		L.adjustBruteLoss(10)

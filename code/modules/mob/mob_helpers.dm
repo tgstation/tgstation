@@ -413,14 +413,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == ORGAN_ROBOTIC)
+	if(affecting && affecting.status == BODYPART_ROBOTIC)
 		var/dam //changes repair text based on how much brute/burn was supplied
 		if(brute_heal > burn_heal)
 			dam = 1
 		else
 			dam = 0
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-			affecting.heal_damage(brute_heal,burn_heal,1)
+			if(affecting.heal_damage(brute_heal, burn_heal, 1, 0))
+				H.update_damage_overlays()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
 			return 1 //successful heal
 		else
@@ -464,3 +465,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		M << "There were no ghosts willing to take control."
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
+
+//toggles the talk wheel
+/mob/verb/toggle_talk_wheel()
+	set name = "talk-wheel"
+	set hidden = 1
+
+	if(isliving(src))
+		var/mob/living/L = src
+		if(L.hud_used)
+			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
+				TW.Click()
+

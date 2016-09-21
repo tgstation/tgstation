@@ -69,6 +69,8 @@
 		if(slot_glasses)
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
+			if(G.glass_colour_type)
+				update_glasses_color(G, 1)
 			if(G.tint)
 				update_tint()
 			if(G.vision_correction)
@@ -144,6 +146,8 @@
 	else if(I == glasses)
 		glasses = null
 		var/obj/item/clothing/glasses/G = I
+		if(G.glass_colour_type)
+			update_glasses_color(G, 0)
 		if(G.tint)
 			update_tint()
 		if(G.vision_correction)
@@ -200,7 +204,16 @@
 
 
 //Cycles through all clothing slots and tests them for destruction
-/mob/living/carbon/human/proc/shred_clothing(bomb,shock)
+/mob/living/carbon/proc/shred_clothing(bomb,shock)
+	if(back)
+		back.shred(bomb,shock-20,src)
+	if(head)
+		head.shred(bomb,shock,src)
+	if(wear_mask)
+		wear_mask.shred(bomb,shock,src)
+
+
+/mob/living/carbon/human/shred_clothing(bomb,shock)
 	var/covered_parts = 0	//The body parts that are protected by exterior clothing/armor
 	var/head_absorbed = 0	//How much of the shock the headgear absorbs when it is shredded. -1=it survives
 	var/suit_absorbed = 0	//How much of the shock the exosuit absorbs when it is shredded. -1=it survives

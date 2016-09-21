@@ -852,7 +852,7 @@
 /turf/closed/wall,
 /area/awaymission/academy/headmaster)
 "cI" = (
-/obj/structure/divine/trap/damage,
+/obj/structure/trap/damage,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "cJ" = (
@@ -3881,11 +3881,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/divine/trap/chill,
+/obj/structure/trap/chill,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "kN" = (
-/obj/structure/divine/trap/fire,
+/obj/structure/trap/fire,
 /turf/open/floor/engine,
 /area/awaymission/academy/academyaft)
 "kO" = (
@@ -3946,7 +3946,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "la" = (
-/obj/structure/divine/trap/damage,
+/obj/structure/trap/damage,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lb" = (

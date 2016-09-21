@@ -1,3 +1,10 @@
+
+/mob/living/carbon/alien/get_eye_protection()
+	return ..() + 2 //potential cyber implants + natural eye protection
+
+/mob/living/carbon/alien/get_ear_protection()
+	return 2 //no ears
+
 /mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush)
 	..(AM, skipcatch = 1, hitpush = 0)
 
@@ -40,7 +47,6 @@ In all, this is a lot like the monkey code. /N
 				updatehealth()
 			else
 				M << "<span class='warning'>[name] is too injured for that.</span>"
-	return
 
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)
@@ -65,9 +71,10 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
 	if(..())
 		if (stat != DEAD)
-			adjustBruteLoss(rand(1, 3))
-			updatehealth()
-	return
+			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
+			apply_damage(rand(1, 3), BRUTE, affecting)
+
+
 
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
@@ -96,3 +103,22 @@ In all, this is a lot like the monkey code. /N
 		adjustBruteLoss(damage)
 		add_logs(M, src, "attacked")
 		updatehealth()
+
+/mob/living/carbon/alien/ex_act(severity, target)
+	..()
+	switch (severity)
+		if (1)
+			gib()
+
+		if (2)
+			take_overall_damage(60, 60)
+			adjustEarDamage(30,120)
+
+		if(3)
+			take_overall_damage(30,0)
+			if(prob(50))
+				Paralyse(1)
+			adjustEarDamage(15,60)
+
+/mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 1, damage_pwr = 5, deafen_pwr = 15)
+	return 0

@@ -38,7 +38,7 @@
 	M.setCloneLoss(0, 0)
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
-	M.heal_organ_damage(5,5, 0)
+	M.heal_bodypart_damage(5,5, 0)
 	M.adjustToxLoss(-5, 0)
 	M.hallucination = 0
 	M.setBrainLoss(0)
@@ -163,7 +163,7 @@
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
-	M.heal_organ_damage(1,1, 0)
+	M.heal_bodypart_damage(1,1, 0)
 	M.status_flags &= ~DISFIGURED
 	..()
 	. = 1

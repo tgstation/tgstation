@@ -11,13 +11,15 @@
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
-	var/mob/living/carbon/holder
+	var/mob/living/holder
 
-/datum/dna/New(mob/living/carbon/new_holder)
+/datum/dna/New(mob/living/new_holder)
 	if(new_holder)
 		holder = new_holder
 
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
+	if(!istype(destination))
+		return
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
@@ -166,11 +168,35 @@
 	features = random_features()
 
 
+/datum/dna/stored //subtype used by brain mob's stored_dna
+
+/datum/dna/stored/add_mutation(mutation_name) //no mutation changes on stored dna.
+	return
+
+/datum/dna/stored/remove_mutation(mutation_name)
+	return
+
+/datum/dna/stored/check_mutation(mutation_name)
+	return
+
+/datum/dna/stored/remove_all_mutations()
+	return
+
+/datum/dna/stored/remove_mutation_group(list/group)
+	return
 
 /////////////////////////// DNA MOB-PROCS //////////////////////
 
 /mob/proc/set_species(datum/species/mrace, icon_update = 1)
 	return
+
+/mob/living/brain/set_species(datum/species/mrace, icon_update = 1)
+	if(mrace)
+		if(ispath(mrace))
+			stored_dna.species = new mrace()
+		else
+			stored_dna.species = mrace //not calling any species update procs since we're a brain, not a monkey/human
+
 
 /mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
 	if(mrace && has_dna())
@@ -290,48 +316,46 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 		return 0
 	return getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 
-/proc/randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
-	if(!M.has_dna())
+/mob/living/carbon/proc/randmut(list/candidates, difficulty = 2)
+	if(!has_dna())
 		return
 	var/datum/mutation/human/num = pick(candidates)
-	. = num.force_give(M)
-	return
+	. = num.force_give(src)
 
-/proc/randmutb(mob/living/carbon/M)
-	if(!M.has_dna())
+/mob/living/carbon/proc/randmutb()
+	if(!has_dna())
 		return
 	var/datum/mutation/human/HM = pick((bad_mutations | not_good_mutations) - mutations_list[RACEMUT])
-	. = HM.force_give(M)
+	. = HM.force_give(src)
 
-/proc/randmutg(mob/living/carbon/M)
-	if(!M.has_dna())
+/mob/living/carbon/proc/randmutg()
+	if(!has_dna())
 		return
 	var/datum/mutation/human/HM = pick(good_mutations)
-	. = HM.force_give(M)
+	. = HM.force_give(src)
 
-/proc/randmutvg(mob/living/carbon/M)
-	if(!M.has_dna())
+/mob/living/carbon/proc/randmutvg()
+	if(!has_dna())
 		return
 	var/datum/mutation/human/HM = pick((good_mutations) - mutations_list[HULK] - mutations_list[DWARFISM])
-	. = HM.force_give(M)
+	. = HM.force_give(src)
 
-/proc/randmuti(mob/living/carbon/M)
-	if(!M.has_dna())
+/mob/living/carbon/proc/randmuti()
+	if(!has_dna())
 		return
 	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
-	var/newdna = setblock(M.dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, hex_characters))
-	M.dna.uni_identity = newdna
-	M.updateappearance(mutations_overlay_update=1)
-	return
+	var/newdna = setblock(dna.uni_identity, num, random_string(DNA_BLOCK_SIZE, hex_characters))
+	dna.uni_identity = newdna
+	updateappearance(mutations_overlay_update=1)
 
-/proc/clean_dna(mob/living/carbon/M)
-	if(!M.has_dna())
+/mob/living/carbon/proc/clean_dna()
+	if(!has_dna())
 		return
-	M.dna.remove_all_mutations()
+	dna.remove_all_mutations()
 
-/proc/clean_randmut(mob/living/carbon/M, list/candidates, difficulty = 2)
-	clean_dna(M)
-	randmut(M, candidates, difficulty)
+/mob/living/carbon/proc/clean_randmut(list/candidates, difficulty = 2)
+	clean_dna()
+	randmut(candidates, difficulty)
 
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, probability)
 	if(!M.has_dna())

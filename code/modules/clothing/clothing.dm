@@ -47,7 +47,7 @@
 		M.put_in_hand(src, H.held_index)
 		add_fingerprint(usr)
 
-/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin)
+/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(pockets)
 		pockets.close_all()
 	return ..()

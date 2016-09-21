@@ -104,6 +104,7 @@
 	if(W == A)
 		W.attack_self(src)
 		update_inv_hands()
+		return
 
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
 	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))

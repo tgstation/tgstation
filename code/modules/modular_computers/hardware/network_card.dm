@@ -11,6 +11,7 @@ var/global/ntnet_card_uid = 1
 	var/long_range = 0
 	var/ethernet = 0 // Hard-wired, therefore always on, ignores NTNet wireless checks.
 	malfunction_probability = 1
+	device_type = MC_NET
 
 /obj/item/weapon/computer_hardware/network_card/diagnostics(var/mob/user)
 	..()

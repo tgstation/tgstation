@@ -167,7 +167,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "av" = (
-/obj/structure/divine/trap/stun{
+/obj/structure/trap/stun{
 	desc = "A rune inscribed in the floor, the air feeling electrified around it.";
 	name = "shock rune"
 	},
@@ -474,7 +474,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "aY" = (
-/obj/structure/divine/trap/fire{
+/obj/structure/trap/fire{
 	desc = "An old rune inscribed on the floor, giving off an intense amount of heat.";
 	name = "flame rune"
 	},
@@ -485,7 +485,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "aZ" = (
-/obj/structure/divine/trap/fire{
+/obj/structure/trap/fire{
 	desc = "An old rune inscribed on the floor, giving off an intense amount of heat.";
 	name = "flame rune"
 	},
@@ -672,7 +672,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "bs" = (
-/obj/structure/divine/trap/stun{
+/obj/structure/trap/stun{
 	desc = "A rune inscribed in the floor, the air feeling electrified around it.";
 	name = "shock rune"
 	},

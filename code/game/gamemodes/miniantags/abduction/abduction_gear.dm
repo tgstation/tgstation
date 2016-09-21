@@ -50,11 +50,10 @@
 	if(disguise == null)
 		return
 	stealth_active = 1
-	if(istype(src.loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src.loc
-		addtimer(GLOBAL_PROC, "anim", 0, FALSE, M.loc, M, 'icons/mob/mob.dmi',
-			null, "cloak", null, M.dir)
-
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = loc
+		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/cloak,
+			list(get_turf(M), M.dir))
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
@@ -65,10 +64,10 @@
 	if(!stealth_active)
 		return
 	stealth_active = 0
-	if(istype(src.loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src.loc
-		addtimer(GLOBAL_PROC, "anim", 0, FALSE, M.loc, M, 'icons/mob/mob.dmi',
-			null, "uncloak", null, M.dir)
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = loc
+		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja,
+			list(get_turf(M), M.dir))
 		M.name_override = null
 		M.cut_overlays()
 		M.regenerate_icons()
@@ -92,11 +91,11 @@
 				ActivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
-	if(istype(src.loc, /mob/living/carbon/human))
+	if(istype(loc, /mob/living/carbon/human))
 		if(combat_cooldown != initial(combat_cooldown))
-			src.loc << "<span class='warning'>Combat injection is still recharging.</span>"
+			loc << "<span class='warning'>Combat injection is still recharging.</span>"
 			return
-		var/mob/living/carbon/human/M = src.loc
+		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
 		M.SetParalysis(0)
 		M.SetStunned(0)
@@ -459,11 +458,11 @@ Congratulations! You are now trained for xenobiology research!"}
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2)
+		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()

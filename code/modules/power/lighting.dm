@@ -441,8 +441,7 @@
 
 			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 			if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
-				H.update_damage_overlays(0)
-			H.updatehealth()
+				H.update_damage_overlays()
 			return				// if burned, don't remove the light
 	else
 		user << "<span class='notice'>You remove the light [fitting].</span>"
@@ -535,8 +534,9 @@
 	else
 		flicker()
 
-/obj/machinery/light/tesla_act(var/power)
-	explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
+/obj/machinery/light/tesla_act(power, explosive = FALSE)
+	if(explosive)
+		explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
 	qdel(src)
 
 // called when area power state changes

@@ -93,6 +93,11 @@
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
 
+	using = new/obj/screen/wheel/talk
+	using.screen_loc = ui_borg_talk_wheel
+	wheels += using
+	static_inventory += using
+
 //Radio
 	using = new /obj/screen/robot/radio()
 	using.screen_loc = ui_borg_radio

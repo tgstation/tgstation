@@ -13,6 +13,10 @@
 	var/verb_exclaim = "exclaims"
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
+	var/atom/inertia_last_loc
+	var/inertia_moving = 0
+	var/inertia_next_move = 0
+	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	glide_size = 8
@@ -70,19 +74,15 @@
 
 	last_move = direct
 	setDir(direct)
-
-	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
-		if(loc && direct && last_move == direct)
-			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
-				newtonian_move(last_move)
-
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	if (!inertia_moving)
+		inertia_next_move = world.time + inertia_move_delay
+		newtonian_move(Dir)
 	return 1
-
 
 /atom/movable/Destroy()
 	. = ..()
@@ -146,7 +146,7 @@
 		reset_perspective(destination)
 	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
-/mob/living/carbon/brain/forceMove(atom/destination)
+/mob/living/brain/forceMove(atom/destination)
 	if(container)
 		container.forceMove(destination)
 	else //something went very wrong.
@@ -172,13 +172,16 @@
 	if(pulledby)
 		return 1
 
+	if(throwing)
+		return 1
+
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return 1
 
 	return 0
 
-/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
 
+/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
 	if(!loc || Process_Spacemove(0))
 		inertia_dir = 0
 		return 0
@@ -186,10 +189,9 @@
 	inertia_dir = direction
 	if(!direction)
 		return 1
-
-	var/old_dir = dir
-	. = step(src, direction)
-	setDir(old_dir)
+	inertia_last_loc = loc
+	SSspacedrift.processing[src] = src
+	return 1
 
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
@@ -294,6 +296,7 @@
 				return 1
 
 		throw_impact(get_turf(src))  // we haven't hit something yet and we still must, let's hit the ground.
+	newtonian_move(init_dir)
 	return 1
 
 /atom/movable/proc/hitcheck()
@@ -304,26 +307,6 @@
 			throwing = 0
 			throw_impact(AM)
 			return 1
-
-//Overlays
-/atom/movable/overlay
-	var/atom/master = null
-	anchored = 1
-
-/atom/movable/overlay/New()
-	verbs.Cut()
-
-/atom/movable/overlay/attackby(a, b, c)
-	if (src.master)
-		return src.master.attackby(a, b, c)
-
-/atom/movable/overlay/attack_paw(a, b, c)
-	if (src.master)
-		return src.master.attack_paw(a, b, c)
-
-/atom/movable/overlay/attack_hand(a, b, c)
-	if (src.master)
-		return src.master.attack_hand(a, b, c)
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)

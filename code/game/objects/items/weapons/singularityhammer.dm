@@ -57,7 +57,7 @@
 			charged = 0
 			if(istype(A, /mob/living/))
 				var/mob/living/Z = A
-				Z.take_organ_damage(20,0)
+				Z.take_bodypart_damage(20,0)
 			playsound(user, 'sound/weapons/marauder.ogg', 50, 1)
 			var/turf/target = get_turf(A)
 			vortex(target,user)
