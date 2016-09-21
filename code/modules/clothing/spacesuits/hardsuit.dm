@@ -85,6 +85,10 @@
 		jetpack = new jetpack(src)
 	..()
 
+/obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	..()
+
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tank/jetpack/suit))
 		if(jetpack)
