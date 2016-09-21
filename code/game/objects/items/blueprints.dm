@@ -139,7 +139,7 @@
 /obj/item/areaeditor/blueprints/dropped(mob/user)
 	..()
 	clear_viewer()
-	legend = 0
+	legend = FALSE
 
 
 /obj/item/areaeditor/proc/get_area()
