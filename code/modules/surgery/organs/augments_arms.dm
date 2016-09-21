@@ -192,7 +192,7 @@
 	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated enregy."
 	contents = newlist(/obj/item/weapon/melee/energy/blade)
 
-/obj/item/organ/cyberimp/arm/medibeam
+/obj/item/organ/cyberimp/arm/medbeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
 	contents = newlist(/obj/item/weapon/gun/medbeam)
