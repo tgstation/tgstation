@@ -1034,13 +1034,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	player_minimum = 30
 
 /datum/uplink_item/cyber_implants/esword/traitor	//This is a worse idea
-	name = "Arm Energy-Blade Projector"
-	desc = "An illegal cybernetic combat implant that allows the user to project a blade of lethal energy from their hand."
-	item = /obj/item/device/autoimplanter/esword
 	cost = 16
 	include_modes = list()
 	exclude_modes = list(/datum/game_mode/nuclear)
-	player_minimum = 30
 
 /datum/uplink_item/cyber_implants/medbeam
 	name = "Medical Beam Arm Implant"
