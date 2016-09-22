@@ -140,7 +140,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 	. = ..()
 /obj/singularity/energy_ball/stop_orbit()
-	if (istype(orbiting.orbiting, /obj/singularity/energy_ball))
+	if (orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/orbitingball = orbiting.orbiting
 		orbitingball.orbiting_balls -= src
 		orbitingball.dissipate_strength = orbitingball.orbiting_balls.len

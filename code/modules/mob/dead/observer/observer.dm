@@ -383,7 +383,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/orbitsize = (I.Width()+I.Height())*0.5
 	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
 
-	if(orbiting.orbiting != target)
+	if(orbiting && orbiting.orbiting != target)
 		src << "<span class='notice'>Now orbiting [target].</span>"
 
 	var/rot_seg
