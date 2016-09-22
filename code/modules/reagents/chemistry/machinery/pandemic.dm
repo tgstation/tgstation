@@ -140,6 +140,13 @@
 		icon_state = "mixer0"
 		src.updateUsrDialog()
 		return
+	else if (href_list["emptyeject_beaker"])
+		beaker.reagents.clear_reagents()
+		beaker:loc = src.loc
+		beaker = null
+		icon_state = "mixer0"
+		src.updateUsrDialog()
+		return
 	else if(href_list["clear"])
 		src.temp_html = ""
 		src.updateUsrDialog()
@@ -257,7 +264,8 @@
 					dat += "nothing<BR>"
 			else
 				dat += "nothing<BR>"
-		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
+		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]"
+		dat += "[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];emptyeject_beaker=1'>Empty and Eject beaker</A>":"")]<BR>"
 		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
 
 	user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
