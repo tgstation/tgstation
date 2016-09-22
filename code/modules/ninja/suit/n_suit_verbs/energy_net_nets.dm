@@ -3,7 +3,7 @@ It will teleport people to a holding facility after 30 seconds. (Check the proce
 It is possible to destroy the net by the occupant or someone else.
 */
 
-/obj/effect/energy_net
+/obj/structure/energy_net
 	name = "energy net"
 	desc = "It's a net made of green energy."
 	icon = 'icons/effects/effects.dmi'
@@ -20,7 +20,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -29,7 +29,7 @@ It is possible to destroy the net by the occupant or someone else.
 			if(sound_effect)
 				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 
-/obj/effect/energy_net/Destroy()
+/obj/structure/energy_net/Destroy()
 	if(affecting)
 		var/mob/living/carbon/M = affecting
 		M.anchored = 0
@@ -39,7 +39,7 @@ It is possible to destroy the net by the occupant or someone else.
 			master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
 	return ..()
 
-/obj/effect/energy_net/process(mob/living/carbon/M)
+/obj/structure/energy_net/process(mob/living/carbon/M)
 	var/check = 30//30 seconds before teleportation. Could be extended I guess.
 	var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 	//The person can still try and attack the net when inside.
@@ -95,26 +95,8 @@ It is possible to destroy the net by the occupant or someone else.
 	return
 
 
-/obj/effect/energy_net/blob_act(obj/structure/blob/B)
-	qdel(src)
 
-
-/obj/effect/energy_net/attack_hulk(mob/living/carbon/human/user)
-	..(user, 1)
-	user.visible_message("<span class='danger'>[user] rips the energy net apart!</span>", \
-								"<span class='notice'>You easily destroy the energy net.</span>")
-	qdel(src)
-
-
-
-/obj/effect/energy_net/attack_paw(mob/user)
+/obj/structure/energy_net/attack_paw(mob/user)
 	return attack_hand()
-
-
-/obj/effect/energy_net/attacked_by(obj/item/weapon/W, mob/user) //phil235 structure?
-	if(W.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [W]!</span>", "<span class='danger'>You hit [src] with [W]!</span>")
-	take_damage(W.force, W.damtype, "melee", 1)
-
 
 
