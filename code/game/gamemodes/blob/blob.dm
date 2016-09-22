@@ -96,7 +96,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 		message_sent = TRUE
 
 		sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 8)
-
-		send_intercept(2) //if the blob has been alive this long, it's time to bomb it
+		if(!replacementmode)
+			send_intercept(2) //if the blob has been alive this long, it's time to bomb it
 
 	return ..()
