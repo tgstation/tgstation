@@ -19,6 +19,7 @@
  *		Toy big red button
  *		Beach ball
  *		Toy xeno
+ *		Lemon plushie
  *      Kitty toys!
  *		Snowballs
  */
@@ -1066,12 +1067,12 @@
 	return ..()
 
 /*
- * ma44/lemon plushie
+ * Lemon plushie
  */
  
  /obj/item/toy/lemonplushie
 	name = "lemon plushie"
-	desc = "A lemon plushie that feels heavier than it is, this will make a scale unbalanced"
+	desc = "A lemon plushie that feels heavier than it looks, this will make a scale unbalanced"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "lemon"
 	item_state = "lemon"
