@@ -1072,7 +1072,7 @@
  
  /obj/item/toy/lemonplushie
 	name = "lemon plushie"
-	desc = "A lemon plushie that feels heavier than it looks, this will make a scale unbalanced"
+	desc = "A lemon plushie that feels heavier than it looks, this will make a scale unbalanced."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "lemon"
 	item_state = "lemon"
