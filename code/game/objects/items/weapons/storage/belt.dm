@@ -421,7 +421,7 @@
 
 /obj/item/weapon/storage/belt/sabre
 	name = "sabre sheath"
-	desc = "An ornate sheath designed to hold an officer's blade."
+	desc = "An ornate sheath designed to hold an officer's blade. Alt-Click to quickly draw the sheathed blade."
 	icon_state = "sheath"
 	item_state = "sheath"
 	storage_slots = 1
@@ -430,6 +430,21 @@
 	can_hold = list(
 		/obj/item/weapon/melee/sabre
 		)
+
+
+
+
+/obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
+	if(!ishuman(user) || !user.canUseTopic(src))
+		return
+	if(contents.len)
+		var/obj/item/I = contents[1]
+		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
+		)
+		user.put_in_hands(I)
+		update_icon()
+	else
+		user << "[src] is empty."
 
 /obj/item/weapon/storage/belt/sabre/update_icon()
 	icon_state = "sheath"
@@ -441,6 +456,7 @@
 		var/mob/living/L = loc
 		L.regenerate_icons()
 	..()
+
 
 /obj/item/weapon/storage/belt/sabre/New()
 	..()
