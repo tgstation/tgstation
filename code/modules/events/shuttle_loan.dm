@@ -3,6 +3,7 @@
 #define SPIDER_GIFT 3
 #define DEPARTMENT_RESUPPLY 4
 #define ANTIDOTE_NEEDED 5
+#define PIZZA_DELIVERY 6
 
 
 /datum/round_event_control/shuttle_loan
@@ -20,7 +21,7 @@
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
 /datum/round_event/shuttle_loan/start()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED)
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
 
 /datum/round_event/shuttle_loan/announce()
 	SSshuttle.shuttle_loan = src
@@ -37,6 +38,8 @@
 			bonus_points = 0
 		if(ANTIDOTE_NEEDED)
 			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "Centcom Research Initiatives")
+		if (PIZZA_DELIVERY)
+			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead", "Centcom Spacepizza Division")
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by Centcom.")
@@ -60,6 +63,8 @@
 			SSshuttle.centcom_message += "Department resupply incoming."
 		if(ANTIDOTE_NEEDED)
 			SSshuttle.centcom_message += "Virus samples incoming."
+		if(PIZZA_DELIVERY)
+			SSshuttle.centcom_message += "Pizza delivery for [world.name]"
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -165,6 +170,16 @@
 				for(var/i in 1 to 5)
 					var/decal = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
 					new decal(pick_n_take(empty_shuttle_turfs))
+			if(PIZZA_DELIVERY)
+				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
+				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
+				shuttle_spawns.Add(/obj/item/pizzabox/meat)
+				shuttle_spawns.Add(/obj/item/pizzabox/meat)
+				shuttle_spawns.Add(/obj/item/pizzabox/vegetable)
+				if(prob(10))
+					shuttle_spawns.Add(/obj/item/pizzabox/bomb)
+				else
+					shuttle_spawns.Add(/obj/item/pizzabox/margherita)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
@@ -181,3 +196,4 @@
 #undef SPIDER_GIFT
 #undef DEPARTMENT_RESUPPLY
 #undef ANTIDOTE_NEEDED
+#undef PIZZA_DELIVERY
