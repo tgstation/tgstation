@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	10
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	16
+#define SAVEFILE_VERSION_MAX	17
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -123,7 +123,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			joblessrole = BERANDOMJOB
 		else
 			joblessrole = BEASSISTANT
-		
+	if(current_version < 17)
+		features["legs"] = "Normal Legs"
+
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")

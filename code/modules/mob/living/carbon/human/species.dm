@@ -167,13 +167,13 @@
 	if(C.dna.features["legs"] == "Digitigrade Legs")
 		specflags += DIGITIGRADE
 	if(DIGITIGRADE in specflags)
-		C.Digitigrade_Leg_Swap(0)
+		C.Digitigrade_Leg_Swap(FALSE)
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 	if(DIGITIGRADE in specflags)
-		C.Digitigrade_Leg_Swap(1)
+		C.Digitigrade_Leg_Swap(TRUE)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
