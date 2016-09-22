@@ -28,6 +28,9 @@
 	pixel_y = -4
 	pixel_x = -4
 	icon = smooth_icon
+
+	color = "[procedural_generation_walls]"
+
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in cardinal)
@@ -482,6 +485,7 @@
 	sand_type = /obj/item/weapon/ore/glass/basalt
 	floor_variance = 15
 
+
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
 	baseturf = /turf/open/floor/plating/lava/smooth
 
@@ -515,6 +519,7 @@
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
+	color = "[procedural_generation_floors]"
 
 /turf/open/floor/plating/asteroid/basalt/New()
 	..()

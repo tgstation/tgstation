@@ -17,6 +17,10 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	mob_size = MOB_SIZE_LARGE
 
+/mob/living/simple_animal/hostile/asteroid/New()
+	color = "[procedural_generation_mobs]"
+	..()
+
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
 	if(vision_range != aggro_vision_range)
