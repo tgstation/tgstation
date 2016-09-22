@@ -316,9 +316,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
-					var/mob/M = loc
-					M.put_in_hands(cartridge)
-					usr << "<span class='notice'>You remove [cartridge] from [src].</span>"
+					U.put_in_hands(cartridge)
+					U << "<span class='notice'>You remove [cartridge] from [src].</span>"
 					scanmode = 0
 					if (cartridge.radio)
 						cartridge.radio.hostpda = null
