@@ -11,12 +11,15 @@
 	lock = _lock
 
 	//at this point we could get deleted and orbiter/orbiting could be null.
-	if (orbiter && orbiter.orbiting)
-		orbiter.stop_orbit()
 	if (orbiting)
 		if (!orbiting.orbiters)
 			orbiting.orbiters = list()
 		orbiting.orbiters += src
+
+	if (orbiter)
+		if (orbiter.orbiting)
+			orbiter.stop_orbit()
+		orbiter.orbiting = src
 
 //do not qdel directly, use stop_orbit on the movable. (This way the movable can bind to the orbit stopping)
 /datum/orbit/Destroy(force = FALSE)
