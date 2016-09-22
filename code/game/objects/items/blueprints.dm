@@ -54,6 +54,7 @@
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	var/list/image/showing = list()
 	var/client/viewing
+	var/legend = FALSE	//Viewing the wire legend
 
 
 /obj/item/areaeditor/blueprints/Destroy()
@@ -63,15 +64,25 @@
 
 /obj/item/areaeditor/blueprints/attack_self(mob/user)
 	. = ..()
-	var/area/A = get_area()
-	if(get_area_type() == AREA_STATION)
-		. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
-		. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
-	if(!viewing)
-		. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
+	if(!legend)
+		var/area/A = get_area()
+		if(get_area_type() == AREA_STATION)
+			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
+			. += "<p>You may <a href='?src=\ref[src];edit_area=1'>make an amendment</a> to the drawing.</p>"
+		. += "<p><a href='?src=\ref[src];view_legend=1'>View wire colour legend</a></p>"
+		if(!viewing)
+			. += "<p><a href='?src=\ref[src];view_blueprints=1'>View structural data</a></p>"
+		else
+			. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
+			. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
 	else
-		. += "<p><a href='?src=\ref[src];refresh=1'>Refresh structural data</a></p>"
-		. += "<p><a href='?src=\ref[src];hide_blueprints=1'>Hide structural data</a></p>"
+		if(legend == TRUE)
+			. += "<a href='?src=\ref[src];exit_legend=1'><< Back</a>"
+			. += view_wire_devices(user);
+		else
+			//legend is a wireset
+			. += "<a href='?src=\ref[src];view_legend=1'><< Back</a>"
+			. += view_wire_set(user, legend)
 	var/datum/browser/popup = new(user, "blueprints", "[src]", 700, 500)
 	popup.set_content(.)
 	popup.open()
@@ -84,6 +95,12 @@
 		if(get_area_type()!=AREA_STATION)
 			return
 		edit_area()
+	if(href_list["exit_legend"])
+		legend = FALSE;
+	if(href_list["view_legend"])
+		legend = TRUE;
+	if(href_list["view_wireset"])
+		legend = href_list["view_wireset"];
 	if(href_list["view_blueprints"])
 		set_viewer(usr, "<span class='notice'>You flip the blueprints over to view the complex information diagram.</span>")
 	if(href_list["hide_blueprints"])
@@ -122,6 +139,7 @@
 /obj/item/areaeditor/blueprints/dropped(mob/user)
 	..()
 	clear_viewer()
+	legend = FALSE
 
 
 /obj/item/areaeditor/proc/get_area()
@@ -148,6 +166,26 @@
 		if ( istype(A,type) )
 			return AREA_SPECIAL
 	return AREA_STATION
+
+/obj/item/areaeditor/blueprints/proc/view_wire_devices(mob/user)
+	var/message = "<br>You examine the wire legend.<br>"
+	for(var/wireset in wire_color_directory)
+		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[wire_name_directory[wireset]]</a>"
+	message += "</p>"
+	return message
+
+/obj/item/areaeditor/blueprints/proc/view_wire_set(mob/user, wireset)
+	//for some reason you can't use wireset directly as a derefencer so this is the next best :/
+	for(var/device in wire_color_directory)
+		if("[device]" == wireset)	//I know... don't change it...
+			var/message = "<p><b>[wire_name_directory[device]]:</b>"
+			for(var/Col in wire_color_directory[device])
+				var/wire_name = wire_color_directory[device][Col]
+				if(!findtext(wire_name, WIRE_DUD_PREFIX))	//don't show duds
+					message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
+			message += "</p>"
+			return message
+	return ""
 
 /proc/create_area(mob/living/creator)
 	var/res = detect_room(get_turf(creator))
