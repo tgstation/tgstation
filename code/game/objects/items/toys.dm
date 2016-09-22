@@ -1079,16 +1079,16 @@
 	w_class = 2
 	attack_verb = list("slapped", "whacked", "robusted")
 	burn_state = FLAMMABLE
-	var/sound = 'sound/items/bikehorn.ogg'
+	var/plushsound = 'sound/items/bikehorn.ogg'
 
 //Attack mob
 /obj/item/toy/lemonplushie/attack(mob/M, mob/user)
-	playsound(loc, sound, 20, 1)	//Play plushie sound in local area
+	playsound(loc, plushsound, 20, 1)	//Play plushie sound in local area
 	return ..()
 
 //Attack self
 /obj/item/toy/lemonplushie/attack_self(mob/user)
-	playsound(src.loc, sound, 20, 1)
+	playsound(src.loc, plushsound, 20, 1)
 	user << "<span class='notice'>You poke [src] and sense evil energies coming from it.</span>"
 	return ..()
  
