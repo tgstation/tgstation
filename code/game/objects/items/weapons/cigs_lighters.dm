@@ -699,7 +699,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				reagents.trans_to(C, REAGENTS_METABOLISM)
 				if(reagents.get_reagent_amount("welding_fuel"))
 					//HOT STUFF
-					C.fire_stacks = 2;
+					C.fire_stacks = 2
 					C.IgniteMob()
 
 				if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
