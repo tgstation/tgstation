@@ -16,16 +16,17 @@
 
 	icon_state = "flightpack"
 	item_state = "flightpack_mob"
-	var/icon_state_on = "flightpack_on"
-	var/item_state_on = "flightpack_on_mob"
+	var/icon_state_active = "flightpack_on"
+	var/item_state_active = "flightpack_on_mob"
 	var/icon_state_boost = "flightpack_boost"
 	var/item_state_boost = "flightpack_boost_mob"
 	icon = 'icons/obj/clothing/flightsuit.dmi'
+	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power)
 
 	w_class = 4
 	slot_flags = SLOT_BACK
 	burn_state = FIRE_PROOF
-	acid_state = ACID_PROOF
+	unacidable = 1
 
 	var/obj/item/clothing/suit/space/hardsuit/flightsuit/suit = null
 	var/obj/item/clothing/shoes/flightshoes/shoes = null
@@ -33,11 +34,13 @@
 	var/slowdown_ground = 1
 	var/slowdown_air = 0
 	var/flight = 0
-	var/flight_mobflags = PASSTABLE|FLYING
+	var/flight_mobflags = FLYING
+	var/flight_passflags = PASSTABLE
 	var/flight_shoeflags = NOSLIP
 	var/powersetting = 2
 	var/list/powersettings = list(10,20,30)
 
+	var/boost = 0
 	var/boost_duration = 30	//Vroom! If you hit someone while boosting they'll likely be knocked flying. Fun.
 	var/boost_speed = 2
 	var/boost_power = 50
@@ -77,23 +80,23 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	..()
 
-//Proc to change amount of momentum the user has, or dampen all momentum by a certain amount.
+//Proc to change amount of momentum the wearer has, or dampen all momentum by a certain amount.
 /obj/item/weapon/flightpack/proc/adjust_momentum(amountx, amounty, reduce_amount_total = 0)
 	if(reduce_amount_total < 0||reduce_amount_total > 0)
 		if(momentum_x > 0)
-		momentum_x = Clamp(momentum_x - reduce_amount_total, 0, momentum_max)
+			momentum_x = Clamp(momentum_x - reduce_amount_total, 0, momentum_max)
 		else if(momentum_x < 0)
-		momentum_x = Clamp(momentum_x + reduce_amount_total, -momentum_max, 0)
+			momentum_x = Clamp(momentum_x + reduce_amount_total, -momentum_max, 0)
 		if(momentum_y > 0)
-		momentum_y = Clamp(momentum_y - reduce_amount_total, 0, momentum_max)
+			momentum_y = Clamp(momentum_y - reduce_amount_total, 0, momentum_max)
 		else if(momentum_y < 0)
-		momentum_y = Clamp(momentum_y + reduce_amount_total, -momentum_max, 0)
+			momentum_y = Clamp(momentum_y + reduce_amount_total, -momentum_max, 0)
 	momentum_x = Clamp(momentum_x + amountx, -momentum_max, momentum_max)
 	momentum_y = Clamp(momentum_y + amounty, -momentum_max, momentum_max)
 	calculate_momentum_speed()
 
-//Called by the pair of shoes the user is required to wear to detect movement.
-/obj/item/weapon/flightpack/proc/user_movement(dir)
+//Called by the pair of shoes the wearer is required to wear to detect movement.
+/obj/item/weapon/flightpack/proc/wearer_movement(dir)
 	var/momentum_increment = momentum_gain
 	if(boost)
 		momentum_increment = boost_power
@@ -107,31 +110,31 @@
 		if(WEST)
 			adjust_momentum(-momentum_increment, 0)
 
-//The user has momentum left. Move them and take some away, while negating the momentum that moving the user would gain. Or force the user to lose control if they are incapacitated.
+//The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/weapon/flightpack/proc/momentum_drift()
 	var/momentum_increment = momentum_gain
 	if(boost)
 		momentum_increment = boost_power
 	if(suit)
-		if(suit.user)
-			if(suit.user.canmove)
+		if(suit.wearer)
+			if(suit.wearer.canmove)
 				if(momentum_x > 0)
-					step(suit.user, EAST)
+					step(suit.wearer, EAST)
 					adjust_momentum(-momentum_increment, 0)
 				if(momentum_x < 0)
-					step(suit.user, WEST)
+					step(suit.wearer, WEST)
 					adjust_momentum(momentum_increment, 0)
 				if(momentum_y > 0)
-					step(suit.user, NORTH)
+					step(suit.wearer, NORTH)
 					adjust_momentum(0, -momentum_increment)
 				if(momentum_y < 0)
-					step(suit.user, SOUTH)
+					step(suit.wearer, SOUTH)
 					adjust_momentum(0, momentum_increment)
 			else
 				losecontrol()
 			momentum_decay()
 
-//Make the user lose some momentum.
+//Make the wearer lose some momentum.
 /obj/item/weapon/flightpack/proc/momentum_decay()
 	if(gravity)
 		adjust_momentum(0, 0, gravity_decay_amount)
@@ -148,22 +151,23 @@
 		resync = 1
 	if(!suit)
 		toggle_flight(0)
-		user << "<span class='userdanger'>Your flight pack shuts off. Somehow your flight suit was unlinked from the control mechanisms!</span>"
+		wearer << "<span class='wearerdanger'>Your flight pack shuts off. Somehow your flight suit was unlinked from the control mechanisms!</span>"
 	if(!shoes)
 		toggle_flight(0)
-		user << "<span class='userdanger'>Your flight pack shuts off. Somehow your flight shoes were unlinked from the control mechanisms!</span>"
-	if(!user)
+		wearer << "<span class='wearerdanger'>Your flight pack shuts off. Somehow your flight shoes were unlinked from the control mechanisms!</span>"
+	if(!wearer)
 		toggle_flight(0)
-	//Add check for user wearing the shoes and suit here
+	//Add check for wearer wearing the shoes and suit here
 	if(suit)
-		if(suit.user)
-			if(suit.user.has_gravity())
+		if(suit.wearer)
+			if(suit.wearer.has_gravity())
 				gravity = 1
 			else
 				gravity = 0
-			var/turf/T = get_turf(suit.user)
+			var/turf/T = get_turf(suit.wearer)
 			var/datum/gas_mixture/gas = T.return_air()
-			if(environment.return_pressure() >= pressure_threshold)
+			var/envpressure =	gas.return_pressure()
+			if(envpressure >= pressure_threshold)
 				pressure = 1
 			else
 				pressure = 0
@@ -173,7 +177,7 @@
 	resync = 1
 	suit.resync()
 
-//How fast should the user be?
+//How fast should the wearer be?
 /obj/item/weapon/flightpack/proc/update_slowdown()
 	if(flight)
 		if(boost)
@@ -185,6 +189,7 @@
 
 /obj/item/weapon/flightpack/process()
 	if(!flight)
+		wearer.float(0)
 		return
 	check_conditions()
 	handle_flight()
@@ -196,28 +201,28 @@
 	update_icon()
 
 /obj/item/weapon/flightpack/proc/handle_flight()
-
+	wearer.float(1)
 
 /obj/item/weapon/flightpack/proc/adjust_power()
 	var/settings = powersettings.len()
 	if(powersetting < settings)
-		var/momentum_gain = powersettings[powersetting+1]
+		momentum_gain = powersettings[powersetting+1]
 	else
-		var/momentum_gain = powersettings[0]
+		momentum_gain = powersettings[0]
 	if(suit)
-		if(suit.user)
-			user << "<span class='notice'>FLIGHTPACK: Engines set to force [momentum_gain].</span>"
+		if(suit.wearer)
+			wearer << "<span class='notice'>FLIGHTPACK: Engines set to force [momentum_gain].</span>"
 
 
-/obj/item/weapon/flightpack/proc/lose_control()
-	M.visible_message("<span class='warning'>[user]'s flight suit careens wildly as they lose control of it!</span>")
-	if(suit.user)
-		while(momentum > 0)
+/obj/item/weapon/flightpack/proc/losecontrol()
+	wearer.visible_message("<span class='warning'>[wearer]'s flight suit careens wildly as they lose control of it!</span>")
+	if(wearer)
+		while(momentum_x != 0 || momentum_y != 0)
 			spawn(2)
-			step(user, pick(cardinal))
+			step(wearer, pick(cardinal))
 			momentum_decay()
 			adjust_momentum(-10)
-		suit.user.visible_message("<span class='warning'>[user]'s flight suit crashes into the ground and shuts off!</span>")
+		suit.wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground and shuts off!</span>")
 	if(flight)
 		toggle_flight(0)
 
@@ -229,37 +234,37 @@
 		icon_state = icon_state_active
 		item_state = item_state_active
 		suit.wearer.flags |= flight_mobflags
+		suit.wearer.passflags |= flight_passflags
 		suit.wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
-		playsound(
-		override_float = 1
+		//I DONT HAVE SOUND EFFECTS YET playsound(
 		flight = 1
 	if(!toggle)
-		if(momentum < 40 || forced)
+		if(momentum_x != 0 || momentum_y != 0 || forced)
 			momentum_x = 0
 			momentum_y = 0
 			icon_state = initial(icon_state)
 			item_state = initial(item_state)
 			suit.wearer.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
-			playsound(
+		//NO SOUND YET	playsound(
 			suit.wearer.flags &= ~flight_mobflags
-			override_float = 0
+			suit.wearer.passflags &= ~flight_passflags
 			flight = 0
 		else
-			lose_control()
+			losecontrol()
 	update_icon()
 
-/obj/item/weapon/flightpack/dropped(mob/user)
+/obj/item/weapon/flightpack/dropped(mob/wearer)
 	..()
 	if(suit)
 		suit.deploy_flightpack(0, 1)
 
 /obj/item/weapon/flightpack/item_action_slot_check(slot)
-	if(slot == slot_back)
+	if(slot == SLOT_BACK)
 		return 1
 
-/obj/item/weapon/flightpack/equipped(mob/user, slot)
+/obj/item/weapon/flightpack/equipped(mob/wearer, slot)
 	..()
-	if(slot != slot_back)
+	if(slot != SLOT_BACK)
 		if(suit)
 			suit.deploy_flightpack(0, 1)
 		else
@@ -294,7 +299,7 @@
 	var/mob/living/carbon/human/wearer = null
 	var/active = 0
 	burn_state = FIRE_PROOF
-	acid_state = ACID_PROOF
+	unacidable = 1
 
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	if(suit)
@@ -307,35 +312,31 @@
 		active = toggle
 		if(active)
 			src.flags |= NOSLIP
-			icon_state = icon_state_active
-			item_state = item_state_active
 		if(!active)
 			src.flags &= ~NOSLIP
-			icon_state = initial(icon_state)
-			item_state = initial(item_state)
 
 /obj/item/clothing/shoes/flightshoes/step_action()
 	if(!active)
 		return
 	if(pack)
 		if(wearer)
-			pack.detect_step(wearer.dir)
+			pack.wearer_movement(wearer.dir)
 
 /obj/item/clothing/shoes/flightshoes/negates_gravity()
 	return flags & NOSLIP
 
-/obj/item/clothing/shoes/flightshoes/dropped(mob/user)
+/obj/item/clothing/shoes/flightshoes/dropped(mob/wearer)
 	..()
 	if(suit)
 		suit.deploy_flightshoes(0, 1)
 
 /obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot)
-	if(slot == slot_feet)
+	if(slot == SLOT_FEET)
 		return 1
 
-/obj/item/clothing/shoes/flightshoes/equipped(mob/user, slot)
+/obj/item/clothing/shoes/flightshoes/equipped(mob/wearer, slot)
 	..()
-	if(slot != slot_feet)
+	if(slot != SLOT_FEET)
 		if(suit)
 			suit.deploy_flightshoes(0, 1)
 		else
@@ -346,10 +347,10 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit
 	name = "flight suit"
-	desc = "An advanced suit that allows the user flight via two high powered miniature jet engines on a deployable back-mounted unit."
+	desc = "An advanced suit that allows the wearer flight via two high powered miniature jet engines on a deployable back-mounted unit."
 	icon_state = "flightsuit"
 	item_state = "flightsuit_mob"
-	icon = 'icons/obj/clothing/flightsuit'
+	icon = 'icons/obj/clothing/flightsuit.dmi'
 	strip_delay = 30
 	var/locked_strip_delay = 80
 	w_class = 4
@@ -360,13 +361,13 @@
 	var/deployedshoes = 0
 	var/locked = 0
 	burn_state = FIRE_PROOF
-	acid_state = ACID_PROOF
+	unacidable = 1
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
 	jetpack = null
 	var/flightpack
 	var/flight = 0
 	allowed = list(/obj/item/weapon/tank/internals)
-	actions_types = list(/datum/action/item_action/toggle_helmet,/datum/action/item_action/toggle_boots,/datum/action/item_action/toggle_flightpack,/datum/action/item_action/lock_suit) //TODO: Toggle boots, toggle jetpack, lock suit :^)
+	actions_types = list(/datum/action/item_action/toggle_helmet,/datum/action/item_action/flightsuit/toggle_boots,/datum/action/item_action/flightsuit/toggle_flightpack,/datum/action/item_action/flightsuit/lock_suit) //TODO: Toggle boots, toggle jetpack, lock suit :^)
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/New()
 	shoes = new /obj/item/clothing/shoes/flightshoes(src)
@@ -392,7 +393,7 @@
 	shoes.wearer = wearer
 	shoes.pack = pack
 	pack.shoes = shoes
-	suit.suit = src
+	pack.suit = src
 	shoes.suit = src
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/ui_action_click(owner, action)
@@ -409,22 +410,22 @@
 	pack.toggle_flight(0, 1)
 	deploy_flightpack(0, 1)
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/proc/toggle_lock(mob/user, locking = -1)
-	if(locking = -1)
+/obj/item/clothing/suit/space/hardsuit/flightsuit/proc/toggle_lock(mob/wearer, locking = -1)
+	if(locking == -1)
 		locking = !locked
 	if(locking)
-		user.visible_message("<span class='notice'>[user]'s flight suit locks around them, powered buckles and straps automatically adjusting to their body!</span>")
+		wearer.visible_message("<span class='notice'>[wearer]'s flight suit locks around them, powered buckles and straps automatically adjusting to their body!</span>")
 		playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
-		wearer = user
+		wearer = wearer
 		resync()
 		strip_delay = locked_strip_delay
 		locked = 1
 		return 1
 	if(!locking)
 		if(pack.flight)
-			user << "<span class='warning'>You must shut off the flight-pack before unlocking your suit!</span>"
+			wearer << "<span class='warning'>You must shut off the flight-pack before unlocking your suit!</span>"
 			return 0
-		user.visible_message("<span class='notice'>[user]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
+		wearer.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
 		playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
 		wearer = null
 		resync()
@@ -433,11 +434,11 @@
 		return 1
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/deploy_flightpack(deploying = -1, forced = 0)
-	if(deploying = -1)
+	if(deploying == -1)
 		deploying = !deployedpack
 	if(deploying)
-		pack.on_pickup()
-		pack.
+
+
 		pack.flags |= NODROP
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 		deployedpack = 1
@@ -454,14 +455,14 @@
 		deployedpack = 0
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/deploy_flightshoes(deploying = -1, forced = 0)
-	if(deploying = -1)
+	if(deploying == (-1))
 		deploying = !deployedshoes
 	if(deploying)
 		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 		shoes.flags |= NODROP
 		deployedshoes = 1
 	if(!deploying)
-		if(pack.flight && !forced
+		if(pack.flight && !forced)
 			wearer << "<span class='warning'>You can not take off your flight shoes without shutting off the engines first!</span>"
 			return 0
 		if(pack.flight && forced)
@@ -483,11 +484,11 @@
 		shoes.pack = pack
 		shoes.suit = src
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/equipped(mob/user, slot)
+/obj/item/clothing/suit/space/hardsuit/flightsuit/equipped(mob/wearer, slot)
 	if(slot != slot_wear_suit)
-		if(user = wearer)
-			wearer.Equip(src, slot_wear_suit)
-			return 0
+		if(wearer == wearer)
+			Wearer.equip(src, slot_wear_suit)
+			return
 		deploy_flightpack(0, 1)
 		deploy_flightshoes(0, 1)
 	..()
@@ -524,7 +525,7 @@
 	else
 		RemoveHelmet()
 */
-/obj/item/clothing/suit/space/hardsuit/flightsuit/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/suit/space/hardsuit/flightsuit/attackby(obj/item/I, mob/wearer, params)
 	return
 
 
@@ -534,12 +535,12 @@
 	desc = "A sealed helmet attached to a flight suit for EVA usage scenerios."
 	icon_state = ""
 	item_state = ""
-	icon = 'icons/obj/clothing/flightsuit.dmi
+	icon = 'icons/obj/clothing/flightsuit.dmi'
 	burn_state = FIRE_PROOF
-	acid_state = ACID_PROOF
+	unacidable = 1
 	brightness_on = 7
 	armor = list(melee = 20, bullet = 10, laser = 10, energy = 10, bomb = 30, bio = 100, rad = 75)
-	obj/item/clothing/suit/space/hardsuit/syndi/flightsuit/linkedsuit = null
+	obj/item/clothing/suit/space/hardsuit/flightsuit/linkedsuit = null
 
 //ITEM ACTIONS------------------------------------------------------------------------------------------------------------------------------------------------------
 /datum/action/item_action/flightsuit/toggle_boots
