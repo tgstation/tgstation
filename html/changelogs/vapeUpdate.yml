@@ -32,5 +32,5 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes:
-  - rscadd: "Added E-cigarettes as contraband to cig vending machines. They take reagents instead of dried plants and also hold more than cigarettes or pipes. You can modify them to puff out clouds of reagents or emag them to fill a whole room with reagent vapor."
+  - rscadd: "Added E-cigarettes as contraband to cigarettes vending machines. They take reagents instead of dried plants and also hold more than cigarettes or pipes. You can modify them to puff out clouds of reagents or emag them to fill a whole room with reagent vapor."
   - rscadd: "Added a new shirt to the clothing vendor relating to the newly added vapes."
