@@ -41,6 +41,8 @@ var/list/preferences_datums = list()
 	var/allow_midround_antag = 1
 	var/preferred_map = null
 
+	var/uses_glasses_colour = 0
+
 	//character preferences
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we'll have a random name every round

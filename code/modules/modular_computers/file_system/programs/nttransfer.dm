@@ -66,7 +66,8 @@ var/global/nttransfer_uid = 0
 
 // Finishes download and attempts to store the file on HDD
 /datum/computer_file/program/nttransfer/proc/finish_download()
-	if(!computer || !computer.hard_drive || !computer.hard_drive.store_file(downloaded_file))
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+	if(!computer || !hard_drive || !hard_drive.store_file(downloaded_file))
 		error = "I/O Error:  Unable to save file. Check your hard drive and try again."
 	finalize_download()
 
@@ -109,7 +110,7 @@ var/global/nttransfer_uid = 0
 			if(!remote || !remote.provided_file)
 				return
 			if(remote.server_password)
-				var/pass = sanitize(input(usr, "Code 401 Unauthorized. Please enter password:", "Password required"))
+				var/pass = reject_bad_text(input(usr, "Code 401 Unauthorized. Please enter password:", "Password required"))
 				if(pass != remote.server_password)
 					error = "Incorrect Password"
 					return
@@ -127,7 +128,7 @@ var/global/nttransfer_uid = 0
 			provided_file = null
 			return 1
 		if("PRG_setpassword")
-			var/pass = sanitize(input(usr, "Enter new server password. Leave blank to cancel, input 'none' to disable password.", "Server security", "none"))
+			var/pass = reject_bad_text(input(usr, "Enter new server password. Leave blank to cancel, input 'none' to disable password.", "Server security", "none"))
 			if(!pass)
 				return
 			if(pass == "none")
@@ -136,7 +137,8 @@ var/global/nttransfer_uid = 0
 			server_password = pass
 			return 1
 		if("PRG_uploadfile")
-			for(var/datum/computer_file/F in computer.hard_drive.stored_files)
+			var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+			for(var/datum/computer_file/F in hard_drive.stored_files)
 				if("[F.uid]" == params["id"])
 					if(F.unsendable)
 						error = "I/O Error: File locked."
@@ -174,7 +176,8 @@ var/global/nttransfer_uid = 0
 		data["upload_filename"] = "[provided_file.filename].[provided_file.filetype]"
 	else if (upload_menu)
 		var/list/all_files[0]
-		for(var/datum/computer_file/F in computer.hard_drive.stored_files)
+		var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+		for(var/datum/computer_file/F in hard_drive.stored_files)
 			all_files.Add(list(list(
 			"uid" = F.uid,
 			"filename" = "[F.filename].[F.filetype]",

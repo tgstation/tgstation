@@ -1,6 +1,7 @@
 /obj/item/weapon/melee
 	needs_permit = 1
 
+
 /obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
@@ -20,6 +21,17 @@
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (OXYLOSS)
 
+/obj/item/weapon/melee/synthetic_arm_blade
+	name = "synthetic arm blade"
+	desc = "A grotesque blade that on closer inspection seems made of synthentic flesh, it still feels like it would hurt very badly as a weapon."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "arm_blade"
+	item_state = "arm_blade"
+	origin_tech = "combat=5,biotech=5"
+	w_class = 5.0
+	force = 15
+	throwforce = 10
+	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/sabre
 	name = "officer's sabre"
@@ -27,6 +39,7 @@
 	icon_state = "sabre"
 	item_state = "sabre"
 	flags = CONDUCT
+	unique_rename = 1
 	force = 15
 	throwforce = 10
 	w_class = 4

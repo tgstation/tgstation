@@ -7,7 +7,7 @@
 #define VAULT_NOBREATH "Lung Enhancement"
 #define VAULT_FIREPROOF "Thermal Regulation"
 #define VAULT_STUNTIME "Neural Repathing"
-#define VAULT_ARMOUR "Bone Reinforcment"
+#define VAULT_ARMOUR "Bone Reinforcement"
 
 /datum/station_goal/dna_vault
 	name = "DNA Vault"
@@ -20,7 +20,7 @@
 	animal_count = rand(15,20) //might be too few given ~15 roundstart stationside ones
 	human_count = rand(round(0.75 * ticker.totalPlayersReady) , ticker.totalPlayersReady) // 75%+ roundstart population.
 	var/non_standard_plants = non_standard_plants_count()
-	plant_count = rand(round(0.7 * non_standard_plants),round(0.9 * non_standard_plants))
+	plant_count = rand(round(0.5 * non_standard_plants),round(0.7 * non_standard_plants))
 
 /datum/station_goal/dna_vault/proc/non_standard_plants_count()
 	. = 0
@@ -52,7 +52,7 @@
 	if(..())
 		return TRUE
 	for(var/obj/machinery/dna_vault/V in machines)
-		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna >= human_count)
+		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna.len >= human_count)
 			return TRUE
 	return FALSE
 

@@ -7,7 +7,7 @@
 
 /datum/station_goal/bluespace_cannon/get_report()
 	return {"Our military presence is inadequate in your sector.
-	 We need you to construct BSA-[rand(0-99)] Artillery position aboard your station.
+	 We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.
 
 	 Base parts should be availible for shipping by your cargo shuttle.
 	 -Nanotrasen Naval Command"}
@@ -60,7 +60,7 @@
 	name = "Bluespace Artillery Fusor"
 	desc = "Contents classifed by Nanotrasen Naval Command. Needs to be linked with the other BSA parts using multitool."
 	icon_state = "fuel_chamber"
-	var/obj/machinery/bsa/back/back 
+	var/obj/machinery/bsa/back/back
 	var/obj/machinery/bsa/front/front
 
 /obj/machinery/bsa/middle/attackby(obj/item/weapon/W, mob/user, params)
@@ -169,7 +169,7 @@
 	var/turf/point = get_front_turf()
 	for(var/turf/T in getline(get_step(point,dir),get_target_turf()))
 		T.ex_act(1)
-	point.Beam(get_target_turf(),icon_state="bsa_beam",icon='icons/effects/beam.dmi',time=50,maxdistance = world.maxx) //ZZZAP
+	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
 
 
 /obj/structure/filler
@@ -218,7 +218,7 @@
 	var/notice
 	var/target
 	use_power = 0
-	circuit = /obj/machinery/computer/bsa_control
+	circuit = /obj/item/weapon/circuitboard/machine/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	var/area_aim = FALSE //should also show areas for targeting

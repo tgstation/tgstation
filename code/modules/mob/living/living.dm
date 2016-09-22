@@ -29,6 +29,9 @@
 /mob/living/Destroy()
 	..()
 
+	if(buckled)
+		buckled.unbuckle_mob(src,force=1)
+
 	for(var/mob/living/simple_animal/drone/D in player_list)
 		for(var/image/I in staticOverlays)
 			D.staticOverlays.Remove(I)

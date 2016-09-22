@@ -21,8 +21,6 @@
 #define ROLE_GANG				"gangster"
 #define ROLE_ABDUCTOR			"abductor"
 #define ROLE_REVENANT			"revenant"
-#define ROLE_HOG_GOD			"hand of god: god"
-#define ROLE_HOG_CULTIST		"hand of god: cultist"
 #define ROLE_DEVIL				"devil"
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
 
@@ -45,8 +43,6 @@ var/global/list/special_roles = list(
 	ROLE_GANG = /datum/game_mode/gang,
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
-	ROLE_HOG_GOD = /datum/game_mode/hand_of_god,
-	ROLE_HOG_CULTIST = /datum/game_mode/hand_of_god,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
 )

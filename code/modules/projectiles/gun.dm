@@ -14,6 +14,7 @@
 	force = 5
 	origin_tech = "combat=1"
 	needs_permit = 1
+	unique_rename = 0
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -31,11 +32,8 @@
 	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
-
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
-
-	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
 	var/current_skin = null //the skin choice if we had a reskin
 	var/list/options = list()
@@ -90,8 +88,6 @@
 		user << "It doesn't have a firing pin installed, and won't fire."
 	if(unique_reskin && !current_skin)
 		user << "<span class='notice'>Alt-click it to reskin it.</span>"
-	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it.</span>"
 
 
 /obj/item/weapon/gun/proc/process_chamber()
@@ -302,10 +298,7 @@ obj/item/weapon/gun/proc/newshot()
 			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
 				qdel(TGL)
 
-	if(unique_rename)
-		if(istype(I, /obj/item/weapon/pen))
-			rename_gun(user)
-	..()
+
 
 /obj/item/weapon/gun/proc/toggle_gunlight()
 	set name = "Toggle Gunlight"
@@ -386,13 +379,6 @@ obj/item/weapon/gun/proc/newshot()
 		update_icon()
 
 
-/obj/item/weapon/gun/proc/rename_gun(mob/M)
-	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
-
-	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
-		name = input
-		M << "You name the gun [input]. Say hello to your new friend."
-		return
 
 
 /obj/item/weapon/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params)

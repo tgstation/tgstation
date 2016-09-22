@@ -88,7 +88,8 @@
 
 
 /datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
-	var/obj/item/weapon/card/id/id_card = computer.card_slot.stored_card
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/obj/item/weapon/card/id/id_card = card_slot.stored_card
 	var/list/formatted = list()
 	for(var/job in jobs)
 		formatted.Add(list(list(
@@ -102,11 +103,19 @@
 	if(..())
 		return 1
 
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot
+	var/obj/item/weapon/computer_hardware/printer/printer
+	if(computer)
+		card_slot = computer.all_components[MC_CARD]
+		printer = computer.all_components[MC_PRINT]
+		if(!card_slot)
+			return
+
 	var/obj/item/weapon/card/id/user_id_card = null
 	var/mob/user = usr
 
-	var/obj/item/weapon/card/id/id_card = computer.card_slot.stored_card
-	var/obj/item/weapon/card/id/auth_card = computer.card_slot.stored_card2
+	var/obj/item/weapon/card/id/id_card = card_slot.stored_card
+	var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
 
 	if(auth_card)
 		user_id_card = auth_card
@@ -129,7 +138,7 @@
 			else
 				show_assignments = 1
 		if("PRG_print")
-			if(computer && computer.printer) //This option should never be called if there is no printer
+			if(computer && printer) //This option should never be called if there is no printer
 				if(mod_mode)
 					if(authorized())
 						var/contents = {"<h4>Access Report</h4>
@@ -145,7 +154,7 @@
 							if(A in known_access_rights)
 								contents += "  [get_access_desc(A)]"
 
-						if(!computer.printer.print_text(contents,"access report"))
+						if(!printer.print_text(contents,"access report"))
 							usr << "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>"
 							return
 						else
@@ -155,26 +164,26 @@
 									<br>
 									[data_core ? data_core.get_manifest(0) : ""]
 									"}
-					if(!computer.printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
+					if(!printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
 						usr << "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>"
 						return
 					else
 						computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
 		if("PRG_eject")
-			if(computer && computer.card_slot)
+			if(computer && card_slot)
 				var/select = params["target"]
 				switch(select)
 					if("id")
 						if(id_card)
 							data_core.manifest_modify(id_card.registered_name, id_card.assignment)
-							computer.proc_eject_id(user, 1)
+							card_slot.try_eject(, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))
 								if(!usr.drop_item())
 									return
 								I.forceMove(computer)
-								computer.card_slot.stored_card = I
+								card_slot.stored_card = I
 					if("auth")
 						if(auth_card)
 							if(id_card)
@@ -183,14 +192,14 @@
 							region_access = null
 							authenticated = 0
 							minor = 0
-							computer.proc_eject_id(user, 2)
+							card_slot.try_eject(, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))
 								if(!usr.drop_item())
 									return
 								I.forceMove(computer)
-								computer.card_slot.stored_card2 = I
+								card_slot.stored_card2 = I
 		if("PRG_terminate")
 			if(computer && ((id_card.assignment in head_subordinates) || id_card.assignment == "Assistant"))
 				id_card.assignment = "Unassigned"
@@ -292,13 +301,21 @@
 
 	var/list/data = get_header_data()
 
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot
+	var/obj/item/weapon/computer_hardware/printer/printer
+
+	if(computer)
+		card_slot = computer.all_components[MC_CARD]
+		printer = computer.all_components[MC_PRINT]
+
 	data["mmode"] = mod_mode
 
 	var/authed = 0
-	if(computer && computer.card_slot)
-		var/obj/item/weapon/card/id/auth_card = computer.card_slot.stored_card2
-		data["auth_name"] = auth_card ? strip_html_simple(auth_card.name) : "-----"
-		authed = authorized()
+	if(computer)
+		if(card_slot)
+			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
+			data["auth_name"] = auth_card ? strip_html_simple(auth_card.name) : "-----"
+			authed = authorized()
 
 
 	if(mod_mode == 2)
@@ -336,9 +353,9 @@
 		data["manifest"] = crew
 	data["assignments"] = show_assignments
 	if(computer)
-		data["have_id_slot"] = !!computer.card_slot
-		data["have_printer"] = !!computer.printer
-		if(!computer.card_slot && mod_mode == 1)
+		data["have_id_slot"] = !!card_slot
+		data["have_printer"] = !!printer
+		if(!card_slot && mod_mode == 1)
 			mod_mode = 0 //We can't modify IDs when there is no card reader
 	else
 		data["have_id_slot"] = 0
@@ -350,10 +367,9 @@
 	data["authenticated"] = authed
 
 
-	if(mod_mode == 1)
-
-		if(computer && computer.card_slot)
-			var/obj/item/weapon/card/id/id_card = computer.card_slot.stored_card
+	if(mod_mode == 1 && computer)
+		if(card_slot)
+			var/obj/item/weapon/card/id/id_card = card_slot.stored_card
 
 			data["has_id"] = !!id_card
 			data["id_rank"] = id_card && id_card.assignment ? html_encode(id_card.assignment) : "Unassigned"
@@ -370,8 +386,8 @@
 				data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
 
-		if(computer.card_slot.stored_card)
-			var/obj/item/weapon/card/id/id_card = computer.card_slot.stored_card
+		if(card_slot.stored_card)
+			var/obj/item/weapon/card/id/id_card = card_slot.stored_card
 			if(is_centcom)
 				var/list/all_centcom_access = list()
 				for(var/access in get_all_centcom_access())
@@ -431,9 +447,10 @@
 
 
 /datum/computer_file/program/card_mod/proc/authorized()
-	if(!authenticated)
-		if(computer && computer.card_slot)
-			var/obj/item/weapon/card/id/auth_card = computer.card_slot.stored_card2
+	if(!authenticated && computer)
+		var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+		if(card_slot)
+			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
 			if(auth_card)
 				region_access = list()
 				if(transfer_access in auth_card.GetAccess())

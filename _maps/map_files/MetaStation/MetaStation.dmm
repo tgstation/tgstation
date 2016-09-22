@@ -3923,7 +3923,7 @@
 	pixel_y = 0
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/fancy,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -47246,7 +47246,6 @@
 /turf/open/floor/wood,
 /area/library)
 "bDx" = (
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/bot,
 /area/atmos)
 "bDy" = (
@@ -49975,6 +49974,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bHQ" = (
@@ -49985,6 +49985,7 @@
 	dir = 2;
 	on = 1
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/black/corner{
 	dir = 2
 	},
@@ -62702,6 +62703,8 @@
 	network = list("SS13","Medbay")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/limbgrower,
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
@@ -73092,7 +73095,6 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_y = 32
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/warning{
 	dir = 5
 	},
@@ -73555,6 +73557,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
@@ -74082,6 +74085,7 @@
 /turf/open/floor/plasteel/bot,
 /area/toxins/storage)
 "cxf" = (
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 8
 	},
@@ -74089,6 +74093,7 @@
 "cxg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},

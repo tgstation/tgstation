@@ -33,7 +33,7 @@
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
 		if(health < max_health)
 			health = min(max_health, health + 5)
-			Beam(M, icon_state="sendbeam", icon='icons/effects/effects.dmi', time=4)
+			Beam(M, icon_state="sendbeam", time=4)
 			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
 				"<span class='cult'>You repair <b>[src]</b>, leaving it at <b>[health]/[max_health]</b> stability.</span>")
 		else

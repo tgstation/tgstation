@@ -170,3 +170,7 @@
 
 /turf/open/space/proc/update_icon()
 	icon_state = SPACE_ICON_STATE
+
+/turf/open/space/is_transition_turf()
+	if(destination_x || destination_y || destination_z)
+		return 1

@@ -21,6 +21,11 @@
 	pull_icon.screen_loc = ui_pull_resist
 	hotkeybuttons += pull_icon
 
+	using = new/obj/screen/wheel/talk
+	using.screen_loc = ui_alien_talk_wheel
+	wheels += using
+	static_inventory += using
+
 	zone_select = new /obj/screen/zone_sel/alien()
 	zone_select.update_icon(mymob)
 	static_inventory += zone_select

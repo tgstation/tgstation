@@ -391,13 +391,11 @@
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"
 	frame = /obj/structure/table_frame/brass
-	framestackamount = 0
-	buildstackamount = 0
+	framestack = /obj/item/stack/sheet/brass
+	buildstack = /obj/item/stack/sheet/brass
+	framestackamount = 1
+	buildstackamount = 1
 	canSmoothWith = list(/obj/structure/table/reinforced/brass)
-
-/obj/structure/table/reinforced/brass/table_destroy()
-	new frame(src.loc)
-	qdel(src)
 
 /obj/structure/table/reinforced/brass/narsie_act()
 	take_damage(rand(15, 45), BRUTE)

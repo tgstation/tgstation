@@ -6,6 +6,7 @@
 	nodamage = 0
 	flag = "bullet"
 	hitsound_wall = "ricochet"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5

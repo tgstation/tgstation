@@ -37,7 +37,7 @@
 
 	if(unique_rename)
 		if(istype(A, /obj/item/weapon/pen))
-			rename_gun(user)
+			rename_weapon(user)
 
 /obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0

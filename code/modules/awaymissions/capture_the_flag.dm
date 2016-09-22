@@ -463,31 +463,27 @@
 
 
 
-/obj/structure/divine/trap/ctf
+/obj/structure/trap/ctf
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
-	health = INFINITY
-	maxhealth = INFINITY
 	var/team = WHITE_TEAM
-	constructable = FALSE
 	time_between_triggers = 1
 	alpha = 255
 
-/obj/structure/divine/trap/examine(mob/user)
+/obj/structure/trap/examine(mob/user)
 	return
 
-/obj/structure/divine/trap/ctf/trap_effect(mob/living/L)
+/obj/structure/trap/ctf/trap_effect(mob/living/L)
 	if(!(src.team in L.faction))
 		L << "<span class='danger'><B>Stay out of the enemy spawn!</B></span>"
 		L.death()
 
-
-/obj/structure/divine/trap/ctf/red
+/obj/structure/trap/ctf/red
 	team = RED_TEAM
 	icon_state = "trap-fire"
 
-/obj/structure/divine/trap/ctf/blue
+/obj/structure/trap/ctf/blue
 	team = BLUE_TEAM
 	icon_state = "trap-frost"
 

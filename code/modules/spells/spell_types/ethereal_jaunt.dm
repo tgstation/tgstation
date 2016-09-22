@@ -13,70 +13,56 @@
 	centcom_cancast = 0 //Prevent people from getting to centcom
 	nonabstract_req = 1
 	var/jaunt_duration = 50 //in deciseconds
+	var/jaunt_in_time = 5
+	var/jaunt_in_type = /obj/effect/overlay/temp/wizard
+	var/jaunt_out_type = /obj/effect/overlay/temp/wizard/out
 	action_icon_state = "jaunt"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
 	playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
 	for(var/mob/living/target in targets)
-		target.notransform = 1 //protects the mob from being transformed (replaced) midjaunt and getting stuck in bluespace
-		spawn(0)
-			var/turf/mobloc = get_turf(target.loc)
-			var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt( mobloc )
-			var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
-			animation.name = "water"
-			animation.density = 0
-			animation.anchored = 1
-			animation.icon = 'icons/mob/mob.dmi'
-			animation.layer = FLY_LAYER
-			animation.master = holder
-			target.ExtinguishMob()
-			if(target.buckled)
-				target.buckled.unbuckle_mob(target,force=1)
-			if(target.pulledby)
-				target.pulledby.stop_pulling()
-			target.stop_pulling()
-			if(target.has_buckled_mobs())
-				target.unbuckle_all_mobs(force=1)
-			jaunt_disappear(animation, target)
-			target.loc = holder
-			target.reset_perspective(holder)
-			target.notransform=0 //mob is safely inside holder now, no need for protection.
-			jaunt_steam(mobloc)
+		addtimer(src, "do_jaunt", 0, FALSE, target)
 
-			sleep(jaunt_duration)
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/do_jaunt(mob/living/target)
+	target.notransform = 1
+	var/turf/mobloc = get_turf(target)
+	var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt(mobloc)
+	PoolOrNew(jaunt_out_type, list(mobloc, holder.dir))
+	target.ExtinguishMob()
+	if(target.buckled)
+		target.buckled.unbuckle_mob(target,force=1)
+	if(target.pulledby)
+		target.pulledby.stop_pulling()
+	target.stop_pulling()
+	if(target.has_buckled_mobs())
+		target.unbuckle_all_mobs(force=1)
+	target.loc = holder
+	target.reset_perspective(holder)
+	target.notransform=0 //mob is safely inside holder now, no need for protection.
+	jaunt_steam(mobloc)
 
-			if(target.loc != holder) //mob warped out of the warp
-				qdel(holder)
-				return
-			mobloc = get_turf(target.loc)
-			animation.loc = mobloc
-			jaunt_steam(mobloc)
-			target.canmove = 0
-			holder.reappearing = 1
-			playsound(get_turf(user), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
-			sleep(20)
-			if(!qdeleted(target))
-				jaunt_reappear(animation, target)
-			sleep(5)
-			qdel(animation)
-			qdel(holder)
-			if(!qdeleted(target))
-				if(mobloc.density)
-					for(var/direction in list(1,2,4,8,5,6,9,10))
-						var/turf/T = get_step(mobloc, direction)
-						if(T)
-							if(target.Move(T))
-								break
-				target.canmove = 1
+	sleep(jaunt_duration)
 
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
-	animation.icon_state = "liquify"
-	flick("liquify",animation)
-
-
-/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_reappear(atom/movable/overlay/animation, mob/living/target)
-	flick("reappear",animation)
-
+	if(target.loc != holder) //mob warped out of the warp
+		qdel(holder)
+		return
+	mobloc = get_turf(target.loc)
+	jaunt_steam(mobloc)
+	target.canmove = 0
+	holder.reappearing = 1
+	playsound(get_turf(target), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
+	sleep(25 - jaunt_in_time)
+	PoolOrNew(jaunt_in_type, list(mobloc, holder.dir))
+	sleep(jaunt_in_time)
+	qdel(holder)
+	if(!qdeleted(target))
+		if(mobloc.density)
+			for(var/direction in alldirs)
+				var/turf/T = get_step(mobloc, direction)
+				if(T)
+					if(target.Move(T))
+						break
+		target.canmove = 1
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
@@ -103,6 +89,7 @@
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
 	if (!src.canmove || reappearing || !direction) return
 	var/turf/newLoc = get_step(src,direction)
+	setDir(direction)
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
 	else
