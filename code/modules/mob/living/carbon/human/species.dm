@@ -164,7 +164,7 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-	if(C.dna.features["legs"] == "Digitigrade Legs")
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
 		specflags += DIGITIGRADE
 	if(DIGITIGRADE in specflags)
 		C.Digitigrade_Leg_Swap(FALSE)

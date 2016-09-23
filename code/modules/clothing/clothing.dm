@@ -406,6 +406,7 @@ BLIND     // can't see anything
 			adjusted = DIGITIGRADE_STYLE
 		else if(adjusted == DIGITIGRADE_STYLE)
 			adjusted = NORMAL_STYLE
+		H.update_inv_w_uniform()
 
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
