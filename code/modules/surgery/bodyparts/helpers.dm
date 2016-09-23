@@ -236,3 +236,36 @@
 			. = "fff4e6"
 		if("orange")
 			. = "ffc905"
+
+/mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
+	var/body_plan_changed = FALSE
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/O = X
+		var/obj/item/bodypart/N
+		if((!O.use_digitigrade && swap_back == FALSE) || (O.use_digitigrade && swap_back == TRUE))
+			if(O.body_part == LEG_LEFT)
+				if(swap_back == TRUE)
+					N = new /obj/item/bodypart/l_leg/
+				else
+					N = new /obj/item/bodypart/l_leg/digitigrade
+			else if(O.body_part == LEG_RIGHT)
+				if(swap_back == TRUE)
+					N = new /obj/item/bodypart/r_leg/
+				else
+					N = new /obj/item/bodypart/r_leg/digitigrade
+		if(!N)
+			continue
+		body_plan_changed = TRUE
+		O.drop_limb(1)
+		qdel(O)
+		N.attach_limb(src)
+	if(body_plan_changed && ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.w_uniform)
+			var/obj/item/clothing/under/U = H.w_uniform
+			if(U.mutantrace_variation)
+				if(swap_back)
+					U.adjusted = NORMAL_STYLE
+				else
+					U.adjusted = DIGITIGRADE_STYLE
+				H.update_inv_w_uniform()

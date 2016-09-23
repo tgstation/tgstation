@@ -54,9 +54,9 @@
 	say_mod = "hisses"
 	default_color = "00FF00"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
-	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
+	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
 	mutant_organs = list(/obj/item/organ/tongue/lizard)
-	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -86,7 +86,7 @@
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = "lizard"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
 /*
  PODPEOPLE
 */
@@ -920,6 +920,33 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	else
 		return ..()
 
+
+/datum/species/android
+	name = "Android"
+	id = "android"
+	say_mod = "states"
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
+	safe_oxygen_min = 0
+	safe_toxins_min = 0
+	safe_toxins_max = 0
+	safe_co2_max = 0
+	SA_para_min = 0
+	SA_sleep_min = 0
+	meat = null
+	damage_overlay_type = "synth"
+	limbs_id = "synth"
+
+/datum/species/android/on_species_gain(mob/living/carbon/C)
+	. = ..()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYPART_ROBOTIC)
+
+/datum/species/android/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYPART_ORGANIC)
 
 /*
 SYNDICATE BLACK OPS
