@@ -3,26 +3,27 @@
 	var/atom/orbiting
 	var/lock = TRUE
 	var/turf/lastloc
+	var/lastprocess
 
 /datum/orbit/New(_orbiter, _orbiting, _lock)
 	orbiter = _orbiter
 	orbiting = _orbiting
-	OnMove()
+	SSorbit.processing += src
+	if (!orbiting.orbiters)
+		orbiting.orbiters = list()
+	orbiting.orbiters += src
+
+	if (orbiter.orbiting)
+		orbiter.stop_orbit()
+	orbiter.orbiting = src
+	Check()
 	lock = _lock
 
-	//at this point we could get deleted and orbiter/orbiting could be null.
-	if (orbiting)
-		if (!orbiting.orbiters)
-			orbiting.orbiters = list()
-		orbiting.orbiters += src
 
-	if (orbiter)
-		if (orbiter.orbiting)
-			orbiter.stop_orbit()
-		orbiter.orbiting = src
 
-//do not qdel directly, use stop_orbit on the movable. (This way the movable can bind to the orbit stopping)
+//do not qdel directly, use stop_orbit on the orbiter. (This way the orbiter can bind to the orbit stopping)
 /datum/orbit/Destroy(force = FALSE)
+	SSorbit.processing -= src
 	if (orbiter)
 		orbiter.orbiting = null
 		orbiter = null
@@ -34,10 +35,22 @@
 		orbiting = null
 	..()
 
-/datum/orbit/proc/OnMove()
-	var/targetloc = get_turf(orbiting)
+/datum/orbit/proc/Check(turf/targetloc)
+	if (!orbiter)
+		qdel(src)
+		return
+	if (!orbiting)
+		orbiter.stop_orbit()
+		return
+	if (!orbiter.orbiting) //admin wants to stop the orbit.
+		orbiter.orbiting = src //set it back to us first
+		orbiter.stop_orbit()
+	lastprocess = world.time
+	if (!targetloc)
+		targetloc = get_turf(orbiting)
 	if (!targetloc || (!lock && orbiter.loc != lastloc && orbiter.loc != targetloc))
 		orbiter.stop_orbit()
+		return
 
 	orbiter.loc = targetloc
 	lastloc = orbiter.loc
@@ -90,14 +103,19 @@
 	if (orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
-			O.OnMove()
-
-/atom/movable/Destroy(force = FALSE)
-	..()
+			O.Check()
 	if (orbiting)
-		stop_orbit()
+		orbiting.Check()
+
+/atom/Destroy(force = FALSE)
+	..()
 	if (orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
 			if (O.orbiter)
 				O.orbiter.stop_orbit()
+
+/atom/movable/Destroy(force = FALSE)
+	..()
+	if (orbiting)
+		stop_orbit()
