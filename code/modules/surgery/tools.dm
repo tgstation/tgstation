@@ -41,7 +41,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
 	flags = CONDUCT
-	force = 3
+	force = 5
 	w_class = 3
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
@@ -52,7 +52,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
 	flags = CONDUCT
-	force = 3
+	force = 5
 	w_class = 1
 	throwforce = 5
 	throw_speed = 3
@@ -78,7 +78,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	throwhitsound =  'sound/weapons/pierce.ogg'
 	flags = CONDUCT
-	force = 5
+	force = 8
 	w_class = 3
 	throwforce = 9
 	throw_speed = 2
