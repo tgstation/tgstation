@@ -299,8 +299,8 @@ var/datum/subsystem/ticker/ticker
 					if(cinematic)
 						qdel(cinematic)
 						cinematic = null
-					if(temp_buckle)
-						qdel(temp_buckle)
+					for(var/mob/M in mob_list)
+						M.notransform = FALSE
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
