@@ -637,13 +637,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user << "<span class='notice'>You increase the voltage in the [src]</span>"
 				add_overlay(image(icon, "vapeopen_med"))
 			else
-				if(!emagged)
-					cut_overlays()
-					super = 0
-					user << "<span class='notice'>You decrease the voltage in the [src]</span>"
-					add_overlay(image(icon, "vapeopen_low"))
-				else
-					user << "<span class='notice'>The [name] can't be modified!</span>"
+				cut_overlays()
+				super = 0
+				user << "<span class='notice'>You decrease the voltage in the [src]</span>"
+				add_overlay(image(icon, "vapeopen_low"))
+		
+		if(screw && emagged)
+			user << "<span class='notice'>The [name] can't be modified!</span>"
 
 
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
