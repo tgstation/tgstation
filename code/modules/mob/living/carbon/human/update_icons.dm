@@ -117,10 +117,8 @@ There are several things that need to be remembered:
 		var/t_color = U.item_color
 		if(!t_color)
 			t_color = U.icon_state
-		if(U.adjusted == ALT_STYLE)
+		if(U.adjusted)
 			t_color = "[t_color]_d"
-		else if(U.adjusted == DIGITIGRADE_STYLE)
-			t_color = "[t_color]_l"
 
 		var/image/standing
 
@@ -140,7 +138,6 @@ There are several things that need to be remembered:
 			unEquip(thing)
 
 	apply_overlay(UNIFORM_LAYER)
-	update_mutant_bodyparts()
 
 
 /mob/living/carbon/human/update_inv_wear_id()
@@ -540,14 +537,13 @@ generate/load female uniform sprites matching all previously decided variables
 			. += "-organic"
 		else
 			. += "-robotic"
-		if(BP.use_digitigrade)
-			. += "-digitigrade[BP.use_digitigrade]"
 
 	if(disabilities & HUSK)
 		. += "-husk"
 
 /mob/living/carbon/human/load_limb_from_cache()
 	..()
+	update_mutant_bodyparts()
 	update_hair()
 
 
