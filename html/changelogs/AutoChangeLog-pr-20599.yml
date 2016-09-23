@@ -1,8 +1,0 @@
-author: "Incoming5643 + WJohnston"
-delete-after: True
-changes: 
-  - imageadd: "Lizard sprites have received an overhaul, sprites courtesy of WJohnston!"
-  - rscdel: "While there are some new bits, a few old bits have gone by the wayside, if your lizard has been affected by this the specific feature will be randomized until you pick a new setting."
-  - rscadd: "Lizards can now choose to have digitigrade legs (those weird backwards bending ones). Keep in mind that they can only be properly seen in rather short pants. They also preclude the use of shoes. By default no lizard will have these legs, you have to opt in."
-  - rscadd: "All ash walker lizards however are forced to have these legs."
-  - experiment: "There is absolutely no tactical benefits to using digitigrade legs, you are only crippling yourself if you use them."
