@@ -70,7 +70,7 @@
 		for(var/i=0,i<number,i++)
 			H.equip_to_slot_or_del(new path(H),slot_in_backpack)
 
-	H.update_body()
 	post_equip(H, visualsOnly)
 
+	H.update_body()
 	return 1
