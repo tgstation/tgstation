@@ -46,6 +46,7 @@ Bonus
 		if(L.heal_damage(heal_amt, heal_amt))
 			C.update_damage_overlays()
 	C.adjustToxLoss(heal_amt*parts.len)
+	PoolOrNew(/obj/effect/overlay/temp/heal, list(C), "#FF3399")
 	return 1
 
 /*
@@ -96,6 +97,7 @@ Bonus
 
 		for(var/obj/item/bodypart/L in parts)
 			L.heal_damage(get_damage, get_damage, 0)
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#FFFF00"))
 		M.adjustToxLoss(get_damage)
 
 	else
@@ -105,5 +107,4 @@ Bonus
 			M.adjustToxLoss(get_damage)
 		else
 			return
-
 	return 1
