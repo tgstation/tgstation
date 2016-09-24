@@ -1,0 +1,5 @@
+author: "optional name here"
+delete-after: True
+changes: 
+  - tweak: "Changes cursed heart description to something slightly more clear."
+  - bugfix: "Fixes a capitalization issue"
