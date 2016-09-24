@@ -42,7 +42,7 @@
 			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
 			src.l_hacking = 1
 			if (do_after(usr, 100/W.toolspeed, target = src))
-				if (prob(40))
+				if (prob(33))
 					src.l_setshort = 1
 					src.l_set = 0
 					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
@@ -65,13 +65,10 @@
 /obj/item/weapon/storage/secure/emag_act(mob/user)
 	if(locked)
 		if(!emagged)
-			emagged = 1
-			src.add_overlay(image('icons/obj/storage.dmi', icon_sparking))
-			sleep(6)
-			src.overlays = null
-			add_overlay(image('icons/obj/storage.dmi', icon_locking))
-			locked = 0
-			user << "<span class='notice'>You short out the lock on [src].</span>"
+			user << "<span class='notice'>You take a second to realize there's no ID slot for you to emag this with.</span>"
+	else
+		if(!emagged)
+			user << "<span class='notice'>You take a second to realize the case is already open, making you look really silly. Hopefully no one saw.</span>"
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
