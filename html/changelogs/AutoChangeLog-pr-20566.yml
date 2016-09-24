@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscdel: "Viruses start with 0 in every stat instead of 1."
