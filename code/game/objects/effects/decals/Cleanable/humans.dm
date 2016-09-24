@@ -46,6 +46,7 @@
 	desc = "They look bloody and gruesome."
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
+	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 
 /obj/effect/decal/cleanable/blood/gibs/New()
