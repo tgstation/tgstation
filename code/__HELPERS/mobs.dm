@@ -330,6 +330,24 @@ Proc for attack log creation, because really why not
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
+/proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
+	var/turf/T = get_turf(target)
+	var/step_count = 0
+	if(!T)
+		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
+
+	for(var/j in 1 to amount)
+		var/atom/movable/X = new spawn_type(T)
+		X.admin_spawned = admin_spawn
+
+		if(always_max_walk || prob(walk_chance))
+			if(always_max_walk)
+				step_count = max_walk
+			else
+				step_count = rand(1, max_walk)
+
+			for(var/i in 1 to step_count)
+				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	for(var/mob/M in player_list)
