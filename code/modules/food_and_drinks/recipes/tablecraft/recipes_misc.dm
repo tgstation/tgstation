@@ -259,7 +259,7 @@
 	category = CAT_MISCFOOD
 
 
-/datum/crafting_recipe/stuffedlegion
+/datum/crafting_recipe/food/stuffedlegion
 	name = "Stuffed legion"
 	time = 40
 	reqs = list(
@@ -272,7 +272,7 @@
 	category = CAT_MISCFOOD
 
 
-/datum/crafting_recipe/lizardwine
+/datum/crafting_recipe/food/lizardwine
 	name = "Lizard wine"
 	time = 40
 	reqs = list(
@@ -283,7 +283,7 @@
 	category = CAT_MISCFOOD
 
 
-/datum/crafting_recipe/powercrepe
+/datum/crafting_recipe/food/powercrepe
 	name = "Powercrepe"
 	time = 40
 	reqs = list(
