@@ -6,7 +6,7 @@
 
 	if (notransform)
 		return
-	if(..())
+	if(..()) //not dead
 		// GROW!
 		if(amount_grown < max_grown)
 			amount_grown++

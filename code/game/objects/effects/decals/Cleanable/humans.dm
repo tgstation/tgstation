@@ -1,9 +1,6 @@
 /obj/effect/decal/cleanable/blood
 	name = "blood"
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
-	gender = PLURAL
-	density = 0
-	layer = ABOVE_NORMAL_TURF_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
@@ -29,16 +26,12 @@
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
-	gender = PLURAL
 	random_icon_states = null
 
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
 	name = "blood"
 	icon_state = "ltrails_1"
 	desc = "Your instincts say you shouldn't be following these."
-	gender = PLURAL
-	density = 0
-	layer = ABOVE_OPEN_TURF_LAYER
 	random_icon_states = null
 	var/list/existing_dirs = list()
 	blood_DNA = list()
@@ -51,9 +44,6 @@
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
-	gender = PLURAL
-	density = 0
-	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
@@ -108,7 +98,6 @@
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
 	desc = "It's red."
-	gender = PLURAL
 	icon_state = "1"
 	random_icon_states = list("drip1","drip2","drip3","drip4","drip5")
 	bloodiness = 0
@@ -125,7 +114,6 @@
 	icon = 'icons/effects/footprints.dmi'
 	icon_state = "nothingwhatsoever"
 	desc = "where might they lead?"
-	gender = PLURAL
 	random_icon_states = null
 	var/entered_dirs = 0
 	var/exited_dirs = 0

@@ -534,8 +534,9 @@
 	else
 		flicker()
 
-/obj/machinery/light/tesla_act(var/power)
-	explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
+/obj/machinery/light/tesla_act(power, explosive = FALSE)
+	if(explosive)
+		explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
 	qdel(src)
 
 // called when area power state changes

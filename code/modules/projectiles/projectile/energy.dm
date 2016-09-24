@@ -143,6 +143,7 @@
 	damage = 20
 	damage_type = CLONE
 	irradiate = 10
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
 
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
@@ -164,17 +165,10 @@
 /obj/item/projectile/energy/bolt/large
 	damage = 20
 
-/obj/item/ammo_casing/energy/plasma
-	projectile_type = /obj/item/projectile/plasma
-	select_name = "plasma burst"
-	fire_sound = 'sound/weapons/pulse.ogg'
-
-/obj/item/ammo_casing/energy/plasma/adv
-	projectile_type = /obj/item/projectile/plasma/adv
-
 /obj/item/projectile/energy/shock_revolver
 	name = "shock bolt"
 	icon_state = "purple_laser"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
 	var/chain
 
 /obj/item/projectile/energy/shock_revolver/fire(setAngle)

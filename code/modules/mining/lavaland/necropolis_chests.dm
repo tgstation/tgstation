@@ -48,7 +48,7 @@
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/borg/upgrade/modkit/aoe/mobs(src)
+			new /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
@@ -579,7 +579,7 @@
 	switch(random)
 		if(1)
 			user << "<span class='danger'>Your appearence morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>"
-			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body")
+			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
 			H.eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
 		if(2)
@@ -704,15 +704,13 @@
 
 /obj/structure/closet/crate/necropolis/bubblegum/New()
 	..()
-	var/loot = rand(1,4)
+	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
-			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
-		if(2)
 			new /obj/item/mayhem(src)
-		if(3)
+		if(2)
 			new /obj/item/blood_contract(src)
-		if(4)
+		if(3)
 			new /obj/item/weapon/gun/magic/staff/spellblade(src)
 
 /obj/item/blood_contract

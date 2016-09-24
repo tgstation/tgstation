@@ -5307,7 +5307,7 @@
 /turf/open/floor/plating,
 /area/ctf)
 "qD" = (
-/obj/structure/divine/trap/ctf/blue,
+/obj/structure/trap/ctf/blue,
 /turf/open/floor/plasteel/blue,
 /area/ctf)
 "qE" = (
@@ -5335,7 +5335,7 @@
 /turf/open/floor/plasteel/darkred,
 /area/ctf)
 "qI" = (
-/obj/structure/divine/trap/ctf/red,
+/obj/structure/trap/ctf/red,
 /turf/open/floor/plasteel/darkred,
 /area/ctf)
 "qJ" = (
@@ -5379,7 +5379,7 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ctf)
 "qQ" = (
-/obj/structure/divine/trap/ctf/red,
+/obj/structure/trap/ctf/red,
 /turf/open/floor/plasteel/red,
 /area/ctf)
 "qR" = (
@@ -10943,7 +10943,7 @@ kG
 kG
 kG
 nb
-lG
+md
 ju
 aa
 aa
@@ -11200,7 +11200,7 @@ ln
 lI
 kG
 jc
-kj
+ju
 ju
 aa
 aa
@@ -12999,9 +12999,9 @@ kG
 kG
 kG
 ku
-lG
-lG
-ns
+nr
+nr
+ni
 jc
 nD
 nD

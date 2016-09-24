@@ -72,6 +72,7 @@
 #define EASYDISMEMBER	20
 #define EASYLIMBATTACHMENT 21
 #define TOXINLOVER		22
+#define DIGITIGRADE		23	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 
 #define FLYING	65536
 

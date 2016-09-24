@@ -3,12 +3,8 @@
 	if(stat != DEAD)
 		death(1)
 
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1) //to update alien nest overlay, forced because we don't exist anymore
-
 	if(!prev_lying)
 		gib_animation()
-
 
 	spill_organs(no_brain, no_organs, no_bodyparts)
 
@@ -64,8 +60,6 @@
 	living_mob_list -= src
 	if(!gibbed)
 		dead_mob_list += src
-	else if(buckled)
-		buckled.unbuckle_mob(src,force=1)
 	paralysis = 0
 	stunned = 0
 	weakened = 0
