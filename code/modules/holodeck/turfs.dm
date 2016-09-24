@@ -5,7 +5,7 @@
 	burnt_states = list("engine")
 	flags = NONE
 
-/turf/open/floor/holofloor/attackby()
+/turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
 
 /turf/open/floor/holofloor/plating
