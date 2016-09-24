@@ -21,7 +21,6 @@
 	var/l_set = 0
 	var/l_setshort = 0
 	var/l_hacking = 0
-	var/emagged = 0
 	var/open = 0
 	w_class = 3
 	max_w_class = 2
@@ -61,14 +60,6 @@
 
 	// -> storage/attackby() what with handle insertion, etc
 	return ..()
-
-/obj/item/weapon/storage/secure/emag_act(mob/user)
-	if(locked)
-		if(!emagged)
-			user << "<span class='notice'>You take a second to realize there's no ID slot for you to emag this with.</span>"
-	else
-		if(!emagged)
-			user << "<span class='notice'>You take a second to realize the case is already open, making you look really silly. Hopefully no one saw.</span>"
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
