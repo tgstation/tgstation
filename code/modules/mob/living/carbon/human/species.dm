@@ -164,7 +164,7 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-	if(C.dna.features["legs"] == "Digitigrade Legs")
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
 		specflags += DIGITIGRADE
 	if(DIGITIGRADE in specflags)
 		C.Digitigrade_Leg_Swap(FALSE)
@@ -384,10 +384,13 @@
 		not_digitigrade = FALSE
 		if(!(DIGITIGRADE in specflags)) //Someone cut off a digitigrade leg and tacked it on
 			specflags += DIGITIGRADE
-		if(O.use_digitigrade == FULL_DIGITIGRADE && (H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) || (H.wear_suit.body_parts_covered & LEGS)) || (H.w_uniform && (H.w_uniform.body_parts_covered & LEGS))))
+		var/should_be_squished = FALSE
+		if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) || (H.wear_suit.body_parts_covered & LEGS)) || (H.w_uniform && (H.w_uniform.body_parts_covered & LEGS)))
+			should_be_squished = TRUE
+		if(O.use_digitigrade == FULL_DIGITIGRADE && should_be_squished)
 			O.use_digitigrade = SQUISHED_DIGITIGRADE
 			update_needed = TRUE
-		else if(O.use_digitigrade == SQUISHED_DIGITIGRADE)
+		else if(O.use_digitigrade == SQUISHED_DIGITIGRADE && !should_be_squished)
 			O.use_digitigrade = FULL_DIGITIGRADE
 			update_needed = TRUE
 	if(update_needed)
