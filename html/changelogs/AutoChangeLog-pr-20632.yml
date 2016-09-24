@@ -1,5 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - tweak: "Orbits now use a subsystem."
-  - tweak: "Orbits now bind to object's moving to allow for quicker updates, subsystem fallback for when that doesn't work (for things inside of things or things that move without announcing it)"
