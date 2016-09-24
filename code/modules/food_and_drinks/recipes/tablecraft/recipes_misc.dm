@@ -271,6 +271,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/stuffedlegion
 	category = CAT_MISCFOOD
 
+
 /datum/crafting_recipe/lizardwine
 	name = "Lizard wine"
 	time = 40
@@ -279,4 +280,18 @@
 		/datum/reagent/consumable/ethanol = 100
 	)
 	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine
+	category = CAT_MISCFOOD
+
+
+/datum/crafting_recipe/powercrepe
+	name = "Powercrepe"
+	time = 40
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flatdough = 1,
+		/datum/reagent/consumable/milk = 1,
+		/datum/reagent/consumable/cherryjelly = 5,
+		/obj/item/weapon/stock_parts/cell/super =1,
+		/obj/item/weapon/melee/sabre = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/powercrepe
 	category = CAT_MISCFOOD
