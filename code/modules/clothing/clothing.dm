@@ -399,13 +399,17 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
+	if(adjusted)
+		adjusted = NORMAL_STYLE
+		fitted = initial(fitted)
+		if(!alt_covers_chest)
+			body_parts_covered |= CHEST
 
 	if(mutantrace_variation && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(DIGITIGRADE in H.dna.species.specflags)
 			adjusted = DIGITIGRADE_STYLE
-		else if(adjusted == DIGITIGRADE_STYLE)
-			adjusted = NORMAL_STYLE
+		H.update_inv_w_uniform()
 
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
@@ -544,7 +548,10 @@ BLIND     // can't see anything
 		usr << "<span class='notice'>You adjust the suit to wear it more casually.</span>"
 	else
 		usr << "<span class='notice'>You adjust the suit back to normal.</span>"
-	usr.update_inv_w_uniform()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.update_inv_w_uniform()
+		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	if(adjusted == DIGITIGRADE_STYLE)
@@ -553,13 +560,12 @@ BLIND     // can't see anything
 	if(adjusted)
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
-		if (alt_covers_chest) // for the special snowflake suits that don't expose the chest when adjusted
-			body_parts_covered = CHEST|GROIN|LEGS
-		else
-			body_parts_covered = GROIN|LEGS
+		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted
+			body_parts_covered &= ~CHEST
 	else
 		fitted = initial(fitted)
-		body_parts_covered = CHEST|GROIN|LEGS|ARMS
+		if(!alt_covers_chest)
+			body_parts_covered |= CHEST
 	return adjusted
 
 /obj/item/clothing/under/examine(mob/user)

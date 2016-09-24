@@ -1180,6 +1180,8 @@ B --><-- A
 
 /proc/add_to_proximity_list(atom/A, range)
 	var/turf/T = get_turf(A)
+	if(!T || !A.loc)
+		throw EXCEPTION("Someone adding a prox sensor in nullspace")
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
