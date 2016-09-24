@@ -61,6 +61,14 @@
 	// -> storage/attackby() what with handle insertion, etc
 	return ..()
 
+/obj/item/weapon/storage/secure/emag_act(mob/user)		
+	if(locked)		
+ 		if(!emagged)		
+ 			user << "<span class='notice'>You take a second to realize there's no ID slot for you to emag this with.</span>"		
+ 	else		
+ 		if(!emagged)		
+ 			user << "<span class='notice'>You take a second to realize the case is already open, making you look really silly. Hopefully no one saw.</span>"		
+ 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
@@ -72,10 +80,6 @@
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
-	if ((src.l_set == 0) && (!src.emagged) && (!src.l_setshort))
-		dat += text("<p>\n<b>5-DIGIT PASSCODE NOT SET.<br>ENTER NEW PASSCODE.</b>")
-	if (src.emagged)
-		dat += text("<p>\n<font color=red><b>LOCKING SYSTEM ERROR - 1701</b></font>")
 	if (src.l_setshort)
 		dat += text("<p>\n<font color=red><b>ALERT: MEMORY SYSTEM ERROR - 6040 201</b></font>")
 	message = text("[]", src.code)
@@ -101,12 +105,6 @@
 			else
 				src.code = "ERROR"
 		else
-			if ((href_list["type"] == "R") && (src.emagged == 0) && (!src.l_setshort))
-				src.locked = 1
-				src.overlays = null
-				src.code = null
-				src.close(usr)
-			else
 				src.code += text("[]", href_list["type"])
 				if (length(src.code) > 5)
 					src.code = "ERROR"
