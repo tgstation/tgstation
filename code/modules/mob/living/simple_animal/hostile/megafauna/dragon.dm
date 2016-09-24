@@ -230,7 +230,7 @@ Difficulty: Medium
 			L.adjustBruteLoss(75)
 			if(L && !qdeleted(L)) // Some mobs are deleted on death
 				var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-				L.throw_at_fast(throwtarget)
+				L.throw_at_fast(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
 
 	for(var/mob/M in range(7, src))
