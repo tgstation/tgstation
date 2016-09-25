@@ -64,10 +64,12 @@
 /obj/item/weapon/storage/secure/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/emag/bluespace))
 		if(locked)				
- 			user << "<span class='notice'>You take a second to realize there's no ID slot for you to emag this with.</span>"		
+ 			user << "<span class='notice'>You take a second to realize there's no ID slot for you to emag this with.</span>"
+			return 0
  		else		
  			user << "<span class='notice'>You take a second to realize the case is already open, making you look really silly. Hopefully no one saw.</span>"		
- 	else
+ 			return 0
+	else
 		return ..()
 		
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
