@@ -421,7 +421,7 @@
 
 /obj/item/weapon/storage/belt/sabre
 	name = "sabre sheath"
-	desc = "An ornate sheath designed to hold an officer's blade. Alt-Click to quickly draw the sheathed blade."
+	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
 	item_state = "sheath"
 	storage_slots = 1
@@ -431,8 +431,10 @@
 		/obj/item/weapon/melee/sabre
 		)
 
-
-
+/obj/item/weapon/storage/belt/sabre/examine(mob/user)
+	..()
+	if(contents.len)
+		user << "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
 /obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
 	if(!ishuman(user) || !user.canUseTopic(src))

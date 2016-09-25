@@ -56,7 +56,7 @@
 			if (used)
 				H << "You already used this contract!"
 				return
-			var/list/candidates = get_candidates(ROLE_WIZARD)
+			var/list/candidates = pollCandidates("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150)
 			if(candidates.len)
 				src.used = 1
 				var/client/C = pick(candidates)
@@ -149,8 +149,8 @@
 	if(!(check_usability(user)))
 		return
 
-	var/list/nuke_candidates = get_candidates(ROLE_OPERATIVE, 3000, "operative")
-	if(nuke_candidates.len > 0)
+	var/list/nuke_candidates = pollCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150)
+	if(nuke_candidates.len)
 		used = 1
 		var/client/C = pick(nuke_candidates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
@@ -228,7 +228,7 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-	var/list/demon_candidates = get_candidates(ROLE_ALIEN)
+	var/list/demon_candidates = pollCandidates("Do you want to play as a [initial(demon_type.name)]?", null, null, ROLE_ALIEN, 50)
 	if(user.z != 1)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return

@@ -1,0 +1,4 @@
+author: "Razharas"
+delete-after: True
+changes: 
+  - rscadd: "\"Kudzu now keeps the mutations it had before and thus can be properly cultivated to be whatever you want\""

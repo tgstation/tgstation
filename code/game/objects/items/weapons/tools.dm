@@ -518,6 +518,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	can_off_process = 1
 	light_intensity = 1
 	toolspeed = 2
+	var/nextrefueltick = 0
 
 /obj/item/weapon/weldingtool/experimental/brass
 	name = "brass welding tool"
@@ -526,20 +527,11 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	item_state = "brasswelder"
 
 
-//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
-//i don't think this is actually used, yaaaaay -Pete
-/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	if(!welding && !last_gen)
-		last_gen = 1
-		reagents.add_reagent("welding_fuel",1)
-		spawn(10)
-			last_gen = 0
-
 /obj/item/weapon/weldingtool/experimental/process()
 	..()
-	if(reagents.total_volume < max_fuel)
-		fuel_gen()
-
+	if(get_fuel() < max_fuel && nextrefueltick < world.time)
+		nextrefueltick = world.time + 10
+		reagents.add_reagent("welding_fuel", 1)
 
 
 /*

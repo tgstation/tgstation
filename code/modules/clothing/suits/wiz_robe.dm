@@ -150,7 +150,7 @@
 	burn_state = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/paper
-	name = "papier-m‚chÈ robe"
+	name = "papier-m√¢ch√© robe"
 	desc = "A robe held together by various bits of clear-tape and paste."
 	icon_state = "wizard-paper"
 	item_state = "wizrobe"
@@ -199,6 +199,7 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
+	unacidable = 1
 	slowdown = 0
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
@@ -209,6 +210,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20)
+	unacidable = 1
 	actions_types = null //No inbuilt light
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
