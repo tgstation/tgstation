@@ -65,8 +65,7 @@
 	if(istype(W, /obj/item/weapon/card/emag))
 		if(locked)
 			user << "<span class='notice'>You take a second to realize there's no ID slot for you to emag this with.</span>"
-	else
-		if(locked)
+		else
 			user << "<span class='notice'>You take a second to realize the case is already open, making you look really silly. Hopefully no one saw.</span>"
 	return
 	
