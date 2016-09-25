@@ -107,6 +107,81 @@
 	required_reagents = list("carbon" = 1, "oxygen" = 2)
 	required_temp = 777 // pure carbon isn't especially reactive.
 
+////////////////////////////////// Mutation Toxins ///////////////////////////////////
+
+/datum/chemical_reaction/human_mutation_toxin
+	name = "Human Mutation Toxin"
+	id = "humanmutationtoxin"
+	results = list("humanmutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "blood" = 1) //classic
+
+/datum/chemical_reaction/lizard_mutation_toxin
+	name = "Lizard Mutation Toxin"
+	id = "lizardmutationtoxin"
+	results = list("lizardmutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "radium" = 1) //mutant
+
+/datum/chemical_reaction/fly_mutation_toxin
+	name = "Fly Mutation Toxin"
+	id = "flymutationtoxin"
+	results = list("flymutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "mutagen" = 1) //VERY mutant
+
+/datum/chemical_reaction/jelly_mutation_toxin
+	name = "Imperfect Mutation Toxin"
+	id = "jellymutationtoxin"
+	results = list("jellymutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "slimejelly" = 1) //why would you even make this
+
+/datum/chemical_reaction/plasma_mutation_toxin
+	name = "Plasma Mutation Toxin"
+	id = "plasmamutationtoxin"
+	results = list("plasmamutationtoxin" = 1)
+	required_reagents = list("amutationtoxin" = 1, "plasma" = 1) //this is very fucking powerful, so it needs the advanced toxin to make
+
+/datum/chemical_reaction/golem_mutation_toxin
+	name = "Golem Mutation Toxin"
+	id = "golemmutationtoxin"
+	results = list("golemmutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "silver" = 1) //not too hard to get but also not just there in xenobio
+
+/datum/chemical_reaction/shadow_mutation_toxin
+	name = "Shadow Mutation Toxin"
+	id = "shadowmutationtoxin"
+	results = list("shadowmutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "liquid_dark_matter" = 1) //only reagent i could think of
+
+/datum/chemical_reaction/pod_mutation_toxin
+	name = "Podperson Mutation Toxin"
+	id = "podmutationtoxin"
+	results = list("podmutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "eznutriment" = 1) //plant food
+
+/datum/chemical_reaction/skeleton_mutation_toxin
+	name = "Skeleton Mutation Toxin"
+	id = "skeletonmutationtoxin"
+	results = list("skeletonmutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "milk" = 1) //good for yer bones
+
+/datum/chemical_reaction/zombie_mutation_toxin
+	name = "Zombie Mutation Toxin"
+	id = "zombiemutationtoxin"
+	results = list("zombiemutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "toxin" = 1)
+
+/datum/chemical_reaction/abductor_mutation_toxin
+	name = "Abductor Mutation Toxin"
+	id = "abductormutationtoxin"
+	results = list("abductormutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "morphine" = 1)
+
+/datum/chemical_reaction/mulligan
+	name = "Mulligan"
+	id = "mulligan"
+	results = list("mulligan" = 1)
+	required_reagents = list("humanmutationtoxin" = 1, "mutagen" = 1) //a fancy recipe for mulligan
+
+
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
 /datum/chemical_reaction/virus_food

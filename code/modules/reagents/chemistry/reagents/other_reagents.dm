@@ -392,6 +392,115 @@
 
 	return 1
 
+/datum/reagent/stableslimetoxin
+	name = "Human Mutation Toxin"
+	id = "humanmutationtoxin"
+	description = "A humanizing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	metabolization_rate = INFINITY //So it instantly removes all of itself
+	var/datum/species/race = /datum/species/human
+	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
+
+/datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
+	..()
+	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
+	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.Weaken(3, 0)
+	spawn(30)
+		if(!H || qdeleted(H))
+			return
+
+		var/current_species = H.dna.species.type
+		var/datum/species/mutation = race
+		if(mutation && mutation != current_species)
+			H << mutationtext
+			H.set_species(mutation)
+		else
+			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+
+	return 1
+
+/datum/reagent/stableslimetoxin/lizard
+	name = "Lizard Mutation Toxin"
+	id = "lizardmutationtoxin"
+	description = "A lizarding toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/lizard
+	mutationtext = "<span class='danger'>The pain subsides. You feel... scaly.</span>"
+
+
+/datum/reagent/stableslimetoxin/fly
+	name = "Fly Mutation Toxin"
+	id = "flymutationtoxin"
+	description = "An insectifying toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/fly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
+
+/datum/reagent/stableslimetoxin/pod
+	name = "Podperson Mutation Toxin"
+	id = "podmutationtoxin"
+	description = "A vegetalizing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/pod
+	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
+
+/datum/reagent/stableslimetoxin/shadow
+	name = "Shadow Mutation Toxin"
+	id = "shadowmutationtoxin"
+	description = "A dark toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/shadow
+	mutationtext = "<span class='danger'>The pain subsides. You feel... darker.</span>"
+
+/datum/reagent/stableslimetoxin/jelly
+	name = "Imperfect Mutation Toxin"
+	id = "jellymutationtoxin"
+	description = "An jellyfying toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/jelly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... wobbly.</span>"
+
+/datum/reagent/stableslimetoxin/golem
+	name = "Golem Mutation Toxin"
+	id = "golemmutationtoxin"
+	description = "A crystal toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/golem/random
+	mutationtext = "<span class='danger'>The pain subsides. You feel... rocky.</span>"
+
+/datum/reagent/stableslimetoxin/skeleton
+	name = "Skeleton Mutation Toxin"
+	id = "skeletonmutationtoxin"
+	description = "A scary toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/skeleton
+	mutationtext = "<span class='danger'>The pain subsides. You feel... spooky.</span>"
+
+/datum/reagent/stableslimetoxin/zombie
+	name = "Zombie Mutation Toxin"
+	id = "zombiemutationtoxin"
+	description = "An undead toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/zombie //Not the infectious kind. The days of xenobio zombie outbreaks are long past.
+	mutationtext = "<span class='danger'>The pain subsides. You feel... undead.</span>"
+
+/datum/reagent/stableslimetoxin/abductor
+	name = "Abductor Mutation Toxin"
+	id = "abductormutationtoxin"
+	description = "An alien toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/abductor
+	mutationtext = "<span class='danger'>The pain subsides. You feel... alien.</span>"
+
+/datum/reagent/stableslimetoxin/plasma
+	name = "Plasma Mutation Toxin"
+	id = "plasmamutationtoxin"
+	description = "A plasma-based toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/plasmaman
+	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
+
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
 	id = "mulligan"
