@@ -761,6 +761,7 @@ var/list/ai_list = list()
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
 		loc = card//Throw AI into the card.
 		card.AI = src
+		user.forceMove(src)
 		src << "You have been downloaded to a mobile storage device. Remote device connection severed."
 		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 
