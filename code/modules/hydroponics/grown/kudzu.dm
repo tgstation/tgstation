@@ -38,6 +38,7 @@
 /obj/item/seeds/kudzu/Copy()
 	var/obj/item/seeds/kudzu/KZ = ..()
 	KZ.mutations = mutations.Copy()
+	. = KZ
 
 /obj/item/seeds/kudzu/harvest(mob/user = usr)
 	. = ..()
