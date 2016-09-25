@@ -774,7 +774,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/storage/box/matches = 10,
 					/obj/item/weapon/lighter/greyscale = 4,
 					/obj/item/weapon/storage/fancy/rollingpapers = 5)
-	contraband = list(/obj/item/weapon/lighter = 3)
+	contraband = list(/obj/item/weapon/lighter = 3, /obj/item/clothing/mask/vape = 5)
 	premium = list(/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 3, \
 	/obj/item/weapon/storage/fancy/cigarettes/cigars = 1, /obj/item/weapon/storage/fancy/cigarettes/cigars/havana = 1, /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
@@ -1001,7 +1001,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
 	/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
 	/obj/item/clothing/suit/jacket/letterman_red=1)
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/tie/dope_necklace=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
