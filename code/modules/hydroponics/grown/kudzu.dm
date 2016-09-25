@@ -35,6 +35,17 @@
 	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
 	qdel(src)
 
+/obj/item/seeds/kudzu/Copy()
+	var/obj/item/seeds/kudzu/KZ = ..()
+	KZ.mutations = mutations.Copy()
+	. = KZ
+
+/obj/item/seeds/kudzu/harvest(mob/user = usr)
+	. = ..()
+	for(var/A in .)
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/KP = A
+		KP.seed = Copy()
+
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	plant(user)
 	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
