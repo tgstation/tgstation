@@ -137,7 +137,7 @@
 	name = "Plasma Mutation Toxin"
 	id = "plasmamutationtoxin"
 	results = list("plasmamutationtoxin" = 1)
-	required_reagents = list("amutationtoxin" = 1, "plasma" = 1) //this is very fucking powerful, so it needs the advanced toxin to make
+	required_reagents = list("skeletonmutationtoxin" = 1, "plasma" = 1, "uranium" = 1) //this is very fucking powerful, so it's hard to make
 
 /datum/chemical_reaction/golem_mutation_toxin
 	name = "Golem Mutation Toxin"
@@ -149,7 +149,7 @@
 	name = "Shadow Mutation Toxin"
 	id = "shadowmutationtoxin"
 	results = list("shadowmutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "liquid_dark_matter" = 1) //only reagent i could think of
+	required_reagents = list("amutationtoxin" = 1, "liquid_dark_matter" = 1) //only reagent i could think of
 
 /datum/chemical_reaction/pod_mutation_toxin
 	name = "Podperson Mutation Toxin"
@@ -161,19 +161,25 @@
 	name = "Skeleton Mutation Toxin"
 	id = "skeletonmutationtoxin"
 	results = list("skeletonmutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "milk" = 1) //good for yer bones
+	required_reagents = list("amutationtoxin" = 1, "milk" = 1) //good for yer bones
 
 /datum/chemical_reaction/zombie_mutation_toxin
 	name = "Zombie Mutation Toxin"
 	id = "zombiemutationtoxin"
 	results = list("zombiemutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "toxin" = 1)
+	required_reagents = list("amutationtoxin" = 1, "toxin" = 1) //blacklisted species so it's harder to get
 
 /datum/chemical_reaction/abductor_mutation_toxin
 	name = "Abductor Mutation Toxin"
 	id = "abductormutationtoxin"
 	results = list("abductormutationtoxin" = 1)
 	required_reagents = list("unstablemutationtoxin" = 1, "morphine" = 1)
+
+/datum/chemical_reaction/android_mutation_toxin
+	name = "Android Mutation Toxin"
+	id = "androidmutationtoxin"
+	results = list("androidmutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "teslium" = 1) //beep boop
 
 /datum/chemical_reaction/mulligan
 	name = "Mulligan"
