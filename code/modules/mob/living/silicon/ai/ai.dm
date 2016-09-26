@@ -759,7 +759,6 @@ var/list/ai_list = list()
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
-		loc = card//Throw AI into the card.
 		card.AI = src
 		user.forceMove(src)
 		src << "You have been downloaded to a mobile storage device. Remote device connection severed."
