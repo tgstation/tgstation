@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Blobs will generally require fewer blobs to win during the blob mode, which should hopefully make the mode end faster at lower overmind amounts."
