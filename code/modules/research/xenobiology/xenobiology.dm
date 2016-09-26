@@ -194,7 +194,7 @@
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
-		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
+		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.them_pronoun()] in completing [user.their_pronoun()] goals at any cost.</span>"
 		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
 	else
