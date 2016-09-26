@@ -1,0 +1,5 @@
+author: "TheCarlSaganExpress"
+delete-after: True
+changes: 
+  - rscadd: "You may now insert crayons, lipstick, penlights, or cigarettes in your PDA."
+  - bugfix: "Removing cartridges from the PDA will no longer cause them to automatically fall to the floor."
