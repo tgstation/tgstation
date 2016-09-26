@@ -25,42 +25,36 @@
 /client/they_pronoun(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "it"
+	. = "they"
 	switch(temp_gender)
 		if(FEMALE)
 			. = "she"
 		if(MALE)
 			. = "he"
-		if(PLURAL)
-			. = "they"
 	if(capitalized)
 		. = capitalize(.)
 
 /client/their_pronoun(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "its"
+	. = "their"
 	switch(temp_gender)
 		if(FEMALE)
 			. = "her"
 		if(MALE)
 			. = "his"
-		if(PLURAL)
-			. = "their"
 	if(capitalized)
 		. = capitalize(.)
 
 /client/them_pronoun(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "it"
+	. = "them"
 	switch(temp_gender)
 		if(FEMALE)
 			. = "her"
 		if(MALE)
 			. = "him"
-		if(PLURAL)
-			. = "them"
 	if(capitalized)
 		. = capitalize(.)
 
@@ -68,14 +62,14 @@
 	if(!temp_gender)
 		temp_gender = gender
 	. = "has"
-	if(temp_gender == PLURAL)
+	if(temp_gender == PLURAL || temp_gender == NEUTER)
 		. = "have"
 
 /client/get_is(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "is"
-	if(temp_gender == PLURAL)
+	if(temp_gender == PLURAL || temp_gender == NEUTER)
 		. = "are"
 
 //mobs(and atoms but atoms don't really matter write your own proc overrides) also have gender!
