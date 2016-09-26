@@ -21,6 +21,17 @@
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (OXYLOSS)
 
+/obj/item/weapon/melee/synthetic_arm_blade
+	name = "synthetic arm blade"
+	desc = "A grotesque blade that on closer inspection seems made of synthentic flesh, it still feels like it would hurt very badly as a weapon."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "arm_blade"
+	item_state = "arm_blade"
+	origin_tech = "combat=5,biotech=5"
+	w_class = 5.0
+	force = 15
+	throwforce = 10
+	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/sabre
 	name = "officer's sabre"
@@ -36,7 +47,7 @@
 	armour_penetration = 75
 	sharpness = IS_SHARP
 	origin_tech = "combat=5"
-	attack_verb = list("lunged at", "stabbed")
+	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
 

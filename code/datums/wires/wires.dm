@@ -17,6 +17,7 @@ var/list/wire_colors = list(
 	"yellow",
 )
 var/list/wire_color_directory = list()
+var/list/wire_name_directory = list()
 
 /proc/is_wire_tool(obj/item/I)
 	if(istype(I, /obj/item/device/multitool))
@@ -35,12 +36,14 @@ var/list/wire_color_directory = list()
 /datum/wires
 	var/atom/holder = null // The holder (atom that contains these wires).
 	var/holder_type = null // The holder's typepath (used to make wire colors common to all holders).
+	var/proper_name = "Unknown" // The display name for the wire set shown in station blueprints. Not used if randomize is true or it's an item NT wouldn't know about (Explosives/Nuke)
 
 	var/list/wires = list() // List of wires.
 	var/list/cut_wires = list() // List of wires that have been cut.
 	var/list/colors = list() // Dictionary of colors to wire.
 	var/list/assemblies = list() // List of attached assemblies.
 	var/randomize = 0 // If every instance of these wires should be random.
+					  // Prevents wires from showing up in station blueprints
 
 /datum/wires/New(atom/holder)
 	..()
@@ -55,6 +58,7 @@ var/list/wire_color_directory = list()
 		if(!wire_color_directory[holder_type])
 			randomize()
 			wire_color_directory[holder_type] = colors
+			wire_name_directory[holder_type] = proper_name
 		else
 			colors = wire_color_directory[holder_type]
 
@@ -65,7 +69,7 @@ var/list/wire_color_directory = list()
 
 /datum/wires/proc/add_duds(duds)
 	while(duds)
-		var/dud = "dud[--duds]"
+		var/dud = WIRE_DUD_PREFIX + "[--duds]"
 		if(dud in wires)
 			continue
 		wires += dud

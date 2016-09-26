@@ -19,7 +19,10 @@
 	..(location)
 	if(C && istype(C))
 		circuit = C
-	else if(circuit)
+	//Some machines, oldcode arcades mostly, new themselves, so circuit
+	//can already be an instance of a type and trying to new that will
+	//cause a runtime
+	else if(ispath(circuit))
 		circuit = new circuit(null)
 	power_change()
 	update_icon()

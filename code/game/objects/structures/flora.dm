@@ -25,6 +25,7 @@
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
 				icon = 'icons/obj/flora/pinetrees.dmi'
 				icon_state = "tree_stump"
+				density = 0
 				pixel_x = -16
 				name += " stump"
 				cut = TRUE

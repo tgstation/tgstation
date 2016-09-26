@@ -573,3 +573,177 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user << "<span class='warning'>You need to dry this first!</span>"
 	else
 		..()
+
+///////////////
+//VAPE NATION//
+///////////////
+/obj/item/clothing/mask/vape
+	name = "E-Cigarette"
+	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: do not fill with flamable materials\""//<<< i'd vape to that.
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = null
+	item_state = null
+	var/chem_volume = 100
+	var/vapetime = 0 //this so it won't puff out clouds every tick
+	var/screw = 0 // kinky
+	var/super = 0 //for the fattest vapes dude.
+	var/emagged = 0 //LET THE GRIEF BEGIN
+
+/obj/item/clothing/mask/vape/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, they trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
+	return (TOXLOSS|OXYLOSS)
+
+
+/obj/item/clothing/mask/vape/New(loc, var/param_color = null)
+	..()
+	create_reagents(chem_volume)
+	reagents.set_reacting(FALSE) // so it doesn't react until you light it
+	reagents.add_reagent("nicotine", 50)
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("red","blue","black","white","green","purple","yellow","orange")
+		icon_state = "[param_color]_vape"
+		item_state = "[param_color]_vape"
+
+/obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+		if(reagents.total_volume < chem_volume)
+			if(O.reagents.total_volume > 0)
+				O.reagents.trans_to(src,25)
+				user << "<span class='notice'>You add the contents of [O] to the [src]</span>"
+			else
+				user << "<span class='warning'>The [O] is empty!</span>"
+		else
+			user << "<span class='warning'>[src] can't hold anymore reagents!</span>"
+
+	if(istype(O, /obj/item/weapon/screwdriver))
+		if(!screw)
+			screw = 1
+			user << "<span class='notice'>You open the cap on the [src]</span>"
+			if(super)
+				add_overlay(image(icon, "vapeopen_med"))
+			else
+				add_overlay(image(icon, "vapeopen_low"))
+		else
+			screw = 0
+			user << "<span class='notice'>You close the cap on the [src]</span>"
+			cut_overlays()
+
+	if(istype(O, /obj/item/device/multitool))
+		if(screw && !emagged)//also kinky
+			if(!super)
+				cut_overlays()
+				super = 1
+				user << "<span class='notice'>You increase the voltage in the [src]</span>"
+				add_overlay(image(icon, "vapeopen_med"))
+			else
+				cut_overlays()
+				super = 0
+				user << "<span class='notice'>You decrease the voltage in the [src]</span>"
+				add_overlay(image(icon, "vapeopen_low"))
+		
+		if(screw && emagged)
+			user << "<span class='notice'>The [name] can't be modified!</span>"
+
+
+/obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
+	if(screw)
+		if(!emagged)
+			cut_overlays()
+			emagged = 1
+			super = 0
+			user << "<span class='warning'>You maximize the voltage in the [src]</span>"
+			add_overlay(image(icon, "vapeopen_high"))
+			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
+			sp.set_up(5, 1, src)
+			sp.start()
+		else
+			user << "<span class='warning'>The [name] is already emagged!</span>"
+	else
+		user << "<span class='notice'>You need to open the cap to do that</span>"
+
+/obj/item/clothing/mask/vape/attack_self(mob/user)
+	if(reagents.total_volume > 0)
+		user << "<span class='notice'>you empty [src] of all reagents.</span>"
+		reagents.clear_reagents()
+	return
+
+/obj/item/clothing/mask/vape/equipped(mob/user, slot)
+	if(slot == slot_wear_mask)
+		if(!screw)
+			user << "<span class='notice'>You start puffing on that dank vape</span>"
+			reagents.set_reacting(TRUE)
+			START_PROCESSING(SSobj, src)
+		else //it will not start if the vape is opened.
+			user << "<span class='warning'>You need to close the cap first!</span>"
+
+/obj/item/clothing/mask/vape/dropped(mob/user)
+	var/mob/living/carbon/C = user
+	if(C.get_item_by_slot(slot_wear_mask) == src)
+		reagents.set_reacting(FALSE)
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error
+	if(reagents.total_volume)
+		if(iscarbon(loc))
+			var/mob/living/carbon/C = loc
+			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
+				var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1) //this will react instantly, making them a little more dangerous than cigarettes
+				reagents.reaction(C, INGEST, fraction)
+				reagents.trans_to(C, REAGENTS_METABOLISM)
+				if(reagents.get_reagent_amount("welding_fuel"))
+					//HOT STUFF
+					C.fire_stacks = 2
+					C.IgniteMob()
+
+				if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
+					var/datum/effect_system/reagents_explosion/e = new()
+					e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
+					e.start()
+					if(ismob(loc))
+						var/mob/M = loc
+						M.unEquip(src, 1)
+					qdel(src)
+				return
+		reagents.remove_any(REAGENTS_METABOLISM)
+
+/obj/item/clothing/mask/vape/process()
+	var/mob/living/M = loc
+
+	if(isliving(loc))
+		M.IgniteMob()
+
+	vapetime++
+
+	if(!reagents.total_volume)
+		if(ismob(loc))
+			M << "<span class='notice'>The [name] is empty!</span>"
+			STOP_PROCESSING(SSobj, src)
+			//it's reusable so it won't unequip when empty
+		return
+	//open flame removed because vapes are a closed system, they wont light anything on fire
+
+	if(super && vapetime > 3)//Time to start puffing those fat vapes, yo.
+		var/datum/effect_system/smoke_spread/chem/s = new
+		s.set_up(reagents, 1, loc)
+		s.start()
+		vapetime = 0
+
+	if(emagged && vapetime > 3)
+		var/datum/effect_system/smoke_spread/chem/s = new
+		s.set_up(reagents, 4, loc)
+		s.start()
+		vapetime = 0
+		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
+			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
+			M.apply_damage(20, BURN, "head")
+			M.unEquip(src, 1)
+			M.Weaken(15, 1, 0)
+			qdel(src)
+			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
+			sp.set_up(5, 1, src)
+			sp.start()
+			M << "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>"
+
+	if(reagents && reagents.total_volume)
+		hand_reagents()

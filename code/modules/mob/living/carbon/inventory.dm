@@ -37,6 +37,7 @@
 				observe.client.screen -= I
 	I.loc = src
 	I.layer = ABOVE_HUD_LAYER
+	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 	switch(slot)
 		if(slot_back)

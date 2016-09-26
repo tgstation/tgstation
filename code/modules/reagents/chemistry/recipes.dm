@@ -57,9 +57,9 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 				chosen = pick(chemical_mob_spawn_nicecritters)
 			else
 				chosen = pick(chemical_mob_spawn_meancritters)
-			var/mob/living/simple_animal/C = new chosen
+			var/spawnloc = get_turf(holder.my_atom)
+			var/mob/living/simple_animal/C = new chosen(spawnloc)
 			C.faction |= mob_faction
-			C.loc = get_turf(holder.my_atom)
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))

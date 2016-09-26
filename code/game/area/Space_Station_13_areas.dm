@@ -187,6 +187,7 @@ var/list/teleportlocs = list()
 	has_gravity = 1
 	noteleport = 1
 	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
+	flags = NONE
 
 /area/centcom/control
 	name = "Centcom Docks"
@@ -396,6 +397,7 @@ var/list/teleportlocs = list()
 /area/atmos
  	name = "Atmospherics"
  	icon_state = "atmos"
+ 	flags = NONE
 
 //Maintenance
 /area/maintenance
@@ -617,11 +619,15 @@ var/list/teleportlocs = list()
 /area/library
  	name = "Library"
  	icon_state = "library"
+ 	flags = NONE
+
+/area/chapel
+	icon_state = "chapel"
+	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
+	flags = NONE
 
 /area/chapel/main
 	name = "Chapel"
-	icon_state = "chapel"
-	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
 
 /area/chapel/office
 	name = "Chapel Office"
@@ -668,6 +674,7 @@ var/list/teleportlocs = list()
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
 	blob_allowed = FALSE
+	flags = NONE
 
 /area/solar/auxport
 		name = "Fore Port Solar Array"
@@ -784,6 +791,7 @@ var/list/teleportlocs = list()
 /area/medical/virology
 	name = "Virology"
 	icon_state = "virology"
+	flags = NONE
 
 /area/medical/morgue
 	name = "Morgue"
@@ -957,6 +965,7 @@ var/list/teleportlocs = list()
 /area/janitor/
 	name = "Custodial Closet"
 	icon_state = "janitor"
+	flags = NONE
 
 /area/hydroponics
 	name = "Hydroponics"

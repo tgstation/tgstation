@@ -85,6 +85,10 @@
 		jetpack = new jetpack(src)
 	..()
 
+/obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	..()
+
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tank/jetpack/suit))
 		if(jetpack)
@@ -494,6 +498,7 @@
 	desc = "A special hardsuit helmet designed for only the most fashionable of military figureheads."
 	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 	actions_types = list()
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR //we want to see the mask
 
 /obj/item/clothing/head/helmet/space/hardsuit/captain/attack_self()
 	return //Sprites required for flashlight

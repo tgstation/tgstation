@@ -27,7 +27,7 @@
 	colour_type - a typepath (subtyped from /datum/client_colour)
 */
 /mob/proc/add_client_colour(colour_type)
-	if(!ispath(/datum/client_colour))
+	if(!ispath(colour_type, /datum/client_colour))
 		return
 
 	var/datum/client_colour/CC = new colour_type()
@@ -41,7 +41,7 @@
 	colour_type - a typepath (subtyped from /datum/client_colour)
 */
 /mob/proc/remove_client_colour(colour_type)
-	if(!ispath(/datum/client_colour))
+	if(!ispath(colour_type, /datum/client_colour))
 		return
 
 	for(var/cc in client_colours)
@@ -70,3 +70,39 @@
 
 
 
+/datum/client_colour/glass_colour
+	priority = 0
+	colour = "red"
+
+/datum/client_colour/glass_colour/green
+	colour = "#aaffaa"
+
+/datum/client_colour/glass_colour/lightgreen
+	colour = "#ccffcc"
+
+/datum/client_colour/glass_colour/blue
+	colour = "#aaaaff"
+
+/datum/client_colour/glass_colour/lightblue
+	colour = "#ccccff"
+
+/datum/client_colour/glass_colour/yellow
+	colour = "#ffff66"
+
+/datum/client_colour/glass_colour/red
+	colour = "#ffaaaa"
+
+/datum/client_colour/glass_colour/darkred
+	colour = "#bb5555"
+
+/datum/client_colour/glass_colour/orange
+	colour = "#ffbb99"
+
+/datum/client_colour/glass_colour/lightorange
+	colour = "#ffddaa"
+
+/datum/client_colour/glass_colour/purple
+	colour = "#ff99ff"
+
+/datum/client_colour/glass_colour/gray
+	colour = "#cccccc"

@@ -81,14 +81,6 @@
 	results = list("mindbreaker" = 5)
 	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
 
-/datum/chemical_reaction/teslium
-	name = "Teslium"
-	id = "teslium"
-	results = list("teslium" = 3)
-	required_reagents = list("plasma" = 1, "silver" = 1, "blackpowder" = 1)
-	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
-	required_temp = 400
-
 /datum/chemical_reaction/heparin
 	name = "Heparin"
 	id = "Heparin"

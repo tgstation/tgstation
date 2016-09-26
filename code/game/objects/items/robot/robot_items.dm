@@ -10,15 +10,16 @@
 	icon_state = "elecarm"
 	var/charge_cost = 30
 
-/obj/item/borg/stun/attack(mob/living/M, mob/living/silicon/robot/user)
+/obj/item/borg/stun/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
 			playsound(M, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
-
-	if(!user.cell.use(charge_cost))
-		return
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(!R.cell.use(charge_cost))
+			return
 
 	user.do_attack_animation(M)
 	M.Weaken(5)

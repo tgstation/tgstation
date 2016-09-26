@@ -164,11 +164,16 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+		specflags += DIGITIGRADE
+	if(DIGITIGRADE in specflags)
+		C.Digitigrade_Leg_Swap(FALSE)
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
+	if(DIGITIGRADE in specflags)
+		C.Digitigrade_Leg_Swap(TRUE)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
@@ -258,8 +263,6 @@
 
 	var/list/standing	= list()
 
-	handle_mutant_bodyparts(H)
-
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
 	if(!(H.disabilities & HUSK))
@@ -289,7 +292,7 @@
 			else
 				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 
-	if(H.socks && H.get_num_legs() >= 2)
+	if(H.socks && H.get_num_legs() >= 2 && !(DIGITIGRADE in specflags))
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
 			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
@@ -298,7 +301,7 @@
 		H.overlays_standing[BODY_LAYER] = standing
 
 	H.apply_overlay(BODY_LAYER)
-
+	handle_mutant_bodyparts(H)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
@@ -371,6 +374,29 @@
 		else if ("wings" in mutant_bodyparts)
 			bodyparts_to_add -= "wings_open"
 
+	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
+	var/update_needed = FALSE
+	var/not_digitigrade = TRUE
+	for(var/X in H.bodyparts)
+		var/obj/item/bodypart/O = X
+		if(!O.use_digitigrade)
+			continue
+		not_digitigrade = FALSE
+		if(!(DIGITIGRADE in specflags)) //Someone cut off a digitigrade leg and tacked it on
+			specflags += DIGITIGRADE
+		var/should_be_squished = FALSE
+		if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) || (H.wear_suit.body_parts_covered & LEGS)) || (H.w_uniform && (H.w_uniform.body_parts_covered & LEGS)))
+			should_be_squished = TRUE
+		if(O.use_digitigrade == FULL_DIGITIGRADE && should_be_squished)
+			O.use_digitigrade = SQUISHED_DIGITIGRADE
+			update_needed = TRUE
+		else if(O.use_digitigrade == SQUISHED_DIGITIGRADE && !should_be_squished)
+			O.use_digitigrade = FULL_DIGITIGRADE
+			update_needed = TRUE
+	if(update_needed)
+		H.update_body_parts()
+	if(not_digitigrade && (DIGITIGRADE in specflags)) //Curse is lifted
+		specflags -= DIGITIGRADE
 
 	if(!bodyparts_to_add)
 		return
@@ -411,6 +437,8 @@
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")
 					S = wings_open_list[H.dna.features["wings"]]
+				if("legs")
+					S = legs_list[H.dna.features["legs"]]
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -552,6 +580,10 @@
 				return 0
 			if(num_legs < 2)
 				return 0
+			if(DIGITIGRADE in specflags)
+				if(!disable_warning)
+					H << "<span class='warning'>The footwear around here isn't compatible with your feet!</span>"
+				return 0
 			return 1
 		if(slot_belt)
 			if(H.belt)
@@ -678,7 +710,7 @@
 	return
 
 /datum/species/proc/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	return
+	H.update_mutant_bodyparts()
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == exotic_blood)
@@ -1065,13 +1097,15 @@
 					user.add_mob_blood(H)
 
 		switch(hit_area)
-			if("head")	//Harder to score a stun but if you do it lasts a bit longer
+			if("head")
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
-										"<span class='userdanger'>[H] has been knocked unconscious!</span>")
-						H.apply_effect(20, PARALYZE, armor_block)
-					if(prob(I.force + ((100 - H.health)/2)) && H != user && I.damtype == BRUTE)
+						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
+										"<span class='userdanger'>[H] has been knocked senseless!</span>")
+						H.confused = max(H.confused, 20)
+						H.adjust_blurriness(10)
+
+					if(prob(I.force + ((100 - H.health)/2)) && H != user)
 						ticker.mode.remove_revolutionary(H.mind)
 
 				if(bloody)	//Apply blood
@@ -1085,11 +1119,12 @@
 						H.glasses.add_mob_blood(H)
 						H.update_inv_glasses()
 
-			if("chest")	//Easier to score a stun but lasts less time
-				if(H.stat == CONSCIOUS && I.force && prob(I.force + 10))
-					H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
+			if("chest")
+				if(H.stat == CONSCIOUS && armor_block < 50)
+					if(prob(I.force))
+						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
-					H.apply_effect(5, WEAKEN, armor_block)
+						H.apply_effect(3, WEAKEN, armor_block)
 
 				if(bloody)
 					if(H.wear_suit)

@@ -38,8 +38,8 @@
 	health = 90
 	maxHealth = 90
 	speed = -1
-	melee_damage_lower = 20
-	melee_damage_upper = 20
+	melee_damage_lower = 18
+	melee_damage_upper = 18
 	attacktext = "crushes"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	loot = list(/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment)
