@@ -361,8 +361,8 @@
 	color = "#13BC5E" // rgb: 19, 188, 94
 
 /datum/reagent/stableslimetoxin
-	name = "Human Mutation Toxin"
-	id = "humanmutationtoxin"
+	name = "Stable Mutation Toxin"
+	id = "stablemutationtoxin"
 	description = "A humanizing toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself

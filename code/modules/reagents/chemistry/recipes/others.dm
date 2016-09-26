@@ -109,10 +109,10 @@
 
 ////////////////////////////////// Mutation Toxins ///////////////////////////////////
 
-/datum/chemical_reaction/human_mutation_toxin
-	name = "Human Mutation Toxin"
-	id = "humanmutationtoxin"
-	results = list("humanmutationtoxin" = 1)
+/datum/chemical_reaction/stable_mutation_toxin
+	name = "Stable Mutation Toxin"
+	id = "stablemutationtoxin"
+	results = list("stablemutationtoxin" = 1)
 	required_reagents = list("unstablemutationtoxin" = 1, "blood" = 1) //classic
 
 /datum/chemical_reaction/lizard_mutation_toxin
