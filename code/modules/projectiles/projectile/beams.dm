@@ -129,7 +129,8 @@
 /obj/item/projectile/beam/instakill
 	name = "instagib laser"
 	icon_state = "purple_laser"
-	damage = 200
+	damage = 10000000
+	armor_penetration = 10000000
 	damage_type = BURN
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
 
