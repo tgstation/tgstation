@@ -149,7 +149,7 @@
 	name = "Shadow Mutation Toxin"
 	id = "shadowmutationtoxin"
 	results = list("shadowmutationtoxin" = 1)
-	required_reagents = list("amutationtoxin" = 1, "liquid_dark_matter" = 1) //only reagent i could think of
+	required_reagents = list("amutationtoxin" = 1, "liquid_dark_matter" = 1, "holywater" = 1)
 
 /datum/chemical_reaction/pod_mutation_toxin
 	name = "Podperson Mutation Toxin"
