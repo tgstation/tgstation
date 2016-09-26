@@ -61,7 +61,7 @@
 	..()
 
 /datum/status_effect/vanguard_shield/on_apply()
-	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
+	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 
 /datum/status_effect/vanguard_shield/on_remove()
@@ -102,7 +102,7 @@
 	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
 	owner.color = "#1E8CE1"
 	owner.fully_heal()
-	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " is glowing with a flickering blue light!")
+	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " glowing with a flickering blue light!")
 	owner.status_flags |= GODMODE
 	animate(owner, color = initial(owner.color), time = 150, easing = EASE_IN)
 	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
