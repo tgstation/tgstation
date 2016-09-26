@@ -130,7 +130,6 @@
 	name = "instagib laser"
 	icon_state = "purple_laser"
 	damage = INFINITY
-	armor_penetration = INFINITY
 	damage_type = BURN
 	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
 
