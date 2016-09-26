@@ -883,6 +883,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
+	inserted_item = null
+	qdel(inserted_item)
 	return ..()
 
 //AI verb and proc for sending PDA messages.
