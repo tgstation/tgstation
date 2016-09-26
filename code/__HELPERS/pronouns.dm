@@ -3,17 +3,17 @@
 /datum/proc/they_pronoun(capitalized, temp_gender)
 	. = "it"
 	if(capitalized)
-		. = capitalize("[.]")
+		. = capitalize(.)
 
 /datum/proc/their_pronoun(capitalized, temp_gender)
 	. = "its"
 	if(capitalized)
-		. = capitalize("[.]")
+		. = capitalize(.)
 
 /datum/proc/them_pronoun(capitalized, temp_gender)
 	. = "it"
 	if(capitalized)
-		. = capitalize("[.]")
+		. = capitalize(.)
 
 /datum/proc/get_has(temp_gender)
 	. = "has"
@@ -34,7 +34,7 @@
 		if(PLURAL)
 			. = "they"
 	if(capitalized)
-		. = capitalize("[.]")
+		. = capitalize(.)
 
 /client/their_pronoun(capitalized, temp_gender)
 	if(!temp_gender)
@@ -48,7 +48,7 @@
 		if(PLURAL)
 			. = "their"
 	if(capitalized)
-		. = capitalize("[.]")
+		. = capitalize(.)
 
 /client/them_pronoun(capitalized, temp_gender)
 	if(!temp_gender)
@@ -62,7 +62,7 @@
 		if(PLURAL)
 			. = "them"
 	if(capitalized)
-		. = capitalize("[.]")
+		. = capitalize(.)
 
 /client/get_has(temp_gender)
 	if(!temp_gender)
@@ -91,7 +91,7 @@
 		if(PLURAL)
 			. = "they"
 	if(capitalized)
-		. = capitalize("[.]")
+		. = capitalize(.)
 
 /mob/their_pronoun(capitalized, temp_gender)
 	if(!temp_gender)
@@ -105,7 +105,7 @@
 		if(PLURAL)
 			. = "their"
 	if(capitalized)
-		. = capitalize("[.]")
+		. = capitalize(.)
 
 /mob/them_pronoun(capitalized, temp_gender)
 	if(!temp_gender)
@@ -119,7 +119,7 @@
 		if(PLURAL)
 			. = "them"
 	if(capitalized)
-		. = capitalize("[.]")
+		. = capitalize(.)
 
 /mob/get_has(temp_gender)
 	if(!temp_gender)
