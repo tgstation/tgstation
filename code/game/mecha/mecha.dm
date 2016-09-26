@@ -639,7 +639,6 @@
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
 			AI.loc = card
-			AI.forceMove(card)
 			card.AI = AI
 			occupant = null
 			AI.controlled_mech = null
