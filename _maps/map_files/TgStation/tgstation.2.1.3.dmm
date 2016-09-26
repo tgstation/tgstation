@@ -7384,6 +7384,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "apI" = (
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "apJ" = (
@@ -36590,6 +36591,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bCY" = (
@@ -37039,6 +37041,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
@@ -37088,6 +37091,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bEd" = (
@@ -37871,7 +37875,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bFJ" = (
@@ -38435,13 +38438,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGS" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-/obj/item/weapon/reagent_containers/syringe,
+/obj/machinery/limbgrower,
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGT" = (
@@ -38550,7 +38548,6 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bHf" = (
@@ -39185,6 +39182,18 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/morphine{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_x = 6;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIn" = (
@@ -41814,13 +41823,13 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNR" = (
@@ -41853,6 +41862,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNT" = (
@@ -90902,7 +90912,7 @@ bJs
 bKy
 bLM
 bLM
-alX
+bNQ
 bOV
 bQk
 bRt
@@ -106060,7 +106070,7 @@ bDc
 bEo
 bDf
 bEb
-bIC
+apI
 bGY
 bJN
 bMp

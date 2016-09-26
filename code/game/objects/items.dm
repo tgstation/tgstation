@@ -344,6 +344,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/datum/action/A = X
 		A.Remove(user)
 	if(DROPDEL & flags)
+		//Prevents infinite loops where Destroy() calls an objects dropped() function
+		flags &= ~DROPDEL
 		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
@@ -585,3 +587,8 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		. = "<span class='notice'>[user] lights [A] with [src].</span>"
 	else
 		. = ""
+
+
+//when an item modify our speech spans when in our active hand. Override this to modify speech spans.
+/obj/item/proc/get_held_item_speechspans(mob/living/carbon/user)
+	return

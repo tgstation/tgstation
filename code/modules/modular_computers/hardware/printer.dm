@@ -5,6 +5,7 @@
 	origin_tech = "programming=2;engineering=2"
 	icon_state = "printer"
 	w_class = 3
+	device_type = MC_PRINT
 	var/stored_paper = 20
 	var/max_paper = 30
 

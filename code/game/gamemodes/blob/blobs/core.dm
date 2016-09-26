@@ -62,6 +62,8 @@
 		overmind.update_health_hud()
 
 /obj/effect/blob/core/Life()
+	if(qdeleted(src))
+		return
 	if(!overmind)
 		create_overmind()
 	else
@@ -91,7 +93,7 @@
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = get_candidates(ROLE_BLOB)
+		candidates = pollCandidatesForMob("Do you want to play as a blob overmind?", ROLE_BLOB, null, ROLE_BLOB, 50, src) //we're technically not a mob but behave similarly
 		if(candidates.len)
 			C = pick(candidates)
 	else

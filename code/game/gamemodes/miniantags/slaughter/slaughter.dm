@@ -63,6 +63,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	name = "pile of viscera"
 	desc = "A repulsive pile of guts and gore."
+	gender = NEUTER
 	random_icon_states = list("innards")
 
 /mob/living/simple_animal/slaughter/phasein()

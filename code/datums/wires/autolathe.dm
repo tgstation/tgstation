@@ -1,5 +1,6 @@
 /datum/wires/autolathe
 	holder_type = /obj/machinery/autolathe
+	proper_name = "Autolathe"
 
 /datum/wires/autolathe/New(atom/holder)
 	wires = list(

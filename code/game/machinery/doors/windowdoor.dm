@@ -346,17 +346,12 @@
 
 /obj/machinery/door/window/clockwork/New(loc, set_dir)
 	..()
-	if(set_dir)
-		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
-		setDir(set_dir)
-		E.setDir(set_dir)
-		made_glow = TRUE
-	debris += new/obj/item/stack/sheet/brass(src)
+	debris += new/obj/item/stack/sheet/brass(src, 2)
 	change_construction_value(2)
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
