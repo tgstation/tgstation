@@ -47246,6 +47246,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bDx" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/plasteel/bot,
 /area/atmos)
 "bDy" = (
@@ -49974,7 +49975,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bHQ" = (
@@ -49985,7 +49985,6 @@
 	dir = 2;
 	on = 1
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/black/corner{
 	dir = 2
 	},
@@ -73557,7 +73556,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
@@ -74085,7 +74083,6 @@
 /turf/open/floor/plasteel/bot,
 /area/toxins/storage)
 "cxf" = (
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 8
 	},
@@ -74093,7 +74090,6 @@
 "cxg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
@@ -75357,7 +75353,6 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/warning{
 	dir = 10
 	},
@@ -90633,8 +90628,9 @@
 	},
 /area/shuttle/transport)
 "cZx" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/abandoned)
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/turf/open/floor/plasteel/bot,
+/area/atmos)
 "cZy" = (
 /turf/open/floor/plating/warnplate{
 	dir = 1
@@ -134571,7 +134567,7 @@ bEn
 bHQ
 bJz
 bKT
-bDx
+cZx
 atw
 cXn
 bRz

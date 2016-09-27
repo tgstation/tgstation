@@ -36591,7 +36591,6 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bCY" = (
@@ -37041,7 +37040,6 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
@@ -37091,7 +37089,6 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bEd" = (
@@ -41829,7 +41826,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNR" = (
@@ -41862,7 +41858,6 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNT" = (
@@ -105297,7 +105292,7 @@ bAG
 bCa
 bDc
 bEo
-apI
+bIC
 bEc
 bIB
 bIB
@@ -106070,7 +106065,7 @@ bDc
 bEo
 bDf
 bEb
-apI
+bGY
 bGY
 bJN
 bMp
