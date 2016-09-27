@@ -198,6 +198,14 @@ var/last_irc_status = 0
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
 	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
+	var/round_end_sound_sent = FALSE
+	if(ticker.round_end_sound)
+		round_end_sound_sent = TRUE
+		for(var/thing in clients)
+			var/client/C = thing
+			if (!C)
+				continue
+			C.Export("##action=load_rsc", ticker.round_end_sound)
 	sleep(delay)
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
@@ -215,7 +223,7 @@ var/last_irc_status = 0
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-	#ifdef dellogging
+#ifdef dellogging
 	var/log = file("data/logs/del.log")
 	log << time2text(world.realtime)
 	for(var/index in del_counter)
@@ -223,12 +231,24 @@ var/last_irc_status = 0
 		if(count > 10)
 			log << "#[count]\t[index]"
 #endif
-	spawn(0)
+	var/soundwait = 0
+	if (ticker.round_end_sound && !round_end_sound_sent)
+		soundwait = 10
+		for(var/thing in clients)
+			var/client/C = thing
+			if (!C)
+				continue
+			C.Export("##action=load_rsc", ticker.round_end_sound)
+	spawn(soundwait/2)
 		if(ticker && ticker.round_end_sound)
 			world << sound(ticker.round_end_sound)
 		else
 			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg')) // random end sounds!! - LastyBatsy
-	for(var/client/C in clients)
+	sleep(soundwait)
+	for(var/thing in clients)
+		var/client/C = thing
+		if (!C)
+			continue
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 	..(0)
