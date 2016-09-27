@@ -595,7 +595,7 @@
         . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_state]")
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 ///////////////Capture the Flag////////////////////
 

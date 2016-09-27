@@ -146,7 +146,7 @@
 	resistance_flags = 0
 
 /obj/item/clothing/suit/wizrobe/paper
-	name = "papier-m?ch? robe"
+	name = "papier-mâché robe"
 	desc = "A robe held together by various bits of clear-tape and paste."
 	icon_state = "wizard-paper"
 	item_state = "wizrobe"
