@@ -95,16 +95,6 @@
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/Laser.ogg'
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
-	equip_cooldown = 30
-	name = "eZ-13 MK2 heavy pulse rifle"
-	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demloishing obstacles."
-	icon_state = "mecha_pulse"
-	energy_drain = 120
-	origin_tech = "materials=3;combat=6;powerstorage=4"
-	projectile = /obj/item/projectile/beam/pulse/heavy
-	fire_sound = 'sound/weapons/marauder.ogg'
-
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	equip_cooldown = 20
 	name = "217-D Heavy Plasma Cutter"

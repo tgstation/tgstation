@@ -31,35 +31,7 @@
 
 /obj/mecha/combat/marauder/loaded/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
-	ME.attach(src)
-
-/obj/mecha/combat/marauder/seraph
-	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
-	name = "\improper Seraph"
-	icon_state = "seraph"
-	operation_req_access = list(access_cent_specops)
-	step_in = 3
-	health = 550
-	wreckage = /obj/structure/mecha_wreckage/seraph
-	internal_damage_threshold = 20
-	force = 55
-	max_equip = 5
-
-/obj/mecha/combat/marauder/seraph/New()
-	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
 	ME.attach(src)

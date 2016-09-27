@@ -209,38 +209,6 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
-/datum/outfit/spec_ops
-	name = "Special Ops Officer"
-
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/space/officer
-	shoes = /obj/item/clothing/shoes/combat/swat
-	gloves = /obj/item/clothing/gloves/combat
-	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	ears = /obj/item/device/radio/headset/headset_cent/commander
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
-	head = /obj/item/clothing/head/helmet/space/beret
-	belt = /obj/item/weapon/gun/energy/pulse/pistol/m1911
-	r_pocket = /obj/item/weapon/lighter
-	back = /obj/item/weapon/storage/backpack/satchel/leather
-	id = /obj/item/weapon/card/id
-
-/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/card/id/W = H.wear_id
-	W.icon_state = "centcom"
-	W.access = get_all_accesses()
-	W.access += get_centcom_access("Special Ops Officer")
-	W.assignment = "Special Ops Officer"
-	W.registered_name = H.real_name
-	W.update_label()
-
-	var/obj/item/device/radio/headset/R = H.ears
-	R.set_frequency(CENTCOM_FREQ)
-	R.freqlock = 1
-
 /datum/outfit/wizard
 	name = "Blue Wizard"
 
@@ -374,16 +342,4 @@
 /datum/outfit/death_commando/officer
 	name = "Death Commando Officer"
 	head = /obj/item/clothing/head/helmet/space/beret
-
-/datum/outfit/chrono_agent
-	name = "Timeline Eradication Agent"
-	uniform = /obj/item/clothing/under/color/white
-	suit = /obj/item/clothing/suit/space/chronos
-	back = /obj/item/weapon/chrono_eraser
-	head = /obj/item/clothing/head/helmet/space/chronos
-	mask = /obj/item/clothing/mask/breath
-	suit_store = /obj/item/weapon/tank/internals/oxygen
-
-
-
 
