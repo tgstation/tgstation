@@ -1,0 +1,4 @@
+author: "uraniummeltdown"
+delete-after: True
+changes: 
+  - tweak: "Protolathe stock parts now build 5 times faster"
