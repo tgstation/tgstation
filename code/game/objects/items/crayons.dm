@@ -380,7 +380,7 @@
 	if(edible && (M == user))
 		user << "You take a bite of the [src.name]. Delicious!"
 		var/eaten = use_charges(5)
-		if(eaten == 0) //Prevents divsion by zero
+		if(!reagents.total_volume) //Prevents divsion by zero
 			check_empty()
 			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
