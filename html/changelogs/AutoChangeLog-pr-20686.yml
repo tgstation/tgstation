@@ -1,0 +1,5 @@
+author: "Incoming5643"
+delete-after: True
+changes: 
+  - rscadd: "The secret satchels system has been updated to hide more smuggler's satchels hidden randomly under the station"
+  - experiment: "In case you forgot about the secret satchel system, basically if you take a smuggler's satchel (a traitor item also occasionally found under a random tile in the station [USE T-RAYS]), stow away an item in it, and bury it under the floor tiles that item can reappear in a random later round!"
