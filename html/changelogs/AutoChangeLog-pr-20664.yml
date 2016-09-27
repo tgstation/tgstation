@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - tweak: "Using plasma on dark blue slimes will now spawn freon instead of arbitrarily freezing mobs."
