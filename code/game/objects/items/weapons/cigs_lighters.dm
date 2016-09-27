@@ -577,38 +577,36 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 ///////////////
 //VAPE NATION//
 ///////////////
-/obj/item/clothing/mask/cigarette/vape
+/obj/item/clothing/mask/vape
 	name = "E-Cigarette"
 	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: do not fill with flamable materials\""//<<< i'd vape to that.
+	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = null
 	item_state = null
-	icon_on = null  //Note - these are in masks.dmi
-	icon_off = null // i'm lazy
-	smoketime = 3000 //long live the vape
-	chem_volume = 100
+	var/chem_volume = 100
 	var/vapetime = 0 //this so it won't puff out clouds every tick
 	var/screw = 0 // kinky
 	var/super = 0 //for the fattest vapes dude.
 	var/emagged = 0 //LET THE GRIEF BEGIN
 
-/obj/item/clothing/mask/cigarette/vape/suicide_act(mob/user)
+/obj/item/clothing/mask/vape/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, they trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
 
-/obj/item/clothing/mask/cigarette/vape/New(loc, var/param_color = null)
+/obj/item/clothing/mask/vape/New(loc, var/param_color = null)
 	..()
+	create_reagents(chem_volume)
+	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	reagents.add_reagent("nicotine", 50)
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("red","blue","black","white","green","purple","yellow","orange")
 		icon_state = "[param_color]_vape"
-		icon_on = "[param_color]_vape"
-		icon_off = "[param_color]_vape" //i'm extremely lazy
 		item_state = "[param_color]_vape"
 
-/obj/item/clothing/mask/cigarette/vape/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers))
+/obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
 				O.reagents.trans_to(src,25)
@@ -648,7 +646,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user << "<span class='notice'>The [name] can't be modified!</span>"
 
 
-/obj/item/clothing/mask/cigarette/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
+/obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
 	if(screw)
 		if(!emagged)
 			cut_overlays()
@@ -664,32 +662,28 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		user << "<span class='notice'>You need to open the cap to do that</span>"
 
-/obj/item/clothing/mask/cigarette/vape/attack_self(mob/user)
+/obj/item/clothing/mask/vape/attack_self(mob/user)
 	if(reagents.total_volume > 0)
 		user << "<span class='notice'>you empty [src] of all reagents.</span>"
-		smoketime = 0
 		reagents.clear_reagents()
 	return
 
-/obj/item/clothing/mask/cigarette/vape/equipped(mob/user, slot)
+/obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == slot_wear_mask)
 		if(!screw)
 			user << "<span class='notice'>You start puffing on that dank vape</span>"
 			reagents.set_reacting(TRUE)
-			lit = 1
 			START_PROCESSING(SSobj, src)
-			light("<span class='notice'>[user] starts puffing on that fine vape</span>")
 		else //it will not start if the vape is opened.
 			user << "<span class='warning'>You need to close the cap first!</span>"
 
-/obj/item/clothing/mask/cigarette/vape/dropped(mob/user)
+/obj/item/clothing/mask/vape/dropped(mob/user)
 	var/mob/living/carbon/C = user
 	if(C.get_item_by_slot(slot_wear_mask) == src)
-		lit = 0
 		reagents.set_reacting(FALSE)
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/clothing/mask/cigarette/vape/handle_reagents()//had to rename to avoid duplicate error
+/obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error
 	if(reagents.total_volume)
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
@@ -713,7 +707,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
 
-/obj/item/clothing/mask/cigarette/vape/process()
+/obj/item/clothing/mask/vape/process()
 	var/mob/living/M = loc
 
 	if(isliving(loc))
@@ -731,13 +725,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(super && vapetime > 3)//Time to start puffing those fat vapes, yo.
 		var/datum/effect_system/smoke_spread/chem/s = new
-		s.set_up(reagents, 1, loc)
+		s.set_up(reagents, 1, loc, silent=TRUE)
 		s.start()
 		vapetime = 0
 
 	if(emagged && vapetime > 3)
 		var/datum/effect_system/smoke_spread/chem/s = new
-		s.set_up(reagents, 4, loc)
+		s.set_up(reagents, 4, loc, silent=TRUE)
 		s.start()
 		vapetime = 0
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
@@ -752,4 +746,4 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			M << "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>"
 
 	if(reagents && reagents.total_volume)
-		handle_reagents()
+		hand_reagents()
