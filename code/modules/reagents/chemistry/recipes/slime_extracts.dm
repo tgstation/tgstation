@@ -249,11 +249,9 @@
 	addtimer(src, "freeze", 50, FALSE, holder)
 /datum/chemical_reaction/slimefreeze/proc/freeze(datum/reagents/holder)
 	if(holder && holder.my_atom)
-		var/turf/T = get_turf(holder.my_atom)
-		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
-		for(var/mob/living/M in range(T, 7))
-			M.bodytemperature -= 240
-			M << "<span class='notice'>You feel a chill!</span>"
+		var/turf/open/T = get_turf(holder.my_atom)
+		if(istype(T))
+			T.atmos_spawn_air("freon=50;TEMP=120")
 
 
 /datum/chemical_reaction/slimefireproof
