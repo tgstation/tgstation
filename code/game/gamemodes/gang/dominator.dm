@@ -155,7 +155,7 @@
 		take_damage(damage_amount, P.damage_type, 0)
 
 
-/obj/machinery/dominator/blob_act(obj/effect/blob/B)
+/obj/machinery/dominator/blob_act(obj/structure/blob/B)
 	take_damage(110, BRUTE, 0)
 
 /obj/machinery/dominator/attack_hand(mob/user)

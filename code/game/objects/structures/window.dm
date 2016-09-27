@@ -65,7 +65,7 @@
 		if(3)
 			take_damage(rand(25,75), BRUTE, 0)
 
-/obj/structure/window/blob_act(obj/effect/blob/B)
+/obj/structure/window/blob_act(obj/structure/blob/B)
 	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/window/narsie_act()

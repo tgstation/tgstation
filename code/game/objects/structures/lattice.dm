@@ -26,7 +26,7 @@
 	stored = null
 	return ..()
 
-/obj/structure/lattice/blob_act(obj/effect/blob/B)
+/obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
 /obj/structure/lattice/ex_act(severity, target)

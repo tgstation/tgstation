@@ -16,7 +16,7 @@
 	unique_name = 1
 	a_intent = "harm"
 	var/mob/camera/blob/overmind = null
-	var/obj/effect/blob/factory/factory = null
+	var/obj/structure/blob/factory/factory = null
 
 /mob/living/simple_animal/hostile/blob/update_icons()
 	if(overmind)
@@ -29,7 +29,7 @@
 		overmind.blob_mobs -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blob_act(obj/effect/blob/B)
+/mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
 			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
@@ -44,12 +44,12 @@
 	adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
 
 /mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height = 0)
-	if(istype(mover, /obj/effect/blob))
+	if(istype(mover, /obj/structure/blob))
 		return 1
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
-	for(var/obj/effect/blob/B in range(1, src))
+	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
 
@@ -97,7 +97,7 @@
 	var/is_zombie = 0
 	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/blob/blobspore/New(loc, var/obj/effect/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/New(loc, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -228,7 +228,7 @@
 		if(independent)
 			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
-		if(!(locate(/obj/effect/blob) in range(2, src)))
+		if(!(locate(/obj/structure/blob) in range(2, src)))
 			damagesources++
 		if(!factory)
 			damagesources++

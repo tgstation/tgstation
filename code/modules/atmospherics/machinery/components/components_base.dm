@@ -72,7 +72,7 @@ Pipenet stuff; housekeeping
 		qdel(AIR_I)
 		AIR_I = null
 
-/obj/machinery/atmospherics/components/construction()
+/obj/machinery/atmospherics/components/on_construction()
 	..()
 	update_parents()
 

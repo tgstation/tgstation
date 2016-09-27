@@ -84,7 +84,7 @@
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_dispenser/blob_act(obj/effect/blob/B)
+/obj/machinery/chem_dispenser/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
 
@@ -284,7 +284,7 @@
 		return
 	return ..()
 
-/obj/machinery/chem_dispenser/constructable/deconstruction()
+/obj/machinery/chem_dispenser/constructable/on_deconstruction()
 	if(beaker)
 		beaker.loc = loc
 		beaker = null

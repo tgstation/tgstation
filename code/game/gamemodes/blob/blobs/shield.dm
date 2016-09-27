@@ -1,4 +1,4 @@
-/obj/effect/blob/shield
+/obj/structure/blob/shield
 	name = "strong blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_shield"
@@ -11,18 +11,18 @@
 	atmosblock = 1
 
 
-/obj/effect/blob/shield/scannerreport()
+/obj/structure/blob/shield/scannerreport()
 	if(atmosblock)
 		return "Will prevent the spread of atmospheric changes."
 	return "N/A"
 
-/obj/effect/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
-/obj/effect/blob/shield/core
+/obj/structure/blob/shield/core
 	point_return = 0
 
-/obj/effect/blob/shield/update_icon()
+/obj/structure/blob/shield/update_icon()
 	..()
 	if(health <= 75)
 		icon_state = "blob_shield_damaged"
