@@ -440,43 +440,44 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
-	if(nutrition < 100 && !blood)
-		if(message)
-			visible_message("<span class='warning'>[src] dry heaves!</span>", \
-							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
-		if(stun)
-			Weaken(10)
-		return 1
-
-	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
-		if(message)
-			visible_message("<span class='danger'>[src] throws up all over themself!</span>", \
-							"<span class='userdanger'>You throw up all over yourself!</span>")
-		distance = 0
-	else
-		if(message)
-			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
-
-	if(stun)
-		Stun(4)
-
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
-	var/turf/T = get_turf(src)
-	for(var/i=0 to distance)
-		if(blood)
-			if(T)
-				add_splatter_floor(T)
+	if((!(NOHUNGER in specflags))
+		if(nutrition < 100 && !blood)
+			if(message)
+				visible_message("<span class='warning'>[src] dry heaves!</span>", \
+								"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
 			if(stun)
-				adjustBruteLoss(3)
+				Weaken(10)
+			return 1
+
+		if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
+			if(message)
+				visible_message("<span class='danger'>[src] throws up all over themself!</span>", \
+								"<span class='userdanger'>You throw up all over yourself!</span>")
+			distance = 0
 		else
-			if(T)
-				T.add_vomit_floor(src, 0)//toxic barf looks different
-			nutrition -= lost_nutrition
-			adjustToxLoss(-3)
-		T = get_step(T, dir)
-		if (is_blocked_turf(T))
-			break
-	return 1
+			if(message)
+				visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
+
+		if(stun)
+			Stun(4)
+
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		var/turf/T = get_turf(src)
+		for(var/i=0 to distance)
+			if(blood)
+				if(T)
+					add_splatter_floor(T)
+				if(stun)
+					adjustBruteLoss(3)
+			else
+				if(T)
+					T.add_vomit_floor(src, 0)//toxic barf looks different
+				nutrition -= lost_nutrition
+				adjustToxLoss(-3)
+			T = get_step(T, dir)
+			if (is_blocked_turf(T))
+				break
+		return 1
 
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
