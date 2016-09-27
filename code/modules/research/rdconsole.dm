@@ -438,6 +438,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_lathe.reagents.remove_reagent(R, being_built.reagents_list[R]*coeff)
 
 		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+
+		coeff *= being_built.lathe_time_factor
+
 		spawn(32*coeff*amount**0.8)
 			if(linked_lathe)
 				if(g2g) //And if we only fail the material requirements, we still spend time and power
