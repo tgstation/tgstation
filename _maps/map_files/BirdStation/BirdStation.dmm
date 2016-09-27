@@ -15000,8 +15000,7 @@
 /area/maintenance/asmaint2)
 "aLm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	name = "acidproof air injector";
-	unacidable = 1
+	name = "acidproof air injector"
 	},
 /turf/open/floor/engine,
 /area/toxins/xenobiology)

@@ -190,14 +190,13 @@
 	return T.storage_contents_dump_act(src_object, user)
 
 /obj/fire_act(global_overlay=1)
-	if(!qdeleted(src))
-		if(!(resistance_flags & FIRE_PROOF))
-			resistance_flags |= ON_FIRE
-			SSobj.burning += src
-			burn_world_time = world.time + burntime*rand(10,20)
-			if(global_overlay)
-				add_overlay(fire_overlay)
-			return 1
+	if(!(resistance_flags & (FIRE_PROOF|ON_FIRE)))
+		resistance_flags |= ON_FIRE
+		SSobj.burning += src
+		burn_world_time = world.time + burntime*rand(10,20)
+		if(global_overlay)
+			add_overlay(fire_overlay)
+		return 1
 
 /obj/proc/burn()
 	empty_object_contents(1, src.loc)
