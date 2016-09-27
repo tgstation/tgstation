@@ -130,9 +130,9 @@
 	name = "survival medipen"
 	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. "
 	icon_state = "stimpen"
-	volume = 50
-	amount_per_transfer_from_this = 50
-	list_reagents = list("salbutamol" = 10, "leporazine" = 15, "tricordrazine" = 15, "epinephrine" = 10)
+	volume = 55
+	amount_per_transfer_from_this = 55
+	list_reagents = list("salbutamol" = 10, "leporazine" = 15, "tricordrazine" = 20, "epinephrine" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/species_mutator
 	name = "species mutator medipen"
