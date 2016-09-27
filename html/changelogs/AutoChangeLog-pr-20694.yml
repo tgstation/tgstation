@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "Custom Round end sounds selected by admins will be preloaded to all clients before actually rebooting the world"
