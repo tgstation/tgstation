@@ -93,6 +93,8 @@
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"

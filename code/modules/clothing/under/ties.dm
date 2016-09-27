@@ -367,3 +367,22 @@
 	icon_state = "talisman"
 	item_color = "talisman"
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5) //Faith is the best armor.
+
+//////////////
+//OBJECTION!//
+//////////////
+
+/obj/item/clothing/tie/lawyers_badge
+	name = "attorney's badge"
+	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
+	icon_state = "lawyerbadge"
+	item_color = "lawyerbadge"
+
+/obj/item/clothing/tie/attach(obj/item/clothing/under/U, user)
+	if(!..())
+		return 0
+	user.bubble_icon = "lawyer"
+
+/obj/item/clothing/tie/detach(obj/item/clothing/under/U, user)
+	..()
+	user.bubble_icon = initial(user.bubble_icon)
