@@ -5,7 +5,7 @@
 /obj/item/weapon/grown // Grown weapons
 	name = "grown_weapon"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 
 /obj/item/weapon/grown/New(newloc, var/obj/item/seeds/new_seed = null)

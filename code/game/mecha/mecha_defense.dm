@@ -301,7 +301,7 @@
 	var/deflection = deflect_chance
 	var/dam_coeff = 1
 	for(var/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/B in equipment)
-		if(B.attack_react(user))
+		if(B.attack_react())
 			deflection *= B.deflect_coeff
 			dam_coeff *= B.damage_coeff
 			break

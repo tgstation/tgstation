@@ -2,7 +2,6 @@
 	languages_spoken = HUMAN
 	languages_understood = HUMAN
 	var/crit_fail = 0
-	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
 	var/throwforce = 0
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
@@ -10,7 +9,9 @@
 	var/damtype = "brute"
 	var/force = 0
 
-	var/burn_state = FIRE_PROOF // LAVA_PROOF | FIRE_PROOF | FLAMMABLE | ON_FIRE
+	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	var/resistance_flags = FIRE_PROOF // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+
 	var/burntime = 10 //How long it takes to burn to ashes, in seconds
 	var/burn_world_time //What world time the object will burn up completely
 	var/being_shocked = 0
@@ -189,13 +190,14 @@
 	return T.storage_contents_dump_act(src_object, user)
 
 /obj/fire_act(global_overlay=1)
-	if(!burn_state)
-		burn_state = ON_FIRE
-		SSobj.burning += src
-		burn_world_time = world.time + burntime*rand(10,20)
-		if(global_overlay)
-			add_overlay(fire_overlay)
-		return 1
+	if(!qdeleted(src))
+		if(!(resistance_flags & FIRE_PROOF))
+			resistance_flags |= ON_FIRE
+			SSobj.burning += src
+			burn_world_time = world.time + burntime*rand(10,20)
+			if(global_overlay)
+				add_overlay(fire_overlay)
+			return 1
 
 /obj/proc/burn()
 	empty_object_contents(1, src.loc)
@@ -205,8 +207,8 @@
 	qdel(src)
 
 /obj/proc/extinguish()
-	if(burn_state == ON_FIRE)
-		burn_state = FLAMMABLE
+	if(resistance_flags & ON_FIRE)
+		resistance_flags &= ~ON_FIRE
 		overlays -= fire_overlay
 		SSobj.burning -= src
 

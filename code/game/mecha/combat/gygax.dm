@@ -7,6 +7,7 @@
 	health = 250
 	deflect_chance = 5
 	damage_absorption = list("brute"=0.75,"fire"=1,"bullet"=0.8,"laser"=0.7,"energy"=0.85,"bomb"=1)
+	armor = list(melee = 40, bullet = 35, laser = 15, energy = 10, bomb = 20, bio = 0, rad = 0, fire = 0, acid = 0)
 	max_temperature = 25000
 	infra_luminosity = 6
 	wreckage = /obj/structure/mecha_wreckage/gygax
@@ -21,6 +22,7 @@
 	health = 300
 	deflect_chance = 15
 	damage_absorption = list("brute"=0.6,"fire"=0.8,"bullet"=0.6,"laser"=0.5,"energy"=0.65,"bomb"=0.8)
+	armor = list(melee = 40, bullet = 40, laser = 50, energy = 35, bomb = 20, bio = 0, rad = 0, fire = 0, acid = 0)
 	max_temperature = 35000
 	leg_overload_coeff = 100
 	operation_req_access = list(access_syndicate)

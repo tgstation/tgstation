@@ -135,7 +135,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	singular_name = "plasma sheet"
 	origin_tech = "plasmatech=2;materials=2"
 	sheettype = "plasma"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 5
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 

@@ -182,7 +182,7 @@
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/damage_per_tick = 2.5
 	var/sight_range = 3
 	var/atom/movable/target
@@ -250,10 +250,10 @@
 		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check() && !B)
 			. += L
 		else if(B)
-			if(B.burn_state != ON_FIRE)
+			if(!(B.resistance_flags & ON_FIRE))
 				L << "<span class='warning'>Your [B.name] bursts into flames!</span>"
 			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
-				if(BI.burn_state != ON_FIRE)
+				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
@@ -274,7 +274,7 @@
 	anchored = 0
 	density = 0
 	takes_damage = FALSE
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/mobtype = /mob/living/simple_animal/hostile/clockwork
 	var/spawn_message = " is an error and you should yell at whoever spawned this shell."
 
@@ -389,7 +389,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
 /obj/effect/clockwork/New()
 	..()
@@ -697,7 +697,7 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	burntime = 1
 	var/affects_servants = FALSE
 	var/stat_affected = CONSCIOUS

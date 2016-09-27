@@ -172,7 +172,7 @@
 	density = 1
 	opacity = 1 	// changed in New()
 	anchored = 1
-	unacidable = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL

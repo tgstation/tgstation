@@ -55,7 +55,7 @@
 
 /obj/item/weapon/paper/contract/infernal
 	var/contractType = 0
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/datum/mind/owner
 	icon_state = "paper_onfire"
 
