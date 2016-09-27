@@ -28,7 +28,7 @@
 	var/hue
 	var/quality
 
-/datum/spacevine_mutation/proc/add(obj/effect/spacevine/holder)
+/datum/spacevine_mutation/proc/add_mutation_to_vinepiece(obj/effect/spacevine/holder)
 	holder.mutations |= src
 	holder.color = hue
 
@@ -370,7 +370,7 @@
 
 /obj/effect/spacevine/examine(mob/user)
 	..()
-	var/text = "This one is"
+	var/text = "This one is a"
 	if(mutations.len)
 		for(var/A in mutations)
 			var/datum/spacevine_mutation/SM = A
@@ -508,14 +508,14 @@
 	SV.master = src
 	if(muts && muts.len)
 		for(var/datum/spacevine_mutation/M in muts)
-			M.add(SV)
+			M.add_mutation_to_vinepiece(SV)
 		return
 	if(parent)
 		SV.mutations |= parent.mutations
 		SV.color = parent.color
 		if(prob(mutativness))
 			var/datum/spacevine_mutation/randmut = pick(mutations_list - SV.mutations)
-			randmut.add(SV)
+			randmut.add_mutation_to_vinepiece(SV)
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)
