@@ -240,7 +240,7 @@ atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/
 	if(interaction == AI_TRANS_FROM_CARD)
 		AI.control_disabled = 0
 		AI.radio_enabled = 1
-		AI.loc = loc//To replace the terminal.
+		AI.forceMove(loc) // to replace the terminal.
 		AI << "You have been uploaded to a stationary terminal. Remote device connection restored."
 		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
 		card.AI = null
