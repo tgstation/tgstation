@@ -24259,7 +24259,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Monitoring"
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/caution/corner{
 	dir = 1
 	},
@@ -84341,7 +84340,7 @@ aze
 aAw
 aBE
 aCO
-ckj
+aFp
 aFn
 aGo
 aCO
