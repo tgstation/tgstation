@@ -6,7 +6,8 @@
     <ui-button icon='pencil' action='relabel'>Relabel</ui-button>
   {{/partial}}
   <ui-section label='Pressure'>
-    <span>{{Math.round(adata.tankPressure)}} kPa</span>
+    <ui-gauge value="{{Math.round((adata.tankPressure - 0) / (adata.maxTankPressure - 0) * 100)}}" label="Pressure"/><br>
+	({{Math.round(adata.tankPressure)}} kPa)
   </ui-section>
   <ui-section label='Port'>
     <span class='{{data.portConnected ? "good" : "average"}}'>{{data.portConnected ? "Connected" : "Not Connected"}}</span>

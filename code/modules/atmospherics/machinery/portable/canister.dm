@@ -87,14 +87,14 @@
 	desc = "Freon. Great for the atmosphere!"
 	icon_state = "freon"
 	gas_type = "freon"
-	starter_temp = 120
+	starter_temp = 2.7
+	filled = 0.25
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "water vapor canister"
 	desc = "Water Vapor. We get it, you vape."
 	icon_state = "water_vapor"
 	gas_type = "water_vapor"
-	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
 	..()
@@ -272,13 +272,14 @@
 															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "canister", name, 420, 405, master_ui, state)
+		ui = new(user, src, ui_key, "canister", name, 460, 405, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data()
 	var/data = list()
 	data["portConnected"] = connected_port ? 1 : 0
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["maxTankPressure"] = round(maximum_pressure)
 	data["releasePressure"] = round(release_pressure ? release_pressure : 0)
 	data["defaultReleasePressure"] = round(CAN_DEFAULT_RELEASE_PRESSURE)
 	data["minReleasePressure"] = round(CAN_MIN_RELEASE_PRESSURE)

@@ -17,6 +17,7 @@ component.exports = {
     'ui-section': require('components/section'),
     'ui-subdisplay': require('components/subdisplay'),
     'ui-tabs': require('components/tabs'),
+    'ui-gauge': require('../node_modules/ractive-gauge/dist/ractive-gauge'),
   },
   events: {
     enter: require('ractive-events-keys').enter,
