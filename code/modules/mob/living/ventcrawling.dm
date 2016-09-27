@@ -93,7 +93,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
 		if(!A.pipe_vision_img)
 			A.pipe_vision_img = image(A, A.loc, layer = ABOVE_HUD_LAYER, dir = A.dir)
-			//20 for being above darkness
+			A.pipe_vision_img.plane = ABOVE_HUD_PLANE
 		pipes_shown += A.pipe_vision_img
 		if(client)
 			client.images += A.pipe_vision_img

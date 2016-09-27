@@ -1,6 +1,9 @@
-//Defines for atom layers
+//Defines for atom layers and planes
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
+#define CLICKCATCHER_PLANE -99
+
+#define GAME_PLANE 0
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
@@ -47,14 +50,20 @@
 #define AREA_LAYER 10
 #define MASSIVE_OBJ_LAYER 11
 #define POINT_LAYER 12
+
+#define LIGHTING_PLANE 15
 #define LIGHTING_LAYER 15
 
 //HUD layer defines
-#define COLORED_VISION_LAYER 17.8
-#define FLASH_LAYER 17.9
-#define FULLSCREEN_LAYER 18
-#define UI_DAMAGE_LAYER 18.1
-#define BLIND_LAYER 18.2
-#define CRIT_LAYER 18.3
+
+#define FULLSCREEN_PLANE 18
+#define FLASH_LAYER 18
+#define FULLSCREEN_LAYER 18.1
+#define UI_DAMAGE_LAYER 18.2
+#define BLIND_LAYER 18.3
+#define CRIT_LAYER 18.4
+
+#define HUD_PLANE 19
 #define HUD_LAYER 19
-#define ABOVE_HUD_LAYER 19.1
+#define ABOVE_HUD_PLANE 20
+#define ABOVE_HUD_LAYER 20

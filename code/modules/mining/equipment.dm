@@ -417,6 +417,7 @@
 				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
 					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = FLASH_LAYER)
+					I.plane = FULLSCREEN_PLANE
 					C.images += I
 					spawn(30)
 						if(C)

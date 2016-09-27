@@ -159,6 +159,7 @@
 		I.loc = src
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
+		I.plane = ABOVE_HUD_PLANE
 		I.equipped(src, slot_hands)
 		if(I.pulledby)
 			I.pulledby.stop_pulling()
@@ -214,6 +215,7 @@
 		return FALSE
 	I.forceMove(get_turf(src))
 	I.layer = initial(I.layer)
+	I.plane = initial(I.plane)
 	I.dropped(src)
 	return FALSE
 
@@ -266,6 +268,7 @@
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
+		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		I.forceMove(loc)
 		I.dropped(src)

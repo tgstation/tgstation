@@ -38,6 +38,7 @@
 			var/obj/temp = new/obj()
 			temp.appearance = target.appearance
 			temp.layer = initial(target.layer) // scanning things in your inventory
+			temp.plane = initial(target.plane)
 			saved_appearance = temp.appearance
 
 /obj/item/device/chameleon/proc/toggle()

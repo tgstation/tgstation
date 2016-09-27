@@ -1,5 +1,6 @@
 /atom
 	layer = TURF_LAYER
+	plane = GAME_PLANE
 	var/level = 2
 	var/flags = 0
 	var/list/fingerprints

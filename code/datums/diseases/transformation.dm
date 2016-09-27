@@ -50,6 +50,7 @@
 				qdel(W)
 				continue
 			W.layer = initial(W.layer)
+			W.plane = initial(W.plane)
 			W.loc = affected_mob.loc
 			W.dropped(affected_mob)
 		var/mob/living/new_mob = new new_form(affected_mob.loc)
