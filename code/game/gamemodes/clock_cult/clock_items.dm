@@ -46,10 +46,6 @@
 /obj/item/clockwork/slab/scarab
 	nonhuman_usable = TRUE
 
-/obj/item/clockwork/slab/debug
-	no_cost = TRUE
-	nonhuman_usable = TRUE
-
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
 	..()
 	if(!is_servant_of_ratvar(user))

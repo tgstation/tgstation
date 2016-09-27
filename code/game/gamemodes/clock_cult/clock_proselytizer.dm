@@ -29,11 +29,6 @@
 		return 0
 	return ..()
 
-/obj/item/clockwork/clockwork_proselytizer/scarab/debug
-	clockwork_desc = "A cogscarab's internal proselytizer. It can convert nearly any object into a Ratvarian variant."
-	uses_alloy = FALSE
-	debug = TRUE
-
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))

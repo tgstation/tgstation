@@ -130,7 +130,3 @@
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/New()
 	..()
 	new slab_type(src)
-
-/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
-	slab_type = /obj/item/clockwork/slab/debug
-	proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab/debug
