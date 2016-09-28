@@ -48,7 +48,11 @@
 	U.cut_overlays()
 	U.hastie = null
 
+/obj/item/clothing/tie/proc/on_uniform_equip(obj/item/clothing/under/U)
+	return
 
+/obj/item/clothing/tie/proc/on_uniform_dropped(obj/item/clothing/under/U)
+	return
 
 /obj/item/clothing/tie/blue
 	name = "blue tie"
@@ -377,27 +381,26 @@
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
-	var/mob/living/current_lawyer = null
 
 /obj/item/clothing/tie/lawyers_badge/attach(obj/item/clothing/under/U, user)
 	if(!..())
 		return 0
-	START_PROCESSING(SSobj, src)
+	if(isliving(U.loc))
+		on_uniform_equip(U)
 
 /obj/item/clothing/tie/lawyers_badge/detach(obj/item/clothing/under/U, user)
 	..()
-	STOP_PROCESSING(SSobj, src)
-	if(current_lawyer)
-		current_lawyer.bubble_icon = initial(current_lawyer.bubble_icon)
-		current_lawyer = null
+	if(isliving(U.loc))
+		on_uniform_dropped(U)
 
-/obj/item/clothing/tie/lawyers_badge/process()
-	var/obj/item/clothing/under/U = loc
-	if(U && current_lawyer == U.loc)
+/obj/item/clothing/tie/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U)
+	if(!isliving(U.loc))
 		return
-	if(current_lawyer)
-		current_lawyer.bubble_icon = initial(current_lawyer.bubble_icon)
-		current_lawyer = null
-	if(U && isliving(U.loc))
-		current_lawyer = U.loc
-		current_lawyer.bubble_icon = "lawyer"
+	var/mob/living/L = U.loc
+	L.bubble_icon = "lawyer"
+
+/obj/item/clothing/tie/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U)
+	if(!isliving(U.loc))
+		return
+	var/mob/living/L = U.loc
+	L.bubble_icon = initial(L.bubble_icon)
