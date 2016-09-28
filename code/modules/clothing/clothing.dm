@@ -415,9 +415,9 @@ BLIND     // can't see anything
 		hastie.on_uniform_equip(src, user)
 
 /obj/item/clothing/under/dropped(mob/user)
-	..()
 	if(hastie)
 		hastie.on_uniform_dropped(src, user)
+	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(!attachTie(I, user))
