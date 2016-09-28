@@ -3,7 +3,7 @@
 	desc = "What the fuck is this? It looks kinda like a frog."
 	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "rare_pepe"
+	icon_state = "null"
 	w_class = 2
 
 /obj/item/clockwork/New()
