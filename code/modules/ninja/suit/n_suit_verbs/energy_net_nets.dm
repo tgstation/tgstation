@@ -70,7 +70,7 @@ It is possible to destroy the net by the occupant or someone else.
 		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
 		for(var/obj/item/W in M)
 			if(ishuman(M))
-				var/mob/living/human/H = M
+				var/mob/living/carbon/human/H = M
 				if(W == H.w_uniform)
 					continue//So all they're left with are shoes and uniform.
 				if(W == H.shoes)

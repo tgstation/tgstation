@@ -76,7 +76,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		x = clong.x
 		y = clong.y
 
-	if(isurf(clong) || isobj(clong))
+	if(isturf(clong) || isobj(clong))
 		if(clong.density)
 			clong.ex_act(2)
 
