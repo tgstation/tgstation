@@ -1,0 +1,5 @@
+author: "LanCartwright"
+delete-after: True
+changes: 
+  - rscdel: "Removed Stimulants and Coffee from survival pens."
+  - tweak: "Nanites have been replaced with Mining Nanites which heal more when you are lower health, and do not have the ridiculous healing Adminorazine had."
