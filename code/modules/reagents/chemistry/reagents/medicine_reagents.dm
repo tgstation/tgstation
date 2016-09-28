@@ -1058,6 +1058,33 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	..()
 	. = 1
 
+/datum/reagent/medicine/miningnanites
+	name = "Nanites"
+	id = "miningnanites"
+	description = "It's mining magic. We don't have to explain it."
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
+	can_synth = 0
+
+/datum/reagent/medicine/miningnanites/on_mob_life(mob/living/M)
+	if(M.getBruteLoss() > 50)
+		M.adjustBruteLoss(-5.5*REM, 0)
+	else
+		M.adjustBruteLoss(-2.5*REM, 0)
+	if(M.getFireLoss() > 50)
+		M.adjustFireLoss(-5.5*REM, 0)
+	else
+		M.adjustFireLoss(-2.5*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/miningnanites/overdose_process(mob/living/M)
+	M.adjustBruteLoss(3*REM, 0)
+	M.adjustFireLoss(3*REM, 0)
+	M.adjustToxLoss(3*REM, 0)
+	..()
+	. = 1
+
 //used for changeling's adrenaline power
 /datum/reagent/medicine/changelingAdrenaline
 	name = "Adrenaline"
