@@ -164,7 +164,7 @@ FLOOR SAFES
 		return ..()
 
 
-obj/structure/safe/blob_act(obj/effect/blob/B)
+obj/structure/safe/blob_act(obj/structure/blob/B)
 	return
 
 obj/structure/safe/ex_act(severity, target)

@@ -129,7 +129,7 @@
 
 				for(var/i in 1 to 5)
 					T = pick_n_take(empty_shuttle_turfs)
-					new /obj/effect/spider/stickyweb(T)
+					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
 				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)

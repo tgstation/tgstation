@@ -281,42 +281,37 @@
 
 //Outdated but still in use apparently. This should at least be a human proc.
 //Daily reminder to murder this - Remie.
-/mob/proc/get_equipped_items()
-	var/list/items = list()
+/mob/living/proc/get_equipped_items()
+	return
 
-	if(hasvar(src,"back"))
-		if(src:back)
-			items += src:back
-	if(hasvar(src,"belt"))
-		if(src:belt)
-			items += src:belt
-	if(hasvar(src,"ears"))
-		if(src:ears)
-			items += src:ears
-	if(hasvar(src,"glasses"))
-		if(src:glasses)
-			items += src:glasses
-	if(hasvar(src,"gloves"))
-		if(src:gloves)
-			items += src:gloves
-	if(hasvar(src,"head"))
-		if(src:head)
-			items += src:head
-	if(hasvar(src,"shoes"))
-		if(src:shoes)
-			items += src:shoes
-	if(hasvar(src,"wear_id"))
-		if(src:wear_id)
-			items += src:wear_id
-	if(hasvar(src,"wear_mask"))
-		if(src:wear_mask)
-			items += src:wear_mask
-	if(hasvar(src,"wear_suit"))
-		if(src:wear_suit)
-			items += src:wear_suit
-	if(hasvar(src,"w_uniform"))
-		if(src:w_uniform)
-			items += src:w_uniform
+/mob/living/carbon/get_equipped_items()
+	var/list/items = list()
+	if(back)
+		items += back
+	if(head)
+		items += head
+	if(wear_mask)
+		items += wear_mask
+	return items
+
+/mob/living/carbon/human/get_equipped_items()
+	var/list/items = ..()
+	if(belt)
+		items += belt
+	if(ears)
+		items += ears
+	if(glasses)
+		items += glasses
+	if(gloves)
+		items += gloves
+	if(shoes)
+		items += shoes
+	if(wear_id)
+		items += wear_id
+	if(wear_suit)
+		items += wear_suit
+	if(w_uniform)
+		items += w_uniform
 	return items
 
 

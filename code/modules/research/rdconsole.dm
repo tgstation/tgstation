@@ -138,7 +138,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	updateUsrDialog()
 
 
-/obj/machinery/computer/rdconsole/deconstruction()
+/obj/machinery/computer/rdconsole/on_deconstruction()
 	if(linked_destroy)
 		linked_destroy.linked_console = null
 		linked_destroy = null

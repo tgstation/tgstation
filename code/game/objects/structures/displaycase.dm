@@ -48,7 +48,7 @@
 		showpiece.loc = src.loc
 		showpiece = null
 
-/obj/structure/displaycase/blob_act(obj/effect/blob/B)
+/obj/structure/displaycase/blob_act(obj/structure/blob/B)
 	take_damage(30)
 
 /obj/structure/displaycase/hitby(atom/movable/AM)

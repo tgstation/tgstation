@@ -159,7 +159,7 @@
 /obj/item/organ/gland/spiderman/activate()
 	owner << "<span class='warning'>You feel something crawling in your skin.</span>"
 	owner.faction |= "spiders"
-	new /obj/effect/spider/spiderling(owner.loc)
+	new /obj/structure/spider/spiderling(owner.loc)
 
 /obj/item/organ/gland/egg
 	cooldown_low = 300
