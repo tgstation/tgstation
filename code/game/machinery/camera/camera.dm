@@ -112,7 +112,7 @@
 	..()
 	qdel(src)//to prevent bomb testing camera from exploding over and over forever
 
-/obj/machinery/camera/blob_act(obj/effect/blob/B)
+/obj/machinery/camera/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		take_damage(health, BRUTE, 0)
 

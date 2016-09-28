@@ -9,12 +9,22 @@
 	desc = "Ashes to ashes, dust to dust, and into space."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
+	mergeable_decal = 0
 
 /obj/effect/decal/cleanable/ash/New()
 	..()
 	reagents.add_reagent("ash", 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+
+/obj/effect/decal/cleanable/ash/large
+	name = "large pile of ashes"
+	icon_state = "big_ash"
+
+/obj/effect/decal/cleanable/ash/large/New()
+	..()
+	reagents.add_reagent("ash", 30) //double the amount of ash.
+
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -62,6 +72,11 @@
 	gender = NEUTER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "molten"
+	mergeable_decal = 0
+
+/obj/effect/decal/cleanable/molten_object/large
+	name = "big gooey grey mass"
+	icon_state = "big_molten"
 
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
@@ -133,6 +148,7 @@
 	desc = "The shredded remains of what appears to be clothing."
 	icon_state = "shreds"
 	gender = PLURAL
+	mergeable_decal = 0
 
 /obj/effect/decal/cleanable/shreds/New()
 	pixel_x = rand(-5, 5)

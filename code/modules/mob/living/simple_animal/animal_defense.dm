@@ -112,6 +112,6 @@
 				bloss = bloss / 1.5
 			adjustBruteLoss(bloss)
 
-/mob/living/simple_animal/blob_act(obj/effect/blob/B)
+/mob/living/simple_animal/blob_act(obj/structure/blob/B)
 	adjustBruteLoss(20)
 	return

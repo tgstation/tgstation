@@ -95,7 +95,7 @@
 "bQ" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
 "bR" = (/obj/structure/toilet{dir = 4},/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
 "bS" = (/obj/machinery/door/airlock{name = "Toilet"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
-"bT" = (/obj/effect/glowshroom/single,/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
+"bT" = (/obj/structure/glowshroom/single,/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
 "bU" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plating/asteroid,/area/ruin/powered)
 "bV" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruin/powered)
 "bW" = (/turf/open/floor/plating,/area/ruin/powered)

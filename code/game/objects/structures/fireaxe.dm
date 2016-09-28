@@ -83,7 +83,7 @@
 	take_damage(P.damage, P.damage_type, 0)
 
 
-/obj/structure/fireaxecabinet/blob_act(obj/effect/blob/B)
+/obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
 	if(fireaxe)
 		fireaxe.forceMove(loc)
 	qdel(src)

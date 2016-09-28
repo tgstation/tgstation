@@ -27,7 +27,7 @@
 		return 1
 
 
-/obj/machinery/field/containment/blob_act(obj/effect/blob/B)
+/obj/machinery/field/containment/blob_act(obj/structure/blob/B)
 	return 0
 
 

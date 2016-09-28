@@ -24,7 +24,7 @@
 	smoke.start()
 
 
-	for(var/obj/effect/blob/B in view(8,src))
+	for(var/obj/structure/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.health -= damage
 		B.update_icon()

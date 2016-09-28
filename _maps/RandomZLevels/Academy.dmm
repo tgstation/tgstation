@@ -3961,7 +3961,7 @@
 /turf/open/floor/mineral/uranium,
 /area/awaymission/academy/academycellar)
 "le" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lf" = (

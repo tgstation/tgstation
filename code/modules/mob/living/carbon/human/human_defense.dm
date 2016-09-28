@@ -379,7 +379,7 @@
 					break
 	..()
 
-/mob/living/carbon/human/blob_act(obj/effect/blob/B)
+/mob/living/carbon/human/blob_act(obj/structure/blob/B)
 	if(stat == DEAD)
 		return
 	show_message("<span class='userdanger'>The blob attacks you!</span>")

@@ -321,7 +321,7 @@
 					toner = 0
 
 
-/obj/machinery/photocopier/blob_act(obj/effect/blob/B)
+/obj/machinery/photocopier/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
 	else

@@ -177,3 +177,5 @@ Lawyer
 	if(J.lawyers>1)
 		uniform = /obj/item/clothing/under/lawyer/purpsuit
 		suit = /obj/item/clothing/suit/toggle/lawyer/purple
+
+	H.bubble_icon = "lawyer"

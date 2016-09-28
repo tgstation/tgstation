@@ -556,6 +556,7 @@
 	var/shield_on = "shield-old"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	recharge_cooldown = world.time + recharge_delay
 	if(current_charges > 0)
 		var/datum/effect_system/spark_spread/s = new
 		s.set_up(2, 1, src)
@@ -563,7 +564,6 @@
 		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
 		current_charges--
 		if(recharge_rate)
-			recharge_cooldown = world.time + recharge_delay
 			START_PROCESSING(SSobj, src)
 		if(current_charges <= 0)
 			owner.visible_message("[owner]'s shield overloads!")

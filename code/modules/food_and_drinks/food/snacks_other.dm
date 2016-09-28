@@ -324,5 +324,9 @@
 	icon_state = "powercrepe"
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 3, "iron" = 10)
 	list_reagents = list("nutriment" = 10, "vitamin" = 5, "cherryjelly" = 5)
-	force = 15
+	force = 20
+	throwforce = 10
+	block_chance = 50
+	armour_penetration = 75
+	attack_verb = list("slapped", "slathered")
 	w_class = 4

@@ -1,8 +1,4 @@
 
-/obj/effect
-	icon = 'icons/effects/effects.dmi'
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
-
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."

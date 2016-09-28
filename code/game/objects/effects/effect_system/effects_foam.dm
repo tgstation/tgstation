@@ -39,10 +39,11 @@
 
 /obj/effect/particle_effect/foam/proc/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
-	if(metal)
-		var/obj/structure/foamedmetal/M = new(src.loc)
-		M.metal = metal
-		M.updateicon()
+	switch(metal)
+		if(1)
+			new /obj/structure/foamedmetal(src.loc)
+		if(2)
+			new /obj/structure/foamedmetal/iron(src.loc)
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
 
@@ -206,7 +207,7 @@
 	qdel(src)
 
 
-/obj/structure/foamedmetal/blob_act(obj/effect/blob/B)
+/obj/structure/foamedmetal/blob_act(obj/structure/blob/B)
 	qdel(src)
 
 
@@ -281,3 +282,8 @@
 
 /obj/structure/foamedmetal/CanAtmosPass()
 	return !density
+
+
+/obj/structure/foamedmetal/iron
+	icon_state = "ironfoam"
+	metal = 2

@@ -32,7 +32,7 @@
 		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
 
-/obj/structure/grille/blob_act(obj/effect/blob/B)
+/obj/structure/grille/blob_act(obj/structure/blob/B)
 	if(!destroyed)
 		Break()
 

@@ -92,7 +92,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/autolathe/deconstruction()
+/obj/machinery/autolathe/on_deconstruction()
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)

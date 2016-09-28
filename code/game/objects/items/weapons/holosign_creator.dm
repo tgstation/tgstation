@@ -137,7 +137,7 @@
 	..()
 	take_damage(I.force * 0.5, I.damtype)
 
-/obj/effect/overlay/holograph/blob_act(obj/effect/blob/B)
+/obj/effect/overlay/holograph/blob_act(obj/structure/blob/B)
 	qdel(src)
 
 /obj/effect/overlay/holograph/attack_animal(mob/living/simple_animal/M)

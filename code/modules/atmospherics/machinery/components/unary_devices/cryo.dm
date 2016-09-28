@@ -35,7 +35,7 @@
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/stack/sheet/glass = 2)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/construction()
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
