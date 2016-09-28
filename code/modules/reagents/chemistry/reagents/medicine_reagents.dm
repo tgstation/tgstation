@@ -1067,8 +1067,7 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	can_synth = 0
 
 /datum/reagent/medicine/miningnanites/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-5.5*REM, 0)
-	M.adjustFireLoss(-5.5*REM, 0)
+	M.heal_bodypart_damage(5,5, 0)
 	..()
 	. = 1
 
