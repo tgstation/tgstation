@@ -509,6 +509,9 @@ var/next_mob_id = 0
 					mob_eye.observers = list()
 				mob_eye.observers |= src
 				mob_eye.hud_used.show_hud(1,src)
+	//It's not a mob, so just orbit it
+	else
+		ManualFollow(mob_eye)
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
