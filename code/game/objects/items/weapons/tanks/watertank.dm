@@ -415,7 +415,7 @@
 		loc << "<span class='notice'>[src] turns off.</span>"
 
 /obj/item/weapon/reagent_containers/chemtank/process()
-	if(!istype(loc,/mob/living/carbon/human))
+	if(!ishuman(loc))
 		turn_off()
 		return
 	if(!reagents.total_volume)

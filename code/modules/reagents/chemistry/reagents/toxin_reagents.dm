@@ -74,7 +74,7 @@
 	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(reac_volume / 5)
@@ -520,7 +520,7 @@
 				M.adjustOxyLoss(rand(5,25), 0)
 				. = 1
 			if(3)
-				if(istype(M, /mob/living/carbon/human))
+				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if(!H.heart_attack)
 						H.heart_attack = 1 // rip in pepperoni

@@ -295,7 +295,7 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if(scan)
-					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_held_item())
+					if(ishuman(usr) && !usr.get_active_held_item())
 						usr.put_in_hands(scan)
 					else
 						scan.loc = get_turf(src)

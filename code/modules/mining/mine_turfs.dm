@@ -434,7 +434,7 @@
 
 /turf/closed/mineral/Bumped(AM as mob|obj)
 	..()
-	if(istype(AM,/mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		var/obj/item/I = H.is_holding_item_of_type(/obj/item/weapon/pickaxe)
 		if(I)

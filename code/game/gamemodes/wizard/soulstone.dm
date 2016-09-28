@@ -53,7 +53,7 @@
 		user << "<span class='warning'>There is no power left in the shard.\
 			</span>"
 		return
-	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
+	if(!ishuman(M))//If target is not a human.
 		return ..()
 	if(iscultist(M))
 		user << "<span class='cultlarge'>\"Come now, do not capture your fellow's soul.\"</span>"

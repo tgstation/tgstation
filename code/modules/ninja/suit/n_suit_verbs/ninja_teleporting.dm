@@ -12,7 +12,7 @@ Contents:
 
 //Handles elporting while grabbing someone
 /obj/item/clothing/suit/space/space_ninja/proc/handle_teleport_grab(turf/T, mob/living/H)
-	if(H.pulling && (istype(H.pulling, /mob/living)))
+	if(H.pulling && (isliving(H.pulling)))
 		var/mob/living/victim =	H.pulling
 		if(!victim.anchored)
 			victim.forceMove(locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z))

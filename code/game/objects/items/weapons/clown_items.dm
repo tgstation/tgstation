@@ -155,7 +155,7 @@
 	if (!spam_flag)
 		var/turf/T = get_turf(src)
 		for(M in ohearers(7, T))
-			if(istype(M, /mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
 					continue

@@ -272,7 +272,7 @@
 
 ///////HUDs///////
 	if(href_list["hud"])
-		if(istype(usr, /mob/living/carbon/human))
+		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			var/perpname = get_face_name(get_id_name(""))
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud))

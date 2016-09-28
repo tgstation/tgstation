@@ -33,12 +33,14 @@
 /obj/item/weapon/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
 		if(istype(X, /atom/movable))
-			if(X == wielder) continue
-			if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
-				step_towards(X,pull)
-				step_towards(X,pull)
-				step_towards(X,pull)
-			else if(istype(X,/mob/living/carbon/human))
+			var/atom/movable/A = X
+			if(A == wielder)
+				continue
+			if(A && !A.anchored && !ishuman(X))
+				step_towards(A,pull)
+				step_towards(A,pull)
+				step_towards(A,pull)
+			else if(ishuman(X))
 				var/mob/living/carbon/human/H = X
 				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
@@ -99,7 +101,7 @@
 
 /obj/item/weapon/twohanded/mjollnir/throw_impact(atom/target)
 	. = ..()
-	if(istype(target, /mob/living))
+	if(isliving(target))
 		var/mob/living/L = target
 		L.Stun(3)
 		shock(L)
