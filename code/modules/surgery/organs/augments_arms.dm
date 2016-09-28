@@ -190,8 +190,8 @@
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated enregy."
-	contents = newlist(/obj/item/weapon/melee/energy/blade)
-	origin_tech = "materials=5;combat=7;biotech=3;powerstorage=2;syndicate=5"
+	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight)
+	origin_tech = "materials=4;combat=5;biotech=3;powerstorage=2;syndicate=5"	//Well come on it's 16 TC for traitors and 12 for nukeops.
 
 /obj/item/organ/cyberimp/arm/medibeam
 	name = "integrated medical beamgun"
@@ -220,7 +220,7 @@
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
-	contents = newlist(/obj/item/weapon/melee/energy/blade, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
 	origin_tech = "materials=5;combat=7;biotech=5;powerstorage=5;syndicate=6;programming=5"
 
 /obj/item/organ/cyberimp/arm/combat/New()

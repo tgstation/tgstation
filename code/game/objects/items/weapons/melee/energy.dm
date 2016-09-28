@@ -242,3 +242,9 @@
 
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)
 	return
+
+/obj/item/weapon/melee/energy/blade/hardlight
+	name = "hardlight blade"
+	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
+	icon_state = "lightblade"
+	item_state = "lightblade"
