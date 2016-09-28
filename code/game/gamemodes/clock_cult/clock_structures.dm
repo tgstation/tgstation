@@ -4,10 +4,10 @@
 
 /obj/structure/destructible/clockwork
 	name = "meme structure"
-	desc = "Some frog or something, the fuck?"
+	desc = "This shouldn't have spawned. Please tell an administrator."
 	var/clockwork_desc //Shown to servants when they examine
 	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "rare_pepe"
+	icon_state = "null"
 	anchored = 1
 	density = 1
 	var/repair_amount = 5 //how much a proselytizer can repair each cycle
