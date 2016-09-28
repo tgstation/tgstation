@@ -1,6 +1,6 @@
 /obj/item/clockwork
 	name = "meme blaster"
-	desc = "What the fuck is this? It looks kinda like a frog."
+	desc = "This shouldn't have spawned. Please tell an administrator."
 	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "null"

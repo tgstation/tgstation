@@ -4,7 +4,7 @@
 
 /obj/structure/destructible/clockwork
 	name = "meme structure"
-	desc = "Some frog or something, the fuck?"
+	desc = "This shouldn't have spawned. Please tell an administrator."
 	var/clockwork_desc //Shown to servants when they examine
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "null"
