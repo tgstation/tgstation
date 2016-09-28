@@ -326,7 +326,7 @@ var/list/blood_splatter_icons = list()
 		G.add_blood(blood_dna)
 	else
 		transfer_blood_dna(blood_dna)
-	bloody_hands = rand(2, 4)
+		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1
 
