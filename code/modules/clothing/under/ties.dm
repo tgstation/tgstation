@@ -377,12 +377,27 @@
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
+	var/mob/living/current_lawyer = null
 
-/obj/item/clothing/tie/attach(obj/item/clothing/under/U, user)
+/obj/item/clothing/tie/lawyers_badge/attach(obj/item/clothing/under/U, user)
 	if(!..())
 		return 0
-	user.bubble_icon = "lawyer"
+	START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/tie/detach(obj/item/clothing/under/U, user)
+/obj/item/clothing/tie/lawyers_badge/detach(obj/item/clothing/under/U, user)
 	..()
-	user.bubble_icon = initial(user.bubble_icon)
+	STOP_PROCESSING(SSobj, src)
+	if(current_lawyer)
+		current_lawyer.bubble_icon = initial(current_lawyer.bubble_icon)
+		current_lawyer = null
+
+/obj/item/clothing/tie/lawyers_badge/process()
+	var/obj/item/clothing/under/U = loc
+	if(U && current_lawyer == U.loc)
+		return
+	if(current_lawyer)
+		current_lawyer.bubble_icon = initial(current_lawyer.bubble_icon)
+		current_lawyer = null
+	if(U && isliving(U.loc))
+		current_lawyer = U.loc
+		current_lawyer.bubble_icon = "lawyer"
