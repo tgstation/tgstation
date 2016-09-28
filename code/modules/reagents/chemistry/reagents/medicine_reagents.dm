@@ -1067,14 +1067,8 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	can_synth = 0
 
 /datum/reagent/medicine/miningnanites/on_mob_life(mob/living/M)
-	if(M.getBruteLoss() > 50)
-		M.adjustBruteLoss(-5.5*REM, 0)
-	else
-		M.adjustBruteLoss(-2.5*REM, 0)
-	if(M.getFireLoss() > 50)
-		M.adjustFireLoss(-5.5*REM, 0)
-	else
-		M.adjustFireLoss(-2.5*REM, 0)
+	M.adjustBruteLoss(-5.5*REM, 0)
+	M.adjustFireLoss(-5.5*REM, 0)
 	..()
 	. = 1
 
