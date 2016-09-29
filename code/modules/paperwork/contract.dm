@@ -55,7 +55,7 @@
 
 /obj/item/weapon/paper/contract/infernal
 	var/contractType = 0
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/datum/mind/owner
 	icon_state = "paper_onfire"
 
@@ -172,7 +172,7 @@
 /obj/item/weapon/paper/contract/infernal/attack(mob/M, mob/living/user)
 	add_fingerprint(user)
 	if(M == user && target == M.mind && M.mind.soulOwner != owner && attempt_signature(user, 1))
-		user.visible_message("<span class='danger'>[user] slices their wrist with [src], and scrawls their name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>")
+		user.visible_message("<span class='danger'>[user] slices [user.their_pronoun()] wrist with [src], and scrawls [user.their_pronoun()] name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>")
 		user.blood_volume = max(user.blood_volume - 100, 0)
 	else
 		return ..()

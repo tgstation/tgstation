@@ -84,7 +84,7 @@
 	holder = item
 
 	holder.flags |= NODROP
-	holder.unacidable = 1
+	holder.resistance_flags |= LAVA_PROOF | UNACIDABLE
 	holder.slot_flags = null
 	holder.w_class = 5
 	holder.materials = null

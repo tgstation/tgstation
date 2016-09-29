@@ -145,7 +145,7 @@ Doesn't work on other aliens/AI.*/
 		// OBJ CHECK
 		if(isobj(target))
 			var/obj/I = target
-			if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
+			if(I.resistance_flags & UNACIDABLE)//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		// TURF CHECK

@@ -151,6 +151,7 @@
 	maxhealth = 180
 	proj_pass_rate = 20
 	ranged_damage_modifier = 0.5
+	armor = list(melee = 10, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 
 
 /obj/structure/barricade/security/New()

@@ -237,7 +237,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath
 	name = "goliath steak"
 	desc = "A delicious, lava cooked steak."
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	icon_state = "goliathsteak"
 	trash = null
 

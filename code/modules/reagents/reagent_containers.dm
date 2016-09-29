@@ -62,7 +62,7 @@
 	else if(C.is_mouth_covered(mask_only = 1))
 		covered = "mask"
 	if(covered)
-		var/who = (isnull(user) || eater == user) ? "your" : "their"
+		var/who = (isnull(user) || eater == user) ? "your" : "[eater.their_pronoun()]"
 		user << "<span class='warning'>You have to remove [who] [covered] first!</span>"
 		return 0
 	return 1

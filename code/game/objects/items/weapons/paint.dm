@@ -10,7 +10,7 @@
 	item_color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 5
 	var/paintleft = 10
 

@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	origin_tech = "bluespace=6"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 /obj/item/weapon/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"

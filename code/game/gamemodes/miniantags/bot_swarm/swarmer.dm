@@ -420,7 +420,7 @@
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "ui_light"
 	layer = MOB_LAYER
-	unacidable = 1
+
 	luminosity = 1
 	anchored = 1
 	var/health = 30

@@ -251,7 +251,7 @@
 		if(copier_empty())
 			if(istype(O,/obj/item/weapon/paper/contract/infernal))
 				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
-				burn_state = ON_FIRE
+				resistance_flags |= ON_FIRE
 			else
 				if(!user.drop_item())
 					return

@@ -83,6 +83,10 @@
 	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
+	if(istype(current) && islist(current.antag_datums)) //wow apparently current isn't always living good fucking job SOMEONE
+		for(var/i in current.antag_datums)
+			var/datum/antagonist/D = i
+			D.transfer_to_new_body(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
 	leave_all_huds()									//leave all the huds in the old body, so it won't get huds if somebody else enters it
 	current = new_character								//associate ourself with our new body
@@ -215,7 +219,7 @@
 		ticker.mode.add_revolutionary(src)
 
 	else if(is_servant_of_ratvar(creator))
-		add_servant_of_ratvar(src)
+		add_servant_of_ratvar(current)
 
 	else if(is_nuclear_operative(creator))
 		make_Nuke(null, null, 0, FALSE)

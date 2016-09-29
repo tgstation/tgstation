@@ -1,6 +1,7 @@
 
 /mob/living/simple_animal/hostile/clockwork
 	faction = list("ratvar")
+	gender = NEUTER
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	unique_name = 1
 	minbodytemp = 0
@@ -30,6 +31,22 @@
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()
 	src << playstyle_string
+
+/mob/living/simple_animal/hostile/clockwork/examine(mob/user)
+	var/t_He = they_pronoun(TRUE)
+	var/plurality = (gender == PLURAL)
+	var/msg = "<span class='brass'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	msg += "[desc]\n"
+	if(health < maxHealth)
+		msg += "<span class='warning'>"
+		if (src.health >= src.maxHealth/2)
+			msg += "[t_He] look[plurality ? "":"s"] slightly dented.\n"
+		else
+			msg += "<b>[t_He] look[plurality ? "":"s"] severely dented!</b>\n"
+		msg += "</span>"
+	msg += "*---------*</span>"
+
+	user << msg
 
 /mob/living/simple_animal/hostile/clockwork/fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"

@@ -8,6 +8,7 @@
 	layer = HIGH_OBJ_LAYER
 	var/maxhealth = 200
 	var/health = 200
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 	var/datum/gang/gang
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet

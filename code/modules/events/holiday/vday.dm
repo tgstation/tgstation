@@ -28,7 +28,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sc_Ace of Hearts_syndicate" // shut up
 	var/message = "A generic message of love or whatever."
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	w_class = 1
 
 /obj/item/weapon/valentine/New()

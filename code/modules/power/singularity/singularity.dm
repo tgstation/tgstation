@@ -9,7 +9,6 @@
 	density = 1
 	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
-	unacidable = 1 //Don't comment this out.
 	appearance_flags = 0
 	var/current_size = 1
 	var/allowed_size = 1
@@ -27,7 +26,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
