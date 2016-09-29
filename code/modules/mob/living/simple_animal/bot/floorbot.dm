@@ -307,14 +307,14 @@
 
 /mob/living/simple_animal/bot/floorbot/proc/repair(turf/target_turf)
 
-	if(isspace(target_turf))
+	if(isspaceturf(target_turf))
 		 //Must be a hull breach or in line mode to continue.
 		if(!is_hull_breach(target_turf) && !targetdirection)
 			target = null
 			return
 	else if(!isfloorturf(target_turf))
 		return
-	if(isspace(target_turf)) //If we are fixing an area not part of pure space, it is
+	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
 		anchored = 1
 		icon_state = "floorbot-c"
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
