@@ -7,7 +7,7 @@
 	throw_speed = 1
 	throwforce = 0
 	w_class = 1
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 4
 
 	var/obj/item/weapon/paper/internalPaper

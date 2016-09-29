@@ -393,14 +393,14 @@ var/highlander_claymores = 0
 	w_class = 2
 	armour_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 /obj/item/weapon/staff/broom
 	name = "broom"
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 /obj/item/weapon/staff/stick
 	name = "stick"

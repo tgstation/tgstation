@@ -238,5 +238,4 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
 	density = 1
-	unacidable = 1
 	anchored = 1

@@ -118,6 +118,7 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = 1
 	var/holo_integrity = 1
+	armor = list(melee = 0, bullet = 50, laser = 50, energy = 50, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/obj/item/weapon/holosign_creator/projector
 
 /obj/effect/overlay/holograph/New(loc, source_projector)

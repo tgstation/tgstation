@@ -9,7 +9,7 @@
 	throw_range = 7
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 5
 	var/active = 0
 	var/det_time = 50

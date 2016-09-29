@@ -193,7 +193,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 /obj/item/clothing/under/syndicate/coldres
 	name = "insulated tactical turtleneck"
 	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection"
-	armor = list(melee = 20, bullet = 10, laser = 0,energy = 5, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 20, bullet = 10, laser = 0,energy = 5, bomb = 0, bio = 0, rad = 0, fire = 25, acid = 25)
 	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 /obj/item/clothing/shoes/combat/coldres

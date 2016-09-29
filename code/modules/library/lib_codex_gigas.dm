@@ -3,7 +3,7 @@
 	icon_state ="demonomicon"
 	throw_speed = 1
 	throw_range = 10
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	author = "Forces beyond your comprehension"
 	unique = 1
 	title = "The codex gigas"
