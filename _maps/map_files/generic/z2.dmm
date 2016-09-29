@@ -4165,7 +4165,7 @@
 "mW" = (
 /mob/living/simple_animal/bot/medbot/mysterious{
 	desc = "If you don't accidentally blow yourself up from time to time you're not really a wizard anyway.";
-	faction = list("neutral","silicon");
+	faction = list("neutral","silicon","creature");
 	name = "Nobody's Perfect"
 	},
 /turf/open/floor/engine/cult,
