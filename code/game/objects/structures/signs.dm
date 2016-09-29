@@ -13,7 +13,7 @@
 /obj/structure/sign/ex_act(severity, target)
 	qdel(src)
 
-/obj/structure/sign/blob_act(obj/effect/blob/B)
+/obj/structure/sign/blob_act(obj/structure/blob/B)
 	qdel(src)
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)

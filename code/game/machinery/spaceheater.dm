@@ -37,14 +37,14 @@
 							/obj/item/weapon/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil = 3)
 
-/obj/machinery/space_heater/construction()
+/obj/machinery/space_heater/on_construction()
 	qdel(cell)
 	cell = null
 	panel_open = TRUE
 	update_icon()
 	return ..()
 
-/obj/machinery/space_heater/deconstruction()
+/obj/machinery/space_heater/on_deconstruction()
 	if(cell)
 		component_parts += cell
 		cell = null

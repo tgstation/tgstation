@@ -1,7 +1,4 @@
 
-/obj/effect
-	icon = 'icons/effects/effects.dmi'
-
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."

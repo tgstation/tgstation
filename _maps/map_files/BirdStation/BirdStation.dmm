@@ -20926,7 +20926,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
 "aZw" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating"

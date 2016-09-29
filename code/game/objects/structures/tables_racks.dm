@@ -53,7 +53,7 @@
 		if(3)
 			take_damage(rand(40,80), BRUTE, 0)
 
-/obj/structure/table/blob_act(obj/effect/blob/B)
+/obj/structure/table/blob_act(obj/structure/blob/B)
 	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/table/narsie_act()
@@ -476,7 +476,7 @@
 		if(3)
 			take_damage(rand(5,25), BRUTE, 0)
 
-/obj/structure/rack/blob_act(obj/effect/blob/B)
+/obj/structure/rack/blob_act(obj/structure/blob/B)
 	rack_destroy()
 
 

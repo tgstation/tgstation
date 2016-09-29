@@ -144,7 +144,7 @@
 		if(prob(25))
 			malfunction()
 
-/obj/machinery/vending/blob_act(obj/effect/blob/B)
+/obj/machinery/vending/blob_act(obj/structure/blob/B)
 	malfunction()
 	..()
 
@@ -319,7 +319,7 @@
 		return ..()
 
 
-/obj/machinery/vending/deconstruction()
+/obj/machinery/vending/on_deconstruction()
 	var/product_list = list(product_records, hidden_records, coin_records)
 	for(var/i=1, i<=3, i++)
 		for(var/datum/data/vending_product/machine_content in product_list[i])

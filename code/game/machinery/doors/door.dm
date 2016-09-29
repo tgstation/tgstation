@@ -185,7 +185,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 
-/obj/machinery/door/blob_act(obj/effect/blob/B)
+/obj/machinery/door/blob_act(obj/structure/blob/B)
 	if(prob(60))
 		qdel(src)
 

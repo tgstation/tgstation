@@ -242,7 +242,7 @@
 	qdel(src)
 	return(gain)
 
-/obj/machinery/power/supermatter_shard/blob_act(obj/effect/blob/B)
+/obj/machinery/power/supermatter_shard/blob_act(obj/structure/blob/B)
 	if(B && !istype(loc, /turf/open/space)) //does nothing in space
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 		damage += B.health * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
@@ -321,7 +321,7 @@
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		power += 200
-	else if(isobj(AM) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
+	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 
