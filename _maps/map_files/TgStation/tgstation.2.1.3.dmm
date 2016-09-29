@@ -7114,8 +7114,7 @@
 /area/shuttle/labor)
 "aoZ" = (
 /obj/machinery/atmospherics/components/binary/valve{
-	name = "Waste Release";
-	step_y = 0
+	name = "Waste Release"
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
