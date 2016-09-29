@@ -46,7 +46,7 @@
 	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
-		if(isrobot(S) && !silent_update)
+		if(iscyborg(S) && !silent_update)
 			S << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
 		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	else if(isbrain(owner) || isclockmob(owner))
@@ -61,7 +61,7 @@
 	owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
-		if(isrobot(S))
+		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			R.UnlinkSelf()
 			R.emagged = 1
@@ -109,7 +109,7 @@
 		qdel(F)
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
-		if(isrobot(S))
+		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			R.emagged = initial(R.emagged)
 		S.make_laws()
@@ -128,6 +128,6 @@
 		owner.mind.memory = "" //Not sure if there's a better way to do this
 		owner.mind.special_role = null
 	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
-	if(isrobot(owner))
+	if(iscyborg(owner))
 		owner << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
 	..()
