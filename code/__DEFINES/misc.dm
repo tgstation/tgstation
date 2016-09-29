@@ -343,7 +343,7 @@ var/list/bloody_footprints_cache = list()
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF 1
-#define FIRE_PROOF 2
+#define FIRE_PROOF 2 //not flammable (but may or may not take damage from fire)
 #define ON_FIRE 4
 #define UNACIDABLE 8 //acid can't even appear on it, let alone melt it.
 #define ACID_PROOF 16 //acid stuck on it doesn't melt it.

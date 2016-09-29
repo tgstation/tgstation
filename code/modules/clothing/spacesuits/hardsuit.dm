@@ -325,7 +325,7 @@
 	visor_flags_inv = 0
 	visor_flags = 0
 	on = 0
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
@@ -338,7 +338,7 @@
 	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70, fire = 95, acid = 100)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
@@ -414,7 +414,7 @@
 	desc = "A prototype helmet designed for research in a hazardous, low pressure environment. Scientific data flashes across the visor."
 	icon_state = "hardsuit0-rd"
 	item_color = "rd"
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/onboard_hud_enabled = 0 //stops conflicts with another diag HUD
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60, fire = 60, acid = 80)
@@ -693,7 +693,7 @@
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 95, acid = 95)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
 	dog_fashion = /datum/dog_fashion/back/deathsquad
 
