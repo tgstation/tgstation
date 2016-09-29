@@ -91,6 +91,12 @@
 	origin_tech = "materials=2;engineering=3"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
+/obj/item/weapon/pickaxe/bone
+	icon_state = "bonepickaxe"
+	item_state = "bpickaxe"
+	materials = list()
+	origin_tech = ""
+
 /obj/item/weapon/pickaxe/mini
 	name = "compact pickaxe"
 	desc = "A smaller, compact version of the standard pickaxe."

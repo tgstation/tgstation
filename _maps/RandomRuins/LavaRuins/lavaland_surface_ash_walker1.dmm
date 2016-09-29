@@ -49,12 +49,12 @@
 	},
 /area/ruin/unpowered)
 "j" = (
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe/bone,
+/obj/item/weapon/pickaxe/bone,
 /obj/structure/closet/crate/internals,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe/bone,
+/obj/item/weapon/pickaxe/bone,
+/obj/item/weapon/pickaxe/bone,
 /obj/item/weapon/storage/box/rxglasses,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -130,7 +130,7 @@
 	},
 /area/ruin/unpowered)
 "s" = (
-/obj/item/weapon/twohanded/spear,
+/obj/item/weapon/twohanded/bonespear,
 /obj/structure/mineral_door/iron,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -229,17 +229,17 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "G" = (
-/obj/item/weapon/twohanded/spear,
+/obj/item/weapon/twohanded/bonespear,
 /obj/structure/rack,
-/obj/item/weapon/twohanded/spear,
-/obj/item/weapon/twohanded/spear,
-/obj/item/weapon/twohanded/spear,
+/obj/item/weapon/twohanded/bonespear,
+/obj/item/weapon/twohanded/bonespear,
+/obj/item/weapon/twohanded/bonespear,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "H" = (
-/obj/item/weapon/twohanded/spear,
+/obj/item/weapon/twohanded/bonespear,
 /obj/structure/rack,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -264,14 +264,14 @@
 	},
 /area/lavaland/surface/outdoors)
 "L" = (
-/obj/item/weapon/twohanded/spear,
+/obj/item/weapon/twohanded/bonespear,
 /obj/structure/table,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "M" = (
-/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe/bone,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "o2=13;n2=24;TEMP=300"
