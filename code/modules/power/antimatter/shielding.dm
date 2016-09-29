@@ -24,6 +24,8 @@
 	var/processing = 0//To track if we are in the update list or not, we need to be when we are damaged and if we ever
 	var/stability = 100//If this gets low bad things tend to happen
 	var/efficiency = 1//How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
+	var/coredirs = 0
+	var/dirs = 0
 
 
 /obj/machinery/am_shielding/New(loc)
@@ -105,14 +107,37 @@
 
 
 /obj/machinery/am_shielding/update_icon()
+	dirs = 0
+	coredirs = 0
 	cut_overlays()
 	for(var/direction in alldirs)
-		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit)||(istype(machine, /obj/machinery/power/am_control_unit) && machine == control_unit))
-			add_overlay("shield_[direction]")
+		var/turf/T = get_step(loc, direction)
+		for(var/obj/machinery/machine in T)
+			if(istype(machine, /obj/machinery/am_shielding))
+				var/obj/machinery/am_shielding/shield = machine
+				if(shield.control_unit == control_unit)
+					if(shield.processing)
+						coredirs |= direction
+					if(direction in cardinal)
+						dirs |= direction
+
+			else
+				if(istype(machine, /obj/machinery/power/am_control_unit) && (direction in cardinal))
+					var/obj/machinery/power/am_control_unit/control = machine
+					if(control == control_unit)
+						dirs |= direction
+
+
+	var/prefix = ""
+	var/icondirs=dirs
+
+	if(coredirs)
+		prefix="core"
+
+	icon_state = "[prefix]shield_[icondirs]"
 
 	if(core_check())
-		add_overlay("core")
+		add_overlay("core[control_unit && control_unit.active]")
 		if(!processing)
 			setup_core()
 	else if(processing)
@@ -151,10 +176,15 @@
 //Scans cards for shields or the control unit and if all there it
 /obj/machinery/am_shielding/proc/core_check()
 	for(var/direction in alldirs)
-		var/machine = locate(/obj/machinery, get_step(loc, direction))
-		if(!machine)
-			return 0//Need all for a core
-		if(!istype(machine, /obj/machinery/am_shielding) && !istype(machine, /obj/machinery/power/am_control_unit))
+		var/found_am_device=0
+		for(var/obj/machinery/machine in get_step(loc, direction))
+		//var/machine = locate(/obj/machinery, get_step(loc, direction))
+			if(!machine)
+				continue//Need all for a core
+			if(istype(machine, /obj/machinery/am_shielding) || istype(machine, /obj/machinery/power/am_control_unit))
+				found_am_device = 1
+				break
+		if(!found_am_device)
 			return 0
 	return 1
 

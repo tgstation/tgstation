@@ -3,7 +3,7 @@
 	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "control"
-	anchored = 1
+	anchored = 0
 	density = 1
 	use_power = 1
 	idle_power_usage = 100
@@ -37,7 +37,10 @@
 
 /obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
+		AMS.control_unit = null
 		qdel(AMS)
+	qdel(fueljar)
+	fueljar = null
 	return ..()
 
 
