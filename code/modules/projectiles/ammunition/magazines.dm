@@ -189,6 +189,16 @@
 	max_ammo = 8
 	multiple_sprites = 2
 
+/obj/item/ammo_box/magazine/m9mm
+	name = "pistol magazine (soporific 9mm)"
+	desc = "A gun magazine."
+	icon_state = "9x19p"
+	origin_tech = "combat=4"
+	ammo_type = /obj/item/ammo_casing/c9mmtranq
+	caliber = "9mmtranq"
+	max_ammo = 8
+	multiple_sprites = 2
+
 /obj/item/ammo_box/magazine/m45
 	name = "handgun magazine (.45)"
 	icon_state = "45-8"

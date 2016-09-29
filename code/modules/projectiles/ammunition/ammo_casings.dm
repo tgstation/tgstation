@@ -94,6 +94,11 @@
 	icon_state = "40mmHE"
 	projectile_type = /obj/item/projectile/bullet/a40mm
 
+/obj/item/ammo_casing/c9mmtranq
+	desc = "A soporific 9mm bullet casing."
+	caliber = "9mmtranq"
+	projectile_type = /obj/item/projectile/bullet/tranq
+
 
 
 /////SNIPER ROUNDS
