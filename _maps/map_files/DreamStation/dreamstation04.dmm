@@ -12792,7 +12792,6 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/escape{
 	tag = "icon-escape (NORTH)";
 	dir = 1
@@ -67446,7 +67445,6 @@
 	dir = 4;
 	network = list("SS13","Sci")
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cEh" = (
@@ -67983,7 +67981,6 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cFh" = (

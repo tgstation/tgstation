@@ -28,6 +28,10 @@
 	var/hue
 	var/quality
 
+/datum/spacevine_mutation/proc/add_mutation_to_vinepiece(obj/effect/spacevine/holder)
+	holder.mutations |= src
+	holder.color = hue
+
 /datum/spacevine_mutation/proc/process_mutation(obj/effect/spacevine/holder)
 	return
 
@@ -364,6 +368,18 @@
 	var/obj/effect/spacevine_controller/master = null
 	var/list/mutations = list()
 
+/obj/effect/spacevine/examine(mob/user)
+	..()
+	var/text = "This one is a"
+	if(mutations.len)
+		for(var/A in mutations)
+			var/datum/spacevine_mutation/SM = A
+			text += " [SM.name]"
+	else
+		text += " normal"
+	text += " vine."
+	user << text
+
 /obj/effect/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_death(src)
@@ -491,19 +507,15 @@
 	vines += SV
 	SV.master = src
 	if(muts && muts.len)
-		SV.mutations |= muts
+		for(var/datum/spacevine_mutation/M in muts)
+			M.add_mutation_to_vinepiece(SV)
+		return
 	if(parent)
 		SV.mutations |= parent.mutations
 		SV.color = parent.color
-		SV.desc = parent.desc
 		if(prob(mutativness))
-			SV.mutations |= pick(mutations_list)
-			var/datum/spacevine_mutation/randmut = pick(SV.mutations)
-			SV.color = randmut.hue
-			SV.desc = "An extremely expansionistic species of vine. These are "
-			for(var/datum/spacevine_mutation/M in SV.mutations)
-				SV.desc += "[M.name] "
-			SV.desc += "vines."
+			var/datum/spacevine_mutation/randmut = pick(mutations_list - SV.mutations)
+			randmut.add_mutation_to_vinepiece(SV)
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)

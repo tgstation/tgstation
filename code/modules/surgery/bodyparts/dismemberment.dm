@@ -80,8 +80,7 @@
 		return
 	var/turf/T = get_turf(owner)
 	var/mob/living/carbon/C = owner
-	if(!no_update)
-		update_limb(1)
+	update_limb(1)
 	C.bodyparts -= src
 	if(held_index)
 		C.unEquip(owner.get_item_for_held_index(held_index), 1)
