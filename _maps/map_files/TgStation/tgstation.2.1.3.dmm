@@ -2805,21 +2805,15 @@
 /turf/open/floor/plating,
 /area/security/main)
 "agd" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
-/area/shuttle/pod_3)
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/turf/open/floor/plasteel,
+/area/atmos)
 "age" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
 	},
-/area/shuttle/pod_3)
+/turf/open/floor/plasteel,
+/area/atmos)
 "agf" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
@@ -2976,10 +2970,9 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "agv" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
 	},
-/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plasteel,
 /area/atmos)
 "agw" = (
@@ -4770,8 +4763,10 @@
 /area/shuttle/labor)
 "ajY" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Unfiltered to Port";
+	on = 0
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
@@ -43474,7 +43469,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
 	name = "Unfiltered to Mix";
-	on = 0
+	on = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4;
@@ -94526,7 +94521,7 @@ bRF
 bSM
 bTS
 bUQ
-bWa
+agd
 bUO
 bVZ
 bVZ
@@ -94783,7 +94778,7 @@ bRE
 bSL
 bPe
 agv
-bOd
+age
 bOd
 bXT
 bXT
