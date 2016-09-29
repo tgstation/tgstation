@@ -75,6 +75,29 @@
 	name = "Ash Walker"
 	id = "lizard"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
+
+/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
+	C.handcrafting.categories = list(CAT_PRIMAL)
+
+/datum/species/lizard/ashwalker/on_species_loss(mob/living/carbon/human/C)
+	C.handcrafting.categories = list(CAT_WEAPON,
+				CAT_AMMO,
+				CAT_ROBOT,
+				CAT_MISC,
+				CAT_PRIMAL,
+				CAT_BREAD,
+				CAT_BURGER,
+				CAT_CAKE,
+				CAT_EGG,
+				CAT_MEAT,
+				CAT_MISCFOOD,
+				CAT_PASTRY,
+				CAT_PIE,
+				CAT_PIZZA,
+				CAT_SALAD,
+				CAT_SANDWICH,
+				CAT_SOUP,
+				CAT_SPAGHETTI)
 /*
  PODPEOPLE
 */
