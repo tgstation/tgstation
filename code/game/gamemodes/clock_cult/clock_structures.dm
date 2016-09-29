@@ -42,19 +42,21 @@
 	..()
 	desc = initial(desc)
 	if(takes_damage)
-		var/servant_message = "It is at <b>[health]/[max_health]</b> integrity"
-		var/other_message = "It seems pristine and undamaged"
+		var/t_It = they_pronoun(TRUE)
+		var/t_is = get_is()
+		var/servant_message = "[t_It] [t_is] at <b>[health]/[max_health]</b> integrity"
+		var/other_message = "[t_It] seems pristine and undamaged"
 		var/heavily_damaged = FALSE
 		var/healthpercent = (health/max_health) * 100
 		if(healthpercent >= 100)
-			other_message = "It seems pristine and undamaged"
+			other_message = "[t_It] seems pristine and undamaged"
 		else if(healthpercent >= 50)
-			other_message = "It looks slightly dented"
+			other_message = "[t_It] looks slightly dented"
 		else if(healthpercent >= 25)
-			other_message = "It appears heavily damaged"
+			other_message = "[t_It] appears heavily damaged"
 			heavily_damaged = TRUE
 		else if(healthpercent >= 0)
-			other_message = "It's falling apart"
+			other_message = "[t_It] [t_is] falling apart"
 			heavily_damaged = TRUE
 		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
@@ -130,7 +132,7 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/daemon_shell))
 		var/component_type
-		switch(alert(user, "Will this daemon produce a specific type of component or produce randomly?.", , "Specific Type", "Random Component"))
+		switch(alert(user, "Will this daemon produce a specific type of component or produce randomly?", , "Specific Type", "Random Component"))
 			if("Specific Type")
 				component_type = get_component_id(input(user, "Choose a component type.", name) as null|anything in list("Belligerent Eye", "Vanguard Cogwheel", "Guvax Capacitor", "Replicant Alloy", "Hierophant Ansible"))
 				if(!component_type)
@@ -929,7 +931,7 @@
 				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
-				L.visible_message("<span class='warning'>[L] collapses in on themself as [src] flares bright blue!</span>")
+				L.visible_message("<span class='warning'>[L] collapses in on [L.them_pronoun()]self as [src] flares bright blue!</span>")
 				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
 				for(var/obj/item/W in L)
 					L.unEquip(W)
@@ -957,7 +959,7 @@
 						ghost.reenter_corpse()
 						L.revive(1, 1)
 						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
-						L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", \
+						L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.their_pronoun()] mouth dripping blue ichor!</span>", \
 						"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 						vitality -= revival_cost
 						break
