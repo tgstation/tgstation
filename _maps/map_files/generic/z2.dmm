@@ -4164,7 +4164,9 @@
 /area/wizard_station)
 "mW" = (
 /mob/living/simple_animal/bot/medbot/mysterious{
-	name = "\improper Nobody's Perfect"
+	desc = "If you don't accidentally blow yourself up from time to time you're not really a wizard anyway.";
+	faction = list("neutral","silicon");
+	name = "Nobody's Perfect"
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
@@ -4640,6 +4642,7 @@
 /area/centcom/holding)
 "ow" = (
 /obj/structure/window/reinforced{
+	burn_state = -2;
 	color = "#008000";
 	dir = 1
 	},
@@ -5865,7 +5868,7 @@
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	name = "Storage"
 	},
-/turf/closed/indestructible/riveted/uranium,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "sW" = (
 /obj/machinery/door/airlock{
@@ -11051,7 +11054,7 @@ aa
 jc
 jc
 ju
-sK
+kP
 lQ
 kG
 kG
@@ -11306,7 +11309,7 @@ aa
 aa
 jc
 jc
-kP
+sK
 sQ
 kP
 jc
