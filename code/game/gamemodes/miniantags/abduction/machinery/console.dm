@@ -45,7 +45,7 @@
 
 	if(experiment != null)
 		var/points = experiment.points
-		var/credits = exeriment.credits
+		var/credits = experiment.credits
 		dat += "Collected Samples : [points] <br>"
 		dat += "Gear Credits: [credits] <br>"
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
