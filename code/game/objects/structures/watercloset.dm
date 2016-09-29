@@ -208,7 +208,7 @@
 			else
 				wash_obj(G)
 	else
-		if(istype(loc, /turf/open))
+		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 

@@ -353,7 +353,7 @@
 		playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 		return
 	if(!wielded)
-		if(isrobot(user))
+		if(iscyborg(user))
 			user << "<span class='warning'>You must activate the paddles in your active module before you can use them on someone!</span>"
 		else
 			user << "<span class='warning'>You need to wield the paddles in both hands before you can use them on someone!</span>"

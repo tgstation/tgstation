@@ -143,7 +143,7 @@
 
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/T in linked)
-		if(!T.intact || istype(T,/turf/open/space))
+		if(!T.intact || isspaceturf(T))
 			return 0
 	return 1
 

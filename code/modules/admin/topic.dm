@@ -1929,7 +1929,7 @@
 
 		switch(where)
 			if("inhand")
-				if (!iscarbon(usr) && !isrobot(usr))
+				if (!iscarbon(usr) && !iscyborg(usr))
 					usr << "Can only spawn in hand when you're a carbon mob or cyborg."
 					where = "onfloor"
 				target = usr
@@ -1972,7 +1972,7 @@
 								var/mob/living/L = usr
 								var/obj/item/I = O
 								L.put_in_hands(I)
-								if(isrobot(L))
+								if(iscyborg(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
 										R.module.add_module(I)

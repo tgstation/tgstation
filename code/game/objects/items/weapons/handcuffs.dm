@@ -186,7 +186,7 @@
 		return ..()
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(isrobot(user))
+	if(iscyborg(user))
 		if(!C.handcuffed)
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \

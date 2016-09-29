@@ -87,7 +87,7 @@ var/datum/subsystem/minimap/SSminimap
 	var/obj/obj
 	var/list/obj_icons
 	// Don't use icons for space, just add objects in space if they exist.
-	if(istype(tile, /turf/open/space))
+	if(isspaceturf(tile))
 		obj = locate(/obj/structure/lattice/catwalk) in tile
 		if(obj)
 			tile_icon = new /icon('icons/obj/smooth_structures/catwalk.dmi', "catwalk", SOUTH)

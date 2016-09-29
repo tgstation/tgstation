@@ -272,7 +272,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		if(!D)
 			return
 
-		if(istype(src,/turf/closed/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
+		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
 			user << "<span class='notice'>You place the poster!</span>"
 		else
 			D.roll_and_drop(temp_loc,D.official)

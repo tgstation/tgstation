@@ -392,7 +392,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(!isabductor(user))
 		return
 
-	if(isrobot(target))
+	if(iscyborg(target))
 		..()
 		return
 

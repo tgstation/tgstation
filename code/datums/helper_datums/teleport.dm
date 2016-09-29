@@ -185,7 +185,7 @@
 		var/z = pick(zlevels)
 		var/random_location = locate(x,y,z)
 
-		if(!(istype(random_location, /turf/open/floor)))
+		if(!isfloorturf(random_location))
 			continue
 		var/turf/open/floor/F = random_location
 		if(!F.air)

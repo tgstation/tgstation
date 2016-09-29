@@ -117,7 +117,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
-		if(T.intact || !istype(T, /turf/open/floor))
+		if(T.intact || !isfloorturf(T))
 			return
 		if(get_dist(src, user) > 1)
 			return

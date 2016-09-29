@@ -82,7 +82,7 @@
 		else
 			user.take_bodypart_damage(2*force)
 		return
-	if(isrobot(target))
+	if(iscyborg(target))
 		..()
 		return
 	if(!isliving(target))
@@ -90,7 +90,7 @@
 	if (user.a_intent == "harm")
 		if(!..())
 			return
-		if(!isrobot(target))
+		if(!iscyborg(target))
 			return
 	else
 		if(cooldown <= world.time)
@@ -190,7 +190,7 @@
 		consume_everything(target)
 	else
 		var/turf/T = get_turf(src)
-		if(!istype(T,/turf/open/space))
+		if(!isspaceturf(T))
 			consume_turf(T)
 
 /obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)

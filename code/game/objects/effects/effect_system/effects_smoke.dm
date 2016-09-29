@@ -157,7 +157,7 @@
 	var/blast = 0
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A,/turf/open))
+	if(isopenturf(A))
 		var/turf/open/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air

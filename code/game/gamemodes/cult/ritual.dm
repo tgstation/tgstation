@@ -189,7 +189,7 @@ This file contains the arcane tome files.
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
-	if(istype(Turf, /turf/open/space))
+	if(isspaceturf(Turf))
 		user << "<span class='warning'>You cannot scribe runes in space!</span>"
 		return
 	for(var/T in typesof(/obj/effect/rune))

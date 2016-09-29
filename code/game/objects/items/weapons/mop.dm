@@ -26,7 +26,7 @@ obj/item/weapon/mop/proc/clean(turf/A)
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
 				qdel(O)
-		if(istype(A, /turf/closed))
+		if(isclosedturf(A))
 			var/turf/closed/C = A
 			C.thermite = 0
 	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.

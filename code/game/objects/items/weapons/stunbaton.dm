@@ -111,7 +111,7 @@
 		deductcharge(hitcost)
 		return
 
-	if(isrobot(M))
+	if(iscyborg(M))
 		..()
 		return
 
@@ -140,7 +140,7 @@
 		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
 			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
-	if(isrobot(loc))
+	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(hitcost))
 			return 0

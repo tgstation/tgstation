@@ -346,10 +346,10 @@
 			user << "<span class='warning'>You need one brass sheet to do this!</span>"
 			return
 		var/turf/T = get_turf(src)
-		if(istype(T, /turf/closed/wall))
+		if(iswallturf(T))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
-		if(!istype(T, /turf/open/floor))
+		if(!isfloorturf(T))
 			user << "<span class='warning'>A floor must be present to build a [anchored ? "false ":""]wall!</span>"
 			return
 		if(locate(/obj/structure/falsewall) in T.contents)

@@ -50,15 +50,15 @@
 			T.dump_contents()
 			qdel(target)
 
-		if(istype(target, /turf/closed/mineral))
+		if(ismineralturf(target))
 			var/turf/closed/mineral/M = target
 			M.ChangeTurf(M.baseturf)
 
-		if(istype(target, /turf/open/floor))
+		if(isfloorturf(target))
 			var/turf/open/floor/F = target
 			F.ChangeTurf(F.baseturf)
 
-		if(istype(target, /turf/closed/wall))
+		if(iswallturf(target))
 			var/turf/closed/wall/W = target
 			W.dismantle_wall(1)
 

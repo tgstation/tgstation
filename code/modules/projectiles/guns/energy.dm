@@ -155,7 +155,7 @@
 		return (OXYLOSS)
 
 /obj/item/weapon/gun/energy/proc/robocharge()
-	if(isrobot(src.loc))
+	if(iscyborg(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot

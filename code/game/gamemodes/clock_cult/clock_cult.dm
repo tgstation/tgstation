@@ -108,7 +108,7 @@ Credit where due:
 	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
-		if(isrobot(S))
+		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			R.UnlinkSelf()
 			R.emagged = 1
@@ -177,7 +177,7 @@ Credit where due:
 		qdel(H)
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
-		if(isrobot(S))
+		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			R.emagged = initial(R.emagged)
 			R << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"

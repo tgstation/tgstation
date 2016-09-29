@@ -184,7 +184,7 @@
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
-	if(istype(target, /turf/closed/mineral))
+	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
 		Range()

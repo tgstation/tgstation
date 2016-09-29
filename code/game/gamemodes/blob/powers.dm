@@ -194,7 +194,7 @@
 		src << "<span class='userdanger'>You have no core and are about to die! May you rest in peace.</span>"
 		return
 	var/area/A = get_area(T)
-	if(istype(T, /turf/open/space) || A && !A.blob_allowed)
+	if(isspaceturf(T) || A && !A.blob_allowed)
 		src << "<span class='warning'>You cannot relocate your core here!</span>"
 		return
 	if(!can_buy(80))

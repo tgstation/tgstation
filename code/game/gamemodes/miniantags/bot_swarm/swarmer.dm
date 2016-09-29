@@ -257,14 +257,14 @@
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	for(var/turf/T in range(1, src))
-		if(istype(T, /turf/open/space) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || istype(T.loc, /area/space))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			return
 	..()
 
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	for(var/turf/T in range(1, src))
-		if(istype(T, /turf/open/space) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || istype(T.loc, /area/space))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			return
 	..()
@@ -482,7 +482,7 @@
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
 			L.electrocute_act(0, src, 1, 1)
-			if(isrobot(L))
+			if(iscyborg(L))
 				L.Weaken(5)
 			qdel(src)
 	..()

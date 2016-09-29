@@ -161,7 +161,7 @@
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
-		if(istype(T, /turf/open))
+		if(isopenturf(T))
 			var/turf/open/OT = T
 			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=10, wet_time_to_add=reac_volume) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
 			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
@@ -392,7 +392,7 @@
 	color = "#FFFFFF" // rgb: 0, 0, 0
 
 /datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
-	if(!istype(T, /turf/open/space))
+	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
 		reagentdecal.reagents.add_reagent("flour", reac_volume)
 

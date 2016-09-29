@@ -74,7 +74,7 @@
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
 
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			addtimer(reagents, "add_reagent", 600, FALSE, refill, trans)

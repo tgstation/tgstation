@@ -199,7 +199,7 @@
 			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
 			bodytemperature += diff
 
-		if(istype(T,/turf/open))
+		if(isopenturf(T))
 			var/turf/open/ST = T
 			if(ST.air)
 				var/ST_gases = ST.air.gases

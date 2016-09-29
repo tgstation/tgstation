@@ -404,7 +404,7 @@ var/list/teleport_runes = list()
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
-	if((((ishuman(sacrificial) || isrobot(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
+	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			M << "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>"
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
@@ -423,7 +423,7 @@ var/list/teleport_runes = list()
 		if(sacrifice_fulfilled)
 			M << "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>"
 		else
-			if(ishuman(sacrificial) || isrobot(sacrificial))
+			if(ishuman(sacrificial) || iscyborg(sacrificial))
 				M << "<span class='cultlarge'>\"I accept this sacrifice.\"</span>"
 			else
 				M << "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>"
@@ -435,7 +435,7 @@ var/list/teleport_runes = list()
 		stone.invisibility = 0
 
 	if(sacrificial)
-		if(isrobot(sacrificial))
+		if(iscyborg(sacrificial))
 			playsound(sacrificial, 'sound/magic/Disable_Tech.ogg', 100, 1)
 			sacrificial.dust() //To prevent the MMI from remaining
 		else
