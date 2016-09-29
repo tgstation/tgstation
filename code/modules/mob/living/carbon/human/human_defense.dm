@@ -339,16 +339,17 @@
 
 
 /mob/living/carbon/human/ex_act(severity, ex_target)
-	var/b_loss = null
-	var/f_loss = null
-	var/bomb_armor = getarmor(null, "bomb")
+
 	if(istype(ex_target, /datum/spacevine_mutation) && isvineimmune(src))
 		return
+	var/b_loss = 0
+	var/f_loss = 0
+	var/bomb_armor = getarmor(null, "bomb")
 
 	switch (severity)
 		if (1)
-			b_loss += 500
-			if (prob(bomb_armor))
+			if(prob(bomb_armor))
+				b_loss = 500
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
 			else
@@ -356,12 +357,11 @@
 				return
 
 		if (2)
-			b_loss += 60
-
-			f_loss += 60
-			if (prob(bomb_armor))
-				b_loss = b_loss/1.5
-				f_loss = f_loss/1.5
+			b_loss = 60
+			f_loss = 60
+			if(bomb_armor)
+				b_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
+				f_loss = b_loss
 
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
@@ -369,15 +369,19 @@
 				Paralyse(10)
 
 		if(3)
-			b_loss += 30
-			if (prob(bomb_armor))
-				b_loss = b_loss/2
+			b_loss = 30
+			if(bomb_armor)
+				b_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
+
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
 			if (prob(50))
 				Paralyse(8)
 
 	take_overall_damage(b_loss,f_loss)
+	if(bomb_armor == 100) //full bomb armor set, we don't call contents_explosion
+		flash_act()
+		return
 
 	//attempt to dismember bodyparts
 	if(severity <= 2 || !bomb_armor)
@@ -450,9 +454,6 @@
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
 	var/acidity = acidpwr * min(acid_volume*0.005, 0.1)
-	var/acid_volume_left = acid_volume
-	var/acid_decay = 100/acidpwr // how much volume we lose per item we try to melt. 5 for fluoro, 10 for sulphuric
-
 	//HEAD//
 	if(!bodyzone_hit || bodyzone_hit == "head") //only if we didn't specify a zone or if that zone is the head.
 		var/obj/item/clothing/head_clothes = null
@@ -464,8 +465,7 @@
 			head_clothes = head
 		if(head_clothes)
 			if(!(head_clothes.resistance_flags & UNACIDABLE))
-				head_clothes.acid_act(acidpwr, acid_volume_left)
-				acid_volume_left = max(acid_volume_left - acid_decay, 0) //We remove some of the acid volume.
+				head_clothes.acid_act(acidpwr, acid_volume)
 				update_inv_glasses()
 				update_inv_wear_mask()
 				update_inv_head()
@@ -487,8 +487,7 @@
 			chest_clothes = wear_suit
 		if(chest_clothes)
 			if(!(chest_clothes.resistance_flags & UNACIDABLE))
-				chest_clothes.acid_act(acidpwr, acid_volume_left)
-				acid_volume_left = max(acid_volume_left - acid_decay, 0)
+				chest_clothes.acid_act(acidpwr, acid_volume)
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
@@ -519,8 +518,7 @@
 
 		if(arm_clothes)
 			if(!(arm_clothes.resistance_flags & UNACIDABLE))
-				arm_clothes.acid_act(acidpwr, acid_volume_left)
-				acid_volume_left = max(acid_volume_left - acid_decay, 0)
+				arm_clothes.acid_act(acidpwr, acid_volume)
 				update_inv_gloves()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
@@ -546,8 +544,7 @@
 			leg_clothes = wear_suit
 		if(leg_clothes)
 			if(!(leg_clothes.resistance_flags & UNACIDABLE))
-				leg_clothes.acid_act(acidpwr, acid_volume_left)
-				acid_volume_left = max(acid_volume_left - acid_decay, 0)
+				leg_clothes.acid_act(acidpwr, acid_volume)
 				update_inv_shoes()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
@@ -588,8 +585,7 @@
 		inventory_items_to_kill += held_items
 
 	for(var/obj/item/I in inventory_items_to_kill)
-		I.acid_act(acidpwr, acid_volume_left)
-		acid_volume_left = max(acid_volume_left - acid_decay, 0)
+		I.acid_act(acidpwr, acid_volume)
 	return 1
 
 /mob/living/carbon/human/singularity_act()

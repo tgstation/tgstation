@@ -6,8 +6,9 @@
 	density = 1
 	anchored = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF//Dissolving the case would also delete the gun.
-	health = 30
-	var/destroyed = 0
+	health = 200
+	maxhealth = 200
+	broken_health = 50
 	var/obj/item/showpiece = null
 	var/alert = 0
 	var/open = 0
@@ -20,17 +21,6 @@
 		showpiece = new start_showpiece_type (src)
 	update_icon()
 
-/obj/structure/displaycase/ex_act(severity, target)
-	switch(severity)
-		if (1)
-			new /obj/item/weapon/shard( src.loc )
-			dump()
-			qdel(src)
-		if (2)
-			take_damage(rand(10,20), BRUTE, 0)
-		if (3)
-			take_damage(5, BRUTE, 0)
-
 /obj/structure/displaycase/examine(mob/user)
 	..()
 	if(showpiece)
@@ -39,47 +29,45 @@
 		user << "<span class='notice'>Hooked up with an anti-theft system.</span>"
 
 
-/obj/structure/displaycase/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
-
 /obj/structure/displaycase/proc/dump()
 	if (showpiece)
 		showpiece.loc = src.loc
 		showpiece = null
 
-/obj/structure/displaycase/blob_act(obj/structure/blob/B)
-	take_damage(30)
-
-/obj/structure/displaycase/hitby(atom/movable/AM)
-	..()
-	if(isobj(AM))
-		var/obj/item/I = AM
-		take_damage(I.throwforce * 0.2)
-
-/obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/structure/displaycase/obj_destruction()
-	if(!destroyed)
+//phil235 hitby must have 80 % armor
+
+/obj/structure/displaycase/obj_destruction(damage_flag)
+	new /obj/item/weapon/shard( src.loc )
+	dump()
+	trigger_alarm()
+	qdel(src)
+
+/obj/structure/displaycase/obj_break(damage_flag)
+	if(!broken)
 		density = 0
-		destroyed = 1
+		broken = 1
 		new /obj/item/weapon/shard( src.loc )
 		playsound(src, "shatter", 70, 1)
 		update_icon()
+		trigger_alarm()
 
-		//Activate Anti-theft
-		if(alert)
-			var/area/alarmed = get_area(src)
-			alarmed.burglaralert(src)
-			playsound(src, "sound/effects/alert.ogg", 50, 1)
+/obj/structure/displaycase/proc/trigger_alarm()
+	//Activate Anti-theft
+	if(alert)
+		var/area/alarmed = get_area(src)
+		alarmed.burglaralert(src)
+		playsound(src, "sound/effects/alert.ogg", 50, 1)
 
+/*
+
+*/
 
 /obj/structure/displaycase/proc/is_directional(atom/A)
 	try
@@ -87,6 +75,7 @@
 	catch
 		return 0
 	return 1
+
 /obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
 	//Get flatIcon even if dir is mismatched for directionless icons
 	//SLOW
@@ -106,7 +95,7 @@
 		I = icon('icons/obj/stationobjs.dmi',"glassbox_open")
 	else
 		I = icon('icons/obj/stationobjs.dmi',"glassbox0")
-	if(destroyed)
+	if(broken)
 		I = icon('icons/obj/stationobjs.dmi',"glassboxb0")
 	if(showpiece)
 		var/icon/S = get_flat_icon_directional(showpiece)
@@ -116,7 +105,7 @@
 	return
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
-	if(W.GetID() && electronics && !destroyed)
+	if(W.GetID() && electronics && !broken)
 		if(allowed(user))
 			user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
 			open = !open
@@ -124,7 +113,7 @@
 		else
 			user <<  "<span class='warning'>Access denied.</span>"
 	else if(!alert && istype(W,/obj/item/weapon/crowbar))
-		if(destroyed)
+		if(broken)
 			if(showpiece)
 				user << "<span class='notice'>Remove the displayed object first.</span>"
 			else
@@ -142,49 +131,26 @@
 			showpiece = W
 			user << "<span class='notice'>You put [W] on display</span>"
 			update_icon()
-	else if(istype(W, /obj/item/stack/sheet/glass) && destroyed)
+	else if(istype(W, /obj/item/stack/sheet/glass) && broken)
 		var/obj/item/stack/sheet/glass/G = W
 		if(G.get_amount() < 2)
 			user << "<span class='warning'>You need two glass sheets to fix the case!</span>"
 			return
-		user << "<span class='notice'>You start fixing the [src]...</span>"
+		user << "<span class='notice'>You start fixing [src]...</span>"
 		if(do_after(user, 20, target = src))
 			G.use(2)
-			destroyed = 0
-			health = initial(health)
+			broken = 0
+			health = maxhealth
 			update_icon()
 	else
 		return ..()
 
-/obj/structure/displaycase/attacked_by(obj/item/weapon/W, mob/living/user)
-	..()
-	take_damage(W.force, W.damtype)
-
 /obj/structure/displaycase/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/displaycase/attack_alien(mob/living/carbon/alien/humanoid/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	take_damage(20, BRUTE, 0)
-
-/obj/structure/displaycase/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper || M.obj_damage)
-		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
-		"<span class='danger'>You smash against the [src.name].</span>")
-		if(M.obj_damage)
-			take_damage(M.obj_damage, M.melee_damage_type, 1)
-		else
-			take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
-
-
 /obj/structure/displaycase/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (showpiece && (destroyed || open))
+	if (showpiece && (broken || open))
 		dump()
 		user << "<span class='notice'>You deactivate the hover field built into the case.</span>"
 		src.add_fingerprint(user)

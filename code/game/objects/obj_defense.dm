@@ -1,7 +1,8 @@
 
 //phil235
 /obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	play_attack_sound(damage_amount, damage_type, damage_flag, sound_effect)
+	if(sound_effect)
+		play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
 		if(BRUTE)
 		if(BURN)
@@ -11,7 +12,7 @@
 		var/armor_protection = 0
 		if(damage_flag)
 			armor_protection = armor[damage_flag]
-		damage_amount = round(damage_amount * (100 - armor_protection)/100, 0.1)
+		damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 		if(damage_amount >= 1)
 			. = damage_amount
 			health = max(health - damage_amount, 0)
@@ -29,17 +30,15 @@
 					obj_break(damage_flag)
 
 //phil235 maybe have it be in an override of take_damage() for each object.
-/obj/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(damage_amount)
-					playsound(src, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+			if(damage_amount)
+				playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/hitby(atom/movable/AM) //phil235 remember to remove the hitby of the children
 	..()
@@ -171,52 +170,55 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 		return 0
 
 /obj/proc/acid_melt()
-	var/turf/T = get_turf(src)
+	var/atom/loca = get_turf(src)
+	if(isobj(loc)) //item melting inside a crate doesn't drop a decal outside of it.
+		loca = loc //phil235 maybe don't drop anything?
 	SSacid.processing -= src
-	empty_object_contents(0, T)
-	var/obj/effect/decal/cleanable/molten_object/MO
-	if(density)
-		MO = new /obj/effect/decal/cleanable/molten_object/large(T)
-	else
-		MO = new (T)
-	MO.pixel_x = rand(-16,16)
-	MO.pixel_y = rand(-16,16)
-	MO.desc = "Looks like this was \an [src] some time ago."
-	for(var/atom/movable/AM in T) //the acid that is still unused drops on the other things on the same turf.
-		if(AM == src)
-			continue
-		AM.acid_act(10, 0.1 * acid_level/T.contents.len)
+	empty_object_contents(0, loca)
+	if(!isobj(loc))
+		var/obj/effect/decal/cleanable/molten_object/MO
+		if(density)
+			MO = new /obj/effect/decal/cleanable/molten_object/large(loca)
+		else
+			MO = new (loca)
+		MO.pixel_x = rand(-16,16)
+		MO.pixel_y = rand(-16,16)
+		MO.desc = "Looks like this was \an [src] some time ago."
+		for(var/atom/movable/AM in loca) //the acid that is still unused drops on the other things on the same turf.
+			if(AM == src)
+				continue
+			AM.acid_act(10, 0.1 * acid_level/loca.contents.len)
 	qdel(src)
 
 /obj/fire_act(global_overlay=1)
 	take_damage(20, BURN, "fire", 0)
-	if(!qdeleted(src))
-		if(!(resistance_flags & FIRE_PROOF))
-			resistance_flags |= ON_FIRE
-			SSfire_burning.processing[src] = src
-			if(global_overlay)
-				add_overlay(fire_overlay)
-			return 1
+	if(!(resistance_flags & (FIRE_PROOF|ON_FIRE)))
+		resistance_flags |= ON_FIRE
+		SSfire_burning.processing[src] = src
+		if(global_overlay)
+			add_overlay(fire_overlay)
+		return 1
 
 /obj/proc/burn()
-	var/turf/T = get_turf(src)
+	var/atom/loca = get_turf(src)
+	if(isobj(loc))
+		loca = loc
 	SSfire_burning.processing -= src
-	empty_object_contents(1, T)
-	var/obj/effect/decal/cleanable/ash/A
-	if(density)
-		A = new /obj/effect/decal/cleanable/ash/large(T)
-	else
-		A = new(T)
-	A.desc = "Looks like this used to be a [name] some time ago."
+	empty_object_contents(1, loca)
+	if(!isobj(loc))
+		drop_ashes(loca)
 	qdel(src)
 
+/obj/proc/drop_ashes(atom/location)
+	var/obj/effect/decal/cleanable/ash/A
+	if(density)
+		A = new /obj/effect/decal/cleanable/ash/large(location)
+	else
+		A = new(location)
+	A.desc = "Looks like this used to be a [name] some time ago."
+
 /obj/proc/obj_shred()
-	var/turf/T = get_turf(src)
-	empty_object_contents(0, T)
-	spawn(1) //so the shreds aren't instantly deleted by the explosion
-		var/obj/effect/decal/cleanable/shreds/Shreds = new(T)
-		Shreds.desc = "The sad remains of what used to be [name]."
-		qdel(src)
+	obj_destruction()
 
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
@@ -240,7 +242,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	being_shocked = 0
 
 
-/obj/proc/deconstruct()
+/obj/proc/deconstruct(disassembled = TRUE)
 	qdel(src)
 
 //what happens when the obj's health is below broken_health level.

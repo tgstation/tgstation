@@ -15,16 +15,15 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	anchored = 1
-	health = 500
-	maxhealth = 500
-	broken_health = 50
+	health = 300
+	maxhealth = 300
+	broken_health = 100
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
-	health = 50
 
 
 /obj/machinery/firealarm/New(loc, dir, building)
@@ -43,7 +42,7 @@
 	update_icon()
 
 /obj/machinery/firealarm/update_icon()
-	src.overlays = list()
+	cut_overlays()
 
 	var/area/A = src.loc
 	A = A.loc
@@ -155,9 +154,7 @@
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil()
-					coil.amount = 5
-					coil.loc = user.loc
+					new /obj/item/stack/cable_coil(user.loc, 5)
 					user << "<span class='notice'>You cut the wires from \the [src].</span>"
 					update_icon()
 					return
@@ -213,10 +210,15 @@
 			if(prob(33))
 				alarm()
 
-/obj/machinery/firealarm/obj_break()
+/obj/machinery/firealarm/obj_break(damage_flag)
 	if(!(stat & BROKEN) && buildstage != 0) //can't break the electronics if there isn't any inside.
 		stat |= BROKEN
 		update_icon()
+
+/obj/machinery/firealarm/obj_destruction(damage_flag)
+	new /obj/item/stack/sheet/metal(loc, 1)
+	new /obj/item/stack/cable_coil(loc, 3)
+	qdel(src)
 
 
 /*

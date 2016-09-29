@@ -10,8 +10,8 @@
 	var/force = 0
 
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-	var/health = 10000
-	var/maxhealth = 10000
+	var/health = 1000
+	var/maxhealth = 1000
 	var/broken_health = 0 //0 if we have no special broken behavior //phil235 ?
 
 	var/resistance_flags = FIRE_PROOF // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
@@ -187,7 +187,7 @@
 
 /obj/examine(mob/user)
 	..()
-	if(!(resistance_flags & INDESTRUCTIBLE))
+	if(!(resistance_flags & INDESTRUCTIBLE)) //phil35 maybe make this a proc so it doesn't show for effect?
 		if(resistance_flags & ON_FIRE)
 			user << "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (health/maxhealth) * 100
@@ -199,4 +199,4 @@
 			if(25 to 50)
 				user <<  "It appears heavily damaged."
 			if(0 to 25)
-				user <<  "It's falling apart!"
+				user <<  "<span class='warning'>It's falling apart!</span>"

@@ -55,6 +55,9 @@
 	active_power_usage = 8
 	power_channel = ENVIRON
 	req_access = list(access_atmospherics)
+	health = 350
+	maxhealth = 350
+	broken_health = 80
 
 	var/danger_level = 0
 	var/mode = AALARM_MODE_SCRUBBING
@@ -628,8 +631,7 @@
 			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && wires.is_all_cut())
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				user << "<span class='notice'>You cut the final wires.</span>"
-				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil(loc)
-				cable.amount = 5
+				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
@@ -714,3 +716,12 @@
 	emagged = TRUE
 	visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
 	playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+
+/obj/machinery/airalarm/obj_break(damage_flag)
+	..()
+	update_icon()
+
+/obj/machinery/airalarm/obj_destruction(damage_flag)
+	new /obj/item/stack/sheet/metal(loc, 1)
+	new /obj/item/stack/cable_coil(loc, 3)
+	qdel(src)

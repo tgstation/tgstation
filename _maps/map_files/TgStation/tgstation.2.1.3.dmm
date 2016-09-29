@@ -33850,7 +33850,6 @@
 /area/maintenance/asmaint)
 "bxh" = (
 /obj/machinery/door/poddoor{
-	auto_close = 300;
 	id = "smindicate";
 	name = "outer blast door"
 	},
@@ -35688,7 +35687,6 @@
 	pixel_y = 0
 	},
 /obj/machinery/newscaster{
-	hitstaken = 1;
 	pixel_x = 0;
 	pixel_y = -32
 	},
@@ -39767,7 +39765,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bJu" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -43277,7 +43275,7 @@
 	},
 /area/security/checkpoint/engineering)
 "bRl" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 8
 	},
 /turf/open/floor/plating,

@@ -2241,7 +2241,6 @@
 /area/shuttle/syndicate)
 "aeh" = (
 /obj/machinery/door/poddoor{
-	auto_close = 300;
 	id = "smindicate";
 	name = "outer blast door"
 	},
@@ -5399,7 +5398,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/newscaster{
-	hitstaken = 0;
 	pixel_x = 0;
 	pixel_y = -32;
 	tag = "s"
@@ -17039,7 +17037,7 @@
 "aJP" = (
 /obj/structure/cable/green,
 /obj/machinery/computer/monitor,
-/obj/machinery/light_construct,
+/obj/structure/light_construct,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aJQ" = (
@@ -24361,7 +24359,6 @@
 	pixel_y = 0
 	},
 /obj/machinery/newscaster{
-	hitstaken = 0;
 	pixel_x = 0;
 	pixel_y = -32;
 	tag = "s"
@@ -30814,7 +30811,6 @@
 	dir = 4
 	},
 /obj/machinery/newscaster{
-	hitstaken = 0;
 	pixel_x = 0;
 	pixel_y = -32;
 	tag = "s"
@@ -35124,7 +35120,6 @@
 "btJ" = (
 /obj/structure/closet/secure_closet/detective,
 /obj/machinery/newscaster{
-	hitstaken = 0;
 	pixel_x = 0;
 	pixel_y = -32;
 	tag = "s"
@@ -35479,7 +35474,6 @@
 /area/hallway/secondary/exit)
 "bup" = (
 /obj/machinery/newscaster{
-	hitstaken = 0;
 	pixel_x = -32;
 	pixel_y = 0;
 	tag = "w"
@@ -38139,7 +38133,6 @@
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/stamp/hop,
 /obj/machinery/newscaster{
-	hitstaken = 0;
 	pixel_x = 0;
 	pixel_y = -32;
 	tag = "s"
@@ -45000,7 +44993,6 @@
 /area/crew_quarters/captain)
 "bLr" = (
 /obj/machinery/newscaster{
-	hitstaken = 0;
 	pixel_x = -32;
 	pixel_y = 0;
 	tag = "w"

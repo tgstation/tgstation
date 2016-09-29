@@ -19,19 +19,6 @@
 	var/material = METAL
 	var/debris_type
 
-
-/obj/structure/barricade/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage_amount)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-
 /obj/structure/barricade/obj_destruction()
 	make_debris()
 	qdel(src)

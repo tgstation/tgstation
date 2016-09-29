@@ -7,12 +7,14 @@
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
+	health = 200
+	maxhealth = 200
+	broken_health = 100
 	var/obj/item/weapon/circuitboard/computer/circuit = null // if circuit==null, computer can't disassembly
 	var/processing = 0
 	var/brightness_on = 2
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
-	var/computer_health = 25
 	var/clockwork = FALSE
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
@@ -79,21 +81,19 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
 		if(do_after(user, 20/I.toolspeed, target = src))
-			deconstruct(user)
+			deconstruct(TRUE, user)
 	else
 		return ..()
 
-/obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(stat & BROKEN)
-					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-				else
-					playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			if(stat & BROKEN)
+				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			else
+				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/machinery/computer/obj_break()
 	if(circuit) //no circuit, no breaking
@@ -115,24 +115,26 @@
 	else
 		..()
 
-/obj/machinery/computer/deconstruct(mob/user)
+/obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
-	var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-	A.circuit = circuit
-	A.anchored = 1
+	if(circuit) //no circuit, no computer frame
+		var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+		A.circuit = circuit
+		A.anchored = 1
+		if(stat & BROKEN)
+			if(user)
+				user << "<span class='notice'>The broken glass falls out.</span>"
+			new /obj/item/weapon/shard(src.loc)
+			new /obj/item/weapon/shard(src.loc)
+			A.state = 3
+			A.icon_state = "3"
+		else
+			if(user)
+				user << "<span class='notice'>You disconnect the monitor.</span>"
+			A.state = 4
+			A.icon_state = "4"
 	circuit = null
 	for(var/obj/C in src)
 		C.forceMove(loc)
-	if(stat & BROKEN)
-		if(user)
-			user << "<span class='notice'>The broken glass falls out.</span>"
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/weapon/shard(src.loc)
-		A.state = 3
-		A.icon_state = "3"
-	else
-		if(user)
-			user << "<span class='notice'>You disconnect the monitor.</span>"
-		A.state = 4
-		A.icon_state = "4"
+
 	qdel(src)

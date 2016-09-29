@@ -8,8 +8,8 @@
 
 
 
-/obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	if(damage_type == BURN && sound_effect)//the stickiness of the web mutes all attack sounds except fire damage type
+/obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 

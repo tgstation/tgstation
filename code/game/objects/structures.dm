@@ -5,6 +5,7 @@
 	var/climb_stun = 2
 	var/climbable = FALSE
 	var/mob/structureclimber
+	var/broken = 0 //phil235 to replace maybe vars in the children. similar to machinery's stat BROKEN
 
 /obj/structure/New()
 	..()

@@ -305,19 +305,6 @@
 	else
 		return ..()
 
-/obj/machinery/droneDispenser/play_attack_sound(damage_amount, damage_type = BRUTE,damage_flag = 0, sound_effect = TRUE)
-	// But why would you hurt the dispenser?
-	switch(damage_type)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage_amount)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-
 /obj/machinery/droneDispenser/obj_destruction()
 	if(!(stat & BROKEN))
 		if(break_message)

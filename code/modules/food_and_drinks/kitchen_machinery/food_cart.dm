@@ -25,6 +25,12 @@
 	mixer = new /obj/item/weapon/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 
+/obj/machinery/food_cart/Destroy()
+	if(mixer)
+		qdel(mixer)
+		mixer = null
+	return ..()
+
 /obj/machinery/food_cart/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
@@ -149,6 +155,10 @@
 		usr.unset_machine()
 		usr << browse(null,"window=foodcart")
 	return
+
+/obj/machinery/food_cart/obj_destruction(damage_flag)
+	new /obj/item/stack/sheet/metal(loc, 4)
+	qdel(src)
 
 #undef STORAGE_CAPACITY
 #undef LIQUID_CAPACIY

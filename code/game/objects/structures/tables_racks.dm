@@ -470,17 +470,15 @@
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
 
-/obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(damage_amount)
-					playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+			if(damage_amount)
+				playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 
 /obj/structure/rack/obj_destruction()
 	rack_destroy()

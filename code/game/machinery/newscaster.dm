@@ -175,8 +175,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-	health = 60
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 0, acid = 0)
+	health = 200
+	maxhealth = 200
+	broken_health = 50
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -192,7 +194,6 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/allow_comments = 1
 	luminosity = 0
 	anchored = 1
-	var/hitstaken = 0 //TO BE REMOVED, no longer used,  the var is present in a map var edit which must be removed.
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
@@ -227,12 +228,13 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			icon_state = "newscaster_normal"
 			if(alert)
 				add_overlay("newscaster_alert")
-	switch(health)
-		if(45 to 60)
+	var/hp_percent = health * 100 /maxhealth
+	switch(hp_percent)
+		if(75 to 100)
 			return
-		if(30 to 45)
+		if(50 to 75)
 			add_overlay("crack1")
-		if(15 to 30)
+		if(25 to 50)
 			add_overlay("crack2")
 		else
 			add_overlay("crack3")
@@ -249,17 +251,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			stat |= NOPOWER
 			update_icon()
 
-/obj/machinery/newscaster/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				qdel(src)
-			else
-				take_damage(rand(40,80), BRUTE, "bomb", 0)
-		else
-			take_damage(rand(20,40), BRUTE, "bomb", 0)
+/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	update_icon()
 
 /obj/machinery/newscaster/attack_ai(mob/user)
 	return attack_hand(user)
@@ -747,6 +741,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 						return
 					user << "<span class='notice'>You repair [src].</span>"
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					health = maxhealth
 					stat &= ~BROKEN
 					update_icon()
 		else
@@ -754,25 +749,27 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	else
 		return ..()
 
-/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(stat & BROKEN)
-					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
-				else
-					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			if(stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
+			else
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+
 
 /obj/machinery/newscaster/obj_destruction()
+	new /obj/item/stack/sheet/metal(loc, 2)
+	new /obj/item/weapon/shard(loc)
+	new /obj/item/weapon/shard(loc)
+	qdel(src)
+
+/obj/machinery/newscaster/obj_break()
 	if(!(stat & BROKEN))
-		if(health <= 0)
-			stat |= BROKEN
-			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		stat |= BROKEN
+		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 		update_icon()
 
 

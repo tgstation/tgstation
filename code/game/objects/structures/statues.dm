@@ -87,18 +87,6 @@
 /obj/structure/statue/CanAtmosPass()
 	return !density
 
-/obj/structure/statue/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage_amount)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-
 /obj/structure/statue/obj_destruction()
 	Dismantle(1)
 

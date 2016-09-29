@@ -331,7 +331,6 @@
 /area/shuttle/abandoned)
 "aba" = (
 /obj/machinery/door/poddoor{
-	auto_close = 300;
 	id = "smindicate";
 	name = "outer blast door"
 	},
@@ -33352,7 +33351,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -33911,7 +33910,7 @@
 	},
 /obj/effect/decal/cleanable/oil,
 /obj/item/weapon/cigbutt,
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -34805,7 +34804,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -41686,7 +41685,6 @@
 	pixel_y = -30
 	},
 /obj/machinery/newscaster{
-	hitstaken = 1;
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/red/side{
@@ -44234,7 +44232,7 @@
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -44862,7 +44860,7 @@
 /area/maintenance/starboard)
 "bLc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 8
 	},
 /obj/effect/spawner/lootdrop/grille_or_trash,

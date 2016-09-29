@@ -1,6 +1,5 @@
 /obj/effect/overlay
 	name = "overlay"
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
 
 /obj/effect/overlay/singularity_act()

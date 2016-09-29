@@ -5,7 +5,6 @@
 	anchored = 1
 	opacity = 0
 	density = 1
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/forcefield/CanAtmosPass(turf/T)
 	return !density

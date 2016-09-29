@@ -69,17 +69,15 @@
 	else
 		return ..()
 
-/obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(stat & BROKEN)
-					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, 1)
-				else
-					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			if(stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, 1)
+			else
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 
 /obj/machinery/power/solar/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
@@ -449,17 +447,15 @@
 	else
 		return ..()
 
-/obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flage = 0, sound_effect = 1)
+/obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(stat & BROKEN)
-					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-				else
-					playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			if(stat & BROKEN)
+				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			else
+				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/machinery/power/solar_control/obj_destruction()
 	if(!(stat & BROKEN))

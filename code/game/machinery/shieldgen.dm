@@ -43,14 +43,12 @@
 /obj/machinery/shield/blob_act(obj/structure/blob/B)
 	qdel(src)
 
-/obj/machinery/shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
 		if(BRUTE)
-			if(sound_effect)
-				playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
 
 /obj/machinery/shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
@@ -111,19 +109,6 @@
 	if((stat & BROKEN) && active)
 		if(deployed_shields.len && prob(5))
 			qdel(pick(deployed_shields))
-
-
-/obj/machinery/shieldgen/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage_amount)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 
 
 /obj/machinery/shieldgen/obj_destruction()

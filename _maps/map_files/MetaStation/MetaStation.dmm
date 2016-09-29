@@ -5211,7 +5211,7 @@
 	})
 "ajq" = (
 /obj/item/stack/sheet/cardboard,
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 1
 	},
 /obj/structure/closet/crate,
@@ -6662,7 +6662,7 @@
 	name = "Port Maintenance"
 	})
 "alP" = (
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 4
 	},
 /obj/structure/rack{
@@ -7402,7 +7402,7 @@
 	})
 "anb" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 8
 	},
 /obj/item/weapon/paper_bin{
@@ -8858,7 +8858,7 @@
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "apG" = (
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 4
 	},
 /obj/structure/chair{
@@ -9574,7 +9574,7 @@
 	name = "Port Maintenance"
 	})
 "aqX" = (
-/obj/machinery/light_construct/small,
+/obj/structure/light_construct/small,
 /obj/item/weapon/toolbox_tiles_sensor,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
@@ -17088,7 +17088,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -19591,7 +19591,7 @@
 /turf/open/floor/plasteel,
 /area/construction)
 "aHE" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 1
 	},
 /obj/structure/closet/emcloset,
@@ -19631,7 +19631,7 @@
 /area/construction)
 "aHJ" = (
 /obj/structure/closet/toolcloset,
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -21751,7 +21751,7 @@
 	},
 /area/space)
 "aLA" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -21766,7 +21766,7 @@
 	},
 /area/construction)
 "aLD" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 4
 	},
 /obj/machinery/light_switch{
@@ -29013,7 +29013,6 @@
 "aYM" = (
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/machinery/newscaster{
-	hitstaken = 1;
 	pixel_x = 0;
 	pixel_y = -32
 	},
@@ -48897,7 +48896,7 @@
 	name = "Port Maintenance"
 	})
 "bGw" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -52847,7 +52846,7 @@
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "bNk" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -60743,7 +60742,7 @@
 	name = "Aft Maintenance"
 	})
 "caT" = (
-/obj/machinery/light_construct,
+/obj/structure/light_construct,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -62476,7 +62475,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -62519,7 +62518,7 @@
 /obj/structure/rack,
 /obj/item/stack/sheet/cardboard,
 /obj/item/device/radio/off,
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 1
 	},
 /obj/effect/spawner/lootdrop/maintenance,
@@ -67169,7 +67168,7 @@
 	pixel_y = 2
 	},
 /obj/structure/table/wood,
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 1
 	},
 /obj/machinery/newscaster{
@@ -68770,7 +68769,7 @@
 	name = "Aft Maintenance"
 	})
 "cou" = (
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
@@ -83334,7 +83333,7 @@
 	name = "Aft Maintenance"
 	})
 "cMp" = (
-/obj/machinery/light_construct/small,
+/obj/structure/light_construct/small,
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
 /obj/structure/sign/poster{
@@ -89481,7 +89480,6 @@
 /area/toxins/xenobiology)
 "cWS" = (
 /obj/machinery/door/poddoor{
-	auto_close = 300;
 	id = "smindicate";
 	name = "outer blast door"
 	},

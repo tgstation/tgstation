@@ -426,40 +426,15 @@
 	anchored = 1
 
 //phil235 make it a structure.
-/obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-
-/obj/structure/swarmer/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
-
-/obj/structure/swarmer/ex_act()
-	qdel(src)
-
-/obj/structure/swarmer/blob_act(obj/structure/blob/B)
-	qdel(src)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/swarmer/emp_act()
 	qdel(src)
-
-/obj/structure/swarmer/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	take_damage(rand(20,30))
-
-/obj/structure/swarmer/attack_animal(mob/living/simple_animal/S)
-	S.do_attack_animation(src)
-	S.changeNext_move(CLICK_CD_MELEE)
-	if(S.obj_damage)
-		take_damage(S.obj_damage, S.melee_damage_type, 1)
-	else if(S.melee_damage_upper)
-		take_damage(rand(S.melee_damage_lower, S.melee_damage_upper), S.melee_damage_type)
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
 	set name = "Create trap"

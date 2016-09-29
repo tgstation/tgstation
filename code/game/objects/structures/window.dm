@@ -94,18 +94,6 @@
 		return 0
 	return 1
 
-
-/obj/structure/window/hitby(AM as mob|obj)
-	..()
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-
-	else if(isobj(AM))
-		var/obj/item/I = AM
-		tforce = I.throwforce
-	take_damage(tforce, BRUTE, "melee", 1)
-
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
@@ -115,12 +103,7 @@
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user)
 	if(!can_be_reached(user))
 		return
-	..(user, 1)
-	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
-	user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
-	add_fingerprint(user)
-	take_damage(50, BRUTE, "melee", 1)
-	return 1
+	..()
 
 /obj/structure/window/attack_hand(mob/user)
 	if(!can_be_reached(user))
@@ -239,6 +222,16 @@
 	. = ..()
 	if(.) //received damage
 		update_nearby_icons()
+
+/obj/structure/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/window/obj_destruction()
 	shatter()

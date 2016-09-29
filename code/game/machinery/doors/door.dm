@@ -152,17 +152,15 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	else
 		return ..()
 
-/obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(glass)
-					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
-				else
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+			if(glass)
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			else
+				playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/machinery/door/blob_act(obj/structure/blob/B)
 	if(prob(60))

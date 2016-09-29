@@ -3,7 +3,6 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
 	anchored = 1
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/landmark/New()

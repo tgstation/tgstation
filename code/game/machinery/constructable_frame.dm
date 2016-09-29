@@ -4,6 +4,8 @@
 	icon_state = "box_0"
 	density = 1
 	anchored = 1
+	health = 250
+	maxhealth = 250
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/state = 1
 
@@ -11,6 +13,15 @@
 	..()
 	if(circuit)
 		user << "It has \a [circuit] installed."
+
+
+/obj/structure/frame/obj_destruction(damage_flag)
+	new /obj/item/stack/sheet/metal(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	qdel(src)
+
 
 /obj/structure/frame/machine
 	name = "machine frame"
@@ -230,6 +241,13 @@
 						return 1
 				user << "<span class='warning'>You cannot add that to the machine!</span>"
 				return 0
+
+
+/obj/structure/frame/machine/obj_destruction(damage_flag)
+	if(state >= 2)
+		new /obj/item/stack/cable_coil(loc , 5)
+	..()
+
 
 
 //Machine Frame Circuit Boards

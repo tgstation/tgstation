@@ -64,6 +64,7 @@
 	density = 0
 	layer = OBJ_LAYER
 	icon_state = "cobweb1"
+	resistance_flags = 0
 
 /obj/effect/decal/cleanable/cobweb/fire_act()
 	qdel(src)
@@ -75,7 +76,6 @@
 	layer = OBJ_LAYER
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
-	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	stackable = 1
 
 /obj/effect/decal/cleanable/molten_object/large
@@ -88,6 +88,7 @@
 	density = 0
 	layer = OBJ_LAYER
 	icon_state = "cobweb2"
+	resistance_flags = 0
 
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit

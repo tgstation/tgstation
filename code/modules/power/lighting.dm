@@ -16,34 +16,36 @@
 	desc = "Used for building lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-item"
-	result_path = /obj/machinery/light_construct
+	result_path = /obj/structure/light_construct
 	inverse = 1
 
 /obj/item/wallframe/light_fixture/small
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-item"
-	result_path = /obj/machinery/light_construct/small
+	result_path = /obj/structure/light_construct/small
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 
 
-/obj/machinery/light_construct
+/obj/structure/light_construct
 	name = "light fixture frame"
 	desc = "A light fixture under construction."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-stage1"
 	anchored = 1
 	layer = WALL_OBJ_LAYER
+	health = 200
+	maxhealth = 200
 	var/stage = 1
 	var/fixture_type = "tube"
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
-/obj/machinery/light_construct/New(loc, ndir, building)
+/obj/structure/light_construct/New(loc, ndir, building)
 	..()
 	if(building)
 		setDir(ndir)
 
-/obj/machinery/light_construct/examine(mob/user)
+/obj/structure/light_construct/examine(mob/user)
 	..()
 	switch(src.stage)
 		if(1)
@@ -53,7 +55,7 @@
 		if(3)
 			user << "The casing is closed."
 
-/obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/light_construct/attackby(obj/item/weapon/W, mob/user, params)
 	add_fingerprint(user)
 	switch(stage)
 		if(1)
@@ -116,16 +118,22 @@
 				return
 	return ..()
 
-/obj/machinery/light_construct/blob_act(obj/structure/blob/B)
+/obj/structure/light_construct/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
 
 
-/obj/machinery/light_construct/small
+/obj/structure/light_construct/obj_destruction(damage_flag)
+	new /obj/item/stack/sheet/metal(loc, sheets_refunded)
+	qdel(src)
+
+/obj/structure/light_construct/small
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-stage1"
 	fixture_type = "bulb"
 	sheets_refunded = 1
+
+
 
 // the standard tube light fixture
 /obj/machinery/light
@@ -136,7 +144,8 @@
 	desc = "A lighting fixture."
 	anchored = 1
 	layer = WALL_OBJ_LAYER
-	health = 20
+	health = 100
+	maxhealth = 100
 	use_power = 2
 	idle_power_usage = 2
 	active_power_usage = 20
@@ -168,7 +177,7 @@
 
 /obj/machinery/light/Move()
 	if(status != LIGHT_BROKEN)
-		broken(1)
+		break_light_tube(1)
 	return ..()
 
 /obj/machinery/light/built/New()
@@ -190,11 +199,11 @@
 			if("tube")
 				brightness = 8
 				if(prob(2))
-					broken(1)
+					break_light_tube(1)
 			if("bulb")
 				brightness = 4
 				if(prob(5))
-					broken(1)
+					break_light_tube(1)
 		spawn(1)
 			update(0)
 
@@ -315,19 +324,7 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
-			var/obj/machinery/light_construct/newlight = null
-			switch(fitting)
-				if("tube")
-					newlight = new /obj/machinery/light_construct(src.loc)
-					newlight.icon_state = "tube-construct-stage2"
-
-				if("bulb")
-					newlight = new /obj/machinery/light_construct/small(src.loc)
-					newlight.icon_state = "bulb-construct-stage2"
-			newlight.setDir(src.dir)
-			newlight.stage = 2
-			transfer_fingerprints_to(newlight)
-			qdel(src)
+			deconstruct()
 		else
 			user << "<span class='userdanger'>You stick \the [W] into the light socket!</span>"
 			if(has_power() && (W.flags & CONDUCT))
@@ -339,6 +336,31 @@
 	else
 		return ..()
 
+/obj/machinery/light/deconstruct(disassembled = TRUE)
+	var/obj/structure/light_construct/newlight = null
+	var/cur_stage = 2
+	if(!disassembled)
+		cur_stage = 1
+	switch(fitting)
+		if("tube")
+			newlight = new /obj/structure/light_construct(src.loc)
+			newlight.icon_state = "tube-construct-stage[cur_stage]"
+
+		if("bulb")
+			newlight = new /obj/structure/light_construct/small(src.loc)
+			newlight.icon_state = "bulb-construct-stage[cur_stage]"
+	newlight.setDir(src.dir)
+	newlight.stage = cur_stage
+	if(!disassembled)
+		newlight.health = newlight.maxhealth * 0.5
+		if(status != LIGHT_BROKEN)
+			break_light_tube()
+		if(status != LIGHT_EMPTY)
+			drop_light_tube()
+		new /obj/item/stack/cable_coil(loc, 1, "red")
+	transfer_fingerprints_to(newlight)
+	qdel(src)
+
 /obj/machinery/light/attacked_by(obj/item/I, mob/living/user)
 	..()
 	if(status == LIGHT_BROKEN || status == LIGHT_EMPTY)
@@ -346,23 +368,27 @@
 			if(prob(12))
 				electrocute_mob(user, get_area(src), src, 0.3)
 
-/obj/machinery/light/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(. && !qdeleted(src))
+		if(prob(damage_amount * 5))
+			break_light_tube()
+
+
+
+
+/obj/machinery/light/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				switch(status)
-					if(LIGHT_EMPTY)
-						playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-					if(LIGHT_BROKEN)
-						playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
-					else
-						playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			switch(status)
+				if(LIGHT_EMPTY)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				if(LIGHT_BROKEN)
+					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
+				else
+					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-
-/obj/machinery/light/obj_destruction()
-	broken()
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 
 // returns whether this light has power
@@ -430,6 +456,9 @@
 	else
 		user << "<span class='notice'>You remove the light [fitting].</span>"
 	// create a light tube/bulb item and put it in the user's hand
+	drop_light_tube(user)
+
+/obj/machinery/light/proc/drop_light_tube(mob/user)
 	var/obj/item/weapon/light/L = new light_type()
 	L.status = status
 	L.rigged = rigged
@@ -440,10 +469,11 @@
 	switchcount = 0
 
 	L.update()
-	L.add_fingerprint(user)
-	L.loc = loc
+	L.forceMove(loc)
 
-	user.put_in_active_hand(L)	//puts it in our active hand
+	if(user) //puts it in our active hand
+		L.add_fingerprint(user)
+		user.put_in_active_hand(L)
 
 	status = LIGHT_EMPTY
 	update()
@@ -455,26 +485,13 @@
 
 	user << "<span class='notice'>You telekinetically remove the light [fitting].</span>"
 	// create a light tube/bulb item and put it in the user's hand
-	var/obj/item/weapon/light/L = new light_type()
-	L.status = status
-	L.rigged = rigged
-	L.brightness = brightness
+	drop_light_tube()
 
-	// light item inherits the switchcount, then zero it
-	L.switchcount = switchcount
-	switchcount = 0
-
-	L.update()
-	L.add_fingerprint(user)
-	L.loc = loc
-
-	status = LIGHT_EMPTY
-	update()
 
 // break the light and make sparks if was on
 
-/obj/machinery/light/proc/broken(skip_sound_and_sparks = 0)
-	if(status == LIGHT_EMPTY)
+/obj/machinery/light/proc/break_light_tube(skip_sound_and_sparks = 0)
+	if(status == LIGHT_EMPTY || status == LIGHT_BROKEN)
 		return
 
 	if(!skip_sound_and_sparks)
@@ -495,29 +512,6 @@
 	on = 1
 	update()
 
-// explosion effect
-// destroy the whole light fixture or just shatter it
-
-/obj/machinery/light/ex_act(severity, target)
-	..()
-	if(!qdeleted(src))
-		switch(severity)
-			if(2)
-				if(prob(50))
-					broken()
-			if(3)
-				if(prob(25))
-					broken()
-
-/obj/machinery/light/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
-		broken()
-		qdel(src)
-	else if(prob(50))
-		broken()
-	else
-		flicker()
-
 /obj/machinery/light/tesla_act(var/power)
 	explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
 	qdel(src)
@@ -532,14 +526,14 @@
 
 /obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
-		broken()
+		break_light_tube()
 
 // explode the light
 
 /obj/machinery/light/proc/explode()
 	set waitfor = 0
 	var/turf/T = get_turf(src.loc)
-	broken()	// break it first to give a warning
+	break_light_tube()	// break it first to give a warning
 	sleep(2)
 	explosion(T, 0, 0, 2, 2)
 	sleep(1)

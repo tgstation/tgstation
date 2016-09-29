@@ -253,18 +253,6 @@
 
 	return ..()
 
-/obj/machinery/camera/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage_amount)
-					playsound(src, 'sound/weapons/smash.ogg', 50, 1) //phil235 very common, make it obj/play_attack_sound ?
-				else
-					playsound(src, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-
 /obj/machinery/camera/obj_destruction()
 	if(status)
 		triggerCameraAlarm()

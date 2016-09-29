@@ -420,17 +420,15 @@
 		damage_dealt = SM.on_hit(src, user, I, force) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
 	take_damage(damage_dealt, I.damtype, "melee", 1)
 
-/obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(damage_amount)
-					playsound(src, 'sound/weapons/slash.ogg', 50, 1)
-				else
-					playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+			if(damage_amount)
+				playsound(src, 'sound/weapons/slash.ogg', 50, 1)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/spacevine/Crossed(mob/crosser)
 	if(isliving(crosser))

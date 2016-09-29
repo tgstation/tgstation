@@ -48,8 +48,10 @@
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
-	health = 50
-	armor = list(melee = 50, bullet = 20, laser = 10, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
+	health = 120
+	maxhealth = 120
+	broken_health = 50
+	armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -185,7 +187,6 @@
 /obj/machinery/power/apc/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		user << "Looks broken."
 		return
 	if(opened)
 		if(has_electronics && terminal)
@@ -413,7 +414,7 @@
 				return
 			if(!user.drop_item())
 				return
-			W.loc = src
+			W.forceMove(src)
 			cell = W
 			user.visible_message(\
 				"[user.name] has inserted the power cell to [src.name]!",\
@@ -557,14 +558,23 @@
 	else
 		return ..()
 
-/obj/machinery/power/apc/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	if((malfhack || (stat & BROKEN)) && !opened)
-		. = ..()
+/obj/machinery/power/apc/attacked_by(obj/item/I, mob/living/user)
+	if(I.force < 15 && (!(stat & BROKEN) || malfai))
+		take_damage(0)
+	else
+		take_damage(I.force, I.damtype)
 
-/obj/machinery/power/apc/obj_destruction()
-	opened = 2
-	visible_message("<span class='warning'>The APC cover is knocked down!</span>")
-	update_icon()
+
+/obj/machinery/power/apc/obj_break(damage_flag)
+	set_broken()
+
+/obj/machinery/power/apc/obj_destruction(damage_flag)
+	if(!(stat & BROKEN))
+		set_broken()
+	if(opened != 2)
+		opened = 2
+		visible_message("<span class='warning'>The APC cover is knocked down!</span>")
+		update_icon()
 
 /obj/machinery/power/apc/emag_act(mob/user)
 	if(!emagged && !malfhack)
@@ -602,9 +612,9 @@
 	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	..() //phil235
 	if(malfhack || (stat & BROKEN))
 		return
+	..()
 	if(opened == 0)
 		if(!panel_open)
 			panel_open = 1
@@ -617,7 +627,7 @@
 			visible_message("<span class='danger'>The [src.name]'s wires are shredded!</span>")
 	else if(opened == 1)
 		if(cell)
-			cell.loc = user.loc
+			cell.forceMove(loc)
 			cell.updateicon()
 			cell = null
 			visible_message("<span class='danger'>The [src.name]'s power cell flies off!</span>")
@@ -1084,17 +1094,6 @@
 	addtimer(src, "reset", 600, FALSE, APC_RESET_EMP)
 	..()
 
-/obj/machinery/power/apc/ex_act(severity, target) //phil235
-	..()
-	if(!qdeleted(src))
-		switch(severity)
-			if(2)
-				if(prob(50))
-					set_broken()
-			if(3)
-				if(prob(25))
-					set_broken()
-
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
 
@@ -1124,7 +1123,7 @@
 			for(var/area/A in area.related)
 				for(var/obj/machinery/light/L in A)
 					L.on = 1
-					L.broken()
+					L.break_light_tube()
 					stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)

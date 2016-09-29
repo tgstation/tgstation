@@ -184,19 +184,6 @@
 	if(exposed_temperature > temperature_resistance)
 		take_damage(5, BURN, 0, 1)
 
-/obj/machinery/portable_atmospherics/canister/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
 
 /obj/machinery/portable_atmospherics/canister/obj_destruction()
 	if(stat & BROKEN)

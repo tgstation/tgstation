@@ -201,7 +201,7 @@
 /obj/structure/foamedmetal/attack_paw(mob/user)
 	attack_hand(user)
 
-/obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
 
 /obj/structure/foamedmetal/attack_hand(mob/user)

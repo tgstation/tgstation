@@ -240,19 +240,6 @@ Class Procs:
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/obj/machinery/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage_amount)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(damage_amount && sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-	..()
-	//phil235
 
 /obj/machinery/attack_paw(mob/living/user)
 	if(user.a_intent != "harm")
@@ -316,14 +303,18 @@ Class Procs:
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		deconstruct()
 
-/obj/machinery/deconstruct()
+/obj/machinery/deconstruct(disassembled = TRUE)
 	on_deconstruction()
-	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
-	transfer_fingerprints_to(M)
-	M.state = 2
-	M.icon_state = "box_1"
-	for(var/obj/item/I in component_parts)
-		I.forceMove(loc)
+	if(component_parts && component_parts.len)
+		var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
+		M.anchored = anchored
+		if(!disassembled)
+			M.health = M.maxhealth * 0.5 //the frame is already half broken
+		transfer_fingerprints_to(M)
+		M.state = 2
+		M.icon_state = "box_1"
+		for(var/obj/item/I in component_parts)
+			I.forceMove(loc)
 	qdel(src)
 
 /obj/machinery/obj_break()
@@ -332,7 +323,7 @@ Class Procs:
 /obj/machinery/obj_destruction()
 	stat |= BROKEN
 	if(!(flags & NODECONSTRUCT))
-		deconstruct()
+		deconstruct(FALSE)
 	else
 		qdel(src)
 
@@ -425,6 +416,8 @@ Class Procs:
 
 /obj/machinery/examine(mob/user)
 	..()
+	if(stat & BROKEN)
+		user << "Looks broken."
 	if(user.research_scanner && component_parts)
 		display_parts(user)
 

@@ -6,20 +6,38 @@
 	icon_state = "fireaxe"
 	anchored = 1
 	density = 0
-	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
+	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 50)
 	var/locked = 1
 	var/open = 0
-	health = 60
+	health = 150
+	maxhealth = 150
+	broken_health = 50
 
 /obj/structure/fireaxecabinet/New()
 	..()
 	update_icon()
 
+/obj/structure/fireaxecabinet/Destroy()
+	if(fireaxe)
+		qdel(fireaxe)
+		fireaxe = null
+	return ..()
+
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user) || istype(I,/obj/item/device/multitool))
 		toggle_lock(user)
-		return
-	if(open || health <= 0)
+	else if(istype(I, /obj/item/stack/sheet/glass) && broken)
+		var/obj/item/stack/sheet/glass/G = I
+		if(G.get_amount() < 2)
+			user << "<span class='warning'>You need two glass sheets to fix [src]!</span>"
+			return
+		user << "<span class='notice'>You start fixing [src]...</span>"
+		if(do_after(user, 20, target = src))
+			G.use(2)
+			broken = 0
+			health = maxhealth
+			update_icon()
+	else if(open || broken)
 		if(istype(I, /obj/item/weapon/twohanded/fireaxe) && !fireaxe)
 			var/obj/item/weapon/twohanded/fireaxe/F = I
 			if(F.wielded)
@@ -28,50 +46,55 @@
 			if(!user.drop_item())
 				return
 			fireaxe = F
-			src.contents += F
+			F.forceMove(loc)
 			user << "<span class='caution'>You place the [F.name] back in the [name].</span>"
 			update_icon()
 			return
-		else if(health > 0)
+		else if(!broken)
 			toggle_open()
 	else
 		return ..()
 
-/obj/structure/fireaxecabinet/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
-
-/obj/structure/fireaxecabinet/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/fireaxecabinet/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(health <= 0)
-					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
-				else
-					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			if(broken)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
+			else
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(open)
 		return
 	. = ..()
-	if(. && health > 0)
+	if(.)
 		update_icon()
 
-/obj/structure/fireaxecabinet/obj_destruction()
-	update_icon()
-	if(health <= 0)
+/obj/structure/fireaxecabinet/obj_break(damage_flag)
+	if(!broken)
+		update_icon()
+		broken = TRUE
 		playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+
+/obj/structure/fireaxecabinet/obj_destruction(damage_flag)
+	if(fireaxe && loc)
+		fireaxe.forceMove(loc)
+		fireaxe = null
+	new /obj/item/stack/sheet/metal(loc, 2)
+	qdel(src)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
 	if(fireaxe)
 		fireaxe.forceMove(loc)
+		fireaxe = null
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
-	if(open || health <= 0)
+	if(open || broken)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
@@ -90,20 +113,6 @@
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
 	attack_hand(user)
 
-/obj/structure/fireaxecabinet/attack_alien(mob/living/user)
-	user.visible_message("<span class='warning'>[user] slashes [src].</span>")
-	take_damage(20)
-
-/obj/structure/fireaxecabinet/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper && !M.obj_damage)
-		return
-	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
-					  "<span class='danger'>You smash against [src].</span>")
-	if(M.obj_damage)
-		take_damage(M.obj_damage, M.melee_damage_type)
-	else
-		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type)
-
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
 	return
@@ -113,17 +122,21 @@
 	if(fireaxe)
 		add_overlay("axe")
 	if(!open)
-		switch(health)
-			if(-INFINITY to 0)
-				add_overlay("glass4")
-			if(1 to 20)
-				add_overlay("glass3")
-			if(21 to 40)
-				add_overlay("glass2")
-			if(41 to 59)
-				add_overlay("glass1")
-			if(60)
-				add_overlay("glass")
+		var/hp_percent = health/maxhealth * 100
+		if(broken)
+			add_overlay("glass4")
+		else
+			switch(hp_percent)
+				if(-INFINITY to 25)
+					add_overlay("glass4")
+				if(25 to 40)
+					add_overlay("glass3")
+				if(40 to 55)
+					add_overlay("glass2")
+				if(55 to 70)
+					add_overlay("glass1")
+				if(85 to INFINITY)
+					add_overlay("glass")
 		if(locked)
 			add_overlay("locked")
 		else

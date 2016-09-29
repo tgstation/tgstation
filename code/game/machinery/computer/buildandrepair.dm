@@ -122,6 +122,14 @@
 				qdel(src)
 
 
+/obj/structure/frame/computer/obj_destruction(damage_flag)
+	if(state == 4)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	if(state >= 3)
+		new /obj/item/stack/cable_coil(loc , 5)
+	..()
+
 
 /obj/item/weapon/circuitboard
 	name = "circuit board"

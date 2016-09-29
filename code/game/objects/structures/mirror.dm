@@ -71,14 +71,12 @@
 	else
 		return ..()
 
-/obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
+			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		if(BURN)
-		else
-			return
-	if(sound_effect)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
 
 /obj/structure/mirror/obj_destruction()

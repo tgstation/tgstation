@@ -226,7 +226,6 @@
 /area/shuttle/syndicate)
 "aaG" = (
 /obj/machinery/door/poddoor{
-	auto_close = 300;
 	id = "smindicate";
 	name = "outer blast door"
 	},

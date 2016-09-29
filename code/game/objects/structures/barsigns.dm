@@ -4,9 +4,12 @@
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
 	req_access = list(access_bar)
+	health = 500
+	maxhealth = 500
+	broken_health = 250
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/list/barsigns=list()
 	var/list/hiddensigns
-	var/broken = 0
 	var/emagged = 0
 	var/state = 0
 	var/prev_sign = ""
@@ -42,6 +45,9 @@
 		desc = "It displays \"[name]\"."
 
 
+
+/obj/structure/sign/barsign/obj_break(damage_flag)
+	broken = 1
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return src.attack_hand(user)

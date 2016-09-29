@@ -20,8 +20,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
-	health = 100
-	maxhealth = 100
+	health = 150
+	maxhealth = 150
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
 
 	var/hitsound = null
 	var/throwhitsound = null
@@ -560,3 +561,19 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		. = "<span class='notice'>[user] lights [A] with [src].</span>"
 	else
 		. = ""
+
+
+/obj/item/hitby(atom/movable/AM)
+	return
+
+/obj/item/obj_shred()
+	var/atom/loca = get_turf(src)
+	if(isobj(loc))
+		loca = loc
+	empty_object_contents(0, loca)
+	spawn(1) //so the shreds aren't instantly deleted by the explosion
+		if(!qdeleted(src))
+			if(isturf(loca))
+				var/obj/effect/decal/cleanable/shreds/Shreds = new(loca)
+				Shreds.desc = "The sad remains of what used to be [name]."
+			qdel(src)

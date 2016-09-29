@@ -359,7 +359,7 @@
 
 	..()
 
-/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
 	if(.) //damage received
 		if(prob(30))

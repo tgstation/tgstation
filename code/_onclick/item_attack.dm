@@ -46,6 +46,8 @@
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(flags & NOBLUDGEON)
 		return
+	if(user.a_intent == "help") //phil235 test
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
