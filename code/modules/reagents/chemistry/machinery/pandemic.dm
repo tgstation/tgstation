@@ -292,7 +292,7 @@
 	else
 		return ..()
 
-/obj/machinery/computer/pandemic/deconstruction()
+/obj/machinery/computer/pandemic/on_deconstruction()
 	if(beaker)
 		beaker.loc = get_turf(src)
 	..()

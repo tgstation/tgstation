@@ -32,7 +32,7 @@
 		dat += "<H3>Prisoner Implant Management</H3>"
 		dat += "<HR>Chemical Implants<BR>"
 		var/turf/Tr = null
-		for(var/obj/item/weapon/implant/chem/C in tracked_implants)
+		for(var/obj/item/weapon/implant/chem/C in tracked_chem_implants)
 			Tr = get_turf(C)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
@@ -114,17 +114,17 @@
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
 							inserted_id.goal = num
 		else if(href_list["inject1"])
-			var/obj/item/weapon/implant/I = locate(href_list["inject1"])
-			if(I)
+			var/obj/item/weapon/implant/I = locate(href_list["inject1"]) in tracked_chem_implants
+			if(I && istype(I))
 				I.activate(1)
 		else if(href_list["inject5"])
-			var/obj/item/weapon/implant/I = locate(href_list["inject5"])
-			if(I)
+			var/obj/item/weapon/implant/I = locate(href_list["inject5"]) in tracked_chem_implants
+			if(I && istype(I))
 				I.activate(5)
 
 		else if(href_list["inject10"])
-			var/obj/item/weapon/implant/I = locate(href_list["inject10"])
-			if(I)
+			var/obj/item/weapon/implant/I = locate(href_list["inject10"]) in tracked_chem_implants
+			if(I && istype(I))
 				I.activate(10)
 
 		else if(href_list["lock"])
@@ -136,8 +136,8 @@
 		else if(href_list["warn"])
 			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
 			if(!warning) return
-			var/obj/item/weapon/implant/I = locate(href_list["warn"])
-			if((I)&&(I.imp_in))
+			var/obj/item/weapon/implant/I = locate(href_list["warn"]) in tracked_chem_implants
+			if(I && istype(I) && I.imp_in)
 				var/mob/living/carbon/R = I.imp_in
 				R << "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>"
 				log_say("[usr]/[usr.ckey] sent an implant message to [R]/[R.ckey]: '[warning]'")

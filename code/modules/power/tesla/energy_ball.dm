@@ -166,7 +166,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	var/mob/living/closest_mob
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
-	var/obj/effect/blob/closest_blob
+	var/obj/structure/blob/closest_blob
 
 	for(var/A in oview(source, zap_range+2))
 		if(istype(A, /obj/machinery/power/tesla_coil))
@@ -216,8 +216,8 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		else if(closest_mob)
 			continue
 
-		else if(istype(A, /obj/effect/blob))
-			var/obj/effect/blob/B = A
+		else if(istype(A, /obj/structure/blob))
+			var/obj/structure/blob/B = A
 			var/dist = get_dist(source, A)
 			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !B.being_shocked)
 				closest_blob = B

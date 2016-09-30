@@ -9,6 +9,8 @@
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 100, acid = 0)
+
 	var/secondsElectrified = 0
 	var/shockedby = list()
 	var/visible = 1
@@ -185,7 +187,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 
-/obj/machinery/door/blob_act(obj/effect/blob/B)
+/obj/machinery/door/blob_act(obj/structure/blob/B)
 	if(prob(60))
 		qdel(src)
 

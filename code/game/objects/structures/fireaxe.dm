@@ -6,6 +6,7 @@
 	icon_state = "fireaxe"
 	anchored = 1
 	density = 0
+	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 	var/locked = 1
 	var/open = 0
 	var/health = 60
@@ -82,7 +83,7 @@
 	take_damage(P.damage, P.damage_type, 0)
 
 
-/obj/structure/fireaxecabinet/blob_act(obj/effect/blob/B)
+/obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
 	if(fireaxe)
 		fireaxe.forceMove(loc)
 	qdel(src)

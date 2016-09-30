@@ -2,6 +2,7 @@
 	force = 30
 	internal_damage_threshold = 50
 	damage_absorption = list("brute"=0.7,"fire"=1,"bullet"=0.7,"laser"=0.85,"energy"=1,"bomb"=0.8)
+	armor = list(melee = 30, bullet = 30, laser = 15, energy = 0, bomb = 20, bio = 0, rad = 0, fire = 0, acid = 0)
 
 /obj/mecha/combat/CheckParts(atom/holder)
 	..()

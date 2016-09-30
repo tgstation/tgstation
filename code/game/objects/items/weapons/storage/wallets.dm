@@ -4,7 +4,7 @@
 	storage_slots = 4
 	icon_state = "wallet"
 	w_class = 2
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	can_hold = list(
 		/obj/item/stack/spacecash,
 		/obj/item/weapon/card,

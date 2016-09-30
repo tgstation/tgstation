@@ -204,6 +204,6 @@
 	emergency_shutdown()
 	..()
 
-/obj/machinery/computer/holodeck/blob_act(obj/effect/blob/B)
+/obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()
 	..()

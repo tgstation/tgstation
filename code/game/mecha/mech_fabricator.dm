@@ -415,7 +415,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/deconstruction()
+/obj/machinery/mecha_part_fabricator/on_deconstruction()
 	materials.retrieve_all()
 	..()
 

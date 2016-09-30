@@ -1,5 +1,5 @@
 /obj/structure/flora
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 30
 	anchored = 1
 
@@ -290,7 +290,7 @@
 	icon_state = "basalt"
 	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	density = 1
 
 /obj/structure/flora/rock/New()

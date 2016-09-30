@@ -12,6 +12,7 @@
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
 
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/health = 50
 	var/list/network = list("SS13")
 	var/c_tag = null
@@ -111,7 +112,7 @@
 	..()
 	qdel(src)//to prevent bomb testing camera from exploding over and over forever
 
-/obj/machinery/camera/blob_act(obj/effect/blob/B)
+/obj/machinery/camera/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		take_damage(health, BRUTE, 0)
 

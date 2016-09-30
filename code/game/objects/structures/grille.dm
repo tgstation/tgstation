@@ -9,6 +9,7 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
 	var/health = 10
+	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
 
@@ -31,7 +32,7 @@
 		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
 
-/obj/structure/grille/blob_act(obj/effect/blob/B)
+/obj/structure/grille/blob_act(obj/structure/blob/B)
 	if(!destroyed)
 		Break()
 
