@@ -487,13 +487,11 @@
 	description = "A stimulating ichor which can make the user resistant to being subued. "
 	color = "#b5a213"
 
-/datum/reagent/consumable/tinlux/on_mob_life(mob/living/M)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
-	M.adjustStaminaLoss(-2*REM, 0)
-	..()
-	. = 1
+/datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
+	M.AddLuminosity(2)
+
+/datum/reagent/consumable/tinlux/on_mob_delete(mob/living/M)
+	M.AddLuminosity(-2)
 
 /datum/reagent/consumable/vitfro
 	name = "Vitrium Froth"

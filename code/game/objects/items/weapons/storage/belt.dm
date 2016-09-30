@@ -185,7 +185,8 @@
 		/obj/item/weapon/ore,
 		/obj/item/weapon/reagent_containers/food/drinks,
 		/obj/item/organ/hivelord_core,
-		/obj/item/device/wormhole_jaunter
+		/obj/item/device/wormhole_jaunter,
+		/obj/item/weapon/storage/bag/plants,
 
 		)
 
