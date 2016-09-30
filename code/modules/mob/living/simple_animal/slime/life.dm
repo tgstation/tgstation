@@ -63,7 +63,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(istype(Target, /mob/living/silicon))
+				if(issilicon(Target))
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)

@@ -551,7 +551,7 @@
 
 	/** SILICON ***/
 
-	if (istype(current, /mob/living/silicon))
+	if(issilicon(current))
 		text = "silicon"
 		var/mob/living/silicon/robot/robot = current
 		if (istype(robot) && robot.emagged)
@@ -1219,7 +1219,7 @@
 					log_admin("[key_name(usr)] has unemag'ed [R].")
 
 			if("unemagcyborgs")
-				if (istype(current, /mob/living/silicon/ai))
+				if(isAI(current))
 					var/mob/living/silicon/ai/ai = current
 					for (var/mob/living/silicon/robot/R in ai.connected_robots)
 						R.SetEmagged(0)

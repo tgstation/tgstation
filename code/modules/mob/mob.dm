@@ -565,7 +565,7 @@ var/next_mob_id = 0
 		return
 	if(!Adjacent(usr))
 		return
-	if(istype(M, /mob/living/silicon/ai))
+	if(isAI(M))
 		return
 	show_inv(usr)
 

@@ -870,7 +870,7 @@
 		return ..()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
+	if(issilicon(user)) //How does AI know what plant is?
 		return
 	if(harvest)
 		myseed.harvest(user)

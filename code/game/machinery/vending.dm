@@ -410,8 +410,8 @@
 	if(..())
 		return
 
-	if(istype(usr,/mob/living/silicon))
-		if(istype(usr,/mob/living/silicon/robot))
+	if(issilicon(usr))
+		if(iscyborg(usr))
 			var/mob/living/silicon/robot/R = usr
 			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
 				usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"

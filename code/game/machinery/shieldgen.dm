@@ -313,7 +313,7 @@
 	if(!anchored)
 		user << "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>"
 		return 1
-	if(locked && !istype(user, /mob/living/silicon))
+	if(locked && !issilicon(user))
 		user << "<span class='warning'>The controls are locked!</span>"
 		return 1
 	if(power != 1)

@@ -263,7 +263,7 @@
 				else if(istype(object,/turf/closed/wall/r_wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/closed/wall)
-				else if(istype(object,/obj))
+				else if(isobj(object))
 					qdel(object)
 				return
 			else if(istype(object,/turf) && alt_click && left_click)

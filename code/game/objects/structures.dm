@@ -81,7 +81,7 @@
 	var/adjusted_climb_time = climb_time
 	if(user.restrained()) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
-	if(istype(user, /mob/living/carbon/alien))
+	if(isalien(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))

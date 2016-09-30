@@ -268,7 +268,7 @@
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	var/mobs = ""
-	var/isAi = istype(user, /mob/living/silicon/ai)
+	var/isAi = isAI(user)
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible

@@ -550,7 +550,7 @@
 				obstacle.mech_melee_attack(src)
 				if(!obstacle || (obstacle && !obstacle.density))
 					step(src,dir)
-			if(istype(obstacle, /obj))
+			if(isobj(obstacle))
 				var/obj/O = obstacle
 				if(!O.anchored)
 					step(obstacle, dir)

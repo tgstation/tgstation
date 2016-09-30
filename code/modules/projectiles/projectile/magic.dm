@@ -164,7 +164,7 @@
 
 	var/list/contents = M.contents.Copy()
 
-	if(istype(M, /mob/living/silicon/robot))
+	if(iscyborg(M))
 		var/mob/living/silicon/robot/Robot = M
 		if(Robot.mmi)
 			qdel(Robot.mmi)

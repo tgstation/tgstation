@@ -49,7 +49,7 @@
 				dat += "Printing in <a href='byond://?src=\ref[src];colortoggle=1'>[greytoggle]</a><BR><BR>"
 	else if(toner)
 		dat += "Please insert paper to copy.<BR><BR>"
-	if(istype(user,/mob/living/silicon/ai))
+	if(isAI(user))
 		dat += "<a href='byond://?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
 	dat += "Current toner level: [toner]"
 	if(!toner)
@@ -195,7 +195,8 @@
 			copies++
 			updateUsrDialog()
 	else if(href_list["aipic"])
-		if(!istype(usr,/mob/living/silicon/ai)) return
+		if(!isAI(usr))
+			return
 		if(toner >= 5 && !busy)
 			var/list/nametemp = list()
 			var/find

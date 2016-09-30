@@ -111,7 +111,7 @@
 		else
 			deflection = 100 //will bounce off
 
-	if(istype(A, /obj))
+	if(isobj(A))
 		var/obj/O = A
 		if(O.throwforce)
 			visible_message("<span class='danger'>[name] is hit by [A].</span>")

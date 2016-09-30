@@ -365,7 +365,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 
-	if (istype(user, /mob/living/silicon))
+	if(issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
