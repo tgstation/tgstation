@@ -212,7 +212,7 @@
 		if ("pout","pouts")
 			message = "<B>[src]</B> pouts."
 			m_type = 2
-		
+
 		if ("scream","screams")
 			message = "<B>[src]</B> screams!"
 			m_type = 2
@@ -339,7 +339,7 @@
  // Maybe some people are okay with that.
 
 		for(var/mob/M in dead_mob_list)
-			if(!M.client || istype(M, /mob/new_player))
+			if(!M.client || isnewplayer(M))
 				continue //skip monkeys, leavers and new players
 			var/T = get_turf(src)
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T,null)))

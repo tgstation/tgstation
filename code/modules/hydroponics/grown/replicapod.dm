@@ -58,7 +58,7 @@
 	if(config.revival_pod_plants)
 		if(ckey)
 			for(var/mob/M in player_list)
-				if(istype(M, /mob/dead/observer))
+				if(isobserver(M))
 					var/mob/dead/observer/O = M
 					if(O.ckey == ckey && O.can_reenter_corpse)
 						make_podman = 1
@@ -73,7 +73,7 @@
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in player_list)
 				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
-					if(istype(M, /mob/dead/observer))
+					if(isobserver(M))
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
 							break

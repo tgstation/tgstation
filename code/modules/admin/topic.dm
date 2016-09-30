@@ -1569,7 +1569,7 @@
 			return
 
 		var/mob/M = locate(href_list["makeanimal"])
-		if(istype(M, /mob/new_player))
+		if(isnewplayer(M))
 			usr << "This cannot be used on instances of type /mob/new_player."
 			return
 

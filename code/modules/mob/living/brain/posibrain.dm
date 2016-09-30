@@ -125,7 +125,7 @@ var/global/posibrain_notif_cooldown = 0
 
 	if(!usr || !src)
 		return
-	if( (usr.disabilities & BLIND || usr.stat) && !istype(usr,/mob/dead/observer) )
+	if((usr.disabilities & BLIND || usr.stat) && !isobserver(usr))
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 

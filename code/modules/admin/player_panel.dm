@@ -260,7 +260,7 @@
 				else
 					M_job = "Living"
 
-			else if(istype(M,/mob/new_player))
+			else if(isnewplayer(M))
 				M_job = "New player"
 
 			else if(isobserver(M))
