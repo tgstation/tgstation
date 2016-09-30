@@ -406,6 +406,7 @@
 				 /obj/item/stack/sheet/sinew = 1)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/bonepickaxe
 	name = "Bone Pickaxe"
 	result = /obj/item/weapon/pickaxe/bone
 	time = 40
