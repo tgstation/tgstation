@@ -137,7 +137,7 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		user << "<span class='warning'>There is no more of the [src.name] \
+		user << "<span class='warning'>There is no more of \the [src.name] \
 			left!</span>"
 		if(self_contained)
 			qdel(src)
