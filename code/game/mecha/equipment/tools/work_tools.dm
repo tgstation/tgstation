@@ -50,7 +50,7 @@
 		else
 			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
 		if(chassis.occupant.a_intent == "harm")
@@ -99,7 +99,7 @@
 		else
 			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
 		if(chassis.occupant.a_intent == "harm")

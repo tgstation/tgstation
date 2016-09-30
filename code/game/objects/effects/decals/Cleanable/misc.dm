@@ -88,9 +88,9 @@
 	var/list/viruses = list()
 
 /obj/effect/decal/cleanable/vomit/attack_hand(var/mob/user)
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "fly")
+		if(isflyperson(H))
 			playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
 			H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
 			if(reagents)

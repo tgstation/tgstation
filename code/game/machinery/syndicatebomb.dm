@@ -9,7 +9,7 @@
 	anchored = 0
 	density = 0
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
-	unacidable = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	var/minimum_timer = 60
 	var/timer_set = 60
@@ -256,7 +256,7 @@
 	item_state = "eshield0"
 	w_class = 3
 	origin_tech = "syndicate=5;combat=6"
-	burn_state = FLAMMABLE //Burnable (but the casing isn't)
+	resistance_flags = 0 //Burnable (but the casing isn't)
 	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.

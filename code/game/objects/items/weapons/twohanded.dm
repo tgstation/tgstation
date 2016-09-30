@@ -57,7 +57,7 @@
 /obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
 		return
-	if(istype(user,/mob/living/carbon/monkey) )
+	if(ismonkey(user))
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
 	if(user.get_inactive_held_item())
@@ -472,7 +472,7 @@
 	if(!proximity)
 		return
 	user.faction |= "greytide(\ref[user])"
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))
 			return
@@ -523,7 +523,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
-	if(istype(user, /mob/living))
+	if(isliving(user))
 		var/mob/living/U = user
 		if(U.mind && !U.mind.devilinfo && (U.mind.soulOwner == U.mind)) //Burn hands unless they are a devil or have sold their soul
 			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \

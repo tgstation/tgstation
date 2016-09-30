@@ -251,7 +251,7 @@
 		if(copier_empty())
 			if(istype(O,/obj/item/weapon/paper/contract/infernal))
 				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
-				burn_state = ON_FIRE
+				resistance_flags |= ON_FIRE
 			else
 				if(!user.drop_item())
 					return
@@ -369,7 +369,7 @@
 		ass = null
 		updateUsrDialog()
 		return 0
-	else if(istype(ass,/mob/living/carbon/human))
+	else if(ishuman(ass))
 		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
 			return 1
 		else

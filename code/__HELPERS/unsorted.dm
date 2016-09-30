@@ -971,7 +971,7 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/is_A_facing_B(atom/A,atom/B)
 	if(!istype(A) || !istype(B))
 		return 0
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		var/mob/living/LA = A
 		if(LA.lying)
 			return 0

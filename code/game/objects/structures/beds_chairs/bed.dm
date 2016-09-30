@@ -15,7 +15,7 @@
 	anchored = 1
 	can_buckle = 1
 	buckle_lying = 1
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
@@ -61,7 +61,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	var/foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)

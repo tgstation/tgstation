@@ -324,7 +324,7 @@
 
 
 /area/Entered(A)
-	if(!istype(A,/mob/living))
+	if(!isliving(A))
 		return
 
 	var/mob/living/L = A

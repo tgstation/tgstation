@@ -7,7 +7,7 @@
 	icon_state = "Contain_F"
 	anchored = 1
 	density = 0
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	use_power = 0
 	luminosity = 4
 	layer = ABOVE_OBJ_LAYER

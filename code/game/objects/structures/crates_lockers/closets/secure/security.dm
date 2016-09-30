@@ -157,7 +157,7 @@
 	name = "\proper detective's cabinet"
 	req_access = list(access_forensics_lockers)
 	icon_state = "cabinet"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 20
 
 /obj/structure/closet/secure_closet/detective/New()

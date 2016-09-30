@@ -454,7 +454,7 @@
 	if(contents.len)
 		icon_state += "-sabre"
 		item_state += "-sabre"
-	if(loc && istype(loc, /mob/living))
+	if(loc && isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
 	..()

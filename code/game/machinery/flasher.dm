@@ -31,6 +31,10 @@
 	else
 		bulb = new /obj/item/device/assembly/flash/handheld(src)
 
+/obj/machinery/flasher/Destroy()
+	remove_from_proximity_list(src, range)
+	..()
+
 /obj/machinery/flasher/Move()
 	remove_from_proximity_list(src, range)
 	..()

@@ -156,6 +156,7 @@
 					return
 
 				ticker.mode.remove_antag_for_borging(M.brainmob.mind)
+				remove_servant_of_ratvar(M, TRUE)
 				M.loc = src
 				brain = M
 				user << "<span class='notice'>Added a brain.</span>"

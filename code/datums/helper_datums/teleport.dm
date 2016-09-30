@@ -167,7 +167,7 @@
 	var/list/bagholding = teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)
 	if(bagholding.len)
 		precision = max(rand(1,100)*bagholding.len,100)
-		if(istype(teleatom, /mob/living))
+		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
 			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
 	return 1

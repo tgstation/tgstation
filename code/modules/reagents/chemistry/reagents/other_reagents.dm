@@ -270,7 +270,7 @@
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
 
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		if(method == PATCH || method == VAPOR)
 			var/mob/living/carbon/human/N = M
 			if(N.dna.species.id == "human")
@@ -335,7 +335,7 @@
 /datum/reagent/spraytan/overdose_process(mob/living/M)
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/N = M
 		if(N.dna.species.id == "human") // If they're human, turn em to the "orange" race, and give em spiky black hair
 			N.skin_tone = "orange"
@@ -346,9 +346,9 @@
 		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes their arms."))
+				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.their_pronoun()] arms."))
 			else
-				M.visible_message("<b>[M]</b> flexes their arms.")
+				M.visible_message("<b>[M]</b> [M.their_pronoun()] their arms.")
 	if(prob(10))
 		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
 	..()
@@ -370,7 +370,7 @@
 /datum/reagent/unstableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
-	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.their_pronoun()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
 		if(!H || qdeleted(H))
@@ -635,7 +635,7 @@
 	..()
 
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
 		if(holder && holder.chem_temp < 100) // COLD iron.
@@ -657,7 +657,7 @@
 	color = "#D0D0D0" // rgb: 208, 208, 208
 
 /datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(M.has_bane(BANE_SILVER))
 		M.reagents.add_reagent("toxin", reac_volume)
@@ -703,7 +703,7 @@
 	color = "#660000" // rgb: 102, 0, 0
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(reac_volume / 10)
@@ -741,7 +741,7 @@
 	if(method == TOUCH || method == VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(istype(M,/mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.lip_style)
 					H.lip_style = null

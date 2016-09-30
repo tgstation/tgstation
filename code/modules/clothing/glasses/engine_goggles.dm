@@ -42,7 +42,7 @@
 	if(!mode)
 		return
 
-	if(!istype(loc,/mob/living/carbon/human))
+	if(!ishuman(loc))
 		invis_update()
 		return
 
@@ -78,7 +78,7 @@
 				O.invisibility = INVISIBILITY_MAXIMUM
 
 /obj/item/clothing/glasses/meson/engine/proc/t_ray_on()
-	if(!istype(loc,/mob/living/carbon/human))
+	if(!ishuman(loc))
 		return 0
 
 	var/mob/living/carbon/human/user = loc
