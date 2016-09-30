@@ -406,6 +406,13 @@
 				 /obj/item/stack/sheet/sinew = 1)
 	category = CAT_PRIMAL
 
+	name = "Bone Pickaxe"
+	result = /obj/item/weapon/pickaxe/bone
+	time = 40
+	reqs = list(/obj/item/stack/sheet/bone = 5,
+				 /obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/boneaxe
 	name = "Bone Axe"
 	result = /obj/item/weapon/twohanded/fireaxe/boneaxe
