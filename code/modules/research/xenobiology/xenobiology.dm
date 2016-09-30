@@ -564,7 +564,7 @@
 	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				var/mob/living/M = A
 				if(M in immune)
 					continue

@@ -369,7 +369,7 @@
 		ass = null
 		updateUsrDialog()
 		return 0
-	else if(istype(ass,/mob/living/carbon/human))
+	else if(ishuman(ass))
 		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
 			return 1
 		else

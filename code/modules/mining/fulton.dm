@@ -71,7 +71,7 @@ var/list/total_extraction_beacons = list()
 			var/image/balloon
 			var/image/balloon2
 			var/image/balloon3
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				var/mob/living/M = A
 				M.Weaken(16) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
@@ -104,7 +104,7 @@ var/list/total_extraction_beacons = list()
 			sleep(10)
 			playsound(holder_obj.loc, 'sound/items/fultext_launch.wav', 50, 1, -3)
 			animate(holder_obj, pixel_z = 1000, time = 30)
-			if(istype(A, /mob/living/carbon/human))
+			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
 				L.SetParalysis(0)
 				L.drowsyness = 0
@@ -173,12 +173,12 @@ var/list/total_extraction_beacons = list()
 	var/atom/movable/stored_obj
 
 /obj/item/weapon/extraction_pack/proc/check_for_living_mobs(atom/A)
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		var/mob/living/L = A
 		if(L.stat != DEAD)
 			return 1
 	for(var/thing in A.GetAllContents())
-		if(istype(A, /mob/living))
+		if(isliving(A))
 			var/mob/living/L = A
 			if(L.stat != DEAD)
 				return 1

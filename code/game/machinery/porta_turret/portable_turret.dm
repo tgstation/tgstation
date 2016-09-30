@@ -197,7 +197,7 @@
 						"<A href='?src=\ref[src];operation=shootall'>[stun_all ? "Yes" : "No"]</A>",
 						"<A href='?src=\ref[src];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A>" )
 	else
-		if(istype(user,/mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(lasercolor == "b" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))
 				return
@@ -471,7 +471,7 @@
 				continue
 
 			//if the target is a human and not in our faction, analyze threat level
-			if(istype(C, /mob/living/carbon/human) && !in_faction(C))
+			if(ishuman(C) && !in_faction(C))
 				if(assess_perp(C) >= 4)
 					targets += C
 

@@ -69,10 +69,11 @@ It is possible to destroy the net by the occupant or someone else.
 		invisibility = INVISIBILITY_ABSTRACT//Make the net invisible so all the animations can play out.
 		health = INFINITY//Make the net invincible so that an explosion/something else won't kill it while, spawn() is running.
 		for(var/obj/item/W in M)
-			if(istype(M,/mob/living/carbon/human))
-				if(W==M:w_uniform)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(W == H.w_uniform)
 					continue//So all they're left with are shoes and uniform.
-				if(W==M:shoes)
+				if(W == H.shoes)
 					continue
 			M.unEquip(W)
 

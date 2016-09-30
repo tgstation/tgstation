@@ -437,7 +437,7 @@ BLIND     // can't see anything
 			if(user && notifyAttach)
 				user << "<span class='notice'>You attach [I] to [src].</span>"
 
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
 
@@ -457,7 +457,7 @@ BLIND     // can't see anything
 		else
 			user << "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>"
 
-		if(istype(loc, /mob/living/carbon/human))
+		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform()
 
@@ -517,7 +517,7 @@ BLIND     // can't see anything
 			if(3)
 				usr << "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>"
 
-	if(istype(loc,/mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		if(H.w_uniform == src)
 			H.update_suit_sensors()

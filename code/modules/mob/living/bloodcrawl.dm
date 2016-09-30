@@ -68,7 +68,7 @@
 		return
 
 	// if the thing we're pulling isn't alive
-	if (!(istype(pullee, /mob/living)))
+	if (!isliving(pullee))
 		return
 
 	var/mob/living/victim = pullee

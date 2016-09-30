@@ -63,7 +63,7 @@
 	var/mob/living/carbon/C = usr
 	if(usr.stat || usr.restrained() || C.back == src)
 		return
-	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
+	if((ishuman(usr) && usr.contents.Find(src)) || usr.contents.Find(master) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)
 		if(href_list["freq"])
 			SSradio.remove_object(src, frequency)
@@ -124,7 +124,7 @@
 
 /obj/item/device/electropack/attack_self(mob/user)
 
-	if(!istype(user, /mob/living/carbon/human))
+	if(!ishuman(user))
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>Turned [on ? "On" : "Off"] -

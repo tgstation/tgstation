@@ -585,7 +585,7 @@
 			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
 			STOP_PROCESSING(SSobj, src)
 		shield_state = "[shield_on]"
-		if(istype(loc, /mob/living/carbon/human))
+		if(ishuman(loc))
 			var/mob/living/carbon/human/C = loc
 			C.update_inv_wear_suit()
 

@@ -162,7 +162,7 @@
 	set category = "Object"
 	set name = "Summon Stick Minions"
 	set src in usr
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		return
 	if(!robe_charge)
 		usr << "<span class='warning'>\The robe's internal magic supply is still recharging!</span>"

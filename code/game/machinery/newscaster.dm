@@ -267,7 +267,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+	if(ishuman(user) || issilicon(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat
 		scan_user(human_or_robot_user)

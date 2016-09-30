@@ -285,7 +285,7 @@
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity_flag)
+	if(isliving(target) && proximity_flag)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)

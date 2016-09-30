@@ -81,7 +81,7 @@
 	if(flag)
 		return //It's adjacent, is the user, or is on the user's person
 
-	if (istype(A, /mob/living))
+	if(isliving(A))
 		src.dealTo(A, user)
 	else
 		return ..()

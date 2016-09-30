@@ -173,7 +173,7 @@
 	color = "#B31008" // rgb: 179, 16, 8
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/carbon/monkey))
+	if(!ishuman(M) && !ismonkey(M))
 		return
 
 	var/mob/living/carbon/victim = M
@@ -193,7 +193,7 @@
 				safe_thing = victim.wear_mask
 
 		//only humans can have helmets and glasses
-		if(istype(victim, /mob/living/carbon/human))
+		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			if( H.head )
 				if ( H.head.flags_cover & MASKCOVERSEYES )
@@ -324,7 +324,7 @@
 	color = "#FF00FF" // rgb: 255, 0, 255
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
+	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()

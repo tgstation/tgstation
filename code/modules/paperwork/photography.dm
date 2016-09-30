@@ -210,8 +210,10 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
-		if(istype(A, /mob/living) && A:lying)
-			img.Turn(A:lying)
+		if(isliving(A))
+			var/mob/living/L = A
+			if(L.lying)
+				img.Turn(L.lying)
 
 		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
 		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
@@ -247,7 +249,7 @@
 
 		var/list/holding = list()
 
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 
 			for(var/obj/item/I in L.held_items)

@@ -94,7 +94,7 @@
 	color = "#863333" // rgb: 175, 175, 0
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/M)
-	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
+	if((ishuman(M) && M.job in list("Clown") ) || ismonkey(M))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
@@ -105,7 +105,7 @@
 	description = "Absolutely nothing."
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
+	if(ishuman(M) && M.job in list("Mime"))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()

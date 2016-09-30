@@ -96,7 +96,7 @@
 
 		if(wisp.orbiting)
 			var/atom/A = wisp.orbiting.orbiting
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
 				M << "<span class='notice'>Your vision returns to \

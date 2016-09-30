@@ -512,9 +512,9 @@
 		if (ticker.mode.config_tag=="monkey")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/human))
+		if (ishuman(current))
 			text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
-		else if (istype(current, /mob/living/carbon/monkey))
+		else if (ismonkey(current))
 			var/found = 0
 			for(var/datum/disease/D in current.viruses)
 				if(istype(D, /datum/disease/transformation/jungle_fever)) found = 1
@@ -583,10 +583,7 @@
 			out += sections[i]+"<br>"
 
 
-	if (((src in ticker.mode.head_revolutionaries) || \
-		(src in ticker.mode.traitors)              || \
-		(src in ticker.mode.syndicates))           && \
-		istype(current,/mob/living/carbon/human)      )
+	if(((src in ticker.mode.head_revolutionaries) || (src in ticker.mode.traitors) || (src in ticker.mode.syndicates)) && ishuman(current))
 
 		text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
 		var/obj/item/device/uplink/U = find_syndicate_uplink()
@@ -662,7 +659,7 @@
 			if ("assassinate","protect","debrain","maroon")
 				var/list/possible_targets = list("Free objective")
 				for(var/datum/mind/possible_target in ticker.minds)
-					if ((possible_target != src) && istype(possible_target.current, /mob/living/carbon/human))
+					if ((possible_target != src) && ishuman(possible_target.current))
 						possible_targets += possible_target.current
 
 				var/mob/def_target = null
@@ -1298,7 +1295,7 @@
 		if(spawnloc)
 			current.loc = spawnloc
 
-		if(istype(current, /mob/living/carbon/human))
+		if(ishuman(current))
 			var/mob/living/carbon/human/H = current
 			qdel(H.belt)
 			qdel(H.back)

@@ -79,7 +79,7 @@
 /obj/effect/gluttony/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)
 		return 1
-	if(istype(mover, /mob/living/carbon/human))
+	if(ishuman(mover))
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
 			H.visible_message("<span class='warning'>[H] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>")
@@ -123,7 +123,7 @@
 		return
 	if(!istype(user))
 		return
-	if(istype(AM, /mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if(user.real_name != H.dna.real_name)
 			user.real_name = H.dna.real_name
