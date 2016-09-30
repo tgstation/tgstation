@@ -403,3 +403,4 @@
 	if(!isliving(U.loc))
 		return
 	var/mob/living/L = U.loc
+	L.bubble_icon = initial(L.bubble_icon)
