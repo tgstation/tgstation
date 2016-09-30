@@ -74,7 +74,7 @@
 		user << "<span class='notice'>..and falls into view. Whew, that was a close one.</span>"
 		user.unEquip(src)
 
-/obj/item/weapon/gun/projectile/automatic/pistol/mgs
+/obj/item/weapon/gun/projectile/automatic/pistol/tranq
 	name = "Mk 22 Hush Puppy"
 	desc = "What is that stance? That gun?.."
 	icon_state = "mgs"
