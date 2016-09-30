@@ -264,6 +264,7 @@
 /turf/open/floor/plating/asteroid/airless/cave
 	var/length = 100
 	var/mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
+	var/flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1 )
 	var/sanity = 1
 	var/forward_cave_dir = 1
 	var/backward_cave_dir = 2
@@ -363,6 +364,7 @@
 			break
 	if(!sanity)
 		return
+	SpawnFlora(T)
 
 	SpawnMonster(T)
 	T.ChangeTurf(turf_type)
@@ -381,6 +383,16 @@
 		var/randumb = pickweight(mob_spawn_list)
 		new randumb(T)
 	return
+/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFlora(turf/T)
+	if(prob(12))
+		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
+			return
+		for(var/obj/structure/flora/ash/F in urange(3,T)) //Allows for growing patches, but not ridiculous stacks of flora
+			if(istype(F, /obj/structure/flora/ash))
+				return
+		var/randumb = pickweight(flora_spawn_list)
+		new randumb(T)
+
 
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
 
