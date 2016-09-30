@@ -247,7 +247,7 @@
 	if(..())
 		return
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || istype(usr, /mob/living/silicon))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
 		//Authenticate
 		if (href_list["auth"])
 			if(!linkedServer || linkedServer.stat & (NOPOWER|BROKEN))
