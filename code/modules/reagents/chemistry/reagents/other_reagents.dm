@@ -354,12 +354,6 @@
 	..()
 	return
 
-/datum/reagent/slimetoxin
-	name = "Mutation Toxin"
-	id = "mutationtoxin"
-	description = "A corruptive toxin produced by slimes."
-	color = "#13BC5E" // rgb: 19, 188, 94
-
 /datum/reagent/stableslimetoxin
 	name = "Stable Mutation Toxin"
 	id = "stablemutationtoxin"
@@ -388,7 +382,7 @@
 
 	return 1
 
-/datum/reagent/stableslimetoxin/classic
+/datum/reagent/stableslimetoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
 	id = "mutationtoxin"
 	description = "A corruptive toxin produced by slimes."
@@ -420,14 +414,6 @@
 	race = /datum/species/pod
 	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
 
-/datum/reagent/stableslimetoxin/shadow
-	name = "Shadow Mutation Toxin"
-	id = "shadowmutationtoxin"
-	description = "A dark toxin produced by slimes."
-	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/shadow
-	mutationtext = "<span class='danger'>The pain subsides. You feel... darker.</span>"
-
 /datum/reagent/stableslimetoxin/jelly
 	name = "Imperfect Mutation Toxin"
 	id = "jellymutationtoxin"
@@ -444,6 +430,24 @@
 	race = /datum/species/golem/random
 	mutationtext = "<span class='danger'>The pain subsides. You feel... rocky.</span>"
 
+/datum/reagent/stableslimetoxin/abductor
+	name = "Abductor Mutation Toxin"
+	id = "abductormutationtoxin"
+	description = "An alien toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/abductor
+	mutationtext = "<span class='danger'>The pain subsides. You feel... alien.</span>"
+
+/datum/reagent/stableslimetoxin/android
+	name = "Android Mutation Toxin"
+	id = "androidmutationtoxin"
+	description = "A robotic toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/android
+	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
+
+
+//BLACKLISTED RACES
 /datum/reagent/stableslimetoxin/skeleton
 	name = "Skeleton Mutation Toxin"
 	id = "skeletonmutationtoxin"
@@ -460,13 +464,23 @@
 	race = /datum/species/zombie //Not the infectious kind. The days of xenobio zombie outbreaks are long past.
 	mutationtext = "<span class='danger'>The pain subsides. You feel... undead.</span>"
 
-/datum/reagent/stableslimetoxin/abductor
-	name = "Abductor Mutation Toxin"
-	id = "abductormutationtoxin"
-	description = "An alien toxin produced by slimes."
+/datum/reagent/stableslimetoxin/ash
+	name = "Ash Mutation Toxin"
+	id = "ashmutationtoxin"
+	description = "An ashen toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/abductor
-	mutationtext = "<span class='danger'>The pain subsides. You feel... alien.</span>"
+	race = /datum/species/lizard/ashwalker
+	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
+
+
+//DANGEROUS RACES
+/datum/reagent/stableslimetoxin/shadow
+	name = "Shadow Mutation Toxin"
+	id = "shadowmutationtoxin"
+	description = "A dark toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/shadow
+	mutationtext = "<span class='danger'>The pain subsides. You feel... darker.</span>"
 
 /datum/reagent/stableslimetoxin/plasma
 	name = "Plasma Mutation Toxin"
@@ -475,14 +489,6 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/plasmaman
 	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
-
-/datum/reagent/stableslimetoxin/android
-	name = "Android Mutation Toxin"
-	id = "androidmutationtoxin"
-	description = "A robotic toxin produced by slimes."
-	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/android
-	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
 
 /datum/reagent/stableslimetoxin/unstable //PSYCH
 	name = "Unstable Mutation Toxin"
