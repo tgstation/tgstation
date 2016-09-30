@@ -137,7 +137,7 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		user << "<span class='warning'>There is no more of [src.name] \
+		user << "<span class='warning'>There is no more of the [src.name] \
 			left!</span>"
 		if(self_contained)
 			qdel(src)
@@ -381,7 +381,7 @@
 		user << "You take a bite of the [src.name]. Delicious!"
 		var/eaten = use_charges(5)
 		if(!reagents.total_volume) //Prevents divsion by zero
-			check_empty(user)
+			check_empty()
 			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction * volume_multiplier)
