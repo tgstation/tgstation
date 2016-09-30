@@ -339,9 +339,10 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/paper/fire_act()
-	..(0)
-	icon_state = "paper_onfire"
-	info = "[stars(info)]"
+	..()
+	if(!(resistance_flags & FIRE_PROOF))
+		icon_state = "paper_onfire"
+		info = "[stars(info)]"
 
 
 /obj/item/weapon/paper/extinguish()

@@ -1101,21 +1101,24 @@
 			if("clear")
 				if(src in ticker.mode.devils)
 					if(istype(current,/mob/living/carbon/true_devil/))
-						usr << "<span class='warning'>This cannot be used on true or arch-devils.</span>"
-					else
-						ticker.mode.devils -= src
-						special_role = null
-						current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
-						RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-						RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
-						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
-						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
-						message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
-						devilinfo = null
-						if(issilicon(current))
-							var/mob/living/silicon/S = current
-							S.clear_law_sixsixsix(current)
-						log_admin("[key_name(usr)] has de-devil'ed [current].")
+						if(devilinfo)
+							devilinfo.regress_blood_lizard()
+						else
+							usr << "<span class='warning'>Something went wrong with removing the devil, we were unable to find an attached devilinfo.</span>."
+					ticker.mode.devils -= src
+					special_role = null
+					current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
+					RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
+					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
+					devilinfo = null
+					if(issilicon(current))
+						var/mob/living/silicon/S = current
+						S.clear_law_sixsixsix(current)
+					log_admin("[key_name(usr)] has de-devil'ed [current].")
 				else if(src in ticker.mode.sintouched)
 					ticker.mode.sintouched -= src
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")

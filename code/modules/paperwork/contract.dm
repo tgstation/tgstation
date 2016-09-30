@@ -78,6 +78,7 @@
 /obj/item/weapon/paper/contract/infernal/revive
 	name = "paper- contract of resurrection"
 	contractType = CONTRACT_REVIVE
+	var/cooldown = FALSE
 
 /obj/item/weapon/paper/contract/infernal/knowledge
 	name = "paper- contract for knowledge"
@@ -203,6 +204,10 @@
 
 /obj/item/weapon/paper/contract/infernal/revive/attack(mob/M, mob/living/user)
 	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)
+		if (cooldown)
+			user << "<span class='notice'>Give [M] a chance to think through the contract, don't rush him.</span>"
+			return 0
+		cooldown = TRUE
 		var/mob/living/carbon/human/H = M
 		var/mob/dead/observer/ghost = H.get_ghost()
 		var/response = "No"
@@ -220,8 +225,12 @@
 			H.fakefire()
 			FulfillContract(H, 1)//Revival contracts are always signed in blood
 			addtimer(H, "fakefireextinguish",5,TRUE)
+		addtimer(src,"resetcooldown",300,TRUE)
 	else
 		..()
+
+/obj/item/weapon/paper/contract/infernal/revive/proc/resetcooldown()
+	cooldown = FALSE
 
 
 /obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
