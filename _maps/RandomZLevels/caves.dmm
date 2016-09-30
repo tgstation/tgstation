@@ -515,7 +515,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bc" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -683,7 +683,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "bt" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -692,7 +692,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bu" = (
-/obj/effect/spider/cocoon,
+/obj/structure/spider/cocoon,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1404,7 +1404,7 @@
 	},
 /area/awaymission/research)
 "cY" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
@@ -1540,7 +1540,7 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "dm" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1580,7 +1580,7 @@
 	icon_state = "bulb1";
 	dir = 4
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1588,7 +1588,7 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "dr" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1735,7 +1735,7 @@
 /area/awaymission/northblock)
 "dJ" = (
 /obj/item/stack/rods,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -1800,7 +1800,7 @@
 	},
 /area/awaymission/northblock)
 "dT" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2417,7 +2417,7 @@
 	icon_state = "bulb1";
 	dir = 1
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
@@ -2434,7 +2434,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2448,7 +2448,7 @@
 	},
 /area/awaymission/BMPship)
 "fv" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2493,7 +2493,7 @@
 	},
 /area/awaymission/BMPship)
 "fB" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
@@ -2505,7 +2505,7 @@
 	},
 /area/awaymission/BMPship)
 "fD" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8

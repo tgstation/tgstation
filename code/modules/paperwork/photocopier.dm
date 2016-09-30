@@ -251,7 +251,7 @@
 		if(copier_empty())
 			if(istype(O,/obj/item/weapon/paper/contract/infernal))
 				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
-				burn_state = ON_FIRE
+				resistance_flags |= ON_FIRE
 			else
 				if(!user.drop_item())
 					return
@@ -321,7 +321,7 @@
 					toner = 0
 
 
-/obj/machinery/photocopier/blob_act(obj/effect/blob/B)
+/obj/machinery/photocopier/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
 	else

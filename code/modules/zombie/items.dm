@@ -69,7 +69,7 @@
 	A.audible_message("<span class='italics'>You hear a loud metallic \
 		grinding sound.</span>")
 
-	addtimer(src, "growl", 20, unique=FALSE, user)
+	addtimer(src, "growl", 20, unique=FALSE, target=user)
 
 	if(do_after(user, delay=160, needhand=FALSE, target=A, progress=TRUE))
 		playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)

@@ -272,7 +272,7 @@
 		qdel(src)
 
 
-/obj/structure/girder/blob_act(obj/effect/blob/B)
+/obj/structure/girder/blob_act(obj/structure/blob/B)
 	if(prob(40))
 		qdel(src)
 

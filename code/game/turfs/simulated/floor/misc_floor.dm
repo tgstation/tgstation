@@ -1,5 +1,5 @@
 /turf/open/floor/goonplaque
-	name = "Commemorative Plaque"
+	name = "commemorative plaque"
 	icon_state = "plaque"
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -27,35 +27,42 @@
 	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/open/floor/plating/beach
-	name = "Beach"
+	name = "beach"
 	icon = 'icons/misc/beach.dmi'
+	flags = NONE
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
 
 /turf/open/floor/plating/beach/sand
-	name = "Sand"
+	name = "sand"
+	desc = "Surf's up."
 	icon_state = "sand"
 	baseturf = /turf/open/floor/plating/beach/sand
 
 /turf/open/floor/plating/beach/coastline_t
-	name = "Coastline"
+	name = "coastline"
+	desc = "Tide's high tonight. Charge your batons."
 	icon_state = "sandwater_t"
 	baseturf = /turf/open/floor/plating/beach/coastline_t
 
 /turf/open/floor/plating/beach/coastline_b
-	name = "Coastline"
+	name = "coastline"
 	icon_state = "sandwater_b"
 	baseturf = /turf/open/floor/plating/beach/coastline_b
 
 /turf/open/floor/plating/beach/water
-	name = "Water"
+	name = "water"
+	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
 	icon_state = "water"
 	baseturf = /turf/open/floor/plating/beach/water
 
+/turf/open/floor/plating/ironsand
+	name = "iron sand"
+	desc = "Like sand, but more <i>metal</i>."
+
 /turf/open/floor/plating/ironsand/New()
 	..()
-	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
 
 /turf/open/floor/plating/ironsand/burn_tile()

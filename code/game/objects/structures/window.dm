@@ -65,7 +65,7 @@
 		if(3)
 			take_damage(rand(25,75), BRUTE, 0)
 
-/obj/structure/window/blob_act(obj/effect/blob/B)
+/obj/structure/window/blob_act(obj/structure/blob/B)
 	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/window/narsie_act()
@@ -434,6 +434,7 @@
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
 	maxhealth = 50
 	explosion_block = 1
 
@@ -494,6 +495,7 @@
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 1

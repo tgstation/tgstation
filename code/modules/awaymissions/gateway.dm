@@ -7,7 +7,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	icon_state = "off"
 	density = 1
 	anchored = 1
-	unacidable = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	var/active = 0
 
 

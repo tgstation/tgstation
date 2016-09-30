@@ -79,7 +79,7 @@
 	icon_state = "tile_grass"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/grass
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 //Wood
@@ -90,7 +90,7 @@
 	icon_state = "tile-wood"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/wood
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 //Carpets
@@ -100,7 +100,7 @@
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	turf_type = /turf/open/floor/carpet
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 /obj/item/stack/tile/fakespace
@@ -109,7 +109,7 @@
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	turf_type = /turf/open/floor/fakespace
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30

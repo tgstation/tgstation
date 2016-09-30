@@ -47,7 +47,7 @@
 	armour_penetration = 75
 	sharpness = IS_SHARP
 	origin_tech = "combat=5"
-	attack_verb = list("lunged at", "stabbed")
+	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
 

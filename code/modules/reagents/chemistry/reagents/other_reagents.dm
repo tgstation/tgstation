@@ -174,7 +174,7 @@
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
-		M.stuttering += 4
+		M.stuttering = min(M.stuttering+4, 10)
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
@@ -346,9 +346,9 @@
 		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes their arms."))
+				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.their_pronoun()] arms."))
 			else
-				M.visible_message("<b>[M]</b> flexes their arms.")
+				M.visible_message("<b>[M]</b> [M.their_pronoun()] their arms.")
 	if(prob(10))
 		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
 	..()
@@ -370,7 +370,7 @@
 /datum/reagent/unstableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
-	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.their_pronoun()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
 		if(!H || qdeleted(H))

@@ -208,7 +208,7 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/construction(pipe_type, obj_color)
+/obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
 	if(can_unwrench)
 		color = obj_color
 		pipe_color = obj_color

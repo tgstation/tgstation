@@ -316,3 +316,17 @@
 	icon_state = "stuffed_legion"
 	bonus_reagents = list("vitamin" = 3, "capsaicin" = 1, "tricordrazine" = 5)
 	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10,)
+
+
+/obj/item/weapon/reagent_containers/food/snacks/powercrepe
+	name = "Powercrepe"
+	desc = "With great power, comes great crepes.  It looks like a pancake filled with jelly but packs quite a punch."
+	icon_state = "powercrepe"
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 3, "iron" = 10)
+	list_reagents = list("nutriment" = 10, "vitamin" = 5, "cherryjelly" = 5)
+	force = 20
+	throwforce = 10
+	block_chance = 50
+	armour_penetration = 75
+	attack_verb = list("slapped", "slathered")
+	w_class = 4

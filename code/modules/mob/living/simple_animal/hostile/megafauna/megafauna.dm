@@ -92,6 +92,8 @@
 		([newloc.x],[newloc.y],[newloc.z])")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
+	if(!L)
+		return
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")

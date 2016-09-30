@@ -9,6 +9,7 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
 	var/health = 10
+	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
 
@@ -31,7 +32,7 @@
 		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
 
-/obj/structure/grille/blob_act(obj/effect/blob/B)
+/obj/structure/grille/blob_act(obj/structure/blob/B)
 	if(!destroyed)
 		Break()
 
@@ -264,17 +265,8 @@
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
-				var/mob/living/closest_mob
-				for(var/A in oview(src, 3))
-					if(istype(A, /mob/living))
-						var/dist = get_dist(src, A)
-						if(dist <= 3)
-							closest_mob = A
-				if(closest_mob)
-					var/shock_damage = C.powernet.avail * 0.0002//setting shock damage for later. equals 1/5000 the power in the grid
-					src.Beam(closest_mob, icon_state="lightning[rand(1,12)]", time=5)
-					closest_mob.electrocute_act(shock_damage, src, 1)//ZAP, damage should be about 40 with 200000W
-					playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
+				playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
+				tesla_zap(src, 3, C.powernet.avail * 0.01) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 	take_damage(tforce)
 
 /obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)

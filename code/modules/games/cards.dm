@@ -125,7 +125,7 @@
 	var/blank = 0
 	var/list/cards = list()
 	var/datum/html_interface/hi
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 /obj/item/weapon/hand/New(loc)
 	. = ..()
@@ -264,9 +264,8 @@
 	if (istype(hclient))
 		switch (href_list["action"])
 			if ("play_card")
-				var/datum/playingcard/card = locate(href_list["card"])
-
-				if (card in src.cards)
+				var/datum/playingcard/card = locate(href_list["card"]) in cards
+				if (card && istype(card))
 					src.discard(card)
 			if ("toggle_conceal")
 				src.toggle_conceal()

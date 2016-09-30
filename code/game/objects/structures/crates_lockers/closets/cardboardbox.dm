@@ -4,7 +4,7 @@
 	icon_state = "cardboard"
 	health = 10
 	mob_storage_capacity = 1
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 20
 	can_weld_shut = 0
 	cutting_tool = /obj/item/weapon/wirecutters
@@ -61,7 +61,7 @@
 	icon_state = "metalbox"
 	health = 500
 	mob_storage_capacity = 5
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weapon/weldingtool
 	open_sound = 'sound/machines/click.ogg'

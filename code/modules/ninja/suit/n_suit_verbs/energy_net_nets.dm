@@ -3,7 +3,7 @@ It will teleport people to a holding facility after 30 seconds. (Check the proce
 It is possible to destroy the net by the occupant or someone else.
 */
 
-/obj/effect/energy_net
+/obj/structure/energy_net
 	name = "energy net"
 	desc = "It's a net made of green energy."
 	icon = 'icons/effects/effects.dmi'
@@ -20,7 +20,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/energy_net/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
@@ -34,7 +34,7 @@ It is possible to destroy the net by the occupant or someone else.
 	if(health <=0)
 		qdel(src)
 
-/obj/effect/energy_net/Destroy()
+/obj/structure/energy_net/Destroy()
 	if(affecting)
 		var/mob/living/carbon/M = affecting
 		M.anchored = 0
@@ -44,7 +44,7 @@ It is possible to destroy the net by the occupant or someone else.
 			master << "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated."
 	return ..()
 
-/obj/effect/energy_net/process(mob/living/carbon/M)
+/obj/structure/energy_net/process(mob/living/carbon/M)
 	var/check = 30//30 seconds before teleportation. Could be extended I guess.
 	var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 	//The person can still try and attack the net when inside.
@@ -101,13 +101,13 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
+/obj/structure/energy_net/bullet_act(obj/item/projectile/Proj)
 	. = ..()
 	take_damage(Proj.damage, Proj.damage_type)
 
 
 
-/obj/effect/energy_net/ex_act(severity, target)
+/obj/structure/energy_net/ex_act(severity, target)
 	switch(severity)
 		if(1)
 			qdel(src)
@@ -116,10 +116,10 @@ It is possible to destroy the net by the occupant or someone else.
 		if(3)
 			take_damage(rand(10,25), BRUTE, 0)
 
-/obj/effect/energy_net/blob_act(obj/effect/blob/B)
+/obj/structure/energy_net/blob_act(obj/structure/blob/B)
 	qdel(src)
 
-/obj/effect/energy_net/hitby(atom/movable/AM)
+/obj/structure/energy_net/hitby(atom/movable/AM)
 	..()
 	var/tforce = 0
 	if(ismob(AM))
@@ -130,7 +130,7 @@ It is possible to destroy the net by the occupant or someone else.
 	take_damage(tforce)
 
 
-/obj/effect/energy_net/attack_hulk(mob/living/carbon/human/user)
+/obj/structure/energy_net/attack_hulk(mob/living/carbon/human/user)
 	..(user, 1)
 	user.visible_message("<span class='danger'>[user] rips the energy net apart!</span>", \
 								"<span class='notice'>You easily destroy the energy net.</span>")
@@ -138,12 +138,12 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/attack_paw(mob/user)
+/obj/structure/energy_net/attack_paw(mob/user)
 	return attack_hand()
 
 
 
-/obj/effect/energy_net/attack_alien(mob/living/user)
+/obj/structure/energy_net/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
@@ -153,7 +153,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/attacked_by(obj/item/weapon/W, mob/user)
+/obj/structure/energy_net/attacked_by(obj/item/weapon/W, mob/user)
 	..()
 	take_damage(W.force, W.damtype)
 

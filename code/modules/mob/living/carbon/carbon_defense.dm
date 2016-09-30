@@ -9,6 +9,14 @@
 	if(head && (head.flags & HEADBANGPROTECT))
 		return 1
 
+//Overridden so we can handle when it hits a limb that doesn't exist
+mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
+	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
+	if(!affecting) //that zone is dismembered
+		. = bullet_act(P, "chest")//act on chest instead
+	else
+		. = ..()//Proceed with standard handling
+
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
@@ -147,7 +155,7 @@
 	return dam_zone
 
 
-/mob/living/carbon/blob_act(obj/effect/blob/B)
+/mob/living/carbon/blob_act(obj/structure/blob/B)
 	if (stat == DEAD)
 		return
 	else

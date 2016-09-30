@@ -5,13 +5,12 @@
 	density = 0
 	anchored = 1
 	flags = ABSTRACT
-	unacidable = 1
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
 	var/obj/item/ammo_casing/ammo_casing = null
@@ -84,10 +83,13 @@
 	var/mob/living/L = target
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
+			var/splatter_dir = dir
+			if(starting)
+				splatter_dir = get_dir(starting, target_loca)
 			if(isalien(L))
-				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter, list(target_loca, dir))
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter, list(target_loca, splatter_dir))
 			else
-				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(target_loca, dir))
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(target_loca, splatter_dir))
 			if(prob(33))
 				L.add_splatter_floor(target_loca)
 		else if(impact_effect_type)

@@ -320,7 +320,7 @@
 
 	..()
 
-/obj/machinery/particle_accelerator/control_box/blob_act(obj/effect/blob/B)
+/obj/machinery/particle_accelerator/control_box/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
 
