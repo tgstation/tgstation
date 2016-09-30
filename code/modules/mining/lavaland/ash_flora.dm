@@ -193,7 +193,7 @@
 	list_reagents = list("nutriment" = 3, "vitfro" = 2, "nicotine" = 2)
 	icon_state = "mushroom_leaf"
 	//standard_prep = FALSE
-	//prepared_type = obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf/prepared
+	//prepared_type = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf/prepared
 /* //
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && (istype(target, /turf/open/floor/plating/ashplanet/wateryrock) || istype(target, /obj/structure/sink)))
@@ -210,7 +210,7 @@
 	desc = "The cap of a large mushroom."
 	list_reagents = list("mindbreaker" = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
 	icon_state = "mushroom_cap"
-	//prepared_type = obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap/prepared
+	//prepared_type = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap/prepared
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap/prepared
 	name = "sliced mushroom cap"
@@ -224,7 +224,7 @@
 	list_reagents = list("tinlux" = 2, "vitamin" = 1, "space_drugs" = 1)
 	icon_state = "mushroom_stem"
 	luminosity = 1
-	//prepared_type = obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem/prepared
+	//prepared_type = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem/prepared
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem/prepared
 	name = "sliced mushroom stem"
@@ -237,7 +237,7 @@
 	list_reagents = list("vitamin" = 2, "nutriment" = 2, "vitfro" = 4)
 	desc = "A cactus fruit covered in a thick, reddish skin. And some ash."
 	icon_state = "cactus_fruit"
-	//prepared_type = obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit/prepared
+	//prepared_type = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit/prepared
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit/prepared
 	name = "peeled cactus fruit"
