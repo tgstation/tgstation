@@ -13,7 +13,10 @@
 	var/verb_exclaim = "exclaims"
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
-	var/inertia_last_loc
+	var/atom/inertia_last_loc
+	var/inertia_moving = 0
+	var/inertia_next_move = 0
+	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	glide_size = 8
@@ -71,13 +74,13 @@
 
 	last_move = direct
 	setDir(direct)
-
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	if (!inertia_dir)
+	if (!inertia_moving)
+		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
 	return 1
 
@@ -304,26 +307,6 @@
 			throwing = 0
 			throw_impact(AM)
 			return 1
-
-//Overlays
-/atom/movable/overlay
-	var/atom/master = null
-	anchored = 1
-
-/atom/movable/overlay/New()
-	verbs.Cut()
-
-/atom/movable/overlay/attackby(a, b, c)
-	if (src.master)
-		return src.master.attackby(a, b, c)
-
-/atom/movable/overlay/attack_paw(a, b, c)
-	if (src.master)
-		return src.master.attack_paw(a, b, c)
-
-/atom/movable/overlay/attack_hand(a, b, c)
-	if (src.master)
-		return src.master.attack_hand(a, b, c)
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)

@@ -25,6 +25,8 @@
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
 	var/health = 80			//the turret's health
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+
 	var/locked = 1			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
 
@@ -195,7 +197,7 @@
 						"<A href='?src=\ref[src];operation=shootall'>[stun_all ? "Yes" : "No"]</A>",
 						"<A href='?src=\ref[src];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A>" )
 	else
-		if(istype(user,/mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(lasercolor == "b" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))
 				return
@@ -469,7 +471,7 @@
 				continue
 
 			//if the target is a human and not in our faction, analyze threat level
-			if(istype(C, /mob/living/carbon/human) && !in_faction(C))
+			if(ishuman(C) && !in_faction(C))
 				if(assess_perp(C) >= 4)
 					targets += C
 

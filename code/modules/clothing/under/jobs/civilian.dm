@@ -31,6 +31,8 @@
 	icon_state = "cargotech"
 	item_state = "lb_suit"
 	item_color = "cargo"
+	body_parts_covered = CHEST|GROIN|ARMS
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 
 /obj/item/clothing/under/rank/chaplain
@@ -86,7 +88,7 @@
 	name = "janitor's jumpsuit"
 	icon_state = "janitor"
 	item_color = "janitor"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 
 
 /obj/item/clothing/under/lawyer

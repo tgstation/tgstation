@@ -10,34 +10,36 @@
 	var/can_see_cult = iscultist(user) || isobserver(user)
 	..()
 	if(takes_damage)
-		var/cultist_message = "It is at <b>[health]/[max_health]</b> stability"
-		var/other_message = "It seems extremely stable"
+		var/t_It = they_pronoun(TRUE)
+		var/t_is = get_is()
+		var/cultist_message = "[t_It] [t_is] at <b>[health]/[max_health]</b> stability"
+		var/other_message = "[t_It] seems extremely stable"
 		var/heavily_damaged = FALSE
 		var/healthpercent = (health/max_health) * 100
 		if(healthpercent >= 100)
-			other_message = "It seems extremely stable"
+			other_message = "[t_It] seems extremely stable"
 		else if(healthpercent >= 50)
-			other_message = "It looks slightly unstable"
+			other_message = "[t_It] looks slightly unstable"
 		else if(healthpercent >= 25)
-			other_message = "It appears very unstable"
+			other_message = "[t_It] appears very unstable"
 			heavily_damaged = TRUE
 		else if(healthpercent >= 0)
-			other_message = "It's glowing faintly and is extremely unstable"
+			other_message = "[t_It] [t_is] glowing faintly and is extremely unstable"
 			heavily_damaged = TRUE
 		user << "<span class='cult'>[heavily_damaged ? "<b>":""][can_see_cult ? "[cultist_message]":"[other_message]"][heavily_damaged ? "!</b>":"."]</span>"
 	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if(can_see_cult && cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+		user << "<span class='cultitalic'>The magic in [src] is too weak, [they_pronoun()] will be ready to use again in [getETA()].</span>"
 
 /obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
 		if(health < max_health)
 			health = min(max_health, health + 5)
-			Beam(M, icon_state="sendbeam", icon='icons/effects/effects.dmi', time=4)
+			Beam(M, icon_state="sendbeam", time=4)
 			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
-				"<span class='cult'>You repair <b>[src]</b>, leaving it at <b>[health]/[max_health]</b> stability.</span>")
+				"<span class='cult'>You repair <b>[src]</b>, leaving [they_pronoun()] at <b>[health]/[max_health]</b> stability.</span>")
 		else
-			M << "<span class='cult'>You cannot repair [src], as it is undamaged!</span>"
+			M << "<span class='cult'>You cannot repair [src], as [they_pronoun()] [get_is()] undamaged!</span>"
 	else
 		..()
 
@@ -238,5 +240,4 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
 	density = 1
-	unacidable = 1
 	anchored = 1

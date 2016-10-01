@@ -340,11 +340,15 @@ var/list/bloody_footprints_cache = list()
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 
-//Fire stuff, for burn_state
-#define LAVA_PROOF -2
-#define FIRE_PROOF -1
-#define FLAMMABLE 0
-#define ON_FIRE 1
+
+//Fire and Acid stuff, for resistance_flags
+#define LAVA_PROOF 1
+#define FIRE_PROOF 2 //not flammable (but may or may not take damage from fire)
+#define ON_FIRE 4
+#define UNACIDABLE 8 //acid can't even appear on it, let alone melt it.
+#define ACID_PROOF 16 //acid stuck on it doesn't melt it.
+#define INDESTRUCTIBLE 32 //doesn't take damage
+#define EMP_PROOF 64 //immune to emp
 
 
 //Ghost orbit types:
@@ -482,7 +486,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define STORAGE_VIEW_DEPTH	2
 
 
-
 // Medal names
 
 #define BOSS_KILL_MEDAL "Killer"
@@ -528,3 +531,8 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MIN_NTNET_LOGS 10
 //TODO Move to a pref
 #define STATION_GOAL_BUDGET  1
+
+//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
+#define LUMA_R 0.213
+#define LUMA_G 0.715
+#define LUMA_B 0.072

@@ -121,7 +121,7 @@
 	is_seeing |= user
 
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin)
+/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	close_all()
 	return ..()
 
@@ -500,7 +500,7 @@
 
 
 /obj/item/weapon/storage/emp_act(severity)
-	if(!istype(loc, /mob/living))
+	if(!isliving(loc))
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 	..()

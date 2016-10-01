@@ -14,6 +14,7 @@
 
 /datum/wires/explosive/c4
 	holder_type = /obj/item/weapon/c4
+	randomize = TRUE	//Same behaviour since no wire actually disarms it
 
 /datum/wires/explosive/c4/interactable(mob/user)
 	var/obj/item/weapon/c4/P = holder

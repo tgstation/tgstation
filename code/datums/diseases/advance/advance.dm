@@ -182,7 +182,7 @@ var/list/advance_cures = 	list(
 		CRASH("We did not have any symptoms before generating properties.")
 		return
 
-	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "transmittable" = 1, "severity" = 0)
+	var/list/properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "transmittable" = 0, "severity" = 0)
 
 	for(var/datum/symptom/S in symptoms)
 

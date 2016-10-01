@@ -1,35 +1,16 @@
 /mob/living/carbon/human/examine(mob/user)
+//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
+	var/t_He = they_pronoun(TRUE)
+	var/t_His = their_pronoun(TRUE)
+	var/t_his = their_pronoun()
+	var/t_him = them_pronoun()
+	var/t_has = get_has()
+	var/t_is = get_is()
+
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-
-	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
-	var/t_He = "It" //capitalised for use at the start of each line.
-	var/t_his = "its"
-	var/t_him = "it"
-	var/t_has = "has"
-	var/t_is = "is"
-
-	var/msg = "<span class='info'>*---------*\nThis is "
-
-	if( (slot_w_uniform in obscured) && skipface ) //big suits/masks/helmets make it hard to tell their gender
-		t_He = "They"
-		t_his = "their"
-		t_him = "them"
-		t_has = "have"
-		t_is = "are"
-	else
-		switch(gender)
-			if(MALE)
-				t_He = "He"
-				t_his = "his"
-				t_him = "him"
-			if(FEMALE)
-				t_He = "She"
-				t_his = "her"
-				t_him = "her"
-
-	msg += "<EM>[src.name]</EM>!\n"
 
 	//uniform
 	if(w_uniform && !(slot_w_uniform in obscured))
@@ -163,7 +144,7 @@
 			if(suiciding)
 				msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 			if(hellbound)
-				msg += "<span class='warning'>[t_his] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
+				msg += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 			if(!key)
 				var/foundghost = 0
@@ -191,18 +172,26 @@
 		for(var/obj/item/I in BP.embedded_objects)
 			msg += "<B>[t_He] [t_has] \a \icon[I] [I] embedded in [t_his] [BP.name]!</B>\n"
 
-	//stores how many left limbs are missing
+	//stores missing limbs
 	var/l_limbs_missing = 0
+	var/r_limbs_missing = 0
 	for(var/t in missing)
 		if(t=="head")
-			msg += "<span class='deadsay'><B>[capitalize(t_his)] [parse_zone(t)] is missing!</B><span class='warning'>\n"
+			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B><span class='warning'>\n"
 			continue
 		if(t == "l_arm" || t == "l_leg")
 			l_limbs_missing++
+		else if(t == "r_arm" || t == "r_leg")
+			r_limbs_missing++
+
 		msg += "<B>[capitalize(t_his)] [parse_zone(t)] is missing!</B>\n"
 
-	if(l_limbs_missing >= 2)
+	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
 		msg += "[t_He] looks all right now.\n"
+	else if(l_limbs_missing == 0 && r_limbs_missing >= 2)
+		msg += "[t_He] really keeps to the left.\n"
+	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
+		msg += "[t_He] doesn't seem all there.\n"
 
 	if(temp)
 		if(temp < 30)
@@ -259,9 +248,9 @@
 	if(islist(stun_absorption))
 		for(var/i in stun_absorption)
 			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
-				msg += "[t_He][stun_absorption[i]["examine_message"]]\n"
+				msg += "[t_He] [t_is][stun_absorption[i]["examine_message"]]\n"
 
-	if(drunkenness && !skipface && stat != DEAD) //Drunkenness
+	if(drunkenness && !skipface && !appears_dead) //Drunkenness
 		switch(drunkenness)
 			if(11 to 21)
 				msg += "[t_He] [t_is] slightly flushed.\n"
@@ -297,7 +286,7 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
-	if(istype(user, /mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/cyberimp/eyes/hud/CIH = H.getorgan(/obj/item/organ/cyberimp/eyes/hud)
 		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || CIH)

@@ -19,20 +19,17 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(stat != DEAD)
-
 		//Breathing, if applicable
 		handle_breathing()
-
+	if(stat != DEAD)
 		//Mutations and radiation
 		handle_mutations_and_radiation()
-
+	if(stat != DEAD)
 		//Chemicals in the body
 		handle_chemicals_in_body()
-
+	if(stat != DEAD)
 		//Random events (vomiting etc)
 		handle_random_events()
-
-		. = 1
 
 	//Handle temperature/pressure differences between body and environment
 	if(environment)
@@ -43,15 +40,18 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	update_gravity(has_gravity())
+	update_gravity(mob_has_gravity())
 
 	if(machine)
 		machine.check_eye(src)
 
-
 	if(stat != DEAD)
 		handle_disabilities() // eye, ear, brain damages
+	if(stat != DEAD)
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
+
+	if(stat != DEAD)
+		return 1
 
 
 /mob/living/proc/handle_breathing()

@@ -4,7 +4,7 @@
 	name = "necropolis chest"
 	desc = "It's watching you closely."
 	icon_state = "necrocrate"
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
@@ -48,7 +48,7 @@
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/borg/upgrade/modkit/aoe/mobs(src)
+			new /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
@@ -95,8 +95,8 @@
 			</span>"
 
 		if(wisp.orbiting)
-			var/atom/A = wisp.orbiting
-			if(istype(A, /mob/living))
+			var/atom/A = wisp.orbiting.orbiting
+			if(isliving(A))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
 				M << "<span class='notice'>Your vision returns to \
@@ -195,7 +195,7 @@
 
 /obj/item/projectile/hook/fire(setAngle)
 	if(firer)
-		chain = Beam(firer, icon_state = "chain", icon = 'icons/obj/lavaland/artefacts.dmi', time = INFINITY, maxdistance = INFINITY)
+		chain = firer.Beam(src, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
 	..()
 
 /obj/item/projectile/hook/on_hit(atom/target)
@@ -252,7 +252,7 @@
 /obj/effect/immortality_talisman
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/can_destroy = FALSE
 
 /obj/effect/immortality_talisman/attackby()
@@ -355,7 +355,7 @@
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	keytype = /obj/item/weapon/oar
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/vehicle/lavaboat/relaymove(mob/user, direction)
 	var/turf/next = get_step(src, direction)
@@ -375,7 +375,7 @@
 	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
 	w_class = 3
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /datum/crafting_recipe/oar
 	name = "goliath bone oar"
@@ -534,8 +534,15 @@
 	var/turf/T = get_turf(src)
 	var/list/contents = T.GetAllContents()
 	var/mob/dead/observer/current_spirits = list()
-	for(var/mob/dead/observer/G in dead_mob_list)
-		if(G.orbiting in contents)
+	var/list/orbiters = list()
+	for(var/thing in contents)
+		var/atom/A = thing
+		if (A.orbiters)
+			orbiters += A.orbiters
+
+	for(var/thing in orbiters)
+		if (isobserver(thing))
+			var/mob/dead/observer/G = thing
 			ghost_counter++
 			G.invisibility = 0
 			current_spirits |= G
@@ -579,7 +586,7 @@
 	switch(random)
 		if(1)
 			user << "<span class='danger'>Your appearence morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>"
-			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body")
+			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
 			H.eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
 		if(2)
@@ -626,7 +633,7 @@
 	w_class = 4
 	force = 25
 	damtype = BURN
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hitsound = 'sound/weapons/sear.ogg'
 	var/turf_type = /turf/open/floor/plating/lava/smooth
 	var/transform_string = "lava"
@@ -704,15 +711,13 @@
 
 /obj/structure/closet/crate/necropolis/bubblegum/New()
 	..()
-	var/loot = rand(1,4)
+	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
-			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
-		if(2)
 			new /obj/item/mayhem(src)
-		if(3)
+		if(2)
 			new /obj/item/blood_contract(src)
-		if(4)
+		if(3)
 			new /obj/item/weapon/gun/magic/staff/spellblade(src)
 
 /obj/item/blood_contract

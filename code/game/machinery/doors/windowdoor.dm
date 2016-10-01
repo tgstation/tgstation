@@ -5,6 +5,7 @@
 	icon_state = "left"
 	var/base_state = "left"
 	var/health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 	visible = 0
 	flags = ON_BORDER
 	opacity = 0
@@ -346,17 +347,12 @@
 
 /obj/machinery/door/window/clockwork/New(loc, set_dir)
 	..()
-	if(set_dir)
-		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
-		setDir(set_dir)
-		E.setDir(set_dir)
-		made_glow = TRUE
-	debris += new/obj/item/stack/sheet/brass(src)
+	debris += new/obj/item/stack/sheet/brass(src, 2)
 	change_construction_value(2)
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()

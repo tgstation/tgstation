@@ -189,7 +189,7 @@ Class Procs:
 	updateUsrDialog()
 	update_icon()
 
-/obj/machinery/blob_act(obj/effect/blob/B)
+/obj/machinery/blob_act(obj/structure/blob/B)
 	if(density && prob(75))
 		qdel(src)
 
@@ -343,15 +343,18 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
-		deconstruction()
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
-		transfer_fingerprints_to(M)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			I.loc = loc
-		qdel(src)
+		deconstruct()
+
+/obj/machinery/proc/deconstruct()
+	on_deconstruction()
+	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
+	transfer_fingerprints_to(M)
+	M.state = 2
+	M.icon_state = "box_1"
+	for(var/obj/item/I in component_parts)
+		I.forceMove(loc)
+	qdel(src)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
@@ -433,11 +436,11 @@ Class Procs:
 		display_parts(user)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
-/obj/machinery/proc/construction()
+/obj/machinery/proc/on_construction()
 	return
 
 //called on deconstruction before the final deletion
-/obj/machinery/proc/deconstruction()
+/obj/machinery/proc/on_deconstruction()
 	return
 
 /obj/machinery/allow_drop()
@@ -459,9 +462,9 @@ Class Procs:
 	. = 1
 
 
-/obj/machinery/tesla_act(var/power)
+/obj/machinery/tesla_act(power, explosive = FALSE)
 	..()
-	if(prob(85))
+	if(prob(85) && explosive)
 		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
 		emp_act(2)

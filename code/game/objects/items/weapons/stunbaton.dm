@@ -26,7 +26,8 @@
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
 	..()
-	if(status && prob(throw_hit_chance))
+	//Only mob/living types have stun handling
+	if(status && prob(throw_hit_chance) && isliving(hit_atom))
 		baton_stun(hit_atom)
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
@@ -113,6 +114,7 @@
 	if(isrobot(M))
 		..()
 		return
+
 	if(!isliving(M))
 		return
 

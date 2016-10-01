@@ -104,10 +104,14 @@
 /mob/living/simple_animal/Life()
 	if(..()) //alive
 		if(!ckey)
-			handle_automated_movement()
-			handle_automated_action()
-			handle_automated_speech()
-		return 1
+			if(stat != DEAD)
+				handle_automated_movement()
+			if(stat != DEAD)
+				handle_automated_action()
+			if(stat != DEAD)
+				handle_automated_speech()
+		if(stat != DEAD)
+			return 1
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -301,7 +305,11 @@
 	if(del_on_death)
 		ghostize()
 		stat = DEAD
+		//Prevent infinite loops if the mob Destroy() is overriden in such
+		//a manner as to cause a call to death() again
+		del_on_death = FALSE
 		qdel(src)
+		return
 	else
 		health = 0
 		icon_state = icon_dead
@@ -364,7 +372,7 @@
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
 
-		else if(istype(M, /mob/living) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			alone = 0
 			continue
 	if(alone && partner && children < 3)

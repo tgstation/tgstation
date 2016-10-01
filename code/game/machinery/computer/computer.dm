@@ -19,10 +19,19 @@
 	..(location)
 	if(C && istype(C))
 		circuit = C
-	else if(circuit)
+	//Some machines, oldcode arcades mostly, new themselves, so circuit
+	//can already be an instance of a type and trying to new that will
+	//cause a runtime
+	else if(ispath(circuit))
 		circuit = new circuit(null)
 	power_change()
 	update_icon()
+
+/obj/machinery/computer/Destroy()
+	if(circuit)
+		qdel(circuit)
+		circuit = null
+	return ..()
 
 /obj/machinery/computer/initialize()
 	power_change()
@@ -99,7 +108,7 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"
 		if(do_after(user, 20/I.toolspeed, target = src))
-			deconstruction()
+			deconstruct()
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.circuit = circuit
 			A.anchored = 1
@@ -139,3 +148,27 @@
 			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 			stat |= BROKEN
 			update_icon()
+
+
+
+/obj/machinery/computer/deconstruct(mob/user)
+	on_deconstruction()
+	var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+	A.circuit = circuit
+	A.anchored = 1
+	circuit = null
+	for(var/obj/C in src)
+		C.forceMove(loc)
+	if(stat & BROKEN)
+		if(user)
+			user << "<span class='notice'>The broken glass falls out.</span>"
+		new /obj/item/weapon/shard(src.loc)
+		new /obj/item/weapon/shard(src.loc)
+		A.state = 3
+		A.icon_state = "3"
+	else
+		if(user)
+			user << "<span class='notice'>You disconnect the monitor.</span>"
+		A.state = 4
+		A.icon_state = "4"
+	qdel(src)

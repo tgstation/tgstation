@@ -152,7 +152,6 @@
 	icon_state = "chronofield"
 	density = 0
 	anchored = 1
-	unacidable = 1
 	blend_mode = BLEND_MULTIPLY
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
@@ -255,7 +254,7 @@
 /obj/effect/chrono_field/ex_act()
 	return
 
-/obj/effect/chrono_field/blob_act(obj/effect/blob/B)
+/obj/effect/chrono_field/blob_act(obj/structure/blob/B)
 	return
 
 

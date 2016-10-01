@@ -138,8 +138,8 @@
 	active_icon = "mending_motor"
 	inactive_icon = "mending_motor_inactive"
 	construction_value = 20
-	max_health = 150
-	health = 150
+	max_health = 125
+	health = 125
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 5, \
 	/obj/item/clockwork/alloy_shards/medium = 1, \
@@ -439,45 +439,13 @@
 			CHECK_TICK
 
 		for(var/M in atoms_to_test)
-			if(istype(M, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/A = M
-				if(A.cell && A.cell.charge)
-					successfulprocess = TRUE
-					playsound(A, "sparks", 50, 1)
-					flick("apc-spark", A)
-					power_drained += min(A.cell.charge, 100)
-					A.cell.charge = max(0, A.cell.charge - 100)
-					if(!A.cell.charge && !A.shorted)
-						A.shorted = 1
-						A.visible_message("<span class='warning'>The [A.name]'s screen blurs with static.</span>")
-					A.update()
-					A.update_icon()
-			else if(istype(M, /obj/machinery/power/smes))
-				var/obj/machinery/power/smes/S = M
-				if(S.charge)
-					successfulprocess = TRUE
-					power_drained += min(S.charge, 500)
-					S.charge = max(0, S.charge - 50000) //SMES units contain too much power and could run an interdiction lens basically forever, or provide power forever
-					if(!S.charge && !S.panel_open)
-						S.panel_open = TRUE
-						S.icon_state = "[initial(S.icon_state)]-o"
-						var/datum/effect_system/spark_spread/spks = new(get_turf(S))
-						spks.set_up(10, 0, get_turf(S))
-						spks.start()
-						S.visible_message("<span class='warning'>[S]'s panel flies open with a flurry of sparks.</span>")
-					S.update_icon()
-			else if(isrobot(M))
-				var/mob/living/silicon/robot/R = M
-				if(!is_servant_of_ratvar(R) && R.cell && R.cell.charge)
-					successfulprocess = TRUE
-					power_drained += min(R.cell.charge, 200)
-					R.cell.charge = max(0, R.cell.charge - 200)
-					R << "<span class='warning'>ERROR: Power loss detected!</span>"
-					var/datum/effect_system/spark_spread/spks = new(get_turf(R))
-					spks.set_up(3, 0, get_turf(R))
-					spks.start()
+			var/atom/movable/A = M
+			power_drained += A.power_drain(TRUE)
 
 			CHECK_TICK
+
+		if(power_drained)
+			successfulprocess = TRUE
 
 		if(!return_power(power_drained) || power_drained < 50) //failed to return power drained or too little power to return
 			successfulprocess = FALSE
@@ -537,8 +505,8 @@
 	active_icon = "obelisk"
 	inactive_icon = "obelisk_inactive"
 	construction_value = 20
-	max_health = 200
-	health = 200
+	max_health = 150
+	health = 150
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
 	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)

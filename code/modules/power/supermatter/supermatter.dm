@@ -236,12 +236,13 @@
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
 	for(var/mob/M in mob_list)
-		M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
-		M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
+		if(M.z == z)
+			M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
+			M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
 	qdel(src)
 	return(gain)
 
-/obj/machinery/power/supermatter_shard/blob_act(obj/effect/blob/B)
+/obj/machinery/power/supermatter_shard/blob_act(obj/structure/blob/B)
 	if(B && !istype(loc, /turf/open/space)) //does nothing in space
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 		damage += B.health * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
@@ -298,7 +299,7 @@
 
 
 /obj/machinery/power/supermatter_shard/Bumped(atom/AM as mob|obj)
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
@@ -314,13 +315,13 @@
 
 
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		var/mob/living/user = AM
 		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		power += 200
-	else if(isobj(AM) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
+	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 

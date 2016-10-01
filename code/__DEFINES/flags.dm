@@ -35,6 +35,7 @@
 //turf-only flags
 #define NOJAUNT		1
 #define UNUSED_TRANSIT_TURF 2
+#define CAN_BE_DIRTY 4 //If a turf can be made dirty at roundstart. This is also used in areas.
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -72,6 +73,7 @@
 #define EASYDISMEMBER	20
 #define EASYLIMBATTACHMENT 21
 #define TOXINLOVER		22
+#define DIGITIGRADE		23	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 
 #define FLYING	65536
 

@@ -25,14 +25,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	anchored = 1
 	density = 1
 	use_power = 0
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	var/sprite_number = 0
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
-/obj/machinery/gravity_generator/blob_act(obj/effect/blob/B)
+/obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
 	if(prob(20))
 		set_broken()
 
@@ -372,7 +372,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	for(var/mob/M in mob_list)
 		if(M.z != z)
 			continue
-		M.update_gravity(M.has_gravity())
+		M.update_gravity(M.mob_has_gravity())
 		if(M.client)
 			shake_camera(M, 15, 1)
 			M.playsound_local(T, 'sound/effects/alert.ogg', 100, 1, 0.5)

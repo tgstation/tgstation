@@ -166,6 +166,7 @@ Difficulty: Medium
 		addtimer(src, "fire_wall", 0, FALSE, d)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
+	var/list/hit_things = list(src)
 	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
 	var/turf/previousturf = get_turf(src)
@@ -175,10 +176,10 @@ Difficulty: Medium
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)
 		J.hotspot_expose(700,50,1)
-		for(var/mob/living/L in J)
-			if(L != src)
-				L.adjustFireLoss(20)
-				L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+		for(var/mob/living/L in J.contents - hit_things)
+			L.adjustFireLoss(20)
+			L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+			hit_things += L
 		previousturf = J
 		sleep(1)
 
@@ -228,8 +229,11 @@ Difficulty: Medium
 		else
 			L.adjustBruteLoss(75)
 			if(L && !qdeleted(L)) // Some mobs are deleted on death
-				var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-				L.throw_at_fast(throwtarget)
+				var/throw_dir = get_dir(src, L)
+				if(L.loc == loc)
+					throw_dir = pick(alldirs)
+				var/throwtarget = get_edge_target_turf(src, throw_dir)
+				L.throw_at_fast(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
 
 	for(var/mob/M in range(7, src))
@@ -243,7 +247,7 @@ Difficulty: Medium
 	if(!istype(A))
 		return
 	if(swoop_cooldown >= world.time)
-		src << "<span class='warning'>You need to wait 20 seconds between swoop attacks!M/span>"
+		src << "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>"
 		return
 	swoop_attack(1, A)
 
@@ -257,6 +261,7 @@ Difficulty: Medium
 	name = "lesser ash drake"
 	maxHealth = 300
 	health = 300
+	faction = list("neutral")
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)

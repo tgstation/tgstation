@@ -6,6 +6,7 @@
 	nodamage = 0
 	flag = "bullet"
 	hitsound_wall = "ricochet"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
@@ -249,7 +250,7 @@
 	breakthings = FALSE
 
 /obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0)
-	if((blocked != 100) && istype(target, /mob/living))
+	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.Sleeping(20)
 	return ..()

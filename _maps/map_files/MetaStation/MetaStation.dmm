@@ -3923,7 +3923,7 @@
 	pixel_y = 0
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/fancy,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -47246,7 +47246,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bDx" = (
-/obj/machinery/portable_atmospherics/canister/bz,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/plasteel/bot,
 /area/atmos)
 "bDy" = (
@@ -62702,6 +62702,8 @@
 	network = list("SS13","Medbay")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/limbgrower,
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
@@ -73092,7 +73094,6 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_y = 32
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/warning{
 	dir = 5
 	},
@@ -75352,7 +75353,6 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/warning{
 	dir = 10
 	},
@@ -90628,8 +90628,9 @@
 	},
 /area/shuttle/transport)
 "cZx" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/abandoned)
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/turf/open/floor/plasteel/bot,
+/area/atmos)
 "cZy" = (
 /turf/open/floor/plating/warnplate{
 	dir = 1
@@ -93289,8 +93290,7 @@
 /area/toxins/xenobiology)
 "deG" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	unacidable = 1
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
@@ -134566,7 +134566,7 @@ bEn
 bHQ
 bJz
 bKT
-bDx
+cZx
 atw
 cXn
 bRz

@@ -48,7 +48,7 @@
 	item_state = "buckler"
 	materials = list()
 	origin_tech = "materials=1;combat=3;biotech=2"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	block_chance = 30
 
 /obj/item/weapon/shield/energy

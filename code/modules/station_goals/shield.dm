@@ -14,7 +14,7 @@
 
 
 /datum/station_goal/station_shield/on_report()
-	//Unlock 
+	//Unlock
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/misc/shield_sat]
 	P.special_enabled = TRUE
 
@@ -69,7 +69,7 @@
 
 /obj/machinery/computer/sat_control/ui_data()
 	var/list/data = list()
-	
+
 	data["satellites"] = list()
 	for(var/obj/machinery/satellite/S in machines)
 		data["satellites"] += list(list(
@@ -78,8 +78,8 @@
 			"mode" = S.mode
 		))
 	data["notice"] = notice
-	
-	
+
+
 	var/datum/station_goal/station_shield/G = locate() in ticker.mode.station_goals
 	if(G)
 		data["meteor_shield"] = 1
@@ -116,7 +116,7 @@
 	active = !active
 	if(active)
 		animate(src, pixel_y = 2, time = 10, loop = -1)
-		anchored = 1	
+		anchored = 1
 	else
 		animate(src, pixel_y = 0, time = 10)
 		anchored = 0
@@ -136,7 +136,7 @@
 	desc = "Meteor Point Defense Satellite"
 	mode = "M-SHIELD"
 	var/kill_range = 10
-	
+
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))
 		if(!istype(T, /turf/open/space))

@@ -7384,6 +7384,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "apI" = (
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "apJ" = (
@@ -37871,7 +37872,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bFJ" = (
@@ -38435,13 +38435,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGS" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-/obj/item/weapon/reagent_containers/syringe,
+/obj/machinery/limbgrower,
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGT" = (
@@ -38550,7 +38545,6 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bHf" = (
@@ -39185,6 +39179,18 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/morphine{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_x = 6;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIn" = (
@@ -41814,7 +41820,6 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNQ" = (
@@ -46882,8 +46887,7 @@
 /area/toxins/xenobiology)
 "bZc" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	unacidable = 1
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/misc_lab)
@@ -90902,7 +90906,7 @@ bJs
 bKy
 bLM
 bLM
-alX
+bNQ
 bOV
 bQk
 bRt
@@ -105287,7 +105291,7 @@ bAG
 bCa
 bDc
 bEo
-apI
+bIC
 bEc
 bIB
 bIB
@@ -106060,7 +106064,7 @@ bDc
 bEo
 bDf
 bEb
-bIC
+bGY
 bGY
 bJN
 bMp

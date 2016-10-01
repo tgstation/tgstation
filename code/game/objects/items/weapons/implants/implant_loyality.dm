@@ -32,7 +32,7 @@
 			return -1
 		if(target.mind in ticker.mode.revolutionaries)
 			ticker.mode.remove_revolutionary(target.mind)
-		if((target.mind in ticker.mode.cult) || (target.mind in ticker.mode.blue_deity_prophets|ticker.mode.red_deity_prophets|ticker.mode.red_deity_followers|ticker.mode.blue_deity_followers))
+		if(target.mind in ticker.mode.cult)
 			target << "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>"
 		else
 			target << "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>"
@@ -45,7 +45,6 @@
 			target << "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>"
 		return 1
 	return 0
-
 
 /obj/item/weapon/implanter/mindshield
 	name = "implanter (mindshield)"

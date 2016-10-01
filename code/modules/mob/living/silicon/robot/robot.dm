@@ -608,12 +608,12 @@
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return 1
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_held_item()) || check_access(H.wear_id))
 			return 1
-	else if(istype(M, /mob/living/carbon/monkey))
+	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
 		if(istype(george.get_active_held_item(), /obj/item))
@@ -683,90 +683,6 @@
 
 	update_fire()
 
-/mob/living/silicon/robot/proc/installed_modules()
-	if(!module)
-		pick_module()
-		return
-	var/dat = {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
-	<BR>
-	<BR>
-	<B>Activated Modules</B>
-	<BR>
-	<table border='0'>
-	<tr><td>Module 1:</td><td>[module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]</td></tr>
-	<tr><td>Module 2:</td><td>[module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]</td></tr>
-	<tr><td>Module 3:</td><td>[module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]</td></tr>
-	</table><BR>
-	<B>Installed Modules</B><BR><BR>
-
-	<table border='0'>"}
-
-	for (var/obj in module.modules)
-		if (!obj)
-			dat += text("<tr><td><B>Resource depleted</B></td></tr>")
-		else if(activated(obj))
-			dat += text("<tr><td>[obj]</td><td><B>Activated</B></td></tr>")
-		else
-			dat += text("<tr><td>[obj]</td><td><A HREF=?src=\ref[src];act=\ref[obj]>Activate</A></td></tr>")
-	if (emagged)
-		if(activated(module.emag))
-			dat += text("<tr><td>[module.emag]</td><td><B>Activated</B></td></tr>")
-		else
-			dat += text("<tr><td>[module.emag]</td><td><A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A></td></tr>")
-	dat += "</table>"
-/*
-		if(activated(obj))
-			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
-		else
-			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
-*/
-	var/datum/browser/popup = new(src, "robotmod", "Modules")
-	popup.set_content(dat)
-	popup.open()
-
-/mob/living/silicon/robot/Topic(href, href_list)
-	..()
-	if(usr && (src != usr))
-		return
-
-	if (href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
-		unset_machine()
-		src << browse(null, t1)
-		return
-
-	if (href_list["showalerts"])
-		robot_alerts()
-		return
-
-	if (href_list["mod"])
-		var/obj/item/O = locate(href_list["mod"])
-		if (O)
-			O.attack_self(src)
-
-	if (href_list["act"])
-		var/obj/item/O = locate(href_list["act"])
-		activate_module(O)
-		installed_modules()
-
-	if (href_list["deact"])
-		var/obj/item/O = locate(href_list["deact"])
-		if(activated(O))
-			if(module_state_1 == O)
-				module_state_1 = null
-				contents -= O
-			else if(module_state_2 == O)
-				module_state_2 = null
-				contents -= O
-			else if(module_state_3 == O)
-				module_state_3 = null
-				contents -= O
-			else
-				src << "Module isn't activated."
-		else
-			src << "Module isn't activated"
-		installed_modules()
-
 #define BORG_CAMERA_BUFFER 30
 /mob/living/silicon/robot/Move(a, b, flag)
 	var/oldLoc = src.loc
@@ -785,13 +701,12 @@
 			if(isturf(tile))
 				tile.clean_blood()
 				for(var/A in tile)
-					if(istype(A, /obj/effect))
-						if(is_cleanable(A))
-							qdel(A)
+					if(is_cleanable(A))
+						qdel(A)
 					else if(istype(A, /obj/item))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
-					else if(istype(A, /mob/living/carbon/human))
+					else if(ishuman(A))
 						var/mob/living/carbon/human/cleaned_human = A
 						if(cleaned_human.lying)
 							if(cleaned_human.head)

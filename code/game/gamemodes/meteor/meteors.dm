@@ -140,7 +140,7 @@
 	//first bust whatever is in the turf
 	for(var/atom/A in T)
 		if(A != src)
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				A.visible_message("<span class='warning'>[src] slams into [A].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
 			A.ex_act(hitpwr)
 

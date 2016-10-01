@@ -499,8 +499,8 @@ var/next_mob_id = 0
 		return
 
 	var/mob/mob_eye = creatures[eye_name]
-
-	if(client && mob_eye)
+	//Istype so we filter out points of interest that are not mobs
+	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
 		if(isobserver(src))
 			src.client.screen = list()
@@ -714,7 +714,7 @@ var/next_mob_id = 0
 			layer = initial(layer)
 	update_transform()
 	update_action_buttons_icon()
-	if(istype(src, /mob/living))
+	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))
 			canmove = 0

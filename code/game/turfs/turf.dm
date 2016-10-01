@@ -13,7 +13,7 @@
 
 	var/PathNode/PNode = null //associated PathNode in the A* algorithm
 
-	flags = 0
+	flags = CAN_BE_DIRTY
 
 	var/list/proximity_checkers = list()
 

@@ -568,7 +568,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
 	w_class = 3
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 10, acid = 50)
 
 /obj/item/clothing/head/helmet/clockwork/equipped(mob/living/user, slot)
 	..()
@@ -599,7 +599,8 @@
 	icon_state = "clockwork_cuirass"
 	w_class = 4
 	body_parts_covered = CHEST|GROIN|LEGS
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
 /obj/item/clothing/suit/armor/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
@@ -635,10 +636,10 @@
 	strip_delay = 50
 	put_on_delay = 30
 	body_parts_covered = ARMS
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 20, acid = 20)
 
 /obj/item/clothing/gloves/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -670,7 +671,7 @@
 	w_class = 3
 	strip_delay = 50
 	put_on_delay = 30
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -772,13 +773,13 @@
 		impale_cooldown = world.time + initial(impale_cooldown)
 		attack_cooldown = world.time + initial(attack_cooldown)
 		if(target)
-			PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
+			PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(get_turf(target), get_dir(user, target)))
 			target.Stun(2)
 			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
-				var/obj/effect/overlay/temp/bloodsplatter/B = PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(T, get_dir(target, user)))
+				var/obj/effect/overlay/temp/dir_setting/bloodsplatter/B = PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(T, get_dir(target, user)))
 				playsound(T, 'sound/misc/splort.ogg', 200, 1)
 				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
 				if(target.stat != CONSCIOUS)
@@ -981,7 +982,7 @@
 	name = "meme component"
 	desc = "A piece of a famous meme."
 	clockwork_desc = null
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/component_id //What the component is identified as
 	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
 	var/list/servant_of_ratvar_messages = list("ayy" = FALSE, "lmao" = TRUE) //Fluff, shown to servants of Ratvar on a low chance, if associated value is TRUE, will automatically apply ratvarian
@@ -1124,7 +1125,7 @@
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
 	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
 	icon_state = "alloy_shards"
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/randomsinglesprite = FALSE
 	var/randomspritemax = 2
 

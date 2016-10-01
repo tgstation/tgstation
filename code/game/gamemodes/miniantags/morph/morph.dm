@@ -121,8 +121,6 @@
 	form = null
 	alpha = initial(alpha)
 
-	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
-
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
 					"<span class='notice'>You reform to your normal body.</span>")
 	name = initial(name)
