@@ -18,6 +18,7 @@
 	if(isabductor(target))
 		return
 	close_machine(target)
+	. = TRUE
 
 /obj/machinery/abductor/experiment/attack_hand(mob/user)
 	if(..())

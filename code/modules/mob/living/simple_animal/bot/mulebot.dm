@@ -334,6 +334,7 @@ var/global/mulebot_count = 0
 	if(!istype(AM))
 		return
 
+	. = TRUE
 	load(AM)
 
 // called to load a crate
@@ -738,7 +739,7 @@ var/global/mulebot_count = 0
 		unload(get_dir(loc, A))
 	else
 		..()
-		
+
 /mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/device/paicard/card)
 	if(..())
 		visible_message("[src] safeties are locked on.")
