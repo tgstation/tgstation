@@ -77,7 +77,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		if(A.level == 3)
 			return 1
 
-/turf/open/floor/blob_act(obj/effect/blob/B)
+/turf/open/floor/blob_act(obj/structure/blob/B)
 	return
 
 /turf/open/floor/proc/update_icon()

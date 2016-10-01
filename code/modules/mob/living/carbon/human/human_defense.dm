@@ -3,11 +3,12 @@
 	var/organnum = 0
 
 	if(def_zone)
+		//Can pass in a bodypart or zone, so lets shortcut that handling
 		if(islimb(def_zone))
 			return checkarmor(def_zone, type)
-		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(def_zone))
+		//Note the check_zone call, this changes UI target values to bodypart zones
+		var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 		return checkarmor(affecting, type)
-		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/X in bodyparts)
@@ -378,7 +379,7 @@
 					break
 	..()
 
-/mob/living/carbon/human/blob_act(obj/effect/blob/B)
+/mob/living/carbon/human/blob_act(obj/structure/blob/B)
 	if(stat == DEAD)
 		return
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
@@ -448,7 +449,7 @@
 	if(head)
 		head_clothes = head
 	if(head_clothes)
-		if(!head_clothes.unacidable)
+		if(!(head_clothes.resistance_flags & UNACIDABLE))
 			head_clothes.acid_act(acidpwr, acid_volume_left)
 			acid_volume_left = max(acid_volume_left - acid_decay, 0) //We remove some of the acid volume.
 			update_inv_glasses()
@@ -470,7 +471,7 @@
 	if(wear_suit)
 		chest_clothes = wear_suit
 	if(chest_clothes)
-		if(!chest_clothes.unacidable)
+		if(!(chest_clothes.resistance_flags & UNACIDABLE))
 			chest_clothes.acid_act(acidpwr, acid_volume_left)
 			acid_volume_left = max(acid_volume_left - acid_decay, 0)
 			update_inv_w_uniform()
@@ -500,7 +501,7 @@
 	if(wear_suit && (wear_suit.body_parts_covered & HANDS) || wear_suit && (wear_suit.body_parts_covered & ARMS))
 		arm_clothes = wear_suit
 	if(arm_clothes)
-		if(!arm_clothes.unacidable)
+		if(!(arm_clothes.resistance_flags & UNACIDABLE))
 			arm_clothes.acid_act(acidpwr, acid_volume_left)
 			acid_volume_left = max(acid_volume_left - acid_decay, 0)
 			update_inv_gloves()
@@ -526,7 +527,7 @@
 	if(wear_suit && (wear_suit.body_parts_covered & FEET) || wear_suit && (wear_suit.body_parts_covered & LEGS))
 		leg_clothes = wear_suit
 	if(leg_clothes)
-		if(!leg_clothes.unacidable)
+		if(!(leg_clothes.resistance_flags & UNACIDABLE))
 			leg_clothes.acid_act(acidpwr, acid_volume_left)
 			acid_volume_left = max(acid_volume_left - acid_decay, 0)
 			update_inv_shoes()

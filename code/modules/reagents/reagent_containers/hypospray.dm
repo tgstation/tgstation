@@ -128,11 +128,11 @@
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/survival
 	name = "survival medipen"
-	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. "
+	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
 	icon_state = "stimpen"
-	volume = 82
-	amount_per_transfer_from_this = 82
-	list_reagents = list("nanites" = 2, "salbutamol" = 10, "coffee" = 20, "leporazine" = 20, "tricordrazine" = 15, "epinephrine" = 10, "omnizine" = 5, "stimulants" = 10)
+	volume = 57
+	amount_per_transfer_from_this = 57
+	list_reagents = list("salbutamol" = 10, "leporazine" = 15, "tricordrazine" = 15, "epinephrine" = 10, "miningnanites" = 2, "omnizine" = 5)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/species_mutator
 	name = "species mutator medipen"

@@ -506,7 +506,7 @@
 
 
 /obj/item/weapon/storage/emp_act(severity)
-	if(!istype(loc, /mob/living))
+	if(!isliving(loc))
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 	..()

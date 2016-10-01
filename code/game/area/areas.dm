@@ -23,6 +23,7 @@
 									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
 									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+	flags = CAN_BE_DIRTY
 
 /area/New()
 	icon_state = ""
@@ -323,7 +324,7 @@
 
 
 /area/Entered(A)
-	if(!istype(A,/mob/living))
+	if(!isliving(A))
 		return
 
 	var/mob/living/L = A

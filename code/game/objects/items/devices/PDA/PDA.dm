@@ -50,6 +50,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/image/photo = null //Scanned photo
 
+	var/list/contained_item = list(/obj/item/weapon/pen, /obj/item/toy/crayon, /obj/item/weapon/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 
 /obj/item/device/pda/pickup(mob/user)
 	..()
@@ -74,7 +76,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
-	new /obj/item/weapon/pen(src)
+	inserted_item =	new /obj/item/weapon/pen(src)
 
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -314,10 +316,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
-					var/turf/T = loc
-					if(ismob(T))
-						T = T.loc
-					cartridge.loc = T
+					U.put_in_hands(cartridge)
+					U << "<span class='notice'>You remove [cartridge] from [src].</span>"
 					scanmode = 0
 					if (cartridge.radio)
 						cartridge.radio.hostpda = null
@@ -704,18 +704,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	if (usr.canUseTopic(src))
-		var/obj/item/weapon/pen/O = locate() in src
-		if(O)
-			if (istype(loc, /mob))
+		if(inserted_item)
+			if(ismob(loc))
 				var/mob/M = loc
-				if(M.get_active_held_item() == null)
-					M.put_in_hands(O)
-					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
-					return
-			O.loc = get_turf(src)
+				M.put_in_hands(inserted_item)
+			else
+				inserted_item.forceMove(loc)
+			usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
+			inserted_item = null
 		else
 			usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
-
 /obj/item/device/pda/proc/id_check(mob/user, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
 		if (id)
@@ -775,15 +773,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
 		updateUsrDialog()
-	else if(istype(C, /obj/item/weapon/pen))
-		var/obj/item/weapon/pen/O = locate() in src
-		if(O)
-			user << "<span class='warning'>There is already a pen in \the [src]!</span>"
+	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
+		if(inserted_item)
+			user << "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>"
 		else
 			if(!user.unEquip(C))
 				return
-			C.loc = src
+			C.forceMove(src)
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+			inserted_item = C
 	else if(istype(C, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
@@ -885,6 +883,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
+	if(inserted_item)
+		qdel(inserted_item)
+		inserted_item = null
 	return ..()
 
 //AI verb and proc for sending PDA messages.

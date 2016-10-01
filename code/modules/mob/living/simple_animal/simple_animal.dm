@@ -372,7 +372,7 @@
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
 
-		else if(istype(M, /mob/living) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			alone = 0
 			continue
 	if(alone && partner && children < 3)

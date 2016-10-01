@@ -78,7 +78,7 @@
 	density = 0
 	anchored = 1
 	invisibility = 60
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
 /obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow

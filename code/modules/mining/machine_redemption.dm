@@ -126,7 +126,7 @@
 
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/deconstruction()
+/obj/machinery/mineral/ore_redemption/on_deconstruction()
 	empty_content()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)

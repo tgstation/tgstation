@@ -119,7 +119,7 @@
 		if(3)
 			take_damage(50, BRUTE, 0)
 
-/obj/structure/alien/blob_act(obj/effect/blob/B)
+/obj/structure/alien/blob_act(obj/structure/blob/B)
 	take_damage(50, BRUTE, 0)
 
 /obj/structure/alien/resin/hitby(atom/movable/AM)

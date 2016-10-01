@@ -158,7 +158,7 @@
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 	return
 
-/obj/mecha/blob_act(obj/effect/blob/B)
+/obj/mecha/blob_act(obj/structure/blob/B)
 	take_directional_damage(30, "brute", get_dir(src, B))
 
 /obj/mecha/emp_act(severity)
@@ -301,7 +301,7 @@
 	var/deflection = deflect_chance
 	var/dam_coeff = 1
 	for(var/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/B in equipment)
-		if(B.attack_react(user))
+		if(B.attack_react())
 			deflection *= B.deflect_coeff
 			dam_coeff *= B.damage_coeff
 			break

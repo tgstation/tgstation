@@ -76,7 +76,9 @@
 
 /obj/structure/guncase/Topic(href, href_list)
 	if(href_list["retrieve"])
-		var/obj/item/O = locate(href_list["retrieve"])
+		var/obj/item/O = locate(href_list["retrieve"]) in contents
+		if(!O || !istype(O))
+			return
 		if(!usr.canUseTopic(src))
 			return
 		if(ishuman(usr))

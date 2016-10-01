@@ -164,7 +164,7 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-	if(C.dna.features["legs"] == "Digitigrade Legs")
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
 		specflags += DIGITIGRADE
 	if(DIGITIGRADE in specflags)
 		C.Digitigrade_Leg_Swap(FALSE)
@@ -384,10 +384,13 @@
 		not_digitigrade = FALSE
 		if(!(DIGITIGRADE in specflags)) //Someone cut off a digitigrade leg and tacked it on
 			specflags += DIGITIGRADE
-		if(O.use_digitigrade == FULL_DIGITIGRADE && (H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) || (H.wear_suit.body_parts_covered & LEGS)) || (H.w_uniform && (H.w_uniform.body_parts_covered & LEGS))))
+		var/should_be_squished = FALSE
+		if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) || (H.wear_suit.body_parts_covered & LEGS)) || (H.w_uniform && (H.w_uniform.body_parts_covered & LEGS)))
+			should_be_squished = TRUE
+		if(O.use_digitigrade == FULL_DIGITIGRADE && should_be_squished)
 			O.use_digitigrade = SQUISHED_DIGITIGRADE
 			update_needed = TRUE
-		else if(O.use_digitigrade == SQUISHED_DIGITIGRADE)
+		else if(O.use_digitigrade == SQUISHED_DIGITIGRADE && !should_be_squished)
 			O.use_digitigrade = FULL_DIGITIGRADE
 			update_needed = TRUE
 	if(update_needed)
@@ -1094,13 +1097,15 @@
 					user.add_mob_blood(H)
 
 		switch(hit_area)
-			if("head")	//Harder to score a stun but if you do it lasts a bit longer
+			if("head")
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
-										"<span class='userdanger'>[H] has been knocked unconscious!</span>")
-						H.apply_effect(20, PARALYZE, armor_block)
-					if(prob(I.force + ((100 - H.health)/2)) && H != user && I.damtype == BRUTE)
+						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
+										"<span class='userdanger'>[H] has been knocked senseless!</span>")
+						H.confused = max(H.confused, 20)
+						H.adjust_blurriness(10)
+
+					if(prob(I.force + ((100 - H.health)/2)) && H != user)
 						ticker.mode.remove_revolutionary(H.mind)
 
 				if(bloody)	//Apply blood
@@ -1114,11 +1119,12 @@
 						H.glasses.add_mob_blood(H)
 						H.update_inv_glasses()
 
-			if("chest")	//Easier to score a stun but lasts less time
-				if(H.stat == CONSCIOUS && I.force && prob(I.force + 10))
-					H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
+			if("chest")
+				if(H.stat == CONSCIOUS && armor_block < 50)
+					if(prob(I.force))
+						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
-					H.apply_effect(5, WEAKEN, armor_block)
+						H.apply_effect(3, WEAKEN, armor_block)
 
 				if(bloody)
 					if(H.wear_suit)

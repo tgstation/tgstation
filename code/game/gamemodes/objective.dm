@@ -323,7 +323,7 @@
 	var/area/A = SSshuttle.emergency.areaInstance
 
 	for(var/mob/living/player in player_list)
-		if(get_area(player) == A && player.mind && player.stat != DEAD && istype(player, /mob/living/carbon/human))
+		if(get_area(player) == A && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
 				return 0

@@ -5,6 +5,7 @@
 	icon_state = "lattice"
 	density = 0
 	anchored = 1
+	armor = list(melee = 100, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	layer = LATTICE_LAYER //under pipes
 	var/obj/item/stack/rods/stored
 	canSmoothWith = list(/obj/structure/lattice,
@@ -26,7 +27,7 @@
 	stored = null
 	return ..()
 
-/obj/structure/lattice/blob_act(obj/effect/blob/B)
+/obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
 /obj/structure/lattice/ex_act(severity, target)

@@ -18,12 +18,14 @@ var/global/datum/getrev/revdata = new()
 	commit = head_log.group[4]
 	world.log << "Running /tg/ revision:"
 	world.log << "[date]"
-	world.log << commit
 	if(testmerge.len)
+		world.log << commit
 		for(var/line in testmerge)
 			if(line)
 				world.log << "Test merge active of PR #[line]"
 		world.log << "Based off master commit [parentcommit]"
+	else
+		world.log << parentcommit
 	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it
 
 /client/verb/showrevinfo()
@@ -31,7 +33,7 @@ var/global/datum/getrev/revdata = new()
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
-	if(revdata.commit)
+	if(revdata.parentcommit)
 		src << "<b>Server revision compiled on:</b> [revdata.date]"
 		if(revdata.testmerge.len)
 			for(var/line in revdata.testmerge)
@@ -39,7 +41,7 @@ var/global/datum/getrev/revdata = new()
 					src << "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a>"
 			src << "Based off master commit <a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
 		else
-			src << "<a href='[config.githuburl]/commit/[revdata.commit]'>[revdata.commit]</a>"
+			src << "<a href='[config.githuburl]/commit/[revdata.parentcommit]'>[revdata.parentcommit]</a>"
 	else
 		src << "Revision unknown"
 	src << "<b>Current Infomational Settings:</b>"

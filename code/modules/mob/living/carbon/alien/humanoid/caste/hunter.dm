@@ -65,7 +65,7 @@
 		return ..()
 
 	if(A)
-		if(istype(A, /mob/living))
+		if(isliving(A))
 			var/mob/living/L = A
 			var/blocked = 0
 			if(ishuman(A))

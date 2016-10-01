@@ -5,6 +5,7 @@
 	icon_state = "left"
 	var/base_state = "left"
 	var/health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 	visible = 0
 	flags = ON_BORDER
 	opacity = 0

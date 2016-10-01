@@ -12792,7 +12792,6 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/escape{
 	tag = "icon-escape (NORTH)";
 	dir = 1
@@ -67446,7 +67445,6 @@
 	dir = 4;
 	network = list("SS13","Sci")
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cEh" = (
@@ -67983,7 +67981,6 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cFh" = (
@@ -73556,8 +73553,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "Xenolab";
-	name = "test chamber blast door";
-	unacidable = 1
+	name = "test chamber blast door"
 	},
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
@@ -73674,8 +73670,7 @@
 /area/toxins/xenobiology)
 "cPV" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	unacidable = 1
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/xenobiology)

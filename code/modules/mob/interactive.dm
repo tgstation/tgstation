@@ -1216,27 +1216,25 @@
 
 	if(shouldTryHeal == 1)
 		for(var/mob/living/carbon/human/C in nearby)
-			if(istype(C,/mob/living/carbon/human)) //I haven't the foggiest clue why this is turning up non-carbons but sure here whatever
-				if(C.health <= 75)
-					if(get_dist(src,C) <= 2)
-						src.say("Wait, [C], let me heal you!")
-						M.attack(C,src)
-						sleep(25)
-					else
-						tryWalk(get_turf(C))
+			if(C.health <= 75)
+				if(get_dist(src,C) <= 2)
+					src.say("Wait, [C], let me heal you!")
+					M.attack(C,src)
+					sleep(25)
+				else
+					tryWalk(get_turf(C))
 	else if(shouldTryHeal == 2)
 		if(HPS)
 			if(HPS.reagents.total_volume <= 0)
 				HPS.reagents.add_reagent("tricordrazine",30)
 			for(var/mob/living/carbon/human/C in nearby)
-				if(istype(C,/mob/living/carbon/human))
-					if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
-						if(get_dist(src,C) <= 2)
-							src.say("Wait, [C], let me heal you!")
-							HPS.attack(C,src)
-							sleep(25)
-						else
-							tryWalk(get_turf(C))
+				if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
+					if(get_dist(src,C) <= 2)
+						src.say("Wait, [C], let me heal you!")
+						HPS.attack(C,src)
+						sleep(25)
+					else
+						tryWalk(get_turf(C))
 
 
 /mob/living/carbon/human/interactive/proc/dojanitor(obj)
@@ -1514,7 +1512,7 @@
 
 	if((TARGET && (doing & FIGHTING))) // this is a redundancy check
 		var/mob/living/M = TARGET
-		if(istype(M,/mob/living))
+		if(isliving(M))
 			if(M.health > 1)
 				//THROWING OBJECTS
 				for(var/A in allContents)

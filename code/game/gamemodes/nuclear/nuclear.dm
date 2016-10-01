@@ -166,7 +166,7 @@
 
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
-		if (istype(operative_mind.current,/mob/living/carbon/human) && (operative_mind.current.stat!=2))
+		if(ishuman(operative_mind.current) && (operative_mind.current.stat!=2))
 			return 0
 	return 1
 

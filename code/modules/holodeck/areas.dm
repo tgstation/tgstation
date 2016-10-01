@@ -3,6 +3,7 @@
 	icon_state = "Holodeck"
 	luminosity = 1
 	lighting_use_dynamic = 0
+	flags = 0
 
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = 0 // if true, program goes on emag list
