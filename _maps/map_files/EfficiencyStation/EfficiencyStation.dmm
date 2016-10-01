@@ -11881,8 +11881,7 @@
 /area/toxins/misc_lab)
 "awm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	unacidable = 1
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/misc_lab)
@@ -24259,7 +24258,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Monitoring"
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/caution/corner{
 	dir = 1
 	},
@@ -84341,7 +84339,7 @@ aze
 aAw
 aBE
 aCO
-ckj
+aFp
 aFn
 aGo
 aCO

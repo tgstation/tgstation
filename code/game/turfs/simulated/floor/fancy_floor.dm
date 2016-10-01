@@ -29,9 +29,11 @@
 
 /turf/open/floor/grass
 	name = "grass patch"
+	desc = "You can't tell if this is real grass or just cheap plastic imitation."
 	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
+	flags = NONE
 	var/ore_type = /obj/item/weapon/ore/glass
 
 /turf/open/floor/grass/New()
@@ -43,7 +45,8 @@
 	if(istype(C, /obj/item/weapon/shovel) && params)
 		new ore_type(src)
 		new ore_type(src) //Make some sand if you shovel grass
-		user << "<span class='notice'>You shovel [src].</span>"
+		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You uproot [src].</span>")
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
 	if(..())
 		return
@@ -83,13 +86,15 @@
 
 
 /turf/open/floor/carpet
-	name = "Carpet"
+	name = "carpet"
+	desc = "Soft velvet carpeting. Feels good between your toes."
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
+	flags = NONE
 
 /turf/open/floor/carpet/New()
 	..()

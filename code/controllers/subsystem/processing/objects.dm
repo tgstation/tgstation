@@ -56,7 +56,7 @@ var/datum/subsystem/objects/SSobj
 			return
 
 	for(var/obj/burningobj in SSobj.burning)
-		if(burningobj && (burningobj.burn_state == ON_FIRE))
+		if(burningobj && (burningobj.resistance_flags & ON_FIRE))
 			if(burningobj.burn_world_time < world.time)
 				burningobj.burn()
 		else

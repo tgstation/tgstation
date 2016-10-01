@@ -15,7 +15,7 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
-/obj/structure/blob_act(obj/effect/blob/B)
+/obj/structure/blob_act(obj/structure/blob/B)
 	if(density && prob(50))
 		qdel(src)
 

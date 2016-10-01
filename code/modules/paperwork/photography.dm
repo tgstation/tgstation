@@ -17,7 +17,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 /*
  * Photo
@@ -28,7 +28,7 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 5
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
@@ -94,7 +94,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 /*
  * Camera
@@ -210,8 +210,10 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
-		if(istype(A, /mob/living) && A:lying)
-			img.Turn(A:lying)
+		if(isliving(A))
+			var/mob/living/L = A
+			if(L.lying)
+				img.Turn(L.lying)
 
 		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
 		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
@@ -247,7 +249,7 @@
 
 		var/list/holding = list()
 
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 
 			for(var/obj/item/I in L.held_items)

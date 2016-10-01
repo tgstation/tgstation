@@ -30,7 +30,7 @@
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)
-	var/obj/effect/blob/core/BC = new/obj/effect/blob/core(pick(blobstart), new_blob.client, new_rate)
+	var/obj/structure/blob/core/BC = new/obj/structure/blob/core(pick(blobstart), new_blob.client, new_rate)
 	BC.overmind.blob_points = min(20 + player_list.len, BC.overmind.max_blob_points)
 	spawned_mobs += BC.overmind
 	message_admins("[BC.overmind.key] has been made into a blob overmind by an event.")

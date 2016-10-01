@@ -26,7 +26,7 @@
 	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 	icon_state = "latexballon_bursted"
 	item_state = "lgloves"
-	if(istype(src.loc, /mob/living))
+	if(isliving(loc))
 		var/mob/living/user = src.loc
 		user.update_inv_hands()
 	loc.assume_air(air_contents)

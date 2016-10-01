@@ -10,7 +10,7 @@
 	throw_speed = 2
 	throw_range = 2
 	w_class = 1
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	var/value = 1
 
 /obj/item/stack/spacecash/c10

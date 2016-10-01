@@ -434,7 +434,7 @@
 
 /turf/closed/mineral/Bumped(AM as mob|obj)
 	..()
-	if(istype(AM,/mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		var/obj/item/I = H.is_holding_item_of_type(/obj/item/weapon/pickaxe)
 		if(I)
@@ -662,6 +662,10 @@
 	return 1
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
+	//Make sure the item is still there after our sleep
+	if(!AM || qdeleted(AM))
+		return
+
 	var/turf/T = locate(drop_x, drop_y, drop_z)
 	if(T)
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
@@ -697,6 +701,9 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
+	//Make sure the item is still there after our sleep
+	if(!AM || qdeleted(AM))
+		return
 	AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
 	into the enveloping dark.</span>")
 	if(isliving(AM))

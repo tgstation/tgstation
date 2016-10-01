@@ -30,7 +30,9 @@
 	if(PRG.available_on_syndinet && !computer.emagged)
 		return 0
 
-	if(!computer || !computer.hard_drive || !computer.hard_drive.can_store_file(PRG))
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+
+	if(!computer || !hard_drive || !hard_drive.can_store_file(PRG))
 		return 0
 
 	ui_header = "downloader_running.gif"
@@ -59,7 +61,8 @@
 	if(!downloaded_file)
 		return
 	generate_network_log("Completed download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
-	if(!computer || !computer.hard_drive || !computer.hard_drive.store_file(downloaded_file))
+	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+	if(!computer || !hard_drive || !hard_drive.store_file(downloaded_file))
 		// The download failed
 		downloaderror = "I/O ERROR - Unable to save file. Check whether you have enough free space on your hard drive and whether your hard drive is properly connected. If the issue persists contact your system administrator for assistance."
 	downloaded_file = null
@@ -129,8 +132,9 @@
 		data["downloadspeed"] = download_netspeed
 		data["downloadcompletion"] = round(download_completion, 0.1)
 	else // No download running, pick file.
-		data["disk_size"] = my_computer.hard_drive.max_capacity
-		data["disk_used"] = my_computer.hard_drive.used_capacity
+		var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = my_computer.all_components[MC_HDD]
+		data["disk_size"] = hard_drive.max_capacity
+		data["disk_used"] = hard_drive.used_capacity
 		var/list/all_entries[0]
 		for(var/A in ntnet_global.available_station_software)
 			var/datum/computer_file/program/P = A

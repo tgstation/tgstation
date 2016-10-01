@@ -121,6 +121,7 @@
 	desc = "A sharpened bone. The bare mimimum in survival."
 	force = 15
 	throwforce = 15
+	materials = list()
 
 /obj/item/weapon/kitchen/knife/combat/cyborg
 	name = "cyborg knife"

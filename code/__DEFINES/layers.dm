@@ -50,6 +50,7 @@
 #define LIGHTING_LAYER 15
 
 //HUD layer defines
+#define COLORED_VISION_LAYER 17.8
 #define FLASH_LAYER 17.9
 #define FULLSCREEN_LAYER 18
 #define UI_DAMAGE_LAYER 18.1

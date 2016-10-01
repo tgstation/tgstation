@@ -38,13 +38,16 @@
 		AddSpell(new spell(null))
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
-	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
-	if (src.health < src.maxHealth)
+	var/t_He = they_pronoun(TRUE)
+	var/plurality = (gender == PLURAL)
+	var/msg = "<span class='cult'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	msg += "[desc]\n"
+	if(health < maxHealth)
 		msg += "<span class='warning'>"
 		if (src.health >= src.maxHealth/2)
-			msg += "It looks slightly dented.\n"
+			msg += "[t_He] look[plurality ? "":"s"] slightly dented.\n"
 		else
-			msg += "<b>It looks severely dented!</b>\n"
+			msg += "<b>[t_He] look[plurality ? "":"s"] severely dented!</b>\n"
 		msg += "</span>"
 	msg += "*---------*</span>"
 
@@ -59,11 +62,11 @@
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
 						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 			else
-				M.visible_message("<span class='danger'>[M] repairs some of its own dents.</span>", \
+				M.visible_message("<span class='danger'>[M] repairs some of [their_pronoun()] own dents.</span>", \
 						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
 		else
 			if(src != M)
-				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
+				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [they_pronoun()] [get_has()] none!</span>"
 			else
 				M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 	else if(src != M)
