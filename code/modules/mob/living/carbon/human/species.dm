@@ -101,6 +101,8 @@
 		limbs_id = id
 	..()
 
+/datum/species/proc/IsAdvancedToolUser()
+	. = 1
 
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
