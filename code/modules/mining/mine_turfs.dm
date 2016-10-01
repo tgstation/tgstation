@@ -73,7 +73,7 @@
 		var/path = pickweight(mineralSpawnChanceList)
 		var/turf/T = ChangeTurf(path)
 
-		if(T && istype(T, /turf/closed/mineral))
+		if(T && ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			M.mineralAmt = rand(1, 5)
 			M.environment_type = src.environment_type
@@ -358,7 +358,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
-		if(!NT || istype(NT, /turf/open/space) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
+		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
 			sanity = 0
 			break
 	if(!sanity)
@@ -400,7 +400,7 @@
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
-			if(istype(src, /turf/closed/mineral))
+			if(ismineralturf(src))
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
@@ -715,7 +715,7 @@
 	for(var/i in 1 to 5)
 		AM.pixel_y--
 		sleep(2)
-	if(isrobot(AM))
+	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
 	qdel(AM)

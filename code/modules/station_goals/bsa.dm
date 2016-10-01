@@ -99,7 +99,7 @@
 			x_max = x - 6
 
 	for(var/turf/T in block(locate(x_min,y-1,z),locate(x_max,y+1,z)))
-		if(T.density || istype(T, /turf/open/space))
+		if(T.density || isspaceturf(T))
 			return FALSE
 	return TRUE
 

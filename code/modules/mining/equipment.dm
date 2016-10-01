@@ -242,7 +242,7 @@
 
 /obj/effect/resonance/proc/burst(turf/T)
 	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-	if(istype(T, /turf/closed/mineral))
+	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled(creator)
 	for(var/mob/living/L in T)
@@ -522,7 +522,7 @@
 				L.underlays += I
 				hammer_synced.marked_image = I
 		var/target_turf = get_turf(target)
-		if(istype(target_turf, /turf/closed/mineral))
+		if(ismineralturf(target_turf))
 			var/turf/closed/mineral/M = target_turf
 			PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, M)
 			M.gets_drilled(firer)

@@ -143,7 +143,7 @@
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
 		A.blob_act(src)
-	if(istype(loc, /turf/closed/wall))
+	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
@@ -174,7 +174,7 @@
 		return 0
 	var/make_blob = TRUE //can we make a blob?
 
-	if(istype(T, /turf/open/space) && !(locate(/obj/structure/lattice) in T) && prob(80))
+	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 

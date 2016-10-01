@@ -126,7 +126,7 @@
 		OpenDoor(target)
 	else
 		var/turf/T = get_turf(target)
-		if(istype(T,/turf/closed) && !istype(T, /turf/closed/indestructible))
+		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
 			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)

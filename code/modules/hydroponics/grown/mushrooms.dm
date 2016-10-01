@@ -168,7 +168,7 @@
 	origin_tech = "biotech=4;programming=5"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/open/space))
+	if(isspaceturf(user.loc))
 		return
 	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
 	M.maxHealth += round(seed.endurance / 4)
@@ -241,7 +241,7 @@
 	origin_tech = "biotech=4;plasmatech=6"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/open/space))
+	if(isspaceturf(user.loc))
 		return
 	var/obj/structure/glowshroom/planted = new effect_path(user.loc)
 	planted.delay = planted.delay - seed.production * 100 //So the delay goes DOWN with better stats instead of up. :I

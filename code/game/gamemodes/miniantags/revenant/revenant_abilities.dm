@@ -248,7 +248,7 @@
 	if(T.flags & NOJAUNT)
 		T.flags -= NOJAUNT
 		PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && istype(T, /turf/open/floor) && prob(15))
+	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
 		if(floor.intact && floor.floor_tile)
 			PoolOrNew(floor.floor_tile, floor)

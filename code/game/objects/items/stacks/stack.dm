@@ -78,12 +78,6 @@
 		var/title as text
 		var/can_build = 1
 		can_build = can_build && (max_multiplier>0)
-		/*
-		if (R.one_per_turf)
-			can_build = can_build && !(locate(R.result_type) in usr.loc)
-		if (R.on_floor)
-			can_build = can_build && istype(usr.loc, /turf/open/floor)
-		*/
 		if (R.res_amount>1)
 			title+= "[R.res_amount]x [R.title]\s"
 		else
@@ -168,7 +162,7 @@
 	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
 		usr << "<span class='warning'>There is another [R.title] here!</span>"
 		return 0
-	if (R.on_floor && !istype(usr.loc, /turf/open/floor))
+	if(R.on_floor && !isfloorturf(usr.loc))
 		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 		return 0
 	return 1

@@ -45,7 +45,7 @@
 			qdel(src)
 		return
 
-	if(isrobot(user) || isalien(user))
+	if(iscyborg(user) || isalien(user))
 		return
 	if(istype(I, /obj/item/weapon/extinguisher))
 		if(!has_extinguisher && opened)
@@ -62,7 +62,7 @@
 
 
 /obj/structure/extinguisher_cabinet/attack_hand(mob/user)
-	if(isrobot(user) || isalien(user))
+	if(iscyborg(user) || isalien(user))
 		return
 	if(has_extinguisher)
 		user.put_in_hands(has_extinguisher)

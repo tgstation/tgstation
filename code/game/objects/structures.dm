@@ -66,7 +66,7 @@
 			return
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_held_item() != O))
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		return
 	if(!user.drop_item())
 		return

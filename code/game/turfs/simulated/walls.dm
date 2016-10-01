@@ -179,7 +179,7 @@
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			if(do_after(user, slicing_duration/W.toolspeed, target = src))
-				if( !istype(src, /turf/closed/wall) || !user || !WT || !WT.isOn() || !T )
+				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
 					return 1
 				if( user.loc == T && user.get_active_held_item() == WT )
 					user << "<span class='notice'>You remove the outer plating.</span>"
@@ -189,7 +189,7 @@
 		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*0.6, target = src))  // plasma cutter is faster than welding tool
-			if( !istype(src, /turf/closed/wall) || !user || !W || !T )
+			if(!iswallturf(src) || !user || !W || !T)
 				return 1
 			if( user.loc == T && user.get_active_held_item() == W )
 				user << "<span class='notice'>You remove the outer plating.</span>"
@@ -202,7 +202,7 @@
 /turf/closed/wall/proc/try_destroy(obj/item/weapon/W, mob/user, turf/T)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if( !istype(src, /turf/closed/wall) || !user || !W || !T )
+		if(!iswallturf(src) || !user || !W || !T)
 			return 1
 		if( user.loc == T && user.get_active_held_item() == W )
 			D.playDigSound()

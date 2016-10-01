@@ -66,7 +66,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		return
 
 	if(istype(I, /obj/item/seeds))
