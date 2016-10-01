@@ -116,7 +116,7 @@
 				return
 	return ..()
 
-/obj/machinery/light_construct/blob_act(obj/effect/blob/B)
+/obj/machinery/light_construct/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
 
@@ -529,7 +529,7 @@
 				if(prob(25))
 					broken()
 
-/obj/machinery/light/blob_act(obj/effect/blob/B)
+/obj/machinery/light/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		broken()
 		qdel(src)

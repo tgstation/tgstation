@@ -9,6 +9,7 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = MAX_SHOE_BLOODINESS
+	mergeable_decal = 0
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
 	set waitfor = 0
@@ -24,9 +25,6 @@
 				s.start()
 		if (!step_to(src, get_step(src, direction), 0))
 			break
-
-/obj/effect/decal/cleanable/robot_debris/replace_decal(obj/effect/decal/cleanable/C)
-	return //robot debris can stack, so gibspawner can work properly
 
 /obj/effect/decal/cleanable/robot_debris/ex_act()
 	return

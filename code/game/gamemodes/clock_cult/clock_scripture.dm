@@ -206,14 +206,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/carbon/C in hearers(7, invoker))
-		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && C.get_num_legs()) //you have legs right
+		var/number_legs = C.get_num_legs()
+		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && number_legs) //you have legs right
 			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
 			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
 			if(C.m_intent != "walk")
 				if(!iscultist(C))
-					C << "<span class='warning'>Your legs shiver with pain!</span>"
+					C << "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>"
 				else //Cultists take extra burn damage
-					C << "<span class='warning'>Your legs burn with pain!</span>"
+					C << "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>"
 					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
 					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
 				C.m_intent = "walk"
@@ -300,7 +301,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/i in 1 to healseverity)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
 	invoker << "<span class='brass'>You bathe [L] in Inath-neq's power!</span>"
-	L.visible_message("<span class='warning'>A blue light washes over [L], mending their bruises and burns!</span>", \
+	L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.their_pronoun()] bruises and burns!</span>", \
 	"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
 	playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
 	return 1
@@ -824,7 +825,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return create_marauder()
 
 /datum/clockwork_scripture/memory_allocation/proc/create_marauder()
-	invoker.visible_message("<span class='warning'>A yellow tendril appears from [invoker]'s [slab.name] and impales itself in their forehead!</span>", \
+	invoker.visible_message("<span class='warning'>A yellow tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.their_pronoun()] forehead!</span>", \
 	"<span class='heavy_brass'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
 	invoker.notransform = TRUE //Vulnerable during the process
 	slab.busy = "Thought modification in process"
@@ -1054,7 +1055,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_sevtug/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
-		invoker << "<span class='sevtug'>\"[text2ratvar("Is it really so hard - even for a simpleton like you - to grasp the concept-of waiting?")]\"</span>\n\
+		invoker << "<span class='sevtug'>\"[text2ratvar("Is it really so hard - even for a simpleton like you - to grasp the concept of waiting?")]\"</span>\n\
 		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>"
 		return 0
 	if(!slab.no_cost && ratvar_awakens)

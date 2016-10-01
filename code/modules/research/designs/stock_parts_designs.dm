@@ -32,6 +32,7 @@
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/weapon/stock_parts/capacitor
 	category = list("Stock Parts","Machinery","initial")
+	lathe_time_factor = 0.2
 
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
@@ -42,6 +43,7 @@
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
 	build_path = /obj/item/weapon/stock_parts/capacitor/adv
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/super_capacitor
 	name = "Super Capacitor"
@@ -52,6 +54,7 @@
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 100)
 	build_path = /obj/item/weapon/stock_parts/capacitor/super
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/quadratic_capacitor
 	name = "Quadratic Capacitor"
@@ -62,6 +65,7 @@
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_DIAMOND = 100)
 	build_path = /obj/item/weapon/stock_parts/capacitor/quadratic
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 //Scanning modules
 /datum/design/basic_scanning
@@ -73,6 +77,7 @@
 	materials = list(MAT_METAL = 100, MAT_GLASS = 50)
 	build_path = /obj/item/weapon/stock_parts/scanning_module
 	category = list("Stock Parts","Machinery","initial")
+	lathe_time_factor = 0.2
 
 /datum/design/adv_scanning
 	name = "Advanced Scanning Module"
@@ -83,6 +88,7 @@
 	materials = list(MAT_METAL = 150, MAT_GLASS = 100)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/adv
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/phasic_scanning
 	name = "Phasic Scanning Module"
@@ -93,6 +99,7 @@
 	materials = list(MAT_METAL = 200, MAT_GLASS = 150, MAT_SILVER = 60)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/phasic
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/triphasic_scanning
 	name = "Triphasic Scanning Module"
@@ -103,6 +110,7 @@
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_DIAMOND = 60)
 	build_path = /obj/item/weapon/stock_parts/scanning_module/triphasic
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 //Maipulators
 /datum/design/micro_mani
@@ -114,6 +122,7 @@
 	materials = list(MAT_METAL = 100)
 	build_path = /obj/item/weapon/stock_parts/manipulator
 	category = list("Stock Parts","Machinery","initial")
+	lathe_time_factor = 0.2
 
 /datum/design/nano_mani
 	name = "Nano Manipulator"
@@ -124,6 +133,7 @@
 	materials = list(MAT_METAL = 150)
 	build_path = /obj/item/weapon/stock_parts/manipulator/nano
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/pico_mani
 	name = "Pico Manipulator"
@@ -134,6 +144,7 @@
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/weapon/stock_parts/manipulator/pico
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/femto_mani
 	name = "Femto Manipulator"
@@ -144,6 +155,7 @@
 	materials = list(MAT_METAL = 200, MAT_DIAMOND = 30, MAT_TITANIUM = 30)
 	build_path = /obj/item/weapon/stock_parts/manipulator/femto
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 //Micro-lasers
 /datum/design/basic_micro_laser
@@ -155,6 +167,7 @@
 	materials = list(MAT_METAL = 100, MAT_GLASS = 50)
 	build_path = /obj/item/weapon/stock_parts/micro_laser
 	category = list("Stock Parts","Machinery","initial")
+	lathe_time_factor = 0.2
 
 /datum/design/high_micro_laser
 	name = "High-Power Micro-Laser"
@@ -165,6 +178,7 @@
 	materials = list(MAT_METAL = 150, MAT_GLASS = 100)
 	build_path = /obj/item/weapon/stock_parts/micro_laser/high
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/ultra_micro_laser
 	name = "Ultra-High-Power Micro-Laser"
@@ -175,6 +189,7 @@
 	materials = list(MAT_METAL = 200, MAT_GLASS = 150, MAT_URANIUM = 60)
 	build_path = /obj/item/weapon/stock_parts/micro_laser/ultra
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/quadultra_micro_laser
 	name = "Quad-Ultra Micro-Laser"
@@ -185,6 +200,7 @@
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_URANIUM = 100, MAT_DIAMOND = 60)
 	build_path = /obj/item/weapon/stock_parts/micro_laser/quadultra
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/basic_matter_bin
 	name = "Basic Matter Bin"
@@ -195,6 +211,7 @@
 	materials = list(MAT_METAL = 100)
 	build_path = /obj/item/weapon/stock_parts/matter_bin
 	category = list("Stock Parts","Machinery","initial")
+	lathe_time_factor = 0.2
 
 /datum/design/adv_matter_bin
 	name = "Advanced Matter Bin"
@@ -205,6 +222,7 @@
 	materials = list(MAT_METAL = 150)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/adv
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/super_matter_bin
 	name = "Super Matter Bin"
@@ -215,6 +233,7 @@
 	materials = list(MAT_METAL = 200)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/super
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 /datum/design/bluespace_matter_bin
 	name = "Bluespace Matter Bin"
@@ -225,6 +244,7 @@
 	materials = list(MAT_METAL = 250, MAT_DIAMOND = 200)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/bluespace
 	category = list("Stock Parts")
+	lathe_time_factor = 0.2
 
 //T-Comms devices
 /datum/design/subspace_ansible

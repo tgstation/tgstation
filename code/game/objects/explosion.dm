@@ -99,7 +99,7 @@
 				if(W.reinf && W.fulltile)
 					cached_exp_block[T] += W.explosion_block
 
-			for(var/obj/effect/blob/B in T)
+			for(var/obj/structure/blob/B in T)
 				cached_exp_block[T] += B.explosion_block
 			CHECK_TICK
 
@@ -226,7 +226,7 @@
 					if(W.explosion_block && W.fulltile)
 						dist += W.explosion_block
 
-				for(var/obj/effect/blob/B in T)
+				for(var/obj/structure/blob/B in T)
 					dist += B.explosion_block
 
 		if(dist < dev)

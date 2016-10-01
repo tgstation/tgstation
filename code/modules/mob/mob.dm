@@ -714,7 +714,7 @@ var/next_mob_id = 0
 			layer = initial(layer)
 	update_transform()
 	update_action_buttons_icon()
-	if(istype(src, /mob/living))
+	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))
 			canmove = 0

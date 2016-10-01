@@ -68,7 +68,7 @@
 		return
 	return ..()
 
-/obj/machinery/chem_heater/deconstruction()
+/obj/machinery/chem_heater/on_deconstruction()
 	eject_beaker()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \

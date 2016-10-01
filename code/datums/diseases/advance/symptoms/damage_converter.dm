@@ -87,7 +87,7 @@ Bonus
 
 	var/get_damage = rand(1, 2)
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
 		var/list/parts = H.get_damaged_bodyparts(1,1)

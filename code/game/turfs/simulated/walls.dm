@@ -80,7 +80,7 @@
 		..()
 	return
 
-/turf/closed/wall/blob_act(obj/effect/blob/B)
+/turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		dismantle_wall()
 

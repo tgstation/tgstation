@@ -53,7 +53,7 @@
 		if(3)
 			take_damage(rand(40,80), BRUTE, 0)
 
-/obj/structure/table/blob_act(obj/effect/blob/B)
+/obj/structure/table/blob_act(obj/structure/blob/B)
 	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/table/narsie_act()
@@ -315,7 +315,7 @@
 	frame = /obj/structure/table_frame/wood
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 20
 	canSmoothWith = list(/obj/structure/table/wood,
 		/obj/structure/table/wood/poker,
@@ -364,6 +364,7 @@
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
 	health = 200
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 0, acid = 70)
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/weldingtool))
@@ -476,7 +477,7 @@
 		if(3)
 			take_damage(rand(5,25), BRUTE, 0)
 
-/obj/structure/rack/blob_act(obj/effect/blob/B)
+/obj/structure/rack/blob_act(obj/structure/blob/B)
 	rack_destroy()
 
 

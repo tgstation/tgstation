@@ -25,14 +25,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	anchored = 1
 	density = 1
 	use_power = 0
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	var/sprite_number = 0
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
-/obj/machinery/gravity_generator/blob_act(obj/effect/blob/B)
+/obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
 	if(prob(20))
 		set_broken()
 

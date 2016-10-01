@@ -47,7 +47,7 @@
 
 	if(H.stat || H.restrained())
 		return
-	if(!istype(H, /mob/living/carbon/human))
+	if(!ishuman(H))
 		return 1
 
 	if(loc == H || (in_range(src, H) && istype(loc, /turf)))

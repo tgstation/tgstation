@@ -59,9 +59,9 @@ Difficulty: Hard
 	invisibility = 100
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount)
-	if(amount > 0 && prob(33))
+	if(amount > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
-		if(prob(33))
+		if(prob(40))
 			step(B, pick(cardinal))
 		else
 			B.setDir(pick(cardinal))
@@ -78,10 +78,10 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = Clamp(round((health/maxHealth) * 10), 5, 10)
+	move_to_delay = Clamp((health/maxHealth) * 10, 5, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
-	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
+	anger_modifier = Clamp(((maxHealth - health)/60),0,20)
 	if(charging)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -94,7 +94,7 @@ Difficulty: Hard
 			return
 
 	if(prob(90 - anger_modifier) || slaughterlings())
-		if(health > maxHealth * 0.5 || client)
+		if(health > maxHealth * 0.5)
 			addtimer(src, "charge", 0)
 		else
 			if(prob(70) || warped)
@@ -116,19 +116,16 @@ Difficulty: Hard
 	internal = new/obj/item/device/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
-	if(charging)
-		return
-	..()
+	if(!charging)
+		..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
-	if(charging)
-		return
-	..()
+	if(!charging)
+		..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
-	if(charging)
-		return
-	..()
+	if(!charging)
+		..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(charging)
@@ -164,12 +161,13 @@ Difficulty: Hard
 	throw_at(T, get_dist(src, T), 1, src, 0)
 	charging = 0
 	try_bloodattack()
-	Goto(target, move_to_delay, minimum_distance)
+	if(target)
+		Goto(target, move_to_delay, minimum_distance)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
-		if(istype(A, /turf) || istype(A, /obj) && A.density)
+		if(isturf(A) || isobj(A) && A.density)
 			A.ex_act(2)
 		DestroySurroundings()
 	..()
@@ -219,14 +217,15 @@ Difficulty: Hard
 		else
 			bloodsmack(target_two_turf, handedness)
 
-	var/list/pools = get_pools(get_turf(target_one), 0)
-	if(pools.len)
-		target_one_turf = get_turf(target_one)
-		if(target_one_turf)
-			if(target_one.stat != CONSCIOUS || prob(10))
-				bloodgrab(target_one_turf, !handedness)
-			else
-				bloodsmack(target_one_turf, !handedness)
+	if(target_one)
+		var/list/pools = get_pools(get_turf(target_one), 0)
+		if(pools.len)
+			target_one_turf = get_turf(target_one)
+			if(target_one_turf)
+				if(target_one.stat != CONSCIOUS || prob(10))
+					bloodgrab(target_one_turf, !handedness)
+				else
+					bloodsmack(target_one_turf, !handedness)
 
 	if(!target_two && target_one)
 		var/list/poolstwo = get_pools(get_turf(target_one), 0)

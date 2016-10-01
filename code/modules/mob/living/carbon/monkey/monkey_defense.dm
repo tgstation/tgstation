@@ -144,7 +144,7 @@
 
 /mob/living/carbon/monkey/acid_act(acidpwr, toxpwr, acid_volume)
 	if(wear_mask)
-		if(!wear_mask.unacidable)
+		if(!(wear_mask.resistance_flags & UNACIDABLE))
 			wear_mask.acid_act(acidpwr)
 			update_inv_wear_mask()
 		else

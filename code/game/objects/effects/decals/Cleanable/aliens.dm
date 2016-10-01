@@ -17,6 +17,18 @@
 	viruses = null
 	return ..()
 
+/obj/effect/decal/cleanable/xenoblood/xsplatter
+	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
+
+/obj/effect/decal/cleanable/xenoblood/xgibs
+	name = "xeno gibs"
+	desc = "Gnarly..."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "xgib1"
+	layer = LOW_OBJ_LAYER
+	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
+	mergeable_decal = 0
+
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
 	set waitfor = 0
 	var/direction = pick(directions)
@@ -30,20 +42,6 @@
 				ND.holder = b
 		if (!step_to(src, get_step(src, direction), 0))
 			break
-
-/obj/effect/decal/cleanable/xenoblood/xgibs/replace_decal(obj/effect/decal/cleanable/C)
-	return //gibs can stack, so gibspawner can work properly
-
-/obj/effect/decal/cleanable/xenoblood/xsplatter
-	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
-
-/obj/effect/decal/cleanable/xenoblood/xgibs
-	name = "xeno gibs"
-	desc = "Gnarly..."
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "xgib1"
-	layer = LOW_OBJ_LAYER
-	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
 	return

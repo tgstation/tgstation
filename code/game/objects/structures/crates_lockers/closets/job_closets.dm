@@ -93,6 +93,8 @@
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"
@@ -119,7 +121,7 @@
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 20
 
 /obj/structure/closet/wardrobe/red

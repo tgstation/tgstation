@@ -91,7 +91,7 @@
 
 	user << "<span class='notice'>It feels [descriptive].</span>"
 
-/obj/item/weapon/tank/blob_act(obj/effect/blob/B)
+/obj/item/weapon/tank/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		var/turf/location = get_turf(src)
 		if(!location)

@@ -277,7 +277,7 @@
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = 2
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 /*
@@ -638,7 +638,7 @@
 
 
 /obj/item/toy/cards
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 5
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
@@ -873,8 +873,8 @@
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
-	if(sourceobj.burn_state == FIRE_PROOF)
-		newobj.burn_state = FIRE_PROOF
+	if(sourceobj.resistance_flags & FIRE_PROOF)
+		newobj.resistance_flags |= FIRE_PROOF
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -991,7 +991,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 /*
  * Fake nuke
@@ -1051,7 +1051,7 @@
 	item_state = "carp_plushie"
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 //Attack mob
@@ -1161,7 +1161,7 @@
 	icon_state = "toy_mouse"
 	w_class = 2.0
 	var/cooldown = 0
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 /*
