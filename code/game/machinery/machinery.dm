@@ -99,6 +99,10 @@ Class Procs:
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
+	health = 200
+	maxhealth = 200
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -332,7 +336,7 @@ Class Procs:
 		SSacid.processing -= src
 		var/turf/T = get_turf(src)
 		var/remaining_acid = acid_level
-		deconstruct()
+		deconstruct(FALSE)
 		for(var/atom/movable/AM in T) //the acid that is still unused drops on the other things on the same turf.
 			if(AM == src)
 				continue

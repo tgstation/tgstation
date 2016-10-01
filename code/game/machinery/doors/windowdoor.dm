@@ -6,7 +6,9 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/base_state = "left"
 	health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
-	armor = list(melee = 20, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
+	maxhealth = 150
+	broken_health = 0
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 100)
 	visible = 0
 	flags = ON_BORDER
 	opacity = 0
@@ -169,9 +171,6 @@
 
 
 /obj/machinery/door/window/obj_destruction()
-		shatter()
-
-/obj/machinery/door/window/proc/shatter()
 	if(!(flags & NODECONSTRUCT))
 		for(var/obj/fragment in debris)
 			fragment.forceMove(get_turf(src))
@@ -188,7 +187,7 @@
 
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		take_damage(round(exposed_volume / 200), BURN, 0, 0)
+		take_damage(round(exposed_volume / 200), BURN, "fire", 0)
 	..()
 
 
@@ -289,13 +288,6 @@
 		if("deny")
 			flick("[src.base_state]deny", src)
 
-/obj/machinery/door/window/attack_hulk(mob/user) //phil235
-	..(user, 1)
-	user.visible_message("<span class='danger'>[user] smashes through the windoor!</span>", \
-						"<span class='danger'>You tear through the windoor!</span>")
-	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-	take_damage(health)
-
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"
@@ -303,6 +295,7 @@
 	base_state = "leftsecure"
 	var/id = null
 	health = 300 //Stronger doors for prison (regular window door health is 200)
+	maxhealth = 300
 	reinf = 1
 	explosion_block = 1
 

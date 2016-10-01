@@ -16,6 +16,9 @@ Pipelines + Other Objects -> Pipe network
 	power_channel = ENVIRON
 	on_blueprints = TRUE
 	layer = GAS_PIPE_LAYER //under wires
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 70)
+	health = 200
+	maxhealth = 200
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0
@@ -156,6 +159,13 @@ Pipelines + Other Objects -> Pipe network
 	else
 		return ..()
 
+/obj/machinery/atmospherics/attacked_by(obj/item/I, mob/user)
+	if(I.force < 10 && !(stat & BROKEN))
+		take_damage(0)
+	else
+		investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
+		add_fingerprint(user)
+		..()
 
 /obj/machinery/atmospherics/proc/can_unwrench(mob/user)
 	return can_unwrench
@@ -179,9 +189,11 @@ Pipelines + Other Objects -> Pipe network
 	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
 	user.throw_at(target, range, speed)
 
-/obj/machinery/atmospherics/deconstruct()
+/obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
 	if(can_unwrench)
-		stored.loc = src.loc
+		stored.forceMove(loc)
+		if(!disassembled)
+			stored.health = stored.maxhealth * 0.5
 		transfer_fingerprints_to(stored)
 		stored = null
 
@@ -288,3 +300,9 @@ Pipelines + Other Objects -> Pipe network
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
 	return 1
+
+/obj/machinery/atmospherics/fire_act(global_overlay=1)
+	var/turf/T = src.loc
+	if(T && T.intact && level == 1) //protected from fire when hidden behind a floor.
+		return
+	..()

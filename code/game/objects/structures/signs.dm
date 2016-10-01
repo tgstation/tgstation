@@ -4,17 +4,25 @@
 	opacity = 0
 	density = 0
 	layer = SIGN_LAYER
+	health = 100
+	maxhealth = 100
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+
 
 /obj/structure/sign/basic
 	name = "blank sign"
 	desc = "How can signs be real if our eyes aren't real?"
 	icon_state = "backing"
 
-/obj/structure/sign/ex_act(severity, target)
-	qdel(src)
-
-/obj/structure/sign/blob_act(obj/structure/blob/B)
-	qdel(src)
+/obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 80, 1)
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/wrench))
@@ -105,6 +113,8 @@
 /obj/structure/sign/map
 	name = "station map"
 	desc = "A framed picture of the station."
+	health = 500
+	maxhealth = 500
 
 /obj/structure/sign/map/left
 	icon_state = "map-left"

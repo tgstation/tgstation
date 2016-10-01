@@ -6,6 +6,7 @@
 
 /obj/structure/disposalholder
 	invisibility = INVISIBILITY_MAXIMUM
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
@@ -123,6 +124,8 @@
 /obj/structure/disposalholder/allow_drop()
 	return 1
 
+
+
 // Disposal pipes
 
 /obj/structure/disposalpipe
@@ -138,6 +141,7 @@
 	health = 200
 	maxhealth = 200
 	broken_health = 30
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
 	var/obj/structure/disposalconstruct/stored
@@ -180,22 +184,9 @@
 /obj/structure/disposalpipe/Destroy()
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
-		// holder was present
 		H.active = 0
 		var/turf/T = src.loc
-		if(T.density)
-			// deleting pipe is inside a dense turf (wall)
-			// this is unlikely, but just dump out everything into the turf in case
-
-			for(var/atom/movable/AM in H)
-				AM.forceMove(src.loc)
-				AM.pipe_eject(0)
-			qdel(H)
-			return ..()
-
-		// otherwise, do normal expel from turf
-		else
-			expel(H, T, 0)
+		expel(H, T, 0)
 	return ..()
 
 // returns the direction of the next pipe object, given the entrance dir
@@ -257,12 +248,14 @@
 /obj/structure/disposalpipe/proc/expel(obj/structure/disposalholder/H, turf/T, direction)
 
 	var/turf/target
+	var/eject_range = 5
+	var/turf/open/floor/floorturf
 
 	if(istype(T, /turf/open/floor)) //intact floor, pop the tile
-		var/turf/open/floor/myturf = T
-		if(myturf.floor_tile)
-			PoolOrNew(myturf.floor_tile, T)
-		myturf.make_plating()
+		floorturf = T
+		if(floorturf.floor_tile)
+			PoolOrNew(floorturf.floor_tile, T)
+		floorturf.make_plating()
 
 	if(direction)		// direction is specified
 		if(istype(T, /turf/open/space)) // if ended in space, then range is unlimited
@@ -270,28 +263,22 @@
 		else						// otherwise limit to 10 tiles
 			target = get_ranged_target_turf(T, direction, 10)
 
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-		if(H)
-			for(var/atom/movable/AM in H)
-				AM.forceMove(src.loc)
-				AM.pipe_eject(direction)
-				AM.throw_at_fast(target, 10, 1)
+		eject_range = 10
 
-	else	// no specified direction, so throw in random direction
+	else if(floorturf)
+		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
-		if(H)
-			for(var/atom/movable/AM in H)
-				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
-				AM.forceMove(src.loc)
-				AM.pipe_eject(0)
-				AM.throw_at_fast(target, 5, 1)
+	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+	for(var/atom/movable/AM in H)
+		AM.forceMove(src.loc)
+		AM.pipe_eject(direction)
+		if(target)
+			AM.throw_at_fast(target, eject_range, 1)
 	H.vent_gas(T)
 	qdel(H)
-	return
 
-
-// pipe affected by explosion //phil235
+/*
+// pipe affected by explosion //phil235 to test
 /obj/structure/disposalpipe/ex_act(severity, target)
 
 	//pass on ex_act to our contents before calling it on ourself
@@ -299,48 +286,49 @@
 	if(H)
 		H.contents_explosion(severity, target)
 	..()
+*/
 
+/obj/structure/disposalpipe/attacked_by(obj/item/I, mob/user)
+	if(I.force < 10)
+		take_damage(0)
+	else
+		..()
 
+/obj/structure/disposalpipe/fire_act(global_overlay=1)
+	var/turf/T = src.loc
+	if(T && T.intact) //protected from fire when hidden behind a floor.
+		return
+	..()
 
 /obj/structure/disposalpipe/obj_break()
-	expel_and_break(1)
+	for(var/D in cardinal)
+		if(D & dpdir)
+			var/obj/structure/disposalpipe/broken/P = new(src.loc)
+			P.setDir(D)
+	qdel(src)
 
-/obj/structure/disposalpipe/obj_destruction()
-	expel_and_break(0)
 
 
+
+/*
 // call to break the pipe
 // will expel any holder inside at the time
 // then delete the pipe
 // remains : set to leave broken pipe pieces in place
 /obj/structure/disposalpipe/proc/expel_and_break(remains)
-	if(remains)
-		for(var/D in cardinal)
-			if(D & dpdir)
-				var/obj/structure/disposalpipe/broken/P = new(src.loc)
-				P.setDir(D)
+
 	src.invisibility = INVISIBILITY_MAXIMUM	// make invisible (since we won't delete the pipe immediately)
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
 		// holder was present
 		H.active = 0
 		var/turf/T = src.loc
-		if(T.density)
-			// broken pipe is inside a dense turf (wall)
-			// this is unlikely, but just dump out everything into the turf in case
+		expel(H, T, 0)
+//phil235 test this
+//	spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
+//		qdel(src)
+*/
 
-			for(var/atom/movable/AM in H)
-				AM.forceMove(src.loc)
-				AM.pipe_eject(0)
-			qdel(H)
-			return
-
-		// otherwise, do normal expel from turf
-		if(H)
-			expel(H, T, 0)
-
-	spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
-		qdel(src)
 
 //attack by item
 //weldingtool: unfasten and convert to obj/disposalconstruct

@@ -15,8 +15,8 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	anchored = 1
-	health = 300
-	maxhealth = 300
+	health = 250
+	maxhealth = 250
 	broken_health = 100
 	use_power = 1
 	idle_power_usage = 2
@@ -53,10 +53,11 @@
 	else
 		icon_state = "fire0"
 
-		if(stat & NOPOWER)
-			return
 		if(stat & BROKEN)
 			icon_state = "firex"
+			return
+
+		if(stat & NOPOWER)
 			return
 
 		add_overlay("overlay_[security_level]")
@@ -215,8 +216,11 @@
 		stat |= BROKEN
 		update_icon()
 
-/obj/machinery/firealarm/obj_destruction(damage_flag)
+/obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal(loc, 1)
+	var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
+	if(!disassembled)
+		I.health = I.maxhealth * 0.5
 	new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 

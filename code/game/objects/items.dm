@@ -565,15 +565,3 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/hitby(atom/movable/AM)
 	return
-
-/obj/item/obj_shred()
-	var/atom/loca = get_turf(src)
-	if(isobj(loc))
-		loca = loc
-	empty_object_contents(0, loca)
-	spawn(1) //so the shreds aren't instantly deleted by the explosion
-		if(!qdeleted(src))
-			if(isturf(loca))
-				var/obj/effect/decal/cleanable/shreds/Shreds = new(loca)
-				Shreds.desc = "The sad remains of what used to be [name]."
-			qdel(src)

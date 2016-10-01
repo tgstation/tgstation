@@ -6,9 +6,10 @@
 	density = 1
 	anchored = 1
 	layer = HIGH_OBJ_LAYER
-	maxhealth = 200
-	health = 200
-	armor = list(melee = 20, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
+	maxhealth = 300
+	health = 300
+	broken_health = 100
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 70)
 	var/datum/gang/gang
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
@@ -29,7 +30,6 @@
 /obj/machinery/dominator/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		user << "<span class='danger'>It looks completely busted.</span>"
 		return
 
 	var/time
@@ -74,20 +74,27 @@
 /obj/machinery/dominator/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
 	if(.)
-		if(health > (maxhealth/2))
+		if(health/maxhealth > 0.66)
 			if(prob(damage_amount*2))
 				spark_system.start()
 		else if(!(stat & BROKEN))
 			spark_system.start()
+			cut_overlays()
 			add_overlay("damage")
 
-/obj/machinery/dominator/obj_destruction()
+/obj/machinery/dominator/obj_break(damage_flag)
 	if(!(stat & BROKEN))
 		set_broken()
 
-	if(health <= -100)
-		new /obj/item/stack/sheet/plasteel(src.loc)
-		qdel(src)
+/obj/machinery/dominator/obj_destruction(damage_flag)
+	if(!(stat & BROKEN))
+		set_broken()
+	new /obj/item/stack/sheet/plasteel(src.loc)
+	qdel(src)
+
+/obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
+	add_fingerprint(user)
+	..()
 
 /obj/machinery/dominator/proc/set_broken()
 	if(gang)
@@ -130,9 +137,6 @@
 /obj/machinery/dominator/emp_act(severity)
 	take_damage(100, BURN, "energy", 0)
 	..()
-
-/obj/machinery/dominator/blob_act(obj/structure/blob/B)
-	take_damage(110, BRUTE, "melee", 0)
 
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating || (stat & BROKEN))
@@ -183,8 +187,6 @@
 			if(G != gang)
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
 
-/obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
-	add_fingerprint(user)
-	..()
+
 
 

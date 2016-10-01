@@ -823,7 +823,7 @@ var/list/WALLITEMS = list(
 	)
 
 var/list/WALLITEMS_EXTERNAL = list(
-	/obj/machinery/camera, /obj/machinery/camera_assembly,
+	/obj/machinery/camera, /obj/structure/camera_assembly,
 	/obj/structure/light_construct, /obj/machinery/light)
 
 var/list/WALLITEMS_INVERSE = list(

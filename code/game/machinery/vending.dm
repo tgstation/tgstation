@@ -21,10 +21,10 @@
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
-	health = 400
-	maxhealth = 400
+	health = 300
+	maxhealth = 300
 	broken_health = 100
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
+	armor = list(melee = 20, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 70)
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/vend_delay = 10	//How long does it take to vend?
@@ -158,6 +158,7 @@
 
 /obj/machinery/vending/obj_break(damage_flag)
 	if(!(stat & BROKEN))
+		var/dump_amount = 0
 		for(var/datum/data/vending_product/R in product_records)
 			if(R.amount <= 0) //Try to use a record that actually has something to dump.
 				continue
@@ -167,9 +168,11 @@
 
 			while(R.amount>0)
 				var/obj/O = new dump_path(loc)
-				step(O, pick(alldirs)) 	//we only drop a third of all products and spread it
-				R.amount -= 3  			//around to not fill the turf with too many objects.
-			continue
+				step(O, pick(alldirs)) 	//we only drop 20% of the total of each products and spread it
+				R.amount -= 5  			//around to not fill the turf with too many objects.
+				dump_amount++
+			if(dump_amount > 15) //so we don't drop too many items (e.g. ClothesMate)
+				break
 		stat |= BROKEN
 		icon_state = "[initial(icon_state)]-broken"
 
@@ -953,7 +956,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/wrench = 5,/obj/item/device/analyzer = 5,/obj/item/device/t_scanner = 5,/obj/item/weapon/screwdriver = 5)
 	contraband = list(/obj/item/weapon/weldingtool/hugetank = 2,/obj/item/clothing/gloves/color/fyellow = 2)
 	premium = list(/obj/item/clothing/gloves/color/yellow = 1)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 
 /obj/machinery/vending/engivend
 	name = "\improper Engi-Vend"

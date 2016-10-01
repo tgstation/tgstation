@@ -111,11 +111,18 @@
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags & NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver) && deconstruction_ready)
-			table_deconstruct(user, 1)
+			user << "<span class='notice'>You start disassembling [src]...</span>"
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			if(do_after(user, 20, target = src))
+				deconstruct(TRUE)
 			return
 
 		if(istype(I, /obj/item/weapon/wrench) && deconstruction_ready)
-			table_deconstruct(user, 0)
+			user << "<span class='notice'>You start deconstructing [src]...</span>"
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 40, target = src))
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				table_destroy()
 			return
 
 	if(istype(I, /obj/item/weapon/storage/bag/tray))
@@ -148,11 +155,6 @@
 /obj/structure/table/obj_destruction()
 	table_destroy()
 
-/*
- * TABLE DESTRUCTION/DECONSTRUCTION
- */
-
-
 
 /obj/structure/table/proc/table_destroy()//phil235
 	if(!(flags & NODECONSTRUCT))
@@ -164,23 +166,15 @@
 	qdel(src)
 
 
-/obj/structure/table/proc/table_deconstruct(mob/user, disassembling = 0)
-	if(flags & NODECONSTRUCT)
-		return
-	if(disassembling)
-		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20, target = src))
-			new frame(src.loc)
+/obj/structure/table/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new frame(src.loc)
+		if(disassembled)
 			for(var/i = 1, i <= buildstackamount, i++)
 				new buildstack(get_turf(src))
-			qdel(src)
-	else
-		user << "<span class='notice'>You start deconstructing [src]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 40, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			table_destroy()
+	qdel(src)
+
+
 
 
 /*
@@ -193,9 +187,8 @@
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
 	canSmoothWith = null
-	health = 50
-	maxhealth = 50
-	broken_health = 30
+	health = 70
+	maxhealth = 70
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/list/debris = list()
 
@@ -313,7 +306,7 @@
 	health = 200
 	maxhealth = 200
 	broken_health = 50
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 0, acid = 70)
+	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/weldingtool))
@@ -412,9 +405,7 @@
 	anchored = 1
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	health = 20
-
-/obj/structure/rack/blob_act(obj/structure/blob/B)
-	rack_destroy()
+	maxhealth = 20
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
@@ -454,11 +445,6 @@
 /obj/structure/rack/attack_paw(mob/living/user)
 	attack_hand(user)
 
-/obj/structure/rack/attack_hulk(mob/living/carbon/human/user)
-	..(user, 1)
-	rack_destroy() //phil235
-	return 1
-
 /obj/structure/rack/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
@@ -480,7 +466,7 @@
 		if(BURN)
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 
-/obj/structure/rack/obj_destruction()
+/obj/structure/rack/obj_destruction(damage_flag)
 	rack_destroy()
 
 

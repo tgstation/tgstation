@@ -95,6 +95,9 @@
 	else
 		return ..()
 
+/obj/machinery/iv_drip/obj_destruction(damage_flag)
+ 	new /obj/item/stack/sheet/metal(loc)
+ 	qdel(src)
 
 /obj/machinery/iv_drip/process()
 	if(!attached)

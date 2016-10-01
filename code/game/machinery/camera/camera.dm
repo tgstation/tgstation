@@ -12,8 +12,10 @@
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
 
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 50, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
 	health = 50
+	maxhealth = 50
+	broken_health = 25
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -22,7 +24,7 @@
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
-	var/obj/machinery/camera_assembly/assembly = null
+	var/obj/structure/camera_assembly/assembly = null
 
 	//OTHER
 
@@ -112,20 +114,10 @@
 	..()
 	qdel(src)//to prevent bomb testing camera from exploding over and over forever
 
-/obj/machinery/camera/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
-		take_damage(health, BRUTE, "melee", 0)
-
 /obj/machinery/camera/ex_act(severity, target)
-	if(src.invuln)
+	if(invuln)
 		return
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			take_damage(50, BRUTE, 0)
-		else
-			take_damage(rand(30,60), BRUTE, 0)
+	..()
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
@@ -161,13 +153,7 @@
 		else if(istype(W, /obj/item/weapon/weldingtool))
 			if(weld(W, user))
 				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame screwed to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame screwed to the wall</span>")
-				if(!assembly)
-					assembly = new()
-				assembly.loc = src.loc
-				assembly.state = 1
-				assembly.setDir(src.dir)
-				assembly = null
-				qdel(src)
+				deconstruct(TRUE)
 			return
 
 		else if(istype(W, /obj/item/device/analyzer))
@@ -253,10 +239,28 @@
 
 	return ..()
 
-/obj/machinery/camera/obj_destruction()
+/obj/machinery/camera/attacked_by(obj/item/I, mob/living/user)
+	if(I.force < 12 && !(stat & BROKEN))
+		take_damage(0)
+	else
+		..()
+
+/obj/machinery/camera/obj_break(damage_flag)
 	if(status)
 		triggerCameraAlarm()
 		toggle_cam(null, 0)
+
+/obj/machinery/camera/deconstruct(disassembled = TRUE)
+	if(!assembly)
+		assembly = new()
+	assembly.loc = src.loc
+	assembly.state = 1
+	assembly.setDir(dir)
+	if(!disassembled)
+		assembly.health = assembly.maxhealth * 0.5
+		new /obj/item/stack/cable_coil(loc, 2)
+	assembly = null
+	qdel(src)
 
 /obj/machinery/camera/update_icon()
 	if(!status)
@@ -385,10 +389,6 @@
 		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
 	else
 		src.SetLuminosity(0)
-
-/obj/machinery/camera/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, P.flag, 0)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf

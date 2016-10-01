@@ -17,8 +17,9 @@
 	var/gas_type = ""
 	var/release_pressure = ONE_ATMOSPHERE
 
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 50)
 	health = 100
+	maxhealth = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
@@ -182,7 +183,7 @@
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
-		take_damage(5, BURN, 0, 1)
+		take_damage(5, BURN, "fire", 1)
 
 
 /obj/machinery/portable_atmospherics/canister/obj_destruction()
@@ -231,16 +232,6 @@
 	if(!holding)
 		air_update_turf() // Update the environment if needed.
 	update_icon()
-
-/obj/machinery/portable_atmospherics/canister/blob_act(obj/structure/blob/B)
-	take_damage(100, BRUTE, "melee", 0)
-
-/obj/machinery/portable_atmospherics/canister/attacked_by(obj/item/I, mob/user)
-	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
-	investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
-	add_fingerprint(user)
-	take_damage(I.force, I.damtype, "melee", 1)
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 															datum/tgui/master_ui = null, datum/ui_state/state = physical_state)

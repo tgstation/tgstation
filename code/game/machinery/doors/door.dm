@@ -8,8 +8,9 @@
 	density = 1
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
-
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 100, acid = 0)
+	health = 350
+	maxhealth = 350
+	armor = list(melee = 30, bullet = 30, laser = 20, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 70)
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
@@ -27,6 +28,7 @@
 	var/locked = 0 //whether the door is bolted or not.
 	var/assemblytype //the type of door frame to drop during deconstruction
 	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
+	var/datum/effect_system/spark_spread/spark_system
 
 /obj/machinery/door/New()
 	..()
@@ -37,7 +39,9 @@
 	update_freelook_sight()
 	air_update_turf(1)
 	airlocks += src
-	return
+	spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(2, 1, src)
+
 
 
 /obj/machinery/door/Destroy()
@@ -45,6 +49,9 @@
 	air_update_turf(1)
 	update_freelook_sight()
 	airlocks -= src
+	if(spark_system)
+		qdel(spark_system)
+		spark_system = null
 	return ..()
 
 //process()
@@ -152,19 +159,29 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	else
 		return ..()
 
+/obj/machinery/door/attacked_by(obj/item/I, mob/living/user)
+	if(I.force < 10)
+		take_damage(0)
+	else
+		..()
+
+/obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(. && health > 0)
+		if(prob(20))
+			spark_system.start()
+
 /obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
 				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
-			else
+			else if(damage_amount)
 				playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-
-/obj/machinery/door/blob_act(obj/structure/blob/B)
-	if(prob(60))
-		qdel(src)
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
@@ -178,15 +195,6 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = 0
-
-/obj/machinery/door/ex_act(severity, target)
-	if(severity == 3)
-		if(prob(80))
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(2, 1, src)
-			s.start()
-		return
-	..()
 
 /obj/machinery/door/update_icon()
 	if(density)
@@ -328,3 +336,4 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 /obj/machinery/door/proc/disable_lockdown()
 	if(!stat) //Opens only powered doors.
 		open() //Open everything!
+

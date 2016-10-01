@@ -102,6 +102,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	stored.loc = T
 	..()
 
+/obj/structure/cable/fire_act(global_overlay=1)
+	var/turf/T = src.loc
+	if(T && T.intact) //protected from fire when hidden behind a floor.
+		return
+	..()
+
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////

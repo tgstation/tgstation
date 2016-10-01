@@ -48,8 +48,8 @@
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
-	health = 120
-	maxhealth = 120
+	health = 200
+	maxhealth = 200
 	broken_health = 50
 	armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	var/area/area
@@ -562,7 +562,7 @@
 	if(I.force < 15 && (!(stat & BROKEN) || malfai))
 		take_damage(0)
 	else
-		take_damage(I.force, I.damtype)
+		..()
 
 
 /obj/machinery/power/apc/obj_break(damage_flag)
@@ -612,28 +612,9 @@
 	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(malfhack || (stat & BROKEN))
+	if(malfhack)
 		return
 	..()
-	if(opened == 0)
-		if(!panel_open)
-			panel_open = 1
-			update_icon()
-			visible_message("<span class='danger'>The [src.name]'s cover flies open, exposing the wires!</span>")
-
-		else if(panel_open && !wires.is_all_cut())
-			wires.cut_all()
-			update_icon()
-			visible_message("<span class='danger'>The [src.name]'s wires are shredded!</span>")
-	else if(opened == 1)
-		if(cell)
-			cell.forceMove(loc)
-			cell.updateicon()
-			cell = null
-			visible_message("<span class='danger'>The [src.name]'s power cell flies off!</span>")
-			charging = 0
-			update_icon()
-
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)

@@ -55,8 +55,8 @@
 	active_power_usage = 8
 	power_channel = ENVIRON
 	req_access = list(access_atmospherics)
-	health = 350
-	maxhealth = 350
+	health = 250
+	maxhealth = 250
 	broken_health = 80
 
 	var/danger_level = 0
@@ -721,7 +721,10 @@
 	..()
 	update_icon()
 
-/obj/machinery/airalarm/obj_destruction(damage_flag)
-	new /obj/item/stack/sheet/metal(loc, 1)
+/obj/machinery/airalarm/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal(loc, 2)
+	var/obj/item/I = new /obj/item/weapon/electronics/airalarm(loc)
+	if(!disassembled)
+		I.health = I.maxhealth * 0.5
 	new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)

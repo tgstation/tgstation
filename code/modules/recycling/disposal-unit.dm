@@ -8,6 +8,9 @@
 	anchored = 1
 	density = 1
 	on_blueprints = TRUE
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	health = 200
+	maxhealth = 200
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// mode -1=screws removed 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -194,14 +197,6 @@
 		return
 	*/
 	interact(user, 0)
-
-// hostile mob escape from disposals
-/obj/machinery/disposal/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes \the [src] apart!</span>")
-		qdel(src)
-	return
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()

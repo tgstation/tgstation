@@ -8,6 +8,10 @@
 	explosion_block = 3
 	heat_proof = 1
 	safe = 0
+	health = 400
+	maxhealth = 400
+	armor = list(melee = 100, bullet = 90, laser = 90, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 100, acid = 70)
+
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"

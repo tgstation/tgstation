@@ -91,4 +91,4 @@
 
 /obj/structure/obj_break(damage_flag)
 	if(damage_flag != "fire" && damage_flag != "acid")
-		deconstruct()
+		deconstruct(FALSE)

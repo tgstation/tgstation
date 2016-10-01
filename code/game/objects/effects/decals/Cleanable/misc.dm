@@ -23,7 +23,7 @@
 
 /obj/effect/decal/cleanable/ash/large
 	name = "large pile of ashes"
-	icon_state = "ash" //phil235 need new icon
+	icon_state = "big_ash"
 
 /obj/effect/decal/cleanable/ash/large/New()
 	..()
@@ -69,6 +69,9 @@
 /obj/effect/decal/cleanable/cobweb/fire_act()
 	qdel(src)
 
+/obj/effect/decal/cleanable/cobweb/cobweb2
+	icon_state = "cobweb2"
+
 /obj/effect/decal/cleanable/molten_object
 	name = "gooey grey mass"
 	desc = "It looks like a melted... something."
@@ -82,13 +85,7 @@
 	name = "big gooey grey mass"
 	icon_state = "big_molten"
 
-/obj/effect/decal/cleanable/cobweb2
-	name = "cobweb"
-	desc = "Somebody should remove that."
-	density = 0
-	layer = OBJ_LAYER
-	icon_state = "cobweb2"
-	resistance_flags = 0
+
 
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit

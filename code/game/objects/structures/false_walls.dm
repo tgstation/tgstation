@@ -14,8 +14,8 @@
 	var/opening = 0
 	density = 1
 	opacity = 1
-	health = 200
-	maxhealth = 200
+	health = 100
+	maxhealth = 100
 
 	canSmoothWith = list(
 	/turf/closed/wall,

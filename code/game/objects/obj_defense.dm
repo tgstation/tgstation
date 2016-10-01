@@ -59,17 +59,18 @@
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(rand(50, 100), BRUTE, "bomb", 0)
+			take_damage(rand(100, 250), BRUTE, "bomb", 0)
 		if(3)
-			take_damage(rand(10, 30), BRUTE, "bomb", 0)
+			take_damage(rand(10, 90), BRUTE, "bomb", 0)
 
 ///obj/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	//phil235 need a max temperature above whitch the default obj takes damage
 
+/*phil235 maybe not worth it, how many items are really harmed by EMPs ?
 /obj/emp_act(severity)
 	if(severity && !(resistance_flags & EMP_PROOF))
 		take_damage(rand(80,120)/severity, BURN, "energy", 0)
-
+*/
 /obj/bullet_act(obj/item/projectile/P)
 	. = ..()
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>")
@@ -82,7 +83,7 @@
 	take_damage(50, BRUTE, "melee", 1, get_dir(src, user))
 
 /obj/blob_act(obj/structure/blob/B)
-	take_damage(30, BRUTE, "melee", 1, get_dir(src, B))
+	take_damage(100, BRUTE, "melee", 1, get_dir(src, B))
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	user.do_attack_animation(src)
@@ -92,7 +93,7 @@
 
 /obj/attack_alien(mob/living/carbon/alien/humanoid/user)
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	attack_generic(user, 20, BRUTE, "melee", 0)
+	attack_generic(user, 40, BRUTE, "melee", 0)
 
 /obj/attack_animal(mob/living/simple_animal/M) //phil235 envir smash?
 	if(!M.melee_damage_upper && !M.obj_damage)
@@ -102,7 +103,7 @@
 		if(M.obj_damage)
 			attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", 1)
 		else
-			attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", 1)
+			attack_generic(M, 2*rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", 1)
 		return 1
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
@@ -120,7 +121,7 @@
 		else
 			return 0
 	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-	return take_damage(M.force*2, M.damtype, "melee", 0, get_dir(src, M)) // multiplied by 2 so we can hit machines hard but not be overpowered against mobs.
+	return take_damage(M.force*3, M.damtype, "melee", 0, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 
 
@@ -147,6 +148,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 /obj/acid_act(acidpwr, acid_volume)
 	if(!(resistance_flags & UNACIDABLE) && acid_volume)
+
 		if(!acid_level)
 			SSacid.processing[src] = src
 			add_overlay(acid_overlay, 1)
@@ -162,7 +164,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 			if(armour_value != "acid")
 				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
 		if(prob(33))
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/Welder.ogg', 150, 1)
 		take_damage(min(5 + 2* round(sqrt(acid_level)), 300), BURN, "acid", 0)
 
 	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
@@ -224,7 +226,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
 		overlays -= fire_overlay
-		SSfire_burning -= src
+		SSfire_burning.processing -= src
 
 /obj/proc/empty_object_contents(burn = 0, new_loc = src.loc)
 	for(var/obj/item/Item in contents) //Empty out the contents

@@ -334,6 +334,8 @@
 	. = 1
 	var/has_acid_effect = 0
 	for(var/obj/O in src)
+		if(intact && O.level == 1) //hidden under the floor
+			continue
 		if(istype(O, /obj/effect/acid))
 			var/obj/effect/acid/A = O
 			A.acid_level = min(A.level + acid_volume * acidpwr, 12000)//capping acid level to limit power of the acid

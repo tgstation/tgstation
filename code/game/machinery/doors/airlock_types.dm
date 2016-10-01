@@ -4,10 +4,14 @@
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
+	health = 450
+	maxhealth = 450
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
+	health = 450
+	maxhealth = 450
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -21,6 +25,8 @@
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
+	health = 250
+	maxhealth = 250
 
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
@@ -59,6 +65,8 @@
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_com/glass
 	glass = 1
+	health = 400
+	maxhealth = 400
 
 /obj/machinery/door/airlock/glass_engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -71,6 +79,8 @@
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec/glass
 	glass = 1
+	health = 400
+	maxhealth = 400
 
 /obj/machinery/door/airlock/glass_medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
@@ -136,6 +146,8 @@
 	icon = 'icons/obj/doors/airlocks/station/diamond.dmi'
 	var/mineral = "diamond"
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
+	health = 1000
+	maxhealth = 1000
 
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
@@ -241,6 +253,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
+	health = 1000
+	maxhealth = 1000
 
 //////////////////////////////////
 /*
@@ -254,6 +268,8 @@
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
+	health = 600
+	maxhealth = 600
 
 //////////////////////////////////
 /*
@@ -285,6 +301,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
 	explosion_block = 2
+	health = 500
+	maxhealth = 500
 
 //////////////////////////////////
 /*
@@ -307,6 +325,8 @@
 	explosion_block = 3
 	hackProof = 1
 	aiControlDisabled = 1
+	health = 700
+	maxhealth = 700
 
 //////////////////////////////////
 /*
