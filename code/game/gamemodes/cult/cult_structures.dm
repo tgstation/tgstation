@@ -24,7 +24,7 @@
 			other_message = "[t_It] appears very unstable"
 			heavily_damaged = TRUE
 		else if(healthpercent >= 0)
-			other_message = "[t_It] [t_is] glowing faintly and is extremely unstable"
+			other_message = "[p_theyre(TRUE)] glowing faintly and is extremely unstable"
 			heavily_damaged = TRUE
 		user << "<span class='cult'>[heavily_damaged ? "<b>":""][can_see_cult ? "[cultist_message]":"[other_message]"][heavily_damaged ? "!</b>":"."]</span>"
 	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"

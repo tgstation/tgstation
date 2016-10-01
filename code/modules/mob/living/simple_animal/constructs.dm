@@ -39,15 +39,15 @@
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
-	var/plurality = (gender == PLURAL)
+	var/t_s = p_s()
 	var/msg = "<span class='cult'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
 		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
-			msg += "[t_He] look[plurality ? "":"s"] slightly dented.\n"
+		if(health >= maxHealth/2)
+			msg += "[t_He] look[t_s] slightly dented.\n"
 		else
-			msg += "<b>[t_He] look[plurality ? "":"s"] severely dented!</b>\n"
+			msg += "<b>[t_He] look[t_s] severely dented!</b>\n"
 		msg += "</span>"
 	msg += "*---------*</span>"
 

@@ -47,7 +47,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		return
 
 	if(!target.key || !target.mind)
-		user << "<span class='warning'>[t_He] appear[target.gender == PLURAL ? "":"s"] to be catatonic! Not even magic can affect [target.p_their()] vacant mind.</span>"
+		user << "<span class='warning'>[t_He] appear[target.p_s()] to be catatonic! Not even magic can affect [target.p_their()] vacant mind.</span>"
 		return
 
 	if(user.suiciding)

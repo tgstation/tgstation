@@ -56,7 +56,7 @@
 			other_message = "[t_It] appears heavily damaged"
 			heavily_damaged = TRUE
 		else if(healthpercent >= 0)
-			other_message = "[t_It] [t_is] falling apart"
+			other_message = "[p_theyre(TRUE)] falling apart"
 			heavily_damaged = TRUE
 		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
