@@ -454,6 +454,26 @@
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)
 
+/obj/item/weapon/CQC_scroll
+	name = "frayed scroll"
+	desc = "An aged and frayed scrap of paper written in shifting runes. There are hand-drawn illustrations of pugilism."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state ="scroll2"
+	var/used = 0
+
+/obj/item/weapon/CQC_scroll/attack_self(mob/user)
+	if(!ishuman(user))
+		return
+	if(!used)
+		var/mob/living/carbon/human/H = user
+		var/datum/martial_art/CQC/F = new/datum/martial_art/CQC(null)
+		F.teach(H)
+		H << "<span class='boldannounce'>You have learned CQC.</span>"
+		used = 1
+		desc = "It's completely blank."
+		name = "empty scroll"
+		icon_state = "blankscroll"
+
 /obj/item/weapon/twohanded/bostaff
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
@@ -531,7 +551,7 @@
 #define KICK_COMBO "HH"
 #define RESTRAIN_COMBO "GG"
 #define PRESSURE_COMBO "DG"
-#define TAKEDOWN_COMBO "HDHDH"
+#define CONSECUTIVE_COMBO ""
 /datum/martial_art/CQC
 	name = "CQC"
 	deflection_chance = 100
@@ -554,31 +574,31 @@
 		streak = ""
 		Pressure(A,D)
 		return 1
-	if(findtext(streak,TAKEDOWN_COMBO))
+	if(findtext(streak,CONSECUTIVE_COMBO))
 		streak = ""
-		Takedown(A,D)
+		Consecutive(A,D)
 		return 1
 	return 0
 
 /datum/martial_art/CQC/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.stunned && !D.weakened)
+	if(!D.stat && !D.weakened)
 		D.visible_message("<span class='warning'>[A] slams [D] into the ground!</span>", \
 						  	"<span class='userdanger'>[A] slams you into the ground!</span>")
-		playsound(get_turf(A), 'sound/effects/slam.ogg', 50, 1, -1)
+		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, 1, -1)
 		D.apply_damage(10, BRUTE)
 		D.Weaken(6)
-		add_logs(A, D, "leg sweeped")
+		add_logs(A, D, "CQC slammed")
 	return 1
 
 /datum/martial_art/CQC/proc/Kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] kicks [D] back!</span>", \
-						  "<span class='userdanger'>[A] kicks you back!</span>")
+						"<span class='userdanger'>[A] kicks you back!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
 	D.throw_at(throw_target, 1, 14, A)
 	D.apply_damage(10, BRUTE)
 	add_logs(A, D, "CQC kicked")
-	if(D.stat && D.stunned && D.weakened)
+	if(D.stat && D.weakened)
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking them out!</span>", \
 					  	"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
 		D.SetSleeping(15)
@@ -586,21 +606,27 @@
 
 /datum/martial_art/CQC/proc/Pressure(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] forces their arm on [D]'s neck!</span>")
+	D.adjustStaminaLoss(60)
 	var/obj/item/weapon/gun/I = D.get_active_held_item()
-	if (istype(I))
+	if (istype(I) && I.can_shoot())
 		D.visible_message("<span class='warning'>[D] panics and fires their weapon blindly!</span>", \
 							"<span class='userdanger'>[A] forces their arm on your neck! It hurts! You fire your weapon blindly!</span>")
 		var/atom/fire_target = get_edge_target_turf(D, A.dir)
-		D.fire(fire_target, D, null, null, null, null, null)
-
-
+		I.process_fire(fire_target, D, message = 1, , )
+	return 1
 
 /datum/martial_art/CQC/proc/Restrain(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
+						"<span class='userdanger'>[A] locks you into a restraining position!</span>")
+	return 1
 
-
-
-/datum/martial_art/CQC/proc/Takedown(mob/living/carbon/human/A, mob/living/carbon/human/D)
-
+/datum/martial_art/CQC/proc/Consecutive(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(!D.stat &&	!D.weakened)
+		D.visible_message("<span class='warning'>[A] strikes [D]'s abdomen and neck and then turns them and strikes their back!</span>", \
+							"<span class='userdanger'>[A] strikes your abdomen and neck and then turns you and strikes your back!</span>")
+		D.adjustStaminaLoss(100)
+		D.apply_damage(10, BRUTE)
+	return 1
 
 /datum/martial_art/CQC/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
@@ -618,9 +644,10 @@
 	return 1
 
 /datum/martial_art/CQC/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return 1
-	add_logs(A, D, "punched")
+	add_logs(A, D, "CQC'd")
 	A.do_attack_animation(D)
 	var/picked_hit_type = pick("CQC'd", "Big Bossed")
 	var/bonus_damage = 10
@@ -635,9 +662,10 @@
 	D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
 					  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
 	add_logs(A, D, "[picked_hit_type] with CQC")
-
+	return 1
 
 /datum/martial_art/CQC/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	add_to_streak("D",D)
 	if(check_streak(A,D))
 		return 1
 	if(prob(60))
@@ -663,9 +691,9 @@
 
 	usr << "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>"
 
-	usr << "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand."
-	usr << "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down."
-	usr << "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns."
-	usr << "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand."
-	usr << "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition."
+	usr << "<span class='notice'>Slam</span>: Grab Harm. Slam opponent into the ground, weakens and knocks down."
+	usr << "<span class='notice'>CQC Kick</span>: Harm Harm. Knocks opponent away. Knocks out stunned or weakened opponents."
+	usr << "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold or stab with a knife to slit throat."
+	usr << "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage, forces opponent to fire any held weapons blindly."
+
 
