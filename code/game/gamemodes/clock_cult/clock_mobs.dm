@@ -33,7 +33,7 @@
 	src << playstyle_string
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
-	var/t_He = they_pronoun(TRUE)
+	var/t_He = p_they(TRUE)
 	var/plurality = (gender == PLURAL)
 	var/msg = "<span class='brass'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"

@@ -10,8 +10,8 @@
 	var/can_see_cult = iscultist(user) || isobserver(user)
 	..()
 	if(takes_damage)
-		var/t_It = they_pronoun(TRUE)
-		var/t_is = get_is()
+		var/t_It = p_they(TRUE)
+		var/t_is = p_are()
 		var/cultist_message = "[t_It] [t_is] at <b>[health]/[max_health]</b> stability"
 		var/other_message = "[t_It] seems extremely stable"
 		var/heavily_damaged = FALSE
@@ -29,7 +29,7 @@
 		user << "<span class='cult'>[heavily_damaged ? "<b>":""][can_see_cult ? "[cultist_message]":"[other_message]"][heavily_damaged ? "!</b>":"."]</span>"
 	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if(can_see_cult && cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic in [src] is too weak, [they_pronoun()] will be ready to use again in [getETA()].</span>"
+		user << "<span class='cultitalic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [getETA()].</span>"
 
 /obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
@@ -37,9 +37,9 @@
 			health = min(max_health, health + 5)
 			Beam(M, icon_state="sendbeam", time=4)
 			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
-				"<span class='cult'>You repair <b>[src]</b>, leaving [they_pronoun()] at <b>[health]/[max_health]</b> stability.</span>")
+				"<span class='cult'>You repair <b>[src]</b>, leaving [p_they()] at <b>[health]/[max_health]</b> stability.</span>")
 		else
-			M << "<span class='cult'>You cannot repair [src], as [they_pronoun()] [get_is()] undamaged!</span>"
+			M << "<span class='cult'>You cannot repair [src], as [p_they()] [p_are()] undamaged!</span>"
 	else
 		..()
 

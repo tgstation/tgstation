@@ -42,8 +42,8 @@
 	..()
 	desc = initial(desc)
 	if(takes_damage)
-		var/t_It = they_pronoun(TRUE)
-		var/t_is = get_is()
+		var/t_It = p_they(TRUE)
+		var/t_is = p_are()
 		var/servant_message = "[t_It] [t_is] at <b>[health]/[max_health]</b> integrity"
 		var/other_message = "[t_It] seems pristine and undamaged"
 		var/heavily_damaged = FALSE
@@ -929,7 +929,7 @@
 				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
-				L.visible_message("<span class='warning'>[L] collapses in on [L.them_pronoun()]self as [src] flares bright blue!</span>")
+				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
 				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
 				for(var/obj/item/W in L)
 					L.unEquip(W)
@@ -957,7 +957,7 @@
 						ghost.reenter_corpse()
 						L.revive(1, 1)
 						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
-						L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.their_pronoun()] mouth dripping blue ichor!</span>", \
+						L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] mouth dripping blue ichor!</span>", \
 						"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 						vitality -= revival_cost
 						break
