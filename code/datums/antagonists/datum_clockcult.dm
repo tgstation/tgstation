@@ -52,6 +52,9 @@
 	else if(isbrain(owner) || isclockmob(owner))
 		owner << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	..()
+	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
+		var/datum/game_mode/clockwork_cult/C = ticker.mode
+		C.present_tasks(owner) //Memorize the objectives
 
 /datum/antagonist/clockcultist/apply_innate_effects()
 	all_clockwork_mobs += owner
@@ -102,7 +105,7 @@
 	owner.faction -= "ratvar"
 	owner.languages_spoken &= ~RATVAR
 	owner.languages_understood &= ~RATVAR
-	owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
+	addtimer(owner, "update_action_buttons_icon", 1) //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
 	owner.clear_alert("clockinfo")
 	owner.clear_alert("nocache")
 	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
