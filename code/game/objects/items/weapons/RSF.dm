@@ -64,13 +64,13 @@ RSF
 /obj/item/weapon/rsf/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
-	if (!(istype(A, /obj/structure/table) || istype(A, /turf/open/floor)))
+	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
 
 	if(matter < 1)
 		user << "<span class='warning'>\The [src] doesn't have enough matter left.</span>"
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell || R.cell.charge < 200)
 			user << "<span class='warning'>You do not have enough power to use [src].</span>"
@@ -105,7 +105,7 @@ RSF
 			use_matter(10, user)
 
 /obj/item/weapon/rsf/proc/use_matter(charge, mob/user)
-	if (isrobot(user))
+	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= charge
 	else
@@ -141,7 +141,7 @@ RSF
 
 /obj/item/weapon/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
-	if(isrobot(user))
+	if(iscyborg(user))
 		P = user
 	if(emagged&&!toxin)
 		toxin = 1
@@ -162,12 +162,12 @@ RSF
 		return
 	if(!proximity)
 		return
-	if (!(istype(A, /obj/structure/table) || istype(A, /turf/open/floor)))
+	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
 	if(matter < 1)
 		user << "<span class='warning'>The [src] doesn't have enough matter left. Wait for it to recharge!</span>"
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell || R.cell.charge < 400)
 			user << "<span class='warning'>You do not have enough power to use [src].</span>"
@@ -178,7 +178,7 @@ RSF
 	var/obj/item/weapon/reagent_containers/food/snacks/cookie/S = new /obj/item/weapon/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
 		S.reagents.add_reagent("chloralhydrate2", 10)
-	if (isrobot(user))
+	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 100
 	else

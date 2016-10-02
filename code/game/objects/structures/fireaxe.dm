@@ -16,7 +16,7 @@
 	update_icon()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
-	if(isrobot(user) || istype(I,/obj/item/device/multitool))
+	if(iscyborg(user) || istype(I,/obj/item/device/multitool))
 		toggle_lock(user)
 		return
 	if(open || health <= 0)

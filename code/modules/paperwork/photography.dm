@@ -411,7 +411,7 @@
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
 /obj/item/device/camera/siliconcam/proc/viewpictures(user)
-	if(isrobot(user)) // Cyborg
+	if(iscyborg(user)) // Cyborg
 		var/mob/living/silicon/robot/C = src.loc
 		var/obj/item/device/camera/siliconcam/Cinfo
 		if(C.connected_ai)

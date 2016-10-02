@@ -23,7 +23,7 @@
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/T = get_step(src, checkdir)
-	if(!istype(T,/turf/open/space))
+	if(!isspaceturf(T))
 		addtimer(src, "open", 0, TRUE)
 	else
 		addtimer(src, "close", 0, TRUE)

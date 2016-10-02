@@ -41,7 +41,7 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(isrobot(user))
+	if(iscyborg(user))
 		user << "<span class='notice'>You free up your module.</span>"
 	else if(istype(src, /obj/item/weapon/twohanded/required))
 		user << "<span class='notice'>You drop \the [name].</span>"
@@ -71,7 +71,7 @@
 		force = force_wielded
 	name = "[name] (Wielded)"
 	update_icon()
-	if(isrobot(user))
+	if(iscyborg(user))
 		user << "<span class='notice'>You dedicate your module to [name].</span>"
 	else
 		user << "<span class='notice'>You grab the [name] with both hands.</span>"
@@ -362,7 +362,7 @@
 /obj/item/weapon/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(AM, /turf/open)) //So you can actually melee with it
+	if(isopenturf(AM)) //So you can actually melee with it
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")

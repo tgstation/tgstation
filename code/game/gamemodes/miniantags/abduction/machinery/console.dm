@@ -45,7 +45,9 @@
 
 	if(experiment != null)
 		var/points = experiment.points
+		var/credits = experiment.credits
 		dat += "Collected Samples : [points] <br>"
+		dat += "Gear Credits: [credits] <br>"
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
 		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
@@ -198,8 +200,8 @@
 		return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
-	if(experiment && experiment.points >= cost)
-		experiment.points-=cost
+	if(experiment && experiment.credits >= cost)
+		experiment.credits -=cost
 		say("Incoming supply!")
 		if(pad)
 			flick("alien-pad", pad)

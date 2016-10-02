@@ -277,7 +277,7 @@
 		jobname = "AI"
 
 	// --- Cyborg ---
-	else if(isrobot(M))
+	else if(iscyborg(M))
 		var/mob/living/silicon/robot/B = M
 		jobname = "[B.designation] Cyborg"
 
