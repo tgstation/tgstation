@@ -7113,7 +7113,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/labor)
 "aoZ" = (
-/obj/machinery/atmospherics/components/binary/valve{
+/obj/machinery/atmospherics/components/binary/valve/digital{
 	name = "Waste Release"
 	},
 /turf/open/floor/plasteel,
@@ -7390,7 +7390,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
 	frequency = 1441;
-	id = "inc_in"
+	id = "waste_out"
 	},
 /turf/open/floor/plating/airless,
 /area/atmos)
@@ -93244,7 +93244,7 @@ bMK
 cbz
 ccx
 cbA
-ama
+cbA
 cfi
 bRH
 cgV
@@ -94520,7 +94520,7 @@ bRF
 bSM
 bTS
 bUQ
-agd
+bWa
 bUO
 bVZ
 bVZ
@@ -94776,8 +94776,8 @@ bQu
 bRE
 bSL
 bPe
-agv
-age
+bOd
+bOd
 bOd
 bXT
 bXT
@@ -95033,7 +95033,7 @@ bQx
 bRH
 bSO
 bTU
-ajY
+bUS
 bUS
 bUS
 bXU
@@ -95290,7 +95290,7 @@ bQw
 bRG
 bSN
 bTT
-ajZ
+bUR
 bWb
 bUR
 bTT
