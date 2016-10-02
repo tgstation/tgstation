@@ -116,7 +116,7 @@
 				return
 	return ..()
 
-/obj/machinery/light_construct/blob_act(obj/effect/blob/B)
+/obj/machinery/light_construct/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
 
@@ -232,11 +232,8 @@
 				if(status == LIGHT_OK && trigger)
 					explode()
 			else if( prob( min(60, switchcount*switchcount*0.01) ) )
-				if(status == LIGHT_OK && trigger)
-					status = LIGHT_BURNED
-					icon_state = "[base_state]-burned"
-					on = 0
-					SetLuminosity(0)
+				if(trigger)
+					burn_out()
 			else
 				use_power = 2
 				SetLuminosity(brightness)
@@ -253,6 +250,13 @@
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
+
+/obj/machinery/light/proc/burn_out()
+	if(status == LIGHT_OK)
+		status = LIGHT_BURNED
+		icon_state = "[base_state]-burned"
+		on = 0
+		SetLuminosity(0)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -439,10 +443,9 @@
 		else
 			user << "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>"
 
-			var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 			if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
-				H.update_damage_overlays(0)
-			H.updatehealth()
+				H.update_damage_overlays()
 			return				// if burned, don't remove the light
 	else
 		user << "<span class='notice'>You remove the light [fitting].</span>"
@@ -526,7 +529,7 @@
 				if(prob(25))
 					broken()
 
-/obj/machinery/light/blob_act(obj/effect/blob/B)
+/obj/machinery/light/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		broken()
 		qdel(src)
@@ -535,8 +538,9 @@
 	else
 		flicker()
 
-/obj/machinery/light/tesla_act(var/power)
-	explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
+/obj/machinery/light/tesla_act(power, explosive = FALSE)
+	if(explosive)
+		explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
 	qdel(src)
 
 // called when area power state changes

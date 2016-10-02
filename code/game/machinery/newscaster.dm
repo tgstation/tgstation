@@ -175,6 +175,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -266,7 +267,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+	if(ishuman(user) || issilicon(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat
 		scan_user(human_or_robot_user)
@@ -791,8 +792,8 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		else
 			qdel(photo)
 		photo = null
-	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
-		photo = user.get_active_hand()
+	if(istype(user.get_active_held_item(), /obj/item/weapon/photo))
+		photo = user.get_active_held_item()
 		if(!user.drop_item())
 			return
 		photo.loc = src

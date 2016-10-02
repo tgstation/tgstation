@@ -86,15 +86,15 @@
 	qdel(src)
 
 /obj/machinery/power/supermatter_shard/process()
-	var/turf/L = loc
+	var/turf/T = loc
 
-	if(isnull(L))		// We have a null turf...something is wrong, stop processing this entity.
+	if(isnull(T))		// We have a null turf...something is wrong, stop processing this entity.
 		return PROCESS_KILL
 
-	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
+	if(!istype(T)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
 
-	if(istype(L, /turf/open/space))	// Stop processing this stuff if we've been ejected.
+	if(isspaceturf(T))	// Stop processing this stuff if we've been ejected.
 		return
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
@@ -118,18 +118,20 @@
 				lastwarning = world.timeofday
 
 		if(damage > explosion_point)
-			for(var/mob/living/mob in living_mob_list)
-				if(istype(mob, /mob/living/carbon/human))
-					//Hilariously enough, running into a closet should make you get hit the hardest.
-					var/mob/living/carbon/human/H = mob
-					H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
-				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
-				mob.rad_act(rads)
+			for(var/mob in living_mob_list)
+				var/mob/living/L = mob
+				if(istype(L) && L.z == z)
+					if(ishuman(mob))
+						//Hilariously enough, running into a closet should make you get hit the hardest.
+						var/mob/living/carbon/human/H = mob
+						H.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
+					var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(L, src) + 1) )
+					L.rad_act(rads)
 
 			explode()
 
 	//Ok, get the air from the turf
-	var/datum/gas_mixture/env = L.return_air()
+	var/datum/gas_mixture/env = T.return_air()
 
 	var/datum/gas_mixture/removed
 
@@ -234,13 +236,14 @@
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
 	for(var/mob/M in mob_list)
-		M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
-		M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
+		if(M.z == z)
+			M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
+			M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
 	qdel(src)
 	return(gain)
 
-/obj/machinery/power/supermatter_shard/blob_act(obj/effect/blob/B)
-	if(B && !istype(loc, /turf/open/space)) //does nothing in space
+/obj/machinery/power/supermatter_shard/blob_act(obj/structure/blob/B)
+	if(B && !isspaceturf(loc)) //does nothing in space
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 		damage += B.health * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
 		if(B.health > 100)
@@ -278,7 +281,7 @@
 
 /obj/machinery/power/supermatter_shard/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
-		if(get_dist(R, src) <= 15) // Better than using orange() every process
+		if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
 			R.receive_pulse(power/10)
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
@@ -296,7 +299,7 @@
 
 
 /obj/machinery/power/supermatter_shard/Bumped(atom/AM as mob|obj)
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
@@ -312,13 +315,13 @@
 
 
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		var/mob/living/user = AM
 		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		power += 200
-	else if(isobj(AM) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
+	else if(isobj(AM) && !istype(AM, /obj/effect))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 

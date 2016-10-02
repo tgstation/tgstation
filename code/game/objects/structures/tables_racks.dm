@@ -53,7 +53,7 @@
 		if(3)
 			take_damage(rand(40,80), BRUTE, 0)
 
-/obj/structure/table/blob_act(obj/effect/blob/B)
+/obj/structure/table/blob_act(obj/structure/blob/B)
 	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/table/narsie_act()
@@ -315,7 +315,7 @@
 	frame = /obj/structure/table_frame/wood
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 20
 	canSmoothWith = list(/obj/structure/table/wood,
 		/obj/structure/table/wood/poker,
@@ -334,6 +334,24 @@
 /obj/structure/table/wood/poker/narsie_act()
 	new /obj/structure/table/wood(src.loc)
 
+/obj/structure/table/wood/fancy
+	name = "fancy table"
+	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "fancy_table"
+	frame = /obj/structure/table_frame
+	framestack = /obj/item/stack/rods
+	buildstack = /obj/item/stack/tile/carpet
+	canSmoothWith = list(/obj/structure/table/wood/fancy)
+
+/obj/structure/table/wood/fancy/New()
+	icon = 'icons/obj/smooth_structures/fancy_table.dmi' //so that the tables place correctly in the map editor
+	..()
+
+/obj/structure/table/wood/fancy/burn() //basically made out of metal
+	new frame(loc)
+	qdel(src)
+
 /*
  * Reinforced tables
  */
@@ -346,6 +364,7 @@
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
 	health = 200
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 0, acid = 70)
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/weldingtool))
@@ -373,13 +392,11 @@
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"
 	frame = /obj/structure/table_frame/brass
-	framestackamount = 0
-	buildstackamount = 0
+	framestack = /obj/item/stack/sheet/brass
+	buildstack = /obj/item/stack/sheet/brass
+	framestackamount = 1
+	buildstackamount = 1
 	canSmoothWith = list(/obj/structure/table/reinforced/brass)
-
-/obj/structure/table/reinforced/brass/table_destroy()
-	new frame(src.loc)
-	qdel(src)
 
 /obj/structure/table/reinforced/brass/narsie_act()
 	take_damage(rand(15, 45), BRUTE)
@@ -460,7 +477,7 @@
 		if(3)
 			take_damage(rand(5,25), BRUTE, 0)
 
-/obj/structure/rack/blob_act(obj/effect/blob/B)
+/obj/structure/rack/blob_act(obj/structure/blob/B)
 	rack_destroy()
 
 
@@ -484,7 +501,7 @@
 		. = . || mover.checkpass(PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_held_item() != O))
 		return
 	if(!user.drop_item())
 		return

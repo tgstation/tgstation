@@ -50,7 +50,7 @@
 		client.prefs.copy_to(H)
 		H.dna.update_dna_identity()
 
-	if(mind && istype(M, /mob/living))
+	if(mind && isliving(M))
 		mind.transfer_to(M, 1) // second argument to force key move to new mob
 	else
 		M.key = key

@@ -119,7 +119,7 @@
 		M.apply_water()
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot && !istype(T, /turf/open/space))
+	if(hotspot && !isspaceturf(T))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
@@ -174,7 +174,7 @@
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
-		M.stuttering += 4
+		M.stuttering = min(M.stuttering+4, 10)
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
@@ -188,11 +188,9 @@
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds
-		if(iscultist(M) || is_handofgod_cultist(M) || is_handofgod_prophet(M) || is_servant_of_ratvar(M))
+		if(iscultist(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
 				ticker.mode.remove_cultist(M.mind, 1, 1)
-			else if(is_handofgod_cultist(M) || is_handofgod_prophet(M))
-				ticker.mode.remove_hog_follower(M.mind)
 			else if(is_servant_of_ratvar(M))
 				remove_servant_of_ratvar(M)
 			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
@@ -272,7 +270,7 @@
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
 
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		if(method == PATCH || method == VAPOR)
 			var/mob/living/carbon/human/N = M
 			if(N.dna.species.id == "human")
@@ -337,7 +335,7 @@
 /datum/reagent/spraytan/overdose_process(mob/living/M)
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/N = M
 		if(N.dna.species.id == "human") // If they're human, turn em to the "orange" race, and give em spiky black hair
 			N.skin_tone = "orange"
@@ -348,9 +346,9 @@
 		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes their arms."))
+				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.their_pronoun()] arms."))
 			else
-				M.visible_message("<b>[M]</b> flexes their arms.")
+				M.visible_message("<b>[M]</b> [M.their_pronoun()] their arms.")
 	if(prob(10))
 		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
 	..()
@@ -372,7 +370,7 @@
 /datum/reagent/unstableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
-	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.their_pronoun()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
 		if(!H || qdeleted(H))
@@ -502,7 +500,7 @@
 	color = "#484848" // rgb: 72, 72, 72
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/open/space))
+	if(M.canmove && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -524,7 +522,7 @@
 	color = "#1C1300" // rgb: 30, 20, 0
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
-	if(!istype(T, /turf/open/space))
+	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents
 		if(!D)
 			new /obj/effect/decal/cleanable/dirt(T)
@@ -537,7 +535,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/chlorine/on_mob_life(mob/living/M)
-	M.take_organ_damage(1*REM, 0, 0)
+	M.take_bodypart_damage(1*REM, 0, 0)
 	. = 1
 	..()
 
@@ -575,7 +573,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/open/space))
+	if(M.canmove && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -600,7 +598,7 @@
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/open/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
@@ -637,7 +635,7 @@
 	..()
 
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
 		if(holder && holder.chem_temp < 100) // COLD iron.
@@ -659,7 +657,7 @@
 	color = "#D0D0D0" // rgb: 208, 208, 208
 
 /datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(M.has_bane(BANE_SILVER))
 		M.reagents.add_reagent("toxin", reac_volume)
@@ -678,7 +676,7 @@
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/open/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
@@ -705,7 +703,7 @@
 	color = "#660000" // rgb: 102, 0, 0
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(reac_volume / 10)
@@ -743,15 +741,13 @@
 	if(method == TOUCH || method == VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(istype(M,/mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.lip_style)
 					H.lip_style = null
 					H.update_body()
-			if(C.r_hand)
-				C.r_hand.clean_blood()
-			if(C.l_hand)
-				C.l_hand.clean_blood()
+			for(var/obj/item/I in C.held_items)
+				I.clean_blood()
 			if(C.wear_mask)
 				if(C.wear_mask.clean_blood())
 					C.update_inv_wear_mask()

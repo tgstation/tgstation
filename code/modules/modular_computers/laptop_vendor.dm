@@ -54,6 +54,7 @@
 			fabricated_laptop = new /obj/item/device/modular_computer/laptop/buildable(src)
 			fabricated_laptop.install_component(new /obj/item/weapon/computer_hardware/battery)
 		total_price = 99
+		var/obj/item/weapon/computer_hardware/battery/battery_module = fabricated_laptop.all_components[MC_CELL]
 		switch(dev_cpu)
 			if(1)
 				if(fabricate)
@@ -65,14 +66,14 @@
 		switch(dev_battery)
 			if(1) // Basic(750C)
 				if(fabricate)
-					fabricated_laptop.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer)
 			if(2) // Upgraded(1100C)
 				if(fabricate)
-					fabricated_laptop.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/advanced)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/advanced)
 				total_price += 199
 			if(3) // Advanced(1500C)
 				if(fabricate)
-					fabricated_laptop.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/super)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/super)
 				total_price += 499
 		switch(dev_disk)
 			if(1) // Basic(128GQ)
@@ -115,17 +116,18 @@
 			fabricated_tablet.install_component(new /obj/item/weapon/computer_hardware/battery)
 			fabricated_tablet.install_component(new /obj/item/weapon/computer_hardware/processor_unit/small)
 		total_price = 199
+		var/obj/item/weapon/computer_hardware/battery/battery_module = fabricated_tablet.all_components[MC_CELL]
 		switch(dev_battery)
 			if(1) // Basic(300C)
 				if(fabricate)
-					fabricated_tablet.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/nano)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/nano)
 			if(2) // Upgraded(500C)
 				if(fabricate)
-					fabricated_tablet.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/micro)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer/micro)
 				total_price += 199
 			if(3) // Advanced(750C)
 				if(fabricate)
-					fabricated_tablet.battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer)
+					battery_module.try_insert(new /obj/item/weapon/stock_parts/cell/computer)
 				total_price += 499
 		switch(dev_disk)
 			if(1) // Basic(32GQ)

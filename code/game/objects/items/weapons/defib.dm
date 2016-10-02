@@ -94,20 +94,10 @@
 		var/mob/M = src.loc
 		if(istype(over_object, /obj/screen/inventory/hand))
 			var/obj/screen/inventory/hand/H = over_object
+			if(!M.unEquip(src))
+				return
+			M.put_in_hand(src, H.held_index)
 
-			switch(H.slot_id)
-				if(slot_r_hand)
-					if(M.r_hand)
-						return
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if(slot_l_hand)
-					if(M.l_hand)
-						return
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
 
 /obj/item/weapon/defibrillator/attackby(obj/item/weapon/W, mob/user, params)
 	if(W == paddles)
@@ -334,7 +324,7 @@
 	if(!req_defib)
 		return ..()
 	if(user)
-		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
+		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_held_item()
 		if(istype(O))
 			O.unwield()
 		user << "<span class='notice'>The paddles snap back into the main unit.</span>"
@@ -363,7 +353,7 @@
 		playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 		return
 	if(!wielded)
-		if(isrobot(user))
+		if(iscyborg(user))
 			user << "<span class='warning'>You must activate the paddles in your active module before you can use them on someone!</span>"
 		else
 			user << "<span class='warning'>You need to wield the paddles in both hands before you can use them on someone!</span>"

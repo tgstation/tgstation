@@ -33,30 +33,20 @@ Bonus
 				Convert(M)
 	return
 
-/datum/symptom/damage_converter/proc/Convert(mob/living/M)
+/datum/symptom/damage_converter/proc/Convert(mob/living/carbon/C)
 
-	var/get_damage = rand(1, 2)
+	var/heal_amt = rand(1, 2)
 
-	if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
+	var/list/parts = C.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
-		var/list/parts = H.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+	if(!parts.len)
+		return
 
-		if(!parts.len)
-			return
-
-		for(var/obj/item/bodypart/L in parts)
-			L.heal_damage(get_damage, get_damage, 0)
-		M.adjustToxLoss(get_damage*parts.len)
-
-	else
-		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
-			M.adjustFireLoss(-get_damage)
-			M.adjustBruteLoss(-get_damage)
-			M.adjustToxLoss(get_damage)
-		else
-			return
-
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(heal_amt, heal_amt))
+			C.update_damage_overlays()
+	C.adjustToxLoss(heal_amt*parts.len)
+	PoolOrNew(/obj/effect/overlay/temp/heal, list(C), "#FF3399")
 	return 1
 
 /*
@@ -97,7 +87,7 @@ Bonus
 
 	var/get_damage = rand(1, 2)
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
 		var/list/parts = H.get_damaged_bodyparts(1,1)
@@ -107,6 +97,7 @@ Bonus
 
 		for(var/obj/item/bodypart/L in parts)
 			L.heal_damage(get_damage, get_damage, 0)
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#FFFF00"))
 		M.adjustToxLoss(get_damage)
 
 	else
@@ -116,5 +107,4 @@ Bonus
 			M.adjustToxLoss(get_damage)
 		else
 			return
-
 	return 1

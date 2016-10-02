@@ -17,7 +17,7 @@ LINEN BINS
 	throw_range = 2
 	w_class = 1
 	item_color = "white"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 
@@ -205,7 +205,7 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 20
 	var/amount = 10
 	var/list/sheets = list()

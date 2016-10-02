@@ -51,7 +51,7 @@
 							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
-				var/replace = (user.get_inactive_hand()==R)
+				var/replace = (user.get_inactive_held_item()==R)
 				R.use(4)
 				if (!R && replace)
 					user.put_in_hands(new_item)
@@ -64,7 +64,7 @@
 							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
-				var/replace = (user.get_inactive_hand()==R)
+				var/replace = (user.get_inactive_held_item()==R)
 				R.use(4)
 				if (!R && replace)
 					user.put_in_hands(new_item)
@@ -79,7 +79,7 @@
 	icon_state = "tile_grass"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/grass
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 //Wood
@@ -90,7 +90,7 @@
 	icon_state = "tile-wood"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/wood
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 //Carpets
@@ -100,7 +100,7 @@
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	turf_type = /turf/open/floor/carpet
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 /obj/item/stack/tile/fakespace
@@ -109,7 +109,7 @@
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	turf_type = /turf/open/floor/fakespace
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
@@ -147,6 +147,13 @@
 	desc = "A darkly colored grooved floor tile."
 	icon_state = "tile_poddark"
 	turf_type = /turf/open/floor/pod/dark
+
+/obj/item/stack/tile/brass
+	name = "brass floor tile"
+	singular_name = "brass floor tile"
+	desc = "A brass floor tile. It vibrates slightly."
+	icon_state = "tile_brass"
+	turf_type = /turf/open/floor/clockwork
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel

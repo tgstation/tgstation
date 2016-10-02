@@ -68,6 +68,10 @@
 		"<span class='notice'>[holder] snaps back into your [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 
+	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
+		var/obj/item/device/assembly/flash/F = holder
+		F.SetLuminosity(0)
+
 	owner.unEquip(holder, 1)
 	holder.loc = src
 	holder = null
@@ -80,13 +84,16 @@
 	holder = item
 
 	holder.flags |= NODROP
-	holder.unacidable = 1
+	holder.resistance_flags |= LAVA_PROOF | UNACIDABLE
 	holder.slot_flags = null
 	holder.w_class = 5
 	holder.materials = null
 
-	var/arm_slot = (zone == "r_arm" ? slot_r_hand : slot_l_hand)
-	var/obj/item/arm_item = owner.get_item_by_slot(arm_slot)
+	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
+		var/obj/item/device/assembly/flash/F = holder
+		F.SetLuminosity(7)
+
+	var/obj/item/arm_item = owner.get_active_held_item()
 
 	if(arm_item)
 		if(!owner.unEquip(arm_item))
@@ -95,13 +102,13 @@
 		else
 			owner << "<span class='notice'>You drop [arm_item] to activate [src]!</span>"
 
-	if(zone == "r_arm" ? !owner.put_in_r_hand(holder) : !owner.put_in_l_hand(holder))
+	var/result = (zone == "r_arm" ? owner.put_in_r_hand(holder) : owner.put_in_l_hand(holder))
+	if(!result)
 		owner << "<span class='warning'>Your [src] fails to activate!</span>"
 		return
 
 	// Activate the hand that now holds our item.
-	if(zone == "r_arm" ? owner.hand : !owner.hand)
-		owner.swap_hand()
+	owner.swap_hand(result)//... or the 1st hand if the index gets lost somehow
 
 	owner.visible_message("<span class='notice'>[owner] extends [holder] from \his [zone == "r_arm" ? "right" : "left"] arm.</span>",
 		"<span class='notice'>You extend [holder] from your [zone == "r_arm" ? "right" : "left"] arm.</span>",
@@ -114,8 +121,7 @@
 		return
 
 	// You can emag the arm-mounted implant by activating it while holding emag in it's hand.
-	var/arm_slot = (zone == "r_arm" ? slot_r_hand : slot_l_hand)
-	if(istype(owner.get_item_by_slot(arm_slot), /obj/item/weapon/card/emag) && emag_act())
+	if(istype(owner.get_active_held_item(), /obj/item/weapon/card/emag) && emag_act())
 		return
 
 	if(!holder || (holder in src))
@@ -180,3 +186,45 @@
 		items_list += new /obj/item/weapon/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0
+
+/obj/item/organ/cyberimp/arm/esword
+	name = "arm-mounted energy blade"
+	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated enregy."
+	contents = newlist(/obj/item/weapon/melee/energy/blade)
+
+/obj/item/organ/cyberimp/arm/medibeam
+	name = "integrated medical beamgun"
+	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
+	contents = newlist(/obj/item/weapon/gun/medbeam)
+
+/obj/item/organ/cyberimp/arm/flash
+	name = "integrated high-intensity photon projector" //Why not
+	desc = "An integrated projector mounted onto a user's arm, that is able to be used as a powerful flash."
+	contents = newlist(/obj/item/device/assembly/flash/armimplant)
+
+/obj/item/organ/cyberimp/arm/flash/New()
+	..()
+	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
+		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+		F.I = src
+
+/obj/item/organ/cyberimp/arm/baton
+	name = "arm electrification implant"
+	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
+	contents = newlist(/obj/item/borg/stun)
+
+/obj/item/organ/cyberimp/arm/combat
+	name = "combat cybernetics implant"
+	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
+	contents = newlist(/obj/item/weapon/melee/energy/blade, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+
+/obj/item/organ/cyberimp/arm/combat/New()
+	..()
+	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
+		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+		F.I = src
+
+/obj/item/organ/cyberimp/arm/surgery
+	name = "surgical toolset implant"
+	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm"
+	contents = newlist(/obj/item/weapon/retractor, /obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, /obj/item/weapon/circular_saw, /obj/item/weapon/surgical_drapes)

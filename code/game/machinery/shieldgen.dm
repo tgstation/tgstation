@@ -6,7 +6,7 @@
 		density = 1
 		opacity = 0
 		anchored = 1
-		unacidable = 1
+		resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 		var/const/max_health = 200
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
@@ -53,7 +53,7 @@
 		if(2)
 			take_damage(50, BRUTE, 0)
 
-/obj/machinery/shield/blob_act(obj/effect/blob/B)
+/obj/machinery/shield/blob_act(obj/structure/blob/B)
 	qdel(src)
 
 
@@ -116,7 +116,7 @@
 	update_icon()
 
 	for(var/turf/target_tile in range(shield_range, src))
-		if (istype(target_tile,/turf/open/space) && !(locate(/obj/machinery/shield) in target_tile))
+		if(isspaceturf(target_tile) && !(locate(/obj/machinery/shield) in target_tile))
 			if(!(stat & BROKEN) || prob(33))
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
@@ -478,7 +478,7 @@
 		icon_state = "shieldwall"
 		anchored = 1
 		density = 1
-		unacidable = 1
+		resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 		luminosity = 3
 		var/needs_power = 0
 		var/active = 1

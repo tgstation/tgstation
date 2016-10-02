@@ -1,20 +1,25 @@
-/datum/supply_pack
+datum/supply_pack
 	var/name = "Crate"
 	var/group = ""
 	var/hidden = FALSE
 	var/contraband = FALSE
 	var/cost = 700 // Minimum cost, or infinite points are possible.
 	var/access = FALSE
+	var/access_any = FALSE
 	var/list/contains = null
 	var/crate_name = "crate"
 	var/crate_type = /obj/structure/closet/crate
 	var/dangerous = FALSE // Should we message admins?
+	var/special = FALSE //Event/Station Goals/Admin enabled packs
+	var/special_enabled = FALSE
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
 	C.name = crate_name
 	if(access)
 		C.req_access = list(access)
+	if(access_any)
+		C.req_one_access = access_any
 
 	fill(C)
 
@@ -154,6 +159,7 @@
 
 /datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
 	var/crate_value = 50
+	var/list/uplink_items = get_uplink_items(ticker.mode)
 	while(crate_value)
 		var/category = pick(uplink_items)
 		var/item = pick(uplink_items[category])
@@ -448,6 +454,35 @@
 	contains = list(/obj/structure/reagent_dispensers/fueltank)
 	crate_name = "fuel tank crate"
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/engineering/oxygen
+	name = "Oxygen Canister"
+	cost = 1500
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	crate_name = "oxygen canister crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/engineering/nitrogen
+	name = "Nitrogen Canister"
+	cost = 2000
+	contains = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
+	crate_name = "nitrogen canister crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/engineering/carbon_dio
+	name = "Carbon Dioxide Canister"
+	cost = 3000
+	contains = list(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
+	crate_name = "carbon dioxide canister crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/science/nitrous_oxide_canister
+	name = "Nitrous Oxide Canister"
+	cost = 3000
+	access = access_atmospherics
+	contains = list(/obj/machinery/portable_atmospherics/canister/nitrous_oxide)
+	crate_name = "nitrous oxide canister crate"
+	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"
@@ -826,6 +861,24 @@
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
 
+/datum/supply_pack/science/bz_canister
+	name = "BZ Canister"
+	cost = 4000
+	access_any = list(access_rd, access_atmospherics)
+	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
+	crate_name = "bz canister crate"
+	crate_type = /obj/structure/closet/crate/secure
+	dangerous = TRUE
+
+/datum/supply_pack/science/freon_canister
+	name = "Freon Canister"
+	cost = 6000
+	access_any = list(access_rd, access_atmospherics)
+	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
+	crate_name = "freon canister crate"
+	crate_type = /obj/structure/closet/crate/secure
+	dangerous = TRUE
+
 /datum/supply_pack/science/research
 	name = "Machine Prototype Crate"
 	cost = 8000
@@ -1198,6 +1251,13 @@
 	crate_name = "high-capacity water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/misc/water_vapor
+	name = "Water Vapor Canister"
+	cost = 2500
+	contains = list(/obj/machinery/portable_atmospherics/canister/water_vapor)
+	crate_name = "water vapor canister crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/misc/lasertag
 	name = "Laser Tag Crate"
 	cost = 1500
@@ -1532,3 +1592,58 @@
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
 	crate_name= "art supply crate"
+
+
+/datum/supply_pack/misc/bsa
+	name = "Bluespace Artillery Parts"
+	cost = 15000
+	special = TRUE
+	contains = list(/obj/item/weapon/circuitboard/machine/bsa/front,
+					/obj/item/weapon/circuitboard/machine/bsa/middle,
+					/obj/item/weapon/circuitboard/machine/bsa/back,
+					/obj/item/weapon/circuitboard/machine/computer/bsa_control
+					)
+	crate_name= "bluespace artillery parts crate"
+
+/datum/supply_pack/misc/dna_vault
+	name = "DNA Vault Parts"
+	cost = 12000
+	special = TRUE
+	contains = list(
+					/obj/item/weapon/circuitboard/machine/dna_vault
+					)
+	crate_name= "dna vault parts crate"
+
+/datum/supply_pack/misc/dna_probes
+	name = "DNA Vault Samplers"
+	cost = 3000
+	special = TRUE
+	contains = list(/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe
+					)
+	crate_name= "dna samplers crate"
+
+
+/datum/supply_pack/misc/shield_sat
+	name = "Shield Generator Satellite"
+	cost = 3000
+	special = TRUE
+	contains = list(
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield
+					)
+	crate_name= "shield sat crate"
+
+
+/datum/supply_pack/misc/shield_sat_control
+	name = "Shield System Control Board"
+	cost = 5000
+	special = TRUE
+	contains = list(
+					/obj/item/weapon/circuitboard/machine/computer/sat_control
+					)
+	crate_name= "shield control board crate"

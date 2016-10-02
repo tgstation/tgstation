@@ -47,7 +47,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden_uplink = null
@@ -117,7 +116,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		qdel(X)
 	return ..()
 
-/obj/item/blob_act(obj/effect/blob/B)
+/obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
 
@@ -220,7 +219,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(anchored)
 		return
 
-	if(burn_state == ON_FIRE)
+	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
 			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
@@ -228,10 +227,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+				var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
-					H.update_damage_overlays(0)
-				H.updatehealth()
+					H.update_damage_overlays()
+
 				return
 		else
 			extinguish()
@@ -285,7 +284,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/attack_ai(mob/user)
 	if(istype(src.loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
-		if(!isrobot(user))
+		if(!iscyborg(user))
 			return
 		var/mob/living/silicon/robot/R = user
 		if(!R.low_power_mode) //can't equip modules with an empty cell.
@@ -344,6 +343,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/datum/action/A = X
 		A.Remove(user)
 	if(DROPDEL & flags)
+		//Prevents infinite loops where Destroy() calls an objects dropped() function
+		flags &= ~DROPDEL
 		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
@@ -396,7 +397,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
-	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
+	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
 
 //This proc is executed when someone clicks the on-screen UI button.
@@ -454,11 +455,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		)
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
-		if(affecting.take_damage(7))
-			U.update_damage_overlays(0)
+		U.apply_damage(7, BRUTE, affecting)
 
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
@@ -503,7 +503,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/acid_act(acidpwr, acid_volume)
 	. = 1
-	if(unacidable)
+	if(resistance_flags & UNACIDABLE)
 		return
 
 	var/meltingpwr = acid_volume*acidpwr
@@ -537,7 +537,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		itempush = 0 //too light to push anything
 	return A.hitby(src, 0, itempush)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	thrownby = thrower
 	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
@@ -574,11 +574,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(slot_l_hand))
-			success = TRUE
-		else if(src == M.get_item_by_slot(slot_r_hand))
-			success = TRUE
-		else if(src == M.get_item_by_slot(slot_wear_mask))
+		if(src == M.get_item_by_slot(slot_wear_mask))
 			success = TRUE
 		if(success)
 			location = get_turf(M)
@@ -590,3 +586,8 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		. = "<span class='notice'>[user] lights [A] with [src].</span>"
 	else
 		. = ""
+
+
+//when an item modify our speech spans when in our active hand. Override this to modify speech spans.
+/obj/item/proc/get_held_item_speechspans(mob/living/carbon/user)
+	return

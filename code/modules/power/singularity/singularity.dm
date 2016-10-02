@@ -9,7 +9,6 @@
 	density = 1
 	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
-	unacidable = 1 //Don't comment this out.
 	appearance_flags = 0
 	var/current_size = 1
 	var/allowed_size = 1
@@ -27,7 +26,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -64,7 +63,7 @@
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
 	return 0
 
-/obj/singularity/blob_act(obj/effect/blob/B)
+/obj/singularity/blob_act(obj/structure/blob/B)
 	return
 
 /obj/singularity/ex_act(severity, target)
@@ -392,11 +391,11 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
+		if(istype(M, /mob/living/brain)) //Ignore brains
 			continue
 
 		if(M.stat == CONSCIOUS)
-			if (istype(M,/mob/living/carbon/human))
+			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
 					var/obj/item/clothing/glasses/meson/MS = H.glasses
@@ -416,11 +415,9 @@
 
 
 /obj/singularity/proc/pulse()
-
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
-		if(get_dist(R, src) <= 15) // Better than using orange() every process
+		if(R.z == z && get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
-	return
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)

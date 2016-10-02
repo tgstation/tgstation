@@ -3923,7 +3923,7 @@
 	pixel_y = 0
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/fancy,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -47246,7 +47246,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bDx" = (
-/obj/machinery/portable_atmospherics/canister/bz,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/plasteel/bot,
 /area/atmos)
 "bDy" = (
@@ -49975,7 +49975,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bHQ" = (
@@ -49986,7 +49985,6 @@
 	dir = 2;
 	on = 1
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/black/corner{
 	dir = 2
 	},
@@ -54759,9 +54757,7 @@
 	name = "Private Study";
 	req_access_txt = "37"
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bQz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -55652,22 +55648,18 @@
 /turf/open/floor/wood,
 /area/library)
 "bSh" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/machinery/newscaster{
 	pixel_x = -30;
 	pixel_y = 0
 	},
 /obj/item/clothing/under/suit_jacket/red,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bSi" = (
 /obj/structure/chair/comfy/brown,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bSj" = (
 /obj/effect/landmark{
@@ -55680,9 +55672,7 @@
 	pixel_x = 30;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bSk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -55784,12 +55774,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/robot_parts/chest{
+/obj/item/bodypart/chest/robot{
 	name = "cyborg torso";
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/robot_parts/head{
+/obj/item/bodypart/head/robot{
 	name = "cyborg head";
 	pixel_x = 3;
 	pixel_y = 2
@@ -56428,9 +56418,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen/invisible,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bTy" = (
 /obj/item/device/taperecorder{
@@ -56441,17 +56429,13 @@
 	pixel_y = -25
 	},
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bTz" = (
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "bTA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -62718,6 +62702,8 @@
 	network = list("SS13","Medbay")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/limbgrower,
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
@@ -73108,7 +73094,6 @@
 /obj/structure/sign/nosmoking_2{
 	pixel_y = 32
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/warning{
 	dir = 5
 	},
@@ -73571,7 +73556,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
@@ -74099,7 +74083,6 @@
 /turf/open/floor/plasteel/bot,
 /area/toxins/storage)
 "cxf" = (
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 8
 	},
@@ -74107,7 +74090,6 @@
 "cxg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
@@ -75371,7 +75353,6 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/warning{
 	dir = 10
 	},
@@ -90239,8 +90220,8 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/robot_parts/r_arm,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/r_arm/robot,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "cYu" = (
@@ -90647,8 +90628,9 @@
 	},
 /area/shuttle/transport)
 "cZx" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/abandoned)
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/turf/open/floor/plasteel/bot,
+/area/atmos)
 "cZy" = (
 /turf/open/floor/plating/warnplate{
 	dir = 1
@@ -93308,8 +93290,7 @@
 /area/toxins/xenobiology)
 "deG" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	unacidable = 1
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
@@ -134585,7 +134566,7 @@ bEn
 bHQ
 bJz
 bKT
-bDx
+cZx
 atw
 cXn
 bRz

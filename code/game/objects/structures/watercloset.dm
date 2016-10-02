@@ -208,7 +208,7 @@
 			else
 				wash_obj(G)
 	else
-		if(istype(loc, /turf/open))
+		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 
@@ -294,10 +294,8 @@
 		var/mob/living/carbon/M = L
 		. = 1
 		check_heat(M)
-		if(M.r_hand)
-			M.r_hand.clean_blood()
-		if(M.l_hand)
-			M.l_hand.clean_blood()
+		for(var/obj/item/I in M.held_items)
+			I.clean_blood()
 		if(M.back)
 			if(M.back.clean_blood())
 				M.update_inv_back(0)
@@ -334,7 +332,7 @@
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform()
 			if(washgloves)
-				clean_blood()
+				H.clean_blood()
 			if(H.shoes && washshoes)
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes()

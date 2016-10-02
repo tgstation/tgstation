@@ -47,7 +47,7 @@
 
 	if(H.stat || H.restrained())
 		return
-	if(!istype(H, /mob/living/carbon/human))
+	if(!ishuman(H))
 		return 1
 
 	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
@@ -56,7 +56,7 @@
 			if (used)
 				H << "You already used this contract!"
 				return
-			var/list/candidates = get_candidates(ROLE_WIZARD)
+			var/list/candidates = pollCandidates("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150)
 			if(candidates.len)
 				src.used = 1
 				var/client/C = pick(candidates)
@@ -84,7 +84,7 @@
 		if("healing")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null))
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/magic/staff/healing(M), slot_r_hand)
+			M.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing(M))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 		if("robeless")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
@@ -149,8 +149,8 @@
 	if(!(check_usability(user)))
 		return
 
-	var/list/nuke_candidates = get_candidates(ROLE_OPERATIVE, 3000, "operative")
-	if(nuke_candidates.len > 0)
+	var/list/nuke_candidates = pollCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150)
+	if(nuke_candidates.len)
 		used = 1
 		var/client/C = pick(nuke_candidates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
@@ -165,7 +165,7 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	M.mind.make_Nuke(null, nuke_code = null, 0, FALSE)
+	M.mind.make_Nuke(null, null, 0, FALSE)
 	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname
@@ -228,7 +228,7 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-	var/list/demon_candidates = get_candidates(ROLE_ALIEN)
+	var/list/demon_candidates = pollCandidates("Do you want to play as a [initial(demon_type.name)]?", null, null, ROLE_ALIEN, 50)
 	if(user.z != 1)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return

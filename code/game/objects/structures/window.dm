@@ -65,7 +65,7 @@
 		if(3)
 			take_damage(rand(25,75), BRUTE, 0)
 
-/obj/structure/window/blob_act(obj/effect/blob/B)
+/obj/structure/window/blob_act(obj/structure/blob/B)
 	take_damage(rand(75,150), BRUTE, 0)
 
 /obj/structure/window/narsie_act()
@@ -83,6 +83,10 @@
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		shatter()
+
+/obj/structure/window/setDir(direct)
+	if(!fulltile)
+		..()
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -430,6 +434,7 @@
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
 	maxhealth = 50
 	explosion_block = 1
 
@@ -490,6 +495,7 @@
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 1
@@ -508,21 +514,32 @@
 	icon_state = "clockwork_window_single"
 	maxhealth = 100
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
+	var/made_glow = FALSE
 
 /obj/structure/window/reinforced/clockwork/New(loc, direct)
 	..()
-	if(!fulltile)
-		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
-		if(direct)
-			setDir(direct)
-			E.setDir(direct)
-	else
-		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
 	for(var/obj/item/I in debris)
 		debris -= I
 		qdel(I)
-	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+	if(!fulltile)
+		if(direct)
+			var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+			setDir(direct)
+			E.setDir(direct)
+			made_glow = TRUE
+		debris += new/obj/item/stack/sheet/brass(src, 1)
+	else
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
+		made_glow = TRUE
+		debris += new/obj/item/stack/sheet/brass(src, 2)
 	change_construction_value(fulltile ? 3 : 2)
+
+/obj/structure/window/reinforced/clockwork/setDir(direct)
+	if(!made_glow)
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+		E.setDir(direct)
+		made_glow = TRUE
+	..()
 
 /obj/structure/window/reinforced/clockwork/Destroy()
 	change_construction_value(fulltile ? -3 : -2)

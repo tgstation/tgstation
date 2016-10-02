@@ -212,13 +212,13 @@
 			src.temp = null
 		if(href_list["scan"])
 			if(src.scan)
-				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+				if(ishuman(usr) && !usr.get_active_held_item())
 					usr.put_in_hands(scan)
 				else
 					scan.loc = get_turf(src)
 				src.scan = null
 			else
-				var/obj/item/I = usr.get_active_hand()
+				var/obj/item/I = usr.get_active_held_item()
 				if(istype(I, /obj/item/weapon/card/id))
 					if(!usr.drop_item())
 						return

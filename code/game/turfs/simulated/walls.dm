@@ -3,13 +3,11 @@
 	desc = "A huge chunk of metal used to separate rooms."
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
-	var/mineral = "metal"
 	explosion_block = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
-	var/walltype = "metal"
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
 	var/sheet_type = /obj/item/stack/sheet/metal
@@ -19,6 +17,7 @@
 	/turf/closed/wall,
 	/turf/closed/wall/r_wall,
 	/obj/structure/falsewall,
+	/obj/structure/falsewall/brass,
 	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust,
@@ -81,7 +80,7 @@
 		..()
 	return
 
-/turf/closed/wall/blob_act(obj/effect/blob/B)
+/turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		dismantle_wall()
 
@@ -180,9 +179,9 @@
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			if(do_after(user, slicing_duration/W.toolspeed, target = src))
-				if( !istype(src, /turf/closed/wall) || !user || !WT || !WT.isOn() || !T )
+				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
 					return 1
-				if( user.loc == T && user.get_active_hand() == WT )
+				if( user.loc == T && user.get_active_held_item() == WT )
 					user << "<span class='notice'>You remove the outer plating.</span>"
 					dismantle_wall()
 					return 1
@@ -190,9 +189,9 @@
 		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*0.6, target = src))  // plasma cutter is faster than welding tool
-			if( !istype(src, /turf/closed/wall) || !user || !W || !T )
+			if(!iswallturf(src) || !user || !W || !T)
 				return 1
-			if( user.loc == T && user.get_active_hand() == W )
+			if( user.loc == T && user.get_active_held_item() == W )
 				user << "<span class='notice'>You remove the outer plating.</span>"
 				dismantle_wall()
 				visible_message("The wall was sliced apart by [user]!", "<span class='italics'>You hear metal being sliced apart.</span>")
@@ -203,9 +202,9 @@
 /turf/closed/wall/proc/try_destroy(obj/item/weapon/W, mob/user, turf/T)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if( !istype(src, /turf/closed/wall) || !user || !W || !T )
+		if(!iswallturf(src) || !user || !W || !T)
 			return 1
-		if( user.loc == T && user.get_active_hand() == W )
+		if( user.loc == T && user.get_active_held_item() == W )
 			D.playDigSound()
 			dismantle_wall()
 			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")

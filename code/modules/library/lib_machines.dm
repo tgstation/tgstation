@@ -374,11 +374,13 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		b.duedate = world.time + (checkoutperiod * 600)
 		checkouts.Add(b)
 	if(href_list["checkin"])
-		var/datum/borrowbook/b = locate(href_list["checkin"])
-		checkouts.Remove(b)
+		var/datum/borrowbook/b = locate(href_list["checkin"]) in checkouts
+		if(b && istype(b))
+			checkouts.Remove(b)
 	if(href_list["delbook"])
-		var/obj/item/weapon/book/b = locate(href_list["delbook"])
-		inventory.Remove(b)
+		var/obj/item/weapon/book/b = locate(href_list["delbook"]) in inventory
+		if(b && istype(b))
+			inventory.Remove(b)
 	if(href_list["setauthor"])
 		var/newauthor = copytext(sanitize(input("Enter the author's name: ") as text|null),1,MAX_MESSAGE_LEN)
 		if(newauthor)

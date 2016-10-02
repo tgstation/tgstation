@@ -55,7 +55,7 @@
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
 	if(isliving(victim) && victim.client)
 		victim << "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>"
-		del(victim.client)
+		qdel(victim.client)
 
 
 /obj/effect/mine/gas
@@ -130,8 +130,7 @@
 
 	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags |= NODROP
-	victim.drop_r_hand()
-	victim.drop_l_hand()
+	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw)
 	chainsaw.attack_self(victim)
 	chainsaw.wield(victim)

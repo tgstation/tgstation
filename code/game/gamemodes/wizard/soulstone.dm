@@ -53,7 +53,7 @@
 		user << "<span class='warning'>There is no power left in the shard.\
 			</span>"
 		return
-	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
+	if(!ishuman(M))//If target is not a human.
 		return ..()
 	if(iscultist(M))
 		user << "<span class='cultlarge'>\"Come now, do not capture your fellow's soul.\"</span>"
@@ -220,12 +220,7 @@
 /obj/item/device/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 	T.invisibility = INVISIBILITY_ABSTRACT
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = T
-	flick("dust-h", animation)
-	qdel(animation)
+	T.dust_animation()
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
 	S.status_flags |= GODMODE //So they won't die inside the stone somehow
 	S.canmove = 0//Can't move out of the soul stone
@@ -256,7 +251,7 @@
 			break
 
 	if(!chosen_ghost)	//Failing that, we grab a ghost
-		var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, poll_time = 100)
+		var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, poll_time = 50)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!T)

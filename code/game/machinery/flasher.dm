@@ -31,6 +31,10 @@
 	else
 		bulb = new /obj/item/device/assembly/flash/handheld(src)
 
+/obj/machinery/flasher/Destroy()
+	remove_from_proximity_list(src, range)
+	..()
+
 /obj/machinery/flasher/Move()
 	remove_from_proximity_list(src, range)
 	..()
@@ -114,7 +118,7 @@
 		if (get_dist(src, L) > range)
 			continue
 
-		if(L.flash_eyes(affect_silicon = 1))
+		if(L.flash_act(affect_silicon = 1))
 			L.Weaken(strength)
 			if(L.weakeyes)
 				L.Weaken(strength * 1.5)

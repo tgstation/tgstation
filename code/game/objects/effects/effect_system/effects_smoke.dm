@@ -9,6 +9,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	opacity = 0
+	layer = FLY_LAYER
 	anchored = 1
 	mouse_opacity = 0
 	animate_movement = 0
@@ -25,6 +26,8 @@
 	var/step = alpha / frames
 	for(var/i = 0, i < frames, i++)
 		alpha -= step
+		if(alpha < 160)
+			opacity = 0 //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
 /obj/effect/particle_effect/smoke/New()
@@ -154,7 +157,7 @@
 	var/blast = 0
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A,/turf/open))
+	if(isopenturf(A))
 		var/turf/open/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
@@ -284,10 +287,10 @@
 			var/more = ""
 			if(M)
 				more = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</a>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) "
-			message_admins("A chemical smoke reaction has taken place in ([whereLink])[contained]. Last associated key is [carry.my_atom.fingerprintslast][more].", 0, 1)
+			message_admins("Smoke: ([whereLink])[contained]. Key: [carry.my_atom.fingerprintslast][more].", 0, 1)
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last associated key is [carry.my_atom.fingerprintslast].")
 		else
-			message_admins("A chemical smoke reaction has taken place in ([whereLink]). No associated key.", 0, 1)
+			message_admins("Smoke: ([whereLink])[contained]. No associated key.", 0, 1)
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
 

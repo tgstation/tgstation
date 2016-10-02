@@ -60,8 +60,7 @@
 					H.Stun(3)
 		if(affecting)
 			if(affecting.take_damage(1, 0))
-				H.update_damage_overlays(0)
-			H.updatehealth()
+				H.update_damage_overlays()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("<span class='boldannounce'>SPLAT!</span>")
@@ -78,7 +77,7 @@
 	else
 		if(((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
-			if(!user.hand)
+			if(!(user.active_hand_index % 2))
 				which_hand = "r_hand"
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
@@ -94,7 +93,7 @@
 	if(armed)
 		if(((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
-			if(!user.hand)
+			if(!(user.active_hand_index % 2))
 				which_hand = "r_hand"
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
@@ -124,7 +123,7 @@
 	if(armed)
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
-		triggered(finder, finder.hand ? "l_hand" : "r_hand")
+		triggered(finder, (finder.active_hand_index % 2 == 0) ? "r_hand" : "l_hand")
 		return 1	//end the search!
 	return 0
 

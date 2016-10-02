@@ -688,7 +688,7 @@ var/global/BSACooldown = 0
 		ai_number++
 		if(isAI(S))
 			usr << "<b>AI [key_name(S, usr)]'s laws:</b>"
-		else if(isrobot(S))
+		else if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			usr << "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>"
 		else if (ispAI(S))
@@ -779,7 +779,7 @@ var/global/BSACooldown = 0
 			if(message)
 				C << message
 			kicked_client_names.Add("[C.ckey]")
-			del(C)
+			qdel(C)
 	return kicked_client_names
 
 //returns 1 to let the dragdrop code know we are trapping this event

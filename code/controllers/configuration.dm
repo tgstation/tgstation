@@ -184,6 +184,7 @@
 	var/grey_assistants = 0
 
 	var/lavaland_budget = 60
+	var/space_budget = 16
 
 	var/aggressive_changelog = 0
 
@@ -620,6 +621,8 @@
 					config.grey_assistants			= 1
 				if("lavaland_budget")
 					config.lavaland_budget			= text2num(value)
+				if("space_budget")
+					config.space_budget			= text2num(value)
 				if("no_summon_guns")
 					config.no_summon_guns			= 1
 				if("no_summon_magic")

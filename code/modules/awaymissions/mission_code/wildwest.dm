@@ -58,7 +58,7 @@
 		user << "The Wish Granter lies silent."
 		return
 
-	else if(!istype(user, /mob/living/carbon/human))
+	else if(!ishuman(user))
 		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
 		return
 
@@ -121,15 +121,15 @@
 	icon_state = "blobpod"
 	var/triggered = 0
 
-/obj/effect/meatgrinder/Crossed(AM as mob|obj)
+/obj/effect/meatgrinder/Crossed(AM)
 	Bumped(AM)
 
-/obj/effect/meatgrinder/Bumped(mob/M as mob|obj)
+/obj/effect/meatgrinder/Bumped(mob/M)
 
 	if(triggered)
 		return
 
-	if(istype(M, /mob/living/carbon/human) && M.stat != DEAD && M.ckey)
+	if(ishuman(M) && M.stat != DEAD && M.ckey)
 		for(var/mob/O in viewers(world.view, src.loc))
 		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
 		triggered = 1

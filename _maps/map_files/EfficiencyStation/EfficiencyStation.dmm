@@ -3505,8 +3505,8 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/robot_parts/r_arm,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/r_arm/robot,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "agJ" = (
@@ -11881,8 +11881,7 @@
 /area/toxins/misc_lab)
 "awm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	unacidable = 1
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/misc_lab)
@@ -24259,7 +24258,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Monitoring"
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/caution/corner{
 	dir = 1
 	},
@@ -34136,7 +34134,7 @@
 	name = "Private Study";
 	req_access_txt = "37"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bqq" = (
 /obj/structure/cable{
@@ -35086,13 +35084,13 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bsg" = (
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bsh" = (
 /obj/structure/cable{
@@ -35658,7 +35656,7 @@
 /obj/effect/landmark/start{
 	name = "Librarian"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "bts" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -35669,7 +35667,7 @@
 	pixel_x = 27
 	},
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "btt" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -36381,9 +36379,9 @@
 /turf/open/floor/plasteel,
 /area/storage/art)
 "buT" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/weapon/book/codex_gigas,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "buU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -36398,7 +36396,7 @@
 	},
 /obj/item/weapon/pen/invisible,
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/library)
 "buV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -84341,7 +84339,7 @@ aze
 aAw
 aBE
 aCO
-ckj
+aFp
 aFn
 aGo
 aCO

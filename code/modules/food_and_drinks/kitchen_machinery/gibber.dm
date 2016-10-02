@@ -62,7 +62,7 @@
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
-		meat_produced += 3 * B.rating
+		meat_produced += B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
@@ -229,7 +229,7 @@
 			var/obj/item/meatslab = allmeat[i]
 			meatslab.loc = src.loc
 			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
-			for (var/turfs=1 to meat_produced*3)
+			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in view(gibturf))
 					new gibtype(gibturf,i)

@@ -351,38 +351,8 @@ var/list/ai_list = list()
 	SSshuttle.cancelEvac(src)
 	return
 
-/mob/living/silicon/ai/blob_act(obj/effect/blob/B)
-	if (stat != DEAD)
-		adjustBruteLoss(60)
-		updatehealth()
-		return 1
-	return 0
-
 /mob/living/silicon/ai/restrained(ignore_grab)
 	. = 0
-
-/mob/living/silicon/ai/emp_act(severity)
-	if (prob(30))
-		switch(pick(1,2))
-			if(1)
-				view_core()
-			if(2)
-				SSshuttle.requestEvac(src,"ALERT: Energy surge detected in AI core! Station integrity may be compromised! Initiati--%m091#ar-BZZT")
-	..()
-
-/mob/living/silicon/ai/ex_act(severity, target)
-	..()
-
-	switch(severity)
-		if(1)
-			gib()
-		if(2)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)
@@ -455,18 +425,6 @@ var/list/ai_list = list()
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
 
-/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
-	..(Proj)
-	updatehealth()
-	return 2
-
-
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
-		return
-
-	..()
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
@@ -790,9 +748,6 @@ var/list/ai_list = list()
 		return //won't work if dead
 	set_autosay()
 
-/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
-	return
-
 /mob/living/silicon/ai/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
 		return
@@ -804,18 +759,10 @@ var/list/ai_list = list()
 		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
-		loc = card//Throw AI into the card.
+		forceMove(card)
 		card.AI = src
 		src << "You have been downloaded to a mobile storage device. Remote device connection severed."
 		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
-
-/mob/living/silicon/ai/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
-	return // no eyes, no flashing
-
-/mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user, params)
-	if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
-		spark_system.start()
-	return ..()
 
 /mob/living/silicon/ai/can_buckle()
 	return 0

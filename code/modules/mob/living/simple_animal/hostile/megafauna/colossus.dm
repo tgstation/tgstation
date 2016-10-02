@@ -46,7 +46,7 @@ Difficulty: Very Hard
 	del_on_death = 1
 	medal_type = MEDAL_PREFIX
 	score_type = COLOSSUS_SCORE
-	loot = list(/obj/machinery/smartfridge/black_box)
+	loot = list(/obj/machinery/anomalous_crystal/random)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
@@ -121,13 +121,10 @@ Difficulty: Very Hard
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
-	var/enraged = FALSE
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.martial_art && prob(H.martial_art.deflection_chance))
-			enraged = TRUE
-
-	return enraged
+			. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	dir_shots(diagonals)
@@ -188,15 +185,15 @@ Difficulty: Very Hard
 		else
 			counter++
 		if(counter > 16)
-			counter = 0
-		if(counter < 0)
+			counter = 1
+		if(counter < 1)
 			counter = 16
 		shoot_projectile(marker)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
 		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
-	if(!marker)
+	if(!marker || marker == loc)
 		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
@@ -220,7 +217,9 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
-	for(var/turf/turf in range(1, target))
+	var/turf/T = get_turf(target)
+	newtonian_move(get_dir(T, targets_from))
+	for(var/turf/turf in range(1, T))
 		shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
@@ -275,7 +274,7 @@ Difficulty: Very Hard
 	icon_off = "blackbox"
 	luminosity = 8
 	max_n_of_items = INFINITY
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	pixel_y = -4
 	use_power = 0
 	var/memory_saved = FALSE
@@ -358,5 +357,419 @@ Difficulty: Very Hard
 
 /obj/machinery/smartfridge/black_box/default_deconstruction_crowbar()
 	return
+
+///Anomolous Crystal///
+
+/obj/machinery/anomalous_crystal
+	name = "anomalous crystal"
+	desc = "A strange chunk of crystal, being in the presence of it fills you with equal parts excitement and dread."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "anomaly_crystal"
+	luminosity = 8
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	use_power = 0
+	density = 1
+	languages_spoken = ALL
+	languages_understood = ALL
+	flags = HEAR
+	var/activation_method = "touch"
+	var/activation_damage_type = null
+	var/last_use_timer = 0
+	var/cooldown_add = 30
+	var/list/affected_targets = list()
+	var/activation_sound = 'sound/effects/break_stone.ogg'
+
+/obj/machinery/anomalous_crystal/New()
+	activation_method = pick("touch","laser","bullet","energy","bomb","mob_bump","heat","weapon","speech")
+	..()
+
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+	..()
+	if(isliving(speaker))
+		ActivationReaction(speaker,"speech")
+
+/obj/machinery/anomalous_crystal/attack_hand(mob/user)
+	..()
+	ActivationReaction(user,"touch")
+
+/obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
+	if(I.is_hot())
+		ActivationReaction(user,"heat")
+	else
+		ActivationReaction(user,"weapon")
+	..()
+
+/obj/machinery/anomalous_crystal/bullet_act(obj/item/projectile/P, def_zone)
+	..()
+	if(istype(P, /obj/item/projectile/magic))
+		ActivationReaction(P.firer, "magic", P.damage_type)
+		return
+	ActivationReaction(P.firer, P.flag, P.damage_type)
+
+/obj/machinery/anomalous_crystal/proc/ActivationReaction(mob/user, method, damtype)
+	if(world.time < last_use_timer)
+		return 0
+	if(activation_damage_type && activation_damage_type != damtype)
+		return 0
+	if(method != activation_method)
+		return 0
+	last_use_timer = (world.time + cooldown_add)
+	playsound(user, activation_sound, 100, 1)
+	return 1
+
+/obj/machinery/anomalous_crystal/Bumped(atom/AM as mob|obj)
+	..()
+	if(ismob(AM))
+		ActivationReaction(AM,"mob_bump")
+
+/obj/machinery/anomalous_crystal/ex_act()
+	ActivationReaction(null,"bomb")
+
+/obj/machinery/anomalous_crystal/random/New()//Just a random crysal spawner for loot
+	var/random_crystal = pick(typesof(/obj/machinery/anomalous_crystal) - /obj/machinery/anomalous_crystal/random - /obj/machinery/anomalous_crystal)
+	new random_crystal(loc)
+	qdel(src)
+
+/obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
+	activation_method = "mob_bump"
+	activation_sound = 'sound/items/bikehorn.ogg'
+
+/obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
+	if(..() && ishuman(user) && !(user in affected_targets))
+		var/mob/living/carbon/human/H = user
+		for(var/obj/item/W in H)
+			H.unEquip(W)
+		var/datum/job/clown/C = new /datum/job/clown()
+		C.equip(H)
+		qdel(C)
+		affected_targets.Add(H)
+
+/obj/machinery/anomalous_crystal/honk/New()
+	..()
+	activation_method = pick("mob_bump","speech")
+
+/obj/machinery/anomalous_crystal/theme_warp //Warps the area you're in to look like a new one
+	activation_method = "touch"
+	cooldown_add = 200
+	var/terrain_theme = "winter"
+	var/NewTerrainFloors
+	var/NewTerrainWalls
+	var/NewTerrainChairs
+	var/NewTerrainTables
+	var/list/NewFlora = list()
+	var/florachance = 8
+
+/obj/machinery/anomalous_crystal/theme_warp/New()
+	..()
+	terrain_theme = pick("lavaland","winter","jungle","ayy lmao")
+	switch(terrain_theme)
+		if("lavaland")//Depressurizes the place... and free cult metal, I guess.
+			NewTerrainFloors = /turf/open/floor/grass/snow/basalt
+			NewTerrainWalls = /turf/closed/wall/mineral/cult
+			NewFlora = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+			florachance = 1
+		if("winter") //Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.
+			NewTerrainFloors = /turf/open/floor/grass/snow
+			NewTerrainWalls = /turf/closed/wall/mineral/wood
+			NewTerrainChairs = /obj/structure/chair/wood/normal
+			NewTerrainTables = /obj/structure/table/glass
+			NewFlora = list(/obj/structure/flora/grass/green, /obj/structure/flora/grass/brown, /obj/structure/flora/grass/both)
+		if("jungle") //Beneficial due to actually having breathable air. Plus, monkeys and bows and arrows.
+			NewTerrainFloors = /turf/open/floor/grass
+			NewTerrainWalls = /turf/closed/wall/mineral/sandstone
+			NewTerrainChairs = /obj/structure/chair/wood
+			NewTerrainTables = /obj/structure/table/wood
+			NewFlora = list(/obj/structure/flora/ausbushes/sparsegrass, /obj/structure/flora/ausbushes/fernybush, /obj/structure/flora/ausbushes/leafybush,
+							/obj/structure/flora/ausbushes/grassybush, /obj/structure/flora/ausbushes/sunnybush, /obj/structure/flora/tree/palm, /mob/living/carbon/monkey,
+							/obj/item/weapon/gun/projectile/bow, /obj/item/weapon/storage/backpack/quiver/full)
+			florachance = 20
+		if("ayy lmao") //Beneficial, turns stuff into alien alloy which is useful to cargo and research. Also repairs atmos.
+			NewTerrainFloors = /turf/open/floor/plating/abductor
+			NewTerrainWalls = /turf/closed/wall/mineral/abductor
+			NewTerrainChairs = /obj/structure/bed/abductor //ayys apparently don't have chairs. An entire species of people who only recline.
+			NewTerrainTables = /obj/structure/table/abductor
+
+/obj/machinery/anomalous_crystal/theme_warp/ActivationReaction(mob/user, method)
+	if(..())
+		var/area/A = get_area(src)
+		if(!A.outdoors && !(A in affected_targets))
+			for(var/atom/Stuff in A)
+				if(isturf(Stuff))
+					var/turf/T = Stuff
+					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
+						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
+						if(O.air)
+							var/datum/gas_mixture/G = O.air
+							G.copy_from_turf(O)
+						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O))
+							var/atom/Picked = pick(NewFlora)
+							new Picked(O)
+						continue
+					if(iswallturf(T) && NewTerrainWalls)
+						T.ChangeTurf(NewTerrainWalls)
+						continue
+				if(istype(Stuff, /obj/structure/chair) && NewTerrainChairs)
+					var/obj/structure/chair/Original = Stuff
+					var/obj/structure/chair/C = new NewTerrainChairs(Original.loc)
+					C.setDir(Original.dir)
+					qdel(Stuff)
+					continue
+				if(istype(Stuff, /obj/structure/table) && NewTerrainTables)
+					new NewTerrainTables(Stuff.loc)
+					continue
+			affected_targets += A
+
+/obj/machinery/anomalous_crystal/emitter //Generates a projectile when interacted with
+	activation_method = "touch"
+	cooldown_add = 50
+	var/generated_projectile = /obj/item/projectile/beam/emitter
+
+/obj/machinery/anomalous_crystal/emitter/New()
+	..()
+	generated_projectile = pick(/obj/item/projectile/magic/fireball/infernal,/obj/item/projectile/magic/spellblade,
+								 /obj/item/projectile/bullet/meteorshot, /obj/item/projectile/beam/xray, /obj/item/projectile/colossus)
+
+/obj/machinery/anomalous_crystal/emitter/ActivationReaction(mob/user, method)
+	if(..())
+		var/obj/item/projectile/P = new generated_projectile(get_turf(src))
+		P.setDir(dir)
+		switch(dir)
+			if(NORTH)
+				P.yo = 20
+				P.xo = 0
+			if(EAST)
+				P.yo = 0
+				P.xo = 20
+			if(WEST)
+				P.yo = 0
+				P.xo = -20
+			else
+				P.yo = -20
+				P.xo = 0
+		P.fire()
+
+/obj/machinery/anomalous_crystal/dark_reprise //Revives anyone nearby, but turns them into shadowpeople and renders them uncloneable, so the crystal is your only hope of getting up again if you go down.
+	activation_method = "touch"
+	activation_sound = 'sound/hallucinations/growl1.ogg'
+
+/obj/machinery/anomalous_crystal/dark_reprise/ActivationReaction(mob/user, method)
+	if(..())
+		for(var/i in range(1, src))
+			if(isturf(i))
+				PoolOrNew(/obj/effect/overlay/temp/cult/sparks, i)
+				continue
+			if(ishuman(i))
+				var/mob/living/carbon/human/H = i
+				if(H.stat == DEAD)
+					H.set_species(/datum/species/shadow, 1)
+					H.revive(1,0)
+					H.disabilities |= NOCLONE //Free revives, but significantly limits your options for reviving except via the crystal
+					H.grab_ghost(force = TRUE)
+
+/obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
+	activation_method = "touch"
+	var/ready_to_deploy = 0
+
+/obj/machinery/anomalous_crystal/helpers/ActivationReaction(mob/user, method)
+	if(..() && !ready_to_deploy)
+		ready_to_deploy = 1
+		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
+
+/obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
+	..()
+	if(ready_to_deploy)
+		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
+		if(be_helper == "No")
+			return
+		var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
+		W.key = user.key
+
+/obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
+	if(href_list["ghostjoin"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			attack_ghost(ghost)
+
+/mob/living/simple_animal/hostile/lightgeist
+	name = "lightgeist"
+	desc = "This small floating creature is a completely unknown form of life... being near it fills you with a sense of tranquility."
+	icon_state = "lightgeist"
+	icon_living = "lightgeist"
+	icon_dead = "butterfly_dead"
+	turns_per_move = 1
+	response_help = "waves away"
+	response_disarm = "brushes aside"
+	response_harm = "disrupts"
+	speak_emote = list("oscillates")
+	maxHealth = 2
+	health = 2
+	harm_intent_damage = 1
+	friendly = "mends"
+	density = 0
+	flying = 1
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	ventcrawler = 2
+	mob_size = MOB_SIZE_TINY
+	gold_core_spawnable = 0
+	verb_say = "warps"
+	verb_ask = "floats inquisitively"
+	verb_exclaim = "zaps"
+	verb_yell = "bangs"
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	luminosity = 4
+	faction = list("neutral")
+	languages_spoken = SLIME
+	languages_understood = ALL
+	del_on_death = 1
+	unsuitable_atmos_damage = 0
+	flying = 1
+	minbodytemp = 0
+	maxbodytemp = 1500
+	environment_smash = 0
+	AIStatus = AI_OFF
+	stop_automated_movement = 1
+	var/heal_power = 5
+
+/mob/living/simple_animal/hostile/lightgeist/New()
+	..()
+	verbs -= /mob/living/verb/pulled
+	verbs -= /mob/verb/me_verb
+	var/datum/atom_hud/medsensor = huds[DATA_HUD_MEDICAL_ADVANCED]
+	medsensor.add_hud_to(src)
+
+/mob/living/simple_animal/hostile/lightgeist/AttackingTarget()
+	..()
+	if(isliving(target) && target != src)
+		var/mob/living/L = target
+		if(L.stat < DEAD)
+			L.heal_overall_damage(heal_power, heal_power)
+			PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
+
+/mob/living/simple_animal/hostile/lightgeist/ghostize()
+	if(..())
+		death()
+
+
+/obj/machinery/anomalous_crystal/refresher //Deletes and recreates a copy of the item, "refreshing" it.
+	activation_method = "touch"
+	cooldown_add = 50
+	activation_sound = 'sound/magic/TIMEPARADOX2.ogg'
+	var/list/banned_items_typecache = list(/obj/item/weapon/storage, /obj/item/weapon/implant, /obj/item/weapon/implanter, /obj/item/weapon/disk/nuclear, /obj/item/projectile, /obj/item/weapon/spellbook)
+
+/obj/machinery/anomalous_crystal/refresher/New()
+	..()
+	banned_items_typecache = typecacheof(banned_items_typecache)
+
+
+/obj/machinery/anomalous_crystal/refresher/ActivationReaction(mob/user, method)
+	if(..())
+		var/list/L = list()
+		var/turf/T = get_step(src, dir)
+		PoolOrNew(/obj/effect/overlay/temp/emp/pulse,T)
+		for(var/i in T)
+			if(istype(i, /obj/item) && !is_type_in_typecache(i, banned_items_typecache))
+				var/obj/item/W = i
+				if(!W.admin_spawned)
+					L += W
+		if(L.len)
+			var/obj/item/CHOSEN = pick(L)
+			new CHOSEN.type(T)
+			qdel(CHOSEN)
+
+/obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
+	activation_method = "touch"
+
+/obj/machinery/anomalous_crystal/possessor/ActivationReaction(mob/user, method)
+	if(..())
+		if(ishuman(user))
+			var/mobcheck = 0
+			for(var/mob/living/simple_animal/A in range(1, src))
+				if(A.melee_damage_upper > 5 || A.mob_size >= MOB_SIZE_LARGE || A.ckey || A.stat)
+					break
+				var/obj/structure/closet/stasis/S = new /obj/structure/closet/stasis(A)
+				user.forceMove(S)
+				mobcheck = 1
+				break
+			if(!mobcheck)
+				new /mob/living/simple_animal/cockroach(get_step(src,dir)) //Just in case there aren't any animals on the station, this will leave you with a terrible option to possess if you feel like it
+
+/obj/structure/closet/stasis
+	name = "quantum entanglement stasis warp field"
+	desc = "You can hardly comprehend this thing... which is why you can't see it."
+	icon_state = null //This shouldn't even be visible, so if it DOES show up, at least nobody will notice
+	density = 1
+	anchored = 1
+	health = 999
+	var/mob/living/simple_animal/holder_animal
+
+/obj/structure/closet/stasis/process()
+	if(holder_animal)
+		if(holder_animal.stat == DEAD && !qdeleted(holder_animal))
+			dump_contents()
+			holder_animal.gib()
+			return
+
+/obj/structure/closet/stasis/New()
+	..()
+	if(isanimal(loc))
+		holder_animal = loc
+	START_PROCESSING(SSobj, src)
+
+/obj/structure/closet/stasis/Entered(atom/A)
+	if(isliving(A) && holder_animal)
+		var/mob/living/L = A
+		L.notransform = 1
+		L.disabilities |= MUTE
+		L.status_flags |= GODMODE
+		L.mind.transfer_to(holder_animal)
+		var/obj/effect/proc_holder/spell/targeted/exit_possession/P = new /obj/effect/proc_holder/spell/targeted/exit_possession
+		holder_animal.mind.AddSpell(P)
+		holder_animal.verbs -= /mob/living/verb/pulled
+
+/obj/structure/closet/stasis/dump_contents(var/kill = 1)
+	STOP_PROCESSING(SSobj, src)
+	for(var/mob/living/L in src)
+		L.disabilities &= ~MUTE
+		L.status_flags &= ~GODMODE
+		L.notransform = 0
+		if(holder_animal && !qdeleted(holder_animal))
+			holder_animal.mind.transfer_to(L)
+			L.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)
+		if(kill || !isanimal(loc))
+			L.death(0)
+	..()
+
+/obj/structure/closet/stasis/emp_act()
+	return
+
+/obj/structure/closet/stasis/ex_act()
+	return
+
+/obj/effect/proc_holder/spell/targeted/exit_possession
+	name = "Exit Possession"
+	desc = "Exits the body you are possessing"
+	charge_max = 60
+	clothes_req = 0
+	invocation_type = "none"
+	max_targets = 1
+	range = -1
+	include_user = 1
+	selection_type = "view"
+	action_icon_state = "exit_possession"
+	sound = null
+
+/obj/effect/proc_holder/spell/targeted/exit_possession/cast(list/targets, mob/user = usr)
+	if(!isfloorturf(user.loc))
+		return
+	var/datum/mind/target_mind = user.mind
+	for(var/i in user)
+		if(istype(i, /obj/structure/closet/stasis))
+			var/obj/structure/closet/stasis/S = i
+			S.dump_contents(0)
+			qdel(S)
+			break
+	user.gib()
+	target_mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)
+
 
 #undef MEDAL_PREFIX

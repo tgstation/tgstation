@@ -55,7 +55,6 @@ var/datum/subsystem/ticker/ticker
 
 	var/maprotatechecked = 0
 
-
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
@@ -222,21 +221,21 @@ var/datum/subsystem/ticker/ticker
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
 
-	var/obj/structure/bed/temp_buckle = new(src)
 	if(station_missed)
 		for(var/mob/M in mob_list)
-			M.buckled = temp_buckle				//buckles the mob so it can't do anything
+			M.notransform = TRUE //stop everything moving
 			if(M.client)
 				M.client.screen += cinematic	//show every client the cinematic
 	else	//nuke kills everyone on z-level 1 to prevent "hurr-durr I survived"
 		for(var/mob/M in mob_list)
-			M.buckled = temp_buckle
 			if(M.client)
 				M.client.screen += cinematic
 			if(M.stat != DEAD)
 				var/turf/T = get_turf(M)
 				if(T && T.z==1)
 					M.death(0) //no mercy
+				else
+					M.notransform=TRUE //no moving for you
 
 	//Now animate the cinematic
 	switch(station_missed)
@@ -300,8 +299,8 @@ var/datum/subsystem/ticker/ticker
 					if(cinematic)
 						qdel(cinematic)
 						cinematic = null
-					if(temp_buckle)
-						qdel(temp_buckle)
+					for(var/mob/M in mob_list)
+						M.notransform = FALSE
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
@@ -314,8 +313,8 @@ var/datum/subsystem/ticker/ticker
 	spawn(300)
 		if(cinematic)
 			qdel(cinematic)		//end the cinematic
-		if(temp_buckle)
-			qdel(temp_buckle)	//release everybody
+		for(var/mob/M in mob_list)
+			M.notransform = FALSE //gratz you survived
 	return
 
 
@@ -442,6 +441,8 @@ var/datum/subsystem/ticker/ticker
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	mode.declare_station_goal_completion()
 
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(SSgarbage.didntgc.len)

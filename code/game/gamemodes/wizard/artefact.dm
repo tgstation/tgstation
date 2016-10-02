@@ -34,7 +34,6 @@
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
 	density = 1
-	unacidable = 1
 	anchored = 1
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
@@ -173,7 +172,7 @@
 		return
 
 	for(var/X in spooky_scaries)
-		if(!istype(X, /mob/living/carbon/human))
+		if(!ishuman(X))
 			spooky_scaries.Remove(X)
 			continue
 		var/mob/living/carbon/human/H = X
@@ -191,8 +190,8 @@
 	H.equip_to_slot_or_del(new hat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/shield/riot/roman(H), slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_r_hand)
+	H.put_in_hands_or_del(new /obj/item/weapon/shield/riot/roman(H))
+	H.put_in_hands_or_del(new /obj/item/weapon/claymore(H))
 	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
 
 
@@ -337,15 +336,15 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/really_black(M), slot_w_uniform)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("roman")
 			var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
 			M.equip_to_slot_or_del(new hat(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/roman(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/weapon/shield/riot/roman(M), slot_l_hand)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(new /obj/item/weapon/shield/riot/roman(M))
+			M.put_in_hands_or_del(sword)
 
 		if("wizard")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), slot_w_uniform)
@@ -353,13 +352,13 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/red(M), slot_head)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 		if("cyborg")
 			for(var/X in M.bodyparts)
 				var/obj/item/bodypart/affecting = X
-				affecting.change_bodypart_status(ORGAN_ROBOTIC)
+				affecting.change_bodypart_status(BODYPART_ROBOTIC)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("syndicate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(M), slot_w_uniform)
@@ -369,34 +368,34 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(M),slot_wear_mask)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("assistant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("animu")
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/schoolgirl/red(M), slot_w_uniform)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("cultist")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("highlander")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("clown")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(M), slot_w_uniform)
@@ -404,7 +403,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(M), slot_l_store)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("killer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/overalls(M), slot_w_uniform)
@@ -416,7 +415,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/apron(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/scalpel(M), slot_r_store)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 			for(var/obj/item/carried_item in M.contents)
 				if(!istype(carried_item, /obj/item/weapon/implant))
 					carried_item.add_mob_blood(M)
@@ -427,7 +426,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/bandana(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("soviet")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/pirate/captain(M), slot_head)
@@ -436,7 +435,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/pirate/captain(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("officer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/beret(M), slot_head)
@@ -447,20 +446,19 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/jacket/miljacket(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 		if("gladiator")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/gladiator(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/gladiator(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
+			M.put_in_hands_or_del(sword)
 
 
 		else
 			return
 
-	M.update_icons()
 	M.update_body_parts()
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
@@ -484,7 +482,7 @@ var/global/list/multiverse = list()
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
 	burntime = 0
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)

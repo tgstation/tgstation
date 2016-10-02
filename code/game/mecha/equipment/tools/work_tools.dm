@@ -50,7 +50,7 @@
 		else
 			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
 		if(chassis.occupant.a_intent == "harm")
@@ -99,7 +99,7 @@
 		else
 			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
 		if(chassis.occupant.a_intent == "harm")
@@ -216,14 +216,14 @@
 
 	switch(mode)
 		if(0)
-			if (istype(target, /turf/closed/wall))
+			if(iswallturf(target))
 				var/turf/closed/wall/W = target
 				occupant_message("Deconstructing [W]...")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
 					W.ChangeTurf(/turf/open/floor/plating)
 					playsound(W, 'sound/items/Deconstruct.ogg', 50, 1)
-			else if (istype(target, /turf/open/floor))
+			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
@@ -237,14 +237,14 @@
 					qdel(target)
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(1)
-			if(istype(target, /turf/open/space))
+			if(isspaceturf(target))
 				var/turf/open/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
 					S.ChangeTurf(/turf/open/floor/plating)
 					playsound(S, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
-			else if(istype(target, /turf/open/floor))
+			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
@@ -252,7 +252,7 @@
 					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)
-			if(istype(target, /turf/open/floor))
+			if(isfloorturf(target))
 				occupant_message("Building Airlock...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
@@ -386,7 +386,7 @@
 	last_piece = null
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(var/turf/new_turf)
-	if(istype(new_turf, /turf/open/floor))
+	if(isfloorturf(new_turf))
 		var/turf/open/floor/T = new_turf
 		if(!istype(T, /turf/open/floor/plating))
 			if(!T.broken && !T.burnt)

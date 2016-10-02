@@ -113,7 +113,7 @@
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -140,21 +140,21 @@
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
 			return
 
 		var/add_to = href_list["add_inv"]
 
 		switch(add_to)
 			if("head")
-				place_on_head(usr.get_active_hand(),usr)
+				place_on_head(usr.get_active_held_item(),usr)
 
 			if("back")
 				if(inventory_back)
 					usr << "<span class='warning'>It's already wearing something!</span>"
 					return
 				else
-					var/obj/item/item_to_add = usr.get_active_hand()
+					var/obj/item/item_to_add = usr.get_active_held_item()
 
 					if(!item_to_add)
 						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")

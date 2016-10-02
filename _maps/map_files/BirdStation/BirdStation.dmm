@@ -446,8 +446,8 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/robot_parts/r_arm,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/r_arm/robot,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abh" = (
@@ -15000,8 +15000,7 @@
 /area/maintenance/asmaint2)
 "aLm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	name = "acidproof air injector";
-	unacidable = 1
+	name = "acidproof air injector"
 	},
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
@@ -20926,7 +20925,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
 "aZw" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating{
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating"

@@ -26,7 +26,8 @@
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
 	..()
-	if(status && prob(throw_hit_chance))
+	//Only mob/living types have stun handling
+	if(status && prob(throw_hit_chance) && isliving(hit_atom))
 		baton_stun(hit_atom)
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
@@ -110,9 +111,10 @@
 		deductcharge(hitcost)
 		return
 
-	if(isrobot(M))
+	if(iscyborg(M))
 		..()
 		return
+
 	if(!isliving(M))
 		return
 
@@ -138,7 +140,7 @@
 		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
 			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
-	if(isrobot(loc))
+	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(hitcost))
 			return 0
@@ -175,12 +177,13 @@
 	desc = "An improvised stun baton."
 	icon_state = "stunprod_nocell"
 	item_state = "prod"
+	w_class = 4
 	force = 3
 	throwforce = 5
 	stunforce = 5
-	hitcost = 2500
+	hitcost = 2000
 	throw_hit_chance = 10
-	slot_flags = null
+	slot_flags = SLOT_BACK
 	var/obj/item/device/assembly/igniter/sparkler = 0
 
 /obj/item/weapon/melee/baton/cattleprod/New()

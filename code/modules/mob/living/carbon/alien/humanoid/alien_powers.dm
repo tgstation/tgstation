@@ -48,7 +48,7 @@ Doesn't work on other aliens/AI.*/
 		if(!silent)
 			user << "<span class='noticealien'>Not enough plasma stored.</span>"
 		return 0
-	if(check_turf && (!isturf(user.loc) || istype(user.loc, /turf/open/space)))
+	if(check_turf && (!isturf(user.loc) || isspaceturf(user.loc)))
 		if(!silent)
 			user << "<span class='noticealien'>Bad place for a garden!</span>"
 		return 0
@@ -145,7 +145,7 @@ Doesn't work on other aliens/AI.*/
 		// OBJ CHECK
 		if(isobj(target))
 			var/obj/I = target
-			if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
+			if(I.resistance_flags & UNACIDABLE)//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		// TURF CHECK

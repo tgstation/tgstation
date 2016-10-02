@@ -1,6 +1,7 @@
 
 /mob/living/simple_animal/hostile/clockwork
 	faction = list("ratvar")
+	gender = NEUTER
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	unique_name = 1
 	minbodytemp = 0
@@ -31,6 +32,22 @@
 	..()
 	src << playstyle_string
 
+/mob/living/simple_animal/hostile/clockwork/examine(mob/user)
+	var/t_He = they_pronoun(TRUE)
+	var/plurality = (gender == PLURAL)
+	var/msg = "<span class='brass'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	msg += "[desc]\n"
+	if(health < maxHealth)
+		msg += "<span class='warning'>"
+		if (src.health >= src.maxHealth/2)
+			msg += "[t_He] look[plurality ? "":"s"] slightly dented.\n"
+		else
+			msg += "<b>[t_He] look[plurality ? "":"s"] severely dented!</b>\n"
+		msg += "</span>"
+	msg += "*---------*</span>"
+
+	user << msg
+
 /mob/living/simple_animal/hostile/clockwork/fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
@@ -38,8 +55,8 @@
 	health = 90
 	maxHealth = 90
 	speed = -1
-	melee_damage_lower = 20
-	melee_damage_upper = 20
+	melee_damage_lower = 18
+	melee_damage_upper = 18
 	attacktext = "crushes"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	loot = list(/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment)
@@ -261,7 +278,7 @@
 	if(amount > 0)
 		combattimer = world.time + initial(combattimer)
 		for(var/mob/living/L in view(2, src))
-			if(istype(L.l_hand, /obj/item/weapon/nullrod) || istype(L.r_hand, /obj/item/weapon/nullrod)) //hand-held holy weapons increase the damage it takes
+			if(L.is_holding_item_of_type(/obj/item/weapon/nullrod))
 				src << "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>"
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break

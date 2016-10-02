@@ -444,7 +444,7 @@
 	if(pestlevel > 5)
 		visible_message("<span class='warning'>The pests seem to behave oddly...</span>")
 		for(var/i=0, i<3, i++)
-			var/obj/effect/spider/spiderling/S = new(src.loc)
+			var/obj/structure/spider/spiderling/S = new(src.loc)
 			S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
 	else
 		usr << "<span class='warning'>The pests seem to behave oddly, but quickly settle down...</span>"
@@ -857,6 +857,10 @@
 		user.visible_message("<span class='notice'>[user] digs out the plants in [src]!</span>", "<span class='notice'>You dig out all of [src]'s plants!</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		if(myseed) //Could be that they're just using it as a de-weeder
+			age = 0
+			health = 0
+			if(harvest)
+				harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
 			qdel(myseed)
 			myseed = null
 		weedlevel = 0 //Has a side effect of cleaning up those nasty weeds

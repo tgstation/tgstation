@@ -17,7 +17,7 @@
 	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 5
 	dog_fashion = /datum/dog_fashion/head
 
@@ -40,7 +40,7 @@
 
 /obj/item/weapon/paper/update_icon()
 
-	if(burn_state == ON_FIRE)
+	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
 		return
 	if(info)
@@ -257,14 +257,14 @@
 		var/t =  stripped_multiline_input("Enter what you want to write:", "Write")
 		if(!t)
 			return
-		var/obj/item/i = usr.get_active_hand()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
+		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
 		if(!istype(i, /obj/item/weapon/pen))
 			if(!istype(i, /obj/item/toy/crayon))
 				return
 			iscrayon = 1
 
-		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != usr && usr.get_active_hand() != i)	//Some check to see if he's allowed to write
+		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != usr && usr.get_active_held_item() != i)	//Some check to see if he's allowed to write
 			return
 
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
@@ -283,7 +283,7 @@
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
 
-	if(burn_state == ON_FIRE)
+	if(resistance_flags & ON_FIRE)
 		return
 
 	if(is_blind(user))

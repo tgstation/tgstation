@@ -640,7 +640,7 @@
 		if(C.client)
 			C.blur_eyes(3)
 			C.blind_eyes(1)
-		if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS.
+		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
 			C.confused = max(C.confused, 3)
 			C.Weaken(3)
 		if(ishuman(C) && actually_paints)
@@ -710,7 +710,7 @@
 
 /obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
 	var/diff = ..()
-	if(!isrobot(user))
+	if(!iscyborg(user))
 		user << "<span class='notice'>How did you get this?</span>"
 		qdel(src)
 		return FALSE

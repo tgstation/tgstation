@@ -30,33 +30,32 @@
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-#define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			19
-#define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
-#define EARS_LAYER				15
-#define SUIT_LAYER				14
-#define GLASSES_LAYER			13
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		11
-#define BACK_LAYER				10
-#define HAIR_LAYER				9		//TODO: make part of head layer?
-#define FACEMASK_LAYER			8
-#define HEAD_LAYER				7
-#define HANDCUFF_LAYER			6
-#define LEGCUFF_LAYER			5
-#define L_HAND_LAYER			4
-#define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
+#define MUTATIONS_LAYER			25		//mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		24		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			23		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			22		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				21		//underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	20		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			19		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			18
+#define ID_LAYER				17
+#define SHOES_LAYER				16
+#define GLOVES_LAYER			15
+#define EARS_LAYER				14
+#define SUIT_LAYER				13
+#define GLASSES_LAYER			12
+#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		10
+#define BACK_LAYER				9
+#define HAIR_LAYER				8		//TODO: make part of head layer?
+#define FACEMASK_LAYER			7
+#define HEAD_LAYER				6
+#define HANDCUFF_LAYER			5
+#define LEGCUFF_LAYER			4
+#define HANDS_LAYER				3
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			25		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -82,8 +81,7 @@
 #define UNDER_HEAD_LAYER			HEAD_LAYER+1
 #define UNDER_HANDCUFF_LAYER		HANDCUFF_LAYER+1
 #define UNDER_LEGCUFF_LAYER			LEGCUFF_LAYER+1
-#define UNDER_L_HAND_LAYER			L_HAND_LAYER+1
-#define UNDER_R_HAND_LAYER			R_HAND_LAYER+1
+#define UNDER_HANDS_LAYER			HANDS_LAYER+1
 #define UNDER_BODY_FRONT_LAYER		BODY_FRONT_LAYER+1
 #define UNDER_FIRE_LAYER			FIRE_LAYER+1
 
@@ -109,8 +107,7 @@
 #define ABOVE_HEAD_LAYER			HEAD_LAYER-1
 #define ABOVE_HANDCUFF_LAYER		HANDCUFF_LAYER-1
 #define ABOVE_LEGCUFF_LAYER			LEGCUFF_LAYER-1
-#define ABOVE_L_HAND_LAYER			L_HAND_LAYER-1
-#define ABOVE_R_HAND_LAYER			R_HAND_LAYER-1
+#define ABOVE_HANDS_LAYER			HANDS_LAYER-1
 #define ABOVE_BODY_FRONT_LAYER		BODY_FRONT_LAYER-1
 #define ABOVE_FIRE_LAYER			FIRE_LAYER-1
 
@@ -343,11 +340,15 @@ var/list/bloody_footprints_cache = list()
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 
-//Fire stuff, for burn_state
-#define LAVA_PROOF -2
-#define FIRE_PROOF -1
-#define FLAMMABLE 0
-#define ON_FIRE 1
+
+//Fire and Acid stuff, for resistance_flags
+#define LAVA_PROOF 1
+#define FIRE_PROOF 2 //not flammable (but may or may not take damage from fire)
+#define ON_FIRE 4
+#define UNACIDABLE 8 //acid can't even appear on it, let alone melt it.
+#define ACID_PROOF 16 //acid stuck on it doesn't melt it.
+#define INDESTRUCTIBLE 32 //doesn't take damage
+#define EMP_PROOF 64 //immune to emp
 
 
 //Ghost orbit types:
@@ -485,7 +486,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define STORAGE_VIEW_DEPTH	2
 
 
-
 // Medal names
 
 #define BOSS_KILL_MEDAL "Killer"
@@ -529,3 +529,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Caps for NTNet logging. Less than 10 would make logging useless anyway, more than 500 may make the log browser too laggy. Defaults to 100 unless user changes it.
 #define MAX_NTNET_LOGS 300
 #define MIN_NTNET_LOGS 10
+//TODO Move to a pref
+#define STATION_GOAL_BUDGET  1
+
+//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
+#define LUMA_R 0.213
+#define LUMA_G 0.715
+#define LUMA_B 0.072

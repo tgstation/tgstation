@@ -42,3 +42,6 @@ var/cmp_field = "name"
 
 /proc/cmp_clientcolour_priority(datum/client_colour/A, datum/client_colour/B)
 	return B.priority - A.priority
+
+/proc/cmp_clockscripture_priority(datum/clockwork_scripture/A, datum/clockwork_scripture/B)
+	return initial(A.sort_priority) - initial(B.sort_priority)

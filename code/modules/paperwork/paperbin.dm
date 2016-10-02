@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	pressure_resistance = 8
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	var/amount = 30					//How much paper is in the bin.
 	var/list/papers = list()	//List of papers put in the bin for reference.
 
@@ -43,11 +43,7 @@
 		if(!remove_item_from_storage(M))
 			if(!M.unEquip(src))
 				return
-		switch(H.slot_id)
-			if(slot_r_hand)
-				M.put_in_r_hand(src)
-			if(slot_l_hand)
-				M.put_in_l_hand(src)
+		M.put_in_hand(src, H.held_index)
 
 	add_fingerprint(M)
 

@@ -14,7 +14,7 @@
 	pass_flags = PASSBLOB
 	faction = list("blob")
 
-	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
+	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/last_attack = 0
@@ -72,7 +72,7 @@
 
 /mob/camera/blob/Destroy()
 	for(var/BL in blobs)
-		var/obj/effect/blob/B = BL
+		var/obj/structure/blob/B = BL
 		if(B && B.overmind == src)
 			B.overmind = null
 			B.update_icon() //reset anything that was ours
@@ -150,7 +150,7 @@
 /mob/camera/blob/emote(act,m_type=1,message = null)
 	return
 
-/mob/camera/blob/blob_act(obj/effect/blob/B)
+/mob/camera/blob/blob_act(obj/structure/blob/B)
 	return
 
 /mob/camera/blob/Stat()
@@ -173,14 +173,14 @@
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)
 	if(placed)
-		var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
+		var/obj/structure/blob/B = locate() in range("3x3", NewLoc)
 		if(B)
 			loc = NewLoc
 		else
 			return 0
 	else
 		var/area/A = get_area(NewLoc)
-		if(istype(NewLoc, /turf/open/space) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
+		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
 			return 0
 		loc = NewLoc
 		return 1

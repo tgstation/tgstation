@@ -10,7 +10,7 @@
 	item_color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 5
 	var/paintleft = 10
 
@@ -57,7 +57,7 @@
 
 /obj/item/weapon/paint/anycolor/attack_self(mob/user)
 	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
-	if ((user.get_active_hand() != src || user.stat || user.restrained()))
+	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
 		return
 	switch(t1)
 		if("red")
@@ -83,7 +83,7 @@
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
 		return
-	if(!istype(target) || istype(target, /turf/open/space))
+	if(!istype(target) || isspaceturf(target))
 		return
 	target.color = "#" + item_color
 

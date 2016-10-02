@@ -100,13 +100,13 @@
 /obj/item/organ/gland/pop
 	cooldown_low = 900
 	cooldown_high = 1800
-	uses = 6
+	uses = -1
 	human_only = 1
 	icon_state = "species"
 
 /obj/item/organ/gland/pop/activate()
 	owner << "<span class='notice'>You feel unlike yourself.</span>"
-	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly))
+	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly,/datum/species/jelly))
 	owner.set_species(species)
 
 /obj/item/organ/gland/ventcrawling
@@ -159,7 +159,7 @@
 /obj/item/organ/gland/spiderman/activate()
 	owner << "<span class='warning'>You feel something crawling in your skin.</span>"
 	owner.faction |= "spiders"
-	new /obj/effect/spider/spiderling(owner.loc)
+	new /obj/structure/spider/spiderling(owner.loc)
 
 /obj/item/organ/gland/egg
 	cooldown_low = 300
@@ -241,10 +241,10 @@
 		qdel(src)
 
 /obj/item/organ/gland/plasma
-	cooldown_low = 2400
-	cooldown_high = 3000
+	cooldown_low = 1200
+	cooldown_high = 1800
 	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
-	uses = 1
+	uses = -1
 
 /obj/item/organ/gland/plasma/activate()
 	owner << "<span class='warning'>You feel bloated.</span>"
@@ -253,9 +253,9 @@
 	owner << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
 	sleep(50)
 	if(!owner) return
-	owner.visible_message("<span class='danger'>[owner] explodes in a cloud of plasma!</span>")
+	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")
 	var/turf/open/T = get_turf(owner)
 	if(istype(T))
-		T.atmos_spawn_air("plasma=300;TEMP=[T20C]")
-	owner.gib()
+		T.atmos_spawn_air("plasma=50;TEMP=[T20C]")
+	owner.vomit()
 	return

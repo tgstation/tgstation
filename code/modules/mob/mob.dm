@@ -178,11 +178,6 @@ var/next_mob_id = 0
 	return
 
 /mob/proc/get_item_by_slot(slot_id)
-	switch(slot_id)
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 	return null
 
 /mob/proc/restrained(ignore_grab)
@@ -193,7 +188,7 @@ var/next_mob_id = 0
 
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
-	var/obj/item/W = get_active_hand()
+	var/obj/item/W = get_active_held_item()
 
 	if(istype(W))
 		if(equip_to_slot_if_possible(W, slot,0,0,0))
@@ -399,16 +394,11 @@ var/next_mob_id = 0
 	if(incapacitated())
 		return
 
-	if(hand)
-		var/obj/item/W = l_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_l_hand()
-	else
-		var/obj/item/W = r_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_r_hand()
+	var/obj/item/I = get_active_held_item()
+	if(I)
+		I.attack_self(src)
+		update_inv_hands()
+
 
 /*
 /mob/verb/dump_source()
@@ -424,6 +414,7 @@ var/next_mob_id = 0
 /mob/verb/memory()
 	set name = "Notes"
 	set category = "IC"
+	set desc = "View your character's notes memory."
 	if(mind)
 		mind.show_memory(src)
 	else
@@ -508,8 +499,8 @@ var/next_mob_id = 0
 		return
 
 	var/mob/mob_eye = creatures[eye_name]
-
-	if(client && mob_eye)
+	//Istype so we filter out points of interest that are not mobs
+	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
 		if(isobserver(src))
 			src.client.screen = list()
@@ -538,8 +529,13 @@ var/next_mob_id = 0
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
-			var/obj/item/what = get_item_by_slot(slot)
-
+			var/hand_index = text2num(href_list["hand_index"])
+			var/obj/item/what
+			if(hand_index)
+				what = get_item_for_held_index(hand_index)
+				slot = list(slot,hand_index)
+			else
+				what = get_item_by_slot(slot)
 			if(what)
 				usr.stripPanelUnequip(what,src,slot)
 			else
@@ -632,7 +628,7 @@ var/next_mob_id = 0
 			var/list/overrides = list()
 			for(var/image/I in client.images)
 				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides = I.loc
+					overrides += I.loc
 			for(var/atom/A in listed_turf)
 				if(!A.mouse_opacity)
 					continue
@@ -694,8 +690,7 @@ var/next_mob_id = 0
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
 	if(ko || resting || stunned || chokehold)
-		drop_r_hand()
-		drop_l_hand()
+		drop_all_held_items()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
@@ -719,7 +714,7 @@ var/next_mob_id = 0
 			layer = initial(layer)
 	update_transform()
 	update_action_buttons_icon()
-	if(istype(src, /mob/living))
+	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))
 			canmove = 0
@@ -728,8 +723,7 @@ var/next_mob_id = 0
 
 
 /mob/proc/fall(forced)
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 
 /mob/verb/eastface()
 	set hidden = 1

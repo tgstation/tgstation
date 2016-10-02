@@ -13,7 +13,7 @@
 
 	var/PathNode/PNode = null //associated PathNode in the A* algorithm
 
-	flags = 0
+	flags = CAN_BE_DIRTY
 
 	var/list/proximity_checkers = list()
 
@@ -176,6 +176,8 @@
 
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
+		if(!S.air)
+			continue
 		var/list/S_gases = S.air.gases
 		for(var/id in S_gases)
 			total.assert_gas(id)
@@ -323,3 +325,6 @@
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
+
+/turf/proc/is_transition_turf()
+	return

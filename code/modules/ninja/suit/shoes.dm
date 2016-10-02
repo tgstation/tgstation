@@ -6,6 +6,7 @@
 	item_state = "secshoes"
 	permeability_coefficient = 0.01
 	flags = NOSLIP
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	strip_delay = 120
 	cold_protection = FEET

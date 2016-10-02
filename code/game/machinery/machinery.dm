@@ -189,7 +189,7 @@ Class Procs:
 	updateUsrDialog()
 	update_icon()
 
-/obj/machinery/blob_act(obj/effect/blob/B)
+/obj/machinery/blob_act(obj/structure/blob/B)
 	if(density && prob(75))
 		qdel(src)
 
@@ -296,7 +296,7 @@ Class Procs:
 
 
 /obj/machinery/attack_ai(mob/user)
-	if(isrobot(user))// For some reason attack_robot doesn't work
+	if(iscyborg(user))// For some reason attack_robot doesn't work
 		var/mob/living/silicon/robot/R = user
 		if(R.client && R.client.eye == R && !R.low_power_mode)// This is to stop robots from using cameras to remotely control machines; and from using machines when the borg has no power.
 			return attack_hand(user)
@@ -313,11 +313,6 @@ Class Procs:
 	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(prob(H.getBrainLoss()))
-			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
-			return 1
 	if(!is_interactable())
 		return 1
 	if(set_machine)
@@ -348,15 +343,18 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
-		deconstruction()
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
-		transfer_fingerprints_to(M)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			I.loc = loc
-		qdel(src)
+		deconstruct()
+
+/obj/machinery/proc/deconstruct()
+	on_deconstruction()
+	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
+	transfer_fingerprints_to(M)
+	M.state = 2
+	M.icon_state = "box_1"
+	for(var/obj/item/I in component_parts)
+		I.forceMove(loc)
+	qdel(src)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
@@ -438,11 +436,11 @@ Class Procs:
 		display_parts(user)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
-/obj/machinery/proc/construction()
+/obj/machinery/proc/on_construction()
 	return
 
 //called on deconstruction before the final deletion
-/obj/machinery/proc/deconstruction()
+/obj/machinery/proc/on_deconstruction()
 	return
 
 /obj/machinery/allow_drop()
@@ -464,9 +462,9 @@ Class Procs:
 	. = 1
 
 
-/obj/machinery/tesla_act(var/power)
+/obj/machinery/tesla_act(power, explosive = FALSE)
 	..()
-	if(prob(85))
+	if(prob(85) && explosive)
 		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
 		emp_act(2)

@@ -18572,9 +18572,7 @@
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aPh" = (
 /obj/structure/table/wood,
@@ -18583,9 +18581,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen/invisible,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aPi" = (
 /obj/structure/table/wood,
@@ -18596,9 +18592,7 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aPj" = (
 /obj/machinery/light_switch{
@@ -19054,17 +19048,13 @@
 /area/library)
 "aQr" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aQs" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/weapon/book/codex_gigas,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aQt" = (
 /obj/effect/landmark{
@@ -19073,9 +19063,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aQu" = (
 /turf/open/floor/plasteel/chapel,
@@ -19576,9 +19564,7 @@
 	name = "Private Study";
 	req_access_txt = "37"
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aRR" = (
 /obj/machinery/firealarm{
@@ -36605,7 +36591,6 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bCY" = (
@@ -37055,7 +37040,6 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
@@ -37105,7 +37089,6 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bEd" = (
@@ -37889,7 +37872,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bFJ" = (
@@ -38453,13 +38435,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGS" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-/obj/item/weapon/reagent_containers/syringe,
+/obj/machinery/limbgrower,
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGT" = (
@@ -38568,7 +38545,6 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bHf" = (
@@ -39203,6 +39179,18 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/morphine{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_x = 6;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIn" = (
@@ -41832,14 +41820,12 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNR" = (
@@ -41872,7 +41858,6 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNT" = (
@@ -46902,8 +46887,7 @@
 /area/toxins/xenobiology)
 "bZc" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	unacidable = 1
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/misc_lab)
@@ -54111,8 +54095,8 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/robot_parts/r_arm,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/r_arm/robot,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "coo" = (
@@ -90922,7 +90906,7 @@ bJs
 bKy
 bLM
 bLM
-alX
+bNQ
 bOV
 bQk
 bRt
@@ -105307,7 +105291,7 @@ bAG
 bCa
 bDc
 bEo
-apI
+bIC
 bEc
 bIB
 bIB
@@ -106080,7 +106064,7 @@ bDc
 bEo
 bDf
 bEb
-bIC
+bGY
 bGY
 bJN
 bMp

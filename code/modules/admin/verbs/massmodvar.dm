@@ -83,6 +83,10 @@
 		var_value = "\icon[var_value]"
 		default = "icon"
 
+	else if(istype(var_value,/client))
+		usr << "Variable appears to be <b>CLIENT</b>."
+		default = "cancel"
+
 	else if(istype(var_value,/atom) || istype(var_value,/datum))
 		usr << "Variable appears to be <b>TYPE</b>."
 		default = "type"
@@ -90,10 +94,6 @@
 	else if(istype(var_value,/list))
 		usr << "Variable appears to be <b>LIST</b>."
 		default = "list"
-
-	else if(istype(var_value,/client))
-		usr << "Variable appears to be <b>CLIENT</b>."
-		default = "cancel"
 
 	else
 		usr << "Variable appears to be <b>FILE</b>."

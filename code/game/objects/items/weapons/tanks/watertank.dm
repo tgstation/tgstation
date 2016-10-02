@@ -83,19 +83,10 @@
 	var/mob/M = src.loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		switch(H.slot_id)
-			if(slot_r_hand)
-				if(M.r_hand)
-					return
-				if(!M.unEquip(src))
-					return
-				M.put_in_r_hand(src)
-			if(slot_l_hand)
-				if(M.l_hand)
-					return
-				if(!M.unEquip(src))
-					return
-				M.put_in_l_hand(src)
+		if(!M.unEquip(src))
+			return
+		M.put_in_hand(src, H.held_index)
+
 
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
@@ -424,7 +415,7 @@
 		loc << "<span class='notice'>[src] turns off.</span>"
 
 /obj/item/weapon/reagent_containers/chemtank/process()
-	if(!istype(loc,/mob/living/carbon/human))
+	if(!ishuman(loc))
 		turn_off()
 		return
 	if(!reagents.total_volume)

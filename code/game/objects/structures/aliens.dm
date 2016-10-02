@@ -119,7 +119,7 @@
 		if(3)
 			take_damage(50, BRUTE, 0)
 
-/obj/structure/alien/blob_act(obj/effect/blob/B)
+/obj/structure/alien/blob_act(obj/structure/blob/B)
 	take_damage(50, BRUTE, 0)
 
 /obj/structure/alien/resin/hitby(atom/movable/AM)
@@ -195,7 +195,7 @@
 			if(3)
 				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 	linked_node = node
-	if(istype(loc, /turf/open/space))
+	if(isspaceturf(loc))
 		qdel(src)
 		return
 	addtimer(src, "Life", rand(150, 200))
@@ -208,7 +208,7 @@
 	set background = BACKGROUND_ENABLED
 	var/turf/U = get_turf(src)
 
-	if(istype(U, /turf/open/space))
+	if(isspaceturf(U))
 		qdel(src)
 		return
 
@@ -217,7 +217,7 @@
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/open/space))
+		if (locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 			continue
 
 		new /obj/structure/alien/weeds(T, linked_node)

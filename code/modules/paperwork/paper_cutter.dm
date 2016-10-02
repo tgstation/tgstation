@@ -97,11 +97,7 @@
 		if(!remove_item_from_storage(M))
 			if(!M.unEquip(src))
 				return
-		switch(H.slot_id)
-			if(slot_r_hand)
-				M.put_in_r_hand(src)
-			if(slot_l_hand)
-				M.put_in_l_hand(src)
+		M.put_in_hand(src, H.held_index)
 	add_fingerprint(M)
 
 
@@ -110,7 +106,7 @@
 	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
 	icon_state = "paperslip"
 	icon = 'icons/obj/bureaucracy.dmi'
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 3
 
 /obj/item/weapon/paperslip/New()

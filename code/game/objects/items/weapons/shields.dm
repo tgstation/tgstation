@@ -48,7 +48,7 @@
 	item_state = "buckler"
 	materials = list()
 	origin_tech = "materials=1;combat=3;biotech=2"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	block_chance = 30
 
 /obj/item/weapon/shield/energy
@@ -74,7 +74,7 @@
 /obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
-		user.take_organ_damage(5)
+		user.take_bodypart_damage(5)
 	active = !active
 	icon_state = "eshield[active]"
 

@@ -167,7 +167,7 @@
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 	for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
-		C.flash_eyes()
+		C.flash_act()
 
 	for(var/i = 1, i <= 4 + rand(1,2), i++)
 		var/chosen = pick(borks)
@@ -195,7 +195,7 @@
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 	for(var/mob/living/carbon/M in viewers(get_turf(holder.my_atom), null))
-		M.flash_eyes()
+		M.flash_act()
 
 	for(var/i = 1, i <= 4 + rand(1,2), i++)
 		var/chosen = pick(borks)
@@ -249,11 +249,9 @@
 	addtimer(src, "freeze", 50, FALSE, holder)
 /datum/chemical_reaction/slimefreeze/proc/freeze(datum/reagents/holder)
 	if(holder && holder.my_atom)
-		var/turf/T = get_turf(holder.my_atom)
-		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
-		for(var/mob/living/M in range(T, 7))
-			M.bodytemperature -= 240
-			M << "<span class='notice'>You feel a chill!</span>"
+		var/turf/open/T = get_turf(holder.my_atom)
+		if(istype(T))
+			T.atmos_spawn_air("freon=50;TEMP=120")
 
 
 /datum/chemical_reaction/slimefireproof

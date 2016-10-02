@@ -5,13 +5,12 @@
 	density = 0
 	anchored = 1
 	flags = ABSTRACT
-	unacidable = 1
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
 	var/obj/item/ammo_casing/ammo_casing = null
@@ -50,6 +49,7 @@
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
+	var/impact_effect_type //what type of impact effect to show when hitting something
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -63,14 +63,42 @@
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	qdel(src)
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
+//to get the correct limb (if any) for the projectile hit message
+/mob/living/proc/check_limb_hit(hit_zone)
+	if(has_limbs)
+		return hit_zone
+
+/mob/living/carbon/check_limb_hit(hit_zone)
+	if(get_bodypart(hit_zone))
+		return hit_zone
+	else //when a limb is missing the damage is actually passed to the chest
+		return "chest"
+
+/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
+		if(impact_effect_type)
+			PoolOrNew(impact_effect_type, list(target_loca, target, src))
 		return 0
 	var/mob/living/L = target
 	if(blocked != 100) // not completely blocked
+		if(damage && L.blood_volume && damage_type == BRUTE)
+			var/splatter_dir = dir
+			if(starting)
+				splatter_dir = get_dir(starting, target_loca)
+			if(isalien(L))
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter, list(target_loca, splatter_dir))
+			else
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(target_loca, splatter_dir))
+			if(prob(33))
+				L.add_splatter_floor(target_loca)
+		else if(impact_effect_type)
+			PoolOrNew(impact_effect_type, list(target_loca, target, src))
+
 		var/organ_hit_text = ""
-		if(L.has_limbs)
-			organ_hit_text = " in \the [parse_zone(def_zone)]"
+		var/limb_hit = L.check_limb_hit(def_zone)//to get the correct message info.
+		if(limb_hit)
+			organ_hit_text = " in \the [parse_zone(limb_hit)]"
 		if(suppressed)
 			playsound(loc, hitsound, 5, 1, -1)
 			L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"

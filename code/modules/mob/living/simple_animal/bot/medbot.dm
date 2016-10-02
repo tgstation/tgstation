@@ -514,7 +514,7 @@
 		reagent_glass = null
 
 	if(prob(50))
-		new /obj/item/robot_parts/l_arm(Tsec)
+		new /obj/item/bodypart/l_arm/robot(Tsec)
 
 	if(emagged && prob(25))
 		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)

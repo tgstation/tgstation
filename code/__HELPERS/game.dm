@@ -348,7 +348,7 @@
 				continue
 			else if(afk_check && M.client.is_afk())
 				continue
-			else if(human_check && !istype(M, /mob/living/carbon/human))
+			else if(human_check && !ishuman(M))
 				continue
 			else if(istype(M, /mob/new_player)) // exclude people in the lobby
 				continue

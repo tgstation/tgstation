@@ -76,7 +76,7 @@
 		return
 
 	var/turf/beacon_loc = get_turf(src.loc)
-	if(!istype(beacon_loc, /turf/open/floor))
+	if(!isfloorturf(beacon_loc))
 		return
 
 	if(beacon)
@@ -148,7 +148,7 @@
 	PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, T)
 	if(isliving(A))
 		var/mob/living/L = A
-		L.flash_eyes()
+		L.flash_act()
 	A.visible_message("<span class='danger'>[A] disappears in a flash of \
 		light!</span>", "<span class='userdanger'>Your vision is obscured \
 		by a flash of light!</span>")

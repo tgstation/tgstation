@@ -15,7 +15,7 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
-/obj/structure/blob_act(obj/effect/blob/B)
+/obj/structure/blob_act(obj/structure/blob/B)
 	if(density && prob(50))
 		qdel(src)
 
@@ -64,9 +64,9 @@
 		if(user.canmove)
 			climb_structure(user)
 			return
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_held_item() != O))
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		return
 	if(!user.drop_item())
 		return

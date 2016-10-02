@@ -126,7 +126,7 @@ Auto Patrol[]"},
 	return dat
 
 /mob/living/simple_animal/bot/ed209/Topic(href, href_list)
-	if(lasercolor && (istype(usr,/mob/living/carbon/human)))
+	if(lasercolor && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if((lasercolor == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))//Opposing team cannot operate it
 			return
@@ -376,9 +376,9 @@ Auto Patrol[]"},
 		G.update_icon()
 
 	if(prob(50))
-		new /obj/item/robot_parts/l_leg(Tsec)
+		new /obj/item/bodypart/l_leg/robot(Tsec)
 		if(prob(25))
-			new /obj/item/robot_parts/r_leg(Tsec)
+			new /obj/item/bodypart/r_leg/robot(Tsec)
 	if(prob(25))//50% chance for a helmet OR vest
 		if(prob(50))
 			new /obj/item/clothing/head/helmet(Tsec)
@@ -528,16 +528,12 @@ Auto Patrol[]"},
 	spawn(2)
 		icon_state = "[lasercolor]ed209[on]"
 	var/threat = 5
-	if(istype(C, /mob/living/carbon/human))
-		C.stuttering = 5
-		C.Stun(5)
-		C.Weaken(5)
+	C.Weaken(5)
+	C.Stun(5)
+	C.stuttering = 5
+	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		threat = H.assess_threat(src)
-	else
-		C.Weaken(5)
-		C.stuttering = 5
-		C.Stun(5)
 	add_logs(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)

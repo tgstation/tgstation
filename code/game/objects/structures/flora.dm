@@ -1,5 +1,5 @@
 /obj/structure/flora
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 30
 	anchored = 1
 
@@ -23,7 +23,10 @@
 					return
 				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "You hear the sound of a tree falling.")
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
+				icon = 'icons/obj/flora/pinetrees.dmi'
 				icon_state = "tree_stump"
+				density = 0
+				pixel_x = -16
 				name += " stump"
 				cut = TRUE
 				for(var/i=1 to log_amount)
@@ -55,6 +58,15 @@
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
+
+/obj/structure/flora/tree/palm
+	icon = 'icons/misc/beach2.dmi'
+	icon_state = "palm1"
+
+/obj/structure/flora/tree/palm/New()
+	..()
+	icon_state = pick("palm1","palm2")
+	pixel_x = 0
 
 /obj/structure/festivus
 	name = "festivus pole"
@@ -278,7 +290,7 @@
 	icon_state = "basalt"
 	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	density = 1
 
 /obj/structure/flora/rock/New()

@@ -21,7 +21,7 @@
 				O.vars[V] = original.vars[V]
 
 	if(istype(O))
-		O.burn_state = FIRE_PROOF // holoitems do not burn
+		O.resistance_flags |= LAVA_PROOF | FIRE_PROOF | UNACIDABLE // holoitems do not burn
 		if(nerf && istype(O,/obj/item))
 			var/obj/item/I = O
 			I.damtype = STAMINA // thou shalt not
@@ -76,7 +76,7 @@
 			continue
 
 		if(platingRequired)
-			if(istype(B, /turf/open/space))
+			if(isspaceturf(B))
 				continue
 
 		var/old_dir1 = T.dir

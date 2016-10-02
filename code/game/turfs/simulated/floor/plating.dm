@@ -235,10 +235,17 @@
 	slowdown = 2
 	luminosity = 1
 
+/turf/open/floor/plating/lava/ex_act()
+	return
+
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
+	if(burn_stuff(AM))
+		START_PROCESSING(SSobj, src)
+
+/turf/open/floor/plating/lava/hitby(atom/movable/AM)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
@@ -265,14 +272,14 @@
 	for(var/thing in thing_to_check)
 		if(isobj(thing))
 			var/obj/O = thing
-			if(O.burn_state == LAVA_PROOF || O.throwing)
+			if(O.resistance_flags & LAVA_PROOF || O.throwing)
 				continue
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				continue
 			. = 1
-			if(O.burn_state == FIRE_PROOF)
-				O.burn_state = FLAMMABLE //Even fireproof things burn up in lava
+			if(O.resistance_flags & FIRE_PROOF)
+				O.resistance_flags &= ~FIRE_PROOF //Even fireproof things burn up in lava
 
 			O.fire_act()
 
@@ -285,7 +292,7 @@
 			if(L.buckled)
 				if(isobj(L.buckled))
 					var/obj/O = L.buckled
-					if(O.burn_state == LAVA_PROOF)
+					if(O.resistance_flags & LAVA_PROOF)
 						continue
 				if(isliving(L.buckled)) //Goliath riding
 					var/mob/living/live = L.buckled

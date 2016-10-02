@@ -45,8 +45,8 @@ Difficulty: Hard
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
 	armour_penetration = 50
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
@@ -87,7 +87,7 @@ Difficulty: Hard
 			did_reset = TRUE
 			//visible_message("<span class='hierophant'>\"Vixyvrmrk xs fewi...\"</span>")
 			blink(spawned_rune)
-			adjustHealth((health - maxHealth) * 0.5) //heal for 50% of our missing health
+			adjustHealth(min((health - maxHealth) * 0.5, -50)) //heal for 50% of our missing health
 			wander = FALSE
 			/*if(health > maxHealth * 0.9)
 				visible_message("<span class='hierophant'>\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\"</span>")
@@ -279,6 +279,8 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/diagonal_blasts(mob/victim) //fire diagonal cross blasts with a delay
 	var/turf/T = get_turf(victim)
+	if(!T)
+		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/diagonal, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
@@ -289,6 +291,8 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cardinal_blasts(mob/victim) //fire cardinal cross blasts with a delay
 	var/turf/T = get_turf(victim)
+	if(!T)
+		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
@@ -299,6 +303,8 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/alldir_blasts(mob/victim) //fire alldir cross blasts with a delay
 	var/turf/T = get_turf(victim)
+	if(!T)
+		return
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, src))
 	playsound(T,'sound/magic/blink.ogg', 200, 1)
 	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
@@ -396,6 +402,7 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/chaser //a hierophant's chaser. follows target around, moving and producing a blast every speed deciseconds.
 	duration = 98
 	var/mob/living/target //what it's following
+	var/turf/targetturf //what turf the target is actually on
 	var/moving_dir //what dir it's moving in
 	var/previous_moving_dir //what dir it was moving in before that
 	var/more_previouser_moving_dir //what dir it was moving in before THAT
@@ -415,7 +422,7 @@ Difficulty: Hard
 	addtimer(src, "seek_target", 1)
 
 /obj/effect/overlay/temp/hierophant/chaser/proc/get_target_dir()
-	. = get_cardinal_dir(src, target)
+	. = get_cardinal_dir(src, targetturf)
 	if((. != previous_moving_dir && . == more_previouser_moving_dir) || . == 0) //we're alternating, recalculate
 		var/list/cardinal_copy = cardinal.Copy()
 		cardinal_copy -= more_previouser_moving_dir
@@ -424,12 +431,13 @@ Difficulty: Hard
 /obj/effect/overlay/temp/hierophant/chaser/proc/seek_target()
 	if(!currently_seeking)
 		currently_seeking = TRUE
-		while(target && src && !qdeleted(src) && currently_seeking && x && y && target.x && target.y) //can this target actually be sook out
+		targetturf = get_turf(target)
+		while(target && src && !qdeleted(src) && currently_seeking && x && y && targetturf) //can this target actually be sook out
 			if(!moving) //we're out of tiles to move, find more and where the target is!
 				more_previouser_moving_dir = previous_moving_dir
 				previous_moving_dir = moving_dir
 				moving_dir = get_target_dir()
-				var/standard_target_dir = get_cardinal_dir(src, target)
+				var/standard_target_dir = get_cardinal_dir(src, targetturf)
 				if((standard_target_dir != previous_moving_dir && standard_target_dir == more_previouser_moving_dir) || standard_target_dir == 0)
 					moving = 1 //we would be repeating, only move a tile before checking
 				else
@@ -446,6 +454,7 @@ Difficulty: Hard
 				make_blast() //make a blast, too
 				moving--
 				sleep(speed)
+			targetturf = get_turf(target)
 
 /obj/effect/overlay/temp/hierophant/chaser/proc/make_blast()
 	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(loc, caster, friendly_fire_check))
@@ -483,7 +492,7 @@ Difficulty: Hard
 	friendly_fire_check = friendly_fire
 	if(new_caster)
 		hit_things += new_caster
-	if(istype(loc, /turf/closed/mineral)) //drill mineral turfs
+	if(ismineralturf(loc)) //drill mineral turfs
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
 	addtimer(src, "blast", 0)
@@ -550,7 +559,9 @@ Difficulty: Hard
 				H.rune = null
 				user.update_action_buttons_icon()
 				qdel(src)
-		else //use this rune instead
+			else
+				H.timer = world.time
+		else
 			user << "<span class='hierophant_warning'>You touch the rune with the staff, but nothing happens.</span>"
 
 	else

@@ -60,20 +60,17 @@
 		var/obj/item/P = locate(href_list["write"])
 
 		if((P && P.loc == src)) //ifthe paper's on the board
-			if(istype(usr.r_hand, /obj/item/weapon/pen)) //and you're holding a pen
+			var/obj/item/I = usr.is_holding_item_of_type(/obj/item/weapon/pen)
+			if(I) //check hand for pen
 				add_fingerprint(usr)
-				P.attackby(usr.r_hand, usr) //then do ittttt
+				P.attackby(I, usr)
 			else
-				if(istype(usr.l_hand, /obj/item/weapon/pen)) //check other hand for pen
-					add_fingerprint(usr)
-					P.attackby(usr.l_hand, usr)
-				else
-					usr << "<span class='notice'>You'll need something to write with!</span>"
+				usr << "<span class='notice'>You'll need something to write with!</span>"
 
 	if(href_list["read"])
 		var/obj/item/weapon/paper/P = locate(href_list["read"])
 		if((P && P.loc == src))
-			if(!( istype(usr, /mob/living/carbon/human) ))
+			if(!ishuman(usr))
 				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[stars(P.info)]</TT></BODY></HTML>", "window=[P.name]")
 				onclose(usr, "[P.name]")
 			else

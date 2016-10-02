@@ -7,7 +7,7 @@
 	throw_speed = 1
 	throwforce = 0
 	w_class = 1
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 4
 
 	var/obj/item/weapon/paper/internalPaper
@@ -87,7 +87,7 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0) //prevent the paper plane from spinning
+/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0) //prevent the paper plane from spinning
 	if(!..())
 		return
 

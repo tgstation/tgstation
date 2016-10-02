@@ -6,7 +6,7 @@
 	icon_state = "rock"
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
+	canSmoothWith = list (/turf/closed)
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
 	opacity = 1
@@ -73,7 +73,7 @@
 		var/path = pickweight(mineralSpawnChanceList)
 		var/turf/T = ChangeTurf(path)
 
-		if(T && istype(T, /turf/closed/mineral))
+		if(T && ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			M.mineralAmt = rand(1, 5)
 			M.environment_type = src.environment_type
@@ -278,7 +278,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/volcanic
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 10, /mob/living/simple_animal/hostile/asteroid/goliath/beast = 50, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, /mob/living/simple_animal/hostile/asteroid/hivelord/legion = 30,
 		/mob/living/simple_animal/hostile/spawner/lavaland = 2, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
-		/mob/living/simple_animal/hostile/megafauna/dragon = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = 2)
+		/mob/living/simple_animal/hostile/megafauna/dragon = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = 2, /mob/living/simple_animal/hostile/megafauna/colossus = 2)
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
@@ -358,7 +358,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
-		if(!NT || istype(NT, /turf/open/space) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
+		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
 			sanity = 0
 			break
 	if(!sanity)
@@ -400,7 +400,7 @@
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
-			if(istype(src, /turf/closed/mineral))
+			if(ismineralturf(src))
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
@@ -434,12 +434,11 @@
 
 /turf/closed/mineral/Bumped(AM as mob|obj)
 	..()
-	if(istype(AM,/mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
-			src.attackby(H.l_hand,H)
-		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
-			src.attackby(H.r_hand,H)
+		var/obj/item/I = H.is_holding_item_of_type(/obj/item/weapon/pickaxe)
+		if(I)
+			attackby(I,H)
 		return
 	else if(istype(AM,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = AM
@@ -506,6 +505,9 @@
 
 /turf/open/floor/plating/asteroid/snow/temperatre
 	initial_gas_mix = "TEMP=255.37"
+
+/turf/open/floor/plating/asteroid/snow/atmosphere
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 
 /turf/open/floor/plating/asteroid/New()
 	var/proper_name = name
@@ -618,15 +620,18 @@
 
 /turf/open/chasm/Entered(atom/movable/AM)
 	START_PROCESSING(SSobj, src)
-	drop_stuff()
+	drop_stuff(AM)
 
 /turf/open/chasm/process()
 	if(!drop_stuff())
 		STOP_PROCESSING(SSobj, src)
 
-/turf/open/chasm/proc/drop_stuff()
+/turf/open/chasm/proc/drop_stuff(AM)
 	. = 0
-	for(var/thing in contents)
+	var/thing_to_check = src
+	if(AM)
+		thing_to_check = list(AM)
+	for(var/thing in thing_to_check)
 		if(droppable(thing))
 			. = 1
 			addtimer(src, "drop", 0, FALSE, thing)
@@ -657,6 +662,10 @@
 	return 1
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
+	//Make sure the item is still there after our sleep
+	if(!AM || qdeleted(AM))
+		return
+
 	var/turf/T = locate(drop_x, drop_y, drop_z)
 	if(T)
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
@@ -692,6 +701,9 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
+	//Make sure the item is still there after our sleep
+	if(!AM || qdeleted(AM))
+		return
 	AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
 	into the enveloping dark.</span>")
 	if(isliving(AM))
@@ -703,7 +715,7 @@
 	for(var/i in 1 to 5)
 		AM.pixel_y--
 		sleep(2)
-	if(isrobot(AM))
+	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
 	qdel(AM)
@@ -812,48 +824,60 @@
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
-	icon_state = "rock"
+	icon_state = "rock2"
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
-	baseturf = /turf/open/floor/plating/ash
+	canSmoothWith = list (/turf/closed)
+	baseturf = /turf/open/floor/plating/ashplanet/wateryrock
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	environment_type = "waste"
-	turf_type = /turf/open/floor/plating/ash
+	turf_type = /turf/open/floor/plating/ashplanet/rocky
 	defer_change = 1
 
-/turf/open/floor/plating/ash
+/turf/open/floor/plating/ashplanet
 	icon = 'icons/turf/mining.dmi'
 	name = "ash"
 	icon_state = "ash"
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/open/floor/plating/ash, /turf/closed)
 	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 	desc = "The ground is covered in volcanic ash."
-	baseturf = /turf/open/floor/plating/ash //I assume this will be a chasm eventually, once this becomes an actual surface
-	slowdown = 1
+	baseturf = /turf/open/floor/plating/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	planetary_atmos = TRUE
 
-/turf/open/floor/plating/ash/New()
-	pixel_y = -4
-	pixel_x = -4
-	icon = smooth_icon
+/turf/open/floor/plating/ashplanet/New()
+	if(smooth)
+		pixel_y = -4
+		pixel_x = -4
+		icon = smooth_icon
 	..()
 
-/turf/open/floor/plating/ash/break_tile()
+/turf/open/floor/plating/ashplanet/break_tile()
 	return
 
-/turf/open/floor/plating/ash/burn_tile()
+/turf/open/floor/plating/ashplanet/burn_tile()
 	return
 
-/turf/open/floor/plating/ash/rocky
+/turf/open/floor/plating/ashplanet/ash
+	canSmoothWith = list(/turf/open/floor/plating/ashplanet/ash, /turf/closed)
+	layer = HIGH_TURF_LAYER
+	slowdown = 1
+
+/turf/open/floor/plating/ashplanet/rocky
 	name = "rocky ground"
 	icon_state = "rockyash"
-	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/floors/rocky_ash.dmi'
-	slowdown = 0
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/open/floor/plating/ash/rocky, /turf/closed)
+	layer = MID_TURF_LAYER
+	canSmoothWith = list(/turf/open/floor/plating/ashplanet/rocky, /turf/closed)
+
+/turf/open/floor/plating/ashplanet/wateryrock
+	name = "wet rocky ground"
+	smooth = null
+	icon_state = "wateryrock"
+	slowdown = 2
+
+/turf/open/floor/plating/ashplanet/wateryrock/New()
+	icon_state = "[icon_state][rand(1, 9)]"
+	..()
 
 //Necropolis
 

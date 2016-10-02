@@ -212,6 +212,9 @@
 /obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
 	list_reagents = list("epinephrine" = 50)
+	
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh
+	list_reagents = list("synthflesh" = 50)
 
 /obj/item/weapon/reagent_containers/glass/bucket
 	name = "bucket"

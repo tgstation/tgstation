@@ -235,7 +235,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aJ" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/weapon/dice/d20/fate,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
@@ -852,7 +852,7 @@
 /turf/closed/wall,
 /area/awaymission/academy/headmaster)
 "cI" = (
-/obj/structure/divine/trap/damage,
+/obj/structure/trap/damage,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "cJ" = (
@@ -3429,7 +3429,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "jw" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -3438,7 +3438,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/awaymission/academy/academyaft)
 "jy" = (
-/obj/structure/cult/pylon,
+/obj/structure/destructible/cult/pylon,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -3881,11 +3881,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/divine/trap/chill,
+/obj/structure/trap/chill,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "kN" = (
-/obj/structure/divine/trap/fire,
+/obj/structure/trap/fire,
 /turf/open/floor/engine,
 /area/awaymission/academy/academyaft)
 "kO" = (
@@ -3946,7 +3946,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "la" = (
-/obj/structure/divine/trap/damage,
+/obj/structure/trap/damage,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lb" = (
@@ -3961,7 +3961,7 @@
 /turf/open/floor/mineral/uranium,
 /area/awaymission/academy/academycellar)
 "le" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lf" = (

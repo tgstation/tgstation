@@ -20,7 +20,7 @@ var/global/list/whiteness = list (
 /mob/living/proc/check_devil_bane_multiplier(obj/item/weapon, mob/living/attacker)
 	switch(mind.devilinfo.bane)
 		if(BANE_WHITECLOTHES)
-			if(istype(attacker, /mob/living/carbon/human))
+			if(ishuman(attacker))
 				var/mob/living/carbon/human/H = attacker
 				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under))
 					var/obj/item/clothing/under/U = H.w_uniform

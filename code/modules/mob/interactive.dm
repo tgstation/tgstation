@@ -137,12 +137,13 @@
 	retal = 1
 	retal_target = user
 
-/mob/living/carbon/human/interactive/bullet_act(var/obj/item/projectile/P)
+/mob/living/carbon/human/interactive/bullet_act(obj/item/projectile/P, def_zone)
 	var/potentialAssault = locate(/mob/living) in view(2,P.starting)
 	if(potentialAssault)
 		retal = 1
 		retal_target = potentialAssault
 	..()
+
 
 /client/proc/resetSNPC(var/mob/A in SSnpc.botPool_l)
 	set name = "Reset SNPC"
@@ -296,11 +297,9 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-			BP.change_bodypart_status(ORGAN_ROBOTIC)
+			BP.change_bodypart_status(BODYPART_ROBOTIC)
 	update_icons()
-	update_damage_overlays(0)
-
-	hand = 0
+	update_damage_overlays()
 	functions = list("nearbyscan","combat","shitcurity","chatter") // stop customize adding multiple copies of a function
 	//job specific favours
 	switch(myjob.title)
@@ -424,10 +423,6 @@
 	if(C)
 		retalTarget(C)
 
-/mob/living/carbon/human/interactive/bullet_act(obj/item/projectile/P, def_zone)
-	..(P,def_zone)
-	retalTarget(P.firer)
-
 /mob/living/carbon/human/interactive/attack_hand(mob/living/carbon/human/M)
 	..(M)
 	retalTarget(M)
@@ -491,28 +486,35 @@
 	if(other_hand)
 		if(other_hand.loc != src)
 			other_hand = null
-	if(hand)
-		if(!l_hand)
+
+	var/obj/item/L = get_item_for_held_index(1) //just going to hardcode SNPCs to 2 hands, for now.
+	var/obj/item/R = get_item_for_held_index(2) //they're just VERY assume-y about 2 hands.
+	if(active_hand_index == 1)
+		if(!L)
 			main_hand = null
-			if(r_hand)
+			if(R)
 				swap_hands()
 	else
-		if(!r_hand)
+		if(!R)
 			main_hand = null
-			if(l_hand)
+			if(L)
 				swap_hands()
 
+
 /mob/living/carbon/human/interactive/proc/swap_hands()
-	hand = !hand
-	var/obj/item/T = other_hand
-	main_hand = other_hand
-	other_hand = T
+	var/oindex = active_hand_index
+	if(active_hand_index == 1)
+		active_hand_index = 2
+	else
+		active_hand_index = 1
+	main_hand = get_active_held_item()
+	other_hand = get_item_for_held_index(oindex)
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/proc/take_to_slot(obj/item/G, var/hands=0)
-	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_l_hand,"right hand" = slot_r_hand)
+	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_hands,"right hand" = slot_hands)
 	if(hands)
-		slots = list ("left hand" = slot_l_hand,"right hand" = slot_r_hand)
+		slots = list ("left hand" = slot_hands,"right hand" = slot_hands)
 	G.loc = src
 	if(G.force && G.force > best_force)
 		best_force = G.force
@@ -520,7 +522,7 @@
 	update_hands = 1
 
 /mob/living/carbon/human/interactive/proc/insert_into_backpack()
-	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_l_hand,"right hand" = slot_r_hand)
+	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_hands,"right hand" = slot_hands)
 	var/obj/item/I = get_item_by_slot(pick(slots))
 	var/obj/item/weapon/storage/BP = get_item_by_slot(slot_back)
 	if(back && BP && I)
@@ -604,14 +606,16 @@
 					D.open()
 
 	if(update_hands)
+		var/obj/item/l_hand = get_item_for_held_index(1)
+		var/obj/item/r_hand = get_item_for_held_index(2)
 		if(l_hand || r_hand)
 			if(l_hand)
-				hand = 1
+				active_hand_index = 1
 				main_hand = l_hand
 				if(r_hand)
 					other_hand = r_hand
 			else if(r_hand)
-				hand = 0
+				active_hand_index = 2
 				main_hand = r_hand
 				if(l_hand) //this technically shouldnt occur, but its a redundancy
 					other_hand = l_hand
@@ -659,12 +663,12 @@
 				if(istype(TARGET, /obj/item/weapon))
 					var/obj/item/weapon/W = TARGET
 					if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
-						if(!l_hand || !r_hand)
+						if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
 							put_in_hands(W)
 						else
 							insert_into_backpack()
 				else
-					if(!l_hand || !r_hand)
+					if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
 						put_in_hands(TARGET)
 					else
 						insert_into_backpack()
@@ -1212,27 +1216,25 @@
 
 	if(shouldTryHeal == 1)
 		for(var/mob/living/carbon/human/C in nearby)
-			if(istype(C,/mob/living/carbon/human)) //I haven't the foggiest clue why this is turning up non-carbons but sure here whatever
-				if(C.health <= 75)
-					if(get_dist(src,C) <= 2)
-						src.say("Wait, [C], let me heal you!")
-						M.attack(C,src)
-						sleep(25)
-					else
-						tryWalk(get_turf(C))
+			if(C.health <= 75)
+				if(get_dist(src,C) <= 2)
+					src.say("Wait, [C], let me heal you!")
+					M.attack(C,src)
+					sleep(25)
+				else
+					tryWalk(get_turf(C))
 	else if(shouldTryHeal == 2)
 		if(HPS)
 			if(HPS.reagents.total_volume <= 0)
 				HPS.reagents.add_reagent("tricordrazine",30)
 			for(var/mob/living/carbon/human/C in nearby)
-				if(istype(C,/mob/living/carbon/human))
-					if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
-						if(get_dist(src,C) <= 2)
-							src.say("Wait, [C], let me heal you!")
-							HPS.attack(C,src)
-							sleep(25)
-						else
-							tryWalk(get_turf(C))
+				if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
+					if(get_dist(src,C) <= 2)
+						src.say("Wait, [C], let me heal you!")
+						HPS.attack(C,src)
+						sleep(25)
+					else
+						tryWalk(get_turf(C))
 
 
 /mob/living/carbon/human/interactive/proc/dojanitor(obj)
@@ -1510,7 +1512,7 @@
 
 	if((TARGET && (doing & FIGHTING))) // this is a redundancy check
 		var/mob/living/M = TARGET
-		if(istype(M,/mob/living))
+		if(isliving(M))
 			if(M.health > 1)
 				//THROWING OBJECTS
 				for(var/A in allContents)

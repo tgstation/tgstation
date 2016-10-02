@@ -15,7 +15,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	unacidable = 1
+	resistance_flags = FIRE_PROOF | UNACIDABLE
 	var/atom/target
 	var/ticks = 0
 	var/target_strength = 0
@@ -50,15 +50,15 @@
 			T.dump_contents()
 			qdel(target)
 
-		if(istype(target, /turf/closed/mineral))
+		if(ismineralturf(target))
 			var/turf/closed/mineral/M = target
 			M.ChangeTurf(M.baseturf)
 
-		if(istype(target, /turf/open/floor))
+		if(isfloorturf(target))
 			var/turf/open/floor/F = target
 			F.ChangeTurf(F.baseturf)
 
-		if(istype(target, /turf/closed/wall))
+		if(iswallturf(target))
 			var/turf/closed/wall/W = target
 			W.dismantle_wall(1)
 
