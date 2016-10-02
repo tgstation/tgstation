@@ -242,7 +242,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimefoam/on_reaction(datum/reagents/holder)
-		feedback_add_details("slime_cores_used","[type]")
+	feedback_add_details("slime_cores_used","[type]")
 
 
 //Dark Blue
@@ -321,7 +321,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimesmoke/on_reaction(datum/reagents/holder)
-		feedback_add_details("slime_cores_used","[type]")
+	feedback_add_details("slime_cores_used","[type]")
 
 //Yellow
 
