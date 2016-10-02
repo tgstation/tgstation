@@ -54,9 +54,6 @@
 	icon_state = "cobweb1"
 	resistance_flags = 0
 
-/obj/effect/decal/cleanable/cobweb/fire_act()
-	qdel(src)
-
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
 

@@ -12,7 +12,9 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
-	health = 20
+	health = 150
+	maxhealth = 150
+	broken_health = 50
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
@@ -80,13 +82,12 @@
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 
-/obj/machinery/power/solar/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	. = ..()
-	if(.)
-		if(health <= 10)
-			if(!(stat & BROKEN))
-				playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
-				set_broken()
+/obj/machinery/power/solar/obj_break(damage_flag)
+	if(!(stat & BROKEN))
+		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		stat |= BROKEN
+		unset_control()
+		update_icon()
 
 /obj/machinery/power/solar/obj_destruction()
 	playsound(src, "shatter", 70, 1)
@@ -136,12 +137,6 @@
 			control.gen += sgen
 		else //if we're no longer on the same powernet, remove from control computer
 			unset_control()
-
-/obj/machinery/power/solar/proc/set_broken()
-	. = (!(stat & BROKEN))
-	stat |= BROKEN
-	unset_control()
-	update_icon()
 
 
 /obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
@@ -268,7 +263,9 @@
 	density = 1
 	use_power = 1
 	idle_power_usage = 250
-	health = 25
+	health = 200
+	maxhealth = 200
+	broken_health = 100
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0
@@ -457,7 +454,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/machinery/power/solar_control/obj_destruction()
+/obj/machinery/power/solar_control/obj_break(damage_flag)
 	if(!(stat & BROKEN))
 		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 		stat |= BROKEN
@@ -495,14 +492,6 @@
 	update_icon()
 
 
-/obj/machinery/power/solar_control/proc/set_broken()
-	stat |= BROKEN
-	update_icon()
-
-/obj/machinery/power/solar_control/blob_act(obj/structure/blob/B)
-	if (prob(75))//phil235
-		set_broken()
-		src.density = 0
 
 
 //

@@ -165,9 +165,9 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
 		if(prob(33))
 			playsound(loc, 'sound/items/Welder.ogg', 150, 1)
-		take_damage(min(5 + 2* round(sqrt(acid_level)), 300), BURN, "acid", 0)
+		take_damage(min(1 + round(sqrt(acid_level)), 300), BURN, "acid", 0)
 
-	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
+	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
 	if(!acid_level)
 		return 0
 
@@ -205,7 +205,8 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	var/atom/loca = get_turf(src)
 	if(isobj(loc))
 		loca = loc
-	SSfire_burning.processing -= src
+	if(resistance_flags & ON_FIRE)
+		SSfire_burning.processing -= src
 	empty_object_contents(1, loca)
 	if(!isobj(loc))
 		drop_ashes(loca)

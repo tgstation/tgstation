@@ -7,8 +7,8 @@
 		opacity = 0
 		anchored = 1
 		resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-		var/const/max_health = 200
-		health = max_health //The shield can only take so much beating (prevents perma-prisons)
+		maxhealth = 200
+		health = 200 //The shield can only take so much beating (prevents perma-prisons)
 
 /obj/machinery/shield/New()
 	src.setDir(pick(1,2,3,4))
@@ -68,8 +68,8 @@
 		anchored = 0
 		pressure_resistance = 2*ONE_ATMOSPHERE
 		req_access = list(access_engine)
-		var/const/max_health = 100
-		health = max_health
+		maxhealth = 100
+		health = 100
 		var/active = 0
 		var/list/deployed_shields = list()
 		var/locked = 0
@@ -158,7 +158,7 @@
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
-			health = max_health
+			health = maxhealth
 			stat &= ~BROKEN
 			user << "<span class='notice'>You repair \the [src].</span>"
 			update_icon()

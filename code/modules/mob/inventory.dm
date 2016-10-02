@@ -311,7 +311,8 @@
 	if(wear_suit)
 		items += wear_suit
 	if(w_uniform)
-		items += w_uniform	return items
+		items += w_uniform
+	return items
 
 
 

@@ -19,7 +19,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new/obj/structure/spacevine_controller(T) //spawn a controller at turf
+		new/obj/effect/spacevine_controller(T) //spawn a controller at turf
 
 
 /datum/spacevine_mutation
@@ -28,6 +28,7 @@
 	var/hue
 	var/quality
 
+/datum/spacevine_mutation/proc/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
 	holder.mutations |= src
 	holder.color = hue
 
@@ -364,7 +365,7 @@
 	health = 50
 	maxhealth = 50
 	var/energy = 0
-	var/obj/structure/spacevine_controller/master = null
+	var/obj/effect/spacevine_controller/master = null
 	var/list/mutations = list()
 
 /obj/structure/spacevine/examine(mob/user)

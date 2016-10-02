@@ -272,10 +272,7 @@
 	for(var/thing in thing_to_check)
 		if(isobj(thing))
 			var/obj/O = thing
-			if((O.resistance_flags & LAVA_PROOF) || O.throwing)
-				continue
-			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
-				qdel(O)
+			if((O.resistance_flags & (LAVA_PROOF|ON_FIRE)) || O.throwing)
 				continue
 			. = 1
 			if(O.resistance_flags & FIRE_PROOF)

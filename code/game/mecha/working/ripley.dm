@@ -63,7 +63,8 @@
 	icon_state = "firefighter"
 	max_temperature = 65000
 	health = 250
-	resistance_flags = LAVA_PROOF |FIRE_PROOF | ACID_PROOF	lights_power = 7
+	resistance_flags = LAVA_PROOF |FIRE_PROOF | ACID_PROOF
+	lights_power = 7
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 0, acid = 0)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter

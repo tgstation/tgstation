@@ -57,7 +57,9 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/obj/item/device/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	luminosity = 0
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	health = 300
+	maxhealth = 300
+	armor = list(melee = 90, bullet = 90, laser = 90, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
 
 /obj/machinery/requests_console/power_change()
 	..()

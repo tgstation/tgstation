@@ -273,10 +273,10 @@
 	if(!can_be_repaired)
 		user << "<span class='warning'>[src] cannot be repaired with a proselytizer!</span>"
 		return
-	if(health == max_health)
+	if(health == maxhealth)
 		user << "<span class='warning'>[src] is at maximum integrity!</span>"
 		return
-	var/amount_to_heal = max_health - health
+	var/amount_to_heal = maxhealth - health
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
 	if(!proselytizer.can_use_alloy(0))
 		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
@@ -288,8 +288,8 @@
 	"<span class='alloy'>You start repairing [src]...</span>")
 	//hugeass while because we need to re-check after the do_after
 	proselytizer.repairing = src
-	while(proselytizer && user && src && health != max_health)
-		amount_to_heal = max_health - health
+	while(proselytizer && user && src && health != maxhealth)
+		amount_to_heal = maxhealth - health
 		if(!amount_to_heal)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
@@ -298,7 +298,7 @@
 		proselytizer_cost = healing_for_cycle*2
 		if(!proselytizer.can_use_alloy(proselytizer_cost) || !do_after(user, proselytizer_cost, target = src) || !proselytizer || !proselytizer.can_use_alloy(proselytizer_cost))
 			break
-		amount_to_heal = max_health - health
+		amount_to_heal = maxhealth - health
 		if(!amount_to_heal)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
@@ -315,7 +315,7 @@
 		proselytizer.repairing = null
 		if(user)
 			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops covering [src] with black liquid metal.</span>", \
-		"<span class='alloy'>You finish repairing [src]. It is now at <b>[health]/[max_health]</b> integrity.</span>")
+		"<span class='alloy'>You finish repairing [src]. It is now at <b>[health]/[maxhealth]</b> integrity.</span>")
 	return
 
 /obj/structure/destructible/clockwork/cache/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)

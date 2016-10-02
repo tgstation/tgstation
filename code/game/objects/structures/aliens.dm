@@ -34,7 +34,7 @@
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/alien/drop_ashes()
-	qdel(src) //doesn't leave ashes behind.
+	return //doesn't leave ashes behind.
 
 /*
  * Generic alien stuff, not related to the purple lizards but still alien-like

@@ -138,7 +138,7 @@
 	active_icon = "mending_motor"
 	inactive_icon = "mending_motor_inactive"
 	construction_value = 20
-	max_health = 125
+	maxhealth = 125
 	health = 125
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 5, \
@@ -196,11 +196,11 @@
 			W.adjustHealth(-15)
 		else if(istype(M, /obj/structure/destructible/clockwork))
 			var/obj/structure/destructible/clockwork/C = M
-			if(C.health == C.max_health)
+			if(C.health == C.maxhealth)
 				continue
 			if(!try_use_power(structure_cost))
 				break
-			C.health = min(C.health + 15, C.max_health)
+			C.health = min(C.health + 15, C.maxhealth)
 		else if(issilicon(M))
 			var/mob/living/silicon/S = M
 			if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
@@ -243,7 +243,7 @@
 	active_icon = "mania_motor"
 	inactive_icon = "mania_motor_inactive"
 	construction_value = 20
-	max_health = 80
+	maxhealth = 80
 	health = 80
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
@@ -505,7 +505,7 @@
 	active_icon = "obelisk"
 	inactive_icon = "obelisk_inactive"
 	construction_value = 20
-	max_health = 150
+	maxhealth = 150
 	health = 150
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \

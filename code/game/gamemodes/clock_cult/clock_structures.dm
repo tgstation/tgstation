@@ -44,10 +44,10 @@
 	if(!(resistance_flags & INDESTRUCTIBLE)) //phil235
 		var/t_It = they_pronoun(TRUE)
 		var/t_is = get_is()
-		var/servant_message = "[t_It] [t_is] at <b>[health]/[max_health]</b> integrity"
+		var/servant_message = "[t_It] [t_is] at <b>[health]/[maxhealth]</b> integrity"
 		var/other_message = "[t_It] seems pristine and undamaged"
 		var/heavily_damaged = FALSE
-		var/healthpercent = (health/max_health) * 100
+		var/healthpercent = (health/maxhealth) * 100
 		switch(healthpercent)
 			if(100 to INFINITY)
 				other_message = "[t_It] seems pristine and undamaged"
@@ -69,7 +69,7 @@
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
-	max_health = 80
+	maxhealth = 80
 	health = 80
 	var/wall_generation_cooldown
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
@@ -179,7 +179,7 @@
 	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
 	health = 25
-	max_health = 25
+	maxhealth = 25
 	construction_value = 15
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
@@ -189,7 +189,6 @@
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
-	var/mech_damage_cycle = 0 //so that people in mechs don't get murderspammed with messages
 
 /obj/structure/destructible/clockwork/ocular_warden/New()
 	..()
@@ -220,11 +219,6 @@
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
 			else if(istype(target,/obj/mecha))
-				var/sending_message = FALSE
-				if(mech_damage_cycle > 1)
-					mech_damage_cycle = 0
-					sending_message = TRUE				else
-					mech_damage_cycle++
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick, BURN, "melee", 1, get_dir(src, M)) //does about half of standard damage to mechs * whatever their fire armor is
 
@@ -265,7 +259,6 @@
 /obj/structure/destructible/clockwork/ocular_warden/proc/lose_target()
 	if(!target)
 		return 0
-	mech_damage_cycle = 0
 	target = null
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
@@ -324,7 +317,7 @@
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
-	max_health = 50
+	maxhealth = 50
 	health = 50
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."

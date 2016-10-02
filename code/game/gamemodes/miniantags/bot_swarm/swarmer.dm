@@ -435,15 +435,6 @@
 /obj/structure/swarmer/emp_act()
 	qdel(src)
 
-/mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
-	set name = "Create trap"
-	set category = "Swarmer"
-	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 5 resources"
-	if(/obj/structure/swarmer/trap in loc)
-		src << "<span class='warning'>There is already a trap here. Aborting.</span>"
-		return
-	Fabricate(/obj/structure/swarmer/trap, 5)
-
 /obj/structure/swarmer/trap
 	name = "swarmer trap"
 	desc = "A quickly assembled trap that electrifies living beings and overwhelms machine sensors. Will not retain its form if damaged enough."
