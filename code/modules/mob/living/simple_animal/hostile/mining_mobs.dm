@@ -165,9 +165,10 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
-		for(var/i in 1 to rand(1, 2))
-			loot += O.type
-		qdel(O)
+		if(is_type_in_list(O, wanted_objects))
+			for(var/i in 1 to rand(1, 2))
+				loot += O.type
+			qdel(O)
 	visible_message("<span class='notice'>[src] rapidly devours the ore!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()
