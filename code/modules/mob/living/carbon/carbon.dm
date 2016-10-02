@@ -733,10 +733,12 @@
 		bodyparts.Remove(X)
 		bodyparts.Add(O)
 		if(O.body_part == ARM_LEFT)
-			O.held_index = (l_arm_index_next += 2) //1, 3, 5, 7...
+			l_arm_index_next += 2
+			O.held_index = l_arm_index_next //1, 3, 5, 7...
 			hand_bodyparts += O
 		else if(O.body_part == ARM_RIGHT)
-			O.held_index = (r_arm_index_next += 2) //2, 4, 6, 8...
+			r_arm_index_next += 2
+			O.held_index = r_arm_index_next //2, 4, 6, 8...
 			hand_bodyparts += O
 
 
