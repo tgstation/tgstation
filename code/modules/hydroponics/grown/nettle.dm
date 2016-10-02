@@ -98,7 +98,7 @@
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
-	if(istype(M, /mob/living))
+	if(isliving(M))
 		M << "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>"
 		add_logs(user, M, "attacked", src)
 

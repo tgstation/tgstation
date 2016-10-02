@@ -180,7 +180,6 @@ BLIND     // can't see anything
 		if(health < maxhealth*0.5)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 
-
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
 	return 0 // return 1 to cancel attack_hand()
@@ -379,17 +378,16 @@ BLIND     // can't see anything
 	var/random_sensor = 1
 	var/sensor_mode = 0	/* 1 = Report living/dead, 2 = Report detailed damages, 3 = Report location */
 	var/can_adjust = 1
-	var/adjusted = 0
+	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/obj/item/clothing/tie/hastie = null
+	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
 
 	if(!isinhands)
 		if(blood_DNA)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
-		if(health < maxhealth * 0.5)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
 		if(hastie)
 			var/tie_color = hastie.item_color
@@ -405,7 +403,29 @@ BLIND     // can't see anything
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
-	adjusted = 0
+	adjusted = NORMAL_STYLE
+	..()
+
+/obj/item/clothing/under/equipped(mob/user, slot)
+	..()
+	if(adjusted)
+		adjusted = NORMAL_STYLE
+		fitted = initial(fitted)
+		if(!alt_covers_chest)
+			body_parts_covered |= CHEST
+
+	if(mutantrace_variation && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(DIGITIGRADE in H.dna.species.specflags)
+			adjusted = DIGITIGRADE_STYLE
+		H.update_inv_w_uniform()
+
+	if(hastie)
+		hastie.on_uniform_equip(src, user)
+
+/obj/item/clothing/under/dropped(mob/user)
+	if(hastie)
+		hastie.on_uniform_dropped(src, user)
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
@@ -428,7 +448,7 @@ BLIND     // can't see anything
 			if(user && notifyAttach)
 				user << "<span class='notice'>You attach [I] to [src].</span>"
 
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
 
@@ -448,7 +468,7 @@ BLIND     // can't see anything
 		else
 			user << "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>"
 
-		if(istype(loc, /mob/living/carbon/human))
+		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform()
 
@@ -508,7 +528,7 @@ BLIND     // can't see anything
 			if(3)
 				usr << "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>"
 
-	if(istype(loc,/mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
@@ -544,25 +564,29 @@ BLIND     // can't see anything
 		usr << "<span class='notice'>You adjust the suit to wear it more casually.</span>"
 	else
 		usr << "<span class='notice'>You adjust the suit back to normal.</span>"
-	usr.update_inv_w_uniform()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.update_inv_w_uniform()
+		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
+	if(adjusted == DIGITIGRADE_STYLE)
+		return
 	adjusted = !adjusted
 	if(adjusted)
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
-		if (alt_covers_chest) // for the special snowflake suits that don't expose the chest when adjusted
-			body_parts_covered = CHEST|GROIN|LEGS
-		else
-			body_parts_covered = GROIN|LEGS
+		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted
+			body_parts_covered &= ~CHEST
 	else
 		fitted = initial(fitted)
-		body_parts_covered = CHEST|GROIN|LEGS|ARMS
+		if(!alt_covers_chest)
+			body_parts_covered |= CHEST
 	return adjusted
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(src.adjusted)
+	if(src.adjusted == ALT_STYLE)
 		user << "Alt-click on [src] to wear it normally."
 	else
 		user << "Alt-click on [src] to wear it casually."

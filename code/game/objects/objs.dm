@@ -17,7 +17,6 @@
 	var/resistance_flags = FIRE_PROOF // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
 	var/acid_level = 0 //how much acid is on that obj
-	var/unacidable = 0//phil235 TO BE REMOVED, ONLY HERE TO NOT HAVE ERROR ON MAP.
 
 	var/being_shocked = 0
 

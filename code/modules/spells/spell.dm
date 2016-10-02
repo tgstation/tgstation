@@ -249,7 +249,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(overlay)
 		for(var/atom/target in targets)
 			var/location
-			if(istype(target,/mob/living))
+			if(isliving(target))
 				location = target.loc
 			else if(istype(target,/turf))
 				location = target
@@ -263,11 +263,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
 		var/location
-		if(istype(target,/mob/living))
+		if(isliving(target))
 			location = target.loc
 		else if(istype(target,/turf))
 			location = target
-		if(istype(target,/mob/living) && message)
+		if(isliving(target) && message)
 			target << text("[message]")
 		if(sparks_spread)
 			var/datum/effect_system/spark_spread/sparks = new

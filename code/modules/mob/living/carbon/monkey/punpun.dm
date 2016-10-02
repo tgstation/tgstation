@@ -11,10 +11,6 @@
 
 /mob/living/carbon/monkey/punpun/New()
 	Read_Memory()
-	if(relic_hat)
-		equip_to_slot_or_del(new relic_hat, slot_head)
-	if(relic_mask)
-		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
 	if(ancestor_name)
 		name = ancestor_name
 		if(ancestor_chain > 1)
@@ -26,6 +22,14 @@
 			name = pick(pet_monkey_names)
 		gender = pick(MALE, FEMALE)
 	..()
+
+	//These have to be after the parent new to ensure that the monkey
+	//bodyparts are actually created before we try to equip things to 
+	//those slots
+	if(relic_hat)
+		equip_to_slot_or_del(new relic_hat, slot_head)
+	if(relic_mask)
+		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
 
 /mob/living/carbon/monkey/punpun/Life()
 	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)

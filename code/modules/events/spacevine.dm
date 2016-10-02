@@ -19,7 +19,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+		new/obj/structure/spacevine_controller(T) //spawn a controller at turf
 
 
 /datum/spacevine_mutation
@@ -27,6 +27,9 @@
 	var/severity = 1
 	var/hue
 	var/quality
+
+	holder.mutations |= src
+	holder.color = hue
 
 /datum/spacevine_mutation/proc/process_mutation(obj/structure/spacevine/holder)
 	return
@@ -361,8 +364,20 @@
 	health = 50
 	maxhealth = 50
 	var/energy = 0
-	var/obj/effect/spacevine_controller/master = null
+	var/obj/structure/spacevine_controller/master = null
 	var/list/mutations = list()
+
+/obj/structure/spacevine/examine(mob/user)
+	..()
+	var/text = "This one is a"
+	if(mutations.len)
+		for(var/A in mutations)
+			var/datum/spacevine_mutation/SM = A
+			text += " [SM.name]"
+	else
+		text += " normal"
+	text += " vine."
+	user << text
 
 /obj/structure/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)
@@ -488,19 +503,15 @@
 	vines += SV
 	SV.master = src
 	if(muts && muts.len)
-		SV.mutations |= muts
+		for(var/datum/spacevine_mutation/M in muts)
+			M.add_mutation_to_vinepiece(SV)
+		return
 	if(parent)
 		SV.mutations |= parent.mutations
 		SV.color = parent.color
-		SV.desc = parent.desc
 		if(prob(mutativness))
-			SV.mutations |= pick(mutations_list)
-			var/datum/spacevine_mutation/randmut = pick(SV.mutations)
-			SV.color = randmut.hue
-			SV.desc = "An extremely expansionistic species of vine. These are "
-			for(var/datum/spacevine_mutation/M in SV.mutations)
-				SV.desc += "[M.name] "
-			SV.desc += "vines."
+			var/datum/spacevine_mutation/randmut = pick(mutations_list - SV.mutations)
+			randmut.add_mutation_to_vinepiece(SV)
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)

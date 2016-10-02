@@ -199,7 +199,7 @@
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
-	if(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr))
+	if(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr))
 
 		//Removing from inventory
 		if(href_list["remove_inv"])

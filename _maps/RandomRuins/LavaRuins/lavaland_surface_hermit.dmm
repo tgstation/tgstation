@@ -50,7 +50,7 @@
 	},
 /area/ruin/powered)
 "k" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /turf/open/floor/plating/asteroid{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	name = "dirt"
@@ -89,7 +89,7 @@
 /turf/open/floor/plating/asteroid/basalt,
 /area/ruin/powered)
 "q" = (
-/obj/effect/glowshroom/single,
+/obj/structure/glowshroom/single,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	},

@@ -243,11 +243,8 @@
 				if(status == LIGHT_OK && trigger)
 					explode()
 			else if( prob( min(60, switchcount*switchcount*0.01) ) )
-				if(status == LIGHT_OK && trigger)
-					status = LIGHT_BURNED
-					icon_state = "[base_state]-burned"
-					on = 0
-					SetLuminosity(0)
+				if(trigger)
+					burn_out()
 			else
 				use_power = 2
 				SetLuminosity(brightness)
@@ -264,6 +261,13 @@
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
+
+/obj/machinery/light/proc/burn_out()
+	if(status == LIGHT_OK)
+		status = LIGHT_BURNED
+		icon_state = "[base_state]-burned"
+		on = 0
+		SetLuminosity(0)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -514,8 +518,9 @@
 	on = 1
 	update()
 
-/obj/machinery/light/tesla_act(var/power)
-	explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
+/obj/machinery/light/tesla_act(power, explosive = FALSE)
+	if(explosive)
+		explosion(src.loc,0,0,0,flame_range = 5, adminlog = 0)
 	qdel(src)
 
 // called when area power state changes

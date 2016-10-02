@@ -1140,7 +1140,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 /client/proc/modify_goals()
 	set category = "Debug"
-	set name = "Modify station goals"
+	set name = "Modify goals"
 
 	if(!check_rights(R_ADMIN))
 		return

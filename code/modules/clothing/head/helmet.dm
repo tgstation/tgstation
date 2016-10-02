@@ -230,7 +230,7 @@
 
 	icon_state = state
 
-	if(istype(loc, /mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_head()
 

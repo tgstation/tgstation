@@ -98,7 +98,7 @@
 		return
 
 	if(emagged == 2) //Emag functions
-		if(istype(loc, /turf/open))
+		if(isopenturf(loc))
 
 			for(var/mob/living/carbon/victim in loc)
 				if(victim != target)

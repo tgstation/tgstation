@@ -257,7 +257,7 @@ Class Procs:
 
 
 /obj/machinery/attack_ai(mob/user)
-	if(isrobot(user))// For some reason attack_robot doesn't work
+	if(iscyborg(user))// For some reason attack_robot doesn't work
 		var/mob/living/silicon/robot/R = user
 		if(R.client && R.client.eye == R && !R.low_power_mode)// This is to stop robots from using cameras to remotely control machines; and from using machines when the borg has no power.
 			return attack_hand(user)
@@ -343,7 +343,6 @@ Class Procs:
 			AM.acid_act(10, 0.1 * remaining_acid/T.contents.len)
 	else
 		..()
-
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -452,9 +451,9 @@ Class Procs:
 	. = 1
 
 
-/obj/machinery/tesla_act(var/power)
+/obj/machinery/tesla_act(power, explosive = FALSE)
 	..()
-	if(prob(85))
+	if(prob(85) && explosive)
 		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
 	else if(prob(50))
 		emp_act(2)

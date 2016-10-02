@@ -42,7 +42,7 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state == GIRDER_DISPLACED)
-			if(!istype(loc, /turf/open/floor))
+			if(!isfloorturf(loc))
 				user << "<span class='warning'>A floor must be present to secure the girder!</span>"
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -88,10 +88,10 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack))
-		if (istype(src.loc, /turf/closed/wall))
+		if(iswallturf(loc))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
-		if (!istype(src.loc, /turf/open/floor))
+		if(!isfloorturf(src.loc))
 			user << "<span class='warning'>A floor must be present to build a false wall!</span>"
 			return
 		if (locate(/obj/structure/falsewall) in src.loc.contents)

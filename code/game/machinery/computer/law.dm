@@ -71,7 +71,7 @@
 		user << "[src.current.name] selected for law changes."
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
-	if(!B || !isrobot(B))
+	if(!B || !iscyborg(B))
 		return 0
 	if(B.scrambledcodes || B.emagged)
 		return 0

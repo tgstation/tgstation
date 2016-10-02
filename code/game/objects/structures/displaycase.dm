@@ -5,7 +5,7 @@
 	desc = "A display case for prized possessions."
 	density = 1
 	anchored = 1
-	resistance_flags = FIRE_PROOF | ACID_PROOF//Dissolving the case would also delete the gun.
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	health = 200
 	maxhealth = 200
 	broken_health = 50

@@ -51,7 +51,7 @@
 /turf/open/space/proc/update_starlight()
 	if(config.starlight)
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			if(istype(t, /turf/open/space))
+			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
 			SetLuminosity(4,1)

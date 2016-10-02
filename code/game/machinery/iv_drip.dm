@@ -157,7 +157,7 @@
 	set name = "Remove IV Container"
 	set src in view(1)
 
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		usr << "<span class='warning'>You can't do that!</span>"
 		return
 
@@ -174,7 +174,7 @@
 	set name = "Toggle Mode"
 	set src in view(1)
 
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		usr << "<span class='warning'>You can't do that!</span>"
 		return
 

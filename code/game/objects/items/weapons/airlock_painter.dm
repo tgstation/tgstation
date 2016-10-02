@@ -55,7 +55,7 @@
 		// Find out if there is an open turf in front of us,
 		// and if not, pick the turf we are standing on.
 		var/turf/T = get_step(get_turf(src), user.dir)
-		if(!istype(T, /turf/open))
+		if(!isopenturf(T))
 			T = get_turf(src)
 
 		// they managed to lose their lungs between then and

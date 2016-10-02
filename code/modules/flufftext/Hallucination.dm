@@ -622,7 +622,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 				var/list/slots_free = list(l,r)
 				if(l_hand) slots_free -= l
 				if(r_hand) slots_free -= r
-				if(istype(src,/mob/living/carbon/human))
+				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					if(!H.belt) slots_free += ui_belt
 					if(!H.l_store) slots_free += ui_storage1

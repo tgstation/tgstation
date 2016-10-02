@@ -599,7 +599,8 @@
 	icon_state = "clockwork_cuirass"
 	w_class = 4
 	body_parts_covered = CHEST|GROIN|LEGS
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0, fire = 50, acid = 50)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
 /obj/item/clothing/suit/armor/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
@@ -981,7 +982,7 @@
 	name = "meme component"
 	desc = "A piece of a famous meme."
 	clockwork_desc = null
-	resistance_flags = LAVA_PROOF|FIRE_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/component_id //What the component is identified as
 	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
 	var/list/servant_of_ratvar_messages = list("ayy" = FALSE, "lmao" = TRUE) //Fluff, shown to servants of Ratvar on a low chance, if associated value is TRUE, will automatically apply ratvarian
@@ -1124,7 +1125,7 @@
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
 	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
 	icon_state = "alloy_shards"
-	resistance_flags = LAVA_PROOF|FIRE_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/randomsinglesprite = FALSE
 	var/randomspritemax = 2
 

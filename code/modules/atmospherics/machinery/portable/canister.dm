@@ -17,7 +17,7 @@
 	var/gas_type = ""
 	var/release_pressure = ONE_ATMOSPHERE
 
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 50)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 50)
 	health = 100
 	maxhealth = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE

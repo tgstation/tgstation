@@ -78,12 +78,6 @@
 		var/title as text
 		var/can_build = 1
 		can_build = can_build && (max_multiplier>0)
-		/*
-		if (R.one_per_turf)
-			can_build = can_build && !(locate(R.result_type) in usr.loc)
-		if (R.on_floor)
-			can_build = can_build && istype(usr.loc, /turf/open/floor)
-		*/
 		if (R.res_amount>1)
 			title+= "[R.res_amount]x [R.title]\s"
 		else
@@ -137,6 +131,7 @@
 		if (R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
+			new_item.update_icon()
 
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
@@ -167,7 +162,7 @@
 	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
 		usr << "<span class='warning'>There is another [R.title] here!</span>"
 		return 0
-	if (R.on_floor && !istype(usr.loc, /turf/open/floor))
+	if(R.on_floor && !isfloorturf(usr.loc))
 		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 		return 0
 	return 1
@@ -232,7 +227,7 @@
 		..()
 	return
 
-/obj/item/stack/AltClick(mob/user)
+/obj/item/stack/AltClick(mob/living/user)
 	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return

@@ -244,7 +244,7 @@
 	var/area/A = src.loc
 	var/d1
 	var/dat
-	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
+	if(ishuman(user) || user.has_unlimited_silicon_privilege)
 		A = A.loc
 
 		if (A.party)

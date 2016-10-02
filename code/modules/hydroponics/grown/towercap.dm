@@ -134,7 +134,7 @@
 
 
 /obj/structure/bonfire/proc/CheckOxygen()
-	if(istype(loc,/turf/open))
+	if(isopenturf(loc))
 		var/turf/open/O = loc
 		if(O.air)
 			var/G = O.air.gases

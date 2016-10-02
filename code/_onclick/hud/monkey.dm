@@ -16,6 +16,11 @@
 	using.screen_loc = ui_movi
 	static_inventory += using
 
+	using = new/obj/screen/wheel/talk
+	using.icon = ui_style
+	wheels += using
+	static_inventory += using
+
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drop_throw

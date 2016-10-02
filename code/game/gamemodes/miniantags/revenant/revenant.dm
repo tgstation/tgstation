@@ -284,7 +284,7 @@
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/closed))
+	if(isclosedturf(T))
 		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
 	for(var/obj/O in T)

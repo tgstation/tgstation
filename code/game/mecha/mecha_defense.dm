@@ -29,7 +29,6 @@
 		var/facing_modifier = get_armour_facing(dir2angle(attack_dir) - dir2angle(src))
 		booster_damage_modifier /= facing_modifier
 		booster_deflection_modifier *= facing_modifier
-
 	if(prob(deflect_chance * booster_deflection_modifier))
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
 		log_append_to_last("Armor saved.")
@@ -223,7 +222,6 @@
 
 /obj/mecha/attacked_by(obj/item/I, mob/living/user)
 	log_message("Attacked by [I]. Attacker - [user]")
-	. = ..()
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1)

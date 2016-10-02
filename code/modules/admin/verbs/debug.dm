@@ -241,7 +241,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
 		var/mob/living/carbon/human/H = M
 		spawn(0)
@@ -257,7 +257,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		log_admin("[key_name(src)] has blobized [M.key].")
 		var/mob/living/carbon/human/H = M
 		spawn(0)
@@ -427,7 +427,7 @@ var/global/list/g_fancy_list_of_types = null
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
-	if (istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/worn = H.wear_id
 		var/obj/item/weapon/card/id/id = null

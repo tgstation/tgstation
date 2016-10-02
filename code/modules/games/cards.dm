@@ -81,7 +81,7 @@
 	if(flag)
 		return //It's adjacent, is the user, or is on the user's person
 
-	if (istype(A, /mob/living))
+	if(isliving(A))
 		src.dealTo(A, user)
 	else
 		return ..()
@@ -264,9 +264,8 @@
 	if (istype(hclient))
 		switch (href_list["action"])
 			if ("play_card")
-				var/datum/playingcard/card = locate(href_list["card"])
-
-				if (card in src.cards)
+				var/datum/playingcard/card = locate(href_list["card"]) in cards
+				if (card && istype(card))
 					src.discard(card)
 			if ("toggle_conceal")
 				src.toggle_conceal()

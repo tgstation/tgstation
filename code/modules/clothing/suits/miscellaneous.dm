@@ -321,6 +321,12 @@
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
 
+/obj/item/clothing/suit/vapeshirt //wearing this is asking to get beat.
+	name = "Vape Naysh shirt"
+	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironicly?"
+	icon_state = "vapeshirt"
+	item_state = "vapeshirt"
+
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
 	desc = "Aviators not included."

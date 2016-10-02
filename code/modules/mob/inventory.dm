@@ -266,6 +266,7 @@
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
+		I.appearance_flags &= ~NO_CLIENT_COLOR
 		I.forceMove(loc)
 		I.dropped(src)
 	return TRUE
@@ -292,6 +293,7 @@
 	if(wear_mask)
 		items += wear_mask
 	return items
+
 /mob/living/carbon/human/get_equipped_items()
 	var/list/items = ..()
 	if(belt)
@@ -309,8 +311,8 @@
 	if(wear_suit)
 		items += wear_suit
 	if(w_uniform)
-		items += w_uniform
-	return items
+		items += w_uniform	return items
+
 
 
 /obj/item/proc/equip_to_best_slot(var/mob/M)

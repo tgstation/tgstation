@@ -4,7 +4,6 @@
 /obj/effect/light_emitter
 	name = "Light emitter"
 	anchored = 1
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = 101
 	var/set_luminosity = 8
 	var/set_cap = 0

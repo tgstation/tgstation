@@ -164,7 +164,7 @@
 	..()
 
 /obj/item/device/mmi/Destroy()
-	if(isrobot(loc))
+	if(iscyborg(loc))
 		var/mob/living/silicon/robot/borg = loc
 		borg.mmi = null
 	if(brainmob)

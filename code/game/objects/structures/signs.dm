@@ -8,7 +8,6 @@
 	maxhealth = 100
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
-
 /obj/structure/sign/basic
 	name = "blank sign"
 	desc = "How can signs be real if our eyes aren't real?"

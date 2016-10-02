@@ -72,4 +72,5 @@
 
 	post_equip(H, visualsOnly)
 
+	H.update_body()
 	return 1

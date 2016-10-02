@@ -28,7 +28,7 @@
 	var/mob/living/last_holder
 	var/mob/living/new_holder
 	var/list/color_altered_mobs = list()
-	resistance_flags = ACID_PROOF | FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/quiet = FALSE
 
 /obj/item/weapon/greentext/New()

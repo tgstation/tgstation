@@ -101,7 +101,6 @@
 	armor = list(melee = 10, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 
 
-
 /obj/structure/barricade/security/New()
 	..()
 	addtimer(src, "deploy", 40)

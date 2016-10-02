@@ -242,7 +242,7 @@
 
 /obj/effect/resonance/proc/burst(turf/T)
 	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-	if(istype(T, /turf/closed/mineral))
+	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled(creator)
 	for(var/mob/living/L in T)
@@ -285,7 +285,7 @@
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity_flag)
+	if(isliving(target) && proximity_flag)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)
@@ -476,10 +476,10 @@
 	icon_state = "mining_hammer1"
 	item_state = "mining_hammer1"
 	name = "proto-kinetic crusher"
-	desc = "An early design of the proto-kinetic accelerator, it is little more than an combination of various mining tools cobbled together, forming a high-tech club.\
-	  While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna. \
-	 \n<span class='info'>Mark a mob with the destabilizing force, then hit them in melee to activate it for extra damage. Extra damage if backstabbed in this fashion. \
-	 This weapon is only particularly effective against large creatures.</span>"
+	desc = "An early design of the proto-kinetic accelerator, it is little more than an combination of various mining tools cobbled together, forming a high-tech club. \
+	While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna.\
+	\n<span class='info'>Mark a mob with the destabilizing force, then hit them in melee to activate it for extra damage. Extra damage if backstabbed in this fashion. \
+	This weapon is only particularly effective against large creatures.</span>"
 	force = 20 //As much as a bone spear, but this is significantly more annoying to carry around due to requiring the use of both hands at all times
 	w_class = 4
 	slot_flags = SLOT_BACK
@@ -491,7 +491,7 @@
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("smashes", "crushes", "cleaves", "chops", "pulps")
+	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = IS_SHARP
 	var/charged = 1
 	var/charge_time = 16
@@ -522,7 +522,7 @@
 				L.underlays += I
 				hammer_synced.marked_image = I
 		var/target_turf = get_turf(target)
-		if(istype(target_turf, /turf/closed/mineral))
+		if(ismineralturf(target_turf))
 			var/turf/closed/mineral/M = target_turf
 			PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, M)
 			M.gets_drilled(firer)

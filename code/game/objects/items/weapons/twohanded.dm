@@ -41,7 +41,7 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(isrobot(user))
+	if(iscyborg(user))
 		user << "<span class='notice'>You free up your module.</span>"
 	else if(istype(src, /obj/item/weapon/twohanded/required))
 		user << "<span class='notice'>You drop \the [name].</span>"
@@ -57,7 +57,7 @@
 /obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
 		return
-	if(istype(user,/mob/living/carbon/monkey) )
+	if(ismonkey(user))
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
 	if(user.get_inactive_held_item())
@@ -71,7 +71,7 @@
 		force = force_wielded
 	name = "[name] (Wielded)"
 	update_icon()
-	if(isrobot(user))
+	if(iscyborg(user))
 		user << "<span class='notice'>You dedicate your module to [name].</span>"
 	else
 		user << "<span class='notice'>You grab the [name] with both hands.</span>"
@@ -362,7 +362,7 @@
 /obj/item/weapon/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(AM, /turf/open)) //So you can actually melee with it
+	if(isopenturf(AM)) //So you can actually melee with it
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
@@ -472,7 +472,7 @@
 	if(!proximity)
 		return
 	user.faction |= "greytide(\ref[user])"
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))
 			return
@@ -523,7 +523,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
-	if(istype(user, /mob/living))
+	if(isliving(user))
 		var/mob/living/U = user
 		if(U.mind && !U.mind.devilinfo && (U.mind.soulOwner == U.mind)) //Burn hands unless they are a devil or have sold their soul
 			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \

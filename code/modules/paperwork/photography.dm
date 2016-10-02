@@ -211,8 +211,10 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
-		if(istype(A, /mob/living) && A:lying)
-			img.Turn(A:lying)
+		if(isliving(A))
+			var/mob/living/L = A
+			if(L.lying)
+				img.Turn(L.lying)
 
 		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
 		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
@@ -248,7 +250,7 @@
 
 		var/list/holding = list()
 
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 
 			for(var/obj/item/I in L.held_items)
@@ -410,7 +412,7 @@
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
 /obj/item/device/camera/siliconcam/proc/viewpictures(user)
-	if(isrobot(user)) // Cyborg
+	if(iscyborg(user)) // Cyborg
 		var/mob/living/silicon/robot/C = src.loc
 		var/obj/item/device/camera/siliconcam/Cinfo
 		if(C.connected_ai)

@@ -31,6 +31,8 @@
 	icon_state = "cargotech"
 	item_state = "lb_suit"
 	item_color = "cargo"
+	body_parts_covered = CHEST|GROIN|ARMS
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 
 /obj/item/clothing/under/rank/chaplain

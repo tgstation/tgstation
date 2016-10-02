@@ -13,23 +13,33 @@ var/datum/subsystem/persistence/SSpersistence
 	NEW_SS_GLOBAL(SSpersistence)
 
 /datum/subsystem/persistence/Initialize()
-	if(!PlaceSecretSatchel())
-		PlaceFreeSatchel()
+	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
+	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
+	secret_satchels[MAP_NAME] >> old_secret_satchels
+
+	var/list/expanded_old_satchels = list()
+	var/placed_satchels = 0
+
+	if(!isnull(old_secret_satchels))
+		expanded_old_satchels = splittext(old_secret_satchels,"#")
+		if(PlaceSecretSatchel(expanded_old_satchels))
+			placed_satchels++
+	else
+		expanded_old_satchels.len = 0
+
+	var/list/free_satchels = list()
+	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION)))) //Nontrivially expensive but it's roundstart only
+		if(isfloorturf(T) && !istype(T,/turf/open/floor/plating/))
+			free_satchels += new /obj/item/weapon/storage/backpack/satchel/flat/secret(T)
+			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchels) >= (50 - expanded_old_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
+				break
+
 	..()
 
 /datum/subsystem/persistence/proc/CollectData()
 	CollectSecretSatchels()
 
-/datum/subsystem/persistence/proc/PlaceSecretSatchel()
-	secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
-	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/weapon/crowbar))
-
-	secret_satchels[MAP_NAME] >> old_secret_satchels
-
-	if(isnull(old_secret_satchels))
-		return 0
-
-	var/list/expanded_old_satchels = splittext(old_secret_satchels,"#")
+/datum/subsystem/persistence/proc/PlaceSecretSatchel(list/expanded_old_satchels)
 	var/satchel_string
 
 	if(expanded_old_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
@@ -50,22 +60,10 @@ var/datum/subsystem/persistence/SSpersistence
 	F.x = text2num(chosen_satchel[1])
 	F.y = text2num(chosen_satchel[2])
 	F.z = ZLEVEL_STATION
-	if(istype(F.loc,/turf/open/floor) && !istype(F.loc,/turf/open/floor/plating/))
+	if(isfloorturf(F.loc) && !istype(F.loc,/turf/open/floor/plating/))
 		F.hide(1)
 	new path(F)
 	return 1
-
-/datum/subsystem/persistence/proc/PlaceFreeSatchel()
-	var/satchel_placed = FALSE
-	var/breakout = 0
-	while(!satchel_placed && breakout <= 5)
-		for(var/V in shuffle(get_area_turfs(pick(the_station_areas))))
-			var/turf/T = V
-			if(istype(T,/turf/open/floor) && !istype(T,/turf/open/floor/plating/))
-				new /obj/item/weapon/storage/backpack/satchel/flat/secret(T)
-				satchel_placed = TRUE
-				break
-		breakout++
 
 /datum/subsystem/persistence/proc/CollectSecretSatchels()
 	for(var/A in new_secret_satchels)

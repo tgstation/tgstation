@@ -257,14 +257,14 @@
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	for(var/turf/T in range(1, src))
-		if(istype(T, /turf/open/space) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || istype(T.loc, /area/space))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			return
 	..()
 
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	for(var/turf/T in range(1, src))
-		if(istype(T, /turf/open/space) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || istype(T.loc, /area/space))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			return
 	..()
@@ -425,7 +425,6 @@
 	maxhealth = 30
 	anchored = 1
 
-//phil235 make it a structure.
 /obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -459,16 +458,26 @@
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
 			L.electrocute_act(0, src, 1, 1)
-			if(isrobot(L))
+			if(iscyborg(L))
 				L.Weaken(5)
 			qdel(src)
 	..()
+
+/mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
+	set name = "Create trap"
+	set category = "Swarmer"
+	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 5 resources"
+	if(locate(/obj/structure/swarmer/trap) in loc)
+		src << "<span class='warning'>There is already a trap here. Aborting.</span>"
+		return
+	Fabricate(/obj/structure/swarmer/trap, 5)
+
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateBarricade()
 	set name = "Create barricade"
 	set category = "Swarmer"
 	set desc = "Creates a barricade that will stop anything but swarmers and disabler beams from passing through."
-	if(/obj/structure/swarmer/blockade in loc)
+	if(locate(/obj/structure/swarmer/blockade) in loc)
 		src << "<span class='warning'>There is already a blockade here. Aborting.</span>"
 		return
 	if(resources < 5)

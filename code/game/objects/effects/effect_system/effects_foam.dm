@@ -44,7 +44,6 @@
 			new /obj/structure/foamedmetal(src.loc)
 		if(2)
 			new /obj/structure/foamedmetal/iron(src.loc)
-
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
 
@@ -178,6 +177,7 @@
 	density = 1
 	opacity = 1 	// changed in New()
 	anchored = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
@@ -220,8 +220,6 @@
 
 /obj/structure/foamedmetal/CanAtmosPass()
 	return !density
-
-
 /obj/structure/foamedmetal/iron
 	health = 50
 	maxhealth = 50

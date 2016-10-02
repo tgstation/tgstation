@@ -19,7 +19,7 @@
 	density = 1 //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
-	resistance_flags = FIRE_PROOF | ACID_PROOF //and no deleting hoomans inside
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
@@ -637,7 +637,7 @@
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
-			AI.loc = card
+			AI.forceMove(card)
 			card.AI = AI
 			occupant = null
 			AI.controlled_mech = null

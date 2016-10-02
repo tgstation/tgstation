@@ -48,7 +48,7 @@ Doesn't work on other aliens/AI.*/
 		if(!silent)
 			user << "<span class='noticealien'>Not enough plasma stored.</span>"
 		return 0
-	if(check_turf && (!isturf(user.loc) || istype(user.loc, /turf/open/space)))
+	if(check_turf && (!isturf(user.loc) || isspaceturf(user.loc)))
 		if(!silent)
 			user << "<span class='noticealien'>Bad place for a garden!</span>"
 		return 0
@@ -147,6 +147,8 @@ Doesn't work on other aliens/AI.*/
 			return 1
 		else
 			user << "<span class='noticealien'>You cannot dissolve this object.</span>"
+
+
 			return 0
 	else
 		src << "<span class='noticealien'>Target is too far away.</span>"

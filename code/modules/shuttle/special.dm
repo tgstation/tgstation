@@ -185,7 +185,7 @@
 // with CENTCOM_BARSTAFF)
 
 /obj/structure/table/wood/bar
-	resistance_flags = LAVA_PROOF|FIRE_PROOF|ACID_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags = NODECONSTRUCT
 	health = 1000
 	var/boot_dir = 1

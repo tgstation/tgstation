@@ -42,20 +42,22 @@
 	..()
 	desc = initial(desc)
 	if(!(resistance_flags & INDESTRUCTIBLE)) //phil235
-		var/servant_message = "It is at <b>[health]/[max_health]</b> integrity"
-		var/other_message = "It seems pristine and undamaged"
+		var/t_It = they_pronoun(TRUE)
+		var/t_is = get_is()
+		var/servant_message = "[t_It] [t_is] at <b>[health]/[max_health]</b> integrity"
+		var/other_message = "[t_It] seems pristine and undamaged"
 		var/heavily_damaged = FALSE
 		var/healthpercent = (health/max_health) * 100
 		switch(healthpercent)
 			if(100 to INFINITY)
-				other_message = "It seems pristine and undamaged"
+				other_message = "[t_It] seems pristine and undamaged"
 			if(50 to 100)
-				other_message = "It looks slightly dented"
+				other_message = "[t_It] looks slightly dented"
 			if(25 to 50)
-				other_message = "It appears heavily damaged"
+				other_message = "[t_It] appears heavily damaged"
 				heavily_damaged = TRUE
 			if(0 to 25)
-				other_message = "It's falling apart"
+				other_message = "[t_It] [t_is] falling apart"
 				heavily_damaged = TRUE
 		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
@@ -130,7 +132,7 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/daemon_shell))
 		var/component_type
-		switch(alert(user, "Will this daemon produce a specific type of component or produce randomly?.", , "Specific Type", "Random Component"))
+		switch(alert(user, "Will this daemon produce a specific type of component or produce randomly?", , "Specific Type", "Random Component"))
 			if("Specific Type")
 				component_type = get_component_id(input(user, "Choose a component type.", name) as null|anything in list("Belligerent Eye", "Vanguard Cogwheel", "Guvax Capacitor", "Replicant Alloy", "Hierophant Ansible"))
 				if(!component_type)
@@ -174,7 +176,7 @@
 /obj/structure/destructible/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
 	name = "ocular warden"
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
-	clockwork_desc = "A stalwart turret that will deal sustained damage to any non-faithful it sees."
+	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
 	health = 25
 	max_health = 25
@@ -182,12 +184,12 @@
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
-	resistance_flags = LAVA_PROOF|FIRE_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/damage_per_tick = 2.5
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
-	var/mech_damage_cycle = 0 //only hits every few cycles so mechs have a chance against it
+	var/mech_damage_cycle = 0 //so that people in mechs don't get murderspammed with messages
 
 /obj/structure/destructible/clockwork/ocular_warden/New()
 	..()
@@ -218,12 +220,14 @@
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
 			else if(istype(target,/obj/mecha))
-				if(mech_damage_cycle)
-					var/obj/mecha/M = target
-					M.take_damage(damage_per_tick, BURN, "melee", 1, get_dir(src, M)) //does about half of standard damage to mechs * whatever their fire armor is
-					mech_damage_cycle--
-				else
+				var/sending_message = FALSE
+				if(mech_damage_cycle > 1)
+					mech_damage_cycle = 0
+					sending_message = TRUE				else
 					mech_damage_cycle++
+				var/obj/mecha/M = target
+				M.take_damage(damage_per_tick, BURN, "melee", 1, get_dir(src, M)) //does about half of standard damage to mechs * whatever their fire armor is
+
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
@@ -291,9 +295,7 @@
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
 		A.visible_message("<span class='brass'>[src][spawn_message]</span>")
-		remove_servant_of_ratvar(S.brainmob, TRUE)
 		S.brainmob.mind.transfer_to(A)
-		add_servant_of_ratvar(A, TRUE)
 		user.drop_item()
 		qdel(S)
 		qdel(src)
@@ -344,10 +346,10 @@
 			user << "<span class='warning'>You need one brass sheet to do this!</span>"
 			return
 		var/turf/T = get_turf(src)
-		if(istype(T, /turf/closed/wall))
+		if(iswallturf(T))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
-		if(!istype(T, /turf/open/floor))
+		if(!isfloorturf(T))
 			user << "<span class='warning'>A floor must be present to build a [anchored ? "false ":""]wall!</span>"
 			return
 		if(locate(/obj/structure/falsewall) in T.contents)
@@ -928,7 +930,7 @@
 				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
-				L.visible_message("<span class='warning'>[L] collapses in on themself as [src] flares bright blue!</span>")
+				L.visible_message("<span class='warning'>[L] collapses in on [L.them_pronoun()]self as [src] flares bright blue!</span>")
 				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
 				for(var/obj/item/W in L)
 					L.unEquip(W)
@@ -956,7 +958,7 @@
 						ghost.reenter_corpse()
 						L.revive(1, 1)
 						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
-						L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", \
+						L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.their_pronoun()] mouth dripping blue ichor!</span>", \
 						"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 						vitality -= revival_cost
 						break

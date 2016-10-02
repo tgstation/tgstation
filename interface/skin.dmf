@@ -78,6 +78,9 @@ macro "default"
 		name = "CTRL+G"
 		command = "a-intent right"
 	elem
+		name = "CTRL+H"
+		command = "talk-wheel"
+	elem
 		name = "CTRL+Q"
 		command = ".northwest"
 	elem
@@ -238,6 +241,12 @@ macro "hotkeys"
 	elem
 		name = "CTRL+G"
 		command = "a-intent right"
+	elem
+		name = "H"
+		command = "talk-wheel"
+	elem
+		name = "CTRL+H"
+		command = "talk-wheel"
 	elem
 		name = "M"
 		command = "me"

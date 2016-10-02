@@ -83,7 +83,7 @@
 	var/shock = 0
 
 /obj/item/weapon/holosign_creator/cyborg/attack_self(mob/user)
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 
 		if(shock)

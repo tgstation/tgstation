@@ -21,7 +21,6 @@
 			damage_amount *= 0.25
 	return ..(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 
-
 /obj/structure/spider/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		take_damage(5, BURN,0, 0)
@@ -37,7 +36,7 @@
 	if(height==0) return 1
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
-	else if(istype(mover, /mob/living))
+	else if(isliving(mover))
 		if(prob(50))
 			mover << "<span class='danger'>You get stuck in \the [src] for a moment.</span>"
 			return 0

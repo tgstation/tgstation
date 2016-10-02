@@ -24,7 +24,7 @@
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
-	if(isrobot(user) || istype(I,/obj/item/device/multitool))
+	if(iscyborg(user) || istype(I,/obj/item/device/multitool))
 		toggle_lock(user)
 	else if(istype(I, /obj/item/stack/sheet/glass) && broken)
 		var/obj/item/stack/sheet/glass/G = I

@@ -76,7 +76,7 @@
 			reagents.conditional_update()
 		else if(istype(A, /atom/movable))
 			var/atom/movable/M = A
-			if(istype(M.loc, /mob/living))
+			if(isliving(M.loc))
 				var/mob/living/L = M.loc
 				L.unEquip(M)
 			M.loc = src
@@ -325,7 +325,7 @@ var/list/blood_splatter_icons = list()
 		G.add_blood(blood_dna)
 	else
 		transfer_blood_dna(blood_dna)
-	bloody_hands = rand(2, 4)
+		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1
 
@@ -354,7 +354,7 @@ var/list/blood_splatter_icons = list()
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/open/space))
+	if(isspaceturf(get_turf(src)))
 		return 1
 	else
 		return 0

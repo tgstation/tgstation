@@ -10,15 +10,16 @@
 	icon_state = "elecarm"
 	var/charge_cost = 30
 
-/obj/item/borg/stun/attack(mob/living/M, mob/living/silicon/robot/user)
+/obj/item/borg/stun/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
 			playsound(M, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
-
-	if(!user.cell.use(charge_cost))
-		return
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		if(!R.cell.use(charge_cost))
+			return
 
 	user.do_attack_animation(M)
 	M.Weaken(5)
@@ -42,7 +43,7 @@
 	var/shockallowed = 0//Can it be a stunarm when emagged. Only PK borgs get this by default.
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/P = user
 		if(P.emagged&&shockallowed == 1)
 			if(mode < 3)
@@ -106,7 +107,7 @@
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
 						M.update_canmove()
 					else
-						if(!isrobot(M))
+						if(!iscyborg(M))
 							M.adjustFireLoss(10)
 							user.visible_message("<span class='userdanger'>[user] shocks [M]!</span>", \
 								"<span class='danger'>You shock [M]!</span>")
@@ -160,7 +161,7 @@
 	update_icon()
 
 /obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
-	if(!proximity_flag || !isrobot(user))
+	if(!proximity_flag || !iscyborg(user))
 		return
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
@@ -281,7 +282,7 @@
 		user << "<font color='red'>The device is still recharging!</font>"
 		return
 
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.cell.charge < 1200)
 			user << "<font color='red'>You don't have enough charge to do this!</font>"
@@ -301,7 +302,7 @@
 		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
-		if(isrobot(user))
+		if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			R.connected_ai << "<br><span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span><br>"
 

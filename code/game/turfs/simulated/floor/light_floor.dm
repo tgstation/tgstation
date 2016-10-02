@@ -1,5 +1,6 @@
 /turf/open/floor/light
-	name = "Light floor"
+	name = "light floor"
+	desc = "A wired glass tile embedded into the floor."
 	luminosity = 5
 	icon_state = "light_on"
 	floor_tile = /obj/item/stack/tile/light

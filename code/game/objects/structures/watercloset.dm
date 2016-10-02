@@ -208,7 +208,7 @@
 			else
 				wash_obj(G)
 	else
-		if(istype(loc, /turf/open))
+		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 
@@ -332,7 +332,7 @@
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform()
 			if(washgloves)
-				clean_blood()
+				H.clean_blood()
 			if(H.shoes && washshoes)
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes()

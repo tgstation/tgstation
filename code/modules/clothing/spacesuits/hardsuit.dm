@@ -86,6 +86,10 @@
 		jetpack = new jetpack(src)
 	..()
 
+/obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	..()
+
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tank/jetpack/suit))
 		if(jetpack)
@@ -322,7 +326,7 @@
 	visor_flags_inv = 0
 	visor_flags = 0
 	on = 0
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
@@ -335,7 +339,7 @@
 	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70, fire = 95, acid = 100)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
@@ -411,7 +415,7 @@
 	desc = "A prototype helmet designed for research in a hazardous, low pressure environment. Scientific data flashes across the visor."
 	icon_state = "hardsuit0-rd"
 	item_color = "rd"
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/onboard_hud_enabled = 0 //stops conflicts with another diag HUD
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60, fire = 60, acid = 80)
@@ -553,6 +557,7 @@
 	var/shield_on = "shield-old"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, attack_text)
+	recharge_cooldown = world.time + recharge_delay
 	if(current_charges > 0)
 		var/datum/effect_system/spark_spread/s = new
 		s.set_up(2, 1, src)
@@ -560,7 +565,6 @@
 		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
 		current_charges--
 		if(recharge_rate)
-			recharge_cooldown = world.time + recharge_delay
 			START_PROCESSING(SSobj, src)
 		if(current_charges <= 0)
 			owner.visible_message("[owner]'s shield overloads!")
@@ -582,7 +586,7 @@
 			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
 			STOP_PROCESSING(SSobj, src)
 		shield_state = "[shield_on]"
-		if(istype(loc, /mob/living/carbon/human))
+		if(ishuman(loc))
 			var/mob/living/carbon/human/C = loc
 			C.update_inv_wear_suit()
 
@@ -592,7 +596,7 @@
         . += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_state]")
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 ///////////////Capture the Flag////////////////////
 
@@ -690,7 +694,7 @@
 	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 95, acid = 95)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
 	dog_fashion = /datum/dog_fashion/back/deathsquad
 

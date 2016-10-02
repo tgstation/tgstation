@@ -175,7 +175,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	health = 200
 	maxhealth = 200
 	broken_health = 50
@@ -261,7 +261,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+	if(ishuman(user) || issilicon(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat
 		scan_user(human_or_robot_user)
