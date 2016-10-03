@@ -440,7 +440,7 @@
 		if(I)
 			attackby(I,H)
 		return
-	else if(istype(AM,/mob/living/silicon/robot))
+	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
 			src.attackby(R.module_active,R)

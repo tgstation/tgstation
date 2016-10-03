@@ -483,7 +483,7 @@ var/next_mob_id = 0
 	set name = "Observe"
 	set category = "OOC"
 
-	if(stat != DEAD || istype(src, /mob/new_player))
+	if(stat != DEAD || isnewplayer(src))
 		usr << "<span class='notice'>You must be observing to use this!</span>"
 		return
 
@@ -565,7 +565,7 @@ var/next_mob_id = 0
 		return
 	if(!Adjacent(usr))
 		return
-	if(istype(M, /mob/living/silicon/ai))
+	if(isAI(M))
 		return
 	show_inv(usr)
 
