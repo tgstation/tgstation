@@ -671,7 +671,7 @@
 
 /datum/chemical_reaction/slimecrayon/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/list/crayons = subtypesof(/obj/item/toy/crayon)
+	var/list/crayons = difflist(subtypesof(/obj/item/toy/crayon),typesof(/obj/item/toy/crayon/spraycan))
 	var/chosen = pick(crayons)
 	var/obj/P = new chosen
 	if(P)
