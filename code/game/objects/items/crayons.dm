@@ -130,7 +130,7 @@
 	// When eating a crayon, check_empty() can be called twice producing
 	// two messages unless we check for being deleted first
 	if(!qdeleted(src))
-		. = TRUE
+		return TRUE
 
 	. = FALSE
 	// -1 is unlimited charges
@@ -381,7 +381,7 @@
 		user << "You take a bite of the [src.name]. Delicious!"
 		var/eaten = use_charges(5)
 		if(!reagents.total_volume) //Prevents divsion by zero
-			check_empty()
+			check_empty(user)
 			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction * volume_multiplier)
