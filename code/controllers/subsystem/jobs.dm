@@ -382,7 +382,7 @@ var/datum/subsystem/job/SSjob
 					if(clear)
 						S = T
 						continue
-		if(istype(S, /obj/effect/landmark) && istype(S.loc, /turf))
+		if(istype(S, /obj/effect/landmark) && isturf(S.loc))
 			H.loc = S.loc
 
 	if(H.mind)

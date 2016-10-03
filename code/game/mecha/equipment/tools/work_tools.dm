@@ -210,7 +210,7 @@
 	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve
 		return
 
-	if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
+	if(!isturf(target) && !istype(target, /obj/machinery/door/airlock))
 		target = get_turf(target)
 	if(!action_checks(target) || get_dist(chassis, target)>3)
 		return

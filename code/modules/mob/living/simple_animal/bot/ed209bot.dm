@@ -418,19 +418,15 @@ Auto Patrol[]"},
 		return
 	lastfired = world.time
 	var/turf/T = loc
-	var/atom/U = (istype(target, /atom/movable) ? target.loc : target)
-	if((!( U ) || !( T )))
+	var/turf/U = get_turf(target)
+	if(!U)
 		return
-	while(!(istype(U, /turf)))
-		U = U.loc
-	if(!(istype(T, /turf)))
+	if(!isturf(T))
 		return
 
 	if(!projectile)
 		return
 
-	if(!(istype(U, /turf)))
-		return
 	var/obj/item/projectile/A = new projectile (loc)
 	playsound(loc, shoot_sound, 50, 1)
 	A.current = U
