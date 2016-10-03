@@ -337,7 +337,7 @@ var/time_last_changed_position = 0
 					scan = I
 			authenticated = 0
 		if ("auth")
-			if ((!( authenticated ) && (scan || (istype(usr, /mob/living/silicon))) && (modify || mode)))
+			if ((!( authenticated ) && (scan || issilicon(usr)) && (modify || mode)))
 				if (check_access(scan))
 					region_access = list()
 					head_subordinates = list()
@@ -368,7 +368,7 @@ var/time_last_changed_position = 0
 							get_subordinates("Chief Engineer")
 						if(region_access)
 							authenticated = 1
-			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))
+			else if ((!( authenticated ) && issilicon(usr)) && (!modify))
 				usr << "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>"
 		if ("logout")
 			region_access = null
@@ -417,7 +417,7 @@ var/time_last_changed_position = 0
 			if (authenticated)
 				var/t2 = modify
 				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
-				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if ((authenticated && modify == t2 && (in_range(src, usr) || issilicon(usr)) && isturf(loc)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)
 						modify.registered_name = newName

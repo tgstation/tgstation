@@ -94,7 +94,7 @@
 						race = "Artificial Life"
 						language = "Humanoid" //Ais and borgs speak human, and binary isnt picked up.
 
-					else if(istype(mobtype, /obj))
+					else if(isobj(mobtype))
 						race = "Machinery"
 						language = race
 

@@ -483,7 +483,7 @@ var/next_mob_id = 0
 	set name = "Observe"
 	set category = "OOC"
 
-	if(stat != DEAD || istype(src, /mob/new_player))
+	if(stat != DEAD || isnewplayer(src))
 		usr << "<span class='notice'>You must be observing to use this!</span>"
 		return
 
@@ -565,7 +565,7 @@ var/next_mob_id = 0
 		return
 	if(!Adjacent(usr))
 		return
-	if(istype(M, /mob/living/silicon/ai))
+	if(isAI(M))
 		return
 	show_inv(usr)
 
@@ -628,7 +628,7 @@ var/next_mob_id = 0
 			var/list/overrides = list()
 			for(var/image/I in client.images)
 				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides = I.loc
+					overrides += I.loc
 			for(var/atom/A in listed_turf)
 				if(!A.mouse_opacity)
 					continue
