@@ -234,7 +234,9 @@
 	return
 
 /obj/item/stack/AltClick(mob/living/user)
-	if(!ishuman(user) || !user.canUseTopic(src))
+	var/speciescheck = !ishuman(user) || !isdrone(user)
+	var/usecheck = !user.canUseTopic(src)
+	if(speciescheck || usecheck)
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
