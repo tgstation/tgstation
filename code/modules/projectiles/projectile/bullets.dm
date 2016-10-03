@@ -200,6 +200,16 @@
 	reagents.add_reagent("foaming_agent", 5)
 	reagents.add_reagent("facid", 5)
 
+/obj/item/projectile/bullet/tranq
+	damage = 5
+	stamina = 60
+
+/obj/item/projectile/bullet/tranq/on_hit(atom/target, blocked = 0)
+	if((blocked != 100) && istype(target, /mob/living))
+		var/mob/living/L = target
+		L.Sleeping(20)
+	return ..()
+
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"

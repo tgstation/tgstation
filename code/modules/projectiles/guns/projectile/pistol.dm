@@ -74,3 +74,9 @@
 		user << "<span class='notice'>..and falls into view. Whew, that was a close one.</span>"
 		user.unEquip(src)
 
+/obj/item/weapon/gun/projectile/automatic/pistol/tranq
+	name = "Mk 22 Hush Puppy"
+	desc = "What is that stance? That gun?.."
+	icon_state = "mgs"
+	origin_tech = "combat=6;materials=4;syndicate=5"
+	mag_type = /obj/item/ammo_box/magazine/m9mm
