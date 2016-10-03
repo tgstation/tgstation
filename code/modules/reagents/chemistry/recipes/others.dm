@@ -55,7 +55,7 @@
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(for(var/i in 1 to created_volume)
+	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/plasma(location)
 		
 /datum/chemical_reaction/goldsolidification
@@ -66,7 +66,7 @@
 
 /datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(for(var/i in 1 to created_volume)
+	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
 
 /datum/chemical_reaction/capsaicincondensation
