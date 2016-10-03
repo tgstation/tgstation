@@ -936,32 +936,31 @@
 // ATTACK PROCS //
 //////////////////
 
-/datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, var/datum/martial_art/attacker_style)
-	if("help")
-		if(target.health >= 0 && !(target.status_flags & FAKEDEATH))
-			target.help_shake_act(user)
-			if(target != user)
-				add_logs(user, target, "shaked")
-			return 1
+/datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.health >= 0 && !(target.status_flags & FAKEDEATH))
+		target.help_shake_act(user)
+		if(target != user)
+			add_logs(user, target, "shaked")
+		return 1
+	else
+		var/we_breathe = (!(NOBREATH in user.dna.species.specflags))
+		var/we_lung = user.getorganslot("lungs")
+
+		if(we_breathe && we_lung)
+			user.do_cpr(target)
+		else if(we_breathe && !we_lung)
+			user << "<span class='warning'>You have no lungs to breathe with, so you cannot peform CPR.</span>"
 		else
-			var/we_breathe = (!(NOBREATH in user.dna.species.specflags))
-			var/we_lung = user.getorganslot("lungs")
+			user << "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>"
 
-			if(we_breathe && we_lung)
-				user.do_cpr(target)
-			else if(we_breathe && !we_lung)
-				user << "<span class='warning'>You have no lungs to breathe with, so you cannot peform CPR.</span>"
-			else
-				user << "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>"
-
-/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, var/datum/martial_art/attacker_style)
+/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(attacker_style && attacker_style.grab_act(user,target))
 		return 1
 	else
 		target.grabbedby(user)
 		return 1
 
-/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, var/datum/martial_art/attacker_style)
+/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return 1
 	else
@@ -1000,7 +999,7 @@
 		else if(target.lying)
 			target.forcesay(hit_appends)
 
-/datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, var/datum/martial_art/attacker_style)
+/datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
 	else
@@ -1043,7 +1042,7 @@
 	return
 
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, 	var/datum/martial_art/attacker_style = M.martial_art)
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
 	if(!istype(M))
 		return
 	CHECK_DNA_AND_SPECIES(M)
@@ -1055,7 +1054,6 @@
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
-
 	switch(M.a_intent)
 		if("help")
 			help(M, H, attacker_style)
