@@ -1000,7 +1000,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	languages_spoken = RATVAR
 	languages_understood = HUMAN | RATVAR
-	sight = 30
+	sight = 28
 	speak = list()
 	speak_emote = list("screeches","says","yells")
 	emote_hear = list("screeches.","bawks!")
