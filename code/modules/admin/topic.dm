@@ -1339,7 +1339,7 @@
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob."
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai."
 			return
 
@@ -1387,7 +1387,7 @@
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob."
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai."
 			return
 
@@ -1417,7 +1417,7 @@
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob."
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai."
 			return
 
@@ -1447,7 +1447,7 @@
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob."
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai."
 			return
 
@@ -1470,7 +1470,7 @@
 		if(!ismob(M))
 			usr << "This can only be used on instances of type /mob."
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai."
 			return
 
@@ -1481,7 +1481,7 @@
 				I.layer = initial(I.layer)
 				I.dropped(M)
 
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/observer = M
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), slot_shoes)
@@ -1569,7 +1569,7 @@
 			return
 
 		var/mob/M = locate(href_list["makeanimal"])
-		if(istype(M, /mob/new_player))
+		if(isnewplayer(M))
 			usr << "This cannot be used on instances of type /mob/new_player."
 			return
 
@@ -1929,7 +1929,7 @@
 
 		switch(where)
 			if("inhand")
-				if (!iscarbon(usr) && !isrobot(usr))
+				if (!iscarbon(usr) && !iscyborg(usr))
 					usr << "Can only spawn in hand when you're a carbon mob or cyborg."
 					where = "onfloor"
 				target = usr
@@ -1972,7 +1972,7 @@
 								var/mob/living/L = usr
 								var/obj/item/I = O
 								L.put_in_hands(I)
-								if(isrobot(L))
+								if(iscyborg(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
 										R.module.add_module(I)

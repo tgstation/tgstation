@@ -77,7 +77,7 @@
 	if(..())
 		return
 	if (src.locked)
-		if (!(istype(usr, /mob/living/silicon)|| IsAdminGhost(usr)))
+		if(!(issilicon(usr)|| IsAdminGhost(usr)))
 			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])

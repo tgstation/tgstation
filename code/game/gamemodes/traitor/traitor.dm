@@ -85,7 +85,7 @@
 
 
 /datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)
-	if(istype(traitor.current, /mob/living/silicon))
+	if(issilicon(traitor.current))
 		var/objective_count = 0
 
 		if(prob(30))
@@ -200,7 +200,7 @@
 
 
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
-	if (istype(traitor.current, /mob/living/silicon))
+	if(issilicon(traitor.current))
 		add_law_zero(traitor.current)
 	else
 		equip_traitor(traitor.current)

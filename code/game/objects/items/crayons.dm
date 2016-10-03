@@ -710,7 +710,7 @@
 
 /obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
 	var/diff = ..()
-	if(!isrobot(user))
+	if(!iscyborg(user))
 		user << "<span class='notice'>How did you get this?</span>"
 		qdel(src)
 		return FALSE

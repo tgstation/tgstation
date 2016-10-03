@@ -244,7 +244,7 @@
 						M_job = "AI"
 					else if(ispAI(M))
 						M_job = "pAI"
-					else if(isrobot(M))
+					else if(iscyborg(M))
 						M_job = "Cyborg"
 					else
 						M_job = "Silicon-based"
@@ -260,7 +260,7 @@
 				else
 					M_job = "Living"
 
-			else if(istype(M,/mob/new_player))
+			else if(isnewplayer(M))
 				M_job = "New player"
 
 			else if(isobserver(M))

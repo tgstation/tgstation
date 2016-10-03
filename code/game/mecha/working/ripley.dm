@@ -10,6 +10,7 @@
 	lights_power = 7
 	deflect_chance = 15
 	damage_absorption = list("brute"=0.6,"fire"=1,"bullet"=0.8,"laser"=0.9,"energy"=1,"bomb"=0.6)
+	armor = list(melee = 40, bullet = 20, laser = 10, energy = 0, bomb = 40, bio = 0, rad = 0, fire = 0, acid = 0)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -63,9 +64,10 @@
 	icon_state = "firefighter"
 	max_temperature = 65000
 	health = 250
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF |FIRE_PROOF | ACID_PROOF
 	lights_power = 7
 	damage_absorption = list("brute"=0.6,"fire"=0.5,"bullet"=0.7,"laser"=0.7,"energy"=1,"bomb"=0.4)
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 0, acid = 0)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 

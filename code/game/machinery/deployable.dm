@@ -90,7 +90,7 @@
 		if(2)
 			take_damage(25, BRUTE, 0)
 
-/obj/structure/barricade/blob_act(obj/effect/blob/B)
+/obj/structure/barricade/blob_act(obj/structure/blob/B)
 	take_damage(25, BRUTE, 0)
 
 /obj/structure/barricade/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
@@ -151,6 +151,7 @@
 	maxhealth = 180
 	proj_pass_rate = 20
 	ranged_damage_modifier = 0.5
+	armor = list(melee = 10, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 
 
 /obj/structure/barricade/security/New()

@@ -248,7 +248,7 @@
 	if(T.flags & NOJAUNT)
 		T.flags -= NOJAUNT
 		PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && istype(T, /turf/open/floor) && prob(15))
+	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
 		if(floor.intact && floor.floor_tile)
 			PoolOrNew(floor.floor_tile, floor)
@@ -366,11 +366,11 @@
 					mob.reagents.add_reagent("plasma", 5)
 		else
 			mob.adjustToxLoss(5)
-	for(var/obj/effect/spacevine/vine in T) //Fucking with botanists, the ability.
+	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.
 		vine.color = "#823abb"
 		PoolOrNew(/obj/effect/overlay/temp/revenant, vine.loc)
 		QDEL_IN(vine, 10)
-	for(var/obj/effect/glowshroom/shroom in T)
+	for(var/obj/structure/glowshroom/shroom in T)
 		shroom.color = "#823abb"
 		PoolOrNew(/obj/effect/overlay/temp/revenant, shroom.loc)
 		QDEL_IN(shroom, 10)

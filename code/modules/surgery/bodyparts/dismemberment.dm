@@ -80,8 +80,7 @@
 		return
 	var/turf/T = get_turf(owner)
 	var/mob/living/carbon/C = owner
-	if(!no_update)
-		update_limb(1)
+	update_limb(1)
 	C.bodyparts -= src
 	if(held_index)
 		C.unEquip(owner.get_item_for_held_index(held_index), 1)
@@ -308,7 +307,7 @@
 	for(var/Z in limb_list)
 		. += regenerate_limb(Z, noheal)
 
-/
+
 /mob/living/proc/regenerate_limb(limb_zone, noheal)
 	return
 
@@ -321,7 +320,8 @@
 		if(!noheal)
 			L.brute_dam = 0
 			L.burn_dam = 0
-			L.burn_state = 0
+			L.brutestate = 0
+			L.burnstate = 0
 
 		L.attach_limb(src, 1)
 		return 1

@@ -226,7 +226,7 @@
 
 /obj/machinery/particle_accelerator/control_box/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon))
+		if(!issilicon(user))
 			user.unset_machine()
 			user << browse(null, "window=pacontrol")
 			return
@@ -320,7 +320,7 @@
 
 	..()
 
-/obj/machinery/particle_accelerator/control_box/blob_act(obj/effect/blob/B)
+/obj/machinery/particle_accelerator/control_box/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
 

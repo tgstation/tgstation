@@ -8,7 +8,7 @@
 	var/datum/gas_mixture/GM = target.return_air()
 	var/list/GM_gases
 	var/burning = 0
-	if(istype(target, /turf/open))
+	if(isopenturf(target))
 		var/turf/open/T = target
 		if(T.active_hotspot)
 			burning = 1

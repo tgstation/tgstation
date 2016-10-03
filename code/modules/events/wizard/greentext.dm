@@ -28,7 +28,7 @@
 	var/mob/living/last_holder
 	var/mob/living/new_holder
 	var/list/color_altered_mobs = list()
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/quiet = FALSE
 
 /obj/item/weapon/greentext/New()
@@ -69,7 +69,7 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
-		burn_state = ON_FIRE
+		resistance_flags |= ON_FIRE
 		qdel(src)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
@@ -78,7 +78,7 @@
 		last_holder = new_holder //long live the king
 
 /obj/item/weapon/greentext/Destroy(force)
-	if((burn_state != ON_FIRE) && (!force))
+	if(!(resistance_flags & ON_FIRE) && !force)
 		return QDEL_HINT_LETMELIVE
 
 	. = ..()

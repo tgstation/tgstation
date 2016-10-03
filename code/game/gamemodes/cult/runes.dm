@@ -21,7 +21,7 @@ To draw a rune, use an arcane tome.
 	anchored = 1
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	layer = ABOVE_NORMAL_TURF_LAYER
 	color = "#FF0000"
 
@@ -357,7 +357,7 @@ var/list/teleport_runes = list()
 	color = "#7D1717"
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
-	var/is_convertable = is_convertable_to_cult(L.mind)
+	var/is_convertable = is_convertable_to_cult(L)
 	if(L.stat != DEAD && (is_clock || is_convertable))
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		..()
@@ -392,7 +392,7 @@ var/list/teleport_runes = list()
 		convertee.adjustBruteLoss(-(brutedamage * 0.75))
 		convertee.adjustFireLoss(-(burndamage * 0.75))
 	convertee.visible_message("<span class='warning'>[convertee] writhes in pain \
-	[brutedamage || burndamage ? "even as their wounds heal and close" : "as the markings below them glow a bloody red"]!</span>", \
+	[brutedamage || burndamage ? "even as [convertee.their_pronoun()] wounds heal and close" : "as the markings below [convertee.them_pronoun()] glow a bloody red"]!</span>", \
  	"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
 	ticker.mode.add_cultist(convertee.mind, 1)
 	new /obj/item/weapon/tome(get_turf(src))
@@ -404,7 +404,7 @@ var/list/teleport_runes = list()
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
-	if((((ishuman(sacrificial) || isrobot(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
+	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			M << "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>"
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
@@ -423,7 +423,7 @@ var/list/teleport_runes = list()
 		if(sacrifice_fulfilled)
 			M << "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>"
 		else
-			if(ishuman(sacrificial) || isrobot(sacrificial))
+			if(ishuman(sacrificial) || iscyborg(sacrificial))
 				M << "<span class='cultlarge'>\"I accept this sacrifice.\"</span>"
 			else
 				M << "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>"
@@ -435,7 +435,7 @@ var/list/teleport_runes = list()
 		stone.invisibility = 0
 
 	if(sacrificial)
-		if(isrobot(sacrificial))
+		if(iscyborg(sacrificial))
 			playsound(sacrificial, 'sound/magic/Disable_Tech.ogg', 100, 1)
 			sacrificial.dust() //To prevent the MMI from remaining
 		else
@@ -572,7 +572,7 @@ var/list/teleport_runes = list()
 	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
 	mob_to_revive.grab_ghost()
 	mob_to_revive << "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>"
-	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from their eyes.</span>", \
+	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.their_pronoun()] eyes.</span>", \
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")
 	rune_in_use = 0
 
@@ -687,11 +687,11 @@ var/list/teleport_runes = list()
 			return
 		affecting.apply_damage(0.1, BRUTE)
 		if(!(user in T))
-			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls them back to the rune!</span>")
+			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls [user.them_pronoun()] back to the rune!</span>")
 			Beam(user,icon_state="drainbeam",time=2)
 			user.forceMove(get_turf(src)) //NO ESCAPE :^)
 		if(user.key)
-			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow around them dimming.</span>", \
+			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow around [user.them_pronoun()] dimming.</span>", \
 								 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
 			user.color = initial(user.color)
 			user.Weaken(3)
@@ -754,7 +754,7 @@ var/list/wall_runes = list()
 	update_state()
 	if(density)
 		spread_density()
-	user.visible_message("<span class='warning'>[user] [iscarbon(user) ? "places their hands on":"stares intently at"] [src], and [density ? "the air above it begins to shimmer" : "the shimmer above it fades"].</span>", \
+	user.visible_message("<span class='warning'>[user] [iscarbon(user) ? "places [user.their_pronoun()] hands on":"stares intently at"] [src], and [density ? "the air above it begins to shimmer" : "the shimmer above it fades"].</span>", \
 						 "<span class='cultitalic'>You channel your life energy into [src], [density ? "temporarily preventing" : "allowing"] passage above it.</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user

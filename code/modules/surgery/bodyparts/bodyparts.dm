@@ -200,9 +200,19 @@
 			original_owner = source
 	else if(original_owner && owner != original_owner) //Foreign limb
 		no_update = 1
-		return
 	else
 		C = owner
+		no_update = 0
+
+	if(C.disabilities & HUSK)
+		species_id = "husk" //overrides species_id
+		dmg_overlay_type = "" //no damage overlay shown when husked
+		should_draw_gender = FALSE
+		should_draw_greyscale = FALSE
+		no_update = 1
+
+	if(no_update)
+		return
 
 	if(!animal_origin)
 		var/mob/living/carbon/human/H = C
@@ -239,12 +249,6 @@
 
 	else if(animal_origin == MONKEY_BODYPART) //currently monkeys are the only non human mob to have damage overlays.
 		dmg_overlay_type = animal_origin
-
-	if(C.disabilities & HUSK)
-		species_id = "husk" //overrides species_id
-		dmg_overlay_type = "" //no damage overlay shown when husked
-		should_draw_gender = FALSE
-		should_draw_greyscale = FALSE
 
 	if(status == BODYPART_ROBOTIC)
 		dmg_overlay_type = "robotic"

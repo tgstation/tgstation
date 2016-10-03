@@ -1,5 +1,5 @@
 //I will need to recode parts of this but I am way too tired atm //I don't know who left this comment but they never did come back
-/obj/effect/blob
+/obj/structure/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
 	luminosity = 1
@@ -20,7 +20,7 @@
 	var/mob/camera/blob/overmind
 
 
-/obj/effect/blob/New(loc)
+/obj/structure/blob/New(loc)
 	var/area/Ablob = get_area(loc)
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		blobs_legit += src
@@ -33,10 +33,10 @@
 		air_update_turf(1)
 	return
 
-/obj/effect/blob/proc/creation_action() //When it's created by the overmind, do this.
+/obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
 
-/obj/effect/blob/Destroy()
+/obj/structure/blob/Destroy()
 	if(atmosblock)
 		atmosblock = 0
 		air_update_turf(1)
@@ -46,7 +46,7 @@
 	return ..()
 
 
-/obj/effect/blob/Adjacent(var/atom/neighbour)
+/obj/structure/blob/Adjacent(var/atom/neighbour)
 	. = ..()
 	if(.)
 		var/result = 0
@@ -55,61 +55,61 @@
 		for(var/A in dirs)
 			if(direction == text2num(A))
 				for(var/B in dirs[A])
-					var/C = locate(/obj/effect/blob) in get_step(src, B)
+					var/C = locate(/obj/structure/blob) in get_step(src, B)
 					if(C)
 						result++
 		. -= result - 1
 
-/obj/effect/blob/CanAtmosPass(turf/T)
+/obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
 
-/obj/effect/blob/BlockSuperconductivity()
+/obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
-/obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
 		return 1
 	if(istype(mover) && mover.checkpass(PASSBLOB))
 		return 1
 	return 0
 
-/obj/effect/blob/CanAStarPass(ID, dir, caller)
+/obj/structure/blob/CanAStarPass(ID, dir, caller)
 	. = 0
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSBLOB)
 
-/obj/effect/blob/proc/check_health(cause)
+/obj/structure/blob/proc/check_health(cause)
 	health = Clamp(health, 0, maxhealth)
 	if(health <= 0)
 		if(overmind)
 			overmind.blob_reagent_datum.death_reaction(src, cause)
 		qdel(src) //we dead now
 
-/obj/effect/blob/update_icon() //Updates color based on overmind color if we have an overmind.
+/obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
 		color = overmind.blob_reagent_datum.color
 	else
 		color = null
 
-/obj/effect/blob/process()
+/obj/structure/blob/process()
 	Life()
 
-/obj/effect/blob/proc/Life()
+/obj/structure/blob/proc/Life()
 	return
 
-/obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
+/obj/structure/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	src.Be_Pulsed()
 	var/expanded = FALSE
 	if(prob(70) && expand())
 		expanded = TRUE
 	var/list/blobs_to_affect = list()
-	for(var/obj/effect/blob/B in urange(claim_range, src, 1))
+	for(var/obj/structure/blob/B in urange(claim_range, src, 1))
 		blobs_to_affect += B
 	shuffle(blobs_to_affect)
 	for(var/L in blobs_to_affect)
-		var/obj/effect/blob/B = L
-		if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
+		var/obj/structure/blob/B = L
+		if(!B.overmind && !istype(B, /obj/structure/blob/core) && prob(30))
 			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 			B.update_icon()
 		var/distance = get_dist(get_turf(src), get_turf(B))
@@ -121,7 +121,7 @@
 			if(blobs_to_affect.len >= 120 && B.heal_timestamp > world.time)
 				can_expand = FALSE
 			if(can_expand && B.pulse_timestamp <= world.time && prob(expand_probablity))
-				var/obj/effect/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
+				var/obj/structure/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
 				if(newB)
 					if(expanded)
 						qdel(newB)
@@ -129,7 +129,7 @@
 		if(distance <= pulse_range)
 			B.Be_Pulsed()
 
-/obj/effect/blob/proc/Be_Pulsed()
+/obj/structure/blob/proc/Be_Pulsed()
 	if(pulse_timestamp <= world.time)
 		ConsumeTile()
 		if(heal_timestamp <= world.time)
@@ -140,13 +140,13 @@
 		return 1 //we did it, we were pulsed!
 	return 0 //oh no we failed
 
-/obj/effect/blob/proc/ConsumeTile()
+/obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
 		A.blob_act(src)
-	if(istype(loc, /turf/closed/wall))
+	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
-/obj/effect/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
+/obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
 	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
 	O.setDir(dir)
 	if(controller)
@@ -159,14 +159,14 @@
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
 
-/obj/effect/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
+/obj/structure/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
 			T = get_step(src, dirn)
-			if(!(locate(/obj/effect/blob) in T))
+			if(!(locate(/obj/structure/blob) in T))
 				break
 			else
 				T = null
@@ -174,7 +174,7 @@
 		return 0
 	var/make_blob = TRUE //can we make a blob?
 
-	if(istype(T, /turf/open/space) && !(locate(/obj/structure/lattice) in T) && prob(80))
+	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
@@ -188,7 +188,7 @@
 		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
-		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
+		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc)
 		if(controller)
 			B.overmind = controller
 		else
@@ -211,24 +211,24 @@
 	return null
 
 
-/obj/effect/blob/ex_act(severity, target)
+/obj/structure/blob/ex_act(severity, target)
 	..()
 	var/damage = 150 - 20 * severity
 	take_damage(damage, BRUTE)
 
-/obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
 	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
 	take_damage(damage, BURN)
 
-/obj/effect/blob/emp_act(severity)
+/obj/structure/blob/emp_act(severity)
 	if(severity > 0)
 		if(overmind)
 			overmind.blob_reagent_datum.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
 			PoolOrNew(/obj/effect/overlay/temp/emp, get_turf(src))
 
-/obj/effect/blob/tesla_act(power)
+/obj/structure/blob/tesla_act(power)
 	..()
 	if(overmind)
 		if(overmind.blob_reagent_datum.tesla_reaction(src, power))
@@ -236,17 +236,17 @@
 	else
 		take_damage(power/400, BURN)
 
-/obj/effect/blob/extinguish()
+/obj/structure/blob/extinguish()
 	..()
 	if(overmind)
 		overmind.blob_reagent_datum.extinguish_reaction(src)
 
-/obj/effect/blob/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/blob/bullet_act(var/obj/item/projectile/Proj)
 	..()
 	take_damage(Proj.damage, Proj.damage_type, Proj)
 	return 0
 
-/obj/effect/blob/attackby(obj/item/I, mob/user, params)
+/obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
 		user.changeNext_move(CLICK_CD_MELEE)
 		user << "<b>The analyzer beeps once, then reports:</b><br>"
@@ -256,7 +256,7 @@
 	else
 		return ..()
 
-/obj/effect/blob/proc/chemeffectreport(mob/user)
+/obj/structure/blob/proc/chemeffectreport(mob/user)
 	if(overmind)
 		user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
 		user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
@@ -264,12 +264,12 @@
 	else
 		user << "<b>No Material Detected!</b><br>"
 
-/obj/effect/blob/proc/typereport(mob/user)
+/obj/structure/blob/proc/typereport(mob/user)
 	user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
 	user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
 	user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
 
-/obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
+/obj/structure/blob/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -278,7 +278,7 @@
 		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 	take_damage(I.force, I.damtype, user)
 
-/obj/effect/blob/attack_animal(mob/living/simple_animal/M)
+/obj/structure/blob/attack_animal(mob/living/simple_animal/M)
 	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut
 		return
 	M.changeNext_move(CLICK_CD_MELEE)
@@ -289,7 +289,7 @@
 	take_damage(damage, M.melee_damage_type, M)
 	return
 
-/obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
+/obj/structure/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -298,7 +298,7 @@
 	take_damage(damage, BRUTE, M)
 	return
 
-/obj/effect/blob/proc/take_damage(damage, damage_type, cause = null, overmind_reagent_trigger = 1)
+/obj/structure/blob/proc/take_damage(damage, damage_type, cause = null, overmind_reagent_trigger = 1)
 	switch(damage_type) //blobs only take brute and burn damage
 		if(BRUTE)
 			damage = max(damage * brute_resist, 0)
@@ -314,11 +314,11 @@
 	update_icon()
 	check_health(cause)
 
-/obj/effect/blob/proc/change_to(type, controller)
+/obj/structure/blob/proc/change_to(type, controller)
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for blob")
 		return
-	var/obj/effect/blob/B = new type(src.loc)
+	var/obj/structure/blob/B = new type(src.loc)
 	if(controller)
 		B.overmind = controller
 	B.creation_action()
@@ -327,7 +327,7 @@
 	qdel(src)
 	return B
 
-/obj/effect/blob/examine(mob/user)
+/obj/structure/blob/examine(mob/user)
 	..()
 	var/datum/atom_hud/hud_to_check = huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || (user in hud_to_check.hudusers))
@@ -337,15 +337,15 @@
 	else
 		user << "It seems to be made of [get_chem_name()]."
 
-/obj/effect/blob/proc/scannerreport()
+/obj/structure/blob/proc/scannerreport()
 	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."
 
-/obj/effect/blob/proc/get_chem_name()
+/obj/structure/blob/proc/get_chem_name()
 	if(overmind)
 		return overmind.blob_reagent_datum.name
 	return "an unknown variant"
 
-/obj/effect/blob/normal
+/obj/structure/blob/normal
 	name = "normal blob"
 	icon_state = "blob"
 	luminosity = 0
@@ -354,12 +354,12 @@
 	health_regen = 1
 	brute_resist = 0.25
 
-/obj/effect/blob/normal/scannerreport()
+/obj/structure/blob/normal/scannerreport()
 	if(health <= 15)
 		return "Currently weak to brute damage."
 	return "N/A"
 
-/obj/effect/blob/normal/update_icon()
+/obj/structure/blob/normal/update_icon()
 	..()
 	if(health <= 15)
 		icon_state = "blob_damaged"

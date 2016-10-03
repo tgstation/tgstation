@@ -206,13 +206,13 @@
 	if(!(active2 in data_core.medical))
 		src.active2 = null
 
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			src.temp = null
 		if(href_list["scan"])
 			if(src.scan)
-				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_held_item())
+				if(ishuman(usr) && !usr.get_active_held_item())
 					usr.put_in_hands(scan)
 				else
 					scan.loc = get_turf(src)
@@ -243,7 +243,7 @@
 					sortBy = href_list["sort"]
 					order = initial(order)
 		else if(href_list["login"])
-			if(istype(usr, /mob/living/silicon))
+			if(issilicon(usr))
 				src.active1 = null
 				src.active2 = null
 				src.authenticated = 1

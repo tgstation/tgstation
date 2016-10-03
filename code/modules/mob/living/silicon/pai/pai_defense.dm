@@ -1,5 +1,5 @@
 
-/mob/living/silicon/pai/blob_act(obj/effect/blob/B)
+/mob/living/silicon/pai/blob_act(obj/structure/blob/B)
 	return 0
 
 /mob/living/silicon/pai/emp_act(severity)

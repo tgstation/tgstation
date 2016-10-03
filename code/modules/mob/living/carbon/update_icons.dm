@@ -213,8 +213,7 @@
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(!BP.no_update)
-			BP.update_limb()
+		BP.update_limb()
 
 	//LOAD ICONS
 	if(limb_icon_cache[icon_render_key])

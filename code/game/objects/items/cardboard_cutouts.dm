@@ -5,7 +5,7 @@
 	icon = 'icons/obj/cardboard_cutout.dmi'
 	icon_state = "cutout_basic"
 	w_class = 4
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	// Possible restyles for the cutout;
 	// add an entry in change_appearance() if you add to here
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
