@@ -955,10 +955,10 @@
 		make_babies()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/make_babies()
-	if(..())
+	. = ..()
+	if(.)
 		udder.reagents.clear_reagents()
 		regenerate_icons()
-
 
 //Nests
 /mob/living/simple_animal/hostile/spawner/lavaland
