@@ -720,6 +720,20 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	one_per_tile = TRUE
 	sort_priority = 15
 
+/datum/clockwork_scripture/create_object/admire_avian
+	descname = "Summon a Clockwork Hawk"
+	name = "Avian Admiration"
+	desc = "The Justicar had an admiration for avians, encouraging servants to watch as they soared through the sky without any need of mechanical assistance. Some Sects dedicated their whole life to this teaching, and this is the only scripture remaining of this lost group."
+	invocations = list("Arise from the ashes, oh mighty phoenix!","To the heavens, from the sky, I call upon you faithful pet!")
+	channel_time = 80
+	required_components = list("belligerent_eye" = 2, "vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
+	consumed_components = list("belligerent_eye" = 2, "vanguard_cogwheel" = 1)
+	whispered = TRUE
+	object_path = /obj/structure/destructible/clockwork/shell/avian
+	usage_tip = "Summons a Clockwork Hawk, a pet capable of seeing through the walls and alerting you of possible threats. This is a sentient being, and can aid your cause."
+	tier = SCRIPTURE_SCRIPT
+	sort_priority = 100
+
 
 //////////////////
 // APPLICATIONS //
@@ -975,7 +989,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		return 0
 	return ..()
 
-//////////////
+
 // REVENANT //
 //////////////
 //Revenant scriptures are different than any others. They are all very powerful, but also very costly and have drawbacks. This might be a very long invocation time or a very high component cost.
