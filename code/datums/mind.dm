@@ -1364,9 +1364,7 @@
 		else
 			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 			current << "<B>Objective #1</B>: [explanation]"
-			current.memory += "<B>Objective #1</B>: [explanation]<BR>"
-			current << "The convert rune is join blood self"
-			current.memory += "The convert rune is join blood self<BR>"
+			memory += "<B>Objective #1</B>: [explanation]<BR>"
 
 	var/mob/living/carbon/human/H = current
 	if (!ticker.mode.equip_cultist(current))
