@@ -56874,9 +56874,13 @@
 	},
 /area/shuttle/syndicate)
 "ckj" = (
-/obj/machinery/portable_atmospherics/canister/bz,
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/wood/bar,
+/obj/item/device/instrument/eguitar,
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
 "ckk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -92328,7 +92332,7 @@ aWM
 aZX
 aWM
 bbG
-bcw
+ckj
 bcw
 bcw
 bcw

@@ -1394,7 +1394,12 @@
 /area/security/hos)
 "adq" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/guitar,
+/obj/item/device/instrument/guitar{
+	pixel_x = -7
+	},
+/obj/item/device/instrument/eguitar{
+	pixel_x = 5
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "adr" = (
