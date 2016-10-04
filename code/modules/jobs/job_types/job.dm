@@ -45,7 +45,7 @@
 /datum/job/proc/equip_items(mob/living/carbon/human/H)
 
 //But don't override this
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, list/fashion)
 	if(!H)
 		return 0
 
@@ -53,7 +53,7 @@
 	H.dna.species.before_equip_job(src, H, visualsOnly)
 
 	if(outfit)
-		H.equipOutfit(outfit, visualsOnly)
+		H.equipOutfit(outfit, visualsOnly, fashion)
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
@@ -192,3 +192,39 @@
 		if(H && announcement_systems.len)
 			var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
 			announcer.announce("NEWHEAD", H.real_name, H.job, channels)
+
+/datum/outfit/proc/apply_fashion(list/fashion)
+	for(var/O in fashion)
+		var/obj/item/I = new fashion[O]
+		if(!istype(I) || isemptylist(I.slot_flags))
+			continue
+		switch(I.slot_flags[1])
+			if(SLOT_ICLOTHING)
+				bump_to_backpack(uniform, I.type)
+			else if(SLOT_OCLOTHING)
+				bump_to_backpack(suit, I.type)
+			else if(SLOT_BACK)
+				bump_to_backpack(null, I.type)
+			else if(SLOT_BELT)
+				bump_to_backpack(belt, I.type)
+			else if(SLOT_GLOVES)
+				bump_to_backpack(gloves, I.type)
+			else if(SLOT_FEET)
+				bump_to_backpack(shoes, I.type)
+			else if(SLOT_HEAD)
+				bump_to_backpack(head, I.type)
+			else if(SLOT_MASK)
+				bump_to_backpack(mask, I.type)
+			else if(SLOT_EARS)
+				bump_to_backpack(ears, I.type)
+			else if(SLOT_EYES)
+				bump_to_backpack(glasses, I.type)
+			else if(SLOT_ID)
+				bump_to_backpack(id, I.type)
+			else if(SLOT_POCKET)
+				bump_to_backpack(l_pocket, I.type)
+
+/datum/outfit/proc/bump_to_backpack(replaced, fashion_item)
+	if(replaced)
+		backpack_contents += replaced
+	replaced = fashion_item
