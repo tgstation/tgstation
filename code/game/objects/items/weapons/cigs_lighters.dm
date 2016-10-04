@@ -579,7 +579,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 ///////////////
 /obj/item/clothing/mask/vape
 	name = "E-Cigarette"
-	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: do not fill with flamable materials\""//<<< i'd vape to that.
+	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = null
 	item_state = null
@@ -606,7 +606,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+	if(istype(O, /obj/item/weapon/reagent_containers/glass)\
+	|| istype(O, /obj/item/weapon/reagent_containers/dropper)\
+	|| istype(O, /obj/item/weapon/reagent_containers/food/condiment)\
+	|| istype(O, /obj/item/weapon/reagent_containers/food/drinks)\
+	|| istype(O, /obj/item/weapon/reagent_containers/spray)\
+	|| istype(O, /obj/item/weapon/reagent_containers/syringe))
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
 				O.reagents.trans_to(src,25)
