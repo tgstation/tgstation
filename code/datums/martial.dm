@@ -563,13 +563,13 @@
 	return 0
 
 #define SLAM_COMBO "GH"
-#define KICK_COMBO "HH"
-#define RESTRAIN_COMBO "GG"
+#define KICK_COMBO "HDH"
+#define RESTRAIN_COMBO "GGG"
+#define RESTRAINKO_COMBO "GGD"
 #define PRESSURE_COMBO "DG"
-#define CONSECUTIVE_COMBO ""
+#define CONSECUTIVE_COMBO "HHD"
 /datum/martial_art/CQC
 	name = "CQC"
-	deflection_chance = 100
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 
 /datum/martial_art/CQC/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -582,8 +582,12 @@
 		Kick(A,D)
 		return 1
 	if(findtext(streak,RESTRAIN_COMBO))
-		streak = ""
+		streak = "GG"
 		Restrain(A,D)
+		return 1
+	if(findtext(streak,RESTRAINKO_COMBO))
+		streak = ""
+		RestrainKo(A,D)
 		return 1
 	if(findtext(streak,PRESSURE_COMBO))
 		streak = ""
@@ -596,7 +600,7 @@
 	return 0
 
 /datum/martial_art/CQC/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.weakened)
+	if(!D.stat || !D.weakened)
 		D.visible_message("<span class='warning'>[A] slams [D] into the ground!</span>", \
 						  	"<span class='userdanger'>[A] slams you into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, 1, -1)
@@ -606,41 +610,47 @@
 	return 1
 
 /datum/martial_art/CQC/proc/Kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	D.visible_message("<span class='warning'>[A] kicks [D] back!</span>", \
-						"<span class='userdanger'>[A] kicks you back!</span>")
-	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
-	var/atom/throw_target = get_edge_target_turf(D, A.dir)
-	D.throw_at(throw_target, 1, 14, A)
-	D.apply_damage(10, BRUTE)
-	add_logs(A, D, "CQC kicked")
-	if(D.stat && D.weakened)
+	if(!D.stat || !D.weakened)
+		D.visible_message("<span class='warning'>[A] kicks [D] back!</span>", \
+							"<span class='userdanger'>[A] kicks you back!</span>")
+		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
+		var/atom/throw_target = get_edge_target_turf(D, A.dir)
+		D.throw_at(throw_target, 1, 14, A)
+		D.apply_damage(10, BRUTE)
+		add_logs(A, D, "CQC kicked")
+	if(D.weakened)
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking them out!</span>", \
-					  	"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
+					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
+		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
 		D.SetSleeping(15)
+		D.adjustBrainLoss(25)
 	return 1
 
 /datum/martial_art/CQC/proc/Pressure(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] forces their arm on [D]'s neck!</span>")
 	D.adjustStaminaLoss(60)
-	var/obj/item/weapon/gun/I = D.get_active_held_item()
-	if (istype(I) && I.can_shoot())
-		D.visible_message("<span class='warning'>[D] panics and fires their weapon blindly!</span>", \
-							"<span class='userdanger'>[A] forces their arm on your neck! It hurts! You fire your weapon blindly!</span>")
-		var/atom/fire_target = get_edge_target_turf(D, A.dir)
-		I.process_fire(fire_target, D, message = 1, , )
+	playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
 	return 1
 
 /datum/martial_art/CQC/proc/Restrain(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
 						"<span class='userdanger'>[A] locks you into a restraining position!</span>")
+	D.adjustStaminaLoss(20)
+	return 1
+
+/datum/martial_art/CQC/proc/RestrainKo(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	D.visible_message("<span class='warning'>[A] puts [D] into a choke hold!</span>", \
+						"<span class='userdanger'>[A] puts you into a choke hold, you pass out!</span>")
+
+	D.SetSleeping(20)
 	return 1
 
 /datum/martial_art/CQC/proc/Consecutive(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat &&	!D.weakened)
-		D.visible_message("<span class='warning'>[A] strikes [D]'s abdomen and neck and then turns them and strikes their back!</span>", \
-							"<span class='userdanger'>[A] strikes your abdomen and neck and then turns you and strikes your back!</span>")
-		D.adjustStaminaLoss(100)
-		D.apply_damage(10, BRUTE)
+	if(!D.stat || !D.weakened)
+		D.visible_message("<span class='warning'>[A] strikes [D]'s abdomen, neck and back consecutively</span>", \
+							"<span class='userdanger'>[A] strikes your abdomen, neck and back consecutively!</span>")
+		D.adjustStaminaLoss(50)
+		D.apply_damage(20, BRUTE)
 	return 1
 
 /datum/martial_art/CQC/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -652,10 +662,10 @@
 	else
 		A.start_pulling(D, 1)
 		if(A.pulling)
-			D.drop_all_held_items()
 			D.stop_pulling()
 			add_logs(A, D, "grabbed", addition="aggressively")
 			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
+
 	return 1
 
 /datum/martial_art/CQC/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -683,7 +693,7 @@
 	add_to_streak("D",D)
 	if(check_streak(A,D))
 		return 1
-	if(prob(60))
+	if(prob(65))
 		var/obj/item/I = D.get_active_held_item()
 		if(I)
 			D.drop_item()
@@ -695,18 +705,26 @@
 		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-	add_logs(A, D, "disarmed with krav maga")
+	add_logs(A, D, "disarmed with CQC")
 	return 1
+
+/mob/living/carbon/human/CtrlClick(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.dna.species.grab(H, src, H.martial_art)
+		H.changeNext_move(CLICK_CD_MELEE)
+		return 1
+	return ..()
 
 /mob/living/carbon/human/proc/CQC_help()
 	set name = "Recall Teachings"
-	set desc = "Remember the basics of CQC."
+	set desc = "You try to remember some of the basics of CQC."
 	set category = "CQC"
 
-	usr << "<b><i>You try to remember some of the basics of CQC...</i></b>"
+	usr << "<b><i>You try to remember some of the basics of CQC.</i></b>"
 
 	usr << "<span class='notice'>Slam</span>: Grab Harm. Slam opponent into the ground, weakens and knocks down."
-	usr << "<span class='notice'>CQC Kick</span>: Harm Harm. Knocks opponent away. Knocks out stunned or weakened opponents."
-	usr << "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold or stab with a knife to slit throat."
-	usr << "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage, forces opponent to fire any held weapons blindly."
-
+	usr << "<span class='notice'>CQC Kick</span>: Harm Disarm Harm. Knocks opponent away. Knocks out stunned or weakened opponents."
+	usr << "<span class='notice'>Restrain</span>: Grab Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold."
+	usr << "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage."
+	usr << "<span class='notice'>Consecutive CQC</span>: Harm Harm Disarm. Mainly offensive move, huge damage and decent stamina damage."
