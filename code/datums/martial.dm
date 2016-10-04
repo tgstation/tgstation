@@ -456,21 +456,6 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
-/obj/item/weapon/twohanded/bostaff
-	name = "bo staff"
-	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
-	force = 10
-	w_class = 4
-	slot_flags = SLOT_BACK
-	force_unwielded = 10
-	force_wielded = 24
-	throwforce = 20
-	throw_speed = 2
-	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "bostaff0"
-	block_chance = 50
-
 /obj/item/weapon/sleeping_carp_scroll
 	name = "mysterious scroll"
 	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
