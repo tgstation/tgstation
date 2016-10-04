@@ -606,12 +606,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass)\
-	|| istype(O, /obj/item/weapon/reagent_containers/dropper)\
-	|| istype(O, /obj/item/weapon/reagent_containers/food/condiment)\
-	|| istype(O, /obj/item/weapon/reagent_containers/food/drinks)\
-	|| istype(O, /obj/item/weapon/reagent_containers/spray)\
-	|| istype(O, /obj/item/weapon/reagent_containers/syringe))
+	if(istype(O, /obj/item/weapon/reagent_containers) && (O.flags & OPENCONTAINER))
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
 				O.reagents.trans_to(src,25)
