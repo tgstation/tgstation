@@ -1,8 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/const/CALL_SHUTTLE_REASON_LENGTH = 12
-var/const/COMMUNICATION_COOLDOWN = 600
-var/const/COMMUNICATION_COOLDOWN_AI = 600
 
 // The communications computer
 /obj/machinery/computer/communications
@@ -33,6 +31,8 @@ var/const/COMMUNICATION_COOLDOWN_AI = 600
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_TOGGLE_EMERGENCY = 10
+	var/const/COMMUNICATION_COOLDOWN = 600
+	var/const/COMMUNICATION_COOLDOWN_AI = 600
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
