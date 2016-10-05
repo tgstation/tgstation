@@ -1528,53 +1528,20 @@
 		else
 			spawn(0)
 				throw EXCEPTION("mind_initialize(): No ticker ready")
-	if(!mind.name)	mind.name = real_name
+	if(!mind.name)
+		mind.name = real_name
 	mind.current = src
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()
 	..()
-	if(!mind.assigned_role)	mind.assigned_role = "Assistant"	//defualt
-
-//MONKEY
-/mob/living/carbon/monkey/mind_initialize()
-	..()
-
-//slime
-/mob/living/simple_animal/slime/mind_initialize()
-	..()
-	mind.special_role = "slime"
-	mind.assigned_role = "slime"
+	if(!mind.assigned_role)
+		mind.assigned_role = "Assistant" //defualt
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	mind.special_role = "Alien"
-	mind.assigned_role = "Alien"
-	//XENO HUMANOID
-/mob/living/carbon/alien/humanoid/royal/queen/mind_initialize()
-	..()
-	mind.special_role = "Queen"
-
-/mob/living/carbon/alien/humanoid/royal/praetorian/mind_initialize()
-	..()
-	mind.special_role = "Praetorian"
-
-/mob/living/carbon/alien/humanoid/hunter/mind_initialize()
-	..()
-	mind.special_role = "Hunter"
-
-/mob/living/carbon/alien/humanoid/drone/mind_initialize()
-	..()
-	mind.special_role = "Drone"
-
-/mob/living/carbon/alien/humanoid/sentinel/mind_initialize()
-	..()
-	mind.special_role = "Sentinel"
-	//XENO LARVA
-/mob/living/carbon/alien/larva/mind_initialize()
-	..()
-	mind.special_role = "Larva"
 
 //AI
 /mob/living/silicon/ai/mind_initialize()
@@ -1591,29 +1558,3 @@
 	..()
 	mind.assigned_role = "pAI"
 	mind.special_role = ""
-
-//BLOB
-/mob/camera/blob/mind_initialize()
-	..()
-	mind.special_role = "Blob"
-
-//Animals
-/mob/living/simple_animal/mind_initialize()
-	..()
-	mind.assigned_role = "Animal"
-	mind.special_role = "Animal"
-
-/mob/living/simple_animal/pet/dog/corgi/mind_initialize()
-	..()
-	mind.assigned_role = "Corgi"
-	mind.special_role = "Corgi"
-
-/mob/living/simple_animal/shade/mind_initialize()
-	..()
-	mind.assigned_role = "Shade"
-	mind.special_role = "Shade"
-
-/mob/living/simple_animal/hostile/construct/mind_initialize()
-	..()
-	mind.assigned_role = "[initial(name)]"
-	mind.special_role = "Cultist"
