@@ -386,11 +386,11 @@
 					megafauna_spawn_list[maybe_boss] = 0
 
 		for(var/mob/living/simple_animal/hostile/H in urange(12,T)) //prevents mob clumps
-			if(ismegafauna(H) && get_dist(src, H) <= 7)
+			if((ispath(randumb, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(H)) && get_dist(src, H) <= 7)
 				return //if there's a megafauna within standard view don't spawn anything at all
-			if(ispath(randumb, /mob/living/simple_animal/hostile/asteroid) && istype(H, /mob/living/simple_animal/hostile/asteroid))
+			if(ispath(randumb, /mob/living/simple_animal/hostile/asteroid) || istype(H, /mob/living/simple_animal/hostile/asteroid))
 				return //if the random is a standard mob, avoid spawning if there's another one within 12 tiles
-			if(ispath(randumb, /mob/living/simple_animal/hostile/spawner/lavaland) && istype(H, /mob/living/simple_animal/hostile/spawner/lavaland) && get_dist(src, H) <= 2)
+			if((ispath(randumb, /mob/living/simple_animal/hostile/spawner/lavaland) || istype(H, /mob/living/simple_animal/hostile/spawner/lavaland)) && get_dist(src, H) <= 2)
 				return //prevents tendrils spawning in each other's collapse range
 
 		new randumb(T)
