@@ -210,7 +210,7 @@
 /atom/proc/blob_act(obj/structure/blob/B)
 	return
 
-/atom/proc/fire_act()
+/atom/proc/fire_act(exposed_temperature, exposed_volume)
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)

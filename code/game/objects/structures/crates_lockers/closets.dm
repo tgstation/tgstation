@@ -190,13 +190,13 @@
 	else
 		return open(user)
 
-/obj/structure/closet/obj_destruction(damage_flag)
+/obj/structure/closet/deconstruct(disassembled = TRUE)
 	if(ispath(material_drop) && !(flags & NODECONSTRUCT))
 		new material_drop(loc)
 	qdel(src)
 
 /obj/structure/closet/obj_break(damage_flag)
-	if(!broken)
+	if(!broken && !(flags & NODECONSTRUCT))
 		if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser")
 			bust_open()
 
@@ -224,9 +224,7 @@
 					visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 									"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 									"<span class='italics'>You hear welding.</span>")
-					var/turf/T = get_turf(src)
-					new material_drop(T)
-					qdel(src)
+					deconstruct(TRUE)
 					return 0
 		else if(user.drop_item())
 			W.forceMove(loc)

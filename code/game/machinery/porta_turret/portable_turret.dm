@@ -25,7 +25,8 @@
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
 	health = 80				//the turret's health
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	maxhealth = 80
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
 
 	var/locked = 1			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
@@ -159,8 +160,9 @@
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
-	qdel(cover)
-	cover = null
+	if(cover)
+		qdel(cover)
+		cover = null
 	return ..()
 
 
@@ -369,19 +371,16 @@
 			spawn(60)
 				attacked = 0
 
-/obj/machinery/porta_turret/obj_destruction()
-	if(!(stat & BROKEN))
-		die()
+/obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
+	qdel(src)
 
-/obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
-	health = 0
-	density = 0
-	stat |= BROKEN	//enables the BROKEN bit
-	icon_state = "[base_icon_state]Broken"
-	invisibility = 0
-	spark_system.start()	//creates some sparks because they look cool
-	density = 1
-	qdel(cover)	//deletes the cover - no need on keeping it there!
+/obj/machinery/porta_turret/obj_break(damage_flag)
+	if(!(flags & NODECONSTRUCT) && !(stat & BROKEN))
+		stat |= BROKEN	//enables the BROKEN bit
+		icon_state = "[base_icon_state]Broken"
+		invisibility = 0
+		spark_system.start()	//creates some sparks because they look cool
+		qdel(cover)	//deletes the cover - no need on keeping it there!
 
 
 

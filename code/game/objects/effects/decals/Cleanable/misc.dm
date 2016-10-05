@@ -57,7 +57,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
 
-/obj/effect/decal/cleanable/molten_item
+/obj/effect/decal/cleanable/molten_object
 	name = "gooey grey mass"
 	desc = "It looks like a melted... something."
 	gender = NEUTER
@@ -140,6 +140,10 @@
 	icon_state = "shreds"
 	gender = PLURAL
 	mergeable_decal = 0
+
+/obj/effect/decal/cleanable/shreds/ex_act(severity, target)
+	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
+		qdel(src)
 
 /obj/effect/decal/cleanable/shreds/New()
 	pixel_x = rand(-10, 10)

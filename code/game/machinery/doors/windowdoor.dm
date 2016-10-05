@@ -170,8 +170,8 @@
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 
-/obj/machinery/door/window/obj_destruction()
-	if(!(flags & NODECONSTRUCT))
+/obj/machinery/door/window/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT) && !disassembled)
 		for(var/obj/fragment in debris)
 			fragment.forceMove(get_turf(src))
 			transfer_fingerprints_to(fragment)

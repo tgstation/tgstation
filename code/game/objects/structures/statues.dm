@@ -53,7 +53,7 @@
 				return
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name].</span>")
-			Dismantle(1)
+			deconstruct(FALSE)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
@@ -74,7 +74,7 @@
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
-			Dismantle(1)
+			deconstruct(FALSE)
 	else
 		return ..()
 
@@ -87,28 +87,26 @@
 /obj/structure/statue/CanAtmosPass()
 	return !density
 
-/obj/structure/statue/obj_destruction()
-	Dismantle(1)
-
-/obj/structure/statue/proc/Dismantle(devastated = 0)
-	if(!devastated)
-		if (mineralType == "metal")
-			var/ore = /obj/item/stack/sheet/metal
-			for(var/i = 1, i <= oreAmount, i++)
-				new ore(get_turf(src))
+/obj/structure/statue/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			if (mineralType == "metal")
+				var/ore = /obj/item/stack/sheet/metal
+				for(var/i = 1, i <= oreAmount, i++)
+					new ore(get_turf(src))
+			else
+				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+				for(var/i = 1, i <= oreAmount, i++)
+					new ore(get_turf(src))
 		else
-			var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
-			for(var/i = 1, i <= oreAmount, i++)
-				new ore(get_turf(src))
-	else
-		if (mineralType == "metal")
-			var/ore = /obj/item/stack/sheet/metal
-			for(var/i = 3, i <= oreAmount, i++)
-				new ore(get_turf(src))
-		else
-			var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
-			for(var/i = 3, i <= oreAmount, i++)
-				new ore(get_turf(src))
+			if (mineralType == "metal")
+				var/ore = /obj/item/stack/sheet/metal
+				for(var/i = 3, i <= oreAmount, i++)
+					new ore(get_turf(src))
+			else
+				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+				for(var/i = 3, i <= oreAmount, i++)
+					new ore(get_turf(src))
 	qdel(src)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
@@ -200,7 +198,7 @@
 
 /obj/structure/statue/plasma/proc/PlasmaBurn()
 	atmos_spawn_air("plasma=400;TEMP=1000")
-	Dismantle(1)
+	deconstruct(FALSE)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)

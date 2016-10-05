@@ -156,8 +156,9 @@
 		usr << browse(null,"window=foodcart")
 	return
 
-/obj/machinery/food_cart/obj_destruction(damage_flag)
-	new /obj/item/stack/sheet/metal(loc, 4)
+/obj/machinery/food_cart/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 4)
 	qdel(src)
 
 #undef STORAGE_CAPACITY

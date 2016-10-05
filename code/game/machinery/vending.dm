@@ -143,21 +143,16 @@
 			refill_inventory(VR, hidden_records, CONTRABAND_CHARGE)
 
 
-/obj/machinery/vending/blob_act(obj/structure/blob/B)
-	if(!refill_canister)
-		qdel(src)
-	else
-		..()
-
-/obj/machinery/vending/obj_destruction(damage_flag)
+/obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
-		new /obj/item/stack/sheet/metal(loc, 3)
+		if(!(flags & NODECONSTRUCT))
+			new /obj/item/stack/sheet/metal(loc, 3)
 		qdel(src)
 	else
 		..()
 
 /obj/machinery/vending/obj_break(damage_flag)
-	if(!(stat & BROKEN))
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		var/dump_amount = 0
 		for(var/datum/data/vending_product/R in product_records)
 			if(R.amount <= 0) //Try to use a record that actually has something to dump.

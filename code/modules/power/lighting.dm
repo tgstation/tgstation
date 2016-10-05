@@ -125,8 +125,9 @@
 		qdel(src)
 
 
-/obj/structure/light_construct/obj_destruction(damage_flag)
-	new /obj/item/stack/sheet/metal(loc, sheets_refunded)
+/obj/structure/light_construct/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, sheets_refunded)
 	qdel(src)
 
 /obj/structure/light_construct/small
@@ -174,7 +175,7 @@
 	brightness = 4
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
-	health = 15
+
 
 
 /obj/machinery/light/Move()
@@ -343,28 +344,29 @@
 		return ..()
 
 /obj/machinery/light/deconstruct(disassembled = TRUE)
-	var/obj/structure/light_construct/newlight = null
-	var/cur_stage = 2
-	if(!disassembled)
-		cur_stage = 1
-	switch(fitting)
-		if("tube")
-			newlight = new /obj/structure/light_construct(src.loc)
-			newlight.icon_state = "tube-construct-stage[cur_stage]"
+	if(!(flags & NODECONSTRUCT))
+		var/obj/structure/light_construct/newlight = null
+		var/cur_stage = 2
+		if(!disassembled)
+			cur_stage = 1
+		switch(fitting)
+			if("tube")
+				newlight = new /obj/structure/light_construct(src.loc)
+				newlight.icon_state = "tube-construct-stage[cur_stage]"
 
-		if("bulb")
-			newlight = new /obj/structure/light_construct/small(src.loc)
-			newlight.icon_state = "bulb-construct-stage[cur_stage]"
-	newlight.setDir(src.dir)
-	newlight.stage = cur_stage
-	if(!disassembled)
-		newlight.health = newlight.maxhealth * 0.5
-		if(status != LIGHT_BROKEN)
-			break_light_tube()
-		if(status != LIGHT_EMPTY)
-			drop_light_tube()
-		new /obj/item/stack/cable_coil(loc, 1, "red")
-	transfer_fingerprints_to(newlight)
+			if("bulb")
+				newlight = new /obj/structure/light_construct/small(src.loc)
+				newlight.icon_state = "bulb-construct-stage[cur_stage]"
+		newlight.setDir(src.dir)
+		newlight.stage = cur_stage
+		if(!disassembled)
+			newlight.health = newlight.maxhealth * 0.5
+			if(status != LIGHT_BROKEN)
+				break_light_tube()
+			if(status != LIGHT_EMPTY)
+				drop_light_tube()
+			new /obj/item/stack/cable_coil(loc, 1, "red")
+		transfer_fingerprints_to(newlight)
 	qdel(src)
 
 /obj/machinery/light/attacked_by(obj/item/I, mob/living/user)

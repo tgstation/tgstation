@@ -30,6 +30,8 @@ field_generator power level display
 	anchored = 0
 	density = 1
 	use_power = 0
+	health = 500
+	maxhealth = 500
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
@@ -157,7 +159,7 @@ field_generator power level display
 	if(Proj.flag != "bullet")
 		power = min(power + Proj.damage, field_generator_max_power)
 		check_power_level()
-	return 0
+	. = ..()
 
 
 /obj/machinery/field/generator/Destroy()

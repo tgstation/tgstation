@@ -33,9 +33,6 @@
 			if(damage_amount)
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/structure/alien/drop_ashes()
-	return //doesn't leave ashes behind.
-
 /*
  * Generic alien stuff, not related to the purple lizards but still alien-like
  */
@@ -46,8 +43,9 @@
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "gelmound"
 
-/obj/structure/alien/gelpod/obj_destruction()
-	new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+/obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
 	qdel(src)
 
 /*
@@ -292,12 +290,14 @@
 	remove_from_proximity_list(src, 1)
 	..()
 
-/obj/structure/alien/egg/obj_destruction()
-	if(status != BURST && status != BURSTING)
-		Burst()
-	else if(status == BURST)
-		qdel(src)	//Remove the egg after it has been hit after bursting.
-
+/obj/structure/alien/egg/deconstruct()
+	if(!(flags & NODECONSTRUCT))
+		if(status != BURST && status != BURSTING)
+			Burst()
+		else if(status == BURST)
+			qdel(src)	//Remove the egg after it has been hit after bursting.
+	else
+		qdel(src)
 
 /obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)

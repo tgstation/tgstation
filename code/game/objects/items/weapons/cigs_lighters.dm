@@ -34,7 +34,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		open_flame(heat)
 
-/obj/item/weapon/match/fire_act()
+/obj/item/weapon/match/fire_act(exposed_temperature, exposed_volume)
 	matchignite()
 
 /obj/item/weapon/match/proc/matchignite()
@@ -248,7 +248,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		return ..()
 
-/obj/item/clothing/mask/cigarette/fire_act()
+/obj/item/clothing/mask/cigarette/fire_act(exposed_temperature, exposed_volume)
 	light()
 
 /obj/item/clothing/mask/cigarette/is_hot()

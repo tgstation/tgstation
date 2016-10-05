@@ -18,8 +18,8 @@
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-	health = 400
-	maxhealth = 400
+	health = 300
+	maxhealth = 300
 	broken_health = 100
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
@@ -306,9 +306,10 @@
 		return ..()
 
 /obj/machinery/photocopier/obj_break(damage_flag)
-	if(toner > 0)
-		new /obj/effect/decal/cleanable/oil(get_turf(src))
-		toner = 0
+	if(!(flags & NODECONSTRUCT))
+		if(toner > 0)
+			new /obj/effect/decal/cleanable/oil(get_turf(src))
+			toner = 0
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.

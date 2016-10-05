@@ -15,11 +15,12 @@
 		user << "It has \a [circuit] installed."
 
 
-/obj/structure/frame/obj_destruction(damage_flag)
-	new /obj/item/stack/sheet/metal(loc, 5)
-	if(circuit)
-		circuit.forceMove(loc)
-		circuit = null
+/obj/structure/frame/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 5)
+		if(circuit)
+			circuit.forceMove(loc)
+			circuit = null
 	qdel(src)
 
 
@@ -243,7 +244,7 @@
 						if(!user.drop_item())
 							break
 						user << "<span class='notice'>You add [P] to [src].</span>"
-						P.loc = src
+						P.forceMove(src)
 						components += P
 						req_components[I]--
 						return 1
@@ -253,9 +254,13 @@
 		return ..()
 
 
-/obj/structure/frame/machine/obj_destruction(damage_flag)
-	if(state >= 2)
-		new /obj/item/stack/cable_coil(loc , 5)
+/obj/structure/frame/machine/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(state >= 2)
+			new /obj/item/stack/cable_coil(loc , 5)
+		for(var/X in components)
+			var/obj/item/I = X
+			I.forceMove(loc)
 	..()
 
 

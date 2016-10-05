@@ -274,9 +274,10 @@
 		qdel(src)
 
 
-/obj/structure/girder/obj_destruction(damage_flags)
-	var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-	new remains(loc)
+/obj/structure/girder/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+		new remains(loc)
 	qdel(src)
 
 /obj/structure/girder/narsie_act()
@@ -374,6 +375,7 @@
 /obj/structure/girder/cult/narsie_act()
 	return
 
-/obj/structure/girder/cult/obj_destruction(damage_flags)
-	new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
+/obj/structure/girder/cult/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
 	qdel(src)

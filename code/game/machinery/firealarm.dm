@@ -212,16 +212,17 @@
 				alarm()
 
 /obj/machinery/firealarm/obj_break(damage_flag)
-	if(!(stat & BROKEN) && buildstage != 0) //can't break the electronics if there isn't any inside.
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT) && buildstage != 0) //can't break the electronics if there isn't any inside.
 		stat |= BROKEN
 		update_icon()
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(loc, 1)
-	var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
-	if(!disassembled)
-		I.health = I.maxhealth * 0.5
-	new /obj/item/stack/cable_coil(loc, 3)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 1)
+		var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
+		if(!disassembled)
+			I.health = I.maxhealth * 0.5
+		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
 

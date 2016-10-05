@@ -305,15 +305,16 @@
 	else
 		return ..()
 
-/obj/machinery/droneDispenser/obj_destruction()
-	if(!(stat & BROKEN))
-		if(break_message)
-			audible_message("<span class='warning'>[src] \
-				[break_message]</span>")
-		if(break_sound)
-			playsound(src, break_sound, 50, 1)
-		stat |= BROKEN
-		update_icon()
+/obj/machinery/droneDispenser/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
+			if(break_message)
+				audible_message("<span class='warning'>[src] \
+					[break_message]</span>")
+			if(break_sound)
+				playsound(src, break_sound, 50, 1)
+			stat |= BROKEN
+			update_icon()
 
 #undef DRONE_PRODUCTION
 #undef DRONE_RECHARGING

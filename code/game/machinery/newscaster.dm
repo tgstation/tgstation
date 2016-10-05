@@ -760,14 +760,15 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 
-/obj/machinery/newscaster/obj_destruction()
-	new /obj/item/stack/sheet/metal(loc, 2)
-	new /obj/item/weapon/shard(loc)
-	new /obj/item/weapon/shard(loc)
+/obj/machinery/newscaster/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
 	qdel(src)
 
 /obj/machinery/newscaster/obj_break()
-	if(!(stat & BROKEN))
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		stat |= BROKEN
 		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 		update_icon()

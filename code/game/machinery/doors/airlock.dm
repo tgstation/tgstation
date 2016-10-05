@@ -1198,7 +1198,7 @@ var/list/airlock_overlays = list()
 
 
 /obj/machinery/door/airlock/obj_break(damage_flag)
-	if(!(stat & BROKEN))
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		stat |= BROKEN
 		if(!panel_open)
 			panel_open = 1
@@ -1206,34 +1206,35 @@ var/list/airlock_overlays = list()
 		update_icon()
 
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
-	var/obj/structure/door_assembly/A
-	if(assemblytype)
-		A = new assemblytype(src.loc)
-		A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
-	else
-		A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
-		//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
-
-	if(!disassembled)
-		if(A)
-			A.health = A.maxhealth * 0.5
-	else if(emagged)
-		if(user)
-			user << "<span class='warning'>You discard the damaged electronics.</span>"
-	else
-		if(user)
-			user << "<span class='notice'>You remove the airlock electronics.</span>"
-
-		var/obj/item/weapon/electronics/airlock/ae
-		if(!electronics)
-			ae = new/obj/item/weapon/electronics/airlock( src.loc )
-			if(req_one_access)
-				ae.one_access = 1
-				ae.accesses = src.req_one_access
-			else
-				ae.accesses = src.req_access
+	if(!(flags & NODECONSTRUCT))
+		var/obj/structure/door_assembly/A
+		if(assemblytype)
+			A = new assemblytype(src.loc)
+			A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 		else
-			ae = electronics
-			electronics = null
-			ae.loc = src.loc
+			A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
+			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
+
+		if(!disassembled)
+			if(A)
+				A.health = A.maxhealth * 0.5
+		else if(emagged)
+			if(user)
+				user << "<span class='warning'>You discard the damaged electronics.</span>"
+		else
+			if(user)
+				user << "<span class='notice'>You remove the airlock electronics.</span>"
+
+			var/obj/item/weapon/electronics/airlock/ae
+			if(!electronics)
+				ae = new/obj/item/weapon/electronics/airlock( src.loc )
+				if(req_one_access)
+					ae.one_access = 1
+					ae.accesses = src.req_one_access
+				else
+					ae.accesses = src.req_access
+			else
+				ae = electronics
+				electronics = null
+				ae.loc = src.loc
 	qdel(src)

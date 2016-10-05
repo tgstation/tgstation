@@ -47,7 +47,8 @@
 
 
 /obj/structure/sign/barsign/obj_break(damage_flag)
-	broken = 1
+	if(!(flags & NODECONSTRUCT))
+		broken = 1
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return src.attack_hand(user)

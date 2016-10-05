@@ -11,6 +11,7 @@
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	health = 30
 	maxhealth = 30
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 90)
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed when?
 	var/heal_timestamp = 0 //we got healed when?
@@ -203,17 +204,6 @@
 		blob_attack_animation(T, controller) //if we can't, animate that we attacked
 	return null
 
-
-/obj/structure/blob/ex_act(severity, target)
-	..()
-	var/damage = 150 - 20 * severity
-	take_damage(damage, BRUTE)
-
-/obj/structure/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	..()
-	var/damage = Clamp(0.01 * exposed_temperature, 0, 4)
-	take_damage(damage, BURN)
-
 /obj/structure/blob/emp_act(severity)
 	if(severity > 0)
 		if(overmind)
@@ -233,11 +223,6 @@
 	..()
 	if(overmind)
 		overmind.blob_reagent_datum.extinguish_reaction(src)
-
-/obj/structure/blob/bullet_act(var/obj/item/projectile/Proj)
-	..()
-	take_damage(Proj.damage, Proj.damage_type, Proj.flag, 1, null, Proj)
-	return 0
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
@@ -262,51 +247,48 @@
 	user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
 	user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
 
-/obj/structure/blob/attacked_by(obj/item/I, mob/living/user)
-	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [I]!</span>")
-	take_damage(I.force, I.damtype, 0, 1, null, user)
-
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
 	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut
 		return
-	attack_generic(rand(M.melee_damage_lower, M.melee_damage_upper), M.melee_damage_type, M)
-
-/obj/structure/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
-	attack_generic(rand(15,30), M)
-
-/obj/structure/blob/attack_generic(damage_amount, damage_type = BRUTE, mob/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	user.visible_message("<span class='danger'>[user] hits [src].</span>", \
-						 "<span class='danger'>You hit [src].</span>" )
-	take_damage(damage_amount, damage_type, 0, 1, null, user)
+	..()
 
 //phil235
-/obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, cause = null, overmind_reagent_trigger = 1)
-	switch(damage_type) //blobs only take brute and burn damage
+/obj/structure/blob/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
 		if(BRUTE)
-			if(damage_amount && sound_effect)
+			if(damage_amount)
 				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-			damage_amount = max(damage_amount * brute_resist, 0)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			if(damage_amount && sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-			damage_amount = max(damage_amount * fire_resist, 0)
-		if(CLONE) //this is basically a marker for 'don't modify the damage'
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
+/obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	switch(damage_type)
+		if(BRUTE)
+			damage_amount *= brute_resist
+		if(BURN)
+			damage_amount *= fire_resist
+		if(CLONE)
 		else
-			damage_amount = 0
-	if(overmind && overmind_reagent_trigger)
-		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, health, damage_amount, damage_type, cause) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
-	health = Clamp(health - damage_amount, 0, maxhealth)
-	update_icon()
-	check_health(cause)
+			return 0
+	var/armor_protection = 0
+	if(damage_flag)
+		armor_protection = armor[damage_flag]
+	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
+	if(overmind && damage_flag)
+		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, health, damage_amount, damage_type, damage_flag) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
+	return damage_amount
 
-/obj/structure/blob/proc/check_health(cause)
-	if(health <= 0)
-		if(overmind)
-			overmind.blob_reagent_datum.death_reaction(src, cause)
-		qdel(src)
+/obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(health > 0)
+		update_icon()
+
+/obj/structure/blob/obj_destruction(damage_flag)
+	if(overmind)
+		overmind.blob_reagent_datum.death_reaction(src, damage_flag)
+	..()
 
 /obj/structure/blob/proc/change_to(type, controller)
 	if(!ispath(type))

@@ -24,10 +24,6 @@
 	prime()
 	..()
 
-/obj/item/weapon/grenade/obj_shred()
-	prime()
-	..()
-
 /obj/item/weapon/grenade/proc/clown_check(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"

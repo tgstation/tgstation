@@ -337,7 +337,7 @@
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	qdel(src)
 
-/obj/item/toy/snappop/fire_act()
+/obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
 	pop_burst()
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)

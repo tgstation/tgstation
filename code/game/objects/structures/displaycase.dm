@@ -43,14 +43,16 @@
 
 //phil235 hitby must have 80 % armor
 
-/obj/structure/displaycase/obj_destruction(damage_flag)
-	new /obj/item/weapon/shard( src.loc )
-	dump()
-	trigger_alarm()
+/obj/structure/displaycase/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		dump()
+		if(!disassembled)
+			new /obj/item/weapon/shard( src.loc )
+			trigger_alarm()
 	qdel(src)
 
 /obj/structure/displaycase/obj_break(damage_flag)
-	if(!broken)
+	if(!broken && !(flags & NODECONSTRUCT))
 		density = 0
 		broken = 1
 		new /obj/item/weapon/shard( src.loc )

@@ -18,27 +18,23 @@
 	resistance_flags = 0
 	health = 100
 	maxhealth = 100
+	broken_health = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
 
-/obj/structure/bed/deconstruct()
-	if(buildstacktype)
-		new buildstacktype(loc,buildstackamount)
+/obj/structure/bed/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
 	..()
 
 /obj/structure/bed/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/bed/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
-	if(M.environment_smash)
-		deconstruct()
-	else
-		..()
-
 /obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		deconstruct()
+		deconstruct(TRUE)
 	else
 		return ..()
 

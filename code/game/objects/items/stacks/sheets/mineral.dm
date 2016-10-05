@@ -160,7 +160,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	else
 		return ..()
 
-/obj/item/stack/sheet/mineral/plasma/fire_act()
+/obj/item/stack/sheet/mineral/plasma/fire_act(exposed_temperature, exposed_volume)
 	atmos_spawn_air("plasma=[amount*10];TEMP=1000")
 	qdel(src)
 

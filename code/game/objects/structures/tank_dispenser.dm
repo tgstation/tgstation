@@ -7,8 +7,12 @@
 	icon_state = "dispenser"
 	density = 1
 	anchored = 1
+	health = 300
+	maxhealth = 300
 	var/oxygentanks = TANK_DISPENSER_CAPACITY
 	var/plasmatanks = TANK_DISPENSER_CAPACITY
+
+//phil235 damage to the dispenser can damage inserted tanks?
 
 /obj/structure/tank_dispenser/oxygen
 	plasmatanks = 0
@@ -48,6 +52,9 @@
 			oxygentanks++
 		else
 			full = TRUE
+	else if(istype(I, /obj/item/weapon/wrench))
+		default_unfasten_wrench(user, I, time = 20)
+		return
 	else if(user.a_intent != "harm")
 		user << "<span class='notice'>[I] does not fit into [src].</span>"
 		return
@@ -94,5 +101,14 @@
 				oxygentanks--
 			. = TRUE
 	update_icon()
+
+
+/obj/structure/tank_dispenser/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		for(var/X in src)
+			var/obj/item/I = X
+			I.forceMove(loc)
+		new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 #undef TANK_DISPENSER_CAPACITY

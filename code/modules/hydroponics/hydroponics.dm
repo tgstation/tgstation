@@ -776,7 +776,7 @@
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
-			O.loc = src
+			O.forceMove(src)
 			update_icon()
 		else
 			user << "<span class='warning'>[src] already has seeds in it!</span>"

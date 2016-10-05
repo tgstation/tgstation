@@ -3,31 +3,28 @@
 /obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	switch(damage_type)
-		if(BRUTE)
-		if(BURN)
-		else
-			return
-	if(!(resistance_flags & INDESTRUCTIBLE))
-		var/armor_protection = 0
-		if(damage_flag)
-			armor_protection = armor[damage_flag]
-		damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
+	if(!(resistance_flags & INDESTRUCTIBLE) && health > 0)
+		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir)
 		if(damage_amount >= 1)
 			. = damage_amount
 			health = max(health - damage_amount, 0)
 			if(health <= 0)
-				if(damage_flag == "acid")
-					acid_melt()
-				else if(damage_flag == "fire")
-					burn()
-				else if(damage_flag == "bomb")
-					obj_shred()
-				else
-					obj_destruction(damage_flag)
+				obj_destruction(damage_flag)
 			else if(broken_health)
 				if(health <= broken_health)
 					obj_break(damage_flag)
+
+//returns the damage value of the attack after processing the obj's various armor protections
+/obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	switch(damage_type)
+		if(BRUTE)
+		if(BURN)
+		else
+			return 0
+	var/armor_protection = 0
+	if(damage_flag)
+		armor_protection = armor[damage_flag]
+	return round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 
 //phil235 maybe have it be in an override of take_damage() for each object.
 /obj/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -80,10 +77,10 @@
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
-	take_damage(50, BRUTE, "melee", 1, get_dir(src, user))
+	take_damage(200, BRUTE, "melee", 1, get_dir(src, user))
 
 /obj/blob_act(obj/structure/blob/B)
-	take_damage(100, BRUTE, "melee", 1, get_dir(src, B))
+	take_damage(500, BRUTE, "melee", 1, get_dir(src, B))
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	user.do_attack_animation(src)
@@ -165,75 +162,52 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
 		if(prob(33))
 			playsound(loc, 'sound/items/Welder.ogg', 150, 1)
-		take_damage(min(1 + round(sqrt(acid_level)), 300), BURN, "acid", 0)
+		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, "acid", 0)
 
 	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
 	if(!acid_level)
 		return 0
 
 /obj/proc/acid_melt()
-	var/atom/loca = get_turf(src)
-	if(isobj(loc)) //item melting inside a crate doesn't drop a decal outside of it.
-		loca = loc //phil235 maybe don't drop anything?
+	var/location = loc
 	SSacid.processing -= src
-	empty_object_contents(0, loca)
-	if(!isobj(loc))
-		var/obj/effect/decal/cleanable/molten_object/MO
-		if(density)
-			MO = new /obj/effect/decal/cleanable/molten_object/large(loca)
-		else
-			MO = new (loca)
-		MO.pixel_x = rand(-16,16)
-		MO.pixel_y = rand(-16,16)
-		MO.desc = "Looks like this was \an [src] some time ago."
-		for(var/atom/movable/AM in loca) //the acid that is still unused drops on the other things on the same turf.
-			if(AM == src)
-				continue
-			AM.acid_act(10, 0.1 * acid_level/loca.contents.len)
-	qdel(src)
+	var/remaining_acid = acid_level
+	var/list/contained = contents
+	deconstruct(FALSE)
+	if(isturf(location))
+		var/turf/T = location
+		for(var/obj/item/I in contained)
+			if(I.loc == T) //we acid the items that used to be inside src and ended up on the turf
+				I.acid_act(10, 0.1 * remaining_acid/T.contents.len)
 
-/obj/fire_act(global_overlay=1)
-	take_damage(20, BURN, "fire", 0)
+/obj/fire_act(exposed_temperature, exposed_volume)
+	var/fire_dmg = 20
+	if(exposed_temperature)
+		fire_dmg = Clamp(0.05 * exposed_temperature, 0, 20)
+	take_damage(fire_dmg, BURN, "fire", 0)
 	if(!(resistance_flags & (FIRE_PROOF|ON_FIRE)))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
-		if(global_overlay)
-			add_overlay(fire_overlay)
+		add_overlay(fire_overlay)
 		return 1
 
 /obj/proc/burn()
-	var/atom/loca = get_turf(src)
-	if(isobj(loc))
-		loca = loc
+	var/location = loc
+	var/list/contained = contents
 	if(resistance_flags & ON_FIRE)
 		SSfire_burning.processing -= src
-	empty_object_contents(1, loca)
-	if(!isobj(loc))
-		drop_ashes(loca)
-	qdel(src)
-
-/obj/proc/drop_ashes(atom/location)
-	var/obj/effect/decal/cleanable/ash/A
-	if(density)
-		A = new /obj/effect/decal/cleanable/ash/large(location)
-	else
-		A = new(location)
-	A.desc = "Looks like this used to be a [name] some time ago."
-
-/obj/proc/obj_shred()
-	obj_destruction()
+	deconstruct(FALSE)
+	if(isturf(location))
+		var/turf/T = location
+		for(var/obj/item/I in contained)
+			if(I.loc == T) //we burn the items that used to be inside src and ended up on the turf
+				I.fire_act()
 
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
 		overlays -= fire_overlay
 		SSfire_burning.processing -= src
-
-/obj/proc/empty_object_contents(burn = 0, new_loc = src.loc)
-	for(var/obj/item/Item in contents) //Empty out the contents
-		Item.loc = new_loc
-		if(burn)
-			Item.fire_act() //Set them on fire, too
 
 /obj/proc/tesla_act(var/power)
 	being_shocked = 1
@@ -254,4 +228,9 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 //what happens when the obj's health reaches zero.
 /obj/proc/obj_destruction(damage_flag)
-	qdel(src)
+	if(damage_flag == "acid")
+		acid_melt()
+	else if(damage_flag == "fire")
+		burn()
+	else
+		deconstruct(FALSE)

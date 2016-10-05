@@ -261,13 +261,14 @@
 		qdel(H)
 
 /obj/machinery/disposal/deconstruct()
-	if(stored)
-		var/turf/T = loc
-		stored.loc = T
-		src.transfer_fingerprints_to(stored)
-		stored.anchored = 0
-		stored.density = 1
-		stored.update_icon()
+	if(!(flags & NODECONSTRUCT))
+		if(stored)
+			var/turf/T = loc
+			stored.loc = T
+			src.transfer_fingerprints_to(stored)
+			stored.anchored = 0
+			stored.density = 1
+			stored.update_icon()
 	..()
 
 //How disposal handles getting a storage dump from a storage object

@@ -99,7 +99,7 @@
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/machinery/computer/obj_break()
-	if(circuit) //no circuit, no breaking
+	if(circuit && !(flags & NODECONSTRUCT)) //no circuit, no breaking
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 			stat |= BROKEN
@@ -110,7 +110,7 @@
 		SSacid.processing -= src
 		var/turf/T = get_turf(src)
 		var/remaining_acid = acid_level
-		deconstruct()
+		deconstruct(FALSE)
 		for(var/atom/movable/AM in T) //the acid that is still unused drops on the other things on the same turf.
 			if(AM == src)
 				continue
@@ -120,24 +120,25 @@
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
-	if(circuit) //no circuit, no computer frame
-		var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
-		A.circuit = circuit
-		A.anchored = 1
-		if(stat & BROKEN)
-			if(user)
-				user << "<span class='notice'>The broken glass falls out.</span>"
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
-			A.state = 3
-			A.icon_state = "3"
-		else
-			if(user)
-				user << "<span class='notice'>You disconnect the monitor.</span>"
-			A.state = 4
-			A.icon_state = "4"
-	circuit = null
-	for(var/obj/C in src)
-		C.forceMove(loc)
+	if(!(flags & NODECONSTRUCT))
+		if(circuit) //no circuit, no computer frame
+			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+			A.circuit = circuit
+			A.anchored = 1
+			if(stat & BROKEN)
+				if(user)
+					user << "<span class='notice'>The broken glass falls out.</span>"
+				new /obj/item/weapon/shard(src.loc)
+				new /obj/item/weapon/shard(src.loc)
+				A.state = 3
+				A.icon_state = "3"
+			else
+				if(user)
+					user << "<span class='notice'>You disconnect the monitor.</span>"
+				A.state = 4
+				A.icon_state = "4"
+			circuit = null
+		for(var/obj/C in src)
+			C.forceMove(loc)
 
 	qdel(src)

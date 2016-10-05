@@ -147,9 +147,6 @@
 			playsound(loc, 'sound/items/welder.ogg', 80, 1)
 
 
-/obj/structure/grille/obj_destruction()
-	deconstruct(FALSE)
-
 /obj/structure/grille/deconstruct(disassembled = TRUE)
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
@@ -160,11 +157,11 @@
 	..()
 
 /obj/structure/grille/obj_break()
-	icon_state = "broken[initial(icon_state)]"
-	density = 0
-	broken = 1
-	stored.amount = 1
-	if(!(flags&NODECONSTRUCT))
+	if(!broken && !(flags & NODECONSTRUCT))
+		icon_state = "broken[initial(icon_state)]"
+		density = 0
+		broken = 1
+		stored.amount = 1
 		var/obj/item/stack/rods/newrods = new(loc)
 		transfer_fingerprints_to(newrods)
 

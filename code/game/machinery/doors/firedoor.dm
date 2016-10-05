@@ -14,6 +14,8 @@
 	icon_state = "door_open"
 	opacity = 0
 	density = 0
+	health = 300
+	maxhealth = 300
 	heat_proof = 1
 	glass = 1
 	var/nextstate = null
@@ -54,10 +56,7 @@
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
 							 "<span class='notice'>You undo [src]'s floor bolts.</span>")
-		var/obj/structure/firelock_frame/F = new assemblytype(get_turf(src))
-		F.constructionStep = CONSTRUCTION_PANEL_OPEN
-		F.update_icon()
-		qdel(src)
+		deconstruct(TRUE)
 		return
 
 	if(istype(C, /obj/item/weapon/screwdriver))
@@ -125,6 +124,18 @@
 	. = ..()
 	latetoggle()
 
+/obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/obj/structure/firelock_frame/F = new assemblytype(get_turf(src))
+		if(disassembled)
+			F.constructionStep = CONSTRUCTION_PANEL_OPEN
+		else
+			F.constructionStep = CONSTRUCTION_WIRES_EXPOSED
+			F.health = F.maxhealth * 0.5
+		F.update_icon()
+	qdel(src)
+
+
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)
 		return
@@ -162,12 +173,14 @@
 	else
 		return 1
 
-
 /obj/machinery/door/firedoor/heavy
 	name = "heavy firelock"
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	glass = 0
 	assemblytype = /obj/structure/firelock_frame/heavy
+	health = 550
+	maxhealth = 550
+
 
 /obj/item/weapon/electronics/firelock
 	name = "firelock circuitry"
@@ -219,7 +232,7 @@
 				return
 			if(istype(C, /obj/item/weapon/wrench))
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
-					user << "<span class='warning'>There's already a firlock there.</span>"
+					user << "<span class='warning'>There's already a firelock there.</span>"
 					return
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] starts bolting down [src]...</span>", \

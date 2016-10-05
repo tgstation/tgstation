@@ -246,20 +246,23 @@
 		..()
 
 /obj/machinery/camera/obj_break(damage_flag)
-	if(status)
+	if(status && !(flags & NODECONSTRUCT))
 		triggerCameraAlarm()
 		toggle_cam(null, 0)
 
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
-	if(!assembly)
-		assembly = new()
-	assembly.loc = src.loc
-	assembly.state = 1
-	assembly.setDir(dir)
-	if(!disassembled)
-		assembly.health = assembly.maxhealth * 0.5
-		new /obj/item/stack/cable_coil(loc, 2)
-	assembly = null
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			if(!assembly)
+				assembly = new()
+			assembly.loc = src.loc
+			assembly.state = 1
+			assembly.setDir(dir)
+			assembly = null
+		else
+			var/obj/item/I = new /obj/item/wallframe/camera (loc)
+			I.health = I.maxhealth * 0.5
+			new /obj/item/stack/cable_coil(loc, 2)
 	qdel(src)
 
 /obj/machinery/camera/update_icon()

@@ -81,9 +81,9 @@
 	else
 		return ..()
 
-/obj/machinery/pdapainter/obj_destruction()
-	if(!(stat & BROKEN))
-		if(health <= 0)
+/obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
 			stat |= BROKEN
 			update_icon()
 

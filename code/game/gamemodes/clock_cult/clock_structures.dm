@@ -92,10 +92,11 @@
 		cache_check(i)
 	return ..()
 
-/obj/structure/destructible/clockwork/cache/obj_destruction()
-	for(var/I in src)
-		var/atom/movable/A = I
-		A.forceMove(get_turf(src)) //drop any daemons we have
+/obj/structure/destructible/clockwork/cache/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		for(var/I in src)
+			var/atom/movable/A = I
+			A.forceMove(get_turf(src)) //drop any daemons we have
 	return ..()
 
 /obj/structure/destructible/clockwork/cache/process()

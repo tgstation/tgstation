@@ -36,10 +36,11 @@
 		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
 			I.loc = src
 
-/obj/structure/filingcabinet/obj_destruction(damage_flag)
-	new /obj/item/stack/sheet/metal(loc, 2)
-	for(var/obj/item/I in src)
-		I.forceMove(loc)
+/obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+		for(var/obj/item/I in src)
+			I.forceMove(loc)
 	qdel(src)
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)

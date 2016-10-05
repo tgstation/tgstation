@@ -39,9 +39,12 @@
 				H.color = "#000000"
 		adjustHealth(-maxHealth*0.0125)
 
-/mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
 	..()
-	adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+	if(exposed_temperature)
+		adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+	else
+		adjustFireLoss(5)
 
 /mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover, /obj/structure/blob))

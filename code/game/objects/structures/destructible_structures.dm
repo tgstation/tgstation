@@ -7,11 +7,12 @@
 	//phil235 these three vars at structure level?
 
 
-/obj/structure/destructible/obj_destruction()
-	if(islist(debris))
-		for(var/I in debris)
-			for(var/i in 1 to debris[I])
-				new I (get_turf(src))
+/obj/structure/destructible/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(islist(debris))
+			for(var/I in debris)
+				for(var/i in 1 to debris[I])
+					new I (get_turf(src))
 	visible_message(break_message)
 	playsound(src, break_sound, 50, 1)
 	qdel(src)

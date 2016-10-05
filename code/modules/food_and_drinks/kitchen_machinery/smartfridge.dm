@@ -52,10 +52,11 @@
 /obj/machinery/smartfridge/on_construction()
 	for(var/datum/A in contents)
 		qdel(A)
-
+/* phil235 no longer needed since I added dropContents to machinery/deconstruct
 /obj/machinery/smartfridge/on_deconstruction()
 	for(var/atom/movable/A in contents)
-		A.loc = loc
+		A.forceMove(loc)
+	..()*/
 
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)

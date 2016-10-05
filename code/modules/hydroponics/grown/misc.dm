@@ -127,6 +127,10 @@
 	prime()
 	..()
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/acid_melt()
+	prime()
+	..()
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion
 

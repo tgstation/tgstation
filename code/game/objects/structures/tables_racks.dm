@@ -122,7 +122,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if(do_after(user, 40, target = src))
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				table_destroy()
+				deconstruct(FALSE)
 			return
 
 	if(istype(I, /obj/item/weapon/storage/bag/tray))
@@ -152,29 +152,16 @@
 	else
 		return ..()
 
-/obj/structure/table/obj_destruction()
-	table_destroy()
-
-
-/obj/structure/table/proc/table_destroy()//phil235
-	if(!(flags & NODECONSTRUCT))
-		var/turf/T = get_turf(src)
-		for(var/i = 1, i <= framestackamount, i++)
-			new framestack(T)
-		for(var/i = 1, i <= buildstackamount, i++)
-			new buildstack(T)
-	qdel(src)
-
 
 /obj/structure/table/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
-		new frame(src.loc)
+		var/turf/T = get_turf(src)
+		new buildstack(T, buildstackamount)
 		if(disassembled)
-			for(var/i = 1, i <= buildstackamount, i++)
-				new buildstack(get_turf(src))
+			new frame(T)
+		else
+			new framestack(T, framestackamount)
 	qdel(src)
-
-
 
 
 /*
@@ -286,11 +273,6 @@
 /obj/structure/table/wood/fancy/New()
 	icon = 'icons/obj/smooth_structures/fancy_table.dmi' //so that the tables place correctly in the map editor
 	..()
-
-/obj/structure/table/wood/fancy/burn() //basically made out of metal
-	new frame(loc)
-	SSfire_burning.processing -= src
-	qdel(src)
 
 /*
  * Reinforced tables
@@ -435,7 +417,7 @@
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		rack_destroy()
+		deconstruct(TRUE)
 		return
 	if(user.a_intent == "harm")
 		return ..()
@@ -467,15 +449,11 @@
 		if(BURN)
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 
-/obj/structure/rack/obj_destruction(damage_flag)
-	rack_destroy()
-
-
 /*
  * Rack destruction
  */
 
-/obj/structure/rack/proc/rack_destroy()
+/obj/structure/rack/deconstruct(disassembled = TRUE)
 	if(!(flags&NODECONSTRUCT))
 		density = 0
 		var/obj/item/weapon/rack_parts/newparts = new(loc)

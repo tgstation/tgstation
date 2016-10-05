@@ -175,10 +175,16 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
+		if(damaged_item)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedgloves")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
-		if(health < maxhealth*0.5)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+
+/obj/item/clothing/gloves/update_item_damaged_state(damaging = TRUE)//phil235
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_gloves()
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
@@ -197,10 +203,17 @@ BLIND     // can't see anything
 /obj/item/clothing/head/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
+		if(damaged_item)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedhelmet")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
-		if(health < maxhealth*0.5)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
+
+/obj/item/clothing/head/update_item_damaged_state(damaging = TRUE)//phil235
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_head()
+
 
 //Mask
 /obj/item/clothing/mask
@@ -218,10 +231,17 @@ BLIND     // can't see anything
 	. = list()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
+			if(damaged_item)
+				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
 			if(blood_DNA)
 				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
-			if(health < maxhealth*0.5)
-				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+
+/obj/item/clothing/mask/update_item_damaged_state(damaging = TRUE)//phil235
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_wear_mask()
+
 
 //Override this to modify speech like luchador masks.
 /obj/item/clothing/mask/proc/speechModification(message)
@@ -283,11 +303,16 @@ BLIND     // can't see anything
 		else
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
 
+		if(damaged_item)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedshoe")
 		if(bloody)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
-		if(health < maxhealth * 0.5)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 
+/obj/item/clothing/shoes/update_item_damaged_state(damaging = TRUE)//phil235
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_shoes()
 
 /obj/item/clothing/shoes/clean_blood()
 	..()
@@ -315,10 +340,16 @@ BLIND     // can't see anything
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
+		if(damaged_item)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damaged[blood_overlay_type]")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
-		if(health < maxhealth * 0.5)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")//phil235 need sprites
+
+/obj/item/clothing/suit/update_item_damaged_state(damaging = TRUE)//phil235
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_wear_suit()
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
@@ -387,6 +418,9 @@ BLIND     // can't see anything
 	. = list()
 
 	if(!isinhands)
+
+		if(damaged_item)
+			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damageduniform")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
 		if(hastie)
@@ -398,6 +432,11 @@ BLIND     // can't see anything
 			tI.color = hastie.color
 			. += tI
 
+/obj/item/clothing/under/update_item_damaged_state(damaging = TRUE)//phil235
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_w_uniform()
 
 /obj/item/clothing/under/New()
 	if(random_sensor)
@@ -618,14 +657,11 @@ BLIND     // can't see anything
 	return 0
 
 
-/obj/item/clothing/obj_shred()
-	var/atom/loca = get_turf(src)
-	if(isobj(loc))
-		loca = loc
-	empty_object_contents(0, loca)
-	spawn(1) //so the shreds aren't instantly deleted by the explosion
-		if(!qdeleted(src))
-			if(isturf(loca))
-				var/obj/effect/decal/cleanable/shreds/Shreds = new(loca)
-				Shreds.desc = "The sad remains of what used to be [name]."
-			qdel(src)
+/obj/item/clothing/obj_destruction(damage_flag)
+	if(damage_flag == "bomb" || damage_flag == "melee")
+		var/turf/T = get_turf(src)
+		var/obj/effect/decal/cleanable/shreds/Shreds = new(T)
+		Shreds.desc = "The sad remains of what used to be [name]."
+		deconstruct(FALSE)
+	else
+		..()

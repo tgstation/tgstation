@@ -566,15 +566,17 @@
 
 
 /obj/machinery/power/apc/obj_break(damage_flag)
-	set_broken()
-
-/obj/machinery/power/apc/obj_destruction(damage_flag)
-	if(!(stat & BROKEN))
+	if(!(flags & NODECONSTRUCT))
 		set_broken()
-	if(opened != 2)
-		opened = 2
-		visible_message("<span class='warning'>The APC cover is knocked down!</span>")
-		update_icon()
+
+/obj/machinery/power/apc/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
+			set_broken()
+		if(opened != 2)
+			opened = 2
+			visible_message("<span class='warning'>The APC cover is knocked down!</span>")
+			update_icon()
 
 /obj/machinery/power/apc/emag_act(mob/user)
 	if(!emagged && !malfhack)

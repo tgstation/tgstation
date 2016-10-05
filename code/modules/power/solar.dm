@@ -60,14 +60,9 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
 		if(do_after(user, 50/W.toolspeed, target = src))
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.loc = src.loc
-				S.give_glass(stat & BROKEN)
-
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
-			qdel(src)
+			deconstruct(TRUE)
 	else
 		return ..()
 
@@ -83,16 +78,23 @@
 
 
 /obj/machinery/power/solar/obj_break(damage_flag)
-	if(!(stat & BROKEN))
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 		stat |= BROKEN
 		unset_control()
 		update_icon()
 
-/obj/machinery/power/solar/obj_destruction()
-	playsound(src, "shatter", 70, 1)
-	new /obj/item/weapon/shard(src.loc)
-	new /obj/item/weapon/shard(src.loc)
+/obj/machinery/power/solar/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			var/obj/item/solar_assembly/S = locate() in src
+			if(S)
+				S.forceMove(loc)
+				S.give_glass(stat & BROKEN)
+		else
+			playsound(src, "shatter", 70, 1)
+			new /obj/item/weapon/shard(src.loc)
+			new /obj/item/weapon/shard(src.loc)
 	qdel(src)
 
 
@@ -104,7 +106,6 @@
 	else
 		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
 		src.setDir(angle2dir(adir))
-	return
 
 //calculates the fraction of the sunlight that the panel recieves
 /obj/machinery/power/solar/proc/update_solar_exposure()
@@ -455,7 +456,7 @@
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/machinery/power/solar_control/obj_break(damage_flag)
-	if(!(stat & BROKEN))
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 		stat |= BROKEN
 		update_icon()

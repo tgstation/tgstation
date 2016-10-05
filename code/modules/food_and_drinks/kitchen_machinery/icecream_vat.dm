@@ -208,8 +208,9 @@
 			reagents.add_reagent("singulo", 2)
 	ice_creamed = 1
 
-/obj/machinery/icecream_vat/obj_destruction(damage_flag)
-	new /obj/item/stack/sheet/metal(loc, 4)
+/obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 4)
 	qdel(src)
 
 

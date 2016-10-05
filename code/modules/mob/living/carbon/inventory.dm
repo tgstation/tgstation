@@ -124,5 +124,6 @@
 	for(var/X in get_equipped_items())
 		var/obj/item/I = X
 		if(I.body_parts_covered & bodypart_bit)
-			I.take_damage(damage_amount, damage_type, damage_flag, 0)
+			I.take_damage(0.5*damage_amount, damage_type, damage_flag, 0)
+			//0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
 

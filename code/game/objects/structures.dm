@@ -87,8 +87,3 @@
 				user << "<span class='warning'>You fail to climb onto [src].</span>"
 			density = 1
 	structureclimber = null
-
-
-/obj/structure/obj_break(damage_flag)
-	if(damage_flag != "fire" && damage_flag != "acid")
-		deconstruct(FALSE)

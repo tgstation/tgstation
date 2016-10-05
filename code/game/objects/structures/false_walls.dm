@@ -128,16 +128,13 @@
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
-	if(disassembled)
-		new girder_type(loc)
-	if(mineral_amount)
-		for(var/i in 1 to mineral_amount)
-			new mineral(loc)
-	..()
-
-
-/obj/structure/falsewall/obj_destruction(damage_flag)
-	deconstruct(FALSE)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			new girder_type(loc)
+		if(mineral_amount)
+			for(var/i in 1 to mineral_amount)
+				new mineral(loc)
+	qdel(src)
 
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0

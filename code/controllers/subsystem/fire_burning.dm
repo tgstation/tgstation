@@ -26,14 +26,14 @@ var/datum/subsystem/fire_burning/SSfire_burning
 	while(currentrun.len)
 		var/obj/O = currentrun[currentrun.len]
 		currentrun.len--
-		if (!O)
+		if (!O || qdeleted(O))
 			processing -= O
 			if (MC_TICK_CHECK)
 				return
 			continue
 
 		if(O.resistance_flags & ON_FIRE)
-			O.take_damage(100, BURN, "fire", 0)
+			O.take_damage(20, BURN, "fire", 0)
 		else
 			processing -= O
 

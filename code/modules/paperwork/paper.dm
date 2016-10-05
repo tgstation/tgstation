@@ -339,8 +339,8 @@
 
 	add_fingerprint(user)
 
-/obj/item/weapon/paper/fire_act()
-	..(0)
+/obj/item/weapon/paper/fire_act(exposed_temperature, exposed_volume)
+	..()
 	icon_state = "paper_onfire"
 	info = "[stars(info)]"
 

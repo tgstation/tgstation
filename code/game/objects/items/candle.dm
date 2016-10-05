@@ -35,7 +35,7 @@
 	if(msg)
 		light(msg)
 
-/obj/item/candle/fire_act()
+/obj/item/candle/fire_act(exposed_temperature, exposed_volume)
 	if(!src.lit)
 		light() //honk
 	..()

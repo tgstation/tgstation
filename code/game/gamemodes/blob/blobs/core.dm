@@ -5,6 +5,7 @@
 	desc = "A huge, pulsating yellow mass."
 	health = 400
 	maxhealth = 400
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 90)
 	explosion_block = 6
 	point_return = -1
 	health_regen = 0 //we regen in Life() instead of when pulsed
@@ -48,18 +49,15 @@
 	poi_list -= src
 	return ..()
 
-/obj/structure/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	exposed_temperature *= 0.5
-	..()
-
 /obj/structure/blob/core/ex_act(severity, target)
 	var/damage = 50 - 10 * severity //remember, the core takes half brute damage, so this is 20/15/10 damage based on severity
-	take_damage(damage, BRUTE) //phil235
+	take_damage(damage, BRUTE, "bomb", 0)
 
-/obj/structure/blob/core/check_health(cause)
-	if(overmind) //we should have an overmind, but...
-		overmind.update_health_hud()
-	..()
+/obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, overmind_reagent_trigger = 1)
+	. = ..()
+	if(health > 0)
+		if(overmind) //we should have an overmind, but...
+			overmind.update_health_hud()
 
 /obj/structure/blob/core/Life()
 	if(qdeleted(src))

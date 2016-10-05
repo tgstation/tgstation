@@ -55,7 +55,7 @@
 			R.on_ex_act()
 	..()
 
-/obj/effect/decal/cleanable/fire_act()
+/obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)
 	if(reagents)
 		reagents.chem_temp += 30
 		reagents.handle_reactions()

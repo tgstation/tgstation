@@ -722,9 +722,10 @@
 	update_icon()
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(loc, 2)
-	var/obj/item/I = new /obj/item/weapon/electronics/airalarm(loc)
-	if(!disassembled)
-		I.health = I.maxhealth * 0.5
-	new /obj/item/stack/cable_coil(loc, 3)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+		var/obj/item/I = new /obj/item/weapon/electronics/airalarm(loc)
+		if(!disassembled)
+			I.health = I.maxhealth * 0.5
+		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)

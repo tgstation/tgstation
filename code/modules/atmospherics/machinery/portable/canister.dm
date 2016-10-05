@@ -18,8 +18,9 @@
 	var/release_pressure = ONE_ATMOSPHERE
 
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 50)
-	health = 100
-	maxhealth = 100
+	health = 200
+	maxhealth = 200
+	broken_health = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
@@ -186,16 +187,17 @@
 		take_damage(5, BURN, "fire", 1)
 
 
-/obj/machinery/portable_atmospherics/canister/obj_destruction()
-	if(stat & BROKEN)
+/obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
+			canister_break()
+		new /obj/item/stack/sheet/metal (loc, 5)
+	qdel(src)
+
+/obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
+	if((stat & BROKEN) || (flags & NODECONSTRUCT))
 		return
 	canister_break()
-
-/obj/machinery/portable_atmospherics/canister/acid_melt()
-	if(!(stat & BROKEN))
-		canister_break()
-	..()
-
 
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()
 	disconnect()

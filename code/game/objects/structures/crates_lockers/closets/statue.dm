@@ -113,16 +113,6 @@
 /obj/structure/closet/statue/toggle()
 	return
 
-/obj/structure/closet/statue/obj_destruction()
-	shatter()
-
-/obj/structure/closet/statue/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		shatter()
-
-/obj/structure/closet/statue/blob_act(obj/structure/blob/B)
-	shatter()
-
 /obj/structure/closet/statue/MouseDrop_T()
 	return
 
@@ -138,9 +128,10 @@
 /obj/structure/closet/statue/update_icon()
 	return
 
-/obj/structure/closet/statue/proc/shatter()
-	for(var/mob/living/M in src)
-		M.dust()
+/obj/structure/closet/statue/deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		for(var/mob/living/M in src)
+			M.dust()
 	dump_contents()
 	visible_message("<span class='danger'>[src] shatters!.</span>")
 	qdel(src)

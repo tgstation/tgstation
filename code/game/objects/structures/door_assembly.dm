@@ -678,25 +678,23 @@
 	add_overlay(get_airlock_overlay("panel_c[state+1]", overlays_file))
 
 
-/obj/structure/door_assembly/obj_destruction(damage_flag)
-	deconstruct(FALSE)
-
 /obj/structure/door_assembly/deconstruct(disassembled = TRUE)
-	var/turf/T = get_turf(src)
-	var/metal_amt = 4
-	if(!disassembled)
-		metal_amt = rand(2,4)
-	new /obj/item/stack/sheet/metal(T, metal_amt)
-	if(mineral)
-		if (mineral == "glass")
-			if(disassembled)
-				if (heat_proof_finished)
-					new /obj/item/stack/sheet/rglass(T)
+	if(!(flags & NODECONSTRUCT))
+		var/turf/T = get_turf(src)
+		var/metal_amt = 4
+		if(!disassembled)
+			metal_amt = rand(2,4)
+		new /obj/item/stack/sheet/metal(T, metal_amt)
+		if(mineral)
+			if (mineral == "glass")
+				if(disassembled)
+					if (heat_proof_finished)
+						new /obj/item/stack/sheet/rglass(T)
+					else
+						new /obj/item/stack/sheet/glass(T)
 				else
-					new /obj/item/stack/sheet/glass(T)
+					new /obj/item/weapon/shard(T)
 			else
-				new /obj/item/weapon/shard(T)
-		else
-			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			new mineral_path(T, 2)
+				var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+				new mineral_path(T, 2)
 	qdel(src)

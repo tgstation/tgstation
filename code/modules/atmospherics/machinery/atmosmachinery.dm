@@ -155,7 +155,7 @@ Pipelines + Other Objects -> Pipe network
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 				if(unsafe_wrenching)
 					unsafe_pressure_release(user, internal_pressure)
-				deconstruct()
+				deconstruct(TRUE)
 	else
 		return ..()
 
@@ -190,14 +190,15 @@ Pipelines + Other Objects -> Pipe network
 	user.throw_at(target, range, speed)
 
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(can_unwrench)
-		stored.forceMove(loc)
-		if(!disassembled)
-			stored.health = stored.maxhealth * 0.5
-		transfer_fingerprints_to(stored)
-		stored = null
-
-	qdel(src)
+	if(!(flags & NODECONSTRUCT))
+		if(can_unwrench)
+			if(stored)
+				stored.forceMove(loc)
+				if(!disassembled)
+					stored.health = stored.maxhealth * 0.5
+				transfer_fingerprints_to(stored)
+				stored = null
+	..()
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 
@@ -238,7 +239,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		deconstruct()
+		deconstruct(FALSE)
 
 
 //Find a connecting /obj/machinery/atmospherics in specified direction
@@ -301,7 +302,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/can_see_pipes()
 	return 1
 
-/obj/machinery/atmospherics/fire_act(global_overlay=1)
+/obj/machinery/atmospherics/fire_act(exposed_temperature, exposed_volume)
 	var/turf/T = src.loc
 	if(T && T.intact && level == 1) //protected from fire when hidden behind a floor.
 		return

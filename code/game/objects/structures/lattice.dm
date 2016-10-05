@@ -42,10 +42,11 @@
 		var/turf/T = get_turf(src)
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
-/obj/structure/lattice/deconstruct()
-	stored.loc = get_turf(src)
-	stored = null
-	..()
+/obj/structure/lattice/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		stored.forceMove(get_turf(src))
+		stored = null
+	qdel(src)
 
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)

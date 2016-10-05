@@ -17,10 +17,10 @@
 	maxhealth = 100
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
 	var/material = METAL
-	var/debris_type
 
-/obj/structure/barricade/obj_destruction()
-	make_debris()
+/obj/structure/barricade/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		make_debris()
 	qdel(src)
 
 /obj/structure/barricade/proc/make_debris()
@@ -37,9 +37,6 @@
 					health = Clamp(health + 20, 0, maxhealth)
 	else
 		return ..()
-
-/obj/structure/barricade/blob_act(obj/structure/blob/B)
-	take_damage(25, BRUTE, "melee", 0)
 
 /obj/structure/barricade/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)

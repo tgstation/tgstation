@@ -132,7 +132,7 @@
 
 	give_control()
 
-/obj/structure/academy_wizard_spawner/obj_destruction()
+/obj/structure/academy_wizard_spawner/deconstruct(disassembled = TRUE)
 	if(!broken)
 		broken = 1
 		visible_message("<span class='warning'>[src] breaks down!</span>")

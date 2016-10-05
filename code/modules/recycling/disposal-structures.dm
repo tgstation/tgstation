@@ -140,7 +140,6 @@
 	dir = 0// dir will contain dominant direction for junction pipes
 	health = 200
 	maxhealth = 200
-	broken_health = 30
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
@@ -294,20 +293,11 @@
 	else
 		..()
 
-/obj/structure/disposalpipe/fire_act(global_overlay=1)
+/obj/structure/disposalpipe/fire_act(exposed_temperature, exposed_volume)
 	var/turf/T = src.loc
 	if(T && T.intact) //protected from fire when hidden behind a floor.
 		return
 	..()
-
-/obj/structure/disposalpipe/obj_break()
-	for(var/D in cardinal)
-		if(D & dpdir)
-			var/obj/structure/disposalpipe/broken/P = new(src.loc)
-			P.setDir(D)
-	qdel(src)
-
-
 
 
 /*
@@ -357,16 +347,24 @@
 	. = 1
 
 // called when pipe is cut with welder
-/obj/structure/disposalpipe/deconstruct()
-	if(stored)
-		var/turf/T = loc
-		stored.loc = T
-		transfer_fingerprints_to(stored)
-		stored.setDir(dir)
-		stored.density = 0
-		stored.anchored = 1
-		stored.update_icon()
-		..()
+/obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			if(stored)
+				var/turf/T = loc
+				stored.loc = T
+				transfer_fingerprints_to(stored)
+				stored.setDir(dir)
+				stored.density = 0
+				stored.anchored = 1
+				stored.update_icon()
+		else
+			for(var/D in cardinal)
+				if(D & dpdir)
+					var/obj/structure/disposalpipe/broken/P = new(src.loc)
+					P.setDir(D)
+	qdel(src)
+
 
 /obj/structure/disposalpipe/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

@@ -174,7 +174,7 @@
 
 	return standing
 
-/obj/item/bodypart/head/burn()
+/obj/item/bodypart/head/deconstruct(disassembled = TRUE)
 	drop_organs()
 	..()
 

@@ -580,7 +580,7 @@ var/global/list/multiverse = list()
 		var/area/A = get_area(src)
 		victim << "<span class='notice'>You feel a dark presence from [A.name]</span>"
 
-/obj/item/voodoo/fire_act()
+/obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
 	if(target)
 		target.adjust_fire_stacks(20)
 		target.IgniteMob()

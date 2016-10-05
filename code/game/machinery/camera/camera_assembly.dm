@@ -133,6 +133,7 @@
 			return 1
 	return 0
 
-/obj/structure/camera_assembly/obj_destruction(damage_flag)
-	new /obj/item/stack/sheet/metal(loc)
+/obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc)
 	qdel(src)

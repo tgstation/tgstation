@@ -47,7 +47,7 @@
 		mytape = null
 		update_icon()
 
-/obj/item/device/taperecorder/fire_act()
+/obj/item/device/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.ruin() //Fires destroy the tape
 	..()
 
@@ -248,7 +248,7 @@
 	var/list/timestamp = list()
 	var/ruined = 0
 
-/obj/item/device/tape/fire_act()
+/obj/item/device/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
 	..()
 

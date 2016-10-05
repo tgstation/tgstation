@@ -83,13 +83,14 @@
 			add_overlay("damage")
 
 /obj/machinery/dominator/obj_break(damage_flag)
-	if(!(stat & BROKEN))
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		set_broken()
 
-/obj/machinery/dominator/obj_destruction(damage_flag)
-	if(!(stat & BROKEN))
-		set_broken()
-	new /obj/item/stack/sheet/plasteel(src.loc)
+/obj/machinery/dominator/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
+			set_broken()
+		new /obj/item/stack/sheet/plasteel(src.loc)
 	qdel(src)
 
 /obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)

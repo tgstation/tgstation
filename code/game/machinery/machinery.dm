@@ -169,12 +169,12 @@ Class Procs:
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in src)
-		L.loc = T
-		L.reset_perspective(null)
+		L.forceMove(T)
 		L.update_canmove() //so the mob falls if he became unconscious inside the machine.
 		. += L
 
-	T.contents += contents
+	for(var/atom/movable/A in contents)
+		A.forceMove(T)
 	occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
@@ -191,10 +191,6 @@ Class Procs:
 		target.forceMove(src)
 	updateUsrDialog()
 	update_icon()
-
-/obj/machinery/blob_act(obj/structure/blob/B)
-	if(density && prob(75))
-		qdel(src)
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
@@ -305,44 +301,27 @@ Class Procs:
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		deconstruct()
+		deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
-	on_deconstruction()
-	if(component_parts && component_parts.len)
-		var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
-		M.anchored = anchored
-		if(!disassembled)
-			M.health = M.maxhealth * 0.5 //the frame is already half broken
-		transfer_fingerprints_to(M)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			I.forceMove(loc)
+	if(!(flags & NODECONSTRUCT))
+		on_deconstruction()
+		if(component_parts && component_parts.len)
+			var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
+			M.anchored = anchored
+			if(!disassembled)
+				M.health = M.maxhealth * 0.5 //the frame is already half broken
+			transfer_fingerprints_to(M)
+			M.state = 2
+			M.icon_state = "box_1"
+			for(var/obj/item/I in component_parts)
+				I.forceMove(loc)
 	qdel(src)
 
-/obj/machinery/obj_break()
-	stat |= BROKEN
-
-/obj/machinery/obj_destruction()
-	stat |= BROKEN
+/obj/machinery/obj_break(damage_flag)
 	if(!(flags & NODECONSTRUCT))
-		deconstruct(FALSE)
-	else
-		qdel(src)
+		stat |= BROKEN
 
-/obj/machinery/acid_melt()
-	if(!(flags & NODECONSTRUCT))
-		SSacid.processing -= src
-		var/turf/T = get_turf(src)
-		var/remaining_acid = acid_level
-		deconstruct(FALSE)
-		for(var/atom/movable/AM in T) //the acid that is still unused drops on the other things on the same turf.
-			if(AM == src)
-				continue
-			AM.acid_act(10, 0.1 * remaining_acid/T.contents.len)
-	else
-		..()
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)

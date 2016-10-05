@@ -22,7 +22,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	health = 150
 	maxhealth = 150
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	var/damaged_item = 0 //similar to machine's BROKEN stat and structure's broken var
 
 	var/hitsound = null
 	var/throwhitsound = null
@@ -571,3 +572,44 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/hitby(atom/movable/AM)
 	return
+
+var/list/damaged_item_icons = list()
+
+/obj/item/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(. && health > 0) //took damage and still not destroyed.
+		if(health <= maxhealth * 0.6 && !damaged_item)
+			update_item_damaged_state(TRUE)
+
+/obj/item/proc/update_item_damaged_state(damaging = TRUE)
+	if(damaging)
+		damaged_item = 1
+		var/index = "\ref[initial(icon)]-[initial(icon_state)]"
+		var/icon/damaged_item_icon = damaged_item_icons[index]
+		if(!damaged_item_icon)
+			damaged_item_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply blood-splatters to the initial icon_state for each object
+			damaged_item_icon.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
+			damaged_item_icon.Blend(icon('icons/effects/effects.dmi', "itemdamaged"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+			damaged_item_icon = fcopy_rsc(damaged_item_icon)
+			damaged_item_icons[index] = damaged_item_icon
+		add_overlay(damaged_item_icon, 1)
+	else
+		damaged_item = 0
+
+/obj/item/burn()
+	if(!qdeleted(src))
+		var/turf/T = get_turf(src)
+		var/obj/effect/decal/cleanable/ash/A = new()
+		A.desc = "Looks like this used to be a [name] some time ago."
+		A.forceMove(T) //so the ash decal is deleted if on top of lava.
+		..()
+
+
+/obj/item/acid_melt()
+	if(!qdeleted(src))
+		var/turf/T = get_turf(src)
+		var/obj/effect/decal/cleanable/molten_object/MO = new (T)
+		MO.pixel_x = rand(-16,16)
+		MO.pixel_y = rand(-16,16)
+		MO.desc = "Looks like this was \an [src] some time ago."
+		..()

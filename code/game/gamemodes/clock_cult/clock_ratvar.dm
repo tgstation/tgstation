@@ -58,17 +58,18 @@
 		countdown = null
 	. = ..()
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/obj_destruction()
-	countdown.stop()
-	visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
-	world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50)
-	make_glow()
-	glow.icon_state = "clockwork_gateway_disrupted"
-	resistance_flags |= INDESTRUCTIBLE
-	sleep(27)
-	explosion(src, 1, 3, 8, 8)
+/obj/structure/destructible/clockwork/massive/celestial_gateway/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!disassembled)
+			countdown.stop()
+			visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
+			world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50)
+			make_glow()
+			glow.icon_state = "clockwork_gateway_disrupted"
+			resistance_flags |= INDESTRUCTIBLE
+			sleep(27)
+			explosion(src, 1, 3, 8, 8)
 	qdel(src)
-	return 1
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/make_glow()
 	if(!glow)
@@ -77,7 +78,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
 	var/damage = max((health * 0.70) / severity, 100) //requires multiple bombs to take down
-	take_damage(damage, BRUTE)
+	take_damage(damage, BRUTE, "bomb", 0)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	. = "IMMINENT"

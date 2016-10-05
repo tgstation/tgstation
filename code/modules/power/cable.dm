@@ -97,12 +97,13 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(invisibility != INVISIBILITY_MAXIMUM)
 		qdel(src)
 
-/obj/structure/cable/deconstruct()
-	var/turf/T = loc
-	stored.loc = T
-	..()
+/obj/structure/cable/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/turf/T = loc
+		stored.forceMove(T)
+	qdel(src)
 
-/obj/structure/cable/fire_act(global_overlay=1)
+/obj/structure/cable/fire_act(exposed_temperature, exposed_volume)
 	var/turf/T = src.loc
 	if(T && T.intact) //protected from fire when hidden behind a floor.
 		return

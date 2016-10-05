@@ -73,18 +73,19 @@
 		update_icon()
 
 /obj/structure/fireaxecabinet/obj_break(damage_flag)
-	if(!broken)
+	if(!broken && !(flags & NODECONSTRUCT))
 		update_icon()
 		broken = TRUE
 		playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
 
-/obj/structure/fireaxecabinet/obj_destruction(damage_flag)
-	if(fireaxe && loc)
-		fireaxe.forceMove(loc)
-		fireaxe = null
-	new /obj/item/stack/sheet/metal(loc, 2)
+/obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(fireaxe && loc)
+			fireaxe.forceMove(loc)
+			fireaxe = null
+		new /obj/item/stack/sheet/metal(loc, 2)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)

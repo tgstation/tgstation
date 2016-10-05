@@ -53,9 +53,6 @@
 		debris += new /obj/item/stack/rods(src, rods)
 
 
-/obj/structure/window/blob_act(obj/structure/blob/B)
-	take_damage(rand(75,150), BRUTE, "melee", 0)
-
 /obj/structure/window/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
 	for(var/obj/item/weapon/shard/shard in debris)
@@ -70,7 +67,7 @@
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		shatter()
+		deconstruct(FALSE)
 
 /obj/structure/window/setDir(direct)
 	if(!fulltile)
@@ -233,21 +230,20 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/structure/window/obj_destruction()
-	shatter()
 
-/obj/structure/window/proc/shatter()
+/obj/structure/window/deconstruct(disassembled = TRUE)
 	if(qdeleted(src))
 		return
-	playsound(src, "shatter", 70, 1)
-	var/turf/T = loc
+	if(!disassembled)
+		playsound(src, "shatter", 70, 1)
+		var/turf/T = loc
 
-	if(!(flags & NODECONSTRUCT))
-		for(var/i in debris)
-			var/obj/item/I = i
+		if(!(flags & NODECONSTRUCT))
+			for(var/i in debris)
+				var/obj/item/I = i
 
-			I.loc = T
-			transfer_fingerprints_to(I)
+				I.loc = T
+				transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
 

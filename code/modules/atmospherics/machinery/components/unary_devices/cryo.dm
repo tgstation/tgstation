@@ -50,7 +50,9 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
-	beaker = null
+	if(beaker)
+		qdel(beaker)
+		beaker = null
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
@@ -137,7 +139,7 @@
 		on = FALSE
 		..()
 		if(beaker)
-			beaker.loc = src
+			beaker.forceMove(src)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
@@ -253,7 +255,7 @@
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
-				beaker.loc = loc
+				beaker.forceMove(loc)
 				beaker = null
 				. = TRUE
 	update_icon()

@@ -10,6 +10,23 @@
 
 //phil235
 /obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(.)
+		if(health > 0)
+			spark_system.start() //phil235
+			switch(damage_flag)
+				if("fire")
+					check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL))
+				if("melee")
+					check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+				else
+					check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT))
+			if(. >= 5 || prob(33))
+				occupant_message("<span class='userdanger'>Taking damage!</span>")
+			log_append_to_last("Took [damage_amount] points of damage. Damage type: \"[damage_type]\".",1)
+
+/obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	. = ..()
 	var/booster_deflection_modifier = 1
 	var/booster_damage_modifier = 1
 	if(damage_flag == "bullet" || damage_flag == "laser" || damage_flag == "energy")
@@ -33,17 +50,8 @@
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
 		log_append_to_last("Armor saved.")
 		return 0
-	if(damage_amount)
-		damage_amount *= booster_damage_modifier
-	. = ..()
 	if(.)
-		if(health > 0)
-			spark_system.start() //phil235
-			//phil235 use flags to only cause certain internal failure types.
-			check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT))
-			occupant_message("<span class='userdanger'>Taking damage!</span>")
-			log_append_to_last("Took [damage_amount] points of damage. Damage type: \"[damage_type]\".",1)
-
+		. *= booster_damage_modifier
 
 
 /obj/mecha/attack_hand(mob/living/user as mob)

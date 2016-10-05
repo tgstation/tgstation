@@ -102,20 +102,14 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/obj_destruction()
-	tank_leak()
+/obj/item/weapon/tank/deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		var/turf/T = get_turf(src)
+		if(T)
+			T.assume_air(air_contents)
+			air_update_turf()
+		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	qdel(src)
-
-/obj/item/weapon/tank/acid_melt()
-	tank_leak()
-	..()
-
-/obj/item/weapon/tank/proc/tank_leak()
-	var/turf/T = get_turf(src)
-	if(T)
-		T.assume_air(air_contents)
-		air_update_turf()
-	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 
 /obj/item/weapon/tank/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user

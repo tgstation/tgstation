@@ -9541,7 +9541,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
 	pixel_y = 28;
-	shattered = 1
+	broken = 1
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plating,
@@ -9550,7 +9550,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
 	pixel_y = 28;
-	shattered = 1
+	broken = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
