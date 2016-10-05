@@ -24,19 +24,19 @@
 	..()
 	switch(d_state)
 		if(INTACT)
-			user << "<span class='notice'>Wirecutters are required to remove the outter grille.</span>"
+			user << "<span class='notice'><b>Wirecutters</b> are required to remove the outter grille.</span>"
 		if(SUPPORT_LINES)
-			user << "<span class='notice'>The outter grille has been removed. A screwdriver could remove the support lines.</span>"
+			user << "<span class='notice'>The outter grille has been removed. A <b>screwdriver</b> could remove the support lines.</span>"
 		if(COVER)
-			user << "<span class='notice'>The support lines have been removed. A welding tool could slice through the cover.</span>"
+			user << "<span class='notice'>The support lines have been removed. A <b>welding tool</b> could slice through the cover.</span>"
 		if(CUT_COVER)
-			user << "<span class='notice'>The cover has been cut open. A crowbar could dislodge it.</span>"
+			user << "<span class='notice'>The cover has been cut open. A <b>crowbar</b> could dislodge it.</span>"
 		if(BOLTS)
-			user << "<span class='notice'>The cover has been removed. A wrench could loosen the bolts.</span>"
+			user << "<span class='notice'>The cover has been removed. A <b>wrench</b> could loosen the bolts.</span>"
 		if(SUPPORT_RODS)
-			user << "<span class='notice'>The bolts have been loosened. A welding tool could cut through the support rods.</span>"
+			user << "<span class='notice'>The bolts have been loosened. A <b>welding tool</b> could cut through the support rods.</span>"
 		if(SHEATH)
-			user << "<span class='notice'>The support rods have been cut. A crowbar could pry off the outer sheath.</span>"
+			user << "<span class='notice'>The support rods have been cut. A <b>crowbar</b> could pry off the outer sheath.</span>"
 
 
 /turf/closed/wall/r_wall/break_wall()
