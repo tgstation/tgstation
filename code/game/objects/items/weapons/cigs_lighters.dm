@@ -671,7 +671,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == slot_wear_mask)
 		if(!screw)
-			user << "<span class='notice'>You start puffing on that dank vape</span>"
+			user << "<span class='notice'>You start puffing on the vape.</span>"
 			reagents.set_reacting(TRUE)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.
