@@ -1,0 +1,87 @@
+"aa" = (/turf/open/space,/area/space)
+"ab" = (/turf/closed/wall/r_wall,/area/space)
+"ac" = (/obj/structure/grille,/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/open/floor/plating/airless,/area/space)
+"ad" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/open/floor/plating/airless,/area/space)
+"ae" = (/obj/machinery/camera/emp_proof{c_tag = "Singularity North-West"; dir = 2; network = list("Singularity")},/obj/machinery/power/grounding_rod,/turf/open/floor/plating/airless,/area/space)
+"af" = (/turf/open/floor/plating/airless,/area/space)
+"ag" = (/obj/machinery/power/grounding_rod,/turf/open/floor/plating/airless,/area/space)
+"ah" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/space)
+"ai" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/open/floor/plating,/area/space)
+"aj" = (/obj/machinery/camera/emp_proof{c_tag = "Singularity North East"; dir = 2; network = list("Singularity")},/obj/machinery/power/grounding_rod,/turf/open/floor/plating/airless,/area/space)
+"ak" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/open/floor/plating/airless,/area/space)
+"al" = (/obj/structure/grille,/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/open/floor/plating/airless,/area/space)
+"am" = (/obj/structure/grille,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/open/floor/plating/airless,/area/space)
+"an" = (/obj/structure/cable/yellow{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/open/floor/plating/airless,/area/space)
+"ao" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0},/turf/open/floor/plating/airless,/area/space)
+"ap" = (/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"; tag = "90Curve"},/turf/open/floor/plating/airless,/area/space)
+"aq" = (/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/open/floor/plating/airless,/area/space)
+"ar" = (/obj/item/weapon/wrench,/turf/open/floor/plating/airless,/area/space)
+"as" = (/obj/structure/grille,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/open/floor/plating/airless,/area/space)
+"at" = (/obj/machinery/power/emitter{anchored = 1; dir = 4; state = 2},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/open/floor/plating/airless,/area/space)
+"au" = (/turf/open/floor/plating/airless/warnplate{dir = 8},/area/space)
+"av" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"aw" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/open/floor/plating/airless,/area/space)
+"ax" = (/obj/machinery/field/generator{anchored = 1; state = 2},/turf/open/floor/plating/airless,/area/space)
+"ay" = (/turf/open/floor/plating/airless/warnplate{dir = 4},/area/space)
+"az" = (/obj/machinery/power/emitter{anchored = 1; dir = 8; state = 2},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/open/floor/plating/airless,/area/space)
+"aA" = (/obj/structure/grille,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/open/floor/plating/airless,/area/space)
+"aB" = (/obj/item/device/multitool,/turf/open/floor/plating/airless,/area/space)
+"aC" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/yellow{icon_state = "1-4"; d1 = 1; d2 = 4},/turf/open/floor/plating/airless,/area/space)
+"aD" = (/obj/structure/cable/yellow{d2 = 8; icon_state = "0-8"},/obj/machinery/power/tesla_coil,/turf/open/floor/plating/airless,/area/space)
+"aE" = (/obj/item/weapon/wirecutters,/obj/structure/lattice,/turf/open/space,/area/space)
+"aF" = (/obj/structure/cable/yellow{icon_state = "0-4"; d2 = 4},/obj/machinery/power/tesla_coil,/turf/open/floor/plating/airless,/area/space)
+"aG" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/open/floor/plating/airless,/area/space)
+"aH" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"aI" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"aJ" = (/obj/effect/landmark/event_spawn,/turf/open/space,/area/space)
+"aK" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"aL" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"aM" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"aN" = (/turf/open/floor/plating/airless/warnplate{dir = 9},/area/space)
+"aO" = (/turf/open/floor/plating/airless/warnplate{dir = 1},/area/space)
+"aP" = (/turf/open/floor/plating/airless/warnplate{dir = 5},/area/space)
+"aQ" = (/obj/item/weapon/crowbar,/turf/open/space,/area/space)
+"aR" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'RADIOACTIVE AREA'"; icon_state = "radiation"; name = "RADIOACTIVE AREA"; pixel_x = 0; pixel_y = 0},/turf/closed/wall/r_wall,/area/space)
+"aS" = (/obj/machinery/light{dir = 8},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"aT" = (/obj/machinery/the_singularitygen,/turf/open/floor/plating/airless/warnplate{dir = 8},/area/space)
+"aU" = (/obj/machinery/the_singularitygen/tesla,/turf/open/floor/plating/airless/warnplate{dir = 4},/area/space)
+"aV" = (/obj/machinery/light{dir = 4; icon_state = "tube1"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"aW" = (/obj/item/weapon/weldingtool,/turf/open/space,/area/space)
+"aX" = (/turf/open/floor/plating/airless/warnplate{dir = 10},/area/space)
+"aY" = (/turf/open/floor/plating/airless/warnplate{dir = 2},/area/space)
+"aZ" = (/turf/open/floor/plating/airless/warnplate{dir = 6},/area/space)
+"ba" = (/obj/item/device/radio/off,/turf/open/floor/plating/airless,/area/space)
+"bb" = (/obj/structure/grille,/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/open/floor/plating/airless,/area/space)
+"bc" = (/obj/structure/grille,/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/open/floor/plating/airless,/area/space)
+"bd" = (/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"be" = (/obj/structure/cable/yellow{icon_state = "0-2"; d2 = 2},/obj/machinery/power/tesla_coil,/turf/open/floor/plating/airless,/area/space)
+"bf" = (/obj/machinery/camera/emp_proof{c_tag = "Singularity West"; dir = 1; network = list("Singularity")},/turf/open/floor/plating/airless,/area/space)
+"bg" = (/obj/structure/cable/yellow{d1 = 1; d2 = 4; icon_state = "1-4"; tag = "90Curve"},/turf/open/floor/plating/airless,/area/space)
+"bh" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0},/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/open/floor/plating/airless,/area/space)
+"bi" = (/obj/structure/cable/yellow{d1 = 1; d2 = 8; icon_state = "1-8"; tag = ""},/turf/open/floor/plating/airless,/area/space)
+"bj" = (/obj/machinery/camera/emp_proof{c_tag = "Singularity East"; dir = 1; network = list("Singularity")},/turf/open/floor/plating/airless,/area/space)
+"bk" = (/obj/structure/sign/securearea,/turf/closed/wall/r_wall,/area/space)
+"bl" = (/turf/closed/wall,/area/space)
+"bm" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'RADIOACTIVE AREA'"; icon_state = "radiation"; name = "RADIOACTIVE AREA"; pixel_x = 0; pixel_y = 0},/turf/closed/wall,/area/space)
+
+(1,1,1) = {"
+aaabacadaeaaafagahahahahaiahahahahagafaaajakalab
+aaabamafafaaanaoaoaoaoaoapaoaoaoaoaoaqaaafaramab
+aaabasatauavawafaxaaaaaaaaaxaaaaaxafawaaayazaAab
+aaabamafaBaaaCaDaaaaaaaaaaaEaaaaaaaFaGaaafafamab
+aaabaHaIafaaawafaaaaavavavavavaaaaafawaJafaKaLab
+aaababaMafaaawafaxavavaNaOaPavaQaaafawaaafaMabab
+avaRabaSafaaaCaDaaaaavaTaraUavaaaaaFaGaaafaVabaR
+aaababaMafaaawafaaaWavaXaYaZavavaxafawaaafaMabab
+aaabaKaLafaaawafaaaaavavavavavaaaaafawaaafaHaIab
+aaabamafbaaaaCaDaaaaaaavaaaaaaaaaaaFaGaaafafamab
+aaabbbatauavawafaxaaaaaxaaaaaaaaaxafawaaayazbcab
+aaabbdafafaaawafafbeafafbeafafbeafafawaaafafbdab
+aaabbdafbfaabgaoaobhaoaobhaoaobhaoaobiaabjafbdab
+aabkabababafavavavavaaaaaaaaaaavavavavafabababbk
+aaavaabdababblblblblblblblblblblblblblababbdavav
+aaavaaaabdbdbdbdbmbdbdbdbdbdbdbdbmbdbdbdbdaaaaav
+aaaaaaaaaaaaaaavavavaaaaaaaaavavavavaaaaaaaaaaav
+aaaaaaaaaaaaaaaaavaaaaaaaaaaaaaaavaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaavaaaaaaaaaaaaaaavaaaaaaaaaaaaaa
+"}
