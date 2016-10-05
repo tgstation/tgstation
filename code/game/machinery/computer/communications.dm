@@ -1,6 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/const/CALL_SHUTTLE_REASON_LENGTH = 12
+var/const/COMMUNICATION_COOLDOWN = 600
+var/const/COMMUNICATION_COOLDOWN_AI = 600
 
 // The communications computer
 /obj/machinery/computer/communications
@@ -111,10 +113,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "<span class='warning'>You need to swipe your ID!</span>"
 
 		if("announce")
-			if(src.authenticated==2 && !message_cooldown)
+			if(src.authenticated==2)
 				make_announcement(usr)
-			else if (src.authenticated==2 && message_cooldown)
-				usr << "Intercomms recharging. Please stand by."
 
 		if("crossserver")
 			if(authenticated==2)
@@ -296,8 +296,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("ai-status")
 			src.aistate = STATE_STATUSDISPLAY
 		if("ai-announce")
-			if(!ai_message_cooldown)
-				make_announcement(usr, 1)
+			make_announcement(usr, 1)
 		if("ai-securitylevel")
 			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel) tmp_alertlevel = 0
@@ -582,23 +581,22 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	return dat
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
+	if((is_silicon && ai_message_cooldown > world.time) || (!is_silicon && message_cooldown > world.time))
+		user << "Intercomms recharging. Please stand by."
+		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src))
 		return
 	if(is_silicon)
-		if(ai_message_cooldown)
+		if(ai_message_cooldown > world.time)
 			return
 		minor_announce(input,"[user.name] Announces:")
-		ai_message_cooldown = 1
-		spawn(600)//One minute cooldown
-			ai_message_cooldown = 0
+		ai_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
 	else
-		if(message_cooldown)
+		if(message_cooldown > world.time)
 			return
 		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
-		message_cooldown = 1
-		spawn(600)//One minute cooldown
-			message_cooldown = 0
+		message_cooldown = world.time + COMMUNICATION_COOLDOWN
 	log_say("[key_name(user)] has made a priority announcement: [input]")
 	message_admins("[key_name_admin(user)] has made a priority announcement.")
 
