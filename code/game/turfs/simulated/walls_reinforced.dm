@@ -256,7 +256,7 @@
 
 #undef INTACT
 #undef SUPPORT_LINES
-#undefCOVER
+#undef COVER
 #undef CUT_COVER
 #undef BOLTS
 #undef SUPPORT_RODS
