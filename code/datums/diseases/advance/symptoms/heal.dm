@@ -1,89 +1,6 @@
 /*
 //////////////////////////////////////
 
-Healing
-
-	Little bit hidden.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity temrendously.
-	Fatal Level.
-
-Bonus
-	Heals toxins in the affected mob's blood stream.
-
-//////////////////////////////////////
-*/
-
-/datum/symptom/heal
-
-	name = "Toxic Filter"
-	stealth = 1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -4
-	level = 6
-
-/datum/symptom/heal/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(4, 5)
-				Heal(M, A)
-	return
-
-/datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
-	var/get_damage = (sqrt(20+A.totalStageSpeed())*(1+rand()))
-	if(M.toxloss > 0)
-		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#66FF99"))
-	M.adjustToxLoss(-get_damage)
-	return 1
-
-/*
-//////////////////////////////////////
-
-Apoptosis
-
-	Lowers resistance.
-	Decreases stage speed.
-	Decreases transmittablity.
-
-Bonus
-	Heals toxins in the affected mob's blood stream faster.
-
-//////////////////////////////////////
-*/
-
-/datum/symptom/aptx
-
-	name = "Apoptoxin filter"
-	stealth = 0
-	resistance = -2
-	stage_speed = -2
-	transmittable = -2
-	level = 8
-
-/datum/symptom/aptx/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(4, 5)
-				Apoptosis(M, A)
-	return
-
-/datum/symptom/aptx/proc/Apoptosis(mob/living/M, datum/disease/advance/A)
-	if(M.toxloss > 0)
-		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#00FF00"))
-	var/get_damage = (sqrt(20+A.totalStageSpeed())*(2+rand()))
-	M.adjustToxLoss(-get_damage)
-	return 1
-
-
-/*
-//////////////////////////////////////
-
 Metabolism
 
 	Little bit hidden.
@@ -108,7 +25,7 @@ Bonus
 	level = 3
 	var/list/cured_diseases = list()
 
-/datum/symptom/heal/metabolism/Heal(mob/living/M, datum/disease/advance/A)
+/datum/symptom/heal/metabolism/proc/Heal(mob/living/M, datum/disease/advance/A)
 	var/cured = 0
 	for(var/datum/disease/D in M.viruses)
 		if(D != A)
@@ -155,7 +72,7 @@ Bonus
 	transmittable = -3
 	level = 5
 
-/datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
+/datum/symptom/heal/dna/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/stage_speed = max( 20 + A.totalStageSpeed(), 0)
 	var/stealth_amount = max( 16 + A.totalStealth(), 0)
 	var/amt_healed = (sqrt(stage_speed*(3+rand())))-(sqrt(stealth_amount*rand()))
