@@ -25,7 +25,7 @@ Bonus
 	level = 3
 	var/list/cured_diseases = list()
 
-/datum/symptom/heal/metabolism/proc/Heal(mob/living/M, datum/disease/advance/A)
+/datum/symptom/heal/metabolism/Heal(mob/living/M, datum/disease/advance/A)
 	var/cured = 0
 	for(var/datum/disease/D in M.viruses)
 		if(D != A)
@@ -63,7 +63,7 @@ Bonus
 //////////////////////////////////////
 */
 
-/datum/symptom/heal/dna
+/datum/symptom/heal
 
 	name = "Deoxyribonucleic Acid Restoration"
 	stealth = -1
@@ -72,7 +72,16 @@ Bonus
 	transmittable = -3
 	level = 5
 
-/datum/symptom/heal/dna/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
+/datum/symptom/heal/Activate(datum/disease/advance/A)
+	..()
+	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
+		var/mob/living/M = A.affected_mob
+		switch(A.stage)
+			if(4, 5)
+				Heal(M, A)
+	return
+
+/datum/symptom/heal/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/stage_speed = max( 20 + A.totalStageSpeed(), 0)
 	var/stealth_amount = max( 16 + A.totalStealth(), 0)
 	var/amt_healed = (sqrt(stage_speed*(3+rand())))-(sqrt(stealth_amount*rand()))
