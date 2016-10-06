@@ -64,7 +64,7 @@ Bonus
 	transmittable = -2
 	level = 8
 
-/datum/symptom/heal/plus/proc/Heal(mob/living/M, datum/disease/advance/A)
+/datum/symptom/heal/plus/Heal(mob/living/M, datum/disease/advance/A)
 	if(M.toxloss > 0)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#00FF00"))
 	var/get_damage = (sqrt(20+A.totalStageSpeed())*(2+rand()))
@@ -97,7 +97,7 @@ Bonus
 	transmittable = -4
 	level = 6
 
-/datum/symptom/heal/brute/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
+/datum/symptom/heal/brute/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = rand(1, 2)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
@@ -138,7 +138,7 @@ Bonus
 	transmittable = -2
 	level = 8
 
-/datum/symptom/heal/brute/plus/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
+/datum/symptom/heal/brute/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = rand(2, 4)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
@@ -183,7 +183,7 @@ Bonus
 	transmittable = -4
 	level = 6
 
-/datum/symptom/heal/burn/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
+/datum/symptom/heal/burn/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = rand(1, 2)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
@@ -224,7 +224,7 @@ Bonus
 	transmittable = -2
 	level = 8
 
-/datum/symptom/heal/burn/plus/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
+/datum/symptom/heal/burn/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = rand(2, 4)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
