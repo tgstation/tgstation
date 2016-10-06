@@ -154,7 +154,7 @@
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
-	var/datum/radio_frequency/freq = SSradio.return_frequency(1441)
+	var/datum/radio_frequency/freq = SSradio.return_frequency(frequency)
 	var/list/devices = freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		var/list/text = splittext(U.id_tag, "_")
