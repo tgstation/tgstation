@@ -196,7 +196,6 @@
 				user << "[total_volume] units of various reagents"
 		else
 			user << "Nothing."
-
 /atom/proc/relaymove()
 	return
 

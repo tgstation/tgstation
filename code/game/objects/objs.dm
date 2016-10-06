@@ -42,6 +42,8 @@
 	if(is_frozen)
 		visible_message("<span class = 'danger'><b>[src] shatters into a million pieces!</b></span>")
 		qdel(src)
+	if(devicecrafting_holder)
+		devicecrafting_holder.on_throw(target)
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -222,6 +224,8 @@
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced, explosive)
 	addtimer(src, "reset_shocked", 10)
+	if(devicecrafting_holder)
+		devicecrafting_holder.on_tesla(power_bounced) // charge your batteries
 
 /obj/proc/reset_shocked()
 	being_shocked = 0
