@@ -15,7 +15,6 @@
 /datum/antagonist/cultist/on_gain()
 	if(ticker && ticker.mode && owner.mind)
 		ticker.mode.cult += owner.mind
-		ticker.mode.servants_of_ratvar += owner.mind
 		ticker.mode.update_cult_icons_added(owner.mind)
 		if(istype(ticker.mode, /datum/game_mode/cult))
 			var/datum/game_mode/cult/C = ticker.mode
