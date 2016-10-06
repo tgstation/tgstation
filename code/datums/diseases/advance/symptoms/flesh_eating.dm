@@ -84,5 +84,5 @@ Bonus
 /datum/symptom/flesh_death/proc/Flesh_death(mob/living/M, datum/disease/advance/A)
 	var/get_damage = ((sqrt(16-A.totalStealth()))*6)
 	M.adjustBruteLoss(get_damage)
-	M.reagents.add_reagent_list(list("heparin" = 5, "lipolicide" = 5))
+	M.reagents.add_reagent("viral_fleshdeath" = 5)
 	return 1

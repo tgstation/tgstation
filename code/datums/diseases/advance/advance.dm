@@ -7,6 +7,8 @@
 
 */
 
+#define SYMPTOM_LIMIT 8
+
 var/list/archive_diseases = list()
 
 // The order goes from easy to cure to hard to cure.
@@ -306,7 +308,7 @@ var/list/advance_cures = 	list(
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < 5 + rand(-1, 1))
+	if(symptoms.len < (SYMPTOM_LIMIT - 1) + rand(-1, 1))
 		symptoms += S
 	else
 		RemoveSymptom(pick(symptoms))

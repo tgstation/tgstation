@@ -14,7 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\tgstation2.dm"
+#include "_maps\ministation.dm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -235,6 +235,7 @@
 #include "code\datums\diseases\advance\symptoms\shivering.dm"
 #include "code\datums\diseases\advance\symptoms\skin.dm"
 #include "code\datums\diseases\advance\symptoms\sneeze.dm"
+#include "code\datums\diseases\advance\symptoms\stimulant.dm"
 #include "code\datums\diseases\advance\symptoms\symptoms.dm"
 #include "code\datums\diseases\advance\symptoms\viral.dm"
 #include "code\datums\diseases\advance\symptoms\vision.dm"
@@ -1731,6 +1732,7 @@
 #include "code\modules\reagents\chemistry\reagents\other_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\pyrotechnic_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\toxin_reagents.dm"
+#include "code\modules\reagents\chemistry\reagents\virus_reagents.dm"
 #include "code\modules\reagents\chemistry\recipes\drugs.dm"
 #include "code\modules\reagents\chemistry\recipes\medicine.dm"
 #include "code\modules\reagents\chemistry\recipes\others.dm"
