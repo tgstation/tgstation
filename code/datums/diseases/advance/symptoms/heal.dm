@@ -55,7 +55,7 @@ Bonus
 //////////////////////////////////////
 */
 
-/datum/symptom/aptx
+/datum/symptom/heal/plus
 
 	name = "Apoptoxin filter"
 	stealth = 0
@@ -64,20 +64,185 @@ Bonus
 	transmittable = -2
 	level = 8
 
-/datum/symptom/aptx/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(4, 5)
-				Apoptosis(M, A)
-	return
-
-/datum/symptom/aptx/proc/Apoptosis(mob/living/M, datum/disease/advance/A)
+/datum/symptom/heal/plus/proc/Heal(mob/living/M, datum/disease/advance/A)
 	if(M.toxloss > 0)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#00FF00"))
 	var/get_damage = (sqrt(20+A.totalStageSpeed())*(2+rand()))
 	M.adjustToxLoss(-get_damage)
+	return 1
+
+/*
+//////////////////////////////////////
+
+Regeneration
+
+	Little bit hidden.
+	Lowers resistance tremendously.
+	Decreases stage speed tremendously.
+	Decreases transmittablity temrendously.
+	Fatal Level.
+
+Bonus
+	Heals brute damage slowly over time.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/brute
+
+	name = "Regeneration"
+	stealth = 1
+	resistance = -4
+	stage_speed = -4
+	transmittable = -4
+	level = 6
+
+/datum/symptom/heal/brute/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = rand(1, 2)
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(!parts.len)
+		return
+
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(heal_amt, 0))
+			M.update_damage_overlays()
+	PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#FF3333")
+	return 1
+
+
+/*
+//////////////////////////////////////
+
+Flesh Mending
+
+	Little bit hidden.
+	Lowers resistance tremendously.
+	Decreases stage speed tremendously.
+	Decreases transmittablity temrendously.
+	Fatal Level.
+
+Bonus
+	Heals brute damage over time. Turns cloneloss into burn damage.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/brute/plus
+
+	name = "Flesh Mending"
+	stealth = 0
+	resistance = 0
+	stage_speed = -2
+	transmittable = -2
+	level = 8
+
+/datum/symptom/heal/brute/plus/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = rand(2, 4)
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(M.getCloneLoss() > 0)
+		M.adjustCloneLoss(-1)
+		M.take_bodypart_damage(0, 2)
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#33FFCC")
+
+	if(!parts.len)
+		return
+
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(heal_amt, 0))
+			M.update_damage_overlays()
+	PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#CC1100")
+	return 1
+
+/*
+//////////////////////////////////////
+
+Tissue Regrowth
+
+	Little bit hidden.
+	Lowers resistance tremendously.
+	Decreases stage speed tremendously.
+	Decreases transmittablity temrendously.
+	Fatal Level.
+
+Bonus
+	Heals burn damage slowly over time.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/burn
+
+	name = "Tissue Regrowth"
+	stealth = 1
+	resistance = -4
+	stage_speed = -4
+	transmittable = -4
+	level = 6
+
+/datum/symptom/heal/burn/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = rand(1, 2)
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(!parts.len)
+		return
+
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(0, heal_amt))
+			M.update_damage_overlays()
+	PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#FF9933")
+	return 1
+
+
+/*
+//////////////////////////////////////
+
+Heat Resistance
+
+	Little bit hidden.
+	Lowers resistance tremendously.
+	Decreases stage speed tremendously.
+	Decreases transmittablity temrendously.
+	Fatal Level.
+
+Bonus
+	Heals burn damage over time, and helps stabilize body temperature.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/heal/burn/plus
+
+	name = "Heat Resistance"
+	stealth = 0
+	resistance = 0
+	stage_speed = -2
+	transmittable = -2
+	level = 8
+
+/datum/symptom/heal/burn/plus/proc/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = rand(2, 4)
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(M.bodytemperature > 310)
+		M.bodytemperature = max(310, M.bodytemperature - (heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#FF3300")
+	else if(M.bodytemperature < 311)
+		M.bodytemperature = min(310, M.bodytemperature + (heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#0000FF")
+
+	if(!parts.len)
+		return
+
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(0, heal_amt))
+			M.update_damage_overlays()
+	PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#CC6600")
 	return 1
 
 
