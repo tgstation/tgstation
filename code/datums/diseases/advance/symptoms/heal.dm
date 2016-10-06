@@ -34,7 +34,7 @@ Bonus
 	return
 
 /datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
-	var/heal_amt = 1
+	var/heal_amt = 0.5
 	if(M.toxloss > 0)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#66FF99"))
 	M.adjustToxLoss(-heal_amt)
@@ -65,7 +65,7 @@ Bonus
 	level = 8
 
 /datum/symptom/heal/plus/Heal(mob/living/M, datum/disease/advance/A)
-	var/heal_amt = 2
+	var/heal_amt = 1
 	if(M.toxloss > 0)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#00FF00"))
 	M.adjustToxLoss(-heal_amt)
@@ -98,7 +98,7 @@ Bonus
 	level = 6
 
 /datum/symptom/heal/brute/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = 1
+	var/heal_amt = 0.5
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
@@ -139,7 +139,7 @@ Bonus
 	level = 8
 
 /datum/symptom/heal/brute/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = 2
+	var/heal_amt = 1
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
@@ -184,7 +184,7 @@ Bonus
 	level = 6
 
 /datum/symptom/heal/burn/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = 1
+	var/heal_amt = 0.5
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
@@ -225,7 +225,7 @@ Bonus
 	level = 8
 
 /datum/symptom/heal/burn/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = 2
+	var/heal_amt = 1
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
