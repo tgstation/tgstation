@@ -234,7 +234,7 @@
 		return
 	if(demon_candidates.len > 0)
 		if(used)
-			user << "<span class='notice'>Your already smashing the bottle, calm down.</span>"
+			user << "<span class='notice'>You're already smashing the bottle, calm down.</span>"
 			return
 		used = 1
 		var/client/C = pick(demon_candidates)
