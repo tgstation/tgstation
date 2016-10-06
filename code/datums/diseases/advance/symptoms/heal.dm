@@ -26,7 +26,7 @@ Bonus
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
+	if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)
@@ -139,7 +139,7 @@ Bonus
 	level = 8
 
 /datum/symptom/heal/brute/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = rand(2, 4)
+	var/heal_amt = rand(2, 3)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
@@ -225,7 +225,7 @@ Bonus
 	level = 8
 
 /datum/symptom/heal/burn/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/heal_amt = rand(2, 4)
+	var/heal_amt = rand(2, 3)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
