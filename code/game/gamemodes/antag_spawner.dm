@@ -233,6 +233,9 @@
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
 	if(demon_candidates.len > 0)
+		if(used)
+			user << "<span class='notice'>Your already smashing the bottle, calm down.</span>"
+			return
 		used = 1
 		var/client/C = pick(demon_candidates)
 		spawn_antag(C, get_turf(src.loc), initial(demon_type.name))
