@@ -20,11 +20,11 @@
 	laws.set_laws_config()
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
-	if(istype(A, /obj/item/weapon/wrench))
+	if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
 					 "<span class='notice'>You start to [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor...</span>")
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 20/P.toolspeed, target = src))
 			user << "<span class='notice'>You [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor.</span>"
 			anchored = !anchored
 		return
@@ -39,9 +39,7 @@
 				return
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			user << "<span class='notice'>You start to deconstruct the frame...</span>"
-			if(do_after(user, 20/P.toolspeed, target = src))
-				if(!src || !WT.remove_fuel(0, user))
-					return
+			if(do_after(user, 20/P.toolspeed, target = src) && state != EMPTY_CORE && src && WT && WT.remove_fuel(0, user))
 				user << "<span class='notice'>You deconstruct the frame.</span>"
 				new /obj/item/stack/sheet/plasteel( loc, 4)
 				qdel(src)
