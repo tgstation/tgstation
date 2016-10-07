@@ -1,3 +1,10 @@
+#define UNANCHORED_CORE 0
+#define ANCHORED_CORE 1
+#define CIRCUIT_CORE 2
+#define SCREWED_CORE 3
+#define CABLED_CORE 4
+#define GLASS_CORE 5
+
 /obj/structure/AIcore
 	density = 1
 	anchored = 0
@@ -15,14 +22,14 @@
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	switch(state)
-		if(0)
+		if(UNANCHORED_CORE)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
-					state = 1
+					state = ANCHORED_CORE
 				return
 			if(istype(P, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = P
@@ -32,48 +39,51 @@
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				user << "<span class='notice'>You start to deconstruct the frame...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
-					if(!src || !WT.remove_fuel(0, user)) return
+					if(!src || !WT.remove_fuel(0, user))
+						return
 					user << "<span class='notice'>You deconstruct the frame.</span>"
 					new /obj/item/stack/sheet/plasteel( loc, 4)
 					qdel(src)
 				return
-		if(1)
+		if(ANCHORED_CORE)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
 					anchored = 0
-					state = 0
+					state = UNANCHORED_CORE
 				return
-			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
+			if(istype(P, /obj/item/weapon/circuitboard/aicore))
 				if(!user.drop_item())
 					return
 				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				user << "<span class='notice'>You place the circuit board inside the frame.</span>"
 				icon_state = "1"
+				state = CIRCUIT_CORE
 				circuit = P
-				P.loc = src
+				P.forceMove(src)
 				return
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
+		if(CIRCUIT_CORE)
+			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You screw the circuit board into place.</span>"
-				state = 2
+				state = SCREWED_CORE
 				icon_state = "2"
 				return
-			if(istype(P, /obj/item/weapon/crowbar) && circuit)
+			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "<span class='notice'>You remove the circuit board.</span>"
-				state = 1
+				state = ANCHORED_CORE
 				icon_state = "0"
-				circuit.loc = loc
+				circuit.forceMove(loc)
 				circuit = null
 				return
-		if(2)
+		if(SCREWED_CORE)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You unfasten the circuit board.</span>"
-				state = 1
+				state = CIRCUIT_CORE
 				icon_state = "1"
 				return
 			if(istype(P, /obj/item/stack/cable_coil))
@@ -81,23 +91,22 @@
 				if(C.get_amount() >= 5)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to add cables to the frame...</span>"
-					if(do_after(user, 20, target = src))
-						if (C.get_amount() >= 5 && state == 2)
-							C.use(5)
-							user << "<span class='notice'>You add cables to the frame.</span>"
-							state = 3
-							icon_state = "3"
+					if(do_after(user, 20, target = src) && C.get_amount() >= 5 && state == SCREWED_CORE)
+						C.use(5)
+						user << "<span class='notice'>You add cables to the frame.</span>"
+						state = CABLED_CORE
+						icon_state = "3"
 				else
 					user << "<span class='warning'>You need five lengths of cable to wire the AI core!</span>"
 				return
-		if(3)
+		if(CABLED_CORE)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				if (brain)
 					user << "<span class='warning'>Get that brain out of there first!</span>"
 				else
 					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					user << "<span class='notice'>You remove the cables.</span>"
-					state = 2
+					state = SCREWED_CORE
 					icon_state = "2"
 					var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( loc )
 					A.amount = 5
@@ -108,12 +117,11 @@
 				if(G.get_amount() >= 2)
 					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					user << "<span class='notice'>You start to put in the glass panel...</span>"
-					if(do_after(user, 20, target = src))
-						if (G.get_amount() >= 2 && state == 3)
-							G.use(2)
-							user << "<span class='notice'>You put in the glass panel.</span>"
-							state = 4
-							icon_state = "4"
+					if(do_after(user, 20, target = src) && G.get_amount() >= 2 && state == CABLED_CORE)
+						G.use(2)
+						user << "<span class='notice'>You put in the glass panel.</span>"
+						state = GLASS_CORE
+						icon_state = "4"
 				else
 					user << "<span class='warning'>You need two sheets of reinforced glass to insert them into the AI core!</span>"
 				return
@@ -136,15 +144,7 @@
 					user << "<span class='warning'>Sticking an inactive brain into the frame would sort of defeat the purpose.</span>"
 					return
 
-				if((config) && (!config.allow_ai))
-					user << "<span class='warning'>This MMI does not seem to fit!</span>"
-					return
-
-				if(jobban_isbanned(M.brainmob, "AI"))
-					user << "<span class='warning'>This MMI does not seem to fit!</span>"
-					return
-
-				if(M.hacked || M.clockwork)
+				if((config) && (!config.allow_ai) || jobban_isbanned(M.brainmob, "AI") || M.hacked || M.clockwork)
 					user << "<span class='warning'>This MMI does not seem to fit!</span>"
 					return
 
@@ -171,12 +171,12 @@
 				icon_state = "3"
 				return
 
-		if(4)
+		if(GLASS_CORE)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "<span class='notice'>You remove the glass panel.</span>"
-				state = 3
-				if (brain)
+				state = CABLED_CORE
+				if(brain)
 					icon_state = "3b"
 				else
 					icon_state = "3"
@@ -197,7 +197,7 @@
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai-empty"
 	anchored = 1
-	state = 20//So it doesn't interact based on the above. Not really necessary.
+	state = GLASS_CORE
 
 /obj/structure/AIcore/deactivated/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/device/aicard))//Is it?
@@ -205,16 +205,10 @@
 	else if(istype(A, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
-					 "<span class='notice'>You start to [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor...</span>")
-		switch(anchored)
-			if(0)
-				if(do_after(user, 20, target = src))
-					user << "<span class='notice'>You fasten the core into place.</span>"
-					anchored = 1
-			if(1)
-				if(do_after(user, 20, target = src))
-					user << "<span class='notice'>You unfasten the core.</span>"
-					anchored = 0
+					 "<span class='notice'>You start to [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor...</span>")
+		if(do_after(user, 20, target = src))
+			user << "<span class='notice'>You [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor.</span>"
+			anchored = !anchored
 	else
 		return ..()
 
