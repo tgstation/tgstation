@@ -26,11 +26,11 @@ Bonus
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB * 20)) //100% for slow but consistent healing
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(4, 5)
-				Heal(M, A)
+	 //100% chance to activate for slow but consistent healing
+	var/mob/living/M = A.affected_mob
+	switch(A.stage)
+		if(4, 5)
+			Heal(M, A)
 	return
 
 /datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
@@ -117,10 +117,9 @@ Bonus
 
 Flesh Mending
 
-	Little bit hidden.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity temrendously.
+	No resistance change.
+	Decreases stage speed.
+	Decreases transmittablity.
 	Fatal Level.
 
 Bonus
@@ -201,12 +200,11 @@ Bonus
 /*
 //////////////////////////////////////
 
-Heat Resistance
+Heat Resistance //Needs a better name
 
-	Little bit hidden.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity temrendously.
+	No resistance change.
+	Decreases stage speed.
+	Decreases transmittablity.
 	Fatal Level.
 
 Bonus
@@ -230,10 +228,10 @@ Bonus
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
 	if(M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (2 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.bodytemperature = max(310, M.bodytemperature - (10 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#FF3300")
 	else if(M.bodytemperature < 311)
-		M.bodytemperature = min(310, M.bodytemperature + (2 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.bodytemperature = min(310, M.bodytemperature + (10 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#0000FF")
 
 	if(!parts.len)
@@ -273,9 +271,7 @@ Bonus
 	level = 5
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
-	var/stage_speed = max( 20 + A.totalStageSpeed(), 0)
-	var/stealth_amount = max( 16 + A.totalStealth(), 0)
-	var/amt_healed = (sqrt(stage_speed*(3+rand())))-(sqrt(stealth_amount*rand()))
+	var/amt_healed = 1
 	if(M.brainloss > 0)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#DDDDDD")
 	M.adjustBrainLoss(-amt_healed)
@@ -286,5 +282,5 @@ Bonus
 	M.dna.remove_mutation_group(unclean_mutations)
 	if(M.radiation > 0)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(M), "#88FFFF")
-	M.radiation = max(M.radiation - 8, 0)
+	M.radiation = max(M.radiation - (2 * amt_healed), 0)
 	return 1
