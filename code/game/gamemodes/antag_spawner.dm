@@ -228,10 +228,10 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-	var/list/demon_candidates = pollCandidates("Do you want to play as a [initial(demon_type.name)]?", null, null, ROLE_ALIEN, 50)
 	if(user.z != 1)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
+	var/list/demon_candidates = pollCandidates("Do you want to play as a [initial(demon_type.name)]?", null, null, ROLE_ALIEN, 50)
 	if(demon_candidates.len > 0)
 		if(used)
 			user << "<span class='notice'>You're already smashing the bottle, calm down.</span>"
