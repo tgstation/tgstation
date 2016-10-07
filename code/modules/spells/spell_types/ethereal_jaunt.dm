@@ -10,7 +10,6 @@
 	range = -1
 	cooldown_min = 100 //50 deciseconds reduction per rank
 	include_user = 1
-	centcom_cancast = 0 //Prevent people from getting to centcom
 	nonabstract_req = 1
 	var/jaunt_duration = 50 //in deciseconds
 	var/jaunt_in_time = 5
