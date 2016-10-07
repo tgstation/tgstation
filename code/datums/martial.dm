@@ -436,25 +436,22 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
-/obj/item/weapon/CQC_scroll
-	name = "frayed scroll"
-	desc = "An aged and frayed scrap of paper written in shifting runes. There are hand-drawn illustrations of pugilism."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state ="scroll2"
-	var/used = 0
+/obj/item/weapon/CQC_manual
+	name = "old manual"
+	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state ="cqcmanual"
 
-/obj/item/weapon/CQC_scroll/attack_self(mob/user)
-	if(!ishuman(user))
+/obj/item/weapon/CQC_manual/attack_self(mob/living/carbon/human/user)
+	if(!istype(user) || !user)
 		return
-	if(!used)
-		var/mob/living/carbon/human/H = user
-		var/datum/martial_art/CQC/F = new/datum/martial_art/CQC(null)
-		F.teach(H)
-		H << "<span class='boldannounce'>You have learned CQC.</span>"
-		used = 1
-		desc = "It's completely blank."
-		name = "empty scroll"
-		icon_state = "blankscroll"
+	user <<"<span class='boldannounce'>You have learned CQC.</span>"
+	var/datum/martial_art/CQC/D = new(null)
+	D.teach(user)
+	user.drop_item()
+	visible_message("<span class='warning'>[src] beeps ominously, and a moment later it bursts up in flames.</span>")
+	new /obj/effect/decal/cleanable/ash(get_turf(src))
+	qdel(src)
 
 /obj/item/weapon/sleeping_carp_scroll
 	name = "mysterious scroll"
