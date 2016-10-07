@@ -77,12 +77,14 @@
 	desc = "Yarr."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
 	desc = "Such a dapper eyepiece!"
 	icon_state = "monocle"
 	item_state = "headset" // lol
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/material
 	name = "Optical Material Scanner"
@@ -120,18 +122,21 @@
 	icon_state = "glasses"
 	item_state = "glasses"
 	vision_correction = 1 //corrects nearsightedness
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "Prescription Glasses"
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/gglasses
 	name = "Green Glasses"
 	desc = "Forest green glasses, like the kind you'd wear when hatching a nasty scheme."
 	icon_state = "gglasses"
 	item_state = "gglasses"
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/sunglasses
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
@@ -226,6 +231,7 @@
 //	vision_flags = BLIND
 	flash_protect = 2
 	tint = 3			// to make them blind
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
@@ -273,12 +279,14 @@
 	desc = "A pair of goggles meant for low temperatures."
 	icon_state = "cold"
 	item_state = "cold"
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/heat
 	name = "heat goggles"
 	desc = "A pair of goggles meant for high temperatures."
 	icon_state = "heat"
 	item_state = "heat"
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/orange
 	name = "orange glasses"
@@ -286,6 +294,7 @@
 	icon_state = "orangeglasses"
 	item_state = "orangeglasses"
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/red
 	name = "red glasses"
@@ -293,6 +302,7 @@
 	icon_state = "redglasses"
 	item_state = "redglasses"
 	glass_colour_type = /datum/client_colour/glass_colour/red
+	cosmetic = TRUE
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"

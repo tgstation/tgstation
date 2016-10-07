@@ -52,6 +52,13 @@
 		var/datum/tech/D = new path()
 		tech_list[D.id] = D
 
+	//Valid fashion items (just glasses right now)
+	for(var/obj/item/clothing/glasses/G in init_subtypes(/obj/item/clothing/glasses))
+		if(G.cosmetic)
+			glasses_list[G.name] = G.type
+			world.log << "Valido!"
+		world.log << "[G.name] [G.type]"
+
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 
 /* // Uncomment to debug chemical reaction list.

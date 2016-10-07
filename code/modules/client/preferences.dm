@@ -61,7 +61,7 @@ var/list/preferences_datums = list()
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
-
+	var/list/fashion = list("glasses" = null)
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
 	var/icon/preview_icon = null
@@ -119,7 +119,7 @@ var/list/preferences_datums = list()
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon()
+	update_preview_icon(fashion)
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<center>"
 
@@ -235,6 +235,14 @@ var/list/preferences_datums = list()
 				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
 				dat += "</td>"
+
+			dat += "<td valign='top' width='7%'>"
+
+			dat += "<h3>Glasses</h3>"
+
+			dat += "<a href='?_src_=prefs;preference=glasses;task=input'>[fashion["glasses"]]</a><BR>"
+
+			dat += "</td>"
 
 			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
 
@@ -467,7 +475,7 @@ var/list/preferences_datums = list()
 		HTML += "The job ticker is not yet finished creating jobs, please try again later"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
 
-	else 
+	else
 		HTML += "<b>Choose occupation chances</b><br>"
 		HTML += "<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br></div>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
@@ -922,6 +930,11 @@ var/list/preferences_datums = list()
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
+
+				if("glasses")
+					var/new_glasses = input(user, "Choose your character's glasses:", "Character Preference") as anything in glasses_list
+					if(new_glasses)
+						fashion["glasses"] = new_glasses
 
 				if("species")
 
