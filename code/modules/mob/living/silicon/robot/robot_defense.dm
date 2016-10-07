@@ -79,7 +79,7 @@
 
 
 /mob/living/silicon/robot/emag_act(mob/user)
-	if(user != src)//To prevent syndieborgs from emagging themselves
+	if(user == src)//To prevent syndieborgs from emagging themselves
 		return
 	if(!opened)//Cover is closed
 		if(locked)
