@@ -32,10 +32,10 @@
 	for(var/datum/disease/advance/P in viruses)
 		if(istype(D, /datum/disease/advance))
 			var/datum/disease/advance/DD = D
-			if (P.totalResistance() < DD.totalTransmittable()) //Overwrite virus if the attacker's Transmission
-				P.remove_virus()							   	//is lower than the defender's Resistance.
-																//This does not grant immunity to the lost virus.
-	if (!viruses.len)
+			if (P.totalResistance() < DD.totalTransmittable()) //Overwrite virus if the attacker's Transmission is lower than the defender's Resistance. This does not grant immunity to the lost virus.
+				P.remove_virus()
+
+	if (!viruses.len) //Only add the new virus if it defeated the existing one
 		var/datum/disease/DD = new D.type(1, D, 0)
 		viruses += DD
 		DD.affected_mob = src

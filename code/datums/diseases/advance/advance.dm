@@ -374,7 +374,7 @@ var/list/advance_cures = 	list(
 	if(!user)
 		return
 
-	var/i = 5
+	var/i = SYMPTOM_LIMIT
 
 	var/datum/disease/advance/D = new(0, null)
 	D.symptoms = list()
