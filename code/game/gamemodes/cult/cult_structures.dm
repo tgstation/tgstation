@@ -7,37 +7,24 @@
 	debris = list(/obj/item/stack/sheet/runed_metal = 1)
 
 /obj/structure/destructible/cult/examine(mob/user)
-	var/can_see_cult = iscultist(user) || isobserver(user)
 	..()
-	if(takes_damage)
-		var/t_It = they_pronoun(TRUE)
-		var/t_is = get_is()
-		var/cultist_message = "[t_It] [t_is] at <b>[health]/[max_health]</b> stability"
-		var/other_message = "[t_It] seems extremely stable"
-		var/heavily_damaged = FALSE
-		var/healthpercent = (health/max_health) * 100
-		if(healthpercent >= 100)
-			other_message = "[t_It] seems extremely stable"
-		else if(healthpercent >= 50)
-			other_message = "[t_It] looks slightly unstable"
-		else if(healthpercent >= 25)
-			other_message = "[t_It] appears very unstable"
-			heavily_damaged = TRUE
-		else if(healthpercent >= 0)
-			other_message = "[t_It] [t_is] glowing faintly and is extremely unstable"
-			heavily_damaged = TRUE
-		user << "<span class='cult'>[heavily_damaged ? "<b>":""][can_see_cult ? "[cultist_message]":"[other_message]"][heavily_damaged ? "!</b>":"."]</span>"
+	var/can_see_cult = iscultist(user) || isobserver(user)
+	var/t_It = they_pronoun(TRUE)
+	var/t_is = get_is()
+	if(!(resistance_flags & INDESTRUCTIBLE))
+		if(can_see_cult)
+			user << "<span class='cult'>[t_It] [t_is] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability</span>"
 	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if(can_see_cult && cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic in [src] is too weak, [they_pronoun()] will be ready to use again in [getETA()].</span>"
+		user << "<span class='cultitalic'>The magic in [src] is too weak, [t_It] will be ready to use again in [getETA()].</span>"
 
 /obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
-		if(health < max_health)
-			health = min(max_health, health + 5)
+		if(obj_integrity < max_integrity)
+			obj_integrity = min(max_integrity, obj_integrity + 5)
 			Beam(M, icon_state="sendbeam", time=4)
 			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
-				"<span class='cult'>You repair <b>[src]</b>, leaving [they_pronoun()] at <b>[health]/[max_health]</b> stability.</span>")
+				"<span class='cult'>You repair <b>[src]</b>, leaving [they_pronoun()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>")
 		else
 			M << "<span class='cult'>You cannot repair [src], as [they_pronoun()] [get_is()] undamaged!</span>"
 	else
