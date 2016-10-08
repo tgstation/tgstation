@@ -13,6 +13,8 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
+	obj_integrity = 200
+	max_integrity = 200
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -264,32 +266,11 @@
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSGRILLE)
 
-/obj/structure/girder/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		if(state != GIRDER_DISPLACED)
-			var/obj/structure/girder/displaced/D = new (loc)
-			transfer_fingerprints_to(D)
-		qdel(src)
-
-
-/obj/structure/girder/blob_act(obj/structure/blob/B)
-	if(prob(40))
-		qdel(src)
-
-/obj/structure/girder/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if (prob(70))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
-		if(3)
-			if (prob(40))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
+/obj/structure/girder/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+		new remains(loc)
+	qdel(src)
 
 /obj/structure/girder/narsie_act()
 	if(prob(25))
@@ -302,27 +283,17 @@
 	anchored = 0
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
+	obj_integrity = 120
+	max_integrity = 120
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
 	icon_state = "reinforced"
 	state = GIRDER_REINF
 	girderpasschance = 0
+	obj_integrity = 350
+	max_integrity = 350
 
-/obj/structure/girder/reinforced/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if (prob(50))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
-		if(3)
-			if (prob(20))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
 
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
@@ -396,15 +367,7 @@
 /obj/structure/girder/cult/narsie_act()
 	return
 
-/obj/structure/girder/cult/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(30))
-				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
-				qdel(src)
-		if(3)
-			if(prob(5))
-				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
-				qdel(src)
+/obj/structure/girder/cult/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
+	qdel(src)

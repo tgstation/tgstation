@@ -289,10 +289,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/TU = get_turf(holder.my_atom)
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "burn", 50, FALSE, holder)
+	addtimer(src, "slime_burn", 50, FALSE, holder)
 
 
-/datum/chemical_reaction/slimefire/proc/burn(datum/reagents/holder)
+/datum/chemical_reaction/slimefire/proc/slime_burn(datum/reagents/holder)
 	if(holder && holder.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))

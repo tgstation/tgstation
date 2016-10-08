@@ -1086,6 +1086,7 @@
 
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
+	H.damage_clothes(I.force, BRUTE, "melee", affecting.body_zone)
 
 	H.send_item_attack_message(I, user, hit_area)
 
@@ -1172,14 +1173,14 @@
 		if(BRUTE)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.take_damage(damage * hit_percent * brutemod, 0))
+				if(BP.receive_damage(damage * hit_percent * brutemod, 0))
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage * hit_percent * brutemod)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.take_damage(0, damage * hit_percent * burnmod))
+				if(BP.receive_damage(0, damage * hit_percent * burnmod))
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage * hit_percent* burnmod)

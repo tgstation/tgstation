@@ -57,7 +57,8 @@
 	name = "wabbajack altar"
 	desc = "Whether you're sleeping or waking, it's going to be \
 		quite chaotic."
-	health = 1000
+	obj_integrity = 1000
+	max_integrity = 1000
 	verb_say = "chants"
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
@@ -187,7 +188,8 @@
 /obj/structure/table/wood/bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags = NODECONSTRUCT
-	health = 1000
+	obj_integrity = 1000
+	max_integrity = 1000
 	var/boot_dir = 1
 
 /obj/structure/table/wood/bar/Crossed(atom/movable/AM)
