@@ -4,6 +4,8 @@
 	name = "\improper AI core"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
+	obj_integrity = 500
+	max_integrity = 500
 	var/state = 0
 	var/datum/ai_laws/laws = new()
 	var/obj/item/weapon/circuitboard/circuit = null
@@ -12,6 +14,15 @@
 /obj/structure/AIcore/New()
 	..()
 	laws.set_laws_config()
+
+/obj/structure/AIcore/Destroy()
+	if(circuit)
+		qdel(circuit)
+		circuit = null
+	if(brain)
+		brain.forceMove(loc)
+		brain = null
+	return ..()
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	switch(state)
@@ -99,8 +110,7 @@
 					user << "<span class='notice'>You remove the cables.</span>"
 					state = 2
 					icon_state = "2"
-					var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( loc )
-					A.amount = 5
+					new /obj/item/stack/cable_coil(loc, 5)
 				return
 
 			if(istype(P, /obj/item/stack/sheet/rglass))
@@ -166,7 +176,7 @@
 			if(istype(P, /obj/item/weapon/crowbar) && brain)
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				user << "<span class='notice'>You remove the brain.</span>"
-				brain.loc = loc
+				brain.forceMove(loc)
 				brain = null
 				icon_state = "3"
 				return
@@ -191,6 +201,18 @@
 				qdel(src)
 				return
 	return ..()
+
+
+/obj/structure/AIcore/deconstruct(disassembled = TRUE)
+	if(state == 4)
+		new /obj/item/stack/sheet/rglass(loc, 2)
+	if(state >= 3)
+		new /obj/item/stack/cable_coil(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	new /obj/item/stack/sheet/plasteel( loc, 4)
+	qdel(src)
 
 /obj/structure/AIcore/deactivated
 	name = "inactive AI"
