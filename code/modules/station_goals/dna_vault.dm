@@ -257,7 +257,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/li
 	switch(upgrade_type)
 		if(VAULT_TOXIN)
 			H << "<span class='notice'>You feel resistant to airborne toxins.</span>"
-			if(/obj/item/organ/lungs in H.internal_organs)
+			if(locate(/obj/item/organ/lungs) in H.internal_organs)
 				var/obj/item/organ/lungs/L = H.internal_organs_slot["lungs"]
 				L.tox_breath_dam_min = 0
 				L.tox_breath_dam_max = 0
