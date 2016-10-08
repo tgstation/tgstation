@@ -297,11 +297,9 @@
 			flash_color(M, flash_color="#966400", flash_time=1)
 			shake_camera(M, 4, 3)
 		var/ratvar_chance = min(ticker.mode.servants_of_ratvar.len, 50)
-		var/narsie_chance = ticker.mode.cult.len
-		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
-			narsie_chance++
+		var/narsie_chance = min(ticker.mode.cult.len, 50)
 		ratvar_chance = rand(base_victory_chance, ratvar_chance)
-		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
+		narsie_chance = rand(base_victory_chance, narsie_chance)
 		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break

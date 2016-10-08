@@ -1,22 +1,23 @@
-
-/datum/action/innate/cultcomm
-	name = "Communion"
-	button_icon_state = "cult_comms"
+/datum/action/innate/cult
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 
-/datum/action/innate/cultcomm/IsAvailable()
+/datum/action/innate/cult/comm
+	name = "Communion"
+	button_icon_state = "cult_comms"
+
+/datum/action/innate/cult/IsAvailable()
 	if(!iscultist(owner))
 		return 0
 	return ..()
 
-/datum/action/innate/cultcomm/Activate()
-	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
+/datum/action/innate/cult/comm/Activate()
+	var/input = stripped_input(owner, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input || !IsAvailable())
 		return
 
-	cultist_commune(usr, input)
+	cultist_commune(owner, input)
 	return
 
 /proc/cultist_commune(mob/living/user, message)

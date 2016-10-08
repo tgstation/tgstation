@@ -37,6 +37,10 @@
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
 
+/mob/living/simple_animal/hostile/construct/Login()
+	..()
+	src << playstyle_string
+
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = they_pronoun(TRUE)
 	var/plurality = (gender == PLURAL)
@@ -257,7 +261,24 @@
 							/obj/effect/proc_holder/spell/targeted/smoke/disable)
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
+	var/obj/item/weapon/tome/internal_tome
 
 /mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+/mob/living/simple_animal/hostile/construct/harvester/New()
+	..()
+	internal_tome = new(src)
+	var/datum/action/innate/cult/tome/T = new()
+	T.Grant(src)
+
+/datum/action/innate/cult/tome
+	name = "Scribe Rune"
+	button_icon_state = "cult_tome"
+
+/datum/action/innate/cult/tome/Activate()
+	if(istype(owner, /mob/living/simple_animal/hostile/construct/harvester))
+		var/mob/living/simple_animal/hostile/construct/harvester/H = owner
+		if(H.internal_tome)
+			H.internal_tome.scribe_rune(H)

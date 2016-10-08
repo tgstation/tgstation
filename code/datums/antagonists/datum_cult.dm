@@ -1,7 +1,7 @@
 /datum/antagonist/cultist
 	prevented_antag_datum_type = /datum/antagonist/cultist
 	some_flufftext = null
-	var/datum/action/innate/cultcomm/communion = new()
+	var/datum/action/innate/cult/comm/communion = new()
 
 /datum/antagonist/cultist/Destroy()
 	qdel(communion)
