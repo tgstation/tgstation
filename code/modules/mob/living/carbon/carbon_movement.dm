@@ -2,14 +2,23 @@
 	. = ..()
 	. += grab_state * 3 //can't go fast while grabbing something.
 
-	if(!get_leg_ignore()) //ignore the fact we lack legs
-		var/leg_amount = get_num_legs()
-		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
-		if(!leg_amount)
-			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
-
-	if(legcuffed)
-		. += legcuffed.slowdown
+	if(ishuman(src))
+		if(!(dna && dna.species && (FLYING in dna.species.specflags)))		//If someone can get me a better way to do this I'l learn gladly.
+			if(!get_leg_ignore()) //ignore the fact we lack legs
+				var/leg_amount = get_num_legs()
+				. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
+				if(!leg_amount)
+					. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
+			if(legcuffed)
+				. += legcuffed.slowdown
+	else
+		if(!get_leg_ignore()) //ignore the fact we lack legs
+			var/leg_amount = get_num_legs()
+			. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
+			if(!leg_amount)
+				. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
+		if(legcuffed)
+			. += legcuffed.slowdown
 
 
 var/const/NO_SLIP_WHEN_WALKING = 1
@@ -24,6 +33,10 @@ var/const/SLIDE_ICE = 8
 
 
 /mob/living/carbon/Process_Spacemove(movement_dir = 0)
+	var/obj/item/device/flightpack/F = get_flightpack()
+	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
+		return 1
+
 	if(..())
 		return 1
 	if(!isturf(loc))
@@ -37,6 +50,7 @@ var/const/SLIDE_ICE = 8
 	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
 	if(istype(J) && (movement_dir || J.stabilizers) && J.allow_thrust(0.01, src))
 		return 1
+
 
 
 

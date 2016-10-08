@@ -3,8 +3,9 @@
 	. += ..()
 	. += config.human_delay
 
-
 /mob/living/carbon/human/slip(s_amount, w_amount, obj/O, lube)
+	if(FLYING in dna.species.specflags)
+		return 0
 	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	return ..()

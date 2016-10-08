@@ -881,15 +881,13 @@
 	. = 0
 
 	if(H.status_flags & GOTTAGOFAST)
-		. -= 1
+		if(!(FLYING in specflags))
+			. -= 1
 	if(H.status_flags & GOTTAGOREALLYFAST)
-		. -= 2
-
+		if(!(FLYING in specflags))
+			. -= 2
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!H.has_gravity())
-			if(FLYING in specflags)
-				. += speedmod
-				return
 			// If there's no gravity we have the sanic speed of jetpack.
 			var/obj/item/weapon/tank/jetpack/J = H.back
 			var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
@@ -903,30 +901,39 @@
 				if(istype(T) && T.allow_thrust(0.01, H))
 					. -= 2
 
+				var/obj/item/device/flightpack/F = H.back
+				if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
+					. -= 1
 		else
+			var/flight = 0
+			if(FLYING in specflags)
+				flight = 1
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
-				. += (health_deficiency / 25)
+				if(flight)							//You only need to keep your hands on the controls/flap your wings, not vigorously run.
+					. += (health_deficiency / 75)
+				else
+					. += (health_deficiency / 25)
 
 			var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
-			if(hungry >= 70)
+			if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 				. += hungry / 50
 
-			if(H.wear_suit)
+			if(H.wear_suit)		//Unfortunately if you lug heavy shit around you'll probably be slowed while flying :^)
 				. += H.wear_suit.slowdown
 			if(H.shoes)
 				. += H.shoes.slowdown
 			if(H.back)
 				. += H.back.slowdown
-			for(var/obj/item/I in H.held_items)
+			for(var/obj/item/I in H.held_items)		//Same for hands.
 				if(I.flags & HANDSLOW)
 					. += I.slowdown
-			if((H.disabilities & FAT))
-				. += 1.5
-			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			if((H.disabilities & FAT))			//... Uh, fine, if you're fat your method of flying will have a hard time lifting you?
+				. += (1.5 - flight)
+			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)		//Just to be fair to goof freon griefgas and space, I guess this could ice over your wings/engines.
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-			. += speedmod
+ 			. += speedmod
 
 //////////////////
 // ATTACK PROCS //

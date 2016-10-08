@@ -270,6 +270,11 @@
 	if (AM)
 		thing_to_check = list(AM)
 	for(var/thing in thing_to_check)
+		if(ismob(thing))
+			if(ishuman(thing))
+				var/mob/living/carbon/human/T = thing
+				if(FLYING in T.dna.species.specflags)
+					continue	//YOU'RE FLYING OVER IT
 		if(isobj(thing))
 			var/obj/O = thing
 			if(O.resistance_flags & LAVA_PROOF || O.throwing)
