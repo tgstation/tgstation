@@ -256,15 +256,8 @@
 	slot = "lungs"
 	gender = PLURAL
 	w_class = 3
-	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	var/safe_oxygen_max = 0
-	var/safe_co2_min = 0
-	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_toxins_min = 0
-	var/safe_toxins_max = 0.05
-	var/SA_para_min = 1 //Sleeping agent
-	var/SA_sleep_min = 5 //Sleeping agent
-	var/BZ_trip_balls_min = 1 //BZ gas.
+	var/list/breathlevels = list("safe_oxygen_min" = 16,"safe_oxygen_max" = 0,"safe_co2_min" = 0,"safe_co2_max" = 10,
+	"safe_toxins_min" = 0,"safe_toxins_max" = 0.05,"SA_para_min" = 1,"SA_sleep_min" = 5,"BZ_trip_balls_min" = 1)
 
 	//Breath damage
 	var/oxy_breath_dam_min = 1
@@ -273,18 +266,12 @@
 	var/co2_breath_dam_max = 10
 	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
 	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
-	var/list/breathlevels = null
 
-/obj/item/organ/lungs/New()
-	breathlevels = list("safe_oxygen_min" = safe_oxygen_min,"safe_oxygen_max" = safe_oxygen_max,"safe_co2_min" = safe_co2_min,"safe_co2_max" = safe_co2_max,
-	"safe_toxins_min" = safe_toxins_min,"safe_toxins_max" = safe_toxins_max,"SA_para_min" = SA_para_min,"SA_sleep_min" = SA_sleep_min,"BZ_trip_balls_min" = BZ_trip_balls_min)
-	..()
+
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
 		return
-
-	//if( H.getorganslot("lungs")
 
 	var/specflags = list()
 	if(H && H.dna && H.dna.species && H.dna.species.specflags)
@@ -325,7 +312,7 @@
 	if(breathlevels["safe_oxygen_max"])
 		if(O2_pp > breathlevels["safe_oxygen_max"] && !(NOBREATH in specflags))
 			var/ratio = (breath_gases["o2"][MOLES]/breathlevels["safe_oxygen_max"]) * 10
-			H.adjustOxyLoss(Clamp(ratio,breathlevels["oxy_breath_dam_min"],breathlevels["oxy_breath_dam_max"]))
+			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
 		else
 			H.clear_alert("too_much_oxy")
@@ -370,7 +357,7 @@
 
 	//Too little CO2!
 	if(breathlevels["safe_co2_min"])
-		if(CO2_pp < safe_co2_min)
+		if(CO2_pp < breathlevels["safe_co2_min"])
 			gas_breathed = handle_too_little_breath(H,CO2_pp, breathlevels["safe_co2_min"],breath_gases["co2"][MOLES])
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
@@ -388,7 +375,7 @@
 	//-- TOX --//
 
 	//Too much toxins!
-	if(safe_toxins_max)
+	if(breathlevels["safe_toxins_max"])
 		if(Toxins_pp > breathlevels["safe_toxins_max"] && !(NOBREATH in specflags))
 			var/ratio = (breath_gases["plasma"][MOLES]/breathlevels["safe_toxins_max"]) * 10
 			if(H.reagents)
