@@ -407,6 +407,7 @@
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
+	held_index = 1
 	px_x = -6
 	px_y = 0
 
@@ -440,6 +441,7 @@
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
+	held_index = 2
 	px_x = 6
 	px_y = 0
 

@@ -31,7 +31,7 @@
 		return
 	if(!cargo_holder)
 		return
-	if(istype(target,/obj))
+	if(isobj(target))
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
@@ -78,9 +78,11 @@
 	energy_drain = 0
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/action(atom/target)
-	if(!action_checks(target)) return
-	if(!cargo_holder) return
-	if(istype(target,/obj))
+	if(!action_checks(target))
+		return
+	if(!cargo_holder)
+		return
+	if(isobj(target))
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)

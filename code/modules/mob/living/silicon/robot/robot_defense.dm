@@ -46,7 +46,7 @@
 
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
+	if(opened && !wiresexposed && !issilicon(user))
 		if(cell)
 			cell.updateicon()
 			cell.add_fingerprint(user)
