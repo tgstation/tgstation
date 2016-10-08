@@ -14,8 +14,8 @@
 	var/opening = 0
 	density = 1
 	opacity = 1
-	health = 100
-	maxhealth = 100
+	obj_integrity = 100
+	max_integrity = 100
 
 	canSmoothWith = list(
 	/turf/closed/wall,
@@ -215,8 +215,8 @@
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	walltype = /turf/closed/wall/mineral/diamond
 	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/closed/wall/mineral/diamond)
-	health = 800
-	maxhealth = 800
+	obj_integrity = 800
+	max_integrity = 800
 
 /obj/structure/falsewall/plasma
 	name = "plasma wall"

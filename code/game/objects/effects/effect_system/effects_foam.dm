@@ -181,8 +181,8 @@
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
-	health = 20
-	maxhealth = 20
+	obj_integrity = 20
+	max_integrity = 20
 
 /obj/structure/foamedmetal/New()
 	..()
@@ -218,6 +218,6 @@
 /obj/structure/foamedmetal/CanAtmosPass()
 	return !density
 /obj/structure/foamedmetal/iron
-	health = 50
-	maxhealth = 50
+	obj_integrity = 50
+	max_integrity = 50
 	icon_state = "ironfoam"

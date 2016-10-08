@@ -7,7 +7,8 @@
 	anchored = 1
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
-	health = 100
+	obj_integrity = 200
+	max_integrity = 200
 
 
 /obj/machinery/pdapainter/update_icon()
@@ -74,7 +75,7 @@
 					user << "<span class='notice'>You repair [src].</span>"
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					stat &= ~BROKEN
-					health = maxhealth
+					obj_integrity = max_integrity
 					update_icon()
 		else
 			user << "<span class='notice'>[src] does not need repairs.</span>"

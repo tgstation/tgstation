@@ -48,9 +48,9 @@
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
-	health = 200
-	maxhealth = 200
-	broken_health = 50
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
 	armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	var/area/area
 	var/areastring = null

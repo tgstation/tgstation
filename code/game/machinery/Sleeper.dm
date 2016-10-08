@@ -78,12 +78,6 @@
 		if(occupant && occupant.stat != DEAD)
 			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
-/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M) //phil235
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-		qdel(src)
-
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)
 		open_machine()

@@ -53,16 +53,9 @@
 	open_machine()
 
 /obj/machinery/recharge_station/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
-	if(occupant)
-		occupant.emp_act(severity)
-	open_machine()
-	..(severity)
-
-/obj/machinery/recharge_station/ex_act(severity, target)
-	if(occupant)
+	if(!(stat & (BROKEN|NOPOWER)))
+		if(occupant)
+			occupant.emp_act(severity)
 		open_machine()
 	..()
 

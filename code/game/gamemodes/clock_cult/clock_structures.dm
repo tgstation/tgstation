@@ -41,25 +41,16 @@
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
-	if(!(resistance_flags & INDESTRUCTIBLE)) //phil235
+	if(!(resistance_flags & INDESTRUCTIBLE))
 		var/t_It = they_pronoun(TRUE)
 		var/t_is = get_is()
-		var/servant_message = "[t_It] [t_is] at <b>[health]/[maxhealth]</b> integrity"
-		var/other_message = "[t_It] seems pristine and undamaged"
+		var/servant_message = "[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity"
 		var/heavily_damaged = FALSE
-		var/healthpercent = (health/maxhealth) * 100
-		switch(healthpercent)
-			if(100 to INFINITY)
-				other_message = "[t_It] seems pristine and undamaged"
-			if(50 to 100)
-				other_message = "[t_It] looks slightly dented"
-			if(25 to 50)
-				other_message = "[t_It] appears heavily damaged"
-				heavily_damaged = TRUE
-			if(0 to 25)
-				other_message = "[t_It] [t_is] falling apart"
-				heavily_damaged = TRUE
-		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
+		var/healthpercent = (obj_integrity/max_integrity) * 100
+		if(healthpercent < 50)
+			heavily_damaged = TRUE
+		if(can_see_clockwork)
+			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/destructible/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
@@ -69,8 +60,8 @@
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
-	maxhealth = 80
-	health = 80
+	max_integrity = 80
+	obj_integrity = 80
 	var/wall_generation_cooldown
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
 
@@ -179,8 +170,8 @@
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
 	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
-	health = 25
-	maxhealth = 25
+	obj_integrity = 25
+	max_integrity = 25
 	construction_value = 15
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
@@ -269,8 +260,7 @@
 	construction_value = 0
 	anchored = 0
 	density = 0
-//phil235	takes_damage = FALSE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/mobtype = /mob/living/simple_animal/hostile/clockwork
 	var/spawn_message = " is an error and you should yell at whoever spawned this shell."
 
@@ -318,8 +308,8 @@
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
-	maxhealth = 50
-	health = 50
+	max_integrity = 50
+	obj_integrity = 50
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
@@ -691,9 +681,6 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
-	resistance_flags = FIRE_PROOF //an effect with health, phil235, fuck this, change it.
-	health = 10 //phil235 that obj had a burntime despite being an effect???
-	maxhealth = 10
 	var/affects_servants = FALSE
 	var/stat_affected = CONSCIOUS
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"

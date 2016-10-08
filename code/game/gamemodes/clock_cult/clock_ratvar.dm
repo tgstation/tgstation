@@ -19,8 +19,8 @@
 	name = "Gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
-	health = 500
-	maxhealth = 500
+	obj_integrity = 500
+	max_integrity = 500
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
@@ -77,12 +77,12 @@
 		glow.linked = src
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/ex_act(severity)
-	var/damage = max((health * 0.70) / severity, 100) //requires multiple bombs to take down
+	var/damage = max((obj_integrity * 0.70) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE, "bomb", 0)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	. = "IMMINENT"
-	if(!health)
+	if(!obj_integrity)
 		. = "DETONATING"
 	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
 		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)][s_on_time ? "S":""]"
@@ -91,7 +91,7 @@
 	if(!progress_in_seconds || prob(7))
 		for(var/M in mob_list)
 			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
-	if(!health)
+	if(!obj_integrity)
 		return 0
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
@@ -116,7 +116,7 @@
 		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
 			if(!purpose_fulfilled)
 				countdown.stop()
-//phil235				takes_damage = FALSE
+				resistance_flags |= INDESTRUCTIBLE
 				purpose_fulfilled = TRUE
 				make_glow()
 				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
@@ -191,7 +191,7 @@
 	icon_state = "ratvar"
 	pixel_x = -235
 	pixel_y = -248
-//phil235	takes_damage = FALSE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	appearance_flags = 0
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE

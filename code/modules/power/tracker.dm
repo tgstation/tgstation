@@ -11,9 +11,9 @@
 	anchored = 1
 	density = 1
 	use_power = 0
-	health = 250
-	maxhealth = 250
-	broken_health = 50
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 50
 
 	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum

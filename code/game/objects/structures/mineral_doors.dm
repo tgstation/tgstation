@@ -14,8 +14,8 @@
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
 	var/close_delay = -1 //-1 if does not auto close.
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 50, acid = 50)
 	var/sheetType = /obj/item/stack/sheet/metal
 	var/sheetAmount = 7
@@ -128,7 +128,7 @@
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
 		user << "<span class='notice'>You start digging the [name]...</span>"
-		if(do_after(user,digTool.digspeed*(1+round(maxhealth*0.01)), target = src) && src)
+		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)
 			user << "<span class='notice'>You finish digging.</span>"
 			deconstruct(TRUE)
 	else if(user.a_intent != "harm")
@@ -146,15 +146,15 @@
 
 /obj/structure/mineral_door/iron
 	name = "iron door"
-	health = 300
-	maxhealth = 300
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/structure/mineral_door/silver
 	name = "silver door"
 	icon_state = "silver"
 	sheetType = /obj/item/stack/sheet/mineral/silver
-	health = 300
-	maxhealth = 300
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/structure/mineral_door/gold
 	name = "gold door"
@@ -165,16 +165,16 @@
 	name = "uranium door"
 	icon_state = "uranium"
 	sheetType = /obj/item/stack/sheet/mineral/uranium
-	health = 300
-	maxhealth = 300
+	obj_integrity = 300
+	max_integrity = 300
 	luminosity = 2
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"
 	icon_state = "sandstone"
 	sheetType = /obj/item/stack/sheet/mineral/sandstone
-	health = 100
-	maxhealth = 100
+	obj_integrity = 100
+	max_integrity = 100
 
 /obj/structure/mineral_door/transparent
 	opacity = 0
@@ -208,8 +208,8 @@
 	name = "diamond door"
 	icon_state = "diamond"
 	sheetType = /obj/item/stack/sheet/mineral/diamond
-	health = 1000
-	maxhealth = 1000
+	obj_integrity = 1000
+	max_integrity = 1000
 
 /obj/structure/mineral_door/wood
 	name = "wood door"
@@ -218,5 +218,5 @@
 	closeSound = 'sound/effects/doorcreaky.ogg'
 	sheetType = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200

@@ -6,10 +6,10 @@
 	density = 1
 	anchored = 1
 	layer = HIGH_OBJ_LAYER
-	maxhealth = 300
-	health = 300
-	broken_health = 100
-	armor = list(melee = 20, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 70)
+	max_integrity = 300
+	obj_integrity = 300
+	integrity_failure = 100
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 70)
 	var/datum/gang/gang
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
@@ -41,7 +41,7 @@
 			user << "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>"
 	else
 		user << "<span class='notice'>System on standby.</span>"
-	user << "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>"
+	user << "<span class='danger'>System Integrity: [round((obj_integrity/max_integrity)*100,1)]%</span>"
 
 /obj/machinery/dominator/process()
 	..()
@@ -74,7 +74,7 @@
 /obj/machinery/dominator/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
 	if(.)
-		if(health/maxhealth > 0.66)
+		if(obj_integrity/max_integrity > 0.66)
 			if(prob(damage_amount*2))
 				spark_system.start()
 		else if(!(stat & BROKEN))

@@ -13,9 +13,9 @@
 	anchored = 1
 	density = 1
 
-	health = 250
-	maxhealth = 250
-	broken_health = 80
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 80
 
 	// These allow for different icons when creating custom dispensers
 	var/icon_off = "off"
@@ -55,7 +55,7 @@
 
 /obj/machinery/droneDispenser/New()
 	..()
-	health = maxhealth
+	obj_integrity = max_integrity
 	materials = new(src, list(MAT_METAL, MAT_GLASS),
 		MINERAL_MATERIAL_AMOUNT*MAX_STACK_SIZE*2)
 
@@ -298,7 +298,7 @@
 			"<span class='notice'>You restore [src] to operation.</span>")
 
 		stat &= ~BROKEN
-		health = maxhealth
+		obj_integrity = max_integrity
 		update_icon()
 	else
 		return ..()

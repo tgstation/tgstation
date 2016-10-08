@@ -374,7 +374,6 @@
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal (loc, 3)
-	//phil235 spill water, and same for sink
 	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)

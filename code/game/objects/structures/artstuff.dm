@@ -10,8 +10,8 @@
 	icon_state = "easel"
 	density = 1
 	resistance_flags = FLAMMABLE
-	health = 60
-	maxhealth = 60
+	obj_integrity = 60
+	max_integrity = 60
 	var/obj/item/weapon/canvas/painting = null
 
 

@@ -18,9 +18,9 @@
 	var/release_pressure = ONE_ATMOSPHERE
 
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
-	health = 250
-	maxhealth = 250
-	broken_health = 100
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
@@ -184,7 +184,7 @@
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
-		take_damage(5, BURN, "fire", 1)
+		take_damage(5, BURN, 0)
 
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
@@ -200,9 +200,9 @@
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
 	if(user.a_intent != "harm" && istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(!WT.remove_fuel(0, user))
-			return
 		if(stat & BROKEN)
+			if(!WT.remove_fuel(0, user))
+				return
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			user << "<span class='notice'>You begin cutting [src] apart...</span>"
 			if(do_after(user, 30, target = src))

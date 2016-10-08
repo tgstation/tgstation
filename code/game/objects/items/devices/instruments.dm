@@ -2,8 +2,8 @@
 /obj/item/device/instrument
 	name = "generic instrument"
 	resistance_flags = FLAMMABLE
-	health = 100
-	maxhealth = 100
+	obj_integrity = 100
+	max_integrity = 100
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "ogg"

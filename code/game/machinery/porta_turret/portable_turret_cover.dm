@@ -10,8 +10,8 @@
 	anchored = 1
 	layer = HIGH_OBJ_LAYER
 	density = 0
-	health = 80
-	maxhealth = 80
+	obj_integrity = 80
+	max_integrity = 80
 	var/obj/machinery/porta_turret/parent_turret = null
 
 

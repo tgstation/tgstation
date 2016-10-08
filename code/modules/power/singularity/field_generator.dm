@@ -30,8 +30,8 @@ field_generator power level display
 	anchored = 0
 	density = 1
 	use_power = 0
-	health = 500
-	maxhealth = 500
+	obj_integrity = 500
+	max_integrity = 500
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE

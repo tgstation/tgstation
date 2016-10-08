@@ -127,7 +127,7 @@
 			chest_clothes = wear_suit
 		else
 			if(wear_id)
-				burning_items += wear_id //phil235!!!
+				burning_items += wear_id
 			if(r_store)
 				burning_items += r_store
 			if(l_store)

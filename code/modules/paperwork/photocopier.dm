@@ -18,9 +18,9 @@
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-	health = 300
-	maxhealth = 300
-	broken_health = 100
+	obj_integrity = 300
+	max_integrity = 300
+	integrity_failure = 100
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
@@ -253,8 +253,10 @@
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
 			if(istype(O,/obj/item/weapon/paper/contract/infernal))
-				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
-				resistance_flags |= ON_FIRE //phil235 ????			else
+				user << "<span class='warning'>[src] smokes, smelling of brimstone!</span>"
+				resistance_flags |= FLAMMABLE
+				fire_act()
+			else
 				if(!user.drop_item())
 					return
 				copy = O

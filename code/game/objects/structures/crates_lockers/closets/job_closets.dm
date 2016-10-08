@@ -122,8 +122,8 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
-	health = 70
-	maxhealth = 70
+	obj_integrity = 70
+	max_integrity = 70
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"

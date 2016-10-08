@@ -42,12 +42,12 @@
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/S = I
-		if(health == maxhealth)
+		if(obj_integrity == max_integrity)
 			user << "<span class='warning'>\The [src] doesn't seem to require repairs.</span>"
 			return 1
 		if(S.use(1))
 			user << "<span class='notice'>You patch up \the [src] with a bit of \the [I].</span>"
-			health = min(health + 10, maxhealth)
+			obj_integrity = min(obj_integrity + 10, max_integrity)
 		return 1
 
 	if(try_insert(I, user))

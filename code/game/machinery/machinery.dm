@@ -99,8 +99,8 @@ Class Procs:
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 
 	var/stat = 0
@@ -310,7 +310,7 @@ Class Procs:
 			var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
 			M.anchored = anchored
 			if(!disassembled)
-				M.health = M.maxhealth * 0.5 //the frame is already half broken
+				M.obj_integrity = M.max_integrity * 0.5 //the frame is already half broken
 			transfer_fingerprints_to(M)
 			M.state = 2
 			M.icon_state = "box_1"
@@ -403,7 +403,7 @@ Class Procs:
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
 			user << "<span class='warning'>It's on fire!</span>"
-		var/healthpercent = (health/maxhealth) * 100
+		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(100 to INFINITY)
 				user <<  "It seems pristine and undamaged."

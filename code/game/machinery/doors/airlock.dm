@@ -29,9 +29,9 @@ var/list/airlock_overlays = list()
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
-	health = 300
-	maxhealth = 300
-	broken_health = 70
+	obj_integrity = 300
+	max_integrity = 300
+	integrity_failure = 70
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
@@ -1217,7 +1217,7 @@ var/list/airlock_overlays = list()
 
 		if(!disassembled)
 			if(A)
-				A.health = A.maxhealth * 0.5
+				A.obj_integrity = A.max_integrity * 0.5
 		else if(emagged)
 			if(user)
 				user << "<span class='warning'>You discard the damaged electronics.</span>"

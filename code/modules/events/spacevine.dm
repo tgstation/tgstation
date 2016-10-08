@@ -328,8 +328,8 @@
 /datum/spacevine_mutation/woodening/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
 		holder.density = 1
-	holder.maxhealth = 100
-	holder.health = holder.maxhealth
+	holder.max_integrity = 100
+	holder.obj_integrity = holder.max_integrity
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
 	if(I.is_sharp())
@@ -362,8 +362,8 @@
 	layer = SPACEVINE_LAYER
 	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
-	health = 50
-	maxhealth = 50
+	obj_integrity = 50
+	max_integrity = 50
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
 	var/list/mutations = list()

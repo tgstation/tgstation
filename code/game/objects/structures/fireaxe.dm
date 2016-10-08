@@ -9,9 +9,9 @@
 	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 50)
 	var/locked = 1
 	var/open = 0
-	health = 150
-	maxhealth = 150
-	broken_health = 50
+	obj_integrity = 150
+	max_integrity = 150
+	integrity_failure = 50
 
 /obj/structure/fireaxecabinet/New()
 	..()
@@ -35,7 +35,7 @@
 		if(do_after(user, 20, target = src))
 			G.use(2)
 			broken = 0
-			health = maxhealth
+			obj_integrity = max_integrity
 			update_icon()
 	else if(open || broken)
 		if(istype(I, /obj/item/weapon/twohanded/fireaxe) && !fireaxe)
@@ -123,7 +123,7 @@
 	if(fireaxe)
 		add_overlay("axe")
 	if(!open)
-		var/hp_percent = health/maxhealth * 100
+		var/hp_percent = obj_integrity/max_integrity * 100
 		if(broken)
 			add_overlay("glass4")
 		else

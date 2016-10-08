@@ -9,9 +9,9 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = BELOW_OBJ_LAYER
 	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
-	health = 50
-	maxhealth = 50
-	broken_health = 20
+	obj_integrity = 50
+	max_integrity = 50
+	integrity_failure = 20
 	var/obj/item/stack/rods/stored
 
 /obj/structure/grille/New()
@@ -94,7 +94,7 @@
 		if(!shock(user, 90))
 			user.visible_message("<span class='notice'>[user] rebuilds the broken grille.</span>", \
 								 "<span class='notice'>You rebuild the broken grille.</span>")
-			health = maxhealth
+			obj_integrity = max_integrity
 			density = 1
 			broken = 0
 			icon_state = initial(icon_state)
@@ -193,7 +193,7 @@
 /obj/structure/grille/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!broken)
 		if(exposed_temperature > T0C + 1500)
-			take_damage(1, BURN, "fire")
+			take_damage(1, BURN, 0, 0)
 	..()
 
 /obj/structure/grille/hitby(AM as mob|obj)
@@ -212,7 +212,7 @@
 /obj/structure/grille/broken // Pre-broken grilles for map placement
 	icon_state = "brokengrille"
 	density = 0
-	health = 2
+	obj_integrity = 20
 	broken = 1
 
 /obj/structure/grille/broken/New()
@@ -249,7 +249,7 @@
 
 /obj/structure/grille/ratvar/broken
 	density = 0
-	health = 0
+	obj_integrity = 20
 	broken = 1
 
 /obj/structure/grille/ratvar/broken/New()

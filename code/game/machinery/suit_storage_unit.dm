@@ -6,8 +6,8 @@
 	icon_state = "close"
 	anchored = 1
 	density = 1
-	health = 250
-	maxhealth = 250
+	obj_integrity = 250
+	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null

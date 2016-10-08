@@ -5,8 +5,8 @@
 	icon_state = "nboard00"
 	density = 0
 	anchored = 1
-	health = 150
-	maxhealth = 150
+	obj_integrity = 150
+	max_integrity = 150
 	var/notices = 0
 
 /obj/structure/noticeboard/initialize()
@@ -83,4 +83,3 @@
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal (loc, 1)
 	qdel(src)
-//phil235 wallframe for noticeboard?

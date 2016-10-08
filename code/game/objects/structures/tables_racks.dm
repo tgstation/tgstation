@@ -29,9 +29,9 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
-	health = 100
-	maxhealth = 100
-	broken_health = 30
+	obj_integrity = 100
+	max_integrity = 100
+	integrity_failure = 30
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
@@ -166,10 +166,10 @@
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
 	canSmoothWith = null
-	health = 70
-	maxhealth = 70
+	obj_integrity = 70
+	max_integrity = 70
 	resistance_flags = ACID_PROOF
-	//phil235 fire armor here
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 	var/list/debris = list()
 
 /obj/structure/table/glass/New()
@@ -248,8 +248,8 @@
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
-	health = 70
-	maxhealth = 70
+	obj_integrity = 70
+	max_integrity = 70
 	canSmoothWith = list(/obj/structure/table/wood,
 		/obj/structure/table/wood/poker,
 		/obj/structure/table/wood/bar)
@@ -292,9 +292,9 @@
 	deconstruction_ready = 0
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
-	health = 200
-	maxhealth = 200
-	broken_health = 50
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
 	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
@@ -337,7 +337,7 @@
 		animate(src, color = previouscolor, time = 8)
 
 /obj/structure/table/reinforced/brass/ratvar_act()
-	health = maxhealth
+	obj_integrity = max_integrity
 
 /*
  * Surgery Tables
@@ -394,8 +394,8 @@
 	density = 1
 	anchored = 1
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
-	health = 20
-	maxhealth = 20
+	obj_integrity = 20
+	max_integrity = 20
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1

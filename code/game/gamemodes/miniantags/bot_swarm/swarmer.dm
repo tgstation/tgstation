@@ -422,8 +422,8 @@
 	layer = MOB_LAYER
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	luminosity = 1
-	health = 30
-	maxhealth = 30
+	obj_integrity = 30
+	max_integrity = 30
 	anchored = 1
 
 /obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -440,8 +440,8 @@
 	name = "swarmer trap"
 	desc = "A quickly assembled trap that electrifies living beings and overwhelms machine sensors. Will not retain its form if damaged enough."
 	icon_state = "trap"
-	health = 10
-	maxhealth = 10
+	obj_integrity = 10
+	max_integrity = 10
 	density = 0
 
 /obj/structure/swarmer/trap/Crossed(var/atom/movable/AM)
@@ -484,8 +484,8 @@
 	desc = "A quickly assembled energy blockade. Will not retain its form if damaged enough, but disabler beams and swarmers pass right through."
 	icon_state = "barricade"
 	luminosity = 1
-	health = 50
-	maxhealth = 50
+	obj_integrity = 50
+	max_integrity = 50
 
 /obj/structure/swarmer/blockade/CanPass(atom/movable/O)
 	if(isswarmer(O))

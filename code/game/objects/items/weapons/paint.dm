@@ -11,8 +11,8 @@
 	item_state = "paintcan"
 	w_class = 3
 	resistance_flags = FLAMMABLE
-	health = 40
-	maxhealth = 40
+	obj_integrity = 100
+	max_integrity = 100
 	var/paintleft = 10
 
 /obj/item/weapon/paint/red

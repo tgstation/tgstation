@@ -11,9 +11,9 @@
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 5 //How weakened targets are when flashed.
 	var/base_state = "mflash"
-	health = 250
-	maxhealth = 250
-	broken_health = 100
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 100
 	anchored = 1
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
@@ -133,14 +133,12 @@
 
 
 /obj/machinery/flasher/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
-	if(bulb && prob(75/severity))
-		flash()
-		bulb.burn_out()
-		power_change()
-	..(severity)
+	if(!(stat & (BROKEN|NOPOWER)))
+		if(bulb && prob(75/severity))
+			flash()
+			bulb.burn_out()
+			power_change()
+	..()
 
 /obj/machinery/flasher/obj_break(damage_flag)
 	if(!(flags & NODECONSTRUCT))

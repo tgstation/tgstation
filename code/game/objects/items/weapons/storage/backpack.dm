@@ -20,8 +20,8 @@
 	max_combined_w_class = 21
 	storage_slots = 21
 	resistance_flags = FLAMMABLE
-	health = 100
-	maxhealth = 100
+	obj_integrity = 100
+	max_integrity = 100
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
@@ -41,7 +41,8 @@
 	resistance_flags = 0
 	var/pshoom = 'sound/items/PSHOOM.ogg'
 	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
-	//phil235 fire armor here
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
+
 
 /obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like \he's trying to commit suicide.</span>")

@@ -158,8 +158,8 @@
 	req_access = list(access_forensics_lockers)
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
-	health = 70
-	maxhealth = 70
+	obj_integrity = 70
+	max_integrity = 70
 
 /obj/structure/closet/secure_closet/detective/New()
 	..()

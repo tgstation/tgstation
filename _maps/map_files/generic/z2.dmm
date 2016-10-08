@@ -3961,7 +3961,7 @@
 "ms" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/rack{
-	health = 9999
+	obj_integrity = 9999
 	},
 /obj/item/clothing/suit/space/hardsuit/wizard,
 /turf/open/floor/engine/cult,
@@ -5105,8 +5105,8 @@
 /area/ctf)
 "qd" = (
 /obj/structure/window/reinforced/fulltile{
-	health = 1e+007;
-	maxhealth = 1e+007;
+	obj_integrity = 5000;
+	max_integrity = 5000;
 	name = "hardened window"
 	},
 /turf/open/floor/plating,

@@ -16,8 +16,7 @@
 	var/toxic = 0			//Toxicity in the tray?
 	var/age = 0				//Current age
 	var/dead = 0			//Is it dead?
-	health = 500			//Its health.
-	var/plant_health
+	var/plant_health		//Its health
 	var/lastproduce = 0		//Last time it was harvested
 	var/lastcycle = 0		//Used for timing of cycles.
 	var/cycledelay = 200	//About 10 seconds / cycle

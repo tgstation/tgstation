@@ -14,8 +14,8 @@
 	icon_state = "door_open"
 	opacity = 0
 	density = 0
-	health = 300
-	maxhealth = 300
+	obj_integrity = 300
+	max_integrity = 300
 	heat_proof = 1
 	glass = 1
 	var/nextstate = null
@@ -131,7 +131,7 @@
 			F.constructionStep = CONSTRUCTION_PANEL_OPEN
 		else
 			F.constructionStep = CONSTRUCTION_WIRES_EXPOSED
-			F.health = F.maxhealth * 0.5
+			F.obj_integrity = F.max_integrity * 0.5
 		F.update_icon()
 	qdel(src)
 
@@ -178,8 +178,8 @@
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	glass = 0
 	assemblytype = /obj/structure/firelock_frame/heavy
-	health = 550
-	maxhealth = 550
+	obj_integrity = 550
+	max_integrity = 550
 
 
 /obj/item/weapon/electronics/firelock

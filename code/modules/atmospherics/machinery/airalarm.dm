@@ -55,9 +55,9 @@
 	active_power_usage = 8
 	power_channel = ENVIRON
 	req_access = list(access_atmospherics)
-	health = 250
-	maxhealth = 250
-	broken_health = 80
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 80
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	resistance_flags = 0
 
@@ -728,6 +728,6 @@
 		new /obj/item/stack/sheet/metal(loc, 2)
 		var/obj/item/I = new /obj/item/weapon/electronics/airalarm(loc)
 		if(!disassembled)
-			I.health = I.maxhealth * 0.5
+			I.obj_integrity = I.max_integrity * 0.5
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)

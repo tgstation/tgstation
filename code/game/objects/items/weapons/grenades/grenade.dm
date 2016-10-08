@@ -10,14 +10,14 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
-	health = 40
-	maxhealth = 40
+	obj_integrity = 40
+	max_integrity = 40
 	var/active = 0
 	var/det_time = 50
 	var/display_timer = 1
 
 /obj/item/weapon/grenade/deconstruct(disassembled = TRUE)
-	if(!disassembled) //phil235 test
+	if(!disassembled)
 		prime()
 	if(!qdeleted(src))
 		qdel(src)

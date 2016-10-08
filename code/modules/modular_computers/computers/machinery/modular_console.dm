@@ -16,9 +16,9 @@
 	max_hardware_size = 4
 	steel_sheet_cost = 10
 	light_strength = 2
-	health = 300
-	maxhealth = 300
-	broken_health = 150
+	obj_integrity = 300
+	max_integrity = 300
+	integrity_failure = 150
 
 /obj/machinery/modular_computer/console/buildable/New()
 	..()

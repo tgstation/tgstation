@@ -33,8 +33,8 @@
 	icon_state = "tube-construct-stage1"
 	anchored = 1
 	layer = WALL_OBJ_LAYER
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
 
 	var/stage = 1
@@ -147,8 +147,8 @@
 	desc = "A lighting fixture."
 	anchored = 1
 	layer = WALL_OBJ_LAYER
-	health = 100
-	maxhealth = 100
+	obj_integrity = 100
+	max_integrity = 100
 	use_power = 2
 	idle_power_usage = 2
 	active_power_usage = 20
@@ -360,7 +360,7 @@
 		newlight.setDir(src.dir)
 		newlight.stage = cur_stage
 		if(!disassembled)
-			newlight.health = newlight.maxhealth * 0.5
+			newlight.obj_integrity = newlight.max_integrity * 0.5
 			if(status != LIGHT_BROKEN)
 				break_light_tube()
 			if(status != LIGHT_EMPTY)

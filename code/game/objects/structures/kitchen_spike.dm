@@ -7,8 +7,8 @@
 	desc = "The frame of a meat spike."
 	density = 1
 	anchored = 0
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -50,8 +50,8 @@
 	anchored = 1
 	buckle_lying = 0
 	can_buckle = 1
-	health = 250
-	maxhealth = 250
+	obj_integrity = 250
+	max_integrity = 250
 
 
 /obj/structure/kitchenspike/attack_paw(mob/user)

@@ -6,9 +6,9 @@
 	icon_state = "mirror"
 	density = 0
 	anchored = 1
-	health = 200
-	maxhealth = 200
-	broken_health = 100
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 100
 
 
 /obj/structure/mirror/attack_hand(mob/user)

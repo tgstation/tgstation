@@ -8,7 +8,7 @@
 	icon_state = ""
 	density = 1
 	anchored = 0
-	health = 100
+	obj_integrity = 100
 	var/oreAmount = 7
 	var/mineralType = "metal"
 
@@ -113,7 +113,7 @@
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
-	health = 300
+	obj_integrity = 300
 	luminosity = 2
 	mineralType = "uranium"
 	var/last_event = 0
@@ -158,7 +158,7 @@
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
 
 /obj/structure/statue/plasma
-	health = 200
+	obj_integrity = 200
 	mineralType = "plasma"
 	desc = "This statue is suitably made from plasma."
 
@@ -207,7 +207,7 @@
 //////////////////////gold///////////////////////////////////////
 
 /obj/structure/statue/gold
-	health = 300
+	obj_integrity = 300
 	mineralType = "gold"
 	desc = "This is a highly valuable statue made from gold."
 
@@ -234,7 +234,7 @@
 //////////////////////////silver///////////////////////////////////////
 
 /obj/structure/statue/silver
-	health = 300
+	obj_integrity = 300
 	mineralType = "silver"
 	desc = "This is a valuable statue made from silver."
 
@@ -261,7 +261,7 @@
 /////////////////////////diamond/////////////////////////////////////////
 
 /obj/structure/statue/diamond
-	health = 1000
+	obj_integrity = 1000
 	mineralType = "diamond"
 	desc = "This is a very expensive diamond statue"
 
@@ -280,7 +280,7 @@
 ////////////////////////bananium///////////////////////////////////////
 
 /obj/structure/statue/bananium
-	health = 300
+	obj_integrity = 300
 	mineralType = "bananium"
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
@@ -315,7 +315,7 @@
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone
-	health = 50
+	obj_integrity = 50
 	mineralType = "sandstone"
 
 /obj/structure/statue/sandstone/assistant
@@ -333,7 +333,7 @@
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
-	health = 50
+	obj_integrity = 50
 	mineralType = "snow"
 
 /obj/structure/statue/snow/snowman

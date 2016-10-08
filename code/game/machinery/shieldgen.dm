@@ -7,8 +7,8 @@
 	opacity = 0
 	anchored = 1
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	maxhealth = 200
-	health = 200 //The shield can only take so much beating (prevents perma-prisons)
+	max_integrity = 200
+	obj_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
 
 /obj/structure/emergency_shield/New()
 	src.setDir(pick(1,2,3,4))
@@ -58,33 +58,33 @@
 	name = "sanguine barrier"
 	desc = "A potent shield summoned by cultists to defend their rites."
 	icon_state = "shield-red"
-	health = 60
-	maxhealth = 60
+	obj_integrity = 60
+	max_integrity = 60
 
 /obj/structure/emergency_shield/invoker
 	name = "Invoker's Shield"
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
 	color = "red"
-	health = 20
-	maxhealth = 20
+	obj_integrity = 20
+	max_integrity = 20
 	mouse_opacity = 0
 
 /obj/machinery/shieldgen
-		name = "anti-breach shielding projector"
-		desc = "Used to seal minor hull breaches."
-		icon = 'icons/obj/objects.dmi'
-		icon_state = "shieldoff"
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
-		req_access = list(access_engine)
-		maxhealth = 100
-		health = 100
-		var/active = 0
-		var/list/deployed_shields = list()
-		var/locked = 0
-		var/shield_range = 4
+	name = "anti-breach shielding projector"
+	desc = "Used to seal minor hull breaches."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
+	density = 1
+	opacity = 0
+	anchored = 0
+	pressure_resistance = 2*ONE_ATMOSPHERE
+	req_access = list(access_engine)
+	max_integrity = 100
+	obj_integrity = 100
+	var/active = 0
+	var/list/deployed_shields = list()
+	var/locked = 0
+	var/shield_range = 4
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/structure/emergency_shield/ES in deployed_shields)
@@ -170,7 +170,7 @@
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
-			health = maxhealth
+			obj_integrity = max_integrity
 			stat &= ~BROKEN
 			user << "<span class='notice'>You repair \the [src].</span>"
 			update_icon()
@@ -204,7 +204,7 @@
 /obj/machinery/shieldgen/emag_act()
 	if(!(stat & BROKEN))
 		stat |= BROKEN
-		health = 0
+		obj_integrity = 0
 		update_icon()
 
 /obj/machinery/shieldgen/update_icon()
@@ -232,8 +232,8 @@
 	req_access = list(access_teleporter)
 	flags = CONDUCT
 	use_power = 0
-	health = 300
-	maxhealth = 300
+	obj_integrity = 300
+	max_integrity = 300
 	var/active = 0
 	var/power = 0
 	var/steps = 0

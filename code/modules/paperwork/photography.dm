@@ -29,8 +29,8 @@
 	item_state = "paper"
 	w_class = 1
 	resistance_flags = FLAMMABLE
-	health = 10
-	maxhealth = 10
+	obj_integrity = 50
+	max_integrity = 50
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?

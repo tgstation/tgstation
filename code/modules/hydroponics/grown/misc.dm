@@ -115,8 +115,8 @@
 	seed = /obj/item/seeds/cherry/bomb
 	bitesize_mod = 2
 	volume = 125 //Gives enough room for the black powder at max potency
-	health = 40
-	maxhealth = 40
+	obj_integrity = 40
+	max_integrity = 40
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
 	var/area/A = get_area(user)

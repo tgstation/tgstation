@@ -488,8 +488,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	persistence_replacement = /obj/item/weapon/disk/fakenucleardisk
-	health = 250
-	maxhealth = 250
+	obj_integrity = 250
+	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 90, acid = 70)
 
 /obj/item/weapon/disk/nuclear/New()

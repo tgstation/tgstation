@@ -17,6 +17,9 @@
 /obj/effect/acid_act()
 	return
 
+/obj/effect/mech_melee_attack(obj/mecha/M)
+	return 0
+
 /obj/effect/blob_act()
 	return
 

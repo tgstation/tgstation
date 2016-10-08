@@ -63,10 +63,10 @@
 	var/effectivedamage = damage
 	if(damage_type == BRUTE)
 		effectivedamage = damage * 2
-	if(damage_type == BURN && effectivedamage > 0 && B.health - effectivedamage > 0 && prob(60))
+	if(damage_type == BURN && effectivedamage > 0 && B.obj_integrity - effectivedamage > 0 && prob(60))
 		var/obj/structure/blob/newB = B.expand(null, null, 0)
 		if(newB)
-			newB.health = B.health - effectivedamage
+			newB.obj_integrity = B.obj_integrity - effectivedamage
 			newB.update_icon()
 	return effectivedamage
 
@@ -95,7 +95,7 @@
 		B.forceMove(T)
 
 /datum/reagent/blob/shifting_fragments/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage > 0 && B.health - damage > 0 && prob(60-damage))
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage > 0 && B.obj_integrity - damage > 0 && prob(60-damage))
 		var/list/blobstopick = list()
 		for(var/obj/structure/blob/OB in orange(1, B))
 			if((istype(OB, /obj/structure/blob/normal) || (istype(OB, /obj/structure/blob/shield) && prob(25))) && OB.overmind && OB.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id)
@@ -200,7 +200,7 @@
 		O << "<span class='notice'>Gained [points] resources from the zombification of [M].</span>"
 
 /datum/reagent/blob/zombifying_pods/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage <= 20 && B.health - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && damage <= 20 && B.obj_integrity - damage <= 0 && prob(30)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 20% chance of a shitty spore.
 		B.visible_message("<span class='warning'><b>A spore floats free of the blob!</b></span>")
 		var/mob/living/simple_animal/hostile/blob/blobspore/weak/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(B.loc)
 		BS.overmind = B.overmind
@@ -236,7 +236,7 @@
 		M.apply_damage(0.6*reac_volume, OXY)
 
 /datum/reagent/blob/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.health - damage <= 0 && prob(10))
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.obj_integrity - damage <= 0 && prob(10))
 		spark_system.set_up(rand(2, 4), 0, B)
 		spark_system.start()
 	return ..()
@@ -402,7 +402,7 @@
 	M.adjustBruteLoss(0.8*reac_volume)
 
 /datum/reagent/blob/reactive_spines/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if(damage && damage_type == BRUTE && B.health - damage > 0) //is there any damage, is it brute, and will we be alive
+	if(damage && damage_type == BRUTE && B.obj_integrity - damage > 0) //is there any damage, is it brute, and will we be alive
 		if(damage_flag == "melee")
 			B.visible_message("<span class='boldwarning'>The blob retaliates, lashing out!</span>")
 		for(var/atom/A in range(1, B))

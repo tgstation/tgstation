@@ -6,8 +6,8 @@
 	force = 10
 	throwforce = 0
 	resistance_flags = FLAMMABLE
-	health = 100
-	maxhealth = 100
+	obj_integrity = 100
+	max_integrity = 100
 	w_class = 4
 	max_w_class = 3
 	storage_slots = 80

@@ -8,8 +8,8 @@
 	density = 1
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
-	health = 350
-	maxhealth = 350
+	obj_integrity = 350
+	max_integrity = 350
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
 
 	var/secondsElectrified = 0
@@ -166,7 +166,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && health > 0)
+	if(. && obj_integrity > 0)
 		if(damage_amount >= 10 && prob(30))
 			spark_system.start()
 

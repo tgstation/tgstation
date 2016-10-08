@@ -2,13 +2,13 @@
 	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
-	health = 300
-	maxhealth = 300
+	obj_integrity = 300
+	max_integrity = 300
 	var/climb_time = 20
 	var/climb_stun = 2
 	var/climbable = FALSE
 	var/mob/structureclimber
-	var/broken = 0 //phil235 to replace maybe vars in the children. similar to machinery's stat BROKEN
+	var/broken = 0 //similar to machinery's stat BROKEN
 
 /obj/structure/New()
 	..()
@@ -92,7 +92,7 @@
 	if(!(resistance_flags & INDESTRUCTIBLE)) //phil35 maybe make this a proc so it doesn't show for effect?
 		if(resistance_flags & ON_FIRE)
 			user << "<span class='warning'>It's on fire!</span>"
-		var/healthpercent = (health/maxhealth) * 100
+		var/healthpercent = (obj_integrity/max_integrity) * 100
 		if(broken)
 			user << "<span class='notice'>It looks broken.</span>"
 		switch(healthpercent)

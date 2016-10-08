@@ -13,8 +13,8 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
-	health = 30
-	maxhealth = 30
+	obj_integrity = 30
+	max_integrity = 30
 	var/potency = 30
 	var/delay = 1200
 	var/floor = 0
@@ -90,9 +90,9 @@ obj/structure/glowshroom/glowcap
 			child.potency = max(potency + rand(-3,6), 0)
 			child.yield = max(yield + rand(-1,2), 0)
 			child.delay = max(delay + rand(-30,60), 0)
-			var/newhealth = max(health + rand(-3,6), 1)
-			child.health = newhealth
-			child.maxhealth = newhealth
+			var/newhealth = max(obj_integrity + rand(-3,6), 1)
+			child.obj_integrity = newhealth
+			child.max_integrity = newhealth
 			child.generation = generation + 1
 
 			CHECK_TICK
@@ -130,11 +130,12 @@ obj/structure/glowshroom/glowcap
 	return 1
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	return
+	if(damage_type == BURN && damage_amount)
+		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		take_damage(5, BURN)
+		take_damage(5, BURN, 0, 0)
 
 /obj/structure/glowshroom/acid_act(acidpwr, acid_volume)
 	. = 1

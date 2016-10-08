@@ -239,7 +239,7 @@
 			damagesources++
 		if(damagesources)
 			for(var/i in 1 to damagesources)
-				adjustHealth(maxHealth*0.025) //take 2.5% maxhealth as damage when not near the blob or if the naut has no factory, 5% if both
+				adjustHealth(maxHealth*0.025) //take 2.5% max_integrity as damage when not near the blob or if the naut has no factory, 5% if both
 			var/list/viewing = list()
 			for(var/mob/M in viewers(src))
 				if(M.client)
@@ -282,7 +282,7 @@
 	..(gibbed)
 	if(factory)
 		factory.naut = null //remove this naut from its factory
-		factory.maxhealth = initial(factory.maxhealth)
+		factory.max_integrity = initial(factory.max_integrity)
 	flick("blobbernaut_death", src)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent

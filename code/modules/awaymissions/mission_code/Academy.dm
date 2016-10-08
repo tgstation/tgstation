@@ -57,8 +57,8 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
 	anchored = 1
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	var/mob/living/current_wizard = null
 	var/next_check = 0
 	var/cooldown = 600

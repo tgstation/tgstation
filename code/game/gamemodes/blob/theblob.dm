@@ -9,8 +9,8 @@
 	anchored = 1
 	layer = BELOW_MOB_LAYER
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
-	health = 30
-	maxhealth = 30
+	obj_integrity = 30
+	max_integrity = 30
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed when?
@@ -128,7 +128,7 @@
 	if(pulse_timestamp <= world.time)
 		ConsumeTile()
 		if(heal_timestamp <= world.time)
-			health = min(maxhealth, health+health_regen)
+			obj_integrity = min(max_integrity, obj_integrity+health_regen)
 			heal_timestamp = world.time + 20
 		update_icon()
 		pulse_timestamp = world.time + 10
@@ -245,7 +245,7 @@
 
 /obj/structure/blob/proc/typereport(mob/user)
 	user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
-	user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
+	user << "<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>"
 	user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
@@ -253,7 +253,6 @@
 		return
 	..()
 
-//phil235
 /obj/structure/blob/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -278,12 +277,12 @@
 		armor_protection = armor[damage_flag]
 	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 	if(overmind && damage_flag)
-		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, damage_amount, damage_type, damage_flag) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
+		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, damage_amount, damage_type, damage_flag)
 	return damage_amount
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && health > 0)
+	if(. && obj_integrity > 0)
 		update_icon()
 
 /obj/structure/blob/obj_destruction(damage_flag)
@@ -326,19 +325,19 @@
 	name = "normal blob"
 	icon_state = "blob"
 	luminosity = 0
-	health = 21
-	maxhealth = 25
+	obj_integrity = 21
+	max_integrity = 25
 	health_regen = 1
 	brute_resist = 0.25
 
 /obj/structure/blob/normal/scannerreport()
-	if(health <= 15)
+	if(obj_integrity <= 15)
 		return "Currently weak to brute damage."
 	return "N/A"
 
 /obj/structure/blob/normal/update_icon()
 	..()
-	if(health <= 15)
+	if(obj_integrity <= 15)
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."

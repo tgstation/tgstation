@@ -7,9 +7,9 @@
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
-	health = 200
-	maxhealth = 200
-	broken_health = 100
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 100
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 20)
 	var/obj/item/weapon/circuitboard/computer/circuit = null // if circuit==null, computer can't disassembly
 	var/processing = 0
@@ -99,12 +99,22 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/machinery/computer/obj_break()
+/obj/machinery/computer/obj_break(damage_flag)
 	if(circuit && !(flags & NODECONSTRUCT)) //no circuit, no breaking
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 			stat |= BROKEN
 			update_icon()
+
+/obj/machinery/computer/emp_act(severity)
+	switch(severity)
+		if(1)
+			if(prob(50))
+				obj_break("energy")
+		if(2)
+			if(prob(10))
+				obj_break("energy")
+	..()
 
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)

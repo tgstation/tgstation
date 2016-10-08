@@ -9,8 +9,8 @@
 	density = 1
 	on_blueprints = TRUE
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// mode -1=screws removed 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled

@@ -17,8 +17,8 @@
 	icon_state = "morgue1"
 	density = 1
 	anchored = 1
-	health = 400
-	maxhealth = 400
+	obj_integrity = 400
+	max_integrity = 400
 
 	var/obj/structure/tray/connected = null
 	var/locked = 0
@@ -226,8 +226,8 @@ var/global/list/crematoriums = new/list()
 	var/obj/structure/bodycontainer/connected = null
 	anchored = 1
 	pass_flags = LETPASSTHROW
-	health = 350
-	maxhealth = 350
+	obj_integrity = 350
+	max_integrity = 350
 
 /obj/structure/tray/Destroy()
 	if(connected)

@@ -5,7 +5,8 @@
 	name = "holo sign"
 	icon = 'icons/effects/effects.dmi'
 	anchored = 1
-	health = 1
+	obj_integrity = 1
+	max_integrity = 1
 	armor = list(melee = 0, bullet = 50, laser = 50, energy = 50, bomb = 0, bio = 0, rad = 0, fire = 20, acid = 20)
 	var/obj/item/weapon/holosign_creator/projector
 
@@ -26,7 +27,6 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	take_damage(5 , BRUTE, "melee", 1)
 
-//phil235
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -47,7 +47,8 @@
 	icon_state = "holosign_sec"
 	pass_flags = LETPASSTHROW
 	density = 1
-	health = 20
+	obj_integrity = 20
+	max_integrity = 20
 	var/allow_walk = 1 //can we pass through it on walk intent
 
 /obj/structure/holosign/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -69,13 +70,15 @@
 	name = "Energy Field"
 	desc = "A fragile energy field that blocks movement"
 	density = 1
-	health = 1
+	obj_integrity = 1
+	max_integrity = 1
 	allow_walk = 0
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
 	desc = "A powerful energy field that blocks movement. Energy arcs off it"
-	health = 10
+	obj_integrity = 10
+	max_integrity = 10
 	var/shockcd = 0
 
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()

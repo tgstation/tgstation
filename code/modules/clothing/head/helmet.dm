@@ -20,9 +20,6 @@
 /obj/item/clothing/head/helmet/New()
 	..()
 
-/obj/item/clothing/head/helmet/emp_act(severity)
-	..()
-
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1
 

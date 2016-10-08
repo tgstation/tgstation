@@ -34,8 +34,8 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("banned")
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 
@@ -78,8 +78,8 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 
@@ -253,8 +253,8 @@ var/highlander_claymores = 0
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 

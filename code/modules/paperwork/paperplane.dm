@@ -8,8 +8,8 @@
 	throwforce = 0
 	w_class = 1
 	resistance_flags = FLAMMABLE
-	health = 10
-	maxhealth = 10
+	obj_integrity = 50
+	max_integrity = 50
 
 	var/obj/item/weapon/paper/internalPaper
 	var/list/stamped = list()

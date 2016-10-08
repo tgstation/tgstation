@@ -3,8 +3,8 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_shield"
 	desc = "A solid wall of slightly twitching tendrils."
-	health = 150
-	maxhealth = 150
+	obj_integrity = 150
+	max_integrity = 150
 	brute_resist = 0.25
 	explosion_block = 3
 	point_return = 4
@@ -23,7 +23,7 @@
 
 /obj/structure/blob/shield/update_icon()
 	..()
-	if(health <= 75)
+	if(obj_integrity <= 75)
 		icon_state = "blob_shield_damaged"
 		name = "weakened strong blob"
 		desc = "A wall of twitching tendrils."

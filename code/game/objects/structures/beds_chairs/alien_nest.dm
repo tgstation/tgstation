@@ -5,8 +5,8 @@
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest"
-	health = 120
-	maxhealth = 120
+	obj_integrity = 120
+	max_integrity = 120
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
 	canSmoothWith = null

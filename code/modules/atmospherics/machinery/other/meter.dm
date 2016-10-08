@@ -11,8 +11,8 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-	health = 150
-	maxhealth = 150
+	obj_integrity = 150
+	max_integrity = 150
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 40, acid = 0)
 
 

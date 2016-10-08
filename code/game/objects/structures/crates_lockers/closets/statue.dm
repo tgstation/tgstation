@@ -5,8 +5,8 @@
 	icon_state = "human_male"
 	density = 1
 	anchored = 1
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	var/intialTox = 0 	//these are here to keep the mob from taking damage from things that logically wouldn't affect a rock
 	var/intialFire = 0	//it's a little sloppy I know but it was this or the GODMODE flag. Lesser of two evils.
 	var/intialBrute = 0
@@ -24,8 +24,8 @@
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
 		L.visible_message("<span class='warning'>[L]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't...  think...</span>")
 
-		health = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
-		maxhealth = health
+		obj_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
+		max_integrity = obj_integrity
 		intialTox = L.getToxLoss()
 		intialFire = L.getFireLoss()
 		intialBrute = L.getBruteLoss()
@@ -44,7 +44,7 @@
 			icon_state = "corgi"
 			desc = "If it takes forever, I will wait for you..."
 
-	if(health == 0) //meaning if the statue didn't find a valid target
+	if(obj_integrity == 0) //meaning if the statue didn't find a valid target
 		qdel(src)
 		return
 
@@ -88,7 +88,7 @@
 	for(var/mob/living/M in src)
 		M.forceMove(loc)
 		M.disabilities -= MUTE
-		M.take_overall_damage((M.health - health + 100)) //any new damage the statue incurred is transfered to the mob
+		M.take_overall_damage((M.health - obj_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		M.faction -= "mimic"
 		M.reset_perspective(null)
 

@@ -18,8 +18,8 @@ Pipelines + Other Objects -> Pipe network
 	layer = GAS_PIPE_LAYER //under wires
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0
@@ -188,7 +188,7 @@ Pipelines + Other Objects -> Pipe network
 			if(stored)
 				stored.forceMove(loc)
 				if(!disassembled)
-					stored.health = stored.maxhealth * 0.5
+					stored.obj_integrity = stored.max_integrity * 0.5
 				transfer_fingerprints_to(stored)
 				stored = null
 	..()

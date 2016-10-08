@@ -8,22 +8,20 @@
 			return facing_modifiers[FRONT_ARMOUR]
 	return 1 //always return non-0
 
-//phil235
 /obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(.)
-		if(health > 0)
-			spark_system.start() //phil235
-			switch(damage_flag)
-				if("fire")
-					check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL))
-				if("melee")
-					check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-				else
-					check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT))
-			if(. >= 5 || prob(33))
-				occupant_message("<span class='userdanger'>Taking damage!</span>")
-			log_append_to_last("Took [damage_amount] points of damage. Damage type: \"[damage_type]\".",1)
+	if(. && obj_integrity > 0)
+		spark_system.start()
+		switch(damage_flag)
+			if("fire")
+				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL))
+			if("melee")
+				check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+			else
+				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT))
+		if(. >= 5 || prob(33))
+			occupant_message("<span class='userdanger'>Taking damage!</span>")
+		log_append_to_last("Took [damage_amount] points of damage. Damage type: \"[damage_type]\".",1)
 
 /obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	. = ..()
@@ -114,7 +112,6 @@
 	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
 	. = ..()
 
-//phil235
 /obj/mecha/ex_act(severity, target)
 	log_message("Affected by explosion of severity: [severity].",1)
 	if(prob(deflect_chance))
@@ -228,14 +225,14 @@
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
-		if(health<maxhealth)
+		if(obj_integrity<max_integrity)
 			if (WT.remove_fuel(0,user))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
 					clearInternalDamage(MECHA_INT_TANK_BREACH)
 					user << "<span class='notice'>You repair the damaged gas tank.</span>"
 				else
 					user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>")
-					health += min(10, maxhealth-health)
+					obj_integrity += min(10, max_integrity-obj_integrity)
 			else
 				user << "<span class='warning'>The welder must be on for this task!</span>"
 				return 1

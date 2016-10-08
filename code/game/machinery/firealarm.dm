@@ -15,9 +15,9 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	anchored = 1
-	health = 250
-	maxhealth = 250
-	broken_health = 100
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 100
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	use_power = 1
 	idle_power_usage = 2
@@ -208,7 +208,7 @@
 /obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage received
-		if(health > 0 && !(stat & BROKEN) && buildstage != 0)
+		if(obj_integrity > 0 && !(stat & BROKEN) && buildstage != 0)
 			if(prob(33))
 				alarm()
 
@@ -222,7 +222,7 @@
 		new /obj/item/stack/sheet/metal(loc, 1)
 		var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
 		if(!disassembled)
-			I.health = I.maxhealth * 0.5
+			I.obj_integrity = I.max_integrity * 0.5
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 

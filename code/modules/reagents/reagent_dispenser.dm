@@ -6,14 +6,14 @@
 	density = 1
 	anchored = 0
 	pressure_resistance = 2*ONE_ATMOSPHERE
-	health = 300
-	maxhealth = 300
+	obj_integrity = 300
+	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
 	var/reagent_id = "water" //The ID of the reagent that the dispenser uses
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && health > 0)
+	if(. && obj_integrity > 0)
 		if(tank_volume && (damage_flag == "bullet" || damage_flag == "laser"))
 			boom()
 
@@ -162,6 +162,8 @@
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
 	explosion(src.loc,0,3,5,7,10)
+	if(!qdeleted(src))
+		qdel(src)
 
 
 /obj/structure/reagent_dispensers/virusfood

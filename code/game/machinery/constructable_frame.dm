@@ -4,8 +4,8 @@
 	icon_state = "box_0"
 	density = 1
 	anchored = 1
-	health = 250
-	maxhealth = 250
+	obj_integrity = 250
+	max_integrity = 250
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/state = 1
 

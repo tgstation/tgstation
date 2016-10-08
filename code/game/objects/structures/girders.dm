@@ -13,8 +13,8 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -283,16 +283,16 @@
 	anchored = 0
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
-	health = 120
-	maxhealth = 120
+	obj_integrity = 120
+	max_integrity = 120
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
 	icon_state = "reinforced"
 	state = GIRDER_REINF
 	girderpasschance = 0
-	health = 350
-	maxhealth = 350
+	obj_integrity = 350
+	max_integrity = 350
 
 
 

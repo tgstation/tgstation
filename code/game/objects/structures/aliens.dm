@@ -9,8 +9,8 @@
 
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
-	health = 100
-	maxhealth = 100
+	obj_integrity = 100
+	max_integrity = 100
 
 /obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee")
@@ -59,8 +59,8 @@
 	opacity = 1
 	anchored = 1
 	canSmoothWith = list(/obj/structure/alien/resin)
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	smooth = SMOOTH_TRUE
 	var/resintype = null
 
@@ -96,8 +96,8 @@
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "membrane0"
 	opacity = 0
-	health = 160
-	maxhealth = 160
+	obj_integrity = 160
+	max_integrity = 160
 	resintype = "membrane"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
@@ -129,8 +129,8 @@
 	density = 0
 	layer = TURF_LAYER
 	icon_state = "weeds"
-	health = 15
-	maxhealth = 15
+	obj_integrity = 15
+	max_integrity = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
@@ -183,7 +183,7 @@
 
 /obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		take_damage(5, BURN, "fire", 0)
+		take_damage(5, BURN, 0, 0)
 
 
 //Weed nodes
@@ -220,8 +220,8 @@
 	icon_state = "egg_growing"
 	density = 0
 	anchored = 1
-	health = 100
-	maxhealth = 100
+	obj_integrity = 100
+	max_integrity = 100
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
 
@@ -300,7 +300,7 @@
 
 /obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)
-		take_damage(5, BURN, "fire", 0)
+		take_damage(5, BURN, 0, 0)
 
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)

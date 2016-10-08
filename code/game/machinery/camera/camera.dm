@@ -13,9 +13,9 @@
 	layer = WALL_OBJ_LAYER
 
 	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
-	health = 100
-	maxhealth = 100
-	broken_health = 50
+	obj_integrity = 100
+	max_integrity = 100
+	integrity_failure = 50
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -142,7 +142,7 @@
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/wirecutters)) //enable/disable the camera
 			toggle_cam(user, 1)
-			health = maxhealth //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
+			obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 			return
 
 		else if(istype(W, /obj/item/device/multitool)) //change focus
@@ -260,7 +260,7 @@
 			assembly = null
 		else
 			var/obj/item/I = new /obj/item/wallframe/camera (loc)
-			I.health = I.maxhealth * 0.5
+			I.obj_integrity = I.max_integrity * 0.5
 			new /obj/item/stack/cable_coil(loc, 2)
 	qdel(src)
 

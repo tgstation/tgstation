@@ -5,9 +5,9 @@
 	icon_state = "left"
 	resistance_flags = ACID_PROOF
 	var/base_state = "left"
-	health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
-	maxhealth = 150
-	broken_health = 0
+	obj_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	max_integrity = 150
+	integrity_failure = 0
 	armor = list(melee = 20, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 100)
 	visible = 0
 	flags = ON_BORDER
@@ -37,7 +37,7 @@
 	density = 0
 	for(var/I in debris)
 		qdel(I)
-	if(health == 0)
+	if(obj_integrity == 0)
 		playsound(src, "shatter", 70, 1)
 	electronics = null
 	return ..()
@@ -187,7 +187,7 @@
 
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		take_damage(round(exposed_volume / 200), BURN, "fire", 0)
+		take_damage(round(exposed_volume / 200), BURN, 0, 0)
 	..()
 
 
@@ -294,8 +294,8 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	var/id = null
-	health = 300 //Stronger doors for prison (regular window door health is 200)
-	maxhealth = 300
+	obj_integrity = 300 //Stronger doors for prison (regular window door health is 200)
+	max_integrity = 300
 	reinf = 1
 	explosion_block = 1
 
@@ -325,7 +325,7 @@
 	return ..()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
-	health = maxhealth
+	obj_integrity = max_integrity
 
 /obj/machinery/door/window/clockwork/hasPower()
 	return TRUE //yup that's power all right

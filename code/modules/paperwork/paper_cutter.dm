@@ -107,8 +107,8 @@
 	icon_state = "paperslip"
 	icon = 'icons/obj/bureaucracy.dmi'
 	resistance_flags = FLAMMABLE
-	health = 10
-	maxhealth = 10
+	obj_integrity = 50
+	max_integrity = 50
 
 /obj/item/weapon/paperslip/New()
 	..()

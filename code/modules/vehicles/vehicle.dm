@@ -8,8 +8,8 @@
 	anchored = 0
 	can_buckle = 1
 	buckle_lying = 0
-	health = 300
-	maxhealth = 300
+	obj_integrity = 300
+	max_integrity = 300
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 60, acid = 60)
 	var/keytype = null //item typepath, if non-null an item of this type is needed in your hands to drive this vehicle
 	var/next_vehicle_move = 0 //used for move delays
@@ -162,7 +162,7 @@
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
 			user << "<span class='warning'>It's on fire!</span>"
-		var/healthpercent = (health/maxhealth) * 100
+		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(100 to INFINITY)
 				user <<  "It seems pristine and undamaged."

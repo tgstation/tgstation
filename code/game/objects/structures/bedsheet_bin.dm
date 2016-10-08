@@ -206,8 +206,8 @@ LINEN BINS
 	icon_state = "linenbin-full"
 	anchored = 1
 	resistance_flags = FLAMMABLE
-	health = 70
-	maxhealth = 70
+	obj_integrity = 70
+	max_integrity = 70
 	var/amount = 10
 	var/list/sheets = list()
 	var/obj/item/hidden = null

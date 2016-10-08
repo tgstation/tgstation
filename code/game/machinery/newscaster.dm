@@ -176,9 +176,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
-	health = 200
-	maxhealth = 200
-	broken_health = 50
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -228,7 +228,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			icon_state = "newscaster_normal"
 			if(alert)
 				add_overlay("newscaster_alert")
-	var/hp_percent = health * 100 /maxhealth
+	var/hp_percent = obj_integrity * 100 /max_integrity
 	switch(hp_percent)
 		if(75 to 100)
 			return
@@ -741,7 +741,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 						return
 					user << "<span class='notice'>You repair [src].</span>"
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
-					health = maxhealth
+					obj_integrity = max_integrity
 					stat &= ~BROKEN
 					update_icon()
 		else

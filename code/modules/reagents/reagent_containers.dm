@@ -74,7 +74,6 @@
 	..()
 
 /obj/item/weapon/reagent_containers/fire_act(exposed_temperature, exposed_volume)
-	//phil235
 	reagents.chem_temp += 30
 	reagents.handle_reactions()
 	..()

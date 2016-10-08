@@ -6,8 +6,8 @@
 	var/hi_pres_step_in = 4 //step_in while in high pressure.
 	var/lo_pres_step_in = 2 //step_in while in low/zero pressure.
 	max_temperature = 20000
-	health = 200
-	maxhealth = 200
+	obj_integrity = 200
+	max_integrity = 200
 	lights_power = 7
 	deflect_chance = 15
 	armor = list(melee = 40, bullet = 20, laser = 10, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
@@ -62,8 +62,8 @@
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
-	health = 250
-	maxhealth = 250
+	obj_integrity = 250
+	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)

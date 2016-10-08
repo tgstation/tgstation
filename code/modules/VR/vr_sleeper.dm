@@ -139,7 +139,7 @@
 				status = "Dead"
 			if(UNCONSCIOUS)
 				status = "Unconscious"
-		data["vr_avatar"] = list("name" = vr_human.name, "status" = status, "health" = vr_human.health, "maxhealth" = vr_human.maxHealth)
+		data["vr_avatar"] = list("name" = vr_human.name, "status" = status, "health" = vr_human.health, "max_integrity" = vr_human.maxHealth)
 	data["toggle_open"] = state_open
 	data["isoccupant"] = (user == occupant)
 	return data

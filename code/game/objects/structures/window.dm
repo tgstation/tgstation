@@ -7,8 +7,8 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
-	maxhealth = 25
-	health = 0
+	max_integrity = 25
+	obj_integrity = 25
 	var/ini_dir = null
 	var/state = 0
 	var/reinf = 0
@@ -20,7 +20,7 @@
 	var/list/debris = list()
 	can_be_unanchored = 1
 	resistance_flags = ACID_PROOF
-	//phil235 fire armor here
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -28,7 +28,7 @@
 
 /obj/structure/window/New(Loc,re=0)
 	..()
-	health = maxhealth
+	obj_integrity = max_integrity
 	if(re)
 		reinf = re
 	if(reinf)
@@ -127,12 +127,12 @@
 	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
 		var/obj/item/weapon/weldingtool/WT = I
-		if(health < maxhealth)
+		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 				if(do_after(user, 40/I.toolspeed, target = src))
-					health = maxhealth
+					obj_integrity = max_integrity
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					update_nearby_icons()
 					user << "<span class='notice'>You repair [src].</span>"
@@ -344,7 +344,7 @@
 		if(!fulltile)
 			return
 
-		var/ratio = health / maxhealth
+		var/ratio = obj_integrity / max_integrity
 		ratio = Ceiling(ratio*4) * 25
 
 		if(smooth)
@@ -358,7 +358,7 @@
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		take_damage(round(exposed_volume / 100), BURN, 0)
+		take_damage(round(exposed_volume / 100), BURN, 0, 0)
 	..()
 
 /obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
@@ -376,8 +376,8 @@
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
-	maxhealth = 50
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
+	max_integrity = 50
 	explosion_block = 1
 
 /obj/structure/window/reinforced/tinted
@@ -390,13 +390,13 @@
 	icon_state = "fwindow"
 
 
-/* Full Tile Windows (more health) */
+/* Full Tile Windows (more obj_integrity) */
 
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window"
 	dir = NORTHEAST
-	maxhealth = 50
+	max_integrity = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
@@ -405,7 +405,7 @@
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
 	dir = NORTHEAST
-	maxhealth = 100
+	max_integrity = 100
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
@@ -423,7 +423,7 @@
 /obj/structure/window/reinforced/fulltile/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
 	icon_state = "ice_window"
-	maxhealth = 150
+	max_integrity = 150
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/reinforced/fulltile/ice)
 	level = 3
 
@@ -433,11 +433,11 @@
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
 	dir = NORTHEAST
-	maxhealth = 100
+	max_integrity = 100
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 1
@@ -454,7 +454,7 @@
 	desc = "A paper-thin pane of translucent yet reinforced brass."
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
-	maxhealth = 100
+	max_integrity = 100
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
 	var/made_glow = FALSE
 
@@ -488,7 +488,7 @@
 	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()
-	health = maxhealth
+	obj_integrity = max_integrity
 	update_icon()
 	return 0
 
@@ -505,4 +505,4 @@
 	canSmoothWith = null
 	fulltile = 1
 	dir = NORTHEAST
-	maxhealth = 150
+	max_integrity = 150

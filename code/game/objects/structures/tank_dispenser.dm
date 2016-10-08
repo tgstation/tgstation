@@ -7,12 +7,10 @@
 	icon_state = "dispenser"
 	density = 1
 	anchored = 1
-	health = 300
-	maxhealth = 300
+	obj_integrity = 300
+	max_integrity = 300
 	var/oxygentanks = TANK_DISPENSER_CAPACITY
 	var/plasmatanks = TANK_DISPENSER_CAPACITY
-
-//phil235 damage to the dispenser can damage inserted tanks?
 
 /obj/structure/tank_dispenser/oxygen
 	plasmatanks = 0

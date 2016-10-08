@@ -7424,7 +7424,7 @@
 "apP" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 35
+	obj_integrity = 35
 	},
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
@@ -15356,7 +15356,7 @@
 "aHx" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 25
+	obj_integrity = 25
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -37690,7 +37690,7 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 25
+	obj_integrity = 25
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
@@ -38948,14 +38948,14 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 35
+	obj_integrity = 35
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bHX" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 25
+	obj_integrity = 25
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)

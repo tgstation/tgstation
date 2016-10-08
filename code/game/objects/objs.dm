@@ -10,9 +10,9 @@
 	var/force = 0
 
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-	var/health = 500
-	var/maxhealth = 500
-	var/broken_health = 0 //0 if we have no special broken behavior
+	var/obj_integrity = 500
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior
 
 	var/resistance_flags = 0 // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 

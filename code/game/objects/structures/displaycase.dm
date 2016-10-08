@@ -6,10 +6,10 @@
 	density = 1
 	anchored = 1
 	resistance_flags = ACID_PROOF
-	//phil235 need a nice fire armor here
-	health = 200
-	maxhealth = 200
-	broken_health = 50
+	armor = list(melee = 30, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 100)
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
 	var/obj/item/showpiece = null
 	var/alert = 0
 	var/open = 0
@@ -41,8 +41,6 @@
 			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(BURN)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-
-//phil235 hitby must have 80 % armor
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -143,7 +141,7 @@
 		if(do_after(user, 20, target = src))
 			G.use(2)
 			broken = 0
-			health = maxhealth
+			obj_integrity = max_integrity
 			update_icon()
 	else
 		return ..()

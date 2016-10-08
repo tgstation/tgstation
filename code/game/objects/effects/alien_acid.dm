@@ -80,7 +80,7 @@
 				L << "<span class='userdanger'>[src] burns you!</span>"
 
 /obj/effect/acid/alien
-	var/target_strength = 60 //phil235 roughly 1 minute for alien acid on wall, if 1 process per second
+	var/target_strength = 60
 
 
 /obj/effect/acid/alien/process()

@@ -12,9 +12,9 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
-	health = 150
-	maxhealth = 150
-	broken_health = 50
+	obj_integrity = 150
+	max_integrity = 150
+	integrity_failure = 50
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
@@ -52,7 +52,8 @@
 		S.anchored = 1
 	S.loc = src
 	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
-		health *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
+		max_integrity *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
+		obj_integrity = max_integrity
 	update_icon()
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user, params)
@@ -264,9 +265,9 @@
 	density = 1
 	use_power = 1
 	idle_power_usage = 250
-	health = 200
-	maxhealth = 200
-	broken_health = 100
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 100
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0
