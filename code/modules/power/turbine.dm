@@ -155,7 +155,7 @@
 
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 
-	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION/efficiency))
+	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION*efficiency))
 
 
 	if(starter && !(stat & NOPOWER))
