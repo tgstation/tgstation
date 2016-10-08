@@ -107,5 +107,5 @@
 //we eject the loaded item when deconstructing the machine
 /obj/machinery/r_n_d/on_deconstruction()
 	if(loaded_item)
-		loaded_item.loc = loc
+		loaded_item.forceMove(loc)
 	..()
