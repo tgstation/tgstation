@@ -2,23 +2,13 @@
 	. = ..()
 	. += grab_state * 3 //can't go fast while grabbing something.
 
-	if(ishuman(src))
-		if(!(dna && dna.species && (FLYING in dna.species.specflags)))		//If someone can get me a better way to do this I'l learn gladly.
-			if(!get_leg_ignore()) //ignore the fact we lack legs
-				var/leg_amount = get_num_legs()
-				. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
-				if(!leg_amount)
-					. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
-			if(legcuffed)
-				. += legcuffed.slowdown
-	else
-		if(!get_leg_ignore()) //ignore the fact we lack legs
-			var/leg_amount = get_num_legs()
-			. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
-			if(!leg_amount)
-				. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
-		if(legcuffed)
-			. += legcuffed.slowdown
+	if(!get_leg_ignore()) //ignore the fact we lack legs
+		var/leg_amount = get_num_legs()
+		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
+		if(!leg_amount)
+			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
+	if(legcuffed)
+		. += legcuffed.slowdown
 
 
 var/const/NO_SLIP_WHEN_WALKING = 1
