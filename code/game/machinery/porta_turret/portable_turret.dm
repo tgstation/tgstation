@@ -742,7 +742,7 @@
 			user << "You link \the [M.buffer] with \the [src]"
 			return
 
-	if (istype(user, /mob/living/silicon))
+	if (issilicon(user))
 		return src.attack_hand(user)
 
 	if( get_dist(src, user) == 0 )		// trying to unlock the interface
@@ -789,10 +789,10 @@
 	var/area/area = get_area(src)
 	var/t = ""
 
-	if(src.locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))
+	if(src.locked && !(issilicon(user) || IsAdminGhost(user)))
 		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 	else
-		if (!istype(user, /mob/living/silicon) && !IsAdminGhost(user))
+		if(!issilicon(user) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
 		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
@@ -808,7 +808,7 @@
 	if(..())
 		return
 	if (src.locked)
-		if (!(istype(usr, /mob/living/silicon) || IsAdminGhost(usr)))
+		if(!(issilicon(usr) || IsAdminGhost(usr)))
 			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])

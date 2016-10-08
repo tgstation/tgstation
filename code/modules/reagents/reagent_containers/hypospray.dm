@@ -81,7 +81,7 @@
 	..()
 	update_icon()
 	spawn(80)
-		if(isrobot(user) && !reagents.total_volume)
+		if(iscyborg(user) && !reagents.total_volume)
 			var/mob/living/silicon/robot/R = user
 			if(R.cell.use(100))
 				reagents.add_reagent_list(list_reagents)

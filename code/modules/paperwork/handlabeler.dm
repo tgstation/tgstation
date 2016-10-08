@@ -96,7 +96,7 @@
 
 /obj/item/weapon/hand_labeler/borg/afterattack(atom/A, mob/user, proximity)
 	..(A, user, proximity)
-	if(!isrobot(user))
+	if(!iscyborg(user))
 		return
 
 	var/mob/living/silicon/robot/borgy = user

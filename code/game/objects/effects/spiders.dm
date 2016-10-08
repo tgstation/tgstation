@@ -1,6 +1,7 @@
 //generic procs copied from obj/effect/alien
 /obj/structure/spider
 	name = "web"
+	icon = 'icons/effects/effects.dmi'
 	desc = "it's stringy and sticky"
 	anchored = 1
 	density = 0
@@ -204,7 +205,7 @@
 
 /obj/structure/spider/cocoon/container_resist()
 	var/mob/living/user = usr
-	var/breakout_time = 2
+	var/breakout_time = 1
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>"
@@ -217,7 +218,8 @@
 
 
 /obj/structure/spider/cocoon/Destroy()
+	var/turf/T = get_turf(src)
 	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
-		A.loc = src.loc
+		A.forceMove(T)
 	return ..()

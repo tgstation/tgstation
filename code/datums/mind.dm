@@ -419,13 +419,13 @@
 	if (ticker.mode.config_tag=="cult")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if (src in ticker.mode.cult)
+	if(iscultist(current))
 		text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
 		text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
 
 	else if(isloyal(current))
 		text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
-	else if(is_convertable_to_cult(src))
+	else if(is_convertable_to_cult(current))
 		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 	else
 		text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Nar-Sie</i>"
@@ -442,7 +442,7 @@
 	if(ticker.mode.config_tag == "clockwork cult")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if(src in ticker.mode.servants_of_ratvar)
+	if(is_servant_of_ratvar(current))
 		text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
 		text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
 	else if(isloyal(current))
@@ -555,7 +555,7 @@
 
 	/** SILICON ***/
 
-	if (istype(current, /mob/living/silicon))
+	if(issilicon(current))
 		text = "silicon"
 		var/mob/living/silicon/robot/robot = current
 		if (istype(robot) && robot.emagged)
@@ -1220,7 +1220,7 @@
 					log_admin("[key_name(usr)] has unemag'ed [R].")
 
 			if("unemagcyborgs")
-				if (istype(current, /mob/living/silicon/ai))
+				if(isAI(current))
 					var/mob/living/silicon/ai/ai = current
 					for (var/mob/living/silicon/robot/R in ai.connected_robots)
 						R.SetEmagged(0)

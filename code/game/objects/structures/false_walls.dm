@@ -107,7 +107,7 @@
 			if(T.density)
 				user << "<span class='warning'>[src] is blocked!</span>"
 				return
-			if(!istype(T, /turf/open/floor))
+			if(!isfloorturf(T))
 				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
 				return
 			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")

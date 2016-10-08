@@ -76,7 +76,7 @@
 			continue
 
 		if(platingRequired)
-			if(istype(B, /turf/open/space))
+			if(isspaceturf(B))
 				continue
 
 		var/old_dir1 = T.dir

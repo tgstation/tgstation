@@ -163,13 +163,6 @@
 			cult_mind.current.Paralyse(5)
 		return 1
 
-
-/datum/game_mode/cult/add_cultist(datum/mind/cult_mind, stun) //INHERIT
-	if (!..(cult_mind))
-		return
-	memorize_cult_objectives(cult_mind)
-
-
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
 	if(cult_mind.current)
 		var/datum/antagonist/cultist/cult_datum = cult_mind.current.has_antag_datum(/datum/antagonist/cultist, TRUE)
@@ -194,7 +187,7 @@
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(player.mind && !is_convertable_to_cult(player.mind))
+		if(player.mind && !is_convertable_to_cult(player) && !(player.mind in cultists_to_cult))
 			ucs += player.mind
 	return ucs
 

@@ -182,7 +182,7 @@
 			mob.client.Move(get_step(loc, direction), direction)
 			mob.reset_perspective(null)
 
-			//if(moving && istype(loc, /turf/open/space))
+			//if(moving && isspaceturf(loc))
 				// Todo: If you get out of a moving pod in space, you should move as well.
 				//  Same direction as pod? Direcion you moved? Halfway between?
 

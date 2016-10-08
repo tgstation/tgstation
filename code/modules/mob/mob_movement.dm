@@ -85,7 +85,7 @@
 
 /client/verb/drop_item()
 	set hidden = 1
-	if(!isrobot(mob))
+	if(!iscyborg(mob))
 		mob.drop_item_v()
 	return
 
@@ -286,7 +286,7 @@
 			continue
 		else if(isturf(A))
 			var/turf/turf = A
-			if(istype(turf,/turf/open/space))
+			if(isspaceturf(turf))
 				continue
 			if(!turf.density && !mob_negates_gravity())
 				continue

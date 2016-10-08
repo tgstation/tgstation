@@ -432,7 +432,7 @@
 
 /mob/living/movement_delay()
 	. = ..()
-	if(istype(loc, /turf/open))
+	if(isopenturf(loc))
 		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
@@ -739,7 +739,7 @@
 	else if(istype(loc, /obj/structure/transit_tube_pod))
 		loc_temp = environment.temperature
 
-	else if(istype(get_turf(src), /turf/open/space))
+	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 

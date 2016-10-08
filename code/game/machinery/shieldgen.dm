@@ -116,7 +116,7 @@
 	update_icon()
 
 	for(var/turf/target_tile in range(shield_range, src))
-		if (istype(target_tile,/turf/open/space) && !(locate(/obj/machinery/shield) in target_tile))
+		if(isspaceturf(target_tile) && !(locate(/obj/machinery/shield) in target_tile))
 			if(!(stat & BROKEN) || prob(33))
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
@@ -313,7 +313,7 @@
 	if(!anchored)
 		user << "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>"
 		return 1
-	if(locked && !istype(user, /mob/living/silicon))
+	if(locked && !issilicon(user))
 		user << "<span class='warning'>The controls are locked!</span>"
 		return 1
 	if(power != 1)

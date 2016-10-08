@@ -119,7 +119,7 @@
 		M.apply_water()
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot && !istype(T, /turf/open/space))
+	if(hotspot && !isspaceturf(T))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
@@ -354,20 +354,16 @@
 	..()
 	return
 
-/datum/reagent/slimetoxin
-	name = "Mutation Toxin"
-	id = "mutationtoxin"
-	description = "A corruptive toxin produced by slimes."
-	color = "#13BC5E" // rgb: 19, 188, 94
-
-/datum/reagent/unstableslimetoxin
-	name = "Unstable Mutation Toxin"
-	id = "unstablemutationtoxin"
-	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+/datum/reagent/stableslimetoxin
+	name = "Stable Mutation Toxin"
+	id = "stablemutationtoxin"
+	description = "A humanizing toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
+	var/datum/species/race = /datum/species/human
+	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
 
-/datum/reagent/unstableslimetoxin/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.their_pronoun()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
@@ -375,22 +371,141 @@
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
-		var/list/possible_morphs = list()
-		for(var/type in subtypesof(/datum/species))
-			var/datum/species/S = type
-			if(initial(S.blacklisted))
-				continue
-			possible_morphs += S
 
 		var/current_species = H.dna.species.type
-		var/datum/species/mutation = pick(possible_morphs)
+		var/datum/species/mutation = race
 		if(mutation && mutation != current_species)
-			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
+			H << mutationtext
 			H.set_species(mutation)
 		else
 			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
 
 	return 1
+
+/datum/reagent/stableslimetoxin/classic //The one from plasma on green slimes
+	name = "Mutation Toxin"
+	id = "mutationtoxin"
+	description = "A corruptive toxin produced by slimes."
+	color = "#13BC5E" // rgb: 19, 188, 94
+	race = /datum/species/jelly/slime
+	mutationtext = "<span class='danger'>The pain subsides. Your whole body feels like slime.</span>"
+
+/datum/reagent/stableslimetoxin/lizard
+	name = "Lizard Mutation Toxin"
+	id = "lizardmutationtoxin"
+	description = "A lizarding toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/lizard
+	mutationtext = "<span class='danger'>The pain subsides. You feel... scaly.</span>"
+
+/datum/reagent/stableslimetoxin/fly
+	name = "Fly Mutation Toxin"
+	id = "flymutationtoxin"
+	description = "An insectifying toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/fly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
+
+/datum/reagent/stableslimetoxin/pod
+	name = "Podperson Mutation Toxin"
+	id = "podmutationtoxin"
+	description = "A vegetalizing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/pod
+	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
+
+/datum/reagent/stableslimetoxin/jelly
+	name = "Imperfect Mutation Toxin"
+	id = "jellymutationtoxin"
+	description = "An jellyfying toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/jelly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... wobbly.</span>"
+
+/datum/reagent/stableslimetoxin/golem
+	name = "Golem Mutation Toxin"
+	id = "golemmutationtoxin"
+	description = "A crystal toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/golem/random
+	mutationtext = "<span class='danger'>The pain subsides. You feel... rocky.</span>"
+
+/datum/reagent/stableslimetoxin/abductor
+	name = "Abductor Mutation Toxin"
+	id = "abductormutationtoxin"
+	description = "An alien toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/abductor
+	mutationtext = "<span class='danger'>The pain subsides. You feel... alien.</span>"
+
+/datum/reagent/stableslimetoxin/android
+	name = "Android Mutation Toxin"
+	id = "androidmutationtoxin"
+	description = "A robotic toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/android
+	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
+
+
+//BLACKLISTED RACES
+/datum/reagent/stableslimetoxin/skeleton
+	name = "Skeleton Mutation Toxin"
+	id = "skeletonmutationtoxin"
+	description = "A scary toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/skeleton
+	mutationtext = "<span class='danger'>The pain subsides. You feel... spooky.</span>"
+
+/datum/reagent/stableslimetoxin/zombie
+	name = "Zombie Mutation Toxin"
+	id = "zombiemutationtoxin"
+	description = "An undead toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/zombie //Not the infectious kind. The days of xenobio zombie outbreaks are long past.
+	mutationtext = "<span class='danger'>The pain subsides. You feel... undead.</span>"
+
+/datum/reagent/stableslimetoxin/ash
+	name = "Ash Mutation Toxin"
+	id = "ashmutationtoxin"
+	description = "An ashen toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/lizard/ashwalker
+	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
+
+
+//DANGEROUS RACES
+/datum/reagent/stableslimetoxin/shadow
+	name = "Shadow Mutation Toxin"
+	id = "shadowmutationtoxin"
+	description = "A dark toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/shadow
+	mutationtext = "<span class='danger'>The pain subsides. You feel... darker.</span>"
+
+/datum/reagent/stableslimetoxin/plasma
+	name = "Plasma Mutation Toxin"
+	id = "plasmamutationtoxin"
+	description = "A plasma-based toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/plasmaman
+	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
+
+/datum/reagent/stableslimetoxin/unstable //PSYCH
+	name = "Unstable Mutation Toxin"
+	id = "unstablemutationtoxin"
+	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	mutationtext = "<span class='danger'>The pain subsides. You feel... different.</span>"
+
+/datum/reagent/stableslimetoxin/unstable/on_mob_life(mob/living/carbon/human/H)
+	var/list/possible_morphs = list()
+	for(var/type in subtypesof(/datum/species))
+		var/datum/species/S = type
+		if(initial(S.blacklisted))
+			continue
+		possible_morphs += S
+	race = pick(possible_morphs)
+	..()
 
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
@@ -500,7 +615,7 @@
 	color = "#484848" // rgb: 72, 72, 72
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/open/space))
+	if(M.canmove && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -522,7 +637,7 @@
 	color = "#1C1300" // rgb: 30, 20, 0
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
-	if(!istype(T, /turf/open/space))
+	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents
 		if(!D)
 			new /obj/effect/decal/cleanable/dirt(T)
@@ -573,7 +688,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
-	if(M.canmove && istype(M.loc, /turf/open/space))
+	if(M.canmove && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -598,7 +713,7 @@
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/open/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
@@ -676,7 +791,7 @@
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
-		if(!istype(T, /turf/open/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
