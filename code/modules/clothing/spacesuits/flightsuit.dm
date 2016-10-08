@@ -155,10 +155,10 @@
 		return 0
 	var/drift_x = 0
 	var/drift_dir_x = 0
-	var/drift_antidir_x = 0
+//	var/drift_antidir_x = 0
 	var/drift_y = 0
 	var/drift_dir_y = 0
-	var/drift_antidir_y = 0
+//	var/drift_antidir_y = 0
 	if(momentum_x > 0)
 		drift_x = 1
 		drift_dir_x = EAST
