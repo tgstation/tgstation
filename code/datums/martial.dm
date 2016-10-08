@@ -439,7 +439,7 @@
 /obj/item/weapon/CQC_manual
 	name = "old manual"
 	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state ="cqcmanual"
 
 /obj/item/weapon/CQC_manual/attack_self(mob/living/carbon/human/user)
