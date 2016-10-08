@@ -84,7 +84,7 @@
 	C.bodyparts -= src
 	if(held_index)
 		C.unEquip(owner.get_item_for_held_index(held_index), 1)
-		C.hand_bodyparts[held_index] = null
+		C.hand_bodyparts -= src
 
 	owner = null
 
