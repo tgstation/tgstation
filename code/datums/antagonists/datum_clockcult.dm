@@ -124,6 +124,8 @@
 	if(!silent_update)
 		owner.visible_message("<span class='big'>[owner] seems to have remembered their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
+		if(iscyborg(owner))
+			owner << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
 	if(ticker && ticker.mode && owner.mind)
 		ticker.mode.servants_of_ratvar -= owner.mind
 		ticker.mode.update_servant_icons_removed(owner.mind)
@@ -131,6 +133,4 @@
 		owner.mind.memory = "" //Not sure if there's a better way to do this
 		owner.mind.special_role = null
 	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
-	if(iscyborg(owner))
-		owner << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
 	..()

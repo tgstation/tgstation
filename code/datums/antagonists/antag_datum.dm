@@ -58,7 +58,9 @@
 /mob/living/Destroy() //TODO: merge this with the living/Destroy() in code\modules\mob\living\living.dm (currently line 29)
 	if(islist(antag_datums))
 		for(var/i in antag_datums)
-			qdel(i)
+			var/datum/antagonist/A = i
+			A.silent_update = TRUE
+			A.on_remove()
 		antag_datums = null
 	return ..()
 

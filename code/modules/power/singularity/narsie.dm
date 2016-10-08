@@ -40,7 +40,7 @@
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
-	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, 0, loc_override = src.loc)
+	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, TRUE, loc_override = src.loc)
 	PoolOrNew(/obj/effect/particle_effect/smoke/sleeping, src.loc)
 
 
