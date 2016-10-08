@@ -45,7 +45,7 @@
 	var/boost_speed = 2
 	var/boost_power = 50
 	var/boost_chargerate = 0.5
-	var/boost_drain = 1			//Keep in mind it charges and drains at the same time, so drain realistically is drain-charge=change
+	var/boost_drain = 5			//Keep in mind it charges and drains at the same time, so drain realistically is drain-charge=change
 
 	var/momentum_x = 0		//Realistic physics. No more "Instant stopping while barreling down a hallway at Mach 1".
 	var/momentum_y = 0
@@ -116,7 +116,7 @@
 
 //Proc to change amount of momentum the wearer has, or dampen all momentum by a certain amount.
 /obj/item/device/flightpack/proc/adjust_momentum(amountx, amounty, reduce_amount_total = 0)
-	if(reduce_amount_total < 0||reduce_amount_total > 0)
+	if(reduce_amount_total != 0)
 		if(momentum_x > 0)
 			momentum_x = Clamp(momentum_x - reduce_amount_total, 0, momentum_max)
 		else if(momentum_x < 0)
@@ -131,6 +131,8 @@
 
 //Called by the pair of shoes the wearer is required to wear to detect movement.
 /obj/item/device/flightpack/proc/wearer_movement(dir)
+	if(!flight)
+		return
 	var/momentum_increment = momentum_gain
 	if(boost)
 		momentum_increment = boost_power
@@ -149,6 +151,8 @@
 
 //The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/device/flightpack/proc/momentum_drift()
+	if(!flight)
+		return 0
 	var/drift_x = 0
 	var/drift_dir_x = 0
 	var/drift_antidir_x = 0
@@ -179,24 +183,18 @@
 				if(momentum_speed == 3)
 					if(drift_x)
 						step(suit.user, drift_dir_x)
-						wearer_movement(drift_antidir_x)
 					if(drift_y)
 						step(suit.user, drift_dir_y)
-						wearer_movement(drift_antidir_y)
 				else if(momentum_speed == 2)
 					if(drift_x)
 						step(suit.user, drift_dir_x)
-						wearer_movement(drift_antidir_x)
 					if(drift_y)
 						step(suit.user, drift_dir_y)
-						wearer_movement(drift_antidir_y)
 				else if(momentum_speed == 1)
 					if(drift_x)
 						step(suit.user, drift_dir_x)
-						wearer_movement(drift_antidir_x)
 					if(drift_y)
 						step(suit.user, drift_dir_y)
-						wearer_movement(drift_antidir_y)
 			else
 				losecontrol()
 			momentum_decay()
@@ -260,25 +258,41 @@
 		suit.slowdown = slowdown_air
 
 /obj/item/device/flightpack/process()
-	if(!flight)
-		return
 	check_conditions()
 	handle_flight()
 	update_slowdown()
-	momentum_drift_tick++
 	calculate_momentum_speed()
+	momentum_drift_tick++
 	momentum_drift()
+	handle_boost()
 	update_icon()
+
+/obj/item/device/flightpack/update_icon()
+	if(!flight)
+		icon_state = initial(icon_state)
+		item_state = initial(item_state)
+	if(flight)
+		icon_state = icon_state_active
+		item_state = item_state_active
+		if(boost)
+			icon_state = icon_state_boost
+			item_state = item_state_boost
 	wearer.update_inv_wear_suit()
+	..()
+
+/obj/item/device/flightpack/proc/handle_flight()
+	if(!flight)
+		return 0
+	wearer.float(2)
+
+/obj/item/device/flightpack/proc/handle_boost()
 	if(boost)
 		boost_charge = Clamp(boost_charge-boost_drain, 0, boost_maxcharge)
-		if(boost_charge < 5)
+		if(boost_charge < 1)
 			deactivate_booster()
 	if(boost_charge < boost_maxcharge)
 		boost_charge = Clamp(boost_charge+boost_chargerate, 0, boost_maxcharge)
 
-/obj/item/device/flightpack/proc/handle_flight()
-	wearer.float(2)
 
 /obj/item/device/flightpack/proc/cycle_power()
 	if(powersetting < powersetting_high)
@@ -306,8 +320,6 @@
 		disable_flight()
 
 /obj/item/device/flightpack/proc/enable_flight(forced = 0)
-	icon_state = icon_state_active
-	item_state = item_state_active
 	wearer.dna.species.specflags |= FLYING
 	wearer.pass_flags |= flight_passflags
 	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
@@ -323,8 +335,6 @@
 	if(abs(momentum_x) <= 20 && abs(momentum_y) <= 20)
 		momentum_x = 0
 		momentum_y = 0
-		icon_state = initial(icon_state)
-		item_state = initial(item_state)
 		suit.user.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
 		//NO SOUND YET	playsound(
 		wearer.dna.species.specflags |= FLYING
