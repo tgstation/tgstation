@@ -9908,7 +9908,7 @@
 	name = "MO19 Arrivals"
 	})
 "nJ" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;

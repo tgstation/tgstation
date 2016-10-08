@@ -3531,7 +3531,7 @@
 "jp" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastely flipped over for cover.";
-	obj_integrity 55;
+	obj_integrity = 55;
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
 	max_integrity = 55;
@@ -3648,7 +3648,7 @@
 "jG" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastely flipped over for cover.";
-	obj_integrity 55;
+	obj_integrity = 55;
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
 	max_integrity = 55;
@@ -3779,7 +3779,7 @@
 "kb" = (
 /obj/structure/barricade/wooden{
 	desc = "A wooden table hastely flipped over for cover.";
-	obj_integrity 55;
+	obj_integrity = 55;
 	icon = 'icons/obj/smooth_structures/wood_table.dmi';
 	icon_state = "wood_table";
 	max_integrity = 55;
