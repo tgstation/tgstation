@@ -32,7 +32,6 @@
 	if(igniting)
 		if(oxy < 0.5 || tox < 0.5)
 			return 0
-
 		active_hotspot = PoolOrNew(/obj/effect/hotspot, src)
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
@@ -45,7 +44,7 @@
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
 	anchored = 1
-	mouse_opacity = 0
+	mouse_opacity = 2
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
@@ -69,6 +68,8 @@
 	if(!istype(location) || !(location.air))
 		return 0
 
+	location.active_hotspot = src
+
 	if(volume > CELL_VOLUME*0.95)
 		bypassing = 1
 	else
@@ -87,9 +88,9 @@
 		location.assume_air(affected)
 
 	for(var/A in loc)
-		var/atom/item = A
-		if(item && item != src) // It's possible that the item is deleted in temperature_expose
-			item.fire_act(null, temperature, volume)
+		var/atom/AT = A
+		if(AT && AT != src) // It's possible that the item is deleted in temperature_expose
+			AT.fire_act(temperature, volume)
 	return 0
 
 
@@ -175,4 +176,4 @@
 /obj/effect/hotspot/Crossed(mob/living/L)
 	..()
 	if(isliving(L))
-		L.fire_act()
+		L.fire_act(temperature, volume)
