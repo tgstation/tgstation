@@ -25576,7 +25576,7 @@
 	dir = 4
 	},
 /obj/structure/closet/wardrobe/chemistry_white,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bbl" = (
@@ -70871,7 +70871,7 @@
 	pixel_y = 24;
 	req_access_txt = "0"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cKy" = (

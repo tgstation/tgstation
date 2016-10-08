@@ -4485,7 +4485,7 @@
 /area/ai_monitored/security/armory)
 "ahW" = (
 /obj/item/clothing/head/festive,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ahX" = (
@@ -4504,7 +4504,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aia" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/table,
 /obj/item/weapon/stock_parts/manipulator,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -8659,7 +8659,7 @@
 /area/maintenance/starboard)
 "apo" = (
 /obj/structure/closet,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/weapon/reagent_containers/food/drinks/beer{
 	desc = "Takes you to a whole new level of thinking.";
 	name = "Meta-Cider"
@@ -8759,7 +8759,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/auxsolarstarboard)
 "apy" = (
@@ -9538,7 +9538,7 @@
 	})
 "aqT" = (
 /obj/structure/rack,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/weapon/storage/toolbox/emergency,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -10959,7 +10959,7 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
@@ -11839,7 +11839,7 @@
 "auK" = (
 /obj/item/stack/sheet/cardboard,
 /obj/item/device/flashlight,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -14578,7 +14578,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
 /area/library)
 "azw" = (
@@ -17837,7 +17837,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -18623,7 +18623,7 @@
 	},
 /obj/item/weapon/folder,
 /obj/item/weapon/folder,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/cult{
 	dir = 2
 	},
@@ -30641,7 +30641,7 @@
 /area/hallway/primary/central)
 "bbo" = (
 /obj/machinery/space_heater,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -30678,7 +30678,7 @@
 /obj/machinery/door/window{
 	base_state = "rightsecure";
 	dir = 4;
-	health = 300;
+	obj_integrity = 300;
 	icon_state = "rightsecure";
 	layer = 4.1;
 	name = "Secondary AI Core Access";
@@ -30729,7 +30729,7 @@
 /obj/machinery/door/window{
 	base_state = "rightsecure";
 	dir = 4;
-	health = 300;
+	obj_integrity = 300;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
 	req_access_txt = "16"
@@ -30800,7 +30800,7 @@
 /obj/machinery/door/window{
 	base_state = "leftsecure";
 	dir = 8;
-	health = 300;
+	obj_integrity = 300;
 	icon_state = "leftsecure";
 	layer = 4.1;
 	name = "Tertiary AI Core Access";
@@ -40680,7 +40680,7 @@
 /obj/machinery/door/window{
 	base_state = "leftsecure";
 	dir = 8;
-	health = 300;
+	obj_integrity = 300;
 	icon_state = "leftsecure";
 	name = "Primary AI Core Access";
 	req_access_txt = "16"
@@ -44214,7 +44214,7 @@
 	})
 "byc" = (
 /obj/structure/closet,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/weapon/poster/contraband,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -47114,7 +47114,7 @@
 	name = "Arrivals"
 	})
 "bDi" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
@@ -47268,7 +47268,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bDB" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
 /area/library)
 "bDC" = (
@@ -52902,7 +52902,7 @@
 	name = "Port Maintenance"
 	})
 "bNq" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/rack{
 	dir = 8;
 	layer = 2.9
@@ -54201,7 +54201,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/window/reinforced,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/showcase{
 	desc = "A flimsy model of a standard NanoTrasen automated loyalty implant machine. With secure positioning harnesses and a robotic surgical injector, brain damage and other serious medical anomalies are now up to 60% less likely!";
 	icon = 'icons/obj/machines/implantchair.dmi';
@@ -55584,7 +55584,7 @@
 	name = "Port Maintenance"
 	})
 "bRZ" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
@@ -55643,7 +55643,7 @@
 /obj/structure/table/wood,
 /obj/item/weapon/dice/d20,
 /obj/item/weapon/dice,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
 /area/library)
 "bSh" = (
@@ -67857,7 +67857,7 @@
 	pixel_y = 2
 	},
 /obj/structure/table,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/reagentgrinder{
 	pixel_y = 4
 	},
@@ -81330,7 +81330,7 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/aft{
 	name = "Aft Maintenance"
@@ -82125,7 +82125,7 @@
 	dir = 2;
 	on = 1
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/black,
 /area/toxins/server{
 	name = "\improper Research Division Server Room"
@@ -85017,7 +85017,7 @@
 	pixel_x = 0;
 	pixel_y = 25
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault,
 /area/chapel/main)
@@ -85591,7 +85591,7 @@
 /obj/structure/flora/ausbushes/palebush,
 /obj/structure/window/reinforced{
 	dir = 5;
-	health = 1e+007
+	obj_integrity = 10000
 	},
 /turf/open/floor/grass,
 /area/hallway/secondary/exit{
@@ -86276,7 +86276,7 @@
 /obj/structure/flora/ausbushes/sunnybush,
 /obj/structure/window/reinforced{
 	dir = 5;
-	health = 1e+007
+	obj_integrity = 10000
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -86683,7 +86683,7 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
@@ -86723,7 +86723,7 @@
 	},
 /area/chapel/main)
 "cSd" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
@@ -90910,7 +90910,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/item/weapon/extinguisher,
 /obj/item/weapon/extinguisher,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -91339,7 +91339,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "daN" = (
@@ -91912,7 +91912,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "dbR" = (
