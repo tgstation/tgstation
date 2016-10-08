@@ -1,6 +1,9 @@
 /obj/item/clothing
 	name = "clothing"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
+	health = 150
+	maxhealth = 150
+	broken_health = 80
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
@@ -59,6 +62,13 @@
 		return ..()
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
+	if(damaged_item && istype(W, /obj/item/stack/sheet/cloth))
+		var/obj/item/stack/sheet/cloth/C = W
+		C.use(1)
+		update_item_damaged_state(FALSE)
+		health = maxhealth
+		user << "<span class='notice'>You repair the damages on [src] with [C].</span>"
+		return 1
 	if(pockets)
 		return pockets.attackby(W, user, params)
 	else
@@ -110,6 +120,32 @@
 				user.vars[variable] = user_vars_to_edit[variable]
 
 
+/obj/item/clothing/examine(mob/user)
+	..()
+	if(damaged_item)
+		user <<  "<span class='warning'>It looks damaged!</span>"
+
+/obj/item/clothing/obj_break(damage_flag)
+	if(!damaged_item)
+		update_item_damaged_state(TRUE)
+
+var/list/damaged_item_icons = list()
+
+/obj/item/clothing/proc/update_item_damaged_state(damaging = TRUE)
+	if(damaging)
+		damaged_item = 1
+		var/index = "\ref[initial(icon)]-[initial(icon_state)]"
+		var/icon/damaged_item_icon = damaged_item_icons[index]
+		if(!damaged_item_icon)
+			damaged_item_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply blood-splatters to the initial icon_state for each object
+			damaged_item_icon.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
+			damaged_item_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+			damaged_item_icon = fcopy_rsc(damaged_item_icon)
+			damaged_item_icons[index] = damaged_item_icon
+		add_overlay(damaged_item_icon, 1)
+	else
+		damaged_item = 0
+
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -117,7 +153,7 @@
 	w_class = 1
 	throwforce = 0
 	slot_flags = SLOT_EARS
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -127,7 +163,7 @@
 	flags = EARBANGPROTECT
 	strip_delay = 15
 	put_on_delay = 25
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 //Glasses
 /obj/item/clothing/glasses
@@ -145,7 +181,7 @@
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20
 	put_on_delay = 25
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -361,7 +397,7 @@ BLIND     // can't see anything
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	item_state = "spaceold"
 	permeability_coefficient = 0.01
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 0, acid = 70)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 80, acid = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -371,7 +407,7 @@ BLIND     // can't see anything
 	strip_delay = 50
 	put_on_delay = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -385,7 +421,7 @@ BLIND     // can't see anything
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
 	slowdown = 1
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 0, acid = 70)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 80, acid = 70)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -393,7 +429,7 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
 	put_on_delay = 80
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 //Under clothing
 
@@ -514,7 +550,11 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	switch(src.sensor_mode)
+	if(adjusted == ALT_STYLE)
+		user << "Alt-click on [src] to wear it normally."
+	else
+		user << "Alt-click on [src] to wear it casually."
+	switch(sensor_mode)
 		if(0)
 			user << "Its sensors appear to be disabled."
 		if(1)
@@ -623,13 +663,6 @@ BLIND     // can't see anything
 			body_parts_covered |= CHEST
 	return adjusted
 
-/obj/item/clothing/under/examine(mob/user)
-	..()
-	if(src.adjusted == ALT_STYLE)
-		user << "Alt-click on [src] to wear it normally."
-	else
-		user << "Alt-click on [src] to wear it casually."
-
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(usr))
 		return
@@ -660,8 +693,9 @@ BLIND     // can't see anything
 /obj/item/clothing/obj_destruction(damage_flag)
 	if(damage_flag == "bomb" || damage_flag == "melee")
 		var/turf/T = get_turf(src)
-		var/obj/effect/decal/cleanable/shreds/Shreds = new(T)
-		Shreds.desc = "The sad remains of what used to be [name]."
+		spawn(1) //so the shred survives potential turf change from the explosion.
+			var/obj/effect/decal/cleanable/shreds/Shreds = new(T)
+			Shreds.desc = "The sad remains of what used to be [name]."
 		deconstruct(FALSE)
 	else
 		..()

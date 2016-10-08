@@ -17,9 +17,9 @@
 	var/gas_type = ""
 	var/release_pressure = ONE_ATMOSPHERE
 
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 50)
-	health = 200
-	maxhealth = 200
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
+	health = 250
+	maxhealth = 250
 	broken_health = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
@@ -191,8 +191,27 @@
 	if(!(flags & NODECONSTRUCT))
 		if(!(stat & BROKEN))
 			canister_break()
-		new /obj/item/stack/sheet/metal (loc, 5)
+		if(disassembled)
+			new /obj/item/stack/sheet/metal (loc, 10)
+		else
+			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
+
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
+	if(user.a_intent != "harm" && istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(!WT.remove_fuel(0, user))
+			return
+		if(stat & BROKEN)
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			user << "<span class='notice'>You begin cutting [src] apart...</span>"
+			if(do_after(user, 30, target = src))
+				deconstruct(TRUE)
+		else
+			user << "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>"
+		return 1
+	else
+		return ..()
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
 	if((stat & BROKEN) || (flags & NODECONSTRUCT))

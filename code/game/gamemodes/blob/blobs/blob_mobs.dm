@@ -90,6 +90,8 @@
 	verb_yell = "psychically screams"
 	melee_damage_lower = 2
 	melee_damage_upper = 4
+	obj_damage = 20
+	environment_smash = 0
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	flying = 1
@@ -207,7 +209,7 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	obj_damage = 20
+	obj_damage = 60
 	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	verb_say = "gurgles"

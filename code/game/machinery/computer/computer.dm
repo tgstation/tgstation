@@ -10,6 +10,7 @@
 	health = 200
 	maxhealth = 200
 	broken_health = 100
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 20)
 	var/obj/item/weapon/circuitboard/computer/circuit = null // if circuit==null, computer can't disassembly
 	var/processing = 0
 	var/brightness_on = 2
@@ -105,18 +106,6 @@
 			stat |= BROKEN
 			update_icon()
 
-/obj/machinery/computer/acid_melt()
-	if(!(flags & NODECONSTRUCT))
-		SSacid.processing -= src
-		var/turf/T = get_turf(src)
-		var/remaining_acid = acid_level
-		deconstruct(FALSE)
-		for(var/atom/movable/AM in T) //the acid that is still unused drops on the other things on the same turf.
-			if(AM == src)
-				continue
-			AM.acid_act(10, 0.1 * remaining_acid/T.contents.len)
-	else
-		..()
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
@@ -128,6 +117,8 @@
 			if(stat & BROKEN)
 				if(user)
 					user << "<span class='notice'>The broken glass falls out.</span>"
+				else
+					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 				new /obj/item/weapon/shard(src.loc)
 				new /obj/item/weapon/shard(src.loc)
 				A.state = 3

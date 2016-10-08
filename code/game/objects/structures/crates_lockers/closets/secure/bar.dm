@@ -2,7 +2,7 @@
 	name = "booze storage"
 	req_access = list(access_bar)
 	icon_state = "cabinet"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 70
 	maxhealth = 70
 

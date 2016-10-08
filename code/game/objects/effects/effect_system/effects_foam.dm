@@ -199,9 +199,6 @@
 	..()
 	move_update_air(T)
 
-/obj/structure/foamedmetal/blob_act(obj/structure/blob/B)
-	qdel(src)
-
 /obj/structure/foamedmetal/attack_paw(mob/user)
 	attack_hand(user)
 

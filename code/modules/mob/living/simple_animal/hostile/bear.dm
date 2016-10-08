@@ -22,6 +22,7 @@
 	health = 60
 	var/armored = FALSE
 
+	obj_damage = 60
 	melee_damage_lower = 20
 	melee_damage_upper = 30
 	attacktext = "claws"

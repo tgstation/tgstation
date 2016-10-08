@@ -2,7 +2,7 @@
 	name = "cabinet"
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 70
 	maxhealth = 70
 

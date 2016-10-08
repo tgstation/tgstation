@@ -6,7 +6,7 @@
 
 /obj/structure/disposalholder
 	invisibility = INVISIBILITY_MAXIMUM
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
@@ -287,11 +287,10 @@
 	..()
 */
 
-/obj/structure/disposalpipe/attacked_by(obj/item/I, mob/user)
-	if(I.force < 10)
-		take_damage(0)
-	else
-		..()
+/obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 10)
+		return 0
+	. = ..()
 
 /obj/structure/disposalpipe/fire_act(exposed_temperature, exposed_volume)
 	var/turf/T = src.loc

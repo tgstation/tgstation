@@ -13,8 +13,9 @@
 	anchored = 1
 	density = 1
 
-	health = 200
-	maxhealth = 200
+	health = 250
+	maxhealth = 250
+	broken_health = 80
 
 	// These allow for different icons when creating custom dispensers
 	var/icon_off = "off"
@@ -157,9 +158,6 @@
 	..()
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
 		user << "<span class='warning'>[recharging_text]</span>"
-	if(stat & BROKEN)
-		user << "<span class='warning'>[src] is smoking and steadily buzzing. \
-			It seems to be broken.</span>"
 	if(metal_cost)
 		user << "<span class='notice'>It has [materials.amount(MAT_METAL)] \
 			units of metal stored.</span>"
@@ -305,7 +303,7 @@
 	else
 		return ..()
 
-/obj/machinery/droneDispenser/deconstruct(disassembled = TRUE)
+/obj/machinery/droneDispenser/obj_break(damage_flag)
 	if(!(flags & NODECONSTRUCT))
 		if(!(stat & BROKEN))
 			if(break_message)
@@ -315,6 +313,11 @@
 				playsound(src, break_sound, 50, 1)
 			stat |= BROKEN
 			update_icon()
+
+/obj/machinery/droneDispenser/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 5)
+	qdel(src)
 
 #undef DRONE_PRODUCTION
 #undef DRONE_RECHARGING

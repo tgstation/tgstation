@@ -5,7 +5,8 @@
 	desc = "A display case for prized possessions."
 	density = 1
 	anchored = 1
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = ACID_PROOF
+	//phil235 need a nice fire armor here
 	health = 200
 	maxhealth = 200
 	broken_health = 50

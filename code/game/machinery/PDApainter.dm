@@ -74,7 +74,7 @@
 					user << "<span class='notice'>You repair [src].</span>"
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					stat &= ~BROKEN
-					health = initial(health)
+					health = maxhealth
 					update_icon()
 		else
 			user << "<span class='notice'>[src] does not need repairs.</span>"

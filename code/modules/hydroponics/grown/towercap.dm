@@ -165,7 +165,7 @@
 			continue
 		if(isobj(A))
 			var/obj/O = A
-			O.fire_act()
+			O.fire_act(1000, 500)
 		else if(isliving(A))
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)

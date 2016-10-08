@@ -10,7 +10,7 @@
 	power_channel = ENVIRON
 	health = 350
 	maxhealth = 350
-	armor = list(melee = 30, bullet = 30, laser = 20, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 70)
+	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
@@ -159,16 +159,15 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	else
 		return ..()
 
-/obj/machinery/door/attacked_by(obj/item/I, mob/living/user)
-	if(I.force < 10)
-		take_damage(0)
-	else
-		..()
+/obj/machinery/door/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 10)
+		return 0
+	. = ..()
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(. && health > 0)
-		if(prob(20))
+		if(damage_amount >= 10 && prob(30))
 			spark_system.start()
 
 /obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

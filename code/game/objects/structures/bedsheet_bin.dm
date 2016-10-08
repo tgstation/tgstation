@@ -17,7 +17,7 @@ LINEN BINS
 	throw_range = 2
 	w_class = 1
 	item_color = "white"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 
@@ -205,7 +205,7 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 70
 	maxhealth = 70
 	var/amount = 10

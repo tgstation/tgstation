@@ -7,7 +7,7 @@
 	throw_speed = 1
 	throwforce = 0
 	w_class = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 10
 	maxhealth = 10
 

@@ -702,6 +702,13 @@
 
 	..()
 
+/mob/living/carbon/ExtinguishMob()
+	for(var/X in get_equipped_items())
+		var/obj/item/I = X
+		I.acid_level = 0 //washes off the acid on our clothes
+		I.extinguish() //extinguishes our clothes
+	..()
+
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
 	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
 	apply_overlay(FIRE_LAYER)

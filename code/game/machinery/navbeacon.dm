@@ -10,6 +10,7 @@
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
 	anchored = 1
+	//phil235 how resistant should this be?
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked

@@ -3,7 +3,7 @@
 //Effects are mostly temporary visual effects like sparks, smoke, as well as decals, etc...
 /obj/effect
 	icon = 'icons/effects/effects.dmi'
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/attackby(obj/item/I, mob/living/user, params)
 	return
@@ -15,6 +15,9 @@
 	return
 
 /obj/effect/acid_act()
+	return
+
+/obj/effect/blob_act()
 	return
 
 /obj/effect/ex_act(severity, target)
@@ -31,4 +34,5 @@
 				if(prob(25))
 					qdel(src)
 
-
+/obj/effect/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	return 0

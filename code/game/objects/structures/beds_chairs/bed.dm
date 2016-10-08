@@ -15,7 +15,7 @@
 	anchored = 1
 	can_buckle = 1
 	buckle_lying = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 100
 	maxhealth = 100
 	broken_health = 30
@@ -46,7 +46,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 	var/foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)

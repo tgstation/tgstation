@@ -54,7 +54,7 @@
 		. *= booster_damage_modifier
 
 
-/obj/mecha/attack_hand(mob/living/user as mob)
+/obj/mecha/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src)
 	log_message("Attack by hand/paw. Attacker - [user].",1)
@@ -65,17 +65,42 @@
 	return attack_hand(user)
 
 
-/obj/mecha/attack_alien(mob/living/user as mob)
+/obj/mecha/attack_alien(mob/living/user)
 	log_message("Attack by alien. Attacker - [user].",1)
-	. = ..()
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	attack_generic(user, 15, BRUTE, "melee", 0)
 
-/obj/mecha/attack_animal(mob/living/simple_animal/user as mob)
+/obj/mecha/attack_animal(mob/living/simple_animal/user)
 	log_message("Attack by simple animal. Attacker - [user].",1)
-	. = ..()
-	if(.)
+	if(!user.melee_damage_upper && !user.obj_damage)
+		user.emote("[user.friendly] [src]")
+		return 0
+	else
+		var/play_soundeffect = 1
+		if(user.environment_smash)
+			play_soundeffect = 0
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
+		if(user.obj_damage)
+			animal_damage = user.obj_damage
+		animal_damage = min(animal_damage, 20*user.environment_smash)
+		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
 		add_logs(user, src, "attacked")
+		return 1
 
 
+
+/obj/mecha/attack_hulk(mob/living/carbon/human/user)
+	if(user.a_intent == "harm")
+		log_message("Attack by hulk. Attacker - [user].",1)
+		user.changeNext_move(CLICK_CD_MELEE)
+		add_logs(user, src, "punched", "hulk powers")
+		user.do_attack_animation(src)
+		user.visible_message("<span class='danger'>[user] hits [name]. The metal creaks and bends.</span>")
+		take_damage(15, BRUTE, "melee", 0, get_dir(src, user))
+
+/obj/mecha/blob_act(obj/structure/blob/B)
+	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))
 
 /obj/mecha/attack_tk()
 	return
@@ -230,6 +255,7 @@
 
 /obj/mecha/attacked_by(obj/item/I, mob/living/user)
 	log_message("Attacked by [I]. Attacker - [user]")
+	..()
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1)

@@ -5,6 +5,7 @@
 	step_in = 3
 	max_temperature = 15000
 	health = 120
+	maxhealth = 120
 	wreckage = /obj/structure/mecha_wreckage/odysseus
 	internal_damage_threshold = 35
 	deflect_chance = 15

@@ -366,7 +366,7 @@
 				break
 	SplashReagents(target)
 	if(firestarter && active)
-		target.fire_act() //phil235 not necessary already called by the created hotspot.
+		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
 	..()
 

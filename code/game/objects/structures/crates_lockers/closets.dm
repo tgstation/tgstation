@@ -200,12 +200,6 @@
 		if(damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser")
 			bust_open()
 
-/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
-		qdel(src)
-
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user, params)
 	if(user in src)
 		return

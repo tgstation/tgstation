@@ -10,7 +10,7 @@
 	var/interval 	= 2
 	var/list/vents  = list()
 	var/list/gunk = list("water","carbon","flour","radium","toxin","cleaner","nutriment","condensedcapsaicin","mushroomhallucinogen","lube",
-								 "plantbgone","banana","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","facid")
+								 "plantbgone","banana","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","sacid")
 
 /datum/round_event/vent_clog/announce()
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")

@@ -12,10 +12,10 @@
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
 
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
-	health = 50
-	maxhealth = 50
-	broken_health = 25
+	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
+	health = 100
+	maxhealth = 100
+	broken_health = 50
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -142,7 +142,7 @@
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/wirecutters)) //enable/disable the camera
 			toggle_cam(user, 1)
-			health = initial(health) //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
+			health = maxhealth //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 			return
 
 		else if(istype(W, /obj/item/device/multitool)) //change focus
@@ -239,11 +239,10 @@
 
 	return ..()
 
-/obj/machinery/camera/attacked_by(obj/item/I, mob/living/user)
-	if(I.force < 12 && !(stat & BROKEN))
-		take_damage(0)
-	else
-		..()
+/obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 12 && !(stat & BROKEN))
+		return 0
+	. = ..()
 
 /obj/machinery/camera/obj_break(damage_flag)
 	if(status && !(flags & NODECONSTRUCT))

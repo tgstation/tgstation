@@ -345,6 +345,11 @@
 	return standing
 
 
+
+/obj/item/bodypart/deconstruct(disassembled = TRUE)
+	drop_organs()
+	qdel(src)
+
 /obj/item/bodypart/chest
 	name = "chest"
 	desc = "It's impolite to stare at a person's chest."

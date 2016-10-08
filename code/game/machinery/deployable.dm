@@ -95,7 +95,7 @@
 	health = 180
 	maxhealth = 180
 	proj_pass_rate = 20
-	armor = list(melee = 10, bullet = 50, laser = 50, energy = 0, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
+	armor = list(melee = 10, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 
 
 /obj/structure/barricade/security/New()

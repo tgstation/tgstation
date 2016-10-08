@@ -171,7 +171,7 @@
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
 
 
-/mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user)
+/mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
 		..(user, 1)
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)

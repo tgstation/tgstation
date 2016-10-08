@@ -483,7 +483,7 @@ var/global/list/multiverse = list()
 	var/cooldown = 0
 	health = 10
 	maxhealth = 10
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)

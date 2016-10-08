@@ -9,7 +9,7 @@
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "easel"
 	density = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 60
 	maxhealth = 60
 	var/obj/item/weapon/canvas/painting = null
@@ -52,7 +52,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 	desc = "draw out your soul on this canvas!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	var/whichGlobalBackup = 1 //List index
 
 /obj/item/weapon/canvas/nineteenXnineteen

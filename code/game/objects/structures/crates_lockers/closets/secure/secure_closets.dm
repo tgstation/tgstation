@@ -8,8 +8,7 @@
 	armor = list(melee = 30, bullet = 50, laser = 50, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 	secure = 1
 
-/obj/structure/closet/secure_closet/attacked_by(obj/item/I, mob/living/user)
-	if(I.force < 20)
-		take_damage(0)
-	else
-		..()
+/obj/structure/closet/secure_closet/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 20)
+		return 0
+	. = ..()

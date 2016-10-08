@@ -57,14 +57,6 @@
 /obj/structure/table/attack_paw(mob/user)
 	attack_hand(user)
 
-/obj/structure/table/attack_hulk(mob/living/carbon/human/user)
-	..(user, 1)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-	visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-	take_damage(rand(180,280), BRUTE, "melee", 0)
-	return 1
-
 /obj/structure/table/attack_hand(mob/living/user)
 	if(user.a_intent == "grab" && user.pulling && isliving(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
@@ -122,7 +114,7 @@
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if(do_after(user, 40, target = src))
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				deconstruct(FALSE)
+				deconstruct(TRUE, 1)
 			return
 
 	if(istype(I, /obj/item/weapon/storage/bag/tray))
@@ -153,11 +145,11 @@
 		return ..()
 
 
-/obj/structure/table/deconstruct(disassembled = TRUE)
+/obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
 	if(!(flags & NODECONSTRUCT))
 		var/turf/T = get_turf(src)
 		new buildstack(T, buildstackamount)
-		if(disassembled)
+		if(!wrench_disassembly)
 			new frame(T)
 		else
 			new framestack(T, framestackamount)
@@ -176,7 +168,8 @@
 	canSmoothWith = null
 	health = 70
 	maxhealth = 70
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = ACID_PROOF
+	//phil235 fire armor here
 	var/list/debris = list()
 
 /obj/structure/table/glass/New()
@@ -223,6 +216,20 @@
 	M.Weaken(5)
 	qdel(src)
 
+/obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			..()
+			return
+		else
+			var/turf/T = get_turf(src)
+			playsound(T, "shatter", 50, 1)
+			for(var/X in debris)
+				var/atom/movable/AM = X
+				AM.forceMove(T)
+				debris -= AM
+	qdel(src)
+
 /obj/structure/table/glass/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
 	for(var/obj/item/weapon/shard/S in debris)
@@ -240,7 +247,7 @@
 	frame = /obj/structure/table_frame/wood
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 70
 	maxhealth = 70
 	canSmoothWith = list(/obj/structure/table/wood,
@@ -330,7 +337,7 @@
 		animate(src, color = previouscolor, time = 8)
 
 /obj/structure/table/reinforced/brass/ratvar_act()
-	health = initial(health)
+	health = maxhealth
 
 /*
  * Surgery Tables

@@ -166,7 +166,8 @@
 
 		for(var/X in burning_items)
 			var/obj/item/I = X
-			I.take_damage(fire_stacks, BURN, "fire", 0)
+			if(!(I.resistance_flags & FIRE_PROOF))
+				I.take_damage(fire_stacks, BURN, "fire", 0)
 
 		var/thermal_protection = get_thermal_protection()
 

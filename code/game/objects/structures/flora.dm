@@ -1,5 +1,5 @@
 /obj/structure/flora
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 150
 	maxhealth = 150
 	anchored = 1

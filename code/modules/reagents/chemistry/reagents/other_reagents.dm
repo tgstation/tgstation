@@ -135,8 +135,7 @@
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
 	O.extinguish()
-	if(O.acid_level)
-		O.acid_level = max(O.acid_level - reac_volume*50, 0)
+	O.acid_level = 0
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O

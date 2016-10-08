@@ -277,7 +277,7 @@
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = 2
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 
 /*
@@ -638,7 +638,7 @@
 
 
 /obj/item/toy/cards
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 50
 	maxhealth = 50
 	var/parentdeck = null
@@ -991,7 +991,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /*
  * Fake nuke
@@ -1051,7 +1051,7 @@
 	item_state = "carp_plushie"
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 //Attack mob
@@ -1161,7 +1161,7 @@
 	icon_state = "toy_mouse"
 	w_class = 2.0
 	var/cooldown = 0
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 
 /*

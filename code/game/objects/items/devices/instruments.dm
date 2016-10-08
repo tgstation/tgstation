@@ -1,7 +1,7 @@
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/device/instrument
 	name = "generic instrument"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 100
 	maxhealth = 100
 	var/datum/song/handheld/song

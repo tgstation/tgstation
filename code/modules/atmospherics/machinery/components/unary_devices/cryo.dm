@@ -4,6 +4,9 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1
+	health = 350
+	maxhealth = 350
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
 
 	var/on = FALSE
 	state_open = FALSE
@@ -54,6 +57,12 @@
 		qdel(beaker)
 		beaker = null
 	return ..()
+
+//phil235 deconstruct or on_deconstruction?
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
+	if(beaker)
+		beaker.forceMove(loc)
+		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	if(panel_open)

@@ -52,7 +52,7 @@
 	gender = NEUTER
 	layer = WALL_OBJ_LAYER
 	icon_state = "cobweb1"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"

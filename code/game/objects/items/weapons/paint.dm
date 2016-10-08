@@ -10,7 +10,7 @@
 	item_color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 40
 	maxhealth = 40
 	var/paintleft = 10

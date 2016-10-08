@@ -558,11 +558,10 @@
 	else
 		return ..()
 
-/obj/machinery/power/apc/attacked_by(obj/item/I, mob/living/user)
-	if(I.force < 15 && (!(stat & BROKEN) || malfai))
-		take_damage(0)
-	else
-		..()
+/obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
+		return 0
+	. = ..()
 
 
 /obj/machinery/power/apc/obj_break(damage_flag)

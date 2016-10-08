@@ -11,7 +11,7 @@
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	health = 30
 	maxhealth = 30
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 90)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed when?
 	var/heal_timestamp = 0 //we got healed when?
@@ -28,11 +28,10 @@
 	blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(cardinal))
 	update_icon()
-	..(loc)
+	..()
 	ConsumeTile()
 	if(atmosblock)
 		air_update_turf(1)
-	return
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -46,6 +45,8 @@
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
+/obj/structure/blob/blob_act()
+	return
 
 /obj/structure/blob/Adjacent(var/atom/neighbour)
 	. = ..()
@@ -277,12 +278,12 @@
 		armor_protection = armor[damage_flag]
 	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
 	if(overmind && damage_flag)
-		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, health, damage_amount, damage_type, damage_flag) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
+		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, damage_amount, damage_type, damage_flag) //pass the blob, its health before damage, the damage being done, the type of damage being done, and the cause.
 	return damage_amount
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(health > 0)
+	if(. && health > 0)
 		update_icon()
 
 /obj/structure/blob/obj_destruction(damage_flag)

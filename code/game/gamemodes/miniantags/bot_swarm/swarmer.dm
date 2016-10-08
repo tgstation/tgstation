@@ -83,6 +83,7 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	languages_spoken = SWARMER
 	languages_understood = SWARMER
+	obj_damage = 0
 	environment_smash = 0
 	attacktext = "shocks"
 	attack_sound = 'sound/effects/EMPulse.ogg'

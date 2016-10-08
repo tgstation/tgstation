@@ -30,9 +30,10 @@
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
 	health = 300 //health is health
+	maxhealth = 300
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//phil235 brute and burn instead of melee?
-	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
@@ -239,7 +240,7 @@
 
 /obj/mecha/examine(mob/user)
 	..()
-	var/integrity = health/initial(health)*100
+	var/integrity = health*100/maxhealth
 	switch(integrity)
 		if(85 to 100)
 			user << "It's fully intact."
@@ -255,8 +256,6 @@
 		user << "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
 			user << "\icon[ME] [ME]"
-	return
-
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -341,7 +340,7 @@
 				else
 					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
 
-		var/integrity = health/initial(health)*100
+		var/integrity = health/maxhealth*100
 		switch(integrity)
 			if(30 to 45)
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
@@ -567,7 +566,7 @@
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
-		if(ignore_threshold || health*100/initial(health) < internal_damage_threshold)
+		if(ignore_threshold || health*100/maxhealth < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -575,7 +574,7 @@
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || health*100/initial(health)<internal_damage_threshold)
+		if(ignore_threshold || health*100/maxhealth < internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/ME = safepick(equipment)
 			if(ME)
 				qdel(ME)

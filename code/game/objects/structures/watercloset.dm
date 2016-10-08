@@ -274,6 +274,7 @@
 
 	if(istype(O,/obj/item))
 		var/obj/item/I = O
+		I.acid_level = 0
 		I.extinguish()
 
 
@@ -371,6 +372,10 @@
 			else
 				wash_obj(G)
 
+/obj/machinery/shower/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 3)
+	//phil235 spill water, and same for sink
+	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
 	if(watertemp == "freezing")
@@ -502,6 +507,11 @@
 	else
 		return ..()
 
+/obj/structure/sink/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 3)
+	qdel(src)
+
+
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
@@ -540,7 +550,6 @@
 	density = 0
 	var/open = TRUE
 
-
 /obj/structure/curtain/proc/toggle()
 	open = !open
 	update_icon()
@@ -563,3 +572,16 @@
 	toggle()
 	..()
 
+/obj/structure/curtain/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/cloth (loc, 3)
+	qdel(src)
+
+/obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 80, 1)

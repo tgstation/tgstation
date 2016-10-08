@@ -4,10 +4,11 @@
 	icon_state = "marauder"
 	step_in = 5
 	health = 500
+	maxhealth = 500
 	deflect_chance = 25
-	armor = list(melee = 50, bullet = 55, laser = 40, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 50, bullet = 55, laser = 40, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_temperature = 60000
-	resistance_flags = LAVA_PROOF |FIRE_PROOF | ACID_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	infra_luminosity = 3
 	operation_req_access = list(access_cent_specops)
 	wreckage = /obj/structure/mecha_wreckage/marauder

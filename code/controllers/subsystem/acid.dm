@@ -32,7 +32,7 @@ var/datum/subsystem/acid/SSacid
 				return
 			continue
 
-		if(O.acid_level && O.acid_processing_effect())
+		if(O.acid_level && O.acid_processing())
 		else
 			O.overlays -= acid_overlay
 			O.priority_overlays -= acid_overlay

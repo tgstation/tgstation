@@ -6,6 +6,9 @@
 	var/icon_state_open = "cold_off"
 	density = TRUE
 	anchored = TRUE
+	health = 300
+	maxhealth = 300
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
 
 	var/on = FALSE
 	var/min_temperature = 0

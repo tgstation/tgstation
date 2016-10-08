@@ -266,14 +266,6 @@
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSGRILLE)
 
-/obj/structure/girder/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		if(state != GIRDER_DISPLACED)
-			var/obj/structure/girder/displaced/D = new (loc)
-			transfer_fingerprints_to(D)
-		qdel(src)
-
-
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)

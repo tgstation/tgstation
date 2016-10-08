@@ -59,7 +59,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	luminosity = 0
 	health = 300
 	maxhealth = 300
-	armor = list(melee = 90, bullet = 90, laser = 90, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
+	armor = list(melee = 70, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
+	//phil235
 
 /obj/machinery/requests_console/power_change()
 	..()

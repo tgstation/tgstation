@@ -7,11 +7,10 @@
 	amount_per_transfer_from_this = 10
 	volume = 50
 	materials = list(MAT_GLASS=500)
-	resistance_flags = 0
 	health = 20
 	maxhealth = 20
 	spillable = 1
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = ACID_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	cut_overlays()

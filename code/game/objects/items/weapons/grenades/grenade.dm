@@ -9,20 +9,18 @@
 	throw_range = 7
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 40
 	maxhealth = 40
 	var/active = 0
 	var/det_time = 50
 	var/display_timer = 1
 
-/obj/item/weapon/grenade/burn()
-	prime()
-	..()
-
-/obj/item/weapon/grenade/acid_melt()
-	prime()
-	..()
+/obj/item/weapon/grenade/deconstruct(disassembled = TRUE)
+	if(!disassembled) //phil235 test
+		prime()
+	if(!qdeleted(src))
+		qdel(src)
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))

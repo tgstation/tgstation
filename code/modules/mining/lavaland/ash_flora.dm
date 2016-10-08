@@ -152,7 +152,7 @@
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
 	w_class = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 100
 	maxhealth = 100
 	var/prepared = FALSE
@@ -241,7 +241,7 @@
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
 	w_class = 2
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 200
 	maxhealth = 200
 

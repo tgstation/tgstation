@@ -3,12 +3,12 @@
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = ACID_PROOF
 	var/base_state = "left"
 	health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	maxhealth = 150
 	broken_health = 0
-	armor = list(melee = 20, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 100)
+	armor = list(melee = 20, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 100)
 	visible = 0
 	flags = ON_BORDER
 	opacity = 0
@@ -325,7 +325,7 @@
 	return ..()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
-	health = initial(health)
+	health = maxhealth
 
 /obj/machinery/door/window/clockwork/hasPower()
 	return TRUE //yup that's power all right

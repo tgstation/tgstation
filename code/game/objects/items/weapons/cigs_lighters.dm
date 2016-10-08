@@ -448,6 +448,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	slot_flags = SLOT_BELT
 	var/lit = 0
 	heat = 1500
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/lighter/greyscale
 	name = "cheap lighter"

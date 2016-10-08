@@ -17,7 +17,7 @@
 	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 20
 	maxhealth = 20
 	dog_fashion = /datum/dog_fashion/head

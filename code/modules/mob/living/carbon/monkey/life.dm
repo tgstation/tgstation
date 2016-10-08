@@ -143,26 +143,26 @@
 
 /mob/living/carbon/monkey/handle_fire()
 	. = ..()
-	if(.) //not on fire
-		return
+	if(on_fire)
 
-	//the fire tries to damage the exposed clothes and items
-	var/list/burning_items = list()
-	//HEAD//
-	var/obj/item/clothing/head_clothes = null
-	if(wear_mask)
-		head_clothes = wear_mask
-	if(head)
-		head_clothes = head
-	if(head_clothes)
-		burning_items += head_clothes
+		//the fire tries to damage the exposed clothes and items
+		var/list/burning_items = list()
+		//HEAD//
+		var/obj/item/clothing/head_clothes = null
+		if(wear_mask)
+			head_clothes = wear_mask
+		if(head)
+			head_clothes = head
+		if(head_clothes)
+			burning_items += head_clothes
 
-	if(back)
-		burning_items += back
+		if(back)
+			burning_items += back
 
-	for(var/X in burning_items)
-		var/obj/item/I = X
-		I.take_damage(fire_stacks, BURN, "fire", 0)
+		for(var/X in burning_items)
+			var/obj/item/I = X
+			if(!(I.resistance_flags & FIRE_PROOF))
+				I.take_damage(fire_stacks, BURN, "fire", 0)
 
-	bodytemperature += BODYTEMP_HEATING_MAX
+		bodytemperature += BODYTEMP_HEATING_MAX
 

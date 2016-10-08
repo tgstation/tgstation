@@ -5,8 +5,9 @@
 	step_in = 4
 	dir_in = 1 //Facing North.
 	health = 400
+	maxhealth = 400
 	deflect_chance = 20
-	armor = list(melee = 40, bullet = 35, laser = 15, energy = 10, bomb = 20, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 40, bullet = 35, laser = 15, energy = 10, bomb = 20, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_temperature = 30000
 	infra_luminosity = 8
 	force = 40

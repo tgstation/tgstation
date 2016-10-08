@@ -18,7 +18,8 @@
 	health = 50000
 	healable = 0
 
-	harm_intent_damage = 70
+	harm_intent_damage = 10
+	obj_damage = 100
 	melee_damage_lower = 68
 	melee_damage_upper = 83
 	attacktext = "claws"

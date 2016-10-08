@@ -157,7 +157,7 @@
 	name = "\proper detective's cabinet"
 	req_access = list(access_forensics_lockers)
 	icon_state = "cabinet"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 70
 	maxhealth = 70
 

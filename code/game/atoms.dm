@@ -62,10 +62,11 @@
 
 	return 0
 
-/atom/proc/attack_hulk(mob/living/carbon/human/hulk)
-	hulk.changeNext_move(CLICK_CD_MELEE)
-	add_logs(hulk, src, "punched", "hulk powers")
-	hulk.do_attack_animation(src)
+/atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(does_attack_animation)
+		user.changeNext_move(CLICK_CD_MELEE)
+		add_logs(user, src, "punched", "hulk powers")
+		user.do_attack_animation(src)
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)

@@ -75,12 +75,21 @@
 	take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180))
 
 
-/obj/attack_hulk(mob/living/carbon/human/user)
-	..()
-	take_damage(200, BRUTE, "melee", 1, get_dir(src, user))
+/obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(user.a_intent == "harm")
+		..(user, 1)
+		visible_message("<span class='danger'>[user] smashes [src]!</span>")
+		if(density)
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		else
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		take_damage(150, BRUTE, "melee", 0, get_dir(src, user))
+		return 1
+	return 0
 
 /obj/blob_act(obj/structure/blob/B)
-	take_damage(500, BRUTE, "melee", 1, get_dir(src, B))
+	take_damage(400, BRUTE, "melee", 0, get_dir(src, B))
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	user.do_attack_animation(src)
@@ -90,17 +99,21 @@
 
 /obj/attack_alien(mob/living/carbon/alien/humanoid/user)
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	attack_generic(user, 40, BRUTE, "melee", 0)
+	attack_generic(user, 60, BRUTE, "melee", 0)
 
 /obj/attack_animal(mob/living/simple_animal/M) //phil235 envir smash?
 	if(!M.melee_damage_upper && !M.obj_damage)
 		M.emote("[M.friendly] [src]")
 		return 0
 	else
+		var/play_soundeffect = 1
+		if(M.environment_smash)
+			play_soundeffect = 0
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		if(M.obj_damage)
-			attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", 1)
+			attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", play_soundeffect)
 		else
-			attack_generic(M, 2*rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", 1)
+			attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", play_soundeffect)
 		return 1
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
@@ -154,11 +167,11 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
 		return 1
 
-/obj/proc/acid_processing_effect()
+/obj/proc/acid_processing()
 	. = 1
 	if(!(resistance_flags & ACID_PROOF))
 		for(var/armour_value in armor)
-			if(armour_value != "acid")
+			if(armour_value != "acid" && armour_value != "fire")
 				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
 		if(prob(33))
 			playsound(loc, 'sound/items/Welder.ogg', 150, 1)
@@ -181,11 +194,9 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 				I.acid_act(10, 0.1 * remaining_acid/T.contents.len)
 
 /obj/fire_act(exposed_temperature, exposed_volume)
-	var/fire_dmg = 20
-	if(exposed_temperature)
-		fire_dmg = Clamp(0.05 * exposed_temperature, 0, 20)
-	take_damage(fire_dmg, BURN, "fire", 0)
-	if(!(resistance_flags & (FIRE_PROOF|ON_FIRE)))
+	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
+		take_damage(Clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
+	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
 		add_overlay(fire_overlay)

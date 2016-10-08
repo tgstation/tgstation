@@ -691,7 +691,7 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF //an effect with health, phil235, fuck this, change it.
 	health = 10 //phil235 that obj had a burntime despite being an effect???
 	maxhealth = 10
 	var/affects_servants = FALSE

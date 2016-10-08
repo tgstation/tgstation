@@ -16,7 +16,8 @@ Pipelines + Other Objects -> Pipe network
 	power_channel = ENVIRON
 	on_blueprints = TRUE
 	layer = GAS_PIPE_LAYER //under wires
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 70)
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
 	health = 200
 	maxhealth = 200
 	var/nodealert = 0
@@ -158,14 +159,6 @@ Pipelines + Other Objects -> Pipe network
 				deconstruct(TRUE)
 	else
 		return ..()
-
-/obj/machinery/atmospherics/attacked_by(obj/item/I, mob/user)
-	if(I.force < 10 && !(stat & BROKEN))
-		take_damage(0)
-	else
-		investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
-		add_fingerprint(user)
-		..()
 
 /obj/machinery/atmospherics/proc/can_unwrench(mob/user)
 	return can_unwrench

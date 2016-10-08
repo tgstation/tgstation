@@ -302,7 +302,7 @@
 	var/image/holder = hud_list[DIAG_MECH_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	holder.icon_state = "huddiag[RoundDiagBar(health/initial(health))]"
+	holder.icon_state = "huddiag[RoundDiagBar(health/maxhealth)]"
 
 
 /obj/mecha/proc/diag_hud_set_mechcell()

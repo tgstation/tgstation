@@ -35,6 +35,7 @@
 	response_harm   = "hits"
 	maxHealth = 200
 	health = 200
+	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	faction = list("spiders")

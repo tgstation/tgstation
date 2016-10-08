@@ -47,8 +47,20 @@
 
 
 /obj/structure/sign/barsign/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(! broken && !(flags & NODECONSTRUCT))
 		broken = 1
+
+/obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 2)
+	new /obj/item/stack/cable_coil (loc, 2)
+	qdel(src)
+
+/obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		if(BURN)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return src.attack_hand(user)

@@ -399,7 +399,20 @@ Class Procs:
 /obj/machinery/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		user << "Looks broken."
+		user << "<span class='notice'>It looks broken and non functional.</span>"
+	if(!(resistance_flags & INDESTRUCTIBLE))
+		if(resistance_flags & ON_FIRE)
+			user << "<span class='warning'>It's on fire!</span>"
+		var/healthpercent = (health/maxhealth) * 100
+		switch(healthpercent)
+			if(100 to INFINITY)
+				user <<  "It seems pristine and undamaged."
+			if(50 to 100)
+				user <<  "It looks slightly damaged."
+			if(25 to 50)
+				user <<  "It appears heavily damaged."
+			if(0 to 25)
+				user <<  "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
 		display_parts(user)
 

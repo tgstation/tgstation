@@ -418,7 +418,7 @@
 	item_state = "golem"
 	item_color = "golem"
 	flags = ABSTRACT | NODROP
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	has_sensor = 0
 
 /obj/item/clothing/suit/golem
@@ -431,7 +431,7 @@
 	permeability_coefficient = 0.50
 	body_parts_covered = FULL_BODY
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 /obj/item/clothing/shoes/golem
@@ -439,7 +439,7 @@
 	desc = "sturdy adamantine feet"
 	icon_state = "golem"
 	item_state = null
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = NOSLIP | ABSTRACT | NODROP
 
 
@@ -460,7 +460,7 @@
 	item_state = null
 	siemens_coefficient = 0
 	flags = ABSTRACT | NODROP
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 
 /obj/item/clothing/head/space/golem

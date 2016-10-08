@@ -12,15 +12,14 @@
 	health = 100
 	maxhealth = 100
 
-/obj/structure/alien/attacked_by(obj/item/I, mob/user)
-	user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
-	var/damage = I.force
-	switch(I.damtype)
-		if(BRUTE)
-			damage *= 0.25 //phil235 moved to take_damage? or reduction is just for item attack and not other attacks
-		if(BURN)
-			damage *= 2
-	take_damage(damage, I.damtype, "melee")
+/obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee")
+		switch(damage_type)
+			if(BRUTE)
+				damage_amount *= 0.25
+			if(BURN)
+				damage_amount *= 2
+	. = ..()
 
 /obj/structure/alien/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

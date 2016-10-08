@@ -24,9 +24,10 @@
 	var/lasercolor = ""		//Something to do with lasertag turrets, blame Sieve for not adding a comment.
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
-	health = 80				//the turret's health
-	maxhealth = 80
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
+	health = 160			//the turret's health
+	maxhealth = 160
+	broken_health = 80
+	armor = list(melee = 50, bullet = 30, laser = 30, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 90, acid = 90)
 
 	var/locked = 1			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
@@ -670,6 +671,7 @@
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 	var/list/obj/machinery/porta_turret/turrets = list()
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/turretid/New(loc, ndir = 0, built = 0)
 	..()

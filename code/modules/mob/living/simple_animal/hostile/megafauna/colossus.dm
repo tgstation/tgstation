@@ -625,6 +625,7 @@ Difficulty: Very Hard
 	flying = 1
 	minbodytemp = 0
 	maxbodytemp = 1500
+	obj_damage = 0
 	environment_smash = 0
 	AIStatus = AI_OFF
 	stop_automated_movement = 1

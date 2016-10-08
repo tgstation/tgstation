@@ -5,7 +5,7 @@
 	icon_state = "moneybag"
 	force = 10
 	throwforce = 0
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 100
 	maxhealth = 100
 	w_class = 4

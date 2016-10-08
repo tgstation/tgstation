@@ -14,7 +14,7 @@
 	var/maxhealth = 500
 	var/broken_health = 0 //0 if we have no special broken behavior
 
-	var/resistance_flags = FIRE_PROOF // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+	var/resistance_flags = 0 // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
 	var/acid_level = 0 //how much acid is on that obj
 
@@ -183,19 +183,3 @@
 
 /obj/proc/check_uplink_validity()
 	return 1
-
-/obj/examine(mob/user)
-	..()
-	if(!(resistance_flags & INDESTRUCTIBLE)) //phil35 maybe make this a proc so it doesn't show for effect?
-		if(resistance_flags & ON_FIRE)
-			user << "<span class='warning'>It's on fire!</span>"
-		var/healthpercent = (health/maxhealth) * 100
-		switch(healthpercent)
-			if(100 to INFINITY)
-				user <<  "It seems pristine and undamaged."
-			if(50 to 100)
-				user <<  "It looks slightly damaged."
-			if(25 to 50)
-				user <<  "It appears heavily damaged."
-			if(0 to 25)
-				user <<  "<span class='warning'>It's falling apart!</span>"

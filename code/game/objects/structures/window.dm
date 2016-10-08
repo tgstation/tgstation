@@ -19,7 +19,8 @@
 	var/image/crack_overlay
 	var/list/debris = list()
 	can_be_unanchored = 1
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = ACID_PROOF
+	//phil235 fire armor here
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -97,9 +98,9 @@
 	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
-/obj/structure/window/attack_hulk(mob/living/carbon/human/user)
+/obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
-		return
+		return 1
 	..()
 
 /obj/structure/window/attack_hand(mob/user)

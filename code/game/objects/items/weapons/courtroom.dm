@@ -11,7 +11,7 @@
 	throwforce = 6
 	w_class = 2
 	attack_verb = list("bashed", "battered", "judged", "whacked")
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/gavelhammer/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] has sentenced \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -26,7 +26,7 @@
 	force = 2
 	throwforce = 2
 	w_class = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/gavelblock/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/gavelhammer))

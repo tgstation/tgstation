@@ -17,7 +17,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /*
  * Photo
@@ -28,7 +28,7 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 10
 	maxhealth = 10
 	var/icon/img		//Big photo image
@@ -95,7 +95,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /*
  * Camera

@@ -4,9 +4,10 @@
 	icon_state = "honker"
 	step_in = 3
 	health = 140
+	maxhealth = 140
 	deflect_chance = 60
 	internal_damage_threshold = 60
-	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_temperature = 25000
 	infra_luminosity = 5
 	operation_req_access = list(access_theatre)
@@ -27,7 +28,7 @@
 */
 
 /obj/mecha/combat/honker/get_stats_part()
-	var/integrity = health/initial(health)*100
+	var/integrity = health/maxhealth*100
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"

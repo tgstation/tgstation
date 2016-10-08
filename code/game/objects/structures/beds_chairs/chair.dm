@@ -6,7 +6,7 @@
 	anchored = 1
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 	health = 250
 	maxhealth = 250
 	broken_health = 25
@@ -26,10 +26,6 @@
 
 /obj/structure/chair/attack_paw(mob/user)
 	return attack_hand(user)
-
-/obj/structure/chair/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
-	if(M.environment_smash)
-		deconstruct()
 
 /obj/structure/chair/narsie_act()
 	if(prob(20))
@@ -110,7 +106,7 @@
 	icon_state = "wooden_chair"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 70
 	maxhealth = 70
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
@@ -132,7 +128,7 @@
 	desc = "It looks comfy.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 70
 	maxhealth = 70
 	buildstackamount = 2
@@ -302,7 +298,7 @@
 	name = "wooden chair"
 	icon_state = "wooden_chair_toppled"
 	item_state = "woodenchair"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	health = 70
 	maxhealth = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
