@@ -618,6 +618,7 @@
 	D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
 						"<span class='userdanger'>[A] locks you into a restraining position!</span>")
 	D.adjustStaminaLoss(20)
+	D.Stun(5)
 	return 1
 
 /datum/martial_art/CQC/proc/RestrainKo(mob/living/carbon/human/A, mob/living/carbon/human/D)
