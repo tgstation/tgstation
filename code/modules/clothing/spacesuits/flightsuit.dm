@@ -155,26 +155,20 @@
 		return 0
 	var/drift_x = 0
 	var/drift_dir_x = 0
-//	var/drift_antidir_x = 0
 	var/drift_y = 0
 	var/drift_dir_y = 0
-//	var/drift_antidir_y = 0
 	if(momentum_x > 0)
 		drift_x = 1
 		drift_dir_x = EAST
-		drift_antidir_x = WEST
 	if(momentum_x < 0)
 		drift_x = 1
 		drift_dir_x = WEST
-		drift_antidir_x = EAST
 	if(momentum_y > 0)
 		drift_y = 1
 		drift_dir_y = NORTH
-		drift_antidir_y = SOUTH
 	if(momentum_y < 0)
 		drift_y = 1
 		drift_dir_y = SOUTH
-		drift_antidir_y = NORTH
 	if(momentum_speed == 0)
 		return 0
 	if(suit)
