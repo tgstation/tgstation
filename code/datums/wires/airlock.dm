@@ -1,5 +1,6 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
+	proper_name = "Airlock"
 
 /datum/wires/airlock/secure
 	randomize = TRUE
@@ -17,7 +18,7 @@
 
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
-	if(!istype(user, /mob/living/silicon) && A.isElectrified() && A.shock(user, 100))
+	if(!issilicon(user) && A.isElectrified() && A.shock(user, 100))
 		return FALSE
 	if(A.panel_open)
 		return TRUE

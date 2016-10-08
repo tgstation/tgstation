@@ -172,7 +172,7 @@
 		reagents.clear_reagents()
 
 		var/turf/T = get_turf(loc)
-		if(istype(T, /turf/open))
+		if(isopenturf(T))
 			var/turf/open/theturf = T
 			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 

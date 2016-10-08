@@ -539,8 +539,6 @@
 	ticker.mode.remove_cultist(newborgie, 0, 0)
 	ticker.mode.remove_revolutionary(newborgie, 0)
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
-	remove_servant_of_ratvar(newborgie.current, TRUE)
-
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()

@@ -7,7 +7,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 50
 	materials = list(MAT_GLASS=500)
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 5
 	spillable = 1
 

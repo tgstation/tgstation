@@ -1,6 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
@@ -117,7 +117,7 @@
 	w_class = 1
 	throwforce = 0
 	slot_flags = SLOT_EARS
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -127,7 +127,7 @@
 	flags = EARBANGPROTECT
 	strip_delay = 15
 	put_on_delay = 25
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 //Glasses
 /obj/item/clothing/glasses
@@ -145,7 +145,7 @@
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20
 	put_on_delay = 25
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -172,12 +172,11 @@ BLIND     // can't see anything
 	put_on_delay = 40
 
 
-/obj/item/clothing/gloves/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
-
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
@@ -193,7 +192,7 @@ BLIND     // can't see anything
 	var/can_toggle = null
 
 
-/obj/item/clothing/head/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/head/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(blood_DNA)
@@ -211,7 +210,7 @@ BLIND     // can't see anything
 	var/adjusted_flags = null
 
 
-/obj/item/clothing/mask/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(blood_DNA && (body_parts_covered & HEAD))
@@ -268,7 +267,7 @@ BLIND     // can't see anything
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
-/obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		var/bloody = 0
@@ -298,13 +297,13 @@ BLIND     // can't see anything
 	name = "suit"
 	var/fire_resist = T0C+100
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 
 
-/obj/item/clothing/suit/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(blood_DNA)
@@ -320,7 +319,7 @@ BLIND     // can't see anything
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
 	item_state = "spaceold"
 	permeability_coefficient = 0.01
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 0, acid = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -330,7 +329,7 @@ BLIND     // can't see anything
 	strip_delay = 50
 	put_on_delay = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -344,7 +343,7 @@ BLIND     // can't see anything
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals)
 	slowdown = 1
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50, fire = 0, acid = 70)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -352,7 +351,7 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
 	put_on_delay = 80
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 //Under clothing
 
@@ -362,23 +361,23 @@ BLIND     // can't see anything
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_ICLOTHING
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/random_sensor = 1
 	var/sensor_mode = 0	/* 1 = Report living/dead, 2 = Report detailed damages, 3 = Report location */
 	var/can_adjust = 1
-	var/adjusted = 0
+	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/obj/item/clothing/tie/hastie = null
+	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
-/obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
+/obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
 
 	if(!isinhands)
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
-
 		if(hastie)
 			var/tie_color = hastie.item_color
 			if(!tie_color)
@@ -393,7 +392,29 @@ BLIND     // can't see anything
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
-	adjusted = 0
+	adjusted = NORMAL_STYLE
+	..()
+
+/obj/item/clothing/under/equipped(mob/user, slot)
+	..()
+	if(adjusted)
+		adjusted = NORMAL_STYLE
+		fitted = initial(fitted)
+		if(!alt_covers_chest)
+			body_parts_covered |= CHEST
+
+	if(mutantrace_variation && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(DIGITIGRADE in H.dna.species.specflags)
+			adjusted = DIGITIGRADE_STYLE
+		H.update_inv_w_uniform()
+
+	if(hastie)
+		hastie.on_uniform_equip(src, user)
+
+/obj/item/clothing/under/dropped(mob/user)
+	if(hastie)
+		hastie.on_uniform_dropped(src, user)
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
@@ -416,7 +437,7 @@ BLIND     // can't see anything
 			if(user && notifyAttach)
 				user << "<span class='notice'>You attach [I] to [src].</span>"
 
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
 
@@ -436,7 +457,7 @@ BLIND     // can't see anything
 		else
 			user << "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>"
 
-		if(istype(loc, /mob/living/carbon/human))
+		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform()
 
@@ -496,7 +517,7 @@ BLIND     // can't see anything
 			if(3)
 				usr << "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>"
 
-	if(istype(loc,/mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
@@ -532,25 +553,29 @@ BLIND     // can't see anything
 		usr << "<span class='notice'>You adjust the suit to wear it more casually.</span>"
 	else
 		usr << "<span class='notice'>You adjust the suit back to normal.</span>"
-	usr.update_inv_w_uniform()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.update_inv_w_uniform()
+		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
+	if(adjusted == DIGITIGRADE_STYLE)
+		return
 	adjusted = !adjusted
 	if(adjusted)
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
-		if (alt_covers_chest) // for the special snowflake suits that don't expose the chest when adjusted
-			body_parts_covered = CHEST|GROIN|LEGS
-		else
-			body_parts_covered = GROIN|LEGS
+		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted
+			body_parts_covered &= ~CHEST
 	else
 		fitted = initial(fitted)
-		body_parts_covered = CHEST|GROIN|LEGS|ARMS
+		if(!alt_covers_chest)
+			body_parts_covered |= CHEST
 	return adjusted
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(src.adjusted)
+	if(src.adjusted == ALT_STYLE)
 		user << "Alt-click on [src] to wear it normally."
 	else
 		user << "Alt-click on [src] to wear it casually."

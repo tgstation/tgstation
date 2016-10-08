@@ -483,7 +483,7 @@
 
 /obj/effect/goliath_tentacle/New()
 	var/turftype = get_turf(src)
-	if(istype(turftype, /turf/closed/mineral))
+	if(ismineralturf(turftype))
 		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
 	addtimer(src, "Trip", 10)
@@ -987,7 +987,7 @@
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
 	for(var/F in RANGE_TURFS(1, src))
-		if(istype(F, /turf/closed/mineral))
+		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
 			M.ChangeTurf(M.turf_type)
 	gps = new /obj/item/device/gps/internal(src)

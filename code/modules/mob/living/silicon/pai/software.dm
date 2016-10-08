@@ -195,7 +195,7 @@
 			if(href_list["getdna"])
 				var/mob/living/M = card.loc
 				var/count = 0
-				while(!istype(M, /mob/living))
+				while(!isliving(M))
 					if(!M || !M.loc) return 0 //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 					M = M.loc
 					count++
@@ -497,8 +497,8 @@
 				 <h4>Host Bioscan</h4><br>
 				"}
 		var/mob/living/M = card.loc
-		if(!istype(M, /mob/living))
-			while (!istype(M, /mob/living))
+		if(!isliving(M))
+			while(!isliving(M))
 				if(istype(M, /turf))
 					src.temp = "Error: No biological host found. <br>"
 					src.subscreen = 0

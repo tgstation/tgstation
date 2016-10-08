@@ -186,7 +186,7 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/regress_humanoid()
 	owner.current << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
-	if(istype(owner.current, /mob/living/carbon/human))
+	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(/datum/species/human, 1)
 		H.regenerate_icons()
@@ -209,7 +209,7 @@ var/global/list/lawlorify = list (
 /datum/devilinfo/proc/increase_blood_lizard()
 	owner.current << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
 	sleep(50)
-	if(istype(owner.current, /mob/living/carbon/human))
+	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(/datum/species/lizard, 1)
 		H.underwear = "Nude"
@@ -374,7 +374,7 @@ var/global/list/lawlorify = list (
 				return 0
 			return 1
 		if(BANISH_FUNERAL_GARB)
-			if(istype(body, /mob/living/carbon/human))
+			if(ishuman(body))
 				var/mob/living/carbon/human/H = body
 				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/burial))
 					return 1

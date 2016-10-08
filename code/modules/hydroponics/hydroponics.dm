@@ -444,7 +444,7 @@
 	if(pestlevel > 5)
 		visible_message("<span class='warning'>The pests seem to behave oddly...</span>")
 		for(var/i=0, i<3, i++)
-			var/obj/effect/spider/spiderling/S = new(src.loc)
+			var/obj/structure/spider/spiderling/S = new(src.loc)
 			S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
 	else
 		usr << "<span class='warning'>The pests seem to behave oddly, but quickly settle down...</span>"
@@ -870,7 +870,7 @@
 		return ..()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
+	if(issilicon(user)) //How does AI know what plant is?
 		return
 	if(harvest)
 		myseed.harvest(user)

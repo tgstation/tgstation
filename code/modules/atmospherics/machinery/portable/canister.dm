@@ -17,6 +17,7 @@
 	var/gas_type = ""
 	var/release_pressure = ONE_ATMOSPHERE
 
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
 	var/health = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
@@ -235,7 +236,7 @@
 		air_update_turf() // Update the environment if needed.
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/blob_act(obj/effect/blob/B)
+/obj/machinery/portable_atmospherics/canister/blob_act(obj/structure/blob/B)
 	take_damage(100, BRUTE, 0)
 
 /obj/machinery/portable_atmospherics/canister/burn()

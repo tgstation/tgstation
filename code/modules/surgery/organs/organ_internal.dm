@@ -165,7 +165,7 @@
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
-	desc = "it needs to be pumped..."
+	desc = "A heart that, when inserted, will force you to pump it manually."
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
 	origin_tech = "biotech=6"
@@ -208,7 +208,7 @@
 		owner << "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>"
 
 /datum/action/item_action/organ_action/cursed_heart
-	name = "pump your blood"
+	name = "Pump your blood"
 
 //You are now brea- pumping blood manually
 /datum/action/item_action/organ_action/cursed_heart/Trigger()

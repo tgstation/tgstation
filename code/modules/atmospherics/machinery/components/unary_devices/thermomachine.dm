@@ -49,7 +49,7 @@
 	else
 		return ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/construction()
+/obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
 	..(dir,dir)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()

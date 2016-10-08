@@ -396,7 +396,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/ex_act(severity, target)
 	return
 
-/obj/machinery/nuclearbomb/blob_act(obj/effect/blob/B)
+/obj/machinery/nuclearbomb/blob_act(obj/structure/blob/B)
 	if(exploding)
 		return
 	. = ..()

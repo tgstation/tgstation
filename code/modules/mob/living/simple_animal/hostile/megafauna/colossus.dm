@@ -121,13 +121,10 @@ Difficulty: Very Hard
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
-	var/enraged = FALSE
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.martial_art && prob(H.martial_art.deflection_chance))
-			enraged = TRUE
-
-	return enraged
+			. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	dir_shots(diagonals)
@@ -188,15 +185,15 @@ Difficulty: Very Hard
 		else
 			counter++
 		if(counter > 16)
-			counter = 0
-		if(counter < 0)
+			counter = 1
+		if(counter < 1)
 			counter = 16
 		shoot_projectile(marker)
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
 		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
-	if(!marker)
+	if(!marker || marker == loc)
 		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
@@ -221,6 +218,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	var/turf/T = get_turf(target)
+	newtonian_move(get_dir(T, targets_from))
 	for(var/turf/turf in range(1, T))
 		shoot_projectile(turf)
 
@@ -276,7 +274,7 @@ Difficulty: Very Hard
 	icon_off = "blackbox"
 	luminosity = 8
 	max_n_of_items = INFINITY
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	pixel_y = -4
 	use_power = 0
 	var/memory_saved = FALSE
@@ -368,7 +366,7 @@ Difficulty: Very Hard
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "anomaly_crystal"
 	luminosity = 8
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = 0
 	density = 1
 	languages_spoken = ALL
@@ -428,7 +426,7 @@ Difficulty: Very Hard
 	ActivationReaction(null,"bomb")
 
 /obj/machinery/anomalous_crystal/random/New()//Just a random crysal spawner for loot
-	var/random_crystal = pick(typesof(/obj/machinery/anomalous_crystal) - /obj/machinery/anomalous_crystal/random)
+	var/random_crystal = pick(typesof(/obj/machinery/anomalous_crystal) - /obj/machinery/anomalous_crystal/random - /obj/machinery/anomalous_crystal)
 	new random_crystal(loc)
 	qdel(src)
 
@@ -498,7 +496,7 @@ Difficulty: Very Hard
 			for(var/atom/Stuff in A)
 				if(isturf(Stuff))
 					var/turf/T = Stuff
-					if((istype(T, /turf/open/space) || istype(T, /turf/open/floor)) && NewTerrainFloors)
+					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
 						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
 						if(O.air)
 							var/datum/gas_mixture/G = O.air
@@ -507,7 +505,7 @@ Difficulty: Very Hard
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
 						continue
-					if(istype(T, /turf/closed/wall) && NewTerrainWalls)
+					if(iswallturf(T) && NewTerrainWalls)
 						T.ChangeTurf(NewTerrainWalls)
 						continue
 				if(istype(Stuff, /obj/structure/chair) && NewTerrainChairs)
@@ -761,7 +759,7 @@ Difficulty: Very Hard
 	sound = null
 
 /obj/effect/proc_holder/spell/targeted/exit_possession/cast(list/targets, mob/user = usr)
-	if(!istype(user.loc, /turf/open/floor))
+	if(!isfloorturf(user.loc))
 		return
 	var/datum/mind/target_mind = user.mind
 	for(var/i in user)

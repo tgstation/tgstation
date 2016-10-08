@@ -73,7 +73,7 @@
 		var/path = pickweight(mineralSpawnChanceList)
 		var/turf/T = ChangeTurf(path)
 
-		if(T && istype(T, /turf/closed/mineral))
+		if(T && ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			M.mineralAmt = rand(1, 5)
 			M.environment_type = src.environment_type
@@ -358,7 +358,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
-		if(!NT || istype(NT, /turf/open/space) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
+		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
 			sanity = 0
 			break
 	if(!sanity)
@@ -400,7 +400,7 @@
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
-			if(istype(src, /turf/closed/mineral))
+			if(ismineralturf(src))
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
@@ -434,13 +434,13 @@
 
 /turf/closed/mineral/Bumped(AM as mob|obj)
 	..()
-	if(istype(AM,/mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		var/obj/item/I = H.is_holding_item_of_type(/obj/item/weapon/pickaxe)
 		if(I)
 			attackby(I,H)
 		return
-	else if(istype(AM,/mob/living/silicon/robot))
+	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
 			src.attackby(R.module_active,R)
@@ -662,6 +662,10 @@
 	return 1
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
+	//Make sure the item is still there after our sleep
+	if(!AM || qdeleted(AM))
+		return
+
 	var/turf/T = locate(drop_x, drop_y, drop_z)
 	if(T)
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
@@ -697,6 +701,9 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
+	//Make sure the item is still there after our sleep
+	if(!AM || qdeleted(AM))
+		return
 	AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
 	into the enveloping dark.</span>")
 	if(isliving(AM))
@@ -708,7 +715,7 @@
 	for(var/i in 1 to 5)
 		AM.pixel_y--
 		sleep(2)
-	if(isrobot(AM))
+	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
 	qdel(AM)

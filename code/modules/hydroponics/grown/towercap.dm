@@ -104,7 +104,6 @@
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
-	var/flame_strength = FLAMMABLE
 	var/fire_stack_strength = 5
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
@@ -135,7 +134,7 @@
 
 
 /obj/structure/bonfire/proc/CheckOxygen()
-	if(istype(loc,/turf/open))
+	if(isopenturf(loc))
 		var/turf/open/O = loc
 		if(O.air)
 			var/G = O.air.gases
@@ -166,7 +165,7 @@
 			continue
 		if(isobj(A))
 			var/obj/O = A
-			if(O.burn_state < flame_strength)
+			if(O.resistance_flags & FIRE_PROOF)
 				continue
 			O.fire_act()
 		else if(isliving(A))

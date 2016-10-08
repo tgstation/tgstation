@@ -179,7 +179,7 @@
 
 
 /datum/hud/proc/toggle_show_robot_modules()
-	if(!isrobot(mymob)) return
+	if(!iscyborg(mymob)) return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -187,7 +187,7 @@
 	update_robot_modules_display()
 
 /datum/hud/proc/update_robot_modules_display(mob/viewer)
-	if(!isrobot(mymob)) return
+	if(!iscyborg(mymob)) return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -250,20 +250,21 @@
 
 	var/mob/screenmob = viewer || R
 
-	if(screenmob.hud_used.hud_shown)
-		if(R.module_state_1)
-			R.module_state_1.screen_loc = ui_inv1
-			screenmob.client.screen += R.module_state_1
-		if(R.module_state_2)
-			R.module_state_2.screen_loc = ui_inv2
-			screenmob.client.screen += R.module_state_2
-		if(R.module_state_3)
-			R.module_state_3.screen_loc = ui_inv3
-			screenmob.client.screen += R.module_state_3
-	else
-		if(R.module_state_1)
-			screenmob.client.screen -= R.module_state_1
-		if(R.module_state_2)
-			screenmob.client.screen -= R.module_state_2
-		if(R.module_state_3)
-			screenmob.client.screen -= R.module_state_3
+	if(screenmob.hud_used)
+		if(screenmob.hud_used.hud_shown)
+			if(R.module_state_1)
+				R.module_state_1.screen_loc = ui_inv1
+				screenmob.client.screen += R.module_state_1
+			if(R.module_state_2)
+				R.module_state_2.screen_loc = ui_inv2
+				screenmob.client.screen += R.module_state_2
+			if(R.module_state_3)
+				R.module_state_3.screen_loc = ui_inv3
+				screenmob.client.screen += R.module_state_3
+		else
+			if(R.module_state_1)
+				screenmob.client.screen -= R.module_state_1
+			if(R.module_state_2)
+				screenmob.client.screen -= R.module_state_2
+			if(R.module_state_3)
+				screenmob.client.screen -= R.module_state_3

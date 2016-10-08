@@ -372,7 +372,7 @@
 		for(var/n=1;n<4,n++)
 			var/fail
 			var/turf/T = turfs[n]
-			if(!istype(T, /turf/open/floor))
+			if(!isfloorturf(T))
 				fail = 1
 			var/datum/camerachunk/C = cameranet.getCameraChunk(T.x, T.y, T.z)
 			if(!C.visibleTurfs[T])

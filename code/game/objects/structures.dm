@@ -15,7 +15,7 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
-/obj/structure/blob_act(obj/effect/blob/B)
+/obj/structure/blob_act(obj/structure/blob/B)
 	if(density && prob(50))
 		qdel(src)
 
@@ -66,7 +66,7 @@
 			return
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_held_item() != O))
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		return
 	if(!user.drop_item())
 		return
@@ -81,7 +81,7 @@
 	var/adjusted_climb_time = climb_time
 	if(user.restrained()) //climbing takes twice as long when restrained.
 		adjusted_climb_time *= 2
-	if(istype(user, /mob/living/carbon/alien))
+	if(isalien(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))

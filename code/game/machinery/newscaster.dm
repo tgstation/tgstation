@@ -175,6 +175,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -266,7 +267,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+	if(ishuman(user) || issilicon(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat
 		scan_user(human_or_robot_user)
@@ -511,7 +512,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || issilicon(usr))
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])
@@ -796,15 +797,15 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		if(!user.drop_item())
 			return
 		photo.loc = src
-	if(istype(user,/mob/living/silicon))
+	if(issilicon(user))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
 		var/obj/item/device/camera/siliconcam/targetcam = null
-		if(istype(user,/mob/living/silicon/ai))
+		if(isAI(user))
 			var/mob/living/silicon/ai/R = user
 			targetcam = R.aicamera
-		else if(istype(user,/mob/living/silicon/robot))
+		else if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			if(R.connected_ai)
 				targetcam = R.connected_ai.aicamera
@@ -845,7 +846,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				scanned_user ="Unknown"
 		else
 			scanned_user ="Unknown"
-	else if(istype(user,/mob/living/silicon))
+	else if(issilicon(user))
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
 	else

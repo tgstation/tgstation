@@ -29,7 +29,7 @@
 	req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 10000)
-	build_path = /obj/item/weapon/gun/energy/shock_revolver
+	build_path = /obj/item/weapon/gun/energy/tesla_revolver
 	category = list("Weapons")
 
 /datum/design/nuclear_gun

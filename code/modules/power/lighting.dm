@@ -116,7 +116,7 @@
 				return
 	return ..()
 
-/obj/machinery/light_construct/blob_act(obj/effect/blob/B)
+/obj/machinery/light_construct/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
 
@@ -232,11 +232,8 @@
 				if(status == LIGHT_OK && trigger)
 					explode()
 			else if( prob( min(60, switchcount*switchcount*0.01) ) )
-				if(status == LIGHT_OK && trigger)
-					status = LIGHT_BURNED
-					icon_state = "[base_state]-burned"
-					on = 0
-					SetLuminosity(0)
+				if(trigger)
+					burn_out()
 			else
 				use_power = 2
 				SetLuminosity(brightness)
@@ -253,6 +250,13 @@
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
+
+/obj/machinery/light/proc/burn_out()
+	if(status == LIGHT_OK)
+		status = LIGHT_BURNED
+		icon_state = "[base_state]-burned"
+		on = 0
+		SetLuminosity(0)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -525,7 +529,7 @@
 				if(prob(25))
 					broken()
 
-/obj/machinery/light/blob_act(obj/effect/blob/B)
+/obj/machinery/light/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		broken()
 		qdel(src)

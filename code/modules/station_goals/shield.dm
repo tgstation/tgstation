@@ -139,7 +139,7 @@
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))
-		if(!istype(T, /turf/open/space))
+		if(!isspaceturf(T))
 			return FALSE
 	return TRUE
 

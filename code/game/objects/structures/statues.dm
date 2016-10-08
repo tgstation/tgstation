@@ -31,7 +31,7 @@
 									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
 				anchored = 0
 		else
-			if (!istype(src.loc, /turf/open/floor))
+			if(!isfloorturf(src.loc))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)

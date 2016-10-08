@@ -277,7 +277,7 @@
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = 2
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 /*
@@ -638,7 +638,7 @@
 
 
 /obj/item/toy/cards
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	burntime = 5
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
@@ -873,8 +873,8 @@
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
-	if(sourceobj.burn_state == FIRE_PROOF)
-		newobj.burn_state = FIRE_PROOF
+	if(sourceobj.resistance_flags & FIRE_PROOF)
+		newobj.resistance_flags |= FIRE_PROOF
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -991,7 +991,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 /*
  * Fake nuke
@@ -1035,7 +1035,7 @@
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
 		for(var/mob/M in urange(10, src))
-			if(!M.stat && !istype(M, /mob/living/silicon/ai))\
+			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
 		qdel(src)
 
@@ -1051,7 +1051,7 @@
 	item_state = "carp_plushie"
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 //Attack mob
@@ -1082,7 +1082,7 @@
 		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
 		for(var/mob/M in urange(10, src)) // Checks range
-			if(!M.stat && !istype(M, /mob/living/silicon/ai)) // Checks to make sure whoever's getting shaken is alive/not the AI
+			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				sleep(8) // Short delay to match up with the explosion sound
 				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.
 
@@ -1161,7 +1161,7 @@
 	icon_state = "toy_mouse"
 	w_class = 2.0
 	var/cooldown = 0
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 
 
 /*
