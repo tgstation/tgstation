@@ -10,7 +10,7 @@
 	var/obj/item/weapon/pen/haspen		//The stored pen.
 	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
 	slot_flags = SLOT_BELT
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/clipboard/New()
 	update_icon()

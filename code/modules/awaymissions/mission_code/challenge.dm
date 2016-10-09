@@ -22,6 +22,7 @@
 	icon_state = "emitter"
 	anchored = 1
 	density = 1
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 
 	use_power = 0
 	idle_power_usage = 0

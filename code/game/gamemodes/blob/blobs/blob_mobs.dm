@@ -39,9 +39,12 @@
 				H.color = "#000000"
 		adjustHealth(-maxHealth*0.0125)
 
-/mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
 	..()
-	adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+	if(exposed_temperature)
+		adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+	else
+		adjustFireLoss(5)
 
 /mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover, /obj/structure/blob))
@@ -87,6 +90,8 @@
 	verb_yell = "psychically screams"
 	melee_damage_lower = 2
 	melee_damage_upper = 4
+	obj_damage = 20
+	environment_smash = 0
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	flying = 1
@@ -204,7 +209,7 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	obj_damage = 20
+	obj_damage = 60
 	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	verb_say = "gurgles"
@@ -234,7 +239,7 @@
 			damagesources++
 		if(damagesources)
 			for(var/i in 1 to damagesources)
-				adjustHealth(maxHealth*0.025) //take 2.5% maxhealth as damage when not near the blob or if the naut has no factory, 5% if both
+				adjustHealth(maxHealth*0.025) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 			var/list/viewing = list()
 			for(var/mob/M in viewers(src))
 				if(M.client)
@@ -277,7 +282,7 @@
 	..(gibbed)
 	if(factory)
 		factory.naut = null //remove this naut from its factory
-		factory.maxhealth = initial(factory.maxhealth)
+		factory.max_integrity = initial(factory.max_integrity)
 	flick("blobbernaut_death", src)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent

@@ -116,7 +116,7 @@
 "cl" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/open/floor/plasteel/bar,/area/awaymission/BMPship/Midship)
 "cm" = (/obj/structure/table,/obj/item/weapon/kitchen/knife,/turf/open/floor/plasteel/bar,/area/awaymission/BMPship/Midship)
 "cn" = (/obj/structure/table,/obj/machinery/light/small{dir = 1},/turf/open/floor/plasteel/bar,/area/awaymission/BMPship/Midship)
-"co" = (/obj/structure/table,/obj/effect/decal/cleanable/cobweb2,/turf/open/floor/plasteel/bar,/area/awaymission/BMPship/Midship)
+"co" = (/obj/structure/table,/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/floor/plasteel/bar,/area/awaymission/BMPship/Midship)
 "cp" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/door/poddoor/shutters{id = "packerCargo"},/turf/open/floor/plating,/area/awaymission/BMPship/Aft)
 "cq" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/open/floor/carpet,/area/awaymission/BMPship/Fore)
 "cr" = (/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice,/turf/open/floor/plasteel/bar,/area/awaymission/BMPship/Midship)

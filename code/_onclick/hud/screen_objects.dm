@@ -10,10 +10,13 @@
 	name = ""
 	icon = 'icons/mob/screen_gen.dmi'
 	layer = ABOVE_HUD_LAYER
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/datum/hud/hud = null // A reference to the owner HUD, if any.
+
+/obj/screen/take_damage()
+	return
 
 /obj/screen/Destroy()
 	master = null

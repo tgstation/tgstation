@@ -31,7 +31,7 @@
 
 
 /datum/game_mode/proc/finalize_devil(datum/mind/devil_mind)
-	
+
 	var/trueName= randomDevilName()
 
 	devil_mind.devilinfo = devilInfo(trueName, 1)
@@ -93,15 +93,15 @@
 	hud.leave_hud(devil_mind.current)
 	set_antag_hud(devil_mind.current, null)
 
-/datum/game_mode/proc/update_sintouch_icons_added(datum/mind/sin_mind)
+/datum/game_mode/proc/update_sintouched_icons_added(datum/mind/sintouched_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_SINTOUCHED]
-	hud.join_hud(sin_mind.current)
-	set_antag_hud(sin_mind.current, "sintouched")
+	hud.join_hud(sintouched_mind.current)
+	set_antag_hud(sintouched_mind.current, "sintouched")
 
-/datum/game_mode/proc/update_sintouch_icons_removed(datum/mind/sin_mind)
+/datum/game_mode/proc/update_sintouched_icons_removed(datum/mind/sintouched_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_SINTOUCHED]
-	hud.leave_hud(sin_mind.current)
-	set_antag_hud(sin_mind.current, null)
+	hud.leave_hud(sintouched_mind.current)
+	set_antag_hud(sintouched_mind.current, null)
 
 /datum/game_mode/proc/update_soulless_icons_added(datum/mind/soulless_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_SOULLESS]

@@ -10,7 +10,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()
@@ -105,6 +105,7 @@
 	volume = 5
 	flags = CONDUCT | OPENCONTAINER
 	spillable = 1
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup
 	name = "gold cup"

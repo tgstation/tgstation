@@ -13,7 +13,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "giftdeliverypackage3"
 	item_state = "gift1"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/a_gift/New()
 	..()

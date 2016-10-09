@@ -29,11 +29,10 @@
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
-	var/health = 300 //health is health
+	obj_integrity = 300 //obj_integrity is health
+	max_integrity = 300
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
-	//the values in this list show how much damage will pass through, not how much will be absorbed.
-	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
-	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
@@ -240,7 +239,7 @@
 
 /obj/mecha/examine(mob/user)
 	..()
-	var/integrity = health/initial(health)*100
+	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
 			user << "It's fully intact."
@@ -256,8 +255,6 @@
 		user << "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
 			user << "\icon[ME] [ME]"
-	return
-
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -276,7 +273,7 @@
 			if(cabin_air && cabin_air.return_volume()>0)
 				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
 				if(cabin_air.return_temperature() > max_temperature/2)
-					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1),"fire")
+					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			internal_temp_regulation = 0
@@ -342,7 +339,7 @@
 				else
 					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
 
-		var/integrity = health/initial(health)*100
+		var/integrity = obj_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
@@ -568,7 +565,7 @@
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
-		if(ignore_threshold || health*100/initial(health) < internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -576,7 +573,7 @@
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || health*100/initial(health)<internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/ME = safepick(equipment)
 			if(ME)
 				qdel(ME)
@@ -804,7 +801,7 @@
 	visible_message("[user] starts to climb into [name].")
 
 	if(do_after(user, 40, target = src))
-		if(health <= 0)
+		if(obj_integrity <= 0)
 			user << "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>"
 		else if(occupant)
 			user << "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>"

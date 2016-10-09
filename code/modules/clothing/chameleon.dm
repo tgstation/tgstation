@@ -159,8 +159,8 @@
 	origin_tech = "syndicate=2"
 	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
-	resistance_flags = FIRE_PROOF
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/under/chameleon/New()
 	..()
@@ -176,8 +176,8 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "syndicate=2"
-	resistance_flags = FIRE_PROOF
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/suit/chameleon/New()
 	..()
@@ -192,8 +192,8 @@
 	icon_state = "meson"
 	item_state = "meson"
 	origin_tech = "syndicate=2"
-	resistance_flags = FIRE_PROOF
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/glasses/chameleon/New()
 	..()
@@ -208,8 +208,8 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 
-	resistance_flags = FIRE_PROOF
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/gloves/chameleon/New()
 	..()
@@ -224,8 +224,8 @@
 	icon_state = "greysoft"
 	item_color = "grey"
 
-	resistance_flags = FIRE_PROOF
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	resistance_flags = 0
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action = null
 
@@ -256,8 +256,8 @@
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
-	resistance_flags = FIRE_PROOF
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	resistance_flags = 0
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
@@ -307,9 +307,9 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=2"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/shoes/chameleon/New()
 	..()

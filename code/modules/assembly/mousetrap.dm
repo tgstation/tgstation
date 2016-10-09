@@ -59,7 +59,7 @@
 					affecting = H.get_bodypart(type)
 					H.Stun(3)
 		if(affecting)
-			if(affecting.take_damage(1, 0))
+			if(affecting.receive_damage(1, 0))
 				H.update_damage_overlays()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target

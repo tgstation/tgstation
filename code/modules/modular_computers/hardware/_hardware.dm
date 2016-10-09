@@ -42,12 +42,12 @@
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/S = I
-		if(!damage)
+		if(obj_integrity == max_integrity)
 			user << "<span class='warning'>\The [src] doesn't seem to require repairs.</span>"
 			return 1
 		if(S.use(1))
 			user << "<span class='notice'>You patch up \the [src] with a bit of \the [I].</span>"
-			take_damage(-10)
+			obj_integrity = min(obj_integrity + 10, max_integrity)
 		return 1
 
 	if(try_insert(I, user))
@@ -81,12 +81,6 @@
 		user << "<span class='warning'>It seems to be damaged!</span>"
 	else if(damage)
 		user << "<span class='notice'>It seems to be slightly damaged.</span>"
-
-// Damages the component. Contains necessary checks. Negative damage "heals" the component.
-/obj/item/weapon/computer_hardware/proc/take_damage(var/amount)
-	damage += round(amount) 					// We want nice rounded numbers here.
-	damage = max(0, min(damage, max_damage))		// Clamp the value.
-
 
 // Component-side compatibility check.
 /obj/item/weapon/computer_hardware/proc/can_install(obj/item/device/modular_computer/M, mob/living/user = null)

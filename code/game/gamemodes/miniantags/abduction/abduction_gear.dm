@@ -581,9 +581,8 @@ Congratulations! You are now trained for xenobiology research!"}
 	can_buckle = 1
 	buckle_lying = 1
 	flags = NODECONSTRUCT
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/structure/table/optable/abductor/table_destroy()
-	return //can't destroy the abductor's only optable.
 
 /obj/structure/bed/abductor
 	name = "resting contraption"
