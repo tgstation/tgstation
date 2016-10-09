@@ -63,7 +63,7 @@
 	switch(d_state)
 		if(0)
 			if (istype(W, /obj/item/weapon/wirecutters))
-				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(src, W.usesound, 100, 1)
 				src.d_state = 1
 				update_icon()
 				user << "<span class='notice'>You cut the outer grille.</span>"
@@ -72,7 +72,7 @@
 		if(1)
 			if (istype(W, /obj/item/weapon/screwdriver))
 				user << "<span class='notice'>You begin removing the support lines...</span>"
-				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(src, W.usesound, 100, 1)
 
 				if(do_after(user, 40, target = src))
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
@@ -103,7 +103,7 @@
 				if( WT.remove_fuel(0,user) )
 
 					user << "<span class='notice'>You begin slicing through the metal cover...</span>"
-					playsound(src, 'sound/items/Welder.ogg', 100, 1)
+					playsound(src, W.usesound, 100, 1)
 
 					if(do_after(user, 60, target = src))
 						if( !istype(src, /turf/closed/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
@@ -134,7 +134,7 @@
 			if (istype(W, /obj/item/weapon/crowbar))
 
 				user << "<span class='notice'>You struggle to pry off the cover...</span>"
-				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(src, W.usesound, 100, 1)
 
 				if(do_after(user, 100, target = src))
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
@@ -150,7 +150,7 @@
 			if (istype(W, /obj/item/weapon/wrench))
 
 				user << "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame...</span>"
-				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(src, W.usesound, 100, 1)
 
 				if(do_after(user, 40, target = src))
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
@@ -168,7 +168,7 @@
 				if( WT.remove_fuel(0,user) )
 
 					user << "<span class='notice'>You begin slicing through the support rods...</span>"
-					playsound(src, 'sound/items/Welder.ogg', 100, 1)
+					playsound(src, W.usesound, 100, 1)
 
 					if(do_after(user, 100, target = src))
 						if( !istype(src, /turf/closed/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
@@ -199,7 +199,7 @@
 			if( istype(W, /obj/item/weapon/crowbar) )
 
 				user << "<span class='notice'>You struggle to pry off the outer sheath...</span>"
-				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(src, W.usesound, 100, 1)
 
 				if(do_after(user, 100, target = src))
 					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )

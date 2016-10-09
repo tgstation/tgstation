@@ -54,7 +54,7 @@
 			if(beakers.len)
 				stage_change(READY)
 				user << "<span class='notice'>You lock the [initial(name)] assembly.</span>"
-				playsound(loc, 'sound/items/Screwdriver.ogg', 25, -3)
+				playsound(loc, I.usesound, 25, -3)
 			else
 				user << "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>"
 		else if(stage == READY && !nadeassembly)

@@ -18,7 +18,7 @@
 		user << "<span class='danger'>You unscrew the planks.</span>"
 		new floor_tile(src)
 		make_plating()
-		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+		playsound(src, C.usesound, 80, 1)
 		return
 
 /turf/open/floor/wood/cold
