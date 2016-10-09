@@ -8,9 +8,11 @@
 	icon_state = ""
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	var/mob/living/carbon/owner = null
+	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
+	var/use_digitigrade = NOT_DIGITIGRADE //Used for alternate legs, useless elsewhere
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
@@ -194,8 +196,23 @@
 	var/mob/living/carbon/C
 	if(source)
 		C = source
+		if(!original_owner)
+			original_owner = source
+	else if(original_owner && owner != original_owner) //Foreign limb
+		no_update = 1
 	else
 		C = owner
+		no_update = 0
+
+	if(C.disabilities & HUSK)
+		species_id = "husk" //overrides species_id
+		dmg_overlay_type = "" //no damage overlay shown when husked
+		should_draw_gender = FALSE
+		should_draw_greyscale = FALSE
+		no_update = 1
+
+	if(no_update)
+		return
 
 	if(!animal_origin)
 		var/mob/living/carbon/human/H = C
@@ -232,12 +249,6 @@
 
 	else if(animal_origin == MONKEY_BODYPART) //currently monkeys are the only non human mob to have damage overlays.
 		dmg_overlay_type = animal_origin
-
-	if(C.disabilities & HUSK)
-		species_id = "husk" //overrides species_id
-		dmg_overlay_type = "" //no damage overlay shown when husked
-		should_draw_gender = FALSE
-		should_draw_greyscale = FALSE
 
 	if(status == BODYPART_ROBOTIC)
 		dmg_overlay_type = "robotic"
@@ -294,6 +305,8 @@
 		if(should_draw_greyscale)
 			if(should_draw_gender)
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			else if(use_digitigrade)
+				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="digitigrade_[use_digitigrade]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 			else
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
@@ -389,6 +402,7 @@
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
+	held_index = 1
 	px_x = -6
 	px_y = 0
 
@@ -422,6 +436,7 @@
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
+	held_index = 2
 	px_x = 6
 	px_y = 0
 
@@ -458,6 +473,10 @@
 	px_x = -2
 	px_y = 12
 
+/obj/item/bodypart/l_leg/digitigrade
+	name = "left digitigrade leg"
+	use_digitigrade = FULL_DIGITIGRADE
+
 /obj/item/bodypart/l_leg/monkey
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_leg"
@@ -491,6 +510,10 @@
 	body_part = LEG_RIGHT
 	px_x = 2
 	px_y = 12
+
+/obj/item/bodypart/r_leg/digitigrade
+	name = "right digitigrade leg"
+	use_digitigrade = FULL_DIGITIGRADE
 
 /obj/item/bodypart/r_leg/monkey
 	icon = 'icons/mob/animal_parts.dmi'

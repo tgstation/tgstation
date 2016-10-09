@@ -30,7 +30,7 @@
 			else
 				user << "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>"
 				return 1	//returns 1 so we don't stab the guy in the dick or wherever.
-	if(isrobot(user) && user.a_intent != "harm") //to save asimov borgs a LOT of heartache
+	if(iscyborg(user) && user.a_intent != "harm") //to save asimov borgs a LOT of heartache
 		return 1
 	return 0
 
@@ -50,7 +50,7 @@
 			prob_chance = implements[implement_type]
 		prob_chance *= surgery.get_propability_multiplier()
 
-		if(prob(prob_chance) || isrobot(user))
+		if(prob(prob_chance) || iscyborg(user))
 			if(success(user, target, target_zone, tool, surgery))
 				advance = 1
 		else

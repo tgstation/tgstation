@@ -213,8 +213,7 @@
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(!BP.no_update)
-			BP.update_limb()
+		BP.update_limb()
 
 	//LOAD ICONS
 	if(limb_icon_cache[icon_render_key])
@@ -263,6 +262,8 @@ var/global/list/limb_icon_cache = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		. += "-[BP.body_zone]"
+		if(BP.use_digitigrade)
+			. += "-digitigrade[BP.use_digitigrade]"
 		if(BP.animal_origin)
 			. += "-[BP.animal_origin]"
 		if(BP.status == BODYPART_ORGANIC)

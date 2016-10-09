@@ -144,7 +144,7 @@ var/pipenetwarnings = 10
 	var/target_temperature
 	var/target_heat_capacity
 
-	if(istype(target, /turf/open))
+	if(isopenturf(target))
 
 		var/turf/open/modeled_location = target
 		target_temperature = modeled_location.GetTemperature()

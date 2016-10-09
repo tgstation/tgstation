@@ -49,7 +49,7 @@
 				dat += "Printing in <a href='byond://?src=\ref[src];colortoggle=1'>[greytoggle]</a><BR><BR>"
 	else if(toner)
 		dat += "Please insert paper to copy.<BR><BR>"
-	if(istype(user,/mob/living/silicon/ai))
+	if(isAI(user))
 		dat += "<a href='byond://?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
 	dat += "Current toner level: [toner]"
 	if(!toner)
@@ -195,7 +195,8 @@
 			copies++
 			updateUsrDialog()
 	else if(href_list["aipic"])
-		if(!istype(usr,/mob/living/silicon/ai)) return
+		if(!isAI(usr))
+			return
 		if(toner >= 5 && !busy)
 			var/list/nametemp = list()
 			var/find
@@ -251,7 +252,7 @@
 		if(copier_empty())
 			if(istype(O,/obj/item/weapon/paper/contract/infernal))
 				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
-				burn_state = ON_FIRE
+				resistance_flags |= ON_FIRE
 			else
 				if(!user.drop_item())
 					return
@@ -321,7 +322,7 @@
 					toner = 0
 
 
-/obj/machinery/photocopier/blob_act(obj/effect/blob/B)
+/obj/machinery/photocopier/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
 	else
@@ -369,7 +370,7 @@
 		ass = null
 		updateUsrDialog()
 		return 0
-	else if(istype(ass,/mob/living/carbon/human))
+	else if(ishuman(ass))
 		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
 			return 1
 		else

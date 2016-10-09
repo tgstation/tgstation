@@ -386,7 +386,7 @@
 		if(labeler.mode)
 			return 0
 	. = 1 //no afterattack
-	if(isrobot(user))
+	if(iscyborg(user))
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
@@ -500,7 +500,7 @@
 
 
 /obj/item/weapon/storage/emp_act(severity)
-	if(!istype(loc, /mob/living))
+	if(!isliving(loc))
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 	..()

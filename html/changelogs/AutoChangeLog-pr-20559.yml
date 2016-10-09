@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - rscadd: "Wire layouts of NanoTransen devices for the round can now be found in the Station Blueprints"

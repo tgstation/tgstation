@@ -268,7 +268,7 @@
 	var/shredded
 
 	if(!bomb)
-		if(burn_state != -1)
+		if(!(resistance_flags & FIRE_PROOF))
 			shredded = 1 //No heat protection, it burns
 		else
 			shredded = -1 //Heat protection = Fireproof

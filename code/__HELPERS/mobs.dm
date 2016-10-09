@@ -62,13 +62,15 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
 	if(!spines_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
+	if(!legs_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
 	if(!body_markings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 	if(!wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list)))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list), "legs" = "Normal Legs"))
 
 /proc/random_hair_style(gender)
 	switch(gender)
@@ -328,6 +330,24 @@ Proc for attack log creation, because really why not
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
+/proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
+	var/turf/T = get_turf(target)
+	var/step_count = 0
+	if(!T)
+		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
+
+	for(var/j in 1 to amount)
+		var/atom/movable/X = new spawn_type(T)
+		X.admin_spawned = admin_spawn
+
+		if(always_max_walk || prob(walk_chance))
+			if(always_max_walk)
+				step_count = max_walk
+			else
+				step_count = rand(1, max_walk)
+
+			for(var/i in 1 to step_count)
+				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	for(var/mob/M in player_list)
@@ -340,7 +360,7 @@ Proc for attack log creation, because really why not
 		var/adminoverride = 0
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
 			adminoverride = 1
-		if(istype(M, /mob/new_player) && !adminoverride)
+		if(isnewplayer(M) && !adminoverride)
 			continue
 		if(M.stat != DEAD && !adminoverride)
 			continue
@@ -355,7 +375,7 @@ Proc for attack log creation, because really why not
 				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
 					continue
 
-		if(istype(M, /mob/dead/observer) && follow_target)
+		if(isobserver(M) && follow_target)
 			var/link = FOLLOW_LINK(M, follow_target)
 			M << "[link] [message]"
 		else

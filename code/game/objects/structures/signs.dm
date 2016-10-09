@@ -13,7 +13,7 @@
 /obj/structure/sign/ex_act(severity, target)
 	qdel(src)
 
-/obj/structure/sign/blob_act(obj/effect/blob/B)
+/obj/structure/sign/blob_act(obj/structure/blob/B)
 	qdel(src)
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)
@@ -87,7 +87,7 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	w_class = 3
-	burn_state = FLAMMABLE
+	resistance_flags = 0
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)

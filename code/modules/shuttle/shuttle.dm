@@ -8,7 +8,7 @@
 	//icon = 'icons/dirsquare.dmi'
 	icon_state = "pinonfar"
 
-	unacidable = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	anchored = 1
 
 	var/id
@@ -472,7 +472,7 @@
 			areaInstance.contents += T1
 
 			//copy over air
-			if(istype(T1, /turf/open))
+			if(isopenturf(T1))
 				var/turf/open/Ts1 = T1
 				Ts1.copy_air_with_tile(T0)
 

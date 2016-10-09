@@ -90,7 +90,7 @@
 	..()
 
 
-/obj/machinery/r_n_d/server/blob_act(obj/effect/blob/B)
+/obj/machinery/r_n_d/server/blob_act(obj/structure/blob/B)
 	griefProtection()
 	..()
 
@@ -129,7 +129,7 @@
 				air_update_turf()
 
 //called when the server is deconstructed.
-/obj/machinery/r_n_d/server/deconstruction()
+/obj/machinery/r_n_d/server/on_deconstruction()
 	griefProtection()
 	..()
 

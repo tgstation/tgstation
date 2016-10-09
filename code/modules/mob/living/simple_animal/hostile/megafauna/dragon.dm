@@ -229,8 +229,11 @@ Difficulty: Medium
 		else
 			L.adjustBruteLoss(75)
 			if(L && !qdeleted(L)) // Some mobs are deleted on death
-				var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-				L.throw_at_fast(throwtarget)
+				var/throw_dir = get_dir(src, L)
+				if(L.loc == loc)
+					throw_dir = pick(alldirs)
+				var/throwtarget = get_edge_target_turf(src, throw_dir)
+				L.throw_at_fast(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
 
 	for(var/mob/M in range(7, src))
@@ -244,7 +247,7 @@ Difficulty: Medium
 	if(!istype(A))
 		return
 	if(swoop_cooldown >= world.time)
-		src << "<span class='warning'>You need to wait 20 seconds between swoop attacks!M/span>"
+		src << "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>"
 		return
 	swoop_attack(1, A)
 

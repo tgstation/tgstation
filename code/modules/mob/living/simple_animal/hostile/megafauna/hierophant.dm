@@ -492,7 +492,7 @@ Difficulty: Hard
 	friendly_fire_check = friendly_fire
 	if(new_caster)
 		hit_things += new_caster
-	if(istype(loc, /turf/closed/mineral)) //drill mineral turfs
+	if(ismineralturf(loc)) //drill mineral turfs
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
 	addtimer(src, "blast", 0)

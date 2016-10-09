@@ -304,7 +304,7 @@
 
 	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, 1)
-	if(isrobot(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
+	if(iscyborg(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
 
