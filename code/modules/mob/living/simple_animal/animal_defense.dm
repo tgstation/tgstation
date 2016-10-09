@@ -21,6 +21,15 @@
 			updatehealth()
 			return 1
 
+/mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(user.a_intent == "harm")
+		..(user, 1)
+		playsound(loc, "punch", 25, 1, -1)
+		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
+				"<span class='userdanger'>[user] has punched [src]!</span>")
+		adjustBruteLoss(15)
+		return 1
+
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)

@@ -15,6 +15,8 @@
 	icon_state = "sheet-glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=1"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 100)
+	resistance_flags = ACID_PROOF
 
 /obj/item/stack/sheet/glass/cyborg
 	materials = list()
@@ -137,6 +139,8 @@
 	icon_state = "sheet-rglass"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=2"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 100)
+	resistance_flags = ACID_PROOF
 
 /obj/item/stack/sheet/rglass/cyborg
 	materials = list()
@@ -282,6 +286,10 @@
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	resistance_flags = ACID_PROOF
+	armor = list(melee = 100, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 100)
+	obj_integrity = 40
+	max_integrity = 40
 	var/cooldown = 0
 	sharpness = IS_SHARP
 

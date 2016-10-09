@@ -179,9 +179,6 @@
 	else
 		return ..()
 
-/obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
-	boom(user)
-
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src))
 		return
@@ -224,8 +221,7 @@
 	else
 		..()
 
-/obj/structure/closet/crate/secure/loot/burn()
-	SSobj.burning -= src
+/obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
 	boom()
 
 /obj/structure/closet/crate/secure/loot/proc/boom(mob/user)

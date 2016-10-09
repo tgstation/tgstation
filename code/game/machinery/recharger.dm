@@ -148,20 +148,17 @@
 	update_icon()
 
 /obj/machinery/recharger/emp_act(severity)
-	if(stat & (NOPOWER|BROKEN) || !anchored)
-		..(severity)
-		return
+	if(!(stat & (NOPOWER|BROKEN)) && anchored)
+		if(istype(charging,  /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/gun/energy/E = charging
+			if(E.power_supply)
+				E.power_supply.emp_act(severity)
 
-	if(istype(charging,  /obj/item/weapon/gun/energy))
-		var/obj/item/weapon/gun/energy/E = charging
-		if(E.power_supply)
-			E.power_supply.emp_act(severity)
-
-	else if(istype(charging, /obj/item/weapon/melee/baton))
-		var/obj/item/weapon/melee/baton/B = charging
-		if(B.bcell)
-			B.bcell.charge = 0
-	..(severity)
+		else if(istype(charging, /obj/item/weapon/melee/baton))
+			var/obj/item/weapon/melee/baton/B = charging
+			if(B.bcell)
+				B.bcell.charge = 0
+	..()
 
 
 /obj/machinery/recharger/update_icon(using_power = 0)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.

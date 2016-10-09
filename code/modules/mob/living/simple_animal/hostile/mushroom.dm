@@ -13,6 +13,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
 	harm_intent_damage = 5
+	obj_damage = 0
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_same = 2

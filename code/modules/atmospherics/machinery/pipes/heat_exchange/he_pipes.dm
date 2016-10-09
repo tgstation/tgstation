@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/pipe/heat_exchanging/
+/obj/machinery/atmospherics/pipe/heat_exchanging
 	icon = 'icons/obj/atmospherics/pipes/heat.dmi'
 	level = 2
 	var/initialize_directions_he

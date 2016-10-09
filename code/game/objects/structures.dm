@@ -1,10 +1,14 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	obj_integrity = 300
+	max_integrity = 300
 	var/climb_time = 20
 	var/climb_stun = 2
 	var/climbable = FALSE
 	var/mob/structureclimber
+	var/broken = 0 //similar to machinery's stat BROKEN
 
 /obj/structure/New()
 	..()
@@ -15,10 +19,6 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 
-/obj/structure/blob_act(obj/structure/blob/B)
-	if(density && prob(50))
-		qdel(src)
-
 /obj/structure/Destroy()
 	if(ticker)
 		cameranet.updateVisibility(src)
@@ -27,13 +27,6 @@
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()
-
-/obj/structure/mech_melee_attack(obj/mecha/M)
-	M.do_attack_animation(src)
-	if(M.damtype == BRUTE || M.damtype == BURN)
-		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-		return 1
-	return 0
 
 /obj/structure/attack_hand(mob/user)
 	. = ..()
@@ -51,10 +44,6 @@
 /obj/structure/ui_act(action, params)
 	..()
 	add_fingerprint(usr)
-
-/obj/structure/proc/deconstruct(forced = FALSE)
-	qdel(src)
-
 
 /obj/structure/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
@@ -97,3 +86,21 @@
 				user << "<span class='warning'>You fail to climb onto [src].</span>"
 			density = 1
 	structureclimber = null
+
+/obj/structure/examine(mob/user)
+	..()
+	if(!(resistance_flags & INDESTRUCTIBLE))
+		if(resistance_flags & ON_FIRE)
+			user << "<span class='warning'>It's on fire!</span>"
+		var/healthpercent = (obj_integrity/max_integrity) * 100
+		if(broken)
+			user << "<span class='notice'>It looks broken.</span>"
+		switch(healthpercent)
+			if(100 to INFINITY)
+				user <<  "It seems pristine and undamaged."
+			if(50 to 100)
+				user <<  "It looks slightly damaged."
+			if(25 to 50)
+				user <<  "It appears heavily damaged."
+			if(0 to 25)
+				user <<  "<span class='warning'>It's falling apart!</span>"

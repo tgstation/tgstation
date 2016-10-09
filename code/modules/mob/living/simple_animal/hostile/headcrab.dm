@@ -16,6 +16,7 @@
 	faction = list("creature")
 	robust_searching = 1
 	stat_attack = 2
+	obj_damage = 0
 	environment_smash = 0
 	speak_emote = list("squeaks")
 	ventcrawler = 2

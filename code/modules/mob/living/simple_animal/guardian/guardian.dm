@@ -32,6 +32,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	healable = FALSE //don't brusepack the guardian
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
 	environment_smash = 1
+	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)

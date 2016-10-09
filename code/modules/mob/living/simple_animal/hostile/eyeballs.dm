@@ -17,6 +17,7 @@
 	speak_emote = list("telepathically cries")
 
 	harm_intent_damage = 15
+	obj_damage = 60
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	attacktext = "blinks at"

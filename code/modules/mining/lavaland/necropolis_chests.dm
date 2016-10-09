@@ -252,7 +252,6 @@
 /obj/effect/immortality_talisman
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/can_destroy = FALSE
 
 /obj/effect/immortality_talisman/attackby()

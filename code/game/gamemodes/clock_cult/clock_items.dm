@@ -636,10 +636,10 @@
 	strip_delay = 50
 	put_on_delay = 30
 	body_parts_covered = ARMS
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 20, acid = 20)
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 70, acid = 20)
 
 /obj/item/clothing/gloves/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -671,7 +671,7 @@
 	w_class = 3
 	strip_delay = 50
 	put_on_delay = 30
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
