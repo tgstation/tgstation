@@ -266,6 +266,11 @@
 			user << "<span class='warning'>The [src] isn't accepting the \
 				[sheets].</span>"
 
+	else if(istype(O, /obj/item/weapon/crowbar))
+		materials.retrieve_all()
+		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		user << "<span class='notice'>You retrieve the materials from [src].</span>"
+
 	else if(istype(O, /obj/item/weapon/weldingtool))
 		if(!(stat & BROKEN))
 			user << "<span class='warning'>[src] doesn't need repairs.</span>"
