@@ -8,6 +8,7 @@
 	use_power = 1
 	idle_power_usage = 40
 	interact_offline = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30

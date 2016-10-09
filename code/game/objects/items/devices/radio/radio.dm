@@ -110,7 +110,7 @@
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
-	if(b_stat && !istype(user, /mob/living/silicon/ai))
+	if(b_stat && !isAI(user))
 		wires.interact(user)
 	else
 		ui_interact(user)
@@ -277,7 +277,7 @@
 		jobname = "AI"
 
 	// --- Cyborg ---
-	else if(isrobot(M))
+	else if(iscyborg(M))
 		var/mob/living/silicon/robot/B = M
 		jobname = "[B.designation] Cyborg"
 

@@ -11,6 +11,7 @@ var/datum/events/keycard_events = new()
 	active_power_usage = 6
 	power_channel = ENVIRON
 	req_access = list(access_keycard_auth)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/datum/event/ev
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source

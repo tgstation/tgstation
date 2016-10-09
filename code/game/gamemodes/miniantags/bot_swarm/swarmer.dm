@@ -83,6 +83,7 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	languages_spoken = SWARMER
 	languages_understood = SWARMER
+	obj_damage = 0
 	environment_smash = 0
 	attacktext = "shocks"
 	attack_sound = 'sound/effects/EMPulse.ogg'
@@ -257,14 +258,14 @@
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	for(var/turf/T in range(1, src))
-		if(istype(T, /turf/open/space) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || istype(T.loc, /area/space))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			return
 	..()
 
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	for(var/turf/T in range(1, src))
-		if(istype(T, /turf/open/space) || istype(T.loc, /area/space))
+		if(isspaceturf(T) || istype(T.loc, /area/space))
 			S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
 			return
 	..()
@@ -412,7 +413,6 @@
 	icon_state = "integrate"
 	duration = 5
 
-
 /obj/structure/swarmer //Default swarmer effect object visual feedback
 	name = "swarmer ui"
 	desc = null
@@ -420,61 +420,29 @@
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "ui_light"
 	layer = MOB_LAYER
-
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	luminosity = 1
+	obj_integrity = 30
+	max_integrity = 30
 	anchored = 1
-	var/health = 30
 
-/obj/structure/swarmer/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
-	if(health <= 0)
-		qdel(src)
-
-/obj/structure/swarmer/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type)
-
-/obj/structure/swarmer/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
-
-/obj/structure/swarmer/ex_act()
-	qdel(src)
-
-/obj/structure/swarmer/blob_act(obj/structure/blob/B)
-	qdel(src)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/swarmer/emp_act()
 	qdel(src)
-
-/obj/structure/swarmer/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	take_damage(rand(20,30))
-
-/obj/structure/swarmer/attack_animal(mob/living/simple_animal/S)
-	S.do_attack_animation(src)
-	S.changeNext_move(CLICK_CD_MELEE)
-	if(S.obj_damage)
-		take_damage(S.obj_damage, S.melee_damage_type, 1)
-	else if(S.melee_damage_upper)
-		take_damage(rand(S.melee_damage_lower, S.melee_damage_upper), S.melee_damage_type)
 
 /obj/structure/swarmer/trap
 	name = "swarmer trap"
 	desc = "A quickly assembled trap that electrifies living beings and overwhelms machine sensors. Will not retain its form if damaged enough."
 	icon_state = "trap"
-	luminosity = 1
-	health = 10
+	obj_integrity = 10
+	max_integrity = 10
+	density = 0
 
 /obj/structure/swarmer/trap/Crossed(var/atom/movable/AM)
 	if(isliving(AM))
@@ -482,7 +450,7 @@
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
 			L.electrocute_act(0, src, 1, 1)
-			if(isrobot(L))
+			if(iscyborg(L))
 				L.Weaken(5)
 			qdel(src)
 	..()
@@ -516,9 +484,8 @@
 	desc = "A quickly assembled energy blockade. Will not retain its form if damaged enough, but disabler beams and swarmers pass right through."
 	icon_state = "barricade"
 	luminosity = 1
-	health = 50
-	density = 1
-	anchored = 1
+	obj_integrity = 50
+	max_integrity = 50
 
 /obj/structure/swarmer/blockade/CanPass(atom/movable/O)
 	if(isswarmer(O))

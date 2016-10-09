@@ -18,14 +18,6 @@
 		return 1	//Pure humans are always allowed in all roles.
 	return ..()
 
-
-/datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "mutationtoxin")
-		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		H.set_species(/datum/species/jelly/slime)
-		H.reagents.del_reagent(chem.type)
-		return 1
-
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

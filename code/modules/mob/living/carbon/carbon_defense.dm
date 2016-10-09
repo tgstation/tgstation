@@ -286,3 +286,15 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 					src << "<span class='warning'>Your ears start to ring!</span>"
 				src << sound('sound/weapons/flash_ring.ogg',0,1,0,250)
 		return effect_amount //how soundbanged we are
+
+
+/mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+	var/bodypart_bit = 0
+	if(def_zone)
+		bodypart_bit = body_zone2body_parts_covered(def_zone)
+	for(var/X in get_equipped_items())
+		var/obj/item/I = X
+		if(I.body_parts_covered & bodypart_bit)
+			I.take_damage(0.5*damage_amount, damage_type, damage_flag, 0)
+			//0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
+

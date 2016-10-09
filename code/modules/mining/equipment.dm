@@ -242,7 +242,7 @@
 
 /obj/effect/resonance/proc/burst(turf/T)
 	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
-	if(istype(T, /turf/closed/mineral))
+	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled(creator)
 	for(var/mob/living/L in T)
@@ -294,7 +294,7 @@
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
 				M.revive(full_heal = 1, admin_revive = 1)
-				if(istype(target, /mob/living/simple_animal/hostile))
+				if(ishostile(target))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)
 						H.faction |= list("lazarus", "\ref[user]")
@@ -523,7 +523,7 @@
 				L.underlays += I
 				hammer_synced.marked_image = I
 		var/target_turf = get_turf(target)
-		if(istype(target_turf, /turf/closed/mineral))
+		if(ismineralturf(target_turf))
 			var/turf/closed/mineral/M = target_turf
 			PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, M)
 			M.gets_drilled(firer)

@@ -45,7 +45,6 @@
 		AL["helptext"] = initial(ability.helptext)
 		AL["owned"] = changeling.has_sting(ability)
 		var/req_dna = initial(ability.req_dna)
-		AL["required_absorptions"] = req_dna
 		AL["dna_cost"] = dna_cost
 		AL["can_purchase"] = ((req_dna <= absorbed_dna_count) && (dna_cost <= genetic_points_remaining))
 

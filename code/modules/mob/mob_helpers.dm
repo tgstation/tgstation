@@ -318,7 +318,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src))
+	else if(iscyborg(src) || ismonkey(src) || islarva(src))
 		switch(input)
 			if("help")
 				a_intent = "help"
@@ -342,7 +342,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!istype(M))
 		return 0
 	if(issilicon(M))
-		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
+		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
 			if(R.mind && R.mind.special_role)
 				if(R.laws && R.laws.zeroth && R.syndicate)

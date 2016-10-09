@@ -148,13 +148,14 @@
 	if(B.naut) //if it already made a blobbernaut, it can't do it again
 		src << "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>"
 		return
-	if(B.health < B.maxhealth * 0.5)
+	if(B.obj_integrity < B.max_integrity * 0.5)
 		src << "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>"
 		return
 	if(!can_buy(40))
 		return
-	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
-	B.check_health()
+	B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
+	B.obj_integrity = min(B.obj_integrity, B.max_integrity)
+	B.update_icon()
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
@@ -194,7 +195,7 @@
 		src << "<span class='userdanger'>You have no core and are about to die! May you rest in peace.</span>"
 		return
 	var/area/A = get_area(T)
-	if(istype(T, /turf/open/space) || A && !A.blob_allowed)
+	if(isspaceturf(T) || A && !A.blob_allowed)
 		src << "<span class='warning'>You cannot relocate your core here!</span>"
 		return
 	if(!can_buy(80))

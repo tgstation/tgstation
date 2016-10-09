@@ -304,7 +304,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(stat == DEAD)
 		return //won't work if dead
-	if(istype(usr,/mob/living/silicon/ai))
+	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
 			usr << "Wireless control is disabled!"
@@ -343,7 +343,7 @@ var/list/ai_list = list()
 	set category = "Malfunction"
 	if(stat == DEAD)
 		return //won't work if dead
-	if(istype(usr,/mob/living/silicon/ai))
+	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
 			src	 << "Wireless control is disabled!"

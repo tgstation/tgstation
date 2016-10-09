@@ -5,7 +5,7 @@
 	icon_state = "folder"
 	w_class = 2
 	pressure_resistance = 2
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."

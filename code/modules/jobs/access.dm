@@ -106,8 +106,8 @@
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return 1
-	if(istype(M, /mob/living/silicon))
-		//AI can do whatever he wants
+	if(issilicon(M))
+		//AI can do whatever it wants
 		return 1
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse

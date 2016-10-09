@@ -15,41 +15,26 @@
 	anchored = 1
 	can_buckle = 1
 	buckle_lying = 1
-	resistance_flags = 0
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
+	integrity_failure = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
 
-/obj/structure/bed/deconstruct()
-	if(buildstacktype)
-		new buildstacktype(loc,buildstackamount)
+/obj/structure/bed/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
 	..()
 
 /obj/structure/bed/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/bed/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
-	if(M.environment_smash)
-		deconstruct()
-
-/obj/structure/bed/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-			return
-		if(2)
-			if(prob(70))
-				deconstruct()
-				return
-		if(3)
-			if(prob(50))
-				deconstruct()
-				return
-
 /obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		deconstruct()
+		deconstruct(TRUE)
 	else
 		return ..()
 
@@ -61,7 +46,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 	var/foldabletype = /obj/item/roller
 
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
