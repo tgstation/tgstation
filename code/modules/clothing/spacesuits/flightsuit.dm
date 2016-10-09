@@ -7,8 +7,6 @@
 //The speed at which you drift is determined by your current momentum
 //Also, I should probably add in some kind of limiting mechanic but I really don't like having to refill this all the time, expecially as it will be NODROP.
 //Apparently due to code limitations you have to detect mob movement with.. shoes.
-
-//Note to Admins: DO NOT SPAWN THE FLIGHT PACK BY ITSELF. IT RELIES ON THE SHOES AND SUIT BECAUSE MOVEMENT DETECTION AND ETC ETC.
 //The object that handles the flying itself - FLIGHT PACK --------------------------------------------------------------------------------------
 /obj/item/device/flightpack
 	name = "flight pack"
@@ -65,14 +63,31 @@
 	var/pressure = 1
 	var/pressure_decay_amount = 4
 	var/pressure_threshold = 30
-
 	var/brake = 0
 	var/airbrake_decay_amount = 30
 
 	var/resync = 0	//Used to resync the flight-suit every 30 seconds or so.
 
-	//var/datum/effect_system/trail_follow/ion/ion_trail
+	var/disabled = 0	//Whether it is disabled from crashes/emps/whatever
+	var/crash_disable_message = 0	//To not spam the user with messages
+	var/emp_disable_message = 0
 
+	//This is probably too much code just for EMP damage.
+	var/emp_damage = 0	//One hit should make it hard to control, continuous hits will cripple it and then simply shut it off/make it crash. Direct hits count more.
+	var/emp_strong_damage = 1.5
+	var/emp_weak_damage = 1
+	var/emp_heal_amount = 0.1		//How much emp damage to heal per process.
+	var/emp_disable_threshold = 3	//3 weak ion, 2 strong ion hits.
+	var/emp_disabled = 0
+
+	var/crash_damage = 0	//Same thing, but for crashes. This is in addition to possible amounts of brute damage to the wearer.
+	var/crash_damage_low = 1
+	var/crash_damage_high = 2.5
+	var/crash_disable_threshold = 5
+	var/crash_heal_amount = 0.2
+	var/crash_disabled = 0
+
+	//var/datum/effect_system/trail_follow/ion/ion_trail
 
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/New()
@@ -86,6 +101,17 @@
 		shoes.pack = null
 	STOP_PROCESSING(SSfastprocess, src)
 	..()
+
+/obj/item/device/flightpack/emp_act(severity)
+	var/damage = 0
+	if(severity == 1)
+		damage = emp_strong_damage
+	else
+		damage = emp_weak_damage
+	if(emp_damage <= (emp_disable_threshold * 1.5))
+		emp_damage += damage
+	wearer << "<span class='userdanger'>Flightpack: BZZZZZZZZZZZT</span>"
+	wearer << "<span class='warning'>Flightpack: WARNING: Class [severity] EMP detected! Circuit damage at [(100/emp_disable_threshold)*emp_damage]!</span>"
 
 //ACTION BUTTON CODE
 /obj/item/device/flightpack/ui_action_click(owner, action)
@@ -259,7 +285,37 @@
 	momentum_drift_tick++
 	momentum_drift()
 	handle_boost()
+	handle_damage()
 	update_icon()
+
+/obj/item/device/flightpack/proc/handle_damage()
+	if(crash_damage)
+		crash_damage = Clamp(crash_damage-crash_heal_amount, 0, crash_disable_threshold*10)
+		if(crash_damage >= crash_disable_threshold)
+			crash_disabled = 1
+		if(crash_disabled && (crash_damage <= 1))
+			crash_disabled = 0
+			crash_disable_message = 0
+			wearer << "<span class='notice'>Flightpack: Stabilizers re-calibrated. Flightpack re-enabled.</span>"
+	if(emp_damage)
+		emp_damage = Clamp(emp_damage-emp_heal_amount, 0, emp_disable_threshold * 10)
+		if(emp_damage >= emp_disable_threshold)
+			emp_disabled = 1
+		if(emp_disabled && (emp_damage <= 0.5))
+			emp_disabled = 0
+			wearer << "<span class='notice'>Flightpack: Systems rebooted. Flightpack re-enabled.</span>"
+	disabled = crash_disabled + emp_disabled
+	if(disabled)
+		if(crash_disabled && (!crash_disable_message))
+			wearer << "<span class='userdanger'>Flightpack: WARNING: STABILIZERS DAMAGED. UNABLE TO CONTINUE OPERATION. PLEASE WAIT FOR AUTOMATIC RECALIBRATION.</span>"
+			wearer << "<span class='warning'>Your flightpack abruptly shuts off!</span>"
+			crash_disable_message = 1
+		if(emp_disabled)
+			wearer << "<span class='userdanger'>Flightpack: WARNING: POWER SURGE DETECTED FROM INTERNAL SHORT CIRCUIT. PLEASE WAIT FOR AUTOMATIC REBOOT.</span>"
+			wearer << "<span class='warning'>Your flightpack abruptly shuts off!</span>"
+			emp_disable_message = 1
+		if(flight)
+			disable_flight(1)
 
 /obj/item/device/flightpack/update_icon()
 	if(!flight)
@@ -545,6 +601,11 @@
 		user = null
 	..()
 
+/obj/item/clothing/suit/space/hardsuit/flightsuit/ToggleHelmet()
+	if(!suittoggled)
+		if(!locked)
+			user << "<span class='warning'>You must lock your suit before engaging the helmet!</span>"
+
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/lock_suit(mob/wearer)
 	user = src.loc
 	user = wearer
@@ -556,6 +617,9 @@
 	return 1
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/unlock_suit(mob/wearer)
+	if(suittoggled)
+		user << "<span class='warning'>You must retract the helmet before unlocking your suit!</span>"
+		return 0
 	if(pack.flight)
 		user << "<span class='warning'>You must shut off the flight-pack before unlocking your suit!</span>"
 		return 0
@@ -668,38 +732,7 @@
 			unlock_suit(user)
 	..()
 
-/*
-/obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
-	if(!helmet)
-		return
-	suittoggled = 0
-	if(ishuman(helmet.loc))
-		var/mob/living/carbon/H = helmet.loc
-		H.unEquip(helmet, 1)
-		H.update_inv_wear_suit()
-		H << "<span class='notice'>The helmet on the hardsuit disengages.</span>"
-	helmet.loc = src
 
-/obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
-	var/mob/living/carbon/human/H = src.loc
-	if(!helmettype)
-		return
-	if(!helmet)
-		return
-	if(!suittoggled)
-		if(ishuman(src.loc))
-			if(H.wear_suit != src)
-				H << "<span class='warning'>You must be wearing [src] to engage the helmet!</span>"
-				return
-			if(H.head)
-				H << "<span class='warning'>You're already wearing something on your head!</span>"
-				return
-			else if(H.equip_to_slot_if_possible(helmet,slot_head,0,0,1))
-				H << "<span class='notice'>You engage the helmet on the hardsuit.</span>"
-				H.update_inv_wear_suit()
-	else
-		RemoveHelmet()
-*/
 /obj/item/clothing/suit/space/hardsuit/flightsuit/attackby(obj/item/I, mob/wearer, params)
 	return
 

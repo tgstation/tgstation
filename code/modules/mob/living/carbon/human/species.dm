@@ -1531,7 +1531,7 @@
 //Space Move//
 //////////////
 
-/datum/species/proc/space_move()
+/datum/species/proc/space_move(mob/living/carbon/human/H)
 	return 0
 
 /datum/species/proc/negates_gravity()

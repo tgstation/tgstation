@@ -23,8 +23,9 @@
 	if(H)
 		H.endTailWag()
 
-/datum/species/human/space_move()
-	if(FLYING in specflags)
+/datum/species/human/space_move(mob/living/carbon/human/H)
+	var/obj/item/device/flightpack/F = H.get_flightpack()
+	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
 		return 1
 /*
  LIZARDPEOPLE
