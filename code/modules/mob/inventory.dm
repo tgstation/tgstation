@@ -315,6 +315,7 @@
 	return items
 
 
+
 /obj/item/proc/equip_to_best_slot(var/mob/M)
 	if(src != M.get_active_held_item())
 		M << "<span class='warning'>You are not holding anything to equip!</span>"

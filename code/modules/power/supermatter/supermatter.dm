@@ -76,7 +76,9 @@
 
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", "supermatter")
-	qdel(radio)
+	if(radio)
+		qdel(radio)
+		radio = null
 	poi_list -= src
 	. = ..()
 
@@ -245,11 +247,11 @@
 /obj/machinery/power/supermatter_shard/blob_act(obj/structure/blob/B)
 	if(B && !isspaceturf(loc)) //does nothing in space
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
-		damage += B.health * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
-		if(B.health > 100)
+		damage += B.obj_integrity * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
+		if(B.obj_integrity > 100)
 			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and flinches away!</span>",\
 			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
-			B.take_damage(100, BURN, src)
+			B.take_damage(100, BURN)
 		else
 			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and rapidly flashes to ash.</span>",\
 			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")

@@ -8,6 +8,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/pandemic
 	use_power = 1
 	idle_power_usage = 20
+	resistance_flags = ACID_PROOF
 	var/temp_html = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/beaker = null

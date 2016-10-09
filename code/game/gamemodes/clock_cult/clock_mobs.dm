@@ -115,11 +115,11 @@
 	health = 300 //Health is very high, and under most cases it will take enough fatigue to be forced to recall first
 	maxHealth = 300
 	speed = 1
+	obj_damage = 40
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	environment_smash = 1
 	weather_immunities = list("lava")
 	flying = 1
 	loot = list(/obj/item/clockwork/component/replicant_alloy/fallen_armor)

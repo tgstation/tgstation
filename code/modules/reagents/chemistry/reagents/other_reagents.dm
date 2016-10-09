@@ -125,15 +125,17 @@
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
 			qdel(hotspot)
+	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
+	if(A)
+		A.acid_level = max(A.acid_level - reac_volume*50, 0)
 
 /*
  *	Water reaction to an object
  */
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
-	if(istype(O))
-		O.extinguish()
-
+	O.extinguish()
+	O.acid_level = 0
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O

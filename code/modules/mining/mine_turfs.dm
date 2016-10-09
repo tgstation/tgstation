@@ -36,6 +36,10 @@
 				if(istype(T, /turf/closed/mineral/random))
 					Spread(T)
 
+
+/turf/closed/mineral/acid_melt()
+	ChangeTurf(baseturf)
+
 /turf/closed/mineral/volcanic
 	environment_type = "basalt"
 	turf_type = /turf/open/floor/plating/asteroid/basalt

@@ -57,16 +57,21 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "forge"
 	anchored = 1
-	var/health = 200
+	obj_integrity = 200
+	max_integrity = 200
 	var/mob/living/current_wizard = null
 	var/next_check = 0
 	var/cooldown = 600
 	var/faction = "wizard"
-	var/broken = 0
 	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()
 	START_PROCESSING(SSobj, src)
+
+/obj/structure/academy_wizard_spawner/Destroy()
+	if(!broken)
+		STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/structure/academy_wizard_spawner/process()
 	if(next_check < world.time)
@@ -127,28 +132,12 @@
 
 	give_control()
 
-/obj/structure/academy_wizard_spawner/proc/update_status()
-	if(health<0)
+/obj/structure/academy_wizard_spawner/deconstruct(disassembled = TRUE)
+	if(!broken)
+		broken = 1
 		visible_message("<span class='warning'>[src] breaks down!</span>")
 		icon_state = "forge_off"
 		STOP_PROCESSING(SSobj, src)
-		broken = 1
-
-/obj/structure/academy_wizard_spawner/attackby(obj/item/weapon/W, mob/living/user, params)
-	add_fingerprint(user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if(!broken)
-		health -= W.force
-		update_status()
-	..()
-
-/obj/structure/academy_wizard_spawner/bullet_act(obj/item/projectile/Proj)
-	if(!broken)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			health -= Proj.damage
-			update_status()
-	..()
-	return
 
 /datum/outfit/wizard/academy
 	name = "Academy Wizard"

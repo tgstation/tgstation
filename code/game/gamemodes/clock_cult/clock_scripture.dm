@@ -535,7 +535,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 					if(BP.heal_damage(power_damage, power_damage, 1, 0)) //heals one point of burn and brute for every ~100W drained on augumented limbs
 						H.update_damage_overlays()
 				else
-					if(BP.take_damage(0, power_damage))
+					if(BP.receive_damage(0, power_damage))
 						H.update_damage_overlays()
 		else if(isanimal(invoker))
 			var/mob/living/simple_animal/A = invoker

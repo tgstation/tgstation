@@ -119,11 +119,11 @@
 		shutdown_core()
 
 
-/obj/machinery/am_shielding/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/am_shielding/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
-				if(damage)
+				if(damage_amount)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 				else
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
@@ -132,8 +132,8 @@
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
-	if(damage >= 10)
-		stability -= damage/2
+	if(damage_amount >= 10)
+		stability -= damage_amount/2
 		check_stability()
 
 
