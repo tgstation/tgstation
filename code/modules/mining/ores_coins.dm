@@ -17,6 +17,33 @@
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
 
+/obj/item/weapon/ore/Crossed(atom/movable/AM)
+	var/obj/item/weapon/storage/bag/ore/OB
+	var/turf/open/floor/F = get_turf(src)
+	if(loc != F)
+		return ..()
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		for(var/thing in H.get_storage_slots())
+			if(istype(thing, /obj/item/weapon/storage/bag/ore))
+				OB = thing
+				break
+	else if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		for(var/thing in H.held_items)
+			if(istype(thing, /obj/item/weapon/storage/bag/ore))
+				OB = thing
+				break
+	else if(issilicon(AM))
+		var/mob/living/silicon/robot/R = AM
+		for(var/thing in R.module_active)
+			if(istype(thing, /obj/item/weapon/storage/bag/ore))
+				OB = thing
+				break
+	if(OB && istype(F, /turf/open/floor/plating/asteroid))
+		F.attackby(OB, AM)
+	return ..()
+
 /obj/item/weapon/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
