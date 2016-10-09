@@ -498,8 +498,7 @@
 			return 1
 		busy = 0
 		O.clean_blood()
-		if(O.acid_level)
-			O.acid_level = max(O.acid_level - 6000, 0) //you might have to wash it multiple times
+		O.acid_level = 0
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1

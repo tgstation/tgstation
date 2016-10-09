@@ -246,7 +246,7 @@
 
 /datum/reagent/blob/energized_jelly/emp_reaction(obj/structure/blob/B, severity)
 	var/damage = rand(30, 50) - severity * rand(10, 15)
-	B.take_damage(damage, BURN)
+	B.take_damage(damage, BURN, "energy")
 
 //does aoe brute damage when hitting targets, is immune to explosions
 /datum/reagent/blob/explosive_lattice
@@ -278,11 +278,10 @@
 		M.apply_damage(0.6*reac_volume, BRUTE)
 
 /datum/reagent/blob/explosive_lattice/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if(damage_flag != "melee" || damage_flag != "bullet" || damage_flag != "laser")
-		if(damage_type == BRUTE)
-			return 0 //no-sell the explosion we do not take damage
-		if(damage_type == BURN)
-			return damage * 1.5 //take more from fire, tesla, and flashbangs
+	if(damage_flag == "bomb")
+		return 0
+	else if(damage_flag != "melee" || damage_flag != "bullet" || damage_flag != "laser")
+		return damage * 1.5
 	return ..()
 
 //does brute, burn, and toxin damage, and cools targets down

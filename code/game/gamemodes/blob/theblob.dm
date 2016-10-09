@@ -216,9 +216,9 @@
 	..()
 	if(overmind)
 		if(overmind.blob_reagent_datum.tesla_reaction(src, power))
-			take_damage(power/400, BURN)
+			take_damage(power/400, BURN, "energy")
 	else
-		take_damage(power/400, BURN)
+		take_damage(power/400, BURN, "energy")
 
 /obj/structure/blob/extinguish()
 	..()

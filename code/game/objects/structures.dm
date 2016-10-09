@@ -89,7 +89,7 @@
 
 /obj/structure/examine(mob/user)
 	..()
-	if(!(resistance_flags & INDESTRUCTIBLE)) //phil35 maybe make this a proc so it doesn't show for effect?
+	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
 			user << "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (obj_integrity/max_integrity) * 100

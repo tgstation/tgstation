@@ -4,6 +4,7 @@
 	obj_integrity = 150
 	max_integrity = 150
 	integrity_failure = 80
+	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Malk: Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
@@ -62,10 +63,10 @@
 		return ..()
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
-	if(damaged_item && istype(W, /obj/item/stack/sheet/cloth))
+	if(damaged_clothes && istype(W, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/C = W
 		C.use(1)
-		update_item_damaged_state(FALSE)
+		update_clothes_damaged_state(FALSE)
 		obj_integrity = max_integrity
 		user << "<span class='notice'>You fix the damages on [src] with [C].</span>"
 		return 1
@@ -122,31 +123,31 @@
 
 /obj/item/clothing/examine(mob/user)
 	..()
-	if(damaged_item)
+	if(damaged_clothes)
 		user <<  "<span class='warning'>It looks damaged!</span>"
 
 /obj/item/clothing/obj_break(damage_flag)
-	if(!damaged_item)
-		update_item_damaged_state(TRUE)
+	if(!damaged_clothes)
+		update_clothes_damaged_state(TRUE)
 
-var/list/damaged_item_icons = list()
+var/list/damaged_clothes_icons = list()
 
-/obj/item/clothing/proc/update_item_damaged_state(damaging = TRUE)
+/obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "\ref[initial(icon)]-[initial(icon_state)]"
 	if(damaging)
-		damaged_item = 1
-		var/icon/damaged_item_icon = damaged_item_icons[index]
-		if(!damaged_item_icon)
-			damaged_item_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply blood-splatters to the initial icon_state for each object
-			damaged_item_icon.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
-			damaged_item_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-			damaged_item_icon = fcopy_rsc(damaged_item_icon)
-			damaged_item_icons[index] = damaged_item_icon
-		add_overlay(damaged_item_icon, 1)
+		damaged_clothes = 1
+		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
+		if(!damaged_clothes_icon)
+			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply damaged effect to the initial icon_state for each object
+			damaged_clothes_icon.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
+			damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
+			damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
+			damaged_clothes_icons[index] = damaged_clothes_icon
+		add_overlay(damaged_clothes_icon, 1)
 	else
-		damaged_item = 0
-		overlays -= damaged_item_icons[index]
-		priority_overlays -= damaged_item_icons[index]
+		damaged_clothes = 0
+		overlays -= damaged_clothes_icons[index]
+		priority_overlays -= damaged_clothes_icons[index]
 
 
 //Ears: currently only used for headsets and earmuffs
@@ -213,12 +214,12 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
-		if(damaged_item)
+		if(damaged_clothes)
 			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedgloves")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
 
-/obj/item/clothing/gloves/update_item_damaged_state(damaging = TRUE)
+/obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -241,12 +242,12 @@ BLIND     // can't see anything
 /obj/item/clothing/head/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
-		if(damaged_item)
+		if(damaged_clothes)
 			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedhelmet")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
 
-/obj/item/clothing/head/update_item_damaged_state(damaging = TRUE)
+/obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -269,12 +270,12 @@ BLIND     // can't see anything
 	. = list()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
-			if(damaged_item)
+			if(damaged_clothes)
 				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
 			if(blood_DNA)
 				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 
-/obj/item/clothing/mask/update_item_damaged_state(damaging = TRUE)
+/obj/item/clothing/mask/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -341,12 +342,12 @@ BLIND     // can't see anything
 		else
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
 
-		if(damaged_item)
+		if(damaged_clothes)
 			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedshoe")
 		if(bloody)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 
-/obj/item/clothing/shoes/update_item_damaged_state(damaging = TRUE)
+/obj/item/clothing/shoes/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -378,12 +379,12 @@ BLIND     // can't see anything
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
-		if(damaged_item)
+		if(damaged_clothes)
 			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damaged[blood_overlay_type]")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
 
-/obj/item/clothing/suit/update_item_damaged_state(damaging = TRUE)
+/obj/item/clothing/suit/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -457,7 +458,7 @@ BLIND     // can't see anything
 
 	if(!isinhands)
 
-		if(damaged_item)
+		if(damaged_clothes)
 			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damageduniform")
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
@@ -470,7 +471,7 @@ BLIND     // can't see anything
 			tI.color = hastie.color
 			. += tI
 
-/obj/item/clothing/under/update_item_damaged_state(damaging = TRUE)
+/obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc

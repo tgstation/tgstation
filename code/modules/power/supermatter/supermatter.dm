@@ -76,7 +76,9 @@
 
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", "supermatter")
-	qdel(radio)
+	if(radio)
+		qdel(radio)
+		radio = null
 	poi_list -= src
 	. = ..()
 

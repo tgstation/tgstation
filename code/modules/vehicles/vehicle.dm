@@ -148,7 +148,7 @@
 /obj/vehicle/space/Process_Spacemove(direction)
 	return 1
 
-/obj/vehicle/run_obj_armor/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/vehicle/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 20)
 		return 0
 	. = ..()

@@ -32,8 +32,7 @@
 			user << "<span class='warning'>You need two glass sheets to fix [src]!</span>"
 			return
 		user << "<span class='notice'>You start fixing [src]...</span>"
-		if(do_after(user, 20, target = src))
-			G.use(2)
+		if(do_after(user, 20, target = src) && G.use(2))
 			broken = 0
 			obj_integrity = max_integrity
 			update_icon()

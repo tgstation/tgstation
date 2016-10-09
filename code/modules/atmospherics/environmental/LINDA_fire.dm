@@ -32,6 +32,7 @@
 	if(igniting)
 		if(oxy < 0.5 || tox < 0.5)
 			return 0
+
 		active_hotspot = PoolOrNew(/obj/effect/hotspot, src)
 		active_hotspot.temperature = exposed_temperature
 		active_hotspot.volume = exposed_volume
@@ -44,7 +45,7 @@
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
 	anchored = 1
-	mouse_opacity = 2
+	mouse_opacity = 0
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
