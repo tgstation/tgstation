@@ -96,7 +96,6 @@ var/highlander_claymores = 0
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
-	var/bloodthirst_level = 0 //HOW THIRSTY WE ARE FOR BLOOD
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
 /obj/item/weapon/claymore/highlander/New()
@@ -117,8 +116,6 @@ var/highlander_claymores = 0
 	if(isliving(loc))
 		var/mob/living/L = loc
 		if(L.stat != DEAD)
-			if(!announced)
-				handle_bloodthirst(L)
 			if(announced || admin_spawned || highlander_claymores > 1)
 				return
 			announced = TRUE
@@ -134,8 +131,7 @@ var/highlander_claymores = 0
 	user.add_stun_absorption("highlander", INFINITY, 1, "is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
 
 /obj/item/weapon/claymore/highlander/dropped(mob/living/user)
-	user << "<span class='danger'>The power of Scotland fades away! You are no longer shielded from stuns.</span>"
-	user.add_stun_absorption("highlander", 0.1, 1, "is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
+	qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/weapon/claymore/highlander/examine(mob/user)
 	..()
@@ -144,14 +140,9 @@ var/highlander_claymores = 0
 		user << "<span class='boldwarning'>It's holding the nuke disk!</span>"
 
 /obj/item/weapon/claymore/highlander/attack(mob/living/target, mob/living/user)
-	var/old_target_stat = target.stat
 	. = ..()
-	bloodthirst_level = max(bloodthirst_level - (target.mind && target.mind.special_role == "highlander" ? 15 : 5), 0)
-	if(target && target.stat == DEAD && old_target_stat != DEAD && target.mind && target.mind.special_role == "highlander")
+	if(target && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
-		if(bloodthirst_level >= 30)
-			user << "<span class='notice'>[src] shakes greedily as it devours [target]'s soul. Its bloodthirst is quenched for the moment...</span>"
-		bloodthirst_level = 0
 		add_notch(user)
 		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
 		target.dust()
@@ -222,22 +213,6 @@ var/highlander_claymores = 0
 
 	name = new_name
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
-
-/obj/item/weapon/claymore/highlander/proc/handle_bloodthirst(mob/living/S) //THE BLADE THIRSTS FOR BLOOD AND WILL PUNISH THE WEAK OR PACIFISTIC
-	bloodthirst_level += (1 + min(notches, 10))
-	if(bloodthirst_level == 30)
-		S << "<span class='warning'>[src] shudders in your hand. It hungers for battle...</span>"
-	if(bloodthirst_level == 60)
-		S << "<span class='boldwarning'>[src] trembles violently. Kill someone already!</span>"
-	if(bloodthirst_level == 90)
-		S << "<span class='userdanger'>[src] starts shaking viciously! Shed blood or it'll give you away!</span>"
-	if(bloodthirst_level >= 120)
-		var/turf/T = get_turf(S)
-		for(var/mob/M in player_list - S)
-			if(M.z == T.z)
-				M << "<span class='userdanger'>THERE IS A COWARD WHO DOES NOT FIGHT TO THE [uppertext(dir2text(get_dir(M, T)))]. THEIR NAME IS [uppertext(S.real_name)] - SLAUGHTER THEM.</span>"
-		S << "<span class='notice'>you fucked up</span>"
-		bloodthirst_level = 100
 
 /obj/item/weapon/katana
 	name = "katana"
