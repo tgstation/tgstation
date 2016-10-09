@@ -264,6 +264,8 @@
 
 		if(type == "config")
 			switch(name)
+				if("hub")
+					world.visibility = 1
 				if("admin_legacy_system")
 					config.admin_legacy_system = 1
 				if("ban_legacy_system")

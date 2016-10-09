@@ -4,9 +4,12 @@
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
+	hub = "Exadv1.spacestation13"
+	hub_password = "kMZy3U5jJHSiBQjr"
+	name = "/tg/ Station 13"
 	fps = 20
 
-var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
+var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
 	check_for_cleanbot_bug()
@@ -32,7 +35,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-
+	visibility = 0
 	load_configuration()
 	load_mode()
 	load_motd()

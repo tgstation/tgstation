@@ -16,7 +16,6 @@
 #include "_maps\__MAP_DEFINES.dm"
 #include "_maps\tgstation2.dm"
 #include "code\_compile_options.dm"
-#include "code\hub.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\heap.dm"
 #include "code\__DATASTRUCTURES\linked_lists.dm"
