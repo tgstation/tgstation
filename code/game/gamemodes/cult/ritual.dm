@@ -253,7 +253,6 @@ This file contains the arcane tome files.
 	feedback_add_details("cult_runes_scribed", R.cultist_name)
 
 /obj/item/weapon/tome/proc/check_rune_turf(turf/T, mob/user)
-	var/narsie_exists = FALSE
 	var/area/A = get_area(T)
 
 	if(isspaceturf(T))
