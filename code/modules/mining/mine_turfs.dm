@@ -717,11 +717,20 @@
 		L.resting = TRUE
 	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 	for(var/i in 1 to 5)
+		//Make sure the item is still there after our sleep
+		if(!AM || qdeleted(AM))
+			return
 		AM.pixel_y--
 		sleep(2)
+
+	//Make sure the item is still there after our sleep
+	if(!AM || qdeleted(AM))
+		return
+
 	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
+
 	qdel(AM)
 
 /turf/closed/mineral/volcanic/lava_land_surface
