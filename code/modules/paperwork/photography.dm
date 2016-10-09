@@ -17,7 +17,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /*
  * Photo
@@ -28,8 +28,9 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1
-	resistance_flags = 0
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
@@ -94,7 +95,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /*
  * Camera

@@ -61,6 +61,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	throwforce = 10
 	flags = CONDUCT
 	origin_tech = "materials=1"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/sheet/metal/ratvar_act()
 	new /obj/item/stack/sheet/brass(loc, amount)
@@ -104,6 +105,8 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	throwforce = 10
 	flags = CONDUCT
 	origin_tech = "materials=2"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 80)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 	recipes = plasteel_recipes
@@ -146,7 +149,8 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	icon = 'icons/obj/items.dmi'
 	origin_tech = "materials=1;biotech=1"
 	sheettype = "wood"
-	resistance_flags = 0
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
+	resistance_flags = FLAMMABLE
 
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
@@ -183,7 +187,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
 
@@ -216,7 +220,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
 	origin_tech = "materials=1"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes

@@ -97,9 +97,16 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(invisibility != INVISIBILITY_MAXIMUM)
 		qdel(src)
 
-/obj/structure/cable/Deconstruct()
-	var/turf/T = loc
-	stored.loc = T
+/obj/structure/cable/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/turf/T = loc
+		stored.forceMove(T)
+	qdel(src)
+
+/obj/structure/cable/fire_act(exposed_temperature, exposed_volume)
+	var/turf/T = src.loc
+	if(T && T.intact) //protected from fire when hidden behind a floor.
+		return
 	..()
 
 ///////////////////////////////////
@@ -138,7 +145,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
-		Deconstruct()
+		deconstruct()
 		return
 
 	else if(istype(W, /obj/item/stack/cable_coil))
@@ -169,21 +176,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		return 0
 
-//explosion handling
-/obj/structure/cable/ex_act(severity, target)
-	..()
-	if(!qdeleted(src))
-		switch(severity)
-			if(2)
-				if(prob(50))
-					Deconstruct()
-			if(3)
-				if(prob(25))
-					Deconstruct()
-
 /obj/structure/cable/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
 
 /obj/structure/cable/proc/cableColor(colorC = "red")
 	cable_color = colorC
@@ -619,7 +614,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				C.Deconstruct()
+				C.deconstruct()
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
@@ -684,7 +679,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
-					NC.Deconstruct()
+					NC.deconstruct()
 
 			return
 
@@ -734,7 +729,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				C.Deconstruct()
+				C.deconstruct()
 				return
 
 		C.denode()// this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.

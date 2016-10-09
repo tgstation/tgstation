@@ -18069,7 +18069,7 @@
 "yN" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /turf/open/floor/plasteel/shuttle{

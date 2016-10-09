@@ -272,16 +272,15 @@
 	for(var/thing in thing_to_check)
 		if(isobj(thing))
 			var/obj/O = thing
-			if(O.resistance_flags & LAVA_PROOF || O.throwing)
-				continue
-			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
-				qdel(O)
+			if((O.resistance_flags & (LAVA_PROOF|ON_FIRE|INDESTRUCTIBLE)) || O.throwing)
 				continue
 			. = 1
-			if(O.resistance_flags & FIRE_PROOF)
-				O.resistance_flags &= ~FIRE_PROOF //Even fireproof things burn up in lava
-
-			O.fire_act()
+			if(!(O.resistance_flags & FLAMMABLE))
+				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
+				O.resistance_flags = ~FIRE_PROOF
+			if(O.armor["fire"] > 50) //obj with 100% fire armor still get slowly burned away.
+				O.armor["fire"] = 50
+			O.fire_act(10000, 1000)
 
 
 		else if (isliving(thing))

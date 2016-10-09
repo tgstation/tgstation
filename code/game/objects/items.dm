@@ -20,6 +20,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
+	obj_integrity = 150
+	max_integrity = 150
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+
 	var/hitsound = null
 	var/throwhitsound = null
 	var/w_class = 3
@@ -120,12 +124,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(B && B.loc == loc)
 		qdel(src)
 
-/obj/item/ex_act(severity, target)
-	if(severity == 1 || target == src)
-		qdel(src)
-	if(!qdeleted(src))
-		contents_explosion(severity, target)
-
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
 //BRUTELOSS = 1
@@ -220,20 +218,29 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return
 
 	if(resistance_flags & ON_FIRE)
-		var/mob/living/carbon/human/H = user
-		if(istype(H))
-			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
+		var/mob/living/carbon/C = user
+		if(istype(C))
+			if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 				extinguish()
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
-					H.update_damage_overlays()
-
+				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
+					C.update_damage_overlays()
 				return
 		else
 			extinguish()
+
+	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
+		var/mob/living/carbon/C = user
+		if(istype(C))
+			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
+				user << "<span class='warning'>The acid on [src] burns your hand!</span>"
+				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
+					C.update_damage_overlays()
+
 
 	if(istype(loc, /obj/item/weapon/storage))
 		//If the item is in a storage item, take it out
@@ -501,36 +508,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		throw_at_fast(S,14,3, spin=0)
 	else ..()
 
-/obj/item/acid_act(acidpwr, acid_volume)
-	. = 1
-	if(resistance_flags & UNACIDABLE)
-		return
-
-	var/meltingpwr = acid_volume*acidpwr
-	var/melting_threshold = 100
-	if(meltingpwr <= melting_threshold) // so a single unit can't melt items. You need 5.1+ unit for fluoro and 10.1+ for sulphuric
-		return
-	for(var/V in armor)
-		if(armor[V] > 0)
-			.-- //it survives the acid...
-			break
-	if(. && prob(min(meltingpwr/10,90))) //chance to melt depends on acid power and volume.
-		var/turf/T = get_turf(src)
-		if(T)
-			var/obj/effect/decal/cleanable/molten_item/I = new (T)
-			I.pixel_x = rand(-16,16)
-			I.pixel_y = rand(-16,16)
-			I.desc = "Looks like this was \an [src] some time ago."
-		if(istype(src,/obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = src
-			S.do_quick_empty() //melted storage item drops its content.
-		qdel(src)
-	else
-		for(var/armour_value in armor) //but is weakened
-			armor[armour_value] = max(armor[armour_value]-min(acidpwr,meltingpwr/10),0)
-		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
-			desc += " it looks slightly melted..." //needs a space at the start, formatting
-
 /obj/item/throw_impact(atom/A)
 	var/itempush = 1
 	if(w_class < 4)
@@ -591,3 +568,32 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 //when an item modify our speech spans when in our active hand. Override this to modify speech spans.
 /obj/item/proc/get_held_item_speechspans(mob/living/carbon/user)
 	return
+
+/obj/item/hitby(atom/movable/AM)
+	return
+
+/obj/item/attack_hulk(mob/living/carbon/human/user)
+	return 0
+
+/obj/item/attack_animal(mob/living/simple_animal/M)
+	return 0
+
+/obj/item/mech_melee_attack(obj/mecha/M)
+	return 0
+
+/obj/item/burn()
+	if(!qdeleted(src))
+		var/turf/T = get_turf(src)
+		var/obj/effect/decal/cleanable/ash/A = new()
+		A.desc = "Looks like this used to be a [name] some time ago."
+		A.forceMove(T) //so the ash decal is deleted if on top of lava.
+		..()
+
+/obj/item/acid_melt()
+	if(!qdeleted(src))
+		var/turf/T = get_turf(src)
+		var/obj/effect/decal/cleanable/molten_object/MO = new (T)
+		MO.pixel_x = rand(-16,16)
+		MO.pixel_y = rand(-16,16)
+		MO.desc = "Looks like this was \an [src] some time ago."
+		..()

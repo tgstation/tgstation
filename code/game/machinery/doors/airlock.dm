@@ -29,6 +29,9 @@ var/list/airlock_overlays = list()
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
+	obj_integrity = 300
+	max_integrity = 300
+	integrity_failure = 70
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
@@ -926,33 +929,7 @@ var/list/airlock_overlays = list()
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 		if(do_after(user,40/I.toolspeed, target = src))
 			if(src.loc)
-				if(assemblytype)
-					var/obj/structure/door_assembly/A = new assemblytype(src.loc)
-					A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
-				else
-					new /obj/structure/door_assembly/door_assembly_0(src.loc)
-					//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
-
-				if(emagged)
-					user << "<span class='warning'>You discard the damaged electronics.</span>"
-					qdel(src)
-					return
-				user << "<span class='notice'>You remove the airlock electronics.</span>"
-
-				var/obj/item/weapon/electronics/airlock/ae
-				if(!electronics)
-					ae = new/obj/item/weapon/electronics/airlock( src.loc )
-					if(req_one_access)
-						ae.one_access = 1
-						ae.accesses = src.req_one_access
-					else
-						ae.accesses = src.req_access
-				else
-					ae = electronics
-					electronics = null
-					ae.loc = src.loc
-
-				qdel(src)
+				deconstruct(TRUE, user)
 				return
 	else if(hasPower())
 		user << "<span class='warning'>The airlock's motors resist your efforts to force it!</span>"
@@ -1218,3 +1195,46 @@ var/list/airlock_overlays = list()
 		secondsElectrified = 0
 		open()
 		safe = TRUE
+
+
+/obj/machinery/door/airlock/obj_break(damage_flag)
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+		stat |= BROKEN
+		if(!panel_open)
+			panel_open = 1
+		wires.cut_all()
+		update_icon()
+
+/obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
+	if(!(flags & NODECONSTRUCT))
+		var/obj/structure/door_assembly/A
+		if(assemblytype)
+			A = new assemblytype(src.loc)
+			A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
+		else
+			A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
+			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
+
+		if(!disassembled)
+			if(A)
+				A.obj_integrity = A.max_integrity * 0.5
+		else if(emagged)
+			if(user)
+				user << "<span class='warning'>You discard the damaged electronics.</span>"
+		else
+			if(user)
+				user << "<span class='notice'>You remove the airlock electronics.</span>"
+
+			var/obj/item/weapon/electronics/airlock/ae
+			if(!electronics)
+				ae = new/obj/item/weapon/electronics/airlock( src.loc )
+				if(req_one_access)
+					ae.one_access = 1
+					ae.accesses = src.req_one_access
+				else
+					ae.accesses = src.req_access
+			else
+				ae = electronics
+				electronics = null
+				ae.loc = src.loc
+	qdel(src)
