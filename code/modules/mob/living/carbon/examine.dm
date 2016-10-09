@@ -37,7 +37,7 @@
 		if(t=="head")
 			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 			continue
-		msg += "<<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
+		msg += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 
 	msg += "<span class='warning'>"
 	var/temp = getBruteLoss()

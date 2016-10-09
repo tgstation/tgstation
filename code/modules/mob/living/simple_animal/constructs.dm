@@ -91,6 +91,7 @@
 	health = 250
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
+	obj_damage = 90
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "smashes their armored gauntlet into"
@@ -169,6 +170,7 @@
 	health = 50
 	response_harm = "viciously beats"
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	retreat_distance = 10

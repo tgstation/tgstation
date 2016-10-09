@@ -679,7 +679,7 @@
 	if(method == INJECT)
 		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
-	C.acid_act(acidpwr, toxpwr, reac_volume)
+	C.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, reac_volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
@@ -691,8 +691,7 @@
 	if (!istype(T))
 		return
 	reac_volume = round(reac_volume,0.1)
-	for(var/obj/O in T)
-		O.acid_act(acidpwr, reac_volume)
+	T.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"

@@ -29,7 +29,7 @@ var/datum/subsystem/persistence/SSpersistence
 
 	var/list/free_satchels = list()
 	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION)))) //Nontrivially expensive but it's roundstart only
-		if(istype(T,/turf/open/floor) && !istype(T,/turf/open/floor/plating/))
+		if(isfloorturf(T) && !istype(T,/turf/open/floor/plating/))
 			free_satchels += new /obj/item/weapon/storage/backpack/satchel/flat/secret(T)
 			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchels) >= (50 - expanded_old_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
 				break
@@ -60,7 +60,7 @@ var/datum/subsystem/persistence/SSpersistence
 	F.x = text2num(chosen_satchel[1])
 	F.y = text2num(chosen_satchel[2])
 	F.z = ZLEVEL_STATION
-	if(istype(F.loc,/turf/open/floor) && !istype(F.loc,/turf/open/floor/plating/))
+	if(isfloorturf(F.loc) && !istype(F.loc,/turf/open/floor/plating/))
 		F.hide(1)
 	new path(F)
 	return 1

@@ -106,8 +106,9 @@
 	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
 	icon_state = "paperslip"
 	icon = 'icons/obj/bureaucracy.dmi'
-	resistance_flags = 0
-	burntime = 3
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 
 /obj/item/weapon/paperslip/New()
 	..()

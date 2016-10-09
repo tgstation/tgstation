@@ -181,6 +181,7 @@
 	else
 		return ..()
 
+
 /obj/machinery/power/am_control_unit/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
@@ -278,7 +279,7 @@
 
 /obj/machinery/power/am_control_unit/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon/ai))
+		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return

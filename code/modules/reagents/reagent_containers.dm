@@ -73,7 +73,7 @@
 			R.on_ex_act()
 	..()
 
-/obj/item/weapon/reagent_containers/fire_act()
+/obj/item/weapon/reagent_containers/fire_act(exposed_temperature, exposed_volume)
 	reagents.chem_temp += 30
 	reagents.handle_reactions()
 	..()

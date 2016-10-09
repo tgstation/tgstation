@@ -5,7 +5,8 @@
 	icon_state = "human_male"
 	density = 1
 	anchored = 1
-	health = 0 //destroying the statue kills the mob within
+	obj_integrity = 200
+	max_integrity = 200
 	var/intialTox = 0 	//these are here to keep the mob from taking damage from things that logically wouldn't affect a rock
 	var/intialFire = 0	//it's a little sloppy I know but it was this or the GODMODE flag. Lesser of two evils.
 	var/intialBrute = 0
@@ -23,7 +24,8 @@
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
 		L.visible_message("<span class='warning'>[L]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't...  think...</span>")
 
-		health = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
+		obj_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
+		max_integrity = obj_integrity
 		intialTox = L.getToxLoss()
 		intialFire = L.getFireLoss()
 		intialBrute = L.getBruteLoss()
@@ -42,7 +44,7 @@
 			icon_state = "corgi"
 			desc = "If it takes forever, I will wait for you..."
 
-	if(health == 0) //meaning if the statue didn't find a valid target
+	if(obj_integrity == 0) //meaning if the statue didn't find a valid target
 		qdel(src)
 		return
 
@@ -84,9 +86,9 @@
 		O.loc = src.loc
 
 	for(var/mob/living/M in src)
-		M.loc = src.loc
+		M.forceMove(loc)
 		M.disabilities -= MUTE
-		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
+		M.take_overall_damage((M.health - obj_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		M.faction -= "mimic"
 		M.reset_perspective(null)
 
@@ -111,25 +113,6 @@
 /obj/structure/closet/statue/toggle()
 	return
 
-/obj/structure/closet/statue/bullet_act(obj/item/projectile/Proj)
-	health -= Proj.damage
-	if(health <= 0)
-		shatter()
-
-/obj/structure/closet/statue/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		shatter()
-
-/obj/structure/closet/statue/blob_act(obj/structure/blob/B)
-	shatter()
-
-/obj/structure/closet/statue/attacked_by(obj/item/I, mob/living/user)
-	if(I.damtype != STAMINA)
-		health -= I.force
-	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
-	if(health <= 0)
-		shatter()
-
 /obj/structure/closet/statue/MouseDrop_T()
 	return
 
@@ -145,9 +128,10 @@
 /obj/structure/closet/statue/update_icon()
 	return
 
-/obj/structure/closet/statue/proc/shatter()
-	for(var/mob/living/M in src)
-		M.dust()
+/obj/structure/closet/statue/deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		for(var/mob/living/M in src)
+			M.dust()
 	dump_contents()
 	visible_message("<span class='danger'>[src] shatters!.</span>")
 	qdel(src)

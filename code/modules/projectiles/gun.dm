@@ -484,8 +484,3 @@ obj/item/weapon/gun/proc/newshot()
 		azoom = new()
 		azoom.gun = src
 
-
-/obj/item/weapon/gun/burn()
-	if(pin)
-		qdel(pin)
-	.=..()

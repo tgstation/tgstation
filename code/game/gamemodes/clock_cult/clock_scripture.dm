@@ -170,7 +170,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/check_special_requirements()
 	var/turf/T = get_turf(invoker)
-	if(!space_allowed && istype(T, /turf/open/space))
+	if(!space_allowed && isspaceturf(T))
 		invoker << "<span class='warning'>You need solid ground to place this object!</span>"
 		return 0
 	if(one_per_tile && (locate(prevent_path) in T))
@@ -535,7 +535,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 					if(BP.heal_damage(power_damage, power_damage, 1, 0)) //heals one point of burn and brute for every ~100W drained on augumented limbs
 						H.update_damage_overlays()
 				else
-					if(BP.take_damage(0, power_damage))
+					if(BP.receive_damage(0, power_damage))
 						H.update_damage_overlays()
 		else if(isanimal(invoker))
 			var/mob/living/simple_animal/A = invoker

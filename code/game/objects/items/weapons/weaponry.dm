@@ -34,6 +34,10 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("banned")
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>")
@@ -74,6 +78,10 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -245,6 +253,10 @@ var/highlander_claymores = 0
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/katana/cursed
 	slot_flags = null
@@ -307,6 +319,7 @@ var/highlander_claymores = 0
 	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	resistance_flags = FIRE_PROOF
 
 
 /obj/item/weapon/switchblade
@@ -323,6 +336,7 @@ var/highlander_claymores = 0
 	origin_tech = "engineering=3;combat=2"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
+	resistance_flags = FIRE_PROOF
 	var/extended = 0
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
@@ -393,14 +407,14 @@ var/highlander_claymores = 0
 	w_class = 2
 	armour_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/staff/broom
 	name = "broom"
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/staff/stick
 	name = "stick"

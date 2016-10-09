@@ -37,7 +37,7 @@
 	item_state = "armor"
 	can_adjust = 0
 	strip_delay = 100
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -125,7 +125,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -378,7 +378,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/sundress
 	name = "sundress"

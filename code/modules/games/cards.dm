@@ -125,7 +125,7 @@
 	var/blank = 0
 	var/list/cards = list()
 	var/datum/html_interface/hi
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/hand/New(loc)
 	. = ..()

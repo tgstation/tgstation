@@ -823,11 +823,11 @@ var/list/WALLITEMS = list(
 	)
 
 var/list/WALLITEMS_EXTERNAL = list(
-	/obj/machinery/camera, /obj/machinery/camera_assembly,
-	/obj/machinery/light_construct, /obj/machinery/light)
+	/obj/machinery/camera, /obj/structure/camera_assembly,
+	/obj/structure/light_construct, /obj/machinery/light)
 
 var/list/WALLITEMS_INVERSE = list(
-	/obj/machinery/light_construct, /obj/machinery/light)
+	/obj/structure/light_construct, /obj/machinery/light)
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)

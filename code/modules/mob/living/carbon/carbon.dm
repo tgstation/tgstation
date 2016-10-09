@@ -30,7 +30,7 @@
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
 				var/obj/item/bodypart/BP = get_bodypart("chest")
-				if(BP.take_damage(d, 0))
+				if(BP.receive_damage(d, 0))
 					update_damage_overlays()
 				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>", \
 									"<span class='userdanger'>[user] attacks your stomach wall with the [I.name]!</span>")
@@ -440,6 +440,9 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+	if(dna && dna.species && NOHUNGER in dna.species.specflags)
+		return 1
+
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
@@ -498,8 +501,6 @@
 	update_stat()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
 		become_husk()
-		if(on_fire)
-			shred_clothing()
 	med_hud_set_health()
 
 /mob/living/carbon/update_sight()
@@ -704,6 +705,13 @@
 
 	..()
 
+/mob/living/carbon/ExtinguishMob()
+	for(var/X in get_equipped_items())
+		var/obj/item/I = X
+		I.acid_level = 0 //washes off the acid on our clothes
+		I.extinguish() //extinguishes our clothes
+	..()
+
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
 	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
 	apply_overlay(FIRE_LAYER)
@@ -725,16 +733,20 @@
 		add_logs(src, C, "devoured")
 
 /mob/living/carbon/proc/create_bodyparts()
+	var/l_arm_index_next = -1
+	var/r_arm_index_next = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/O = new X()
 		O.owner = src
 		bodyparts.Remove(X)
 		bodyparts.Add(O)
 		if(O.body_part == ARM_LEFT)
-			O.held_index = 1
+			l_arm_index_next += 2
+			O.held_index = l_arm_index_next //1, 3, 5, 7...
 			hand_bodyparts += O
 		else if(O.body_part == ARM_RIGHT)
-			O.held_index = 2
+			r_arm_index_next += 2
+			O.held_index = r_arm_index_next //2, 4, 6, 8...
 			hand_bodyparts += O
 
 

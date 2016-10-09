@@ -306,10 +306,10 @@
 						msg += "Detected cybernetic modifications:<br>"
 						msg += implant_detect
 					if(R)
-						var/health = R.fields["p_stat"]
-						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health]\]</a>"
-						health = R.fields["m_stat"]
-						msg += "<a href='?src=\ref[src];hud=m;m_stat=1'>\[[health]\]</a><br>"
+						var/health_r = R.fields["p_stat"]
+						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health_r]\]</a>"
+						health_r = R.fields["m_stat"]
+						msg += "<a href='?src=\ref[src];hud=m;m_stat=1'>\[[health_r]\]</a><br>"
 					R = find_record("name", perpname, data_core.medical)
 					if(R)
 						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"

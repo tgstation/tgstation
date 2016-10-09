@@ -14,6 +14,7 @@
 	health = 100
 
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "slashes"

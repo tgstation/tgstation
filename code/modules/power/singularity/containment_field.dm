@@ -7,7 +7,7 @@
 	icon_state = "Contain_F"
 	anchored = 1
 	density = 0
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = 0
 	luminosity = 4
 	layer = ABOVE_OBJ_LAYER
@@ -26,10 +26,19 @@
 		shock(user)
 		return 1
 
+/obj/machinery/field/containment/attackby(obj/item/W, mob/user, params)
+	shock(user)
+	return 1
+
+/obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BURN)
+			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+		if(BRUTE)
+			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
 
 /obj/machinery/field/containment/blob_act(obj/structure/blob/B)
 	return 0
-
 
 /obj/machinery/field/containment/ex_act(severity, target)
 	return 0
@@ -69,6 +78,8 @@
 /obj/machinery/field/containment/Move()
 	qdel(src)
 
+
+
 // Abstract Field Class
 // Used for overriding certain procs
 
@@ -106,7 +117,6 @@
 
 		user.updatehealth()
 		bump_field(user)
-	return
 
 /obj/machinery/field/proc/clear_shock()
 	hasShocked = 0

@@ -82,7 +82,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
-		if(!(T.type == /turf/open/space))
+		if(istype(T, /turf/open/space/transit) || !isspaceturf(T))
 			continue
 		if((T.x == A.x) || (T.x == B.x) || (T.y == A.y) || (T.y == B.y))
 			T.color = "#ffff00"
@@ -234,7 +234,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/callShuttle = 1
 
 	for(var/thing in shuttle_caller_list)
-		if(istype(thing, /mob/living/silicon/ai))
+		if(isAI(thing))
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.stat || !AI.client)
 				continue

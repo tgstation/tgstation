@@ -136,6 +136,7 @@
 /mob/living/simple_animal/hostile/syndicate/civilian
 	minimum_distance = 10
 	retreat_distance = 10
+	obj_damage = 0
 	environment_smash = 0
 
 /mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
@@ -154,6 +155,8 @@
 	maxHealth = 25
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	obj_damage = 0
+	environment_smash = 0
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("syndicate")

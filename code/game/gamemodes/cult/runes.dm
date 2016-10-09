@@ -21,7 +21,7 @@ To draw a rune, use an arcane tome.
 	anchored = 1
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = ABOVE_NORMAL_TURF_LAYER
 	color = "#FF0000"
 
@@ -357,7 +357,7 @@ var/list/teleport_runes = list()
 	color = "#7D1717"
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
-	var/is_convertable = is_convertable_to_cult(L.mind)
+	var/is_convertable = is_convertable_to_cult(L)
 	if(L.stat != DEAD && (is_clock || is_convertable))
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		..()
@@ -404,7 +404,7 @@ var/list/teleport_runes = list()
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
-	if((((ishuman(sacrificial) || isrobot(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
+	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			M << "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>"
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
@@ -423,7 +423,7 @@ var/list/teleport_runes = list()
 		if(sacrifice_fulfilled)
 			M << "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>"
 		else
-			if(ishuman(sacrificial) || isrobot(sacrificial))
+			if(ishuman(sacrificial) || iscyborg(sacrificial))
 				M << "<span class='cultlarge'>\"I accept this sacrifice.\"</span>"
 			else
 				M << "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>"
@@ -435,7 +435,7 @@ var/list/teleport_runes = list()
 		stone.invisibility = 0
 
 	if(sacrificial)
-		if(isrobot(sacrificial))
+		if(iscyborg(sacrificial))
 			playsound(sacrificial, 'sound/magic/Disable_Tech.ogg', 100, 1)
 			sacrificial.dust() //To prevent the MMI from remaining
 		else
@@ -990,17 +990,14 @@ var/list/wall_runes = list()
 	..()
 	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
 	user << "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>"
-	var/obj/machinery/shield/N = new(get_turf(src))
-	N.name = "Invoker's Shield"
-	N.desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
-	N.color = "red"
-	N.health = 20
-	N.mouse_opacity = 0
+	var/turf/T = get_turf(src)
+	var/obj/structure/emergency_shield/invoker/N = new(T)
+
 	new_human.key = ghost_to_spawn.key
 	ticker.mode.add_cultist(new_human.mind, 0)
 	new_human << "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>"
 
-	while(user in get_turf(src))
+	while(user in T)
 		if(user.stat)
 			break
 		user.apply_damage(0.1, BRUTE)

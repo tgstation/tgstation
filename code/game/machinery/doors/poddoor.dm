@@ -8,6 +8,10 @@
 	explosion_block = 3
 	heat_proof = 1
 	safe = 0
+	obj_integrity = 600
+	max_integrity = 600
+	armor = list(melee = 50, bullet = 100, laser = 100, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
@@ -23,7 +27,7 @@
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/T = get_step(src, checkdir)
-	if(!istype(T,/turf/open/space))
+	if(!isspaceturf(T))
 		addtimer(src, "open", 0, TRUE)
 	else
 		addtimer(src, "close", 0, TRUE)
@@ -36,30 +40,14 @@
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
-	if(target == src)
-		qdel(src)
+	if(severity == 3)
 		return
-	switch(severity)
-		if(1)
-			if(prob(80))
-				qdel(src)
-			else
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-		if(2)
-			if(prob(20))
-				qdel(src)
-			else
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
+	..()
 
-		if(3)
-			if(prob(80))
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
+/obj/machinery/door/poddoor/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 70) //any melee attack below 70 dmg does nothing
+		return 0
+	. = ..()
 
 /obj/machinery/door/poddoor/do_animate(animation)
 	switch(animation)

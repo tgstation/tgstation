@@ -35,7 +35,7 @@
 		add_overlay("[icon_state]_door")
 
 /obj/structure/guncase/attackby(obj/item/I, mob/user, params)
-	if(isrobot(user) || isalien(user))
+	if(iscyborg(user) || isalien(user))
 		return
 	if(istype(I, gun_category))
 		if(contents.len < capacity && open)
@@ -53,7 +53,7 @@
 		return ..()
 
 /obj/structure/guncase/attack_hand(mob/user)
-	if(isrobot(user) || isalien(user))
+	if(iscyborg(user) || isalien(user))
 		return
 	if(contents.len && open)
 		ShowWindow(user)
