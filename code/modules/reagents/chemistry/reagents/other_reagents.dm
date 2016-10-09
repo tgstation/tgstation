@@ -348,9 +348,9 @@
 		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.their_pronoun()] arms."))
+				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
 			else
-				M.visible_message("<b>[M]</b> [M.their_pronoun()] their arms.")
+				M.visible_message("<b>[M]</b> [M.p_their()] their arms.")
 	if(prob(10))
 		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
 	..()
@@ -368,7 +368,7 @@
 /datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
-	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.their_pronoun()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
 		if(!H || qdeleted(H))

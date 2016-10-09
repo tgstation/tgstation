@@ -294,7 +294,7 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
-				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
+				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
 				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"

@@ -496,7 +496,7 @@
 			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.
-		user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [their_pronoun()] head" : "on [their_pronoun()] body"].</span>"
+		user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>"
 
 /mob/living/carbon/human/proc/check_obscured_slots()
 	var/list/obscured = list()
@@ -630,7 +630,7 @@
 		src << "<span class='warning'>Remove your mask first!</span>"
 		return 0
 	if(C.is_mouth_covered())
-		src << "<span class='warning'>Remove [their_pronoun()] mask first!</span>"
+		src << "<span class='warning'>Remove [p_their()] mask first!</span>"
 		return 0
 
 	if(C.cpr_time < world.time + 30)

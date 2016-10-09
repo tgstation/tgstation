@@ -392,7 +392,7 @@ var/list/teleport_runes = list()
 		convertee.adjustBruteLoss(-(brutedamage * 0.75))
 		convertee.adjustFireLoss(-(burndamage * 0.75))
 	convertee.visible_message("<span class='warning'>[convertee] writhes in pain \
-	[brutedamage || burndamage ? "even as [convertee.their_pronoun()] wounds heal and close" : "as the markings below [convertee.them_pronoun()] glow a bloody red"]!</span>", \
+	[brutedamage || burndamage ? "even as [convertee.p_their()] wounds heal and close" : "as the markings below [convertee.p_them()] glow a bloody red"]!</span>", \
  	"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
 	ticker.mode.add_cultist(convertee.mind, 1)
 	new /obj/item/weapon/tome(get_turf(src))
@@ -572,7 +572,7 @@ var/list/teleport_runes = list()
 	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
 	mob_to_revive.grab_ghost()
 	mob_to_revive << "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>"
-	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.their_pronoun()] eyes.</span>", \
+	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes.</span>", \
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")
 	rune_in_use = 0
 
@@ -687,11 +687,11 @@ var/list/teleport_runes = list()
 			return
 		affecting.apply_damage(0.1, BRUTE)
 		if(!(user in T))
-			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls [user.them_pronoun()] back to the rune!</span>")
+			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls [user.p_them()] back to the rune!</span>")
 			Beam(user,icon_state="drainbeam",time=2)
 			user.forceMove(get_turf(src)) //NO ESCAPE :^)
 		if(user.key)
-			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow around [user.them_pronoun()] dimming.</span>", \
+			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow around [user.p_them()] dimming.</span>", \
 								 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
 			user.color = initial(user.color)
 			user.Weaken(3)
@@ -754,7 +754,7 @@ var/list/wall_runes = list()
 	update_state()
 	if(density)
 		spread_density()
-	user.visible_message("<span class='warning'>[user] [iscarbon(user) ? "places [user.their_pronoun()] hands on":"stares intently at"] [src], and [density ? "the air above it begins to shimmer" : "the shimmer above it fades"].</span>", \
+	user.visible_message("<span class='warning'>[user] [iscarbon(user) ? "places [user.p_their()] hands on":"stares intently at"] [src], and [density ? "the air above it begins to shimmer" : "the shimmer above it fades"].</span>", \
 						 "<span class='cultitalic'>You channel your life energy into [src], [density ? "temporarily preventing" : "allowing"] passage above it.</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user

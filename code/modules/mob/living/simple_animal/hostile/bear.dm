@@ -95,7 +95,7 @@
 		A.melee_damage_lower += 5
 		A.melee_damage_upper += 5
 		A.update_icons()
-		user << "<span class='info'>You strap the armor plating to [A] and sharpen [A.their_pronoun()] claws with the nail filer. This was a great idea.</span>"
+		user << "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>"
 		qdel(src)
 
 

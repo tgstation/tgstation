@@ -301,7 +301,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/i in 1 to healseverity)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
 	invoker << "<span class='brass'>You bathe [L] in Inath-neq's power!</span>"
-	L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.their_pronoun()] bruises and burns!</span>", \
+	L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
 	"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
 	playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
 	return 1
@@ -825,7 +825,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return create_marauder()
 
 /datum/clockwork_scripture/memory_allocation/proc/create_marauder()
-	invoker.visible_message("<span class='warning'>A yellow tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.their_pronoun()] forehead!</span>", \
+	invoker.visible_message("<span class='warning'>A yellow tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
 	"<span class='heavy_brass'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
 	invoker.notransform = TRUE //Vulnerable during the process
 	slab.busy = "Thought modification in process"
