@@ -17,7 +17,7 @@
 	use_power = 1
 	idle_power_usage = 50
 	machinetype = 2
-	//heatgen = 20
+	heatgen = 20
 	netspeed = 40
 	var/change_frequency = 0
 

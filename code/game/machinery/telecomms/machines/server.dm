@@ -16,7 +16,7 @@
 	use_power = 1
 	idle_power_usage = 15
 	machinetype = 4
-	//heatgen = 50
+	heatgen = 50
 	var/list/log_entries = list()
 	var/list/stored_names = list()
 	var/list/TrafficActions = list()

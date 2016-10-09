@@ -15,7 +15,7 @@
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 8
-	//heatgen = 0
+	heatgen = 0
 	netspeed = 5
 	long_range_link = 1
 	var/broadcasting = 1

@@ -55156,7 +55156,9 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
 "cgF" = (
-/obj/machinery/telecomms/bus/preset_three,
+/obj/machinery/telecomms/bus/preset_three{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55170,7 +55172,9 @@
 	},
 /area/tcommsat/server)
 "cgH" = (
-/obj/machinery/telecomms/processor/preset_three,
+/obj/machinery/telecomms/processor/preset_three{
+	heatgen = 0
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
@@ -55178,7 +55182,9 @@
 	},
 /area/tcommsat/server)
 "cgI" = (
-/obj/machinery/telecomms/processor/preset_one,
+/obj/machinery/telecomms/processor/preset_one{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55192,7 +55198,9 @@
 	},
 /area/tcommsat/server)
 "cgK" = (
-/obj/machinery/telecomms/bus/preset_one,
+/obj/machinery/telecomms/bus/preset_one{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55421,7 +55429,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
 "chp" = (
-/obj/machinery/telecomms/server/presets/security,
+/obj/machinery/telecomms/server/presets/security{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55441,7 +55451,9 @@
 	},
 /area/tcommsat/server)
 "chr" = (
-/obj/machinery/telecomms/server/presets/command,
+/obj/machinery/telecomms/server/presets/command{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55469,7 +55481,9 @@
 	},
 /area/tcommsat/server)
 "chv" = (
-/obj/machinery/telecomms/server/presets/medical,
+/obj/machinery/telecomms/server/presets/medical{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55489,7 +55503,9 @@
 	},
 /area/tcommsat/server)
 "chx" = (
-/obj/machinery/telecomms/server/presets/science,
+/obj/machinery/telecomms/server/presets/science{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55673,7 +55689,9 @@
 /turf/open/space,
 /area/space)
 "chY" = (
-/obj/machinery/telecomms/processor/preset_four,
+/obj/machinery/telecomms/processor/preset_four{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55691,7 +55709,9 @@
 	},
 /area/tcommsat/server)
 "cia" = (
-/obj/machinery/telecomms/bus/preset_four,
+/obj/machinery/telecomms/bus/preset_four{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55706,7 +55726,9 @@
 	},
 /area/tcommsat/server)
 "cic" = (
-/obj/machinery/telecomms/bus/preset_two,
+/obj/machinery/telecomms/bus/preset_two{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55726,7 +55748,9 @@
 	},
 /area/tcommsat/server)
 "cie" = (
-/obj/machinery/telecomms/processor/preset_two,
+/obj/machinery/telecomms/processor/preset_two{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55838,7 +55862,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cit" = (
-/obj/machinery/telecomms/server/presets/engineering,
+/obj/machinery/telecomms/server/presets/engineering{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55852,7 +55878,9 @@
 	},
 /area/tcommsat/server)
 "civ" = (
-/obj/machinery/telecomms/server/presets/common,
+/obj/machinery/telecomms/server/presets/common{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55873,7 +55901,9 @@
 /turf/closed/wall,
 /area/tcommsat/server)
 "ciy" = (
-/obj/machinery/telecomms/server/presets/supply,
+/obj/machinery/telecomms/server/presets/supply{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -55887,7 +55917,9 @@
 	},
 /area/tcommsat/server)
 "ciA" = (
-/obj/machinery/telecomms/server/presets/service,
+/obj/machinery/telecomms/server/presets/service{
+	heatgen = 0
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"

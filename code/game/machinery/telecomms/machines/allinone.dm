@@ -11,6 +11,7 @@
 	anchored = 1
 	use_power = 0
 	idle_power_usage = 0
+	heatgen = 0	//Places that use this usually can't support a cooling system
 	machinetype = 6
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
 

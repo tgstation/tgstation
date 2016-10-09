@@ -24,6 +24,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/network = "NULL" // the network of the machinery
 
 	var/list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
+	var/integrity = 100 // basically HP, loses integrity by heat
+	var/heatgen = 20 // how much heat to transfer to the environment
+	var/delay = 10 // how many process() ticks to delay per heat
+	var/heating_power = 40000
 
 	var/machinetype = 0 // just a hacky way of preventing alike machines from pairing
 	var/toggled = 1 	// Is it toggled on
@@ -40,6 +44,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(!on)
 		return
 	var/send_count = 0
+
+	signal.data["slow"] += rand(0, round((100-integrity))) // apply some lag based on integrity
 
 	// Apply some lag based on traffic rates
 	var/netlag = round(traffic / 50)
@@ -191,7 +197,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/proc/update_power()
 
 	if(toggled)
-		if(stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
+		if(stat & (BROKEN|NOPOWER|EMPED) || integrity <= 0) // if powered, on. if not powered, off. if too damaged, off
 			on = 0
 		else
 			on = 1
@@ -200,6 +206,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/process()
 	update_power()
+
+	checkheat()
 
 	// Update the icon
 	update_icon()
@@ -215,3 +223,36 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			spawn(rand(duration - 20, duration + 20)) // Takes a long time for the machines to reboot.
 				stat &= ~EMPED
 	..()
+
+
+/obj/machinery/telecomms/proc/checkheat()
+	// Checks heat from the environment and applies any integrity damage
+	var/datum/gas_mixture/environment = loc.return_air()
+	switch(environment.temperature)
+		if(T0C to (T20C + 20))
+			integrity = Clamp(integrity, 0, 100)
+		if((T20C + 20) to (T0C + 70))
+			integrity = max(0, integrity - 1)
+	if(delay)
+		delay--
+	else
+		// If the machine is on, ready to produce heat, and has positive traffic, genn some heat
+		if(on && traffic > 0)
+			produce_heat(heatgen)
+			delay = initial(delay)
+/obj/machinery/telecomms/proc/produce_heat(heat_amt)
+	if(heatgen == 0)
+		return
+	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
+		var/turf/L = loc
+		if(istype(L))
+			var/datum/gas_mixture/env = L.return_air()
+			if(env.temperature < (heat_amt+T0C))
+				var/transfer_moles = 0.25 * env.total_moles()
+				var/datum/gas_mixture/removed = env.remove(transfer_moles)
+				if(removed)
+					var/heat_capacity = removed.heat_capacity()
+					if(heat_capacity == 0 || heat_capacity == null)
+						heat_capacity = 1
+					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
+				env.merge(removed)
