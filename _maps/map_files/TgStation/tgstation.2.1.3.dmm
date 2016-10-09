@@ -7180,6 +7180,14 @@
 	pixel_x = 30;
 	pixel_y = 0
 	},
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 0;
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/warning{
 	dir = 1
 	},
@@ -37408,9 +37416,7 @@
 	})
 "bEA" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/warning{
-	dir = 6
-	},
+/turf/open/floor/plasteel/warning,
 /area/toxins/mixing)
 "bEB" = (
 /obj/structure/table,
@@ -37441,7 +37447,10 @@
 	name = "Science Requests Console";
 	pixel_y = 30
 	},
-/turf/open/floor/plasteel/white,
+/obj/structure/closet/l3closet,
+/turf/open/floor/plasteel/warning{
+	dir = 6
+	},
 /area/toxins/mixing)
 "bEE" = (
 /turf/open/floor/plasteel/floorgrime,
@@ -38071,7 +38080,10 @@
 /area/toxins/mixing)
 "bFV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/girder,
+/obj/machinery/door/poddoor{
+	id = "mixvent";
+	name = "Mixer Room Vent"
+	},
 /turf/open/floor/engine,
 /area/maintenance/asmaint2)
 "bFW" = (
@@ -38768,11 +38780,10 @@
 /turf/open/floor/engine,
 /area/toxins/mixing)
 "bHs" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	frequency = 1441;
+	id = "n2_in"
 	},
 /turf/open/floor/engine/vacuum,
 /area/toxins/mixing)
@@ -42133,6 +42144,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/science_white,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -60790,6 +60802,10 @@
 /area/toxins/mixing)
 "cCC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Toxins Launch Room Access";
+	dir = 2
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/mixing)
 "cCD" = (
@@ -60980,12 +60996,13 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/mixing)
 "cCU" = (
-/obj/machinery/door/airlock/research{
-	name = "Toxins Storage";
-	req_access_txt = "8"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/research{
+	name = "Toxins Launch Room Access";
+	req_access_txt = "8"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/mixing)
@@ -61129,52 +61146,31 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
-"cDv" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
-"cDu" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+"cDm" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/toxins/storage)
+"cDn" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
-"cDt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/turf/open/floor/plasteel/floorgrime,
+/area/toxins/storage)
+"cDo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/toxins/storage)
-"cDs" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/toxins/storage)
-"cDr" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
-"cDq" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "cDp" = (
 /obj/structure/disposalpipe/segment,
@@ -61189,32 +61185,58 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
-"cDo" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+"cDq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/toxins/storage)
+"cDr" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/toxins/storage)
+"cDs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/toxins/storage)
+"cDt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
 /area/toxins/storage)
-"cDn" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
-"cDm" = (
+"cDu" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
 	pixel_y = 0
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/turf/open/floor/plating,
+/area/maintenance/asmaint2)
+"cDv" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/asmaint2)
+"cDw" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -108401,8 +108423,8 @@ bDf
 bJV
 bFY
 bMu
+cDw
 bIY
-aaT
 bEC
 bQU
 bQU
@@ -108658,8 +108680,8 @@ bFU
 bJU
 bGl
 bMu
+cDw
 bIZ
-aaT
 bEC
 bQT
 bSg
