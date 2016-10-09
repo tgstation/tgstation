@@ -278,7 +278,7 @@
 		return
 	var/amount_to_heal = max_health - health
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
-	if(!proselytizer.can_use_alloy(0))
+	if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
 	var/proselytizer_cost = healing_for_cycle*2
 	if(!proselytizer.can_use_alloy(proselytizer_cost))
@@ -293,7 +293,7 @@
 		if(!amount_to_heal)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
-		if(!proselytizer.can_use_alloy(0))
+		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
 		proselytizer_cost = healing_for_cycle*2
 		if(!proselytizer.can_use_alloy(proselytizer_cost) || !do_after(user, proselytizer_cost, target = src) || !proselytizer || !proselytizer.can_use_alloy(proselytizer_cost))
@@ -302,7 +302,7 @@
 		if(!amount_to_heal)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
-		if(!proselytizer.can_use_alloy(0))
+		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
 		proselytizer_cost = healing_for_cycle*2
 		if(!proselytizer.can_use_alloy(proselytizer_cost))
