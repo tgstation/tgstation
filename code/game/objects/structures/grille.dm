@@ -139,11 +139,11 @@
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(!shock(user, 100))
-			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			Deconstruct()
 	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf) || anchored))
 		if(!shock(user, 90))
-			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
 								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")

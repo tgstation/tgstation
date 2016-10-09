@@ -21,6 +21,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
 	var/hitsound = null
+	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = 3
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.

@@ -41,7 +41,7 @@
 				return
 
 			else if(istype(W, /obj/item/weapon/wrench))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				user << "<span class='notice'>You unattach the assembly from its place.</span>"
 				new /obj/item/wallframe/camera(get_turf(src))
 				qdel(src)
@@ -71,7 +71,7 @@
 		if(3)
 			// State 3
 			if(istype(W, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 
 				var/input = stripped_input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
 				if(!input)
@@ -96,7 +96,7 @@
 
 			else if(istype(W, /obj/item/weapon/wirecutters))
 				new/obj/item/stack/cable_coil(get_turf(src), 2)
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				user << "<span class='notice'>You cut the wires from the circuits.</span>"
 				state = 2
 				return
@@ -115,7 +115,7 @@
 		var/obj/U = locate(/obj) in upgrades
 		if(U)
 			user << "<span class='notice'>You unattach an upgrade from the assembly.</span>"
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			U.loc = get_turf(src)
 			upgrades -= U
 		return
@@ -129,7 +129,7 @@
 		return 0
 
 	user << "<span class='notice'>You start to weld \the [src]...</span>"
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(src.loc, WT.usesound, 50, 1)
 	busy = 1
 	if(do_after(user, 20, target = src))
 		busy = 0

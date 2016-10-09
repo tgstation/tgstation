@@ -121,7 +121,7 @@
 			user << "<span class='warning'>Turn off [src] before you perform this action!</span>"
 			return 0
 		user.visible_message("<span class='notice'>[user] unscrews [src]'s maintenance panel and begins fiddling with its innards...</span>", "<span class='notice'>You begin resetting [src]...</span>")
-		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(user, I.usesound, 50, 1)
 		if(!do_after(user, 40/I.toolspeed, target = user))
 			return 0
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")

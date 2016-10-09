@@ -174,7 +174,7 @@
 
 		if(8)
 			if(istype(W, /obj/item/weapon/screwdriver))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>You start attaching the gun to the frame...</span>"
 				sleep(40)

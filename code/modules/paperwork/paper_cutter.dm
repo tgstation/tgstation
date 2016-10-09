@@ -55,7 +55,7 @@
 		update_icon()
 		return
 	if(istype(P, /obj/item/weapon/screwdriver) && storedcutter)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, P.usesound, 50, 1)
 		user << "<span class='notice'>\The [storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>"
 		cuttersecured = !cuttersecured
 		return

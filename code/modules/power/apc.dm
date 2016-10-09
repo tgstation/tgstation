@@ -375,7 +375,7 @@
 			if (terminal)
 				user << "<span class='warning'>Disconnect the wires first!</span>"
 				return
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "<span class='notice'>You are trying to remove the power control board...</span>" //lpeters - fixed grammar issues
 			if(do_after(user, 50/W.toolspeed, target = src))
 				if (has_electronics==1)
@@ -427,12 +427,12 @@
 				if (has_electronics==1 && terminal)
 					has_electronics = 2
 					stat &= ~MAINT
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(src.loc, W.usesound, 50, 1)
 					user << "<span class='notice'>You screw the circuit electronics into place.</span>"
 				else if (has_electronics==2)
 					has_electronics = 1
 					stat |= MAINT
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(src.loc, W.usesound, 50, 1)
 					user << "<span class='notice'>You unfasten the electronics.</span>"
 				else /* has_electronics==0 */
 					user << "<span class='warning'>There is nothing to secure!</span>"
@@ -510,7 +510,7 @@
 		user.visible_message("[user.name] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		if(do_after(user, 50/W.toolspeed, target = src))
 			if(!src || !WT.remove_fuel(3, user)) return
 			if (emagged || malfhack || (stat & BROKEN) || opened==2)

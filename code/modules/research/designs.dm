@@ -505,6 +505,25 @@ datum/design/diagnostic_hud_night
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
 
+/datum/design/handdrill
+	name = "Hand Drill"
+	desc = "A small electric hand drill with an interchangable screwdriver and bolt bit"
+	id = "handdrill"
+	req_tech = list("materials" = 4, "engineering" = 6)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3500, MAT_SILVER = 1500, MAT_TITANIUM = 2500)
+	build_path = /obj/item/weapon/screwdriver/power
+	category = list("Equipment")
+
+/datum/design/jawsoflife
+	name = "Jaws of Life"
+	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
+	id = "jawsoflife"
+	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6) // added one more requirment since the Jaws of Life are a bit OP
+	build_path = /obj/item/weapon/crowbar/power
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
+
 /datum/design/diskplantgene
 	name = "Plant data disk"
 	desc = "A disk for storing plant genetic data."

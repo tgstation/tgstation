@@ -975,6 +975,34 @@ var/list/airlock_overlays = list()
 					open(2)
 				else
 					close(2)
+	if(istype(I, /obj/item/weapon/crowbar/power))
+		if(isElectrified())
+			shock(user,100)//it's like sticking a forck in a power socket
+			return
+
+		if(!density)//already open
+			return
+
+		if(locked)
+			user << "<span class='warning'>The bolts are down, it won't budge!</span>"
+			return
+
+		if(welded)
+			user << "<span class='warning'>It's welded, it won't budge!</span>"
+			return
+
+		var/time_to_open = 5
+		if(hasPower())
+			time_to_open = 50
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg',100,1) //is it aliens or just the CE being a dick?
+			if(do_after(user, time_to_open,target = src))
+				open(2)
+				if(density && !open(2))
+					user << "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>"
+		else
+			open(2)//hopefully this won't be redundant
+
+
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
@@ -1198,6 +1226,9 @@ var/list/airlock_overlays = list()
 	if(do_after(user, time_to_open, target = src))
 		if(density && !open(2)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			user << "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>"
+
+
+
 
 /obj/machinery/door/airlock/hostile_lockdown(mob/origin)
 	// Must be powered and have working AI wire.
