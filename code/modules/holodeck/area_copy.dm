@@ -21,7 +21,7 @@
 				O.vars[V] = original.vars[V]
 
 	if(istype(O))
-		O.resistance_flags |= LAVA_PROOF | FIRE_PROOF | UNACIDABLE // holoitems do not burn
+		O.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF // holoitems do not burn
 		if(nerf && istype(O,/obj/item))
 			var/obj/item/I = O
 			I.damtype = STAMINA // thou shalt not

@@ -49,14 +49,6 @@
 	else
 		return ..()
 
-/obj/machinery/smartfridge/on_construction()
-	for(var/datum/A in contents)
-		qdel(A)
-
-/obj/machinery/smartfridge/on_deconstruction()
-	for(var/atom/movable/A in contents)
-		A.loc = loc
-
 /obj/machinery/smartfridge/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
@@ -95,44 +87,44 @@
 		updateUsrDialog()
 		return
 
-	if(stat)
-		return 0
+	if(!stat)
 
-	if(contents.len >= max_n_of_items)
-		user << "<span class='warning'>\The [src] is full!</span>"
-		return 0
-
-	if(accept_check(O))
-		load(O)
-		user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
-		updateUsrDialog()
-		return 1
-
-	if(istype(O, /obj/item/weapon/storage/bag))
-		var/obj/item/weapon/storage/P = O
-		var/loaded = 0
-		for(var/obj/G in P.contents)
-			if(contents.len >= max_n_of_items)
-				break
-			if(accept_check(G))
-				load(G)
-				loaded++
-		updateUsrDialog()
-
-		if(loaded)
-			if(contents.len >= max_n_of_items)
-				user.visible_message("[user] loads \the [src] with \the [O].", \
-								 "<span class='notice'>You fill \the [src] with \the [O].</span>")
-			else
-				user.visible_message("[user] loads \the [src] with \the [O].", \
-									 "<span class='notice'>You load \the [src] with \the [O].</span>")
-			if(O.contents.len > 0)
-				user << "<span class='warning'>Some items are refused.</span>"
-		else
-			user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
+		if(contents.len >= max_n_of_items)
+			user << "<span class='warning'>\The [src] is full!</span>"
 			return 0
 
-	else if(user.a_intent != "harm")
+		if(accept_check(O))
+			load(O)
+			user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
+			updateUsrDialog()
+			return 1
+
+		if(istype(O, /obj/item/weapon/storage/bag))
+			var/obj/item/weapon/storage/P = O
+			var/loaded = 0
+			for(var/obj/G in P.contents)
+				if(contents.len >= max_n_of_items)
+					break
+				if(accept_check(G))
+					load(G)
+					loaded++
+			updateUsrDialog()
+
+			if(loaded)
+				if(contents.len >= max_n_of_items)
+					user.visible_message("[user] loads \the [src] with \the [O].", \
+									 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+				else
+					user.visible_message("[user] loads \the [src] with \the [O].", \
+										 "<span class='notice'>You load \the [src] with \the [O].</span>")
+				if(O.contents.len > 0)
+					user << "<span class='warning'>Some items are refused.</span>"
+				return 1
+			else
+				user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
+				return 0
+
+	if(user.a_intent != "harm")
 		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
 		return 0
@@ -293,6 +285,10 @@
 		if(S.dried_type)
 			return 1
 	return 0
+
+/obj/machinery/smartfridge/drying_rack/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/mineral/wood (loc, 10)
+	qdel(src)
 
 /obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff = 0)
 	if(drying || forceoff)

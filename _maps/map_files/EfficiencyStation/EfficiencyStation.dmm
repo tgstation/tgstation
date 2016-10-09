@@ -321,7 +321,7 @@
 /obj/machinery/vending/cigarette{
 	use_power = 0
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aaZ" = (
@@ -331,7 +331,6 @@
 /area/shuttle/abandoned)
 "aba" = (
 /obj/machinery/door/poddoor{
-	auto_close = 300;
 	id = "smindicate";
 	name = "outer blast door"
 	},
@@ -1406,7 +1405,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "acX" = (
@@ -3191,7 +3190,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/bot,
 /area/shuttle/abandoned)
 "agd" = (
@@ -3809,7 +3808,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aho" = (
@@ -7956,7 +7955,7 @@
 	dir = 8;
 	on = 1
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/device/radio/intercom{
 	dir = 1;
 	name = "Station Intercom (General)";
@@ -10340,7 +10339,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "atv" = (
@@ -22858,7 +22857,7 @@
 	},
 /area/maintenance/fore)
 "aSa" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
@@ -28205,7 +28204,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/reagent_dispensers/watertank,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
@@ -33350,7 +33349,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -33909,7 +33908,7 @@
 	},
 /obj/effect/decal/cleanable/oil,
 /obj/item/weapon/cigbutt,
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -34753,7 +34752,7 @@
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28;
-	shattered = 1
+	broken = 1
 	},
 /obj/effect/decal/cleanable/vomit/old,
 /obj/effect/decal/cleanable/cobweb,
@@ -34803,7 +34802,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -36081,7 +36080,7 @@
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
 	pixel_x = -28;
-	shattered = 1
+	broken = 1
 	},
 /obj/item/weapon/cigbutt,
 /turf/open/floor/plasteel{
@@ -41684,7 +41683,6 @@
 	pixel_y = -30
 	},
 /obj/machinery/newscaster{
-	hitstaken = 1;
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/red/side{
@@ -42257,7 +42255,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg3"
@@ -44232,7 +44230,7 @@
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -44860,7 +44858,7 @@
 /area/maintenance/starboard)
 "bLc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light_construct/small{
+/obj/structure/light_construct/small{
 	dir = 8
 	},
 /obj/effect/spawner/lootdrop/grille_or_trash,
@@ -56874,9 +56872,13 @@
 	},
 /area/shuttle/syndicate)
 "ckj" = (
-/obj/machinery/portable_atmospherics/canister/bz,
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/wood/bar,
+/obj/item/device/instrument/eguitar,
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
 "ckk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -92328,7 +92330,7 @@ aWM
 aZX
 aWM
 bbG
-bcw
+ckj
 bcw
 bcw
 bcw
