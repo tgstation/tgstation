@@ -42242,7 +42242,9 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "kanyewest"
+	id = "kanyewest";
+	layer = 2.9;
+	name = "privacy shutters"
 	},
 /turf/open/floor/plating,
 /area/security/detectives_office)
