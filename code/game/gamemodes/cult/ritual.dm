@@ -180,7 +180,7 @@ This file contains the arcane tome files.
 	if(!possible_runes.len)
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || !check_rune_turf(Turf, user))
+	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
@@ -195,7 +195,7 @@ This file contains the arcane tome files.
 	if(!rune_to_scribe)
 		return
 	Turf = get_turf(user) //we may have moved. adjust as needed...
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || !check_rune_turf(Turf, user))
+	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(ticker.mode.name == "cult")
