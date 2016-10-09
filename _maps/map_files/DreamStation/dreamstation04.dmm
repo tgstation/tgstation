@@ -72370,6 +72370,7 @@
 /area/maintenance/asmaint2)
 "cNz" = (
 /obj/item/weapon/coin/uranium,
+/obj/item/device/instrument/eguitar,
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"

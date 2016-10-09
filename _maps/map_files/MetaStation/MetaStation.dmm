@@ -82287,6 +82287,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
+/obj/item/device/instrument/eguitar,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
