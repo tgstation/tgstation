@@ -19,8 +19,9 @@
 	max_w_class = 3
 	max_combined_w_class = 21
 	storage_slots = 21
-	resistance_flags = 0
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
@@ -37,9 +38,11 @@
 	icon_state = "holdingpack"
 	max_w_class = 6
 	max_combined_w_class = 35
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 	var/pshoom = 'sound/items/PSHOOM.ogg'
 	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
+
 
 /obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like \he's trying to commit suicide.</span>")
@@ -141,14 +144,14 @@
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
 	item_state = "captainpack"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
 	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
 	item_state = "engiepack"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/botany
 	name = "botany backpack"
@@ -173,7 +176,7 @@
 	desc = "A specially designed backpack. It's fire resistant and smells vaguely of plasma."
 	icon_state = "toxpack"
 	item_state = "toxpack"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/virology
 	name = "virology backpack"
@@ -196,7 +199,7 @@
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/satchel/leather/withwallet/New()
 	..()
@@ -207,7 +210,7 @@
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
 	item_state = "engiepack"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/satchel/med
 	name = "medical satchel"
@@ -238,7 +241,7 @@
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-tox"
 	item_state = "satchel-tox"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/satchel/hyd
 	name = "botanist satchel"
@@ -263,7 +266,7 @@
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
@@ -328,7 +331,7 @@
 	desc = "A large dufflebag for holding extra captainly goods."
 	icon_state = "duffle-captain"
 	item_state = "duffle-captain"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/dufflebag/med
 	name = "medical dufflebag"
@@ -347,7 +350,7 @@
 	desc = "A large dufflebag for holding extra tools and supplies."
 	icon_state = "duffle-eng"
 	item_state = "duffle-eng"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/dufflebag/drone
 	name = "drone dufflebag"

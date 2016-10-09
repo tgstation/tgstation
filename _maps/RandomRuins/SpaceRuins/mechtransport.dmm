@@ -95,7 +95,7 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "u" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "v" = (

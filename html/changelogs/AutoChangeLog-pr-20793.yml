@@ -1,0 +1,9 @@
+author: "phil235"
+delete-after: True
+changes: 
+  - rscadd: "A whole bunch of structures and machines can now be broken and destroyed using conventional attack methods."
+  - rscadd: "The effect of fire on objects is overhauled. When on fire, your external clothes now take fire damage and can become ashes, unless fire proof. All objects caught in a fire can now take fire damage, instead of just flammable ones, unless fire proof."
+  - rscadd: "Acid effect is overhauled. Splashing acid on something puts a green effect on it and start slowly melting it. Throwing acid on mobs puts acid on their clothes. Acid can destroy structures and items alike, as long as they're not acid proof. The more acid put on an object, the faster it melts. Walking on an acid puddle puts acid on your shoes or burns your bare feet. Picking up an item with acid without adequate glove protection burns your hand. Acid can be washed away with any sort of water source (extinguisher, shower, water glass,etc...)."
+  - rscadd: "When a mob receives melee attacks, its clothes also get damaged. Clothes with enough damage get a visual effect. Damaged clothes can be repaired with cloth (produced with botany's biogenerator). Clothes that receives too much melee damage become shreds."
+  - tweak: "Clicking a structure/machine with an item on help intent can never result in an attack."
+  - tweak: "Hostile animals that are environment destroyers no longer destroys tables&closets in one hit. It now takes several hits depending on the animal."

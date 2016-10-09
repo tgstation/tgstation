@@ -4,19 +4,21 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "cameracase"
 	materials = list(MAT_METAL=400, MAT_GLASS=250)
-	result_path = /obj/machinery/camera_assembly
+	result_path = /obj/structure/camera_assembly
 
 
-/obj/machinery/camera_assembly
+/obj/structure/camera_assembly
 	name = "camera assembly"
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera1"
+	obj_integrity = 150
+	max_integrity = 150
 	//	Motion, EMP-Proof, X-Ray
 	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer)
 	var/list/upgrades = list()
 	var/state = 1
-	var/busy = 0
+
 	/*
 			1 = Wrenched in place
 			2 = Welded in place
@@ -24,12 +26,12 @@
 			4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
-/obj/machinery/camera_assembly/New(loc, ndir, building)
+/obj/structure/camera_assembly/New(loc, ndir, building)
 	..()
 	if(building)
 		setDir(ndir)
 
-/obj/machinery/camera_assembly/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
 		if(1)
 			// State 1
@@ -73,14 +75,14 @@
 			if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-				var/input = stripped_input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
+				var/input = stripped_input(user, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
 				if(!input)
-					usr << "<span class='warning'>No input found, please hang up and try your call again!</span>"
+					user << "<span class='warning'>No input found, please hang up and try your call again!</span>"
 					return
 
 				var/list/tempnetwork = splittext(input, ",")
 				if(tempnetwork.len < 1)
-					usr << "<span class='warning'>No network found, please hang up and try your call again!</span>"
+					user << "<span class='warning'>No network found, please hang up and try your call again!</span>"
 					return
 
 				state = 4
@@ -122,19 +124,18 @@
 
 	return ..()
 
-/obj/machinery/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
-	if(busy)
-		return 0
+/obj/structure/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
 	if(!WT.remove_fuel(0, user))
 		return 0
-
 	user << "<span class='notice'>You start to weld \the [src]...</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-	busy = 1
 	if(do_after(user, 20, target = src))
-		busy = 0
-		if(!WT.isOn())
-			return 0
-		return 1
-	busy = 0
+		if(WT.isOn())
+			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+			return 1
 	return 0
+
+/obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc)
+	qdel(src)

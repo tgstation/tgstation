@@ -12,6 +12,7 @@
 	var/cooldown = 600
 	possible_destinations = "ferry_home"
 	admin_controlled = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/machinery/computer/shuttle/ferry/request/Topic(href, href_list)
 	..()

@@ -25,7 +25,7 @@
 	desc = "It's just an ordinary box."
 	icon_state = "box"
 	item_state = "syringe_kit"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 
 
@@ -634,7 +634,7 @@
 	desc = "A sack neatly crafted out of paper."
 	icon_state = "paperbag_None"
 	item_state = "paperbag_None"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	foldable = null
 	var/design = NODESIGN
 

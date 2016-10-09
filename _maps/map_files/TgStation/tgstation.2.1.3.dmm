@@ -7424,7 +7424,7 @@
 "apP" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 35
+	obj_integrity = 35
 	},
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
@@ -7499,7 +7499,7 @@
 	layer = 2.9
 	},
 /obj/item/weapon/storage/briefcase,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
 /area/lawoffice)
 "aqc" = (
@@ -7764,7 +7764,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aqB" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aqC" = (
@@ -7995,7 +7995,7 @@
 	pixel_y = 23
 	},
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "arj" = (
@@ -9541,7 +9541,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
 	pixel_y = 28;
-	shattered = 1
+	broken = 1
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plating,
@@ -9550,7 +9550,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
 	pixel_y = 28;
-	shattered = 1
+	broken = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -9563,7 +9563,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "ava" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/chair,
 /obj/item/weapon/reagent_containers/blood/random,
 /turf/open/floor/plating,
@@ -10294,7 +10294,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "awE" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -13644,7 +13644,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aDX" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
@@ -15356,7 +15356,7 @@
 "aHx" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 25
+	obj_integrity = 25
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -33845,13 +33845,12 @@
 	})
 "bxg" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bxh" = (
 /obj/machinery/door/poddoor{
-	auto_close = 300;
 	id = "smindicate";
 	name = "outer blast door"
 	},
@@ -34891,7 +34890,7 @@
 	dir = 2;
 	on = 1
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/black,
 /area/toxins/server)
 "bzy" = (
@@ -35689,7 +35688,6 @@
 	pixel_y = 0
 	},
 /obj/machinery/newscaster{
-	hitstaken = 1;
 	pixel_x = 0;
 	pixel_y = -32
 	},
@@ -37692,7 +37690,7 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 25
+	obj_integrity = 25
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
@@ -38950,14 +38948,14 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 35
+	obj_integrity = 35
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bHX" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 25
+	obj_integrity = 25
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
@@ -39773,7 +39771,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bJu" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -40432,7 +40430,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bKK" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -41296,7 +41294,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bMC" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -43282,7 +43280,7 @@
 	},
 /area/security/checkpoint/engineering)
 "bRl" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -45351,7 +45349,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bVE" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
@@ -47218,7 +47216,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bZO" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -50413,7 +50411,7 @@
 /obj/structure/rack{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
@@ -51921,7 +51919,7 @@
 /area/maintenance/starboardsolar)
 "cjE" = (
 /obj/structure/rack,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -55188,7 +55186,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cqv" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cqw" = (

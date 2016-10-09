@@ -1,0 +1,7 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Using blood on an Oil Slime will create Corn Oil."
+  - rscadd: "Using blood on Pyrite Slimes will create a random crayon."
+  - rscadd: "Using water on Orange Slimes will create a small smoke cloud."
+  - rscadd: "Using water on Blue Slimes will spawn foam."

@@ -142,7 +142,7 @@
 	else
 		overload()
 
-/obj/machinery/power/rtg/abductor/fire_act()
+/obj/machinery/power/rtg/abductor/fire_act(exposed_temperature, exposed_volume)
 	overload()
 
 /obj/machinery/power/rtg/abductor/tesla_act()
