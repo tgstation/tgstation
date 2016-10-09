@@ -37,6 +37,10 @@
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
 
+/mob/living/simple_animal/hostile/construct/Login()
+	..()
+	src << playstyle_string
+
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = they_pronoun(TRUE)
 	var/plurality = (gender == PLURAL)
