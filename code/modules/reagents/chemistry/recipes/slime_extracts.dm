@@ -233,6 +233,17 @@
 	P.loc = get_turf(holder.my_atom)
 
 
+/datum/chemical_reaction/slimefoam
+	name = "Slime Foam"
+	id = "m_foam"
+	results = list("fluorosurfactant" = 20, "water" = 20)
+	required_reagents = list("water" = 5)
+	required_container = /obj/item/slime_extract/blue
+	required_other = 1
+
+/datum/chemical_reaction/slimefoam/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+
 
 //Dark Blue
 /datum/chemical_reaction/slimefreeze
@@ -289,14 +300,26 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/TU = get_turf(holder.my_atom)
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "burn", 50, FALSE, holder)
+	addtimer(src, "slime_burn", 50, FALSE, holder)
 
 
-/datum/chemical_reaction/slimefire/proc/burn(datum/reagents/holder)
+/datum/chemical_reaction/slimefire/proc/slime_burn(datum/reagents/holder)
 	if(holder && holder.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
 			T.atmos_spawn_air("plasma=50;TEMP=1000")
+
+
+/datum/chemical_reaction/slimesmoke
+	name = "Slime Smoke"
+	id = "m_smoke"
+	results = list("phosphorus" = 10, "potassium" = 10, "sugar" = 10)
+	required_reagents = list("water" = 5)
+	required_container = /obj/item/slime_extract/orange
+	required_other = 1
+
+/datum/chemical_reaction/slimesmoke/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
 
 //Yellow
 
@@ -480,6 +503,18 @@
 	if(holder && holder.my_atom)
 		explosion(get_turf(holder.my_atom), 1 ,3, 6)
 
+
+/datum/chemical_reaction/slimecornoil
+	name = "Slime Corn Oil"
+	id = "m_cornoil"
+	results = list("cornoil" = 10)
+	required_reagents = list("blood" = 1)
+	required_container = /obj/item/slime_extract/oil
+	required_other = 1
+
+/datum/chemical_reaction/slimecornoil/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+
 //Light Pink
 /datum/chemical_reaction/slimepotion2
 	name = "Slime Potion 2"
@@ -547,7 +582,6 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/obj/item/slimepotion/enhancer/P = new /obj/item/slimepotion/enhancer
 	P.loc = get_turf(holder.my_atom)
-
 
 
 /datum/chemical_reaction/slime_territory
@@ -621,6 +655,22 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/list/paints = subtypesof(/obj/item/weapon/paint)
 	var/chosen = pick(paints)
+	var/obj/P = new chosen
+	if(P)
+		P.loc = get_turf(holder.my_atom)
+
+
+/datum/chemical_reaction/slimecrayon
+	name = "Slime Crayon"
+	id = "s_crayon"
+	required_reagents = list("blood" = 1)
+	required_container = /obj/item/slime_extract/pyrite
+	required_other = 1
+
+/datum/chemical_reaction/slimecrayon/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/list/crayons = difflist(subtypesof(/obj/item/toy/crayon),typesof(/obj/item/toy/crayon/spraycan))
+	var/chosen = pick(crayons)
 	var/obj/P = new chosen
 	if(P)
 		P.loc = get_turf(holder.my_atom)

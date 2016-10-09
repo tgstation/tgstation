@@ -50,8 +50,8 @@
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
-		if(locate(/obj/structure/spacevine) in loc)
-			var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		if(SV)
 			SV.eat(src)
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
@@ -67,8 +67,8 @@
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
 	if(!stat)
-		if(locate(/obj/structure/spacevine) in loc)
-			var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		if(SV)
 			SV.eat(src)
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)

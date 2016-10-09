@@ -41,24 +41,16 @@
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
-	if(takes_damage)
+	if(!(resistance_flags & INDESTRUCTIBLE))
 		var/t_It = they_pronoun(TRUE)
 		var/t_is = get_is()
-		var/servant_message = "[t_It] [t_is] at <b>[health]/[max_health]</b> integrity"
-		var/other_message = "[t_It] seems pristine and undamaged"
+		var/servant_message = "[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity"
 		var/heavily_damaged = FALSE
-		var/healthpercent = (health/max_health) * 100
-		if(healthpercent >= 100)
-			other_message = "[t_It] seems pristine and undamaged"
-		else if(healthpercent >= 50)
-			other_message = "[t_It] looks slightly dented"
-		else if(healthpercent >= 25)
-			other_message = "[t_It] appears heavily damaged"
+		var/healthpercent = (obj_integrity/max_integrity) * 100
+		if(healthpercent < 50)
 			heavily_damaged = TRUE
-		else if(healthpercent >= 0)
-			other_message = "[t_It] [t_is] falling apart"
-			heavily_damaged = TRUE
-		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
+		if(can_see_clockwork)
+			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/destructible/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
@@ -68,8 +60,8 @@
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
-	max_health = 80
-	health = 80
+	max_integrity = 80
+	obj_integrity = 80
 	var/wall_generation_cooldown
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
 
@@ -91,8 +83,8 @@
 		cache_check(i)
 	return ..()
 
-/obj/structure/destructible/clockwork/cache/destroyed()
-	if(takes_damage)
+/obj/structure/destructible/clockwork/cache/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
 		for(var/I in src)
 			var/atom/movable/A = I
 			A.forceMove(get_turf(src)) //drop any daemons we have
@@ -178,8 +170,8 @@
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
 	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
-	health = 25
-	max_health = 25
+	obj_integrity = 25
+	max_integrity = 25
 	construction_value = 15
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
@@ -189,7 +181,6 @@
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
-	var/mech_damage_cycle = 0 //so that people in mechs don't get murderspammed with messages
 
 /obj/structure/destructible/clockwork/ocular_warden/New()
 	..()
@@ -220,14 +211,9 @@
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
 			else if(istype(target,/obj/mecha))
-				var/sending_message = FALSE
-				if(mech_damage_cycle > 1)
-					mech_damage_cycle = 0
-					sending_message = TRUE
-				else
-					mech_damage_cycle++
 				var/obj/mecha/M = target
-				M.take_directional_damage(damage_per_tick, "fire", get_dir(src, M), 0, 1, sending_message)
+				M.take_damage(damage_per_tick, BURN, "melee", 1, get_dir(src, M)) //does about half of standard damage to mechs * whatever their fire armor is
+
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
@@ -265,7 +251,6 @@
 /obj/structure/destructible/clockwork/ocular_warden/proc/lose_target()
 	if(!target)
 		return 0
-	mech_damage_cycle = 0
 	target = null
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
@@ -275,8 +260,7 @@
 	construction_value = 0
 	anchored = 0
 	density = 0
-	takes_damage = FALSE
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/mobtype = /mob/living/simple_animal/hostile/clockwork
 	var/spawn_message = " is an error and you should yell at whoever spawned this shell."
 
@@ -324,8 +308,8 @@
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
-	max_health = 50
-	health = 50
+	max_integrity = 50
+	obj_integrity = 50
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
@@ -389,7 +373,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/clockwork/New()
 	..()
@@ -697,8 +681,6 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
-	resistance_flags = FIRE_PROOF
-	burntime = 1
 	var/affects_servants = FALSE
 	var/stat_affected = CONSCIOUS
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"

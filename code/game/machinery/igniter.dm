@@ -9,6 +9,10 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	obj_integrity = 300
+	max_integrity = 300
+	armor = list(melee = 50, bullet = 30, laser = 70, energy = 50, bomb = 20, bio = 0, rad = 0, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
 
 /obj/machinery/igniter/attack_ai(mob/user)
 	return src.attack_hand(user)
@@ -118,8 +122,6 @@
 	return 1
 
 /obj/machinery/sparker/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
-	ignite()
-	..(severity)
+	if(!(stat & (BROKEN|NOPOWER)))
+		ignite()
+	..()

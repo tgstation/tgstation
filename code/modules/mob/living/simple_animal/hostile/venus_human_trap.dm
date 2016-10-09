@@ -55,6 +55,7 @@
 	maxHealth = 50
 	ranged = 1
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	a_intent = "harm"

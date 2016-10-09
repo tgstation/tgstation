@@ -10,10 +10,12 @@
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
-	var/broken = FALSE
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
-	var/health = 100
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
+	armor = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60)
 	var/breakout_time = 2
 	var/lastbang
 	var/can_weld_shut = TRUE
@@ -188,25 +190,14 @@
 	else
 		return open(user)
 
-/obj/structure/closet/ex_act(severity, target)
-	contents_explosion(severity, target)
-	if(loc && ispath(material_drop) && !(flags & NODECONSTRUCT))
+/obj/structure/closet/deconstruct(disassembled = TRUE)
+	if(ispath(material_drop) && !(flags & NODECONSTRUCT))
 		new material_drop(loc)
 	qdel(src)
-	..()
 
-/obj/structure/closet/bullet_act(obj/item/projectile/P)
-	..()
-	if(P.damage_type == BRUTE || P.damage_type == BURN)
-		health -= P.damage
-		if(health <= 0)
-			qdel(src)
-
-/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
-		qdel(src)
+/obj/structure/closet/obj_break(damage_flag)
+	if(!broken && !(flags & NODECONSTRUCT))
+		bust_open()
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user, params)
 	if(user in src)
@@ -226,9 +217,7 @@
 					visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 									"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 									"<span class='italics'>You hear welding.</span>")
-					var/turf/T = get_turf(src)
-					new material_drop(T)
-					qdel(src)
+					deconstruct(TRUE)
 					return 0
 		else if(user.drop_item())
 			W.forceMove(loc)
@@ -367,15 +356,18 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
-		welded = 0 //applies to all lockers lockers
-		locked = 0 //applies to critter crates and secure lockers only
-		broken = 1 //applies to secure lockers only
 		user.visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>",
 							"<span class='notice'>You successfully break out of [src]!</span>")
-		open()
+		bust_open()
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			user << "<span class='warning'>You fail to break out of [src]!</span>"
+
+/obj/structure/closet/proc/bust_open()
+	welded = 0 //applies to all lockers lockers
+	locked = 0 //applies to critter crates and secure lockers only
+	broken = 1 //applies to secure lockers only
+	open()
 
 /obj/structure/closet/AltClick(mob/user)
 	..()

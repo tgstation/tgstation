@@ -78,12 +78,6 @@
 		if(occupant && occupant.stat != DEAD)
 			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
-/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-		qdel(src)
-
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)
 		open_machine()
@@ -176,8 +170,8 @@
 	if(!occupant)
 		return
 	var/amount = occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/health = occupant.health > min_health || chem == "epinephrine"
-	return amount && health
+	var/occ_health = occupant.health > min_health || chem == "epinephrine"
+	return amount && occ_health
 
 
 /obj/machinery/sleeper/syndie

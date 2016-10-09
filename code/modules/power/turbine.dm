@@ -29,6 +29,7 @@
 	icon_state = "compressor"
 	anchored = 1
 	density = 1
+	resistance_flags = FIRE_PROOF
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
@@ -47,6 +48,7 @@
 	icon_state = "turbine"
 	anchored = 1
 	density = 1
+	resistance_flags = FIRE_PROOF
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
 	var/turf/outturf
