@@ -95,8 +95,7 @@
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "<span class='notice'>You start to add cables to the frame...</span>"
-						if(do_after(user, 20, target = src) && C.get_amount() >= 5 && state == SCREWED_CORE)
-							C.use(5)
+						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
 							user << "<span class='notice'>You add cables to the frame.</span>"
 							state = CABLED_CORE
 							icon_state = "3"
@@ -121,8 +120,7 @@
 					if(G.get_amount() >= 2)
 						playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "<span class='notice'>You start to put in the glass panel...</span>"
-						if(do_after(user, 20, target = src) && G.get_amount() >= 2 && state == CABLED_CORE)
-							G.use(2)
+						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
 							user << "<span class='notice'>You put in the glass panel.</span>"
 							state = GLASS_CORE
 							icon_state = "4"
@@ -135,7 +133,7 @@
 					module.install(laws, user)
 					return
 
-				if(istype(P, /obj/item/device/mmi))
+				if(istype(P, /obj/item/device/mmi) && !brain)
 					var/obj/item/device/mmi/M = P
 					if(!M.brainmob)
 						user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
@@ -161,7 +159,7 @@
 
 					ticker.mode.remove_antag_for_borging(M.brainmob.mind)
 					remove_servant_of_ratvar(M, TRUE)
-					M.loc = src
+					M.forceMove(src)
 					brain = M
 					user << "<span class='notice'>Added a brain.</span>"
 					icon_state = "3b"
