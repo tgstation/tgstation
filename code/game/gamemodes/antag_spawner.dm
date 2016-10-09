@@ -243,7 +243,7 @@
 		if(used)
 			return
 		used = 1
-		var/mob/dead/observer/theghost = pick(candidates)
+		var/mob/dead/observer/theghost = pick(demon_candidates)
 		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
 		user << shatter_msg
 		user << veil_msg
