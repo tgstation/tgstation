@@ -262,9 +262,9 @@
 				stat(null, "You are [recovering ? "un" : ""]able to deploy!")
 			else
 				if(resulthealth > 60)
-					stat(null, "You are [recovering ? "unable to deploy" : "can deploy on hearing your True Name"]!")
+					stat(null, "You are [recovering ? "unable to deploy" : "able to deploy on hearing your True Name"]!")
 				else
-					stat(null, "You are [recovering ? "unable to deploy" : "can deploy to protect your host"]!")
+					stat(null, "You are [recovering ? "unable to deploy" : "able to deploy to protect your host"]!")
 		if(ratvar_awakens)
 			stat(null, "Block Chance: 80%")
 			stat(null, "Counter Chance: 80%")
