@@ -53,15 +53,18 @@
 	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
 		H.set_machine(src)
 		if(href_list["school"])
-			if (used)
+			if(used)
 				H << "You already used this contract!"
 				return
-			var/list/candidates = pollCandidates("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150)
+			var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150, src)
 			if(candidates.len)
-				src.used = 1
-				var/client/C = pick(candidates)
-				spawn_antag(C, get_turf(H.loc), href_list["school"])
-				if(H.mind)
+				if(used)
+					H << "You already used this contract!"
+					return
+				used = 1
+				var/mob/dead/observer/theghost = pick(candidates)
+				spawn_antag(theghost.client, get_turf(src), href_list["school"])
+				if(H && H.mind)
 					ticker.mode.update_wiz_icons_added(H.mind)
 			else
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
@@ -96,8 +99,8 @@
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/datum/objective/protect/new_objective = new /datum/objective/protect
-	new_objective.owner = M:mind
-	new_objective:target = usr:mind
+	new_objective.owner = M.mind
+	new_objective.target = usr.mind
 	new_objective.explanation_text = "Protect [usr.real_name], the wizard."
 	M.mind.objectives += new_objective
 	ticker.mode.apprentices += M.mind
@@ -149,11 +152,13 @@
 	if(!(check_usability(user)))
 		return
 
-	var/list/nuke_candidates = pollCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150)
+	var/list/nuke_candidates = pollCandidatesForMob("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, src)
 	if(nuke_candidates.len)
+		if(!(check_usability(user)))
+			return
 		used = 1
-		var/client/C = pick(nuke_candidates)
-		spawn_antag(C, get_turf(src.loc), "syndieborg")
+		var/mob/dead/observer/theghost = pick(nuke_candidates)
+		spawn_antag(theghost.client, get_turf(src), "syndieborg")
 		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
 		S.set_up(4, 1, src)
 		S.start()
@@ -228,14 +233,18 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-	var/list/demon_candidates = pollCandidates("Do you want to play as a [initial(demon_type.name)]?", null, null, ROLE_ALIEN, 50)
 	if(user.z != 1)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
+	if(used)
+		return
+	var/list/demon_candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", null, null, ROLE_ALIEN, 50, src)
 	if(demon_candidates.len > 0)
+		if(used)
+			return
 		used = 1
-		var/client/C = pick(demon_candidates)
-		spawn_antag(C, get_turf(src.loc), initial(demon_type.name))
+		var/mob/dead/observer/theghost = pick(candidates)
+		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
 		user << shatter_msg
 		user << veil_msg
 		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
