@@ -88,14 +88,14 @@
 		else
 			user << "<span class='warning'>The cover is already unlocked!</span>"
 		return
-	if((world.time - 100) < emag_cooldown)
+	if(world.time < emag_cooldown)
 		return
 	if(wiresexposed)
 		user << "<span class='warning'>You must unexpose the wires first!</span>"
 		return
 
 	user << "<span class='notice'>You emag [src]'s interface.</span>"
-	emag_cooldown = world.time
+	emag_cooldown = world.time + 100
 
 	if(is_servant_of_ratvar(src))
 		src << "<span class='nezbere'>\"[text2ratvar("You will serve Engine above all else")]!\"</span>\n\
