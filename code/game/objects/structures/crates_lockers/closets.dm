@@ -76,9 +76,6 @@
 	else if(secure && !opened)
 		user << "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
 
-/obj/structure/closet/alter_health()
-	return get_turf(src)
-
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height == 0 || wall_mounted)
 		return 1

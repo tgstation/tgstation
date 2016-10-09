@@ -149,10 +149,6 @@
 			target.LAssailant = user
 		update_icon()
 
-// can breath normally in the disposal
-/obj/machinery/disposal/alter_health()
-	return get_turf(src)
-
 /obj/machinery/disposal/relaymove(mob/user)
 	attempt_escape(user)
 

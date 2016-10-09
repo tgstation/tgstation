@@ -40,9 +40,6 @@
 /obj/structure/bodycontainer/update_icon()
 	return
 
-/obj/structure/bodycontainer/alter_health()
-	return src.loc
-
 /obj/structure/bodycontainer/relaymove(mob/user)
 	if(user.stat || !isturf(loc))
 		return
