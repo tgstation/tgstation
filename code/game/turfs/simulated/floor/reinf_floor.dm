@@ -121,6 +121,6 @@
 	initial_gas_mix = "TEMP=2.7"
 
 
-/turf/open/floor/engine/vacuum //this should be replaced with airless phil235
+/turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	initial_gas_mix = "TEMP=2.7"
