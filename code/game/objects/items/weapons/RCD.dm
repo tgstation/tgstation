@@ -69,7 +69,8 @@ RCD
 	var/deconwindowdelay = 50
 	var/deconairlockdelay = 50
 
-	var/no_ammo_message = ""
+	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \
+		the RCD blinks yellow.</span>"
 
 /obj/item/weapon/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
@@ -238,8 +239,6 @@ RCD
 /obj/item/weapon/rcd/New()
 	..()
 
-	no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \
-		\the [src] blinks yellow.</span>"
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	src.spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
