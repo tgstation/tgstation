@@ -10,7 +10,7 @@
 	mob_size = MOB_SIZE_LARGE
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/organ/brain = 4) //dolphins are intelligent beings
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/dolphinmeat = 3, /obj/item/organ/brain = 2) //dolphins are intelligent beings
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"

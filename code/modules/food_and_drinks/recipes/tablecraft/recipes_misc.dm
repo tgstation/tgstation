@@ -280,3 +280,22 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine
 	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/dolphincereal
+	name = "Dolphin cereal"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dolphinmeat = 2,
+		/datum/reagent/consumable/milk = 5,
+		/datum/reagent/consumable/flour = 15
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/dolphincereal
+	category = CAT_MISCFOOD
+
+/datum/crafting_recipe/dolphinandchips
+	name = "Dolphin and chips"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dolphinmeat = 3,
+		/obj/item/weapon/reagent_containers/food/snacks/chips = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/dolphinandchips
+	category = CAT_MISCFOOD

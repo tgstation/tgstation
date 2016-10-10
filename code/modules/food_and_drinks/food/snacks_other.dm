@@ -316,3 +316,27 @@
 	icon_state = "stuffed_legion"
 	bonus_reagents = list("vitamin" = 3, "capsaicin" = 1, "tricordrazine" = 5)
 	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10,)
+
+/obj/item/weapon/reagent_containers/food/snacks/dolphincereal
+	name = "dolphin cereal"
+	desc = "Finest dolphin skin flakes. This looks flippin' disgusting."
+	icon_state = "dolphincereal"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	filling_color = "#1111FF"
+
+/obj/item/weapon/reagent_containers/food/snacks/dolphinandchips
+	name = "dolphin and chips"
+	desc = "Dolphin and chips, wrapped in the finest newspaper from the clown's newcaster channel."
+	icon_state = "dolphinandchips"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	filling_color = "#5555FF"
+
+/obj/item/weapon/reagent_containers/food/snacks/youmonster
+	name = "full dolphin platter"
+	desc = "A whole dolphin. Good luck eating this. (WARNING: do not consume any wafer thin mints after consumption)"
+	icon_state = "youmonster"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 10, "vitamin" = 2)
+	filling_color = "#5511FF"

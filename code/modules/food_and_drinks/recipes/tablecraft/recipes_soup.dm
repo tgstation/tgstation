@@ -168,6 +168,17 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/beet
 	category = CAT_SOUP
 
+/datum/crafting_recipe/food/dolphinsoup
+	name = "Dolphin soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/weapon/reagent_containers/glass/bowl = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/dolphinmeat = 2,
+		/datum/reagent/blood = 10
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/dolphinsoup
+	category = CAT_SOUP
+
 /datum/crafting_recipe/food/stew
 	name = "Stew"
 	reqs = list(

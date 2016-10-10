@@ -1,7 +1,7 @@
 /datum/round_event_control/dolphin_migration
 	name = "Dolphin Migration"
 	typepath = /datum/round_event/dolphin_migration
-	weight = 8
+	weight = 4
 	min_players = 2
 	earliest_start = 6000
 	max_occurrences = 6
