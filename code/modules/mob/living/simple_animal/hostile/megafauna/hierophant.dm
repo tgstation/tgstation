@@ -535,7 +535,7 @@ Difficulty: Hard
 				continue
 			M.occupant << "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>"
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
-		M.take_damage(damage, "fire", 0)
+		M.take_damage(damage, BURN, 0, 0)
 
 /obj/effect/hierophant
 	name = "hierophant rune"

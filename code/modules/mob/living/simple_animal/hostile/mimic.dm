@@ -216,6 +216,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(obj/O, mob/living/creator, destroy_original = 0)
 	if(..())
 		emote_see = list("aims menacingly")
+		obj_damage = 0
 		environment_smash = 0 //needed? seems weird for them to do so
 		ranged = 1
 		retreat_distance = 1 //just enough to shoot

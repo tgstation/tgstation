@@ -9,11 +9,15 @@
 	var/damtype = "brute"
 	var/force = 0
 
-	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-	var/resistance_flags = FIRE_PROOF // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+	var/list/armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	var/obj_integrity = 500
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior
 
-	var/burntime = 10 //How long it takes to burn to ashes, in seconds
-	var/burn_world_time //What world time the object will burn up completely
+	var/resistance_flags = 0 // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+
+	var/acid_level = 0 //how much acid is on that obj
+
 	var/being_shocked = 0
 
 	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
@@ -21,6 +25,8 @@
 
 	var/persistence_replacement = null //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/is_frozen = FALSE
+
+
 /obj/New()
 	..()
 
@@ -146,21 +152,8 @@
 	if(istype(M) && M.client && M.machine == src)
 		src.attack_self(M)
 
-
-/obj/proc/alter_health()
-	return 1
-
 /obj/proc/hide(h)
 	return
-
-/obj/ex_act(severity, target)
-	if(severity == 1 || target == src)
-		qdel(src)
-	else if(severity == 2)
-		if(prob(50))
-			qdel(src)
-	if(!qdeleted(src))
-		..()
 
 //If a mob logouts/logins in side of an object you can use this proc
 /obj/proc/on_log()
@@ -169,18 +162,10 @@
 		var/obj/Loc=loc
 		Loc.on_log()
 
-/obj/singularity_act()
-	ex_act(1)
-	if(src && !qdeleted(src))
-		qdel(src)
-	return 2
 
 /obj/singularity_pull(S, current_size)
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
-
-/obj/proc/Deconstruct()
-	qdel(src)
 
 /obj/get_spans()
 	return ..() | SPAN_ROBOT
@@ -188,43 +173,6 @@
 /obj/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	var/turf/T = get_turf(src)
 	return T.storage_contents_dump_act(src_object, user)
-
-/obj/fire_act(global_overlay=1)
-	if(!(resistance_flags & (FIRE_PROOF|ON_FIRE)))
-		resistance_flags |= ON_FIRE
-		SSobj.burning += src
-		burn_world_time = world.time + burntime*rand(10,20)
-		if(global_overlay)
-			add_overlay(fire_overlay)
-		return 1
-
-/obj/proc/burn()
-	empty_object_contents(1, src.loc)
-	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
-	A.desc = "Looks like this used to be a [name] some time ago."
-	SSobj.burning -= src
-	qdel(src)
-
-/obj/proc/extinguish()
-	if(resistance_flags & ON_FIRE)
-		resistance_flags &= ~ON_FIRE
-		overlays -= fire_overlay
-		SSobj.burning -= src
-
-/obj/proc/empty_object_contents(burn = 0, new_loc = src.loc)
-	for(var/obj/item/Item in contents) //Empty out the contents
-		Item.loc = new_loc
-		if(burn)
-			Item.fire_act() //Set them on fire, too
-
-/obj/proc/tesla_act(power, explosive = FALSE)
-	being_shocked = 1
-	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced, explosive)
-	addtimer(src, "reset_shocked", 10)
-
-/obj/proc/reset_shocked()
-	being_shocked = 0
 
 /obj/proc/CanAStarPass()
 	. = !density

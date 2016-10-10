@@ -18,6 +18,7 @@ var/bomb_set
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
 	density = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/timer_set = 60
 	var/default_timer_set = 60
@@ -393,13 +394,10 @@ var/bomb_set
 	else
 		. = timer_set
 
-/obj/machinery/nuclearbomb/ex_act(severity, target)
-	return
-
 /obj/machinery/nuclearbomb/blob_act(obj/structure/blob/B)
 	if(exploding)
 		return
-	. = ..()
+	qdel(src)
 
 /obj/machinery/nuclearbomb/tesla_act(var/power)
 	..()
@@ -490,6 +488,9 @@ This is here to make the tiles around the station mininuke change when it's arme
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	persistence_replacement = /obj/item/weapon/disk/fakenucleardisk
+	obj_integrity = 250
+	max_integrity = 250
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 90, acid = 70)
 
 /obj/item/weapon/disk/nuclear/New()
 	..()

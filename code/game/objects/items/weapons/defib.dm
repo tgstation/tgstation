@@ -11,6 +11,7 @@
 	w_class = 4
 	origin_tech = "biotech=4"
 	actions_types = list(/datum/action/item_action/toggle_paddles)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/on = 0 //if the paddles are equipped (1) or on the defib (0)
 	var/safety = 1 //if you can zap people with the defibs on harm mode

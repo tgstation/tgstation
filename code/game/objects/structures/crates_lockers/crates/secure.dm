@@ -4,7 +4,14 @@
 	icon_state = "securecrate"
 	secure = 1
 	locked = 1
-	health = 1000
+	obj_integrity = 500
+	max_integrity = 500
+	armor = list(melee = 30, bullet = 50, laser = 50, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
+
+/obj/structure/closet/crate/secure/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 25)
+		return 0
+	. = ..()
 
 /obj/structure/closet/crate/secure/update_icon()
 	..()

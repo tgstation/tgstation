@@ -7,7 +7,8 @@
 	anchored = 1
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
-	var/health = 100
+	obj_integrity = 200
+	max_integrity = 200
 
 
 /obj/machinery/pdapainter/update_icon()
@@ -74,29 +75,16 @@
 					user << "<span class='notice'>You repair [src].</span>"
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					stat &= ~BROKEN
-					health = initial(health)
+					obj_integrity = max_integrity
 					update_icon()
 		else
 			user << "<span class='notice'>[src] does not need repairs.</span>"
 	else
 		return ..()
 
-/obj/machinery/pdapainter/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	if(!(stat & BROKEN))
-		health -= damage
-		if(health <= 0)
+/obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
 			stat |= BROKEN
 			update_icon()
 

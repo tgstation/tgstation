@@ -51,6 +51,7 @@
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
 		armour_penetration = initial(armour_penetration)
+		obj_damage = initial(obj_damage)
 		environment_smash = initial(environment_smash)
 		alpha = initial(alpha)
 		if(!forced)
@@ -68,6 +69,7 @@
 		melee_damage_lower = 50
 		melee_damage_upper = 50
 		armour_penetration = 100
+		obj_damage = 0
 		environment_smash = 0
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 		alpha = 15

@@ -81,7 +81,7 @@
 			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 							"<span class='userdanger'>[src] has been hit by [I].</span>")
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-			apply_damage(I.throwforce, dtype, zone, armor, I)
+			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
 				add_logs(I.thrownby, src, "hit", I)
 		else
@@ -208,7 +208,7 @@
 		M << "You cannot attack people before the game has started."
 		return 0
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
@@ -252,7 +252,7 @@
 		M << "You cannot attack people before the game has started."
 		return 0
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
@@ -276,8 +276,9 @@
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
-/mob/living/acid_act(acidpwr, toxpwr, acid_volume)
-	take_bodypart_damage(min(10*toxpwr, acid_volume * toxpwr))
+/mob/living/acid_act(acidpwr, acid_volume)
+	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
+	return 1
 
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
@@ -336,3 +337,7 @@
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()
 	return 0
+
+//to damage the clothes worn by a mob
+/mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+	return

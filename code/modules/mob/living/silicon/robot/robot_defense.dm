@@ -166,17 +166,16 @@
 			gib()
 			return
 		if(2)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(30)
-	return
-
 
 /mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj)
 	..(Proj)
 	updatehealth()
-	if(prob(75) && Proj.damage > 0) spark_system.start()
+	if(prob(75) && Proj.damage > 0)
+		spark_system.start()
 	return 2

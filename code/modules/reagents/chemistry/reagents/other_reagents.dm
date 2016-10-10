@@ -125,15 +125,17 @@
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
 			qdel(hotspot)
+	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
+	if(A)
+		A.acid_level = max(A.acid_level - reac_volume*50, 0)
 
 /*
  *	Water reaction to an object
  */
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
-	if(istype(O))
-		O.extinguish()
-
+	O.extinguish()
+	O.acid_level = 0
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
@@ -346,9 +348,9 @@
 		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
-				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.their_pronoun()] arms."))
+				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
 			else
-				M.visible_message("<b>[M]</b> [M.their_pronoun()] their arms.")
+				M.visible_message("<b>[M]</b> [M.p_their()] their arms.")
 	if(prob(10))
 		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
 	..()
@@ -366,7 +368,7 @@
 /datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
-	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.their_pronoun()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
+	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
 		if(!H || qdeleted(H))

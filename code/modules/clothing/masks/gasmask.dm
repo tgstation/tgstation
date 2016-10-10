@@ -9,7 +9,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 // **** Welding gas mask ****
 
@@ -20,13 +20,14 @@
 	materials = list(MAT_METAL=4000, MAT_GLASS=2000)
 	flash_protect = 2
 	tint = 2
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 55)
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 55)
 	origin_tech = "materials=2;engineering=3"
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/gas/welding/attack_self()
 	toggle()
@@ -61,7 +62,7 @@
 	icon_state = "clown"
 	item_state = "clown_hat"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
 
@@ -93,7 +94,7 @@
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -102,7 +103,7 @@
 	icon_state = "mime"
 	item_state = "mime"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/gas/mime/attack_self(mob/user)
@@ -132,7 +133,7 @@
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -141,7 +142,7 @@
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
@@ -152,7 +153,7 @@
 	name = "cyborg visor"
 	desc = "Beep boop."
 	icon_state = "death"
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
@@ -160,7 +161,7 @@
 	icon_state = "owl"
 	flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"

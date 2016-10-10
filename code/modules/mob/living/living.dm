@@ -27,8 +27,6 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
-	..()
-
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
@@ -39,6 +37,8 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
+	..()
+
 	return QDEL_HINT_HARDDEL
 
 

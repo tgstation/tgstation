@@ -5,7 +5,7 @@
 	else
 		..()
 
-/mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
+/mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
 		..(user, 1)
 		adjustBruteLoss(15)

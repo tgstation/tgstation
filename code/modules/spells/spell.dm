@@ -251,7 +251,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			var/location
 			if(isliving(target))
 				location = target.loc
-			else if(istype(target,/turf))
+			else if(isturf(target))
 				location = target
 			var/obj/effect/overlay/spell = new /obj/effect/overlay(location)
 			spell.icon = overlay_icon
@@ -265,7 +265,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		var/location
 		if(isliving(target))
 			location = target.loc
-		else if(istype(target,/turf))
+		else if(isturf(target))
 			location = target
 		if(isliving(target) && message)
 			target << text("[message]")

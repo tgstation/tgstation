@@ -182,3 +182,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/open/floor/initialize()
 	..()
 	MakeDirty()
+
+/turf/open/floor/acid_melt()
+	ChangeTurf(baseturf)
+
