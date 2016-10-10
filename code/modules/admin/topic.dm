@@ -476,13 +476,13 @@
 					return
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason.","Reason",reason2) as null|message
+				reason = input(usr,"Please State Reason.","Reason",reason2) as message
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Please State Reason.","Reason",reason2) as null|message
+				reason = input(usr,"Please State Reason.","Reason",reason2) as message
 				if(!reason)
 					return
 
