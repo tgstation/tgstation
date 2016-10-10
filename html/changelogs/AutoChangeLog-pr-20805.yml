@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "You can now retrieve materials inserted in a Drone Shell Dispenser with a crowbar."
