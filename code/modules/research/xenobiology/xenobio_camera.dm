@@ -69,6 +69,16 @@
 		user.drop_item()
 		qdel(O)
 		return
+	else if(istype(O, /obj/item/weapon/storage/bag))
+		var/obj/item/weapon/storage/P = O
+		var/loaded = 0
+		for(var/obj/G in P.contents)
+			if(istype(G, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+				loaded = 1
+				monkeys++
+				qdel(G)
+		if (loaded)
+			user << "<span class='notice'>You fill the [src] with the monkey cubes stored in the [O]. The [src] now has [monkeys] monkey cubes stored.</span>"
 	..()
 
 /datum/action/innate/camera_off/xenobio/Activate()
