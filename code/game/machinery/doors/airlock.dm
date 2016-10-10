@@ -994,7 +994,7 @@ var/list/airlock_overlays = list()
 	if(autoclose && normalspeed)
 		addtimer(src, "autoclose", 150)
 	else if(autoclose && !normalspeed)
-		addtimer(src, "autoclose", 10)
+		addtimer(src, "autoclose", 15)
 
 	if(!density)
 		return 1
