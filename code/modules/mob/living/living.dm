@@ -817,10 +817,10 @@
 	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	gib(0, 0, 1)
 
-/mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+/mob/living/canUseTopic(atom/movable/M, be_close = FALSE, no_dexterity = FALSE)
 	if(incapacitated())
 		return
-	if(no_dextery)
+	if(no_dexterity)
 		if(be_close && in_range(M, src))
 			return 1
 	else

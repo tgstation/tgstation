@@ -159,10 +159,6 @@
 //click cooldowns, in tenths of a second
 
 
-#define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
-#define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
-//used by canUseTopic()
-
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1

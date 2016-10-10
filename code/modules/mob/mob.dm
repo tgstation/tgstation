@@ -512,7 +512,7 @@ var/next_mob_id = 0
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(usr.canUseTopic(src, be_close=TRUE, no_dexterity=TRUE))
 		if(href_list["item"])
 			var/slot = text2num(href_list["item"])
 			var/hand_index = text2num(href_list["hand_index"])
@@ -843,7 +843,7 @@ var/next_mob_id = 0
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic()
+/mob/proc/canUseTopic(atom/movable/M, be_close = FALSE, no_dexterity = FALSE)
 	return
 
 /mob/proc/faction_check(mob/target)

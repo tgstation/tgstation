@@ -206,7 +206,7 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(usr.canUseTopic(src, be_close=TRUE, no_dexterity=TRUE))
 
 		if(href_list["embedded_object"])
 			var/obj/item/I = locate(href_list["embedded_object"])
@@ -724,7 +724,7 @@
 				viewing += M.client
 		flick_overlay(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), viewing, anim_duration)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = FALSE, no_dexterity = FALSE)
 	if(incapacitated() || lying )
 		return
 	if(!Adjacent(M) && (M.loc != src))
