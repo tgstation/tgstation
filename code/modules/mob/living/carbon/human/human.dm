@@ -219,8 +219,8 @@
 				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 					return
 				L.embedded_objects -= I
-				L.receive_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-				I.forceMove(get_turf(src))
+				L.take_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
+				I.loc = get_turf(src)
 				usr.put_in_hands(I)
 				usr.emote("scream")
 				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
@@ -294,24 +294,24 @@
 				if(href_list["hud"] == "m")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 						if(href_list["p_stat"])
-							var/health_status = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
+							var/health = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
 							if(R)
 								if(!H.canUseHUD())
 									return
 								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 									return
-								if(health_status && health_status != "Cancel")
-									R.fields["p_stat"] = health_status
+								if(health && health != "Cancel")
+									R.fields["p_stat"] = health
 							return
 						if(href_list["m_stat"])
-							var/health_status = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
+							var/health = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
 							if(R)
 								if(!H.canUseHUD())
 									return
 								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 									return
-								if(health_status && health_status != "Cancel")
-									R.fields["m_stat"] = health_status
+								if(health && health != "Cancel")
+									R.fields["m_stat"] = health
 							return
 						if(href_list["evaluation"])
 							if(!getBruteLoss() && !getFireLoss() && !getOxyLoss() && getToxLoss() < 20)
@@ -496,7 +496,7 @@
 			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.
-		user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>"
+		user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [their_pronoun()] head" : "on [their_pronoun()] body"].</span>"
 
 /mob/living/carbon/human/proc/check_obscured_slots()
 	var/list/obscured = list()
@@ -583,17 +583,22 @@
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
 		threatcount += 2
 
+	//check for syndicate dresscode violations
+	if(istype(wear_suit, /obj/item/clothing/suit/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi))
+		threatcount += 2
+		
+	//arrest dem ops
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/syndicate))
+		threatcount += 6
+
 	//Check for nonhuman scum
 	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
 	if(isloyal(src))
-		threatcount -= 1
+		threatcount -= 2
 
-	//Agent cards lower threatlevel.
-	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
-		threatcount -= 5
 
 	return threatcount
 
@@ -630,7 +635,7 @@
 		src << "<span class='warning'>Remove your mask first!</span>"
 		return 0
 	if(C.is_mouth_covered())
-		src << "<span class='warning'>Remove [p_their()] mask first!</span>"
+		src << "<span class='warning'>Remove [their_pronoun()] mask first!</span>"
 		return 0
 
 	if(C.cpr_time < world.time + 30)
@@ -883,6 +888,7 @@
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float
 	..()
+
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
 	if(blood && (NOBLOOD in dna.species.specflags))
