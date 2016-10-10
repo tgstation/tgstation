@@ -16,7 +16,7 @@
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 1
-	//heatgen = 0
+	heatgen = 0
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
 

@@ -7117,19 +7117,28 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/labor)
 "aoZ" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 140;
+	on = 1;
+	pressure_checks = 0
 	},
-/area/shuttle/labor)
+/turf/open/floor/bluegrid{
+	name = "Mainframe Base";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
 "apa" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
+/obj/machinery/airalarm/server{
+	dir = 4;
+	pixel_x = -22;
+	pixel_y = 0
 	},
-/area/shuttle/labor)
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
 "apb" = (
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
@@ -7377,8 +7386,20 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "apF" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/pod_1)
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 120;
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 1;
+	pressure_checks = 2;
+	pump_direction = 0
+	},
+/turf/open/floor/bluegrid{
+	name = "Mainframe Base";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
 "apG" = (
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /turf/open/floor/plasteel,
@@ -7389,9 +7410,15 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "apI" = (
-/obj/machinery/portable_atmospherics/canister/freon,
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/bluegrid{
+	name = "Mainframe Base";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
 "apJ" = (
 /turf/closed/wall,
 /area/mining_construction)
@@ -45780,7 +45807,11 @@
 	},
 /area/tcommsat/server)
 "bWH" = (
-/obj/structure/table,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8;
+	on = 1;
+	target_temperature = 80
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
@@ -45791,6 +45822,10 @@
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	icon_state = "manifold";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
@@ -46308,6 +46343,7 @@
 	d2 = 2
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bXG" = (
@@ -47032,6 +47068,7 @@
 	icon_state = "0-8"
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bZt" = (
@@ -47479,6 +47516,7 @@
 	},
 /area/tcommsat/computer)
 "cao" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -48029,6 +48067,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "cbp" = (
@@ -49372,6 +49411,10 @@
 /area/maintenance/aft)
 "cdZ" = (
 /obj/machinery/telecomms/processor/preset_two,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/black{
 	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -49379,6 +49422,10 @@
 /area/tcommsat/server)
 "cea" = (
 /obj/machinery/telecomms/server/presets/service,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/black{
 	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -49386,6 +49433,10 @@
 /area/tcommsat/server)
 "ceb" = (
 /obj/machinery/telecomms/bus/preset_one,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/black{
 	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -49396,6 +49447,10 @@
 	pixel_y = -32
 	},
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -49403,6 +49458,10 @@
 /area/tcommsat/server)
 "ced" = (
 /obj/machinery/telecomms/server/presets/science,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/black{
 	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -49419,6 +49478,9 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/grille,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 9
+	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "ceg" = (
@@ -85523,12 +85585,12 @@ bVI
 bWB
 bWB
 bYz
-bYz
+apa
 cag
 cbl
 bYz
 bWB
-bWB
+apF
 bVI
 cax
 cbx
@@ -87062,7 +87124,7 @@ cCf
 bNI
 bUz
 bVI
-bWB
+aoZ
 bWB
 bYz
 bZq
@@ -87070,7 +87132,7 @@ cal
 cbm
 bYz
 bWB
-bWB
+apI
 bVI
 cay
 ccw

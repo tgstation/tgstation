@@ -50158,6 +50158,10 @@
 	},
 /area/tcommsat/server)
 "bIl" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
+	},
 /turf/open/floor/plasteel/circuit/gcircuit{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -51797,9 +51801,10 @@
 	},
 /area/tcommsat/server)
 "bLp" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	target_temperature = 80;
+	dir = 2;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer{
@@ -90482,11 +90487,11 @@
 	},
 /area/shuttle/supply)
 "cYZ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
-/area/shuttle/supply)
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plating,
+/area/tcommsat/server)
 "cZa" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -90495,17 +90500,23 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "cZb" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 140;
+	on = 1;
+	pressure_checks = 0
 	},
-/area/shuttle/supply)
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
 "cZc" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
-/area/shuttle/supply)
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/manifold/general/hidden,
+/turf/open/floor/plating,
+/area/tcommsat/server)
 "cZd" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating,
@@ -90595,21 +90606,30 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cZs" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f10"
+/obj/machinery/door/airlock/hatch{
+	name = "Telecoms Server Room"
 	},
-/area/shuttle/transport)
-"cZt" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
 	dir = 4
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
+/turf/open/floor/plasteel/black,
+/area/tcommsat/server)
+"cZt" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
 	},
-/area/shuttle/transport)
+/turf/open/floor/plating,
+/area/tcommsat/server)
 "cZu" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
@@ -90621,11 +90641,20 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cZw" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	external_pressure_bound = 120;
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 1;
+	pressure_checks = 2;
+	pump_direction = 0
 	},
-/area/shuttle/transport)
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
 "cZx" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel/bot,
@@ -147926,7 +147955,7 @@ bBr
 bCY
 bEI
 bGl
-bIk
+cZb
 bIk
 bLu
 bQj
@@ -148438,9 +148467,9 @@ bxz
 bzr
 bBt
 bLp
-bEJ
-bEJ
-bEJ
+cYZ
+cYZ
+cZc
 bJK
 bIk
 bIk
@@ -148697,7 +148726,7 @@ bBu
 bDb
 bEK
 bGn
-bEK
+cZs
 bJL
 bMW
 bMY
@@ -148954,7 +148983,7 @@ bBv
 bDc
 bEJ
 bEJ
-bEJ
+cZt
 bJM
 bLs
 bLs
@@ -149468,7 +149497,7 @@ bBx
 bDe
 bEI
 bGl
-bIk
+cZw
 bIk
 bMX
 bQm

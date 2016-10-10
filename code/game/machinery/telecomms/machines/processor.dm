@@ -16,8 +16,8 @@
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 3
-	//heatgen = 100
-	//delay = 5
+	heatgen = 100
+	delay = 5
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
 
 /obj/machinery/telecomms/processor/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)

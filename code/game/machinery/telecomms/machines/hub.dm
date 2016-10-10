@@ -18,7 +18,7 @@
 	use_power = 1
 	idle_power_usage = 80
 	machinetype = 7
-	//heatgen = 40
+	heatgen = 40
 	long_range_link = 1
 	netspeed = 40
 
