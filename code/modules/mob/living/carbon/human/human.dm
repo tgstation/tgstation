@@ -589,7 +589,7 @@
 		
 	//arrest dem ops
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/syndicate))
-		threatcount += 6
+		threatcount += 2
 
 	//Check for nonhuman scum
 	if(dna && dna.species.id && dna.species.id != "human")
@@ -597,7 +597,7 @@
 
 	//mindshield implants imply trustworthyness
 	if(isloyal(src))
-		threatcount -= 2
+		threatcount -= 1
 
 	return threatcount
 
