@@ -583,17 +583,21 @@
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
 		threatcount += 2
 
+	//check for syndicate dresscode violations
+	if(istype(wear_suit, /obj/item/clothing/suit/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi))
+		threatcount += 2
+		
+	//arrest dem ops
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/syndicate))
+		threatcount += 6
+
 	//Check for nonhuman scum
 	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
 	if(isloyal(src))
-		threatcount -= 1
-
-	//Agent cards lower threatlevel.
-	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
-		threatcount -= 5
+		threatcount -= 2
 
 	return threatcount
 
