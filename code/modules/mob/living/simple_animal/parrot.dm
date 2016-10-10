@@ -26,6 +26,8 @@
 #define PARROT_FLEE 64		//Flying away from its attacker
 
 
+
+
 /mob/living/simple_animal/parrot
 	name = "parrot"
 	desc = "The parrot squaks, \"It's a Parrot! BAWWK!\"" //'
@@ -33,6 +35,7 @@
 	icon_state = "parrot_fly"
 	icon_living = "parrot_fly"
 	icon_dead = "parrot_dead"
+	var/icon_sit = "parrot_sit"
 	density = 0
 	health = 80
 	maxHealth = 80
@@ -282,7 +285,7 @@
 		return
 	if(!stat && M.a_intent == "harm")
 
-		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
+		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -318,7 +321,7 @@
 	if(M.melee_damage_upper > 0 && !stat)
 		parrot_interest = M
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
-		icon_state = "parrot_fly"
+		icon_state = icon_living
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/living/user, params)
@@ -333,7 +336,7 @@
 				parrot_state |= PARROT_ATTACK
 			else
 				parrot_state |= PARROT_FLEE
-			icon_state = "parrot_fly"
+			icon_state = icon_living
 			drop_held_item(0)
 	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
 		qdel(O)
@@ -356,7 +359,7 @@
 		parrot_interest = null
 		parrot_state = PARROT_WANDER | PARROT_FLEE //Been shot and survived! RUN LIKE HELL!
 		//parrot_been_shot += 5
-		icon_state = "parrot_fly"
+		icon_state = icon_living
 		drop_held_item(0)
 	return
 
@@ -369,7 +372,7 @@
 
 	//Sprite update for when a parrot gets pulled
 	if(pulledby && stat == CONSCIOUS)
-		icon_state = "parrot_fly"
+		icon_state = icon_living
 		if(!client)
 			parrot_state = PARROT_WANDER
 		return
@@ -398,11 +401,11 @@
 		if(parrot_perch && parrot_perch.loc != src.loc) //Make sure someone hasnt moved our perch on us
 			if(parrot_perch in view(src))
 				parrot_state = PARROT_SWOOP | PARROT_RETURN
-				icon_state = "parrot_fly"
+				icon_state = icon_living
 				return
 			else
 				parrot_state = PARROT_WANDER
-				icon_state = "parrot_fly"
+				icon_state = icon_living
 				return
 
 		if(--parrot_sleep_dur) //Zzz
@@ -443,7 +446,7 @@
 			if(parrot_interest)
 				emote("me", 1, "looks in [parrot_interest]'s direction and takes flight.")
 				parrot_state = PARROT_SWOOP | PARROT_STEAL
-				icon_state = "parrot_fly"
+				icon_state = icon_living
 			return
 
 //-----WANDERING - This is basically a 'I dont know what to do yet' state
@@ -525,12 +528,12 @@
 			return
 
 		if(Adjacent(parrot_perch))
-			src.loc = parrot_perch.loc
-			drop_held_item()
-			parrot_state = PARROT_PERCH
-			icon_state = "parrot_sit"
-			return
-
+			if(name = "Clockwork Hawk")
+				src.loc = parrot_perch.loc
+				drop_held_item()
+				parrot_state = PARROT_PERCH
+				icon_state = icon_sit
+				return
 		walk_to(src, parrot_perch, 1, parrot_speed)
 		if(isStuck()) return
 
@@ -601,8 +604,8 @@
  */
 
 /mob/living/simple_animal/parrot/movement_delay()
-	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
-		icon_state = "parrot_fly"
+	if(client && stat == CONSCIOUS && parrot_state != ..())
+		icon_state = icon_living
 		//Because the most appropriate place to set icon_state is movement_delay(), clearly
 	return ..()
 
@@ -796,13 +799,13 @@
 	if(stat || !client)
 		return
 
-	if(icon_state == "parrot_fly")
+	if(icon_state == icon_living)
 		for(var/atom/movable/AM in view(src,1))
 			for(var/perch_path in desired_perches)
 				if(istype(AM, perch_path))
 					src.loc = AM.loc
-					icon_state = "parrot_sit"
-					return
+					icon_state = icon_sit
+						return
 	src << "<span class='warning'>There is no perch nearby to sit on!</span>"
 	return
 
@@ -815,7 +818,7 @@
 	if(stat || !client)
 		return
 
-	if(icon_state == "parrot_fly")
+	if(icon_state == icon_living)
 		for(var/mob/living/carbon/human/H in view(src,1))
 			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
@@ -823,7 +826,7 @@
 			return
 		src << "<span class='warning'>There is nobody nearby that you can sit on!</span>"
 	else
-		icon_state = "parrot_fly"
+		icon_state = icon_living
 		parrot_state = PARROT_WANDER
 		if(buckled)
 			src << "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>"
@@ -841,7 +844,7 @@
 	H.buckle_mob(src, force=1)
 	pixel_y = 9
 	pixel_x = pick(-8,8) //pick left or right shoulder
-	icon_state = "parrot_sit"
+	icon_state = icon_sit
 	parrot_state = PARROT_PERCH
 	src << "<span class='notice'>You sit on [H]'s shoulder.</span>"
 
@@ -866,6 +869,9 @@
 /*
  * Sub-types
  */
+
+//Poly
+
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
@@ -977,3 +983,35 @@
 	H.ContractDisease(P)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
+
+//Clockwork Hawk
+
+/mob/living/simple_animal/parrot/clockhawk
+	name = "Clockwork Hawk"
+	desc = "The Justicar has always loved aviaries, for they needed no machinery to engage in such a marvelous feat. For this, he gave a select few the ability to see beyond the sky."
+	icon = 'icons/mob/clockwork_mobs.dmi'
+	icon_state = "clockhawk_fly"
+	icon_living = "clockhawk_fly"
+	icon_dead = ""
+	icon_sit = "clockhawk_sit"
+	density = 0
+	health = 80
+	maxHealth = 80
+	pass_flags = PASSTABLE | PASSMOB
+	languages_spoken = RATVAR
+	languages_understood = HUMAN | RATVAR
+	sight = 28
+	speak = list()
+	speak_emote = list("screeches","says","yells")
+	emote_hear = list("screeches.","bawks!")
+
+/mob/living/simple_animal/parrot/clockhawk/New()
+		..()
+		SetLuminosity(2,1)
+
+
+/mob/living/simple_animal/parrot/clockhawk/Login()
+		..()
+		src << "<span class='heavy_brass'>You are a Hawk of Clockwork.</span><b>, a clockwork creation of Ratvar. As The Hawk, you have low health, and do no damage, but have the \
+	ability to see through walls, alerting fellow servants.\n Your goal is to serve the Justiciar and his servants \
+	in any way you can. You yourself are one of these servants, and will be able to utilize anything they can, assuming it doesn't require opposable thumbs.</b>"

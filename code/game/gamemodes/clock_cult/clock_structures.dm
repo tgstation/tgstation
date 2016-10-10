@@ -303,6 +303,14 @@
 	mobtype = /mob/living/simple_animal/hostile/clockwork/fragment
 	spawn_message = " whirs and rises from the ground on a flickering jet of reddish fire."
 
+/obj/structure/destructible/clockwork/shell/avian
+	name = "Hawkstone"
+	desc = "A relic of an ancient sect of Ratvarian worship. Pleasant to the touch, almost like feathers soaring through a warm breeze. "
+	clockwork_desc = "A stone capable of summoning a majestic Hawk when combined with a soul vessel"
+	icon_state = "hawkstone"
+	mobtype = /mob/living/simple_animal/parrot/clockhawk
+	spawn_message = " arises from the ashes with a vehement yet alluring glow."
+
 
 /obj/structure/destructible/clockwork/wall_gear
 	name = "massive gear"

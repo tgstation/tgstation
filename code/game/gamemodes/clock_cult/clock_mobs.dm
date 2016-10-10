@@ -487,3 +487,4 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/is_in_host() //Checks if the marauder is inside of their host
 	return host && loc == host
+
