@@ -92,7 +92,9 @@
 					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create a death squad.")
 			if("blob")
-				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1) as num
+				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1) as num|null
+				if(!strength)
+					return
 				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
 				new/datum/round_event/ghost_role/blob(TRUE, strength)
@@ -274,7 +276,9 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num
+		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num|null
+		if(!timer)
+			return
 		SSshuttle.emergency.setTimer(timer*10)
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.")
 		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
@@ -309,10 +313,10 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/timer = input("Enter new maximum time",, config.midround_antag_time_check ) as num
-		if(timer)
-			config.midround_antag_time_check = timer
-
+		var/timer = input("Enter new maximum time",, config.midround_antag_time_check ) as num|null
+		if(!timer)
+			return
+		config.midround_antag_time_check = timer
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the maximum midround antagonist time to [timer] minutes.</span>")
 		check_antagonists()
 
@@ -478,13 +482,13 @@
 					return
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason.","Reason",reason2) as message
+				reason = input(usr,"Please State Reason.","Reason",reason2) as message|null
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Please State Reason.","Reason",reason2) as message
+				reason = input(usr,"Please State Reason.","Reason",reason2) as message|null
 				if(!reason)
 					return
 
@@ -528,7 +532,7 @@
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/reason = input(usr,"Please State Reason.","Reason") as message
+				var/reason = input(usr,"Please State Reason.","Reason") as message|null
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_JOB_PERMA, M, -1, reason, "appearance"))
@@ -904,7 +908,7 @@
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
-					var/reason = input(usr,"Please State Reason.","Reason") as message
+					var/reason = input(usr,"Please State Reason.","Reason") as message|null
 					if(!reason)
 						return
 
@@ -931,7 +935,7 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Please State Reason","Reason") as message
+					var/reason = input(usr,"Please State Reason","Reason") as message|null
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1068,7 +1072,7 @@
 				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 				if(!mins)
 					return
-				var/reason = input(usr,"Please State Reason.","Reason") as message
+				var/reason = input(usr,"Please State Reason.","Reason") as message|null
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_TEMP, M, mins, reason))
@@ -1089,7 +1093,7 @@
 
 				qdel(M.client)
 			if("No")
-				var/reason = input(usr,"Please State Reason.","Reason") as message
+				var/reason = input(usr,"Please State Reason.","Reason") as message|null
 				if(!reason)
 					return
 				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
@@ -1524,11 +1528,12 @@
 		var/datum/gang/G = locate(href_list["gangpoints"]) in ticker.mode.gangs
 		if(G)
 			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points) as null|num
-			if(newpoints)
-				message_admins("[key_name_admin(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
-				log_admin("[key_name(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
-				G.points = newpoints
-				G.message_gangtools("Your gang now has [G.points] influence.")
+			if(!newpoints)
+				return
+			message_admins("[key_name_admin(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
+			log_admin("[key_name(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
+			G.points = newpoints
+			G.message_gangtools("Your gang now has [G.points] influence.")
 
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
@@ -2212,9 +2217,13 @@
 			return
 		var/datum/station_goal/G = new picked()
 		if(picked == /datum/station_goal)
-			var/newname = input("Enter goal name:") as text
+			var/newname = input("Enter goal name:") as text|null
+			if(!newname)
+				return
 			G.name = newname
-			var/description = input("Enter centcom message contents:") as message
+			var/description = input("Enter centcom message contents:") as message|null
+			if(!description)
+				return
 			G.report_message = description
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
 		ticker.mode.station_goals += G
