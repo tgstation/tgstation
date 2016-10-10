@@ -394,7 +394,7 @@
 
 	if (istype(P, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if (!isturf(T))
 			return
 
 		if(last_act+P.digspeed > world.time)//prevents message spam
@@ -553,7 +553,7 @@
 		digging_speed = P.digspeed
 	if (digging_speed)
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!isturf(T))
 			return
 
 		if (dug)

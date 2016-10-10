@@ -642,7 +642,7 @@ var/list/airlock_overlays = list()
 			usr.unset_machine()
 			return
 
-	if((in_range(src, usr) && istype(src.loc, /turf)) && panel_open)
+	if((in_range(src, usr) && isturf(loc)) && panel_open)
 		usr.set_machine(src)
 
 

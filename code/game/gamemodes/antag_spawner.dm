@@ -50,7 +50,7 @@
 	if(!ishuman(H))
 		return 1
 
-	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
+	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
 		if(href_list["school"])
 			if (used)

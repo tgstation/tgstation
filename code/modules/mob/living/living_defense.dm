@@ -208,7 +208,7 @@
 		M << "You cannot attack people before the game has started."
 		return 0
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
@@ -252,7 +252,7 @@
 		M << "You cannot attack people before the game has started."
 		return 0
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
 

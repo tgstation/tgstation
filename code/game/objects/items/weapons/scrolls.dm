@@ -37,7 +37,7 @@
 	if (!ishuman(usr))
 		return 1
 	var/mob/living/carbon/human/H = usr
-	if ((H == src.loc || (in_range(src, H) && istype(src.loc, /turf))))
+	if(H == src.loc || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1)
@@ -57,7 +57,7 @@
 
 	if (!user || user.stat || user.restrained() || uses <= 0)
 		return
-	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
+	if(!(user == loc || (in_range(src, user) && isturf(loc))))
 		return
 
 	var/datum/effect_system/smoke_spread/smoke = new
