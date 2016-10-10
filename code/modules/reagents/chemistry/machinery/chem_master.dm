@@ -7,6 +7,7 @@
 	icon_state = "mixer0"
 	use_power = 1
 	idle_power_usage = 20
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/bottle = null
 	var/mode = 1

@@ -128,7 +128,7 @@
 		ticker.mode.servants_of_ratvar -= owner.mind
 		ticker.mode.update_servant_icons_removed(owner.mind)
 	if(owner.mind)
-		owner.mind.memory = "" //Not sure if there's a better way to do this
+		owner.mind.wipe_memory()
 		owner.mind.special_role = null
 	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
 	if(iscyborg(owner))

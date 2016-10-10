@@ -9,8 +9,7 @@
 	var/mode = 0
 
 /obj/item/weapon/hand_labeler/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is pointing \the [src] \
-		at \himself. They're going to label themselves as a suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is pointing \the [src] at [user.p_them()]self. [user.p_theyre(TRUE)] going to label [user.p_them()]self as a suicide!</span>")
 	labels_left = max(labels_left - 1, 0)
 
 	var/old_real_name = user.real_name

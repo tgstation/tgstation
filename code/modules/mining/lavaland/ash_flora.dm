@@ -152,8 +152,9 @@
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
 	w_class = 1
-	resistance_flags = 0
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
 	var/prepared = FALSE
 	var/prepared_type = /obj/item/ash_flora/shavings
 	var/standard_prep = TRUE
@@ -240,8 +241,9 @@
 	icon = 'icons/obj/lavaland/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
 	w_class = 2
-	resistance_flags = 0
-	burntime = 40
+	resistance_flags = FLAMMABLE
+	obj_integrity = 200
+	max_integrity = 200
 
 //what you can craft with these things
 /datum/crafting_recipe/mushroom_bowl

@@ -1,0 +1,4 @@
+author: "ChemicalRascal"
+delete-after: True
+changes: 
+  - bugfix: "Previously, improving the incinerator's efficiency made the RPM decay more quickly, instead of less quickly. No more!"

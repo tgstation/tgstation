@@ -14,7 +14,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"

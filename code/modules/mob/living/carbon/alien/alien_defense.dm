@@ -109,6 +109,7 @@ In all, this is a lot like the monkey code. /N
 	switch (severity)
 		if (1)
 			gib()
+			return
 
 		if (2)
 			take_overall_damage(60, 60)
@@ -122,3 +123,6 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 1, damage_pwr = 5, deafen_pwr = 15)
 	return 0
+
+/mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
+	return 0//aliens are immune to acid.

@@ -29,7 +29,6 @@
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
-	var/memory = ""
 	var/disabilities = 0	//Carbon
 
 	var/atom/movable/pulling = null

@@ -48,7 +48,7 @@
 	if(L.a_intent == "help")
 		visible_message("[L.name] rubs its head against [src].")
 
-/mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
+/mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
 		..(user, 1)
 		adjustBruteLoss(rand(10, 15))

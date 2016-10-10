@@ -9,6 +9,7 @@
 		idle_power_usage = 5
 		active_power_usage = 100
 		pass_flags = PASSTABLE
+		resistance_flags = ACID_PROOF
 		var/operating = 0
 		var/obj/item/weapon/reagent_containers/beaker = null
 		var/limit = 10

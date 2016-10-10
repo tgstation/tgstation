@@ -73,7 +73,7 @@
 		F.SetLuminosity(0)
 
 	owner.unEquip(holder, 1)
-	holder.loc = src
+	holder.forceMove(src)
 	holder = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
 
@@ -84,7 +84,7 @@
 	holder = item
 
 	holder.flags |= NODROP
-	holder.resistance_flags |= LAVA_PROOF | UNACIDABLE
+	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.w_class = 5
 	holder.materials = null
@@ -158,7 +158,8 @@
 	origin_tech = "materials=4;combat=4;biotech=4;powerstorage=4;syndicate=3"
 	holder = /obj/item/weapon/gun/energy/laser/mounted
 
-/obj/item/organ/cyberimp/arm/gun/laser/l/zone = "l_arm"
+/obj/item/organ/cyberimp/arm/gun/laser/l
+	zone = "l_arm"
 
 
 /obj/item/organ/cyberimp/arm/gun/taser
@@ -168,7 +169,8 @@
 	origin_tech = "materials=5;combat=5;biotech=4;powerstorage=4"
 	holder = /obj/item/weapon/gun/energy/gun/advtaser/mounted
 
-/obj/item/organ/cyberimp/arm/gun/taser/l/zone = "l_arm"
+/obj/item/organ/cyberimp/arm/gun/taser/l
+	zone = "l_arm"
 
 
 /obj/item/organ/cyberimp/arm/toolset
@@ -178,7 +180,8 @@
 	contents = newlist(/obj/item/weapon/screwdriver/cyborg, /obj/item/weapon/wrench/cyborg, /obj/item/weapon/weldingtool/largetank/cyborg,
 		/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
 
-/obj/item/organ/cyberimp/arm/toolset/l/zone = "l_arm"
+/obj/item/organ/cyberimp/arm/toolset/l
+	zone = "l_arm"
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act()
 	if(!(locate(/obj/item/weapon/kitchen/knife/combat/cyborg) in items_list))
