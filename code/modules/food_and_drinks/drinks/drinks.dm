@@ -266,7 +266,7 @@
 	icon_state = "mushroom_bowl"
 	w_class = 2
 	resistance_flags = 0
-	burntime = 40
+
 
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm
