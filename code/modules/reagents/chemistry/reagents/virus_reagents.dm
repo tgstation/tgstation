@@ -1,5 +1,5 @@
 
-//This file contains replicas of ordinary reagents, so they can be tweaked without changing the original ones.
+//This file contains replicas of ordinary reagents used by viruses, so they can be tweaked without changing the original ones.
 
 datum/reagent/virus
 	name = "Virus Chemical"
@@ -139,7 +139,7 @@ datum/reagent/virus
 /datum/reagent/virus/fleshdeath //heparin + lipolicide
 	name = "Viral Necrotic Agent"
 	id = "viral_fleshdeath"
-	description = "Increases stun resistance."
+	description = "Causes bleeding and hunger."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
