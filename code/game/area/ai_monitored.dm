@@ -15,7 +15,6 @@
 /area/ai_monitored/Entered(atom/movable/O)
 	..()
 	if (ismob(O) && motioncameras.len)
-		world << "[src] calling enter for [O]"
 		for(var/obj/machinery/camera/cam in motioncameras)
 			cam.newTarget(O)
 			return
@@ -23,7 +22,6 @@
 /area/ai_monitored/Exited(atom/movable/O)
 	..()
 	if (ismob(O) && motioncameras.len)
-		world << "[src] calling exit for [O]"
 		for(var/obj/machinery/camera/cam in motioncameras)
 			cam.lostTarget(O)
 			return
