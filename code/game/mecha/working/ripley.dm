@@ -2,12 +2,15 @@
 	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armour against the dangers of the EVA mining process."
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 5
+	step_in = 4 //Move speed, lower is faster.
+	var/hi_pres_step_in = 4 //step_in while in high pressure.
+	var/lo_pres_step_in = 2 //step_in while in low/zero pressure.
 	max_temperature = 20000
-	health = 200
+	obj_integrity = 200
+	max_integrity = 200
 	lights_power = 7
 	deflect_chance = 15
-	damage_absorption = list("brute"=0.6,"fire"=1,"bullet"=0.8,"laser"=0.9,"energy"=1,"bomb"=0.6)
+	armor = list(melee = 40, bullet = 20, laser = 10, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -26,7 +29,6 @@
 /obj/mecha/working/ripley/Destroy()
 	for(var/i=1, i <= hides, i++)
 		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
-	damage_absorption["brute"] =  initial(damage_absorption["brute"])
 	for(var/atom/movable/A in cargo)
 		A.loc = loc
 		step_rand(A)
@@ -60,10 +62,11 @@
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
-	health = 250
-	burn_state = LAVA_PROOF
+	obj_integrity = 250
+	max_integrity = 250
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
-	damage_absorption = list("brute"=0.6,"fire"=0.5,"bullet"=0.7,"laser"=0.7,"energy"=1,"bomb"=0.4)
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 
@@ -72,7 +75,7 @@
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
-	step_in = 3
+	hi_pres_step_in = 3
 	opacity=0
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
@@ -150,11 +153,11 @@
 	var/pressure = environment.return_pressure()
 
 	if(pressure < 40)
-		step_in = 3
+		step_in = lo_pres_step_in
 		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown)/2
 	else
-		step_in = 5
+		step_in = hi_pres_step_in
 		for(var/obj/item/mecha_parts/mecha_equipment/drill/drill in equipment)
 			drill.equip_cooldown = initial(drill.equip_cooldown)
 

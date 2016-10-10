@@ -29,7 +29,7 @@
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
-	while (!istype(pickedstart, /turf/open/space))
+	while(!isspaceturf(pickedstart))
 		var/startSide = pick(cardinal)
 		pickedstart = spaceDebrisStartLoc(startSide, 1)
 		pickedgoal = spaceDebrisFinishLoc(startSide, 1)
@@ -114,15 +114,17 @@
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
-		if(prob(10) && !istype(T, /turf/open/space))//randomly takes a 'hit' from ramming
+		if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
 			get_hit()
 
 /obj/effect/meteor/Destroy()
+	meteor_list -= src
 	walk(src,0) //this cancels the walk_towards() proc
 	. = ..()
 
 /obj/effect/meteor/New()
 	..()
+	meteor_list += src
 	if(SSaugury)
 		SSaugury.register_doom(src, threat)
 	SpinAnimation()
@@ -138,7 +140,7 @@
 	//first bust whatever is in the turf
 	for(var/atom/A in T)
 		if(A != src)
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				A.visible_message("<span class='warning'>[src] slams into [A].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
 			A.ex_act(hitpwr)
 
@@ -290,7 +292,7 @@
 
 
 /obj/effect/meteor/meaty/ram_turf(turf/T)
-	if(!istype(T, /turf/open/space))
+	if(!isspaceturf(T))
 		new /obj/effect/decal/cleanable/blood(T)
 
 /obj/effect/meteor/meaty/Bump(atom/A)
@@ -308,7 +310,7 @@
 	..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
-	if(!istype(T, /turf/open/space))
+	if(!isspaceturf(T))
 		new /obj/effect/decal/cleanable/xenoblood(T)
 
 //Station buster Tunguska

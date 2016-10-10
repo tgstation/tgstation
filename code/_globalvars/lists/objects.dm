@@ -21,7 +21,8 @@ var/global/list/crafting_recipes = list()				//list of all table craft recipes
 var/global/list/rcd_list = list()					//list of Rapid Construction Devices.
 var/global/list/apcs_list = list()					//list of all Area Power Controller machines, seperate from machines for powernet speeeeeeed.
 var/global/list/tracked_implants = list()			//list of all current implants that are tracked to work out what sort of trek everyone is on. Sadly not on lavaworld not implemented...
+var/global/list/tracked_chem_implants = list()			//list of implants the prisoner console can track and send inject commands too
 var/global/list/poi_list = list()					//list of points of interest for observe/follow
 var/global/list/pinpointer_list = list()			//list of all pinpointers. Used to change stuff they are pointing to all at once.
-// A list of all zombie_infection organs, for any mass "animation"
-var/global/list/zombie_infection_list = list()
+var/global/list/zombie_infection_list = list() 		// A list of all zombie_infection organs, for any mass "animation"
+var/global/list/meteor_list = list()				// List of all meteors.

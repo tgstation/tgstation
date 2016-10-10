@@ -129,15 +129,15 @@
 /obj/item/toy/crayon/proc/check_empty(mob/user)
 	// When eating a crayon, check_empty() can be called twice producing
 	// two messages unless we check for being deleted first
-	if(!qdeleted(src))
-		. = TRUE
+	if(qdeleted(src))
+		return TRUE
 
 	. = FALSE
 	// -1 is unlimited charges
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		user << "<span class='warning'>There is no more of [src.name] \
+		user << "<span class='warning'>There is no more of \the [src.name] \
 			left!</span>"
 		if(self_contained)
 			qdel(src)
@@ -380,6 +380,8 @@
 	if(edible && (M == user))
 		user << "You take a bite of the [src.name]. Delicious!"
 		var/eaten = use_charges(5)
+		if(check_empty(user)) //Prevents divsion by zero
+			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction * volume_multiplier)
 		reagents.trans_to(M, eaten, volume_multiplier)
@@ -640,7 +642,7 @@
 		if(C.client)
 			C.blur_eyes(3)
 			C.blind_eyes(1)
-		if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS.
+		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
 			C.confused = max(C.confused, 3)
 			C.Weaken(3)
 		if(ishuman(C) && actually_paints)
@@ -710,7 +712,7 @@
 
 /obj/item/toy/crayon/spraycan/borg/afterattack(atom/target,mob/user,proximity)
 	var/diff = ..()
-	if(!isrobot(user))
+	if(!iscyborg(user))
 		user << "<span class='notice'>How did you get this?</span>"
 		qdel(src)
 		return FALSE

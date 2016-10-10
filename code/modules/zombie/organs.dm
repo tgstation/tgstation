@@ -52,15 +52,12 @@
 	owner.revive(full_heal = TRUE)
 	switch(old_stat)
 		if(DEAD, UNCONSCIOUS)
-			owner.visible_message("<span class='danger'>[owner] staggers to \
-				their feet!</span>")
+			owner.visible_message("<span class='danger'>[owner] staggers to [owner.p_their()] feet!</span>")
 			owner << "<span class='danger'>You stagger to your feet!</span>"
 		// Conscious conversions will generally only happen for an event
 		// or for a converts_living=TRUE infection
 		if(CONSCIOUS)
-			owner.visible_message("<span class='danger'>[owner] suddenly \
-				convulses, as they gain a ravenous hunger in their \
-				eyes!</span>",
+			owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()] gain a ravenous hunger in [owner.p_their()] eyes!</span>",
 				"<span class='alien'>You HUNGER!</span>")
 			playsound(owner.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 			owner.do_jitter_animation(living_transformation_time)

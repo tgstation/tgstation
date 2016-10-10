@@ -244,26 +244,26 @@
 		if(BASIC_BUILDMODE)
 			if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
 				var/turf/T = object
-				if(istype(object,/turf/open/space))
+				if(isspaceturf(object))
 					T.ChangeTurf(/turf/open/floor/plasteel)
-				else if(istype(object,/turf/open/floor))
+				else if(isfloorturf(object))
 					T.ChangeTurf(/turf/closed/wall)
-				else if(istype(object,/turf/closed/wall))
+				else if(iswallturf(object))
 					T.ChangeTurf(/turf/closed/wall/r_wall)
 				log_admin("Build Mode: [key_name(user)] built [T] at ([T.x],[T.y],[T.z])")
 				return
 			else if(right_click)
 				log_admin("Build Mode: [key_name(user)] deleted [object] at ([object.x],[object.y],[object.z])")
-				if(istype(object,/turf/closed/wall))
+				if(iswallturf(object))
 					var/turf/T = object
 					T.ChangeTurf(/turf/open/floor/plasteel)
-				else if(istype(object,/turf/open/floor))
+				else if(isfloorturf(object))
 					var/turf/T = object
 					T.ChangeTurf(/turf/open/space)
 				else if(istype(object,/turf/closed/wall/r_wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/closed/wall)
-				else if(istype(object,/obj))
+				else if(isobj(object))
 					qdel(object)
 				return
 			else if(istype(object,/turf) && alt_click && left_click)

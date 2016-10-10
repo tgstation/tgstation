@@ -50,16 +50,16 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
-			C.flash_eyes()
+			C.flash_act()
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen
 			if (reaction_name == "Friendly Gold Slime")
 				chosen = pick(chemical_mob_spawn_nicecritters)
 			else
 				chosen = pick(chemical_mob_spawn_meancritters)
-			var/mob/living/simple_animal/C = new chosen
+			var/spawnloc = get_turf(holder.my_atom)
+			var/mob/living/simple_animal/C = new chosen(spawnloc)
 			C.faction |= mob_faction
-			C.loc = get_turf(holder.my_atom)
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))

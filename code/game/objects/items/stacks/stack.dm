@@ -78,12 +78,6 @@
 		var/title as text
 		var/can_build = 1
 		can_build = can_build && (max_multiplier>0)
-		/*
-		if (R.one_per_turf)
-			can_build = can_build && !(locate(R.result_type) in usr.loc)
-		if (R.on_floor)
-			can_build = can_build && istype(usr.loc, /turf/open/floor)
-		*/
 		if (R.res_amount>1)
 			title+= "[R.res_amount]x [R.title]\s"
 		else
@@ -111,7 +105,7 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.restrained() || usr.stat || (usr.get_active_hand() != src && usr.get_inactive_hand() != src))
+	if (usr.restrained() || usr.stat || !usr.is_holding(src))
 		return
 	if (href_list["make"])
 		if (src.get_amount() < 1) qdel(src) //Never should happen
@@ -137,6 +131,7 @@
 		if (R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
+			new_item.update_icon()
 
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
@@ -167,7 +162,7 @@
 	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
 		usr << "<span class='warning'>There is another [R.title] here!</span>"
 		return 0
-	if (R.on_floor && !istype(usr.loc, /turf/open/floor))
+	if(R.on_floor && !isfloorturf(usr.loc))
 		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 		return 0
 	return 1
@@ -200,6 +195,8 @@
 	update_icon()
 
 /obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+	if(S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
+		return
 	var/transfer = get_amount()
 	if(S.is_cyborg)
 		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
@@ -222,7 +219,7 @@
 	return ..()
 
 /obj/item/stack/attack_hand(mob/user)
-	if (user.get_inactive_hand() == src)
+	if (user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return
 		change_stack(user,1)
@@ -230,7 +227,7 @@
 		..()
 	return
 
-/obj/item/stack/AltClick(mob/user)
+/obj/item/stack/AltClick(mob/living/user)
 	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return

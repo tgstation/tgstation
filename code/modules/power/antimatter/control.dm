@@ -170,17 +170,17 @@
 		if(fueljar)
 			user << "<span class='warning'>There is already a [fueljar] inside!</span>"
 			return
+
+		if(!user.unEquip(W))
+			return
 		fueljar = W
-		W.loc = src
-		if(user.client)
-			user.client.screen -= W
-		user.unEquip(W)
-		user.update_icons()
+		W.forceMove(src)
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"<span class='notice'>You load an [W.name].</span>", \
 				"<span class='italics'>You hear a thunk.</span>")
 	else
 		return ..()
+
 
 /obj/machinery/power/am_control_unit/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	switch(damage_type)
@@ -279,7 +279,7 @@
 
 /obj/machinery/power/am_control_unit/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon/ai))
+		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return

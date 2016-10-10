@@ -5,6 +5,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/ion
 
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
@@ -98,8 +99,8 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.dna.species.id == "pod")
-			randmuti(C)
-			randmut(C)
+			C.randmuti()
+			C.randmut()
 			C.updateappearance()
 			C.domutcheck()
 
@@ -166,6 +167,7 @@
 	damage = 5
 	range = 3.5 //works as 4, but doubles to 7
 	dismemberment = 20
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
@@ -182,7 +184,7 @@
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
-	if(istype(target, /turf/closed/mineral))
+	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
 		Range()

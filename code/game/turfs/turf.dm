@@ -13,7 +13,7 @@
 
 	var/PathNode/PNode = null //associated PathNode in the A* algorithm
 
-	flags = 0
+	flags = CAN_BE_DIRTY
 
 	var/list/proximity_checkers = list()
 
@@ -155,7 +155,7 @@
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
-			C.Deconstruct()
+			C.deconstruct()
 
 	queue_smooth_neighbors(src)
 
@@ -176,6 +176,8 @@
 
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
+		if(!S.air)
+			continue
 		var/list/S_gases = S.air.gases
 		for(var/id in S_gases)
 			total.assert_gas(id)
@@ -210,7 +212,7 @@
 		M.adjustBruteLoss(damage)
 		M.Paralyse(damage/5)
 	for(var/obj/mecha/M in src)
-		M.take_damage(damage*2, "brute")
+		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
 	flags |= NOJAUNT
@@ -323,3 +325,27 @@
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
+
+/turf/proc/is_transition_turf()
+	return
+
+
+/turf/acid_act(acidpwr, acid_volume)
+	. = 1
+	var/has_acid_effect = 0
+	for(var/obj/O in src)
+		if(intact && O.level == 1) //hidden under the floor
+			continue
+		if(istype(O, /obj/effect/acid))
+			var/obj/effect/acid/A = O
+			A.acid_level = min(A.level + acid_volume * acidpwr, 12000)//capping acid level to limit power of the acid
+			has_acid_effect = 1
+			continue
+		O.acid_act(acidpwr, acid_volume)
+	if(!has_acid_effect)
+		new /obj/effect/acid(src, acidpwr, acid_volume)
+
+
+/turf/proc/acid_melt()
+	return
+

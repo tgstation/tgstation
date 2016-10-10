@@ -15,6 +15,8 @@
 	icon_state = "sheet-glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=1"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 100)
+	resistance_flags = ACID_PROOF
 
 /obj/item/stack/sheet/glass/cyborg
 	materials = list()
@@ -46,7 +48,7 @@
 			RG.add_fingerprint(user)
 			var/obj/item/stack/sheet/glass/G = src
 			src = null
-			var/replace = (user.get_inactive_hand()==G)
+			var/replace = (user.get_inactive_held_item()==G)
 			V.use(1)
 			G.use(1)
 			if (!G && replace)
@@ -137,6 +139,8 @@
 	icon_state = "sheet-rglass"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=2"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 100)
+	resistance_flags = ACID_PROOF
 
 /obj/item/stack/sheet/rglass/cyborg
 	materials = list()
@@ -282,6 +286,10 @@
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	resistance_flags = ACID_PROOF
+	armor = list(melee = 100, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 100)
+	obj_integrity = 40
+	max_integrity = 40
 	var/cooldown = 0
 	sharpness = IS_SHARP
 
@@ -311,19 +319,16 @@
 		return
 	if(istype(A, /obj/item/weapon/storage))
 		return
-
+	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
-			var/organ = (H.hand ? "l_" : "r_") + "arm"
-			var/obj/item/bodypart/affecting = H.get_bodypart(organ)
-			if(affecting && affecting.take_damage(force / 2))
-				H.update_damage_overlays(0)
+			H.apply_damage(force*0.5, BRUTE, hit_hand)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
 		M << "<span class='warning'>[src] cuts into your hand!</span>"
-		M.adjustBruteLoss(force / 2)
+		M.apply_damage(force*0.5, BRUTE, hit_hand)
 
 
 /obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)

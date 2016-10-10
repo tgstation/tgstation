@@ -41,7 +41,7 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(isrobot(user))
+	if(iscyborg(user))
 		user << "<span class='notice'>You free up your module.</span>"
 	else if(istype(src, /obj/item/weapon/twohanded/required))
 		user << "<span class='notice'>You drop \the [name].</span>"
@@ -49,7 +49,7 @@
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
-	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
+	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_held_item()
 	if(O && istype(O))
 		O.unwield()
 	return
@@ -57,10 +57,10 @@
 /obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
 	if(wielded)
 		return
-	if(istype(user,/mob/living/carbon/monkey) )
+	if(ismonkey(user))
 		user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
-	if(user.get_inactive_hand())
+	if(user.get_inactive_held_item())
 		user << "<span class='warning'>You need your other hand to be empty!</span>"
 		return
 	if(user.get_num_arms() < 2)
@@ -71,7 +71,7 @@
 		force = force_wielded
 	name = "[name] (Wielded)"
 	update_icon()
-	if(isrobot(user))
+	if(iscyborg(user))
 		user << "<span class='notice'>You dedicate your module to [name].</span>"
 	else
 		user << "<span class='notice'>You grab the [name] with both hands.</span>"
@@ -87,7 +87,7 @@
 	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
+		var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
 		if(istype(O))
 			O.unwield(user)
 	return	unwield(user)
@@ -109,7 +109,7 @@
 
 /obj/item/weapon/twohanded/equipped(mob/user, slot)
 	..()
-	if(slot != slot_l_hand && slot != slot_r_hand && wielded)
+	if(!user.is_holding(src) && wielded)
 		unwield(user)
 
 ///////////OFFHAND///////////////
@@ -118,6 +118,7 @@
 	icon_state = "offhand"
 	w_class = 5
 	flags = ABSTRACT
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/weapon/twohanded/offhand/unwield()
 	qdel(src)
@@ -140,7 +141,7 @@
 	return ..()
 
 /obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
-	var/obj/item/weapon/twohanded/required/H = user.get_inactive_hand()
+	var/obj/item/weapon/twohanded/required/H = user.get_inactive_held_item()
 	if(get_dist(src,user) > 1)
 		return 0
 	if(H != null)
@@ -152,7 +153,7 @@
 
 /obj/item/weapon/twohanded/required/equipped(mob/user, slot)
 	..()
-	if(slot == slot_l_hand || slot == slot_r_hand)
+	if(slot == slot_hands)
 		wield(user)
 	else
 		unwield(user)
@@ -173,6 +174,10 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -187,10 +192,10 @@
 	if(wielded) //destroys windows and grilles in one hit
 		if(istype(A,/obj/structure/window))
 			var/obj/structure/window/W = A
-			W.shatter()
+			W.take_damage(400, BRUTE, "melee", 0)
 		else if(istype(A,/obj/structure/grille))
 			var/obj/structure/grille/G = A
-			G.take_damage(16)
+			G.take_damage(40, BRUTE, "melee", 0)
 
 
 /*
@@ -216,6 +221,10 @@
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
 	var/hacked = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
@@ -256,7 +265,7 @@
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
 	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on \the [src].</span>"
 	if (force_wielded)
-		user.take_organ_damage(20,25)
+		user.take_bodypart_damage(20,25)
 	else
 		user.adjustStaminaLoss(25)
 
@@ -265,7 +274,7 @@
 		return ..()
 	return 0
 
-/obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
+/obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
 		user << "<span class='warning'>You can't pick up such dangerous item with your meaty hands without losing fingers, better not to!</span>"
 		return 1
@@ -350,6 +359,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/obj/item/weapon/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
@@ -362,7 +374,7 @@
 /obj/item/weapon/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
 		return
-	if(istype(AM, /turf/open)) //So you can actually melee with it
+	if(isopenturf(AM)) //So you can actually melee with it
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
@@ -433,9 +445,8 @@
 	else
 		hitsound = "swing_hit"
 
-	if(src == user.get_active_hand()) //update inhands
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+	if(src == user.get_active_held_item()) //update inhands
+		user.update_inv_hands()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -473,7 +484,7 @@
 	if(!proximity)
 		return
 	user.faction |= "greytide(\ref[user])"
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))
 			return
@@ -495,6 +506,10 @@
 	attack_verb = list("attacked", "impaled", "pierced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/twohanded/pitchfork/demonic
 	name = "demonic pitchfork"
@@ -524,7 +539,7 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
-	if(istype(user, /mob/living))
+	if(isliving(user))
 		var/mob/living/U = user
 		if(U.mind && !U.mind.devilinfo && (U.mind.soulOwner == U.mind)) //Burn hands unless they are a devil or have sold their soul
 			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \

@@ -110,7 +110,7 @@
 	synd_mind.current << "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>"
 
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
-	synd_mind.current.equip_to_slot_or_del(challenge, slot_r_hand)
+	synd_mind.current.put_in_hands_or_del(challenge)
 
 	var/list/foundIDs = synd_mind.current.search_contents_for(/obj/item/weapon/card/id)
 	if(foundIDs.len)
@@ -130,7 +130,7 @@
 		P.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = synd_mind.current
 		P.loc = H.loc
-		H.equip_to_slot_or_del(P, slot_r_hand, 0)
+		H.put_in_hands_or_del(P)
 		H.update_icons()
 	else
 		nuke_code = "code will be provided later"
@@ -166,7 +166,7 @@
 
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
-		if (istype(operative_mind.current,/mob/living/carbon/human) && (operative_mind.current.stat!=2))
+		if(ishuman(operative_mind.current) && (operative_mind.current.stat!=2))
 			return 0
 	return 1
 

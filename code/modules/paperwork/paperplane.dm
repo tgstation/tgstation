@@ -7,8 +7,9 @@
 	throw_speed = 1
 	throwforce = 0
 	w_class = 1
-	burn_state = FLAMMABLE
-	burntime = 4
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 
 	var/obj/item/weapon/paper/internalPaper
 	var/list/stamped = list()
@@ -79,7 +80,6 @@
 
 		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
 			return
-		internalPaper.burntime = 1 //its already pretty burnt out
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
@@ -87,7 +87,7 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=0) //prevent the paper plane from spinning
+/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0) //prevent the paper plane from spinning
 	if(!..())
 		return
 

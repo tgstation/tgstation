@@ -28,6 +28,7 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	toolspeed = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/wrench/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -103,6 +104,7 @@
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	toolspeed = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -161,6 +163,7 @@
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
 	toolspeed = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/wirecutters/New(loc, var/param_color = null)
 	..()
@@ -216,7 +219,8 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2
-
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
 
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	origin_tech = "engineering=1;plasmatech=1"
@@ -298,7 +302,7 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
+	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != "harm")
 		if(src.remove_fuel(1))
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
@@ -347,7 +351,7 @@
 		reagents.remove_reagent("welding_fuel", amount)
 		check_fuel()
 		if(M)
-			M.flash_eyes(light_intensity)
+			M.flash_act(light_intensity)
 		return TRUE
 	else
 		if(M)
@@ -363,8 +367,7 @@
 		//mob icon update
 		if(ismob(loc))
 			var/mob/M = loc
-			M.update_inv_r_hand(0)
-			M.update_inv_l_hand(0)
+			M.update_inv_hands(0)
 
 		return 0
 	return 1
@@ -519,6 +522,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	can_off_process = 1
 	light_intensity = 1
 	toolspeed = 2
+	var/nextrefueltick = 0
 
 /obj/item/weapon/weldingtool/experimental/brass
 	name = "brass welding tool"
@@ -527,20 +531,11 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	item_state = "brasswelder"
 
 
-//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
-//i don't think this is actually used, yaaaaay -Pete
-/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
-	if(!welding && !last_gen)
-		last_gen = 1
-		reagents.add_reagent("welding_fuel",1)
-		spawn(10)
-			last_gen = 0
-
 /obj/item/weapon/weldingtool/experimental/process()
 	..()
-	if(reagents.total_volume < max_fuel)
-		fuel_gen()
-
+	if(get_fuel() < max_fuel && nextrefueltick < world.time)
+		nextrefueltick = world.time + 10
+		reagents.add_reagent("welding_fuel", 1)
 
 
 /*
@@ -561,6 +556,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	origin_tech = "engineering=1;combat=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	toolspeed = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/crowbar/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")

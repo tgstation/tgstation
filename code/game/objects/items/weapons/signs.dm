@@ -5,7 +5,7 @@
 	force = 5
 	w_class = 4
 	attack_verb = list("bashed","smacked")
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 	var/label = ""
 	var/last_wave = 0

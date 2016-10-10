@@ -42,7 +42,7 @@
 /obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_hand() != W)
+		if(user.get_active_held_item() != W)
 			return
 		if(!in_range(src, user) && loc != user)
 			return

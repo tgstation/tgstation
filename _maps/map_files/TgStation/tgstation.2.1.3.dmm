@@ -1394,7 +1394,12 @@
 /area/security/hos)
 "adq" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/guitar,
+/obj/item/device/instrument/guitar{
+	pixel_x = -7
+	},
+/obj/item/device/instrument/eguitar{
+	pixel_x = 5
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "adr" = (
@@ -7424,7 +7429,7 @@
 "apP" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 35
+	obj_integrity = 35
 	},
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
@@ -7499,7 +7504,7 @@
 	layer = 2.9
 	},
 /obj/item/weapon/storage/briefcase,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
 /area/lawoffice)
 "aqc" = (
@@ -7764,7 +7769,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aqB" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aqC" = (
@@ -7995,7 +8000,7 @@
 	pixel_y = 23
 	},
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "arj" = (
@@ -9541,7 +9546,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
 	pixel_y = 28;
-	shattered = 1
+	broken = 1
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plating,
@@ -9550,7 +9555,7 @@
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
 	pixel_y = 28;
-	shattered = 1
+	broken = 1
 	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -9563,7 +9568,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "ava" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/chair,
 /obj/item/weapon/reagent_containers/blood/random,
 /turf/open/floor/plating,
@@ -10294,7 +10299,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "awE" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -13644,7 +13649,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aDX" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
@@ -15356,7 +15361,7 @@
 "aHx" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 25
+	obj_integrity = 25
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -18572,9 +18577,7 @@
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aPh" = (
 /obj/structure/table/wood,
@@ -18583,9 +18586,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen/invisible,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aPi" = (
 /obj/structure/table/wood,
@@ -18596,9 +18597,7 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aPj" = (
 /obj/machinery/light_switch{
@@ -19054,17 +19053,13 @@
 /area/library)
 "aQr" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aQs" = (
-/obj/structure/cult/tome,
+/obj/structure/destructible/cult/tome,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/weapon/book/codex_gigas,
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aQt" = (
 /obj/effect/landmark{
@@ -19073,9 +19068,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aQu" = (
 /turf/open/floor/plasteel/chapel,
@@ -19576,9 +19569,7 @@
 	name = "Private Study";
 	req_access_txt = "37"
 	},
-/turf/open/floor/plasteel/cult{
-	dir = 2
-	},
+/turf/open/floor/engine/cult,
 /area/library)
 "aRR" = (
 /obj/machinery/firealarm{
@@ -22329,7 +22320,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/button/door{
-	id = "datboidetective";
+	id = "kanyewest";
 	name = "Privacy Shutters";
 	pixel_x = 0;
 	pixel_y = 24
@@ -23406,7 +23397,7 @@
 /area/security/detectives_office)
 "baV" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security{
 	name = "Detective's Office";
 	req_access_txt = "4"
 	},
@@ -33859,13 +33850,12 @@
 	})
 "bxg" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bxh" = (
 /obj/machinery/door/poddoor{
-	auto_close = 300;
 	id = "smindicate";
 	name = "outer blast door"
 	},
@@ -34905,7 +34895,7 @@
 	dir = 2;
 	on = 1
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/black,
 /area/toxins/server)
 "bzy" = (
@@ -35703,7 +35693,6 @@
 	pixel_y = 0
 	},
 /obj/machinery/newscaster{
-	hitstaken = 1;
 	pixel_x = 0;
 	pixel_y = -32
 	},
@@ -36605,7 +36594,6 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bCY" = (
@@ -37055,7 +37043,6 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
@@ -37105,7 +37092,6 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bEd" = (
@@ -37709,7 +37695,7 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 25
+	obj_integrity = 25
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
@@ -37889,7 +37875,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bFJ" = (
@@ -38453,13 +38438,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGS" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-/obj/item/weapon/reagent_containers/syringe,
+/obj/machinery/limbgrower,
+/obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bGT" = (
@@ -38568,7 +38548,6 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
 "bHf" = (
@@ -38974,14 +38953,14 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 35
+	obj_integrity = 35
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bHX" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
-	health = 25
+	obj_integrity = 25
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
@@ -39203,6 +39182,18 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/morphine{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/syringe{
+	pixel_x = 6;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIn" = (
@@ -39785,7 +39776,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bJu" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -40444,7 +40435,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bKK" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -41308,7 +41299,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bMC" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -41832,14 +41823,12 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNR" = (
@@ -41872,7 +41861,6 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bNT" = (
@@ -42256,8 +42244,8 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/poddoor/preopen{
-	id = "datboidetective";
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kanyewest";
 	layer = 2.9;
 	name = "privacy shutters"
 	},
@@ -43297,7 +43285,7 @@
 	},
 /area/security/checkpoint/engineering)
 "bRl" = (
-/obj/machinery/light_construct{
+/obj/structure/light_construct{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -45366,7 +45354,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bVE" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
@@ -46902,8 +46890,7 @@
 /area/toxins/xenobiology)
 "bZc" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	unacidable = 1
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/toxins/misc_lab)
@@ -47234,7 +47221,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bZO" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -50429,7 +50416,7 @@
 /obj/structure/rack{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
@@ -51937,7 +51924,7 @@
 /area/maintenance/starboardsolar)
 "cjE" = (
 /obj/structure/rack,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -54111,8 +54098,8 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/robot_parts/r_arm,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/r_arm/robot,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "coo" = (
@@ -55204,7 +55191,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cqv" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cqw" = (
@@ -90922,7 +90909,7 @@ bJs
 bKy
 bLM
 bLM
-alX
+bNQ
 bOV
 bQk
 bRt
@@ -105307,7 +105294,7 @@ bAG
 bCa
 bDc
 bEo
-apI
+bIC
 bEc
 bIB
 bIB
@@ -106080,7 +106067,7 @@ bDc
 bEo
 bDf
 bEb
-bIC
+bGY
 bGY
 bJN
 bMp

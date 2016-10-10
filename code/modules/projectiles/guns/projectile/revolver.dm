@@ -37,7 +37,7 @@
 
 	if(unique_rename)
 		if(istype(A, /obj/item/weapon/pen))
-			rename_gun(user)
+			rename_weapon(user)
 
 /obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
@@ -111,7 +111,7 @@
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
 			user << "<span class='userdanger'>[src] blows up in your face!</span>"
-			user.take_organ_damage(0,20)
+			user.take_bodypart_damage(0,20)
 			user.unEquip(src)
 			return 0
 	..()

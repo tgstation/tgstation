@@ -104,7 +104,6 @@
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
-	var/flame_strength = FLAMMABLE
 	var/fire_stack_strength = 5
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
@@ -135,7 +134,7 @@
 
 
 /obj/structure/bonfire/proc/CheckOxygen()
-	if(istype(loc,/turf/open))
+	if(isopenturf(loc))
 		var/turf/open/O = loc
 		if(O.air)
 			var/G = O.air.gases
@@ -151,7 +150,7 @@
 		Burn()
 		START_PROCESSING(SSobj, src)
 
-/obj/structure/bonfire/fire_act()
+/obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
 	StartBurning()
 
 /obj/structure/bonfire/Crossed(atom/movable/AM)
@@ -166,9 +165,7 @@
 			continue
 		if(isobj(A))
 			var/obj/O = A
-			if(O.burn_state < flame_strength)
-				continue
-			O.fire_act()
+			O.fire_act(1000, 500)
 		else if(isliving(A))
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)

@@ -47,14 +47,14 @@
 		mytape = null
 		update_icon()
 
-/obj/item/device/taperecorder/fire_act()
+/obj/item/device/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.ruin() //Fires destroy the tape
-	return()
+	..()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
 		if(mytape)
-			if(user.l_hand != src && user.r_hand != src)
+			if(!user.is_holding(src))
 				..()
 				return
 			eject(user)
@@ -248,8 +248,9 @@
 	var/list/timestamp = list()
 	var/ruined = 0
 
-/obj/item/device/tape/fire_act()
+/obj/item/device/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
+	..()
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)

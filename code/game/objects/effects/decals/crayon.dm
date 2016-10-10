@@ -3,14 +3,8 @@
 	desc = "Graffiti. Damn kids."
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
-	layer = ABOVE_NORMAL_TURF_LAYER
+	gender = NEUTER
 	var/do_icon_rotate = TRUE
-
-/obj/effect/decal/cleanable/crayon/examine()
-	set src in view(2)
-	..()
-	return
-
 
 /obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
 	..()

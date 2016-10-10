@@ -355,3 +355,6 @@ BOMBCAP 20
 # spawn, while the converse is true. Alter this number to affect the amount
 # of ruins.
 LAVALAND_BUDGET 60
+
+## Space Ruin Budged
+Space_Budget 16

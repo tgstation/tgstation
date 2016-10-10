@@ -208,7 +208,7 @@
 			else
 				wash_obj(G)
 	else
-		if(istype(loc, /turf/open))
+		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 
@@ -274,6 +274,7 @@
 
 	if(istype(O,/obj/item))
 		var/obj/item/I = O
+		I.acid_level = 0
 		I.extinguish()
 
 
@@ -294,10 +295,8 @@
 		var/mob/living/carbon/M = L
 		. = 1
 		check_heat(M)
-		if(M.r_hand)
-			M.r_hand.clean_blood()
-		if(M.l_hand)
-			M.l_hand.clean_blood()
+		for(var/obj/item/I in M.held_items)
+			I.clean_blood()
 		if(M.back)
 			if(M.back.clean_blood())
 				M.update_inv_back(0)
@@ -334,7 +333,7 @@
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform()
 			if(washgloves)
-				clean_blood()
+				H.clean_blood()
 			if(H.shoes && washshoes)
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes()
@@ -373,6 +372,9 @@
 			else
 				wash_obj(G)
 
+/obj/machinery/shower/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 3)
+	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
 	if(watertemp == "freezing")
@@ -496,11 +498,17 @@
 			return 1
 		busy = 0
 		O.clean_blood()
+		O.acid_level = 0
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1
 	else
 		return ..()
+
+/obj/structure/sink/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 3)
+	qdel(src)
+
 
 
 /obj/structure/sink/kitchen
@@ -540,7 +548,6 @@
 	density = 0
 	var/open = TRUE
 
-
 /obj/structure/curtain/proc/toggle()
 	open = !open
 	update_icon()
@@ -563,3 +570,16 @@
 	toggle()
 	..()
 
+/obj/structure/curtain/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/cloth (loc, 3)
+	qdel(src)
+
+/obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 80, 1)

@@ -21,7 +21,7 @@
 	maxHealth = 150
 	health = 150
 	healable = 0
-	environment_smash = 1
+	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	see_in_dark = 8
@@ -120,8 +120,6 @@
 	morphed = 0
 	form = null
 	alpha = initial(alpha)
-
-	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
 					"<span class='notice'>You reform to your normal body.</span>")

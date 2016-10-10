@@ -93,7 +93,7 @@
 	..()
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
-	if(prob(fail_chance) && istype(loc, /mob/living))
+	if(prob(fail_chance) && isliving(loc))
 		var/mob/living/M = loc
 		switch(fail_tick)
 			if(0 to 200)

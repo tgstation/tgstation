@@ -56,12 +56,12 @@
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
+		if(ishuman(M) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
 			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(M.flash_eyes(visual = 1))
+			if(M.flash_act(visual = 1))
 				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
@@ -77,7 +77,7 @@
 				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
 					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
 				else //they're okay!
-					if(C.flash_eyes(visual = 1))
+					if(C.flash_act(visual = 1))
 						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()

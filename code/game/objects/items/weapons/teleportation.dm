@@ -134,6 +134,8 @@ Frequency:
 	throw_range = 5
 	materials = list(MAT_METAL=10000)
 	origin_tech = "magnets=3;bluespace=4"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/active_portals = 0
 
 /obj/item/weapon/hand_tele/attack_self(mob/user)
@@ -165,7 +167,7 @@ Frequency:
 	if(turfs.len)
 		L["None (Dangerous)"] = pick(turfs)
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
-	if (user.get_active_hand() != src || user.incapacitated())
+	if (user.get_active_held_item() != src || user.incapacitated())
 		return
 	if(active_portals >= 3)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")

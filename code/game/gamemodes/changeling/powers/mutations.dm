@@ -21,32 +21,28 @@
 	var/weapon_name_simple
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
-	if(check_weapon(user, user.r_hand, 1))
-		return
-	if(check_weapon(user, user.l_hand, 0))
-		return
+	for(var/obj/item/I in user.held_items)
+		if(check_weapon(user, I))
+			return
 	..(user, target)
 
-/obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item, right_hand=1)
+/obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
 	if(istype(hand_item, weapon_type))
 		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 		qdel(hand_item)
 		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
-		if(right_hand)
-			user.update_inv_r_hand()
-		else
-			user.update_inv_l_hand()
+		user.update_inv_hands()
 		return 1
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
 	if(!user.drop_item())
-		user << "<span class='warning'>The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>"
+		user << "<span class='warning'>The [user.get_active_held_item()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>"
 		return
 	var/limb_regen = 0
-	if(user.hand) //we regen the arm before changing it into the weapon
-		limb_regen = user.regenerate_limb("l_arm", 1)
-	else
+	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
 		limb_regen = user.regenerate_limb("r_arm", 1)
+	else
+		limb_regen = user.regenerate_limb("l_arm", 1)
 	if(limb_regen)
 		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		user.emote("scream")
@@ -56,8 +52,9 @@
 	return W
 
 /obj/effect/proc_holder/changeling/weapon/on_refund(mob/user)
-	check_weapon(user, user.r_hand, 1)
-	check_weapon(user, user.l_hand, 0)
+	for(var/obj/item/I in user.held_items)
+		check_weapon(user, I)
+
 
 //Parent to space suits and armor.
 /obj/effect/proc_holder/changeling/suit
@@ -168,7 +165,7 @@
 		return
 	if(istype(target, /obj/structure/table))
 		var/obj/structure/table/T = target
-		T.table_destroy()
+		T.deconstruct(FALSE)
 
 	else if(istype(target, /obj/machinery/computer))
 		var/obj/machinery/computer/C = target
@@ -274,7 +271,7 @@
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
 	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/tank/internals/oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0) //No armor at all.
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90) //No armor at all.
 
 /obj/item/clothing/suit/space/changeling/New()
 	..()
@@ -292,7 +289,7 @@
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Again, no THICKMATERIAL.
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /***************************************\
@@ -320,7 +317,7 @@
 	icon_state = "lingarmor"
 	flags = NODROP | DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0, fire = 90, acid = 90)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
@@ -335,5 +332,5 @@
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
 	flags = NODROP | DROPDEL
-	armor = list(melee = 30, bullet = 30, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0, fire = 90, acid = 90)
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE

@@ -1,6 +1,7 @@
 /obj/item/weapon/melee
 	needs_permit = 1
 
+
 /obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
@@ -20,6 +21,17 @@
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 		return (OXYLOSS)
 
+/obj/item/weapon/melee/synthetic_arm_blade
+	name = "synthetic arm blade"
+	desc = "A grotesque blade that on closer inspection seems made of synthentic flesh, it still feels like it would hurt very badly as a weapon."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "arm_blade"
+	item_state = "arm_blade"
+	origin_tech = "combat=5,biotech=5"
+	w_class = 5.0
+	force = 15
+	throwforce = 10
+	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/sabre
 	name = "officer's sabre"
@@ -27,6 +39,7 @@
 	icon_state = "sabre"
 	item_state = "sabre"
 	flags = CONDUCT
+	unique_rename = 1
 	force = 15
 	throwforce = 10
 	w_class = 4
@@ -34,7 +47,7 @@
 	armour_penetration = 75
 	sharpness = IS_SHARP
 	origin_tech = "combat=5"
-	attack_verb = list("lunged at", "stabbed")
+	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
 
@@ -67,9 +80,9 @@
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, "head")
 		else
-			user.take_organ_damage(2*force)
+			user.take_bodypart_damage(2*force)
 		return
-	if(isrobot(target))
+	if(iscyborg(target))
 		..()
 		return
 	if(!isliving(target))
@@ -77,7 +90,7 @@
 	if (user.a_intent == "harm")
 		if(!..())
 			return
-		if(!isrobot(target))
+		if(!iscyborg(target))
 			return
 	else
 		if(cooldown <= world.time)
@@ -124,7 +137,7 @@
 		if (B && !qdeleted(B))
 			H.internal_organs -= B
 			qdel(B)
-		gibs(H.loc, H.viruses, H.dna)
+		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
 		return (BRUTELOSS)
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
@@ -177,7 +190,7 @@
 		consume_everything(target)
 	else
 		var/turf/T = get_turf(src)
-		if(!istype(T,/turf/open/space))
+		if(!isspaceturf(T))
 			consume_turf(T)
 
 /obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)

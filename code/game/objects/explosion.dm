@@ -99,7 +99,7 @@
 				if(W.reinf && W.fulltile)
 					cached_exp_block[T] += W.explosion_block
 
-			for(var/obj/effect/blob/B in T)
+			for(var/obj/structure/blob/B in T)
 				cached_exp_block[T] += B.explosion_block
 			CHECK_TICK
 
@@ -133,7 +133,7 @@
 		//------- TURF FIRES -------
 
 		if(T)
-			if(flame_dist && prob(40) && !istype(T, /turf/open/space) && !T.density)
+			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 			if(dist > 0)
 				T.ex_act(dist)
@@ -226,7 +226,7 @@
 					if(W.explosion_block && W.fulltile)
 						dist += W.explosion_block
 
-				for(var/obj/effect/blob/B in T)
+				for(var/obj/structure/blob/B in T)
 					dist += B.explosion_block
 
 		if(dist < dev)
@@ -246,4 +246,18 @@
 		T.color = null
 		T.maptext = ""
 
+proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
+	if(!power)
+		return
+	var/range = 0
+	range = round((2 * power)**DYN_EX_SCALE)
+	explosion(epicenter, round(range * 0.25), round(range * 0.5), round(range), flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
 
+// Using default dyn_ex scale:
+// 100 explosion power is a (5, 10, 20) explosion.
+// 75 explosion power is a (4, 8, 17) explosion.
+// 50 explosion power is a (3, 7, 14) explosion.
+// 25 explosion power is a (2, 5, 10) explosion.
+// 10 explosion power is a (1, 3, 6) explosion.
+// 5 explosion power is a (0, 1, 3) explosion.
+// 1 explosion power is a (0, 0, 1) explosion.
