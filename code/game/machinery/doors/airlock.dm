@@ -89,6 +89,11 @@ var/list/airlock_overlays = list()
 		airlock_material = "glass"
 	update_icon()
 
+/obj/machinery/door/airlock/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 20) //any melee attack below 20 dmg does nothing
+		return 0
+	. = ..()
+
 /obj/machinery/door/airlock/initialize()
 	. = ..()
 	if (cyclelinkeddir)
