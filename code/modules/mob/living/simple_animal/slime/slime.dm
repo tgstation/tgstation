@@ -259,10 +259,11 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(..()) //successful larva bite.
 		attacked += 10
 
-/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
+/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
-		adjustBruteLoss(15)
 		discipline_slime(user)
+		return ..()
+
 
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)

@@ -20,7 +20,7 @@
 		user << "<span class='userdanger'>No... just one more try...</span>"
 		user.gib()
 	else
-		user.visible_message("<span class='warning'>[user] pulls [src]'s lever with a glint in [user.their_pronoun()] eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
+		user.visible_message("<span class='warning'>[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
 		know it'll be worth it.</span>")
 	icon_state = "slots2"
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, 0)
@@ -97,7 +97,7 @@
 	icon_state = "magic_mirror"
 
 /obj/structure/mirror/magic/pride/curse(mob/user)
-	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.their_pronoun()] hand leaves the mirror!</B></span>", \
+	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
 	var/turf/T = get_turf(user)
 	T.ChangeTurf(/turf/open/chasm/straight_down)

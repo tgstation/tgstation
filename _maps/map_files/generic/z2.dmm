@@ -1196,8 +1196,8 @@
 /area/ctf)
 "dO" = (
 /obj/structure/window/reinforced/fulltile{
-	health = 1e+007;
-	 maxhealth = 1e+007;
+	obj_integrity = 5000;
+	 max_integrity = 5000;
 	 name = "hardened window"
 	},
 /turf/open/floor/plating,

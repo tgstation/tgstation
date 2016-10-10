@@ -277,7 +277,7 @@
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = 2
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 
 /*
@@ -337,7 +337,7 @@
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	qdel(src)
 
-/obj/item/toy/snappop/fire_act()
+/obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
 	pop_burst()
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)
@@ -638,8 +638,9 @@
 
 
 /obj/item/toy/cards
-	resistance_flags = 0
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
@@ -873,8 +874,7 @@
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
-	if(sourceobj.resistance_flags & FIRE_PROOF)
-		newobj.resistance_flags |= FIRE_PROOF
+	newobj.resistance_flags = sourceobj.resistance_flags
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -991,7 +991,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /*
  * Fake nuke
@@ -1051,7 +1051,7 @@
 	item_state = "carp_plushie"
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 //Attack mob
@@ -1161,7 +1161,7 @@
 	icon_state = "toy_mouse"
 	w_class = 2.0
 	var/cooldown = 0
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 
 /*

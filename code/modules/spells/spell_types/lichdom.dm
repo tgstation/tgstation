@@ -80,7 +80,7 @@
 			lich.real_name = M.mind.name
 			M.mind.transfer_to(lich)
 			lich.hardset_dna(null,null,lich.real_name,null,/datum/species/skeleton)
-			lich << "<span class='warning'>Your bones clatter and shutter as they're pulled back into this world!</span>"
+			lich << "<span class='warning'>Your bones clatter and shutter as you are pulled back into this world!</span>"
 			charge_max += 600
 			var/mob/old_body = current_body
 			var/turf/body_turf = get_turf(old_body)

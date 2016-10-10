@@ -262,6 +262,7 @@ Difficulty: Medium
 	maxHealth = 300
 	health = 300
 	faction = list("neutral")
+	obj_damage = 80
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)

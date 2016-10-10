@@ -4,6 +4,8 @@
 	icon_state = "box_0"
 	density = 1
 	anchored = 1
+	obj_integrity = 250
+	max_integrity = 250
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/state = 1
 
@@ -11,6 +13,16 @@
 	..()
 	if(circuit)
 		user << "It has \a [circuit] installed."
+
+
+/obj/structure/frame/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 5)
+		if(circuit)
+			circuit.forceMove(loc)
+			circuit = null
+	qdel(src)
+
 
 /obj/structure/frame/machine
 	name = "machine frame"
@@ -66,10 +78,10 @@
 		if(1)
 			if(istype(P, /obj/item/weapon/circuitboard/machine))
 				user << "<span class='warning'>The frame needs wiring first!</span>"
-
+				return
 			else if(istype(P, /obj/item/weapon/circuitboard))
 				user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
-
+				return
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
@@ -83,7 +95,7 @@
 							icon_state = "box_1"
 				else
 					user << "<span class='warning'>You need five length of cable to wire the frame!</span>"
-					return
+				return
 			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
@@ -94,6 +106,7 @@
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
 						M.add_fingerprint(user)
 						qdel(src)
+				return
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -101,6 +114,7 @@
 					if(state == 1)
 						user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 						anchored = !anchored
+				return
 
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
@@ -109,6 +123,7 @@
 				if(do_after(user, 40/P.toolspeed, target = src))
 					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 					anchored = !anchored
+				return
 
 			if(istype(P, /obj/item/weapon/circuitboard/machine))
 				if(!anchored)
@@ -126,9 +141,11 @@
 				components = list()
 				req_components = B.req_components.Copy()
 				update_namelist()
+				return
 
 			else if(istype(P, /obj/item/weapon/circuitboard))
 				user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
+				return
 
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
@@ -137,6 +154,7 @@
 				icon_state = "box_0"
 				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
 				A.amount = 5
+				return
 
 		if(3)
 			if(istype(P, /obj/item/weapon/crowbar))
@@ -155,6 +173,7 @@
 				req_components = null
 				components = null
 				icon_state = "box_1"
+				return
 
 			if(istype(P, /obj/item/weapon/screwdriver))
 				var/component_check = 1
@@ -175,6 +194,7 @@
 					circuit.loc = null
 					new_machine.RefreshParts()
 					qdel(src)
+				return
 
 			if(istype(P, /obj/item/weapon/storage/part_replacer) && P.contents.len && get_req_components_amt())
 				var/obj/item/weapon/storage/part_replacer/replacer = P
@@ -224,12 +244,25 @@
 						if(!user.drop_item())
 							break
 						user << "<span class='notice'>You add [P] to [src].</span>"
-						P.loc = src
+						P.forceMove(src)
 						components += P
 						req_components[I]--
 						return 1
 				user << "<span class='warning'>You cannot add that to the machine!</span>"
 				return 0
+	if(user.a_intent == "harm")
+		return ..()
+
+
+/obj/structure/frame/machine/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(state >= 2)
+			new /obj/item/stack/cable_coil(loc , 5)
+		for(var/X in components)
+			var/obj/item/I = X
+			I.forceMove(loc)
+	..()
+
 
 
 //Machine Frame Circuit Boards

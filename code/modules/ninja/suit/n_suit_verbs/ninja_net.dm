@@ -24,7 +24,7 @@
 				spawn(0)//Parallel processing.
 					E.process(C)
 			else
-				H << "<span class='warning'>They are already trapped inside an energy net!</span>"
+				H << "<span class='warning'>[C.p_they(TRUE)] are already trapped inside an energy net!</span>"
 		else
-			H << "<span class='warning'>They will bring no honor to your Clan!</span>"
+			H << "<span class='warning'>[C.p_they(TRUE)] will bring no honor to your Clan!</span>"
 	return

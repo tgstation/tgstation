@@ -64,6 +64,7 @@
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 			moving_diagonally = 0
+			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0

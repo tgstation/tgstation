@@ -9,7 +9,7 @@
 	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
-	obj_damage = 75
+	obj_damage = 400
 	luminosity = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
