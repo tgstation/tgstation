@@ -28,15 +28,15 @@
 			if(istype(thing, /obj/item/weapon/storage/bag/ore))
 				OB = thing
 				break
-	else if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		for(var/thing in H.held_items)
-			if(istype(thing, /obj/item/weapon/storage/bag/ore))
-				OB = thing
-				break
 	else if(issilicon(AM))
 		var/mob/living/silicon/robot/R = AM
 		for(var/thing in R.module_active)
+			if(istype(thing, /obj/item/weapon/storage/bag/ore))
+				OB = thing
+				break
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		for(var/thing in H.held_items)
 			if(istype(thing, /obj/item/weapon/storage/bag/ore))
 				OB = thing
 				break

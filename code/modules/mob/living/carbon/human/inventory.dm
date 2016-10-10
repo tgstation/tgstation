@@ -81,6 +81,7 @@
 		belt,
 		l_store,
 		r_store,
+		s_store,
 		)
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
