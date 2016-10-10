@@ -22320,7 +22320,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/button/door{
-	id = "datboidetective";
+	id = "kanyewest";
 	name = "Privacy Shutters";
 	pixel_x = 0;
 	pixel_y = 24
@@ -23397,7 +23397,7 @@
 /area/security/detectives_office)
 "baV" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security{
 	name = "Detective's Office";
 	req_access_txt = "4"
 	},
@@ -42244,8 +42244,8 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/poddoor/preopen{
-	id = "datboidetective";
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kanyewest";
 	layer = 2.9;
 	name = "privacy shutters"
 	},
