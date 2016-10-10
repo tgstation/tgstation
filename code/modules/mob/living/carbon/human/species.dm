@@ -919,18 +919,18 @@
 			if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 				. += hungry / 50
 
-			if(H.wear_suit)		//Unfortunately if you lug heavy shit around you'll probably be slowed while flying :^)
+			if(H.wear_suit)
 				. += H.wear_suit.slowdown
 			if(H.shoes)
 				. += H.shoes.slowdown
 			if(H.back)
 				. += H.back.slowdown
-			for(var/obj/item/I in H.held_items)		//Same for hands.
+			for(var/obj/item/I in H.held_items)
 				if(I.flags & HANDSLOW)
 					. += I.slowdown
-			if((H.disabilities & FAT))			//... Uh, fine, if you're fat your method of flying will have a hard time lifting you?
+			if((H.disabilities & FAT))
 				. += (1.5 - flight)
-			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)		//Just to be fair to goof freon griefgas and space, I guess this could ice over your wings/engines.
+			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
  			. += speedmod

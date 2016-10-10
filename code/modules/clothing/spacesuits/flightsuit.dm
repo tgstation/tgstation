@@ -430,19 +430,19 @@
 		return 1
 
 /obj/item/device/flightpack/proc/enable_stabilizers()
-	wearer << "<span class='notice'>Your [src.name]'s integrated stabilizer system restarts as fins fold out and thrusters steady your movement!</span>"
+	wearer << "<span class='notice'>Your [name]'s integrated stabilizer system restarts as fins fold out and thrusters steady your movement!</span>"
 	stabilizer = 1
 
 /obj/item/device/flightpack/proc/disable_stabilizers()
 	if(wearer)
 		if(brake)
 			disable_airbrake()
-		wearer << "<span class='warning'>Your [src.name]'s stabilizers cut off, fins folding in and maneuvering thrusters shutting off!</span>"
+		wearer << "<span class='warning'>Your [name]'s stabilizers cut off, fins folding in and maneuvering thrusters shutting off!</span>"
 	stabilizer = 0
 
 /obj/item/device/flightpack/proc/activate_booster()
 	if(boost_charge < 5)
-		wearer << "<span class='warning'>Your [src.name] beeps an alert. Its boost capacitors are still charging!</span>"
+		wearer << "<span class='warning'>Your [name] beeps an alert. Its boost capacitors are still charging!</span>"
 		return 0
 	wearer << "<span class='notice'>Flightpack: Boosters engaged!</span>"
 	wearer.visible_message("<span class='notice'>[wearer.name]'s flightpack engines flare in intensity as they are rocketed forward by the immense thrust!</span>")
@@ -652,7 +652,7 @@
 		user.equip_to_slot_if_possible(pack,slot_back,0,0,1)
 		pack.flags |= NODROP
 		resync()
-		user.visible_message("<span class='notice'>A [pack.name] extends from [user]'s [src.name] and clamps to their back!</span>")
+		user.visible_message("<span class='notice'>A [pack.name] extends from [user]'s [name] and clamps to their back!</span>")
 		user.update_inv_wear_suit()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedpack = 1
@@ -689,7 +689,7 @@
 			return 0
 		user.equip_to_slot_if_possible(shoes,slot_shoes,0,0,1)
 		shoes.flags |= NODROP
-		user.visible_message("<span class='notice'>[user]'s [src.name] extends a pair of [shoes.name] over their feet!</span>")
+		user.visible_message("<span class='notice'>[user]'s [name] extends a pair of [shoes.name] over their feet!</span>")
 		user.update_inv_wear_suit()
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedshoes = 1
@@ -703,7 +703,7 @@
 	shoes.flags &= ~NODROP
 	user.unEquip(shoes, 1)
 	shoes.loc = src
-	user.visible_message("<span class='notice'>[user]'s [shoes.name] retracts back into their [src.name]!</span>")
+	user.visible_message("<span class='notice'>[user]'s [shoes.name] retracts back into their [name]!</span>")
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedshoes = 0
 	user.update_inv_wear_suit()

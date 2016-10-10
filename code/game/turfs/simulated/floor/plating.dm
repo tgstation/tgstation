@@ -273,7 +273,8 @@
 		if(ismob(thing))
 			if(ishuman(thing))
 				var/mob/living/carbon/human/T = thing
-				if(FLYING in T.dna.species.specflags)
+				var/obj/item/device/flightpack/F = T.getflightpack()
+				if(istype(F) && F.flight)
 					continue	//YOU'RE FLYING OVER IT
 		if(isobj(thing))
 			var/obj/O = thing
