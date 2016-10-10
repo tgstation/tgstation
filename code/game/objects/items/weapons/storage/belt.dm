@@ -437,7 +437,7 @@
 		user << "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
 /obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
-	if(!ishuman(user) || !user.canUseTopic(src))
+	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
 		return
 	if(contents.len)
 		var/obj/item/I = contents[1]
