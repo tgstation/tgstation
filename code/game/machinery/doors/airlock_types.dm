@@ -304,6 +304,11 @@
 	obj_integrity = 500
 	max_integrity = 500
 
+/obj/machinery/door/airlock/highsecurity/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 50) //any melee attack below 50 dmg does nothing
+		return 0
+	. = ..()
+
 //////////////////////////////////
 /*
 	Shuttle Airlocks
