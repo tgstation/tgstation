@@ -2810,21 +2810,15 @@
 /turf/open/floor/plating,
 /area/security/main)
 "agd" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
-/area/shuttle/pod_3)
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/turf/open/floor/plasteel,
+/area/atmos)
 "age" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
 	},
-/area/shuttle/pod_3)
+/turf/open/floor/plasteel,
+/area/atmos)
 "agf" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
@@ -2981,10 +2975,11 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "agv" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
 	},
-/area/security/main)
+/turf/open/floor/plasteel,
+/area/atmos)
 "agw" = (
 /obj/structure/table,
 /obj/machinery/syndicatebomb/training,
@@ -4772,16 +4767,21 @@
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "ajY" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/labor)
-"ajZ" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 2;
-	icon_state = "swall_f10";
-	layer = 2
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Unfiltered to Port";
+	on = 0
 	},
-/area/shuttle/labor)
+/turf/open/floor/plasteel,
+/area/atmos)
+"ajZ" = (
+/obj/machinery/atmospherics/pipe/manifold/green/visible{
+	dir = 4
+	},
+/obj/machinery/meter,
+/turf/open/floor/plasteel,
+/area/atmos)
 "aka" = (
 /obj/structure/chair{
 	dir = 1
@@ -5402,14 +5402,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "alk" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 1
 	},
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/labor)
+/turf/open/floor/plasteel,
+/area/atmos)
 "all" = (
 /obj/machinery/mineral/labor_claim_console{
 	machinedir = 2;
@@ -5738,10 +5735,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "alX" = (
-/obj/structure/disposalpipe/segment{
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/bz,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plasteel,
 /area/atmos)
 "alY" = (
@@ -5759,8 +5756,12 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/labor)
 "ama" = (
-/turf/closed/wall/shuttle,
-/area/shuttle/labor)
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Waste to Filtering";
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
 "amb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
@@ -7117,19 +7118,18 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/labor)
 "aoZ" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
+/obj/machinery/atmospherics/components/binary/valve/digital{
+	name = "Waste Release"
 	},
-/area/shuttle/labor)
+/turf/open/floor/plasteel,
+/area/atmos)
 "apa" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
 	},
-/area/shuttle/labor)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/floor/plasteel,
+/area/atmos)
 "apb" = (
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
@@ -7377,8 +7377,11 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "apF" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/pod_1)
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/floor/plating,
+/area/atmos)
 "apG" = (
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /turf/open/floor/plasteel,
@@ -7389,9 +7392,13 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "apI" = (
-/obj/machinery/portable_atmospherics/canister/freon,
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1;
+	frequency = 1441;
+	id = "waste_out"
+	},
+/turf/open/floor/plating/airless,
+/area/atmos)
 "apJ" = (
 /turf/closed/wall,
 /area/mining_construction)
@@ -50693,6 +50700,7 @@
 /area/atmos)
 "cgX" = (
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plasteel,
 /area/atmos)
 "cgY" = (
@@ -93750,14 +93758,14 @@ bXS
 bXS
 bMK
 cbB
-bRA
-bTP
-bOd
-bOd
-cfP
+alk
+alX
+aoZ
+bQt
+apa
 cgX
-bMQ
-apQ
+apF
+apI
 bOh
 bOh
 bOh
@@ -94010,7 +94018,7 @@ bQt
 cBJ
 cdy
 bOd
-bOd
+bRy
 cfR
 cha
 civ
