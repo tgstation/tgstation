@@ -42,7 +42,6 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-	centcom_cancast = 0
 
 	mutations = list(LASEREYES, HULK)
 	duration = 300
@@ -104,8 +103,6 @@
 
 	inner_tele_radius = 0
 	outer_tele_radius = 6
-
-	centcom_cancast = 0 //prevent people from getting to centcom
 
 	action_icon_state = "blink"
 	sound1="sound/magic/blink.ogg"
