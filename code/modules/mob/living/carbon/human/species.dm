@@ -879,12 +879,19 @@
 
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0
+	var/obj/item/device/flightpack/F = H.getflightpack()
+	var/flightpack = 0
+	if(istype(F) && F.active)
+		flightpack = 1
+	var/flight = 0
+	if(FLYING in specflags)
+		flight = 1
 
 	if(H.status_flags & GOTTAGOFAST)
-		if(!(FLYING in specflags))
+		if(!flightpack)
 			. -= 1
 	if(H.status_flags & GOTTAGOREALLYFAST)
-		if(!(FLYING in specflags))
+		if(!flightpack)
 			. -= 2
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!H.has_gravity())
@@ -905,12 +912,11 @@
 				if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
 					. -= 1
 		else
-			var/flight = 0
-			if(FLYING in specflags)
-				flight = 1
 			var/health_deficiency = (100 - H.health + H.staminaloss)
 			if(health_deficiency >= 40)
-				if(flight)							//You only need to keep your hands on the controls/flap your wings, not vigorously run.
+				if(flight && flightpack)
+					//Nothing happens.
+				else if(flight)
 					. += (health_deficiency / 75)
 				else
 					. += (health_deficiency / 25)
