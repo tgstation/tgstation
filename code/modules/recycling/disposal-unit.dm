@@ -8,6 +8,9 @@
 	anchored = 1
 	density = 1
 	on_blueprints = TRUE
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	obj_integrity = 200
+	max_integrity = 200
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// mode -1=screws removed 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -54,7 +57,7 @@
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
 
 /obj/machinery/disposal/initialize()
 	// this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
@@ -91,7 +94,7 @@
 					if(!W.isOn())
 						return
 					user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
-					Deconstruct()
+					deconstruct()
 			return
 
 	if(user.a_intent != "harm")
@@ -118,7 +121,7 @@
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
-	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
+	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return
 	if(target.buckled || target.has_buckled_mobs())
 		return
@@ -145,10 +148,6 @@
 			add_logs(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()
-
-// can breath normally in the disposal
-/obj/machinery/disposal/alter_health()
-	return get_turf(src)
 
 /obj/machinery/disposal/relaymove(mob/user)
 	attempt_escape(user)
@@ -194,14 +193,6 @@
 		return
 	*/
 	interact(user, 0)
-
-// hostile mob escape from disposals
-/obj/machinery/disposal/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes \the [src] apart!</span>")
-		qdel(src)
-	return
 
 // eject the contents of the disposal unit
 /obj/machinery/disposal/proc/eject()
@@ -265,14 +256,15 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-/obj/machinery/disposal/Deconstruct()
-	if(stored)
-		var/turf/T = loc
-		stored.loc = T
-		src.transfer_fingerprints_to(stored)
-		stored.anchored = 0
-		stored.density = 1
-		stored.update_icon()
+/obj/machinery/disposal/deconstruct()
+	if(!(flags & NODECONSTRUCT))
+		if(stored)
+			var/turf/T = loc
+			stored.loc = T
+			src.transfer_fingerprints_to(stored)
+			stored.anchored = 0
+			stored.density = 1
+			stored.update_icon()
 	..()
 
 //How disposal handles getting a storage dump from a storage object
@@ -516,7 +508,7 @@
 		if(WEST)
 			if(AM.loc.x != loc.x-1) return
 
-	if(istype(AM, /obj))
+	if(isobj(AM))
 		var/obj/O = AM
 		O.loc = src
 	else if(istype(AM, /mob))

@@ -24,8 +24,10 @@
 	var/lasercolor = ""		//Something to do with lasertag turrets, blame Sieve for not adding a comment.
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
-	var/health = 80			//the turret's health
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	obj_integrity = 160			//the turret's health
+	max_integrity = 160
+	integrity_failure = 80
+	armor = list(melee = 50, bullet = 30, laser = 30, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 90, acid = 90)
 
 	var/locked = 1			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
@@ -159,8 +161,9 @@
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
-	qdel(cover)
-	cover = null
+	if(cover)
+		qdel(cover)
+		cover = null
 	return ..()
 
 
@@ -197,7 +200,7 @@
 						"<A href='?src=\ref[src];operation=shootall'>[stun_all ? "Yes" : "No"]</A>",
 						"<A href='?src=\ref[src];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A>" )
 	else
-		if(istype(user,/mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(lasercolor == "b" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))
 				return
@@ -317,12 +320,6 @@
 	else
 		return ..()
 
-/obj/machinery/porta_turret/attacked_by(obj/item/I, mob/user)
-	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
-	take_damage(I.force * 0.5, I.damtype)
-
-
 /obj/machinery/porta_turret/emag_act(mob/user)
 	if(!emagged)
 		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
@@ -336,7 +333,6 @@
 
 /obj/machinery/porta_turret/bullet_act(obj/item/projectile/P)
 	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
 	if(!disabled)
 		if(lasercolor == "b")
 			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
@@ -366,55 +362,26 @@
 
 	..()
 
-/obj/machinery/porta_turret/ex_act(severity, target)
-	if(severity >= 3)	//turret dies if an explosion touches it!
-		die()
-	else
-		qdel(src)
+/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(.) //damage received
+		if(prob(30))
+			spark_system.start()
+		if(on && !attacked && !emagged)
+			attacked = 1
+			spawn(60)
+				attacked = 0
 
-/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.melee_damage_upper == 0)
-		user.emote("[user.friendly] [src]")
-	else
-		user.do_attack_animation(src)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		take_damage(damage)
+/obj/machinery/porta_turret/deconstruct(disassembled = TRUE)
+	qdel(src)
 
-/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-		else
-			return
-	if(!(stat & BROKEN))
-		if(damage > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
-			if(prob(30))
-				spark_system.start()
-			if(on && !attacked && !emagged)
-				attacked = 1
-				spawn(60)
-					attacked = 0
-		health -= damage
-		if(health <= 0)
-			die()
-
-/obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
-	health = 0
-	density = 0
-	stat |= BROKEN	//enables the BROKEN bit
-	icon_state = "[base_icon_state]Broken"
-	invisibility = 0
-	spark_system.start()	//creates some sparks because they look cool
-	density = 1
-	qdel(cover)	//deletes the cover - no need on keeping it there!
+/obj/machinery/porta_turret/obj_break(damage_flag)
+	if(!(flags & NODECONSTRUCT) && !(stat & BROKEN))
+		stat |= BROKEN	//enables the BROKEN bit
+		icon_state = "[base_icon_state]Broken"
+		invisibility = 0
+		spark_system.start()	//creates some sparks because they look cool
+		qdel(cover)	//deletes the cover - no need on keeping it there!
 
 
 
@@ -471,7 +438,7 @@
 				continue
 
 			//if the target is a human and not in our faction, analyze threat level
-			if(istype(C, /mob/living/carbon/human) && !in_faction(C))
+			if(ishuman(C) && !in_faction(C))
 				if(assess_perp(C) >= 4)
 					targets += C
 
@@ -676,7 +643,7 @@
 	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
-	health = 40
+	obj_integrity = 40
 	projectile = /obj/item/projectile/bullet/weakbullet3
 	eprojectile = /obj/item/projectile/bullet/weakbullet3
 
@@ -704,6 +671,7 @@
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 	var/list/obj/machinery/porta_turret/turrets = list()
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/turretid/New(loc, ndir = 0, built = 0)
 	..()
@@ -742,7 +710,7 @@
 			user << "You link \the [M.buffer] with \the [src]"
 			return
 
-	if (istype(user, /mob/living/silicon))
+	if (issilicon(user))
 		return src.attack_hand(user)
 
 	if( get_dist(src, user) == 0 )		// trying to unlock the interface
@@ -789,10 +757,10 @@
 	var/area/area = get_area(src)
 	var/t = ""
 
-	if(src.locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))
+	if(src.locked && !(issilicon(user) || IsAdminGhost(user)))
 		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 	else
-		if (!istype(user, /mob/living/silicon) && !IsAdminGhost(user))
+		if(!issilicon(user) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
 		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
@@ -808,7 +776,7 @@
 	if(..())
 		return
 	if (src.locked)
-		if (!(istype(usr, /mob/living/silicon) || IsAdminGhost(usr)))
+		if(!(issilicon(usr) || IsAdminGhost(usr)))
 			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])

@@ -36,6 +36,10 @@
 				if(istype(T, /turf/closed/mineral/random))
 					Spread(T)
 
+
+/turf/closed/mineral/acid_melt()
+	ChangeTurf(baseturf)
+
 /turf/closed/mineral/volcanic
 	environment_type = "basalt"
 	turf_type = /turf/open/floor/plating/asteroid/basalt
@@ -73,7 +77,7 @@
 		var/path = pickweight(mineralSpawnChanceList)
 		var/turf/T = ChangeTurf(path)
 
-		if(T && istype(T, /turf/closed/mineral))
+		if(T && ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			M.mineralAmt = rand(1, 5)
 			M.environment_type = src.environment_type
@@ -359,7 +363,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
-		if(!NT || istype(NT, /turf/open/space) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
+		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
 			sanity = 0
 			break
 	if(!sanity)
@@ -402,7 +406,7 @@
 
 	if (istype(P, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if (!isturf(T))
 			return
 
 		if(last_act+P.digspeed > world.time)//prevents message spam
@@ -412,7 +416,7 @@
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
-			if(istype(src, /turf/closed/mineral))
+			if(ismineralturf(src))
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
@@ -446,13 +450,13 @@
 
 /turf/closed/mineral/Bumped(AM as mob|obj)
 	..()
-	if(istype(AM,/mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		var/obj/item/I = H.is_holding_item_of_type(/obj/item/weapon/pickaxe)
 		if(I)
 			attackby(I,H)
 		return
-	else if(istype(AM,/mob/living/silicon/robot))
+	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
 			src.attackby(R.module_active,R)
@@ -561,7 +565,7 @@
 		digging_speed = P.digspeed
 	if (digging_speed)
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!isturf(T))
 			return
 
 		if (dug)
@@ -725,11 +729,20 @@
 		L.resting = TRUE
 	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 	for(var/i in 1 to 5)
+		//Make sure the item is still there after our sleep
+		if(!AM || qdeleted(AM))
+			return
 		AM.pixel_y--
 		sleep(2)
-	if(isrobot(AM))
+
+	//Make sure the item is still there after our sleep
+	if(!AM || qdeleted(AM))
+		return
+
+	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
+
 	qdel(AM)
 
 /turf/closed/mineral/volcanic/lava_land_surface

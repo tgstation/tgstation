@@ -420,7 +420,7 @@ var/const/INJECT = 5 //injection
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if(R.id == reagent)
-			if(my_atom && istype(my_atom, /mob/living))
+			if(my_atom && isliving(my_atom))
 				var/mob/living/M = my_atom
 				R.on_mob_delete(M)
 			qdel(R)

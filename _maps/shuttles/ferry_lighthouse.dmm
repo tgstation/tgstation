@@ -82,7 +82,7 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "as" = (
-/obj/machinery/shield,
+/obj/structure/emergency_shield,
 /turf/open/space,
 /area/shuttle/transport)
 "at" = (

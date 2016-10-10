@@ -484,7 +484,7 @@
 		else
 			user.take_bodypart_damage(2*force)
 		return
-	if(isrobot(target))
+	if(iscyborg(target))
 		return ..()
 	if(!isliving(target))
 		return ..()

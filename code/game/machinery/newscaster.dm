@@ -175,7 +175,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -187,12 +190,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/obj/item/weapon/photo/photo = null
 	var/channel_name = ""
 	var/c_locked=0
-	var/health = 60
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 	luminosity = 0
 	anchored = 1
-	var/hitstaken = 0 //TO BE REMOVED, no longer used,  the var is present in a map var edit which must be removed.
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
@@ -227,12 +228,13 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			icon_state = "newscaster_normal"
 			if(alert)
 				add_overlay("newscaster_alert")
-	switch(health)
-		if(45 to 60)
+	var/hp_percent = obj_integrity * 100 /max_integrity
+	switch(hp_percent)
+		if(75 to 100)
 			return
-		if(30 to 45)
+		if(50 to 75)
 			add_overlay("crack1")
-		if(15 to 30)
+		if(25 to 50)
 			add_overlay("crack2")
 		else
 			add_overlay("crack3")
@@ -249,17 +251,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			stat |= NOPOWER
 			update_icon()
 
-/obj/machinery/newscaster/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				qdel(src)
-			else
-				take_damage(rand(40,80), BRUTE, 0)
-		else
-			take_damage(rand(20,40), BRUTE, 0)
+/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	update_icon()
 
 /obj/machinery/newscaster/attack_ai(mob/user)
 	return attack_hand(user)
@@ -267,7 +261,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+	if(ishuman(user) || issilicon(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat
 		scan_user(human_or_robot_user)
@@ -512,7 +506,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || issilicon(usr))
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])
@@ -747,6 +741,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 						return
 					user << "<span class='notice'>You repair [src].</span>"
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					obj_integrity = max_integrity
 					stat &= ~BROKEN
 					update_icon()
 		else
@@ -754,26 +749,28 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	else
 		return ..()
 
-/obj/machinery/newscaster/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				if(stat & BROKEN)
-					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
-				else
-					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			if(stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
+			else
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	if(damage < 15) //so it can't be broken with a small weapon.
-		return
-	if(!(stat & BROKEN))
-		health -= damage
-		if(health <= 0)
-			stat |= BROKEN
-			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+
+
+/obj/machinery/newscaster/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	qdel(src)
+
+/obj/machinery/newscaster/obj_break()
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+		stat |= BROKEN
+		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 		update_icon()
 
 
@@ -781,7 +778,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	if(user.a_intent != "harm")
 		user << "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>"
 	else
-		take_damage(5)
+		take_damage(5, BRUTE, "melee")
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	if(photo)
@@ -797,15 +794,15 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		if(!user.drop_item())
 			return
 		photo.loc = src
-	if(istype(user,/mob/living/silicon))
+	if(issilicon(user))
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
 		var/obj/item/device/camera/siliconcam/targetcam = null
-		if(istype(user,/mob/living/silicon/ai))
+		if(isAI(user))
 			var/mob/living/silicon/ai/R = user
 			targetcam = R.aicamera
-		else if(istype(user,/mob/living/silicon/robot))
+		else if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			if(R.connected_ai)
 				targetcam = R.connected_ai.aicamera
@@ -846,7 +843,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 				scanned_user ="Unknown"
 		else
 			scanned_user ="Unknown"
-	else if(istype(user,/mob/living/silicon))
+	else if(issilicon(user))
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
 	else
@@ -1010,7 +1007,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
+	if((src in U.contents) || (isturf(loc) && in_range(src, U)))
 		U.set_machine(src)
 		if(href_list["next_page"])
 			if(curr_page == pages+1)

@@ -348,9 +348,9 @@
 				continue
 			else if(afk_check && M.client.is_afk())
 				continue
-			else if(human_check && !istype(M, /mob/living/carbon/human))
+			else if(human_check && !ishuman(M))
 				continue
-			else if(istype(M, /mob/new_player)) // exclude people in the lobby
+			else if(isnewplayer(M)) // exclude people in the lobby
 				continue
 			else if(isobserver(M)) // Ghosts are fine if they were playing once (didn't start as observers)
 				var/mob/dead/observer/O = M

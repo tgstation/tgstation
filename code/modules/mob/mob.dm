@@ -418,7 +418,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.show_memory(src)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
+		src << "You don't have a mind datum for some reason, so you can't look at your notes, if you had any."
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
@@ -430,21 +430,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.store_memory(msg)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
-
-/mob/proc/store_memory(msg as message, popup, sane = 1)
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-
-	if (sane)
-		msg = sanitize(msg)
-
-	if (length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if (popup)
-		memory()
+		src << "You don't have a mind datum for some reason, so you can't add a note to it."
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -483,7 +469,7 @@ var/next_mob_id = 0
 	set name = "Observe"
 	set category = "OOC"
 
-	if(stat != DEAD || istype(src, /mob/new_player))
+	if(stat != DEAD || isnewplayer(src))
 		usr << "<span class='notice'>You must be observing to use this!</span>"
 		return
 
@@ -565,7 +551,7 @@ var/next_mob_id = 0
 		return
 	if(!Adjacent(usr))
 		return
-	if(istype(M, /mob/living/silicon/ai))
+	if(isAI(M))
 		return
 	show_inv(usr)
 
@@ -628,7 +614,7 @@ var/next_mob_id = 0
 			var/list/overrides = list()
 			for(var/image/I in client.images)
 				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides = I.loc
+					overrides += I.loc
 			for(var/atom/A in listed_turf)
 				if(!A.mouse_opacity)
 					continue
@@ -714,7 +700,7 @@ var/next_mob_id = 0
 			layer = initial(layer)
 	update_transform()
 	update_action_buttons_icon()
-	if(istype(src, /mob/living))
+	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))
 			canmove = 0

@@ -46,6 +46,8 @@
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(flags & NOBLUDGEON)
 		return
+	if(user.a_intent == "help") //so you don't hit a machine with a tool while trying to disassemble it.
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
@@ -58,6 +60,7 @@
 /obj/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
 		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
+	take_damage(I.force, I.damtype, "melee", 1)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)

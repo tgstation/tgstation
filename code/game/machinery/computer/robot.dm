@@ -13,10 +13,10 @@
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
 		return 0
-	if(istype(user, /mob/living/silicon/ai))
+	if(isAI(user))
 		if (R.connected_ai != user)
 			return 0
-	if(istype(user, /mob/living/silicon/robot))
+	if(iscyborg(user))
 		if (R != user)
 			return 0
 	if(R.scrambledcodes)
@@ -59,7 +59,7 @@
 			dat += " Slaved to [R.connected_ai.name] |"
 		else
 			dat += " Independent from AI |"
-		if (istype(user, /mob/living/silicon) || IsAdminGhost(user))
+		if(issilicon(user) || IsAdminGhost(user))
 			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "

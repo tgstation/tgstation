@@ -194,7 +194,7 @@
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
-		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.them_pronoun()] in completing [user.their_pronoun()] goals at any cost.</span>"
+		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>"
 		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
 	else
@@ -418,7 +418,7 @@
 	item_state = "golem"
 	item_color = "golem"
 	flags = ABSTRACT | NODROP
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	has_sensor = 0
 
 /obj/item/clothing/suit/golem
@@ -431,7 +431,7 @@
 	permeability_coefficient = 0.50
 	body_parts_covered = FULL_BODY
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 /obj/item/clothing/shoes/golem
@@ -439,7 +439,7 @@
 	desc = "sturdy adamantine feet"
 	icon_state = "golem"
 	item_state = null
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = NOSLIP | ABSTRACT | NODROP
 
 
@@ -449,7 +449,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	siemens_coefficient = 0
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 
@@ -460,7 +460,7 @@
 	item_state = null
 	siemens_coefficient = 0
 	flags = ABSTRACT | NODROP
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 
 /obj/item/clothing/head/space/golem
@@ -469,7 +469,7 @@
 	item_color = "dermal"
 	name = "golem's head"
 	desc = "a golem's head"
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
@@ -478,7 +478,7 @@
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "golem"
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = TURF_LAYER
 
 /obj/effect/golemrune/New()
@@ -564,13 +564,13 @@
 	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				var/mob/living/M = A
 				if(M in immune)
 					continue
 				M.Stun(10, 1, 1)
 				M.anchored = 1
-				if(istype(M, /mob/living/simple_animal/hostile))
+				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
 					H.AIStatus = AI_OFF
 					H.LoseTarget()

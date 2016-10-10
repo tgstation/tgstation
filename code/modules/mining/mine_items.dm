@@ -452,9 +452,10 @@
 	var/buildstackamount = 5
 
 /obj/structure/fans/deconstruct()
-	if(buildstacktype)
-		new buildstacktype(loc,buildstackamount)
-	..()
+	if(!(flags & NODECONSTRUCT))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+	qdel(src)
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))

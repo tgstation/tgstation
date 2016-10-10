@@ -92,7 +92,7 @@
 			qdel(O)
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in src)
-	if(hotspot && !istype(src, /turf/open/space))
+	if(hotspot && !isspaceturf(src))
 		air.temperature = max(min(air.temperature-2000,air.temperature/2),0)
 		qdel(hotspot)
 	return 1

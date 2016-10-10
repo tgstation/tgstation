@@ -5,6 +5,7 @@
 	volume = 50
 	flags = OPENCONTAINER
 	spillable = 1
+	resistance_flags = ACID_PROOF
 
 
 /obj/item/weapon/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
@@ -212,7 +213,7 @@
 /obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"
 	list_reagents = list("epinephrine" = 50)
-	
+
 /obj/item/weapon/reagent_containers/glass/beaker/synthflesh
 	list_reagents = list("synthflesh" = 50)
 
@@ -230,7 +231,8 @@
 	flags = OPENCONTAINER
 	flags_inv = HIDEHAIR
 	slot_flags = SLOT_HEAD
-	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) //Weak melee protection, because you can wear it on your head
+	resistance_flags = 0
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 50) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
 		slot_back, slot_wear_id,\
 		slot_w_uniform, slot_wear_suit,\

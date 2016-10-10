@@ -134,7 +134,7 @@
 
 
 /obj/structure/bonfire/proc/CheckOxygen()
-	if(istype(loc,/turf/open))
+	if(isopenturf(loc))
 		var/turf/open/O = loc
 		if(O.air)
 			var/G = O.air.gases
@@ -150,7 +150,7 @@
 		Burn()
 		START_PROCESSING(SSobj, src)
 
-/obj/structure/bonfire/fire_act()
+/obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
 	StartBurning()
 
 /obj/structure/bonfire/Crossed(atom/movable/AM)
@@ -165,9 +165,7 @@
 			continue
 		if(isobj(A))
 			var/obj/O = A
-			if(O.resistance_flags & FIRE_PROOF)
-				continue
-			O.fire_act()
+			O.fire_act(1000, 500)
 		else if(isliving(A))
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)

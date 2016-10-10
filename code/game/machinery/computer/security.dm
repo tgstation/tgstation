@@ -269,7 +269,7 @@ What a mess.*/
 		active1 = null
 	if(!( data_core.security.Find(active2) ))
 		active2 = null
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -295,7 +295,7 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if(scan)
-					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_held_item())
+					if(ishuman(usr) && !usr.get_active_held_item())
 						usr.put_in_hands(scan)
 					else
 						scan.loc = get_turf(src)
@@ -315,7 +315,7 @@ What a mess.*/
 				active2 = null
 
 			if("Log In")
-				if(istype(usr, /mob/living/silicon))
+				if(issilicon(usr))
 					var/mob/living/silicon/borg = usr
 					active1 = null
 					active2 = null
@@ -734,7 +734,7 @@ What a mess.*/
 
 /obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/obj/item/weapon/photo/P = null
-	if(istype(user, /mob/living/silicon))
+	if(issilicon(user))
 		var/mob/living/silicon/tempAI = user
 		var/datum/picture/selection = tempAI.GetPhoto()
 		if(selection)

@@ -32,7 +32,7 @@
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-	if(istype(loc, /mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_wear_suit()
 	for(var/X in actions)
@@ -50,7 +50,7 @@
 	if(disguise == null)
 		return
 	stealth_active = 1
-	if(istype(loc, /mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
 		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/cloak,
 			list(get_turf(M), M.dir))
@@ -64,7 +64,7 @@
 	if(!stealth_active)
 		return
 	stealth_active = 0
-	if(istype(loc, /mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
 		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja,
 			list(get_turf(M), M.dir))
@@ -91,7 +91,7 @@
 				ActivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
-	if(istype(loc, /mob/living/carbon/human))
+	if(ishuman(loc))
 		if(combat_cooldown != initial(combat_cooldown))
 			loc << "<span class='warning'>Combat injection is still recharging.</span>"
 			return
@@ -172,7 +172,7 @@
 			mark(target, user)
 
 /obj/item/device/abductor/gizmo/proc/scan(atom/target, mob/living/user)
-	if(istype(target,/mob/living/carbon/human))
+	if(ishuman(target))
 		if(console!=null)
 			console.AddSnapshot(target)
 			user << "<span class='notice'>You scan [target] and add them to the database.</span>"
@@ -181,7 +181,7 @@
 	if(marked == target)
 		user << "<span class='warning'>This specimen is already marked!</span>"
 		return
-	if(istype(target,/mob/living/carbon/human))
+	if(ishuman(target))
 		if(isabductor(target))
 			marked = target
 			user << "<span class='notice'>You mark [target] for future retrieval.</span>"
@@ -392,7 +392,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(!isabductor(user))
 		return
 
-	if(isrobot(target))
+	if(iscyborg(target))
 		..()
 		return
 
@@ -581,9 +581,8 @@ Congratulations! You are now trained for xenobiology research!"}
 	can_buckle = 1
 	buckle_lying = 1
 	flags = NODECONSTRUCT
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/structure/table/optable/abductor/table_destroy()
-	return //can't destroy the abductor's only optable.
 
 /obj/structure/bed/abductor
 	name = "resting contraption"

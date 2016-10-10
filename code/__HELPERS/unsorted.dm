@@ -441,7 +441,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
 /proc/get_atom_on_turf(atom/movable/M)
 	var/atom/loc = M
-	while(loc && loc.loc && !istype(loc.loc, /turf/))
+	while(loc && loc.loc && !isturf(loc.loc))
 		loc = loc.loc
 	return loc
 
@@ -823,11 +823,11 @@ var/list/WALLITEMS = list(
 	)
 
 var/list/WALLITEMS_EXTERNAL = list(
-	/obj/machinery/camera, /obj/machinery/camera_assembly,
-	/obj/machinery/light_construct, /obj/machinery/light)
+	/obj/machinery/camera, /obj/structure/camera_assembly,
+	/obj/structure/light_construct, /obj/machinery/light)
 
 var/list/WALLITEMS_INVERSE = list(
-	/obj/machinery/light_construct, /obj/machinery/light)
+	/obj/structure/light_construct, /obj/machinery/light)
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)
@@ -971,7 +971,7 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/is_A_facing_B(atom/A,atom/B)
 	if(!istype(A) || !istype(B))
 		return 0
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		var/mob/living/LA = A
 		if(LA.lying)
 			return 0

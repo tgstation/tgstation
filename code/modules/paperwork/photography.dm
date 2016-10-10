@@ -17,7 +17,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /*
  * Photo
@@ -28,8 +28,9 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1
-	resistance_flags = 0
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
@@ -94,7 +95,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /*
  * Camera
@@ -188,7 +189,7 @@
 		for(var/atom/movable/A in T)
 			if(A.invisibility)
 				if(see_ghosts)
-					if(istype(A, /mob/dead/observer))
+					if(isobserver(A))
 						var/mob/dead/observer/O = A
 						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
 							continue
@@ -210,8 +211,10 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
-		if(istype(A, /mob/living) && A:lying)
-			img.Turn(A:lying)
+		if(isliving(A))
+			var/mob/living/L = A
+			if(L.lying)
+				img.Turn(L.lying)
 
 		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
 		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
@@ -234,7 +237,7 @@
 	var/mob_detail
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
-			if(see_ghosts && istype(M,/mob/dead/observer))
+			if(see_ghosts && isobserver(M))
 				var/mob/dead/observer/O = M
 				if(O.orbiting)
 					continue
@@ -247,12 +250,12 @@
 
 		var/list/holding = list()
 
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 
 			for(var/obj/item/I in L.held_items)
 				if(!holding)
-					holding += "They are holding \a [I]"
+					holding += "[L.p_they(TRUE)] [L.p_are()] holding \a [I]"
 				else
 					holding += " and \a [I]"
 			holding = holding.Join()
@@ -268,7 +271,7 @@
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	var/mobs = ""
-	var/isAi = istype(user, /mob/living/silicon/ai)
+	var/isAi = isAI(user)
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
@@ -409,7 +412,7 @@
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
 /obj/item/device/camera/siliconcam/proc/viewpictures(user)
-	if(isrobot(user)) // Cyborg
+	if(iscyborg(user)) // Cyborg
 		var/mob/living/silicon/robot/C = src.loc
 		var/obj/item/device/camera/siliconcam/Cinfo
 		if(C.connected_ai)

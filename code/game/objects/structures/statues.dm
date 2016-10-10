@@ -8,7 +8,7 @@
 	icon_state = ""
 	density = 1
 	anchored = 0
-	var/health = 100
+	obj_integrity = 100
 	var/oreAmount = 7
 	var/mineralType = "metal"
 
@@ -31,7 +31,7 @@
 									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
 				anchored = 0
 		else
-			if (!istype(src.loc, /turf/open/floor))
+			if(!isfloorturf(src.loc))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -53,7 +53,7 @@
 				return
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name].</span>")
-			Dismantle(1)
+			deconstruct(FALSE)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
@@ -74,13 +74,9 @@
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
-			Dismantle(1)
+			deconstruct(FALSE)
 	else
 		return ..()
-
-/obj/structure/statue/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
 
 /obj/structure/statue/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -91,62 +87,33 @@
 /obj/structure/statue/CanAtmosPass()
 	return !density
 
-/obj/structure/statue/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
-
-/obj/structure/statue/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+/obj/structure/statue/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			if (mineralType == "metal")
+				var/ore = /obj/item/stack/sheet/metal
+				for(var/i = 1, i <= oreAmount, i++)
+					new ore(get_turf(src))
+			else
+				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+				for(var/i = 1, i <= oreAmount, i++)
+					new ore(get_turf(src))
 		else
-			return
-	health -= damage
-	if(health <= 0)
-		Dismantle(1)
-
-/obj/structure/statue/proc/Dismantle(devastated = 0)
-	if(!devastated)
-		if (mineralType == "metal")
-			var/ore = /obj/item/stack/sheet/metal
-			for(var/i = 1, i <= oreAmount, i++)
-				new ore(get_turf(src))
-		else
-			var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
-			for(var/i = 1, i <= oreAmount, i++)
-				new ore(get_turf(src))
-	else
-		if (mineralType == "metal")
-			var/ore = /obj/item/stack/sheet/metal
-			for(var/i = 3, i <= oreAmount, i++)
-				new ore(get_turf(src))
-		else
-			var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
-			for(var/i = 3, i <= oreAmount, i++)
-				new ore(get_turf(src))
+			if (mineralType == "metal")
+				var/ore = /obj/item/stack/sheet/metal
+				for(var/i = 3, i <= oreAmount, i++)
+					new ore(get_turf(src))
+			else
+				var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+				for(var/i = 3, i <= oreAmount, i++)
+					new ore(get_turf(src))
 	qdel(src)
-
-/obj/structure/statue/ex_act(severity = 1)
-	switch(severity)
-		if(1)
-			Dismantle(1)
-		if(2)
-			take_damage(rand(60,110), BRUTE, 0)
-		if(3)
-			take_damage(10, BRUTE, 0)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
-	health = 300
+	obj_integrity = 300
 	luminosity = 2
 	mineralType = "uranium"
 	var/last_event = 0
@@ -191,7 +158,7 @@
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
 
 /obj/structure/statue/plasma
-	health = 200
+	obj_integrity = 200
 	mineralType = "plasma"
 	desc = "This statue is suitably made from plasma."
 
@@ -231,7 +198,7 @@
 
 /obj/structure/statue/plasma/proc/PlasmaBurn()
 	atmos_spawn_air("plasma=400;TEMP=1000")
-	Dismantle(1)
+	deconstruct(FALSE)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
@@ -240,7 +207,7 @@
 //////////////////////gold///////////////////////////////////////
 
 /obj/structure/statue/gold
-	health = 300
+	obj_integrity = 300
 	mineralType = "gold"
 	desc = "This is a highly valuable statue made from gold."
 
@@ -267,7 +234,7 @@
 //////////////////////////silver///////////////////////////////////////
 
 /obj/structure/statue/silver
-	health = 300
+	obj_integrity = 300
 	mineralType = "silver"
 	desc = "This is a valuable statue made from silver."
 
@@ -294,7 +261,7 @@
 /////////////////////////diamond/////////////////////////////////////////
 
 /obj/structure/statue/diamond
-	health = 1000
+	obj_integrity = 1000
 	mineralType = "diamond"
 	desc = "This is a very expensive diamond statue"
 
@@ -313,7 +280,7 @@
 ////////////////////////bananium///////////////////////////////////////
 
 /obj/structure/statue/bananium
-	health = 300
+	obj_integrity = 300
 	mineralType = "bananium"
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
@@ -348,7 +315,7 @@
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone
-	health = 50
+	obj_integrity = 50
 	mineralType = "sandstone"
 
 /obj/structure/statue/sandstone/assistant
@@ -366,7 +333,7 @@
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
-	health = 50
+	obj_integrity = 50
 	mineralType = "snow"
 
 /obj/structure/statue/snow/snowman
