@@ -585,7 +585,7 @@
 
 	//check for syndicate dresscode violations
 	if(istype(wear_suit, /obj/item/clothing/suit/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi))
-		threatcount += 2
+		threatcount += 3
 		
 	//arrest dem ops
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/syndicate))
