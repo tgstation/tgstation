@@ -234,8 +234,7 @@
 	return
 
 /obj/item/stack/AltClick(mob/living/user)
-	var/usecheck = !user.canUseTopic(src)
-	if(!isliving(user) || usecheck)
+	if(!istype(user) || !user.canUseTopic(src))
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
