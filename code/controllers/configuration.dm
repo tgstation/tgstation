@@ -18,6 +18,7 @@
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
+	var/hub = 0
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -265,7 +266,7 @@
 		if(type == "config")
 			switch(name)
 				if("hub")
-					world.visibility = 1
+					config.hub = 1
 				if("admin_legacy_system")
 					config.admin_legacy_system = 1
 				if("ban_legacy_system")

@@ -8,6 +8,7 @@
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "/tg/ Station 13"
 	fps = 20
+	visibility = 0
 
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
@@ -35,7 +36,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-	visibility = 0
 	load_configuration()
 	load_mode()
 	load_motd()
