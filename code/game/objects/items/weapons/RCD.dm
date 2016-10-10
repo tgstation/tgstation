@@ -44,9 +44,11 @@ RCD
 	var/wallcost = 16
 	var/floorcost = 2
 	var/grillecost = 4
+	var/girderupgradecost = 8
 	var/windowcost = 8
 	var/reinforcedwindowcost = 12
 	var/airlockcost = 16
+	var/decongirdercost = 13
 	var/deconwallcost = 26
 	var/deconfloorcost = 33
 	var/decongrillecost = 4
@@ -60,6 +62,7 @@ RCD
 	var/grilledelay = 40
 	var/windowdelay = 40
 	var/airlockdelay = 50
+	var/decongirderdelay = 20
 	var/deconwalldelay = 40
 	var/deconfloordelay = 50
 	var/decongrilledelay = null //as rapid as wirecutters
@@ -323,7 +326,7 @@ RCD
 	if(!proximity) return 0
 	if(istype(A,/turf/open/space/transit))
 		return 0
-	if(!(isturf(A) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window)))
+	if(!(isturf(A) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window) || istype(A, /obj/structure/girder)))
 		return 0
 
 	switch(mode)
@@ -346,6 +349,21 @@ RCD
 						if(!istype(F)) return 0
 						if(!useResource(wallcost, user)) return 0
 						activate()
+						F.ChangeTurf(/turf/closed/wall)
+						return 1
+				return 0
+
+			if(istype(A, /obj/structure/girder))
+				var/turf/open/floor/F = get_turf(A)
+				if(checkResource(girderupgradecost, user))
+					user << "<span class='notice'>You start finishing the \
+						wall...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, walldelay, target = A))
+						if(!istype(A)) return 0
+						if(!useResource(girderupgradecost, user)) return 0
+						activate()
+						qdel(A)
 						F.ChangeTurf(/turf/closed/wall)
 						return 1
 				return 0
@@ -454,6 +472,17 @@ RCD
 						qdel(A)
 						return 1
 					return 0
+
+			if(istype(A, /obj/structure/girder))
+				if(useResource(decongirdercost, user))
+					user << "<span class='notice'>You start deconstructing \
+						[A]...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, decongirderdelay, target = A))
+						if(!useResource(decongirdercost, user)) return 0
+						activate()
+						qdel(A)
+						return 1
 
 		if (4)
 			if(isfloorturf(A))
