@@ -74,34 +74,38 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	M << "<B>You are the [usr.real_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals."
+	var/wizard_name = "the wizard"
+	if(usr)
+		wizard_name = usr.real_name
+	M << "<B>You are [wizard_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals."
 	switch(type)
 		if("destruction")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball(null))
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball."
+			M << "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball."
 		if("bluespace")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt."
+			M << "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt."
 		if("healing")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null))
 			M.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing(M))
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
+			M << "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 		if("robeless")
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
-			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap."
+			M << "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap."
 
 	equip_antag(M)
 	var/wizard_name_first = pick(wizard_first)
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
-	var/datum/objective/protect/new_objective = new /datum/objective/protect
-	new_objective.owner = M.mind
-	new_objective.target = usr.mind
-	new_objective.explanation_text = "Protect [usr.real_name], the wizard."
+	if(usr)
+		var/datum/objective/protect/new_objective = new /datum/objective/protect
+		new_objective.owner = M.mind
+		new_objective.target = usr.mind
+		new_objective.explanation_text = "Protect [usr.real_name], the wizard."
 	M.mind.objectives += new_objective
 	ticker.mode.apprentices += M.mind
 	M.mind.special_role = "apprentice"
@@ -224,10 +228,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
-	var/shatter_msg = "<span class='notice'>You shatter the bottle, no \
-		turning back now!</span>"
-	var/veil_msg = "<span class='warning'>You sense a dark presence lurking \
-		just beyond the veil...</span>"
+	var/shatter_msg = "<span class='notice'>You shatter the bottle, no turning back now!</span>"
+	var/veil_msg = "<span class='warning'>You sense a dark presence lurking just beyond the veil...</span>"
 	var/objective_verb = "Kill"
 	var/mob/living/demon_type = /mob/living/simple_animal/slaughter
 
@@ -262,33 +264,31 @@
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
 	ticker.mode.traitors += S.mind
-	var/datum/objective/assassinate/new_objective = new /datum/objective/assassinate
-	new_objective.owner = S.mind
-	new_objective.target = usr.mind
-	new_objective.explanation_text = "[objective_verb] [usr.real_name], \
-		the one who summoned you."
-	S.mind.objectives += new_objective
+	var/datum/objective/assassinate/new_objective
+	if(usr)
+		new_objective = new /datum/objective/assassinate
+		new_objective.owner = S.mind
+		new_objective.target = usr.mind
+		new_objective.explanation_text = "[objective_verb] [usr.real_name], the one who summoned you."
+		S.mind.objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
 	new_objective2.owner = S.mind
-	new_objective2.explanation_text = "[objective_verb] everyone else \
-		while you're at it."
+	new_objective2.explanation_text = "[objective_verb] everyone[usr ? " else while you're at it":""]."
 	S.mind.objectives += new_objective2
 	S << S.playstyle_string
-	S << "<B>You are currently not currently in the same plane of \
-		existence as the station. Ctrl+Click a blood pool to manifest.</B>"
-	S << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
-	S << "<B>Objective #[2]</B>: [new_objective2.explanation_text]"
+	S << "<B>You are currently not currently in the same plane of existence as the station. \
+	Ctrl+Click a blood pool to manifest.</B>"
+	if(new_objective)
+		S << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
+	S << "<B>Objective #[new_objective ? "[2]":"[1]"]</B>: [new_objective2.explanation_text]"
 
 /obj/item/weapon/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
-	desc = "A magically infused bottle of clown love, distilled from \
-		countless hugging attacks. Used in funny rituals to attract \
-		adorable creatures."
+	desc = "A magically infused bottle of clown love, distilled from countless hugging attacks. Used in funny rituals to attract adorable creatures."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 	color = "#FF69B4" // HOT PINK
 
-	veil_msg = "<span class='warning'>You sense an adorable presence \
-		lurking just beyond the veil...</span>"
+	veil_msg = "<span class='warning'>You sense an adorable presence lurking just beyond the veil...</span>"
 	objective_verb = "Hug and Tickle"
 	demon_type = /mob/living/simple_animal/slaughter/laughter
