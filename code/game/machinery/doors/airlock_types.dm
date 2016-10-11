@@ -303,7 +303,7 @@
 	explosion_block = 2
 	obj_integrity = 500
 	max_integrity = 500
-	damage_deflection = 50
+	damage_deflection = 30
 
 //////////////////////////////////
 /*
@@ -322,6 +322,7 @@
 	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_abductor
+	damage_deflection = 30
 	opacity = 1
 	explosion_block = 3
 	hackProof = 1
