@@ -484,7 +484,7 @@
 /datum/reagent/consumable/tinlux
 	name = "Tinea Luxor"
 	id = "tinlux"
-	description = "A stimulating ichor which can make the user resistant to being subued. "
+	description = "A stimulating ichor which causes luminescent fungi to grow on the skin. "
 	color = "#b5a213"
 
 /datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
