@@ -154,7 +154,7 @@
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src.loc, W.usesound, 100, 1)
 		panel_open = !panel_open
 		if(panel_open)
 			user << "<span class='notice'>You open the panel and expose the wiring.</span>"
@@ -180,11 +180,11 @@
 			user << "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>"
 			return
 		if(!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user << "<span class='notice'>You secure \the [src] to the floor!</span>"
 			anchored = 1
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user << "<span class='notice'>You unsecure \the [src] from the floor!</span>"
 			if(active)
 				user << "<span class='notice'>\The [src] shuts off!</span>"
@@ -376,13 +376,13 @@
 			return
 
 		else if(!anchored && !isinspace()) //Can't fasten this thing in space
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			user << "<span class='notice'>You secure the external reinforcing bolts to the floor.</span>"
 			anchored = 1
 			return
 
 		else //You can unfasten it tough, if you somehow manage to fasten it.
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			user << "<span class='notice'>You undo the external reinforcing bolts.</span>"
 			anchored = 0
 			return

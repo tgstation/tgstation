@@ -28,7 +28,7 @@
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You start wrenching the frame into place...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
@@ -40,7 +40,7 @@
 				if(!WT.isOn())
 					user << "<span class='warning'>The welder must be on for this task!</span>"
 					return
-				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You start to deconstruct the frame...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
@@ -50,7 +50,7 @@
 				return
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You start to unfasten the frame...</span>"
 				if(do_after(user, 20/P.toolspeed, target = src))
 					user << "<span class='notice'>You unfasten the frame.</span>"
@@ -67,13 +67,13 @@
 				P.loc = src
 				return
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You screw the circuit board into place.</span>"
 				state = 2
 				icon_state = "2"
 				return
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
-				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You remove the circuit board.</span>"
 				state = 1
 				icon_state = "0"
@@ -82,7 +82,7 @@
 				return
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You unfasten the circuit board.</span>"
 				state = 1
 				icon_state = "1"
@@ -106,7 +106,7 @@
 				if (brain)
 					user << "<span class='warning'>Get that brain out of there first!</span>"
 				else
-					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You remove the cables.</span>"
 					state = 2
 					icon_state = "2"
@@ -174,7 +174,7 @@
 				return
 
 			if(istype(P, /obj/item/weapon/crowbar) && brain)
-				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You remove the brain.</span>"
 				brain.forceMove(loc)
 				brain = null
@@ -183,7 +183,7 @@
 
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
-				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You remove the glass panel.</span>"
 				state = 3
 				if (brain)
@@ -194,7 +194,7 @@
 				return
 
 			if(istype(P, /obj/item/weapon/screwdriver))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You connect the monitor.</span>"
 				new /mob/living/silicon/ai (loc, laws, brain)
 				feedback_inc("cyborg_ais_created",1)
@@ -225,7 +225,7 @@
 	if(istype(A, /obj/item/device/aicard))//Is it?
 		A.transfer_ai("INACTIVE","AICARD",src,user)
 	else if(istype(A, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, A.usesound, 50, 1)
 		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
 					 "<span class='notice'>You start to [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor...</span>")
 		switch(anchored)

@@ -97,7 +97,7 @@
 					user << "<span class='warning'>You need five length of cable to wire the frame!</span>"
 				return
 			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, P.usesound, 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
 				if(do_after(user, 40/P.toolspeed, target = src))
@@ -109,7 +109,7 @@
 				return
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40/P.toolspeed, target = src))
 					if(state == 1)
 						user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
@@ -119,7 +119,7 @@
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40/P.toolspeed, target = src))
 					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 					anchored = !anchored
@@ -148,7 +148,7 @@
 				return
 
 			if(istype(P, /obj/item/weapon/wirecutters))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src.loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You remove the cables.</span>"
 				state = 1
 				icon_state = "box_0"
@@ -158,7 +158,7 @@
 
 		if(3)
 			if(istype(P, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src.loc, P.usesound, 50, 1)
 				state = 2
 				circuit.loc = src.loc
 				components.Remove(circuit)
@@ -182,7 +182,7 @@
 						component_check = 0
 						break
 				if(component_check)
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(src.loc, P.usesound, 50, 1)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
