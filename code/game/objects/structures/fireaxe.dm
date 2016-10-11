@@ -28,7 +28,7 @@
 		toggle_lock(user)
 	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help" && !broken)
 		var/obj/item/weapon/weldingtool/WT = I
-		if(obj_integrity < max_integrity && WT.remove_fuel(0, user))
+		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
 			user << "<span class='notice'>You begin repairing [src].</span>"
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			if(do_after(user, 40/I.toolspeed, target = src))
