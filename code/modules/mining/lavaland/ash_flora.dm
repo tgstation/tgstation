@@ -157,9 +157,6 @@
 	resistance_flags = FLAMMABLE
 	obj_integrity = 100
 	max_integrity = 100
-	var/prepared = FALSE
-	var/prepared_type = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/shavings
-	var/standard_prep = TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/New()
 	..()
@@ -167,57 +164,30 @@
 	pixel_y = rand(-4, 4)
 
 
-/* //
-/obj/item/weapon/reagent_containers/food/snacks/ash_flora/proc/prepared(mob/user)
-	if(!prepared)
-		prepared = TRUE
-		user << "<span class='notice'>You prepare [src].</span>"
-		var/obj/item/weapon/reagent_containers/food/snacks/ash_flora/A = new prepared_type(get_turf(src))
-		if(user.is_holding(src))
-			user.unEquip(src, TRUE)
-			user.put_in_hands(A)
-		qdel(src)
-		. = 1
-
-
-/obj/item/weapon/reagent_containers/food/snacks/ash_flora/attackby(obj/item/weapon/W, mob/user, params)
-	if(!standard_prep || !W.sharpness || !prepared(user))
-		return ..()
-*/
-
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/shavings //for actual crafting
-	prepared = TRUE
+
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf
 	name = "mushroom leaf"
 	desc = "A leaf, from a mushroom."
 	list_reagents = list("nutriment" = 3, "vitfro" = 2, "nicotine" = 2)
 	icon_state = "mushroom_leaf"
-	//standard_prep = FALSE
-	//prepared_type = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf/prepared
-/* //
-/obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf/afterattack(atom/target, mob/user, proximity_flag)
-	if(proximity_flag && (istype(target, /turf/open/floor/plating/ashplanet/wateryrock) || istype(target, /obj/structure/sink)))
-		prepared(user)
-*/
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf/prepared
 	name = "washed mushroom leaf"
 	desc = "A greenish leaflike structure from a mushroom. Kind of like lettuce?"
 	icon_state = "mushroom_leaf_p"
-	prepared = TRUE
+
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap
 	name = "mushroom cap"
 	desc = "The cap of a large mushroom."
 	list_reagents = list("mindbreaker" = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
 	icon_state = "mushroom_cap"
-	//prepared_type = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap/prepared
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap/prepared
 	name = "sliced mushroom cap"
 	desc = "A sliced-up mushroom cap, revealing pale yellow innards. It smells faintly salty."
 	icon_state = "mushroom_cap_p"
-	//prepared = TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem
 	name = "mushroom stem"
@@ -225,26 +195,22 @@
 	list_reagents = list("tinlux" = 2, "vitamin" = 1, "space_drugs" = 1)
 	icon_state = "mushroom_stem"
 	luminosity = 1
-	//prepared_type = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem/prepared
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem/prepared
 	name = "sliced mushroom stem"
 	desc = "A mushroom stem, cut in half to reveal orange flesh. Smells almost like potatos, but with a sour undertone."
 	icon_state = "mushroom_stem_p"
-	//prepared = TRUE
 
 /obj/item/weapon/reagent_containers/food/cactus_fruit
 	name = "cactus fruit"
 	list_reagents = list("vitamin" = 2, "nutriment" = 2, "vitfro" = 4)
 	desc = "A cactus fruit covered in a thick, reddish skin. And some ash."
 	icon_state = "cactus_fruit"
-	//prepared_type = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit/prepared
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit/prepared
 	name = "peeled cactus fruit"
 	desc = "A cactus fruit with the skin and ash carefully scraped off, revealing a faintly sweet-smelling yellow center."
 	icon_state = "cactus_fruit_p"
-	//prepared = TRUE
 
 
 /obj/item/mushroom_bowl
