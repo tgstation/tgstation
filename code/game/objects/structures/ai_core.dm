@@ -50,10 +50,9 @@
 				return
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			user << "<span class='notice'>You start to deconstruct the frame...</span>"
-			if(do_after(user, 20/P.toolspeed, target = src) && state != EMPTY_CORE && src && WT && WT.remove_fuel(0, user))
+			if(do_after(user, 20/P.toolspeed, target = src) && src && state == EMPTY_CORE && WT && WT.remove_fuel(0, user))
 				user << "<span class='notice'>You deconstruct the frame.</span>"
-				new /obj/item/stack/sheet/plasteel( loc, 4)
-				qdel(src)
+				deconstruct(TRUE)
 			return
 	else
 		switch(state)
@@ -227,7 +226,7 @@ That prevents a few funky behaviors.
 //The type of interaction, the player performing the operation, the AI itself, and the card object, if any.
 
 
-atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(istype(card))
 		if(card.flush)
 			user << "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol."
