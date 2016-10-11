@@ -144,3 +144,18 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+
+
+/turf/open/floor/bluespace
+	slowdown = -1
+	icon_state = "bluespace"
+	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
+	floor_tile = /obj/item/stack/tile/bluespace
+
+
+/turf/open/floor/sepia
+	slowdown = 2
+	icon_state = "sepia"
+	desc = "Time seems to flow very slowly around these tiles"
+	floor_tile = /obj/item/stack/tile/sepia
+

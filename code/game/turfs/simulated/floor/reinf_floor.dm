@@ -33,13 +33,32 @@
 			ChangeTurf(/turf/open/floor/plating)
 			return
 
+
+/turf/open/floor/engine/ex_act(severity, target)
+	contents_explosion(severity, target)
+	switch(severity)
+		if(1)
+			ChangeTurf(src.baseturf)
+		if(2)
+			if(prob(50))
+				ChangeTurf(src.baseturf)
+		else
+			return
+
 /turf/open/floor/engine/ex_act(severity,target)
+	var/shielded = is_shielded()
+	contents_explosion(severity, target)
+	if(severity != 1 && shielded && target != src)
+		return
+	if(target == src)
+		src.ChangeTurf(src.baseturf)
+		return
 	switch(severity)
 		if(1)
 			if(prob(80))
 				ReplaceWithLattice()
 			else if(prob(50))
-				qdel(src)
+				ChangeTurf(src.baseturf)
 			else
 				make_plating(1)
 		if(2)
@@ -54,6 +73,13 @@
 				make_plating()
 		else if(prob(30))
 			ReplaceWithLattice()
+
+/turf/open/floor/engine/attack_paw(mob/user)
+	return src.attack_hand(user)
+
+/turf/open/floor/engine/attack_hand(mob/user)
+	user.Move_Pulled(src)
+
 
 //air filled floors; used in atmos pressure chambers
 
