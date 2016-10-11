@@ -39,10 +39,12 @@
 	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
-	stylesheets[name] = file
+	stylesheets["[ckey(name)].css"] = file
+	register_asset("[ckey(name)].css", file)
 
 /datum/browser/proc/add_script(name, file)
-	scripts[name] = file
+	scripts["[ckey(name)].js"] = file
+	register_asset("[ckey(name)].js", file)
 
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent
@@ -51,17 +53,12 @@
 	content += ncontent
 
 /datum/browser/proc/get_header()
-	var/key
-	var/filename
-	for (key in stylesheets)
-		filename = "[ckey(key)].css"
-		user << browse_rsc(stylesheets[key], filename)
-		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'>"
+	var/file
+	for (file in stylesheets)
+		head_content += "<link rel='stylesheet' type='text/css' href='[file]'>"
 
-	for (key in scripts)
-		filename = "[ckey(key)].js"
-		user << browse_rsc(scripts[key], filename)
-		head_content += "<script type='text/javascript' src='[filename]'></script>"
+	for (file in scripts)
+		head_content += "<script type='text/javascript' src='[file]'></script>"
 
 	var/title_attributes = "class='uiTitle'"
 	if (title_image)
@@ -98,6 +95,10 @@
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
+	if (stylesheets.len)
+		send_asset_list(user, stylesheets, verify=FALSE)
+	if (scripts.len)
+		send_asset_list(user, scripts, verify=FALSE)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
 		spawn(0)

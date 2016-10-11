@@ -6,7 +6,7 @@
 
 
 proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
-	if(!istype(epicenter, /turf) || !reactants.len || threatscale <= 0)
+	if(!isturf(epicenter) || !reactants.len || threatscale <= 0)
 		return
 	var/has_reagents
 	var/total_reagents

@@ -31,7 +31,7 @@
 	del_on_death = 1
 
 /mob/living/simple_animal/shade/death()
-	deathmessage = "lets out a contented sigh as [their_pronoun()] form unwinds."
+	deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
 	..()
 
 /mob/living/simple_animal/shade/canSuicide()
@@ -50,7 +50,7 @@
 			M.visible_message("<span class='danger'>[M] heals \the <b>[src]</b>.</span>", \
 					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 		else
-			M << "<span class='cult'>You cannot heal <b>[src]</b>, as [they_pronoun()] [get_is()] unharmed!</span>"
+			M << "<span class='cult'>You cannot heal <b>[src]</b>, as [p_they()] [p_are()] unharmed!</span>"
 	else if(src != M)
 		..()
 

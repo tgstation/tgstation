@@ -625,6 +625,7 @@ Difficulty: Very Hard
 	flying = 1
 	minbodytemp = 0
 	maxbodytemp = 1500
+	obj_damage = 0
 	environment_smash = 0
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
@@ -699,7 +700,7 @@ Difficulty: Very Hard
 	icon_state = null //This shouldn't even be visible, so if it DOES show up, at least nobody will notice
 	density = 1
 	anchored = 1
-	health = 999
+	obj_integrity = 999
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()

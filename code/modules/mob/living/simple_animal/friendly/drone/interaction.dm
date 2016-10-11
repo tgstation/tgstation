@@ -84,7 +84,7 @@
 			user << "<span class='notice'>You start to tighten loose screws on [src]...</span>"
 			if(do_after(user,80/I.toolspeed,target=user))
 				adjustBruteLoss(-getBruteLoss())
-				visible_message("<span class='notice'>[user] tightens [src == user ? "[user.their_pronoun()]" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
+				visible_message("<span class='notice'>[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
 			else
 				user << "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>"
 		else

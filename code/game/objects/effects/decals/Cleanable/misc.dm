@@ -52,25 +52,16 @@
 	gender = NEUTER
 	layer = WALL_OBJ_LAYER
 	icon_state = "cobweb1"
+	resistance_flags = FLAMMABLE
 
-/obj/effect/decal/cleanable/cobweb/fire_act()
-	qdel(src)
-
-/obj/effect/decal/cleanable/cobweb2
-	name = "cobweb"
-	desc = "Somebody should remove that."
-	gender = NEUTER
-	layer = WALL_OBJ_LAYER
+/obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
 
-/obj/effect/decal/cleanable/cobweb2/fire_act()
-	qdel(src)
-
-/obj/effect/decal/cleanable/molten_item
+/obj/effect/decal/cleanable/molten_object
 	name = "gooey grey mass"
 	desc = "It looks like a melted... something."
 	gender = NEUTER
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
 	mergeable_decal = 0
 
@@ -150,9 +141,13 @@
 	gender = PLURAL
 	mergeable_decal = 0
 
+/obj/effect/decal/cleanable/shreds/ex_act(severity, target)
+	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
+		qdel(src)
+
 /obj/effect/decal/cleanable/shreds/New()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 	..()
 
 /obj/effect/decal/cleanable/salt

@@ -34,7 +34,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		open_flame(heat)
 
-/obj/item/weapon/match/fire_act()
+/obj/item/weapon/match/fire_act(exposed_temperature, exposed_volume)
 	matchignite()
 
 /obj/item/weapon/match/proc/matchignite()
@@ -248,7 +248,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		return ..()
 
-/obj/item/clothing/mask/cigarette/fire_act()
+/obj/item/clothing/mask/cigarette/fire_act(exposed_temperature, exposed_volume)
 	light()
 
 /obj/item/clothing/mask/cigarette/is_hot()
@@ -448,6 +448,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	slot_flags = SLOT_BELT
 	var/lit = 0
 	heat = 1500
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/lighter/greyscale
 	name = "cheap lighter"
@@ -579,7 +580,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 ///////////////
 /obj/item/clothing/mask/vape
 	name = "E-Cigarette"
-	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: do not fill with flamable materials\""//<<< i'd vape to that.
+	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = null
 	item_state = null
@@ -606,7 +607,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+	if(istype(O, /obj/item/weapon/reagent_containers) && (O.flags & OPENCONTAINER))
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
 				O.reagents.trans_to(src,25)
@@ -671,7 +672,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == slot_wear_mask)
 		if(!screw)
-			user << "<span class='notice'>You start puffing on that dank vape</span>"
+			user << "<span class='notice'>You start puffing on the vape.</span>"
 			reagents.set_reacting(TRUE)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.

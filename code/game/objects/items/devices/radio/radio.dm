@@ -110,7 +110,7 @@
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
-	if(b_stat && !istype(user, /mob/living/silicon/ai))
+	if(b_stat && !isAI(user))
 		wires.interact(user)
 	else
 		ui_interact(user)

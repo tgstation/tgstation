@@ -22,6 +22,7 @@
 	melee_damage_upper = 10
 	attacktext = "attacks"
 	attack_sound = 'sound/items/bikehorn.ogg'
+	obj_damage = 0
 	environment_smash = 0
 	del_on_death = 1
 	loot = list(/obj/effect/mob_spawn/human/corpse/clown)

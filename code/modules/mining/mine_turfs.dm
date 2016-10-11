@@ -36,6 +36,10 @@
 				if(istype(T, /turf/closed/mineral/random))
 					Spread(T)
 
+
+/turf/closed/mineral/acid_melt()
+	ChangeTurf(baseturf)
+
 /turf/closed/mineral/volcanic
 	environment_type = "basalt"
 	turf_type = /turf/open/floor/plating/asteroid/basalt
@@ -269,6 +273,7 @@
 	var/mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
 	var/megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, \
 	/mob/living/simple_animal/hostile/megafauna/bubblegum = SPAWN_BUBBLEGUM)
+	var/flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash = 2)
 	var/sanity = 1
 	var/forward_cave_dir = 1
 	var/backward_cave_dir = 2
@@ -281,10 +286,10 @@
 	has_data = TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic
-	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast = 50, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 6, \
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, /mob/living/simple_animal/hostile/spawner/lavaland = 5, \
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion = 30, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 4, \
-		SPAWN_MEGAFAUNA = 9, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast = 50, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, \
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, /mob/living/simple_animal/hostile/spawner/lavaland = 2, \
+		/mob/living/simple_animal/hostile/asteroid/hivelord/legion = 30, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
+		SPAWN_MEGAFAUNA = 6, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
@@ -369,6 +374,7 @@
 			break
 	if(!sanity)
 		return
+	SpawnFlora(T)
 
 	SpawnMonster(T)
 	T.ChangeTurf(turf_type)
@@ -399,6 +405,16 @@
 #undef SPAWN_MEGAFAUNA
 #undef SPAWN_BUBBLEGUM
 
+/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFlora(turf/T)
+	if(prob(12))
+		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
+			return
+		for(var/obj/structure/flora/ash/F in urange(3,T)) //Allows for growing patches, but not ridiculous stacks of flora
+			return
+		var/randumb = pickweight(flora_spawn_list)
+		new randumb(T)
+
+
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
 
 	if (!user.IsAdvancedToolUser())
@@ -407,7 +423,7 @@
 
 	if (istype(P, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if (!isturf(T))
 			return
 
 		if(last_act+P.digspeed > world.time)//prevents message spam
@@ -457,7 +473,7 @@
 		if(I)
 			attackby(I,H)
 		return
-	else if(istype(AM,/mob/living/silicon/robot))
+	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
 			src.attackby(R.module_active,R)
@@ -566,7 +582,7 @@
 		digging_speed = P.digspeed
 	if (digging_speed)
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!isturf(T))
 			return
 
 		if (dug)
@@ -730,11 +746,20 @@
 		L.resting = TRUE
 	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 	for(var/i in 1 to 5)
+		//Make sure the item is still there after our sleep
+		if(!AM || qdeleted(AM))
+			return
 		AM.pixel_y--
 		sleep(2)
+
+	//Make sure the item is still there after our sleep
+	if(!AM || qdeleted(AM))
+		return
+
 	if(iscyborg(AM))
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
+
 	qdel(AM)
 
 /turf/closed/mineral/volcanic/lava_land_surface

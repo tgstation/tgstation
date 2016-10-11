@@ -228,7 +228,7 @@
 
 	current.faction = creator.faction.Copy()
 
-	if(special_role)
+	if(creator.mind.special_role)
 		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
 		current << "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>"
 
@@ -555,7 +555,7 @@
 
 	/** SILICON ***/
 
-	if (istype(current, /mob/living/silicon))
+	if(issilicon(current))
 		text = "silicon"
 		var/mob/living/silicon/robot/robot = current
 		if (istype(robot) && robot.emagged)
@@ -1220,7 +1220,7 @@
 					log_admin("[key_name(usr)] has unemag'ed [R].")
 
 			if("unemagcyborgs")
-				if (istype(current, /mob/living/silicon/ai))
+				if(isAI(current))
 					var/mob/living/silicon/ai/ai = current
 					for (var/mob/living/silicon/robot/R in ai.connected_robots)
 						R.SetEmagged(0)
@@ -1364,9 +1364,7 @@
 		else
 			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 			current << "<B>Objective #1</B>: [explanation]"
-			current.memory += "<B>Objective #1</B>: [explanation]<BR>"
-			current << "The convert rune is join blood self"
-			current.memory += "The convert rune is join blood self<BR>"
+			memory += "<B>Objective #1</B>: [explanation]<BR>"
 
 	var/mob/living/carbon/human/H = current
 	if (!ticker.mode.equip_cultist(current))
@@ -1528,53 +1526,20 @@
 		else
 			spawn(0)
 				throw EXCEPTION("mind_initialize(): No ticker ready")
-	if(!mind.name)	mind.name = real_name
+	if(!mind.name)
+		mind.name = real_name
 	mind.current = src
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()
 	..()
-	if(!mind.assigned_role)	mind.assigned_role = "Assistant"	//defualt
-
-//MONKEY
-/mob/living/carbon/monkey/mind_initialize()
-	..()
-
-//slime
-/mob/living/simple_animal/slime/mind_initialize()
-	..()
-	mind.special_role = "slime"
-	mind.assigned_role = "slime"
+	if(!mind.assigned_role)
+		mind.assigned_role = "Assistant" //defualt
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	mind.special_role = "Alien"
-	mind.assigned_role = "Alien"
-	//XENO HUMANOID
-/mob/living/carbon/alien/humanoid/royal/queen/mind_initialize()
-	..()
-	mind.special_role = "Queen"
-
-/mob/living/carbon/alien/humanoid/royal/praetorian/mind_initialize()
-	..()
-	mind.special_role = "Praetorian"
-
-/mob/living/carbon/alien/humanoid/hunter/mind_initialize()
-	..()
-	mind.special_role = "Hunter"
-
-/mob/living/carbon/alien/humanoid/drone/mind_initialize()
-	..()
-	mind.special_role = "Drone"
-
-/mob/living/carbon/alien/humanoid/sentinel/mind_initialize()
-	..()
-	mind.special_role = "Sentinel"
-	//XENO LARVA
-/mob/living/carbon/alien/larva/mind_initialize()
-	..()
-	mind.special_role = "Larva"
 
 //AI
 /mob/living/silicon/ai/mind_initialize()
@@ -1591,29 +1556,3 @@
 	..()
 	mind.assigned_role = "pAI"
 	mind.special_role = ""
-
-//BLOB
-/mob/camera/blob/mind_initialize()
-	..()
-	mind.special_role = "Blob"
-
-//Animals
-/mob/living/simple_animal/mind_initialize()
-	..()
-	mind.assigned_role = "Animal"
-	mind.special_role = "Animal"
-
-/mob/living/simple_animal/pet/dog/corgi/mind_initialize()
-	..()
-	mind.assigned_role = "Corgi"
-	mind.special_role = "Corgi"
-
-/mob/living/simple_animal/shade/mind_initialize()
-	..()
-	mind.assigned_role = "Shade"
-	mind.special_role = "Shade"
-
-/mob/living/simple_animal/hostile/construct/mind_initialize()
-	..()
-	mind.assigned_role = "[initial(name)]"
-	mind.special_role = "Cultist"
