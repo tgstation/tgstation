@@ -83,24 +83,21 @@
 		user << "<span class='warning'>The wisp has gone missing!</span>"
 		return
 	if(wisp.loc == src)
-		user << "<span class='notice'>You release the wisp. It begins to \
-			bob around your head.</span>"
+		user << "<span class='notice'>You release the wisp. It begins to bob around your head.</span>"
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
 		feedback_add_details("wisp_lantern","F") // freed
 
 	else
-		user << "<span class='notice'>You return the wisp to the lantern.\
-			</span>"
+		user << "<span class='notice'>You return the wisp to the lantern.</span>"
 
 		if(wisp.orbiting)
 			var/atom/A = wisp.orbiting.orbiting
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
-				M << "<span class='notice'>Your vision returns to \
-					normal.</span>"
+				M << "<span class='notice'>Your vision returns to normal.</span>"
 
 		wisp.stop_orbit()
 		wisp.loc = src
@@ -116,8 +113,7 @@
 		if(wisp.loc == src)
 			qdel(wisp)
 		else
-			wisp.visible_message("<span class='notice'>[wisp] has a sad \
-				feeling for a moment, then it passes.</span>")
+			wisp.visible_message("<span class='notice'>[wisp] has a sad feeling for a moment, then it passes.</span>")
 	..()
 
 //Wisp Lantern
@@ -233,7 +229,7 @@
 	if(cooldown < world.time)
 		feedback_add_details("immortality_talisman","U") // usage
 		cooldown = world.time + 600
-		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in their place!</span>")
+		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
@@ -252,7 +248,6 @@
 /obj/effect/immortality_talisman
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/can_destroy = FALSE
 
 /obj/effect/immortality_talisman/attackby()
@@ -514,7 +509,7 @@
 		return
 	user << "You call out for aid, attempting to summon spirits to your side."
 
-	notify_ghosts("[user] is raising their [src], calling for your help!",
+	notify_ghosts("[user] is raising [user.p_their()] [src], calling for your help!",
 		enter_link="<a href=?src=\ref[src];orbit=1>(Click to help)</a>",
 		source = user, action=NOTIFY_ORBIT)
 
@@ -756,7 +751,7 @@
 		for(var/mob/living/carbon/human/H in player_list)
 			if(H == L)
 				continue
-			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. They have been marked red! Go kill them!</span>"
+			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>"
 			H.put_in_hands_or_del(new /obj/item/weapon/kitchen/knife/butcher(H))
 
 	qdel(src)
@@ -794,7 +789,7 @@
 		addtimer(src, "aoe_burst", 0, FALSE, T, user)
 		add_logs(user, target, "fired 3x3 blast at", src)
 	else
-		if(istype(target, /turf/closed/mineral) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
+		if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
 			addtimer(src, "cardinal_blasts", 0, FALSE, T, user)
 			timer = world.time + cooldown_time
 		else if(target in view(5, get_turf(user))) //if the target is in view, hit it
@@ -814,9 +809,12 @@
 		friendly_fire_check = !friendly_fire_check
 		user << "<span class='warning'>You toggle friendly fire [friendly_fire_check ? "off":"on"]!</span>"
 		return
+	if(!user.is_holding(src)) //you need to hold the staff to teleport
+		user << "<span class='warning'>You need to hold the staff in your hands to [rune ? "teleport with it":"create a rune"]!</span>"
+		return
 	if(!rune)
 		if(isturf(user.loc))
-			user.visible_message("<span class='hierophant_warning'>[user] holds [src] carefully in front of them, moving it in a strange pattern...</span>", \
+			user.visible_message("<span class='hierophant_warning'>[user] holds [src] carefully in front of [user.p_them()], moving it in a strange pattern...</span>", \
 			"<span class='notice'>You start creating a hierophant rune to teleport to...</span>")
 			timer = world.time + 51
 			if(do_after(user, 50, target = user))
@@ -826,16 +824,13 @@
 				var/obj/effect/hierophant/H = new/obj/effect/hierophant(T)
 				rune = H
 				user.update_action_buttons_icon()
-				user.visible_message("<span class='hierophant_warning'>[user] creates a strange rune beneath them!</span>", \
+				user.visible_message("<span class='hierophant_warning'>[user] creates a strange rune beneath [user.p_them()]!</span>", \
 				"<span class='hierophant'>You create a hierophant rune, which you can teleport yourself and any allies to at any time!</span>\n\
 				<span class='notice'>You can remove the rune to place a new one by striking it with the staff.</span>")
 			else
 				timer = world.time
 		else
 			user << "<span class='warning'>You need to be on solid ground to produce a rune!</span>"
-		return
-	if(!user.is_holding(src)) //you need to hold the staff to teleport
-		user << "<span class='warning'>You need to hold the staff in your hands to [rune ? "teleport with it":"create a rune"]!</span>"
 		return
 	if(get_dist(user, rune) <= 2) //rune too close abort
 		user << "<span class='warning'>You are too close to the rune to teleport to it!</span>"

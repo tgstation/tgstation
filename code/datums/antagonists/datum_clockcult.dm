@@ -46,12 +46,15 @@
 	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
-		if(isrobot(S) && !silent_update)
+		if(iscyborg(S) && !silent_update)
 			S << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
 		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	else if(isbrain(owner) || isclockmob(owner))
 		owner << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	..()
+	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
+		var/datum/game_mode/clockwork_cult/C = ticker.mode
+		C.present_tasks(owner) //Memorize the objectives
 
 /datum/antagonist/clockcultist/apply_innate_effects()
 	all_clockwork_mobs += owner
@@ -61,7 +64,7 @@
 	owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
-		if(isrobot(S))
+		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			R.UnlinkSelf()
 			R.emagged = 1
@@ -102,14 +105,14 @@
 	owner.faction -= "ratvar"
 	owner.languages_spoken &= ~RATVAR
 	owner.languages_understood &= ~RATVAR
-	owner.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
+	addtimer(owner, "update_action_buttons_icon", 1) //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
 	owner.clear_alert("clockinfo")
 	owner.clear_alert("nocache")
 	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
-		if(isrobot(S))
+		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			R.emagged = initial(R.emagged)
 		S.make_laws()
@@ -125,9 +128,9 @@
 		ticker.mode.servants_of_ratvar -= owner.mind
 		ticker.mode.update_servant_icons_removed(owner.mind)
 	if(owner.mind)
-		owner.mind.memory = "" //Not sure if there's a better way to do this
+		owner.mind.wipe_memory()
 		owner.mind.special_role = null
 	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
-	if(isrobot(owner))
+	if(iscyborg(owner))
 		owner << "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>"
 	..()

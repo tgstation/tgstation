@@ -228,7 +228,7 @@
 
 	current.faction = creator.faction.Copy()
 
-	if(special_role)
+	if(creator.mind.special_role)
 		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
 		current << "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>"
 
@@ -419,13 +419,13 @@
 	if (ticker.mode.config_tag=="cult")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if (src in ticker.mode.cult)
+	if(iscultist(current))
 		text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
 		text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
 
 	else if(isloyal(current))
 		text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
-	else if(is_convertable_to_cult(src))
+	else if(is_convertable_to_cult(current))
 		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 	else
 		text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Nar-Sie</i>"
@@ -442,7 +442,7 @@
 	if(ticker.mode.config_tag == "clockwork cult")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if(src in ticker.mode.servants_of_ratvar)
+	if(is_servant_of_ratvar(current))
 		text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
 		text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
 	else if(isloyal(current))
@@ -512,9 +512,9 @@
 		if (ticker.mode.config_tag=="monkey")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/human))
+		if (ishuman(current))
 			text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
-		else if (istype(current, /mob/living/carbon/monkey))
+		else if (ismonkey(current))
 			var/found = 0
 			for(var/datum/disease/D in current.viruses)
 				if(istype(D, /datum/disease/transformation/jungle_fever)) found = 1
@@ -555,7 +555,7 @@
 
 	/** SILICON ***/
 
-	if (istype(current, /mob/living/silicon))
+	if(issilicon(current))
 		text = "silicon"
 		var/mob/living/silicon/robot/robot = current
 		if (istype(robot) && robot.emagged)
@@ -583,10 +583,7 @@
 			out += sections[i]+"<br>"
 
 
-	if (((src in ticker.mode.head_revolutionaries) || \
-		(src in ticker.mode.traitors)              || \
-		(src in ticker.mode.syndicates))           && \
-		istype(current,/mob/living/carbon/human)      )
+	if(((src in ticker.mode.head_revolutionaries) || (src in ticker.mode.traitors) || (src in ticker.mode.syndicates)) && ishuman(current))
 
 		text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
 		var/obj/item/device/uplink/U = find_syndicate_uplink()
@@ -662,7 +659,7 @@
 			if ("assassinate","protect","debrain","maroon")
 				var/list/possible_targets = list("Free objective")
 				for(var/datum/mind/possible_target in ticker.minds)
-					if ((possible_target != src) && istype(possible_target.current, /mob/living/carbon/human))
+					if ((possible_target != src) && ishuman(possible_target.current))
 						possible_targets += possible_target.current
 
 				var/mob/def_target = null
@@ -1223,7 +1220,7 @@
 					log_admin("[key_name(usr)] has unemag'ed [R].")
 
 			if("unemagcyborgs")
-				if (istype(current, /mob/living/silicon/ai))
+				if(isAI(current))
 					var/mob/living/silicon/ai/ai = current
 					for (var/mob/living/silicon/robot/R in ai.connected_robots)
 						R.SetEmagged(0)
@@ -1298,7 +1295,7 @@
 		if(spawnloc)
 			current.loc = spawnloc
 
-		if(istype(current, /mob/living/carbon/human))
+		if(ishuman(current))
 			var/mob/living/carbon/human/H = current
 			qdel(H.belt)
 			qdel(H.back)
@@ -1367,9 +1364,7 @@
 		else
 			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 			current << "<B>Objective #1</B>: [explanation]"
-			current.memory += "<B>Objective #1</B>: [explanation]<BR>"
-			current << "The convert rune is join blood self"
-			current.memory += "The convert rune is join blood self<BR>"
+			memory += "<B>Objective #1</B>: [explanation]<BR>"
 
 	var/mob/living/carbon/human/H = current
 	if (!ticker.mode.equip_cultist(current))
@@ -1531,53 +1526,20 @@
 		else
 			spawn(0)
 				throw EXCEPTION("mind_initialize(): No ticker ready")
-	if(!mind.name)	mind.name = real_name
+	if(!mind.name)
+		mind.name = real_name
 	mind.current = src
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()
 	..()
-	if(!mind.assigned_role)	mind.assigned_role = "Assistant"	//defualt
-
-//MONKEY
-/mob/living/carbon/monkey/mind_initialize()
-	..()
-
-//slime
-/mob/living/simple_animal/slime/mind_initialize()
-	..()
-	mind.special_role = "slime"
-	mind.assigned_role = "slime"
+	if(!mind.assigned_role)
+		mind.assigned_role = "Assistant" //defualt
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	mind.special_role = "Alien"
-	mind.assigned_role = "Alien"
-	//XENO HUMANOID
-/mob/living/carbon/alien/humanoid/royal/queen/mind_initialize()
-	..()
-	mind.special_role = "Queen"
-
-/mob/living/carbon/alien/humanoid/royal/praetorian/mind_initialize()
-	..()
-	mind.special_role = "Praetorian"
-
-/mob/living/carbon/alien/humanoid/hunter/mind_initialize()
-	..()
-	mind.special_role = "Hunter"
-
-/mob/living/carbon/alien/humanoid/drone/mind_initialize()
-	..()
-	mind.special_role = "Drone"
-
-/mob/living/carbon/alien/humanoid/sentinel/mind_initialize()
-	..()
-	mind.special_role = "Sentinel"
-	//XENO LARVA
-/mob/living/carbon/alien/larva/mind_initialize()
-	..()
-	mind.special_role = "Larva"
 
 //AI
 /mob/living/silicon/ai/mind_initialize()
@@ -1594,29 +1556,3 @@
 	..()
 	mind.assigned_role = "pAI"
 	mind.special_role = ""
-
-//BLOB
-/mob/camera/blob/mind_initialize()
-	..()
-	mind.special_role = "Blob"
-
-//Animals
-/mob/living/simple_animal/mind_initialize()
-	..()
-	mind.assigned_role = "Animal"
-	mind.special_role = "Animal"
-
-/mob/living/simple_animal/pet/dog/corgi/mind_initialize()
-	..()
-	mind.assigned_role = "Corgi"
-	mind.special_role = "Corgi"
-
-/mob/living/simple_animal/shade/mind_initialize()
-	..()
-	mind.assigned_role = "Shade"
-	mind.special_role = "Shade"
-
-/mob/living/simple_animal/hostile/construct/mind_initialize()
-	..()
-	mind.assigned_role = "[initial(name)]"
-	mind.special_role = "Cultist"

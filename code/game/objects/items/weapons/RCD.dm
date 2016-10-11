@@ -21,6 +21,8 @@ RCD
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 160
@@ -230,7 +232,7 @@ RCD
 	return ..()
 
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
-	if(isrobot(user))	//Make sure cyborgs can't load their RCDs
+	if(iscyborg(user))	//Make sure cyborgs can't load their RCDs
 		return
 	var/loaded = 0
 	if(istype(W, /obj/item/weapon/rcd_ammo))
@@ -302,12 +304,12 @@ RCD
 	if(!proximity) return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/open/space/transit))
 		return 0
-	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window)))
+	if(!(isturf(A) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window)))
 		return 0
 
 	switch(mode)
 		if(1)
-			if(istype(A, /turf/open/space))
+			if(isspaceturf(A))
 				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
 					user << "<span class='notice'>You start building floor...</span>"
@@ -316,7 +318,7 @@ RCD
 					return 1
 				return 0
 
-			if(istype(A, /turf/open/floor))
+			if(isfloorturf(A))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
 					user << "<span class='notice'>You start building wall...</span>"
@@ -330,7 +332,7 @@ RCD
 				return 0
 
 		if(2)
-			if(istype(A, /turf/open/floor))
+			if(isfloorturf(A))
 				if(checkResource(airlockcost, user))
 					var/door_check = 1
 					for(var/obj/machinery/door/D in A)
@@ -370,12 +372,12 @@ RCD
 				return 0
 
 		if(3)
-			if(istype(A, /turf/closed/wall))
+			if(iswallturf(A))
 				var/turf/closed/wall/W = A
 				if(istype(W, /turf/closed/wall/r_wall) && !canRturf)
 					return 0
 				if(checkResource(deconwallcost, user))
-					user << "<span class='notice'>You start deconstructing wall...</span>"
+					user << "<span class='notice'>You start deconstructing [W]...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconwalldelay, target = A))
 						if(!useResource(deconwallcost, user)) return 0
@@ -384,7 +386,7 @@ RCD
 						return 1
 				return 0
 
-			if(istype(A, /turf/open/floor))
+			if(isfloorturf(A))
 				var/turf/open/floor/F = A
 				if(istype(F, /turf/open/floor/engine) && !canRturf)
 					return 0
@@ -435,7 +437,7 @@ RCD
 					return 0
 
 		if (4)
-			if(istype(A, /turf/open/floor))
+			if(isfloorturf(A))
 				if(checkResource(grillecost, user))
 					if(locate(/obj/structure/grille) in A)
 						user << "<span class='warning'>There is already a grille there!</span>"
@@ -504,7 +506,7 @@ RCD
 	canRturf = 1
 
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
-	if(!isrobot(user))
+	if(!iscyborg(user))
 		return 0
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
@@ -517,7 +519,7 @@ RCD
 	return .
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
-	if(!isrobot(user))
+	if(!iscyborg(user))
 		return 0
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)

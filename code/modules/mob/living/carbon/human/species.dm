@@ -932,7 +932,117 @@
 // ATTACK PROCS //
 //////////////////
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
+//////////////////
+// ATTACK PROCS //
+//////////////////
+
+/datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.health >= 0 && !(target.status_flags & FAKEDEATH))
+		target.help_shake_act(user)
+		if(target != user)
+			add_logs(user, target, "shaked")
+		return 1
+	else
+		var/we_breathe = (!(NOBREATH in user.dna.species.specflags))
+		var/we_lung = user.getorganslot("lungs")
+
+		if(we_breathe && we_lung)
+			user.do_cpr(target)
+		else if(we_breathe && !we_lung)
+			user << "<span class='warning'>You have no lungs to breathe with, so you cannot peform CPR.</span>"
+		else
+			user << "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>"
+
+/datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(attacker_style && attacker_style.grab_act(user,target))
+		return 1
+	else
+		target.grabbedby(user)
+		return 1
+
+/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(attacker_style && attacker_style.harm_act(user,target))
+		return 1
+	else
+		user.do_attack_animation(target)
+
+		var/atk_verb = user.dna.species.attack_verb
+		if(target.lying)
+			atk_verb = "kick"
+
+		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+
+		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+
+		if(!damage || !affecting)
+			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
+			target.visible_message("<span class='warning'>[user] has attempted to [atk_verb] [target]!</span>")
+			return 0
+
+
+		var/armor_block = target.run_armor_check(affecting, "melee")
+
+		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
+
+		target.visible_message("<span class='danger'>[user] has [atk_verb]ed [target]!</span>", \
+						"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>")
+
+		if(user.limb_destroyer)
+			target.dismembering_strike(user, affecting.body_zone)
+		target.apply_damage(damage, BRUTE, affecting, armor_block)
+		add_logs(user, target, "punched")
+		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
+			target.visible_message("<span class='danger'>[user] has weakened [target]!</span>", \
+							"<span class='userdanger'>[user] has weakened [target]!</span>")
+			target.apply_effect(4, WEAKEN, armor_block)
+			target.forcesay(hit_appends)
+		else if(target.lying)
+			target.forcesay(hit_appends)
+
+/datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(attacker_style && attacker_style.disarm_act(user,target))
+		return 1
+	else
+		user.do_attack_animation(target)
+		add_logs(user, target, "disarmed")
+
+		if(target.w_uniform)
+			target.w_uniform.add_fingerprint(user)
+		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+		var/randn = rand(1, 100)
+		if(randn <= 25)
+			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
+							"<span class='userdanger'>[user] has pushed [target]!</span>")
+			target.apply_effect(2, WEAKEN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
+			target.forcesay(hit_appends)
+			return
+
+		var/talked = 0	// BubbleWrap
+
+		if(randn <= 60)
+			//BubbleWrap: Disarming breaks a pull
+			if(target.pulling)
+				target.visible_message("<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
+				talked = 1
+				target.stop_pulling()
+			//End BubbleWrap
+
+			if(!talked)	//BubbleWrap
+				if(target.drop_item())
+					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
+									"<span class='userdanger'>[user] has disarmed [target]!</span>")
+			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			return
+
+
+		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
+						"<span class='userdanger'>[user] attemped to disarm [target]!</span>")
+	return
+
+
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
 	if(!istype(M))
 		return
 	CHECK_DNA_AND_SPECIES(M)
@@ -944,113 +1054,18 @@
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
-
-	var/datum/martial_art/attacker_style = M.martial_art
-
 	switch(M.a_intent)
 		if("help")
-			if(H.health >= 0 && !(H.status_flags & FAKEDEATH))
-				H.help_shake_act(M)
-				if(H != M)
-					add_logs(M, H, "shaked")
-				return 1
-			else
-				var/we_breathe = (!(NOBREATH in M.dna.species.specflags))
-				var/we_lung = M.getorganslot("lungs")
-
-				if(we_breathe && we_lung)
-					M.do_cpr(H)
-				else if(we_breathe && !we_lung)
-					M << "<span class='warning'>You have no lungs to breathe with, so you cannot peform CPR.</span>"
-				else
-					M << "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>"
+			help(M, H, attacker_style)
 
 		if("grab")
-			if(attacker_style && attacker_style.grab_act(M,H))
-				return 1
-			else
-				H.grabbedby(M)
-				return 1
+			grab(M, H, attacker_style)
 
 		if("harm")
-			if(attacker_style && attacker_style.harm_act(M,H))
-				return 1
-			else
-				M.do_attack_animation(H)
+			harm(M, H, attacker_style)
 
-				var/atk_verb = M.dna.species.attack_verb
-				if(H.lying)
-					atk_verb = "kick"
-
-				var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
-
-				var/obj/item/bodypart/affecting = H.get_bodypart(ran_zone(M.zone_selected))
-
-				if(!damage || !affecting)
-					playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)
-					H.visible_message("<span class='warning'>[M] has attempted to [atk_verb] [H]!</span>")
-					return 0
-
-
-				var/armor_block = H.run_armor_check(affecting, "melee")
-
-				playsound(H.loc, M.dna.species.attack_sound, 25, 1, -1)
-
-				H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
-								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
-
-				if(M.limb_destroyer)
-					H.dismembering_strike(M, affecting.body_zone)
-				H.apply_damage(damage, BRUTE, affecting, armor_block)
-				add_logs(M, H, "punched")
-				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
-					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
-									"<span class='userdanger'>[M] has weakened [H]!</span>")
-					H.apply_effect(4, WEAKEN, armor_block)
-					H.forcesay(hit_appends)
-				else if(H.lying)
-					H.forcesay(hit_appends)
 		if("disarm")
-			if(attacker_style && attacker_style.disarm_act(M,H))
-				return 1
-			else
-				M.do_attack_animation(H)
-				add_logs(M, H, "disarmed")
-
-				if(H.w_uniform)
-					H.w_uniform.add_fingerprint(M)
-				var/obj/item/bodypart/affecting = H.get_bodypart(ran_zone(M.zone_selected))
-				var/randn = rand(1, 100)
-				if(randn <= 25)
-					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					H.visible_message("<span class='danger'>[M] has pushed [H]!</span>",
-									"<span class='userdanger'>[M] has pushed [H]!</span>")
-					H.apply_effect(2, WEAKEN, H.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
-					H.forcesay(hit_appends)
-					return
-
-				var/talked = 0	// BubbleWrap
-
-				if(randn <= 60)
-					//BubbleWrap: Disarming breaks a pull
-					if(H.pulling)
-						H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [H.pulling]!</span>")
-						talked = 1
-						H.stop_pulling()
-					//End BubbleWrap
-
-					if(!talked)	//BubbleWrap
-						if(H.drop_item())
-							H.visible_message("<span class='danger'>[M] has disarmed [H]!</span>", \
-											"<span class='userdanger'>[M] has disarmed [H]!</span>")
-					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					return
-
-
-				playsound(H, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				H.visible_message("<span class='danger'>[M] attempted to disarm [H]!</span>", \
-								"<span class='userdanger'>[M] attemped to disarm [H]!</span>")
-	return
+			disarm(M, H, attacker_style)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
@@ -1071,6 +1086,7 @@
 
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
+	H.damage_clothes(I.force, BRUTE, "melee", affecting.body_zone)
 
 	H.send_item_attack_message(I, user, hit_area)
 
@@ -1157,14 +1173,14 @@
 		if(BRUTE)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.take_damage(damage * hit_percent * brutemod, 0))
+				if(BP.receive_damage(damage * hit_percent * brutemod, 0))
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage * hit_percent * brutemod)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.take_damage(0, damage * hit_percent * burnmod))
+				if(BP.receive_damage(0, damage * hit_percent * burnmod))
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage * hit_percent* burnmod)

@@ -104,7 +104,7 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/take_damage(brute, burn, updating_health = 1)
+/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1)
 	if(owner && (owner.status_flags & GODMODE))
 		return 0	//godmode
 	brute	= max(brute * config.damage_multiplier,0)
@@ -345,6 +345,11 @@
 	return standing
 
 
+
+/obj/item/bodypart/deconstruct(disassembled = TRUE)
+	drop_organs()
+	qdel(src)
+
 /obj/item/bodypart/chest
 	name = "chest"
 	desc = "It's impolite to stare at a person's chest."
@@ -402,6 +407,7 @@
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
+	held_index = 1
 	px_x = -6
 	px_y = 0
 
@@ -435,6 +441,7 @@
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
+	held_index = 2
 	px_x = 6
 	px_y = 0
 

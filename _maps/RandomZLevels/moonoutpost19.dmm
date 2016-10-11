@@ -82,7 +82,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -105,7 +105,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -177,7 +177,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -536,7 +536,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -558,7 +558,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -1970,7 +1970,7 @@
 "cG" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -3285,7 +3285,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -3516,7 +3516,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -3625,7 +3625,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -4034,7 +4034,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -5043,7 +5043,7 @@
 "gE" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -5744,7 +5744,7 @@
 "hx" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -6294,7 +6294,7 @@
 	desc = "Oh no, seven years of bad luck!";
 	icon_state = "mirror_broke";
 	pixel_x = 28;
-	shattered = 1
+	broken = 1
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -8056,7 +8056,7 @@
 /obj/item/stack/rods,
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -8074,7 +8074,7 @@
 "kQ" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -9643,7 +9643,7 @@
 "ns" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -9801,7 +9801,7 @@
 "nD" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /obj/item/stack/rods,
@@ -9908,7 +9908,7 @@
 	name = "MO19 Arrivals"
 	})
 "nJ" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating{
 	broken = 1;
 	heat_capacity = 1e+006;
@@ -10270,7 +10270,7 @@
 "oj" = (
 /obj/structure/grille{
 	density = 0;
-	destroyed = 1;
+	broken = 1;
 	icon_state = "brokengrille"
 	},
 /turf/open/floor/mineral/titanium,

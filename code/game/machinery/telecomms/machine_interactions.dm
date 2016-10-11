@@ -138,7 +138,7 @@
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
-	else if(isrobot(user) && in_range(user, src))
+	else if(iscyborg(user) && in_range(user, src))
 		if(istype(user.get_active_held_item(), /obj/item/device/multitool))
 			P = user.get_active_held_item()
 	return P

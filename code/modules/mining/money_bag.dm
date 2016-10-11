@@ -5,8 +5,9 @@
 	icon_state = "moneybag"
 	force = 10
 	throwforce = 0
-	resistance_flags = 0
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 100
+	max_integrity = 100
 	w_class = 4
 	max_w_class = 3
 	storage_slots = 80

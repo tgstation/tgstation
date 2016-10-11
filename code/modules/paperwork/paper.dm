@@ -17,8 +17,9 @@
 	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
-	resistance_flags = 0
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
 
 	var/info		//What's actually written on the paper.
@@ -338,8 +339,8 @@
 
 	add_fingerprint(user)
 
-/obj/item/weapon/paper/fire_act()
-	..(0)
+/obj/item/weapon/paper/fire_act(exposed_temperature, exposed_volume)
+	..()
 	icon_state = "paper_onfire"
 	info = "[stars(info)]"
 

@@ -250,7 +250,7 @@
 	breakthings = FALSE
 
 /obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0)
-	if((blocked != 100) && istype(target, /mob/living))
+	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.Sleeping(20)
 	return ..()

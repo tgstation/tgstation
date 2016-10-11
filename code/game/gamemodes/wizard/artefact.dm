@@ -172,7 +172,7 @@
 		return
 
 	for(var/X in spooky_scaries)
-		if(!istype(X, /mob/living/carbon/human))
+		if(!ishuman(X))
 			spooky_scaries.Remove(X)
 			continue
 		var/mob/living/carbon/human/H = X
@@ -481,8 +481,9 @@ var/global/list/multiverse = list()
 	var/obj/item/link = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
-	burntime = 0
-	resistance_flags = 0
+	obj_integrity = 10
+	max_integrity = 10
+	resistance_flags = FLAMMABLE
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
@@ -579,7 +580,7 @@ var/global/list/multiverse = list()
 		var/area/A = get_area(src)
 		victim << "<span class='notice'>You feel a dark presence from [A.name]</span>"
 
-/obj/item/voodoo/fire_act()
+/obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
 	if(target)
 		target.adjust_fire_stacks(20)
 		target.IgniteMob()

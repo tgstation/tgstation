@@ -3,6 +3,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
+	obj_damage = 30
 	environment_smash = 2
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -69,6 +70,7 @@
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 12
 	melee_damage_upper = 12
 	attacktext = "bites into"
@@ -210,6 +212,7 @@
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
 	ranged_cooldown_time = 20
+	obj_damage = 0
 	environment_smash = 0
 	retreat_distance = 3
 	minimum_distance = 3
@@ -291,7 +294,7 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
-				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
+				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
 				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
@@ -327,6 +330,7 @@
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
+	obj_damage = 0
 	environment_smash = 0
 	pass_flags = PASSTABLE
 	del_on_death = 1
@@ -420,6 +424,7 @@
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
+	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "pulverizes"
@@ -454,7 +459,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
-	if(!(istype(tturf, /turf)))
+	if(!isturf(tturf))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
@@ -483,7 +488,7 @@
 
 /obj/effect/goliath_tentacle/New()
 	var/turftype = get_turf(src)
-	if(istype(turftype, /turf/closed/mineral))
+	if(ismineralturf(turftype))
 		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
 	addtimer(src, "Trip", 10)
@@ -537,13 +542,11 @@
 				return
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/D = target
-			var/list/damage_absorption = D.damage_absorption
 			if(D.hides < 3)
 				D.hides++
-				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
-				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
-				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
-				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
+				D.armor["melee"] = max(D.armor["melee"] - 0.1, 0.3)
+				D.armor["bullet"] = D.armor["bullet"] - 0.05
+				D.armor["laser"] = D.armor["laser"] - 0.025
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				D.update_icon()
 				if(D.hides == 3)
@@ -581,6 +584,7 @@
 	maxHealth = 50
 	health = 50
 	harm_intent_damage = 5
+	obj_damage = 0
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attacktext = "chomps"
@@ -625,6 +629,7 @@
 		return
 	wumbo = 1
 	icon_state = "Fugu_big"
+	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	harm_intent_damage = 0
@@ -643,6 +648,7 @@
 		walk(src, 0)
 		wumbo = 0
 		icon_state = "Fugu"
+		obj_damage = 0
 		melee_damage_lower = 0
 		melee_damage_upper = 0
 		harm_intent_damage = 5
@@ -743,6 +749,7 @@
 	icon_aggro = "legion"
 	icon_dead = "legion"
 	icon_gib = "syndicate_gib"
+	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "lashes out at"
@@ -861,6 +868,7 @@
 	density = 0
 	speak_chance = 1
 	turns_per_move = 8
+	obj_damage = 0
 	environment_smash = 0
 	move_to_delay = 15
 	response_help  = "pets"
@@ -987,7 +995,7 @@
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
 	for(var/F in RANGE_TURFS(1, src))
-		if(istype(F, /turf/closed/mineral))
+		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
 			M.ChangeTurf(M.turf_type)
 	gps = new /obj/item/device/gps/internal(src)

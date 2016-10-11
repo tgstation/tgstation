@@ -9,7 +9,7 @@
 	throw_range = 7
 	w_class = 3
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 	var/mopping = 0
 	var/mopcount = 0
 	var/mopcap = 5
@@ -26,7 +26,7 @@ obj/item/weapon/mop/proc/clean(turf/A)
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
 				qdel(O)
-		if(istype(A, /turf/closed))
+		if(isclosedturf(A))
 			var/turf/closed/C = A
 			C.thermite = 0
 	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.

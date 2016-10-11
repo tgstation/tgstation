@@ -100,7 +100,7 @@
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		if(!anchored)
-			if(!isturf(src.loc) || istype(src.loc, /turf/open/space))
+			if(!isturf(loc) || isspaceturf(loc))
 				user << "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>"
 			else
 				user << "<span class='notice'>You firmly wrench the bomb to the floor.</span>"
@@ -256,7 +256,7 @@
 	item_state = "eshield0"
 	w_class = 3
 	origin_tech = "syndicate=5;combat=6"
-	resistance_flags = 0 //Burnable (but the casing isn't)
+	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 
 /obj/item/weapon/bombcore/ex_act(severity, target) // Little boom can chain a big boom.

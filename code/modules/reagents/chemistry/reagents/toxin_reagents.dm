@@ -74,7 +74,7 @@
 	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(reac_volume / 5)
@@ -520,12 +520,12 @@
 				M.adjustOxyLoss(rand(5,25), 0)
 				. = 1
 			if(3)
-				if(istype(M, /mob/living/carbon/human))
+				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if(!H.heart_attack)
 						H.heart_attack = 1 // rip in pepperoni
 						if(H.stat == CONSCIOUS)
-							H.visible_message("<span class='userdanger'>[H] clutches at [H.their_pronoun()] chest as if [H.their_pronoun()] heart stopped!</span>")
+							H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
 					else
 						H.losebreath += 10
 						H.adjustOxyLoss(rand(5,25), 0)
@@ -679,7 +679,7 @@
 	if(method == INJECT)
 		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
-	C.acid_act(acidpwr, toxpwr, reac_volume)
+	C.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, reac_volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
@@ -691,8 +691,7 @@
 	if (!istype(T))
 		return
 	reac_volume = round(reac_volume,0.1)
-	for(var/obj/O in T)
-		O.acid_act(acidpwr, reac_volume)
+	T.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"

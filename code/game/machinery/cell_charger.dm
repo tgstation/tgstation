@@ -91,7 +91,7 @@
 	if(!charging)
 		return
 
-	charging.loc = loc
+	charging.forceMove(loc)
 	user << "<span class='notice'>You telekinetically remove [charging] from [src].</span>"
 
 	removecell()

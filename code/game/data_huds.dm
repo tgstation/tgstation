@@ -76,10 +76,10 @@
 /proc/RoundHealth(mob/living/M)
 	if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
-	var/maxhealth = M.maxHealth
+	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
-		maxhealth = 100 //so crit shows up right for aliens and other high-health carbon mobs; noncarbons don't have crit.
-	var/resulthealth = (M.health / maxhealth) * 100
+		maxi_health = 100 //so crit shows up right for aliens and other high-health carbon mobs; noncarbons don't have crit.
+	var/resulthealth = (M.health / maxi_health) * 100
 	switch(resulthealth)
 		if(100 to INFINITY)
 			return "health100"
@@ -302,7 +302,7 @@
 	var/image/holder = hud_list[DIAG_MECH_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	holder.icon_state = "huddiag[RoundDiagBar(health/initial(health))]"
+	holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
 
 
 /obj/mecha/proc/diag_hud_set_mechcell()

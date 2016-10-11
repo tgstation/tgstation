@@ -189,7 +189,7 @@ This file contains the arcane tome files.
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
-	if(istype(Turf, /turf/open/space))
+	if(isspaceturf(Turf))
 		user << "<span class='warning'>You cannot scribe runes in space!</span>"
 		return
 	for(var/T in typesof(/obj/effect/rune))
@@ -234,11 +234,7 @@ This file contains the arcane tome files.
 			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
 			for(var/B in spiral_range_turfs(1, user, 1))
 				var/turf/T = B
-				var/obj/machinery/shield/N = new(T)
-				N.name = "sanguine barrier"
-				N.desc = "A potent shield summoned by cultists to defend their rites."
-				N.icon_state = "shield-red"
-				N.health = 60
+				var/obj/structure/emergency_shield/sanguine/N = new(T)
 				shields |= N
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
@@ -248,7 +244,7 @@ This file contains the arcane tome files.
 	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
 		for(var/V in shields)
-			var/obj/machinery/shield/S = V
+			var/obj/structure/emergency_shield/sanguine/S = V
 			if(S && !qdeleted(S))
 				qdel(S)
 		return
@@ -258,7 +254,7 @@ This file contains the arcane tome files.
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
-		var/obj/machinery/shield/S = V
+		var/obj/structure/emergency_shield/S = V
 		if(S && !qdeleted(S))
 			qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)

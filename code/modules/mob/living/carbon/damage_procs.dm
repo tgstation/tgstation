@@ -18,13 +18,13 @@
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(BP.take_damage(damage * hit_percent, 0))
+				if(BP.receive_damage(damage * hit_percent, 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
 				adjustBruteLoss(damage * hit_percent)
 		if(BURN)
 			if(BP)
-				if(BP.take_damage(0, damage * hit_percent))
+				if(BP.receive_damage(0, damage * hit_percent))
 					update_damage_overlays()
 			else
 				adjustFireLoss(damage * hit_percent)
@@ -120,7 +120,7 @@
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.take_damage(brute,burn))
+	if(picked.receive_damage(brute,burn))
 		update_damage_overlays()
 
 
@@ -162,7 +162,7 @@
 		var/burn_was = picked.burn_dam
 
 
-		update |= picked.take_damage(brute_per_part,burn_per_part, 0)
+		update |= picked.receive_damage(brute_per_part,burn_per_part, 0)
 
 		brute	-= (picked.brute_dam - brute_was)
 		burn	-= (picked.burn_dam - burn_was)

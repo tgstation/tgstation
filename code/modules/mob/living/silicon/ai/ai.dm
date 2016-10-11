@@ -110,7 +110,7 @@ var/list/ai_list = list()
 	radio = new /obj/item/device/radio/headset/ai(src)
 	aicamera = new/obj/item/device/camera/siliconcam/ai_camera(src)
 
-	if (istype(loc, /turf))
+	if(isturf(loc))
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
@@ -304,7 +304,7 @@ var/list/ai_list = list()
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(stat == DEAD)
 		return //won't work if dead
-	if(istype(usr,/mob/living/silicon/ai))
+	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
 			usr << "Wireless control is disabled!"
@@ -343,7 +343,7 @@ var/list/ai_list = list()
 	set category = "Malfunction"
 	if(stat == DEAD)
 		return //won't work if dead
-	if(istype(usr,/mob/living/silicon/ai))
+	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
 			src	 << "Wireless control is disabled!"

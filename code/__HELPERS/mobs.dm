@@ -360,7 +360,7 @@ Proc for attack log creation, because really why not
 		var/adminoverride = 0
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
 			adminoverride = 1
-		if(istype(M, /mob/new_player) && !adminoverride)
+		if(isnewplayer(M) && !adminoverride)
 			continue
 		if(M.stat != DEAD && !adminoverride)
 			continue
@@ -375,7 +375,7 @@ Proc for attack log creation, because really why not
 				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
 					continue
 
-		if(istype(M, /mob/dead/observer) && follow_target)
+		if(isobserver(M) && follow_target)
 			var/link = FOLLOW_LINK(M, follow_target)
 			M << "[link] [message]"
 		else
