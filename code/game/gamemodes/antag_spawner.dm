@@ -106,12 +106,12 @@
 		new_objective.owner = M.mind
 		new_objective.target = usr.mind
 		new_objective.explanation_text = "Protect [usr.real_name], the wizard."
-	M.mind.objectives += new_objective
+		M.mind.objectives += new_objective
 	ticker.mode.apprentices += M.mind
 	M.mind.special_role = "apprentice"
 	ticker.mode.update_wiz_icons_added(M.mind)
 	M << sound('sound/effects/magic.ogg')
-	var/newname = copytext(sanitize(input(M, "You are the wizard's apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
+	var/newname = copytext(sanitize(input(M, "You are [wizard_name]'s apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
 	if (!newname)
 		newname = randomname
 	M.mind.name = newname
