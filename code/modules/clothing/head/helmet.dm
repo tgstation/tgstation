@@ -35,6 +35,7 @@
 /obj/item/clothing/head/helmet/blueshirt
 	icon_state = "blueshift"
 	item_state = "blueshift"
+	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
