@@ -65,7 +65,7 @@
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		monkeys++
-		user << "<span class='notice'>You feed [O] to the [src]. It now has [monkeys] monkey cubes stored.</span>"
+		user << "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>"
 		user.drop_item()
 		qdel(O)
 		return
@@ -78,7 +78,7 @@
 				monkeys++
 				qdel(G)
 		if (loaded)
-			user << "<span class='notice'>You fill the [src] with the monkey cubes stored in the [O]. The [src] now has [monkeys] monkey cubes stored.</span>"
+			user << "<span class='notice'>You fill [src] with the monkey cubes stored in the [O]. [src] now has [monkeys] monkey cubes stored.</span>"
 	..()
 
 /datum/action/innate/camera_off/xenobio/Activate()
