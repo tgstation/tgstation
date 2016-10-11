@@ -217,8 +217,7 @@ MASS SPECTROMETER
 			if(H.reagents.reagent_list.len)
 				user << "<span class='notice'>Subject contains the following reagents:</span>"
 				for(var/datum/reagent/R in H.reagents.reagent_list)
-					if(!istype(R, /datum/reagent/virus)) //Virus reagents are invisible
-						user << "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]"
+					user << "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]"
 			else
 				user << "<span class='notice'>Subject contains no reagents.</span>"
 			if(H.reagents.addiction_list.len)
