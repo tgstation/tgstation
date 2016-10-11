@@ -57,7 +57,7 @@
 
 	//Hot simple_animal baby making vars
 	var/list/childtype = null
-	var/scan_ready = 1
+	var/next_scan_time = 0
 	var/animal_species //Sorry, no spider+corgi buttbabies.
 
 	//simple_animal access
@@ -353,11 +353,9 @@
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || !scan_ready || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
-		return 0
-	scan_ready = 0
-	spawn(400)
-		scan_ready = 1
+	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
+		return
+	next_scan_time = world.time + 400
 	var/alone = 1
 	var/mob/living/simple_animal/partner
 	var/children = 0
@@ -373,13 +371,13 @@
 				partner = M
 
 		else if(isliving(M) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
-			alone = 0
-			continue
+			return //we never mate when not alone, so just abort early
+
 	if(alone && partner && children < 3)
 		var/childspawn = pickweight(childtype)
-		new childspawn(loc)
-		return 1
-	return 0
+		var/turf/target = get_turf(loc)
+		if(target)
+			return new childspawn(target)
 
 /mob/living/simple_animal/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
 	if(incapacitated())
