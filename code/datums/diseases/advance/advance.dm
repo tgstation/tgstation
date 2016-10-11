@@ -201,7 +201,7 @@ var/list/advance_cures = 	list(
 
 	if(properties && properties.len)
 		switch(properties["stealth"])
-			if(2)
+			if(2,3)
 				visibility_flags = HIDDEN_SCANNER
 			if(4 to INFINITY)
 				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
