@@ -193,17 +193,20 @@
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal, and highly dangerous cybernetic implant that can project a deadly blade of concentrated enregy."
-	contents = newlist(/obj/item/weapon/melee/energy/blade)
+	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight)
+	origin_tech = "materials=4;combat=5;biotech=3;powerstorage=2;syndicate=5"
 
 /obj/item/organ/cyberimp/arm/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
 	contents = newlist(/obj/item/weapon/gun/medbeam)
+	origin_tech = "materials=5;combat=2;biotech=5;powerstorage=4;syndicate=1"
 
 /obj/item/organ/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm, that is able to be used as a powerful flash."
 	contents = newlist(/obj/item/device/assembly/flash/armimplant)
+	origin_tech = "materials=4;combat=3;biotech=4;magnets=4;powerstorage=3"
 
 /obj/item/organ/cyberimp/arm/flash/New()
 	..()
@@ -215,11 +218,13 @@
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
 	contents = newlist(/obj/item/borg/stun)
+	origin_tech = "materials=3;combat=5;biotech=4;powerstorage=4;syndicate=3"
 
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
-	contents = newlist(/obj/item/weapon/melee/energy/blade, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+	contents = newlist(/obj/item/weapon/melee/energy/blade/hardlight, /obj/item/weapon/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+	origin_tech = "materials=5;combat=7;biotech=5;powerstorage=5;syndicate=6;programming=5"
 
 /obj/item/organ/cyberimp/arm/combat/New()
 	..()
@@ -231,3 +236,4 @@
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm"
 	contents = newlist(/obj/item/weapon/retractor, /obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, /obj/item/weapon/circular_saw, /obj/item/weapon/surgical_drapes)
+	origin_tech = "materials=3;engineering=3;biotech=3;programming=2;magnets=3"

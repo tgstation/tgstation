@@ -36025,12 +36025,6 @@
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
@@ -36653,16 +36647,16 @@
 /turf/open/floor/plasteel/barber,
 /area/medical/cmo)
 "bCX" = (
-/obj/effect/decal/cleanable/oil,
-/obj/item/weapon/cigbutt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "bCY" = (
 /turf/open/floor/plasteel/barber,
 /area/medical/cmo)
@@ -36787,19 +36781,8 @@
 	})
 "bDm" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
@@ -37137,18 +37120,11 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bDY" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "bDZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -37201,14 +37177,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bEf" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 5
@@ -37217,21 +37187,17 @@
 	name = "Research Division"
 	})
 "bEg" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
 /obj/machinery/door/airlock/research{
-	name = "Toxins Storage";
+	name = "Research Storage";
 	req_access_txt = "8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "bEh" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin{
@@ -37289,21 +37255,29 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "bEo" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/plasteel/delivery{
-	name = "floor"
+/obj/structure/table,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/stack/sheet/glass{
+	amount = 20;
+	pixel_x = -3;
+	pixel_y = 6
 	},
-/area/toxins/storage)
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/cable_coil,
+/obj/item/weapon/stock_parts/cell/high/plus,
+/obj/item/device/assembly/flash/handheld,
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "bEp" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/structure/sign/nosmoking_2{
-	pixel_x = 0;
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/delivery{
-	name = "floor"
-	},
-/area/toxins/storage)
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "bEq" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -37998,8 +37972,13 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "bFJ" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
@@ -38663,22 +38642,25 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bHe" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Toxins Storage APC";
-	pixel_x = -25
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Toxins Storage";
 	dir = 4;
 	network = list("SS13","RD")
 	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/obj/structure/rack,
+/obj/item/weapon/circuitboard/machine/destructive_analyzer{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/circuitboard/machine/protolathe,
+/obj/item/weapon/circuitboard/machine/circuit_imprinter{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "bHf" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -39478,9 +39460,11 @@
 	name = "Research Division"
 	})
 "bIB" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/turf/open/floor/plasteel/bot,
-/area/toxins/storage)
+/obj/item/weapon/crowbar,
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "bIC" = (
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/storage)
@@ -40165,7 +40149,9 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/toxins/storage)
+/area/medical/research{
+	name = "Research Division"
+	})
 "bJS" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -42156,7 +42142,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/closet/wardrobe/science_white,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -50736,6 +50721,7 @@
 /area/atmos)
 "cgX" = (
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plasteel,
 /area/atmos)
 "cgY" = (
@@ -60394,11 +60380,10 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "cBE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/closed/wall,
-/area/maintenance/asmaint2)
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "cBF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 8
@@ -60720,13 +60705,22 @@
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "cCq" = (
-/turf/closed/wall,
-/area/space)
+/obj/structure/closet/crate,
+/obj/item/weapon/ore/slag,
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "cCr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating/airless,
-/area/space)
+/obj/structure/closet/bombcloset,
+/obj/structure/sign/nosmoking_2{
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
 "cCs" = (
 /obj/item/target,
 /obj/structure/window/reinforced,
@@ -60748,12 +60742,11 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cCu" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'BOMB RANGE";
-	name = "BOMB RANGE"
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 1
 	},
-/turf/closed/wall,
-/area/space)
+/turf/open/floor/plasteel,
+/area/atmos)
 "cCv" = (
 /obj/structure/chair,
 /turf/open/floor/plating/airless/warnplate{
@@ -60871,9 +60864,12 @@
 	},
 /area/toxins/test_area)
 "cCJ" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/plasteel/bot,
-/area/toxins/storage)
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/floor/plasteel,
+/area/atmos)
 "cCK" = (
 /obj/structure/chair{
 	dir = 8
@@ -60883,15 +60879,11 @@
 	},
 /area/toxins/test_area)
 "cCL" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+/obj/machinery/atmospherics/components/binary/valve/digital{
+	name = "Waste Release"
 	},
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/turf/open/floor/plasteel,
+/area/atmos)
 "cCM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -61155,22 +61147,18 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cDm" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/floor/plasteel,
+/area/atmos)
 "cDn" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/bot,
-/area/toxins/storage)
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/floor/plating,
+/area/atmos)
 "cDo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -61178,16 +61166,13 @@
 /turf/closed/wall/r_wall,
 /area/toxins/storage)
 "cDp" = (
-/obj/structure/sign/nosmoking_2{
-	pixel_x = -32
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1;
+	frequency = 1441;
+	id = "waste_out"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white/side{
-	dir = 5
-	},
-/area/medical/research{
-	name = "Research Division"
-	})
+/turf/open/floor/plating/airless,
+/area/atmos)
 "cDq" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating{
@@ -61198,8 +61183,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime,
-/area/toxins/storage)
+/turf/open/floor/plating,
+/area/medical/research{
+	name = "Research Division"
+	})
 "cDs" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -94296,14 +94283,14 @@ bXS
 bXS
 bMK
 cbB
-bRA
-bTP
-bOd
-bOd
-cfP
+cCu
+cCJ
+cCL
+bQt
+cDm
 cgX
-bMQ
-apQ
+cDn
+cDp
 bOh
 bOh
 bOh
@@ -94556,7 +94543,7 @@ bQt
 cBJ
 cdy
 bOd
-bOd
+bRy
 cfR
 cha
 civ
@@ -105581,12 +105568,12 @@ byi
 bzz
 bAE
 bBY
-bDc
+bhA
 bEo
 bFI
 bHe
-cCJ
-cCJ
+cBE
+bIz
 bJN
 bMl
 bIv
@@ -105838,12 +105825,12 @@ byi
 bwN
 bAG
 bCa
-bDc
-bEo
-bIC
-bEc
+bhA
+cCy
+cBE
+agd
 bIB
-bIB
+cCq
 bJN
 bMo
 bNp
@@ -106095,12 +106082,12 @@ byj
 bwM
 bAF
 bBZ
-bDc
+bhA
 bEp
 bCX
-cCL
-cDn
-cDn
+cBE
+cBE
+bIA
 bJN
 bMn
 bNp
@@ -106352,12 +106339,12 @@ bvC
 bzD
 bxv
 bCc
-bDc
-bEo
+bhA
+cCz
 cDr
 bDY
-cDn
-cDn
+cBE
+bEF
 bJN
 bMq
 bNp
@@ -106609,12 +106596,12 @@ byk
 bzC
 bAH
 bCb
-bDc
-bEo
-bDj
-cDm
-bGY
-bGY
+bhA
+cCA
+cDr
+bEb
+apI
+bEL
 bJN
 bMp
 bNp
@@ -106866,12 +106853,12 @@ byk
 byk
 byk
 byk
-bDc
-bDc
+bhA
+bhA
 bJR
 bEg
-bDc
-bDc
+bhA
+bhA
 bLe
 bMr
 bNr
@@ -107127,7 +107114,7 @@ bDd
 bEq
 bDl
 bEf
-cDp
+bIb
 bHc
 bHK
 bIb
@@ -107383,7 +107370,7 @@ bzB
 bAa
 bBE
 bDm
-bEr
+bFR
 bFR
 bHf
 bHM
@@ -107899,7 +107886,7 @@ bDn
 cCN
 bEz
 bFS
-bFS
+cCr
 bLh
 bMs
 bIW
@@ -115342,16 +115329,6 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaa
-aaf
-aaa
 aaa
 aaa
 aaa
@@ -115359,6 +115336,16 @@ aaa
 aaa
 aaa
 aaf
+aaa
+aaf
+aaa
+aaa
+aag
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -115599,18 +115586,18 @@ aaa
 aaa
 aaa
 aaa
-cxn
 aaa
 aaa
 aaa
 aaa
 aaa
-aaf
 aaa
 aaf
 aaa
+aaf
 aaa
 aaa
+aag
 aaa
 aaa
 aaa
@@ -115856,18 +115843,18 @@ aaa
 aaa
 aaa
 aaf
-aaf
 aaa
 aaa
 aaa
 aaa
 aaa
-aaf
 aaa
 aaf
 aaa
+aaf
 aaa
 aaa
+aag
 aaa
 aaa
 aaa
@@ -116122,11 +116109,11 @@ aaa
 aaf
 aaa
 aaf
-aaa
-aaa
-aaa
-aaa
 aae
+aaa
+aag
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -116381,7 +116368,7 @@ aaa
 aaf
 aaa
 aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -116638,7 +116625,7 @@ aaa
 aaf
 aaa
 aaa
-aaa
+aaf
 aaa
 aaa
 aaa
