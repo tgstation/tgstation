@@ -47,6 +47,7 @@
 
 
 				//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
+				/obj/item/slime_extract = list(),
 				/obj/item/weapon/reagent_containers/pill = list(),
 				/obj/item/weapon/reagent_containers/food = list(),
 				/obj/item/weapon/reagent_containers/honeycomb = list()
@@ -404,6 +405,18 @@
 
 						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 								break
+				remove_object(O)
+
+		//Slime Extractis
+		for (var/obj/item/slime_extract/O in holdingitems)
+				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+						break
+				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+				if (O.reagents != null)
+						var/amount = O.reagents.total_volume
+						O.reagents.trans_to(beaker, min(amount, space))
+				if (O.Uses > 0)
+						beaker.reagents.add_reagent("slimejelly",min(20, space))
 				remove_object(O)
 
 		//Everything else - Transfers reagents from it into beaker
