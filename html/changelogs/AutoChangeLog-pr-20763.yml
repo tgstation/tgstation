@@ -1,5 +1,0 @@
-author: "Papa Bones"
-delete-after: True
-changes: 
-  - rscadd: "Flora now spawns in lavaland tunnels, they can be harvested with a knife."
-  - rscadd: "Flora have a range of effects, be careful what you eat!"

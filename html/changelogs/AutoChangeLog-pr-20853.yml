@@ -1,5 +1,0 @@
-author: "Incoming5643"
-delete-after: True
-changes: 
-  - rscadd: "Wizards may finally use jaunt and blink on the escape shuttle. Maybe elsewhere too?"
-  - bugfix: "The previously broken radios in the wizards den should work now. You still have to turn them on though."
