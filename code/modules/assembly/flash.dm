@@ -151,7 +151,7 @@
 				if(M.stat == CONSCIOUS)
 					M.mind_initialize() //give them a mind datum if they don't have one.
 					var/resisted
-					if(!isloyal(M))
+					if(!M.isloyal())
 						if(user.mind in ticker.mode.head_revolutionaries)
 							if(ticker.mode.add_revolutionary(M.mind))
 								M.Stun(3)
