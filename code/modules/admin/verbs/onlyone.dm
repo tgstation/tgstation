@@ -39,6 +39,8 @@ var/highlander = FALSE
 
 	for(var/obj/item/I in get_equipped_items())
 		qdel(I)
+	for(var/obj/item/I in held_items)
+		qdel(I)
 	equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(src), slot_w_uniform)
 	equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(src), slot_ears)
 	equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(src), slot_head)

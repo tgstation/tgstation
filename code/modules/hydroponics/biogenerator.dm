@@ -43,19 +43,6 @@
 		update_icon()
 		updateUsrDialog()
 
-/obj/machinery/reagentgrinder/contents_explosion(severity, target)
-	..()
-	if(beaker)
-		beaker.ex_act(severity, target)
-
-/obj/machinery/reagentgrinder/handle_atom_del(atom/A)
-	..()
-	if(A == beaker)
-		beaker = null
-		update_icon()
-		updateUsrDialog()
-
-
 /obj/item/weapon/circuitboard/machine/biogenerator
 	name = "circuit board (Biogenerator)"
 	build_path = /obj/machinery/biogenerator

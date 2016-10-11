@@ -57,7 +57,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 				var/failed = 0
 				var/list/items_list = get_equipped_items()
 				if(items_list.len)
-					failed = 1 //phil235
+					failed = 1
 				for(var/obj/item/I in held_items)
 					failed = 1
 					break

@@ -29,7 +29,9 @@
 		CH.cavity_item = null
 
 	if(tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in get_equipped_items())
+		var/Itemlist = get_equipped_items()
+		Itemlist += held_items
+		for(var/obj/item/W in Itemlist)
 			unEquip(W)
 
 	//Make mob invisible and spawn animation
@@ -166,7 +168,9 @@
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in get_equipped_items())
+		var/Itemlist = get_equipped_items()
+		Itemlist += held_items
+		for(var/obj/item/W in Itemlist)
 			unEquip(W)
 			if (client)
 				client.screen -= W

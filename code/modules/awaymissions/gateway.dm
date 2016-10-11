@@ -254,7 +254,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		return
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/C = AM
-		for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant in the contents
+		for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
 			AM << "\black The station gate has detected your exile implant and is blocking your entry."
 			return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
