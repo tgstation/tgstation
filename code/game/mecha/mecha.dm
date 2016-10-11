@@ -609,10 +609,10 @@
 	//Allows the Malf to scan a mech's status and loadout, helping it to decide if it is a worthy chariot.
 	if(user.can_dominate_mechs)
 		examine(user) //Get diagnostic information!
-		if(trackers.len) //Beacons give the AI more detailed mech information.
-			var/obj/item/mecha_parts/mecha_tracking/B = trackers[1]
+		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
 			user << "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:"
 			user << "[B.get_mecha_info()]"
+			break
 		//Nothing like a big, red link to make the player feel powerful!
 		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
 
