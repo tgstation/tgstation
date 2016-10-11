@@ -31,7 +31,6 @@
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in get_equipped_items())
 			unEquip(W)
-	//stomach contents???
 
 	//Make mob invisible and spawn animation
 	notransform = 1
