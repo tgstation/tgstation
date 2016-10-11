@@ -392,8 +392,7 @@
 		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
 		for(var/obj/structure/flora/ash/F in urange(3,T)) //Allows for growing patches, but not ridiculous stacks of flora
-			if(istype(F, /obj/structure/flora/ash))
-				return
+			return
 		var/randumb = pickweight(flora_spawn_list)
 		new randumb(T)
 
