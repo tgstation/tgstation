@@ -268,8 +268,8 @@
 			M.do_attack_animation(src)
 			return 1
 
-/mob/living/ex_act(severity, origin)
-	if(istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+/mob/living/ex_act(severity, target, origin)
+	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
 	flash_act()

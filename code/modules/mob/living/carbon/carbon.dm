@@ -13,6 +13,8 @@
 		qdel(food)
 	for(var/BP in bodyparts)
 		qdel(BP)
+	for(var/imp in implants)
+		qdel(imp)
 	bodyparts = list()
 	remove_from_all_data_huds()
 	if(dna)

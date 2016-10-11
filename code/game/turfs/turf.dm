@@ -349,3 +349,7 @@
 /turf/proc/acid_melt()
 	return
 
+/turf/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK

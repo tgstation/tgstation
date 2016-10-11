@@ -98,6 +98,7 @@
 	return
 
 /turf/open/floor/vines/ex_act(severity, target)
+	..()
 	if(severity < 3 || target == src)
 		ChangeTurf(src.baseturf)
 
@@ -227,10 +228,10 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/structure/spacevine/holder, turf/target)
-	target.ex_act(severity, src) // vine immunity handled at /mob/ex_act
+	target.ex_act(severity, null, src) // vine immunity handled at /mob/ex_act
 
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
-	buckled.ex_act(severity, src)
+	buckled.ex_act(severity, null, src)
 
 /datum/spacevine_mutation/transparency
 	name = "transparent"

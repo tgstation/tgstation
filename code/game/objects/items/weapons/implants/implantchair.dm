@@ -51,7 +51,7 @@
 	data["ready_implants"]  = ready_implants
 	data["ready"] = ready
 	data["replenishing"] = replenishing
-	
+
 	return data
 
 /obj/machinery/implantchair/ui_act(action, params)
@@ -189,4 +189,3 @@
 	log_game("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	return 1
 
-	

@@ -44,8 +44,7 @@
 		if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
-		else
-			O.loc = src
+
 	ChangeTurf(/turf/open/floor/plating)
 
 /turf/closed/wall/proc/break_wall()
@@ -75,10 +74,9 @@
 		if(3)
 			if (prob(hardness))
 				dismantle_wall(0,1)
-			else
 	if(!density)
 		..()
-	return
+
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))

@@ -86,11 +86,13 @@
 
 /obj/item/mecha_parts/mecha_tracking/emp_act()
 	qdel(src)
-	return
 
-/obj/item/mecha_parts/mecha_tracking/ex_act()
-	qdel(src)
-	return
+/obj/item/mecha_parts/mecha_tracking/Destroy()
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		if(src in M.trackers)
+			M.trackers -= src
+	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(istype(src.loc, /obj/mecha))
@@ -104,7 +106,7 @@
 	qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
-	if(!src.in_mecha())
+	if(!istype(loc, /obj/mecha))
 		return 0
 	var/obj/mecha/M = src.loc
 	return M.get_log_html()

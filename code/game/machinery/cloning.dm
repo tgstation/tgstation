@@ -377,6 +377,13 @@
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
 	if(!qdeleted(src))
+		locked = FALSE
+		go_out()
+
+/obj/machinery/clonepod/handle_atom_del(atom/A)
+	if(A == occupant)
+		occupant = null
+		locked = FALSE
 		go_out()
 
 /obj/machinery/clonepod/deconstruct(disassembled = TRUE)

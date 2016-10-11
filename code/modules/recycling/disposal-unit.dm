@@ -256,7 +256,7 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-/obj/machinery/disposal/deconstruct()
+/obj/machinery/disposal/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		if(stored)
 			var/turf/T = loc
