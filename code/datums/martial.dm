@@ -439,7 +439,7 @@
 /obj/item/weapon/CQC_manual
 	name = "old manual"
 	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/library.dmi'
 	icon_state ="cqcmanual"
 
 /obj/item/weapon/CQC_manual/attack_self(mob/living/carbon/human/user)
@@ -653,7 +653,6 @@
 			D.stop_pulling()
 			add_logs(A, D, "grabbed", addition="aggressively")
 			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
-
 	return 1
 
 /datum/martial_art/CQC/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -675,6 +674,13 @@
 	D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
 					  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
 	add_logs(A, D, "[picked_hit_type] with CQC")
+	if(A.resting && !D.stat && !D.weakened)
+		D.visible_message("<span class='warning'>[A] leg sweeps [D]!", \
+							"<span class='userdanger'>[A] leg sweeps you!</span>")
+		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, 1, -1)
+		D.apply_damage(10, BRUTE)
+		D.Weaken(3)
+		add_logs(A, D, "CQC sweeped")
 	return 1
 
 /datum/martial_art/CQC/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
