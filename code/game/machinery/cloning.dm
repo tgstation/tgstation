@@ -151,7 +151,7 @@
 		if(!G)
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
-		horrifyingsound()
+		add_timer(0, "horrifyingsound", src)
 		mess = 1
 		icon_state = "pod_g"
 		update_icon()
@@ -373,7 +373,8 @@
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
-	if(prob(100/(severity*efficiency))) malfunction()
+	if(prob(100/(severity*efficiency)))
+		malfunction()
 	..()
 
 /obj/machinery/clonepod/ex_act(severity, target)
@@ -382,12 +383,17 @@
 		go_out()
 
 /obj/machinery/clonepod/proc/horrifyingsound()
-	spawn(0)
-		for(var/i in 1 to 5)
-			playsound(loc,pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 100, rand(0.95,1.05))
-			sleep(1)
-		sleep(10)
-		playsound(loc,'sound/hallucinations/wail.ogg',100,1)
+	for(var/i in 1 to 5)
+		playsound(loc,pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 100, rand(0.95,1.05))
+		sleep(1)
+	sleep(10)
+	playsound(loc,'sound/hallucinations/wail.ogg',100,1)
+
+/obj/machinery/clonepod/deconstruct(disassembled = TRUE)
+	if(occupant)
+		locked = FALSE
+		go_out()
+	..()
 
 
 /*

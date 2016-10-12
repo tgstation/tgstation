@@ -10,6 +10,9 @@
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
 
+/turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
+	return 0
+
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"
 	icon = 'icons/turf/shuttleold.dmi'

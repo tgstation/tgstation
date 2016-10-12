@@ -157,7 +157,7 @@
 	var/blast = 0
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A,/turf/open))
+	if(isopenturf(A))
 		var/turf/open/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
@@ -227,6 +227,8 @@
 		for(var/atom/movable/AM in T)
 			if(AM.type == src.type)
 				continue
+			if(T.intact && AM.level == 1) //hidden under the floor
+				continue
 			reagents.reaction(AM, TOUCH, fraction)
 
 		reagents.reaction(T, TOUCH, fraction)
@@ -264,7 +266,7 @@
 	return ..()
 
 /datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = 0)
-	if(istype(loca, /turf/))
+	if(isturf(loca))
 		location = loca
 	else
 		location = get_turf(loca)

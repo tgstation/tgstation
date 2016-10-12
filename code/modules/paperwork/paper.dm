@@ -17,8 +17,9 @@
 	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
-	resistance_flags = 0
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
 
 	var/info		//What's actually written on the paper.

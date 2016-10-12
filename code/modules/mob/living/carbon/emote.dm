@@ -14,10 +14,6 @@
 	//var/m_type = 1
 
 	switch(act)//Even carbon organisms want it alphabetically ordered..
-		if ("aflap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps \his wings ANGRILY!"
-				m_type = 2
 
 		if ("airguitar")
 			if (!src.restrained())
@@ -30,10 +26,6 @@
 
 		if ("blink_r")
 			message = "<B>[src]</B> blinks rapidly."
-			m_type = 1
-
-		if ("blush","blushes")
-			message = "<B>[src]</B> blushes."
 			m_type = 1
 
 		if ("bow","bows")
@@ -82,15 +74,6 @@
 				message = "<B>[src]</B> makes a strong noise."
 				m_type = 2
 
-		if ("deathgasp","deathgasps")
-			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
-			m_type = 1
-
-		if ("flap","flaps")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps \his wings."
-				m_type = 2
-
 		if ("gasp","gasps")
 			if (!muzzled)
 				..(act)
@@ -116,20 +99,12 @@
 				..()
 			return
 
-		if ("nod","nods")
-			message = "<B>[src]</B> nods."
-			m_type = 1
-
 		if ("scream","screams")
 			if (!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a very loud noise."
 				m_type = 2
-
-		if ("shake","shakes")
-			message = "<B>[src]</B> shakes \his head."
-			m_type = 1
 
 		if ("sneeze","sneezes")
 			if (!muzzled)
@@ -144,10 +119,6 @@
 			else
 				message = "<B>[src]</B> sighs."
 				m_type = 2
-
-		if ("sniff","sniffs")
-			message = "<B>[src]</B> sniffs."
-			m_type = 2
 
 		if ("snore","snores")
 			if (!muzzled)
@@ -188,7 +159,7 @@
  // Maybe some people are okay with that.
 
 		for(var/mob/M in dead_mob_list)
-			if(!M.client || istype(M, /mob/new_player))
+			if(!M.client || isnewplayer(M))
 				continue //skip monkeys, leavers and new players
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)

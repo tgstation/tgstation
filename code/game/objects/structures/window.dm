@@ -7,8 +7,8 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
-	var/maxhealth = 25
-	var/health = 0
+	max_integrity = 25
+	obj_integrity = 25
 	var/ini_dir = null
 	var/state = 0
 	var/reinf = 0
@@ -19,6 +19,8 @@
 	var/image/crack_overlay
 	var/list/debris = list()
 	can_be_unanchored = 1
+	resistance_flags = ACID_PROOF
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -26,7 +28,7 @@
 
 /obj/structure/window/New(Loc,re=0)
 	..()
-	health = maxhealth
+	obj_integrity = max_integrity
 	if(re)
 		reinf = re
 	if(reinf)
@@ -52,22 +54,6 @@
 		debris += new /obj/item/stack/rods(src, rods)
 
 
-/obj/structure/window/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
-
-/obj/structure/window/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			shatter()
-		if(3)
-			take_damage(rand(25,75), BRUTE, 0)
-
-/obj/structure/window/blob_act(obj/structure/blob/B)
-	take_damage(rand(75,150), BRUTE, 0)
-
 /obj/structure/window/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
 	for(var/obj/item/weapon/shard/shard in debris)
@@ -82,7 +68,7 @@
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		shatter()
+		deconstruct(FALSE)
 
 /obj/structure/window/setDir(direct)
 	if(!fulltile)
@@ -106,35 +92,16 @@
 		return 0
 	return 1
 
-
-/obj/structure/window/hitby(AM as mob|obj)
-	..()
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-
-	else if(isobj(AM))
-		var/obj/item/I = AM
-		tforce = I.throwforce
-	if(reinf)
-		tforce *= 0.25
-	take_damage(tforce)
-
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
-/obj/structure/window/attack_hulk(mob/living/carbon/human/user)
+/obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
-		return
-	..(user, 1)
-	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
-	user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
-	add_fingerprint(user)
-	take_damage(50)
-	return 1
+		return 1
+	..()
 
 /obj/structure/window/attack_hand(mob/user)
 	if(!can_be_reached(user))
@@ -148,31 +115,10 @@
 	return attack_hand(user)
 
 
-/obj/structure/window/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE)	//used by attack_alien, attack_animal, and attack_slime
+/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
-	take_damage(damage, damage_type)
-
-/obj/structure/window/attack_alien(mob/living/user)
-	attack_generic(user, 15)
-
-/obj/structure/window/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper && !M.obj_damage)
-		return
-	if(M.obj_damage)
-		attack_generic(M, M.obj_damage, M.melee_damage_type)
-	else
-		attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
-
-
-/obj/structure/window/attack_slime(mob/living/simple_animal/slime/user)
-	if(!user.is_adult)
-		return
-	attack_generic(user, rand(10, 15))
-
+	..()
 
 /obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))
@@ -181,12 +127,12 @@
 	add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
 		var/obj/item/weapon/weldingtool/WT = I
-		if(health < maxhealth)
+		if(obj_integrity < max_integrity)
 			if(WT.remove_fuel(0,user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 				if(do_after(user, 40/I.toolspeed, target = src))
-					health = maxhealth
+					obj_integrity = max_integrity
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					update_nearby_icons()
 					user << "<span class='notice'>You repair [src].</span>"
@@ -256,14 +202,10 @@
 			return
 	return ..()
 
-
-/obj/structure/window/attacked_by(obj/item/I, mob/living/user)
-	..()
-	take_damage(I.force, I.damtype)
-
 /obj/structure/window/mech_melee_attack(obj/mecha/M)
-	if(..())
-		take_damage(M.force, M.damtype)
+	if(!can_be_reached())
+		return
+	..()
 
 
 /obj/structure/window/proc/can_be_reached(mob/user)
@@ -274,35 +216,35 @@
 					return 0
 	return 1
 
-/obj/structure/window/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	if(reinf)
-		damage *= 0.5
+/obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(.) //received damage
+		update_nearby_icons()
+
+/obj/structure/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			if(damage_amount)
+				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
-	update_nearby_icons()
-	if(health <= 0)
-		shatter()
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/structure/window/proc/shatter()
+
+/obj/structure/window/deconstruct(disassembled = TRUE)
 	if(qdeleted(src))
 		return
-	playsound(src, "shatter", 70, 1)
-	var/turf/T = loc
+	if(!disassembled)
+		playsound(src, "shatter", 70, 1)
+		var/turf/T = loc
 
-	if(!(flags & NODECONSTRUCT))
-		for(var/i in debris)
-			var/obj/item/I = i
+		if(!(flags & NODECONSTRUCT))
+			for(var/i in debris)
+				var/obj/item/I = i
 
-			I.loc = T
-			transfer_fingerprints_to(I)
+				I.loc = T
+				transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
 
@@ -402,7 +344,7 @@
 		if(!fulltile)
 			return
 
-		var/ratio = health / maxhealth
+		var/ratio = obj_integrity / max_integrity
 		ratio = Ceiling(ratio*4) * 25
 
 		if(smooth)
@@ -416,7 +358,7 @@
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
-		take_damage(round(exposed_volume / 100), BURN, 0)
+		take_damage(round(exposed_volume / 100), BURN, 0, 0)
 	..()
 
 /obj/structure/window/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
@@ -434,8 +376,8 @@
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
-	maxhealth = 50
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
+	max_integrity = 50
 	explosion_block = 1
 
 /obj/structure/window/reinforced/tinted
@@ -448,13 +390,13 @@
 	icon_state = "fwindow"
 
 
-/* Full Tile Windows (more health) */
+/* Full Tile Windows (more obj_integrity) */
 
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window"
 	dir = NORTHEAST
-	maxhealth = 50
+	max_integrity = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
@@ -463,7 +405,7 @@
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
 	dir = NORTHEAST
-	maxhealth = 100
+	max_integrity = 100
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
@@ -481,7 +423,7 @@
 /obj/structure/window/reinforced/fulltile/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
 	icon_state = "ice_window"
-	maxhealth = 150
+	max_integrity = 150
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/reinforced/fulltile/ice)
 	level = 3
 
@@ -491,11 +433,11 @@
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
 	dir = NORTHEAST
-	maxhealth = 100
+	max_integrity = 100
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 0, acid = 0)
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 1
@@ -512,7 +454,7 @@
 	desc = "A paper-thin pane of translucent yet reinforced brass."
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
-	maxhealth = 100
+	max_integrity = 100
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
 	var/made_glow = FALSE
 
@@ -546,7 +488,7 @@
 	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()
-	health = maxhealth
+	obj_integrity = max_integrity
 	update_icon()
 	return 0
 
@@ -563,4 +505,4 @@
 	canSmoothWith = null
 	fulltile = 1
 	dir = NORTHEAST
-	maxhealth = 150
+	max_integrity = 150

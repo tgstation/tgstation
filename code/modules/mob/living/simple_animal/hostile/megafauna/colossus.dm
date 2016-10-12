@@ -496,7 +496,7 @@ Difficulty: Very Hard
 			for(var/atom/Stuff in A)
 				if(isturf(Stuff))
 					var/turf/T = Stuff
-					if((istype(T, /turf/open/space) || istype(T, /turf/open/floor)) && NewTerrainFloors)
+					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
 						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
 						if(O.air)
 							var/datum/gas_mixture/G = O.air
@@ -505,7 +505,7 @@ Difficulty: Very Hard
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
 						continue
-					if(istype(T, /turf/closed/wall) && NewTerrainWalls)
+					if(iswallturf(T) && NewTerrainWalls)
 						T.ChangeTurf(NewTerrainWalls)
 						continue
 				if(istype(Stuff, /obj/structure/chair) && NewTerrainChairs)
@@ -625,6 +625,7 @@ Difficulty: Very Hard
 	flying = 1
 	minbodytemp = 0
 	maxbodytemp = 1500
+	obj_damage = 0
 	environment_smash = 0
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
@@ -699,7 +700,7 @@ Difficulty: Very Hard
 	icon_state = null //This shouldn't even be visible, so if it DOES show up, at least nobody will notice
 	density = 1
 	anchored = 1
-	health = 999
+	obj_integrity = 999
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()
@@ -759,7 +760,7 @@ Difficulty: Very Hard
 	sound = null
 
 /obj/effect/proc_holder/spell/targeted/exit_possession/cast(list/targets, mob/user = usr)
-	if(!istype(user.loc, /turf/open/floor))
+	if(!isfloorturf(user.loc))
 		return
 	var/datum/mind/target_mind = user.mind
 	for(var/i in user)

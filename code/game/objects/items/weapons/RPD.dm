@@ -133,6 +133,8 @@ var/global/list/RPD_recipes=list(
 	w_class = 3
 	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
 	origin_tech = "engineering=4;materials=2"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
 	var/p_type = PIPE_SIMPLE
@@ -562,7 +564,7 @@ var/global/list/RPD_recipes=list(
 			user << "<span class='warning'>The [src]'s error light flickers!  Perhaps you need to only use it on pipes and pipe meters?</span>"
 			return 0
 		if(ATMOS_MODE)
-			if(!(istype(A, /turf)))
+			if(!isturf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
@@ -577,7 +579,7 @@ var/global/list/RPD_recipes=list(
 			return 0
 
 		if(METER_MODE)
-			if(!(istype(A, /turf)))
+			if(!isturf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building meter...</span>"

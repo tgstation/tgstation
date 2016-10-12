@@ -4,6 +4,9 @@
 	icon_state = "cell-off"
 	density = 1
 	anchored = 1
+	obj_integrity = 350
+	max_integrity = 350
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
 
 	var/on = FALSE
 	state_open = FALSE
@@ -50,8 +53,15 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
-	beaker = null
+	if(beaker)
+		qdel(beaker)
+		beaker = null
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
+	if(beaker)
+		beaker.forceMove(loc)
+		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	if(panel_open)
@@ -137,7 +147,7 @@
 		on = FALSE
 		..()
 		if(beaker)
-			beaker.loc = src
+			beaker.forceMove(src)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
@@ -253,7 +263,7 @@
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
-				beaker.loc = loc
+				beaker.forceMove(loc)
 				beaker = null
 				. = TRUE
 	update_icon()

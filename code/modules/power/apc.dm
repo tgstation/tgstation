@@ -48,6 +48,10 @@
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
+	armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -93,7 +97,7 @@
 	var/global/list/status_overlays_equipment
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
-	var/health = 50
+
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
@@ -183,7 +187,6 @@
 /obj/machinery/power/apc/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		user << "Looks broken."
 		return
 	if(opened)
 		if(has_electronics && terminal)
@@ -368,7 +371,7 @@
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/living/user, params)
 
-	if (istype(user, /mob/living/silicon) && get_dist(src,user)>1)
+	if(issilicon(user) && get_dist(src,user)>1)
 		return src.attack_hand(user)
 	if (istype(W, /obj/item/weapon/crowbar) && opened)
 		if (has_electronics==1)
@@ -411,7 +414,7 @@
 				return
 			if(!user.drop_item())
 				return
-			W.loc = src
+			W.forceMove(src)
 			cell = W
 			user.visible_message(\
 				"[user.name] has inserted the power cell to [src.name]!",\
@@ -555,13 +558,21 @@
 	else
 		return ..()
 
-/obj/machinery/power/apc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	..()
-	if((malfhack || (stat & BROKEN)) && !opened)
-		if(damage < 10)
-			return
-		health -= damage
-		if(health <= 0)
+/obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
+		return 0
+	. = ..()
+
+
+/obj/machinery/power/apc/obj_break(damage_flag)
+	if(!(flags & NODECONSTRUCT))
+		set_broken()
+
+/obj/machinery/power/apc/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
+			set_broken()
+		if(opened != 2)
 			opened = 2
 			visible_message("<span class='warning'>The APC cover is knocked down!</span>")
 			update_icon()
@@ -602,28 +613,9 @@
 	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	..()
-	if(malfhack || (stat & BROKEN))
+	if(malfhack)
 		return
-	if(opened == 0)
-		if(!panel_open)
-			panel_open = 1
-			update_icon()
-			visible_message("<span class='danger'>The [src.name]'s cover flies open, exposing the wires!</span>")
-
-		else if(panel_open && !wires.is_all_cut())
-			wires.cut_all()
-			update_icon()
-			visible_message("<span class='danger'>The [src.name]'s wires are shredded!</span>")
-	else if(opened == 1)
-		if(cell)
-			cell.loc = user.loc
-			cell.updateicon()
-			cell = null
-			visible_message("<span class='danger'>The [src.name]'s power cell flies off!</span>")
-			charging = 0
-			update_icon()
-
+	..()
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -1084,17 +1076,6 @@
 	addtimer(src, "reset", 600, FALSE, APC_RESET_EMP)
 	..()
 
-/obj/machinery/power/apc/ex_act(severity, target)
-	..()
-	if(!qdeleted(src))
-		switch(severity)
-			if(2)
-				if(prob(50))
-					set_broken()
-			if(3)
-				if(prob(25))
-					set_broken()
-
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
 
@@ -1124,7 +1105,7 @@
 			for(var/area/A in area.related)
 				for(var/obj/machinery/light/L in A)
 					L.on = 1
-					L.broken()
+					L.break_light_tube()
 					stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)

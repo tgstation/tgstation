@@ -24,6 +24,7 @@
 	maxHealth = 125
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	obj_damage = 0
 	environment_smash = 0
 	check_friendly_fire = 1
 	stop_automated_movement_when_pulled = 1

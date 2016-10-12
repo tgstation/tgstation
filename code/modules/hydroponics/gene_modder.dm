@@ -66,7 +66,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(isrobot(user))
+	if(iscyborg(user))
 		return
 
 	if(istype(I, /obj/item/seeds))
@@ -104,7 +104,7 @@
 		return
 
 	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600)
-	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
+	if(!(in_range(src, user) || issilicon(user)))
 		popup.close()
 		return
 

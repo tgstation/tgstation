@@ -108,14 +108,13 @@
 		dismantle_wall(1)
 		return
 
-/turf/closed/wall/attack_hulk(mob/user)
+/turf/closed/wall/attack_hulk(mob/user, does_attack_animation = 0)
 	..(user, 1)
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		user << text("<span class='notice'>You smash through the wall.</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		dismantle_wall(1)
-
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		user << text("<span class='notice'>You punch the wall.</span>")
@@ -137,7 +136,7 @@
 		return
 
 	//get the user's location
-	if( !istype(user.loc, /turf) )
+	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
 
 	add_fingerprint(user)
@@ -179,7 +178,7 @@
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			if(do_after(user, slicing_duration/W.toolspeed, target = src))
-				if( !istype(src, /turf/closed/wall) || !user || !WT || !WT.isOn() || !T )
+				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
 					return 1
 				if( user.loc == T && user.get_active_held_item() == WT )
 					user << "<span class='notice'>You remove the outer plating.</span>"
@@ -189,7 +188,7 @@
 		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*0.6, target = src))  // plasma cutter is faster than welding tool
-			if( !istype(src, /turf/closed/wall) || !user || !W || !T )
+			if(!iswallturf(src) || !user || !W || !T)
 				return 1
 			if( user.loc == T && user.get_active_held_item() == W )
 				user << "<span class='notice'>You remove the outer plating.</span>"
@@ -202,7 +201,7 @@
 /turf/closed/wall/proc/try_destroy(obj/item/weapon/W, mob/user, turf/T)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if( !istype(src, /turf/closed/wall) || !user || !W || !T )
+		if(!iswallturf(src) || !user || !W || !T)
 			return 1
 		if( user.loc == T && user.get_active_held_item() == W )
 			D.playDigSound()
@@ -266,3 +265,7 @@
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/turf/closed/wall/acid_melt()
+	dismantle_wall(1)
+

@@ -1,7 +1,7 @@
 /proc/radiation_pulse(turf/epicenter, heavy_range, light_range, severity, log=0)
 	if(!epicenter || !severity) return
 
-	if(!istype(epicenter, /turf))
+	if(!isturf(epicenter))
 		epicenter = get_turf(epicenter.loc)
 
 	if(heavy_range > light_range)

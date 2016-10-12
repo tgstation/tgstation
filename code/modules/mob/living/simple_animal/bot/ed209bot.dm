@@ -8,7 +8,7 @@
 	health = 100
 	maxHealth = 100
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-
+	obj_damage = 60
 	environment_smash = 2 //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
 
@@ -418,19 +418,15 @@ Auto Patrol[]"},
 		return
 	lastfired = world.time
 	var/turf/T = loc
-	var/atom/U = (istype(target, /atom/movable) ? target.loc : target)
-	if((!( U ) || !( T )))
+	var/turf/U = get_turf(target)
+	if(!U)
 		return
-	while(!(istype(U, /turf)))
-		U = U.loc
-	if(!(istype(T, /turf)))
+	if(!isturf(T))
 		return
 
 	if(!projectile)
 		return
 
-	if(!(istype(U, /turf)))
-		return
 	var/obj/item/projectile/A = new projectile (loc)
 	playsound(loc, shoot_sound, 50, 1)
 	A.current = U

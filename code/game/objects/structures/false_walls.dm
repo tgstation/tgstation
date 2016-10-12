@@ -14,6 +14,8 @@
 	var/opening = 0
 	density = 1
 	opacity = 1
+	obj_integrity = 100
+	max_integrity = 100
 
 	canSmoothWith = list(
 	/turf/closed/wall,
@@ -65,14 +67,6 @@
 	air_update_turf(1)
 	opening = 0
 
-/obj/structure/falsewall/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		deconstruct()
-
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
 		smooth = SMOOTH_FALSE
@@ -107,7 +101,7 @@
 			if(T.density)
 				user << "<span class='warning'>[src] is blocked!</span>"
 				return
-			if(!istype(T, /turf/open/floor))
+			if(!isfloorturf(T))
 				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
 				return
 			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
@@ -128,18 +122,19 @@
 	else
 		return ..()
 
-/obj/structure/falsewall/proc/dismantle(mob/user, drop_girder)
+/obj/structure/falsewall/proc/dismantle(mob/user, disassembled = TRUE)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
-	deconstruct(drop_girder)
+	deconstruct(disassembled)
 
-/obj/structure/falsewall/deconstruct(drop_girder)
-	if(drop_girder)
-		new girder_type(loc)
-	if(mineral_amount)
-		for(var/i in 1 to mineral_amount)
-			new mineral(loc)
-	..()
+/obj/structure/falsewall/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			new girder_type(loc)
+		if(mineral_amount)
+			for(var/i in 1 to mineral_amount)
+				new mineral(loc)
+	qdel(src)
 
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
@@ -220,6 +215,8 @@
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	walltype = /turf/closed/wall/mineral/diamond
 	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/closed/wall/mineral/diamond)
+	obj_integrity = 800
+	max_integrity = 800
 
 /obj/structure/falsewall/plasma
 	name = "plasma wall"

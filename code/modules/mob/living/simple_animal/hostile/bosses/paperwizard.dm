@@ -10,6 +10,7 @@
 	environment_smash = 0
 	minimum_distance = 3
 	retreat_distance = 3
+	obj_damage = 0
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	health = 1000

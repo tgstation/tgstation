@@ -492,7 +492,7 @@ Difficulty: Hard
 	friendly_fire_check = friendly_fire
 	if(new_caster)
 		hit_things += new_caster
-	if(istype(loc, /turf/closed/mineral)) //drill mineral turfs
+	if(ismineralturf(loc)) //drill mineral turfs
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
 	addtimer(src, "blast", 0)
@@ -535,7 +535,7 @@ Difficulty: Hard
 				continue
 			M.occupant << "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>"
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
-		M.take_damage(damage, "fire", 0)
+		M.take_damage(damage, BURN, 0, 0)
 
 /obj/effect/hierophant
 	name = "hierophant rune"

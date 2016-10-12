@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile
 	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
+	obj_damage = 40
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 	var/atom/target
 	var/ranged = 0
@@ -352,7 +353,7 @@
 		EscapeConfinement()
 		for(var/dir in cardinal)
 			var/turf/T = get_step(targets_from, dir)
-			if(istype(T, /turf/closed/wall) || istype(T, /turf/closed/mineral))
+			if(iswallturf(T) || ismineralturf(T))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)

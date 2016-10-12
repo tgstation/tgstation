@@ -16,7 +16,7 @@
 	var/toxic = 0			//Toxicity in the tray?
 	var/age = 0				//Current age
 	var/dead = 0			//Is it dead?
-	var/health = 0			//Its health.
+	var/plant_health		//Its health
 	var/lastproduce = 0		//Last time it was harvested
 	var/lastcycle = 0		//Used for timing of cycles.
 	var/cycledelay = 200	//About 10 seconds / cycle
@@ -197,8 +197,8 @@
 
 //Health & Age///////////////////////////////////////////////////////////
 
-			// Plant dies if health <= 0
-			if(health <= 0)
+			// Plant dies if plant_health <= 0
+			if(plant_health <= 0)
 				plantdies()
 				adjustWeeds(1 / rating) // Weeds flourish
 
@@ -305,7 +305,7 @@
 		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3"))
 	if(nutrilevel <= 2)
 		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3"))
-	if(health <= (myseed.endurance / 2))
+	if(plant_health <= (myseed.endurance / 2))
 		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3"))
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
 		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3"))
@@ -321,7 +321,7 @@
 			user << "<span class='warning'>It's dead!</span>"
 		else if (harvest)
 			user << "<span class='info'>It's ready to harvest.</span>"
-		else if (health <= (myseed.endurance / 2))
+		else if (plant_health <= (myseed.endurance / 2))
 			user << "<span class='warning'>It looks unhealthy.</span>"
 	else
 		user << "<span class='info'>[src] is empty.</span>"
@@ -366,7 +366,7 @@
 		else
 			myseed = new /obj/item/seeds/weeds(src)
 	age = 0
-	health = myseed.endurance
+	plant_health = myseed.endurance
 	lastcycle = world.time
 	harvest = 0
 	weedlevel = 0 // Reset
@@ -399,7 +399,7 @@
 
 	hardmutate()
 	age = 0
-	health = myseed.endurance
+	plant_health = myseed.endurance
 	lastcycle = world.time
 	harvest = 0
 	weedlevel = 0 // Reset
@@ -419,7 +419,7 @@
 		dead = 0
 		hardmutate()
 		age = 0
-		health = myseed.endurance
+		plant_health = myseed.endurance
 		lastcycle = world.time
 		harvest = 0
 		weedlevel = 0 // Reset
@@ -432,7 +432,7 @@
 
 
 /obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
-	health = 0
+	plant_health = 0
 	harvest = 0
 	pestlevel = 0 // Pests die
 	if(!dead)
@@ -773,9 +773,9 @@
 			dead = 0
 			myseed = O
 			age = 1
-			health = myseed.endurance
+			plant_health = myseed.endurance
 			lastcycle = world.time
-			O.loc = src
+			O.forceMove(src)
 			update_icon()
 		else
 			user << "<span class='warning'>[src] already has seeds in it!</span>"
@@ -858,7 +858,7 @@
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		if(myseed) //Could be that they're just using it as a de-weeder
 			age = 0
-			health = 0
+			plant_health = 0
 			if(harvest)
 				harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
 			qdel(myseed)
@@ -870,7 +870,7 @@
 		return ..()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
+	if(issilicon(user)) //How does AI know what plant is?
 		return
 	if(harvest)
 		myseed.harvest(user)
@@ -910,7 +910,7 @@
 
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(myseed && !dead)
-		health = Clamp(health + adjustamt, 0, myseed.endurance)
+		plant_health = Clamp(plant_health + adjustamt, 0, myseed.endurance)
 
 /obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
 	toxic = Clamp(toxic + adjustamt, 0, 100)

@@ -7,6 +7,10 @@
 	w_class = 2
 	var/w_class_on = 4
 	heat = 3500
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>", \
@@ -229,6 +233,7 @@
 	throw_range = 1
 	w_class = 4//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
+	sharpness = IS_SHARP
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/weapon/melee/energy/blade/New()
@@ -241,3 +246,9 @@
 
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)
 	return
+
+/obj/item/weapon/melee/energy/blade/hardlight
+	name = "hardlight blade"
+	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
+	icon_state = "lightblade"
+	item_state = "lightblade"
