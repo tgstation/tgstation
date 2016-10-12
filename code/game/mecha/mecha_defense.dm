@@ -268,6 +268,21 @@
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()
 
+/obj/mecha/proc/full_repair(charge_cell)
+	obj_integrity = max_integrity
+	if(cell && charge_cell)
+		cell.charge = cell.maxcharge
+	if(internal_damage & MECHA_INT_FIRE)
+		clearInternalDamage(MECHA_INT_FIRE)
+	if(internal_damage & MECHA_INT_TEMP_CONTROL)
+		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
+	if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
+		clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
+	if(internal_damage & MECHA_INT_TANK_BREACH)
+		clearInternalDamage(MECHA_INT_TANK_BREACH)
+	if(internal_damage & MECHA_INT_CONTROL_LOST)
+		clearInternalDamage(MECHA_INT_CONTROL_LOST)
+
 /obj/mecha/narsie_act()
 	if(occupant)
 		var/mob/living/L = occupant
@@ -278,19 +293,7 @@
 /obj/mecha/ratvar_act()
 	if(occupant)
 		if(is_servant_of_ratvar(occupant)) //reward the minion that got a mech by repairing it
-			obj_integrity = max_integrity
-			if(cell)
-				cell.charge = cell.maxcharge
-			if(internal_damage & MECHA_INT_FIRE)
-				clearInternalDamage(MECHA_INT_FIRE)
-			if(internal_damage & MECHA_INT_TEMP_CONTROL)
-				clearInternalDamage(MECHA_INT_TEMP_CONTROL)
-			if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
-				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
-			if(internal_damage & MECHA_INT_TANK_BREACH)
-				clearInternalDamage(MECHA_INT_TANK_BREACH)
-			if(internal_damage & MECHA_INT_CONTROL_LOST)
-				clearInternalDamage(MECHA_INT_CONTROL_LOST)
+			full_repair(TRUE)
 		else
 			var/mob/living/L = occupant
 			go_out(TRUE)
