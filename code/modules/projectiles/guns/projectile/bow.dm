@@ -186,3 +186,6 @@
 	..()
 	var/obj/item/projectile/bullet/reusable/arrow/hardlight2/A = new /obj/item/projectile/bullet/reusable/arrow/hardlight2(src.loc)
 	A.Bump(target, 1)
+
+/obj/item/ammo_casing/caseless/arrow/hardlight/Dropped()
+	addtimer(src, "Destroy", 200)
