@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "You can now store monkey cubes in bio bags; using bio bags on the consoles will load them with the monkey cubes inside the bags."
