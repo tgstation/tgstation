@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Fixed motion alarms instantly triggering and de/un/re/triggering"
