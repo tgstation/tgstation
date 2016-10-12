@@ -310,7 +310,7 @@
 
 	//Too much oxygen! //Yes, some species may not like it.
 	if(breathlevels["safe_oxygen_max"])
-		if(O2_pp > breathlevels["safe_oxygen_max"] && !(NOBREATH in specflags))
+		if(O2_pp > breathlevels["safe_oxygen_max"])
 			var/ratio = (breath_gases["o2"][MOLES]/breathlevels["safe_oxygen_max"]) * 10
 			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
@@ -339,7 +339,7 @@
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
 	if(breathlevels["safe_co2_max"])
-		if(CO2_pp > breathlevels["safe_co2_max"] && !(NOBREATH in specflags))
+		if(CO2_pp > breathlevels["safe_co2_max"])
 			if(!H.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				H.co2overloadtime = world.time
 			else if(world.time - H.co2overloadtime > 120)
@@ -376,7 +376,7 @@
 
 	//Too much toxins!
 	if(breathlevels["safe_toxins_max"])
-		if(Toxins_pp > breathlevels["safe_toxins_max"] && !(NOBREATH in specflags))
+		if(Toxins_pp > breathlevels["safe_toxins_max"])
 			var/ratio = (breath_gases["plasma"][MOLES]/breathlevels["safe_toxins_max"]) * 10
 			if(H.reagents)
 				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
@@ -387,7 +387,7 @@
 
 	//Too little toxins!
 	if(breathlevels["safe_toxins_min"])
-		if(Toxins_pp < breathlevels["safe_toxins_min"] && !(NOBREATH in specflags))
+		if(Toxins_pp < breathlevels["safe_toxins_min"])
 			gas_breathed = handle_too_little_breath(H,Toxins_pp, breathlevels["safe_toxins_min"], breath_gases["plasma"][MOLES])
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
@@ -404,7 +404,7 @@
 
 	//-- TRACES --//
 
-	if(breath && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
+	if(breath)	// If there's some other shit in the air lets deal with it here.
 
 	// N2O
 
@@ -436,21 +436,17 @@
 	. = 0
 	if(!H || !safe_breath_min) //the other args are either: Ok being 0 or Specifically handled.
 		return 0
-	var/nobreath = 0
-	if(H && H.dna && H.dna && H.dna.species && H.dna.species.specflags)
-		if(NOBREATH in H.dna.species.specflags)
-			nobreath = 1
-	if(!nobreath || (H.health <= HEALTH_THRESHOLD_CRIT))
-		if(prob(20))
-			H.emote("gasp")
-		if(breath_pp > 0)
-			var/ratio = safe_breath_min/breath_pp
-			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!
-			H.failed_last_breath = 1
-			. = true_pp*ratio/6
-		else
-			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-			H.failed_last_breath = 1
+
+	if(prob(20))
+		H.emote("gasp")
+	if(breath_pp > 0)
+		var/ratio = safe_breath_min/breath_pp
+		H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!
+		H.failed_last_breath = 1
+		. = true_pp*ratio/6
+	else
+		H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+		H.failed_last_breath = 1
 
 
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/H) // called by human/life, handles temperatures
