@@ -32,7 +32,7 @@
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/wrench))
-		playsound(loc, P.usesound, 50, 1)
+		playsound(loc, P.usesound, 50, 1)//you have any idea how many times i've typed this?
 		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
 					 "<span class='notice'>You start to [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor...</span>")
 		if(do_after(user, 20/P.toolspeed, target = src))
