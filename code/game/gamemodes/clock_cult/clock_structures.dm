@@ -617,6 +617,9 @@
 	icon_state = "clockwork_floor"
 	layer = TURF_LAYER
 
+/obj/effect/clockwork/overlay/floor/bloodcult //this is used by BLOOD CULT, it shouldn't use such a path...
+	icon_state = "cult"
+
 /obj/effect/clockwork/general_marker
 	name = "general marker"
 	desc = "Some big guy. For you."
