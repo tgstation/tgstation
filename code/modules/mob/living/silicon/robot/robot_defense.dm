@@ -154,7 +154,6 @@
 /mob/living/silicon/robot/blob_act(obj/structure/blob/B)
 	if(stat != DEAD)
 		adjustBruteLoss(30)
-		updatehealth()
 	else
 		gib()
 	return TRUE
