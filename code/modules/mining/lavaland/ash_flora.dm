@@ -71,6 +71,9 @@
 	else
 		..()
 
+/obj/structure/flora/ash/tall_shroom //exists only so that the spawning check doesn't allow these spawning near other things
+	regrowth_time_low = 4200
+
 /obj/structure/flora/ash/leaf_shroom
 	icon_state = "s_mushroom"
 	name = "leafy mushrooms"
