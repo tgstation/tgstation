@@ -9472,7 +9472,6 @@
 	},
 /area/crew_quarters/sleep)
 "atk" = (
-/obj/machinery/hologram/holopad,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -11906,12 +11905,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aye" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
 	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
+/turf/open/floor/plasteel/white,
+/area/medical/research{
+	name = "Research Division"
+	})
 "ayf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -12779,16 +12779,16 @@
 	layer = 4.1;
 	pixel_y = 12
 	},
-/obj/machinery/requests_console{
-	department = "Detective's office";
-	pixel_x = -30;
-	pixel_y = 0
-	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aAd" = (
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/requests_console{
+	department = "Detective's office";
+	pixel_x = 0;
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -14342,6 +14342,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/requests_console{
+	department = "Detective's office";
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/black,
 /area/security/detectives_office)
 "aDc" = (
@@ -14377,6 +14382,11 @@
 	icon_state = "1-2";
 	pixel_y = 0;
 	tag = ""
+	},
+/obj/machinery/requests_console{
+	department = "Detective's office";
+	pixel_x = -30;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -16428,8 +16438,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aHn" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
@@ -16838,16 +16848,17 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aIq" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
 	})
 "aIr" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
@@ -24446,6 +24457,10 @@
 /area/quartermaster/qm)
 "aYA" = (
 /obj/structure/closet/wardrobe/miner,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -28
+	},
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTHWEST)";
 	dir = 9;
@@ -28658,18 +28673,26 @@
 /turf/open/floor/plating,
 /area/medical/genetics)
 "bhz" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/medical/medbay3)
-"bhA" = (
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Port Emergency Storage APC";
 	pixel_x = 0;
 	pixel_y = -24
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/medical/medbay3)
+"bhA" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/open/floor/plating,
 /area/medical/medbay3)
 "bhB" = (
@@ -29557,6 +29580,9 @@
 /obj/structure/table,
 /obj/item/clothing/tie/stethoscope,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
@@ -30983,7 +31009,6 @@
 /area/medical/medbay)
 "bmf" = (
 /obj/machinery/chem_master{
-	step_x = 0;
 	layer = 2.7;
 	pixel_x = -2
 	},
@@ -31013,7 +31038,6 @@
 /area/medical/chemistry)
 "bmi" = (
 /obj/machinery/chem_master{
-	step_x = 0;
 	layer = 2.7;
 	pixel_x = -2
 	},
@@ -33816,17 +33840,17 @@
 	name = "Research Division"
 	})
 "brM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
 	})
 "brN" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/research{
@@ -35550,6 +35574,11 @@
 /area/security/checkpoint/science)
 "buW" = (
 /obj/structure/closet/wardrobe/red,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 23;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
@@ -36655,11 +36684,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science)
 "bxc" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 23;
-	pixel_y = 0
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	on = 1
@@ -36725,10 +36749,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/research{
 	name = "Research Division"
@@ -40127,6 +40148,7 @@
 /area/medical/virology)
 "bDM" = (
 /obj/structure/table,
+/obj/item/clothing/gloves/color/latex,
 /obj/item/weapon/reagent_containers/dropper,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -40143,7 +40165,6 @@
 "bDO" = (
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/color/latex,
-/obj/item/device/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/machinery/requests_console{
@@ -40151,6 +40172,7 @@
 	name = "Virology Requests Console";
 	pixel_x = 32
 	},
+/obj/item/weapon/storage/box/monkeycubes,
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
@@ -48424,25 +48446,35 @@
 /obj/item/weapon/stock_parts/scanning_module,
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
-"bVX" = (
+"bVZ" = (
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/apmaint)
-"bVW" = (
+"bVY" = (
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
 	},
 /area/maintenance/apmaint)
-"bVV" = (
+"bVX" = (
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/green/side{
 	dir = 8
 	},
 /area/hydroponics)
-"bVU" = (
+"bVW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
+"bVV" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
@@ -48452,6 +48484,13 @@
 	dir = 4
 	},
 /area/bridge)
+"bVU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/hologram/holopad,
+/turf/open/floor/plasteel,
+/area/crew_quarters/sleep)
 "bVT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
@@ -70144,7 +70183,7 @@ atx
 auH
 avx
 avx
-aye
+avx
 azc
 aAc
 aBi
@@ -71686,7 +71725,7 @@ atC
 auF
 avx
 awG
-ayh
+bVW
 azc
 aAi
 aAe
@@ -73561,9 +73600,9 @@ bND
 bpM
 bOG
 bOG
+bOG
 bOH
-bOH
-bOH
+bOG
 bOG
 bOG
 bwu
@@ -73820,9 +73859,9 @@ bOH
 bOH
 bOH
 bQb
-bOH
-bOH
-bOH
+bOG
+bOG
+bOG
 bwu
 bRR
 bwu
@@ -74075,11 +74114,11 @@ bFC
 bpM
 bOG
 bOG
-bOH
+bOG
 bQc
 bOH
-bOG
-bOG
+bOH
+bOH
 bwu
 bvp
 bwu
@@ -74279,7 +74318,7 @@ aQx
 aRx
 aOF
 aTt
-bVV
+bVX
 aUs
 aWj
 aUs
@@ -74332,9 +74371,9 @@ bNE
 bpM
 bOG
 bOG
+bOG
 bOH
-bOH
-bOH
+bOG
 bOG
 bOG
 bwu
@@ -80678,7 +80717,7 @@ arm
 asi
 asU
 aub
-bVU
+bVV
 avS
 axk
 ayD
@@ -84820,8 +84859,8 @@ aUJ
 aVD
 aWE
 aIt
-bVW
-bVX
+bVY
+bVZ
 aDH
 bbf
 aBT
@@ -85077,7 +85116,7 @@ aUK
 aSa
 aWF
 aIt
-bVX
+bVZ
 aFL
 aCd
 aCd
@@ -85610,7 +85649,7 @@ bmv
 bnQ
 bpm
 bqx
-aHn
+aye
 bsV
 buk
 buX
@@ -85867,7 +85906,7 @@ bmw
 bnR
 bpm
 bgL
-aIq
+aHn
 bsW
 buk
 buX
@@ -86124,7 +86163,7 @@ bmx
 bnS
 bpm
 bqy
-aIr
+aIq
 bsX
 buk
 buX
@@ -87419,7 +87458,7 @@ buk
 buk
 buk
 buk
-bHm
+bCk
 bCs
 bHm
 bNB
@@ -87873,7 +87912,7 @@ aoP
 aoP
 aoP
 atk
-auq
+bVU
 avi
 awj
 axw
@@ -87923,13 +87962,13 @@ blm
 bnX
 bjU
 bgM
-brM
+aIr
 biJ
 bfw
 bvc
-brN
+brM
 bxi
-bfw
+brN
 bzs
 bAq
 aad
@@ -88180,7 +88219,7 @@ bmC
 bnY
 bjU
 bfw
-aIr
+aIq
 bhO
 bfv
 bvd
@@ -96663,7 +96702,7 @@ bij
 bij
 bij
 btw
-bdx
+btw
 aaa
 aaa
 aaa
