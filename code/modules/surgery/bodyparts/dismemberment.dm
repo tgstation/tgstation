@@ -16,7 +16,7 @@
 			return 0
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
-	affecting.take_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
 	drop_limb()
@@ -80,12 +80,11 @@
 		return
 	var/turf/T = get_turf(owner)
 	var/mob/living/carbon/C = owner
-	if(!no_update)
-		update_limb(1)
+	update_limb(1)
 	C.bodyparts -= src
 	if(held_index)
 		C.unEquip(owner.get_item_for_held_index(held_index), 1)
-		C.hand_bodyparts[held_index] = null
+		C.hand_bodyparts -= src
 
 	owner = null
 
@@ -263,12 +262,12 @@
 				break
 
 	update_bodypart_damage_state()
+
 	C.updatehealth()
 	C.update_body()
 	C.update_hair()
 	C.update_damage_overlays()
 	C.update_canmove()
-
 
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
@@ -308,7 +307,7 @@
 	for(var/Z in limb_list)
 		. += regenerate_limb(Z, noheal)
 
-/
+
 /mob/living/proc/regenerate_limb(limb_zone, noheal)
 	return
 
@@ -321,7 +320,8 @@
 		if(!noheal)
 			L.brute_dam = 0
 			L.burn_dam = 0
-			L.burn_state = 0
+			L.brutestate = 0
+			L.burnstate = 0
 
 		L.attach_limb(src, 1)
 		return 1

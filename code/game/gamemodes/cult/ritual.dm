@@ -74,9 +74,8 @@ This file contains the arcane tome files.
 	Successful conversions will produce a tome for the new cultist, in addition to healing them.<br> \
 	Successful sacrifices will please the Geometer, can complete your objective if it sacrificed the sacrifice target, and will attempt to place the target into a soulstone.<br><br>"
 
-	text += "<font color='red'><b>Raise Dead</b></font><br>This rune requires two corpses. To perform the ritual, place the corpse you wish to revive onto \
-	the rune and the offering body adjacent to it. When the rune is invoked, the body to be sacrificed will turn to dust, the life force flowing into the revival target. Assuming the target is not moved \
-	within a few seconds, they will be brought back to life, healed of all ailments.<br><br>"
+	text += "<font color='red'><b>Raise Dead</b></font><br>This rune requires the corpse of a cultist placed upon the rune, and one person sacrificed for each revival you wish to do.\
+	Provided there are remaining revivals from those sacrificed, invoking the rune will revive the cultist placed upon it.<br><br>"
 
 	text += "<font color='red'><b>Electromagnetic Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. This rune may allow you to gain the upper \
 	hand against these pests. By using the rune, a large electromagnetic pulse will be emitted from the rune's location. The size of the EMP will grow significantly for each additional adjacent cultist when the \
@@ -172,15 +171,8 @@ This file contains the arcane tome files.
 	var/list/shields = list()
 	var/area/A = get_area(src)
 
-	if(locate(/obj/effect/rune) in Turf)
-		user << "<span class='cult'>There is already a rune here.</span>"
+	if(!check_rune_turf(Turf, user))
 		return
-
-	if(Turf.z != ZLEVEL_STATION && Turf.z != ZLEVEL_MINING)
-		user << "<span class='warning'>The veil is not weak enough here."
-		return
-	if(istype(A, /area/shuttle))
-		user << "<span class='warning'>Interference from hyperspace engines disrupts the Geometer's power on shuttles.</span>"
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name))
@@ -188,10 +180,7 @@ This file contains the arcane tome files.
 	if(!possible_runes.len)
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
-		return
-	if(istype(Turf, /turf/open/space))
-		user << "<span class='warning'>You cannot scribe runes in space!</span>"
+	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
@@ -206,10 +195,7 @@ This file contains the arcane tome files.
 	if(!rune_to_scribe)
 		return
 	Turf = get_turf(user) //we may have moved. adjust as needed...
-	if(locate(/obj/effect/rune) in Turf)
-		user << "<span class='cult'>There is already a rune here.</span>"
-		return
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(ticker.mode.name == "cult")
@@ -235,33 +221,50 @@ This file contains the arcane tome files.
 			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
 			for(var/B in spiral_range_turfs(1, user, 1))
 				var/turf/T = B
-				var/obj/machinery/shield/N = new(T)
-				N.name = "sanguine barrier"
-				N.desc = "A potent shield summoned by cultists to defend their rites."
-				N.icon_state = "shield-red"
-				N.health = 60
+				var/obj/structure/emergency_shield/sanguine/N = new(T)
 				shields |= N
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 			return
-	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
-						 "<span class='cult'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
-	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
+	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open their arm and begins writing in their own blood":"begins sketching out a strange design"]!</span>", \
+						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
+	if(user.blood_volume)
+		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
 		for(var/V in shields)
-			var/obj/machinery/shield/S = V
+			var/obj/structure/emergency_shield/sanguine/S = V
 			if(S && !qdeleted(S))
 				qdel(S)
 		return
-	if(locate(/obj/effect/rune) in Turf)
-		user << "<span class='cult'>There is already a rune here.</span>"
+	if(!check_rune_turf(Turf, user))
 		return
-	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
+	user.visible_message("<span class='warning'>[user] creates a strange circle[user.blood_volume ? " in their own blood":""].</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
-		var/obj/machinery/shield/S = V
+		var/obj/structure/emergency_shield/S = V
 		if(S && !qdeleted(S))
 			qdel(S)
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>"
 	feedback_add_details("cult_runes_scribed", R.cultist_name)
+
+/obj/item/weapon/tome/proc/check_rune_turf(turf/T, mob/user)
+	var/area/A = get_area(T)
+
+	if(isspaceturf(T))
+		user << "<span class='warning'>You cannot scribe runes in space!</span>"
+		return FALSE
+
+	if(locate(/obj/effect/rune) in T)
+		user << "<span class='cult'>There is already a rune here.</span>"
+		return FALSE
+
+	if(T.z != ZLEVEL_STATION && T.z != ZLEVEL_MINING)
+		user << "<span class='warning'>The veil is not weak enough here."
+		return FALSE
+
+	if(istype(A, /area/shuttle))
+		user << "<span class='warning'>Interference from hyperspace engines disrupts the Geometer's power on shuttles.</span>"
+		return FALSE
+
+	return TRUE

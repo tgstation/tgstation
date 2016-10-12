@@ -4,7 +4,6 @@
 /obj/effect/light_emitter
 	name = "Light emitter"
 	anchored = 1
-	unacidable = 1
 	invisibility = 101
 	var/set_luminosity = 8
 	var/set_cap = 0
@@ -47,6 +46,7 @@
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/device/radio/headset/headset_cargo/mining(src)
+	new /obj/item/weapon/storage/bag/plants(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
@@ -452,9 +452,10 @@
 	var/buildstackamount = 5
 
 /obj/structure/fans/deconstruct()
-	if(buildstacktype)
-		new buildstacktype(loc,buildstackamount)
-	..()
+	if(!(flags & NODECONSTRUCT))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+	qdel(src)
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))

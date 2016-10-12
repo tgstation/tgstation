@@ -318,7 +318,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src))
+	else if(iscyborg(src) || ismonkey(src) || islarva(src))
 		switch(input)
 			if("help")
 				a_intent = "help"
@@ -342,7 +342,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!istype(M))
 		return 0
 	if(issilicon(M))
-		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
+		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
 			if(R.mind && R.mind.special_role)
 				if(R.laws && R.laws.zeroth && R.syndicate)
@@ -465,3 +465,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		M << "There were no ghosts willing to take control."
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
+
+//toggles the talk wheel
+/mob/verb/toggle_talk_wheel()
+	set name = "talk-wheel"
+	set hidden = 1
+
+	if(isliving(src))
+		var/mob/living/L = src
+		if(L.hud_used)
+			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
+				TW.Click()
+

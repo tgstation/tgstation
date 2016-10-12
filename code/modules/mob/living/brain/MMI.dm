@@ -90,22 +90,26 @@
 		user << "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>"
 	else
 		user << "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>"
-
-		brainmob.container = null //Reset brainmob mmi var.
-		brainmob.loc = brain //Throw mob into brain.
-		brainmob.stat = DEAD
-		brainmob.emp_damage = 0
-		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-		living_mob_list -= brainmob //Get outta here
-		dead_mob_list += brainmob
-		brain.brainmob = brainmob //Set the brain to use the brainmob
-		brainmob = null //Set mmi brainmob var to null
-
-		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
-		brain = null //No more brain in here
-
+		eject_brain(user)
 		update_icon()
 		name = "Man-Machine Interface"
+
+/obj/item/device/mmi/proc/eject_brain(mob/user)
+	brainmob.container = null //Reset brainmob mmi var.
+	brainmob.loc = brain //Throw mob into brain.
+	brainmob.stat = DEAD
+	brainmob.emp_damage = 0
+	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
+	living_mob_list -= brainmob //Get outta here
+	dead_mob_list += brainmob
+	brain.brainmob = brainmob //Set the brain to use the brainmob
+	brainmob = null //Set mmi brainmob var to null
+	if(user)
+		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
+	else
+		brain.forceMove(get_turf(src))
+	brain = null //No more brain in here
+
 
 /obj/item/device/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
 	if(!brainmob)
@@ -164,13 +168,26 @@
 	..()
 
 /obj/item/device/mmi/Destroy()
-	if(isrobot(loc))
+	if(iscyborg(loc))
 		var/mob/living/silicon/robot/borg = loc
 		borg.mmi = null
 	if(brainmob)
 		qdel(brainmob)
 		brainmob = null
+	if(brain)
+		qdel(brain)
+		brain = null
+	if(mecha)
+		mecha = null
+	if(radio)
+		qdel(radio)
+		radio = null
 	return ..()
+
+/obj/item/device/mmi/deconstruct(disassembled = TRUE)
+	if(brain)
+		eject_brain()
+	qdel(src)
 
 /obj/item/device/mmi/examine(mob/user)
 	..()

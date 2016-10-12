@@ -370,13 +370,21 @@
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
-	if(prob(100/(severity*efficiency))) malfunction()
+	if(prob(100/(severity*efficiency)))
+		malfunction()
 	..()
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
 	if(!qdeleted(src))
 		go_out()
+
+/obj/machinery/clonepod/deconstruct(disassembled = TRUE)
+	if(occupant)
+		locked = FALSE
+		go_out()
+	..()
+
 
 /*
  *	Diskette Box

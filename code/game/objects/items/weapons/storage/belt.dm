@@ -185,7 +185,8 @@
 		/obj/item/weapon/ore,
 		/obj/item/weapon/reagent_containers/food/drinks,
 		/obj/item/organ/hivelord_core,
-		/obj/item/device/wormhole_jaunter
+		/obj/item/device/wormhole_jaunter,
+		/obj/item/weapon/storage/bag/plants,
 
 		)
 
@@ -431,16 +432,34 @@
 		/obj/item/weapon/melee/sabre
 		)
 
+/obj/item/weapon/storage/belt/sabre/examine(mob/user)
+	..()
+	if(contents.len)
+		user << "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
+
+/obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
+	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
+		return
+	if(contents.len)
+		var/obj/item/I = contents[1]
+		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
+		)
+		user.put_in_hands(I)
+		update_icon()
+	else
+		user << "[src] is empty."
+
 /obj/item/weapon/storage/belt/sabre/update_icon()
 	icon_state = "sheath"
 	item_state = "sheath"
 	if(contents.len)
 		icon_state += "-sabre"
 		item_state += "-sabre"
-	if(loc && istype(loc, /mob/living))
+	if(loc && isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
 	..()
+
 
 /obj/item/weapon/storage/belt/sabre/New()
 	..()

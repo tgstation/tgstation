@@ -9,7 +9,7 @@
 	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
-	obj_damage = 75
+	obj_damage = 400
 	luminosity = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
@@ -92,6 +92,8 @@
 		([newloc.x],[newloc.y],[newloc.z])")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
+	if(!L)
+		return
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")

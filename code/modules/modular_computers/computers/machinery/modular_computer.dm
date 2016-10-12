@@ -28,9 +28,6 @@ var/list/global_modular_computers = list()
 	var/base_active_power_usage = 100					// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
 	var/base_idle_power_usage = 10						// Power usage when the computer is idle and screen is off (currently only applies to laptops)
 
-	var/_max_damage = 100
-	var/_break_damage = 50
-
 	var/obj/item/device/modular_computer/processor/cpu = null				// CPU that handles most logic while this type only handles power and other specific things.
 
 /obj/machinery/modular_computer/New()
@@ -69,7 +66,7 @@ var/list/global_modular_computers = list()
 		else
 			overlays.Add(screen_icon_state_menu)
 
-	if(cpu && cpu.damage > cpu.broken_damage)
+	if(cpu && cpu.obj_integrity <= cpu.integrity_failure)
 		add_overlay("bsod")
 		add_overlay("broken")
 

@@ -8,7 +8,7 @@
 	health = 100
 	maxHealth = 100
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-
+	obj_damage = 60
 	environment_smash = 2 //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
 
@@ -126,7 +126,7 @@ Auto Patrol[]"},
 	return dat
 
 /mob/living/simple_animal/bot/ed209/Topic(href, href_list)
-	if(lasercolor && (istype(usr,/mob/living/carbon/human)))
+	if(lasercolor && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if((lasercolor == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))//Opposing team cannot operate it
 			return
@@ -418,19 +418,15 @@ Auto Patrol[]"},
 		return
 	lastfired = world.time
 	var/turf/T = loc
-	var/atom/U = (istype(target, /atom/movable) ? target.loc : target)
-	if((!( U ) || !( T )))
+	var/turf/U = get_turf(target)
+	if(!U)
 		return
-	while(!(istype(U, /turf)))
-		U = U.loc
-	if(!(istype(T, /turf)))
+	if(!isturf(T))
 		return
 
 	if(!projectile)
 		return
 
-	if(!(istype(U, /turf)))
-		return
 	var/obj/item/projectile/A = new projectile (loc)
 	playsound(loc, shoot_sound, 50, 1)
 	A.current = U
@@ -528,16 +524,12 @@ Auto Patrol[]"},
 	spawn(2)
 		icon_state = "[lasercolor]ed209[on]"
 	var/threat = 5
-	if(istype(C, /mob/living/carbon/human))
-		C.stuttering = 5
-		C.Stun(5)
-		C.Weaken(5)
+	C.Weaken(5)
+	C.Stun(5)
+	C.stuttering = 5
+	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		threat = H.assess_threat(src)
-	else
-		C.Weaken(5)
-		C.stuttering = 5
-		C.Stun(5)
 	add_logs(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)

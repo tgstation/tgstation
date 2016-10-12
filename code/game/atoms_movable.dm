@@ -13,7 +13,10 @@
 	var/verb_exclaim = "exclaims"
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
-	var/inertia_last_loc
+	var/atom/inertia_last_loc
+	var/inertia_moving = 0
+	var/inertia_next_move = 0
+	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	glide_size = 8
@@ -61,6 +64,7 @@
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 			moving_diagonally = 0
+			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
@@ -71,13 +75,13 @@
 
 	last_move = direct
 	setDir(direct)
-
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	if (!inertia_dir)
+	if (!inertia_moving)
+		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
 	return 1
 
@@ -244,7 +248,7 @@
 
 	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
 		var/slept = 0
-		if(!istype(loc, /turf))
+		if(!isturf(loc))
 			hit = 1
 			break
 

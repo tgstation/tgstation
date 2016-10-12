@@ -1,7 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Combined the Convert and Sacrifice runes into one rune. It'll convert targets that are alive and eligible, and attempt to sacrifice them otherwise. The only changes to mechanics are that: Converting someone will heal them of all brute and burn damage they had, and sacrificing anything will always produce a soulstone(but will still only sometimes fill it)"
-  - tweak: "You can no longer teleport to Teleport runes that have dense objects on top of them."
-  - experiment: "Wall runes will now activate other nearby wall runes when activated, but will automatically disable after a minute and a half of continuous activity and become unusable for 5 seconds."
-  - experiment: "The Blood Boil rune no longer does all of its damage instantly or stuns, but if you remain in range for the full duration you will be sent deep into critical."

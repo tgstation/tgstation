@@ -35,7 +35,7 @@
 		add_overlay("[icon_state]_door")
 
 /obj/structure/guncase/attackby(obj/item/I, mob/user, params)
-	if(isrobot(user) || isalien(user))
+	if(iscyborg(user) || isalien(user))
 		return
 	if(istype(I, gun_category))
 		if(contents.len < capacity && open)
@@ -53,7 +53,7 @@
 		return ..()
 
 /obj/structure/guncase/attack_hand(mob/user)
-	if(isrobot(user) || isalien(user))
+	if(iscyborg(user) || isalien(user))
 		return
 	if(contents.len && open)
 		ShowWindow(user)
@@ -76,7 +76,9 @@
 
 /obj/structure/guncase/Topic(href, href_list)
 	if(href_list["retrieve"])
-		var/obj/item/O = locate(href_list["retrieve"])
+		var/obj/item/O = locate(href_list["retrieve"]) in contents
+		if(!O || !istype(O))
+			return
 		if(!usr.canUseTopic(src))
 			return
 		if(ishuman(usr))

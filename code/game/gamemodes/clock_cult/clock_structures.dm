@@ -41,22 +41,16 @@
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
-	if(takes_damage)
-		var/servant_message = "It is at <b>[health]/[max_health]</b> integrity"
-		var/other_message = "It seems pristine and undamaged"
+	if(!(resistance_flags & INDESTRUCTIBLE))
+		var/t_It = p_they(TRUE)
+		var/t_is = p_are()
+		var/servant_message = "[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity"
 		var/heavily_damaged = FALSE
-		var/healthpercent = (health/max_health) * 100
-		if(healthpercent >= 100)
-			other_message = "It seems pristine and undamaged"
-		else if(healthpercent >= 50)
-			other_message = "It looks slightly dented"
-		else if(healthpercent >= 25)
-			other_message = "It appears heavily damaged"
+		var/healthpercent = (obj_integrity/max_integrity) * 100
+		if(healthpercent < 50)
 			heavily_damaged = TRUE
-		else if(healthpercent >= 0)
-			other_message = "It's falling apart"
-			heavily_damaged = TRUE
-		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
+		if(can_see_clockwork)
+			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/destructible/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
@@ -66,8 +60,8 @@
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
-	max_health = 80
-	health = 80
+	max_integrity = 80
+	obj_integrity = 80
 	var/wall_generation_cooldown
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
 
@@ -89,8 +83,8 @@
 		cache_check(i)
 	return ..()
 
-/obj/structure/destructible/clockwork/cache/destroyed()
-	if(takes_damage)
+/obj/structure/destructible/clockwork/cache/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
 		for(var/I in src)
 			var/atom/movable/A = I
 			A.forceMove(get_turf(src)) //drop any daemons we have
@@ -130,7 +124,7 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/daemon_shell))
 		var/component_type
-		switch(alert(user, "Will this daemon produce a specific type of component or produce randomly?.", , "Specific Type", "Random Component"))
+		switch(alert(user, "Will this daemon produce a specific type of component or produce randomly?", , "Specific Type", "Random Component"))
 			if("Specific Type")
 				component_type = get_component_id(input(user, "Choose a component type.", name) as null|anything in list("Belligerent Eye", "Vanguard Cogwheel", "Guvax Capacitor", "Replicant Alloy", "Hierophant Ansible"))
 				if(!component_type)
@@ -176,18 +170,17 @@
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
 	clockwork_desc = "A fragile turret that will deal sustained damage to any non-faithful it sees."
 	icon_state = "ocular_warden"
-	health = 25
-	max_health = 25
+	obj_integrity = 25
+	max_integrity = 25
 	construction_value = 15
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/damage_per_tick = 2.5
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
-	var/mech_damage_cycle = 0 //so that people in mechs don't get murderspammed with messages
 
 /obj/structure/destructible/clockwork/ocular_warden/New()
 	..()
@@ -218,14 +211,9 @@
 						L.adjust_fire_stacks(damage_per_tick)
 						L.IgniteMob()
 			else if(istype(target,/obj/mecha))
-				var/sending_message = FALSE
-				if(mech_damage_cycle > 1)
-					mech_damage_cycle = 0
-					sending_message = TRUE
-				else
-					mech_damage_cycle++
 				var/obj/mecha/M = target
-				M.take_directional_damage(damage_per_tick, "fire", get_dir(src, M), 0, 1, sending_message)
+				M.take_damage(damage_per_tick, BURN, "melee", 1, get_dir(src, M)) //does about half of standard damage to mechs * whatever their fire armor is
+
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
@@ -250,10 +238,10 @@
 		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check() && !B)
 			. += L
 		else if(B)
-			if(B.burn_state != ON_FIRE)
+			if(!(B.resistance_flags & ON_FIRE))
 				L << "<span class='warning'>Your [B.name] bursts into flames!</span>"
 			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
-				if(BI.burn_state != ON_FIRE)
+				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
@@ -263,7 +251,6 @@
 /obj/structure/destructible/clockwork/ocular_warden/proc/lose_target()
 	if(!target)
 		return 0
-	mech_damage_cycle = 0
 	target = null
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
@@ -273,8 +260,7 @@
 	construction_value = 0
 	anchored = 0
 	density = 0
-	takes_damage = FALSE
-	burn_state = LAVA_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/mobtype = /mob/living/simple_animal/hostile/clockwork
 	var/spawn_message = " is an error and you should yell at whoever spawned this shell."
 
@@ -293,9 +279,7 @@
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
 		A.visible_message("<span class='brass'>[src][spawn_message]</span>")
-		remove_servant_of_ratvar(S.brainmob, TRUE)
 		S.brainmob.mind.transfer_to(A)
-		add_servant_of_ratvar(A, TRUE)
 		user.drop_item()
 		qdel(S)
 		qdel(src)
@@ -324,8 +308,8 @@
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
-	max_health = 50
-	health = 50
+	max_integrity = 50
+	obj_integrity = 50
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
@@ -346,10 +330,10 @@
 			user << "<span class='warning'>You need one brass sheet to do this!</span>"
 			return
 		var/turf/T = get_turf(src)
-		if(istype(T, /turf/closed/wall))
+		if(iswallturf(T))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
-		if(!istype(T, /turf/open/floor))
+		if(!isfloorturf(T))
 			user << "<span class='warning'>A floor must be present to build a [anchored ? "false ":""]wall!</span>"
 			return
 		if(locate(/obj/structure/falsewall) in T.contents)
@@ -389,7 +373,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/clockwork/New()
 	..()
@@ -697,8 +681,6 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
-	burn_state = FIRE_PROOF
-	burntime = 1
 	var/affects_servants = FALSE
 	var/stat_affected = CONSCIOUS
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
@@ -929,7 +911,7 @@
 				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
-				L.visible_message("<span class='warning'>[L] collapses in on themself as [src] flares bright blue!</span>")
+				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
 				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
 				for(var/obj/item/W in L)
 					L.unEquip(W)
@@ -957,7 +939,7 @@
 						ghost.reenter_corpse()
 						L.revive(1, 1)
 						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
-						L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", \
+						L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] mouth dripping blue ichor!</span>", \
 						"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 						vitality -= revival_cost
 						break

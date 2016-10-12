@@ -389,7 +389,7 @@
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
 			for(var/obj/machinery/light/L in machines)
-				L.broken()
+				L.break_light_tube()
 
 		if("anime")
 			if(!check_rights(R_FUN))

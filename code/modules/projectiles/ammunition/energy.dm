@@ -172,11 +172,11 @@ obj/item/ammo_casing/energy/net
 /obj/item/ammo_casing/energy/instakill/red
 	projectile_type = /obj/item/projectile/beam/instakill/red
 
-/obj/item/ammo_casing/energy/shock_revolver
+/obj/item/ammo_casing/energy/tesla_revolver
 	fire_sound = 'sound/magic/lightningbolt.ogg'
 	e_cost = 200
 	select_name = "stun"
-	projectile_type = /obj/item/projectile/energy/shock_revolver
+	projectile_type = /obj/item/projectile/energy/tesla_revolver
 
 /obj/item/ammo_casing/energy/gravityrepulse
 	projectile_type = /obj/item/projectile/gravityrepulse

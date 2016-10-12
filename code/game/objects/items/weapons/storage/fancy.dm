@@ -17,7 +17,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
 	var/fancy_open = FALSE

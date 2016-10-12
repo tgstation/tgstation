@@ -331,7 +331,9 @@
 	color = "#FFEBEB"
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
+	if(iscarbon(M))
+		if (M.stat == DEAD)
+			show_message = 0
 		if(method in list(PATCH, TOUCH))
 			M.adjustBruteLoss(-1.25 * reac_volume)
 			M.adjustFireLoss(-1.25 * reac_volume)
@@ -1055,6 +1057,26 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	if(prob(20))
 		M.adjustBrainLoss(1*REM)
 	M.adjustStaminaLoss(2.5*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/miningnanites
+	name = "Nanites"
+	id = "miningnanites"
+	description = "It's mining magic. We don't have to explain it."
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
+	can_synth = 0
+
+/datum/reagent/medicine/miningnanites/on_mob_life(mob/living/M)
+	M.heal_bodypart_damage(5,5, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/miningnanites/overdose_process(mob/living/M)
+	M.adjustBruteLoss(3*REM, 0)
+	M.adjustFireLoss(3*REM, 0)
+	M.adjustToxLoss(3*REM, 0)
 	..()
 	. = 1
 

@@ -3,7 +3,6 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
 	anchored = 1
-	unacidable = 1
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/landmark/New()
@@ -109,7 +108,6 @@
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
 	new /obj/item/clothing/head/flatcap(src.loc)
 	new /obj/item/clothing/suit/toggle/labcoat/mad(src.loc)
-	new /obj/item/clothing/glasses/gglasses(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/costume/elpresidente/New()

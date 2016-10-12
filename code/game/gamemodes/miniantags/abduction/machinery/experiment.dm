@@ -7,6 +7,7 @@
 	anchored = 1
 	state_open = 1
 	var/points = 0
+	var/credits = 0
 	var/list/history = list()
 	var/list/abductee_minds = list()
 	var/flash = " - || - "
@@ -170,6 +171,7 @@
 			SendBack(H)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			points += point_reward
+			credits += point_reward
 			return "<span class='good'>Experiment successful! [point_reward] new data-points collected.</span>"
 		else
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)

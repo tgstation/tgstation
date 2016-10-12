@@ -10,7 +10,6 @@
 	range = -1
 	cooldown_min = 100 //50 deciseconds reduction per rank
 	include_user = 1
-	centcom_cancast = 0 //Prevent people from getting to centcom
 	nonabstract_req = 1
 	var/jaunt_duration = 50 //in deciseconds
 	var/jaunt_in_time = 5
@@ -78,7 +77,7 @@
 	density = 0
 	anchored = 1
 	invisibility = 60
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/dummy/spell_jaunt/Destroy()
 	// Eject contents if deleted somehow

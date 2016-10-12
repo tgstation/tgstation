@@ -17,6 +17,8 @@
 	icon_state = "morgue1"
 	density = 1
 	anchored = 1
+	obj_integrity = 400
+	max_integrity = 400
 
 	var/obj/structure/tray/connected = null
 	var/locked = 0
@@ -37,9 +39,6 @@
 
 /obj/structure/bodycontainer/update_icon()
 	return
-
-/obj/structure/bodycontainer/alter_health()
-	return src.loc
 
 /obj/structure/bodycontainer/relaymove(mob/user)
 	if(user.stat || !isturf(loc))
@@ -76,6 +75,10 @@
 			name = initial(name)
 	else
 		return ..()
+
+/obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 5)
+	qdel(src)
 
 /obj/structure/bodycontainer/container_resist()
 	open()
@@ -202,9 +205,10 @@ var/global/list/crematoriums = new/list()
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
-		locked = 0
-		update_icon()
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
+		if(!qdeleted(src))
+			locked = 0
+			update_icon()
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
 
 /*
@@ -219,6 +223,8 @@ var/global/list/crematoriums = new/list()
 	var/obj/structure/bodycontainer/connected = null
 	anchored = 1
 	pass_flags = LETPASSTHROW
+	obj_integrity = 350
+	max_integrity = 350
 
 /obj/structure/tray/Destroy()
 	if(connected)
@@ -226,6 +232,10 @@ var/global/list/crematoriums = new/list()
 		connected.update_icon()
 		connected = null
 	return ..()
+
+/obj/structure/tray/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 /obj/structure/tray/attack_paw(mob/user)
 	return src.attack_hand(user)

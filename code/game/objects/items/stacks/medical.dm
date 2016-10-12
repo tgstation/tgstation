@@ -7,8 +7,9 @@
 	w_class = 1
 	throw_speed = 3
 	throw_range = 7
-	burn_state = FLAMMABLE
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 40
+	max_integrity = 40
 	var/heal_brute = 0
 	var/heal_burn = 0
 	var/stop_bleeding = 0

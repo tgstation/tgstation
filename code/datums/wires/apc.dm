@@ -1,5 +1,6 @@
 /datum/wires/apc
 	holder_type = /obj/machinery/power/apc
+	proper_name = "APC"
 
 /datum/wires/apc/New(atom/holder)
 	wires = list(

@@ -21,6 +21,7 @@
 	pass_flags = PASSTABLE
 	faction = list("hostile")
 	attack_sound = 'sound/weapons/bite.ogg'
+	obj_damage = 0
 	environment_smash = 0
 	ventcrawler = 2
 	mob_size = MOB_SIZE_TINY
