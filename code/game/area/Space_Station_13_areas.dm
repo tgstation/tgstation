@@ -83,7 +83,9 @@ var/list/teleportlocs = list()
 
 /area/engine/
 
-/area/turret_protected/
+/area/ai_monitored	//stub defined ai_monitored.dm
+
+/area/ai_monitored/turret_protected/
 
 /area/arrival
 	requires_power = 0
@@ -1231,22 +1233,22 @@ var/list/teleportlocs = list()
 	icon_state = "storage"
 
 
-/area/turret_protected/
+/area/ai_monitored/turret_protected/
 	ambientsounds = list('sound/ambience/ambimalf.ogg')
 
-/area/turret_protected/ai_upload
+/area/ai_monitored/turret_protected/ai_upload
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
 
-/area/turret_protected/ai_upload_foyer
+/area/ai_monitored/turret_protected/ai_upload_foyer
 	name = "AI Upload Access"
 	icon_state = "ai_foyer"
 
-/area/turret_protected/ai
+/area/ai_monitored/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
 
-/area/turret_protected/aisat
+/area/ai_monitored/turret_protected/aisat
 	name = "AI Satellite"
 	icon_state = "ai"
 
@@ -1254,35 +1256,35 @@ var/list/teleportlocs = list()
 	name = "AI Satellite Exterior"
 	icon_state = "yellow"
 
-/area/turret_protected/aisat_interior
+/area/ai_monitored/turret_protected/aisat_interior
 	name = "AI Satellite Antechamber"
 	icon_state = "ai"
 
-/area/turret_protected/AIsatextFP
+/area/ai_monitored/turret_protected/AIsatextFP
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-/area/turret_protected/AIsatextFS
+/area/ai_monitored/turret_protected/AIsatextFS
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-/area/turret_protected/AIsatextAS
+/area/ai_monitored/turret_protected/AIsatextAS
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-/area/turret_protected/AIsatextAP
+/area/ai_monitored/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-/area/turret_protected/NewAIMain
+/area/ai_monitored/turret_protected/NewAIMain
 	name = "AI Main New"
 	icon_state = "storage"
 
@@ -1327,22 +1329,22 @@ var/list/teleportlocs = list()
 	name = "Abandoned Satellite"
 	icon_state = "tcomsatcham"
 
-/area/turret_protected/tcomsat
+/area/ai_monitored/turret_protected/tcomsat
 	name = "Telecoms Satellite"
 	icon_state = "tcomsatlob"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
-/area/turret_protected/tcomfoyer
+/area/ai_monitored/turret_protected/tcomfoyer
 	name = "Telecoms Foyer"
 	icon_state = "tcomsatentrance"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
-/area/turret_protected/tcomwest
+/area/ai_monitored/turret_protected/tcomwest
 	name = "Telecommunications Satellite West Wing"
 	icon_state = "tcomsatwest"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
-/area/turret_protected/tcomeast
+/area/ai_monitored/turret_protected/tcomeast
 	name = "Telecommunications Satellite East Wing"
 	icon_state = "tcomsateast"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
@@ -1641,7 +1643,7 @@ var/list/the_station_areas = list (
 	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
 //	/area/ai_monitored/storage/secure,	//not present on map
 //	/area/ai_monitored/storage/emergency,	//not present on map
-	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
-	/area/turret_protected/ai_upload_foyer,
-	/area/turret_protected/ai,
+	/area/ai_monitored/turret_protected/ai_upload, //do not try to simplify to "/area/ai_monitored/turret_protected" --rastaf0
+	/area/ai_monitored/turret_protected/ai_upload_foyer,
+	/area/ai_monitored/turret_protected/ai,
 )

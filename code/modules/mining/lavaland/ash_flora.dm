@@ -172,10 +172,7 @@
 	desc = "A leaf, from a mushroom."
 	list_reagents = list("nutriment" = 3, "vitfro" = 2, "nicotine" = 2)
 	icon_state = "mushroom_leaf"
-/obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf/prepared
-	name = "washed mushroom leaf"
-	desc = "A greenish leaflike structure from a mushroom. Kind of like lettuce?"
-	icon_state = "mushroom_leaf_p"
+
 
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap
@@ -184,10 +181,6 @@
 	list_reagents = list("mindbreaker" = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
 	icon_state = "mushroom_cap"
 
-/obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap/prepared
-	name = "sliced mushroom cap"
-	desc = "A sliced-up mushroom cap, revealing pale yellow innards. It smells faintly salty."
-	icon_state = "mushroom_cap_p"
 
 /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem
 	name = "mushroom stem"
@@ -196,21 +189,11 @@
 	icon_state = "mushroom_stem"
 	luminosity = 1
 
-/obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem/prepared
-	name = "sliced mushroom stem"
-	desc = "A mushroom stem, cut in half to reveal orange flesh. Smells almost like potatos, but with a sour undertone."
-	icon_state = "mushroom_stem_p"
-
-/obj/item/weapon/reagent_containers/food/cactus_fruit
+/obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit
 	name = "cactus fruit"
 	list_reagents = list("vitamin" = 2, "nutriment" = 2, "vitfro" = 4)
 	desc = "A cactus fruit covered in a thick, reddish skin. And some ash."
 	icon_state = "cactus_fruit"
-
-/obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit/prepared
-	name = "peeled cactus fruit"
-	desc = "A cactus fruit with the skin and ash carefully scraped off, revealing a faintly sweet-smelling yellow center."
-	icon_state = "cactus_fruit_p"
 
 
 /obj/item/mushroom_bowl

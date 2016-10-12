@@ -18,6 +18,19 @@
 	if(istype(AM))
 		playsound(src,sound,50,1)
 
+/turf/open/indestructible/necropolis
+	name = "necropolis floor"
+	desc = "It's regarding you suspiciously."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "necro1"
+	baseturf = /turf/open/indestructible/necropolis
+
+/turf/open/indestructible/necropolis/New()
+	..()
+	if(prob(12))
+		icon_state = "necro[rand(2,3)]"
+
+
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()

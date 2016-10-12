@@ -287,40 +287,10 @@
 		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
 		qdel(src)
 
+
+
 //Pod turfs and objects
 
-
-//Floors
-/turf/open/floor/pod
-	name = "pod floor"
-	icon_state = "podfloor"
-	icon_regular_floor = "podfloor"
-	floor_tile = /obj/item/stack/tile/pod
-
-/turf/open/floor/pod/light
-	icon_state = "podfloor_light"
-	icon_regular_floor = "podfloor_light"
-	floor_tile = /obj/item/stack/tile/pod/light
-
-/turf/open/floor/pod/dark
-	icon_state = "podfloor_dark"
-	icon_regular_floor = "podfloor_dark"
-	floor_tile = /obj/item/stack/tile/pod/dark
-
-//Walls
-/turf/closed/wall/shuttle/survival
-	name = "pod wall"
-	desc = "An easily-compressable wall used for temporary shelter."
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "smooth"
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
-
-/turf/closed/wall/shuttle/survival/nodiagonal
-	smooth = SMOOTH_MORE
-
-/turf/closed/wall/shuttle/survival/pod
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
 //Window
 /obj/structure/window/shuttle/survival_pod
