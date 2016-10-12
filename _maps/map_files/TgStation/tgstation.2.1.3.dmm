@@ -49741,10 +49741,13 @@
 /turf/open/floor/plating,
 /area/toxins/misc_lab)
 "ceS" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/toxins/misc_lab)
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/toxins/storage)
 "ceT" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating,
@@ -58551,12 +58554,13 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "cxn" = (
-/obj/structure/lattice,
-/obj/effect/landmark{
-	name = "carpspawn"
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
 	},
-/turf/open/space,
-/area/space)
+/turf/open/floor/plating,
+/area/toxins/storage)
 "cxo" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
@@ -112260,9 +112264,9 @@ bNt
 bNt
 bLj
 bKi
-bKh
+ceS
 bIC
-bMw
+cxn
 bNC
 bLj
 clt
