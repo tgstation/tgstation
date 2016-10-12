@@ -445,7 +445,7 @@
 /obj/item/weapon/CQC_manual/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
-	user <<"<span class='boldannounce'>You have learned CQC.</span>"
+	user <<"<span class='boldannounce'>You remember the basics of CQC.</span>"
 	var/datum/martial_art/CQC/D = new(null)
 	D.teach(user)
 	user.drop_item()
