@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Exhausted slime extracts will now dissolve instead of leaving useless used slime extracts."
