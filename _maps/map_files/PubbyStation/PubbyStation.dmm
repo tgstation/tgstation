@@ -22185,7 +22185,6 @@
 /obj/structure/sink{
 	pixel_y = 28
 	},
-/obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aTx" = (
@@ -48468,12 +48467,12 @@
 /obj/item/weapon/stock_parts/scanning_module,
 /turf/open/floor/plasteel/black,
 /area/tcommsat/server)
-"bWe" = (
+"bWf" = (
 /obj/machinery/limbgrower,
 /obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
-"bWd" = (
+"bWe" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
@@ -48481,7 +48480,7 @@
 /area/medical/research{
 	name = "Research Division"
 	})
-"bWc" = (
+"bWd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
@@ -48490,7 +48489,7 @@
 /area/medical/research{
 	name = "Research Division"
 	})
-"bWb" = (
+"bWc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
@@ -48498,7 +48497,7 @@
 /area/medical/research{
 	name = "Research Division"
 	})
-"bWa" = (
+"bWb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1
 	},
@@ -48506,7 +48505,7 @@
 /area/medical/research{
 	name = "Research Division"
 	})
-"bVZ" = (
+"bWa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -48514,18 +48513,24 @@
 /area/medical/research{
 	name = "Research Division"
 	})
-"bVY" = (
+"bVZ" = (
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/apmaint)
-"bVX" = (
+"bVY" = (
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
 	},
 /area/maintenance/apmaint)
+"bVX" = (
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/hydroponics)
 "bVW" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -74375,7 +74380,7 @@ aQx
 aRx
 aOF
 aTt
-aUs
+bVX
 aUs
 aWj
 aUs
@@ -77747,7 +77752,7 @@ bvG
 bwK
 bxK
 byY
-bWe
+bWf
 bAd
 bBP
 bCV
@@ -84916,8 +84921,8 @@ aUJ
 aVD
 aWE
 aIt
-bVX
 bVY
+bVZ
 aDH
 bbf
 aBT
@@ -85173,7 +85178,7 @@ aUK
 aSa
 aWF
 aIt
-bVY
+bVZ
 aFL
 aCd
 aCd
@@ -85706,7 +85711,7 @@ bmv
 bnQ
 bpm
 bqx
-bVZ
+bWa
 bsV
 buk
 buX
@@ -85963,7 +85968,7 @@ bmw
 bnR
 bpm
 bgL
-bWa
+bWb
 bsW
 buk
 buX
@@ -86220,7 +86225,7 @@ bmx
 bnS
 bpm
 bqy
-bWb
+bWc
 bsX
 buk
 buX
@@ -88019,11 +88024,11 @@ blm
 bnX
 bjU
 bgM
-bWc
+bWd
 biJ
 bfw
 bvc
-bWd
+bWe
 bxi
 bfw
 bzs
@@ -88276,7 +88281,7 @@ bmC
 bnY
 bjU
 bfw
-bWb
+bWc
 bhO
 bfv
 bvd
