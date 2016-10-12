@@ -125,7 +125,7 @@
 		else
 			user << "<span class='warning'>[src] is already in good condition!</span>"
 		return
-	else if(!alert && istype(W,/obj/item/weapon/crowbar))
+	else if(!alert && istype(W,/obj/item/weapon/crowbar)) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				user << "<span class='notice'>Remove the displayed object first.</span>"
@@ -194,7 +194,7 @@
 
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/weapon/wrench)) //The player can only deconstruct the wooden frame
 		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30/I.toolspeed, target = src))
@@ -234,10 +234,11 @@
 /obj/structure/displaycase/captain
 	alert = 1
 	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
-	req_access = list(access_captain)
-
+	req_access = list(access_captain) 
+	
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(access_rd)
+	
