@@ -331,7 +331,9 @@
 	color = "#FFEBEB"
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
+	if(iscarbon(M))
+		if (M.stat == DEAD)
+			show_message = 0
 		if(method in list(PATCH, TOUCH))
 			M.adjustBruteLoss(-1.25 * reac_volume)
 			M.adjustFireLoss(-1.25 * reac_volume)

@@ -92,7 +92,7 @@
 	return adjacent_turfs
 
 /atom/proc/air_update_turf(command = 0)
-	if(!istype(loc,/turf) && command)
+	if(!isturf(loc) && command)
 		return
 	var/turf/T = get_turf(loc)
 	T.air_update_turf(command)
@@ -103,7 +103,7 @@
 	SSair.add_to_active(src,command)
 
 /atom/movable/proc/move_update_air(turf/T)
-    if(istype(T,/turf))
+    if(isturf(T))
         T.air_update_turf(1)
     air_update_turf(1)
 

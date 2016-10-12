@@ -564,7 +564,7 @@ var/global/list/RPD_recipes=list(
 			user << "<span class='warning'>The [src]'s error light flickers!  Perhaps you need to only use it on pipes and pipe meters?</span>"
 			return 0
 		if(ATMOS_MODE)
-			if(!(istype(A, /turf)))
+			if(!isturf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
@@ -579,7 +579,7 @@ var/global/list/RPD_recipes=list(
 			return 0
 
 		if(METER_MODE)
-			if(!(istype(A, /turf)))
+			if(!isturf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building meter...</span>"

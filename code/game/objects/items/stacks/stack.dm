@@ -228,7 +228,7 @@
 	return
 
 /obj/item/stack/AltClick(mob/living/user)
-	if(user.incapacitated())
+	if(!istype(user) || !user.canUseTopic(src))
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))

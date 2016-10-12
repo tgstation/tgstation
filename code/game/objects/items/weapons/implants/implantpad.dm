@@ -62,7 +62,7 @@
 	..()
 	if(usr.stat)
 		return
-	if((usr.contents.Find(src)) || ((in_range(src, usr) && istype(loc, /turf))))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)
 
 		if(istype(loc, /mob))

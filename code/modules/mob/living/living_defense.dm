@@ -208,7 +208,7 @@
 		M << "You cannot attack people before the game has started."
 		return 0
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
@@ -252,7 +252,7 @@
 		M << "You cannot attack people before the game has started."
 		return 0
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
 
@@ -313,7 +313,15 @@
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
 	else
-		new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
+		switch(rand(1, 10))
+			if(1)
+				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
+			if(2)
+				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
+			if(3 to 6)
+				new /mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(src))
+			if(6 to 10)
+				new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 

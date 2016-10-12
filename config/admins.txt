@@ -120,3 +120,4 @@ SnipeDragon = Game Master
 Fjeld = Game Master
 kevinz000 = Game Master
 TrustyGun = Game Master
+Cyberboss = Game Master

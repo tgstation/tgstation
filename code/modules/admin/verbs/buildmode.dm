@@ -242,7 +242,7 @@
 	. = 1
 	switch(mode)
 		if(BASIC_BUILDMODE)
-			if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
+			if(isturf(object) && left_click && !alt_click && !ctrl_click)
 				var/turf/T = object
 				if(isspaceturf(object))
 					T.ChangeTurf(/turf/open/floor/plasteel)
@@ -266,10 +266,10 @@
 				else if(isobj(object))
 					qdel(object)
 				return
-			else if(istype(object,/turf) && alt_click && left_click)
+			else if(isturf(object) && alt_click && left_click)
 				log_admin("Build Mode: [key_name(user)] built an airlock at ([object.x],[object.y],[object.z])")
 				new/obj/machinery/door/airlock(get_turf(object))
-			else if(istype(object,/turf) && ctrl_click && left_click)
+			else if(isturf(object) && ctrl_click && left_click)
 				switch(build_dir)
 					if(NORTH)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
