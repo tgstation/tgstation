@@ -199,7 +199,7 @@
 					areaindex[tmpname] = 1
 				L[tmpname] = I
 
-		var/desc = input("Please select a location to lock in.", "Locking Computer") in L
+		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 
 	else
@@ -221,7 +221,7 @@
 			else
 				areaindex[tmpname] = 1
 			L[tmpname] = R
-		var/desc = input("Please select a station to lock in.", "Locking Computer") in L
+		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 		if(target)
 			var/obj/machinery/teleport/station/trg = target

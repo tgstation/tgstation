@@ -292,13 +292,6 @@
 		return 0
 	. = ..()
 
-/obj/structure/disposalpipe/fire_act(exposed_temperature, exposed_volume)
-	var/turf/T = src.loc
-	if(T && T.intact) //protected from fire when hidden behind a floor.
-		return
-	..()
-
-
 //attack by item
 //weldingtool: unfasten and convert to obj/disposalconstruct
 

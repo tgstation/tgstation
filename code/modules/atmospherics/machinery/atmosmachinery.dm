@@ -295,8 +295,3 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/can_see_pipes()
 	return 1
 
-/obj/machinery/atmospherics/fire_act(exposed_temperature, exposed_volume)
-	var/turf/T = src.loc
-	if(T && T.intact && level == 1) //protected from fire when hidden behind a floor.
-		return
-	..()

@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - rscadd: "The waste line now has a digital valve leading to space (off by default) along with a port on it's far side"

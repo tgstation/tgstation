@@ -560,7 +560,7 @@
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	materials = list(MAT_METAL=60)
+	materials = list(MAT_GLASS=100)
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
@@ -570,7 +570,6 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	item_state = "c_tube"
-	materials = list(MAT_GLASS=100)
 	brightness = 8
 
 /obj/item/weapon/light/bulb
@@ -579,7 +578,6 @@
 	icon_state = "lbulb"
 	base_state = "lbulb"
 	item_state = "contvapour"
-	materials = list(MAT_GLASS=100)
 	brightness = 4
 
 /obj/item/weapon/light/throw_impact(atom/hit_atom)
