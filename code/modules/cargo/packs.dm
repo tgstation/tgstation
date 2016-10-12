@@ -1255,7 +1255,6 @@ datum/supply_pack
 			/obj/item/weapon/storage/bag/ore,
 			/obj/item/clothing/suit/space/hardsuit/mining,
 			/obj/item/clothing/mask/gas/explorer)
-			
 
 /datum/supply_pack/misc/mule
 	name = "MULEbot Crate"
