@@ -550,6 +550,7 @@
 #define RESTRAINKO_COMBO "GGD"
 #define PRESSURE_COMBO "DG"
 #define CONSECUTIVE_COMBO "HHD"
+#define STRIKE_COMBO "HG"
 /datum/martial_art/CQC
 	name = "CQC"
 	help_verb = /mob/living/carbon/human/proc/CQC_help
@@ -578,6 +579,9 @@
 	if(findtext(streak,CONSECUTIVE_COMBO))
 		streak = ""
 		Consecutive(A,D)
+	if(findtext(streak,STRIKE_COMBO))
+		streak = ""
+		Strike(A,D)
 		return 1
 	return 0
 
@@ -639,6 +643,18 @@
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
 		D.apply_damage(20, BRUTE)
+	return 1
+
+/datum/martial_art/CQC/proc/Strike(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(!D.stat)
+		var/obj/item/I = D.get_active_held_item()
+		D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand and then disarms them!</span>", \
+							"<span class='userdanger'>[A] strikes your jaw, disorienting you, and then disarms you!</span>")
+		if(I)
+			D.drop_item()
+			A.put_in_hands(I)
+		D.Jitter(2)
+		D.apply_damage(5, BRUTE)
 	return 1
 
 /datum/martial_art/CQC/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -722,3 +738,4 @@
 	usr << "<span class='notice'>Restrain</span>: Grab Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold."
 	usr << "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage."
 	usr << "<span class='notice'>Consecutive CQC</span>: Harm Harm Disarm. Mainly offensive move, huge damage and decent stamina damage."
+	usr << "<span class='notice'>Disorient and Disarm</span>: Harm Grab. Deal a hit to opponent's jaw to disorient them, and then steal what they are holding.."
