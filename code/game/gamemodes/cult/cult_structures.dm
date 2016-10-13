@@ -207,19 +207,20 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 		return
 	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
-	var/pickedtype
+	var/pickedtype[0]
 	switch(choice)
 		if("Supply Talisman")
-			pickedtype = /obj/item/weapon/paper/talisman/supply/weak
+			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
 		if("Shuttle Curse")
-			pickedtype = /obj/item/device/shuttle_curse
+			pickedtype += /obj/item/device/shuttle_curse
 		if("Veil Walker Set")
-			pickedtype = /obj/item/device/cult_shift
-			pickedtype = /obj/item/device/flashlight/flare/culttorch
+			pickedtype += /obj/item/device/cult_shift
+			pickedtype += /obj/item/device/flashlight/flare/culttorch
 	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
-		var/obj/item/N = new pickedtype(get_turf(src))
-		user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
+		for(var/N in pickedtype)
+			var/obj/item/D = new N(get_turf(src))
+			user << "<span class='cultitalic'>You summon [D] from the archives!</span>"
 
 /obj/effect/gateway
 	name = "gateway"
