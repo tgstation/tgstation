@@ -137,6 +137,7 @@
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
+	. = TRUE
 
 /obj/machinery/implantchair/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open)

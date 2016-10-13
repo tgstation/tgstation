@@ -278,7 +278,7 @@
 		return
 	var/amount_to_heal = max_integrity - obj_integrity
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
-	if(!proselytizer.can_use_alloy(0))
+	if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
 	var/proselytizer_cost = healing_for_cycle*2
 	if(!proselytizer.can_use_alloy(proselytizer_cost))
@@ -293,7 +293,7 @@
 		if(!amount_to_heal)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
-		if(!proselytizer.can_use_alloy(0))
+		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
 		proselytizer_cost = healing_for_cycle*2
 		if(!proselytizer.can_use_alloy(proselytizer_cost) || !do_after(user, proselytizer_cost, target = src) || !proselytizer || !proselytizer.can_use_alloy(proselytizer_cost))
@@ -302,7 +302,7 @@
 		if(!amount_to_heal)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
-		if(!proselytizer.can_use_alloy(0))
+		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
 		proselytizer_cost = healing_for_cycle*2
 		if(!proselytizer.can_use_alloy(proselytizer_cost))
@@ -320,7 +320,7 @@
 
 /obj/structure/destructible/clockwork/cache/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = ..()
-	if(proselytizer.can_use_alloy(0) || proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT > proselytizer.max_alloy)
+	if(proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) || proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT > proselytizer.max_alloy)
 		user << "<span class='warning'>[proselytizer]'s containers of liquified alloy are full!</span>"
 		return
 	if(!clockwork_component_cache["replicant_alloy"])
@@ -329,9 +329,9 @@
 	user.visible_message("<span class='notice'>[user] places the end of [proselytizer] in the hole in [src]...</span>", \
 	"<span class='notice'>You start filling [proselytizer] with liquified alloy...</span>")
 	//hugeass check because we need to re-check after the do_after
-	while(proselytizer && proselytizer.uses_alloy && proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"] \
+	while(proselytizer && !proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) && proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"] \
 	&& do_after(user, 10, target = src) \
-	&& proselytizer && proselytizer.uses_alloy &&  proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"])
+	&& proselytizer && !proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK) &&  proselytizer.stored_alloy + REPLICANT_ALLOY_UNIT <= proselytizer.max_alloy && clockwork_component_cache["replicant_alloy"])
 		proselytizer.modify_stored_alloy(REPLICANT_ALLOY_UNIT)
 		clockwork_component_cache["replicant_alloy"]--
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)

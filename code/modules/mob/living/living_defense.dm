@@ -309,13 +309,22 @@
 		adjustBruteLoss(35)
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
-		return 0
+		return FALSE
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
 	else
-		new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
+		switch(rand(1, 10))
+			if(1)
+				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
+			if(2)
+				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
+			if(3 to 6)
+				new /mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(src))
+			if(6 to 10)
+				new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
+	return TRUE
 
 
 /mob/living/ratvar_act()
@@ -325,6 +334,8 @@
 		if(src)
 			adjust_fire_stacks(1)
 			IgniteMob()
+		return FALSE
+	return TRUE
 
 
 //called when the mob receives a bright flash
