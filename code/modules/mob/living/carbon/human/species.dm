@@ -1120,7 +1120,6 @@
 			if("head")
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
-						//phil235
 						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
 										"<span class='userdanger'>[H] has been knocked senseless!</span>")
 						H.confused = max(H.confused, 20)
@@ -1143,7 +1142,6 @@
 			if("chest")
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
-						//phil235
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
 						H.apply_effect(3, WEAKEN, armor_block)

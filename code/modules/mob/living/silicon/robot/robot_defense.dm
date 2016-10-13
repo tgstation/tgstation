@@ -11,7 +11,6 @@
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			if(get_active_held_item())
 				uneq_active()
-				//phil235
 				src << "<span class='userdanger'>[M] has disabled [src]'s active module!</span>"
 				add_logs(M, src, "disarmed")
 			else

@@ -246,7 +246,7 @@ Class Procs:
 		return attack_hand(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)//phil235 no more needed?
+		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		take_damage(4, BRUTE, "melee", 1)
 
 

@@ -26,7 +26,7 @@
 		dismantle_wall(1)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 	else
-		//phil235 bang sound here
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 
 /turf/closed/wall/r_wall/try_destroy(obj/item/weapon/W, mob/user, turf/T)
