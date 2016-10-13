@@ -39,7 +39,6 @@
 	desc = "Holds tools, looks snazzy"
 	icon_state = "utilitybelt_ce"
 	item_state = "utility_ce"
-	..()
 
 /obj/item/weapon/storage/belt/utility/chief/full/New()
 	..()

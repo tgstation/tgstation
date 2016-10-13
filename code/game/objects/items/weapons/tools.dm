@@ -32,7 +32,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/wrench/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -64,13 +64,13 @@
 /obj/item/weapon/wrench/power/attack_self(mob/user)
 	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
 	var/obj/item/weapon/wirecutters/power/s_drill = new /obj/item/weapon/screwdriver/power
-	user << "<span class='notice'>You attach the screw driver bit to the [src.name].</span>"
+	user << "<span class='notice'>You attach the screw driver bit to the [src].</span>"
 	user.unEquip(src)
 	user.put_in_active_hand(s_drill)
 	qdel(src)
 
 obj/item/weapon/wrench/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is pressing the [src.name] against \his head, it looks like he's trying to drill \his head off")
+	user.visible_message("<span class='suicide'>[user] is pressing the [src] against \his head, it looks like he's trying to drill \his head off")
 	return (BRUTELOSS)
 
 /obj/item/weapon/wrench/medical
@@ -134,8 +134,8 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is stabbing the [src] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
@@ -181,13 +181,13 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 	toolspeed = 4
 
 /obj/item/weapon/screwdriver/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting the [src.name] up to \his temple, it looks like they're trying to commit suicide</span>")
+	user.visible_message("<span class='suicide'>[user] is putting the [src] up to \his temple, it looks like they're trying to commit suicide</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/power/attack_self(mob/user)
 	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
 	var/obj/item/weapon/wrench/power/b_drill = new /obj/item/weapon/wrench/power
-	user << "<span class='notice'>You attach the bolt driver bit to the [src.name].</span>"
+	user << "<span class='notice'>You attach the bolt driver bit to the [src].</span>"
 	user.unEquip(src)
 	user.put_in_active_hand(b_drill)
 	qdel(src)
@@ -241,7 +241,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 		..()
 
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -269,7 +269,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 	toolspeed = 4
 
 /obj/item/weapon/wirecutters/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is the [src.name] around \his neck, it looks like \he's trying to rip \his head off!</span>")
+	user.visible_message("<span class='suicide'>[user] is the [src] around \his neck, it looks like \he's trying to rip \his head off!</span>")
 	playsound(loc, 'sound/items/jaws_cut.ogg', 50, 1, -1)
 	var/mob/living/carbon/C = user
 	var/obj/item/bodypart/BP = C.get_bodypart("head")
@@ -651,7 +651,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/crowbar/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -697,7 +697,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	toolspeed = 4
 
 /obj/item/weapon/crowbar/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting his head in the [src.name], it looks like \he's trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is putting his head in the [src], it looks like \he's trying to commit suicide!</span>")
 	playsound(loc, 'sound/items/jaws_pry.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
