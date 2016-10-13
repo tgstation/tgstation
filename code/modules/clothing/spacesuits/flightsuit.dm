@@ -87,12 +87,14 @@
 	var/crash_heal_amount = 0.2
 	var/crash_disabled = 0
 
-	//var/datum/effect_system/trail_follow/ion/ion_trail
+	var/datum/effect_system/trail_follow/ion/ion_trail
 
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/New()
 	START_PROCESSING(SSfastprocess, src)
 	..()
+	ion_trail = new
+	ion_trail.set_up(src)
 
 /obj/item/device/flightpack/Destroy()
 	if(suit)
@@ -377,6 +379,7 @@
 	flight = 1
 	shoes.toggle(1)
 	update_icon()
+	ion_trail.start()
 
 /obj/item/device/flightpack/proc/disable_flight(forced = 0)
 	if(forced)
@@ -387,6 +390,7 @@
 		momentum_y = 0
 		suit.user.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
 		//NO SOUND YET	playsound(
+		ion_trail.stop()
 		wearer.dna.species.specflags |= FLYING
 		wearer.pass_flags &= ~flight_passflags
 		flight = 0

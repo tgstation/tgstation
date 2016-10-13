@@ -53,8 +53,13 @@
 	icon_state = "ion_trails"
 	anchored = 1
 
+/obj/effect/particle_effect/ion_trails/flight
+	icon_state = "ion_trails_flight"
+
 /datum/effect_system/trail_follow/ion
 	effect_type = /obj/effect/particle_effect/ion_trails
+	var/fadetype = "ion_fade"
+	var/fade = 1
 
 /datum/effect_system/trail_follow/ion/start() //Whoever is responsible for this abomination of code should become an hero
 	if(!on)
@@ -69,8 +74,9 @@
 			if(!T.has_gravity())
 				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
 				I.setDir(holder.dir)
-				flick("ion_fade", I)
-				I.icon_state = ""
+				if(fade)
+					flick(fadetype, I)
+					I.icon_state = ""
 				spawn(20)
 					qdel(I)
 			oldposition = T
@@ -79,8 +85,9 @@
 				processing = 1
 				start()
 
-
-
+/datum/effect_system/trail_follow/ion/flight
+	effect_type = /obj/effect/particle_effect/ion_trails/flight
+	fadetype = "ion_fade_flight"
 
 //Reagent-based explosion effect
 

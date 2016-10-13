@@ -879,9 +879,9 @@
 
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0
-	var/obj/item/device/flightpack/F = H.getflightpack()
+	var/obj/item/device/flightpack/F = H.get_flightpack()
 	var/flightpack = 0
-	if(istype(F) && F.active)
+	if(istype(F) && F.flight)
 		flightpack = 1
 	var/flight = 0
 	if(FLYING in specflags)
@@ -908,8 +908,7 @@
 				if(istype(T) && T.allow_thrust(0.01, H))
 					. -= 2
 
-				var/obj/item/device/flightpack/F = H.back
-				if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
+				if(flightpack && F.allow_thrust(0.01, src))
 					. -= 1
 		else
 			var/health_deficiency = (100 - H.health + H.staminaloss)

@@ -273,7 +273,7 @@
 		if(ismob(thing))
 			if(ishuman(thing))
 				var/mob/living/carbon/human/T = thing
-				var/obj/item/device/flightpack/F = T.getflightpack()
+				var/obj/item/device/flightpack/F = T.get_flightpack()
 				if(istype(F) && F.flight)
 					continue	//YOU'RE FLYING OVER IT
 		if(isobj(thing))
