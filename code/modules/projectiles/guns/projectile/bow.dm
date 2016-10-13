@@ -128,8 +128,9 @@
 	icon_state = "arrow_hardlight"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
 	range = 30
-	damage = 20
+	damage = 12
 	damage_type = BRUTE
+	flag = "bullet"
 	dropped = 1
 
 /obj/item/ammo_casing/caseless/arrow/hardlight
@@ -141,8 +142,8 @@
 
 /obj/item/projectile/bullet/reusable/arrow/hardlight2
 	name = "hardlight arrow"
-	range = 20
-	damage = 10
+	range = 30
+	damage = 18
 	damage_type = BURN
 	flag = "laser"
 	dropped = 1

@@ -217,6 +217,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/dangerous/bow
+	name = "Hardlight Bow"
+	desc = "A futuristic remake of a medieval weapon, this bow comes with a quiver that materializes hardlight arrows \
+			that can pierce a target and burn them. Manually loaded."
+	item = /obj/item/weapon/storage/box/syndie_kit/bow
+	cost = 7
+	surplus = 40
+
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
 	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
