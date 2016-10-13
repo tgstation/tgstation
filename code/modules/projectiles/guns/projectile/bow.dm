@@ -127,7 +127,7 @@
 	name = "hardlight arrow"
 	icon_state = "arrow_hardlight"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
-	range = 20
+	range = 30
 	damage = 20
 	damage_type = BRUTE
 	dropped = 1
