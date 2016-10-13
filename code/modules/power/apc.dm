@@ -547,6 +547,7 @@
 			user << "<span class='notice'>You replace the damaged APC frame with a new one.</span>"
 			qdel(W)
 			stat &= ~BROKEN
+			obj_integrity = max_integrity
 			malfai = null
 			malfhack = 0
 			if (opened==2)

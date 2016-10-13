@@ -7,6 +7,8 @@
 
 */
 
+#define SYMPTOM_LIMIT 8
+
 var/list/archive_diseases = list()
 
 // The order goes from easy to cure to hard to cure.
@@ -199,9 +201,9 @@ var/list/advance_cures = 	list(
 
 	if(properties && properties.len)
 		switch(properties["stealth"])
-			if(2)
+			if(2,3)
 				visibility_flags = HIDDEN_SCANNER
-			if(3 to INFINITY)
+			if(4 to INFINITY)
 				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
@@ -306,7 +308,7 @@ var/list/advance_cures = 	list(
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < 5 + rand(-1, 1))
+	if(symptoms.len < (SYMPTOM_LIMIT - 1) + rand(-1, 1))
 		symptoms += S
 	else
 		RemoveSymptom(pick(symptoms))
@@ -372,7 +374,7 @@ var/list/advance_cures = 	list(
 	if(!user)
 		return
 
-	var/i = 5
+	var/i = SYMPTOM_LIMIT
 
 	var/datum/disease/advance/D = new(0, null)
 	D.symptoms = list()

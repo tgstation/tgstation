@@ -1245,6 +1245,20 @@ datum/supply_pack
 /datum/supply_pack/misc
 	group = "Miscellaneous Supplies"
 
+/datum/supply_pack/misc/minerkit
+	name = "Shaft Miner Starter Kit"
+	cost = 2500
+	access = access_qm
+	contains = list(/obj/item/weapon/pickaxe/mini,
+			/obj/item/clothing/glasses/meson,
+			/obj/item/device/t_scanner/adv_mining_scanner/lesser,
+			/obj/item/device/radio/headset/headset_cargo/mining,
+			/obj/item/weapon/storage/bag/ore,
+			/obj/item/clothing/suit/space/hardsuit/mining,
+			/obj/item/clothing/mask/gas/explorer)
+	crate_name = "shaft miner starter kit"
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/misc/mule
 	name = "MULEbot Crate"
 	cost = 2000

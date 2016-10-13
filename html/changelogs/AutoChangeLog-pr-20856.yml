@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "You can now deconstruct AI cores that contain no actual AI."

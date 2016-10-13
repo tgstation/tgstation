@@ -167,13 +167,6 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor)
 
-/turf/closed/wall/shuttle //nosmoothing shuttle walls
-	name = "wall"
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall"
-	sheet_type = /obj/item/stack/sheet/mineral/titanium
-	smooth = SMOOTH_FALSE
-
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
 	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."
