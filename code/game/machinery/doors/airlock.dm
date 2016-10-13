@@ -978,8 +978,6 @@ var/list/airlock_overlays = list()
 				open(2)
 				if(density && !open(2))
 					user << "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>"
-			else
-				//open(2)//hopefully this won't be redundant
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
