@@ -14,7 +14,6 @@
 	var/draw_sound = 'sound/weapons/draw_bow.ogg'
 	var/ready_to_fire = 0
 	var/slowdown_when_ready = 2
-	var/draw_time = 10
 
 /obj/item/weapon/gun/projectile/bow/update_icon()
 	if(ready_to_fire)
@@ -38,12 +37,10 @@
 
 /obj/item/weapon/gun/projectile/bow/attack_self(mob/living/user)
 	if(!ready_to_fire && magazine.ammo_count())
-		spawn(draw_time)
 		ready_to_fire = TRUE
 		playsound(user, draw_sound, 100, 1)
 		update_icon()
 	else
-		spawn(draw_time)
 		ready_to_fire = FALSE
 		update_icon()
 
@@ -108,12 +105,6 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/ammo_casing/caseless/arrow(src)
 
-/obj/item/weapon/storage/backpack/quiver/proc/arrow_count()
-	var/count = 0
-	for(var/obj/item/ammo_casing/caseless/arrow/A in src)
-		count++
-	return count
-
 /obj/item/weapon/gun/projectile/bow/hardlight
 	name = "hardlight chargebow"
 	desc = "A modern take on an ancient weapon, this weapon shoots charged hardlight arrows at high velocities, allowing much higher effective range than a simple medieval varient."
@@ -127,7 +118,6 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/bow/hardlight
 	draw_sound = 'sound/weapons/draw_bow2.ogg'
 	slowdown_when_ready = 1
-	draw_time = 5
 
 /obj/item/ammo_box/magazine/internal/bow/hardlight
 	name = "bow hardlight magazine"
@@ -160,7 +150,7 @@
 /obj/item/weapon/storage/backpack/quiver/hardlight
 	name = "hardlight quiver"
 	desc = "A sophiscated quiver for holding hardlight arrows that slowly regenerates them."
-	icon_state = "quiver_hardlight"
+	icon_state = "hlquiver3"
 	item_state = "quiver_hardlight"
 	storage_slots = 10
 	can_hold = list(
@@ -168,6 +158,7 @@
 		)
 	var/charge_delay = 5
 	var/charge_tick = 0
+	var/arrow_amount = 0
 
 /obj/item/weapon/storage/backpack/quiver/hardlight/New()
 	..()
@@ -176,16 +167,31 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/storage/backpack/quiver/hardlight/process()
+	arrow_amount = contents.len
 	charge_tick++
 	if(charge_tick >= charge_delay)
-		if(arrow_count() < storage_slots)
+		if(arrow_amount < storage_slots)
 			new /obj/item/ammo_casing/caseless/arrow/hardlight(src)
 		charge_tick = 0
+	update_icon()
+
+/obj/item/weapon/storage/backpack/quiver/hardlight/update_icon()
+	var/icon_amount = 0
+	switch(arrow_amount)
+		if(0)
+			icon_amount = 0
+		if(1 to 3)
+			icon_amount = 1
+		if(4 to 7)
+			icon_amount = 2
+		else
+			icon_amount = 3
+	icon_state = "hlquiver[icon_amount]"
 
 /obj/item/projectile/bullet/reusable/arrow/hardlight/on_hit(atom/target, blocked = 0)
 	..()
 	var/obj/item/projectile/bullet/reusable/arrow/hardlight2/A = new /obj/item/projectile/bullet/reusable/arrow/hardlight2(src.loc)
 	A.Bump(target, 1)
 
-/obj/item/ammo_casing/caseless/arrow/hardlight/Dropped()
-	addtimer(src, "Destroy", 200)
+/obj/item/ammo_casing/caseless/arrow/hardlight/dropped()
+	QDEL_IN(src,200)
