@@ -23,15 +23,11 @@
 	else
 		add_overlay("securecrateg")
 
-/obj/structure/closet/crate/secure/bust_open()
+/obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(prob(tamperproof))
 		boom()
 	..()
 
-/obj/structure/closet/crate/secure/ex_act(severity, target)
-	if(prob(tamperproof)) //anti-tamper mechanisms full of explosives don't like being near explosions, who knew?
-		boom()
-	..()
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)
