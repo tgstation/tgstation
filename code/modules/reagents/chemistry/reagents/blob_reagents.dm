@@ -60,15 +60,14 @@
 	M.apply_damage(0.7*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	var/effectivedamage = damage
 	if(damage_type == BRUTE)
-		effectivedamage = damage * 2
-	if(damage_type == BURN && effectivedamage > 0 && B.obj_integrity - effectivedamage > 0 && prob(60))
+		damage = damage * 2
+	else if(damage_type == BURN && damage > 0 && B.obj_integrity - damage > 0 && prob(60))
 		var/obj/structure/blob/newB = B.expand(null, null, 0)
 		if(newB)
-			newB.obj_integrity = B.obj_integrity - effectivedamage
+			newB.obj_integrity = B.obj_integrity - damage
 			newB.update_icon()
-	return effectivedamage
+	return ..()
 
 /datum/reagent/blob/replicating_foam/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T)
 	if(prob(30))
@@ -131,14 +130,16 @@
 		M.emote("scream")
 
 /datum/reagent/blob/blazing_oil/extinguish_reaction(obj/structure/blob/B)
-	B.take_damage(rand(1, 3), BURN)
+	B.take_damage(rand(1, 3), BURN, "energy")
 
 /datum/reagent/blob/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if(damage_type == BURN && (damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser"))
+	if(damage_type == BURN && damage_flag != "energy")
 		for(var/turf/open/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
 			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && prob(80))
 				PoolOrNew(/obj/effect/hotspot, T)
+	if(damage_flag == "fire")
+		return 0
 	return ..()
 
 //does toxin damage, hallucination, targets think they're not hurt at all
