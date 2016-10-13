@@ -64,6 +64,7 @@
 	if(!istype(target))
 		return
 	if(ismonkey(target))
+		. = TRUE
 		stuff_monkey_in(target, user)
 
 /obj/machinery/monkey_recycler/proc/stuff_monkey_in(mob/living/carbon/monkey/target, mob/living/user)

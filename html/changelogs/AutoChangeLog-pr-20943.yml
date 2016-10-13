@@ -1,0 +1,4 @@
+author: "ma44"
+delete-after: True
+changes: 
+  - rscadd: "Cargo can now order a 2500 supply point crate that requires a QM or above to unlock. This crates contains a explorer suit, compact pickaxe, mesons, and a bag to hold ore with."
