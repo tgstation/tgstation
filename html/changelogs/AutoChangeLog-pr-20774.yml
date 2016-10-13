@@ -1,4 +1,0 @@
-author: "Razharas"
-delete-after: True
-changes: 
-  - tweak: "Makes clicking something in heat of battle a bit easier by making drag&drops that dont have any effect be counted as clicks"
