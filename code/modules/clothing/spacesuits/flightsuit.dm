@@ -87,7 +87,7 @@
 	var/crash_heal_amount = 0.2
 	var/crash_disabled = 0
 
-	var/datum/effect_system/trail_follow/ion/ion_trail
+	var/datum/effect_system/trail_follow/ion/flight/ion_trail
 
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/New()
@@ -609,6 +609,7 @@
 	if(!suittoggled)
 		if(!locked)
 			user << "<span class='warning'>You must lock your suit before engaging the helmet!</span>"
+	..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/lock_suit(mob/wearer)
 	user = src.loc

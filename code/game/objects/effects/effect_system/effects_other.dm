@@ -60,6 +60,7 @@
 	effect_type = /obj/effect/particle_effect/ion_trails
 	var/fadetype = "ion_fade"
 	var/fade = 1
+	var/nograv_required = 1
 
 /datum/effect_system/trail_follow/ion/start() //Whoever is responsible for this abomination of code should become an hero
 	if(!on)
@@ -71,7 +72,7 @@
 		processing = 0
 		var/turf/T = get_turf(holder)
 		if(T != oldposition)
-			if(!T.has_gravity())
+			if(!T.has_gravity() && nograv_required)
 				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
 				I.setDir(holder.dir)
 				if(fade)
@@ -88,6 +89,7 @@
 /datum/effect_system/trail_follow/ion/flight
 	effect_type = /obj/effect/particle_effect/ion_trails/flight
 	fadetype = "ion_fade_flight"
+	nograv_required = 0
 
 //Reagent-based explosion effect
 
