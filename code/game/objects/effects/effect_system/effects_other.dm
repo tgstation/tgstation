@@ -72,7 +72,7 @@
 		processing = 0
 		var/turf/T = get_turf(holder)
 		if(T != oldposition)
-			if(!T.has_gravity() && nograv_required)
+			if(!T.has_gravity() || !nograv_required)
 				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
 				I.setDir(holder.dir)
 				if(fade)
