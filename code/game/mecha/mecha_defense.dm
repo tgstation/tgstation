@@ -268,6 +268,37 @@
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()
 
+/obj/mecha/proc/full_repair(charge_cell)
+	obj_integrity = max_integrity
+	if(cell && charge_cell)
+		cell.charge = cell.maxcharge
+	if(internal_damage & MECHA_INT_FIRE)
+		clearInternalDamage(MECHA_INT_FIRE)
+	if(internal_damage & MECHA_INT_TEMP_CONTROL)
+		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
+	if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
+		clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
+	if(internal_damage & MECHA_INT_TANK_BREACH)
+		clearInternalDamage(MECHA_INT_TANK_BREACH)
+	if(internal_damage & MECHA_INT_CONTROL_LOST)
+		clearInternalDamage(MECHA_INT_CONTROL_LOST)
+
+/obj/mecha/narsie_act()
+	if(occupant)
+		var/mob/living/L = occupant
+		go_out(TRUE)
+		if(L)
+			L.narsie_act()
+
+/obj/mecha/ratvar_act()
+	if(occupant)
+		if(is_servant_of_ratvar(occupant)) //reward the minion that got a mech by repairing it
+			full_repair(TRUE)
+		else
+			var/mob/living/L = occupant
+			go_out(TRUE)
+			if(L)
+				L.ratvar_act()
 
 /obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
 	if(!no_effect)
@@ -280,3 +311,4 @@
 			else if(damtype == TOX)
 				visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
+

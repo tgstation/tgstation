@@ -9,11 +9,11 @@
 	if(!usr || !over) return
 	if(over == src)
 		return usr.client.Click(src, src_location, src_control, params)
-	if(!Adjacent(usr) || !over.Adjacent(usr)) return // should stop you from dragging through windows
+	if(!Adjacent(usr) || !over.Adjacent(usr))
+		return usr.client.Click(src, src_location, src_control, params) // should stop you from dragging through windows
 
-	over.MouseDrop_T(src,usr)
-	return
+	if(!over.MouseDrop_T(src,usr))
+		usr.client.Click(src, src_location, src_control, params)
 
 // recieve a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user)
-	return

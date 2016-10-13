@@ -64,7 +64,7 @@
 			<ui-button action='createPill' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Create Multiple Pills</ui-button>
 			<br/>
 			<br/>
-			<ui-button action='createPatch' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Patch (max 50µ)</ui-button>
+			<ui-button action='createPatch' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Patch (max 40µ)</ui-button>
 			<br/>
 			<ui-button action='createPatch' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Create Multiple Patches</ui-button>
 			<br/>
