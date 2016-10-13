@@ -29,7 +29,7 @@ Chief Engineer
 	name = "Chief Engineer"
 
 	id = /obj/item/weapon/card/id/silver
-	belt = /obj/item/weapon/storage/belt/utility/full
+	belt = /obj/item/weapon/storage/belt/utility/chief/full
 	l_pocket = /obj/item/device/pda/heads/ce
 	ears = /obj/item/device/radio/headset/heads/ce
 	uniform = /obj/item/clothing/under/rank/chief_engineer

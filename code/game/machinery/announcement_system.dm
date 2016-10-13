@@ -76,7 +76,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, P.usesound, 50, 1)
 		panel_open = !panel_open
 		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
 		update_icon()

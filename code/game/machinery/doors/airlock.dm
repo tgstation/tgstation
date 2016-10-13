@@ -913,7 +913,7 @@ var/list/airlock_overlays = list()
 		beingcrowbarred = 0
 	if(panel_open && charge)
 		user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
-		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(get_turf(src), I.usesound, 50, 1)
 		if(!do_after(user, 150/I.toolspeed, target = src))
 			user << "<span class='warning'>You slip and [charge] detonates!</span>"
 			charge.ex_act(1)
@@ -925,7 +925,7 @@ var/list/airlock_overlays = list()
 		charge = null
 		return
 	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+		playsound(src.loc, I.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 		if(do_after(user,40/I.toolspeed, target = src))
@@ -953,6 +953,31 @@ var/list/airlock_overlays = list()
 					open(2)
 				else
 					close(2)
+
+	if(istype(I, /obj/item/weapon/crowbar/power))
+		if(isElectrified())
+			shock(user,100)//it's like sticking a forck in a power socket
+			return
+
+		if(!density)//already open
+			return
+
+		if(locked)
+			user << "<span class='warning'>The bolts are down, it won't budge!</span>"
+			return
+
+		if(welded)
+			user << "<span class='warning'>It's welded, it won't budge!</span>"
+			return
+
+		var/time_to_open = 5
+		if(hasPower())
+			time_to_open = 50
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg',100,1) //is it aliens or just the CE being a dick?
+			if(do_after(user, time_to_open,target = src))
+				open(2)
+				if(density && !open(2))
+					user << "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>"
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite

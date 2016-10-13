@@ -32,7 +32,7 @@
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, P.usesound, 50, 1)
 		user.visible_message("[user] [anchored ? "fastens" : "unfastens"] [src].", \
 					 "<span class='notice'>You start to [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor...</span>")
 		if(do_after(user, 20/P.toolspeed, target = src))
@@ -69,13 +69,13 @@
 					return
 			if(CIRCUIT_CORE)
 				if(istype(P, /obj/item/weapon/screwdriver))
-					playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You screw the circuit board into place.</span>"
 					state = SCREWED_CORE
 					icon_state = "2"
 					return
 				if(istype(P, /obj/item/weapon/crowbar))
-					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You remove the circuit board.</span>"
 					state = EMPTY_CORE
 					icon_state = "0"
@@ -84,7 +84,7 @@
 					return
 			if(SCREWED_CORE)
 				if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-					playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You unfasten the circuit board.</span>"
 					state = CIRCUIT_CORE
 					icon_state = "1"
@@ -106,7 +106,7 @@
 					if (brain)
 						user << "<span class='warning'>Get that brain out of there first!</span>"
 					else
-						playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
+						playsound(loc, P.usesound, 50, 1)
 						user << "<span class='notice'>You remove the cables.</span>"
 						state = SCREWED_CORE
 						icon_state = "2"
@@ -165,7 +165,7 @@
 					return
 
 				if(istype(P, /obj/item/weapon/crowbar) && brain)
-					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You remove the brain.</span>"
 					brain.forceMove(loc)
 					brain = null
@@ -174,7 +174,7 @@
 
 			if(GLASS_CORE)
 				if(istype(P, /obj/item/weapon/crowbar))
-					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You remove the glass panel.</span>"
 					state = CABLED_CORE
 					if(brain)
@@ -185,7 +185,7 @@
 					return
 
 				if(istype(P, /obj/item/weapon/screwdriver))
-					playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(loc, P.usesound, 50, 1)
 					user << "<span class='notice'>You connect the monitor.</span>"
 					new /mob/living/silicon/ai (loc, laws, brain)
 					feedback_inc("cyborg_ais_created",1)

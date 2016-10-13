@@ -128,7 +128,7 @@
 		return
 	user.electrocute_act(10, src)
 
-/obj/machinery/camera/attackby(obj/W, mob/living/user, params)
+/obj/machinery/camera/attackby(obj/item/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
 	var/msg2 = "<span class='notice'>[src] already has that upgrade!</span>"
 
@@ -136,7 +136,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open
 		user << "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>"
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		return
 
 	if(panel_open)
