@@ -66,10 +66,9 @@
 		if("grab")
 			grabbedby(M)
 		else
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
-			visible_message("<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", \
-						"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>")
+			src << "<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>"
 	return 0
 
 /mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)

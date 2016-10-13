@@ -54,9 +54,9 @@
 
 /obj/mecha/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
 	log_message("Attack by hand/paw. Attacker - [user].",1)
-	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>","<span class='danger'>You hit [name] with no visible effect.</span>")
 	log_append_to_last("Armor saved.")
 
 /obj/mecha/attack_paw(mob/user as mob)
@@ -93,9 +93,9 @@
 		log_message("Attack by hulk. Attacker - [user].",1)
 		user.changeNext_move(CLICK_CD_MELEE)
 		add_logs(user, src, "punched", "hulk powers")
-		user.do_attack_animation(src)
-		user.visible_message("<span class='danger'>[user] hits [name]. The metal creaks and bends.</span>")
+		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 		take_damage(15, BRUTE, "melee", 0, get_dir(src, user))
+		return 1
 
 /obj/mecha/blob_act(obj/structure/blob/B)
 	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))
@@ -267,3 +267,16 @@
 	if(M.damtype == BRUTE || M.damtype == BURN)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()
+
+
+/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+	if(!no_effect)
+		if(selected)
+			used_item = selected
+		else if(!visual_effect_icon)
+			visual_effect_icon = ATTACK_EFFECT_SMASH
+			if(damtype == BURN)
+				visual_effect_icon = ATTACK_EFFECT_MECHFIRE
+			else if(damtype == TOX)
+				visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
+	..()

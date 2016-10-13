@@ -97,20 +97,19 @@
 		if(M.damtype == "brute")
 			step_away(src,M,15)
 		switch(M.damtype)
-			if("brute")
+			if(BRUTE)
 				Paralyse(1)
 				take_overall_damage(rand(M.force/2, M.force))
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-			if("fire")
+			if(BURN)
 				take_overall_damage(0, rand(M.force/2, M.force))
 				playsound(src, 'sound/items/Welder.ogg', 50, 1)
-			if("tox")
+			if(TOX)
 				M.mech_toxin_damage(src)
 			else
 				return
 		updatehealth()
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-						"<span class='userdanger'>[M.name] has hit [src]!</span>")
+		src << "<span class='userdanger'>[M.name] has hit [src]!</span>"
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
@@ -184,8 +183,7 @@
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
-				"<span class='userdanger'>The [M.name] glomps [src]!</span>")
+		src << "<span class='userdanger'>The [M.name] glomps [src]!</span>"
 		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
@@ -197,17 +195,12 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
-						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>")
+		src << "<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>"
 		add_logs(M, src, "attacked")
 		return 1
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
-		return 0
-
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
@@ -216,16 +209,14 @@
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			M << "<span class='warning'>You can't bite with your mouth covered!</span>"
 			return 0
-		M.do_attack_animation(src)
+		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>")
+			src << "<span class='userdanger'>[M.name] bites [src]!</span>"
 			return 1
 		else
-			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
-				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>")
+			src << "<span class='userdanger'>[M.name] has attempted to bite [src]!</span>"
 	return 0
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
@@ -238,20 +229,14 @@
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
-				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
-						"<span class='userdanger'>[L.name] bites [src]!</span>")
+				src << "<span class='userdanger'>[L.name] bites [src]!</span>"
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return 1
 			else
-				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
-					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>")
+				src << "<span class='userdanger'>[L.name] has attempted to bite [src]!</span>"
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
-		return 0
-
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
@@ -264,8 +249,11 @@
 		if ("grab")
 			grabbedby(M)
 			return 0
-		else
+		if("harm")
 			M.do_attack_animation(src)
+			return 1
+		if("disarm")
+			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return 1
 
 /mob/living/ex_act(severity, origin)
@@ -349,3 +337,11 @@
 //to damage the clothes worn by a mob
 /mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	return
+
+
+/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+	if(A != src)
+		end_pixel_y = get_standard_pixel_y_offset(lying)
+	used_item = get_active_held_item()
+	..()
+	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

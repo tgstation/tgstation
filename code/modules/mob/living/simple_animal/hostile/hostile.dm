@@ -329,12 +329,11 @@
 		return
 	var/turf/startloc = get_turf(targets_from)
 	if(casingtype)
-		var/obj/item/ammo_casing/casing = new casingtype
+		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, 1)
 		casing.fire(targeted_atom, src, zone_override = ran_zone())
-		casing.loc = startloc
 	else if(projectiletype)
-		var/obj/item/projectile/P = new projectiletype(startloc)
+		var/obj/item/projectile/P = new projectiletype(startloc)//phil235 need firing effect here
 		playsound(src, projectilesound, 100, 1)
 		P.current = startloc
 		P.starting = startloc

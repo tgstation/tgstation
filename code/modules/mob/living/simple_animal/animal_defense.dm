@@ -13,8 +13,8 @@
 			grabbedby(M)
 
 		if("harm", "disarm")
-			M.do_attack_animation(src)
-			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
+			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+			src << "<span class='userdanger'>[M] [response_harm] [src]!</span>"
 			playsound(loc, attacked_sound, 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
@@ -25,8 +25,7 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		playsound(loc, "punch", 25, 1, -1)
-		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
-				"<span class='userdanger'>[user] has punched [src]!</span>")
+		src << "<span class='userdanger'>[user] has punched [src]!</span>"
 		adjustBruteLoss(15)
 		return 1
 
@@ -46,13 +45,11 @@
 	if(..()) //if harm or disarm intent.
 		if(M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
-					"<span class='userdanger'>[M] [response_disarm] [name]!</span>")
+			src << "<span class='userdanger'>[M] [response_disarm] [name]!</span>"
 			add_logs(M, src, "disarmed")
 		else
 			var/damage = rand(15, 30)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-					"<span class='userdanger'>[M] has slashed at [src]!</span>")
+			src << "<span class='userdanger'>[M] has slashed at [src]!</span>"
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			attack_threshold_check(damage)
 			add_logs(M, src, "attacked")
@@ -124,3 +121,11 @@
 /mob/living/simple_animal/blob_act(obj/structure/blob/B)
 	adjustBruteLoss(20)
 	return
+
+/mob/living/simple_animal/do_attack_animation(atom/A, visual_effect_icon, used_item, no_effect, end_pixel_y)
+	if(!no_effect && !visual_effect_icon && melee_damage_upper)
+		if(melee_damage_upper < 10)
+			visual_effect_icon = ATTACK_EFFECT_PUNCH
+		else
+			visual_effect_icon = ATTACK_EFFECT_SMASH
+	..()

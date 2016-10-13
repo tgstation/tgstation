@@ -42,19 +42,13 @@
 
 /obj/structure/grille/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	user.visible_message("<span class='warning'>[user] hits [src].</span>", \
-						 "<span class='danger'>You hit [src].</span>", \
-						 "<span class='italics'>You hear twisting metal.</span>")
+	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
-						 "<span class='danger'>You mangle [src].</span>", \
-						 "<span class='italics'>You hear twisting metal.</span>")
 	if(!shock(user, 70))
 		take_damage(20, BRUTE, "melee", 1)
 

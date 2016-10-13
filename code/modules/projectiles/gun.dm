@@ -115,10 +115,6 @@
 		playsound(user, fire_sound, 50, 1)
 		if(!message)
 			return
-		if(pointblank)
-			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "<span class='italics'>You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!</span>")
-		else
-			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
 
 	if(weapon_weight >= WEAPON_MEDIUM)
 		if(user.get_inactive_held_item())

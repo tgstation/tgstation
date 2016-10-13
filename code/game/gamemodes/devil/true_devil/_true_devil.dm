@@ -129,8 +129,7 @@
 		if(user in viewers(src, null))
 			attack_message = "[user] has [message_verb] [src] with [I]!"
 	if(message_verb)
-		visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>")
+		src << "<span class='userdanger'>[attack_message]</span>"
 	return TRUE
 
 /mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)

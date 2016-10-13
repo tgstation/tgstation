@@ -116,6 +116,7 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
+				//phil235 visual effect instead of message? we keep the msg for victim though.
 				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
 				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
 

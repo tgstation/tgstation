@@ -106,8 +106,7 @@
 			if(hitsound)
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, 1, -1)
-			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
-								"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+			L << "<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>"
 		L.on_hit(type)
 
 	var/reagent_note
