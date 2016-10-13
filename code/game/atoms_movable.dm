@@ -248,7 +248,7 @@
 
 	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
 		var/slept = 0
-		if(!istype(loc, /turf))
+		if(!isturf(loc))
 			hit = 1
 			break
 

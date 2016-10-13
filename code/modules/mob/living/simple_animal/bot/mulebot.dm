@@ -334,6 +334,7 @@ var/global/mulebot_count = 0
 	if(!istype(AM))
 		return
 
+	. = TRUE
 	load(AM)
 
 // called to load a crate
@@ -474,7 +475,7 @@ var/global/mulebot_count = 0
 				if(next == loc)
 					path -= next
 					return
-				if(istype( next, /turf))
+				if(isturf(next))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
 
 					if(bloodiness)

@@ -625,13 +625,6 @@
 	turf_type = /turf/open/floor/bluespace
 
 
-/turf/open/floor/bluespace
-	slowdown = -1
-	icon_state = "bluespace"
-	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
-	floor_tile = /obj/item/stack/tile/bluespace
-
-
 /obj/item/stack/tile/sepia
 	name = "sepia floor tile"
 	singular_name = "floor tile"
@@ -646,13 +639,6 @@
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia
-
-
-/turf/open/floor/sepia
-	slowdown = 2
-	icon_state = "sepia"
-	desc = "Time seems to flow very slowly around these tiles"
-	floor_tile = /obj/item/stack/tile/sepia
 
 
 /obj/item/areaeditor/blueprints/slime

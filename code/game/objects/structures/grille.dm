@@ -82,7 +82,7 @@
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			deconstruct()
-	else if((istype(W, /obj/item/weapon/screwdriver)) && (istype(loc, /turf) || anchored))
+	else if((istype(W, /obj/item/weapon/screwdriver)) && (isturf(loc) || anchored))
 		if(!shock(user, 90))
 			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			anchored = !anchored

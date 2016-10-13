@@ -71,6 +71,7 @@
 			if(!L.incapacitated() && I == L.get_active_held_item())
 				if(can_be_inserted(I, 0))
 					handle_item_insertion(I, 0 , L)
+					. = TRUE
 
 
 //Check if this storage can dump the items

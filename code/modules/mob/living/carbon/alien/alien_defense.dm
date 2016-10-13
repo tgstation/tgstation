@@ -18,7 +18,7 @@ In all, this is a lot like the monkey code. /N
 		M << "You cannot attack people before the game has started."
 		return
 
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
 

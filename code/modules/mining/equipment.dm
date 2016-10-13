@@ -531,7 +531,7 @@
 /obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = get_turf(src)
-		if(!istype(proj_turf, /turf))
+		if(!isturf(proj_turf))
 			return
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()

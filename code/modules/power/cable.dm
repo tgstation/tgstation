@@ -93,21 +93,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list -= src							//remove it from global cable list
 	return ..()									// then go ahead and delete the cable
 
-/obj/structure/cable/blob_act(obj/structure/blob/B)
-	if(invisibility != INVISIBILITY_MAXIMUM)
-		qdel(src)
-
 /obj/structure/cable/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		var/turf/T = loc
 		stored.forceMove(T)
 	qdel(src)
-
-/obj/structure/cable/fire_act(exposed_temperature, exposed_volume)
-	var/turf/T = src.loc
-	if(T && T.intact) //protected from fire when hidden behind a floor.
-		return
-	..()
 
 ///////////////////////////////////
 // General procedures
@@ -116,7 +106,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //If underfloor, hide the cable
 /obj/structure/cable/hide(i)
 
-	if(level == 1 && istype(loc, /turf))
+	if(level == 1 && isturf(loc))
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	updateicon()
 
