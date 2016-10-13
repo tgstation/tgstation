@@ -1,0 +1,7 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added four new symptoms: Regeneration and Tissue Regrowth heal respectively brute and burn damage slowly; Flesh Mending and Heat Resistance are the level 8 version of those symptoms, and heal faster."
+  - rscdel: "The Toxic Compensation, Toxic Metabolism and Stimulants symptoms have been removed."
+  - rscdel: "Viruses no longer stack. Viruses can be overridden if the infecting virus has higher transmittability than the previous virus' resistance."
+  - tweak: "Viruses can now have 8 symptoms, up from 6."
