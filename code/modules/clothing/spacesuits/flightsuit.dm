@@ -609,6 +609,7 @@
 	if(!suittoggled)
 		if(!locked)
 			user << "<span class='warning'>You must lock your suit before engaging the helmet!</span>"
+			return 0
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/lock_suit(mob/wearer)
