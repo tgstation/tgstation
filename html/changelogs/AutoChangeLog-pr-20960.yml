@@ -1,0 +1,5 @@
+author: "Supermichael777"
+delete-after: True
+changes: 
+  - tweak: "Changeling Sting is now one part screwdriver cocktail and 2 parts lemon-lime soda."
+  - bugfix: "Triple citrus now actually displays its sprite."
