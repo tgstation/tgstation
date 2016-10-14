@@ -546,14 +546,14 @@
 
 #define SLAM_COMBO "GH"
 #define KICK_COMBO "HDH"
-#define RESTRAIN_COMBO "GGG"
-#define RESTRAINKO_COMBO "GGD"
+#define RESTRAIN_COMBO "GG"
 #define PRESSURE_COMBO "DG"
 #define CONSECUTIVE_COMBO "HHD"
 #define STRIKE_COMBO "HG"
 /datum/martial_art/CQC
 	name = "CQC"
 	help_verb = /mob/living/carbon/human/proc/CQC_help
+	var/restrained = 0
 
 /datum/martial_art/CQC/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,SLAM_COMBO))
@@ -565,12 +565,8 @@
 		Kick(A,D)
 		return 1
 	if(findtext(streak,RESTRAIN_COMBO))
-		streak = "GG"
-		Restrain(A,D)
-		return 1
-	if(findtext(streak,RESTRAINKO_COMBO))
 		streak = ""
-		RestrainKo(A,D)
+		Restrain(A,D)
 		return 1
 	if(findtext(streak,PRESSURE_COMBO))
 		streak = ""
@@ -624,13 +620,7 @@
 							"<span class='userdanger'>[A] locks you into a restraining position!</span>")
 		D.adjustStaminaLoss(20)
 		D.Stun(5)
-	return 1
-
-/datum/martial_art/CQC/proc/RestrainKo(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	D.visible_message("<span class='warning'>[A] puts [D] into a choke hold!</span>", \
-						"<span class='userdanger'>[A] puts you into a choke hold, you pass out!</span>")
-
-	D.SetSleeping(20)
+		restrained = 1
 	return 1
 
 /datum/martial_art/CQC/proc/Consecutive(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -716,6 +706,11 @@
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	add_logs(A, D, "disarmed with CQC")
+	if(restrained)
+		D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \
+							"<span class='userdanger'>[A] puts you into a chokehold!</span>")
+		D.SetSleeping(20)
+		restrained = 0
 	return 1
 
 /mob/living/carbon/human/CtrlClick(mob/user)
