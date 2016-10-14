@@ -73,10 +73,10 @@
 		if(istype(rev_mind.current,/mob/new_player))
 			head_revolutionaries -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
+			if(newcandidates.len == 0)
+				break
 			for(var/M in newcandidates)
-				if(newcandidates.len == 0)
-					break
-				var/datum/mind/lenin = newcandidates
+				var/datum/mind/lenin = M
 				antag_candidates -= lenin
 				newcandidates -= lenin
 				if(istype(lenin.current,/mob/new_player))
