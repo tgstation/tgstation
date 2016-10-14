@@ -207,7 +207,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 		return
 	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
-	var/pickedtype = list()
+	var/list/pickedtype = list()
 	switch(choice)
 		if("Supply Talisman")
 			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
