@@ -12,6 +12,8 @@
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
 
+	resistance_flags = FIRE_PROOF
+
 	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
 	obj_integrity = 100
 	max_integrity = 100
