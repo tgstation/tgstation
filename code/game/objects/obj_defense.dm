@@ -169,17 +169,8 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 //called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
-	var/location = loc
 	SSacid.processing -= src
-	var/remaining_acid = acid_level
-	var/list/contained = contents
 	deconstruct(FALSE)
-	if(isturf(location))
-		var/turf/T = location
-		for(var/obj/item/I in contained)
-			if(I.loc == T) //we acid the items that used to be inside src and ended up on the turf
-				I.acid_act(10, 0.1 * remaining_acid/T.contents.len)
-
 
 //// FIRE
 
@@ -198,16 +189,9 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 //called when the obj is destroyed by fire
 /obj/proc/burn()
-	var/location = loc
-	var/list/contained = contents
 	if(resistance_flags & ON_FIRE)
 		SSfire_burning.processing -= src
 	deconstruct(FALSE)
-	if(isturf(location))
-		var/turf/T = location
-		for(var/obj/item/I in contained)
-			if(I.loc == T) //we burn the items that used to be inside src and ended up on the turf
-				I.fire_act()
 
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
