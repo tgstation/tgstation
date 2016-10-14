@@ -216,7 +216,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 		if("Veil Walker Set")
 			pickedtype += /obj/item/device/cult_shift
 			pickedtype += /obj/item/device/flashlight/flare/culttorch
-	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+	if(src && !qdeleted(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
 			var/obj/item/D = new N(get_turf(src))
