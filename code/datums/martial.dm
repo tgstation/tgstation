@@ -595,7 +595,7 @@
 	if(!D.stat || !D.weakened)
 		D.visible_message("<span class='warning'>[A] kicks [D] back!</span>", \
 							"<span class='userdanger'>[A] kicks you back!</span>")
-		playsound(get_turf(A), 'sound/weapons/cqchit2.ogg', 50, 1, -1)
+		playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 		var/atom/throw_target = get_edge_target_turf(D, A.dir)
 		D.throw_at(throw_target, 1, 14, A)
 		D.apply_damage(10, BRUTE)
@@ -674,7 +674,7 @@
 		picked_hit_type = "stomps on"
 	D.apply_damage(bonus_damage, BRUTE)
 	if(picked_hit_type == "kicks" || picked_hit_type == "stomps")
-		playsound(get_turf(D), 'sound/weapons/cqchit2.ogg', 50, 1, -1)
+		playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 	else
 		playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 	D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
@@ -730,7 +730,7 @@
 
 	usr << "<span class='notice'>Slam</span>: Grab Harm. Slam opponent into the ground, weakens and knocks down."
 	usr << "<span class='notice'>CQC Kick</span>: Harm Disarm Harm. Knocks opponent away. Knocks out stunned or weakened opponents."
-	usr << "<span class='notice'>Restrain</span>: Grab Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold."
+	usr << "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold."
 	usr << "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage."
 	usr << "<span class='notice'>Consecutive CQC</span>: Harm Harm Disarm. Mainly offensive move, huge damage and decent stamina damage."
 	usr << "<span class='notice'>Disorient and Disarm</span>: Harm Grab. Deal a hit to opponent's jaw to disorient them, and then steal what they are holding.."
