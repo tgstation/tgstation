@@ -31,6 +31,7 @@
 	var/close_sound = 'sound/machines/click.ogg'
 	var/cutting_sound = 'sound/items/Welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
+	var/material_drop_amount = 3
 
 /obj/structure/closet/New()
 	..()
@@ -188,8 +189,8 @@
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if(ispath(material_drop) && !(flags & NODECONSTRUCT))
-		new material_drop(loc)
+	if(ispath(material_drop) && material_drop_amount && !(flags & NODECONSTRUCT))
+		new material_drop(loc, material_drop_amount)
 	qdel(src)
 
 /obj/structure/closet/obj_break(damage_flag)
