@@ -142,8 +142,8 @@
 		if(user.grab_state) //only the first upgrade is instantaneous
 			var/old_grab_state = user.grab_state
 			var/grab_upgrade_time = 30
-			visible_message("<span class='danger'>[user] starts to tighten \his grip on [src]!</span>", \
-				"<span class='userdanger'>[user] starts to tighten \his grip on you!</span>")
+			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
+				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
 			if(!do_mob(user, src, grab_upgrade_time))
 				return 0
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != "grab")
