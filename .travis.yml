@@ -4,7 +4,7 @@ sudo: false
 env:
     global:
     - BYOND_MAJOR="510"
-    - BYOND_MINOR="1347"
+    - BYOND_MINOR="1346"
     - NODE_VERSION="4"
     - BUILD_TOOLS=false
     - DM_MAPFILE=""
