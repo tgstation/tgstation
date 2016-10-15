@@ -92,6 +92,8 @@ var/list/preferences_datums = list()
 
 	var/list/ignoring = list()
 
+	var/clientfps = 0
+
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
@@ -410,6 +412,8 @@ var/list/preferences_datums = list()
 					else
 						p_map += " (No longer exists)"
 				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
+
+			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -1076,6 +1080,18 @@ var/list/preferences_datums = list()
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
+				if ("clientfps")
+					var/version_message
+					if (user.client && user.client.byond_version < 511)
+						version_message = "\nYou need to be using byond version 511 or later to take advantage of this feature, your version of [user.client.byond_version] is too low"
+					if (world.byond_version < 511)
+						version_message += "\nThis server does not currently support client side fps. You can set now for when it does."
+					var/desiredfps = input(user, "Choose your desired fps.[version_message]\n(0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					if (!isnull(desiredfps))
+						clientfps = desiredfps
+						if (world.byond_version >= 511 && user.client && user.client.byond_version >= 511)
+							user.client.vars["fps"] = clientfps
+
 
 
 		else
