@@ -139,7 +139,7 @@
 
 /obj/item/weapon/bikehorn/golden
 	name = "golden bike horn"
-	desc = "Golden? Clearly, its made with bananium! Honk!"
+	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
 
