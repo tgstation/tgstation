@@ -105,7 +105,9 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.restrained() || usr.stat || !usr.is_holding(src))
+	if (usr.restrained() || usr.stat || (!usr.is_holding(src) && isliving(usr)))
+		return
+	if (usr.get_active_held_item() != src && iscyborg(usr))
 		return
 	if (href_list["make"])
 		if (src.get_amount() < 1) qdel(src) //Never should happen
