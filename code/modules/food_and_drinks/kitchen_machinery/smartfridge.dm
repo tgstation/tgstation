@@ -245,9 +245,14 @@
 		component_parts.Cut()
 	component_parts = null
 
+/obj/machinery/smartfridge/drying_rack/on_deconstruction()
+	new /obj/item/stack/sheet/mineral/wood(loc, 10)
+	..()
+
 /obj/machinery/smartfridge/drying_rack/RefreshParts()
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
+/obj/machinery/smartfridge/drying_rack/spawn_frame()
 
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 1)
 	..()
@@ -298,10 +303,6 @@
 		if(S.dried_type)
 			return 1
 	return 0
-
-/obj/machinery/smartfridge/drying_rack/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/mineral/wood (loc, 10)
-	qdel(src)
 
 /obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff = 0)
 	if(drying || forceoff)
