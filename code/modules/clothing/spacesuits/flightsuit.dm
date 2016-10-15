@@ -25,7 +25,6 @@
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/clothing/suit/space/hardsuit/flightsuit/suit = null
-	var/obj/item/clothing/shoes/flightshoes/shoes = null
 	var/mob/living/carbon/human/wearer = null
 	var/slowdown_ground = 1
 	var/slowdown_air = 0
@@ -89,6 +88,8 @@
 
 	var/datum/effect_system/trail_follow/ion/flight/ion_trail
 
+	var/assembled = 0
+
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/New()
 	START_PROCESSING(SSfastprocess, src)
@@ -96,11 +97,11 @@
 	ion_trail = new
 	ion_trail.set_up(src)
 
+/obj/item/device/flightpack/full/New()
+
 /obj/item/device/flightpack/Destroy()
 	if(suit)
-		suit.pack = null
-	if(shoes)
-		shoes.pack = null
+		delink_suit()
 	STOP_PROCESSING(SSfastprocess, src)
 	..()
 
@@ -242,9 +243,6 @@
 	if(!suit)
 		disable_flight(1)
 		wearer << "<span class='wearerdanger'>Your flight pack shuts off. Somehow your flight suit was unlinked from the control mechanisms!</span>"
-	if(!shoes)
-		disable_flight(1)
-		wearer << "<span class='wearerdanger'>Your flight pack shuts off. Somehow your flight shoes were unlinked from the control mechanisms!</span>"
 	if(!wearer)	//Oh god our user fell off!
 		disable_flight(1)
 	//Add check for wearer wearing the shoes and suit here
@@ -372,12 +370,15 @@
 		disable_flight()
 
 /obj/item/device/flightpack/proc/enable_flight(forced = 0)
+	if(!suit)
+		wearer << "<span class='warning'>Your flight pack must be linked to a flight suit to work properly!</span>"
 	wearer.dna.species.specflags |= FLYING
 	wearer.pass_flags |= flight_passflags
 	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
 	//I DONT HAVE SOUND EFFECTS YET playsound(
 	flight = 1
-	shoes.toggle(1)
+	if(suit.shoes)
+		suit.shoes.toggle(1)
 	update_icon()
 	ion_trail.start()
 
@@ -394,7 +395,8 @@
 		wearer.dna.species.specflags |= FLYING
 		wearer.pass_flags &= ~flight_passflags
 		flight = 0
-		shoes.toggle(0)
+		if(suit.shoes)
+			suit.shoes.toggle(0)
 	else
 		if(override_safe)
 			disable_flight(1)
@@ -411,6 +413,10 @@
 
 /obj/item/device/flightpack/dropped(mob/wearer)
 	..()
+
+/obj/item/device/flightpack/equipped(mob/user)
+	if(ishuman(user))
+		wearer = user
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
 	if(slot == SLOT_BACK)
@@ -471,6 +477,18 @@
 /obj/item/device/flightpack/on_mob_move(dir, mob)
 	wearer_movement(dir)
 
+/obj/item/device/flightpack/proc/relink_suit(obj/item/clothing/suit/space/hardsuit/flightsuit/F)
+	if(istype(F))
+		suit = F
+		suit.pack = src
+	else
+		suit = null
+
+/obj/item/device/flightpack/proc/delink_suit()
+	if(suit)
+		suit.pack = null
+	suit = null
+
 //MOB MOVEMENT STUFF----------------------------------------------------------------------------------------------------------------------------------------------
 
 /mob/proc/get_flightpack()
@@ -500,8 +518,6 @@
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	if(suit)
 		suit.shoes = null
-	if(pack)
-		pack.shoes = null
 
 /obj/item/clothing/shoes/flightshoes/proc/toggle(toggle)
 	if(suit)
@@ -548,7 +564,8 @@
 	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet,/datum/action/item_action/flightsuit/toggle_boots,/datum/action/item_action/flightsuit/toggle_flightpack,/datum/action/item_action/flightsuit/lock_suit)
 	armor = list(melee = 20, bullet = 10, laser = 10, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 50, acid = 100)
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/New()
+
+/obj/item/clothing/suit/space/hardsuit/flightsuit/full/New()
 	..()
 	makepack()
 	makeshoes()
@@ -557,8 +574,7 @@
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
 	dropped()
 	if(pack)
-		pack.shoes = null
-		pack.suit = null
+		pack.delink_suit()
 		qdel(pack)
 	if(shoes)
 		shoes.pack = null
@@ -567,12 +583,11 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/resync()
+	pack.relink_suit(src)
 	if(user)
 		pack.wearer = user
 		shoes.wearer = user
 	shoes.pack = pack
-	pack.shoes = shoes
-	pack.suit = src
 	shoes.suit = src
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/ui_action_click(owner, action)
@@ -650,7 +665,7 @@
 		user << "<span class='warning'>You must lock your flight suit first before deploying anything!</span>"
 		return 0
 	if(!pack)
-		makepack()
+		user << "<span class='warning'>There is no attached flightpack!</span>"
 	if(ishuman(user))
 		if(user.back)
 			user << "<span class='warning'>You're already wearing something on your back!</span>"
@@ -717,8 +732,7 @@
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/makepack()
 	if(!pack)
 		pack = new /obj/item/device/flightpack(src)
-		pack.suit = src
-		pack.shoes = shoes
+		pack.relink_suit(src)
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/makeshoes()
 	if(!shoes)
@@ -738,6 +752,10 @@
 			unlock_suit(user)
 	..()
 
+/obj/item/clothing/suit/space/hardsuit/flightsuit/proc/deattach_pack()
+
+/obj/item/clothing/suit/space/hardsuit/flightsuit/proc/attach_pack(obj/item/device/flightpack/F)
+	if
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/attackby(obj/item/I, mob/wearer, params)
 	return

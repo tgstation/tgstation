@@ -709,3 +709,33 @@
 	construction_time = 100
 	build_path = /obj/item/device/assembly/flash/handheld
 	category = list("Misc")
+
+/datum/design/flightsuit		//Multi step build process/redo WIP
+	name = "Flight Suit"
+	desc = "A specialized hardsuit that is able to attach a flightpack and accessories.."
+	id = "flightsuit"
+	build_type = MECHFAB
+	build_path = /obj/item/clothing/suit/space/hardsuit/flightsuit
+	materials = list(MAT_METAL=20000, MAT_GLASS = 10000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 20000)	//This expensive enough for you?
+	construction_time = 250
+	category = list("Misc")
+
+/datum/design/flightpack
+	name = "Flight Pack"
+	desc = "An advanced back-worn system that has dual ion engines powerful enough to grant a humanoid flight. Contains an internal self-recharging high-current capacitor for short, powerful boosts."
+	id = "flightpack"
+	build_type = MECHFAB
+	build_path = /obj/item/device/flightpack
+	materials = list(MAT_METAL=20000, MAT_GLASS = 10000, MAT_DIAMOND = 5000, MAT_GOLD = 15000, MAT_SILVER = 15000, MAT_URANIUM = 25000, MAT_PLASMA = 20000, MAT_TITANIUM = 20000)	//This expensive enough for you?
+	construction_time = 250
+	category = list("Misc")
+
+/datum/design/flightshoes
+	name = "Flight Shoes"
+	desc = "Flight shoes, attachable to a flight suit to provide additional functions."
+	id = "flightshoes"
+	build_type = MECHFAB
+	build_path = /obj/item/clothing/shoes/flightshoes
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_GOLD = 1500, MAT_SILVER = 1500, MAT_PLASMA = 2000, MAT_TITANIUM = 2000)	//They're just shoes.
+	construction_time = 100
+	category = list("Misc")
