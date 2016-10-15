@@ -18,8 +18,8 @@
 	materials = list(MAT_METAL = 1000)
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
-		return (OXYLOSS)
+	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (OXYLOSS)
 
 /obj/item/weapon/melee/synthetic_arm_blade
 	name = "synthetic arm blade"
@@ -126,7 +126,7 @@
 	var/mob/living/carbon/human/H = user
 	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
 
-	user.visible_message("<span class='suicide'>[user] stuffs [src] up their nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear their mind.</span>")
+	user.visible_message("<span class='suicide'>[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear their mind.</span>")
 	if(!on)
 		src.attack_self(user)
 	else

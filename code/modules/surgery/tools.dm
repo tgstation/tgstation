@@ -64,9 +64,7 @@
 	sharpness = IS_SHARP_ACCURATE
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting [user.p_they()] wrists with [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is slitting [user.p_they()] throat with [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is slitting [user.p_they()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku.</span>"))
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 

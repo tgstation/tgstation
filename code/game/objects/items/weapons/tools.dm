@@ -32,7 +32,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/wrench/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -70,7 +70,7 @@
 	qdel(src)
 
 obj/item/weapon/wrench/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head, it looks like he's trying to drill [user.p_their()] head off")
+	user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!")
 	return (BRUTELOSS)
 
 /obj/item/weapon/wrench/medical
@@ -83,7 +83,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed", "whacked")
 
 /obj/item/weapon/wrench/medical/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	// TODO Make them glow with the power of the M E D I C A L W R E N C H
 	// during their ascension
 
@@ -134,8 +134,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is stabbing [src] into [user.p_their()] heart! It looks like [user.p_theyre()] trying to commit suicide.</span>"))
+	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
@@ -181,7 +180,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 	toolspeed = 4
 
 /obj/item/weapon/screwdriver/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting [src] up to [user.p_their()] temple, it looks like [user.p_theyre()] trying to commit suicide</span>")
+	user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/power/attack_self(mob/user)
@@ -241,7 +240,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 		..()
 
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -269,15 +268,14 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 	toolspeed = 4
 
 /obj/item/weapon/wirecutters/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is [src] around [user.p_their()] neck, it looks like [user.p_theyre()] trying to rip [user.p_their()] head off!</span>")
+	user.visible_message("<span class='suicide'>[user] is [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!</span>")
 	playsound(loc, 'sound/items/jaws_cut.ogg', 50, 1, -1)
-	var/mob/living/carbon/C = user
-	var/obj/item/bodypart/BP = C.get_bodypart("head")
-	if(BP)
-		BP.drop_limb()// <- i have no idea why this works, but it does
-		playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
-	else
-		user.visible_message("<span class='suicide'>[user] doesn't have a head to cut off, but dies anyway.</span>")
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		var/obj/item/bodypart/BP = C.get_bodypart("head")
+		if(BP)
+			BP.drop_limb()
+			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
 /obj/item/weapon/wirecutters/power/attack_self(mob/user)
@@ -372,7 +370,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 
 
 /obj/item/weapon/weldingtool/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 
@@ -650,7 +648,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/crowbar/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
