@@ -16,7 +16,8 @@
 		qdel(cc)
 	client_colours = null
 	ghostize()
-	return ..()
+	..()
+	return QDEL_HINT_HARDDEL
 
 var/next_mob_id = 0
 /mob/New()
