@@ -105,6 +105,6 @@
 	if(user in viewers(src, null))
 		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
 	visible_message("<span class='danger'>[attack_message]</span>", \
-	 "<span class='userdanger'>[attack_message]</span>", null, 2,user)
+		"<span class='userdanger'>[attack_message]</span>", null, 2,user)
 	return 1
 
