@@ -13,9 +13,8 @@
 	var/muzzled = is_muzzled()
 	//var/m_type = 1
 
-	for (var/obj/item/weapon/implant/I in src)
-		if (I.implanted)
-			I.trigger(act, src)
+	for (var/obj/item/weapon/implant/I in implants)
+		I.trigger(act, src)
 
 	var/miming=0
 	if(mind)

@@ -322,6 +322,16 @@ Class Procs:
 	if(!(flags & NODECONSTRUCT))
 		stat |= BROKEN
 
+/obj/machinery/contents_explosion(severity, target)
+	if(occupant)
+		occupant.ex_act(severity, target)
+
+/obj/machinery/handle_atom_del(atom/A)
+	if(A == occupant)
+		occupant = null
+		update_icon()
+		updateUsrDialog()
+
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(loc, S.usesound, 50, 1)

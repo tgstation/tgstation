@@ -82,14 +82,36 @@
 		var/list/holdingitems = list()
 
 /obj/machinery/reagentgrinder/New()
-		..()
-		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-		return
+	..()
+	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	return
+
+/obj/machinery/reagentgrinder/Destroy()
+	if(beaker)
+		qdel(beaker)
+		beaker = null
+	return ..()
+
+/obj/machinery/reagentgrinder/contents_explosion(severity, target)
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/reagentgrinder/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		update_icon()
+		updateUsrDialog()
+
+/obj/machinery/reagentgrinder/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 3)
+	qdel(src)
 
 /obj/machinery/reagentgrinder/update_icon()
-		icon_state = "juicer"+num2text(!isnull(beaker))
-		return
-
+	if(beaker)
+		icon_state = "juicer1"
+	else
+		icon_state = "juicer0"
 
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/user, params)
 		if(default_unfasten_wrench(user, I))

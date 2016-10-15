@@ -55,7 +55,7 @@ Credit where due:
 			return 0
 	else
 		return 0
-	if(iscultist(M) || isconstruct(M) || isloyal(M))
+	if(iscultist(M) || isconstruct(M) || M.isloyal())
 		return 0
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
 		return 1

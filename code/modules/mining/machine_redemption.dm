@@ -255,14 +255,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(severity == 1)
-		if(prob(50))
-			empty_content()
-			qdel(src)
-	else if(severity == 2)
-		if(prob(25))
-			empty_content()
-			qdel(src)
+	..()
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()

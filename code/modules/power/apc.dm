@@ -155,6 +155,13 @@
 		disconnect_terminal()
 	. = ..()
 
+/obj/machinery/power/apc/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		update_icon()
+		update_icon()
+		updateUsrDialog()
+
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this

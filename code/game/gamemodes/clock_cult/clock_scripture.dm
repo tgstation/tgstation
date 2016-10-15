@@ -1086,7 +1086,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				H << "<span class='sevtug'>[text2ratvar("Oh, a void weapon. How annoying, I may as well not bother.")]</span>\n\
 				<span class='warning'>Your holy weapon glows a faint orange in an attempt to defend your mind!</span>"
 				messaged = TRUE
-			if(isloyal(H))
+			if(H.isloyal())
 				visualsdistance = round(visualsdistance * 0.5) //half effect for shielded targets
 				minordistance = round(minordistance * 0.5)
 				majordistance = round(majordistance * 0.5)

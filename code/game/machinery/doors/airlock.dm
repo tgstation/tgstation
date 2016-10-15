@@ -169,6 +169,12 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
 	wires = null
+	if(charge)
+		qdel(charge)
+		charge = null
+	if(electronics)
+		qdel(electronics)
+		electronics = null
 	if (cyclelinkedairlock)
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null
@@ -882,7 +888,7 @@ var/list/airlock_overlays = list()
 		user.drop_item()
 		panel_open = 0
 		update_icon()
-		C.loc = src
+		C.forceMove(src)
 		charge = C
 	else
 		return ..()
@@ -921,7 +927,7 @@ var/list/airlock_overlays = list()
 			return
 		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
 							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
-		charge.loc = get_turf(user)
+		charge.forceMove(get_turf(user))
 		charge = null
 		return
 	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
