@@ -60,10 +60,10 @@
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
 		strengthdiv = 8
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
-			var/diety = ticker.Bible_deity_name
+			var/deity = ticker.Bible_deity_name
 			if(!ticker.Bible_deity_name)
-				diety = "Christ"
-			R << "<span class='userdanger'>The power of [diety] compels you!</span>"
+				deity = "Christ"
+			R << "<span class='userdanger'>The power of [deity] compels you!</span>"
 			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
