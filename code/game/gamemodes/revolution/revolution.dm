@@ -74,7 +74,7 @@
 			head_revolutionaries -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
 			if(newcandidates.len == 0)
-				break
+				continue
 			for(var/M in newcandidates)
 				var/datum/mind/lenin = M
 				antag_candidates -= lenin
