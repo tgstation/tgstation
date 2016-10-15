@@ -201,7 +201,6 @@ Contains:
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
-	species_exception = list(/datum/species/angel)
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"

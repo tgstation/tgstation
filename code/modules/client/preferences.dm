@@ -60,7 +60,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -329,15 +329,6 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Wings</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
-
-					dat += "</td>"
-
 			dat += "</tr></table>"
 
 
@@ -467,7 +458,7 @@ var/list/preferences_datums = list()
 		HTML += "The job ticker is not yet finished creating jobs, please try again later"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
 
-	else 
+	else
 		HTML += "<b>Choose occupation chances</b><br>"
 		HTML += "<div align='center'>Left-click to raise an occupation preference, right-click to lower it.<br></div>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>" // Easier to press up here.
@@ -974,12 +965,6 @@ var/list/preferences_datums = list()
 					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in ears_list
 					if(new_ears)
 						features["ears"] = new_ears
-
-				if("wings")
-					var/new_wings
-					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in r_wings_list
-					if(new_wings)
-						features["wings"] = new_wings
 
 				if("frills")
 					var/new_frills
