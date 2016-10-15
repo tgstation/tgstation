@@ -627,6 +627,7 @@
 	if(!D.stat)
 		D.visible_message("<span class='warning'>[A] strikes [D]'s abdomen, neck and back consecutively</span>", \
 							"<span class='userdanger'>[A] strikes your abdomen, neck and back consecutively!</span>")
+		playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 		var/obj/item/I = D.get_active_held_item()
 		if(I)
 			D.drop_item()
@@ -640,6 +641,7 @@
 		var/obj/item/I = D.get_active_held_item()
 		D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand and then disarms them!</span>", \
 							"<span class='userdanger'>[A] strikes your jaw, disorienting you, and then disarms you!</span>")
+		playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 		if(I)
 			D.drop_item()
 			A.put_in_hands(I)
