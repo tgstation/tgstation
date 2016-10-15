@@ -6,7 +6,8 @@
 		if (prob(90))
 			playsound(loc, "punch", 25, 1, -1)
 			add_logs(M, src, "attacked")
-			src << "<span class='userdanger'>[M] has kicked [src]!</span>"
+			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \
+					"<span class='userdanger'>[M] has kicked [src]!</span>", null, 2, M)
 			if ((stat != DEAD) && (damage > 4.9))
 				Paralyse(rand(5,10))
 
@@ -14,7 +15,8 @@
 			apply_damage(damage, BRUTE, affecting)
 		else
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-			src << "<span class='userdanger'>[M] has attempted to kick [src]!</span>"
+			visible_message("<span class='danger'>[M] has attempted to kick [src]!</span>", \
+					"<span class='userdanger'>[M] has attempted to kick [src]!</span>", null, 2, M)
 
 /mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")

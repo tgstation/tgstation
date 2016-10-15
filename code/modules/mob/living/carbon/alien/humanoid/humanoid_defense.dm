@@ -17,7 +17,7 @@
 			hitverb = "slammed"
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has [hitverb] [src]!</span>", \
-		"<span class='userdanger'>[user] has [hitverb] [src]!</span>")
+		"<span class='userdanger'>[user] has [hitverb] [src]!</span>", null, 2, user)
 		return 1
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
@@ -27,7 +27,8 @@
 				var/damage = rand(1, 9)
 				if (prob(90))
 					playsound(loc, "punch", 25, 1, -1)
-					src << "<span class='userdanger'>[M] has punched [src]!</span>"
+					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
+							"<span class='userdanger'>[M] has punched [src]!</span>", null, 2, M)
 					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of weakening an alien.
 						Paralyse(2)
 						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
@@ -37,7 +38,8 @@
 					add_logs(M, src, "attacked")
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-					src << "<span class='userdanger'>[M] has attempted to punch [src]!</span>"
+					visible_message("<span class='userdanger'>[M] has attempted to punch [src]!</span>", \
+						"<span class='userdanger'>[M] has attempted to punch [src]!</span>", null, 2, M)
 
 			if ("disarm")
 				if (!lying)
@@ -51,10 +53,12 @@
 						if (prob(50))
 							drop_item()
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-							src << "<span class='userdanger'>[M] has disarmed [src]!</span>"
+							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+							"<span class='userdanger'>[M] has disarmed [src]!</span>", null, 2, M)
 						else
 							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-							src << "<span class='userdanger'>[M] has attempted to disarm [src]!</span>"
+							visible_message("<span class='userdanger'>[M] has attempted to disarm [src]!</span>",\
+								"<span class='userdanger'>[M] has attempted to disarm [src]!</span>", null, 2, M)
 
 
 

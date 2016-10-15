@@ -109,12 +109,13 @@
 			else
 				return
 		updatehealth()
-		src << "<span class='userdanger'>[M.name] has hit [src]!</span>"
+		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
+						"<span class='userdanger'>[M.name] has hit [src]!</span>", null, 2, M.occupant)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 	else
 		step_away(src,M)
 		add_logs(M.occupant, src, "pushed", M)
-		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
+		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>", null, null, 5)
 
 /mob/living/fire_act()
 	adjust_fire_stacks(3)
@@ -183,7 +184,8 @@
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
-		src << "<span class='userdanger'>The [M.name] glomps [src]!</span>"
+		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
+				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, 2, M)
 		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
@@ -195,7 +197,8 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
-		src << "<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>"
+		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
+						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, 2, M)
 		add_logs(M, src, "attacked")
 		return 1
 
@@ -213,10 +216,12 @@
 		if (prob(75))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			src << "<span class='userdanger'>[M.name] bites [src]!</span>"
+			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+					"<span class='userdanger'>[M.name] bites [src]!</span>", null, 2, M)
 			return 1
 		else
-			src << "<span class='userdanger'>[M.name] has attempted to bite [src]!</span>"
+			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
+				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, 2, M)
 	return 0
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
@@ -229,11 +234,13 @@
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
-				src << "<span class='userdanger'>[L.name] bites [src]!</span>"
+				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
+					"<span class='userdanger'>[L.name] bites [src]!</span>", null, 2, L)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				return 1
 			else
-				src << "<span class='userdanger'>[L.name] has attempted to bite [src]!</span>"
+				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
+					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, 2, L)
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)

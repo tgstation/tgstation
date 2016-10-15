@@ -77,7 +77,7 @@
 		G.loc = loc
 		qdel(G.pin)
 		G.pin = null
-		visible_message("[G] can now fit a new pin, but old one was destroyed in the process.")
+		visible_message("[G] can now fit a new pin, but old one was destroyed in the process.", null, null, 3)
 		qdel(src)
 
 /obj/item/weapon/gun/examine(mob/user)
@@ -113,8 +113,11 @@
 		playsound(user, fire_sound, 10, 1)
 	else
 		playsound(user, fire_sound, 50, 1)
-		if(!message)
-			return
+		if(message)
+			if(pointblank)
+				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, 2, user)
+			else
+				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, 2, user)
 
 	if(weapon_weight >= WEAPON_MEDIUM)
 		if(user.get_inactive_held_item())

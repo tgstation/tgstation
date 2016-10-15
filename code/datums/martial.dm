@@ -46,7 +46,8 @@
 
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		D << "<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>"
+		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
+			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, 2, A)
 		add_logs(A, D, "attempted to [atk_verb]")
 		return 0
 
@@ -54,7 +55,8 @@
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
-	D << "<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>"
+	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
+			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, 2, A)
 
 	D.apply_damage(damage, BRUTE, affecting, armor_block)
 
@@ -105,7 +107,8 @@
 	var/damage = rand(5, 8) + A.dna.species.punchdamagelow
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		D << "<span class='warning'>[A] has attempted to hit [D] with a [atk_verb]!</span>"
+		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
+			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, 2, A)
 		add_logs(A, D, "attempted to hit", atk_verb)
 		return 0
 
@@ -115,7 +118,8 @@
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 
-	D << "<span class='userdanger'>[A] has hit [D] with a [atk_verb]!</span>"
+	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
+			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, 2, A)
 
 	D.apply_damage(damage, STAMINA, affecting, armor_block)
 	add_logs(A, D, "punched (boxing) ")

@@ -14,7 +14,8 @@
 
 		if("harm", "disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			src << "<span class='userdanger'>[M] [response_harm] [src]!</span>"
+			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>",\
+			"<span class='userdanger'>[M] [response_harm] [src]!</span>", null, 2, M)
 			playsound(loc, attacked_sound, 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
@@ -25,7 +26,8 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		playsound(loc, "punch", 25, 1, -1)
-		src << "<span class='userdanger'>[user] has punched [src]!</span>"
+		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
+			"<span class='userdanger'>[user] has punched [src]!</span>", null, 2, user)
 		adjustBruteLoss(15)
 		return 1
 
@@ -45,11 +47,13 @@
 	if(..()) //if harm or disarm intent.
 		if(M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			src << "<span class='userdanger'>[M] [response_disarm] [name]!</span>"
+			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
+					"<span class='userdanger'>[M] [response_disarm] [name]!</span>", null, 2, M)
 			add_logs(M, src, "disarmed")
 		else
 			var/damage = rand(15, 30)
-			src << "<span class='userdanger'>[M] has slashed at [src]!</span>"
+			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
+					"<span class='userdanger'>[M] has slashed at [src]!</span>", null, 2, M)
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			attack_threshold_check(damage)
 			add_logs(M, src, "attacked")

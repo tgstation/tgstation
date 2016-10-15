@@ -56,6 +56,7 @@
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
+	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, 2, user)
 	log_message("Attack by hand/paw. Attacker - [user].",1)
 	log_append_to_last("Armor saved.")
 
@@ -93,6 +94,7 @@
 		log_message("Attack by hulk. Attacker - [user].",1)
 		user.changeNext_move(CLICK_CD_MELEE)
 		add_logs(user, src, "punched", "hulk powers")
+		user.visible_message("<span class='danger'>[user] hits [name]. The metal creaks and bends.</span>", null, null, 2, user)
 		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 		take_damage(15, BRUTE, "melee", 0, get_dir(src, user))
 		return 1

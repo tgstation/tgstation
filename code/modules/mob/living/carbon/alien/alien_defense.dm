@@ -35,7 +35,8 @@ In all, this is a lot like the monkey code. /N
 			if (health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				src << "<span class='userdanger'>[M.name] bites [src]!</span>"
+				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+						"<span class='userdanger'>[M.name] bites [src]!</span>", null, 2, M)
 				adjustBruteLoss(1)
 				add_logs(M, src, "attacked")
 				updatehealth()

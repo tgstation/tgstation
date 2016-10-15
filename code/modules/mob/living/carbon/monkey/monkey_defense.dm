@@ -51,7 +51,8 @@
 		if("harm")
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			if (prob(75))
-				src << "<span class='userdanger'>[M] has punched [name]!</span>"
+				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
+						"<span class='userdanger'>[M] has punched [name]!</span>", null, 2, M)
 
 				playsound(loc, "punch", 25, 1, -1)
 				var/damage = rand(5, 10)
@@ -60,7 +61,7 @@
 					if ( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
 						visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
-									"<span class='userdanger'>[M] has knocked out [name]!</span>")
+									"<span class='userdanger'>[M] has knocked out [name]!</span>", null, 5)
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 				if(!affecting)
 					affecting = get_bodypart("chest")
@@ -70,7 +71,8 @@
 
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				src << "<span class='userdanger'>[M] has attempted to punch [name]!</span>"
+				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
+					"<span class='userdanger'>[M] has attempted to punch [name]!</span>", null, 2, M)
 		if("disarm")
 			if (!paralysis)
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
@@ -78,11 +80,13 @@
 					Paralyse(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					add_logs(M, src, "pushed")
-					src << "<span class='userdanger'>[M] has pushed down [src]!</span>"
+					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
+						"<span class='userdanger'>[M] has pushed down [src]!</span>", null, 2, M)
 				else
 					if(drop_item())
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						src << "<span class='userdanger'>[M] has disarmed [src]!</span>"
+						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+							"<span class='userdanger'>[M] has disarmed [src]!</span>", null, 2, M)
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
@@ -94,9 +98,11 @@
 					damage = rand(20, 40)
 					if (paralysis < 15)
 						Paralyse(rand(10, 15))
-					src << "<span class='userdanger'>[M] has wounded [name]!</span>"
+					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
+							"<span class='userdanger'>[M] has wounded [name]!</span>", null, 2, M)
 				else
-					src << "<span class='userdanger'>[M] has slashed [name]!</span>"
+					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
+							"<span class='userdanger'>[M] has slashed [name]!</span>", null, 2, M)
 
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 				add_logs(M, src, "attacked")
@@ -109,16 +115,19 @@
 
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				src << "<span class='userdanger'>[M] has attempted to lunge at [name]!</span>"
+				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
+						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>", null, 2, M)
 
 		if (M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(prob(95))
 				Weaken(10)
-				src << "<span class='userdanger'>[M] has tackled down [name]!</span>"
+				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
+						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, 2, M)
 			else
 				if(drop_item())
-					src << "<span class='userdanger'>[M] has disarmed [name]!</span>"
+					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", \
+							"<span class='userdanger'>[M] has disarmed [name]!</span>", null, 2, M)
 			add_logs(M, src, "disarmed")
 			updatehealth()
 
