@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Normal blob spores now take two welder hits to die, from three."
+  - tweak: "Cyborgs now die much less rapidly to blob attacks."

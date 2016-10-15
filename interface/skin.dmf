@@ -124,10 +124,10 @@ macro "default"
 		command = "Player-Panel"
 	elem
 		name = "F7"
-		command = "Admin-PM"
+		command = "Stealth-Mode"
 	elem
 		name = "F8"
-		command = "Invisimin"
+		command = "Toggle-Build-Mode-Self"
 	elem
 		name = "F12"
 		command = "F12"
@@ -321,10 +321,10 @@ macro "hotkeys"
 		command = "Player-Panel"
 	elem
 		name = "F7"
-		command = "Admin-PM"
+		command = "Stealth-Mode"
 	elem
 		name = "F8"
-		command = "Invisimin"
+		command = "Toggle-Build-Mode-Self"
 	elem
 		name = "F12"
 		command = "F12"
@@ -444,10 +444,10 @@ macro "robot-default"
 		command = "Player-Panel"
 	elem
 		name = "F7"
-		command = "Admin-PM"
+		command = "Stealth-Mode"
 	elem
 		name = "F8"
-		command = "Invisimin"
+		command = "Toggle-Build-Mode-Self"
 	elem
 		name = "F12"
 		command = "F12"
@@ -617,10 +617,10 @@ macro "robot-hotkeys"
 		command = "Player-Panel"
 	elem
 		name = "F7"
-		command = "Admin-PM"
+		command = "Stealth-Mode"
 	elem
 		name = "F8"
-		command = "Invisimin"
+		command = "Toggle-Build-Mode-Self"
 	elem
 		name = "F12"
 		command = "F12"

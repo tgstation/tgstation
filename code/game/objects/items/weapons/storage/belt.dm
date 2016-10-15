@@ -34,6 +34,23 @@
 		/obj/item/clothing/gloves/
 		)
 
+/obj/item/weapon/storage/belt/utility/chief
+	name = "Chief Engineer's toolbelt"
+	desc = "Holds tools, looks snazzy"
+	icon_state = "utilitybelt_ce"
+	item_state = "utility_ce"
+
+/obj/item/weapon/storage/belt/utility/chief/full/New()
+	..()
+	new /obj/item/weapon/screwdriver/power(src)
+	new /obj/item/weapon/crowbar/power(src)
+	new /obj/item/weapon/weldingtool/experimental(src)//This can be changed if this is too much
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/weapon/extinguisher/mini(src)
+	//much roomier now that we've managed to remove two tools
+
+
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
 	new /obj/item/weapon/screwdriver(src)

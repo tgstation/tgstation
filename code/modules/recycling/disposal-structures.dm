@@ -696,11 +696,11 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(mode==0)
 			mode=1
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			user << "<span class='notice'>You remove the screws around the power connection.</span>"
 		else if(mode==1)
 			mode=0
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			user << "<span class='notice'>You attach the screws around the power connection.</span>"
 
 	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)

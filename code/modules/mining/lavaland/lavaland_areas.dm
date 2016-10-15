@@ -14,7 +14,7 @@
 	power_equip = 0
 	power_light = 0
 	requires_power = 1
-	ambientsounds = list('sound/ambience/ambimine.ogg')
+	ambientsounds = list('sound/ambience/ambilava.ogg')
 
 /area/lavaland/underground
 	name = "Lavaland Caves"
@@ -26,7 +26,7 @@
 	power_environ = 0
 	power_equip = 0
 	power_light = 0
-	ambientsounds = list('sound/ambience/ambimine.ogg')
+	ambientsounds = list('sound/ambience/ambilava.ogg')
 
 
 /area/lavaland/surface/outdoors
