@@ -499,7 +499,7 @@
 		var/mob/living/M = card.loc
 		if(!isliving(M))
 			while(!isliving(M))
-				if(istype(M, /turf))
+				if(isturf(M))
 					src.temp = "Error: No biological host found. <br>"
 					src.subscreen = 0
 					return dat

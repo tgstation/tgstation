@@ -762,7 +762,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			user << "<span class='notice'>Card scanned.</span>"
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
+			if(((src in user.contents) || (isturf(loc) && in_range(src, user))) && (C in user.contents))
 				if(!id_check(user, 2))
 					return
 				user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"

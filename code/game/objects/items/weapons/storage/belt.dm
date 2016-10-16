@@ -185,7 +185,8 @@
 		/obj/item/weapon/ore,
 		/obj/item/weapon/reagent_containers/food/drinks,
 		/obj/item/organ/hivelord_core,
-		/obj/item/device/wormhole_jaunter
+		/obj/item/device/wormhole_jaunter,
+		/obj/item/weapon/storage/bag/plants,
 
 		)
 
@@ -437,7 +438,7 @@
 		user << "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
 /obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
-	if(!ishuman(user) || !user.canUseTopic(src))
+	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
 		return
 	if(contents.len)
 		var/obj/item/I = contents[1]

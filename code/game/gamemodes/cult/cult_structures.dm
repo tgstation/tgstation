@@ -9,11 +9,11 @@
 /obj/structure/destructible/cult/examine(mob/user)
 	..()
 	var/can_see_cult = iscultist(user) || isobserver(user)
-	var/t_It = they_pronoun(TRUE)
-	var/t_is = get_is()
+	var/t_It = p_they(TRUE)
+	var/t_is = p_are()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(can_see_cult)
-			user << "<span class='cult'>[t_It] [t_is] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability</span>"
+			user << "<span class='cult'>[t_It] [t_is] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>"
 	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if(can_see_cult && cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic in [src] is too weak, [t_It] will be ready to use again in [getETA()].</span>"
@@ -24,9 +24,9 @@
 			obj_integrity = min(max_integrity, obj_integrity + 5)
 			Beam(M, icon_state="sendbeam", time=4)
 			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
-				"<span class='cult'>You repair <b>[src]</b>, leaving [they_pronoun()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>")
+				"<span class='cult'>You repair <b>[src]</b>, leaving [p_they()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>")
 		else
-			M << "<span class='cult'>You cannot repair [src], as [they_pronoun()] [get_is()] undamaged!</span>"
+			M << "<span class='cult'>You cannot repair [src], as [p_they()] [p_are()] undamaged!</span>"
 	else
 		..()
 

@@ -525,7 +525,7 @@
 					if(!H.heart_attack)
 						H.heart_attack = 1 // rip in pepperoni
 						if(H.stat == CONSCIOUS)
-							H.visible_message("<span class='userdanger'>[H] clutches at [H.their_pronoun()] chest as if [H.their_pronoun()] heart stopped!</span>")
+							H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
 					else
 						H.losebreath += 10
 						H.adjustOxyLoss(rand(5,25), 0)

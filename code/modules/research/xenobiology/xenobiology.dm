@@ -194,7 +194,7 @@
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
-		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.them_pronoun()] in completing [user.their_pronoun()] goals at any cost.</span>"
+		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>"
 		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
 	else
@@ -625,13 +625,6 @@
 	turf_type = /turf/open/floor/bluespace
 
 
-/turf/open/floor/bluespace
-	slowdown = -1
-	icon_state = "bluespace"
-	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
-	floor_tile = /obj/item/stack/tile/bluespace
-
-
 /obj/item/stack/tile/sepia
 	name = "sepia floor tile"
 	singular_name = "floor tile"
@@ -646,13 +639,6 @@
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia
-
-
-/turf/open/floor/sepia
-	slowdown = 2
-	icon_state = "sepia"
-	desc = "Time seems to flow very slowly around these tiles"
-	floor_tile = /obj/item/stack/tile/sepia
 
 
 /obj/item/areaeditor/blueprints/slime
