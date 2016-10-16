@@ -418,7 +418,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.show_memory(src)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
+		src << "You don't have a mind datum for some reason, so you can't look at your notes, if you had any."
 
 /mob/verb/add_memory(msg as message)
 	set name = "Add Note"
@@ -430,21 +430,7 @@ var/next_mob_id = 0
 	if(mind)
 		mind.store_memory(msg)
 	else
-		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
-
-/mob/proc/store_memory(msg as message, popup, sane = 1)
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-
-	if (sane)
-		msg = sanitize(msg)
-
-	if (length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if (popup)
-		memory()
+		src << "You don't have a mind datum for some reason, so you can't add a note to it."
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"

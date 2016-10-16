@@ -96,8 +96,7 @@
 	for(var/i in found - sleepers)
 		var/mob/living/L = i
 		L.color = "#800080"
-		L.visible_message("<span class='revennotice'>A strange purple glow \
-			wraps itself around [L] as they suddenly fall unconcious.</span>",
+		L.visible_message("<span class='revennotice'>A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious.</span>",
 			"<span class='revendanger'>[desc]</span>")
 		// Don't let them sit suround unconscious forever
 		addtimer(src, "sleeper_dreams", 100, FALSE, L)

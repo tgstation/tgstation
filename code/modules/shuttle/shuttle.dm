@@ -669,22 +669,3 @@
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
 #undef DOCKING_PORT_HIGHLIGHT
 
-
-/turf/proc/copyTurf(turf/T)
-	if(T.type != type)
-		var/obj/O
-		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
-			O = new()
-			O.underlays.Add(T)
-		T.ChangeTurf(type)
-		if(underlays.len)
-			T.underlays = O.underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(T.color != color)
-		T.color = color
-	if(T.dir != dir)
-		T.setDir(dir)
-	return T

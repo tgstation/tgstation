@@ -304,7 +304,7 @@ RCD
 	if(!proximity) return 0
 	if(istype(A,/area/shuttle)||istype(A,/turf/open/space/transit))
 		return 0
-	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window)))
+	if(!(isturf(A) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window)))
 		return 0
 
 	switch(mode)

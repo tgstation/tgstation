@@ -656,6 +656,34 @@ datum/supply_pack
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
+/datum/supply_pack/engineering/engine/am_shielding
+	name = "Antimatter Shielding Crate"
+	cost = 2000
+	contains = list(/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container)//10 shields: 3x3 containment and a core
+	crate_name = "antimatter shielding crate"
+
+/datum/supply_pack/engineering/engine/am_core
+	name = "Antimatter Control Crate"
+	cost = 5000
+	contains = list(/obj/machinery/power/am_control_unit)
+	crate_name = "antimatter control crate"
+
+/datum/supply_pack/engineering/engine/am_jar
+	name = "Antimatter Containment Jar Crate"
+	cost = 2000
+	contains = list(/obj/item/weapon/am_containment,
+					/obj/item/weapon/am_containment)
+	crate_name = "antimatter jar crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

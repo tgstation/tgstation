@@ -1,6 +1,0 @@
-author: "Nanotrasen Stress Relief Board"
-delete-after: True
-changes: 
-  - rscdel: "Claymores created through Highlander no longer thirst for blood or announce their wielder's location incessantly."
-  - bugfix: "Claymores should now properly absorb fallen foes' corpses."
-  - bugfix: "Losing a limb now properly destroys your claymore."

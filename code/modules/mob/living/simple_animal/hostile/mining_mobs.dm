@@ -294,7 +294,7 @@
 				user << "<span class='notice'>[src] are useless on the dead.</span>"
 				return
 			if(H != user)
-				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
+				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
 				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
@@ -459,7 +459,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
-	if(!(istype(tturf, /turf)))
+	if(!isturf(tturf))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
@@ -963,10 +963,10 @@
 		make_babies()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/make_babies()
-	if(..())
+	. = ..()
+	if(.)
 		udder.reagents.clear_reagents()
 		regenerate_icons()
-
 
 //Nests
 /mob/living/simple_animal/hostile/spawner/lavaland

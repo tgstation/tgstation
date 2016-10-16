@@ -31,8 +31,11 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	var/mob/living/target = targets[1]
 
+	var/t_He = target.p_they(TRUE)
+	var/t_is = target.p_are()
+
 	if(!(target in oview(range)) && !distanceoverride)//If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
-		user << "<span class='warning'>They are too far away!</span>"
+		user << "<span class='warning'>[t_He] [t_is] too far away!</span>"
 		return
 
 	if(ismegafauna(target))
@@ -44,7 +47,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		return
 
 	if(!target.key || !target.mind)
-		user << "<span class='warning'>They appear to be catatonic! Not even magic can affect their vacant mind.</span>"
+		user << "<span class='warning'>[t_He] appear[target.p_s()] to be catatonic! Not even magic can affect [target.p_their()] vacant mind.</span>"
 		return
 
 	if(user.suiciding)
@@ -52,7 +55,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		return
 
 	if((target.mind.special_role in protected_roles) || cmptext(copytext(target.key,1,2),"@"))
-		user << "<span class='warning'>Their mind is resisting your spell!</span>"
+		user << "<span class='warning'>[target.p_their(TRUE)] mind is resisting your spell!</span>"
 		return
 
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.

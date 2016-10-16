@@ -121,7 +121,7 @@
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
-	if(!istype(user.loc, /turf/)) //No magically doing it from inside closets
+	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return
 	if(target.buckled || target.has_buckled_mobs())
 		return
@@ -148,10 +148,6 @@
 			add_logs(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()
-
-// can breath normally in the disposal
-/obj/machinery/disposal/alter_health()
-	return get_turf(src)
 
 /obj/machinery/disposal/relaymove(mob/user)
 	attempt_escape(user)

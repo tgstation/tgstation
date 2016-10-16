@@ -62,7 +62,7 @@
 /obj/item/stack/sheet/glass/proc/construct_window(mob/user)
 	if(!user || !src)
 		return 0
-	if(!istype(user.loc,/turf))
+	if(!isturf(user.loc))
 		return 0
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -168,7 +168,7 @@
 /obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
 	if(!user || !src)
 		return 0
-	if(!istype(user.loc,/turf))
+	if(!isturf(user.loc))
 		return 0
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"

@@ -220,7 +220,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	var/turf/T = mob.loc
 
-	if (!( istype(T, /turf) ))
+	if(!isturf(T))
 		return
 
 	var/datum/gas_mixture/env = T.return_air()

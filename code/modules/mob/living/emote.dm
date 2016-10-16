@@ -19,7 +19,7 @@
 	switch(act)//Hello, how would you like to order? Alphabetically!
 		if ("aflap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps its wings ANGRILY!"
+				message = "<B>[src]</B> flaps [p_their()] wings ANGRILY!"
 				m_type = 2
 
 		if ("blush","blushes")
@@ -51,7 +51,7 @@
 			m_type = 2
 
 		if ("cross","crosses")
-			message = "<B>[src]</B> crosses their arms."
+			message = "<B>[src]</B> crosses [p_their()] arms."
 			m_type = 2
 
 		if ("chuckle","chuckles")
@@ -73,7 +73,7 @@
 				m_type = 1
 
 		if ("deathgasp","deathgasps")
-			message = "<B>[src]</B> seizes up and falls limp, its eyes dead and lifeless..."
+			message = "<B>[src]</B> seizes up and falls limp, [p_their()] eyes dead and lifeless..."
 			m_type = 1
 
 		if ("drool","drools")
@@ -89,7 +89,7 @@
 
 		if ("flap","flaps")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps its wings."
+				message = "<B>[src]</B> flaps [p_their()] wings."
 				m_type = 2
 
 		if ("flip","flips")
@@ -222,7 +222,7 @@
 			m_type = 1
 
 		if ("shake","shakes")
-			message = "<B>[src]</B> shakes its head."
+			message = "<B>[src]</B> shakes [p_their()] head."
 			m_type = 1
 
 		if ("sigh","sighs")
@@ -268,7 +268,7 @@
 				message = "<B>[src]</B> stares."
 
 		if ("stretch","stretches")
-			message = "<B>[src]</B> stretches their arms."
+			message = "<B>[src]</B> stretches [p_their()] arms."
 			m_type = 2
 
 		if ("sulk","sulks")
@@ -276,19 +276,11 @@
 			m_type = 1
 
 		if ("surrender","surrenders")
-			message = "<B>[src]</B> puts their hands on their head and falls to the ground, they surrender!"
+			message = "<B>[src]</B> puts [p_their()] hands on [p_their()] head and falls to the ground, [p_they()] surrender[p_s()]!"
 			if(sleeping)
 				return //Can't surrender while asleep.
 			Weaken(20) //So you can't resist.
 			m_type = 1
-
-		if ("faint","faints")
-			message = "<B>[src]</B> faints."
-			if(sleeping)
-				return //Can't faint while asleep
-			SetSleeping(10) //Short-short nap
-			m_type = 1
-
 
 		if ("sway","sways")
 			message = "<B>[src]</B> sways around dizzily."

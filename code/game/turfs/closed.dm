@@ -89,3 +89,11 @@
 	desc = "A wall layered with impenetrable sheets of paper."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "paperwall"
+
+/turf/closed/indestructible/necropolis
+	name = "necropolis wall"
+	desc = "A seemingly impenetrable wall."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "necro"
+	explosion_block = 50
+	baseturf = /turf/closed/indestructible/necropolis
