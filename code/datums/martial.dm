@@ -385,7 +385,7 @@
 /datum/martial_art/CQC
 	name = "CQC"
 	help_verb = /mob/living/carbon/human/proc/CQC_help
-	var/restrained = 0
+	var/restrained = 0 //used in CQC's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 
 /datum/martial_art/CQC/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,SLAM_COMBO))
@@ -447,6 +447,8 @@
 	return 1
 
 /datum/martial_art/CQC/proc/Restrain(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(restrained)
+		return
 	if(!D.stat)
 		D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
 							"<span class='userdanger'>[A] locks you into a restraining position!</span>")
@@ -469,7 +471,7 @@
 	return 1
 
 /datum/martial_art/CQC/proc/Strike(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat)
+	if(!D.stat || !D.weakened)
 		var/obj/item/I = D.get_active_held_item()
 		D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand and then disarms them!</span>", \
 							"<span class='userdanger'>[A] strikes your jaw, disorienting you, and then disarms you!</span>")
@@ -493,6 +495,9 @@
 			D.stop_pulling()
 			add_logs(A, D, "grabbed", addition="aggressively")
 			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
+			if(!A.pulling)
+				restrained = 0
+
 	return 1
 
 /datum/martial_art/CQC/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
