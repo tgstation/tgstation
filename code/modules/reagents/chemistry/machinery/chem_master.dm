@@ -262,21 +262,37 @@
 			. = TRUE
 
 		if("createBottle")
-			var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-			if(!name)
-				return
-			var/obj/item/weapon/reagent_containers/P
-			if(condi)
-				var/obj/item/weapon/reagent_containers/food/condiment/C = new(src.loc)
-				C.originalname = name
-				P = C
-			else
-				P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			var/many = params["many"]
+			if(reagents.total_volume == 0) return
 
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
-			P.name = trim("[name] bottle")
-			reagents.trans_to(P, P.volume)
+			if(condi)
+				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				if(!name)
+					return
+				var/obj/item/weapon/reagent_containers/food/condiment/P = new(src.loc)
+				P.originalname = name
+				P.name = trim("[name] bottle")
+				reagents.trans_to(P, P.volume)
+			else
+				var/amount = 1
+				var/vol_each = min(reagents.total_volume, 30)
+				if(text2num(many))
+					amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0), 10)
+					if(!amount)
+						return
+					vol_each = min(reagents.total_volume / amount, 30)
+				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				if(!name || !reagents.total_volume)
+					return
+				
+				var/obj/item/weapon/reagent_containers/glass/bottle/P
+				for(var/i = 0; i < amount; i++)
+					P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+					P.pixel_x = rand(-7, 7) //random position
+					P.pixel_y = rand(-7, 7)
+					P.name = trim("[name] bottle")
+					reagents.trans_to(P, vol_each)
+					
 			. = TRUE
 
 		if("analyze")
