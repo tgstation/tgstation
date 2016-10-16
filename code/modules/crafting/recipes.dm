@@ -296,6 +296,17 @@
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
 	category = CAT_MISC
 
+/datum/crafting_recipe/dolphinfinthruster
+	name = "Space Dolphin Fin Thruster"
+	result = /obj/item/weapon/dolphinfinthruster
+	time = 20
+	reqs = list(/obj/item/weapon/dolphinfin = 1,
+				/obj/item/stack/rods = 4,
+				/obj/item/stack/sheet/metal = 2,
+				/obj/item/stack/cable_coil = 3,
+				/obj/item/weapon/ore/bluespace_crystal = 2)
+	category = CAT_MISC
+
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
 	result = /obj/vehicle/scooter/skateboard
@@ -310,6 +321,14 @@
 	time = 65
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)
+	category = CAT_MISC
+
+/datum/crafting_recipe/spaceboard
+	name = "Dolphin Spaceboard"
+	result = /obj/vehicle/space/speedbike/spaceboard
+	time = 60
+	reqs = list(/obj/item/stack/rods = 10,
+				/obj/item/weapon/dolphinfinthruster = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/papersack
