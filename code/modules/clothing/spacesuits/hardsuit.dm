@@ -4,8 +4,8 @@
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	icon_state = "hardsuit0-engineering"
 	item_state = "eng_helm"
-	obj_integrity = 200
-	max_integrity = 200
+	obj_integrity = 300
+	max_integrity = 300
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 50, acid = 75)
 	var/basestate = "hardsuit"
 	var/brightness_on = 4 //luminosity when on
