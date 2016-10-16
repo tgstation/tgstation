@@ -126,3 +126,13 @@
 /obj/item/weapon/grenade/clusterbuster/clf3
 	name = "WELCOME TO HELL"
 	payload = /obj/item/weapon/grenade/chem_grenade/clf3
+
+/obj/item/weapon/grenade/clusterbuster/plasma
+ 	name = "Plasma Cluster Grenade"
+ 	desc = "For when everything needs to die in a fire."
+ 	payload = /obj/item/weapon/grenade/gas
+
+/obj/item/weapon/grenade/clusterbuster/n2o
+ 	name = "N2O Cluster Grenade"
+ 	desc = "For when you need to knock out EVERYONE."
+ 	payload = /obj/item/weapon/grenade/gas/knockout
