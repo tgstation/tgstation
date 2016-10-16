@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - experiment: "Byond 511 beta users may now choose their own FPS. This will apply to animations and other client side only effects. Find it in your game preferences."
