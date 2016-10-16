@@ -179,7 +179,9 @@
 	take_bodypart_damage(acidpwr * min(0.6, acid_volume*0.1))
 
 
-/mob/living/carbon/monkey/ex_act(severity, target)
+/mob/living/carbon/monkey/ex_act(severity, target, origin)
+	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 	..()
 
 	switch (severity)
@@ -189,12 +191,14 @@
 
 		if (2)
 			take_overall_damage(60, 60)
+			damage_clothes(200, BRUTE, "bomb")
 			adjustEarDamage(30, 120)
 			if(prob(70))
 				Paralyse(10)
 
 		if(3)
 			take_overall_damage(30, 0)
+			damage_clothes(50, BRUTE, "bomb")
 			adjustEarDamage(15,60)
 			if (prob(50))
 				Paralyse(8)

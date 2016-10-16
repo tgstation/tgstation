@@ -137,6 +137,7 @@ Nah
 	if (pipe.anchored)
 		return
 
+	. = TRUE
 	qdel(pipe)
 
 /obj/machinery/pipedispenser/disposal/attack_hand(mob/user)

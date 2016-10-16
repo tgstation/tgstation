@@ -260,6 +260,7 @@
 		actuallyismob = 1
 	else if(!istype(O, /obj/item))
 		return
+	. = TRUE
 	var/turf/T = get_turf(src)
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
@@ -276,9 +277,9 @@
 				L.Weaken(2)
 			O.forceMove(T)
 			close()
+		return
 	else
 		O.forceMove(T)
-	return 1
 
 /obj/structure/closet/relaymove(mob/user)
 	if(user.stat || !isturf(loc) || !isliving(user))
@@ -417,3 +418,9 @@
 				req_access = list()
 				req_access += pick(get_all_accesses())
 	..()
+
+
+/obj/structure/closet/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK

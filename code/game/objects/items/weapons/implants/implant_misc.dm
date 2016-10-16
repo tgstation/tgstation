@@ -61,3 +61,22 @@
 	empulse(imp_in, 3, 5)
 	if(!uses)
 		qdel(src)
+
+
+//Health Tracker Implant
+
+/obj/item/weapon/implant/health
+	name = "health implant"
+	activated = 0
+	var/healthstring = ""
+
+/obj/item/weapon/implant/health/proc/sensehealth()
+	if (!implanted)
+		return "ERROR"
+	else
+		if(isliving(implanted))
+			var/mob/living/L = implanted
+			healthstring = "<small>Oxygen Deprivation Damage => [round(L.getOxyLoss())]<br />Fire Damage => [round(L.getFireLoss())]<br />Toxin Damage => [round(L.getToxLoss())]<br />Brute Force Damage => [round(L.getBruteLoss())]</small>"
+		if (!healthstring)
+			healthstring = "ERROR"
+		return healthstring

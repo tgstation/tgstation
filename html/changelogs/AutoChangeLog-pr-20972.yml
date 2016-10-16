@@ -1,0 +1,4 @@
+author: "scoopscoop"
+delete-after: True
+changes: 
+  - bugfix: "The cult shifter will now properly spawn as part of the veil walker set."

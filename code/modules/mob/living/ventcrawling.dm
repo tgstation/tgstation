@@ -53,17 +53,17 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 			if(!client)
 				return
 
-			if(iscarbon(src) && contents.len && ventcrawler < 2)//It must have atleast been 1 to get this far
-				for(var/obj/item/I in contents)
-					var/failed = 0
-					if(istype(I, /obj/item/weapon/implant))
-						continue
-					else
-						failed++
-
-					if(failed)
-						src << "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>"
-						return
+			if(iscarbon(src) && ventcrawler < 2)//It must have atleast been 1 to get this far
+				var/failed = 0
+				var/list/items_list = get_equipped_items()
+				if(items_list.len)
+					failed = 1
+				for(var/obj/item/I in held_items)
+					failed = 1
+					break
+				if(failed)
+					src << "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>"
+					return
 
 			visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
 			forceMove(vent_found)

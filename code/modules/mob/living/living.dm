@@ -37,9 +37,8 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-	..()
 
-	return QDEL_HINT_HARDDEL
+	return ..()
 
 
 /mob/living/proc/OpenCraftingMenu()

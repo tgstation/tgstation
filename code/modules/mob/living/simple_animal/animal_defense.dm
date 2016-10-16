@@ -99,7 +99,9 @@
 	Proj.on_hit(src)
 	return 0
 
-/mob/living/simple_animal/ex_act(severity, target)
+/mob/living/simple_animal/ex_act(severity, target, origin)
+	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 	..()
 	var/bomb_armor = getarmor(null, "bomb")
 	switch (severity)

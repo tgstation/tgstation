@@ -28,6 +28,15 @@
 		stored_extinguisher = null
 	return ..()
 
+/obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
+	if(stored_extinguisher)
+		stored_extinguisher.ex_act(severity, target)
+
+/obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
+	if(A == stored_extinguisher)
+		stored_extinguisher = null
+		update_icon()
+
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench) && !stored_extinguisher)
 		user << "<span class='notice'>You start unsecuring [name]...</span>"
@@ -47,6 +56,7 @@
 				return
 			contents += I
 			stored_extinguisher = I
+			update_icon()
 			user << "<span class='notice'>You place [I] in [src].</span>"
 		else
 			toggle_cabinet(user)

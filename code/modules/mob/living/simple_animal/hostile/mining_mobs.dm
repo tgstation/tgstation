@@ -544,9 +544,9 @@
 			var/obj/mecha/working/ripley/D = target
 			if(D.hides < 3)
 				D.hides++
-				D.armor["melee"] = max(D.armor["melee"] - 0.1, 0.3)
-				D.armor["bullet"] = D.armor["bullet"] - 0.05
-				D.armor["laser"] = D.armor["laser"] - 0.025
+				D.armor["melee"] = min(D.armor["melee"] + 10, 70)
+				D.armor["bullet"] = min(D.armor["bullet"] + 5, 50)
+				D.armor["laser"] = min(D.armor["laser"] + 5, 50)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				D.update_icon()
 				if(D.hides == 3)

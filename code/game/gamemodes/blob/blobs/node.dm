@@ -13,7 +13,7 @@
 /obj/structure/blob/node/New(loc)
 	blob_nodes += src
 	START_PROCESSING(SSobj, src)
-	..(loc)
+	..()
 
 /obj/structure/blob/node/scannerreport()
 	return "Gradually expands and sustains nearby blob spores and blobbernauts."

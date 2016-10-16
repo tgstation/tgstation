@@ -197,12 +197,14 @@
 	return put_in_hand(I, get_inactive_hand_index())
 
 
-//Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns TRUE on success.
+//Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
 //If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE)
 	if(!I)
 		return FALSE
+	if(put_in_active_hand(I))
+		return TRUE
 	var/hand = get_empty_held_index_for_side("l")
 	if(!hand)
 		hand =  get_empty_held_index_for_side("r")

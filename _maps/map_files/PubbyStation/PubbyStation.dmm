@@ -331,7 +331,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/wreck/ai)
 "aaP" = (
@@ -1626,7 +1626,7 @@
 /turf/open/floor/plasteel/black,
 /area/security/prison)
 "adO" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
 /area/security/prison)
 "adP" = (
@@ -2335,7 +2335,7 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "afq" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -5602,7 +5602,7 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "alH" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
 	tag = "icon-manifold (NORTH)";
 	icon_state = "manifold";
@@ -11103,7 +11103,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "awI" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -11325,7 +11325,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
 	initialize_directions = 11
@@ -12357,7 +12357,7 @@
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/captain)
 "azm" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/captain)
 "azn" = (
@@ -13122,7 +13122,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads)
 "aAL" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/crew_quarters/heads)
 "aAM" = (
@@ -13211,7 +13211,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aAS" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -13594,7 +13594,7 @@
 /turf/open/floor/bluegrid,
 /area/ai_monitored/turret_protected/ai_upload)
 "aBF" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/camera/motion{
 	c_tag = "AI Upload Center";
 	dir = 1
@@ -17979,7 +17979,7 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aKI" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -19055,7 +19055,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aNa" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aNb" = (
@@ -20161,7 +20161,7 @@
 	name = "\improper Departure Lounge"
 	})
 "aPm" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -20943,7 +20943,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aQR" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -21313,7 +21313,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aRG" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aRH" = (
@@ -23798,7 +23798,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aWX" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aWY" = (
@@ -24032,7 +24032,7 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aXz" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -28765,7 +28765,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bhK" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bhL" = (
@@ -28820,7 +28820,7 @@
 	name = "Research Division"
 	})
 "bhR" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/research{
@@ -30805,7 +30805,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "blR" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -31192,7 +31192,7 @@
 	},
 /area/assembly/robotics)
 "bmx" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/warnwhite{
 	dir = 1
 	},
@@ -32896,7 +32896,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bqa" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -38554,7 +38554,7 @@
 /turf/open/floor/plasteel,
 /area/toxins/mineral_storeroom)
 "bAy" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
@@ -42348,7 +42348,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bIL" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/item/device/radio/beacon,
 /turf/open/floor/plasteel,
 /area/atmos)
@@ -42509,7 +42509,7 @@
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "bJc" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "bJd" = (
@@ -45632,7 +45632,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bPr" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -48620,7 +48620,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "bWh" = (
