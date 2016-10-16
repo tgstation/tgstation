@@ -10,7 +10,7 @@
 	obj_integrity = 250
 	max_integrity = 250
 	resistance_flags = 0
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 75)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -18,7 +18,6 @@
 	icon_state = "armoralt"
 	item_state = "armoralt"
 	blood_overlay_type = "armor"
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 75)
 	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/clothing/suit/armor/vest/alt
