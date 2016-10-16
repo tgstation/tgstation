@@ -119,20 +119,11 @@
 			new /obj/vehicle/scooter/skateboard(user.loc)
 			qdel(src)
 
-
-
-	else if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = I
-		if(M.get_amount() < 5)
-			user << "<span class='warning'>You need at least five metal sheets to make proper wheels!</span>"
-			return
-		user << "<span class='notice'>You begin to add wheels to [src].</span>"
+	else if(istype(I, /obj/item/weapon/dolphinfinthruster))
+		user << "<span class='notice'>You begin to attach the dolphin fin and thrusters to the bottom of the [src].</span>"
 		if(do_after(user, 80, target = src))
-			if(!M || M.get_amount() < 5)
-				return
-			M.use(5)
-			user << "<span class='notice'>You finish making wheels for [src].</span>"
-			new /obj/vehicle/scooter/skateboard(user.loc)
+			user << "<span class='notice'>You attach the thruster fin to the [src].</span>"
+			new /obj/vehicle/space/speedbike/spaceboard(user.loc)
 			qdel(src)
 
 
