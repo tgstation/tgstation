@@ -19,7 +19,7 @@
 /datum/export/weapon/taser
 	cost = 250
 	unit_name = "advanced taser"
-	export_types = list(/obj/item/weapon/gun/energy/gun/advtaser)
+	export_types = list(/obj/item/weapon/gun/energy/e_gun/advtaser)
 
 /datum/export/weapon/laser
 	cost = 250
@@ -34,7 +34,7 @@
 /datum/export/weapon/energy_gun
 	cost = 900
 	unit_name = "energy gun"
-	export_types = list(/obj/item/weapon/gun/energy/gun)
+	export_types = list(/obj/item/weapon/gun/energy/e_gun)
 
 
 /datum/export/weapon/wt550

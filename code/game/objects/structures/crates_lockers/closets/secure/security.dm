@@ -27,7 +27,7 @@
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/storage/belt/sabre(src)
-	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/e_gun(src)
 	new /obj/item/weapon/door_remote/captain(src)
 
 /obj/structure/closet/secure_closet/hop
@@ -49,7 +49,7 @@
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/e_gun(src)
 	new /obj/item/clothing/tie/petcollar(src)
 	new /obj/item/weapon/door_remote/civillian(src)
 
@@ -78,7 +78,7 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/weapon/gun/energy/gun/hos(src)
+	new /obj/item/weapon/gun/energy/e_gun/hos(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/pinpointer(src)
 
@@ -256,7 +256,7 @@
 	new /obj/item/weapon/storage/box/firingpins(src)
 	new /obj/item/weapon/gun/energy/ionrifle(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/weapon/gun/energy/e_gun(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/gun/energy/laser(src)
 

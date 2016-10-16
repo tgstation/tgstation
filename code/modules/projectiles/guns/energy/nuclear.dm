@@ -1,17 +1,17 @@
-/obj/item/weapon/gun/energy/gun
+/obj/item/weapon/gun/energy/e_gun
 	name = "energy gun"
 	desc = "A basic hybrid energy gun with two settings: disable and kill."
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=4;magnets=3"
-	modifystate = 2
+	modifystate = 1
 	can_flashlight = 1
 	ammo_x_offset = 3
 	flight_x_offset = 15
 	flight_y_offset = 10
 
-/obj/item/weapon/gun/energy/gun/mini
+/obj/item/weapon/gun/energy/e_gun/mini
 	name = "miniature energy gun"
 	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: stun and kill."
 	icon_state = "mini"
@@ -22,16 +22,16 @@
 	charge_sections = 3
 	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
 
-/obj/item/weapon/gun/energy/gun/mini/New()
+/obj/item/weapon/gun/energy/e_gun/mini/New()
 	F = new /obj/item/device/flashlight/seclite(src)
 	..()
 
-/obj/item/weapon/gun/energy/gun/mini/update_icon()
+/obj/item/weapon/gun/energy/e_gun/mini/update_icon()
 	..()
 	if(F && F.on)
 		add_overlay("mini-light")
 
-/obj/item/weapon/gun/energy/gun/hos
+/obj/item/weapon/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
@@ -40,7 +40,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 4
 
-/obj/item/weapon/gun/energy/gun/dragnet
+/obj/item/weapon/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"
 	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
 	icon_state = "dragnet"
@@ -49,12 +49,12 @@
 	can_flashlight = 0
 	ammo_x_offset = 1
 
-/obj/item/weapon/gun/energy/gun/dragnet/snare
+/obj/item/weapon/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
 	desc = "Fires an energy snare that slows the target down"
 	ammo_type = list(/obj/item/ammo_casing/energy/trap)
 
-/obj/item/weapon/gun/energy/gun/turret
+/obj/item/weapon/gun/energy/e_gun/turret
 	name = "hybrid turret gun"
 	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
 	icon_state = "turretlaser"
@@ -67,7 +67,7 @@
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2
 
-/obj/item/weapon/gun/energy/gun/nuclear
+/obj/item/weapon/gun/energy/e_gun/nuclear
 	name = "advanced energy gun"
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"
@@ -82,17 +82,17 @@
 	var/fail_tick = 0
 	var/fail_chance = 0
 
-/obj/item/weapon/gun/energy/gun/nuclear/process()
+/obj/item/weapon/gun/energy/e_gun/nuclear/process()
 	if(fail_tick > 0)
 		fail_tick--
 	..()
 
-/obj/item/weapon/gun/energy/gun/nuclear/shoot_live_shot()
+/obj/item/weapon/gun/energy/e_gun/nuclear/shoot_live_shot()
 	failcheck()
 	update_icon()
 	..()
 
-/obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
+/obj/item/weapon/gun/energy/e_gun/nuclear/proc/failcheck()
 	if(prob(fail_chance) && isliving(loc))
 		var/mob/living/M = loc
 		switch(fail_tick)
@@ -106,11 +106,11 @@
 				crit_fail = 1
 				M << "<span class='userdanger'>Your [name]'s reactor overloads!</span>"
 
-/obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
+/obj/item/weapon/gun/energy/e_gun/nuclear/emp_act(severity)
 	..()
 	fail_chance = min(fail_chance + round(15/severity), 100)
 
-/obj/item/weapon/gun/energy/gun/nuclear/update_icon()
+/obj/item/weapon/gun/energy/e_gun/nuclear/update_icon()
 	..()
 	if(crit_fail)
 		add_overlay("[icon_state]_fail_3")

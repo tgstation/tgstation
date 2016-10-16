@@ -19,6 +19,12 @@
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	power_supply.use(round(power_supply.charge / severity))
+	if(chambered)//phil235
+		if(chambered.BB)
+			qdel(chambered.BB)
+			chambered.BB = null
+		chambered = null
+	newshot() //phil235
 	update_icon()
 
 
@@ -30,11 +36,10 @@
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
 	update_ammo_types()
+	on_recharge()
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_icon()
-	return
-
 
 /obj/item/weapon/gun/energy/proc/update_ammo_types()
 	var/obj/item/ammo_casing/energy/shot
@@ -62,16 +67,20 @@
 		if(!power_supply)
 			return
 		power_supply.give(100)
+		on_recharge()
 		update_icon()
+
+/obj/item/weapon/gun/energy/proc/on_recharge()
+	newshot()
 
 /obj/item/weapon/gun/energy/attack_self(mob/living/user as mob)
 	if(ammo_type.len > 1)
 		select_fire(user)
 		update_icon()
-
+/*phil235
 /obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
 	newshot() //prepare a new shot
-	..()
+	..()*/
 
 /obj/item/weapon/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
@@ -80,18 +89,20 @@
 /obj/item/weapon/gun/energy/newshot()
 	if (!ammo_type || !power_supply)
 		return
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(power_supply.charge >= shot.e_cost) //if there's enough power in the power_supply cell...
-		chambered = shot //...prepare a new shot based on the current ammo type selected
-		chambered.newshot()
-	return
+	if(!chambered)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		if(power_supply.charge >= shot.e_cost) //if there's enough power in the power_supply cell...
+			chambered = shot //...prepare a new shot based on the current ammo type selected
+			if(!chambered.BB)
+				chambered.newshot()
 
 /obj/item/weapon/gun/energy/process_chamber()
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		power_supply.use(shot.e_cost)//... drain the power_supply cell
+		robocharge() //if in a cyborg, we recharge the cell for next shot.
 	chambered = null //either way, released the prepared shot
-	return
+	newshot() //phil235
 
 /obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
 	select++
@@ -102,6 +113,12 @@
 	fire_delay = shot.delay
 	if (shot.select_name)
 		user << "<span class='notice'>[src] is now set to [shot.select_name].</span>"
+	if(chambered)//phil235
+		if(chambered.BB)
+			qdel(chambered.BB)
+			chambered.BB = null
+		chambered = null
+	newshot()
 	update_icon()
 	return
 

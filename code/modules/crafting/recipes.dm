@@ -101,7 +101,7 @@
 				/obj/item/bodypart/r_leg/robot = 1,
 				/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/cable_coil = 5,
-				/obj/item/weapon/gun/energy/gun/advtaser = 1,
+				/obj/item/weapon/gun/energy/e_gun/advtaser = 1,
 				/obj/item/weapon/stock_parts/cell = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)

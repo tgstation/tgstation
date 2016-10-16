@@ -234,9 +234,9 @@ datum/supply_pack
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
 	cost = 1500
-	contains = list(/obj/item/weapon/gun/energy/gun/advtaser,
-					/obj/item/weapon/gun/energy/gun/advtaser,
-					/obj/item/weapon/gun/energy/gun/advtaser)
+	contains = list(/obj/item/weapon/gun/energy/e_gun/advtaser,
+					/obj/item/weapon/gun/energy/e_gun/advtaser,
+					/obj/item/weapon/gun/energy/e_gun/advtaser)
 	crate_name = "taser crate"
 
 /datum/supply_pack/security/disabler
@@ -339,8 +339,8 @@ datum/supply_pack
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
 	cost = 2500
-	contains = list(/obj/item/weapon/gun/energy/gun,
-					/obj/item/weapon/gun/energy/gun)
+	contains = list(/obj/item/weapon/gun/energy/e_gun,
+					/obj/item/weapon/gun/energy/e_gun)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 

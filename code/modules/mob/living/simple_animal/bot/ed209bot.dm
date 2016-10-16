@@ -363,7 +363,7 @@ Auto Patrol[]"},
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(!lasercolor)
-		var/obj/item/weapon/gun/energy/gun/advtaser/G = new /obj/item/weapon/gun/energy/gun/advtaser(Tsec)
+		var/obj/item/weapon/gun/energy/e_gun/advtaser/G = new /obj/item/weapon/gun/energy/e_gun/advtaser(Tsec)
 		G.power_supply.charge = 0
 		G.update_icon()
 	else if(lasercolor == "b")
