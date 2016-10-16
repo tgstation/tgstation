@@ -31,7 +31,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
-	sterile = 1
+	sterile = 0
 
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
