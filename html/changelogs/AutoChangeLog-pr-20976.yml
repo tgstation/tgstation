@@ -1,4 +1,0 @@
-author: "phil235"
-delete-after: True
-changes: 
-  - tweak: "Clicking a floor with a bodybag or roller bed now deploys them directly (and the bodybag starts open)"
