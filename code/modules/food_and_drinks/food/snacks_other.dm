@@ -331,10 +331,6 @@
 	attack_verb = list("slapped", "slathered")
 	w_class = 4
 
-
-	w_class = 4
-	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10,)
-
 /obj/item/weapon/reagent_containers/food/snacks/dolphincereal
 	name = "dolphin cereal"
 	desc = "Finest dolphin skin flakes. This looks flippin' disgusting."
