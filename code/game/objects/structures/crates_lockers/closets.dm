@@ -261,7 +261,6 @@
 		actuallyismob = 1
 	else if(!istype(O, /obj/item))
 		return
-	. = TRUE
 	var/turf/T = get_turf(src)
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
@@ -278,9 +277,9 @@
 				L.Weaken(2)
 			O.forceMove(T)
 			close()
-		return
 	else
 		O.forceMove(T)
+	return 1
 
 /obj/structure/closet/relaymove(mob/user)
 	if(user.stat || !isturf(loc) || !isliving(user))

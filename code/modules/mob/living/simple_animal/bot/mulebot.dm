@@ -334,7 +334,6 @@ var/global/mulebot_count = 0
 	if(!istype(AM))
 		return
 
-	. = TRUE
 	load(AM)
 
 // called to load a crate
