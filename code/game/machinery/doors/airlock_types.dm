@@ -460,7 +460,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(construction_state == GEAR_SECURE)
 			user.visible_message("<span class='notice'>[user] begins unfastening [src]'s gear...</span>", "<span class='notice'>You begin unfastening [src]'s gear...</span>")
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 75 / I.toolspeed, target = src))
 				return 1 //Returns 1 so as not to have extra interactions with the tools used (i.e. prying open)
 			user.visible_message("<span class='notice'>[user] unfastens [src]'s gear!</span>", "<span class='notice'>[src]'s gear shifts slightly with a pop.</span>")
@@ -468,7 +468,7 @@
 			construction_state = GEAR_UNFASTENED
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins fastening [src]'s gear...</span>", "<span class='notice'>You begin fastening [src]'s gear...</span>")
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 75 / I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] fastens [src]'s gear!</span>", "<span class='notice'>[src]'s gear shifts back into place.</span>")
@@ -483,7 +483,7 @@
 			return 0
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s gear...</span>", "<span class='notice'>You begin loosening [src]'s gear...</span>")
-			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 80 / I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s gear!</span>", "<span class='notice'>[src]'s gear pops off and dangles loosely.</span>")
@@ -491,7 +491,7 @@
 			construction_state = GEAR_LOOSE
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s gear...</span>", "<span class='notice'>You begin tightening [src]'s gear into place...</span>")
-			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 80 / I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s gear!</span>", "<span class='notice'>You firmly tighten [src]'s gear into place.</span>")
@@ -504,7 +504,7 @@
 			return 1
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s gear...</span>", "<span class='notice'>You slowly begin lifting off [src]'s gear...</span>")
-			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 85 / I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s gear, causing it to fall apart!</span>", "<span class='notice'>You lift off [src]'s gear, causing it to fall \

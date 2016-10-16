@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Airlocks are now immune to any damage below 20, to prevent pickaxe prison breaks."
-  - tweak: "High-Security Airlocks, such as the vault or the AI core's airlocks, are now immune to any damage below 30."

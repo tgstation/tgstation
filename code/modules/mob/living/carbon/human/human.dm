@@ -588,7 +588,7 @@
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
-	if(isloyal(src))
+	if(isloyal())
 		threatcount -= 1
 
 	//Agent cards lower threatlevel.

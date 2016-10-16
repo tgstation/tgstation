@@ -104,7 +104,9 @@ In all, this is a lot like the monkey code. /N
 		add_logs(M, src, "attacked")
 		updatehealth()
 
-/mob/living/carbon/alien/ex_act(severity, target)
+/mob/living/carbon/alien/ex_act(severity, target, origin)
+	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 	..()
 	switch (severity)
 		if (1)

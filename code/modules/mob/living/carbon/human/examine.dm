@@ -298,13 +298,13 @@
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
 					msg += "<a href='?src=\ref[src];hud=1;photo_side=1'>\[Side photo\]</a><br>"
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/medical))
-					var/implant_detect
+					var/cyberimp_detect
 					for(var/obj/item/organ/cyberimp/CI in internal_organs)
 						if(CI.status == ORGAN_ROBOTIC)
-							implant_detect += "[name] is modified with a [CI.name].<br>"
-					if(implant_detect)
+							cyberimp_detect += "[name] is modified with a [CI.name].<br>"
+					if(cyberimp_detect)
 						msg += "Detected cybernetic modifications:<br>"
-						msg += implant_detect
+						msg += cyberimp_detect
 					if(R)
 						var/health_r = R.fields["p_stat"]
 						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health_r]\]</a>"

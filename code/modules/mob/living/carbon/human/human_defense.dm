@@ -339,10 +339,11 @@
 		..()
 
 
-/mob/living/carbon/human/ex_act(severity, ex_target)
+/mob/living/carbon/human/ex_act(severity, target, origin)
 
-	if(istype(ex_target, /datum/spacevine_mutation) && isvineimmune(src))
+	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
+	..()
 	var/b_loss = 0
 	var/f_loss = 0
 	var/bomb_armor = getarmor(null, "bomb")
@@ -351,8 +352,9 @@
 		if (1)
 			if(prob(bomb_armor))
 				b_loss = 500
-				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
-				throw_at(target, 200, 4)
+				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
+				throw_at(throw_target, 200, 4)
+				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
 			else
 				gib()
 				return
@@ -363,7 +365,7 @@
 			if(bomb_armor)
 				b_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
 				f_loss = b_loss
-
+			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
 			if (prob(70))
@@ -373,16 +375,13 @@
 			b_loss = 30
 			if(bomb_armor)
 				b_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
-
+			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
 			if (prob(50))
 				Paralyse(8)
 
 	take_overall_damage(b_loss,f_loss)
-	if(bomb_armor == 100) //full bomb armor set, we don't call contents_explosion
-		flash_act()
-		return
 
 	//attempt to dismember bodyparts
 	if(severity <= 2 || !bomb_armor)
@@ -395,7 +394,7 @@
 				max_limb_loss--
 				if(!max_limb_loss)
 					break
-	..()
+
 
 /mob/living/carbon/human/blob_act(obj/structure/blob/B)
 	if(stat == DEAD)

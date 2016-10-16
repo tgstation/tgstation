@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - tweak: "Changed two admin hotkeys: f7 is now stealth-mode and f8 to toggle-build-mode-self."

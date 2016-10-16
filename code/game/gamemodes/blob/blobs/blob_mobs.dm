@@ -82,8 +82,8 @@
 	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
 	icon_living = "blobpod"
-	health = 40
-	maxHealth = 40
+	health = 30
+	maxHealth = 30
 	verb_say = "psychically pulses"
 	verb_ask = "psychically probes"
 	verb_exclaim = "psychically yells"
@@ -91,7 +91,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	obj_damage = 20
-	environment_smash = 0
+	environment_smash = 1
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	flying = 1

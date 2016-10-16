@@ -71,6 +71,7 @@
 			if(!L.incapacitated() && I == L.get_active_held_item())
 				if(can_be_inserted(I, 0))
 					handle_item_insertion(I, 0 , L)
+					. = TRUE
 
 
 //Check if this storage can dump the items
@@ -515,3 +516,8 @@
 	if(A in contents)
 		usr = null
 		remove_from_storage(A, loc)
+
+/obj/item/weapon/storage/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK
