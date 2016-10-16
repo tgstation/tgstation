@@ -302,7 +302,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aO" = (

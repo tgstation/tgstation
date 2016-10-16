@@ -155,6 +155,13 @@
 		disconnect_terminal()
 	. = ..()
 
+/obj/machinery/power/apc/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		update_icon()
+		update_icon()
+		updateUsrDialog()
+
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
@@ -378,7 +385,7 @@
 			if (terminal)
 				user << "<span class='warning'>Disconnect the wires first!</span>"
 				return
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "<span class='notice'>You are trying to remove the power control board...</span>" //lpeters - fixed grammar issues
 			if(do_after(user, 50/W.toolspeed, target = src))
 				if (has_electronics==1)
@@ -430,12 +437,12 @@
 				if (has_electronics==1 && terminal)
 					has_electronics = 2
 					stat &= ~MAINT
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(src.loc, W.usesound, 50, 1)
 					user << "<span class='notice'>You screw the circuit electronics into place.</span>"
 				else if (has_electronics==2)
 					has_electronics = 1
 					stat |= MAINT
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(src.loc, W.usesound, 50, 1)
 					user << "<span class='notice'>You unfasten the electronics.</span>"
 				else /* has_electronics==0 */
 					user << "<span class='warning'>There is nothing to secure!</span>"

@@ -132,8 +132,8 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 	if(prob(60))
 		var/obj/item/I = D.get_active_held_item()
 		if(I)
-			D.drop_item()
-			A.put_in_hands(I)
+			if(D.drop_item())
+				A.put_in_hands(I)
 		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
 							"<span class='userdanger'>[A] has disarmed [D]!</span>")
 		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

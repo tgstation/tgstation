@@ -300,3 +300,4 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 		var/obj/item/I = X
 		if(!bodypart_bit || (I.body_parts_covered & bodypart_bit))
 			I.take_damage(damage_amount, damage_type, damage_flag, 0)
+

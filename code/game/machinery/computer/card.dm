@@ -67,6 +67,32 @@ var/time_last_changed_position = 0
 	else
 		return ..()
 
+/obj/machinery/computer/card/Destroy()
+	if(scan)
+		qdel(scan)
+		scan = null
+	if(modify)
+		qdel(modify)
+		modify = null
+	return ..()
+
+/obj/machinery/computer/card/handle_atom_del(atom/A)
+	..()
+	if(A == scan)
+		scan = null
+		updateUsrDialog()
+	if(A == modify)
+		modify = null
+		updateUsrDialog()
+
+/obj/machinery/computer/card/on_deconstruction()
+	if(scan)
+		scan.forceMove(loc)
+		scan = null
+	if(modify)
+		modify.forceMove(loc)
+		modify = null
+
 //Check if you can't open a new position for a certain job
 /obj/machinery/computer/card/proc/job_blacklisted(jobtitle)
 	return (jobtitle in blacklisted)

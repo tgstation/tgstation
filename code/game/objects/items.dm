@@ -25,6 +25,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 
 	var/hitsound = null
+	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = 3
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.

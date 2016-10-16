@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "RCDs have a Toggle Window Type verb allowing the rapid construction of reinforced windows, rather than regular windows."
+  - rscadd: "RCDs can now finish and deconstruct wall girders."

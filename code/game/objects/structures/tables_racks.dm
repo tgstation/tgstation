@@ -104,14 +104,14 @@
 	if(!(flags & NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver) && deconstruction_ready)
 			user << "<span class='notice'>You start disassembling [src]...</span>"
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			if(do_after(user, 20, target = src))
 				deconstruct(TRUE)
 			return
 
 		if(istype(I, /obj/item/weapon/wrench) && deconstruction_ready)
 			user << "<span class='notice'>You start deconstructing [src]...</span>"
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			if(do_after(user, 40, target = src))
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				deconstruct(TRUE, 1)
@@ -301,7 +301,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			if(deconstruction_ready)
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
 				if (do_after(user, 50/W.toolspeed, target = src))
@@ -424,7 +424,7 @@
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct(TRUE)
 		return
 	if(user.a_intent == "harm")

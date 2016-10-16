@@ -117,7 +117,24 @@
 	if(prob(deflect_chance))
 		severity++
 		log_append_to_last("Armor saved, changing severity to [severity].")
-	. = ..(severity, target)
+	. = ..()
+
+/obj/mecha/contents_explosion(severity, target)
+	severity++
+	for(var/X in equipment)
+		var/obj/item/mecha_parts/mecha_equipment/ME = X
+		ME.ex_act(severity,target)
+	for(var/Y in trackers)
+		var/obj/item/mecha_parts/mecha_tracking/MT = Y
+		MT.ex_act(severity, target)
+	if(occupant)
+		occupant.ex_act(severity,target)
+
+/obj/mecha/handle_atom_del(atom/A)
+	if(A == occupant)
+		occupant = null
+		icon_state = initial(icon_state)+"-open"
+		setDir(dir_in)
 
 /obj/mecha/emp_act(severity)
 	if(get_charge())
@@ -245,6 +262,7 @@
 			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 		W.forceMove(src)
+		trackers += W
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
 		return
 	else

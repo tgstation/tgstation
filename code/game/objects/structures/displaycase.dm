@@ -22,6 +22,15 @@
 		showpiece = new start_showpiece_type (src)
 	update_icon()
 
+/obj/structure/displaycase/Destroy()
+	if(electronics)
+		qdel(electronics)
+		electronics = null
+	if(showpiece)
+		qdel(showpiece)
+		showpiece = null
+	return ..()
+
 /obj/structure/displaycase/examine(mob/user)
 	..()
 	if(showpiece)
@@ -32,7 +41,7 @@
 
 /obj/structure/displaycase/proc/dump()
 	if (showpiece)
-		showpiece.loc = src.loc
+		showpiece.forceMove(loc)
 		showpiece = null
 
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

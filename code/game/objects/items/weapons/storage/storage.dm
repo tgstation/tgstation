@@ -518,3 +518,8 @@
 	if(A in contents)
 		usr = null
 		remove_from_storage(A, loc)
+
+/obj/item/weapon/storage/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK

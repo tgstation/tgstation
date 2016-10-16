@@ -605,9 +605,7 @@ var/global/list/g_fancy_list_of_types = null
 			return
 
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for (var/obj/item/I in M)
-		if (istype(I, /obj/item/weapon/implant))
-			continue
+	for (var/obj/item/I in M.get_equipped_items())
 		qdel(I)
 	switch(dresscode)
 		if ("Naked")

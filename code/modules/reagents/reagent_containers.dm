@@ -71,7 +71,8 @@
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
 			R.on_ex_act()
-	..()
+	if(!qdeleted(src))
+		..()
 
 /obj/item/weapon/reagent_containers/fire_act(exposed_temperature, exposed_volume)
 	reagents.chem_temp += 30
