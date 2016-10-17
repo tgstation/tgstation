@@ -479,6 +479,7 @@
 		M.adjustToxLoss(3*REM,0)
 		M.adjustStaminaLoss(10*REM,0)
 		M.blur_eyes(5)
+		. = 1
 	..()
 
 /datum/reagent/consumable/tinlux
