@@ -87,9 +87,8 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0) //prevent the paper plane from spinning
-	if(!..())
-		return
+/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE)
+	. = ..(target, range, speed, thrower, FALSE, diagonals_first)
 
 /obj/item/weapon/paperplane/throw_impact(atom/hit_atom)
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
