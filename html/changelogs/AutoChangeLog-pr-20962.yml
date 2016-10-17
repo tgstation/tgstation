@@ -1,0 +1,5 @@
+author: "phil235"
+delete-after: True
+changes: 
+  - rscadd: "Visual effects appear on the target of an attack, similar to the item attack effect."
+  - rscdel: "You now only see a message in chat when witnessing someone else getting attacked or hit by a bullet if you are close enough to the action."
