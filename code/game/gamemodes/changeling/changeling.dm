@@ -70,13 +70,14 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			var/datum/mind/changeling = pick(antag_candidates)
 			antag_candidates -= changeling
 			changelings += changeling
+			changeling.special_role = "Changeling"
 			changeling.restricted_roles = restricted_jobs
 		return 1
 	else
 		return 0
 
 /datum/game_mode/changeling/post_setup()
-	modePlayer += changelings
+
 	//Decide if it's ok for the lings to have a team objective
 	//And then set it up to be handed out in forge_changeling_objectives
 	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
@@ -93,10 +94,10 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	for(var/datum/mind/changeling in changelings)
 		log_game("[changeling.key] (ckey) has been selected as a changeling")
 		changeling.current.make_changeling()
-		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
 		ticker.mode.update_changeling_icons_added(changeling)
+	modePlayer += changelings
 	..()
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
