@@ -121,7 +121,7 @@
 /obj/machinery/clonepod/examine(mob/user)
 	..()
 	if(mess)
-		user << "It's filled with blood and viscrea. You swear you can see it moving..."
+		user << "It's filled with blood and viscera. You swear you can see it moving..."
 	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
 		user << "Current clone cycle is [round(get_completion())]% complete."
 
