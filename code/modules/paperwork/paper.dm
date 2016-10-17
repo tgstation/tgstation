@@ -339,7 +339,7 @@
 
 	add_fingerprint(user)
 
-/obj/item/weapon/paper/fire_act()
+/obj/item/weapon/paper/fire_act(exposed_temperature, exposed_volume)
 	..()
 	if(!(resistance_flags & FIRE_PROOF))
 		icon_state = "paper_onfire"
