@@ -396,23 +396,6 @@ for(var/t in test_times)
 	return
 
 
-//for each body zone, gives the corresponding body_parts_covered bitfield
-/proc/body_zone2body_parts_covered(b_zone)
-	b_zone = check_zone(b_zone)
-	switch(b_zone)
-		if("chest")
-			return CHEST
-		if("head")
-			return HEAD
-		if("r_arm")
-			return ARM_RIGHT
-		if("l_arm")
-			return ARM_LEFT
-		if("r_leg")
-			return LEG_RIGHT
-		if("l_leg")
-			return LEG_LEFT
-
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
 //(I challenge you to find a use for this)
 /proc/body_parts_covered2organ_names(bpc)
