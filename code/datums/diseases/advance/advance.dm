@@ -65,8 +65,7 @@ var/list/advance_cures = 	list(
 			symptoms = GenerateSymptoms(0, 2)
 		else
 			for(var/datum/symptom/S in D.symptoms)
-				symptoms += new S.type
-
+				symptoms += S
 	Refresh()
 	..(process, D)
 	return
@@ -126,7 +125,7 @@ var/list/advance_cures = 	list(
 	if(!(src.IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
 		for(var/datum/symptom/S in possible_symptoms)
-			AddSymptom(new S.type)
+			AddSymptom(S)
 
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
@@ -269,8 +268,13 @@ var/list/advance_cures = 	list(
 
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
 /datum/disease/advance/proc/Evolve(min_level, max_level)
-	var/s = safepick(GenerateSymptoms(min_level, max_level, 1))
+	var/datum/symptom/s = safepick(GenerateSymptoms(min_level, max_level, 1))
 	if(s)
+		//Randomize Symptom Stats
+		s.stealth += rand(-1,1)
+		s.resistance += rand(-1,1)
+		s.stage_speed += rand(-2,2)
+		s.transmittable += rand(-2,2)
 		AddSymptom(s)
 		Refresh(1)
 	return
