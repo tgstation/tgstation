@@ -417,7 +417,6 @@
 		return
 	if(!user.drop_item())
 		return
-	. = TRUE
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 

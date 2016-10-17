@@ -780,7 +780,6 @@
 		log_append_to_last("Permission denied.")
 		return
 	var/passed
-	. = TRUE
 	if(dna_lock)
 		if(user.has_dna())
 			var/mob/living/carbon/C = user
