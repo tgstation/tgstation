@@ -89,3 +89,8 @@
 		if(BURN)
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
+/obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user)
+	if(user.a_intent != "harm")
+		return attack_hand(user)
+	else
+		return ..()

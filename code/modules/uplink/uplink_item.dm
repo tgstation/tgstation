@@ -524,6 +524,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/stealthy_weapons/cqc
+	name = "CQC Manual"
+	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
+	item = /obj/item/weapon/CQC_manual
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 10
+	surplus = 0
+
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \

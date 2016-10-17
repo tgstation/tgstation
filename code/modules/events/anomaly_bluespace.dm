@@ -27,7 +27,7 @@
 				// Calculate new position (searches through beacons in world)
 			var/obj/item/device/radio/beacon/chosen
 			var/list/possible = list()
-			for(var/obj/item/device/radio/beacon/W in world)
+			for(var/obj/item/device/radio/beacon/W in teleportbeacons)
 				possible += W
 
 			if(possible.len > 0)

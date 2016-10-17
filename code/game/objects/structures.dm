@@ -52,7 +52,7 @@
 	if(ismob(O) && user == O && iscarbon(user))
 		if(user.canmove)
 			climb_structure(user)
-			return 1
+			return
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_held_item() != O))
 		return
 	if(iscyborg(user))
@@ -61,7 +61,7 @@
 		return
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
-	return 1
+	return
 
 /obj/structure/proc/climb_structure(mob/user)
 	src.add_fingerprint(user)

@@ -7,7 +7,7 @@
 			playsound(loc, "punch", 25, 1, -1)
 			add_logs(M, src, "attacked")
 			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \
-					"<span class='userdanger'>[M] has kicked [src]!</span>")
+					"<span class='userdanger'>[M] has kicked [src]!</span>", null, 2, M)
 			if ((stat != DEAD) && (damage > 4.9))
 				Paralyse(rand(5,10))
 
@@ -16,7 +16,7 @@
 		else
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has attempted to kick [src]!</span>", \
-					"<span class='userdanger'>[M] has attempted to kick [src]!</span>")
+					"<span class='userdanger'>[M] has attempted to kick [src]!</span>", null, 2, M)
 
 /mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
@@ -27,3 +27,8 @@
 			sleep(1)
 			step_away(src,user,15)
 		return 1
+
+/mob/living/carbon/alien/larva/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+	if(!no_effect && !visual_effect_icon)
+		visual_effect_icon = ATTACK_EFFECT_BITE
+	..()

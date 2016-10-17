@@ -554,41 +554,6 @@
 		new /obj/structure/barricade/security/ctf(get_turf(src))
 		qdel(src)
 
-//Areas
-
-/area/ctf
-	name = "Capture the Flag"
-	icon_state = "yellow"
-	requires_power = 0
-	has_gravity = 1
-
-/area/ctf/control_room
-	name = "Control Room A"
-
-/area/ctf/control_room2
-	name = "Control Room B"
-
-/area/ctf/central
-	name = "Central"
-
-/area/ctf/main_hall
-	name = "Main Hall A"
-
-/area/ctf/main_hall2
-	name = "Main Hall B"
-
-/area/ctf/corridor
-	name = "Corridor A"
-
-/area/ctf/corridor2
-	name = "Corridor B"
-
-/area/ctf/flag_room
-	name = "Flag Room A"
-
-/area/ctf/flag_room2
-	name = "Flag Room B"
-
 
 //Control Point
 

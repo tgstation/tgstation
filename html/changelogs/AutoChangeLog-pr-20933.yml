@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "You can now grind slime extracts in a reagent grinder. If the slime was unused it will result in slime jelly, while if used it will only output the reagents inside the extract."

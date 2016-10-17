@@ -51,9 +51,7 @@ Captain
 		return
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 	minor_announce("Captain [H.real_name] on deck!")
 

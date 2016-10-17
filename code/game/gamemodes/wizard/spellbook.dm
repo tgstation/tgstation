@@ -810,10 +810,8 @@
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You suddenly feel very solid!</span>"
-	var/obj/structure/closet/statue/S = new /obj/structure/closet/statue(user.loc, user)
-	S.timer = 30
-	user.drop_item()
-
+	user.Stun(2)
+	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
 	spell = /obj/effect/proc_holder/spell/aoe_turf/knock

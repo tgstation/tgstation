@@ -60,7 +60,7 @@ Frequency:
 			if (sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
-				for(var/obj/item/device/radio/beacon/W in world)
+				for(var/obj/item/device/radio/beacon/W in teleportbeacons)
 					if (W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
 						if (tr.z == sr.z && tr)
@@ -167,7 +167,7 @@ Frequency:
 	if(turfs.len)
 		L["None (Dangerous)"] = pick(turfs)
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") as null|anything in L
-	if (user.get_active_held_item() != src || user.incapacitated())
+	if (!t1 || user.get_active_held_item() != src || user.incapacitated())
 		return
 	if(active_portals >= 3)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")

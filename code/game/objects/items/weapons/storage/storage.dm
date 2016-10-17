@@ -71,7 +71,6 @@
 			if(!L.incapacitated() && I == L.get_active_held_item())
 				if(can_be_inserted(I, 0))
 					handle_item_insertion(I, 0 , L)
-					. = TRUE
 
 
 //Check if this storage can dump the items
@@ -372,10 +371,12 @@
 	W.mouse_opacity = initial(W.mouse_opacity)
 	return 1
 
-
 /obj/item/weapon/storage/deconstruct(disassembled = TRUE)
-	for(var/obj/item/Item in contents)
-		remove_from_storage(Item, src.loc)
+	var/drop_loc = loc
+	if(ismob(loc))
+		drop_loc = get_turf(src)
+	for(var/obj/item/I in contents)
+		remove_from_storage(I, drop_loc)
 	qdel(src)
 
 //This proc is called when you want to place an item into the storage item.
@@ -516,3 +517,8 @@
 	if(A in contents)
 		usr = null
 		remove_from_storage(A, loc)
+
+/obj/item/weapon/storage/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK
