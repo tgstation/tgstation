@@ -255,12 +255,9 @@
 	if(icon_gib)
 		new /obj/effect/overlay/temp/gib_animation/animal(loc, icon_gib)
 
-/mob/living/simple_animal/say_quote(input)
-	var/ending = copytext(input, length(input))
-	if(speak_emote && speak_emote.len && ending != "?" && ending != "!")
-		var/emote = pick(speak_emote)
-		if(emote)
-			return "[emote], \"[input]\""
+/mob/living/simple_animal/say_quote(input, list/spans)
+	if(speak_emote && speak_emote.len)
+		verb_say = pick(speak_emote)
 	return ..()
 
 /mob/living/simple_animal/emote(act, m_type=1, message = null)
