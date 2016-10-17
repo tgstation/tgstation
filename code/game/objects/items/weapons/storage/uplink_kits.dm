@@ -276,6 +276,7 @@
 	..()
 	new /obj/item/weapon/grenade/clusterbuster/plasma(src)
 	new /obj/item/weapon/grenade/clusterbuster/n2o(src)
+	new /obj/item/weapon/grenade/clusterbuster/freon(src)
 
 /obj/item/weapon/storage/box/syndie_kit/nuke
 	name = "box"

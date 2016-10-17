@@ -136,3 +136,8 @@
  	name = "N2O Cluster Grenade"
  	desc = "For when you need to knock out EVERYONE."
  	payload = /obj/item/weapon/grenade/gas/knockout
+
+/obj/item/weapon/grenade/clusterbuster/freon
+ 	name = "Freon Cluster Grenade"
+ 	desc = "For when you need everyone to chill out."
+ 	payload = /obj/item/weapon/grenade/gas/freeze
