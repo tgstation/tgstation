@@ -21,11 +21,19 @@ var/global/const/SYMPTOM_ACTIVATION_PROB = 5
 
 /datum/symptom/New()
 	var/list/S = list_symptoms
+
+	//Randomize Symptom Stats
+	stealth += rand(-1,1)
+	resistance += rand(-1,1)
+	stage_speed += rand(-2,2)
+	transmittable += rand(-2,2)
+
 	for(var/i = 1; i <= S.len; i++)
 		if(src.type == S[i])
 			id = "[i]"
 			return
 	CRASH("We couldn't assign an ID!")
+
 
 // Called when processing of the advance disease, which holds this symptom, starts.
 /datum/symptom/proc/Start(datum/disease/advance/A)
