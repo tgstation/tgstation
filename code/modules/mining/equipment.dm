@@ -81,7 +81,7 @@
 	var/list/destinations = list()
 
 	if(isgolem(user))
-		for(var/obj/item/device/radio/beacon/B in world)
+		for(var/obj/item/device/radio/beacon/B in teleportbeacons)
 			var/turf/T = get_turf(B)
 			if(istype(T.loc, /area/ruin/powered/golem_ship))
 				destinations += B
@@ -90,7 +90,7 @@
 	if(destinations.len)
 		return destinations
 
-	for(var/obj/item/device/radio/beacon/B in world)
+	for(var/obj/item/device/radio/beacon/B in teleportbeacons)
 		var/turf/T = get_turf(B)
 		if(T.z == ZLEVEL_STATION)
 			destinations += B

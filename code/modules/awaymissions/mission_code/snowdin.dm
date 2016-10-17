@@ -1,39 +1,3 @@
-//Snow Valley Areas//--
-
-/area/awaymission/snowdin
-	name = "Snowdin Tundra Plains"
-	icon_state = "away"
-	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
-
-/area/awaymission/snowdin/post
-	name = "Snowdin Outpost"
-	requires_power = 1
-
-/area/awaymission/snowdin/igloo
-	name = "Snowdin Igloos"
-	icon_state = "away2"
-
-/area/awaymission/snowdin/cave
-	name = "Snowdin Caves"
-	icon_state = "away2"
-	luminosity = 0
-
-/area/awaymission/snowdin/base
-	name = "Snowdin Main Base"
-	icon_state = "away3"
-	requires_power = 1
-
-/area/awaymission/snowdin/dungeon1
-	name = "Snowdin Depths"
-	icon_state = "away2"
-	luminosity = 0
-
-/area/awaymission/snowdin/sekret
-	name = "Snowdin Operations"
-	icon_state = "away3"
-	requires_power = 1
 
 //notes for lore or treasure hints wow//--
 
