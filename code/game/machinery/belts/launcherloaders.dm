@@ -31,8 +31,14 @@
 				if(!driver) driver = pick(drivers)
 			else
 				driver = pick(drivers)
-
 			src.dir = get_dir(src,driver)
+
+/obj/machinery/launcher_loader/proc/destroy()
+	if (driver)
+		driver = null
+	if (door)
+		door = null
+	return ..()
 
 /obj/machinery/launcher_loader/proc/activate()
 	if(operating || !isturf(src.loc)) return
@@ -107,6 +113,11 @@
 	var/obj/machinery/mass_driver/driver = null
 	var/operating = 0
 	var/driver_operating = 0
+
+/obj/machinery/cargo_router/proc/destroy()
+	if (driver)
+		driver = null
+	return ..()
 
 /obj/machinery/cargo_router/proc/activate()
 	if(operating || !isturf(src.loc)) return

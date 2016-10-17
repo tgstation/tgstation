@@ -19,12 +19,6 @@
 	onclose(user, "bc_computer")
 	return
 
-
-/obj/machinery/computer/barcode/attackby(var/obj/item/I as obj, user as mob) //This is mostly goonconomy. I'll get to it later.
-	attack_hand(user)
-	return
-
-
 /obj/machinery/computer/barcode/Topic(href, href_list)
 	if (..(href, href_list))
 		return
