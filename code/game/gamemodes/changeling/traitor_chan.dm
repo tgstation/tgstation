@@ -45,6 +45,7 @@
 			var/datum/mind/changeling = pick(possible_changelings)
 			antag_candidates -= changeling
 			possible_changelings -= changeling
+			changeling.special_role = "Changeling"
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
 		return ..()
@@ -55,7 +56,6 @@
 	modePlayer += changelings
 	for(var/datum/mind/changeling in changelings)
 		changeling.current.make_changeling()
-		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
 		ticker.mode.update_changeling_icons_added(changeling)
