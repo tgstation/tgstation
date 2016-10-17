@@ -307,16 +307,20 @@ Class Procs:
 	if(!(flags & NODECONSTRUCT))
 		on_deconstruction()
 		if(component_parts && component_parts.len)
-			var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
-			M.anchored = anchored
-			if(!disassembled)
-				M.obj_integrity = M.max_integrity * 0.5 //the frame is already half broken
-			transfer_fingerprints_to(M)
-			M.state = 2
-			M.icon_state = "box_1"
+			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 	qdel(src)
+
+/obj/machinery/proc/spawn_frame(disassembled)
+	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
+	. = M
+	M.anchored = anchored
+	if(!disassembled)
+		M.obj_integrity = M.max_integrity * 0.5 //the frame is already half broken
+	transfer_fingerprints_to(M)
+	M.state = 2
+	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
 	if(!(flags & NODECONSTRUCT))
