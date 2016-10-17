@@ -392,15 +392,16 @@
 			user << "<span class='warning'>This device doesn't have any components installed.</span>"
 			return
 		var/list/component_names = list()
-		for(var/obj/item/weapon/computer_hardware/H in all_components)
+		for(var/h in all_components)
+			var/obj/item/weapon/computer_hardware/H = all_components[h]
 			component_names.Add(H.name)
 
-		var/choice = input(usr, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in component_names
+		var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in component_names
 
 		if(!choice)
 			return
 
-		if(!Adjacent(usr))
+		if(!Adjacent(user))
 			return
 
 		var/obj/item/weapon/computer_hardware/H = find_hardware_by_name(choice)
