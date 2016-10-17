@@ -64,7 +64,7 @@
 		if(ANTIDOTE_NEEDED)
 			SSshuttle.centcom_message += "Virus samples incoming."
 		if(PIZZA_DELIVERY)
-			SSshuttle.centcom_message += "Pizza delivery for [world.name]"
+			SSshuttle.centcom_message += "Pizza delivery for [station_name()]"
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)

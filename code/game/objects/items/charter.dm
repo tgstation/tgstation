@@ -85,12 +85,12 @@
 	else
 		world.name = designation
 	station_name = designation
-	minor_announce("[user.real_name] has designated your station as [station_name]", "Captain's Charter", 0)
-	log_game("[key_name(user)] has renamed the station as [station_name].")
+	minor_announce("[user.real_name] has designated your station as [station_name()]", "Captain's Charter", 0)
+	log_game("[key_name(user)] has renamed the station as [station_name()].")
 
-	name = "station charter for [world.name]"
+	name = "station charter for [station_name()]"
 	desc = "An official document entrusting the governance of \
-		[world.name] and surrounding space to Captain [user]."
+		[station_name()] and surrounding space to Captain [user]."
 
 	if(!unlimited_uses)
 		used = TRUE
