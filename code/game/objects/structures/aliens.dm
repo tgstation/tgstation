@@ -238,6 +238,9 @@
 /obj/structure/alien/egg/attack_paw(mob/living/user)
 	return attack_hand(user)
 
+/obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user)
+	return attack_hand(user)
+
 /obj/structure/alien/egg/attack_hand(mob/living/user)
 	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
