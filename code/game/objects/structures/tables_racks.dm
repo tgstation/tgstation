@@ -322,6 +322,7 @@
 	desc = "A solid, slightly beveled brass table."
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	frame = /obj/structure/table_frame/brass
 	framestack = /obj/item/stack/sheet/brass
 	buildstack = /obj/item/stack/sheet/brass

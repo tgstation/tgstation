@@ -10,6 +10,7 @@
 	icon_state = "rare_pepe"
 	anchored = 1
 	density = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/repair_amount = 5 //how much a proselytizer can repair each cycle
 	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
 	break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
@@ -373,7 +374,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/clockwork/New()
 	..()
@@ -684,6 +685,7 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
+	resistance_flags = NONE
 	var/affects_servants = FALSE
 	var/stat_affected = CONSCIOUS
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
