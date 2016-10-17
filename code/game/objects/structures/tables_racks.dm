@@ -437,9 +437,8 @@
 
 /obj/structure/rack/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
-						 "<span class='danger'>You kick [src].</span>")
+	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
+	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, 2, user)
 	take_damage(rand(4,8), BRUTE, "melee", 1)
 
 

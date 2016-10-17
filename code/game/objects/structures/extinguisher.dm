@@ -44,8 +44,7 @@
 		if(do_after(user, 60/I.toolspeed, target = src))
 			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user << "<span class='notice'>You unsecure [name].</span>"
-			new /obj/item/wallframe/extinguisher_cabinet(loc)
-			qdel(src)
+			deconstruct(TRUE)
 		return
 
 	if(iscyborg(user) || isalien(user))
@@ -58,6 +57,7 @@
 			stored_extinguisher = I
 			update_icon()
 			user << "<span class='notice'>You place [I] in [src].</span>"
+			update_icon()
 		else
 			toggle_cabinet(user)
 	else if(user.a_intent != "harm")
@@ -73,8 +73,9 @@
 		user.put_in_hands(stored_extinguisher)
 		user << "<span class='notice'>You take [stored_extinguisher] from [src].</span>"
 		stored_extinguisher = null
-		opened = 1
-		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
+		if(!opened)
+			opened = 1
+			playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
 		update_icon()
 	else
 		toggle_cabinet(user)
@@ -123,16 +124,19 @@
 /obj/structure/extinguisher_cabinet/obj_break(damage_flag)
 	if(!broken && !(flags & NODECONSTRUCT))
 		broken = 1
-		opened = 0
-		update_icon()
+		opened = 1
 		if(stored_extinguisher)
 			stored_extinguisher.forceMove(loc)
 			stored_extinguisher = null
+		update_icon()
 
 
 /obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
-		new /obj/item/stack/sheet/metal (loc, 2)
+		if(disassembled)
+			new /obj/item/wallframe/extinguisher_cabinet(loc)
+		else
+			new /obj/item/stack/sheet/metal (loc, 2)
 		if(stored_extinguisher)
 			stored_extinguisher.forceMove(loc)
 			stored_extinguisher = null

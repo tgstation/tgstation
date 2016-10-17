@@ -8,18 +8,18 @@
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (M.a_intent =="disarm")
 		if(!(lying))
-			M.do_attack_animation(src)
+			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			if(get_active_held_item())
 				uneq_active()
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-				"<span class='userdanger'>[M] has disabled [src]'s active module!</span>")
+					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, 2, M)
 				add_logs(M, src, "disarmed")
 			else
 				Stun(2)
 				step(src,get_dir(M,src))
 				add_logs(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-				"<span class='userdanger'>[M] has forced back [src]!</span>")
+					"<span class='userdanger'>[M] has forced back [src]!</span>", null, 2, M)
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 	else
 		..()

@@ -101,7 +101,7 @@
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
 		return 1
-	..()
+	. = ..()
 
 /obj/structure/window/attack_hand(mob/user)
 	if(!can_be_reached(user))

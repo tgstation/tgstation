@@ -300,13 +300,13 @@
 		radiation_pulse(get_turf(src), 1, 1, 150, 1)
 
 
-/obj/machinery/power/supermatter_shard/Bumped(atom/AM as mob|obj)
+/obj/machinery/power/supermatter_shard/Bumped(atom/AM)
 	if(isliving(AM))
 		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 	else if(isobj(AM) && !istype(AM, /obj/effect))
-		AM.visible_message("<span class='danger'>\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
+		AM.visible_message("<span class='danger'>\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>", null,\
 		"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	else
 		return

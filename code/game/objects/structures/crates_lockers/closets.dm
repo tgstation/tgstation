@@ -302,10 +302,6 @@
 		togglelock(user)
 		return
 
-/obj/structure/closet/attack_alien(mob/living/user)
-	return attack_hand(user)
-
-
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
 	return attack_hand(user)

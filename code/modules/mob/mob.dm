@@ -84,61 +84,43 @@ var/next_mob_id = 0
 	else
 		src << msg
 
-// Show a message the src mob and to all player mobs who sees the src mob
-// This would be for visible actions by the src mob
-// message is the message output to anyone who can see e.g. "[src] does something!"
+// Show a message to all player mobs who sees this atom
+// Show a message to the src mob (if the src is a mob)
+// Use for atoms performing visible actions
+// message is output to anyone who can see, e.g. "The [src] does something!"
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
+// vision_distance (optional) define how many tiles away the message can be seen.
+// ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-/mob/visible_message(message, self_message, blind_message)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	for(var/mob/M in get_hearers_in_view(7, src))
+	var/range = 7
+	if(vision_distance)
+		range = vision_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
+			continue
+		if(M == ignored_mob)
 			continue
 		var/msg = message
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message
 		else
-			if(M.see_invisible<invisibility || T != loc) //if src is inside something or invisible to us,
+			if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
 					msg = blind_message
 				else
 					continue
 			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
-					if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
+				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+					if(blind_message)
 						msg = blind_message
 					else
 						continue
-		M.show_message(msg,1,blind_message,2)
-
-// Show a message to all player mobs who sees this atom
-// Use for objects performing visible actions
-// message is output to anyone who can see, e.g. "The [src] does something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-
-/atom/proc/visible_message(message, blind_message)
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
-	for(var/mob/M in get_hearers_in_view(7, src))
-		if(!M.client)
-			continue
-		var/msg = message
-		if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
-			if(blind_message) // then people see blind message if there is one, otherwise nothing.
-				msg = blind_message
-			else
-				continue
-		else if(T.lighting_object)
-			if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
-				if(blind_message)
-					msg = blind_message
-				else
-					continue
 		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one

@@ -964,11 +964,20 @@
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return 1
 	else
-		user.do_attack_animation(target)
 
 		var/atk_verb = user.dna.species.attack_verb
 		if(target.lying)
 			atk_verb = "kick"
+
+		switch(atk_verb)
+			if("kick")
+				user.do_attack_animation(target, ATTACK_EFFECT_KICK)
+			if("slash")
+				user.do_attack_animation(target, ATTACK_EFFECT_CLAW)
+			if("smash")
+				user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
+			else
+				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
@@ -976,7 +985,8 @@
 
 		if(!damage || !affecting)
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
-			target.visible_message("<span class='warning'>[user] has attempted to [atk_verb] [target]!</span>")
+			target.visible_message("<span class='danger'>[user] has attempted to [atk_verb] [target]!</span>",\
+			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, 2, user)
 			return 0
 
 
@@ -985,7 +995,7 @@
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
 
 		target.visible_message("<span class='danger'>[user] has [atk_verb]ed [target]!</span>", \
-						"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>")
+					"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>", null, 2, user)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
@@ -1003,7 +1013,7 @@
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
 	else
-		user.do_attack_animation(target)
+		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 		add_logs(user, target, "disarmed")
 
 		if(target.w_uniform)
@@ -1013,7 +1023,7 @@
 		if(randn <= 25)
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
-							"<span class='userdanger'>[user] has pushed [target]!</span>")
+				"<span class='userdanger'>[user] has pushed [target]!</span>", null, 2, user)
 			target.apply_effect(2, WEAKEN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(hit_appends)
 			return
@@ -1023,7 +1033,7 @@
 		if(randn <= 60)
 			//BubbleWrap: Disarming breaks a pull
 			if(target.pulling)
-				target.visible_message("<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
+				target << "<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>"
 				talked = 1
 				target.stop_pulling()
 			//End BubbleWrap
@@ -1031,15 +1041,14 @@
 			if(!talked)	//BubbleWrap
 				if(target.drop_item())
 					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
-									"<span class='userdanger'>[user] has disarmed [target]!</span>")
+						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, 2, user)
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			return
 
 
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
-						"<span class='userdanger'>[user] attemped to disarm [target]!</span>")
-	return
+						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, 2, user)
 
 
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)

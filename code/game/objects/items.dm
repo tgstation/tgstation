@@ -452,10 +452,11 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 	playsound(loc, src.hitsound, 30, 1, -1)
 
+	user.do_attack_animation(M)
+
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
-		user.do_attack_animation(M)
 	else
 		user.visible_message( \
 			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
