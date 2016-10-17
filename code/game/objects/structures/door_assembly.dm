@@ -508,7 +508,7 @@
 					break
 
 			if(door_check)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(src.loc, W.usesound, 100, 1)
 				user.visible_message("[user] secures the airlock assembly to the floor.", \
 									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
 									 "<span class='italics'>You hear wrenching.</span>")
@@ -523,7 +523,7 @@
 				user << "There is another door here!"
 
 		else
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("[user] unsecures the airlock assembly from the floor.", \
 								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
 								 "<span class='italics'>You hear wrenching.</span>")
@@ -549,7 +549,7 @@
 			src.name = "wired airlock assembly"
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(src.loc, W.usesound, 100, 1)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", \
 							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
 
@@ -562,7 +562,7 @@
 			src.name = "secured airlock assembly"
 
 	else if(istype(W, /obj/item/weapon/electronics/airlock) && state == 1 )
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src.loc, W.usesound, 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", \
 							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
 		if(do_after(user, 40, target = src))
@@ -579,7 +579,7 @@
 
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+		playsound(src.loc, W.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 
@@ -642,7 +642,7 @@
 							glass_type = /obj/machinery/door/airlock/glass
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src.loc, W.usesound, 100, 1)
 		user.visible_message("[user] finishes the airlock.", \
 							 "<span class='notice'>You start finishing the airlock...</span>")
 

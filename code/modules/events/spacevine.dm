@@ -98,6 +98,7 @@
 	return
 
 /turf/open/floor/vines/ex_act(severity, target)
+	..()
 	if(severity < 3 || target == src)
 		ChangeTurf(src.baseturf)
 
@@ -227,10 +228,10 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/structure/spacevine/holder, turf/target)
-	target.ex_act(severity, src) // vine immunity handled at /mob/ex_act
+	target.ex_act(severity, null, src) // vine immunity handled at /mob/ex_act
 
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
-	buckled.ex_act(severity, src)
+	buckled.ex_act(severity, null, src)
 
 /datum/spacevine_mutation/transparency
 	name = "transparent"
@@ -433,7 +434,7 @@
 		damage_dealt *= 4
 
 	for(var/datum/spacevine_mutation/SM in mutations)
-		damage_dealt = SM.on_hit(src, user, I, force) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
+		damage_dealt = SM.on_hit(src, user, I, damage_dealt) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
 	take_damage(damage_dealt, I.damtype, "melee", 1)
 
 /obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

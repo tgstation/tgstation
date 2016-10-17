@@ -13,7 +13,9 @@
 	var/list/channels = list()
 
 /obj/item/device/encryptionkey/syndicate
-	icon_state = "cypherkey"
+	name = "syndicate encryption key"
+	desc = "An encryption key for a radio headset. To access the syndicate channel, use :t."
+	icon_state = "syn_cypherkey"
 	channels = list("Syndicate" = 1)
 	origin_tech = "syndicate=1;engineering=3;bluespace=2"
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
@@ -21,7 +23,7 @@
 /obj/item/device/encryptionkey/binary
 	name = "binary translator key"
 	desc = "An encryption key for a radio headset.  To access the binary channel, use :b."
-	icon_state = "cypherkey"
+	icon_state = "bin_cypherkey"
 	translate_binary = 1
 	origin_tech = "syndicate=3;engineering=4;bluespace=3"
 

@@ -44,8 +44,7 @@
 		if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
-		else
-			O.loc = src
+
 	ChangeTurf(/turf/open/floor/plating)
 
 /turf/closed/wall/proc/break_wall()
@@ -75,10 +74,9 @@
 		if(3)
 			if (prob(hardness))
 				dismantle_wall(0,1)
-			else
 	if(!density)
 		..()
-	return
+
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))
@@ -136,7 +134,7 @@
 		return
 
 	//get the user's location
-	if( !istype(user.loc, /turf) )
+	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
 
 	add_fingerprint(user)
@@ -176,7 +174,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, W.usesound, 100, 1)
 			if(do_after(user, slicing_duration/W.toolspeed, target = src))
 				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
 					return 1
@@ -268,4 +266,3 @@
 
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
-

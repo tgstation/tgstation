@@ -115,3 +115,4 @@
 	if(I.flags_inv & HIDEMASK || forced)
 		update_inv_wear_mask()
 	update_inv_head()
+

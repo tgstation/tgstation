@@ -13,7 +13,7 @@
 	if (istype(W, /obj/item/weapon/ore))
 		if(!user.drop_item())
 			return
-		W.loc = src
+		W.forceMove(src)
 	else if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		for(var/obj/item/weapon/ore/O in S.contents)
@@ -25,11 +25,7 @@
 		var/time = 50
 		if(do_after(user, time/C.toolspeed, target = src))
 			user.visible_message("[user] pries \the [src] apart.", "<span class='notice'>You pry apart \the [src].</span>", "<span class='italics'>You hear splitting wood.</span>")
-			// If you change the amount of wood returned, remember
-			// to change the construction costs
-			var/obj/item/stack/sheet/mineral/wood/wo = new (loc, 4)
-			wo.add_fingerprint(user)
-			deconstruct()
+			deconstruct(TRUE, user)
 	else
 		return ..()
 
@@ -52,10 +48,9 @@
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
 	user << browse("[dat]", "window=orebox")
 
-/obj/structure/ore_box/proc/dump_contents()
-	for (var/obj/item/weapon/ore/O in contents)
-		contents -= O
-		O.loc = src.loc
+/obj/structure/ore_box/proc/dump_box_contents()
+	for(var/obj/item/weapon/ore/O in contents)
+		O.forceMove(loc)
 
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
@@ -66,16 +61,14 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["removeall"])
-		dump_contents()
+		dump_box_contents()
 		usr << "<span class='notice'>You empty the box.</span>"
-	src.updateUsrDialog()
-	return
+	updateUsrDialog()
 
-/obj/structure/ore_box/ex_act(severity, target)
-	if(prob(100 / severity) && severity < 3)
-		qdel(src) //nothing but ores can get inside unless its a bug and ores just return nothing on ex_act, not point in calling it on them
 
-/obj/structure/ore_box/Destroy()
-	dump_contents()
-	return ..()
-
+/obj/structure/ore_box/deconstruct(disassembled = TRUE, mob/user)
+	var/obj/item/stack/sheet/mineral/wood/WD = new (loc, 4)
+	if(user)
+		WD.add_fingerprint(user)
+	dump_box_contents()
+	qdel(src)

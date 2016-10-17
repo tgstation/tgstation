@@ -656,6 +656,34 @@ datum/supply_pack
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
+/datum/supply_pack/engineering/engine/am_shielding
+	name = "Antimatter Shielding Crate"
+	cost = 2000
+	contains = list(/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container,
+					/obj/item/device/am_shielding_container)//10 shields: 3x3 containment and a core
+	crate_name = "antimatter shielding crate"
+
+/datum/supply_pack/engineering/engine/am_core
+	name = "Antimatter Control Crate"
+	cost = 5000
+	contains = list(/obj/machinery/power/am_control_unit)
+	crate_name = "antimatter control crate"
+
+/datum/supply_pack/engineering/engine/am_jar
+	name = "Antimatter Containment Jar Crate"
+	cost = 2000
+	contains = list(/obj/item/weapon/am_containment,
+					/obj/item/weapon/am_containment)
+	crate_name = "antimatter jar crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1216,6 +1244,20 @@ datum/supply_pack
 
 /datum/supply_pack/misc
 	group = "Miscellaneous Supplies"
+
+/datum/supply_pack/misc/minerkit
+	name = "Shaft Miner Starter Kit"
+	cost = 2500
+	access = access_qm
+	contains = list(/obj/item/weapon/pickaxe/mini,
+			/obj/item/clothing/glasses/meson,
+			/obj/item/device/t_scanner/adv_mining_scanner/lesser,
+			/obj/item/device/radio/headset/headset_cargo/mining,
+			/obj/item/weapon/storage/bag/ore,
+			/obj/item/clothing/suit/space/hardsuit/mining,
+			/obj/item/clothing/mask/gas/explorer)
+	crate_name = "shaft miner starter kit"
+	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/misc/mule
 	name = "MULEbot Crate"

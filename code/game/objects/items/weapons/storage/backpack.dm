@@ -20,8 +20,8 @@
 	max_combined_w_class = 21
 	storage_slots = 21
 	resistance_flags = FLAMMABLE
-	obj_integrity = 100
-	max_integrity = 100
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)

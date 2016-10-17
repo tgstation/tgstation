@@ -441,7 +441,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
 /proc/get_atom_on_turf(atom/movable/M)
 	var/atom/loc = M
-	while(loc && loc.loc && !istype(loc.loc, /turf/))
+	while(loc && loc.loc && !isturf(loc.loc))
 		loc = loc.loc
 	return loc
 

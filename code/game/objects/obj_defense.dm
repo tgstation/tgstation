@@ -81,6 +81,10 @@
 	return 0
 
 /obj/blob_act(obj/structure/blob/B)
+	if(isturf(loc))
+		var/turf/T = loc
+		if(T.intact && level == 1) //the blob doesn't destroy thing below the floor
+			return
 	take_damage(400, BRUTE, "melee", 0, get_dir(src, B))
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
@@ -165,21 +169,16 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 //called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
-	var/location = loc
 	SSacid.processing -= src
-	var/remaining_acid = acid_level
-	var/list/contained = contents
 	deconstruct(FALSE)
-	if(isturf(location))
-		var/turf/T = location
-		for(var/obj/item/I in contained)
-			if(I.loc == T) //we acid the items that used to be inside src and ended up on the turf
-				I.acid_act(10, 0.1 * remaining_acid/T.contents.len)
-
 
 //// FIRE
 
 /obj/fire_act(exposed_temperature, exposed_volume)
+	if(isturf(loc))
+		var/turf/T = loc
+		if(T.intact && level == 1) //fire can't damage things hidden below the floor.
+			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(Clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
@@ -190,16 +189,9 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 //called when the obj is destroyed by fire
 /obj/proc/burn()
-	var/location = loc
-	var/list/contained = contents
 	if(resistance_flags & ON_FIRE)
 		SSfire_burning.processing -= src
 	deconstruct(FALSE)
-	if(isturf(location))
-		var/turf/T = location
-		for(var/obj/item/I in contained)
-			if(I.loc == T) //we burn the items that used to be inside src and ended up on the turf
-				I.fire_act()
 
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)

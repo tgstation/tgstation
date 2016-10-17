@@ -48,6 +48,41 @@
 			return s_store
 	return null
 
+/mob/living/carbon/human/proc/get_all_slots()
+	. = get_head_slots() | get_body_slots()
+
+/mob/living/carbon/human/proc/get_body_slots()
+	return list(
+		back,
+		s_store,
+		handcuffed,
+		legcuffed,
+		wear_suit,
+		gloves,
+		shoes,
+		belt,
+		wear_id,
+		l_store,
+		r_store,
+		w_uniform
+		)
+
+/mob/living/carbon/human/proc/get_head_slots()
+	return list(
+		head,
+		wear_mask,
+		glasses,
+		ears,
+		)
+
+/mob/living/carbon/human/proc/get_storage_slots()
+	return list(
+		back,
+		belt,
+		l_store,
+		r_store,
+		s_store,
+		)
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 /mob/living/carbon/human/equip_to_slot(obj/item/I, slot)

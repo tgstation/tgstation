@@ -202,9 +202,7 @@
 	return
 
 /atom/proc/contents_explosion(severity, target)
-	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK
+	return
 
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -416,7 +414,7 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if(istype(src,/turf) )
+	if(isturf(src))
 		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
 		// Make toxins vomit look different
 		if(toxvomit)

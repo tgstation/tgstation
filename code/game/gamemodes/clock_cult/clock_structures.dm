@@ -617,6 +617,9 @@
 	icon_state = "clockwork_floor"
 	layer = TURF_LAYER
 
+/obj/effect/clockwork/overlay/floor/bloodcult //this is used by BLOOD CULT, it shouldn't use such a path...
+	icon_state = "cult"
+
 /obj/effect/clockwork/general_marker
 	name = "general marker"
 	desc = "Some big guy. For you."
@@ -824,13 +827,13 @@
 	resist_string = "glows bright orange"
 
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
-	if(isloyal(L))
+	if(L.isloyal())
+		var/mob/living/carbon/C = L
 		delete_on_finish = TRUE
-		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
+		C.visible_message("<span class='warning'>[C] visibly trembles!</span>", \
 		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>")
-		for(var/obj/item/weapon/implant/mindshield/M in L)
-			if(M.implanted)
-				qdel(M)
+		for(var/obj/item/weapon/implant/mindshield/M in C.implants)
+			qdel(M)
 
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"

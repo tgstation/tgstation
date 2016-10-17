@@ -136,7 +136,7 @@
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		panel_open = !panel_open
 		user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
 		update_icon()
@@ -155,7 +155,7 @@
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
-					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					playsound(src.loc, W.usesound, 50, 1)
 					new /obj/item/stack/cable_coil(user.loc, 5)
 					user << "<span class='notice'>You cut the wires from \the [src].</span>"
 					update_icon()
@@ -173,7 +173,7 @@
 					return
 
 				else if(istype(W, /obj/item/weapon/crowbar))
-					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+					playsound(src.loc, W.usesound, 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(do_after(user, 20/W.toolspeed, target = src))
@@ -199,7 +199,7 @@
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.loc = user.loc
-					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+					playsound(src.loc, W.usesound, 50, 1)
 					qdel(src)
 					return
 	return ..()

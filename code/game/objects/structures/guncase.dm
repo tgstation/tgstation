@@ -86,6 +86,14 @@
 				O.forceMove(get_turf(src))
 			update_icon()
 
+/obj/structure/guncase/handle_atom_del(atom/A)
+	update_icon()
+
+/obj/structure/guncase/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity++, target)
+		CHECK_TICK
+
 /obj/structure/guncase/shotgun
 	name = "shotgun locker"
 	desc = "A locker that holds shotguns."

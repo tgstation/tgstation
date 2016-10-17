@@ -41,6 +41,25 @@
 
 		src.colorlist += D
 
+/obj/machinery/pdapainter/Destroy()
+	if(storedpda)
+		qdel(storedpda)
+		storedpda = null
+	return ..()
+
+/obj/machinery/pdapainter/on_deconstruction()
+	if(storedpda)
+		storedpda.forceMove(loc)
+		storedpda = null
+
+/obj/machinery/pdapainter/contents_explosion(severity, target)
+	if(storedpda)
+		storedpda.ex_act(severity, target)
+
+/obj/machinery/pdapainter/handle_atom_del(atom/A)
+	if(A == storedpda)
+		storedpda = null
+		update_icon()
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
 	if(default_unfasten_wrench(user, O))

@@ -1,11 +1,13 @@
 
 // see _DEFINES/is_helpers.dm for mob type checks
 
-/proc/isloyal(A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(L && L.implanted)
-			return 1
+/mob/proc/isloyal() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
 	return 0
+
+/mob/living/carbon/isloyal()
+	for(var/obj/item/weapon/implant/mindshield/L in implants)
+		return 1
+
 
 /proc/check_zone(zone)
 	if(!zone)

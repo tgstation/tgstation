@@ -8,6 +8,7 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 
 	var/serverip = "[world.internet_address]:[world.port]"
@@ -133,7 +134,7 @@
 	if(kickbannedckey)
 		if(banned_mob && banned_mob.client && banned_mob.client.ckey == banckey)
 			qdel(banned_mob.client)
-
+	return 1
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 

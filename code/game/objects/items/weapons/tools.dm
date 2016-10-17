@@ -24,6 +24,7 @@
 	force = 5
 	throwforce = 7
 	w_class = 2
+	usesound = 'sound/items/Ratchet.ogg'
 	materials = list(MAT_METAL=150)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
@@ -31,7 +32,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/wrench/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -47,6 +48,31 @@
 	icon_state = "wrench_brass"
 	toolspeed = 2
 
+/obj/item/weapon/wrench/power
+	name = "Hand Drill"
+	desc ="A simple powered drill with a bolt bit"
+	icon_state = "drill_bolt"
+	item_state = "drill"
+	usesound = 'sound/items/drill_use.ogg'
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+	force = 8 //might or might not be too high, subject to change
+	throwforce = 8
+	attack_verb = list("drilled", "screwed", "jabbed")
+	toolspeed = 4
+
+/obj/item/weapon/wrench/power/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/weapon/wirecutters/power/s_drill = new /obj/item/weapon/screwdriver/power
+	user << "<span class='notice'>You attach the screw driver bit to the [src].</span>"
+	user.unEquip(src)
+	user.put_in_active_hand(s_drill)
+	qdel(src)
+
+obj/item/weapon/wrench/power/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is pressing the [src] against \his head, it looks like he's trying to drill \his head off")
+	return (BRUTELOSS)
+
 /obj/item/weapon/wrench/medical
 	name = "medical wrench"
 	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
@@ -54,7 +80,7 @@
 	force = 2 //MEDICAL
 	throwforce = 4
 	origin_tech = "materials=1;engineering=1;biotech=3"
-	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed")
+	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed", "whacked")
 
 /obj/item/weapon/wrench/medical/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take \his soul. It looks like \he's trying to commit suicide.</span>")
@@ -103,12 +129,13 @@
 	materials = list(MAT_METAL=75)
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	usesound = 'sound/items/Screwdriver.ogg'
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is stabbing the [src] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
@@ -137,11 +164,40 @@
 	icon_state = "screwdriver_brass"
 	toolspeed = 2
 
+/obj/item/weapon/screwdriver/power
+	name = "Hand Drill"
+	desc = "A simple hand drill with a screwdriver bit attached."
+	icon_state = "drill_screw"
+	item_state = "drill"
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+	force = 8 //might or might not be too high, subject to change
+	throwforce = 8
+	throw_speed = 2
+	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
+	attack_verb = list("drilled", "screwed", "jabbed","whacked")
+	hitsound = 'sound/items/drill_hit.ogg'
+	usesound = 'sound/items/drill_use.ogg'
+	toolspeed = 4
+
+/obj/item/weapon/screwdriver/power/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is putting the [src] up to \his temple, it looks like they're trying to commit suicide</span>")
+	return(BRUTELOSS)
+
+/obj/item/weapon/screwdriver/power/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/weapon/wrench/power/b_drill = new /obj/item/weapon/wrench/power
+	user << "<span class='notice'>You attach the bolt driver bit to the [src].</span>"
+	user.unEquip(src)
+	user.put_in_active_hand(b_drill)
+	qdel(src)
+
 /obj/item/weapon/screwdriver/cyborg
 	name = "powered screwdriver"
 	desc = "An electrical screwdriver, designed to be both precise and quick."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "screwdriver_cyborg"
+	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 2
 
 /*
@@ -159,9 +215,9 @@
 	throw_range = 7
 	w_class = 2
 	materials = list(MAT_METAL=80)
-	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
+	usesound = 'sound/items/Wirecutter.ogg'
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
@@ -185,7 +241,7 @@
 		..()
 
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -202,6 +258,35 @@
 	icon_state = "cutters_cyborg"
 	toolspeed = 2
 
+/obj/item/weapon/wirecutters/power
+	name = "Jaws of Life"
+	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head"
+	icon_state = "jaws_cutter"
+	item_state = "jawsoflife"
+	origin_tech = "materials=2;engineering=2"
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	usesound = 'sound/items/jaws_cut.ogg'
+	toolspeed = 4
+
+/obj/item/weapon/wirecutters/power/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is the [src] around \his neck, it looks like \he's trying to rip \his head off!</span>")
+	playsound(loc, 'sound/items/jaws_cut.ogg', 50, 1, -1)
+	var/mob/living/carbon/C = user
+	var/obj/item/bodypart/BP = C.get_bodypart("head")
+	if(BP)
+		BP.drop_limb()// <- i have no idea why this works, but it does
+		playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+	else
+		user.visible_message("<span class='suicide'>[user] doesn't have a head to cutt off, but dies anyway.</span>")
+	return (BRUTELOSS)
+
+/obj/item/weapon/wirecutters/power/attack_self(mob/user)
+	playsound(get_turf(user),"sound/items/change_jaws.ogg",50,1)
+	var/obj/item/weapon/crowbar/power/pryjaws = new /obj/item/weapon/crowbar/power
+	user << "<span class='notice'>You attach the pry jaws to the [src].</span>"
+	user.unEquip(src)
+	user.put_in_active_hand(pryjaws)
+	qdel(src)
 /*
  * Welding Tool
  */
@@ -216,6 +301,9 @@
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
+	usesound = 'sound/items/Welder.ogg'
+	var/acti_sound = 'sound/items/WelderActivate.ogg'
+	var/deac_sound = 'sound/items/WelderDeactivate.ogg'
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2
@@ -248,6 +336,7 @@
 		item_state = "[initial(item_state)]1"
 	else
 		item_state = "[initial(item_state)]"
+
 
 /obj/item/weapon/weldingtool/update_icon()
 	if(change_icons)
@@ -381,6 +470,7 @@ obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 	if(welding)
 		if(get_fuel() >= 1)
 			user << "<span class='notice'>You switch [src] on.</span>"
+			playsound(loc, acti_sound, 50, 1)
 			force = 15
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
@@ -391,6 +481,7 @@ obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 			switched_off(user)
 	else
 		user << "<span class='notice'>You switch [src] off.</span>"
+		playsound(loc, deac_sound, 50, 1)
 		switched_off(user)
 
 //Switches the welder off
@@ -547,6 +638,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
+	usesound = 'sound/items/Crowbar.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5
@@ -559,7 +651,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
 /obj/item/weapon/crowbar/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -589,5 +681,30 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, compact but powerful. Designed to replace crowbar in construction cyborgs."
 	icon = 'icons/obj/items_cyborg.dmi'
+	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 2
+
+/obj/item/weapon/crowbar/power
+	name = "Jaws of Life"
+	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
+	icon_state = "jaws_pry"
+	item_state = "jawsoflife"
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	origin_tech = "materials=2;engineering=2"
+	usesound = 'sound/items/jaws_pry.ogg'
+	force = 15
+	toolspeed = 4
+
+/obj/item/weapon/crowbar/power/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is putting his head in the [src], it looks like \he's trying to commit suicide!</span>")
+	playsound(loc, 'sound/items/jaws_pry.ogg', 50, 1, -1)
+	return (BRUTELOSS)
+
+/obj/item/weapon/crowbar/power/attack_self(mob/user)
+	playsound(get_turf(user),"sound/items/change_jaws.ogg",50,1)
+	var/obj/item/weapon/wirecutters/power/cutjaws = new /obj/item/weapon/wirecutters/power
+	user << "<span class='notice'>You attach the cutting jaws to the [src].</span>"
+	user.unEquip(src)
+	user.put_in_active_hand(cutjaws)
+	qdel(src)
