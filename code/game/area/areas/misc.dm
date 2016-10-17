@@ -46,7 +46,7 @@
 
 
 //PRISON
-/area/prison //phil235
+/area/prison
 	name = "Prison Station"
 	icon_state = "brig"
 

@@ -431,7 +431,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Robotics Lab"
 	icon_state = "ass_line"
 
-/area/assembly/assembly_line //Derelict Assembly Line //phil235
+/area/assembly/assembly_line //Derelict Assembly Line
 	name = "Assembly Line"
 	icon_state = "ass_line"
 	power_equip = 0
@@ -566,7 +566,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "armory"
 
 
-/area/security/nuke_storage //phil235 this one not used on box map
+/area/security/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
 

@@ -122,7 +122,6 @@ var/list/teleportlocs = list()
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
-		world << "DEBUG phil235 state:[state], poweralm:[poweralm]"
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()

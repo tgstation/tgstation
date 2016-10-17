@@ -63,7 +63,8 @@
 
 //ENEMY
 
-/area/wizard_station //phil235
+//Wizard
+/area/wizard_station
 	name = "Wizard's Den"
 	icon_state = "yellow"
 	requires_power = 0
@@ -78,7 +79,7 @@
 	noteleport = 1
 	has_gravity = 1
 
-//Sydicates
+//Syndicates
 /area/syndicate_mothership
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
