@@ -505,4 +505,5 @@
 	if(prob(80))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
+		. = 1
 	..()
