@@ -160,7 +160,7 @@
 	required_container = /obj/item/slime_extract/silver
 	required_other = 1
 
-/datum/chemical_reaction/slimebork/on_reaction(datum/reagents/holder)
+/datum/chemical_reaction/slime/slimebork/on_reaction(datum/reagents/holder)
 
 	feedback_add_details("slime_cores_used","[type]")
 	var/list/blocked = list(/obj/item/weapon/reagent_containers/food/snacks,
