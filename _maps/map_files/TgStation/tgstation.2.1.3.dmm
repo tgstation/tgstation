@@ -5756,12 +5756,9 @@
 /turf/open/floor/plasteel/black,
 /area/shuttle/labor)
 "ama" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Waste to Filtering";
-	on = 1
-	},
+/mob/living/simple_animal/sloth/paperwork,
 /turf/open/floor/plasteel,
-/area/atmos)
+/area/quartermaster/storage)
 "amb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
@@ -81130,7 +81127,7 @@ bgy
 aZE
 bjr
 bjr
-bjr
+ama
 bmh
 bjr
 bjr

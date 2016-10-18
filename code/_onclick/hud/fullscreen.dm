@@ -60,6 +60,7 @@
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
+	plane = FULLSCREEN_PLANE
 	mouse_opacity = 0
 	var/severity = 0
 
@@ -71,18 +72,22 @@
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
 	layer = UI_DAMAGE_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/oxy
 	icon_state = "oxydamageoverlay"
 	layer = UI_DAMAGE_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/crit
 	icon_state = "passage"
 	layer = CRIT_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER
+	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"

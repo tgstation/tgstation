@@ -14,7 +14,7 @@
 	var/shock_cooldown = 0
 
 /obj/item/device/electropack/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] hooks \himself to the electropack and spams the trigger! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 /obj/item/device/electropack/initialize()
@@ -40,7 +40,7 @@
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		if(!user.unEquip(W))
-			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot attach it to \the [src]!</span>"
+			user << "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>"
 			return
 		W.loc = A
 		W.master = A
