@@ -630,6 +630,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 				if(slots_free.len)
 					halitem.screen_loc = pick(slots_free)
 					halitem.layer = ABOVE_HUD_LAYER
+					halitem.plane = ABOVE_HUD_PLANE
 					switch(rand(1,6))
 						if(1) //revolver
 							halitem.icon = 'icons/obj/guns/projectile.dmi'

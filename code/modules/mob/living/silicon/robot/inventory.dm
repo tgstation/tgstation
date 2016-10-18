@@ -50,6 +50,7 @@
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_1 = O
 		O.layer = ABOVE_HUD_LAYER
+		O.plane = ABOVE_HUD_PLANE
 		O.screen_loc = inv1.screen_loc
 		observer_screen_update(O,TRUE)
 		contents += O
@@ -61,6 +62,7 @@
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_2 = O
 		O.layer = ABOVE_HUD_LAYER
+		O.plane = ABOVE_HUD_PLANE
 		O.screen_loc = inv2.screen_loc
 		observer_screen_update(O,TRUE)
 		contents += O
@@ -72,6 +74,7 @@
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_3 = O
 		O.layer = ABOVE_HUD_LAYER
+		O.plane = ABOVE_HUD_PLANE
 		O.screen_loc = inv3.screen_loc
 		observer_screen_update(O,TRUE)
 		contents += O
