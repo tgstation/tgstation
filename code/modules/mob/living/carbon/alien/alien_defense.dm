@@ -14,6 +14,10 @@ As such, they can either help or harm other aliens. Help works like the human he
 In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
+	if(!ticker || !ticker.mode)
+		M << "You cannot attack people before the game has started."
+		return
+
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
@@ -33,11 +37,12 @@ In all, this is a lot like the monkey code. /N
 
 		else
 			if (health > 0)
-				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
+				M.do_attack_animation(src)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				var/damage = 1
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>", null, 2, M)
-				adjustBruteLoss(1)
+						"<span class='userdanger'>[M.name] bites [src]!</span>")
+				adjustBruteLoss(damage)
 				add_logs(M, src, "attacked")
 				updatehealth()
 			else
@@ -57,11 +62,8 @@ In all, this is a lot like the monkey code. /N
 			help_shake_act(M)
 		if("grab")
 			grabbedby(M)
-		if ("harm")
-			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			return 1
-		if("disarm")
-			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
+		if ("harm", "disarm")
+			M.do_attack_animation(src)
 			return 1
 	return 0
 
@@ -71,6 +73,8 @@ In all, this is a lot like the monkey code. /N
 		if (stat != DEAD)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			apply_damage(rand(1, 3), BRUTE, affecting)
+
+
 
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)

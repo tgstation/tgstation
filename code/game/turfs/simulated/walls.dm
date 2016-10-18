@@ -84,18 +84,13 @@
 
 /turf/closed/wall/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)
-	switch(M.damtype)
-		if(BRUTE)
-			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", null, null, 2, M.occupant)
-			if(prob(hardness + M.force) && M.force > 20)
-				dismantle_wall(1)
-				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		if(TOX)
-			playsound(src, 'sound/effects/spray2.ogg', 100, 1)
-			return 0
+	if(M.damtype == "brute")
+		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
+		if(prob(hardness + M.force) && M.force > 20)
+			dismantle_wall(1)
+			visible_message("<span class='warning'>[M.name] smashes through the wall!</span>")
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
 /turf/closed/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -107,6 +102,7 @@
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		M << "<span class='notice'>You smash through the wall.</span>"
 		dismantle_wall(1)
 		return
 
@@ -114,6 +110,7 @@
 	..(user, 1)
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		user << text("<span class='notice'>You smash through the wall.</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		dismantle_wall(1)
 	else

@@ -28,26 +28,16 @@
 
 /datum/martial_art/proc/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
 
+	A.do_attack_animation(D)
 	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
 
 	var/atk_verb = A.dna.species.attack_verb
 	if(D.lying)
 		atk_verb = "kick"
 
-	switch(atk_verb)
-		if("kick")
-			A.do_attack_animation(D, ATTACK_EFFECT_KICK)
-		if("slash")
-			A.do_attack_animation(D, ATTACK_EFFECT_CLAW)
-		if("smash")
-			A.do_attack_animation(D, ATTACK_EFFECT_SMASH)
-		else
-			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
-			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, 2, A)
+		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>")
 		add_logs(A, D, "attempted to [atk_verb]")
 		return 0
 
@@ -56,7 +46,7 @@
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
-			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, 2, A)
+								"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>")
 
 	D.apply_damage(damage, BRUTE, affecting, armor_block)
 
@@ -100,15 +90,14 @@
 
 /datum/martial_art/boxing/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+	A.do_attack_animation(D)
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
 	var/damage = rand(5, 8) + A.dna.species.punchdamagelow
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
-			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, 2, A)
+		D.visible_message("<span class='warning'>[A] has attempted to hit [D] with a [atk_verb]!</span>")
 		add_logs(A, D, "attempted to hit", atk_verb)
 		return 0
 
@@ -118,8 +107,8 @@
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 
-	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
-			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, 2, A)
+	D.visible_message("<span class='danger'>[A] has hit [D] with a [atk_verb]!</span>", \
+								"<span class='userdanger'>[A] has hit [D] with a [atk_verb]!</span>")
 
 	D.apply_damage(damage, STAMINA, affecting, armor_block)
 	add_logs(A, D, "punched (boxing) ")
@@ -196,7 +185,7 @@
 	return
 
 /datum/martial_art/plasma_fist/proc/Plasma(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+	A.do_attack_animation(D)
 	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
 	A.say("PLASMA FIST!")
 	D.visible_message("<span class='danger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>", \
@@ -272,7 +261,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.stunned && !D.weakened)
-		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -286,7 +275,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(A.dir == D.dir && !D.stat && !D.weakened)
-		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
 		step_to(D,get_step(D,D.dir),1)
@@ -298,7 +287,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
-		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
 						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
 		D.audible_message("<b>[D]</b> gags!")
@@ -311,7 +300,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
-		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
 		D.apply_damage(20, BRUTE, "head")
@@ -324,7 +313,7 @@
 
 /datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(D.weakened || D.resting || D.stat)
-		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		A.do_attack_animation(D)
 		D.visible_message("<span class='warning'>[A] elbow drops [D]!</span>", \
 						  "<span class='userdanger'>[A] piledrives you with their elbow!</span>")
 		if(D.stat)
@@ -354,7 +343,7 @@
 	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return 1
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+	A.do_attack_animation(D)
 	var/atk_verb = pick("punches", "kicks", "chops", "hits", "slams")
 	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
 					  "<span class='userdanger'>[A] [atk_verb] you!</span>")

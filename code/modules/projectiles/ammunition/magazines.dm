@@ -439,15 +439,12 @@ obj/item/ammo_box/magazine/tommygunm45
 
 /obj/item/ammo_box/magazine/toy/smg
 	name = "foam force SMG magazine"
-	icon_state = "smg9mm-42"
+	icon_state = "smg9mm-20"
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/toy/smg/update_icon()
 	..()
-	if(ammo_count())
-		icon_state = "smg9mm-42"
-	else
-		icon_state = "smg9mm-0"
+	icon_state = "smg9mm-[round(ammo_count(),5)]"
 
 /obj/item/ammo_box/magazine/toy/smg/riot
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot

@@ -246,8 +246,9 @@ Class Procs:
 		return attack_hand(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, 2, user)
+		user.do_attack_animation(src)
+		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>",\
+		"<span class='danger'>You smash against the [src.name] with your paws.</span>")
 		take_damage(4, BRUTE, "melee", 1)
 
 
