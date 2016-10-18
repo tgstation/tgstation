@@ -1,0 +1,5 @@
+author: "MrPerson"
+delete-after: True
+changes: 
+  - rscadd: "New toxin - Rotatium. It doesn't quite do what it does on other servers. Instead it rocks your game view back and forth while slowly doing toxin damage. The rocking gets more intense with time."
+  - rscadd: "To make it, mix equal parts mindbreaker, neurotoxin, and teslium."
