@@ -90621,11 +90621,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cZw" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
-/area/shuttle/transport)
+/mob/living/simple_animal/sloth/citrus,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "cZx" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel/bot,
@@ -111412,7 +111410,7 @@ aNp
 aNp
 aLI
 aNp
-aNp
+cZw
 aYC
 bal
 bbN
