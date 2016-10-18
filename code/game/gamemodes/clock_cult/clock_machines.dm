@@ -411,9 +411,6 @@
 		if(disabled)
 			user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
 			return 0
-		if(!total_accessable_power() >= disrupt_cost)
-			user << "<span class='warning'>[src] needs more power to function!</span>"
-			return 0
 		toggle(0, user)
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/process()
@@ -462,7 +459,7 @@
 
 			CHECK_TICK
 
-		if(power_drained && (return_power(power_drained) || power_drained >= 50))
+		if(power_drained && return_power(power_drained))
 			successfulprocess = TRUE
 			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
 
