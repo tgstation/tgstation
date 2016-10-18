@@ -16,6 +16,7 @@
 	max_equip = 2
 	step_energy_drain = 3
 	color = "#87878715"
+	atom_colours = list("", "", "", "#87878715")
 	stepsound = null
 	turnsound = null
 	opacity = 0

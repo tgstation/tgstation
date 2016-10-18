@@ -516,13 +516,12 @@ This is here to make the tiles around the station mininuke change when it's arme
 		going delta! It looks like they're comitting suicide.</span>")
 	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
 	var/end_time = world.time + 100
-	var/orig_color = user.color
 	while(world.time < end_time)
 		if(!user)
 			return
-		user.color = RANDOM_COLOUR
+		user.add_atom_colour(RANDOM_COLOUR, ADMIN_COLOUR_PRIORITY)
 		sleep(1)
-	user.color = orig_color
+	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='suicide'>[user] was destroyed \
 		by the nuclear blast!</span>")
 	return OXYLOSS

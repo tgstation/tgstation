@@ -25,6 +25,7 @@
 		src.transform = M
 
 	color = main
+	atom_colours[FIXED_COLOUR_PRIORITY] = main
 
 
 /obj/effect/decal/cleanable/crayon/gang
@@ -37,14 +38,12 @@
 		qdel(src)
 
 	var/area/territory = get_area(location)
-	var/color
-
 	gang = G
-	color = G.color_hex
+	var/newcolor = G.color_hex
 	icon_state = G.name
 	G.territory_new |= list(territory.type = territory.name)
 
-	..(location, color, icon_state, e_name, rotation)
+	..(location, newcolor, icon_state, e_name, rotation)
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
 	var/area/territory = get_area(src)

@@ -211,6 +211,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cocoon_large3"
 	color = rgb(10,120,10)
+	atom_colours = list("", "", "", rgb(10,120,10))
 	density = 1
 	var/hatch_time = 0
 

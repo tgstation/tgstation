@@ -216,6 +216,7 @@ obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	minbodytemp = 0
 	maxbodytemp = 1500
 	color = rgb(114,228,250)
+	atom_colours = list("", "", "", rgb(114,228,250))
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice
 	name = "giant ice spider"
@@ -223,6 +224,7 @@ obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	minbodytemp = 0
 	maxbodytemp = 1500
 	color = rgb(114,228,250)
+	atom_colours = list("", "", "", rgb(114,228,250))
 
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice
 	name = "giant ice spider"
@@ -230,14 +232,17 @@ obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	minbodytemp = 0
 	maxbodytemp = 1500
 	color = rgb(114,228,250)
+	atom_colours = list("", "", "", rgb(114,228,250))
 
 //objs//--
 
 /obj/structure/flora/rock/icy
 	name = "icy rock"
 	color = rgb(114,228,250)
+	atom_colours = list("", "", "", rgb(114,228,250))
 
 /obj/structure/flora/rock/pile/icy
 	name = "icey rocks"
 	color = rgb(114,228,250)
+	atom_colours = list("", "", "", rgb(114,228,250))
 

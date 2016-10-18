@@ -179,7 +179,7 @@
 	qdel(src)
 
 /obj/machinery/door/window/narsie_act()
-	color = "#7D1919"
+	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/ratvar_act()
 	new/obj/machinery/door/window/clockwork(src.loc, dir)

@@ -365,8 +365,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			L.dizziness = min(L.dizziness + 20, 100)
 			L.Weaken(1)
 	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
-	invoker.color = "#AF0AAF"
-	animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
+	var/invoker_old_color = invoker.color
+	invoker.add_atom_colour("#AF0AAF", TEMPORARY_COLOUR_PRIORITY)
+	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
 		var/starttime = world.time
@@ -1135,7 +1136,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	playsound(invoker, 'sound/magic/lightning_chargeup.ogg', 100, 0)
-	animate(invoker, color = list(rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(0,0,0)), time = 88) //Gradual advancement to extreme brightness
+	animate(invoker, color = "#FFFF00", time = 88) //Gradual advancement to extreme brightness
 	sleep(88)
 	if(invoker)
 		invoker.visible_message("<span class='warning'>Massive bolts of energy emerge from across [invoker]'s body!</span>", \
@@ -1143,7 +1144,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		<span class='userdanger'>TOO... MUCH! CAN'T... TAKE IT!</span>")
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
 		if(invoker.stat == CONSCIOUS)
-			animate(invoker, color = initial(invoker.color), time = 10)
+			invoker.update_atom_colour()
 			for(var/mob/living/L in view(7, invoker))
 				if(is_servant_of_ratvar(L))
 					continue

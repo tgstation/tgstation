@@ -288,6 +288,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 	color = "#FF69B4" // HOT PINK
+	atom_colours = list("", "", "", "#FF69B4")
 
 	veil_msg = "<span class='warning'>You sense an adorable presence lurking just beyond the veil...</span>"
 	objective_verb = "Hug and Tickle"

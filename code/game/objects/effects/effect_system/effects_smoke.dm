@@ -84,7 +84,7 @@
 		reagents.copy_to(S, reagents.total_volume)
 		S.setDir(pick(cardinal))
 		S.amount = amount-1
-		S.color = color
+		S.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		S.lifetime = lifetime
 		if(S.amount>0)
 			if(opaque)
@@ -150,6 +150,7 @@
 /obj/effect/particle_effect/smoke/freezing
 	name = "nanofrost smoke"
 	color = "#B2FFFF"
+	atom_colours= list("", "", "", "#B2FFFF")
 	opaque = 0
 
 /datum/effect_system/smoke_spread/freezing
@@ -200,6 +201,7 @@
 
 /obj/effect/particle_effect/smoke/sleeping
 	color = "#9C3636"
+	atom_colours = list("", "", "", "#9C3636")
 	lifetime = 10
 
 /obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
@@ -297,7 +299,7 @@
 
 
 /datum/effect_system/smoke_spread/chem/start()
-	var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
+	var/mixcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 	if(holder)
 		location = get_turf(holder)
 	var/obj/effect/particle_effect/smoke/chem/S = new effect_type(location)
@@ -305,8 +307,8 @@
 	if(chemholder.reagents.total_volume > 1) // can't split 1 very well
 		chemholder.reagents.copy_to(S, chemholder.reagents.total_volume)
 
-	if(color)
-		S.color = color // give the smoke color, if it has any to begin with
+	if(mixcolor)
+		S.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
 	S.amount = amount
 	if(S.amount)
 		S.spread_smoke() //calling process right now so the smoke immediately attacks mobs.

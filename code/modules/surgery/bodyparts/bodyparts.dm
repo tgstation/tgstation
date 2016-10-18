@@ -550,4 +550,5 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "severedtail"
 	color = "#161"
+	atom_colours = list("", "", "", "#161")
 	var/markings = "Smooth"

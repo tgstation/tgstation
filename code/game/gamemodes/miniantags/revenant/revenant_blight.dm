@@ -14,14 +14,11 @@
 	severity = BIOHAZARD
 	var/stagedamage = 0 //Highest stage reached.
 	var/finalstage = 0 //Because we're spawning off the cure in the final stage, we need to check if we've done the final stage's effects.
-	var/old_color = ""
 
 /datum/disease/revblight/cure()
 	if(affected_mob)
-		affected_mob.color = old_color
+		affected_mob.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 		affected_mob << "<span class='notice'>You feel better.</span>"
-		if(affected_mob.dna && affected_mob.dna.species)
-			affected_mob.dna.species.handle_mutant_bodyparts(affected_mob)
 	..()
 
 /datum/disease/revblight/stage_act()
@@ -56,12 +53,8 @@
 				affected_mob << "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>"
 				affected_mob.adjustStaminaLoss(45)
 				PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
-				if(affected_mob.dna && affected_mob.dna.species)
-					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
-					affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
-					affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>")
-					old_color = affected_mob.color
-					affected_mob.color = "#1d2953"
-					addtimer(src, "cure", 100, FALSE)
+				affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>")
+				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
+				addtimer(src, "cure", 100, FALSE)
 		else
 			return

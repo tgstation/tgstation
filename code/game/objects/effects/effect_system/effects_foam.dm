@@ -105,7 +105,7 @@
 		var/obj/effect/particle_effect/foam/F = PoolOrNew(src.type, T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
-		F.color = color
+		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		F.metal = metal
 
 
@@ -164,7 +164,7 @@
 		var/obj/effect/particle_effect/foam/F = PoolOrNew(effect_type, location)
 		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
-		F.color = foamcolor
+		F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 		F.amount = amount
 		F.metal = metal
 

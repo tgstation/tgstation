@@ -121,6 +121,7 @@
 	name = "hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
 	color = "yellow"
+	atom_colours = list("", "", "", "yellow")
 	fail_message = "<span class='warning'>HONK!</span>"
 	force_replace = 1
 

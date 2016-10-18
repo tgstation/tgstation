@@ -65,6 +65,7 @@
 	name = "Invoker's Shield"
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
 	color = "red"
+	atom_colours = list("", "", "", "red")
 	obj_integrity = 20
 	max_integrity = 20
 	mouse_opacity = 0

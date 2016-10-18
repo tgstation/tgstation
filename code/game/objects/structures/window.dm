@@ -55,9 +55,9 @@
 
 
 /obj/structure/window/narsie_act()
-	color = NARSIE_WINDOW_COLOUR
+	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 	for(var/obj/item/weapon/shard/shard in debris)
-		shard.color = NARSIE_WINDOW_COLOUR
+		shard.add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/window/ratvar_act()
 	if(!fulltile)
@@ -444,7 +444,7 @@
 	level = 3
 
 /obj/structure/window/shuttle/narsie_act()
-	color = "#3C3434"
+	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE

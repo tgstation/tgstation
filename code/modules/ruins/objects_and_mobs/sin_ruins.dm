@@ -75,6 +75,7 @@
 	icon_state = "blob"
 	icon = 'icons/mob/blob.dmi'
 	color = rgb(145, 150, 0)
+	atom_colours = list("", "", "", rgb(145, 150, 0))
 
 /obj/effect/gluttony/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)

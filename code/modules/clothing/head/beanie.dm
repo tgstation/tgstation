@@ -7,6 +7,11 @@
 	icon_state = "beanie" //Default white
 	item_color = "beanie"
 
+/obj/item/clothing/head/beanie/New()
+	..()
+	if(color)
+		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
 /obj/item/clothing/head/beanie/black
 	name = "black beanie"
 	icon_state = "beanie"
