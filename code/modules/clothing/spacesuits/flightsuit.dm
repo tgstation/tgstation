@@ -705,7 +705,7 @@
 	shoes.pack = pack
 	shoes.suit = src
 
-/obj/item/device/electropack/attack_hand(mob/user)
+/obj/item/clothing/suit/space/hardsuit/flightsuit/attack_hand(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
