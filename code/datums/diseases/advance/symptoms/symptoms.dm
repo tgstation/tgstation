@@ -21,11 +21,21 @@ var/global/const/SYMPTOM_ACTIVATION_PROB = 5
 
 /datum/symptom/New()
 	var/list/S = list_symptoms
+
 	for(var/i = 1; i <= S.len; i++)
 		if(src.type == S[i])
 			id = "[i]"
 			return
 	CRASH("We couldn't assign an ID!")
+
+/datum/symptom/proc/Copy()
+	var/datum/symptom/C = new src.type
+	C.stealth = src.stealth
+	C.resistance = src.resistance
+	C.stage_speed = src.stage_speed
+	C.transmittable = src.transmittable
+	return C
+
 
 // Called when processing of the advance disease, which holds this symptom, starts.
 /datum/symptom/proc/Start(datum/disease/advance/A)
