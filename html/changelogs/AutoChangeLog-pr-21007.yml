@@ -1,0 +1,4 @@
+author: "Yackemflam"
+delete-after: True
+changes: 
+  - bugfix: "fixed the standard vest being weaker than the slim variant"
