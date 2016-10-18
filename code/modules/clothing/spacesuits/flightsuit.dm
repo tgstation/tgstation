@@ -215,7 +215,7 @@
 	if(boost)
 		momentum_increment = boost_power
 	if(brake)
-		momentum_increment -= 0.5*airbrake_decay_amount
+		momentum_increment = 0
 	switch(dir)
 		if(NORTH)
 			adjust_momentum(0, momentum_increment)
@@ -309,6 +309,9 @@
 			resync = 1
 		if(!wearer)	//Oh god our user fell off!
 			disable_flight(1)
+	if(!pressure)
+		brake = 0
+		usermessage("Airbrakes deactivated due to lack of pressure!")
 	//Add check for wearer wearing the shoes and suit here
 
 //Resync the suit
@@ -701,6 +704,14 @@
 		shoes.wearer = user
 	shoes.pack = pack
 	shoes.suit = src
+
+/obj/item/device/electropack/attack_hand(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.back)
+			usermessage("You can not take a locked hardsuit off! Unlock it first!", 1)
+			return
+	..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/ui_action_click(owner, action)
 	if(action == /datum/action/item_action/flightsuit/lock_suit)
