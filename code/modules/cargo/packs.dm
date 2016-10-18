@@ -44,11 +44,11 @@ datum/supply_pack
 					/mob/living/simple_animal/bot/floorbot,
 					/mob/living/simple_animal/bot/medbot,
 					/mob/living/simple_animal/bot/medbot,
-					/obj/item/weapon/tank/internals/air,
-					/obj/item/weapon/tank/internals/air,
-					/obj/item/weapon/tank/internals/air,
-					/obj/item/weapon/tank/internals/air,
-					/obj/item/weapon/tank/internals/air,
+					/obj/item/weapon/tank/internals/oxygen,
+					/obj/item/weapon/tank/internals/oxygen,
+					/obj/item/weapon/tank/internals/oxygen,
+					/obj/item/weapon/tank/internals/oxygen,
+					/obj/item/weapon/tank/internals/oxygen,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
@@ -69,9 +69,9 @@ datum/supply_pack
 					/obj/item/weapon/tank/internals/emergency_oxygen,
 					/obj/item/weapon/tank/internals/emergency_oxygen,
 					/obj/item/weapon/tank/internals/emergency_oxygen,
-					/obj/item/weapon/tank/internals/air,
-					/obj/item/weapon/tank/internals/air,
-					/obj/item/weapon/tank/internals/air)
+					/obj/item/weapon/tank/internals/oxygen,
+					/obj/item/weapon/tank/internals/oxygen,
+					/obj/item/weapon/tank/internals/oxygen)
 	crate_name = "internals crate"
 	crate_type = /obj/structure/closet/crate/internals
 

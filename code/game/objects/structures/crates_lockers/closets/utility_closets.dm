@@ -36,7 +36,7 @@
 			new /obj/item/clothing/mask/breath(src)
 
 		if ("tank")
-			new /obj/item/weapon/tank/internals/air(src)
+			new /obj/item/weapon/tank/internals/oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
 
 		if ("both")
