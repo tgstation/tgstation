@@ -273,16 +273,19 @@
 	icon_state = "running"
 
 /obj/screen/mov_intent/Click()
-	if(isobserver(usr))
+	toggle(usr)
+
+/obj/screen/mov_intent/proc/toggle(mob/user)
+	if(isobserver(user))
 		return
-	switch(usr.m_intent)
+	switch(user.m_intent)
 		if("run")
-			usr.m_intent = "walk"
+			user.m_intent = "walk"
 			icon_state = "walking"
 		if("walk")
-			usr.m_intent = "run"
+			user.m_intent = "run"
 			icon_state = "running"
-	usr.update_icons()
+	user.update_icons()
 
 /obj/screen/pull
 	name = "stop pulling"

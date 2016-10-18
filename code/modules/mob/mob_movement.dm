@@ -413,3 +413,11 @@
 
 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
 	selector.set_selected_zone("l_leg", mob)
+
+/client/verb/toggle_walk_run()
+	set name = "toggle-walk-run"
+	set hidden = 1
+
+	if(mob && mob.hud_used && mob.hud_used.static_inventory)
+		for(var/obj/screen/mov_intent/selector in mob.hud_used.static_inventory)
+			selector.toggle(mob);
