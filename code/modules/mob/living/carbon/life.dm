@@ -149,8 +149,8 @@
 			adjustOxyLoss(min(5*ratio, 3))
 			oxygen_used = breath_gases["o2"][MOLES]*ratio
 		else if(O2_partialpressure > safe_oxygen_max)
-			//we burn when breathing too much oxy
-			adjustFireLoss(3)
+			//oxygen poisoning
+			adjustToxLoss(1)
 		else
 			adjustOxyLoss(3)
 		failed_last_breath = 1
