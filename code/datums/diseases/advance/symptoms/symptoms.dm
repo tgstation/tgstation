@@ -21,7 +21,6 @@ var/global/const/SYMPTOM_ACTIVATION_PROB = 5
 
 /datum/symptom/New()
 	var/list/S = list_symptoms
-
 	for(var/i = 1; i <= S.len; i++)
 		if(src.type == S[i])
 			id = "[i]"
