@@ -1,10 +1,10 @@
 /mob/living/simple_animal/borer/verb/infect_victim()
-	set name = "Infect"
+	set name = "Infest"
 	set category = "Borer"
-	set desc = "Infect a adjacent human being"
+	set desc = "Infest a suitable humanoid host."
 
 	if(victim)
-		src << "<span class='warning'>You already have a host! leave this one if you want a new one.</span>"
+		src << "<span class='warning'>You are already within a host.</span>"
 
 	if(stat == DEAD)
 		return
@@ -14,11 +14,11 @@
 		if(H!=src && Adjacent(H))
 			choices += H
 
-	var/mob/living/carbon/human/H = input(src,"Who do you wish to infect?") in null|choices
+	var/mob/living/carbon/human/H = input(src,"Who do you wish to infest?") in null|choices
 	if(!H) return
 
 	if(H.borer)
-		src << "<span class='warning'>[victim] is already infected!</span>"
+		src << "<span class='warning'>[victim] is already infested!</span>"
 		return
 
 	if(CanInfect(H))
@@ -48,7 +48,7 @@
 	set desc = "Push some chemicals into your host's bloodstream."
 
 	if(!victim)
-		src << "<span class='warning'>You are not inside a host body!</span>"
+		src << "<span class='warning'>You are not inside a host body.</span>"
 		return
 
 	if(stat != CONSCIOUS)
@@ -83,7 +83,7 @@
 	set desc = "Become invisible to the common eye."
 
 	if(victim)
-		src << "<span class='warning'>You cannot do this whilst you are infecting a host</span>"
+		src << "<span class='warning'>You cannot do this whilst you are infesting a host</span>"
 
 	if(src.stat != CONSCIOUS)
 		return
@@ -130,7 +130,7 @@
 	if(!Adjacent(M)) return
 
 	if(M.borer)
-		src << "<span class='warning'>You cannot paralyze someone who is already infected!</span>"
+		src << "<span class='warning'>You cannot paralyze someone who is already infested!</span>"
 		return
 
 	src.layer = MOB_LAYER
@@ -318,7 +318,7 @@
 /mob/living/simple_animal/borer/verb/punish()
 	set category = "Borer"
 	set name = "Punish"
-	set desc = "Punish your victim"
+	set desc = "Punish your victim."
 
 	if(!victim)
 		src << "<span class='warning'>You are not inside a host body.</span>"
@@ -377,7 +377,7 @@ mob/living/carbon/proc/release_control()
 /mob/living/carbon/proc/spawn_larvae()
 	set category = "Borer"
 	set name = "Reproduce"
-	set desc = "Vomit out your younglings."
+	set desc = "Spawn several young."
 
 	if(istype(src, /mob/living/brain))
 		src << "<span class='usernotice'>You need a mouth to be able to do this.</span>"

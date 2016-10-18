@@ -38,16 +38,14 @@ var/total_borer_hosts_needed = 10
 
 /mob/living/simple_animal/borer/New()
 	..()
-	name = "[pick("Primary","Secondary","Tertiary","Quaternary")] Borer ([rand(100,999)])"
+	name = "[pick("Primary","Secondary","Tertiary","Quaternary")] Borer ([rand(1000,9999)])"
 	borer_chems += /datum/borer_chem/mannitol
 	borer_chems += /datum/borer_chem/bicaridine
 	borer_chems += /datum/borer_chem/kelotane
 	borer_chems += /datum/borer_chem/charcoal
-	borer_chems += /datum/borer_chem/ephedrine
-	borer_chems += /datum/borer_chem/leporazine
+	borer_chems += /datum/borer_chem/methamphetamine
 	borer_chems += /datum/borer_chem/perfluorodecalin
 	borer_chems += /datum/borer_chem/spacedrugs
-	borer_chems += /datum/borer_chem/mutadone
 	//borer_chems += /datum/borer_chem/creagent
 	borer_chems += /datum/borer_chem/ethanol
 	borer_chems += /datum/borer_chem/rezadone
@@ -128,9 +126,9 @@ var/total_borer_hosts_needed = 10
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
-			borer << "<span class='borer'><b>HIVEMIND: </b>[name] transmits: \"[message]\""
+			borer << "<span class='borer'><b>Cortical Link: </b>[name] sings: \"[message]\""
 		for(var/mob/dead in dead_mob_list)
-			dead << "<span class='borer'><b>BORER HIVEMIND: </b>[name] transmits: \"[message]\""
+			dead << "<span class='borer'><b>Cortical Link: </b>[name] sings: \"[message]\""
 		return
 	if(!victim)
 		src << "<span class='warning'>You cannot speak without a host!</span>"
@@ -162,7 +160,7 @@ var/total_borer_hosts_needed = 10
 		return
 
 	if(victim.borer)
-		src << "<span class='warning'>[victim] is already infected!</span>"
+		src << "<span class='warning'>[victim] is already infested!</span>"
 		return
 
 	if(!victim.key || !victim.mind)
@@ -170,14 +168,14 @@ var/total_borer_hosts_needed = 10
 		return
 
 	if (victim && victim.dna && istype(victim.dna.species, /datum/species/skeleton))
-		src << "<span class='warning'>[victim] does not posess the vital systems needed to support us.</span>"
+		src << "<span class='warning'>[victim] does not possess the vital systems needed to support us.</span>"
 		return
 
 	src.victim = victim
 	victim.borer = src
 	loc = victim
 
-	log_game("[src]/([src.ckey]) has infected [victim]/([victim.ckey]")
+	log_game("[src]/([src.ckey]) has infested [victim]/([victim.ckey]")
 
 /mob/living/simple_animal/borer/proc/leave_victim()
 	if(!victim) return
@@ -202,13 +200,13 @@ var/total_borer_hosts_needed = 10
 	ckey = candidate.ckey
 
 	if(mind)
-		mind.store_memory("You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle.")
+		mind.store_memory("You <b>MUST</b> escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle.")
 
 	src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
 	into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
 	your host and your eventual spawn safe and warm."
 	src << "You can speak to your victim with <b>say</b> and your fellow borers by prefixing your message with ';'. You can also force a host you have infested to speak by prefixing messages with *. Check out your borer tab to see your powers as a borer."
-	src << "You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle."
+	src << "You <b>MUST</b> escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle."
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling) return
 

@@ -119,6 +119,7 @@ h1.alert, h2.alert		{color: #000000;}
 .alien					{color: #543354;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
+.borer					{color: #543354;}
 
 .interface				{color: #330033;}
 

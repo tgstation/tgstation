@@ -24,14 +24,9 @@
 	chemname = "charcoal"
 	chem_desc = "Slowly heals toxin damage at a rate of 2 per tick, will also slowly remove any other chemicals."
 
-/datum/borer_chem/ephedrine
-	chemname = "ephedrine"
-	chem_desc = "Reduces stun times, and increases run speed. If overdosed it will deal toxin and oxyloss damage."
-
-/datum/borer_chem/leporazine
-	chemname = "leporazine"
-	chem_desc = "This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA."
-	chemuse = 100
+/datum/borer_chem/methamphetamine
+	chemname = "methamphetamine"
+	chem_desc = "Reduces stun times, increases stamina and run speed while dealing brain damage. If overdosed it will deal toxin and brain damage."
 
 /datum/borer_chem/perfluorodecalin
 	chemname = "perfluorodecalin"
@@ -42,11 +37,6 @@
 	chemname = "space_drugs"
 	chem_desc = "Get your host high as a kite."
 	chemuse = 75
-
-/datum/borer_chem/mutadone
-	chemname = "mutadone"
-	chem_desc = "Heals your genetic mutations."
-	chemuse = 100
 
 /*/datum/borer_chem/creagent
 	chemname = "colorful_reagent"
