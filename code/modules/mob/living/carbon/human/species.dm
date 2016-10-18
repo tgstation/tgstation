@@ -71,11 +71,11 @@
 
 	//Breathing!
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	var/safe_oxygen_max = 0
+	var/safe_oxygen_max = 100	//TODO: make internals an air mix so we can set this properly to 80
 	var/safe_co2_min = 0
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_min = 0
-	var/safe_toxins_max = 0.05
+	var/safe_toxins_max = 0.05	//Don't set this to zero, or you'll get div by zero errors
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas.

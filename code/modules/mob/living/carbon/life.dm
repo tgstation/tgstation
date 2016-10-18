@@ -109,11 +109,26 @@
 		throw_alert("oxy", /obj/screen/alert/oxy)
 		return 0
 
-	var/safe_oxy_min = 16
+	//old defaults for if we don't have a species for whatever reason
+	var/safe_oxygen_min = 16
+	var/safe_oxygen_max = 100
 	var/safe_co2_max = 10
+	var/safe_co2_min = 0
 	var/safe_tox_max = 0.05
+	var/safe_tox_min = 0
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
+
+	if(dna && dna.species)
+		safe_oxygen_min = dna.species.safe_oxygen_min
+		safe_oxygen_max = dna.species.safe_oxygen_max
+		safe_co2_max = dna.species.safe_co2_max
+		safe_co2_min = dna.species.safe_co2_min
+		safe_tox_max = dna.species.safe_toxins_max
+		safe_tox_min = dna.species.safe_toxins_min
+		SA_para_min = dna.species.SA_para_min
+		SA_para_min = dna.species.SA_para_min
+
 	var/oxygen_used = 0
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
@@ -126,17 +141,19 @@
 
 
 	//OXYGEN
-	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
+	if(O2_partialpressure < safe_oxygen_min || O2_partialpressure > safe_oxygen_max) //Not enough oxygen
 		if(prob(20))
 			emote("gasp")
-		if(O2_partialpressure > 0)
-			var/ratio = safe_oxy_min/O2_partialpressure
+		if(O2_partialpressure > 0 && O2_partialpressure < safe_oxygen_min)
+			var/ratio = safe_oxygen_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
-			failed_last_breath = 1
 			oxygen_used = breath_gases["o2"][MOLES]*ratio
+		else if(O2_partialpressure > safe_oxygen_max)
+			//we burn when breathing too much oxy
+			adjustFireLoss(3)
 		else
 			adjustOxyLoss(3)
-			failed_last_breath = 1
+		failed_last_breath = 1
 		throw_alert("oxy", /obj/screen/alert/oxy)
 
 	else //Enough oxygen
@@ -150,7 +167,7 @@
 	breath_gases["co2"][MOLES] += oxygen_used
 
 	//CARBON DIOXIDE
-	if(CO2_partialpressure > safe_co2_max)
+	if(CO2_partialpressure > safe_co2_max || CO2_partialpressure < safe_co2_min)
 		if(!co2overloadtime)
 			co2overloadtime = world.time
 		else if(world.time - co2overloadtime > 120)
@@ -165,9 +182,12 @@
 		co2overloadtime = 0
 
 	//TOXINS/PLASMA
-	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
-		if(reagents)
+	if(Toxins_partialpressure > safe_tox_max || Toxins_partialpressure < safe_tox_min)
+		if(dna && istype(dna.species, /datum/species/plasmaman))
+			//give plasmamen oxyloss, but they get the tox alert. it makes sense
+			adjustOxyLoss(3)
+		else if(reagents)
+			var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
 			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
 		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
 	else
