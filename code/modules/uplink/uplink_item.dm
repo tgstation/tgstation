@@ -248,7 +248,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Atmos Grenades"
 	desc = "A box of three grenades that wreak havoc with the atmosphere of the target area. Capable of engulfing a large area in lit plasma, N2O or Freon. Deploy with extreme caution!"
 	item = /obj/item/weapon/storage/box/syndie_kit/atmosgasgrenades
-	cost = 12
+	cost = 11
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
