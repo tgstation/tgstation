@@ -160,14 +160,14 @@
 	if(clumsy_check)
 		if(istype(user))
 			if (user.disabilities & CLUMSY && prob(40))
-				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
+				user << "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>"
 				var/shot_leg = pick("l_leg", "r_leg")
 				process_fire(user,user,0,params, zone_override = shot_leg)
 				user.drop_item()
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		user << "<span class='userdanger'>You need both hands free to fire \the [src]!</span>"
+		user << "<span class='userdanger'>You need both hands free to fire [src]!</span>"
 		return
 
 	process_fire(target,user,1,params)
@@ -189,7 +189,7 @@
 			pin.auth_fail(user)
 			return 0
 	else
-		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
+		user << "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
 obj/item/weapon/gun/proc/newshot()

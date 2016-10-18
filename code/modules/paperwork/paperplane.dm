@@ -29,7 +29,7 @@
 
 /obj/item/weapon/paperplane/suicide_act(mob/user)
 	user.Stun(10)
-	user.visible_message("<span class='suicide'>[user] jams the [src] in their brains. It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.adjust_blurriness(6)
 	user.adjust_eye_damage(rand(6,8))
 	sleep(10)

@@ -19,7 +19,7 @@
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/cloak/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is strangling themself with [src]! It looks like they're trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
 /obj/item/clothing/suit/cloak/hos
