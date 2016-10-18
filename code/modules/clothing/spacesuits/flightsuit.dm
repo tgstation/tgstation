@@ -167,6 +167,8 @@
 /obj/item/device/flightpack/ui_action_click(owner, action)
 	if(wearer != owner)
 		wearer = owner
+	if(!suit)
+		usermessage("The flightpack will not work without being attached to a suit first!")
 	if(action == /datum/action/item_action/flightpack/toggle_flight)
 		if(!flight)
 			enable_flight()
@@ -327,8 +329,9 @@
 		suit.slowdown = slowdown_air
 
 /obj/item/device/flightpack/process()
-	if(suit)
-		update_slowdown()
+	if(!suit)
+		return 0
+	update_slowdown()
 	update_icon()
 	check_conditions()
 	handle_flight()
@@ -920,6 +923,8 @@
 		if(shoes && input == "Shoes")
 			if(deployedshoes)
 				usermessage("Disengage the shoes first!", 1)
+				return 0
+			detach_shoes()
 	if(istype(I, /obj/item/device/flightpack))
 		if(pack)
 			usermessage("[src] already has a flightpack installed!", 1)
