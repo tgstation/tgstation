@@ -405,25 +405,28 @@
 		U.IgniteMob()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
-	description = "Forged from eldrich energies... a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
+	name = "Thrown Lightning"
+	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
 	clothes_req = 1
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
 
 /obj/item/spellpacket/lightningbolt
 	name = "\improper Lightning bolt Spell Packet"
-	desc = "Some birdseed wrapped in cloth that somehow crackles with electricity"
+	desc = "Some birdseed wrapped in cloth that somehow crackles with electricity
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
 	w_class = 1
 
 /obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom)
 	if(!..())
-		if(ismob(hit_atom))
-			var/mob/M = hit_atom
+		if(isliving(hit_atom))
+			var/mob/living/M = hit_atom
 			M.electrocute_act(80, src, illusion = 1)
 		qdel(src)
 
-/obj/item/spellpacket/lightningbolt/throw_at
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	. = ..()
-	thrower.forcesay("LIGHTNING BOLT!")
+	if(ishuman(thrower))
+		var/mob/living/carbon/human/H = thrower
+		H.say("LIGHTNINGBOLT!!")
