@@ -71,7 +71,7 @@
 
 	//Breathing!
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	var/safe_oxygen_max = 0
+	var/safe_oxygen_max = 80 // oxygen poisoning is real shit
 	var/safe_co2_min = 0
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_min = 0

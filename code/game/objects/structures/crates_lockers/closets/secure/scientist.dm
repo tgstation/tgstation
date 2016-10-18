@@ -16,7 +16,7 @@
 	new /obj/item/weapon/cartridge/rd(src)
 	new /obj/item/clothing/gloves/color/latex(src)
 	new /obj/item/device/radio/headset/heads/rd(src)
-	new /obj/item/weapon/tank/internals/air(src)
+	new /obj/item/weapon/tank/internals/oxygen(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/megaphone/command(src)
 	new /obj/item/clothing/suit/armor/reactive/teleport(src)
