@@ -276,9 +276,10 @@
 	return 1
 
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
 	if(shock_damage > 0)
-		adjustFireLoss(shock_damage)
+		if(!illusion)
+			adjustFireLoss(shock_damage)
 		visible_message(
 			"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 			"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
