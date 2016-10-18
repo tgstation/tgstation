@@ -193,22 +193,22 @@
 				continue
 			if(!try_use_power(mob_cost))
 				break
-			W.adjustHealth(-15)
+			W.adjustHealth(-20)
 		else if(istype(M, /obj/structure/destructible/clockwork))
 			var/obj/structure/destructible/clockwork/C = M
 			if(C.obj_integrity == C.max_integrity)
 				continue
 			if(!try_use_power(structure_cost))
 				break
-			C.obj_integrity = min(C.obj_integrity + 15, C.max_integrity)
+			C.obj_integrity = min(C.obj_integrity + 20, C.max_integrity)
 		else if(issilicon(M))
 			var/mob/living/silicon/S = M
 			if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
 				continue
 			if(!try_use_power(cyborg_cost))
 				break
-			S.adjustBruteLoss(-15)
-			S.adjustFireLoss(-15)
+			S.adjustBruteLoss(-20)
+			S.adjustFireLoss(-10)
 	return 1
 
 /obj/structure/destructible/clockwork/powered/mending_motor/attack_hand(mob/living/user)
@@ -223,9 +223,9 @@
 		if(stored_alloy + 2500 > max_alloy)
 			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
 			return 0
-		clockwork_say(user, text2ratvar("Transmute into water."), TRUE)
-		user.visible_message("<span class='notice'>[user] liquifies [I] and pours it onto [src].</span>", \
-		"<span class='notice'>You liquify [src] and pour it onto [src], transferring the alloy into its reserves.</span>")
+		playsound(user, 'sound/machines/click.ogg', 50, 1)
+		clockwork_say(user, text2ratvar("Transmute into fuel."), TRUE)
+		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains <b>[stored_alloy*0.04]/[max_alloy*0.04]</b> units of liquified alloy.</span>"
 		stored_alloy = stored_alloy + 2500
 		user.drop_item()
 		qdel(I)
@@ -249,13 +249,13 @@
 	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/alloy_shards/small = 3, \
 	/obj/item/clockwork/component/guvax_capacitor/antennae = 1)
-	var/mania_cost = 150
-	var/convert_attempt_cost = 150
-	var/convert_cost = 300
+	var/mania_cost = 200
+	var/convert_attempt_cost = 200
+	var/convert_cost = 200
 
 	var/mania_messages = list("\"Go nuts.\"", "\"Take a crack at crazy.\"", "\"Make a bid for insanity.\"", "\"Get kooky.\"", "\"Move towards mania.\"", "\"Become bewildered.\"", "\"Wax wild.\"", \
 	"\"Go round the bend.\"", "\"Land in lunacy.\"", "\"Try dementia.\"", "\"Strive to get a screw loose.\"")
-	var/compel_messages = list("\"Come closer.\"", "\"Approach the transmitter.\"", "\"Touch the ante-nnae.\"", "\"I always have to deal with idiots. Move towards the mania motor.\"", \
+	var/compel_messages = list("\"Come closer.\"", "\"Approach the transmitter.\"", "\"Touch the antennae.\"", "\"I always have to deal with idiots. Move towards the mania motor.\"", \
 	"\"Advance forward and place your head between the antennae - that's all it's good for.\"", "\"If you were smarter, you'd be over here already.\"", "\"Move FORWARD, you fool.\"")
 	var/convert_messages = list("\"You won't do. Go to sleep while I tell these nitwits how to convert you.\"", "\"You are insufficient. I must instruct these idiots in the art of conversion.\"", \
 	"\"Oh of course, someone we can't convert. These servants are fools.\"", "\"How hard is it to use a Sigil, anyway? All it takes is dragging someone onto it.\"", \
@@ -271,15 +271,17 @@
 		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and <b>[convert_attempt_cost + convert_cost]W</b> to convert humans adjecent to it.</span>"
 
 /obj/structure/destructible/clockwork/powered/mania_motor/process()
-	var/turf/T = get_turf(src)
 	if(!..())
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(T, 'sound/effects/screech.ogg', 40, 1)
+		playsound(src, 'sound/effects/screech.ogg', 40, 1)
 		toggle(0)
 		return
 	if(try_use_power(mania_cost))
+		var/turf/T = get_turf(src)
 		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 		for(var/mob/living/carbon/human/H in view(1, src))
+			if(is_servant_of_ratvar(H))
+				continue
 			if(H.Adjacent(src) && try_use_power(convert_attempt_cost))
 				if(is_eligible_servant(H) && try_use_power(convert_cost))
 					H << "<span class='sevtug'>\"[text2ratvar("You are mine and his, now.")]\"</span>"
@@ -296,74 +298,75 @@
 				visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
 				playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 		for(var/mob/living/carbon/human/H in range(10, src))
-			if(!is_servant_of_ratvar(H) && !H.null_rod_check() && H.stat == CONSCIOUS)
+			if(is_servant_of_ratvar(H))
+				if(H.getBrainLoss() || H.hallucination || H.druggy || H.dizziness || H.confused)
+					H.adjustBrainLoss(-H.getBrainLoss()) //heals servants of braindamage, hallucination, druggy, dizziness, and confusion
+					H.hallucination = 0
+					H.adjust_drugginess(-H.druggy)
+					H.dizziness = 0
+					H.confused = 0
+			else if(!H.null_rod_check() && H.stat == CONSCIOUS)
 				var/distance = get_dist(T, get_turf(H))
 				var/falloff_distance = min((110) - distance * 10, 80)
 				var/sound_distance = falloff_distance * 0.5
 				var/targetbrainloss = H.getBrainLoss()
 				var/targethallu = H.hallucination
 				var/targetdruggy = H.druggy
-				if(distance >= 4 && prob(falloff_distance))
+				var/targetdizziness = H.dizziness
+				var/targetconfused = H.confused
+				if(distance >= 4 && prob(falloff_distance * 0.5))
 					H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
 				H.playsound_local(T, hum, sound_distance, 1)
 				switch(distance)
 					if(2 to 3)
-						if(prob(falloff_distance))
+						if(prob(falloff_distance * 0.5))
 							if(prob(falloff_distance))
 								H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
 							else
 								H << "<span class='sevtug'>[text2ratvar(pick(compel_messages))]</span>"
 						if(targetbrainloss <= 50)
 							H.adjustBrainLoss(50 - targetbrainloss) //got too close had brain eaten
-						if(targetdruggy <= 100)
-							H.adjust_drugginess(8)
-						if(targethallu <= 100)
-							H.hallucination += 8
+						H.adjust_drugginess(Clamp(7, 0, 100 - targetdruggy))
+						H.hallucination = min(targethallu + 7, 100)
+						H.dizziness = min(targetdizziness + 3, 45)
+						H.confused = min(targetconfused + 3, 45)
 					if(4 to 5)
 						if(targetbrainloss <= 50)
 							H.adjustBrainLoss(1)
-						if(targetdruggy <= 80)
-							H.adjust_drugginess(6)
-						if(targethallu <= 80)
-							H.hallucination += 6
+						H.adjust_drugginess(Clamp(5, 0, 80 - targetdruggy))
+						H.hallucination = min(targethallu + 5, 80)
+						H.dizziness = min(targetdizziness + 2, 30)
+						H.confused = min(targetconfused + 2, 30)
 					if(6 to 7)
 						if(targetbrainloss <= 30)
 							H.adjustBrainLoss(1)
-						if(prob(falloff_distance) && targetdruggy <= 60)
-							H.adjust_drugginess(5)
-						else if(targethallu <= 60)
-							H.hallucination += 5
+						H.adjust_drugginess(Clamp(2, 0, 60 - targetdruggy))
+						H.hallucination = min(targethallu + 2, 60)
+						H.dizziness = min(targetdizziness + 2, 15)
+						H.confused = min(targetconfused + 2, 15)
 					if(8 to 9)
-						if(H.getBrainLoss() <= 10)
+						if(targetbrainloss <= 10)
 							H.adjustBrainLoss(1)
-						if(prob(falloff_distance) && targetdruggy <= 40)
-							H.adjust_drugginess(3)
-						else if(targethallu <= 40)
-							H.hallucination += 3
+						H.adjust_drugginess(Clamp(2, 0, 40 - targetdruggy))
+						H.hallucination = min(targethallu + 2, 40)
 					if(10 to INFINITY)
-						if(prob(falloff_distance) && targetdruggy <= 20)
-							H.adjust_drugginess(2)
-						else if(targethallu <= 20)
-							H.hallucination += 2
+						H.adjust_drugginess(Clamp(2, 0, 20 - targetdruggy))
+						H.hallucination = min(targethallu + 2, 20)
 					else //if it's a distance of 1 and they can't see it/aren't adjacent or they're on top of it(how'd they get on top of it and still trigger this???)
-						if(targetbrainloss <= 99)
+						if(prob(falloff_distance * 0.5))
 							if(prob(falloff_distance))
-								if(prob(falloff_distance))
-									H << "<span class='sevtug'>[text2ratvar(pick(compel_messages))]</span>"
-								else if(prob(falloff_distance))
-									H << "<span class='sevtug'>[text2ratvar(pick(close_messages))]</span>"
-								else
-									H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
+								H << "<span class='sevtug'>[text2ratvar(pick(compel_messages))]</span>"
+							else if(prob(falloff_distance * 0.5))
+								H << "<span class='sevtug'>[text2ratvar(pick(close_messages))]</span>"
+							else
+								H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
+						if(targetbrainloss <= 99)
 							H.adjustBrainLoss(99 - targetbrainloss)
-						if(targetdruggy <= 150)
-							H.adjust_drugginess(15)
-						if(targethallu <= 150)
-							H.hallucination += 15
+						H.adjust_drugginess(Clamp(10, 0, 150 - targetdruggy))
+						H.hallucination = min(targethallu + 10, 150)
+						H.dizziness = min(targetdizziness + 5, 60)
+						H.confused = min(targetconfused + 5, 60)
 
-			if(is_servant_of_ratvar(H) && (H.getBrainLoss() || H.hallucination || H.druggy)) //not an else so that newly converted servants are healed of the damage it inflicts
-				H.adjustBrainLoss(-H.getBrainLoss()) //heals servants of braindamage, hallucination, and druggy
-				H.hallucination = 0
-				H.adjust_drugginess(-H.druggy)
 	else
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
 		playsound(src, 'sound/effects/screech.ogg', 40, 1)
@@ -381,7 +384,7 @@
 /obj/structure/destructible/clockwork/powered/interdiction_lens //Interdiction lens: A powerful artifact that constantly disrupts electronics but, if it fails to find something to disrupt, turns off.
 	name = "interdiction lens"
 	desc = "An ominous, double-pronged brass totem. There's a strange gemstone clasped between the pincers."
-	clockwork_desc = "A powerful totem that constantly disrupts nearby electronics and funnels power into nearby Sigils of Transmission."
+	clockwork_desc = "A powerful totem that constantly drains nearby electronics and funnels the power drained into nearby Sigils of Transmission."
 	icon_state = "interdiction_lens"
 	construction_value = 25
 	active_icon = "interdiction_lens_active"
@@ -392,15 +395,13 @@
 	var/recharge_time = 1200 //if it drains no power and affects no objects, it turns off for two minutes
 	var/disabled = FALSE //if it's actually usable
 	var/interdiction_range = 14 //how large an area it drains and disables in
-	var/disrupt_cost = 50 //how much power to use when disabling an object
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()
 	user << "<span class='[recharging > world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
 	: "vibrates in place and thrums with power"].</span>"
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='nezbere_small'>It requires <b>[disrupt_cost]W</b> of power for each nearby disruptable electronic.</span>"
-		user << "<span class='nezbere_small'>If it fails to both drain any power and disrupt any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
+		user << "<span class='nezbere_small'>If it fails to drain any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	..()
@@ -442,50 +443,27 @@
 			var/atom/movable/A = M
 			power_drained += A.power_drain(TRUE)
 
-			CHECK_TICK
-
-		if(power_drained)
-			successfulprocess = TRUE
-
-		if(!return_power(power_drained) || power_drained < 50) //failed to return power drained or too little power to return
-			successfulprocess = FALSE
-		if(try_use_power(disrupt_cost) && total_accessable_power() >= disrupt_cost) //if we can disable at least one object
-			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
-			for(var/M in atoms_to_test)
-				if(istype(M, /obj/machinery/light)) //cosmetic light flickering
-					var/obj/machinery/light/L = M
-					if(L.on)
-						playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
-						L.flicker(3)
-				else if(istype(M, /obj/machinery/camera))
-					var/obj/machinery/camera/C = M
-					if(C.isEmpProof() || !C.status)
-						continue
-					successfulprocess = TRUE
-					if(C.emped)
-						continue
-					if(!try_use_power(disrupt_cost))
-						break
-					C.emp_act(1)
-				else if(istype(M, /obj/item/device/radio))
-					var/obj/item/device/radio/O = M
-					successfulprocess = TRUE
+			if(istype(A, /obj/machinery/camera))
+				var/obj/machinery/camera/C = A
+				if(C.isEmpProof() || !C.status || C.emped)
+					continue
+				C.emp_act(1)
+			else if(istype(A, /obj/item/device/radio))
+				var/obj/item/device/radio/O = A
+				if(O.emped || !O.on)
+					continue
+				O.emp_act(1)
+			else if(isliving(A) || istype(A, /obj/structure/closet) || istype(A, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
+				for(var/obj/item/device/radio/O in A.GetAllContents())
 					if(O.emped || !O.on)
 						continue
-					if(!try_use_power(disrupt_cost))
-						break
 					O.emp_act(1)
-				else if(isliving(M) || istype(M, /obj/structure/closet) || istype(M, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
-					var/atom/movable/A = M
-					for(var/obj/item/device/radio/O in A.GetAllContents())
-						successfulprocess = TRUE
-						if(O.emped || !O.on)
-							continue
-						if(!try_use_power(disrupt_cost))
-							break
-						O.emp_act(1)
 
-				CHECK_TICK
+			CHECK_TICK
+
+		if(power_drained && (return_power(power_drained) || power_drained >= 50))
+			successfulprocess = TRUE
+			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
 
 		if(!successfulprocess)
 			visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")

@@ -881,7 +881,7 @@
 		user << "<span class='warning'>[H] has no head, and thus no mind!</span>"
 		return
 	if(H.stat == CONSCIOUS)
-		user << "<span class='warning'>[H] must be dead or unconscious to claim their mind!</span>"
+		user << "<span class='warning'>[H] must be dead or unconscious for you to claim [H.p_their()] mind!</span>"
 		return
 	if(H.head)
 		var/obj/item/I = H.head
@@ -908,7 +908,7 @@
 	brainmob.real_name = H.real_name
 	brainmob.timeofhostdeath = H.timeofdeath
 	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
-	"<span class='brass'>You extract [H]'s consciousness from their body, trapping it in the soul vessel.</span>")
+	"<span class='brass'>You extract [H]'s consciousness from [H.p_their()] body, trapping it in the soul vessel.</span>")
 	transfer_personality(H)
 	B.Remove(H)
 	qdel(B)
