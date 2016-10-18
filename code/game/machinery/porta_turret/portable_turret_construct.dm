@@ -23,14 +23,14 @@
 	switch(build_step)
 		if(PTURRET_UNSECURED)	//first step
 			if(istype(I, /obj/item/weapon/wrench) && !anchored)
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You secure the external bolts.</span>"
 				anchored = 1
 				build_step = PTURRET_BOLTED
 				return
 
 			else if(istype(I, /obj/item/weapon/crowbar) && !anchored)
-				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
+				playsound(loc, I.usesound, 75, 1)
 				user << "<span class='notice'>You dismantle the turret construction.</span>"
 				new /obj/item/stack/sheet/metal( loc, 5)
 				qdel(src)
@@ -48,7 +48,7 @@
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, I.usesound, 75, 1)
 				user << "<span class='notice'>You unfasten the external bolts.</span>"
 				anchored = 0
 				build_step = PTURRET_UNSECURED
@@ -57,7 +57,7 @@
 
 		if(PTURRET_START_INTERNAL_ARMOUR)
 			if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You bolt the metal armor into place.</span>"
 				build_step = PTURRET_INTERNAL_ARMOUR_ON
 				return
@@ -94,7 +94,7 @@
 				return
 
 			else if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You remove the turret's metal armor bolts.</span>"
 				build_step = PTURRET_START_INTERNAL_ARMOUR
 				return
@@ -111,7 +111,7 @@
 
 		if(PTURRET_SENSORS_ON)
 			if(istype(I, /obj/item/weapon/screwdriver))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				build_step = PTURRET_CLOSED
 				user << "<span class='notice'>You close the internal access hatch.</span>"
 				return
@@ -128,7 +128,7 @@
 				return
 
 			else if(istype(I, /obj/item/weapon/screwdriver))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				build_step = PTURRET_SENSORS_ON
 				user << "<span class='notice'>You open the internal access hatch.</span>"
 				return
@@ -159,7 +159,7 @@
 					qdel(src)
 
 			else if(istype(I, /obj/item/weapon/crowbar))
-				playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
+				playsound(loc, I.usesound, 75, 1)
 				user << "<span class='notice'>You pry off the turret's exterior armor.</span>"
 				new /obj/item/stack/sheet/metal(loc, 2)
 				build_step = PTURRET_CLOSED

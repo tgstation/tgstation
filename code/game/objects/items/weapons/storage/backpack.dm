@@ -20,8 +20,8 @@
 	max_combined_w_class = 21
 	storage_slots = 21
 	resistance_flags = FLAMMABLE
-	obj_integrity = 100
-	max_integrity = 100
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
@@ -45,7 +45,7 @@
 
 
 /obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
 	user.drop_item()
 	user.Stun(5)
 	sleep(20)
@@ -100,7 +100,7 @@
 	max_combined_w_class = 60
 
 /obj/item/weapon/storage/backpack/santabag/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] places the [src.name] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
+	user.visible_message("<span class='suicide'>[user] places [src] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/storage/backpack/cultpack

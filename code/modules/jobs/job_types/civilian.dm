@@ -53,8 +53,7 @@ Clown
 		return
 
 	var/obj/item/weapon/implant/sad_trombone/S = new/obj/item/weapon/implant/sad_trombone(H)
-	S.imp_in = H
-	S.implanted = 1
+	S.implant(H, null, 1)
 
 	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")

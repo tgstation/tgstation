@@ -100,7 +100,7 @@ var/bomb_set
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
 			if(istype(I, /obj/item/weapon/screwdriver/nuke))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You start removing [src]'s front panel's screws...</span>"
 				if(do_after(user, 60/I.toolspeed,target=src))
 					deconstruction_state = NUKESTATE_UNSCREWED
@@ -110,7 +110,7 @@ var/bomb_set
 		if(NUKESTATE_UNSCREWED)
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start removing [src]'s front panel...</span>"
-				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user,30/I.toolspeed,target=src))
 					user << "<span class='notice'>You remove [src]'s front panel.</span>"
 					deconstruction_state = NUKESTATE_PANEL_REMOVED
@@ -119,7 +119,7 @@ var/bomb_set
 		if(NUKESTATE_PANEL_REMOVED)
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/welder = I
-				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				user << "<span class='notice'>You start cutting [src]'s inner plate...</span>"
 				if(welder.remove_fuel(1,user))
 					if(do_after(user,80/I.toolspeed,target=src))
@@ -130,7 +130,7 @@ var/bomb_set
 		if(NUKESTATE_WELDED)
 			if(istype(I, /obj/item/weapon/crowbar))
 				user << "<span class='notice'>You start prying off [src]'s inner plate...</span>"
-				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(loc, I.usesound, 100, 1)
 				if(do_after(user,50/I.toolspeed,target=src))
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
@@ -512,19 +512,20 @@ This is here to make the tiles around the station mininuke change when it's arme
 	return ..()
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is \
-		going delta! It looks like they're comitting suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
 	var/end_time = world.time + 100
 	var/orig_color = user.color
 	while(world.time < end_time)
 		if(!user)
 			return
-		user.color = RANDOM_COLOUR
+		if(user.color == "#FF0000")
+			user.color = "#00FF00"
+		else
+			user.color = "#FF0000"
 		sleep(1)
 	user.color = orig_color
-	user.visible_message("<span class='suicide'>[user] was destroyed \
-		by the nuclear blast!</span>")
+	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	return OXYLOSS
 
 /obj/item/weapon/disk/nuclear/process()

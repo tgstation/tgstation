@@ -419,7 +419,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			updateimage()
 		else
 			if(prob(15))
-				src.do_attack_animation(my_target)
+				do_attack_animation(my_target, ATTACK_EFFECT_PUNCH)
 				if(weapon_name)
 					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
 					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)

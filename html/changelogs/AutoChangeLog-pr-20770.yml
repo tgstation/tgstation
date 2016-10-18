@@ -1,0 +1,7 @@
+author: "lordpidey"
+delete-after: True
+changes: 
+  - rscadd: "There is a new potential obligation for devils to have.  Musical duels.  Ask your nearest devil for a musical duel, there's a 14% chance he's obligated to do it."
+  - rscdel: "Removed the old offering a drink obligation for devils, it overlapped too much with the food obligation."
+  - tweak: "Trying to clone people who've sold their soul now results in FUN."
+  - tweak: "Devils can no longer spam ghosts with revival contracts."

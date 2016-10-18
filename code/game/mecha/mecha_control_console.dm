@@ -16,7 +16,10 @@
 	var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
-		for(var/obj/item/mecha_parts/mecha_tracking/TR in world)
+		var/list/trackerlist = list()
+		for(var/obj/mecha/MC in mechas_list)
+			trackerlist += MC.trackers
+		for(var/obj/item/mecha_parts/mecha_tracking/TR in trackerlist)
 			var/answer = TR.get_mecha_info()
 			if(answer)
 				dat += {"<hr>[answer]<br/>
@@ -86,11 +89,13 @@
 
 /obj/item/mecha_parts/mecha_tracking/emp_act()
 	qdel(src)
-	return
 
-/obj/item/mecha_parts/mecha_tracking/ex_act()
-	qdel(src)
-	return
+/obj/item/mecha_parts/mecha_tracking/Destroy()
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		if(src in M.trackers)
+			M.trackers -= src
+	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(istype(src.loc, /obj/mecha))
@@ -104,7 +109,7 @@
 	qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
-	if(!src.in_mecha())
+	if(!istype(loc, /obj/mecha))
 		return 0
 	var/obj/mecha/M = src.loc
 	return M.get_log_html()

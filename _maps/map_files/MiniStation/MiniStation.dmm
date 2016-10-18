@@ -13899,7 +13899,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "FQ" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/start{
 	name = "Cyborg"

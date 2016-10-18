@@ -36,7 +36,7 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
-		var/message = "A [reaction_name] reaction has occured in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+		var/message = "A [reaction_name] reaction has occurred in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
 		message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)

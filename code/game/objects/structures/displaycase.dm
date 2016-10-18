@@ -22,6 +22,15 @@
 		showpiece = new start_showpiece_type (src)
 	update_icon()
 
+/obj/structure/displaycase/Destroy()
+	if(electronics)
+		qdel(electronics)
+		electronics = null
+	if(showpiece)
+		qdel(showpiece)
+		showpiece = null
+	return ..()
+
 /obj/structure/displaycase/examine(mob/user)
 	..()
 	if(showpiece)
@@ -32,7 +41,7 @@
 
 /obj/structure/displaycase/proc/dump()
 	if (showpiece)
-		showpiece.loc = src.loc
+		showpiece.forceMove(loc)
 		showpiece = null
 
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -106,14 +115,26 @@
 	return
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
-	if(W.GetID() && electronics && !broken)
+	if(W.GetID() && !broken)
 		if(allowed(user))
 			user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
-			open = !open
-			update_icon()
+			toggle_lock(user)
 		else
 			user <<  "<span class='warning'>Access denied.</span>"
-	else if(!alert && istype(W,/obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent == "help" && !broken)
+		var/obj/item/weapon/weldingtool/WT = W
+		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
+			user << "<span class='notice'>You begin repairing [src].</span>"
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			if(do_after(user, 40/W.toolspeed, target = src))
+				obj_integrity = max_integrity
+				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+				update_icon()
+				user << "<span class='notice'>You repair [src].</span>"
+		else
+			user << "<span class='warning'>[src] is already in good condition!</span>"
+		return
+	else if(!alert && istype(W,/obj/item/weapon/crowbar)) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
 				user << "<span class='notice'>Remove the displayed object first.</span>"
@@ -124,8 +145,7 @@
 			user << "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>"
 			if(do_after(user, 20/W.toolspeed, target = src))
 				user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
-				open = !open
-				update_icon()
+				toggle_lock(user)
 	else if(open && !showpiece)
 		if(user.drop_item())
 			W.loc = src
@@ -146,6 +166,10 @@
 	else
 		return ..()
 
+/obj/structure/displaycase/proc/toggle_lock(mob/user)
+	open = !open
+	update_icon()
+
 /obj/structure/displaycase/attack_paw(mob/user)
 	return src.attack_hand(user)
 
@@ -161,9 +185,8 @@
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
-		user.do_attack_animation(src)
-		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", \
-						 "<span class='notice'>You kick the display case.</span>")
+		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, 2, user)
+		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 		take_damage(2)
 
 
@@ -179,7 +202,7 @@
 
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/weapon/wrench)) //The player can only deconstruct the wooden frame
 		user << "<span class='notice'>You start disassembling [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30/I.toolspeed, target = src))
@@ -215,13 +238,16 @@
 	else
 		return ..()
 
-
+//The captains display case requiring specops ID access is intentional.
+//The lab cage and captains display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
 	alert = 1
 	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
-
+	req_access = list(access_cent_specops) 
+	
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
-
+	req_access = list(access_rd)
+	

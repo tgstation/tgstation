@@ -58,6 +58,17 @@
 		beaker = null
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		updateUsrDialog()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
 	if(beaker)
 		beaker.forceMove(loc)

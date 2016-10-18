@@ -4,14 +4,14 @@
 	//Handle items on mob
 
 	//first implants & organs
-	var/list/implants = list()
+	var/list/stored_implants = list()
 	var/list/int_organs = list()
 
-
-
 	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/W in src)
-			implants += W
+		for(var/X in implants)
+			var/obj/item/weapon/implant/IMP = X
+			stored_implants += IMP
+			IMP.removed(src, 1, 1)
 
 	if (tr_flags & TR_KEEPORGANS)
 		for(var/X in internal_organs)
@@ -29,9 +29,10 @@
 		CH.cavity_item = null
 
 	if(tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (contents-implants-cavity_object))
+		var/Itemlist = get_equipped_items()
+		Itemlist += held_items
+		for(var/obj/item/W in Itemlist)
 			unEquip(W)
-
 
 	//Make mob invisible and spawn animation
 	notransform = 1
@@ -84,9 +85,9 @@
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/I in implants)
-			I.loc = O
-			I.implanted = O
+		for(var/Y in implants)
+			var/obj/item/weapon/implant/IMP = Y
+			IMP.implant(O, null, 1)
 
 	//re-add organs to new mob
 	if(tr_flags & TR_KEEPORGANS)
@@ -141,12 +142,14 @@
 	//Handle items on mob
 
 	//first implants & organs
-	var/list/implants = list()
+	var/list/stored_implants = list()
 	var/list/int_organs = list()
 
 	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/W in src)
-			implants += W
+		for(var/X in implants)
+			var/obj/item/weapon/implant/IMP = X
+			stored_implants += IMP
+			IMP.removed(src, 1, 1)
 
 	if (tr_flags & TR_KEEPORGANS)
 		for(var/X in internal_organs)
@@ -165,7 +168,9 @@
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (contents-implants-cavity_object))
+		var/Itemlist = get_equipped_items()
+		Itemlist += held_items
+		for(var/obj/item/W in Itemlist)
 			unEquip(W)
 			if (client)
 				client.screen -= W
@@ -231,10 +236,9 @@
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/obj/item/weapon/implant/I in implants)
-			I.loc = O
-			I.implanted = O
-		O.sec_hud_set_implants()
+		for(var/Y in implants)
+			var/obj/item/weapon/implant/IMP = Y
+			IMP.implant(O, null, 1)
 
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)

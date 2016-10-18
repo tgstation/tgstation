@@ -26,7 +26,7 @@
 			return 0
 	else
 		return 0
-	if(isloyal(M) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
+	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
 		return 0 //can't convert machines, shielded, or ratvar's dogs
 	return 1
 

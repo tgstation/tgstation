@@ -26,6 +26,19 @@
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
 	if(iscyborg(user) || istype(I,/obj/item/device/multitool))
 		toggle_lock(user)
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help" && !broken)
+		var/obj/item/weapon/weldingtool/WT = I
+		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
+			user << "<span class='notice'>You begin repairing [src].</span>"
+			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			if(do_after(user, 40/I.toolspeed, target = src))
+				obj_integrity = max_integrity
+				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+				update_icon()
+				user << "<span class='notice'>You repair [src].</span>"
+		else
+			user << "<span class='warning'>[src] is already in good condition!</span>"
+		return
 	else if(istype(I, /obj/item/stack/sheet/glass) && broken)
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 2)
