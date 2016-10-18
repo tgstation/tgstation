@@ -18,11 +18,11 @@
 
 /datum/borer_chem/kelotane
 	chemname = "kelotane"
-	chem_desc = "Heals burn damage at a rate of 2 units per tick."
+	chem_desc = "Heals burn damage."
 
 /datum/borer_chem/charcoal
 	chemname = "charcoal"
-	chem_desc = "Slowly heals toxin damage at a rate of 2 per tick, will also slowly remove any other chemicals."
+	chem_desc = "Slowly heals toxin damage, will also slowly remove any other chemicals."
 
 /datum/borer_chem/methamphetamine
 	chemname = "methamphetamine"
@@ -30,7 +30,7 @@
 
 /datum/borer_chem/perfluorodecalin
 	chemname = "perfluorodecalin"
-	chem_desc = "Heals suffocation damage so quickly that you could have a spacewalk, but it mutes your voice. Has a 33% chance of healing brute and burn damage per cycle as well."
+	chem_desc = "Heals suffocation damage quickly but mutes your voice. Has a 33% chance of healing brute and burn damage per cycle as well."
 	chemuse = 75
 
 /datum/borer_chem/spacedrugs
@@ -50,5 +50,5 @@
 
 /datum/borer_chem/rezadone
 	chemname = "rezadone"
-	chem_desc = "Heals your host's cellular damage."
+	chem_desc = "Heals cellular damage."
 	chemuse = 75

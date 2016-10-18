@@ -74,15 +74,6 @@ var/total_borer_hosts_needed = 10
 
 	..()
 
-	for(var/image/hud in client.images)
-		if(hud.icon_state == "borer")
-			client.images -= hud
-	for(var/mob/living/simple_animal/borer/B in borers)
-		if(B.victim)
-			client.images += image('icons/mob/hud.dmi',B.victim,"borer")
-			if(victim && victim.client)
-				victim.client.images += image('icons/mob/hud.dmi',B.victim,"borer")
-
 	if(victim)
 		if(stat != DEAD)
 			if(victim.stat == DEAD)
@@ -214,8 +205,6 @@ var/total_borer_hosts_needed = 10
 
 	victim.verbs -= /mob/living/carbon/proc/release_control
 	victim.verbs -= /mob/living/carbon/proc/spawn_larvae
-
-	victim.med_hud_set_status()
 
 	if(host_brain)
 
