@@ -37,7 +37,7 @@
 	if (!ishuman(usr))
 		return 1
 	var/mob/living/carbon/human/H = usr
-	if(H == src.loc || (in_range(src, H) && isturf(loc)))
+	if(H.is_holding(src))
 		H.set_machine(src)
 		if (href_list["spell_teleport"])
 			if(uses)
@@ -51,7 +51,7 @@
 	var/A
 
 	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in teleportlocs
-	if(!src || qdeleted(src) || !user || src != user.get_active_held_item() || user.incapacitated() || !A || !uses)
+	if(!src || qdeleted(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
 		return
 	var/area/thearea = teleportlocs[A]
 
