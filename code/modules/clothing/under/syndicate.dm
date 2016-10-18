@@ -6,7 +6,7 @@
 	item_color = "syndicate"
 	has_sensor = 0
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 200, acid = 200)
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 200, acid = 40)
 	alt_covers_chest = 1
 
 /obj/item/clothing/under/syndicate/tacticool
