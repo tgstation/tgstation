@@ -4,7 +4,7 @@
  *		Anesthetic
  *		Air* Removed, airmix is in oxytanks now
  *		Plasma
- *		Emergency Air
+ *		Emergency Oxygen
  */
 
 /*
