@@ -65,7 +65,8 @@ var/list/advance_cures = 	list(
 			symptoms = GenerateSymptoms(0, 2)
 		else
 			for(var/datum/symptom/S in D.symptoms)
-				symptoms += S.Copy()
+				symptoms += new S.type
+
 	Refresh()
 	..(process, D)
 	return
@@ -125,7 +126,7 @@ var/list/advance_cures = 	list(
 	if(!(src.IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
 		for(var/datum/symptom/S in possible_symptoms)
-			AddSymptom(S.Copy())
+			AddSymptom(new S.type)
 
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
@@ -266,13 +267,8 @@ var/list/advance_cures = 	list(
 
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
 /datum/disease/advance/proc/Evolve(min_level, max_level)
-	var/datum/symptom/s = safepick(GenerateSymptoms(min_level, max_level, 1))
+	var/s = safepick(GenerateSymptoms(min_level, max_level, 1))
 	if(s)
-		//Randomize Symptom Stats
-		s.stealth += rand(-1,1)
-		s.resistance += rand(-1,1)
-		s.stage_speed += rand(-2,2)
-		s.transmittable += rand(-2,2)
 		AddSymptom(s)
 		Refresh(1)
 	return
@@ -298,11 +294,6 @@ var/list/advance_cures = 	list(
 		for(var/datum/symptom/S in symptoms)
 			L += S.id
 		L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
-		//Give different IDs if the properties are different
-		L += properties["stealth"]
-		L += properties["resistance"]
-		L += properties["stage_rate"]
-		L += properties["transmittable"]
 		var/result = jointext(L, ":")
 		id = result
 	return id
