@@ -102,6 +102,20 @@ macro "default"
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 	elem
+		name = "CTRL+NUMPAD1"
+		command = "body-r-leg"	elem 
+		name = "CTRL+NUMPAD2"
+		command = "body-groin"	elem 
+		name = "CTRL+NUMPAD3"
+		command = "body-l-leg"	elem 
+		name = "CTRL+NUMPAD4"
+		command = "body-r-arm"	elem 
+		name = "CTRL+NUMPAD5"
+		command = "body-chest"	elem 
+		name = "CTRL+NUMPAD6"
+		command = "body-l-arm"	elem 
+		name = "CTRL+NUMPAD8"
+		command = "body-toggle-head"	elem 
 		name = "F1"
 		command = "adminhelp"
 	elem
@@ -302,6 +316,20 @@ macro "hotkeys"
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 	elem
+		name = "NUMPAD1"
+		command = "body-r-leg"	elem 
+		name = "NUMPAD2"
+		command = "body-groin"	elem 
+		name = "NUMPAD3"
+		command = "body-l-leg"	elem 
+		name = "NUMPAD4"
+		command = "body-r-arm"	elem 
+		name = "NUMPAD5"
+		command = "body-chest"	elem 
+		name = "NUMPAD6"
+		command = "body-l-arm"	elem 
+		name = "NUMPAD8"
+		command = "body-toggle-head"	elem 
 		name = "F1"
 		command = "adminhelp"
 	elem
@@ -425,6 +453,20 @@ macro "robot-default"
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 	elem
+		name = "CTRL+NUMPAD1"
+		command = "body-r-leg"	elem 
+		name = "CTRL+NUMPAD2"
+		command = "body-groin"	elem 
+		name = "CTRL+NUMPAD3"
+		command = "body-l-leg"	elem 
+		name = "CTRL+NUMPAD4"
+		command = "body-r-arm"	elem 
+		name = "CTRL+NUMPAD5"
+		command = "body-chest"	elem 
+		name = "CTRL+NUMPAD6"
+		command = "body-l-arm"	elem 
+		name = "CTRL+NUMPAD8"
+		command = "body-toggle-head"	elem 
 		name = "F1"
 		command = "adminhelp"
 	elem
@@ -598,6 +640,20 @@ macro "robot-hotkeys"
 		name = "CTRL+Z"
 		command = "Activate-Held-Object"
 	elem
+		name = "NUMPAD1"
+		command = "body-r-leg"	elem 
+		name = "NUMPAD2"
+		command = "body-groin"	elem 
+		name = "NUMPAD3"
+		command = "body-l-leg"	elem 
+		name = "NUMPAD4"
+		command = "body-r-arm"	elem 
+		name = "NUMPAD5"
+		command = "body-chest"	elem 
+		name = "NUMPAD6"
+		command = "body-l-arm"	elem 
+		name = "NUMPAD8"
+		command = "body-toggle-head"	elem 
 		name = "F1"
 		command = "adminhelp"
 	elem
