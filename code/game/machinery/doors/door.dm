@@ -149,7 +149,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe))
+	if(user.a_intent == "help" && (istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe)))
 		try_to_crowbar(I, user)
 		return 1
 	else if(istype(I, /obj/item/weapon/weldingtool))
