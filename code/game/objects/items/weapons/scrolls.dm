@@ -40,7 +40,7 @@
 	if(H == src.loc || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
 		if (href_list["spell_teleport"])
-			if (src.uses >= 1)
+			if(uses)
 				teleportscroll(H)
 	if(H)
 		attack_self(H)
@@ -51,14 +51,9 @@
 	var/A
 
 	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in teleportlocs
-	if(!A)
+	if(!src || qdeleted(src) || !user || src != user.get_active_held_item() || user.incapacitated() || !A || !uses)
 		return
 	var/area/thearea = teleportlocs[A]
-
-	if (!user || user.stat || user.restrained() || uses <= 0)
-		return
-	if(!(user == loc || (in_range(src, user) && isturf(loc))))
-		return
 
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(2, user.loc)
@@ -66,17 +61,11 @@
 	smoke.start()
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density)
-			var/clear = 1
-			for(var/obj/O in T)
-				if(O.density)
-					clear = 0
-					break
-			if(clear)
-				L+=T
+		if(!is_blocked_turf(T))
+			L += T
 
 	if(!L.len)
-		user <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+		user << "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
 		return
 
 	if(user && user.buckled)
@@ -98,4 +87,4 @@
 		user.loc = pick(L)
 
 	smoke.start()
-	src.uses -= 1
+	uses--
