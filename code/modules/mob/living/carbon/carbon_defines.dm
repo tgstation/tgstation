@@ -43,4 +43,6 @@
 					 /obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
 	//Gets filled up in create_bodyparts()
 
+	var/mob/living/simple_animal/borer/borer //Stores the borer inside someone, if one exists
+
 	var/list/hand_bodyparts = list() //a collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
