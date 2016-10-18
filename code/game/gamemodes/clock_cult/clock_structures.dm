@@ -843,7 +843,7 @@
 	color = "#EC8A2D"
 	alpha = 50
 	resist_string = "glows faintly"
-	var/power_charge = 2500 //starts with 2500W by default
+	var/power_charge = REPLICANT_ALLOY_POWER //starts with REPLICANT_ALLOY_POWER by default
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
 	if(severity == 3)

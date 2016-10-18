@@ -68,7 +68,7 @@
 			target_apc = null
 		else if(target_apc.cell)
 			var/apccharge = target_apc.cell.charge
-			if(apccharge >= 50)
+			if(apccharge >= MIN_CLOCKCULT_POWER)
 				power += apccharge
 	return power
 
@@ -94,17 +94,17 @@
 	var/list/sigils_in_range = list()
 	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
 		sigils_in_range |= T
-	while(sigilpower && amount >= 50)
+	while(sigilpower && amount >= MIN_CLOCKCULT_POWER)
 		for(var/S in sigils_in_range)
 			var/obj/effect/clockwork/sigil/transmission/T = S
-			if(amount >= 50 && T.modify_charge(50))
-				sigilpower -= 50
-				amount -= 50
+			if(amount >= MIN_CLOCKCULT_POWER && T.modify_charge(MIN_CLOCKCULT_POWER))
+				sigilpower -= MIN_CLOCKCULT_POWER
+				amount -= MIN_CLOCKCULT_POWER
 	var/apcpower = accessable_apc_power()
-	while(apcpower >= 50 && amount >= 50)
-		if(target_apc.cell.use(50))
-			apcpower -= 50
-			amount -= 50
+	while(apcpower >= MIN_CLOCKCULT_POWER && amount >= MIN_CLOCKCULT_POWER)
+		if(target_apc.cell.use(MIN_CLOCKCULT_POWER))
+			apcpower -= MIN_CLOCKCULT_POWER
+			amount -= MIN_CLOCKCULT_POWER
 			target_apc.update()
 			target_apc.update_icon()
 		else
@@ -122,11 +122,11 @@
 		sigils_in_range |= T
 	if(!sigils_in_range.len)
 		return 0
-	while(amount >= 50)
+	while(amount >= MIN_CLOCKCULT_POWER)
 		for(var/S in sigils_in_range)
 			var/obj/effect/clockwork/sigil/transmission/T = S
-			if(amount >= 50 && T.modify_charge(-50))
-				amount -= 50
+			if(amount >= MIN_CLOCKCULT_POWER && T.modify_charge(-MIN_CLOCKCULT_POWER))
+				amount -= MIN_CLOCKCULT_POWER
 	return 1
 
 
@@ -145,14 +145,14 @@
 	/obj/item/clockwork/alloy_shards/medium = 1, \
 	/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/component/vanguard_cogwheel = 1)
-	var/stored_alloy = 0 //2500W = 1 alloy = 100 liquified alloy
-	var/max_alloy = 25000
+	var/stored_alloy = 0
+	var/max_alloy = REPLICANT_ALLOY_POWER * 10
 	var/mob_cost = 200
 	var/structure_cost = 250
 	var/cyborg_cost = 300
 
 /obj/structure/destructible/clockwork/powered/mending_motor/prefilled
-	stored_alloy = 2500 //starts with 1 replicant alloy/100 liquified alloy
+	stored_alloy = REPLICANT_ALLOY_POWER //starts with 1 replicant alloy's worth of power
 
 /obj/structure/destructible/clockwork/powered/mending_motor/total_accessable_power()
 	. = ..()
@@ -164,16 +164,17 @@
 
 /obj/structure/destructible/clockwork/powered/mending_motor/use_power(amount)
 	var/alloypower = accessable_alloy_power()
-	while(alloypower >= 50 && amount >= 50)
-		stored_alloy -= 50
-		alloypower -= 50
-		amount -= 50
+	while(alloypower >= MIN_CLOCKCULT_POWER && amount >= MIN_CLOCKCULT_POWER)
+		stored_alloy -= MIN_CLOCKCULT_POWER
+		alloypower -= MIN_CLOCKCULT_POWER
+		amount -= MIN_CLOCKCULT_POWER
 	return ..()
 
 /obj/structure/destructible/clockwork/powered/mending_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='alloy'>It contains <b>[stored_alloy*0.04]/[max_alloy*0.04]</b> units of liquified alloy, which is equivalent to <b>[stored_alloy]W/[max_alloy]W</b> of power.</span>"
+		user << "<span class='alloy'>It contains <b>[stored_alloy*CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER]/[max_alloy*CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER]</b> units of liquified alloy, \
+		which is equivalent to <b>[stored_alloy]W/[max_alloy]W</b> of power.</span>"
 		user << "<span class='inathneq_small'>It requires <b>[mob_cost]W</b> to heal clockwork mobs, <b>[structure_cost]W</b> for clockwork structures, and <b>[cyborg_cost]W</b> for cyborgs.</span>"
 
 /obj/structure/destructible/clockwork/powered/mending_motor/process()
@@ -220,13 +221,14 @@
 
 /obj/structure/destructible/clockwork/powered/mending_motor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user))
-		if(stored_alloy + 2500 > max_alloy)
+		if(stored_alloy + REPLICANT_ALLOY_POWER > max_alloy)
 			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
 			return 0
 		playsound(user, 'sound/machines/click.ogg', 50, 1)
 		clockwork_say(user, text2ratvar("Transmute into fuel."), TRUE)
-		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains <b>[stored_alloy*0.04]/[max_alloy*0.04]</b> units of liquified alloy.</span>"
-		stored_alloy = stored_alloy + 2500
+		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. \
+		It now contains <b>[stored_alloy*CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER]/[max_alloy*CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER]</b> units of liquified alloy.</span>"
+		stored_alloy = stored_alloy + REPLICANT_ALLOY_POWER
 		user.drop_item()
 		qdel(I)
 		return 1
@@ -459,7 +461,7 @@
 
 			CHECK_TICK
 
-		if(power_drained && return_power(power_drained))
+		if(power_drained && power_drained >= MIN_CLOCKCULT_POWER && return_power(power_drained))
 			successfulprocess = TRUE
 			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
 
@@ -486,7 +488,7 @@
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
 	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)
-	var/hierophant_cost = 50 //how much it costs to broadcast with large text
+	var/hierophant_cost = MIN_CLOCKCULT_POWER //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
 	var/gateway_active = FALSE
 
