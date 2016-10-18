@@ -71,20 +71,7 @@
 	if(user && user.buckled)
 		user.buckled.unbuckle_mob(user, force=1)
 
-	var/list/tempL = L.Copy()
-	var/attempt = null
-	var/success = 0
-	while(tempL.len)
-		attempt = pick(tempL)
-		user.Move(attempt)
-		if(get_turf(user) == attempt)
-			success = 1
-			break
-		else
-			tempL.Remove(attempt)
-
-	if(!success)
-		user.loc = pick(L)
+	user.forceMove(pick(L))
 
 	smoke.start()
 	uses--
