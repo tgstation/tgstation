@@ -341,8 +341,9 @@
 
 /obj/item/weapon/paper/fire_act(exposed_temperature, exposed_volume)
 	..()
-	icon_state = "paper_onfire"
-	info = "[stars(info)]"
+	if(!(resistance_flags & FIRE_PROOF))
+		icon_state = "paper_onfire"
+		info = "[stars(info)]"
 
 
 /obj/item/weapon/paper/extinguish()

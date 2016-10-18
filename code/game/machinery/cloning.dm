@@ -103,13 +103,10 @@
 
 /obj/machinery/clonepod/examine(mob/user)
 	..()
-	if (isnull(occupant) || !is_operational())
-		return
-	if ((!isnull(occupant)) && (occupant.stat != DEAD))
+	if(mess)
+		user << "It's filled with blood and viscera. You swear you can see it moving..."
+	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
 		user << "Current clone cycle is [round(get_completion())]% complete."
-	else if(mess)
-		user << "It's filled with blood and vicerea. You swear you can see \
-			it moving..."
 
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
@@ -136,6 +133,12 @@
 		var/mob/dead/observer/G = clonemind.get_ghost()
 		if(!G)
 			return FALSE
+	if(clonemind.damnation_type) //Can't clone the damned.
+		addtimer(0, "horrifyingsound", src)
+		mess = 1
+		icon_state = "pod_g"
+		update_icon()
+		return FALSE
 
 	attempting = TRUE //One at a time!!
 	locked = TRUE
@@ -368,6 +371,13 @@
 		occupant = null
 		locked = FALSE
 		go_out()
+
+/obj/machinery/clonepod/proc/horrifyingsound()
+	for(var/i in 1 to 5)
+		playsound(loc,pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 100, rand(0.95,1.05))
+		sleep(1)
+	sleep(10)
+	playsound(loc,'sound/hallucinations/wail.ogg',100,1)
 
 /obj/machinery/clonepod/deconstruct(disassembled = TRUE)
 	if(occupant)
