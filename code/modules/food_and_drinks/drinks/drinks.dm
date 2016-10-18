@@ -259,7 +259,7 @@
 
 ///Lavaland bowls and bottles///
 
-/obj/item/reagent_containers/food/drinks/mushroom_bowl
+/obj/item/weapon/reagent_containers/food/drinks/mushroom_bowl
 	name = "mushroom bowl"
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
 	icon = 'icons/obj/lavaland/ash_flora.dmi'

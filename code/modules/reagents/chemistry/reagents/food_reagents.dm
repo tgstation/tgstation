@@ -479,7 +479,7 @@
 		M.adjustToxLoss(3*REM,0)
 		M.adjustStaminaLoss(10*REM,0)
 		M.blur_eyes(5)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/tinlux
@@ -505,5 +505,5 @@
 	if(prob(80))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-		. = 1
+		. = TRUE
 	..()
