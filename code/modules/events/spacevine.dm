@@ -459,6 +459,7 @@
 
 
 /obj/structure/spacevine/attack_paw(mob/living/user)
+	user.do_attack_animation(src)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user,user)
