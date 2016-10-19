@@ -27,7 +27,7 @@
 				/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 				/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 				/obj/item/weapon/grown/nettle/basic = list("sacid" = 0),
-				/obj/item/weapon/grown/nettle/death = list("facid" = 0),
+				/obj/item/weapon/grown/nettle/death = list("facid" = 0, "sacid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
 
 				//Blender Stuff
