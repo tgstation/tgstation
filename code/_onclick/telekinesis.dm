@@ -72,6 +72,7 @@ var/const/tk_maxrange = 15
 	//item_state = null
 	w_class = 10
 	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 
 	var/last_throw = 0
 	var/atom/movable/focus = null

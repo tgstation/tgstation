@@ -323,6 +323,7 @@
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 	if (legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
@@ -334,6 +335,7 @@
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)

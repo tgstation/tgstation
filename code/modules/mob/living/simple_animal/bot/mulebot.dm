@@ -408,6 +408,7 @@ var/global/mulebot_count = 0
 		load.loc = loc
 		load.pixel_y = initial(load.pixel_y)
 		load.layer = initial(load.layer)
+		load.plane = initial(load.plane)
 		if(dirn)
 			var/turf/T = loc
 			var/turf/newT = get_step(T,dirn)
