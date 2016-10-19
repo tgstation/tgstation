@@ -84,6 +84,7 @@
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
+	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
 	var/longtermpower = 10
 	var/auto_name = 0
 	var/failure_timer = 0
