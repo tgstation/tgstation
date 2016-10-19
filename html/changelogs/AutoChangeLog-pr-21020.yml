@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Physically speaking is no longer delayed by your radio's lag"
