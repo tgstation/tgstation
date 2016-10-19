@@ -293,6 +293,7 @@ var/global/list/datum/stack_recipe/brass_recipes = list ( \
 	desc = "Sheets made out of brass."
 	singular_name = "brass sheet"
 	icon_state = "sheet-brass"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	throwforce = 10
 
 /obj/item/stack/sheet/brass/narsie_act()

@@ -416,6 +416,7 @@
 	hackProof = TRUE
 	aiControlDisabled = TRUE
 	use_power = FALSE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
 /obj/machinery/door/airlock/clockwork/New()

@@ -454,6 +454,7 @@
 	desc = "A paper-thin pane of translucent yet reinforced brass."
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 100
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
 	var/made_glow = FALSE
