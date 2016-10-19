@@ -772,31 +772,30 @@
 			H.overeatduration -= 2 //doubled the unfat rate
 
 	//metabolism change
-	if(!(NOHUNGER in H.dna.species.specflags))
-		if(H.nutrition > NUTRITION_LEVEL_FAT)
-			H.metabolism_efficiency = 1
-		else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
-			if(H.metabolism_efficiency != 1.25)
-				H << "<span class='notice'>You feel vigorous.</span>"
-				H.metabolism_efficiency = 1.25
-		else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-			if(H.metabolism_efficiency != 0.8)
-				H << "<span class='notice'>You feel sluggish.</span>"
-			H.metabolism_efficiency = 0.8
-		else
-			if(H.metabolism_efficiency == 1.25)
-				H << "<span class='notice'>You no longer feel vigorous.</span>"
-			H.metabolism_efficiency = 1
+	if(H.nutrition > NUTRITION_LEVEL_FAT)
+		H.metabolism_efficiency = 1
+	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
+		if(H.metabolism_efficiency != 1.25)
+			H << "<span class='notice'>You feel vigorous.</span>"
+			H.metabolism_efficiency = 1.25
+	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
+		if(H.metabolism_efficiency != 0.8)
+			H << "<span class='notice'>You feel sluggish.</span>"
+		H.metabolism_efficiency = 0.8
+	else
+		if(H.metabolism_efficiency == 1.25)
+			H << "<span class='notice'>You no longer feel vigorous.</span>"
+		H.metabolism_efficiency = 1
 
-		switch(H.nutrition)
-			if(NUTRITION_LEVEL_FULL to INFINITY)
-				H.throw_alert("nutrition", /obj/screen/alert/fat)
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-				H.clear_alert("nutrition")
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				H.throw_alert("nutrition", /obj/screen/alert/hungry)
-			else
-				H.throw_alert("nutrition", /obj/screen/alert/starving)
+	switch(H.nutrition)
+		if(NUTRITION_LEVEL_FULL to INFINITY)
+			H.throw_alert("nutrition", /obj/screen/alert/fat)
+		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
+			H.clear_alert("nutrition")
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+			H.throw_alert("nutrition", /obj/screen/alert/hungry)
+		else
+			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 
 /datum/species/proc/update_sight(mob/living/carbon/human/H)
