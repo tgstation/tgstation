@@ -1444,7 +1444,7 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "ada" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/door/window{
 	name = "Primary AI Core Access";
 	pixel_y = -2;
@@ -2270,7 +2270,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -2342,7 +2342,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/effect/landmark/start{
 	name = "Cyborg"
 	},
@@ -2426,7 +2426,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/AIsatextFP{
 	name = "AI Satellite Service"
@@ -3660,7 +3660,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "agX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "agY" = (
@@ -4843,7 +4843,7 @@
 	name = "Medical Maintenance"
 	})
 "ajs" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
@@ -5088,7 +5088,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "ajU" = (
@@ -8949,7 +8949,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/floorgrime,
 /area/toxins/misc_lab)
 "aqG" = (
@@ -9113,7 +9113,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/effect/landmark{
 	name = "blobstart"
 	},
@@ -13015,7 +13015,7 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "ayA" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -13394,7 +13394,7 @@
 	name = "\improper Toxins Lab"
 	})
 "azo" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/start{
 	name = "Scientist"
@@ -13812,7 +13812,7 @@
 	name = "Medbay Central"
 	})
 "aAa" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/cafeteria,
 /area/medical/medbay{
@@ -13973,7 +13973,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/hor)
 "aAs" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -14495,7 +14495,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "aBx" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -14847,7 +14847,7 @@
 	name = "Research Division"
 	})
 "aCe" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -15652,7 +15652,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "aDH" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/atmos)
 "aDI" = (
@@ -18355,7 +18355,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "aIO" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "aIP" = (
@@ -18566,7 +18566,7 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/explab)
 "aJk" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/toxins/explab)
 "aJl" = (
@@ -18885,7 +18885,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "aJT" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "aJU" = (
@@ -19483,7 +19483,7 @@
 	name = "Medbay Central"
 	})
 "aLa" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay{
 	name = "Medbay Central"
@@ -20242,7 +20242,7 @@
 	},
 /area/toxins/lab)
 "aMN" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/warnwhite/corner{
 	dir = 4
 	},
@@ -20285,7 +20285,7 @@
 /turf/open/floor/plasteel/white,
 /area/assembly/robotics)
 "aMS" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -20354,7 +20354,7 @@
 /turf/open/floor/mech_bay_recharge_floor,
 /area/assembly/chargebay)
 "aNa" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -21868,7 +21868,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/atmos)
 "aQb" = (
@@ -22010,7 +22010,7 @@
 /turf/open/floor/plasteel/barber,
 /area/medical/cmo)
 "aQn" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -22168,7 +22168,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "aQB" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -24521,7 +24521,7 @@
 	name = "Medbay Central"
 	})
 "aVH" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay{
@@ -24610,7 +24610,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/warning{
 	dir = 1
 	},
@@ -24642,7 +24642,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
 "aVZ" = (
@@ -25953,7 +25953,7 @@
 	},
 /area/hallway/primary/central)
 "aYy" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -26773,7 +26773,7 @@
 	name = "\improper Maltese Falcon"
 	})
 "aZW" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar{
 	name = "\improper Maltese Falcon"
@@ -29543,7 +29543,7 @@
 	},
 /area/library)
 "bgn" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/carpet,
 /area/library)
 "bgo" = (
@@ -29878,7 +29878,7 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bgZ" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bha" = (
@@ -33981,7 +33981,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/neutral,
 /area/engine/chiefs_office)
 "bpV" = (
@@ -35300,7 +35300,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "bsG" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "bsH" = (
@@ -35514,7 +35514,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "btf" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "btg" = (
@@ -37490,7 +37490,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bwZ" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bxa" = (
@@ -37646,7 +37646,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
@@ -38006,7 +38006,7 @@
 /area/crew_quarters/sleep)
 "byc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -40940,7 +40940,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "bDO" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "bDP" = (
@@ -41979,7 +41979,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads)
 "bFQ" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads)
 "bFR" = (
@@ -43286,7 +43286,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -44715,7 +44715,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/crew_quarters/captain{
 	name = "\improper Captain's Quarters"
@@ -45962,7 +45962,7 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bNj" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft{
 	name = "Aft Starboard Primary Hallway"
@@ -46999,7 +46999,7 @@
 "bPl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/security/main)
 "bPm" = (
@@ -50009,7 +50009,7 @@
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bVB" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bVC" = (
@@ -51191,7 +51191,7 @@
 	name = "Arrivals"
 	})
 "bXY" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry{
 	name = "Arrivals"
@@ -52952,7 +52952,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "cbz" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "cbA" = (
@@ -53773,7 +53773,7 @@
 /turf/open/space,
 /area/space)
 "cdA" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -54709,7 +54709,7 @@
 	name = "\improper Telecoms Control Room"
 	})
 "cfw" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -55453,7 +55453,7 @@
 	},
 /area/tcommsat/server)
 "cht" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/bluegrid{
 	name = "Mainframe Base";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -56461,7 +56461,7 @@
 	name = "Chapel Maintenance"
 	})
 "cjz" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/carpet,
 /area/security/hos)
 "cjA" = (

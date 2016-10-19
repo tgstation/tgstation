@@ -31,6 +31,7 @@
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
 	obj_integrity = 100
+	integrity_failure = 50
 	max_integrity = 100
 	armor = list(melee = 0, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 0, acid = 0)
 
@@ -391,15 +392,16 @@
 			user << "<span class='warning'>This device doesn't have any components installed.</span>"
 			return
 		var/list/component_names = list()
-		for(var/obj/item/weapon/computer_hardware/H in all_components)
+		for(var/h in all_components)
+			var/obj/item/weapon/computer_hardware/H = all_components[h]
 			component_names.Add(H.name)
 
-		var/choice = input(usr, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in component_names
+		var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in component_names
 
 		if(!choice)
 			return
 
-		if(!Adjacent(usr))
+		if(!Adjacent(user))
 			return
 
 		var/obj/item/weapon/computer_hardware/H = find_hardware_by_name(choice)

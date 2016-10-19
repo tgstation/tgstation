@@ -20,11 +20,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
-	obj_integrity = 150
-	max_integrity = 150
+	obj_integrity = 200
+	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 
 	var/hitsound = null
+	var/usesound = null
 	var/throwhitsound = null
 	var/w_class = 3
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -451,10 +452,11 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 	playsound(loc, src.hitsound, 30, 1, -1)
 
+	user.do_attack_animation(M)
+
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
-		user.do_attack_animation(M)
 	else
 		user.visible_message( \
 			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \

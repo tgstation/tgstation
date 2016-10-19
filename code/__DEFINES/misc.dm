@@ -535,3 +535,14 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define LUMA_R 0.213
 #define LUMA_G 0.715
 #define LUMA_B 0.072
+
+
+//attack visual effects
+#define ATTACK_EFFECT_PUNCH		"punch"
+#define ATTACK_EFFECT_KICK		"kick"
+#define ATTACK_EFFECT_SMASH		"smash"
+#define ATTACK_EFFECT_CLAW		"claw"
+#define ATTACK_EFFECT_DISARM	"disarm"
+#define ATTACK_EFFECT_BITE		"bite"
+#define ATTACK_EFFECT_MECHFIRE	"mech_fire"
+#define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"

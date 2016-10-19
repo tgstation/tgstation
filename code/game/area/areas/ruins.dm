@@ -31,11 +31,13 @@
 /area/ruin/powered/golem_ship
 	name = "Free Golem Ship"
 
+
+
 // Ruins of "onehalf" ship
+
 /area/ruin/onehalf/hallway
 	name = "Hallway"
 	icon_state = "hallC"
-
 
 /area/ruin/onehalf/drone_bay
 	name = "Mining Drone Bay"
@@ -49,6 +51,8 @@
 	name = "Bridge"
 	icon_state = "bridge"
 
+
+
 /area/ruin/powered/dinner_for_two
 	name = "Dinner for Two"
 
@@ -58,6 +62,9 @@
 /area/ruin/powered/aesthetic
 	name = "Aesthetic"
 	ambientsounds = list('sound/ambience/ambivapor1.ogg')
+
+
+//Ruin of Hotel
 
 /area/ruin/hotel
 	name = "Hotel"
@@ -99,6 +106,8 @@
 	name = "Hotel Staff Room"
 	icon_state = "crew_quarters"
 
+
+
 /area/ruin/fakespace
 	icon_state = "space"
 	requires_power = 1
@@ -112,3 +121,79 @@
 	outdoors = 1
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 	blob_allowed = 0
+
+
+
+//Ruin of Derelict Oupost
+
+/area/ruin/derelictoutpost
+	name = "Derelict Outpost"
+	icon_state = "green"
+
+/area/ruin/derelictoutpost/cargostorage
+	name = "Derelict Outpost Cargo Storage"
+	icon_state = "storage"
+
+/area/ruin/derelictoutpost/cargobay
+	name = "Derelict Outpost Cargo Bay"
+	icon_state = "quartstorage"
+
+/area/ruin/derelictoutpost/powerstorage
+	name = "Derelict Outpost Power Storage"
+	icon_state = "engine_smes"
+
+/area/ruin/derelictoutpost/dockedship
+	name = "Derelict Outpost Docked Ship"
+	icon_state = "red"
+
+
+//Ruin of Space Bar
+
+/area/ruin/powered/spacebar
+	name = "Space Bar"
+	icon_state = "yellow"
+
+/area/ruin/powered/spacebar/bar
+	icon_state = "bar"
+
+
+//Ruin of turretedoutpost
+
+/area/ruin/turretedoutpost
+	name = "Turreted Outpost"
+	icon_state = "red"
+
+
+//Ruin of old teleporter
+
+/area/ruin/oldteleporter
+	name = "Old teleporter"
+	icon_state = "teleporter"
+	has_gravity = 0
+
+
+//Ruin of mech transport
+
+/area/ruin/powered/mechtransport
+	name = "Mech Transport"
+	icon_state = "green"
+
+
+//Ruin of gas the lizard
+
+/area/ruin/gasthelizard
+	name = "Gas the lizard"
+
+
+//Ruin of Deep Storage
+
+/area/ruin/deepstorage
+	name = "Deep Storage"
+	icon_state = "storage"
+
+
+//Ruin of Abandoned Zoo
+
+/area/ruin/abandonedzoo
+	name = "Abandoned Zoo"
+	icon_state = "green"

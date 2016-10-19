@@ -1,21 +1,3 @@
-/*Cabin areas*/
-/area/awaymission/snowforest
-	name = "Snow Forest"
-	icon_state = "away"
-	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
-
-/area/awaymission/cabin
-	name = "Cabin"
-	icon_state = "away2"
-	requires_power = 1
-	luminosity = 0
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
-
-/area/awaymission/snowforest/lumbermill
-	name = "Lumbermill"
-	icon_state = "away3"
 
 /obj/structure/firepit
 	name = "firepit"

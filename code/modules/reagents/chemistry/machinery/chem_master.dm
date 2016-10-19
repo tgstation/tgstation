@@ -55,6 +55,23 @@
 	if(severity < 3)
 		..()
 
+/obj/machinery/chem_master/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+	if(bottle)
+		bottle.ex_act(severity, target)
+
+/obj/machinery/chem_master/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		reagents.clear_reagents()
+		icon_state = "mixer0"
+	else if(A == bottle)
+		bottle = null
+
+
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
 		qdel(src)
