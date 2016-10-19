@@ -563,14 +563,6 @@
 		restrained = 0
 	return 1
 
-/mob/living/carbon/human/CtrlClick(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.dna.species.grab(H, src, H.martial_art)
-		H.changeNext_move(CLICK_CD_MELEE)
-		return 1
-	return ..()
-
 /mob/living/carbon/human/proc/CQC_help()
 	set name = "Recall Teachings"
 	set desc = "You try to remember some of the basics of CQC."
