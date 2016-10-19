@@ -120,6 +120,7 @@ h1.alert, h2.alert		{color: #000000;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .borer					{color: #543354;	font-style: italic;}
+.changeling				{color: #800080;	font-style: italic;}
 
 .interface				{color: #330033;}
 
