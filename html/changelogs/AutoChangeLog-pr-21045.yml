@@ -1,0 +1,5 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - tweak: "The BSA is no longer ready to fire when constructed"
+  - bugfix: "The BSA can no longer be reloaded faster by rebuilding the console"
