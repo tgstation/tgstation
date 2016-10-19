@@ -1,8 +1,0 @@
-author: "phil235"
-delete-after: True
-changes: 
-  - tweak: "Made the singularity gen and tesla gen immune to fire."
-  - tweak: "All unique traitor steal objective item are now immune to all damage except severity=1 explosion."
-  - tweak: "Mobs on fire no longer get damage to their worn backpacks, belts, id, pocket stuff, and suit storage."
-  - bugfix: "Mob receiving melee attacks now only have its outer layer of clothes damaged, e.g. no damage to jumpsuit when wearing a suit."
-  - bugfix: "now all hardsuit have 50% more health, as intended."

@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - tweak: "tweaked the settings of the space drift subsystem to be less effected by anti-lag slowdowns"
