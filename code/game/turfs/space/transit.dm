@@ -2,6 +2,7 @@
 	icon_state = "black"
 	dir = SOUTH
 	baseturf = /turf/open/space/transit
+	flags = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 
 /turf/open/space/transit/south
 	dir = SOUTH

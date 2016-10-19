@@ -10,7 +10,7 @@
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
 	var/obj/item/ammo_casing/ammo_casing = null
@@ -107,7 +107,7 @@
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, 1, -1)
 			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
-								"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+					"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>", null, 2)
 		L.on_hit(type)
 
 	var/reagent_note

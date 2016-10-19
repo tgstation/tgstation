@@ -24,7 +24,7 @@
 	density = 1
 	anchored = 0
 	luminosity = 4
-
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/gasefficency = 0.125
 
@@ -76,7 +76,9 @@
 
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", "supermatter")
-	qdel(radio)
+	if(radio)
+		qdel(radio)
+		radio = null
 	poi_list -= src
 	. = ..()
 
@@ -245,11 +247,11 @@
 /obj/machinery/power/supermatter_shard/blob_act(obj/structure/blob/B)
 	if(B && !isspaceturf(loc)) //does nothing in space
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
-		damage += B.health * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
-		if(B.health > 100)
+		damage += B.obj_integrity * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
+		if(B.obj_integrity > 100)
 			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and flinches away!</span>",\
 			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
-			B.take_damage(100, BURN, src)
+			B.take_damage(100, BURN)
 		else
 			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and rapidly flashes to ash.</span>",\
 			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
@@ -298,13 +300,13 @@
 		radiation_pulse(get_turf(src), 1, 1, 150, 1)
 
 
-/obj/machinery/power/supermatter_shard/Bumped(atom/AM as mob|obj)
+/obj/machinery/power/supermatter_shard/Bumped(atom/AM)
 	if(isliving(AM))
 		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 	else if(isobj(AM) && !istype(AM, /obj/effect))
-		AM.visible_message("<span class='danger'>\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
+		AM.visible_message("<span class='danger'>\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>", null,\
 		"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	else
 		return

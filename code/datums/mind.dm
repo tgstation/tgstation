@@ -228,7 +228,7 @@
 
 	current.faction = creator.faction.Copy()
 
-	if(special_role)
+	if(creator.mind.special_role)
 		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
 		current << "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>"
 
@@ -297,7 +297,7 @@
 			text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
-		else if(isloyal(current))
+		else if(current.isloyal())
 			text += "head|<b>LOYAL</b>|employee|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|rev"
 		else if (src in ticker.mode.revolutionaries)
 			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
@@ -316,7 +316,7 @@
 		if (ticker.mode.config_tag=="gang")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		text += "[isloyal(current) ? "<B>LOYAL</B>" : "loyal"]|"
+		text += "[current.isloyal() ? "<B>LOYAL</B>" : "loyal"]|"
 		if(src in ticker.mode.get_all_gangsters())
 			text += "<a href='?src=\ref[src];gang=clear'>none</a>"
 		else
@@ -423,7 +423,7 @@
 		text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
 		text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
 
-	else if(isloyal(current))
+	else if(current.isloyal())
 		text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 	else if(is_convertable_to_cult(current))
 		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
@@ -445,7 +445,7 @@
 	if(is_servant_of_ratvar(current))
 		text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
 		text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
-	else if(isloyal(current))
+	else if(current.isloyal())
 		text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
 	else if(is_eligible_servant(current))
 		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
@@ -1101,21 +1101,24 @@
 			if("clear")
 				if(src in ticker.mode.devils)
 					if(istype(current,/mob/living/carbon/true_devil/))
-						usr << "<span class='warning'>This cannot be used on true or arch-devils.</span>"
-					else
-						ticker.mode.devils -= src
-						special_role = null
-						current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
-						RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-						RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
-						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
-						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
-						message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
-						devilinfo = null
-						if(issilicon(current))
-							var/mob/living/silicon/S = current
-							S.clear_law_sixsixsix(current)
-						log_admin("[key_name(usr)] has de-devil'ed [current].")
+						if(devilinfo)
+							devilinfo.regress_blood_lizard()
+						else
+							usr << "<span class='warning'>Something went wrong with removing the devil, we were unable to find an attached devilinfo.</span>."
+					ticker.mode.devils -= src
+					special_role = null
+					current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
+					RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
+					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
+					devilinfo = null
+					if(issilicon(current))
+						var/mob/living/silicon/S = current
+						S.clear_law_sixsixsix(current)
+					log_admin("[key_name(usr)] has de-devil'ed [current].")
 				else if(src in ticker.mode.sintouched)
 					ticker.mode.sintouched -= src
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
@@ -1364,9 +1367,7 @@
 		else
 			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
 			current << "<B>Objective #1</B>: [explanation]"
-			current.memory += "<B>Objective #1</B>: [explanation]<BR>"
-			current << "The convert rune is join blood self"
-			current.memory += "The convert rune is join blood self<BR>"
+			memory += "<B>Objective #1</B>: [explanation]<BR>"
 
 	var/mob/living/carbon/human/H = current
 	if (!ticker.mode.equip_cultist(current))
@@ -1528,53 +1529,20 @@
 		else
 			spawn(0)
 				throw EXCEPTION("mind_initialize(): No ticker ready")
-	if(!mind.name)	mind.name = real_name
+	if(!mind.name)
+		mind.name = real_name
 	mind.current = src
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()
 	..()
-	if(!mind.assigned_role)	mind.assigned_role = "Assistant"	//defualt
-
-//MONKEY
-/mob/living/carbon/monkey/mind_initialize()
-	..()
-
-//slime
-/mob/living/simple_animal/slime/mind_initialize()
-	..()
-	mind.special_role = "slime"
-	mind.assigned_role = "slime"
+	if(!mind.assigned_role)
+		mind.assigned_role = "Assistant" //defualt
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	mind.special_role = "Alien"
-	mind.assigned_role = "Alien"
-	//XENO HUMANOID
-/mob/living/carbon/alien/humanoid/royal/queen/mind_initialize()
-	..()
-	mind.special_role = "Queen"
-
-/mob/living/carbon/alien/humanoid/royal/praetorian/mind_initialize()
-	..()
-	mind.special_role = "Praetorian"
-
-/mob/living/carbon/alien/humanoid/hunter/mind_initialize()
-	..()
-	mind.special_role = "Hunter"
-
-/mob/living/carbon/alien/humanoid/drone/mind_initialize()
-	..()
-	mind.special_role = "Drone"
-
-/mob/living/carbon/alien/humanoid/sentinel/mind_initialize()
-	..()
-	mind.special_role = "Sentinel"
-	//XENO LARVA
-/mob/living/carbon/alien/larva/mind_initialize()
-	..()
-	mind.special_role = "Larva"
 
 //AI
 /mob/living/silicon/ai/mind_initialize()
@@ -1591,29 +1559,3 @@
 	..()
 	mind.assigned_role = "pAI"
 	mind.special_role = ""
-
-//BLOB
-/mob/camera/blob/mind_initialize()
-	..()
-	mind.special_role = "Blob"
-
-//Animals
-/mob/living/simple_animal/mind_initialize()
-	..()
-	mind.assigned_role = "Animal"
-	mind.special_role = "Animal"
-
-/mob/living/simple_animal/pet/dog/corgi/mind_initialize()
-	..()
-	mind.assigned_role = "Corgi"
-	mind.special_role = "Corgi"
-
-/mob/living/simple_animal/shade/mind_initialize()
-	..()
-	mind.assigned_role = "Shade"
-	mind.special_role = "Shade"
-
-/mob/living/simple_animal/hostile/construct/mind_initialize()
-	..()
-	mind.assigned_role = "[initial(name)]"
-	mind.special_role = "Cultist"

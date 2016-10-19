@@ -94,9 +94,10 @@
 		detonate(T.z)
 		qdel(src)
 	else
-		if(!(sec_left % 60) && (!milestones[sec_left]))
-			milestones[sec_left] = TRUE
-			var/message = "[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
+		var/key = num2text(sec_left)
+		if(!(sec_left % 60) && !(key in milestones))
+			milestones[key] = TRUE
+			var/message = "[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
 			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)
@@ -133,7 +134,7 @@
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
 	//Upgrade AI turrets around the world
 	for(var/obj/machinery/porta_turret/ai/turret in machines)
-		turret.health += 30
+		turret.obj_integrity += 30
 		turret.eprojectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
 		turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"

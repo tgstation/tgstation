@@ -7,6 +7,7 @@
 	icon_state = "mixer0"
 	use_power = 1
 	idle_power_usage = 20
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/bottle = null
 	var/mode = 1
@@ -53,6 +54,23 @@
 /obj/machinery/chem_master/ex_act(severity, target)
 	if(severity < 3)
 		..()
+
+/obj/machinery/chem_master/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+	if(bottle)
+		bottle.ex_act(severity, target)
+
+/obj/machinery/chem_master/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		reagents.clear_reagents()
+		icon_state = "mixer0"
+	else if(A == bottle)
+		bottle = null
+
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))

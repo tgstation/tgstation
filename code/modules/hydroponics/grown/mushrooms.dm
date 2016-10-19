@@ -245,7 +245,8 @@
 		return
 	var/obj/structure/glowshroom/planted = new effect_path(user.loc)
 	planted.delay = planted.delay - seed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
-	planted.endurance = seed.endurance
+	planted.obj_integrity = seed.endurance
+	planted.max_integrity = seed.endurance
 	planted.yield = seed.yield
 	planted.potency = seed.potency
 	user << "<span class='notice'>You plant [src].</span>"

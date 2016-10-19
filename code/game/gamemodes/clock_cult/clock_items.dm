@@ -1,6 +1,7 @@
 /obj/item/clockwork
 	name = "meme blaster"
 	desc = "What the fuck is this? It looks kinda like a frog."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
@@ -369,6 +370,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "wraith_specs"
 	item_state = "glasses"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
 	invis_view = 2
 	darkness_view = 3
@@ -428,6 +430,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "judicial_visor_0"
 	item_state = "sunglasses"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/active = FALSE //If the visor is online
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/item/weapon/ratvars_flame/flame //The linked flame object
@@ -568,7 +571,8 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
 	w_class = 3
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 10, acid = 50)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/head/helmet/clockwork/equipped(mob/living/user, slot)
 	..()
@@ -636,10 +640,11 @@
 	strip_delay = 50
 	put_on_delay = 30
 	body_parts_covered = ARMS
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 20, acid = 20)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/gloves/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -671,7 +676,7 @@
 	w_class = 3
 	strip_delay = 50
 	put_on_delay = 30
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -846,6 +851,7 @@
 	fluff_names = list("Servant")
 	clockwork = TRUE
 	autoping = FALSE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/device/mmi/posibrain/soul_vessel/New()
 	..()

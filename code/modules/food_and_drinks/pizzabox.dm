@@ -44,7 +44,7 @@
 			if(bomb_defused)
 				desc = "[desc] The bomb seems inert."
 			if(bomb_active)
-				desc = "[desc] It looks like its about to go off!"
+				desc = "[desc] It looks like it's about to go off!"
 	else
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(boxes.len)

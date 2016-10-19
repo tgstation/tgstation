@@ -1,10 +1,10 @@
 /mob/living/carbon/examine(mob/user)
-	var/t_He = they_pronoun(TRUE)
-	var/t_His = their_pronoun(TRUE)
-	var/t_his = their_pronoun()
-	var/t_him = them_pronoun()
-	var/t_has = get_has()
-	var/t_is = get_is()
+	var/t_He = p_they(TRUE)
+	var/t_His = p_their(TRUE)
+	var/t_his = p_their()
+	var/t_him = p_them()
+	var/t_has = p_have()
+	var/t_is = p_are()
 
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 
@@ -37,7 +37,7 @@
 		if(t=="head")
 			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 			continue
-		msg += "<<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
+		msg += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 
 	msg += "<span class='warning'>"
 	var/temp = getBruteLoss()

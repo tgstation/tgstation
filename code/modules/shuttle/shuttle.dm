@@ -8,7 +8,7 @@
 	//icon = 'icons/dirsquare.dmi'
 	icon_state = "pinonfar"
 
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = 1
 
 	var/id
@@ -29,12 +29,16 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+/obj/docking_port/take_damage()
+	return
+
 /obj/docking_port/singularity_pull()
 	return
 /obj/docking_port/singularity_act()
 	return 0
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
+
 //returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
 	if(_dir == null)
@@ -665,22 +669,3 @@
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
 #undef DOCKING_PORT_HIGHLIGHT
 
-
-/turf/proc/copyTurf(turf/T)
-	if(T.type != type)
-		var/obj/O
-		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
-			O = new()
-			O.underlays.Add(T)
-		T.ChangeTurf(type)
-		if(underlays.len)
-			T.underlays = O.underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(T.color != color)
-		T.color = color
-	if(T.dir != dir)
-		T.setDir(dir)
-	return T

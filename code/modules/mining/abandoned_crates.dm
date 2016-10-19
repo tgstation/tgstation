@@ -4,6 +4,7 @@
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
+	integrity_failure = 0 //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
 	var/attempts = 10
@@ -179,9 +180,6 @@
 	else
 		return ..()
 
-/obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
-	boom(user)
-
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src))
 		return
@@ -224,8 +222,7 @@
 	else
 		..()
 
-/obj/structure/closet/crate/secure/loot/burn()
-	SSobj.burning -= src
+/obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
 	boom()
 
 /obj/structure/closet/crate/secure/loot/proc/boom(mob/user)

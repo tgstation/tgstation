@@ -67,7 +67,7 @@
 		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
 			R.UnlinkSelf()
-			R.emagged = 1
+			R.SetEmagged(TRUE)
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
 			for(var/C in A.connected_robots)
@@ -114,7 +114,7 @@
 		var/mob/living/silicon/S = owner
 		if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			R.emagged = initial(R.emagged)
+			R.SetEmagged(FALSE)
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
@@ -128,7 +128,7 @@
 		ticker.mode.servants_of_ratvar -= owner.mind
 		ticker.mode.update_servant_icons_removed(owner.mind)
 	if(owner.mind)
-		owner.mind.memory = "" //Not sure if there's a better way to do this
+		owner.mind.wipe_memory()
 		owner.mind.special_role = null
 	owner.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
 	if(iscyborg(owner))

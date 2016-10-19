@@ -58,19 +58,22 @@
 	for(var/turf/T in block(locate(1,1,1), locate(world.maxx,world.maxy,1)))
 
 		if(isfloorturf(T))
-			if(!(T:burnt))
+			var/turf/open/floor/TF = T
+			if(!(TF.burnt))
 				src.floor += 12
 			else
 				src.floor += 1
 
 		if(iswallturf(T))
-			if(T:intact)
+			var/turf/closed/wall/TW = T
+			if(TW.intact)
 				src.wall += 2
 			else
 				src.wall += 1
 
 		if(istype(T, /turf/closed/wall/r_wall))
-			if(T:intact)
+			var/turf/closed/wall/r_wall/TRW = T
+			if(TRW.intact)
 				src.r_wall += 2
 			else
 				src.r_wall += 1
@@ -79,8 +82,10 @@
 		for(var/obj/O in T.contents)
 			if(istype(O, /obj/structure/window))
 				src.window += 1
-			else if(istype(O, /obj/structure/grille) && (!O:destroyed))
-				src.grille += 1
+			else if(istype(O, /obj/structure/grille))
+				var/obj/structure/grille/GR = O
+				if(!GR.broken)
+					src.grille += 1
 			else if(istype(O, /obj/machinery/door))
 				src.door += 1
 			else if(istype(O, /obj/machinery))

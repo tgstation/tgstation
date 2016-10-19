@@ -13,9 +13,8 @@
 	var/muzzled = is_muzzled()
 	//var/m_type = 1
 
-	for (var/obj/item/weapon/implant/I in src)
-		if (I.implanted)
-			I.trigger(act, src)
+	for (var/obj/item/weapon/implant/I in implants)
+		I.trigger(act, src)
 
 	var/miming=0
 	if(mind)
@@ -24,12 +23,12 @@
 	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
 		if ("aflap") //Any emote on human that uses miming must be left in, oh well.
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps \his wings ANGRILY!"
+				message = "<B>[src]</B> flaps [p_their()] wings ANGRILY!"
 				m_type = 2
 
 		if ("choke","chokes")
 			if (miming)
-				message = "<B>[src]</B> clutches \his throat desperately!"
+				message = "<B>[src]</B> clutches [p_their()] throat desperately!"
 			else
 				..(act)
 
@@ -70,7 +69,7 @@
 					message = "<B>[src]</B> cries."
 					m_type = 2
 				else
-					message = "<B>[src]</B> makes a weak noise. \He frowns."
+					message = "<B>[src]</B> makes a weak noise. [p_they(TRUE)] frown[p_s()]."
 					m_type = 2
 
 		if ("custom")
@@ -121,7 +120,7 @@
 				if (M)
 					message = "<B>[src]</B> gives daps to [M]."
 				else
-					message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps \himself. Shameful."
+					message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps [p_them()]self. Shameful."
 
 		if ("eyebrow")
 			message = "<B>[src]</B> raises an eyebrow."
@@ -129,7 +128,7 @@
 
 		if ("flap","flaps")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps \his wings."
+				message = "<B>[src]</B> flaps [p_their()] wings."
 				m_type = 2
 				if(((dna.features["wings"] != "None") && !("wings" in dna.species.mutant_bodyparts)))
 					OpenWings()
@@ -138,10 +137,10 @@
 		if ("wings")
 			if (!src.restrained())
 				if(dna && dna.species &&((dna.features["wings"] != "None") && ("wings" in dna.species.mutant_bodyparts)))
-					message = "<B>[src]</B> opens \his wings."
+					message = "<B>[src]</B> opens [p_their()] wings."
 					OpenWings()
 				else if(dna && dna.species &&((dna.features["wings"] != "None") && ("wingsopen" in dna.species.mutant_bodyparts)))
-					message = "<B>[src]</B> closes \his wings."
+					message = "<B>[src]</B> closes [p_their()] wings."
 					CloseWings()
 				else
 					src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
@@ -191,7 +190,7 @@
 					if (M.canmove && M.get_empty_held_indexes() && !M.restrained())
 						message = "<B>[src]</B> shakes hands with [M]."
 					else
-						message = "<B>[src]</B> holds out \his hand to [M]."
+						message = "<B>[src]</B> holds out [p_their()] hand to [M]."
 
 		if ("hug","hugs")
 			m_type = 1
@@ -207,7 +206,7 @@
 				if (M)
 					message = "<B>[src]</B> hugs [M]."
 				else
-					message = "<B>[src]</B> hugs \himself."
+					message = "<B>[src]</B> hugs [p_them()]self."
 
 		if ("me")
 			if(silent)
@@ -339,7 +338,7 @@
 
 		if("wag","wags")
 			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || ((dna.features["tail_human"] != "None") && !("waggingtail_human" in dna.species.mutant_bodyparts))))
-				message = "<B>[src]</B> wags \his tail."
+				message = "<B>[src]</B> wags [p_their()] tail."
 				startTailWag()
 			else if(dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)))
 				endTailWag()

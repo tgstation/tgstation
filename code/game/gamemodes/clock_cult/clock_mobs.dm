@@ -33,16 +33,16 @@
 	src << playstyle_string
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
-	var/t_He = they_pronoun(TRUE)
-	var/plurality = (gender == PLURAL)
+	var/t_He = p_they(TRUE)
+	var/t_s = p_s()
 	var/msg = "<span class='brass'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
 		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
-			msg += "[t_He] look[plurality ? "":"s"] slightly dented.\n"
+		if(health >= maxHealth/2)
+			msg += "[t_He] look[t_s] slightly dented.\n"
 		else
-			msg += "<b>[t_He] look[plurality ? "":"s"] severely dented!</b>\n"
+			msg += "<b>[t_He] look[t_s] severely dented!</b>\n"
 		msg += "</span>"
 	msg += "*---------*</span>"
 
@@ -115,11 +115,11 @@
 	health = 300 //Health is very high, and under most cases it will take enough fatigue to be forced to recall first
 	maxHealth = 300
 	speed = 1
+	obj_damage = 40
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	environment_smash = 1
 	weather_immunities = list("lava")
 	flying = 1
 	loot = list(/obj/item/clockwork/component/replicant_alloy/fallen_armor)
@@ -262,9 +262,9 @@
 				stat(null, "You are [recovering ? "un" : ""]able to deploy!")
 			else
 				if(resulthealth > 60)
-					stat(null, "You are [recovering ? "unable to deploy" : "can deploy on hearing your True Name"]!")
+					stat(null, "You are [recovering ? "unable to deploy" : "able to deploy on hearing your True Name"]!")
 				else
-					stat(null, "You are [recovering ? "unable to deploy" : "can deploy to protect your host"]!")
+					stat(null, "You are [recovering ? "unable to deploy" : "able to deploy to protect your host"]!")
 		if(ratvar_awakens)
 			stat(null, "Block Chance: 80%")
 			stat(null, "Counter Chance: 80%")

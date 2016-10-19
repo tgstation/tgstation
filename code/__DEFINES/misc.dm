@@ -343,13 +343,12 @@ var/list/bloody_footprints_cache = list()
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF 1
-#define FIRE_PROOF 2 //not flammable (but may or may not take damage from fire)
-#define ON_FIRE 4
-#define UNACIDABLE 8 //acid can't even appear on it, let alone melt it.
-#define ACID_PROOF 16 //acid stuck on it doesn't melt it.
-#define INDESTRUCTIBLE 32 //doesn't take damage
-#define EMP_PROOF 64 //immune to emp
-
+#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
+#define FLAMMABLE 4
+#define ON_FIRE 8
+#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
+#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
+#define INDESTRUCTIBLE 64 //doesn't take damage
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
@@ -536,3 +535,14 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define LUMA_R 0.213
 #define LUMA_G 0.715
 #define LUMA_B 0.072
+
+
+//attack visual effects
+#define ATTACK_EFFECT_PUNCH		"punch"
+#define ATTACK_EFFECT_KICK		"kick"
+#define ATTACK_EFFECT_SMASH		"smash"
+#define ATTACK_EFFECT_CLAW		"claw"
+#define ATTACK_EFFECT_DISARM	"disarm"
+#define ATTACK_EFFECT_BITE		"bite"
+#define ATTACK_EFFECT_MECHFIRE	"mech_fire"
+#define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"

@@ -174,10 +174,6 @@
 
 	return standing
 
-/obj/item/bodypart/head/burn()
-	drop_organs()
-	..()
-
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_head"

@@ -176,12 +176,6 @@
 	list_reagents = list("nutriment" = 3, "toxin" = 5)
 	icon_state = "goliathmeat"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
-	visible_message("\The [src] finishes cooking!")
-	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
-	SSobj.burning -= src
-	qdel(src)
-
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."

@@ -11,8 +11,9 @@
 	max_w_class = 3
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
-	resistance_flags = 0
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 150
+	max_integrity = 150
 	var/folder_path = /obj/item/weapon/folder //this is the path of the folder that gets spawned in New()
 
 /obj/item/weapon/storage/briefcase/New()
@@ -42,8 +43,9 @@
 	max_w_class = 3
 	max_combined_w_class = 21
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
-	resistance_flags = 0
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 150
+	max_integrity = 150
 
 /obj/item/weapon/storage/briefcase/sniperbundle/New()
 	..()

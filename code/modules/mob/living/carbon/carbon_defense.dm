@@ -43,6 +43,7 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
 		apply_damage(I.force, I.damtype, affecting)
+		damage_clothes(I.force, I.damtype, "melee", affecting.body_zone)
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -286,3 +287,18 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 					src << "<span class='warning'>Your ears start to ring!</span>"
 				src << sound('sound/weapons/flash_ring.ogg',0,1,0,250)
 		return effect_amount //how soundbanged we are
+
+
+/mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+	if(damage_type != BRUTE && damage_type != BURN)
+		return
+	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
+	if(!def_zone || def_zone == "head")
+		var/obj/item/clothing/hit_clothes
+		if(wear_mask)
+			hit_clothes = wear_mask
+		if(head)
+			hit_clothes = head
+		if(hit_clothes)
+			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
+
