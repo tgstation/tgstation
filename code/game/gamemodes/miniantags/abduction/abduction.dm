@@ -19,7 +19,7 @@
 
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
-	world << "There are alien <b>abductors</b> sent to [world.name] to perform nefarious experiments!"
+	world << "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!"
 	world << "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones."
 	world << "<b>Crew</b> - don't get abducted and stop the abductors."
 
