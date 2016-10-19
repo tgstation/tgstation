@@ -2,7 +2,10 @@
 	name = "Barcode Computer"
 	desc = "Used to print barcode stickers for the cargo routing system."
 	icon = 'goon/icons/obj/barcode.dmi'
-	icon_state = "barcode_comp"
+	icon_state = "barcode_base"
+	icon_keyboard = "barcode_keyboard"
+	icon_screen = "barcode_screen"
+	clockwork = TRUE //That'd look weird.
 	var/printing = 0
 	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
 
@@ -45,11 +48,11 @@
 	item_state = "paper"
 	var/destination = "QM Dock"
 
-/obj/item/barcodesticker/proc/attachTo(atom/target)
-	if(get_dist(get_turf(target), get_turf(src)) <= 1 && istype(target, /atom/movable))
+/obj/item/barcodesticker/proc/attachTo(atom/movable/target)
+	if(get_dist(get_turf(target), get_turf(src)) <= 1 )
 		if(target==loc && target != usr)
 			return //Backpack or something
-		target:delivery_destination = destination
+		target.delivery_destination = destination
 		usr.visible_message("<span style=\"color:blue\">[usr] puts a [src.name] on [target].</span>")
 		qdel(src)
 	return
