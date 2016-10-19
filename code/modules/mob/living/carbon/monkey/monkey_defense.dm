@@ -142,7 +142,7 @@
 		if(!affecting)
 			affecting = get_bodypart("chest")
 		apply_damage(damage, M.melee_damage_type, affecting)
-		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
+		damage_clothes(damage, M.melee_damage_type, "melee", affecting.body_zone)
 
 
 
