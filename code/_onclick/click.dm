@@ -219,6 +219,7 @@
 	Ctrl click
 	For most objects, pull
 */
+
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
@@ -227,6 +228,14 @@
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
+
+/mob/living/carbon/human/CtrlClick(mob/user)
+    if(ishuman(user) && Adjacent(user))
+        var/mob/living/carbon/human/H = user
+        H.dna.species.grab(H, src, H.martial_art)
+        H.changeNext_move(CLICK_CD_MELEE)
+        return TRUE
+    return ..()
 
 /*
 	Alt click
