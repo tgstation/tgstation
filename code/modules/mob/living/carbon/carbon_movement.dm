@@ -43,7 +43,9 @@ var/const/SLIDE_ICE = 8
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
-		if(src.nutrition && src.stat != 2)
+		if(dna && dna.species && (NOHUNGER in dna.species.specflags))
+			src.nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
+		else if(src.nutrition && src.stat != 2)
 			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")
 				src.nutrition -= HUNGER_FACTOR/10

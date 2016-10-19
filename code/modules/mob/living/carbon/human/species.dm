@@ -71,11 +71,11 @@
 
 	//Breathing!
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	var/safe_oxygen_max = 0
+	var/safe_oxygen_max = 100	//TODO: make internals an air mix so we can set this properly to 80
 	var/safe_co2_min = 0
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_min = 0
-	var/safe_toxins_max = 0.05
+	var/safe_toxins_max = 0.05	//Don't set this to zero, or you'll get div by zero errors
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas.
@@ -772,30 +772,31 @@
 			H.overeatduration -= 2 //doubled the unfat rate
 
 	//metabolism change
-	if(H.nutrition > NUTRITION_LEVEL_FAT)
-		H.metabolism_efficiency = 1
-	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
-		if(H.metabolism_efficiency != 1.25)
-			H << "<span class='notice'>You feel vigorous.</span>"
-			H.metabolism_efficiency = 1.25
-	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		if(H.metabolism_efficiency != 0.8)
-			H << "<span class='notice'>You feel sluggish.</span>"
-		H.metabolism_efficiency = 0.8
-	else
-		if(H.metabolism_efficiency == 1.25)
-			H << "<span class='notice'>You no longer feel vigorous.</span>"
-		H.metabolism_efficiency = 1
-
-	switch(H.nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
-			H.throw_alert("nutrition", /obj/screen/alert/fat)
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-			H.clear_alert("nutrition")
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			H.throw_alert("nutrition", /obj/screen/alert/hungry)
+	if(!(NOHUNGER in H.dna.species.specflags))
+		if(H.nutrition > NUTRITION_LEVEL_FAT)
+			H.metabolism_efficiency = 1
+		else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
+			if(H.metabolism_efficiency != 1.25)
+				H << "<span class='notice'>You feel vigorous.</span>"
+				H.metabolism_efficiency = 1.25
+		else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
+			if(H.metabolism_efficiency != 0.8)
+				H << "<span class='notice'>You feel sluggish.</span>"
+			H.metabolism_efficiency = 0.8
 		else
-			H.throw_alert("nutrition", /obj/screen/alert/starving)
+			if(H.metabolism_efficiency == 1.25)
+				H << "<span class='notice'>You no longer feel vigorous.</span>"
+			H.metabolism_efficiency = 1
+
+		switch(H.nutrition)
+			if(NUTRITION_LEVEL_FULL to INFINITY)
+				H.throw_alert("nutrition", /obj/screen/alert/fat)
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
+				H.clear_alert("nutrition")
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+				H.throw_alert("nutrition", /obj/screen/alert/hungry)
+			else
+				H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 
 /datum/species/proc/update_sight(mob/living/carbon/human/H)
