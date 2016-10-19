@@ -539,15 +539,10 @@
 						M.pulledby.stop_pulling()
 					M.stop_pulling()
 					M.visible_message("<span class='warning'>[M] is hit by \
-							a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+							a hyperspace ripple!</span>",
 							"<span class='userdanger'>You feel an immense \
 							crushing pressure as the space around you ripples.</span>")
-					if(M.anchored)
-						M.gib()
-					else
-						step(M, dir)
-						M.Paralyse(10)
-						M.ex_act(2)
+					M.gib()
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
 				if(istype(AM, /obj/singularity) && !istype(AM, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
