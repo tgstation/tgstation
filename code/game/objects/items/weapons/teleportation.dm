@@ -135,7 +135,7 @@ Frequency:
 	materials = list(MAT_METAL=10000)
 	origin_tech = "magnets=3;bluespace=4"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/active_portals = 0
 
 /obj/item/weapon/hand_tele/attack_self(mob/user)

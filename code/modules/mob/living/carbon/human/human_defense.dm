@@ -660,3 +660,61 @@
 				w_uniform.add_fingerprint(M)
 
 			..()
+
+
+/mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+	if(damage_type != BRUTE && damage_type != BURN)
+		return
+	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
+	var/list/torn_items = list()
+
+	//HEAD//
+	if(!def_zone || def_zone == "head")
+		var/obj/item/clothing/head_clothes = null
+		if(glasses)
+			head_clothes = glasses
+		if(wear_mask)
+			head_clothes = wear_mask
+		if(head)
+			head_clothes = head
+		if(head_clothes)
+			torn_items += head_clothes
+		else if(ears)
+			torn_items += ears
+
+	//CHEST//
+	if(!def_zone || def_zone == "chest")
+		var/obj/item/clothing/chest_clothes = null
+		if(w_uniform)
+			chest_clothes = w_uniform
+		if(wear_suit)
+			chest_clothes = wear_suit
+		if(chest_clothes)
+			torn_items += chest_clothes
+
+	//ARMS & HANDS//
+	if(!def_zone || def_zone == "l_arm" || def_zone == "r_arm")
+		var/obj/item/clothing/arm_clothes = null
+		if(gloves)
+			arm_clothes = gloves
+		if(w_uniform && ((w_uniform.body_parts_covered & HANDS) || (w_uniform.body_parts_covered & ARMS)))
+			arm_clothes = w_uniform
+		if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
+			arm_clothes = wear_suit
+		if(arm_clothes)
+			torn_items += arm_clothes
+
+	//LEGS & FEET//
+	if(!def_zone || def_zone == "l_leg" || def_zone == "r_leg")
+		var/obj/item/clothing/leg_clothes = null
+		if(shoes)
+			leg_clothes = shoes
+		if(w_uniform && ((w_uniform.body_parts_covered & FEET) || (w_uniform.body_parts_covered & LEGS)))
+			leg_clothes = w_uniform
+		if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
+			leg_clothes = wear_suit
+		if(leg_clothes)
+			torn_items += leg_clothes
+
+	for(var/obj/item/I in torn_items)
+		I.take_damage(damage_amount, damage_type, damage_flag, 0)

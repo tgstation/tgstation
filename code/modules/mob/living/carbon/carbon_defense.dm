@@ -292,12 +292,13 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 /mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
 		return
-	var/bodypart_bit = 0
 	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
-	if(def_zone)
-		bodypart_bit = body_zone2body_parts_covered(def_zone)
-	for(var/X in get_equipped_items())
-		var/obj/item/I = X
-		if(!bodypart_bit || (I.body_parts_covered & bodypart_bit))
-			I.take_damage(damage_amount, damage_type, damage_flag, 0)
+	if(!def_zone || def_zone == "head")
+		var/obj/item/clothing/hit_clothes
+		if(wear_mask)
+			hit_clothes = wear_mask
+		if(head)
+			hit_clothes = head
+		if(hit_clothes)
+			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
 

@@ -125,15 +125,7 @@
 			chest_clothes = w_uniform
 		if(wear_suit)
 			chest_clothes = wear_suit
-		else
-			if(wear_id)
-				burning_items += wear_id
-			if(r_store)
-				burning_items += r_store
-			if(l_store)
-				burning_items += l_store
-			if(s_store)
-				burning_items += s_store
+
 		if(chest_clothes)
 			burning_items += chest_clothes
 
@@ -158,11 +150,6 @@
 			leg_clothes = wear_suit
 		if(leg_clothes)
 			burning_items += leg_clothes
-
-		if(back)
-			burning_items += back
-		if(belt)
-			burning_items += belt
 
 		for(var/X in burning_items)
 			var/obj/item/I = X
