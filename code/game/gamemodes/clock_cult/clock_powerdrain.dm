@@ -37,7 +37,7 @@
 	if(on)
 		playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 		flicker(2)
-		. += 50
+		. += MIN_CLOCKCULT_POWER
 	else if(prob(50))
 		burn_out()
 
