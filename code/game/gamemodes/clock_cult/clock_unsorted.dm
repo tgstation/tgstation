@@ -203,6 +203,21 @@
 		else
 			return null
 
+/proc/get_component_animation_type(id)
+	switch(id)
+		if("belligerent_eye")
+			return /obj/effect/overlay/temp/ratvar/component
+		if("vanguard_cogwheel")
+			return /obj/effect/overlay/temp/ratvar/component/cogwheel
+		if("guvax_capacitor")
+			return /obj/effect/overlay/temp/ratvar/component/capacitor
+		if("replicant_alloy")
+			return /obj/effect/overlay/temp/ratvar/component/alloy
+		if("hierophant_ansible")
+			return /obj/effect/overlay/temp/ratvar/component/ansible
+		else
+			return null
+
 /proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component
 	if(specific_component_id)
 		clockwork_component_cache[specific_component_id]++
