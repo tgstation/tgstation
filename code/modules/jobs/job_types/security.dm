@@ -155,7 +155,7 @@ Detective
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
 		/obj/item/weapon/melee/classic_baton=1,\
-		/obj/item/weapon/gun/energy/disabler, \
+		/obj/item/weapon/gun/energy/disabler=1, \
 		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1)
 	mask = /obj/item/clothing/mask/cigarette
 
