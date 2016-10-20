@@ -357,6 +357,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 /datum/clockwork_scripture/component_syphon/scripture_effects()
 	var/final_printout = "<span class='brass'>Added the following components to your slab:</span>"
 	var/list/components_gained = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+	var/mindless_component = FALSE
 	for(var/mob/living/L in hearers(1, get_turf(invoker)))
 		if(!is_servant_of_ratvar(L) && L.stat == DEAD)
 			var/component_id
@@ -370,16 +371,21 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 					for(var/i in clockwork_component_cache)
 						current_components += clockwork_component_cache[i]
 				amount_to_produce = max(1, rand(3, 6) - round(current_components*0.1))
-			for(var/i in 1 to amount_to_produce)
-				component_id = get_weighted_component_id(slab)
-				slab.stored_components[component_id]++
-				components_gained[component_id]++
-				animation_type = get_component_animation_type(component_id)
-				var/obj/effect/overlay/temp/animation = PoolOrNew(animation_type, get_turf(L))
-				animation.transform = matrix()*0.75
-				animation.pixel_x = rand(-10, 10)
-				animation.pixel_y = rand(-10, -2)
-				animate(animation, pixel_y = animation.pixel_y + 10, alpha = 50, time = 10, easing = EASE_OUT)
+			else if(!mindless_component)
+				mindless_component = TRUE
+			else
+				amount_to_produce = 0
+			if(amount_to_produce)
+				for(var/i in 1 to amount_to_produce)
+					component_id = get_weighted_component_id(slab)
+					slab.stored_components[component_id]++
+					components_gained[component_id]++
+					animation_type = get_component_animation_type(component_id)
+					var/obj/effect/overlay/temp/animation = PoolOrNew(animation_type, get_turf(L))
+					animation.transform = matrix()*0.75
+					animation.pixel_x = rand(-10, 10)
+					animation.pixel_y = rand(-10, -2)
+					animate(animation, pixel_y = animation.pixel_y + 10, alpha = 50, time = 10, easing = EASE_OUT)
 			playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
 			L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self!</span>")
 			for(var/obj/item/W in L)
