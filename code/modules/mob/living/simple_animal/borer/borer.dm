@@ -95,9 +95,9 @@ var/total_borer_hosts_needed = 10
 	var/dominate_cooldown = 150
 	var/leaving = 0
 
-/mob/living/simple_animal/borer/New()
-	..()
-	generation = 1
+/mob/living/simple_animal/borer/New(atom/newloc, var/gen=1)
+	..(newloc)
+	generation = gen
 	real_name = "Cortical Borer [rand(1000,9999)]"
 	truename = "[borer_names[min(generation, borer_names.len)]] [rand(1000,9999)]"
 	borer_chems += /datum/borer_chem/epinephrine
@@ -701,32 +701,21 @@ mob/living/carbon/proc/release_control()
 	set name = "Reproduce"
 	set desc = "Spawn several young."
 
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
+
 	if(istype(src, /mob/living/brain))
 		src << "<span class='usernotice'>You need a mouth to be able to do this.</span>"
 		return
-	if(!borer)
+	if(!B)
 		return
 
-	if(borer.chemicals >= 100)
-		var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
-		for(var/client/C in candidates)
-			if(jobban_isbanned(C.mob, "borer") || !(C.prefs.toggles & MIDROUND_ANTAG))
-				candidates -= C
-		if(!candidates.len)
-			src << "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>"
-			return
-		var/client/C = pick(candidates)
-
-		borer.chemicals -= 100
+	if(B.chemicals >= 100)
+		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
+		B.chemicals -= 100
 
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
-		var/mob/living/simple_animal/borer/B = src.loc
-		newborer.generation += B.generation
-		newborer.transfer_personality(C)
-		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
+		new /mob/living/simple_animal/borer(get_turf(src), B.generation + 1)
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
 	else
 		src << "<span class='warning'>You do not have enough chemicals stored to reproduce.</span>"
