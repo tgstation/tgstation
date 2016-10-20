@@ -389,7 +389,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
 			L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self!</span>")
 			for(var/obj/item/W in L)
-				L.unEquip(W)
+				if(!L.unEquip(W))
+					qdel(W)
 			L.dust()
 	var/gained = FALSE
 	for(var/i in components_gained)
