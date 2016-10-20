@@ -411,7 +411,7 @@
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
 
-/obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
 	..()
 	for(var/mob/living/carbon/C in targets)
 		C.throw_mode_on()
