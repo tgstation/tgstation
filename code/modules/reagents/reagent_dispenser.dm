@@ -36,7 +36,7 @@
 		user << "<span class='danger'>It's empty.</span>"
 
 
-/obj/structure/reagent_dispensers/proc/boom()
+/obj/structure/reagent_dispensers/proc/boom(mob/user)
 	visible_message("<span class='danger'>\The [src] ruptures!</span>")
 	chem_splash(loc, 5, list(reagents))
 	qdel(src)
@@ -65,7 +65,9 @@
 	icon_state = "fuel"
 	reagent_id = "welding_fuel"
 
-/obj/structure/reagent_dispensers/fueltank/boom()
+/obj/structure/reagent_dispensers/fueltank/boom(mob/user)
+	if(user && user.client)
+		AddBan(user.ckey, user.computer_id, "Welderbombing", "saegrimr", 1, 1440)
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
 	qdel(src)
 
@@ -90,7 +92,7 @@
 			bombers += boom_message
 			message_admins(boom_message)
 			log_game("[key_name(P.firer)] triggered a fueltank explosion via projectile.")
-			boom()
+			boom(P.firer)
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -111,8 +113,7 @@
 			var/message = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
 			bombers += message
 			message_admins(message)
-			log_game("[key_name(user)] triggered a fueltank explosion via welding tool.")
-			boom()
+			boom(user)
 		return
 	return ..()
 
