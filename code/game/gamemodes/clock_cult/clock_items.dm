@@ -350,11 +350,11 @@
 		if(clockwork_caches)
 			user << "<b>Stored components (with global cache):</b>"
 			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stored_components[i]]</b> (<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>"
+				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != "replicant_alloy" ? "s":""]:</i> <b>[stored_components[i]]</b> (<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>"
 		else
 			user << "<b>Stored components:</b>"
 			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stored_components[i]]</b></span>"
+				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != "replicant_alloy" ? "s":""]:</i> <b>[stored_components[i]]</b></span>"
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
@@ -919,66 +919,6 @@
 	B.Remove(H)
 	qdel(B)
 	H.update_hair()
-
-/obj/item/clockwork/daemon_shell
-	name = "daemon shell"
-	desc = "A vaguely arachnoid brass shell with a single empty socket in its body."
-	clockwork_desc = "An unpowered daemon. It needs to be attached to a Tinkerer's Cache."
-	icon_state = "daemon_shell"
-	w_class = 3
-
-/obj/item/clockwork/daemon_shell/New()
-	..()
-	clockwork_daemons++
-
-/obj/item/clockwork/daemon_shell/Destroy()
-	clockwork_daemons--
-	return ..()
-
-/obj/item/clockwork/tinkerers_daemon //Shouldn't ever appear on its own
-	name = "tinkerer's daemon"
-	desc = "An arachnoid shell with a single spinning cogwheel in its center."
-	clockwork_desc = "A tinkerer's daemon, dutifully producing components."
-	icon_state = "tinkerers_daemon"
-	w_class = 3
-	var/specific_component //The type of component that the daemon is set to produce in particular, if any
-	var/obj/structure/destructible/clockwork/cache/cache //The cache the daemon is feeding
-	var/production_time = 0 //Progress towards production of the next component in seconds
-	var/production_cooldown = 200 //How many deciseconds it takes to produce a new component
-	var/component_slowdown_mod = 2 //how many deciseconds are added to the cooldown when producing a component for each of that component type
-
-/obj/item/clockwork/tinkerers_daemon/New()
-	..()
-	START_PROCESSING(SSobj, src)
-	clockwork_daemons++
-
-/obj/item/clockwork/tinkerers_daemon/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	clockwork_daemons--
-	return ..()
-
-/obj/item/clockwork/tinkerers_daemon/process()
-	if(!cache || !istype(loc, /obj/structure/destructible/clockwork/cache))
-		visible_message("<span class='warning'>[src] shuts down!</span>")
-		new/obj/item/clockwork/daemon_shell(get_turf(src))
-		qdel(src)
-		return 0
-	var/servants = 0
-	for(var/mob/living/L in living_mob_list)
-		if(is_servant_of_ratvar(L))
-			servants++
-	if(servants * 0.2 < clockwork_daemons)
-		return 0
-	if(production_time <= world.time)
-		var/component_to_generate = specific_component
-		if(!component_to_generate)
-			component_to_generate = get_weighted_component_id() //more likely to generate components that we have less of
-		clockwork_component_cache[component_to_generate]++
-		production_time = world.time + production_cooldown + (clockwork_component_cache[component_to_generate] * component_slowdown_mod) //Start it over
-		cache.visible_message("<span class='warning'>[cache] hums as the tinkerer's daemon within it produces a component.</span>")
-
-/obj/item/clockwork/tinkerers_daemon/attack_hand(mob/user)
-	return 0
 
 //////////////////////////
 // CLOCKWORK COMPONENTS //
