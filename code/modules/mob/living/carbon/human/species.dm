@@ -59,15 +59,8 @@
 
 	var/mob/living/list/ignored_by = list()	// list of mobs that will ignore this species
 	//Breathing!
-	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	var/safe_oxygen_max = 0
-	var/safe_co2_min = 0
-	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_toxins_min = 0
-	var/safe_toxins_max = 0.05
-	var/SA_para_min = 1 //Sleeping agent
-	var/SA_sleep_min = 5 //Sleeping agent
-	var/BZ_trip_balls_min = 1 //BZ gas.
+	var/obj/item/organ/lungs/mutantlungs = null
+	var/breathid = "o2"
 
 	//Flight and floating
 	var/override_float = 0
@@ -126,15 +119,15 @@
 		heart = new()
 		heart.Insert(C)
 
-	if((NOBREATH in specflags) && lungs)
+	if(lungs)
 		lungs.Remove(C)
 		qdel(lungs)
-	else if((!(NOBREATH in specflags)) && (!lungs))
-		lungs = new()
+	if((!(NOBREATH in specflags)) && !lungs)
+		if(mutantlungs)
+			lungs = new mutantlungs()
+		else
+			lungs = new()
 		lungs.Insert(C)
-	if(lungs)
-		lungs.breathlevels = list("safe_oxygen_min" = safe_oxygen_min,"safe_oxygen_max" = safe_oxygen_max,"safe_co2_min" = safe_co2_min,"safe_co2_max" = safe_co2_max,
-	"safe_toxins_min" = safe_toxins_min,"safe_toxins_max" = safe_toxins_max,"SA_para_min" = SA_para_min,"SA_sleep_min" = SA_sleep_min,"BZ_trip_balls_min" = BZ_trip_balls_min)
 
 	if((NOHUNGER in specflags) && appendix)
 		appendix.Remove(C)

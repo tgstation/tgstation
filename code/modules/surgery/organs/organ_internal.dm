@@ -260,6 +260,17 @@
 	"safe_toxins_min" = 0,"safe_toxins_max" = 0.05,"SA_para_min" = 1,"SA_sleep_min" = 5,"BZ_trip_balls_min" = 1)
 
 	//Breath damage
+
+	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
+	var/safe_oxygen_max = 0
+	var/safe_co2_min = 0
+	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
+	var/safe_toxins_min = 0
+	var/safe_toxins_max = 0.05
+	var/SA_para_min = 1 //Sleeping agent
+	var/SA_sleep_min = 5 //Sleeping agent
+	var/BZ_trip_balls_min = 1 //BZ gas.
+
 	var/oxy_breath_dam_min = 1
 	var/oxy_breath_dam_max = 10
 	var/co2_breath_dam_min = 1
@@ -286,11 +297,11 @@
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		H.failed_last_breath = 1
-		if(breathlevels["safe_oxygen_min"])
+		if(safe_oxygen_min)
 			H.throw_alert("oxy", /obj/screen/alert/oxy)
-		else if(breathlevels["safe_toxins_min"])
+		else if(safe_toxins_min)
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
-		else if(breathlevels["safe_co2_min"])
+		else if(safe_co2_min)
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		return 0
 
@@ -309,18 +320,18 @@
 	//-- OXY --//
 
 	//Too much oxygen! //Yes, some species may not like it.
-	if(breathlevels["safe_oxygen_max"])
-		if(O2_pp > breathlevels["safe_oxygen_max"])
-			var/ratio = (breath_gases["o2"][MOLES]/breathlevels["safe_oxygen_max"]) * 10
+	if(safe_oxygen_max)
+		if(O2_pp > safe_oxygen_max)
+			var/ratio = (breath_gases["o2"][MOLES]/safe_oxygen_max) * 10
 			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
 		else
 			H.clear_alert("too_much_oxy")
 
 	//Too little oxygen!
-	if(breathlevels["safe_oxygen_min"])
-		if(O2_pp < breathlevels["safe_oxygen_min"])
-			gas_breathed = handle_too_little_breath(H,O2_pp,breathlevels["safe_oxygen_min"],breath_gases["o2"][MOLES])
+	if(safe_oxygen_min)
+		if(O2_pp < safe_oxygen_min)
+			gas_breathed = handle_too_little_breath(H,O2_pp,safe_oxygen_min,breath_gases["o2"][MOLES])
 			H.throw_alert("oxy", /obj/screen/alert/oxy)
 		else
 			H.failed_last_breath = 0
@@ -338,8 +349,8 @@
 	//-- CO2 --//
 
 	//CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2, this will hurt you, but only once per 4 ticks, instead of once per tick.
-	if(breathlevels["safe_co2_max"])
-		if(CO2_pp > breathlevels["safe_co2_max"])
+	if(safe_co2_max)
+		if(CO2_pp > safe_co2_max)
 			if(!H.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				H.co2overloadtime = world.time
 			else if(world.time - H.co2overloadtime > 120)
@@ -357,8 +368,8 @@
 
 	//Too little CO2!
 	if(breathlevels["safe_co2_min"])
-		if(CO2_pp < breathlevels["safe_co2_min"])
-			gas_breathed = handle_too_little_breath(H,CO2_pp, breathlevels["safe_co2_min"],breath_gases["co2"][MOLES])
+		if(CO2_pp < safe_co2_min)
+			gas_breathed = handle_too_little_breath(H,CO2_pp, safe_co2_min,breath_gases["co2"][MOLES])
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = 0
@@ -375,9 +386,9 @@
 	//-- TOX --//
 
 	//Too much toxins!
-	if(breathlevels["safe_toxins_max"])
-		if(Toxins_pp > breathlevels["safe_toxins_max"])
-			var/ratio = (breath_gases["plasma"][MOLES]/breathlevels["safe_toxins_max"]) * 10
+	if(safe_toxins_max)
+		if(Toxins_pp > safe_toxins_max)
+			var/ratio = (breath_gases["plasma"][MOLES]/safe_toxins_max) * 10
 			if(H.reagents)
 				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
 			H.throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
@@ -386,9 +397,9 @@
 
 
 	//Too little toxins!
-	if(breathlevels["safe_toxins_min"])
-		if(Toxins_pp < breathlevels["safe_toxins_min"])
-			gas_breathed = handle_too_little_breath(H,Toxins_pp, breathlevels["safe_toxins_min"], breath_gases["plasma"][MOLES])
+	if(safe_toxins_min)
+		if(Toxins_pp < safe_toxins_min)
+			gas_breathed = handle_too_little_breath(H,Toxins_pp, safe_toxins_min, breath_gases["plasma"][MOLES])
 			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = 0
@@ -409,9 +420,9 @@
 	// N2O
 
 		var/SA_pp = breath.get_breath_partial_pressure(breath_gases["n2o"][MOLES])
-		if(SA_pp > breathlevels["SA_para_min"]) // Enough to make us paralysed for a bit
+		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 			H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-			if(SA_pp > breathlevels["SA_sleep_min"]) // Enough to make us sleep as well
+			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 				H.Sleeping(max(H.sleeping+2, 10))
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
@@ -420,7 +431,7 @@
 	// BZ
 
 		var/bz_pp = breath.get_breath_partial_pressure(breath_gases["bz"][MOLES])
-		if(bz_pp > breathlevels["BZ_trip_balls_min"])
+		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 20
 			if(prob(33))
 				H.adjustBrainLoss(3)
@@ -481,6 +492,18 @@
 	var/obj/S = ..()
 	S.reagents.add_reagent("salbutamol", 5)
 	return S
+
+
+/obj/item/organ/lungs/plasmaman
+	name = "plasma filter"
+
+	safe_oxygen_min = 0 //We don't breath this
+	safe_toxins_min = 16 //We breath THIS!
+	safe_toxins_max = 0
+
+
+
+
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

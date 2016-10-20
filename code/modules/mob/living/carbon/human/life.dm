@@ -108,11 +108,11 @@
 		if(dna && dna.species)
 			var/datum/species/S = dna.species
 
-			if(S.safe_oxygen_min)
+			if(S.breathid = "o2")
 				throw_alert("oxy", /obj/screen/alert/oxy)
-			else if(S.safe_toxins_min)
+			else if(S.breathid = "tox")
 				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
-			else if(S.safe_co2_min)
+			else if(S.breathid = "co2")
 				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 
 		return 0
