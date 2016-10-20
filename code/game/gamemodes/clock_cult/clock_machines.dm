@@ -661,7 +661,7 @@
 	return max(MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER * (1 + round(clockwork_component_cache[id] * 0.2)))
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/process()
-	var/servants = 5
+	var/servants = 0
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
