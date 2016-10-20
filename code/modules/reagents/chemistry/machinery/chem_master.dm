@@ -291,25 +291,27 @@
 				P.name = trim("[name] bottle")
 				reagents.trans_to(P, P.volume)
 			else
-				var/amount = 1
-				var/vol_each = min(reagents.total_volume, 30)
+				var/amount_full = 0
+				var/vol_part = min(reagents.total_volume, 30)
 				if(text2num(many))
-					amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many bottles?", amount) as num|null), 0, 10)
-					if(!amount)
-						return
-					vol_each = min(reagents.total_volume / amount, 30)
+					amount_full = round(reagents.total_volume / 30)
+					vol_part = reagents.total_volume % 30
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume)
 					return
 				
 				var/obj/item/weapon/reagent_containers/glass/bottle/P
-				for(var/i = 0; i < amount; i++)
+				for(var/i = 0; i < amount_full; i++)
 					P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
 					P.name = trim("[name] bottle")
-					reagents.trans_to(P, vol_each)
+					reagents.trans_to(P, 30)
 					
+				if(vol_part)
+					P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+					P.name = trim("[name] bottle")
+					reagents.trans_to(P, vol_part)
 			. = TRUE
 
 		if("analyze")

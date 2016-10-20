@@ -71,7 +71,7 @@
 			<br/>
 			<ui-button action='createBottle' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Bottle (max 30µ)</ui-button>
 			<br/>
-			<ui-button action='createBottle' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Create Multiple Bottles</ui-button>
+			<ui-button action='createBottle' params='{"many": 1}' state='{{data.bufferContents ? null : "disabled"}}' >Dispense Buffer to Bottles</ui-button>
 			
 	</ui-display>
 
