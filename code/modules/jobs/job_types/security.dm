@@ -46,6 +46,7 @@ Head of Security
 	suit_store = /obj/item/weapon/gun/energy/gun
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
+	tie = /obj/item/clothing/tie/medal/silver/security
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
@@ -154,6 +155,7 @@ Detective
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
 		/obj/item/weapon/melee/classic_baton=1,\
+		/obj/item/weapon/gun/energy/disabler=1, \
 		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1)
 	mask = /obj/item/clothing/mask/cigarette
 
@@ -207,7 +209,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	r_pocket = /obj/item/device/assembly/flash/handheld
-	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
+	suit_store = /obj/item/weapon/gun/energy/gun/taser
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
