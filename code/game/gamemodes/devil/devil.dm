@@ -18,7 +18,7 @@ var/global/list/whiteness = list (
 
 
 /mob/living/proc/check_devil_bane_multiplier(obj/item/weapon, mob/living/attacker)
-	switch(mind.devilinfo.bane)
+	switch(has_antag_datum(/datum/antagonist/devil, true).bane)
 		if(BANE_WHITECLOTHES)
 			if(ishuman(attacker))
 				var/mob/living/carbon/human/H = attacker
