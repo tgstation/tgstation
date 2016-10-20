@@ -44,7 +44,7 @@
 		if(dna.species.mutantlungs)
 			internal_organs += new dna.species.mutantlungs()
 		else
-			internal_organs += new /obj/item/organ/lungs
+			internal_organs += new /obj/item/organ/lungs()
 	if(!(NOBLOOD in dna.species.specflags))
 		internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
