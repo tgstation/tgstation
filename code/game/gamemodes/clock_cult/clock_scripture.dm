@@ -4,9 +4,9 @@ Tiers and Requirements
 Pieces of scripture require certain follower counts, contruction value, and active caches in order to recite.
 Drivers: Unlocked by default
 Scripts: 5 servants and a cache
-Applications: 8 servants, 3 caches, and 50 CV
-Revenant: 10 servants and 100 CV
-Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
+Applications: 8 servants, 3 caches, and 100 CV
+Revenant: 10 servants, 4 caches, and 200 CV
+Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or destroyed
 */
 
 /datum/clockwork_scripture
@@ -342,45 +342,59 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/channeled/taunting_tirade //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each channel
-	descname = "Channeled, Mobile Area Confusion"
-	name = "Taunting Tirade"
-	desc = "Weakens, confuses and dizzies all nearby non-servants with a short invocation, then allows movement for five seconds. Chanted every second for up to thirty seconds."
-	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
-	chant_amount = 5
-	chant_interval = 10
+/datum/clockwork_scripture/component_syphon //Component Syphon: Transmutes each nearby dead, minded nonservant into 1-6 components, weighted towards the components the cult needs
+	descname = "Components From Dead"
+	name = "Component Syphon"
+	desc = "Produces components from all adjacent dead non-Servants, destroying the bodies of the dead in the process. The components are automatically stored in the invoker's slab."
+	invocations = list("Become Engine parts...", "...to bring glory to these shells!")
+	channel_time = 50
 	required_components = list("guvax_capacitor" = 2)
 	consumed_components = list("guvax_capacitor" = 1)
-	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
+	usage_tip = "An effective way to turn useless corpses into useful components."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 6
-	var/flee_time = 47 //allow fleeing for 5 seconds
-	var/grace_period = 3 //very short grace period so you don't have to stop immediately
-	var/datum/progressbar/progbar
 
-/datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
-	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_servant_of_ratvar(L) && !L.null_rod_check())
-			L.confused = min(L.confused + 20, 100)
-			L.dizziness = min(L.dizziness + 20, 100)
-			L.Weaken(1)
-	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
-	invoker.color = "#AF0AAF"
-	animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
-	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
-		var/endtime = world.time + flee_time
-		var/starttime = world.time
-		progbar = new(invoker, flee_time, invoker)
-		progbar.bar.color = "#AF0AAF"
-		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime)
-			sleep(1)
-			progbar.update(world.time - starttime)
-		qdel(progbar)
-		sleep(grace_period)
-
-/datum/clockwork_scripture/channeled/taunting_tirade/chant_end_effects()
-	qdel(progbar)
+/datum/clockwork_scripture/component_syphon/scripture_effects()
+	var/final_printout = "<span class='brass'>Added the following components to your slab:</span>"
+	var/list/components_gained = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+	for(var/mob/living/L in hearers(1, get_turf(invoker)))
+		if(!is_servant_of_ratvar(L) && L.stat == DEAD)
+			var/component_id
+			var/animation_type
+			var/amount_to_produce = 1
+			if(L.mind)
+				var/current_components = 0
+				for(var/i in slab.stored_components)
+					current_components += slab.stored_components[i]
+				if(clockwork_caches)
+					for(var/i in clockwork_component_cache)
+						current_components += clockwork_component_cache[i]
+				amount_to_produce = max(1, rand(3, 6) - round(current_components*0.1))
+			for(var/i in 1 to amount_to_produce)
+				component_id = get_weighted_component_id(slab)
+				slab.stored_components[component_id]++
+				components_gained[component_id]++
+				animation_type = get_component_animation_type(component_id)
+				var/obj/effect/overlay/temp/animation = PoolOrNew(animation_type, get_turf(L))
+				animation.transform = matrix()*0.75
+				animation.pixel_x = rand(-10, 10)
+				animation.pixel_y = rand(-10, -2)
+				animate(animation, pixel_y = animation.pixel_y + 10, alpha = 50, time = 10, easing = EASE_OUT)
+			playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
+			L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self!</span>")
+			for(var/obj/item/W in L)
+				L.unEquip(W)
+			L.dust()
+	var/gained = FALSE
+	for(var/i in components_gained)
+		if(components_gained[i])
+			final_printout += "\n<span class='[get_component_span(i)]_small'><b>[components_gained[i]]</b> \
+			[get_component_name(i)][i != "replicant_alloy" && components_gained[i] > 1 ? "s":""].</span>"
+			gained = TRUE
+	if(!gained) //sevtug: good job you wasted a component
+		final_printout = "<span class='sevtug'>\"Well, that was a waste of time and components. [text2ratvar("Idiot. How do we get things done with such idiots?")]\"</span>"
+	invoker << final_printout
+	return TRUE
 
 
 
