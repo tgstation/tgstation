@@ -1,16 +1,21 @@
 /datum/borer_chem
 	var/chemname
 	var/chem_desc = "This is a chemical"
-	var/chemuse = 35
+	var/chemuse = 30
 	var/quantity = 10
 
 /datum/borer_chem/epinephrine
 	chemname = "epinephrine"
 	chem_desc = "Stabilizes critical condition and slowly restores oxygen damage. If overdosed, it will deal toxin and oxyloss damage."
 
+/datum/borer_chem/leporazine
+	chemname = "leporazine"
+	chem_desc = "This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA."
+	chemuse = 100
+
 /datum/borer_chem/mannitol
 	chemname = "mannitol"
-	chem_desc = "Quickly heals brain damage."
+	chem_desc = "Heals brain damage."
 
 /datum/borer_chem/bicaridine
 	chemname = "bicaridine"
@@ -28,10 +33,9 @@
 	chemname = "methamphetamine"
 	chem_desc = "Reduces stun times, increases stamina and run speed while dealing brain damage. If overdosed it will deal toxin and brain damage."
 
-/datum/borer_chem/perfluorodecalin
-	chemname = "perfluorodecalin"
-	chem_desc = "Heals suffocation damage quickly but mutes your voice. Has a 33% chance of healing brute and burn damage per cycle as well."
-	chemuse = 75
+/datum/borer_chem/salbutamol
+	chemname = "salbutamol"
+	chem_desc = "Heals suffocation damage."
 
 /datum/borer_chem/spacedrugs
 	chemname = "space_drugs"
@@ -51,4 +55,3 @@
 /datum/borer_chem/rezadone
 	chemname = "rezadone"
 	chem_desc = "Heals cellular damage."
-	chemuse = 75

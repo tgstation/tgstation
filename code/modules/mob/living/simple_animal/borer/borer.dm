@@ -28,7 +28,7 @@
 			if (istype(M, /mob/new_player))
 				continue
 			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
-				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.name]:</b> [message]</i>"
+				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>"
 
 /mob/living/captive_brain/emote(var/message)
 	return
@@ -37,10 +37,10 @@
 
 	var/mob/living/simple_animal/borer/B = src.loc
 
-	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 10 seconds).</span>"
+	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 20 seconds).</span>"
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
-	spawn(rand(150,220))
+	spawn(rand(150,220) + B.victim.brainloss)
 
 		if(!B || !B.controlling)
 			return
@@ -50,6 +50,7 @@
 		B.victim << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
 
 		B.detatch()
+
 		verbs -= /mob/living/carbon/proc/release_control
 		verbs -= /mob/living/carbon/proc/spawn_larvae
 
@@ -77,6 +78,11 @@ var/total_borer_hosts_needed = 10
 	minbodytemp = 0
 	maxbodytemp = 1500
 
+	var/generation = 1
+	var/static/list/borer_names = list(
+			"Primary", "Secondary", "Tertiary", "Quaternary", "Quinary", "Senary",
+			"Septenary", "Octonary", "Novenary", "Decenary", "Undenary", "Duodenary",
+			)
 
 	var/mob/living/carbon/victim = null
 	var/mob/living/captive_brain/host_brain = null
@@ -85,23 +91,23 @@ var/total_borer_hosts_needed = 10
 	var/controlling = 0
 	var/chemicals = 10
 	var/used_dominate
-	var/used_control
 	var/borer_chems = list()
 	var/dominate_cooldown = 150
-	var/control_cooldown = 300
 	var/leaving = 0
 
 /mob/living/simple_animal/borer/New()
 	..()
-	var/index_num = rand(1000,9999)
-	real_name = "Cortical Borer ([index_num])"
-	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [index_num]"
+	generation = 1
+	real_name = "Cortical Borer [rand(1000,9999)]"
+	truename = "[borer_names[min(generation, borer_names.len)]] [rand(1000,9999)]"
+	borer_chems += /datum/borer_chem/epinephrine
+	borer_chems += /datum/borer_chem/leporazine
 	borer_chems += /datum/borer_chem/mannitol
 	borer_chems += /datum/borer_chem/bicaridine
 	borer_chems += /datum/borer_chem/kelotane
 	borer_chems += /datum/borer_chem/charcoal
 	borer_chems += /datum/borer_chem/methamphetamine
-	borer_chems += /datum/borer_chem/perfluorodecalin
+	borer_chems += /datum/borer_chem/salbutamol
 	borer_chems += /datum/borer_chem/spacedrugs
 	//borer_chems += /datum/borer_chem/creagent
 	borer_chems += /datum/borer_chem/ethanol
@@ -256,16 +262,8 @@ var/total_borer_hosts_needed = 10
 	if(!victim)
 		src << "<span class='warning'>You cannot speak without a host!</span>"
 		return
-	if(dd_hasprefix(message, "*"))
-		message = copytext(message,2)
-		victim.say(message)
-		return
 	if(message == "")
 		return
-	var/message2 = ""
-	message2 = addtext(uppertext(copytext(message, 1, 2)), copytext(message, 2) )
-	victim << "<span class='changeling'><b>[name] says, </b></span>\"[message2]\""
-	src << "<span class='changeling'><b>[name] says, </b></span>\"[message2]\""
 
 /mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
 	healthscan(usr, M)
@@ -309,7 +307,6 @@ var/total_borer_hosts_needed = 10
 	loc = get_turf(victim)
 
 	victim.borer = null
-	victim = null
 	reset_perspective(null)
 
 	var/mob/living/V = victim
@@ -569,11 +566,6 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>This host lacks enough brain function to control.</span>"
 		return
 
-	if(world.time - used_control < control_cooldown)
-		src << "<span class='warning'>It's too soon to use that!</span>"
-		return
-
-
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 
 	spawn(200+(victim.brainloss*5))
@@ -731,6 +723,8 @@ mob/living/carbon/proc/release_control()
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
+		var/mob/living/simple_animal/borer/B = src.loc
+		newborer.generation += B.generation
 		newborer.transfer_personality(C)
 		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
