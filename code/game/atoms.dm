@@ -19,6 +19,19 @@
 	//overlays that should remain on top and not normally be removed, like c4.
 	var/list/priority_overlays
 
+	var/list/atom_colours	 //used to store the different colors on an atom
+							//its inherent color, the colored paint applied on it, special color effect etc...
+
+
+/atom/New()
+	//atom creation method that preloads variables at creation
+	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+		_preloader.load(src)
+
+	if(color)
+		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+	. = ..()
+
 /atom/Destroy()
 	if(alternate_appearances)
 		for(var/aakey in alternate_appearances)
@@ -455,16 +468,14 @@ var/list/blood_splatter_icons = list()
 	"whichever was set last is displayed"
 */
 
-/atom
-	var/list/atom_colours	 //used to store the different colors on an atom
-							//its inherent color, the colored paint applied on it, special color effect etc...
 
 /*
 	Adds an instance of colour_type to the atom's atom_colours list
 */
 /atom/proc/add_atom_colour(coloration, colour_priority)
-	if(!atom_colours)
-		atom_colours = list("", "", "", "") //four priority levels currently.
+	if(!atom_colours || !atom_colours.len)
+		atom_colours = list()
+		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
 	if(!coloration)
 		return
 	if(colour_priority > atom_colours.len)
@@ -476,12 +487,15 @@ var/list/blood_splatter_icons = list()
 /*
 	Removes an instance of colour_type from the atom's atom_colours list
 */
-/atom/proc/remove_atom_colour(colour_priority)
+/atom/proc/remove_atom_colour(colour_priority, coloration)
 	if(!atom_colours)
-		atom_colours = list("", "", "", "")
+		atom_colours = list()
+		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
 	if(colour_priority > atom_colours.len)
 		return
-	atom_colours[colour_priority] = ""
+	if(coloration && atom_colours[colour_priority] != coloration)
+		return //if we don't have the expected color (for a specific priority) to remove, do nothing
+	atom_colours[colour_priority] = null
 	update_atom_colour()
 
 
@@ -491,7 +505,8 @@ var/list/blood_splatter_icons = list()
 */
 /atom/proc/update_atom_colour()
 	if(!atom_colours)
-		atom_colours = list("", "", "", "")
+		atom_colours = list()
+		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
 	color = null
 	for(var/C in atom_colours)
 		if(islist(C))
@@ -499,7 +514,7 @@ var/list/blood_splatter_icons = list()
 			if(L.len)
 				color = L
 				return
-		else if(C != "")
+		else if(C)
 			color = C
 			return
 

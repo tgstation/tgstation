@@ -17,7 +17,7 @@
 
 /datum/disease/revblight/cure()
 	if(affected_mob)
-		affected_mob.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+		affected_mob.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#1d2953")
 		affected_mob << "<span class='notice'>You feel better.</span>"
 	..()
 

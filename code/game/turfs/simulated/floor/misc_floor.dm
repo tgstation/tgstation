@@ -144,6 +144,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 
 /turf/open/floor/bluespace
@@ -165,7 +166,6 @@
 
 /turf/open/floor/vines
 	color = "#aa77aa"
-	atom_colours = list("", "", "", "#aa77aa")
 	icon_state = "vinefloor"
 	broken_states = list()
 

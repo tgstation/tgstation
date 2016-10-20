@@ -103,7 +103,6 @@
 	name = "\improper Reticence wreckage"
 	icon_state = "reticence-broken"
 	color = "#87878715"
-	atom_colours = list("", "", "", "#87878715")
 
 /obj/structure/mecha_wreckage/ripley
 	name = "\improper Ripley wreckage"

@@ -133,7 +133,6 @@
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
 	color = "#999999"
-	atom_colours = list("", "", "", "#999999")
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 

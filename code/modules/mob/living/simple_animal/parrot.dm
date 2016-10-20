@@ -945,7 +945,6 @@
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the earth."
 	color = "#FFFFFF77"
-	atom_colours = list("", "", "", "#FFFFFF77")
 	speak_chance = 20
 	status_flags = GODMODE
 	incorporeal_move = 1

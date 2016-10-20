@@ -720,7 +720,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	color = "#FF0000"
-	atom_colours = list("", "", "", "#FF0000")
 	desc = "Mark your target for death. "
 	var/used = FALSE
 

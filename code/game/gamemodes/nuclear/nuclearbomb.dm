@@ -515,10 +515,15 @@ This is here to make the tiles around the station mininuke change when it's arme
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
 	var/end_time = world.time + 100
+	var/newcolor = "#00FF00"
 	while(world.time < end_time)
 		if(!user)
 			return
-		user.add_atom_colour(RANDOM_COLOUR, ADMIN_COLOUR_PRIORITY)
+		if(newcolor == "#FF0000")
+			newcolor = "#00FF00"
+		else
+			newcolor = "#FF0000"
+		user.add_atom_colour(newcolor, ADMIN_COLOUR_PRIORITY)
 		sleep(1)
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")

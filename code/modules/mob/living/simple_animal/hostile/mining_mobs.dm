@@ -347,7 +347,6 @@
 	icon_aggro = "bloodbrood"
 	attacktext = "pierces"
 	color = "#C80000"
-	atom_colours = list("", "", "" ,"#C80000")
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/death()
 	if(loc) // Splash the turf we are on with blood

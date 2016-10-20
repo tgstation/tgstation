@@ -79,5 +79,4 @@
 	maxHealth = 75
 	health = 75
 	color = rgb(114,228,250)
-	atom_colours = list("", "", "", rgb(114,228,250))
 	loot = list(/obj/effect/decal/remains/human{color = rgb(114,228,250)})

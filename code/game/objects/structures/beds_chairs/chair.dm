@@ -128,7 +128,6 @@
 	desc = "It looks comfy.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
-	atom_colours = list("", "", "", rgb(255,255,255))
 	resistance_flags = FLAMMABLE
 	obj_integrity = 70
 	max_integrity = 70
@@ -139,7 +138,6 @@
 /obj/structure/chair/comfy/New()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
-
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
@@ -151,23 +149,18 @@
 
 /obj/structure/chair/comfy/brown
 	color = rgb(255,113,0)
-	atom_colours = list("", "", "", rgb(255,113,0))
 
 /obj/structure/chair/comfy/beige
 	color = rgb(255,253,195)
-	atom_colours = list("", "", "", rgb(255,253,195))
 
 /obj/structure/chair/comfy/teal
 	color = rgb(0,255,255)
-	atom_colours = list("", "", "", rgb(0,255,255))
 
 /obj/structure/chair/comfy/black
 	color = rgb(167,164,153)
-	atom_colours = list("", "", "", rgb(167,164,153))
 
 /obj/structure/chair/comfy/lime
 	color = rgb(255,251,0)
-	atom_colours = list("", "", "", rgb(255,251,0))
 
 /obj/structure/chair/office
 	anchored = 0

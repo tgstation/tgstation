@@ -295,7 +295,6 @@
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	color = rgb(0,0,255)
-	atom_colours = list("", "", "", rgb(0,0,255))
 
 /obj/structure/ladder/unbreakable/rune/update_icon()
 	return

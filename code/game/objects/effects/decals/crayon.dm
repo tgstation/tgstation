@@ -24,8 +24,7 @@
 		M.Turn(rotation)
 		src.transform = M
 
-	color = main
-	atom_colours[FIXED_COLOUR_PRIORITY] = main
+	add_atom_colour(main, FIXED_COLOUR_PRIORITY)
 
 
 /obj/effect/decal/cleanable/crayon/gang

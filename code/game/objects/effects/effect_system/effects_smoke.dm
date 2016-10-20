@@ -201,7 +201,6 @@
 
 /obj/effect/particle_effect/smoke/sleeping
 	color = "#9C3636"
-	atom_colours = list("", "", "", "#9C3636")
 	lifetime = 10
 
 /obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)

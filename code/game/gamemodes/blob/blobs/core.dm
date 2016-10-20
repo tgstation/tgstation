@@ -1,7 +1,7 @@
 /obj/structure/blob/core
 	name = "blob core"
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "blob"
+	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
 	obj_integrity = 400
 	max_integrity = 400
@@ -32,7 +32,11 @@
 
 /obj/structure/blob/core/update_icon()
 	cut_overlays()
-	..()
+	color = null
+	var/image/I = new('icons/mob/blob.dmi', "blob")
+	if(overmind)
+		I.color = overmind.blob_reagent_datum.color
+	add_overlay(I)
 	var/image/C = new('icons/mob/blob.dmi', "blob_core_overlay")
 	add_overlay(C)
 

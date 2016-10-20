@@ -34,6 +34,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/structure/destructible/clockwork/examine(mob/user)
 	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
@@ -770,6 +771,7 @@
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
+	var/oldcolor = color
 	animate(src, color = "#AF0AAF", time = convert_time)
 	var/obj/effect/overlay/temp/ratvar/sigil/glow
 	if(glow_type)
@@ -782,7 +784,8 @@
 	if(get_turf(L) != get_turf(src))
 		if(glow)
 			qdel(glow)
-		animate(src, color = initial(color), time = 20)
+		animate(src, color = oldcolor, time = 20)
+		addtimer(src, "update_atom_colour", 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return 0
 	post_channel(L)
@@ -807,7 +810,8 @@
 	if(delete_on_finish)
 		qdel(src)
 	else
-		animate(src, color = initial(color), time = 20)
+		animate(src, color = oldcolor, time = 20)
+		addtimer(src, "update_atom_colour", 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 	return 1
 

@@ -270,11 +270,6 @@
 	item_color = "scarf"
 	dog_fashion = /datum/dog_fashion/head
 
-/obj/item/clothing/tie/scarf/New()
-	..()
-	if(color)
-		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-
 /obj/item/clothing/tie/scarf/black
 	name = "black scarf"
 	icon_state = "scarf"

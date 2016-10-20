@@ -647,7 +647,6 @@
 	name = "cerulean prints"
 	desc = "A one use yet of blueprints made of jelly like organic material. Renaming an area to 'Xenobiology Lab' will extend the reach of the management console."
 	color = "#2956B2"
-	atom_colours = list("", "", "", "#2956B2")
 
 /obj/item/areaeditor/blueprints/slime/edit_area()
 	var/success = ..()

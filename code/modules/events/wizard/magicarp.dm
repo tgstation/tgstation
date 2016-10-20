@@ -46,7 +46,6 @@
 	name = "chaos magicarp"
 	desc = "50% carp, 100% magic, 150% horrible."
 	color = "#00FFFF"
-	atom_colours = list("", "", "", "#00FFFF")
 	maxHealth = 75
 	health = 75
 
