@@ -672,8 +672,10 @@
 			if(!min_power_usable)
 				min_power_usable = get_component_cost(i)
 			else
-				min_power_usable = min(min_power_usable, get_component_cost(i)) //if we don't have enough to produce the lowest or what we chose to produce, cancel out
-	if(!clockwork_caches || servants * 0.2 < clockwork_daemons || (!component_id_to_produce && . < min_power_usable) || (component_id_to_produce && . < get_component_cost(component_id_to_produce)))
+				min_power_usable = min(min_power_usable, get_component_cost(i))
+	else
+		min_power_usable = get_component_cost(component_id_to_produce)
+	if(!clockwork_caches || servants * 0.2 < clockwork_daemons || . < min_power_usable) //if we don't have enough to produce the lowest or what we chose to produce, cancel out
 		visible_message("<span class='warning'>[src] shuts down!</span>")
 		toggle()
 		return
