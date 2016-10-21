@@ -31,10 +31,23 @@
 	C.update_hair()
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0)
-	..()
+	if(!owner)
+		return ..() // Probably a redundant removal; just bail
+
+	var/obj/item/organ/brain/B = src
 	if(!special)
-		transfer_identity(C)
-	C.update_hair()
+		var/mob/living/simple_animal/borer/borer = owner.has_brain_worms()
+
+		if(borer)
+			borer.detatch()
+			borer.leave_victim() //Should remove borer if the brain is removed - RR
+		if(owner.mind)
+			B.transfer_identity(C)
+
+	if(istype(owner,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		H.update_hair()
+	. = ..()
 
 /obj/item/organ/brain/prepare_eat()
 	return // Too important to eat.

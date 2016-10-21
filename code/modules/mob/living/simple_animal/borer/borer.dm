@@ -252,7 +252,7 @@ var/total_borer_hosts_needed = 10
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/say(message)
-	if(dd_hasprefix(message, ";"))
+	if(message == "")
 		message = copytext(message,2)
 		for(var/borer in borers)
 			borer << "<span class='borer'>Cortical Link: [truename] sings: \"[message]\""
@@ -261,8 +261,6 @@ var/total_borer_hosts_needed = 10
 		return
 	if(!victim)
 		src << "<span class='warning'>You cannot speak without a host!</span>"
-		return
-	if(message == "")
 		return
 
 /mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
@@ -333,7 +331,7 @@ var/total_borer_hosts_needed = 10
 	var/mob/living/carbon/human/H = input(src,"Who do you wish to infest?") in null|choices
 	if(!H) return
 
-	if(H.borer)
+	if(H.has_brain_worms())
 		src << "<span class='warning'>[victim] is already infested!</span>"
 		return
 
