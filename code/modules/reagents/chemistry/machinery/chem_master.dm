@@ -230,7 +230,7 @@
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume)
+				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src))
 					return
 				var/obj/item/weapon/reagent_containers/pill/P
 
@@ -245,7 +245,7 @@
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume)
+				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src))
 					return
 				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
 
@@ -266,7 +266,7 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume)
+			if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src))
 				return
 			var/obj/item/weapon/reagent_containers/pill/P
 
@@ -284,7 +284,7 @@
 
 			if(condi)
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name)
+				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src))
 					return
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new(src.loc)
 				P.originalname = name
@@ -297,7 +297,7 @@
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = reagents.total_volume % 30
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume)
+				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src))
 					return
 				
 				var/obj/item/weapon/reagent_containers/glass/bottle/P
