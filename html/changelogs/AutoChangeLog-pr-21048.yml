@@ -1,0 +1,4 @@
+author: "Adam E."
+delete-after: True
+changes: 
+  - tweak: "Added cargo and engi access to auxillary mine base launching console."
