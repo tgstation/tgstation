@@ -483,7 +483,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
 				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 			else
-				if(prob(75))
+				var/prot = FALSE
+				var/mob/living/carbon/human/H = user
+
+				if(istype(H) && H.gloves)
+					var/obj/item/clothing/gloves/G = H.gloves
+					if(G.max_heat_protection_temperature)
+						prot = (G.max_heat_protection_temperature > 360)
+				else
+					prot = TRUE
+
+				if(prot || prob(75))
 					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
 				else
 					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? "r_hand" : "l_hand"
