@@ -26,7 +26,7 @@ Clown
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	l_pocket = /obj/item/weapon/bikehorn
 	r_pocket = /obj/item/toy/crayon/rainbow
-	tie = /obj/item/clothing/tie/medal/bronze_heart
+	tie = /obj/item/clothing/tie/medal/bronze_heart //memes
 	backpack_contents = list(
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
