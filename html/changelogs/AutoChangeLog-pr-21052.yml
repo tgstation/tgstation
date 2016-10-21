@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Mending Motors heal for more."
-  - wip: "Mania Motors are overall more powerful; they have greater effect, but require more power to run and less power to convert adjacent targets."
-  - experiment: "Interdiction Lenses no longer require power to disrupt electronics and will no longer disrupt the radios of servants."

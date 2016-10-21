@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Wraith Spectacles will now slowly repair the eye damage they did to you as long as you aren't wearing them."
-  - experiment: "You can now see how much eye damage the spectacles have done to you overall, as well as how close you are to being nearsighted/blinded."
