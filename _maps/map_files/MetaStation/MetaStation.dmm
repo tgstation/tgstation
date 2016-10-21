@@ -55653,6 +55653,7 @@
 	},
 /obj/item/clothing/under/suit_jacket/red,
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/weapon/book/codex_gigas,
 /turf/open/floor/engine/cult,
 /area/library)
 "bSi" = (
