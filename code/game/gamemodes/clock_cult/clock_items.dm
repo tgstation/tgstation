@@ -372,7 +372,6 @@
 	vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
 	invis_view = 2
 	darkness_view = 3
-	var/list/wraith_users = list()
 
 /obj/item/clothing/glasses/wraith_spectacles/equipped(mob/living/user, slot)
 	..()
@@ -392,43 +391,11 @@
 	if(is_servant_of_ratvar(user))
 		tint = 0
 		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+		user.apply_status_effect(STATUS_EFFECT_WRAITHSPECS)
 	else
 		tint = 3
 		user << "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>"
 
-/obj/item/clothing/glasses/wraith_spectacles/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/glasses/wraith_spectacles/Destroy()
-	wraith_users = null
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/clothing/glasses/wraith_spectacles/process()
-	for(var/i in wraith_users)
-		var/mob/living/carbon/human/H = i
-		if(H && wraith_users[H] && H.glasses != src && prob(50)) //if they're not wearing the spectacles, repair the eye damage done slowly
-			H.adjust_eye_damage(-1)
-			wraith_users[H] -= 1
-	if(ratvar_awakens || !ishuman(loc) || !is_servant_of_ratvar(loc)) //If Ratvar is alive, the spectacles don't hurt your eyes
-		return 0
-	var/mob/living/carbon/human/H = loc
-	if(!(H in wraith_users))
-		wraith_users[H] = 0
-	if(H.glasses == src && !H.disabilities & BLIND)
-		H.adjust_eye_damage(1)
-		wraith_users[H] += 1
-		if(H.eye_damage >= 15)
-			H.adjust_blurriness(2)
-		if(H.eye_damage >= 30)
-			if(H.become_nearsighted())
-				H << "<span class='boldwarning'>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</span>"
-		if(H.eye_damage >= 45)
-			if(H.become_blind())
-				H << "<span class='userdanger'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
-		if(prob(15))
-			H << "<span class='warning'>Your eyes continue to burn.</span>"
 
 /obj/item/clothing/glasses/judicial_visor //Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
 	name = "judicial visor"
