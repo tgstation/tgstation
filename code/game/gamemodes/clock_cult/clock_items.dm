@@ -393,36 +393,11 @@
 	if(is_servant_of_ratvar(user))
 		tint = 0
 		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+		user.apply_status_effect(STATUS_EFFECT_WRAITHSPECS)
 	else
 		tint = 3
 		user << "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>"
 
-/obj/item/clothing/glasses/wraith_spectacles/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/glasses/wraith_spectacles/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/clothing/glasses/wraith_spectacles/process()
-	if(ratvar_awakens || !ishuman(loc) || !is_servant_of_ratvar(loc)) //If Ratvar is alive, the spectacles don't hurt your eyes
-		return 0
-	var/mob/living/carbon/human/H = loc
-	if(H.glasses != src)
-		return 0
-	if(!H.disabilities & BLIND)
-		H.adjust_eye_damage(1)
-		if(H.eye_damage >= 15)
-			H.adjust_blurriness(2)
-		if(H.eye_damage >= 30)
-			if(H.become_nearsighted())
-				H << "<span class='warning'><b>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</b></span>"
-		if(H.eye_damage >= 45)
-			if(H.become_blind())
-				H << "<span class='userdanger'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
-		if(prob(15))
-			H << "<span class='warning'>Your eyes continue to burn.</span>"
 
 /obj/item/clothing/glasses/judicial_visor //Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
 	name = "judicial visor"
