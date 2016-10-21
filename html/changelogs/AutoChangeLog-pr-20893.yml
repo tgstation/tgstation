@@ -1,0 +1,5 @@
+author: "Screemonster"
+delete-after: True
+changes: 
+  - tweak: "The anti-tamper mechanism on abandoned crates now resists tampering."
+  - tweak: "Secure, non-abandoned crates can be given a %chance of exploding when tampered with. Defaults to 0."
