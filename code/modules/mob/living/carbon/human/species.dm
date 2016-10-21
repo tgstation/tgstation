@@ -122,6 +122,7 @@
 	if(lungs)
 		lungs.Remove(C)
 		qdel(lungs)
+		lungs = null
 	if((!(NOBREATH in specflags)) && !lungs)
 		if(mutantlungs)
 			lungs = new mutantlungs()
