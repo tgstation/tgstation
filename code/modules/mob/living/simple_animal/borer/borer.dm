@@ -255,9 +255,9 @@ var/total_borer_hosts_needed = 10
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
-			borer << "<span class='borer'>Cortical Link: [truename] sings: \"[message]\""
+			borer << "<span class='borer'>Cortical Link: [truename] sings, \"[message]\""
 		for(var/mob/dead in dead_mob_list)
-			dead << "<span class='borer'>Cortical Link: [truename] sings: \"[message]\""
+			dead << "<span class='borer'>Cortical Link: [truename] sings, \"[message]\""
 		return
 	if(!victim)
 		src << "<span class='warning'>You cannot speak without a host!</span>"
