@@ -1,0 +1,5 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - rscadd: "The action button for a dental implant now includes the name of the pill"
+  - bugfix: "The pill activation button now properly displays the pill's icon"
