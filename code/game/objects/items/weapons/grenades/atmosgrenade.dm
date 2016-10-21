@@ -19,7 +19,7 @@
 
 /obj/item/weapon/grenade/gas/knockout
 	name = "Knockout Grenade"
-	desc = "A grenade that completely removes all air and heat from its detonation area."
+	desc = "A grenade that floods the area with nitrous oxide, putting everyone to sleep."
 	spawn_contents = "n2o=100;TEMP=293.15"
 
 /obj/item/weapon/grenade/gas/freeze
