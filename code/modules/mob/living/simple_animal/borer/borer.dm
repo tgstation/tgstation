@@ -252,7 +252,7 @@ var/total_borer_hosts_needed = 10
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/say(message)
-	if(message == "")
+	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
 			borer << "<span class='borer'>Cortical Link: [truename] sings: \"[message]\""
@@ -261,6 +261,8 @@ var/total_borer_hosts_needed = 10
 		return
 	if(!victim)
 		src << "<span class='warning'>You cannot speak without a host!</span>"
+		return
+	if(message == "")
 		return
 
 /mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
@@ -736,7 +738,7 @@ mob/living/carbon/proc/release_control()
 	src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
 	into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
 	your host and your eventual spawn safe and warm."
-	src << "You can speak to your victim with <b>say</b> and your fellow borers by prefixing your message with ';'. You can also force a host you have infested to speak by prefixing messages with *. Check out your borer tab to see your powers as a borer."
+	src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your borer tab to see your powers as a borer."
 	src << "You <b>MUST</b> escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle."
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling) return
