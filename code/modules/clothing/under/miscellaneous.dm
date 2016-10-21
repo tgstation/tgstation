@@ -259,7 +259,7 @@
 	item_state = "burial"
 	item_color = "burial"
 
-/obj/item/clothing/under/blackskirt
+/obj/item/clothing/under/skirt/black
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
@@ -268,7 +268,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/blueskirt
+/obj/item/clothing/under/skirt/blue
 	name = "blue skirt"
 	desc = "A blue, casual skirt."
 	icon_state = "blueskirt"
@@ -278,12 +278,26 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/blueskirt/redskirt
+/obj/item/clothing/under/skirt/red
 	name = "red skirt"
 	desc = "A red, casual skirt."
 	icon_state = "redskirt"
 	item_color = "redskirt"
 	item_state = "r_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
+/obj/item/clothing/under/skirt/purple
+	name = "purple skirt"
+	desc = "A purple, casual skirt."
+	icon_state = "purpleskirt"
+	item_color = "purpleskirt"
+	item_state = "p_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
 
 /obj/item/clothing/under/schoolgirl
 	name = "blue schoolgirl uniform"
