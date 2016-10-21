@@ -237,7 +237,6 @@
 	icon = LIGHTING_ICON
 	icon_state = LIGHTING_ICON_STATE
 	layer = LIGHTING_LAYER
-	plane = LIGHTING_PLANE
 	mouse_opacity = 0
 	blend_mode = BLEND_OVERLAY
 	invisibility = INVISIBILITY_LIGHTING

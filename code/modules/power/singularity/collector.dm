@@ -120,7 +120,6 @@ var/global/list/rad_collectors = list()
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
-	Z.plane = initial(Z.plane)
 	src.loaded_tank = null
 	if(active)
 		toggle_power()
