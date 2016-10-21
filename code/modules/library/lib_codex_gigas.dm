@@ -15,6 +15,7 @@
 
 /obj/item/weapon/book/codex_gigas/attack_self(mob/user)
 	if(is_blind(user))
+		user << "<span class='notice'>You suddenly feel really stupid now.</span>"
 		return
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
