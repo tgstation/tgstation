@@ -175,7 +175,7 @@
 			H.cure_blind()
 			H.adjust_eye_damage(-eye_damage_done)
 			eye_damage_done = 0
-		else if(prob(50))
+		else if(prob(50) && eye_damage_done)
 			H.adjust_eye_damage(-1)
 			eye_damage_done--
 		if(!eye_damage_done)
