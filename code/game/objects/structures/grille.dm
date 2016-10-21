@@ -43,14 +43,14 @@
 /obj/structure/grille/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
-	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, 2, user)
+	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE, user)
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='warning'>[user] mangles [src].</span>", null, null, 2, user)
+	user.visible_message("<span class='warning'>[user] mangles [src].</span>", null, null, COMBAT_MESSAGE_RANGE, user)
 	if(!shock(user, 70))
 		take_damage(20, BRUTE, "melee", 1)
 
