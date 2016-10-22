@@ -518,7 +518,6 @@
 	name = "Shuttle Import"
 
 /obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
-	var/list/hurt_mobs = list()
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		var/turf/T1 = L1[i]
@@ -530,8 +529,7 @@
 
 		for(var/atom/movable/AM in T1)
 			if(ismob(AM))
-				if(isliving(AM) && !(AM in hurt_mobs))
-					hurt_mobs |= AM
+				if(isliving(AM))
 					var/mob/living/M = AM
 					if(M.buckled)
 						M.buckled.unbuckle_mob(M, 1)
