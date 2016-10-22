@@ -101,8 +101,7 @@
 	var/shock_damage = min(rand(30,40),rand(30,40))
 
 	if(iscarbon(user))
-		var/stun = min(shock_damage, 15)
-		user.Stun(stun)
+		user.Stun(15)
 		user.Weaken(10)
 		user.electrocute_act(shock_damage, src, 1)
 
