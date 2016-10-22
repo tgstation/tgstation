@@ -46,24 +46,26 @@
 
 	var/momentum_x = 0		//Realistic physics. No more "Instant stopping while barreling down a hallway at Mach 1".
 	var/momentum_y = 0
-	var/momentum_max = 250
-	var/momentum_impact_coeff = 0.4	//At this speed you'll start coliding with people resulting in momentum loss and them being knocked back, but no injuries or knockdowns
+	var/momentum_max = 500
+	var/momentum_impact_coeff = 0.6	//At this speed you'll start coliding with people resulting in momentum loss and them being knocked back, but no injuries or knockdowns
 	var/momentum_impact_loss = 50
 	var/momentum_crash_coeff = 0.8	//At this speed if you hit a dense object, you will careen out of control, while that object will be knocked flying.
 	var/momentum_speed = 0	//How fast we are drifting around
+	var/momentum_speed_x = 0
+	var/momentum_speed_y = 0
 	var/momentum_drift_tick = 0 //Cooldowns
-	var/momentum_passive_loss = 2
+	var/momentum_passive_loss = 4
 	var/momentum_gain = 20
 
 	var/stabilizer = 1
-	var/stabilizer_decay_amount = 20
+	var/stabilizer_decay_amount = 25
 	var/gravity = 1
-	var/gravity_decay_amount = 4
+	var/gravity_decay_amount = 6
 	var/pressure = 1
-	var/pressure_decay_amount = 4
+	var/pressure_decay_amount = 6
 	var/pressure_threshold = 30
 	var/brake = 0
-	var/airbrake_decay_amount = 30
+	var/airbrake_decay_amount = 60
 
 	var/resync = 0	//Used to resync the flight-suit every 30 seconds or so.
 
@@ -225,7 +227,6 @@
 			adjust_momentum(momentum_increment, 0)
 		if(WEST)
 			adjust_momentum(-momentum_increment, 0)
-	world << "MOMENTUM: [momentum_x] [momentum_y] MOMENTUM SPEED : [momentum_speed] MOMENTUM TICK : [momentum_drift_tick]"
 
 //The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/device/flightpack/proc/momentum_drift()
@@ -253,15 +254,23 @@
 		if(suit.user)
 			if(suit.user.canmove)
 				if(momentum_speed == 3)
-					if(drift_x)
-						step(suit.user, drift_dir_x)
-					if(drift_y)
-						step(suit.user, drift_dir_y)
+					var/turf/target = get_turf(suit.user)
+					if(drift_x && momentum_speed_x == 3)
+						target = get_edge_target_turf(target, drift_dir_x)
+					else if(drift_x && momentum_speed_x == 2)
+						target = get_step(target, drift_dir_x)
+					if(drift_y && momentum_speed_y == 3)
+						target = get_edge_target_turf(target, drift_dir_y)
+					else if(drift_y && momentum_speed_y == 2)
+						target = get_step(target, drift_dir_y)
+					suit.user.throw_at_fast(target, (momentum_speed + (boost * 2)), 3, null, 0)
 				else if(momentum_speed == 2)
-					if(drift_x)
-						step(suit.user, drift_dir_x)
-					if(drift_y)
-						step(suit.user, drift_dir_y)
+					var/turf/target = get_turf(suit.user)
+					if(drift_x && momentum_speed_x == 2)
+						target = get_edge_target_turf(target, drift_dir_x)
+					if(drift_y && momentum_speed_y == 2)
+						target = get_edge_target_turf(target, drift_dir_y)
+					suit.user.throw_at_fast(target, (momentum_speed + (boost * 2)), 3, null, 0)
 				else if(momentum_speed == 1)
 					if(drift_x)
 						step(suit.user, drift_dir_x)
@@ -309,7 +318,7 @@
 			resync = 1
 		if(!wearer)	//Oh god our user fell off!
 			disable_flight(1)
-	if(!pressure)
+	if(!pressure && brake)
 		brake = 0
 		usermessage("Airbrakes deactivated due to lack of pressure!")
 	//Add check for wearer wearing the shoes and suit here
@@ -353,23 +362,23 @@
 		if(crash_disabled && (crash_damage <= 1))
 			crash_disabled = 0
 			crash_disable_message = 0
-			wearer << "<span class='notice'>Flightpack: Stabilizers re-calibrated. Flightpack re-enabled.</span>"
+			usermessage("Flightpack: Stabilizers re-calibrated. Flightpack re-enabled.")
 	if(emp_damage)
 		emp_damage = Clamp(emp_damage-emp_heal_amount, 0, emp_disable_threshold * 10)
 		if(emp_damage >= emp_disable_threshold)
 			emp_disabled = 1
 		if(emp_disabled && (emp_damage <= 0.5))
 			emp_disabled = 0
-			wearer << "<span class='notice'>Flightpack: Systems rebooted. Flightpack re-enabled.</span>"
+			usermessage("Flightpack: Systems rebooted. Flightpack re-enabled")
 	disabled = crash_disabled + emp_disabled
 	if(disabled)
 		if(crash_disabled && (!crash_disable_message))
-			wearer << "<span class='userdanger'>Flightpack: WARNING: STABILIZERS DAMAGED. UNABLE TO CONTINUE OPERATION. PLEASE WAIT FOR AUTOMATIC RECALIBRATION.</span>"
-			wearer << "<span class='warning'>Your flightpack abruptly shuts off!</span>"
+			usermessage("WARNING: STABILIZERS DAMAGED. UNABLE TO CONTINUE OPERATION. PLEASE WAIT FOR AUTOMATIC RECALIBRATION", 1)
+			usermessage("Your flightpack abruptly shuts off!", 2)
 			crash_disable_message = 1
 		if(emp_disabled)
-			wearer << "<span class='userdanger'>Flightpack: WARNING: POWER SURGE DETECTED FROM INTERNAL SHORT CIRCUIT. PLEASE WAIT FOR AUTOMATIC REBOOT.</span>"
-			wearer << "<span class='warning'>Your flightpack abruptly shuts off!</span>"
+			usermessage("WARNING: POWER SURGE DETECTED FROM INTERNAL SHORT CIRCUIT. PLEASE WAIT FOR AUTOMATIC REBOOT.", 1)
+			usermessage("Your flightpack abruptly shuts off!", 2)
 			emp_disable_message = 1
 		if(flight)
 			disable_flight(1)
@@ -412,6 +421,61 @@
 		if(suit.user)
 			wearer << "<span class='notice'>FLIGHTPACK: Engines set to force [momentum_gain].</span>"
 
+/obj/item/device/flightpack/proc/flight_impact(atom/movable/victim)	//Yes, victim.
+	var/density = 0
+	var/anchored = 0
+	density = victim.density
+	anchored = victim.anchored
+	if(!anchored)
+		var/turf/target = get_edge_target_turf(victim, suit.user.dir)
+		target = get_edge_target_turf(target, suit.user.dir)	//Woop
+		var/aim = rand(1, 5)
+		switch(aim)
+			if(1)
+				target = get_step(target, NORTH)
+				target = get_step(target, NORTH)
+				target = get_step(target, EAST)
+				target = get_step(target, EAST)
+			if(2)
+				target = get_step(target, NORTH)
+				target = get_step(target, NORTH)
+				target = get_step(target, WEST)
+				target = get_step(target, WEST)
+			if(3)
+				target = get_step(target, SOUTH)
+				target = get_step(target, SOUTH)
+				target = get_step(target, EAST)
+				target = get_step(target, EAST)
+			if(4)
+				target = get_step(target, SOUTH)
+				target = get_step(target, SOUTH)
+				target = get_step(target, WEST)
+				target = get_step(target, WEST)
+		victim.throw_at_fast(target,20,suit.user)
+		victim.visible_message("<span class='userdanger'>[victim.name] is thrown backwards violently by the impact of [suit.user.name]!</span>")
+	var/bounceangle = dir2angle(suit.user.dir)		//YOUR TURN!
+	var/bounceaim = rand(1, 85)
+	bounceangle += 180
+	var/bounceangle2 = bounceangle
+	switch(pick(1, 2))
+		if(1)
+			bounceangle += bounceaim
+		if(2)
+			bounceangle -= bounceaim
+	if(bounceangle > 360)
+		bounceangle -= 360
+	if(bounceangle2 > 360)
+		bounceangle2 -= 360
+	var/turf/bounceback = get_edge_target_turf(suit.user, angle2dir(bounceangle2))
+	bounceback = get_edge_target_turf(bounceback, angle2dir(bounceangle))
+	suit.user.throw_at_fast(bounceback, (12/(stabilizer+1))+(density*2), suit.user)
+	var/userdamage = 4
+	userdamage -= stabilizer*2
+	userdamage -= part_bin.rating
+	userdamage += density*2
+	userdamage += anchored*2
+	suit.user.visible_message("<span class='userdanger'>[suit.user.name] is thrown backwards by the impact!</span>")
+	losecontrol()
 
 /obj/item/device/flightpack/proc/losecontrol()
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit careens wildly as they lose control of it!</span>")
@@ -426,6 +490,8 @@
 	momentum_y = 0
 	if(flight)
 		disable_flight()
+	usermessage("WARNING: Stabilizers taking damage!", 1)
+	crash_damage = Clamp(crash_damage + crash_damage_low, 0, crash_disable_threshold*1.5)
 
 /obj/item/device/flightpack/proc/enable_flight(forced = 0)
 	if(!suit)
@@ -486,10 +552,21 @@
 		momentum_speed = 0
 	else if((abs(momentum_x) >= (momentum_crash_coeff*momentum_max))||(abs(momentum_y) >= (momentum_crash_coeff*momentum_max)))
 		momentum_speed = 3
+		if(abs(momentum_x) >= (momentum_crash_coeff*momentum_max))
+			momentum_speed_x = 3
+		if(abs(momentum_y) >= (momentum_crash_coeff*momentum_max))
+			momentum_speed_y = 3
 	else if((abs(momentum_x) >= (momentum_impact_coeff*momentum_max))||(abs(momentum_y) >= (momentum_impact_coeff*momentum_max)))
 		momentum_speed = 2
+		if(abs(momentum_x) >= (momentum_impact_coeff*momentum_max))
+			momentum_speed_x = 2
+		if(abs(momentum_y) >= (momentum_impact_coeff*momentum_max))
+			momentum_speed_y = 2
 	else if((momentum_x != 0)||(momentum_y != 0))
 		momentum_speed = 1
+		momentum_speed_x = 1
+		momentum_speed_y = 1
+	world << "DEBUG: Mspeed = [momentum_speed], Mspeedx = [momentum_speed_x], Mspeedy = [momentum_speed_y]"
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
 	if(slot == slot_back)
@@ -513,22 +590,27 @@
 	wearer << "<span class='notice'>Flightpack: Boosters engaged!</span>"
 	wearer.visible_message("<span class='notice'>[wearer.name]'s flightpack engines flare in intensity as they are rocketed forward by the immense thrust!</span>")
 	boost = 1
+	update_slowdown()
 
 /obj/item/device/flightpack/proc/deactivate_booster()
 	wearer << "<span class='warning'>Flightpack: Boosters disengaged!</span>"
 	boost = 0
+	update_slowdown()
 
 /obj/item/device/flightpack/proc/enable_airbrake()
 	if(wearer)
 		if(!stabilizer)
 			enable_stabilizers()
-		wearer << "<span class='notice'>You enable your suit's airbrakes, slowing you down to a slow cruise.</span>"
+			usermessage("Stabilizers activated!")
+		usermessage("Airbrakes extended!")
 	brake = 1
+	update_slowdown()
 
 /obj/item/device/flightpack/proc/disable_airbrake()
 	if(wearer)
-		wearer << "<span class='notice'>You disable your suit's airbrakes, speeding up back to normal.</span>"
+		usermessage("Airbrakes retracted!")
 	brake = 0
+	update_slowdown()
 
 /obj/item/device/flightpack/on_mob_move(dir, mob)
 	wearer_movement(dir)
@@ -706,9 +788,9 @@
 	shoes.suit = src
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/attack_hand(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.back)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(src == H.wear_suit && locked)
 			usermessage("You can not take a locked hardsuit off! Unlock it first!", 1)
 			return
 	..()

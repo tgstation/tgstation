@@ -91,6 +91,12 @@
 
 /mob/living/carbon/throw_impact(atom/hit_atom)
 	. = ..()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/obj/item/device/flightpack/FP = H.get_flightpack()
+		if(istype(FP) && FP.flight && (FP.momentum_speed > 1))
+			FP.flight_impact(hit_atom)
+			return 1
 	if(hit_atom.density && isturf(hit_atom))
 		Weaken(1)
 		take_bodypart_damage(10)
@@ -102,7 +108,6 @@
 		take_bodypart_damage(10)
 		visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
-
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
