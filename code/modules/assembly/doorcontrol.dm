@@ -50,9 +50,9 @@
 		if(D.id_tag == src.id)
 			if(specialfunctions & OPEN)
 				if(D.density)
-					D.open()
+					addtimer(D,"open",0,FALSE)
 				else
-					D.close()
+					addtimer(D,"close",0,FALSE)
 			if(specialfunctions & IDSCAN)
 				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
 			if(specialfunctions & BOLTS)
