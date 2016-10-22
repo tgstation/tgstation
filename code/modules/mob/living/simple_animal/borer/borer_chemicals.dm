@@ -32,6 +32,7 @@
 /datum/borer_chem/methamphetamine
 	chemname = "methamphetamine"
 	chem_desc = "Reduces stun times, increases stamina and run speed while dealing brain damage. If overdosed it will deal toxin and brain damage."
+	quantity = 9
 
 /datum/borer_chem/salbutamol
 	chemname = "salbutamol"

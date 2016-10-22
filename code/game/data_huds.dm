@@ -173,10 +173,13 @@
 		holder.icon_state = "hudbuff"
 	else if(has_brain_worms())
 		var/mob/living/simple_animal/borer/B = has_brain_worms()
-		if(B.controlling)
-			holder.icon_state = "hudbrainworm"
+		if(B == null)
+			return
 		else
-			holder.icon_state = "hudhealthy"
+			if(B.controlling)
+				holder.icon_state = "hudbrainworm"
+			else
+				holder.icon_state = "hudhealthy"
 
 	else
 		holder.icon_state = "hudhealthy"

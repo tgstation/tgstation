@@ -294,17 +294,18 @@ var/total_borer_hosts_needed = 10
 
 	src.victim = victim
 	victim.borer = src
-	loc = victim
+	src.forceMove(victim)
 
 	log_game("[src]/([src.ckey]) has infested [victim]/([victim.ckey]")
 
 /mob/living/simple_animal/borer/proc/leave_victim()
-	if(!victim) return
+	if(!victim)
+		return
 
 	if(controlling)
 		detatch()
 
-	loc = get_turf(victim)
+	src.forceMove(get_turf(victim))
 
 	victim.borer = null
 	reset_perspective(null)
