@@ -294,7 +294,7 @@ var/total_borer_hosts_needed = 10
 
 	src.victim = victim
 	victim.borer = src
-	src.forceMove(victim)
+	forceMove(victim)
 
 	log_game("[src]/([src.ckey]) has infested [victim]/([victim.ckey]")
 
