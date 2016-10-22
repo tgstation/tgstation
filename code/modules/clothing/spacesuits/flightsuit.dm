@@ -423,9 +423,10 @@
 
 /obj/item/device/flightpack/proc/flight_impact(atom/movable/victim)	//Yes, victim.
 	var/density = 0
-	var/anchored = 0
+	var/anchored = 1
 	density = victim.density
-	anchored = victim.anchored
+	if(istype(victim))
+		anchored = victim.anchored
 	if(!anchored)
 		var/turf/target = get_edge_target_turf(victim, suit.user.dir)
 		target = get_edge_target_turf(target, suit.user.dir)	//Woop
@@ -566,7 +567,6 @@
 		momentum_speed = 1
 		momentum_speed_x = 1
 		momentum_speed_y = 1
-	world << "DEBUG: Mspeed = [momentum_speed], Mspeedx = [momentum_speed_x], Mspeedy = [momentum_speed_y]"
 
 /obj/item/device/flightpack/item_action_slot_check(slot)
 	if(slot == slot_back)
