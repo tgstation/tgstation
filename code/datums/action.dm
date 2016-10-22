@@ -235,11 +235,11 @@
 		return 0
 	return ..()
 
-/datum/action/item_action/clock/toggle_flame
-	name = "Summon/Dismiss Ratvar's Flame"
-	desc = "Allows you to summon a flame that can create stunning zones at any range."
+/datum/action/item_action/clock/toggle_visor
+	name = "Create Judicial Marker"
+	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
 
-/datum/action/item_action/clock/toggle_flame/IsAvailable()
+/datum/action/item_action/clock/toggle_visor/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))

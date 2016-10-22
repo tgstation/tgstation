@@ -390,60 +390,6 @@
 	..()
 	desc = initial(desc)
 
-/obj/effect/clockwork/judicial_marker //Judicial marker: Created by the judicial visor. After three seconds, stuns any non-servants nearby and damages Nar-Sian cultists.
-	name = "judicial marker"
-	desc = "You get the feeling that you shouldn't be standing here."
-	clockwork_desc = "A sigil that will soon erupt and smite any unenlightened nearby."
-	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -32
-	pixel_y = -32
-	layer = BELOW_MOB_LAYER
-	var/mob/user
-
-/obj/effect/clockwork/judicial_marker/New(loc, caster)
-	..()
-	user = caster
-	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
-	flick("judicial_marker", src)
-	addtimer(src, "burstanim", 16, FALSE)
-
-/obj/effect/clockwork/judicial_marker/proc/burstanim()
-	layer = ABOVE_ALL_MOB_LAYER
-	flick("judicial_explosion", src)
-	addtimer(src, "judicialblast", 13, FALSE)
-
-/obj/effect/clockwork/judicial_marker/proc/judicialblast()
-	var/targetsjudged = 0
-	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
-	for(var/mob/living/L in range(1, src))
-		if(is_servant_of_ratvar(L))
-			continue
-		if(L.null_rod_check())
-			var/obj/item/I = L.null_rod_check()
-			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
-			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
-			continue
-		if(!iscultist(L))
-			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
-			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Weaken(8)
-		else
-			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
-			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Weaken(4) //half the stun, but sets cultists on fire
-			L.adjust_fire_stacks(2)
-			L.IgniteMob()
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			C.silent += 6
-		targetsjudged++
-		L.adjustBruteLoss(10)
-		add_logs(user, L, "struck with a judicial blast")
-	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
-	QDEL_IN(src, 3) //so the animation completes properly
-
-/obj/effect/clockwork/judicial_marker/ex_act(severity)
-	return
 
 /obj/effect/clockwork/spatial_gateway //Spatial gateway: A usually one-way rift to another location.
 	name = "spatial gateway"
