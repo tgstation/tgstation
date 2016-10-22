@@ -23,11 +23,10 @@ var/sound/admin_sound
 	admin_sound.wait = 1
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
-		
+
 	for(var/mob/M in player_list)
-		if(M.client.prefs.toggles & SOUND_MIDI)
-			M << admin_sound
-			
+		M << admin_sound
+
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

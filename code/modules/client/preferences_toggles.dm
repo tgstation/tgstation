@@ -155,24 +155,6 @@
 			mob.stopLobbySound()
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/togglemidis()
-	set name = "Hear/Silence Midis"
-	set category = "Preferences"
-	set desc = "Toggles hearing sounds uploaded by admins"
-	prefs.toggles ^= SOUND_MIDI
-	prefs.save_preferences()
-	if(prefs.toggles & SOUND_MIDI)
-		src << "You will now hear any sounds uploaded by admins."
-		if(admin_sound)
-			src << admin_sound
-	else
-		src << "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled."
-		if(admin_sound && !(admin_sound.status & SOUND_PAUSED))
-			admin_sound.status |= SOUND_PAUSED
-			src << admin_sound
-			admin_sound.status ^= SOUND_PAUSED
-	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/verb/stop_client_sounds()
 	set name = "Stop Sounds"
 	set category = "Preferences"
