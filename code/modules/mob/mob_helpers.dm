@@ -89,6 +89,7 @@
 	var/newletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
+		newletter = sanitize_russian(newletter)
 		if(rand(1,3)==3)
 			if(lowertext(newletter)=="o")
 				newletter="u"
