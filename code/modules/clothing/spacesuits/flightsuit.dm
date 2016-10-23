@@ -253,29 +253,14 @@
 	if(suit)
 		if(suit.user)
 			if(suit.user.canmove)
-				if(momentum_speed == 3)
-					var/turf/target = get_turf(suit.user)
-					if(drift_x && momentum_speed_x == 3)
-						target = get_edge_target_turf(target, drift_dir_x)
-					else if(drift_x && momentum_speed_x == 2)
-						target = get_step(target, drift_dir_x)
-					if(drift_y && momentum_speed_y == 3)
-						target = get_edge_target_turf(target, drift_dir_y)
-					else if(drift_y && momentum_speed_y == 2)
-						target = get_step(target, drift_dir_y)
-					suit.user.throw_at_fast(target, (momentum_speed + (boost * 2)), 3, null, 0)
-				else if(momentum_speed == 2)
-					var/turf/target = get_turf(suit.user)
-					if(drift_x && momentum_speed_x == 2)
-						target = get_edge_target_turf(target, drift_dir_x)
-					if(drift_y && momentum_speed_y == 2)
-						target = get_edge_target_turf(target, drift_dir_y)
-					suit.user.throw_at_fast(target, (momentum_speed + (boost * 2)), 3, null, 0)
-				else if(momentum_speed == 1)
+				var/i = 0
+				while(i < momentum_speed)
+					i++
 					if(drift_x)
 						step(suit.user, drift_dir_x)
 					if(drift_y)
 						step(suit.user, drift_dir_y)
+					spawn(1)
 			else
 				losecontrol()
 			momentum_decay()
@@ -421,8 +406,8 @@
 		if(suit.user)
 			wearer << "<span class='notice'>FLIGHTPACK: Engines set to force [momentum_gain].</span>"
 
-/obj/item/device/flightpack/proc/crash_damage(density, anchored, speed)
-	var/crashmessagesrc = "<span class='userdanger'>[suit.user] violently crashes into [victim], "
+/obj/item/device/flightpack/proc/crash_damage(density, anchored, speed, victim_name)
+	var/crashmessagesrc = "<span class='userdanger'>[suit.user] violently crashes into [victim_name], "
 	var/userdamage = speed
 	userdamage -= stabilizer*2
 	userdamage -= part_bin.rating
@@ -436,7 +421,7 @@
 	crash_damage = Clamp(crash_damage + crash_damage_low, 0, crash_disable_threshold*1.5)
 
 
-
+//WIP
 	var/bounceangle = dir2angle(suit.user.dir)
 	var/bounceaim = rand(1, 85)
 	bounceangle += 180
@@ -457,17 +442,18 @@
 
 
 
-/obj/item/device/flightpack/proc/flight_impact(atom/victim)	//Yes, victim.
+/obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim)	//Yes, victim.
 	var/density = 0
 	var/anchored = 1
-	if(isclosedturf(victim))
+	var/victim
+	if(isclosedturf(unmovablevictim))
 		density = 1
 		anchored = 1
-	else if(ismovable(victim))
+	crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
+	else if(ismovableatom(unmovablevictim))
+		victim = unmovablevictim		//Now we know it can be moved!
 		density = victim.density
 		anchored = victim.anchored
-	crash_damage(density, anchored, momentum_speed)
-	suit.user.visible_message(crashmessage)
 	if(!anchored)
 		var/turf/target = get_edge_target_turf(victim, suit.user.dir)
 		target = get_edge_target_turf(target, suit.user.dir)	//Woop
