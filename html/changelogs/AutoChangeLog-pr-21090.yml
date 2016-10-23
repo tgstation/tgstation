@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "NOHUNGER species no longer hunger"
