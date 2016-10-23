@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug that caused door buttons to open doors one after another rather than simultaneously like they are suppose to"
