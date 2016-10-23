@@ -54462,7 +54462,7 @@
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/wood,
 /area/security/vacantoffice)
 "bPX" = (
 /obj/structure/table,
@@ -56408,6 +56408,10 @@
 	pixel_y = 0
 	},
 /obj/machinery/photocopier,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/open/floor/wood,
 /area/library)
 "bTx" = (
@@ -114047,7 +114051,7 @@ bNu
 bBI
 bwh
 bSe
-cZs
+bSd
 bDw
 bDw
 bwh
@@ -114306,7 +114310,7 @@ bwh
 bPc
 bTv
 bUN
-cZt
+bSd
 bwh
 cnY
 bZU
