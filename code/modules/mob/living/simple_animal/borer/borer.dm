@@ -6,7 +6,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "\red You cannot speak in IC (muted)."
+			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -147,7 +147,8 @@ var/total_borer_hosts_needed = 10
 		return
 
 	var/input = stripped_input(src, "Please enter a message to tell your host.", "Borer", null)
-	if(!input) return
+	if(!input)
+		return
 
 
 	var/say_string = (docile) ? "slurs" :"states"
@@ -173,7 +174,8 @@ var/total_borer_hosts_needed = 10
 		return
 
 	var/input = stripped_input(src, "Please enter a message to tell the borer.", "Message", null)
-	if(!input) return
+	if(!input)
+		return
 
 	B << "<span class='changeling'><i>[src] says:</i> [input]</span>"
 	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [input]")
@@ -196,7 +198,8 @@ var/total_borer_hosts_needed = 10
 		return
 	var/mob/living/captive_brain/CB = B.host_brain
 	var/input = stripped_input(src, "Please enter a message to tell the trapped mind.", "Message", null)
-	if(!input) return
+	if(!input)
+		return
 
 	CB << "<span class='changeling'><i>[B.truename] says:</i> [input]</span>"
 	log_say("Borer Communication: [key_name(B)] -> [key_name(CB)] : [input]")
@@ -218,8 +221,7 @@ var/total_borer_hosts_needed = 10
 				chemicals++
 			else if(chemicals < 250)
 				chemicals+=2
-			if (chemicals > 250)
-				chemicals = 250 //to prevent 251 chemical bug from +2 per tick
+			chemicals = min(250, chemicals)
 
 
 		if(stat != DEAD && victim.stat != DEAD)
@@ -305,7 +307,7 @@ var/total_borer_hosts_needed = 10
 	if(controlling)
 		detatch()
 
-	src.forceMove(get_turf(victim))
+	forceMove(get_turf(victim))
 
 	victim.borer = null
 	reset_perspective(null)
@@ -332,7 +334,8 @@ var/total_borer_hosts_needed = 10
 			choices += H
 
 	var/mob/living/carbon/human/H = input(src,"Who do you wish to infest?") in null|choices
-	if(!H) return
+	if(!H)
+		return
 
 	if(H.has_brain_worms())
 		src << "<span class='warning'>[victim] is already infested!</span>"
@@ -345,19 +348,20 @@ var/total_borer_hosts_needed = 10
 			src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
 			return
 
-		if(!H || !src) return
+		if(!H || !src)
+			return
 
 		Infect(H)
 
 /mob/living/simple_animal/borer/proc/CanInfect(var/mob/living/carbon/human/H)
 	if(!Adjacent(H))
-		return 0
+		return FALSE
 
 	if(stat != CONSCIOUS)
 		src << "<span class='warning'>You cannot do that in your current state.</span>"
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
 	set category = "Borer"
@@ -443,8 +447,10 @@ var/total_borer_hosts_needed = 10
 	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
 
 
-	if(!M || !src) return
-	if(!Adjacent(M)) return
+	if(!M || !src)
+		return
+	if(!Adjacent(M))
+		return
 
 	if(M.borer)
 		src << "<span class='warning'>You cannot paralyze someone who is already infested!</span>"
@@ -470,7 +476,8 @@ var/total_borer_hosts_needed = 10
 	if(stat != CONSCIOUS)
 		src << "<span class='userdanger'>You cannot leave your host in your current state.</span>"
 
-	if(!victim || !src) return
+	if(!victim || !src)
+		return
 
 	if(leaving)
 		leaving = 0
@@ -486,9 +493,12 @@ var/total_borer_hosts_needed = 10
 
 	spawn(100)
 
-		if(!victim || !src) return
-		if(!leaving) return
-		if(controlling) return
+		if(!victim || !src)
+			return
+		if(!leaving)
+			return
+		if(controlling)
+			return
 
 		if(src.stat != CONSCIOUS)
 			src << "<span class='userdanger'>You cannot release your host in your current state.</span>"
@@ -742,7 +752,8 @@ mob/living/carbon/proc/release_control()
 	src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your borer tab to see your powers as a borer."
 	src << "You <b>MUST</b> escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle."
 /mob/living/simple_animal/borer/proc/detatch()
-	if(!victim || !controlling) return
+	if(!victim || !controlling)
+		return
 
 	controlling = 0
 
