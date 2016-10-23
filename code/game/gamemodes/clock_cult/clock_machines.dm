@@ -187,6 +187,8 @@
 
 		for(var/M in atoms_to_test)
 			var/atom/movable/A = M
+			if(!A || qdeleted(A))
+				continue
 			power_drained += A.power_drain(TRUE)
 
 			if(istype(A, /obj/machinery/camera))
