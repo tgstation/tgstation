@@ -220,7 +220,8 @@
 
 		if("createPill")
 			var/many = params["many"]
-			if(reagents.total_volume == 0) return
+			if(reagents.total_volume == 0)
+				return
 			if(!condi)
 				var/amount = 1
 				var/vol_each = min(reagents.total_volume, 50)
@@ -257,7 +258,8 @@
 
 		if("createPatch")
 			var/many = params["many"]
-			if(reagents.total_volume == 0) return
+			if(reagents.total_volume == 0)
+				return
 			var/amount = 1
 			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(many))
@@ -280,7 +282,8 @@
 
 		if("createBottle")
 			var/many = params["many"]
-			if(reagents.total_volume == 0) return
+			if(reagents.total_volume == 0)
+				return
 
 			if(condi)
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
