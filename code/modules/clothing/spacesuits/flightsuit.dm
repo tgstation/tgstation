@@ -421,14 +421,53 @@
 		if(suit.user)
 			wearer << "<span class='notice'>FLIGHTPACK: Engines set to force [momentum_gain].</span>"
 
-/obj/item/device/flightpack/proc/flight_impact(atom/movable/victim)	//Yes, victim.
+/obj/item/device/flightpack/proc/crash_damage(density, anchored, speed)
+	var/crashmessagesrc = "<span class='userdanger'>[suit.user] violently crashes into [victim], "
+	var/userdamage = speed
+	userdamage -= stabilizer*2
+	userdamage -= part_bin.rating
+	userdamage += density*2
+	userdamage += anchored*2
+	if(userdamage)
+		crashmessagesrc += "that really must of hurt!"
+	else
+		crashmessagesrc += "but luckily [suit.user]'s impact was absorbed by their suit's stabilizers!</span>"
+	usermessage("WARNING: Stabilizers taking damage!", 1)
+	crash_damage = Clamp(crash_damage + crash_damage_low, 0, crash_disable_threshold*1.5)
+
+
+
+	var/bounceangle = dir2angle(suit.user.dir)
+	var/bounceaim = rand(1, 85)
+	bounceangle += 180
+	var/bounceangle2 = bounceangle
+	switch(pick(1, 2))
+		if(1)
+			bounceangle += bounceaim
+		if(2)
+			bounceangle -= bounceaim
+	if(bounceangle > 360)
+		bounceangle -= 360
+	if(bounceangle2 > 360)
+		bounceangle2 -= 360
+	var/turf/bounceback = get_edge_target_turf(suit.user, angle2dir(bounceangle2))
+	bounceback = get_edge_target_turf(bounceback, angle2dir(bounceangle))
+	suit.user.throw_at_fast(bounceback, (12/(stabilizer+1))+(density*2), suit.user)
+
+
+
+
+/obj/item/device/flightpack/proc/flight_impact(atom/victim)	//Yes, victim.
 	var/density = 0
 	var/anchored = 1
 	if(isclosedturf(victim))
 		density = 1
 		anchored = 1
-	else if(istype(victim,))
+	else if(ismovable(victim))
+		density = victim.density
 		anchored = victim.anchored
+	crash_damage(density, anchored, momentum_speed)
+	suit.user.visible_message(crashmessage)
 	if(!anchored)
 		var/turf/target = get_edge_target_turf(victim, suit.user.dir)
 		target = get_edge_target_turf(target, suit.user.dir)	//Woop
@@ -456,28 +495,6 @@
 				target = get_step(target, WEST)
 		victim.throw_at_fast(target,20,suit.user)
 		victim.visible_message("<span class='userdanger'>[victim.name] is thrown backwards violently by the impact of [suit.user.name]!</span>")
-	suit.user.visible_message("<span class='userdanger'>[suit.user.name] crashes into [victim] and is violently thrown back!</span>")
-	var/bounceangle = dir2angle(suit.user.dir)		//YOUR TURN!
-	var/bounceaim = rand(1, 85)
-	bounceangle += 180
-	var/bounceangle2 = bounceangle
-	switch(pick(1, 2))
-		if(1)
-			bounceangle += bounceaim
-		if(2)
-			bounceangle -= bounceaim
-	if(bounceangle > 360)
-		bounceangle -= 360
-	if(bounceangle2 > 360)
-		bounceangle2 -= 360
-	var/turf/bounceback = get_edge_target_turf(suit.user, angle2dir(bounceangle2))
-	bounceback = get_edge_target_turf(bounceback, angle2dir(bounceangle))
-	suit.user.throw_at_fast(bounceback, (12/(stabilizer+1))+(density*2), suit.user)
-	var/userdamage = 4
-	userdamage -= stabilizer*2
-	userdamage -= part_bin.rating
-	userdamage += density*2
-	userdamage += anchored*2
 	losecontrol()
 
 /obj/item/device/flightpack/proc/losecontrol()
@@ -493,8 +510,6 @@
 	momentum_y = 0
 	if(flight)
 		disable_flight()
-	usermessage("WARNING: Stabilizers taking damage!", 1)
-	crash_damage = Clamp(crash_damage + crash_damage_low, 0, crash_disable_threshold*1.5)
 
 /obj/item/device/flightpack/proc/enable_flight(forced = 0)
 	if(!suit)
