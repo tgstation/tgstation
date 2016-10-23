@@ -893,3 +893,6 @@
 			Weaken(10)
 		return 1
 	..()
+
+/mob/living/carbon/human/Bump(atom/A)
+	world << "DEBUG: BUMP WITH [A]"

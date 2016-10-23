@@ -75,6 +75,9 @@
 			if(!T.has_gravity() || !nograv_required)
 				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
 				I.setDir(holder.dir)
+				if(istype(holder, /obj/item/device/flightpack))
+					var/obj/item/device/flightpack/F = holder
+					I.setDir(F.suit.user.dir)
 				if(fade)
 					flick(fadetype, I)
 					I.icon_state = ""

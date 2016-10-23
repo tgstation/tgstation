@@ -424,8 +424,10 @@
 /obj/item/device/flightpack/proc/flight_impact(atom/movable/victim)	//Yes, victim.
 	var/density = 0
 	var/anchored = 1
-	density = victim.density
-	if(istype(victim))
+	if(isclosedturf(victim))
+		density = 1
+		anchored = 1
+	else if(istype(victim,))
 		anchored = victim.anchored
 	if(!anchored)
 		var/turf/target = get_edge_target_turf(victim, suit.user.dir)
@@ -454,6 +456,7 @@
 				target = get_step(target, WEST)
 		victim.throw_at_fast(target,20,suit.user)
 		victim.visible_message("<span class='userdanger'>[victim.name] is thrown backwards violently by the impact of [suit.user.name]!</span>")
+	suit.user.visible_message("<span class='userdanger'>[suit.user.name] crashes into [victim] and is violently thrown back!</span>")
 	var/bounceangle = dir2angle(suit.user.dir)		//YOUR TURN!
 	var/bounceaim = rand(1, 85)
 	bounceangle += 180
@@ -475,7 +478,6 @@
 	userdamage -= part_bin.rating
 	userdamage += density*2
 	userdamage += anchored*2
-	suit.user.visible_message("<span class='userdanger'>[suit.user.name] is thrown backwards by the impact!</span>")
 	losecontrol()
 
 /obj/item/device/flightpack/proc/losecontrol()
@@ -643,19 +645,29 @@
 		var/obj/item/weapon/stock_parts/S = I
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
 			if((!part_manip) || (part_manip.rating < S.rating))
-				usermessage("[I] sucessfully installed into systems.")
+				usermessage("[I] has been sucessfully installed into systems.")
+				I.loc = src
+				part_manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
 			if((!part_scan) || (part_scan.rating < S.rating))
-				usermessage("[I] sucessfully installed into systems.")
+				usermessage("[I] has been sucessfully installed into systems.")
+				I.loc = src
+				part_scan = I
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
 			if((!part_laser) || (part_laser.rating < S.rating))
-				usermessage("[I] sucessfully installed into systems.")
+				usermessage("[I] has been sucessfully installed into systems.")
+				I.loc = src
+				part_laser = I
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
 			if((!part_bin) || (part_bin.rating < S.rating))
-				usermessage("[I] sucessfully installed into systems.")
+				usermessage("[I] has been sucessfully installed into systems.")
+				I.loc = src
+				part_bin = I
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
 			if((!part_cap) || (part_cap.rating < S.rating))
-				usermessage("[I] sucessfully installed into systems.")
+				usermessage("[I] has been sucessfully installed into systems.")
+				I.loc = src
+				part_cap = I
 
 //MOB MOVEMENT STUFF----------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -960,14 +972,10 @@
 	usermessage("You detach the flightpack.")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/attach_pack(obj/item/device/flightpack/F)
-	if(pack)
-		usermessage("A flight pack is already attached!", 1)
-		return 0
-	else
-		F.loc = src
-		pack = F
-		pack.relink_suit(src)
-		usermessage("You attach and fasten the flightpack.")
+	F.loc = src
+	pack = F
+	pack.relink_suit(src)
+	usermessage("You attach and fasten the flightpack.")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/detach_shoes()
 	shoes.delink_suit()
@@ -976,14 +984,10 @@
 	usermessage("You detach the flight shoes.")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/attach_shoes(obj/item/clothing/shoes/flightshoes/S)
-	if(shoes)
-		usermessage("Flight shoes are already attached!", 1)
-		return 0
-	else
-		S.loc = src
-		shoes = F
-		shoes.relink_suit(src)
-		usermessage("You attach and fasten a pair of flight shoes.")
+	S.loc = src
+	shoes = S
+	shoes.relink_suit(src)
+	usermessage("You attach and fasten a pair of flight shoes.")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/attackby(obj/item/I, mob/wearer, params)
 	user = wearer
@@ -1019,20 +1023,22 @@
 				return 0
 			detach_shoes()
 	if(istype(I, /obj/item/device/flightpack))
+		var/obj/item/device/flightpack/F = I
 		if(pack)
 			usermessage("[src] already has a flightpack installed!", 1)
 			return 0
-		if(!pack.assembled)
+		if(!F.assembled)
 			usermessage("The flightpack you are trying to install is not fully assembled and operational!", 1)
 			return 0
-		if(user.unEquip(I))
-			attach_pack(I)
+		if(user.unEquip(F))
+			attach_pack(F)
 	if(istype(I, /obj/item/clothing/shoes/flightshoes))
+		var/obj/item/clothing/shoes/flightshoes/S = I
 		if(shoes)
 			usermessage("There are already shoes installed!", 1)
 			return 0
-		if(user.unEquip(I))
-			attach_shoes(I)
+		if(user.unEquip(S))
+			attach_shoes(S)
 
 //FLIGHT HELMET----------------------------------------------------------------------------------------------------------------------------------------------------
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
