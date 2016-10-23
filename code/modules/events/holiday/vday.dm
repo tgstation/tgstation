@@ -125,5 +125,5 @@
                 "A heart-shaped candy that reads: VALIDTINES",
                 "A heart-shaped candy that reads: FACEHUGGER",
                 "A heart-shaped candy that reads: DOMINATOR",
-                "A heart-shaped candy that reads: GET TESLA'D"
+                "A heart-shaped candy that reads: GET TESLA'D")
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")
