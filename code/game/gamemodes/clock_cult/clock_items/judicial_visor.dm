@@ -51,6 +51,16 @@
 		user.IgniteMob()
 	return 1
 
+/obj/item/clothing/glasses/judicial_visor/dropped(mob/user)
+	. = ..()
+	addtimer(src, "check_on_mob", 1, FALSE, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+
+/obj/item/clothing/glasses/judicial_visor/proc/check_on_mob(mob/user)
+	if(user && src != user.get_item_by_slot(slot_glasses)) //if we happen to check and we AREN'T in the slot, we need to remove our shit from whoever we got dropped from
+		update_status(FALSE)
+		if(blaster.active)
+			blaster.remove_ranged_ability(user)
+
 /obj/item/clothing/glasses/judicial_visor/attack_self(mob/user)
 	if(is_servant_of_ratvar(user) && src == user.get_item_by_slot(slot_glasses))
 		blaster.toggle(user)
@@ -62,12 +72,12 @@
 	if(active == change_to)
 		return 0
 	var/mob/living/L = loc
-	if(!is_servant_of_ratvar(L) || L.stat)
-		return 0
 	active = change_to
 	icon_state = "judicial_visor_[active]"
 	L.update_action_buttons_icon()
 	L.update_inv_glasses()
+	if(!is_servant_of_ratvar(L) || L.stat)
+		return 0
 	switch(active)
 		if(TRUE)
 			L << "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
@@ -106,7 +116,7 @@
 /obj/effect/proc_holder/judicial_visor/InterceptClickOn(mob/living/carbon/user, params, atom/target)
 	if(..())
 		return
-	if(user.incapacitated())
+	if(user.incapacitated() || !visor || visor != user.get_item_by_slot(slot_glasses))
 		remove_ranged_ability(user)
 		return
 
