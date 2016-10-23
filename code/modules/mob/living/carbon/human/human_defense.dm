@@ -113,14 +113,14 @@
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == ORGAN_ROBOTIC)
 			if(!informed)
-				src << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
+				src << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload!</span>"
 				informed = 1
 			switch(severity)
 				if(1)
-					L.take_damage(0,10)
-					src.Stun(10)
+					L.take_damage(0,4)
+					src.Stun(7)
 				if(2)
-					L.take_damage(0,5)
+					L.take_damage(0,2)
 					src.Stun(5)
 	..()
 
