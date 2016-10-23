@@ -53,6 +53,43 @@
 	if(IsMultiple(activeFor, 4))
 		spawn_meteors(3, meteorsSPOOKY) //meteor list types defined in gamemode/meteor/meteors.dm
 
+//Creepy clown invasion
+/datum/round_event_control/creepy_clowns
+	name = "Clowns"
+	typepath = /datum/round_event/creepy_clowns
+	holidayID = HALLOWEEN
+	weight = 20
+	earliest_start = 0
+
+/datum/round_event/creepy_clowns
+	endWhen = 40
+
+/datum/round_event/creepy_clowns/start()
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		if(!H.client || !istype(H))
+			return
+		H << "<span class='danger'>Honk...</span>"
+		H << 'sound/spookoween/scary_clown_appear.ogg'
+		new /obj/effect/hallucination/delusion(H.loc,H,force_kind="clown",duration=300,skip_nearby=0)
+
+/datum/round_event/creepy_clowns/tick()
+	if(IsMultiple(activeFor, 3))
+		for(var/mob/living/carbon/human/H in living_mob_list)
+			if (prob(66))
+				playsound(H.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 300, 1)
+			if (prob(33))
+				new /obj/effect/hallucination/delusion(H.loc,H,force_kind="clown",duration=50,skip_nearby=0) //
+			else if (prob(33))
+				new /obj/effect/mob_spawn/human/corpse/clown(H.loc)
+			else if (prob(1))
+				new /mob/living/simple_animal/hostile/retaliate/clown(H.loc)
+
+/datum/round_event/creepy_clowns/announce()
+	priority_announce("Honk... Honk... HONK... HONK!", "HONK!", 'sound/spookoween/scary_horn.ogg')
+
+/datum/round_event/spooky/start()
+	..()
+
 //spooky foods (you can't actually make these when it's not halloween)
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
 	name = "skull cookie"
