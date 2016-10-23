@@ -1,6 +1,7 @@
 /obj/item/clockwork
 	name = "meme blaster"
 	desc = "What the fuck is this? It looks kinda like a frog."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
@@ -369,6 +370,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "wraith_specs"
 	item_state = "glasses"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	vision_flags = SEE_MOBS | SEE_TURFS | SEE_OBJS
 	invis_view = 2
 	darkness_view = 3
@@ -391,36 +393,11 @@
 	if(is_servant_of_ratvar(user))
 		tint = 0
 		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+		user.apply_status_effect(STATUS_EFFECT_WRAITHSPECS)
 	else
 		tint = 3
 		user << "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>"
 
-/obj/item/clothing/glasses/wraith_spectacles/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/glasses/wraith_spectacles/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/clothing/glasses/wraith_spectacles/process()
-	if(ratvar_awakens || !ishuman(loc) || !is_servant_of_ratvar(loc)) //If Ratvar is alive, the spectacles don't hurt your eyes
-		return 0
-	var/mob/living/carbon/human/H = loc
-	if(H.glasses != src)
-		return 0
-	if(!H.disabilities & BLIND)
-		H.adjust_eye_damage(1)
-		if(H.eye_damage >= 15)
-			H.adjust_blurriness(2)
-		if(H.eye_damage >= 30)
-			if(H.become_nearsighted())
-				H << "<span class='warning'><b>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</b></span>"
-		if(H.eye_damage >= 45)
-			if(H.become_blind())
-				H << "<span class='userdanger'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
-		if(prob(15))
-			H << "<span class='warning'>Your eyes continue to burn.</span>"
 
 /obj/item/clothing/glasses/judicial_visor //Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
 	name = "judicial visor"
@@ -428,6 +405,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "judicial_visor_0"
 	item_state = "sunglasses"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/active = FALSE //If the visor is online
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/item/weapon/ratvars_flame/flame //The linked flame object
@@ -568,7 +546,8 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
 	w_class = 3
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 10, acid = 50)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/head/helmet/clockwork/equipped(mob/living/user, slot)
 	..()
@@ -639,7 +618,8 @@
 	resistance_flags = 0
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 70, acid = 20)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/gloves/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -671,7 +651,7 @@
 	w_class = 3
 	strip_delay = 50
 	put_on_delay = 30
-	resistance_flags = 0
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -846,6 +826,7 @@
 	fluff_names = list("Servant")
 	clockwork = TRUE
 	autoping = FALSE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/device/mmi/posibrain/soul_vessel/New()
 	..()
@@ -881,7 +862,7 @@
 		user << "<span class='warning'>[H] has no head, and thus no mind!</span>"
 		return
 	if(H.stat == CONSCIOUS)
-		user << "<span class='warning'>[H] must be dead or unconscious to claim their mind!</span>"
+		user << "<span class='warning'>[H] must be dead or unconscious for you to claim [H.p_their()] mind!</span>"
 		return
 	if(H.head)
 		var/obj/item/I = H.head
@@ -908,7 +889,7 @@
 	brainmob.real_name = H.real_name
 	brainmob.timeofhostdeath = H.timeofdeath
 	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
-	"<span class='brass'>You extract [H]'s consciousness from their body, trapping it in the soul vessel.</span>")
+	"<span class='brass'>You extract [H]'s consciousness from [H.p_their()] body, trapping it in the soul vessel.</span>")
 	transfer_personality(H)
 	B.Remove(H)
 	qdel(B)

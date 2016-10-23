@@ -48,9 +48,9 @@
 
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user)
-	user.visible_message("<span class='danger'>[user] zaps \himself with [src].</span>")
+	user.visible_message("<span class='danger'>[user] zaps [user.p_them()]self with [src].</span>")
 	playsound(user, fire_sound, 50, 1)
-	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> zapped \himself with a <b>[src]</b>"
+	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> zapped [user.p_them()]self with a <b>[src]</b>"
 
 
 /////////////////////////////////////
@@ -66,12 +66,13 @@
 	max_charges = 3 //3, 2, 2, 1
 
 /obj/item/weapon/gun/magic/wand/death/zap_self(mob/living/user)
-	var/message ="<span class='warning'>You irradiate yourself with pure energy! "
-	message += pick("Do not pass go. Do not collect 200 zorkmids.</span>","You feel more confident in your spell casting skills.</span>","You Die...</span>","Do you want your possessions identified?</span>")
-	user << message
+	..()
+	user << "<span class='warning'>You irradiate yourself with pure energy! \
+	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
+	</span>"
 	user.adjustOxyLoss(500)
 	charges--
-	..()
+
 
 /////////////////////////////////////
 //WAND OF HEALING
@@ -163,6 +164,6 @@
 	max_charges = 8 //8, 4, 4, 3
 
 /obj/item/weapon/gun/magic/wand/fireball/zap_self(mob/living/user)
+	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	charges--
-	..()

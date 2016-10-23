@@ -133,9 +133,10 @@
 	r_hand = /obj/item/weapon/twohanded/fireaxe
 
 /datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.contents)
-		if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
-			carried_item.add_mob_blood(H)//Oh yes, there will be blood...
+	for(var/obj/item/carried_item in H.get_equipped_items())
+		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
+	for(var/obj/item/I in H.held_items)
+		I.add_mob_blood(H)
 	H.regenerate_icons()
 
 /datum/outfit/assassin
@@ -358,9 +359,7 @@
 	R.freqlock = 1
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 
 	var/obj/item/weapon/card/id/W = H.wear_id

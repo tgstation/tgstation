@@ -23,7 +23,7 @@
 	return ..()
 
 /obj/structure/holosign/attack_hand(mob/living/user)
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
 	take_damage(5 , BRUTE, "melee", 1)
 

@@ -10,6 +10,7 @@
 	icon_state = "rare_pepe"
 	anchored = 1
 	density = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/repair_amount = 5 //how much a proselytizer can repair each cycle
 	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
 	break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
@@ -373,7 +374,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/clockwork/New()
 	..()
@@ -684,6 +685,7 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
+	resistance_flags = NONE
 	var/affects_servants = FALSE
 	var/stat_affected = CONSCIOUS
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
@@ -827,13 +829,13 @@
 	resist_string = "glows bright orange"
 
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
-	if(isloyal(L))
+	if(L.isloyal())
+		var/mob/living/carbon/C = L
 		delete_on_finish = TRUE
-		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
+		C.visible_message("<span class='warning'>[C] visibly trembles!</span>", \
 		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>")
-		for(var/obj/item/weapon/implant/mindshield/M in L)
-			if(M.implanted)
-				qdel(M)
+		for(var/obj/item/weapon/implant/mindshield/M in C.implants)
+			qdel(M)
 
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
@@ -843,7 +845,7 @@
 	color = "#EC8A2D"
 	alpha = 50
 	resist_string = "glows faintly"
-	var/power_charge = 2500 //starts with 2500W by default
+	var/power_charge = REPLICANT_ALLOY_POWER //starts with REPLICANT_ALLOY_POWER by default
 
 /obj/effect/clockwork/sigil/transmission/ex_act(severity)
 	if(severity == 3)

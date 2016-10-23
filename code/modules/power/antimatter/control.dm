@@ -59,7 +59,7 @@
 
 	if(!fueljar)//No fuel but we are on, shutdown
 		toggle_power()
-		//Angry buzz or such here
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
 	add_avail(stored_power)
@@ -138,8 +138,15 @@
 
 /obj/machinery/power/am_control_unit/power_change()
 	..()
-	if(stat & NOPOWER && active)
-		toggle_power()
+	if(stat & NOPOWER)
+		if(active)
+			toggle_power(1)
+		else
+			use_power = 0
+
+	else if(!stat && anchored)
+		use_power = 1
+
 	return
 
 
@@ -234,13 +241,13 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/proc/toggle_power()
+/obj/machinery/power/am_control_unit/proc/toggle_power(powerfail = 0)
 	active = !active
 	if(active)
 		use_power = 2
 		visible_message("The [src.name] starts up.")
 	else
-		use_power = 1
+		use_power = !powerfail
 		visible_message("The [src.name] shuts down.")
 	update_icon()
 	return

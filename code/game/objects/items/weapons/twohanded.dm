@@ -44,9 +44,9 @@
 	if(iscyborg(user))
 		user << "<span class='notice'>You free up your module.</span>"
 	else if(istype(src, /obj/item/weapon/twohanded/required))
-		user << "<span class='notice'>You drop \the [name].</span>"
+		user << "<span class='notice'>You drop [src].</span>"
 	else
-		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+		user << "<span class='notice'>You are now carrying [src] with one hand.</span>"
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_held_item()
@@ -72,14 +72,14 @@
 	name = "[name] (Wielded)"
 	update_icon()
 	if(iscyborg(user))
-		user << "<span class='notice'>You dedicate your module to [name].</span>"
+		user << "<span class='notice'>You dedicate your module to [src].</span>"
 	else
-		user << "<span class='notice'>You grab the [name] with both hands.</span>"
+		user << "<span class='notice'>You grab [src] with both hands.</span>"
 	if (wieldsound)
 		playsound(loc, wieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 	O.name = "[name] - offhand"
-	O.desc = "Your second grip on the [name]"
+	O.desc = "Your second grip on [src]."
 	user.put_in_inactive_hand(O)
 	return
 
@@ -136,7 +136,7 @@
 
 /obj/item/weapon/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(wielded && !slot_flags)
-		M << "<span class='warning'>\The [src] is too cumbersome to carry with anything but your hands!</span>"
+		M << "<span class='warning'>[src] is too cumbersome to carry with anything but your hands!</span>"
 		return 0
 	return ..()
 
@@ -145,7 +145,7 @@
 	if(get_dist(src,user) > 1)
 		return 0
 	if(H != null)
-		user << "<span class='notice'>\The [src] is too cumbersome to carry in one hand!</span>"
+		user << "<span class='notice'>[src] is too cumbersome to carry in one hand!</span>"
 		return
 	if(src.loc != user)
 		wield(user)
@@ -170,7 +170,7 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
-	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
+	force_wielded = 24
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -184,7 +184,7 @@
 	return
 
 /obj/item/weapon/twohanded/fireaxe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] axes \himself from head to toe! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
@@ -263,7 +263,7 @@
 		sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
-	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on \the [src].</span>"
+	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>"
 	if (force_wielded)
 		user.take_bodypart_damage(20,25)
 	else
@@ -316,8 +316,7 @@
 		var/mob/living/carbon/C = user
 		if(C.wear_mask == src)
 			in_mouth = ", barely missing their nose"
-	. = "<span class='warning'>[user] swings their \
-		[src][in_mouth]. They light [A] in the process.</span>"
+	. = "<span class='warning'>[user] swings [user.p_their()] [src][in_mouth]. [user.p_they()] light[user.p_s()] [A] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
@@ -435,7 +434,7 @@
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
-	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
+	user << "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]"
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
@@ -535,7 +534,7 @@
 	icon_state = "pitchfork[wielded]"
 
 /obj/item/weapon/twohanded/pitchfork/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] impales \himself in \his abdomen with [src]! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] impales [user.p_them()]self in [user.p_their()] abdomen with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
@@ -543,7 +542,7 @@
 		var/mob/living/U = user
 		if(U.mind && !U.mind.devilinfo && (U.mind.soulOwner == U.mind)) //Burn hands unless they are a devil or have sold their soul
 			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
-				"<span class='warning'>\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\"</span>")
+				"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
 			if(ishuman(U))
 				var/mob/living/carbon/human/H = U
 				H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
@@ -552,7 +551,7 @@
 
 /obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.mind && !user.mind.devilinfo && (user.mind.soulOwner != user.mind))
-		user << "<span class ='warning'>The [src] burns in your hands.</span>"
+		user << "<span class ='warning'>[src] burns in your hands.</span>"
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()
 

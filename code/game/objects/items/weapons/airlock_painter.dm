@@ -34,10 +34,10 @@
 //because you're expecting user input.
 /obj/item/weapon/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		user << "<span class='notice'>There is no toner cartridge installed in \the [name]!</span>"
+		user << "<span class='notice'>There is no toner cartridge installed in [src]!</span>"
 		return 0
 	else if(ink.charges < 1)
-		user << "<span class='notice'>\The [name] is out of ink!</span>"
+		user << "<span class='notice'>[src] is out of ink!</span>"
 		return 0
 	else
 		return 1
@@ -46,7 +46,7 @@
 	var/obj/item/organ/lungs/L = user.getorganslot("lungs")
 
 	if(can_use(user) && L)
-		user.visible_message("<span class='suicide'>[user] is inhaling toner from \the [name]! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		use(user)
 
 		// Once you've inhaled the toner, you throw up your lungs
@@ -79,13 +79,13 @@
 
 		return (TOXLOSS|OXYLOSS)
 	else if(can_use(user) && !L)
-		user.visible_message("<span class='suicide'>[user] is spraying toner on \himself from \the [name]! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is spraying toner on [user.p_them()]self from [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
 		user.reagents.add_reagent("colorful_reagent", 1)
 		user.reagents.reaction(user, TOUCH, 1)
 		return TOXLOSS
 
 	else
-		user.visible_message("<span class='suicide'>[user] is trying to inhale toner from \the [name]! It might be a suicide attempt if \the [name] had any toner.</span>")
+		user.visible_message("<span class='suicide'>[user] is trying to inhale toner from [src]! It might be a suicide attempt if [src] had any toner.</span>")
 		return SHAME
 
 
@@ -107,12 +107,12 @@
 /obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/toner))
 		if(ink)
-			user << "<span class='notice'>\the [name] already contains \a [ink].</span>"
+			user << "<span class='notice'>[src] already contains \a [ink].</span>"
 			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
-		user << "<span class='notice'>You install \the [W] into \the [name].</span>"
+		user << "<span class='notice'>You install [W] into [src].</span>"
 		ink = W
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	else
@@ -123,5 +123,5 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		ink.loc = user.loc
 		user.put_in_hands(ink)
-		user << "<span class='notice'>You remove \the [ink] from \the [name].</span>"
+		user << "<span class='notice'>You remove [ink] from [src].</span>"
 		ink = null

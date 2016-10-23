@@ -241,8 +241,8 @@ var/global/list/pipeID2State = list(
 	qdel(src)
 
 /obj/item/pipe/suicide_act(mob/user)
-	if (pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
-		user.visible_message("<span class='suicide'>[user] shoved the [src] in \his mouth and turned it on!  It looks like \he's trying to commit suicide.</span>")
+	if(pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
+		user.visible_message("<span class='suicide'>[user] shoves the [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		if(istype(user, /mob/living/carbon))
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)

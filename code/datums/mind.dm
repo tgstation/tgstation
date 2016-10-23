@@ -297,7 +297,7 @@
 			text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
-		else if(isloyal(current))
+		else if(current.isloyal())
 			text += "head|<b>LOYAL</b>|employee|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|rev"
 		else if (src in ticker.mode.revolutionaries)
 			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
@@ -316,7 +316,7 @@
 		if (ticker.mode.config_tag=="gang")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		text += "[isloyal(current) ? "<B>LOYAL</B>" : "loyal"]|"
+		text += "[current.isloyal() ? "<B>LOYAL</B>" : "loyal"]|"
 		if(src in ticker.mode.get_all_gangsters())
 			text += "<a href='?src=\ref[src];gang=clear'>none</a>"
 		else
@@ -423,7 +423,7 @@
 		text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
 		text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
 
-	else if(isloyal(current))
+	else if(current.isloyal())
 		text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 	else if(is_convertable_to_cult(current))
 		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
@@ -445,7 +445,7 @@
 	if(is_servant_of_ratvar(current))
 		text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
 		text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
-	else if(isloyal(current))
+	else if(current.isloyal())
 		text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
 	else if(is_eligible_servant(current))
 		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
@@ -1101,21 +1101,24 @@
 			if("clear")
 				if(src in ticker.mode.devils)
 					if(istype(current,/mob/living/carbon/true_devil/))
-						usr << "<span class='warning'>This cannot be used on true or arch-devils.</span>"
-					else
-						ticker.mode.devils -= src
-						special_role = null
-						current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
-						RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-						RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
-						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
-						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
-						message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
-						devilinfo = null
-						if(issilicon(current))
-							var/mob/living/silicon/S = current
-							S.clear_law_sixsixsix(current)
-						log_admin("[key_name(usr)] has de-devil'ed [current].")
+						if(devilinfo)
+							devilinfo.regress_blood_lizard()
+						else
+							usr << "<span class='warning'>Something went wrong with removing the devil, we were unable to find an attached devilinfo.</span>."
+					ticker.mode.devils -= src
+					special_role = null
+					current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
+					RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
+					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
+					devilinfo = null
+					if(issilicon(current))
+						var/mob/living/silicon/S = current
+						S.clear_law_sixsixsix(current)
+					log_admin("[key_name(usr)] has de-devil'ed [current].")
 				else if(src in ticker.mode.sintouched)
 					ticker.mode.sintouched -= src
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")

@@ -31,6 +31,7 @@
 	var/close_sound = 'sound/machines/click.ogg'
 	var/cutting_sound = 'sound/items/Welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
+	var/material_drop_amount = 3
 
 /obj/structure/closet/New()
 	..()
@@ -188,8 +189,8 @@
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if(ispath(material_drop) && !(flags & NODECONSTRUCT))
-		new material_drop(loc)
+	if(ispath(material_drop) && material_drop_amount && !(flags & NODECONSTRUCT))
+		new material_drop(loc, material_drop_amount)
 	qdel(src)
 
 /obj/structure/closet/obj_break(damage_flag)
@@ -260,7 +261,6 @@
 		actuallyismob = 1
 	else if(!istype(O, /obj/item))
 		return
-	. = TRUE
 	var/turf/T = get_turf(src)
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
@@ -277,9 +277,9 @@
 				L.Weaken(2)
 			O.forceMove(T)
 			close()
-		return
 	else
 		O.forceMove(T)
+	return 1
 
 /obj/structure/closet/relaymove(mob/user)
 	if(user.stat || !isturf(loc) || !isliving(user))
@@ -301,10 +301,6 @@
 	if(!toggle(user))
 		togglelock(user)
 		return
-
-/obj/structure/closet/attack_alien(mob/living/user)
-	return attack_hand(user)
-
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
@@ -418,3 +414,9 @@
 				req_access = list()
 				req_access += pick(get_all_accesses())
 	..()
+
+
+/obj/structure/closet/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK

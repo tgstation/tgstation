@@ -64,6 +64,7 @@
 			return 0
 		modify_stored_alloy(REPLICANT_ALLOY_UNIT)
 		playsound(user, 'sound/machines/click.ogg', 50, 1)
+		clockwork_say(user, text2ratvar("Transmute into fuel."), TRUE)
 		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy.</span>"
 		user.drop_item()
 		qdel(I)

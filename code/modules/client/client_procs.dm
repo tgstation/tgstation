@@ -143,6 +143,8 @@ var/next_external_rsc = 0
 		preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
+	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
+		vars["fps"] = prefs.clientfps
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
@@ -218,7 +220,6 @@ var/next_external_rsc = 0
 
 	if(!void)
 		void = new()
-		void = void.MakeGreed()
 
 	screen += void
 

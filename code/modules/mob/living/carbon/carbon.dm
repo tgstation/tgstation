@@ -13,6 +13,8 @@
 		qdel(food)
 	for(var/BP in bodyparts)
 		qdel(BP)
+	for(var/imp in implants)
+		qdel(imp)
 	bodyparts = list()
 	remove_from_all_data_huds()
 	if(dna)
@@ -321,6 +323,7 @@
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 	if (legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
@@ -332,6 +335,7 @@
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)

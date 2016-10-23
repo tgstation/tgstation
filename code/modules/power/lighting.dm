@@ -62,7 +62,7 @@
 	switch(stage)
 		if(1)
 			if(istype(W, /obj/item/weapon/wrench))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src.loc, W.usesound, 75, 1)
 				usr << "<span class='notice'>You begin deconstructing [src]...</span>"
 				if (!do_after(usr, 30/W.toolspeed, target = src))
 					return
@@ -102,13 +102,13 @@
 				new /obj/item/stack/cable_coil(get_turf(loc), 1, "red")
 				user.visible_message("[user.name] removes the wiring from [src].", \
 					"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>")
-				playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				return
 
 			if(istype(W, /obj/item/weapon/screwdriver))
 				user.visible_message("[user.name] closes [src]'s casing.", \
 					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
-				playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+				playsound(loc, W.usesound, 75, 1)
 				switch(fixture_type)
 					if("tube")
 						newlight = new /obj/machinery/light/built(loc)
@@ -328,7 +328,7 @@
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
 			deconstruct()

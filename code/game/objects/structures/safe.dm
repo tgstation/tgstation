@@ -12,6 +12,7 @@ FLOOR SAFES
 	icon_state = "safe"
 	anchored = 1
 	density = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/open = 0		//is the safe open?
 	var/tumbler_1_pos	//the tumbler position- from 0 to 72
 	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
@@ -151,7 +152,7 @@ FLOOR SAFES
 			if(!user.drop_item())
 				user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>"
 				return
-			I.loc = src
+			I.forceMove(src)
 			user << "<span class='notice'>You put [I] in [src].</span>"
 			updateUsrDialog()
 			return
@@ -164,10 +165,13 @@ FLOOR SAFES
 		return ..()
 
 
-obj/structure/safe/blob_act(obj/structure/blob/B)
+/obj/structure/safe/handle_atom_del(atom/A)
+	updateUsrDialog()
+
+/obj/structure/safe/blob_act(obj/structure/blob/B)
 	return
 
-obj/structure/safe/ex_act(severity, target)
+/obj/structure/safe/ex_act(severity, target)
 	return
 
 

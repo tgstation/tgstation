@@ -277,7 +277,6 @@
 	return 0
 
 /mob/get_spacemove_backup()
-	var/atom/movable/dense_object_backup
 	for(var/A in orange(1, get_turf(src)))
 		if(isarea(A))
 			continue
@@ -297,9 +296,7 @@
 					return AM
 				if(pulling == AM)
 					continue
-				dense_object_backup = AM
-				break
-	. = dense_object_backup
+				. = AM
 
 /mob/proc/mob_has_gravity()
 	return has_gravity()

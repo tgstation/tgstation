@@ -4,7 +4,7 @@ sudo: false
 env:
     global:
     - BYOND_MAJOR="510"
-    - BYOND_MINOR="1332"
+    - BYOND_MINOR="1346"
     - NODE_VERSION="4"
     - BUILD_TOOLS=false
     - DM_MAPFILE=""
@@ -16,6 +16,7 @@ env:
     - DM_MAPFILE="dreamstation"
     - DM_MAPFILE="birdstation"
     - DM_MAPFILE="efficiencystation"
+    - DM_MAPFILE="pubbystation"
     - DM_MAPFILE="templates"
 
 

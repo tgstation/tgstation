@@ -153,6 +153,7 @@
 	singular_name = "brass floor tile"
 	desc = "A brass floor tile. It vibrates slightly."
 	icon_state = "tile_brass"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	turf_type = /turf/open/floor/clockwork
 
 //Plasteel (normal)

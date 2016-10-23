@@ -127,6 +127,8 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		var/turf/T = i
 		for(var/mob/living/simple_animal/monster in T)
 			qdel(monster)
+		for(var/obj/structure/flora/ash/plant in T)
+			qdel(plant)
 	template.load(central_turf,centered = TRUE)
 	template.loaded++
 	var/datum/map_template/ruin = template
