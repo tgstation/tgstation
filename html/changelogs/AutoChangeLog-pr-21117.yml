@@ -1,0 +1,4 @@
+author: "ma44"
+delete-after: True
+changes: 
+  - rscadd: "Reminds the user that reading or writing a book is stupid."

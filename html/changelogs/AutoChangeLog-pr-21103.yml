@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Spray bottle can now be used in the chem dispenser"

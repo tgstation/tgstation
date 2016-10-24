@@ -224,7 +224,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 /datum/clockwork_scripture/create_object/judicial_visor //Judicial Visor: Creates a judicial visor.
 	descname = "Delayed Area Stun Glasses"
 	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to form a flame in your hand that can be activated at an area to smite it, stunning, muting, and damaging the nonfaithful. \
+	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging the nonfaithful. \
 	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10

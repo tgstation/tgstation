@@ -480,6 +480,17 @@
 	screen_loc = ui_health
 	mouse_opacity = 0
 
+/obj/screen/healths/clock
+	icon = 'icons/mob/actions.dmi'
+	icon_state = "bg_clock"
+	screen_loc = ui_health
+	mouse_opacity = 0
+
+/obj/screen/healths/clock/gear
+	icon = 'icons/mob/clockwork_mobs.dmi'
+	icon_state = "bg_gear"
+	screen_loc = ui_internal
+
 /obj/screen/healths/revenant
 	name = "essence"
 	icon = 'icons/mob/actions.dmi'

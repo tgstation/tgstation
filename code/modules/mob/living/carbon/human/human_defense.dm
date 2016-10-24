@@ -279,7 +279,7 @@
 			affecting = get_bodypart("chest")
 		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
-		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
+		damage_clothes(damage, M.melee_damage_type, "melee", affecting.body_zone)
 
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
@@ -332,7 +332,7 @@
 			updatehealth()
 
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-								"<span class='userdanger'>[M.name] has hit [src]!</span>", null, 2, M.occupant)
+								"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE, M.occupant)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else
