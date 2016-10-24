@@ -404,4 +404,9 @@
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
 
-
+/obj/item/clothing/suit/armor/swat
+	name = "\improper SWAT vest"
+	desc = "A lightweight assault SWAT vest."
+	icon_state = "swatvest"
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20, fire = 100, acid = 100)
+	strip_delay = 80
