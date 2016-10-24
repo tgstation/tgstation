@@ -705,6 +705,7 @@
 #include "code\game\objects\items\weapons\twohanded.dm"
 #include "code\game\objects\items\weapons\vending_items.dm"
 #include "code\game\objects\items\weapons\weaponry.dm"
+#include "code\game\objects\items\weapons\grenades\atmosgrenade.dm"
 #include "code\game\objects\items\weapons\grenades\chem_grenade.dm"
 #include "code\game\objects\items\weapons\grenades\clusterbuster.dm"
 #include "code\game\objects\items\weapons\grenades\emgrenade.dm"
