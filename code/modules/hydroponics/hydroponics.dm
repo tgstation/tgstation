@@ -889,6 +889,10 @@
 	lastproduce = age
 	if(istype(myseed,/obj/item/seeds/replicapod))
 		user << "<span class='notice'>You harvest from the [myseed.plantname].</span>"
+	else if(myseed,/obj/item/seeds/spiderling
+		user << "<span class='notice'>The spiderling plant suddenly mutates, changing it's stats based on the others!
+			myseed.yield = round (100 / myseed.potency, 1)
+			myseed.production = round(100 / myseed.potency, 1)
 	else if(myseed.getYield() <= 0)
 		user << "<span class='warning'>You fail to harvest anything useful!</span>"
 	else
