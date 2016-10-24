@@ -1,4 +1,0 @@
-author: "Swindly"
-delete-after: True
-changes: 
-  - rscadd: "Added a button to the ChemMaster that dispenses the entire buffer to bottles."
