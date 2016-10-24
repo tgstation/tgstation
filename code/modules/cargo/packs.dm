@@ -36,6 +36,14 @@ datum/supply_pack
 
 /datum/supply_pack/emergency
 	group = "Emergency"
+	
+/datum/supply_pack/emergency/vehicle
+	name = "All-Terrain Vehicle"
+	cost = 2000
+	contraband = TRUE
+	contains = list(/obj/vehicle/atv,
+					/obj/item/key)
+	crate_name = "ATV crate"
 
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Equipment"
