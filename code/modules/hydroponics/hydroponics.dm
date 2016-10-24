@@ -890,7 +890,7 @@
 	if(istype(myseed,/obj/item/seeds/replicapod))
 		user << "<span class='notice'>You harvest from the [myseed.plantname].</span>"
 	else if(myseed,/obj/item/seeds/spiderling
-		user << "<span class='notice'>You feel slightly nasous tearing the spiderlings off the plant but it quickly goes away.</span>"
+		user << "<span class='notice'>You harvest [myseed.getYield()] spiderlings from the [myseed.plantname].</span>"
 			myseed.yield = round (myseed.potency / 10, 1) //Best value is 10
 			myseed.production = round(100 / myseed.potency, 1) //Best value is 1
 				if myseed.production > 10 //stops it from taking forever to grow
