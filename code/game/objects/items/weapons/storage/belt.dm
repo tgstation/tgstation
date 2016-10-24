@@ -8,11 +8,14 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 	obj_integrity = 300
 	max_integrity = 300
+	var/use_item_overlays = 0 // Do we have overlays for items held inside the belt?
 
 /obj/item/weapon/storage/belt/update_icon()
-	cut_overlays()
-	for(var/obj/item/I in contents)
-		add_overlay("[I.name]")
+	if(use_item_overlays)
+		cut_overlays()
+		for(var/obj/item/I in contents)
+			add_overlay("[I.name]")
+
 	..()
 
 /obj/item/weapon/storage/belt/utility
@@ -20,6 +23,7 @@
 	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	use_item_overlays = 1
 	can_hold = list(
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/screwdriver,
@@ -50,6 +54,7 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 	new /obj/item/weapon/extinguisher/mini(src)
+	update_icon()
 	//much roomier now that we've managed to remove two tools
 
 
@@ -62,6 +67,7 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	update_icon()
 
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()
@@ -73,6 +79,7 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/weapon/extinguisher/mini(src)
+	update_icon()
 
 
 
@@ -82,6 +89,7 @@
 	icon_state = "medicalbelt"
 	item_state = "medical"
 	max_w_class = 4
+	use_item_overlays = 1
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
 		/obj/item/weapon/dnainjector,
@@ -132,6 +140,7 @@
 	item_state = "security"//Could likely use a better one.
 	storage_slots = 5
 	max_w_class = 3 //Because the baton wouldn't fit otherwise. - Neerti
+	use_item_overlays = 1
 	can_hold = list(
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/melee/classic_baton,
@@ -230,6 +239,7 @@
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
 	storage_slots = 6
+	use_item_overlays = 1
 	can_hold = list(
 		/obj/item/device/soulstone
 		)
@@ -238,6 +248,7 @@
 	..()
 	for(var/i in 1 to 6)
 		new /obj/item/device/soulstone(src)
+	update_icon()
 
 /obj/item/weapon/storage/belt/champion
 	name = "championship belt"
@@ -322,6 +333,7 @@
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
 	storage_slots = 6
+	use_item_overlays = 1
 	can_hold = list(
 		/obj/item/weapon/gun/magic/wand
 		)
@@ -334,6 +346,7 @@
 	new /obj/item/weapon/gun/magic/wand/teleport(src)
 	new /obj/item/weapon/gun/magic/wand/door(src)
 	new /obj/item/weapon/gun/magic/wand/fireball(src)
+	update_icon()
 
 	for(var/obj/item/weapon/gun/magic/wand/W in contents) //All wands in this pack come in the best possible condition
 		W.max_charges = initial(W.max_charges)
@@ -346,6 +359,7 @@
 	item_state = "janibelt"
 	storage_slots = 6
 	max_w_class = 4 // Set to this so the  light replacer can fit.
+	use_item_overlays = 1
 	can_hold = list(
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/item/device/lightreplacer,
@@ -366,6 +380,19 @@
 	can_hold = list(
 		/obj/item/ammo_casing/shotgun
 		)
+
+/obj/item/weapon/storage/belt/bandolier/update_icon()
+	..()
+	if(contents.len > 8)
+		return
+	else
+		icon_state = "[initial(icon_state)]_[contents.len]"
+
+/obj/item/weapon/storage/belt/bandolier/attackby(obj/item/W, mob/user)
+	var/amount = contents.len
+	. = ..()
+	if(amount != contents.len)
+		update_icon()
 
 /obj/item/weapon/storage/belt/holster
 	name = "shoulder holster"
