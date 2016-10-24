@@ -4,9 +4,9 @@ Tiers and Requirements
 Pieces of scripture require certain follower counts, contruction value, and active caches in order to recite.
 Drivers: Unlocked by default
 Scripts: 5 servants and a cache
-Applications: 8 servants, 3 caches, and 50 CV
-Revenant: 10 servants and 100 CV
-Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
+Applications: 8 servants, 3 caches, and 100 CV
+Revenant: 10 servants, 4 caches, and 200 CV
+Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or destroyed
 */
 
 /datum/clockwork_scripture
@@ -739,7 +739,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	tier = SCRIPTURE_APPLICATION
-	sort_priority = 25
+	sort_priority = 24
 
 
 
@@ -759,7 +759,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "It will remain after converting a target, unless that target has a mindshield implant, which it will break to convert them, but consume itself in the process."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	sort_priority = 22
+	sort_priority = 21
 
 
 
@@ -777,7 +777,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "Can be recharged by using Volt Void while standing on it."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	sort_priority = 26
+	sort_priority = 25
 
 
 
@@ -796,7 +796,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "To revive a servant, the sigil must have 20 vitality plus the target servant's non-oxygen damage. It will still heal dead servants if it lacks the vitality to outright revive them."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	sort_priority = 23
+	sort_priority = 22
 
 
 /datum/clockwork_scripture/memory_allocation //Memory Allocation: Finds a willing ghost and makes them into a clockwork marauders for the invoker.
@@ -812,7 +812,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
 	tier = SCRIPTURE_APPLICATION
-	sort_priority = 24
+	sort_priority = 23
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
 	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in living_mob_list)
@@ -883,7 +883,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission and fails to disable even one thing, it will disable itself for two minutes."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	sort_priority = 29
+	sort_priority = 26
 
 
 
@@ -907,26 +907,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/clockwork_obelisk //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk.
-	descname = "Structure, Teleportation Hub"
-	name = "Clockwork Obelisk"
-	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living servant or clockwork obelisk."
-	invocations = list("May this obelisk...", "...take us to all places!")
-	channel_time = 80
-	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 4)
-	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 3)
-	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
-	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
-	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks recieve double duration and uses."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	sort_priority = 30
-
-
-
 /datum/clockwork_scripture/create_object/mania_motor //Mania Motor: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk.
 	descname = "Structure, Area Denial"
 	name = "Mania Motor"
@@ -947,20 +927,22 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/tinkerers_daemon //Tinkerer's Daemon: Creates a shell that can be attached to a tinkerer's cache to grant it passive component creation.
-	descname = "Component Generator"
+/datum/clockwork_scripture/create_object/tinkerers_daemon //Tinkerer's Daemon: Creates an efficient machine that produces components at a power cost
+	descname = "Structure, Component Generator"
 	name = "Tinkerer's Daemon"
-	desc = "Forms a daemon shell that can be attached to a tinkerer's cache to add new components at a healthy rate. It will only function if it is outnumbered by servants by a ratio of 5:1."
-	invocations = list("Collect Engine parts...", "...that yet hold greatness!")
+	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by servants by a ratio of 5:1, and there is at least one existing cache."
+	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
-	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
-	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
-	object_path = /obj/item/clockwork/daemon_shell
-	creator_message = "<span class='brass'>You form a daemon shell. Attach it to a tinkerer's cache to increase its rate of production.</span>"
+	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 4)
+	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 3)
+	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
+	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
 	usage_tip = "Vital to your success!"
 	tier = SCRIPTURE_APPLICATION
-	space_allowed = TRUE
-	sort_priority = 21
+	one_per_tile = TRUE
+	sort_priority = 29
 
 /datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0
@@ -975,10 +957,30 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		return 0
 	return ..()
 
+
+/datum/clockwork_scripture/create_object/clockwork_obelisk //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk.
+	descname = "Structure, Teleportation Hub"
+	name = "Clockwork Obelisk"
+	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living servant or clockwork obelisk."
+	invocations = list("May this obelisk...", "...take us to all places!")
+	channel_time = 80
+	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 4)
+	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 3)
+	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
+	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
+	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
+	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks recieve double duration and uses."
+	tier = SCRIPTURE_APPLICATION
+	one_per_tile = TRUE
+	sort_priority = 30
+
+
+
 //////////////
 // REVENANT //
 //////////////
-//Revenant scriptures are different than any others. They are all very powerful, but also very costly and have drawbacks. This might be a very long invocation time or a very high component cost.
 
 /datum/clockwork_scripture/invoke_nezbere //Invoke Nezbere, the Brass Eidolon: Invokes Nezbere, bolstering the strength of many clockwork items for one minute.
 	descname = "Structure Buff"
@@ -990,7 +992,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
 	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
-	and interdiction lenses, mending motors, mania motors, and clockwork obelisks will all require no power."
+	and interdiction lenses, mending motors, mania motors, tinkerer's daemons, and clockwork obelisks will all require no power."
 	tier = SCRIPTURE_REVENANT
 	sort_priority = 33
 	invokers_required = 3
@@ -1017,20 +1019,22 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		W.sight_range *= 2
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
 		P.uses_alloy = FALSE
-	for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects) //Daemons produce components twice as quickly
-		D.production_time *= 0.5
 	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
+		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
+			var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
+			D.production_time *= 0.5
 	spawn(600)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
 			W.damage_per_tick = initial(W.damage_per_tick)
 			W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
 			P.uses_alloy = initial(P.uses_alloy)
-		for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects)
-			D.production_time = initial(D.production_time)
 		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
 			M.needs_power = initial(M.needs_power)
+			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))
+				var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
+				D.production_time = initial(D.production_time)
 	return 1
 
 
