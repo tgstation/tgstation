@@ -1,4 +1,4 @@
-/obj/item/clothing/tie //Ties moved to neck slot items, but leaving this as-is to avoid conflicts
+/obj/item/clothing/tie //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
 	name = "tie"
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/ties.dmi'
