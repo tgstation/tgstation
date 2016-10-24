@@ -98,6 +98,7 @@ var/total_borer_hosts_needed = 10
 /mob/living/simple_animal/borer/New(atom/newloc, var/gen=1)
 	..(newloc)
 	generation = gen
+	notify_ghosts("A cortical borer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	real_name = "Cortical Borer [rand(1000,9999)]"
 	truename = "[borer_names[min(generation, borer_names.len)]] [rand(1000,9999)]"
 	borer_chems += /datum/borer_chem/epinephrine
@@ -705,7 +706,7 @@ mob/living/carbon/proc/release_control()
 		if(istype(I,/mob/living/simple_animal/borer))
 			return I
 
-	return 0
+	return FALSE
 
 /mob/living/carbon/proc/spawn_larvae()
 	set category = "Borer"
@@ -761,6 +762,8 @@ mob/living/carbon/proc/release_control()
 	victim.verbs -= /mob/living/carbon/proc/spawn_larvae
 	victim.verbs += /mob/living/proc/borer_comm
 	victim.verbs -= /mob/living/proc/trapped_mind_comm
+
+	victim.med_hud_set_status()
 
 	if(host_brain)
 
