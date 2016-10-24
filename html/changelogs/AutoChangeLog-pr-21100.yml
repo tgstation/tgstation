@@ -1,0 +1,7 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "Tinkerer's Daemons are now a structure instead of a Cache addon."
+  - wip: "Tinkerer's Daemons now consume a small amount of power when producing a component, but produce components every 12 seconds with no additional delay."
+  - tweak: "Adjusted the costs of the Tinkerer's Daemon and Interdiction Lens."
+  - imageadd: "Floaty component images appear when Tinkerer's Caches and Daemons produce components."
