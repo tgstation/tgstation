@@ -1,6 +1,7 @@
 
 /mob/living/simple_animal/hostile/clockwork
 	faction = list("ratvar")
+	gender = NEUTER
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	unique_name = 1
 	minbodytemp = 0
@@ -31,6 +32,22 @@
 	..()
 	src << playstyle_string
 
+/mob/living/simple_animal/hostile/clockwork/examine(mob/user)
+	var/t_He = p_they(TRUE)
+	var/t_s = p_s()
+	var/msg = "<span class='brass'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	msg += "[desc]\n"
+	if(health < maxHealth)
+		msg += "<span class='warning'>"
+		if(health >= maxHealth/2)
+			msg += "[t_He] look[t_s] slightly dented.\n"
+		else
+			msg += "<b>[t_He] look[t_s] severely dented!</b>\n"
+		msg += "</span>"
+	msg += "*---------*</span>"
+
+	user << msg
+
 /mob/living/simple_animal/hostile/clockwork/fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
@@ -38,8 +55,8 @@
 	health = 90
 	maxHealth = 90
 	speed = -1
-	melee_damage_lower = 20
-	melee_damage_upper = 20
+	melee_damage_lower = 18
+	melee_damage_upper = 18
 	attacktext = "crushes"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	loot = list(/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment)
@@ -98,11 +115,11 @@
 	health = 300 //Health is very high, and under most cases it will take enough fatigue to be forced to recall first
 	maxHealth = 300
 	speed = 1
+	obj_damage = 40
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	environment_smash = 1
 	weather_immunities = list("lava")
 	flying = 1
 	loot = list(/obj/item/clockwork/component/replicant_alloy/fallen_armor)
@@ -245,9 +262,9 @@
 				stat(null, "You are [recovering ? "un" : ""]able to deploy!")
 			else
 				if(resulthealth > 60)
-					stat(null, "You are [recovering ? "unable to deploy" : "can deploy on hearing your True Name"]!")
+					stat(null, "You are [recovering ? "unable to deploy" : "able to deploy on hearing your True Name"]!")
 				else
-					stat(null, "You are [recovering ? "unable to deploy" : "can deploy to protect your host"]!")
+					stat(null, "You are [recovering ? "unable to deploy" : "able to deploy to protect your host"]!")
 		if(ratvar_awakens)
 			stat(null, "Block Chance: 80%")
 			stat(null, "Counter Chance: 80%")
@@ -261,7 +278,7 @@
 	if(amount > 0)
 		combattimer = world.time + initial(combattimer)
 		for(var/mob/living/L in view(2, src))
-			if(istype(L.l_hand, /obj/item/weapon/nullrod) || istype(L.r_hand, /obj/item/weapon/nullrod)) //hand-held holy weapons increase the damage it takes
+			if(L.is_holding_item_of_type(/obj/item/weapon/nullrod))
 				src << "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>"
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break

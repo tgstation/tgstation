@@ -7,7 +7,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	icon_state = "off"
 	density = 1
 	anchored = 1
-	unacidable = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/active = 0
 
 
@@ -253,10 +253,10 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(!stationgate || qdeleted(stationgate))
 		return
 	if(istype(AM, /mob/living/carbon))
-		for(var/obj/item/weapon/implant/exile/E in AM)//Checking that there is an exile implant in the contents
-			if(E.imp_in == AM)//Checking that it's actually implanted vs just in their pocket
-				AM << "\black The station gate has detected your exile implant and is blocking your entry."
-				return
+		var/mob/living/carbon/C = AM
+		for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
+			AM << "\black The station gate has detected your exile implant and is blocking your entry."
+			return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
 	AM.setDir(SOUTH)
 	if (ismob(AM))

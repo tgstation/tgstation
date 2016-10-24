@@ -44,7 +44,7 @@
 			if(bomb_defused)
 				desc = "[desc] The bomb seems inert."
 			if(bomb_active)
-				desc = "[desc] It looks like its about to go off!"
+				desc = "[desc] It looks like it's about to go off!"
 	else
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(boxes.len)
@@ -85,7 +85,7 @@
 	update_icon()
 
 /obj/item/pizzabox/attack_hand(mob/user)
-	if(user.get_inactive_hand() != src)
+	if(user.get_inactive_held_item() != src)
 		..()
 		return
 	if(open)

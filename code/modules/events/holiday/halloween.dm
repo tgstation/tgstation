@@ -18,6 +18,9 @@
 
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
+	for(var/mob/living/simple_animal/parrot/Poly/Poly in mob_list)
+		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
+		qdel(Poly)
 
 /datum/round_event/spooky/announce()
 	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
@@ -68,7 +71,7 @@
 
 /obj/item/weapon/storage/spooky
 	name = "trick-o-treat bag"
-	desc = "A Pumpkin shaped bag that holds all sorts of goodies!"
+	desc = "A pumpkin-shaped bag that holds all sorts of goodies!"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "treatbag"
 
@@ -79,5 +82,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin,
 		/obj/item/weapon/reagent_containers/food/snacks/candy_corn,
 		/obj/item/weapon/reagent_containers/food/snacks/candy,
-		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar)
+		/obj/item/weapon/reagent_containers/food/snacks/candiedapple,
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		/obj/item/organ/brain ) // OH GOD THIS ISN'T CANDY!
 		new type(src)

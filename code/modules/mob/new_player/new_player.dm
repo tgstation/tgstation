@@ -304,7 +304,7 @@
 
 	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, 1)
-	if(isrobot(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
+	if(iscyborg(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
 
@@ -332,6 +332,9 @@
 		data_core.manifest_inject(humanc)
 		AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
+		if(highlander)
+			humanc << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
+			humanc.make_scottish()
 
 	joined_player_list += character.ckey
 

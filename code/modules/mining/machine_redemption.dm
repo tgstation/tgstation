@@ -102,7 +102,7 @@
 	if (!powered())
 		return
 	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = user.get_active_hand()
+		var/obj/item/weapon/card/id/I = user.get_active_held_item()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
 				return
@@ -126,7 +126,7 @@
 
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/deconstruction()
+/obj/machinery/mineral/ore_redemption/on_deconstruction()
 	empty_content()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)
@@ -209,7 +209,7 @@
 				else
 					usr << "<span class='warning'>Required access not found.</span>"
 		else if(href_list["choice"] == "insert")
-			var/obj/item/weapon/card/id/I = usr.get_active_hand()
+			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
 			if(istype(I))
 				if(!usr.drop_item())
 					return
@@ -255,14 +255,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(severity == 1)
-		if(prob(50))
-			empty_content()
-			qdel(src)
-	else if(severity == 2)
-		if(prob(25))
-			empty_content()
-			qdel(src)
+	..()
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()
@@ -275,6 +268,7 @@
 			s.use(s.max_amount)
 		s.loc = loc
 		s.layer = initial(s.layer)
+		s.plane = initial(s.plane)
 
 /obj/machinery/mineral/ore_redemption/power_change()
 	..()

@@ -16,6 +16,8 @@
 	var/randomspread = 0						//Randomspread for automatics
 	var/delay = 0								//Delay for energy weapons
 	var/click_cooldown_override = 0				//Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
+	var/firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect	//the visual effect appearing when the ammo is fired.
+
 
 /obj/item/ammo_casing/New()
 	..()
@@ -54,7 +56,7 @@
 			else
 				user << "<span class='warning'>You fail to collect anything!</span>"
 	else
-		..()
+		return ..()
 
 //Boxes of ammo
 /obj/item/ammo_box

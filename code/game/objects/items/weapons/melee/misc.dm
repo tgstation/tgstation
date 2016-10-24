@@ -1,6 +1,7 @@
 /obj/item/weapon/melee
 	needs_permit = 1
 
+
 /obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses."
@@ -17,9 +18,20 @@
 	materials = list(MAT_METAL = 1000)
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-		return (OXYLOSS)
+	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (OXYLOSS)
 
+/obj/item/weapon/melee/synthetic_arm_blade
+	name = "synthetic arm blade"
+	desc = "A grotesque blade that on closer inspection seems made of synthentic flesh, it still feels like it would hurt very badly as a weapon."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "arm_blade"
+	item_state = "arm_blade"
+	origin_tech = "combat=5,biotech=5"
+	w_class = 5.0
+	force = 15
+	throwforce = 10
+	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/sabre
 	name = "officer's sabre"
@@ -27,6 +39,7 @@
 	icon_state = "sabre"
 	item_state = "sabre"
 	flags = CONDUCT
+	unique_rename = 1
 	force = 15
 	throwforce = 10
 	w_class = 4
@@ -34,7 +47,7 @@
 	armour_penetration = 75
 	sharpness = IS_SHARP
 	origin_tech = "combat=5"
-	attack_verb = list("lunged at", "stabbed")
+	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
 
@@ -67,9 +80,9 @@
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, "head")
 		else
-			user.take_organ_damage(2*force)
+			user.take_bodypart_damage(2*force)
 		return
-	if(isrobot(target))
+	if(iscyborg(target))
 		..()
 		return
 	if(!isliving(target))
@@ -77,7 +90,7 @@
 	if (user.a_intent == "harm")
 		if(!..())
 			return
-		if(!isrobot(target))
+		if(!iscyborg(target))
 			return
 	else
 		if(cooldown <= world.time)
@@ -89,8 +102,8 @@
 			target.Weaken(3)
 			add_logs(user, target, "stunned", src)
 			src.add_fingerprint(user)
-			target.visible_message("<span class ='danger'>[user] has knocked down [target] with \the [src]!</span>", \
-				"<span class ='userdanger'>[user] has knocked down [target] with \the [src]!</span>")
+			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
+				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
@@ -113,7 +126,7 @@
 	var/mob/living/carbon/human/H = user
 	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
 
-	user.visible_message("<span class='suicide'>[user] stuffs the [src] up their nose and presses the 'extend' button! It looks like they're trying to clear their mind.</span>")
+	user.visible_message("<span class='suicide'>[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear their mind.</span>")
 	if(!on)
 		src.attack_self(user)
 	else
@@ -124,7 +137,7 @@
 		if (B && !qdeleted(B))
 			H.internal_organs -= B
 			qdel(B)
-		gibs(H.loc, H.viruses, H.dna)
+		new /obj/effect/gibspawner/generic(H.loc, H.viruses, H.dna)
 		return (BRUTELOSS)
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
@@ -166,7 +179,7 @@
 	..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
 	START_PROCESSING(SSobj, src)
-	visible_message("<span class='warning'>\The [src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
+	visible_message("<span class='warning'>[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
 
 /obj/item/weapon/melee/supermatter_sword/process()
 	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))
@@ -177,7 +190,7 @@
 		consume_everything(target)
 	else
 		var/turf/T = get_turf(src)
-		if(!istype(T,/turf/open/space))
+		if(!isspaceturf(T))
 			consume_turf(T)
 
 /obj/item/weapon/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
@@ -200,22 +213,22 @@
 	balanced = 0
 
 /obj/item/weapon/melee/supermatter_sword/ex_act(severity, target)
-	visible_message("<span class='danger'>\The blast wave smacks into \the [src] and rapidly flashes to ash.</span>",\
+	visible_message("<span class='danger'>The blast wave smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	consume_everything()
 
 /obj/item/weapon/melee/supermatter_sword/acid_act()
-	visible_message("<span class='danger'>\The acid smacks into \the [src] and rapidly flashes to ash.</span>",\
+	visible_message("<span class='danger'>The acid smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	consume_everything()
 
 /obj/item/weapon/melee/supermatter_sword/bullet_act(obj/item/projectile/P)
-	visible_message("<span class='danger'>[P] smacks into \the [src] and rapidly flashes to ash.</span>",\
+	visible_message("<span class='danger'>[P] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	consume_everything()
 
 /obj/item/weapon/melee/supermatter_sword/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] touches the [src]'s blade. It looks like they're tired of waiting for the radiation to kill them!</span>")
+	user.visible_message("<span class='suicide'>[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!</span>")
 	user.drop_item()
 	shard.Bumped(user)
 
@@ -231,7 +244,7 @@
 	if(istype(T, T.baseturf))
 		return //Can't void the void, baby!
 	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
-	T.visible_message("<span class='danger'>\The [T] smacks into \the [src] and rapidly flashes to ash.</span>",\
+	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
 	T.ChangeTurf(T.baseturf)

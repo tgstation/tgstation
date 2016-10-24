@@ -309,6 +309,7 @@
 
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
+	firing_effect_type = null
 
 
 /obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet)
@@ -345,6 +346,7 @@
  	icon_state = "s-casing-live"
  	projectile_type = /obj/item/projectile/beam
  	fire_sound = 'sound/weapons/Laser.ogg'
+ 	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/energy
 
 /obj/item/ammo_casing/caseless/laser/gatling
 	projectile_type = /obj/item/projectile/beam/weak
@@ -369,18 +371,18 @@
 		if(BB)
 			BB.icon_state = "foamdart_empty"
 	else
-		icon_state = "foamdart"
+		icon_state = initial(icon_state)
 		desc = "Its nerf or nothing! Ages 8 and up."
 		if(BB)
-			BB.icon_state = "foamdart_empty"
+			BB.icon_state = initial(BB.icon_state)
 
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
-	..()
 	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
 	if (istype(A, /obj/item/weapon/screwdriver) && !modified)
 		modified = 1
 		FD.damage_type = BRUTE
+		user << "<span class='notice'>You pop the safety cap off of [src].</span>"
 		update_icon()
 	else if ((istype(A, /obj/item/weapon/pen)) && modified && !FD.pen)
 		if(!user.unEquip(A))
@@ -390,7 +392,8 @@
 		FD.damage = 5
 		FD.nodamage = 0
 		user << "<span class='notice'>You insert [A] into [src].</span>"
-	return
+	else
+		return ..()
 
 /obj/item/ammo_casing/caseless/foam_dart/attack_self(mob/living/user)
 	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB

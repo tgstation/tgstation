@@ -55,7 +55,7 @@
 
 
 /client/Northwest()
-	if(!usr.get_active_hand())
+	if(!usr.get_active_held_item())
 		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
 		return
 	usr.drop_item()
@@ -85,7 +85,7 @@
 
 /client/verb/drop_item()
 	set hidden = 1
-	if(!isrobot(mob))
+	if(!iscyborg(mob))
 		mob.drop_item_v()
 	return
 
@@ -236,14 +236,12 @@
 				L.loc = locate(locx,locy,mobloc.z)
 				var/limit = 2//For only two trailing shadows.
 				for(var/turf/T in getline(mobloc, L.loc))
-					spawn(0)
-						anim(T,L,'icons/mob/mob.dmi',,"shadow",,L.dir)
+					PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(T, L.dir))
 					limit--
 					if(limit<=0)
 						break
 			else
-				spawn(0)
-					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja/shadow, list(mobloc, L.dir))
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
 		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
@@ -279,13 +277,12 @@
 	return 0
 
 /mob/get_spacemove_backup()
-	var/atom/movable/dense_object_backup
 	for(var/A in orange(1, get_turf(src)))
 		if(isarea(A))
 			continue
 		else if(isturf(A))
 			var/turf/turf = A
-			if(istype(turf,/turf/open/space))
+			if(isspaceturf(turf))
 				continue
 			if(!turf.density && !mob_negates_gravity())
 				continue
@@ -299,9 +296,10 @@
 					return AM
 				if(pulling == AM)
 					continue
-				dense_object_backup = AM
-				break
-	. = dense_object_backup
+				. = AM
+
+/mob/proc/mob_has_gravity()
+	return has_gravity()
 
 /mob/proc/mob_negates_gravity()
 	return 0

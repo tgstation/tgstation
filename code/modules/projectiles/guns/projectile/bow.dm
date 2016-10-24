@@ -74,6 +74,7 @@
 
 /obj/item/ammo_casing/caseless/arrow
 	name = "arrow"
+	desc = "Stab, stab, stab."
 	icon_state = "arrow"
 	force = 10
 	sharpness = IS_SHARP

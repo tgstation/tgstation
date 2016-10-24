@@ -61,19 +61,25 @@
 
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
+	var/threat = 0
 	for(var/datum/disease/D in viruses)
-		if((!(D.visibility_flags & HIDDEN_SCANNER)) && (D.severity != NONTHREAT))
-			return 1
-	return 0
+		if(!(D.visibility_flags & HIDDEN_SCANNER))
+			if (D.severity != NONTHREAT) //a buffing virus gets an icon
+				threat = 2
+				return threat //harmful viruses have priority
+			else
+				threat = 1 //aka good virus
+
+	return threat
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
 	if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
-	var/maxhealth = M.maxHealth
+	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
-		maxhealth = 100 //so crit shows up right for aliens and other high-health carbon mobs; noncarbons don't have crit.
-	var/resulthealth = (M.health / maxhealth) * 100
+		maxi_health = 100 //so crit shows up right for aliens and other high-health carbon mobs; noncarbons don't have crit.
+	var/resulthealth = (M.health / maxi_health) * 100
 	switch(resulthealth)
 		if(100 to INFINITY)
 			return "health100"
@@ -155,13 +161,16 @@
 /mob/living/carbon/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
+	var/virus_state = check_virus()
 	holder.pixel_y = I.Height() - world.icon_size
 	if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (status_flags & FAKEDEATH))
 		holder.icon_state = "huddead"
-	else if(check_virus())
+	else if(virus_state == 2)
 		holder.icon_state = "hudill"
+	else if(virus_state == 1)
+		holder.icon_state = "hudbuff"
 	else
 		holder.icon_state = "hudhealthy"
 
@@ -189,23 +198,22 @@
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
-	for(var/obj/item/weapon/implant/I in src)
-		if(I.implanted)
-			if(istype(I,/obj/item/weapon/implant/tracking))
-				holder = hud_list[IMPTRACK_HUD]
-				var/icon/IC = icon(icon, icon_state, dir)
-				holder.pixel_y = IC.Height() - world.icon_size
-				holder.icon_state = "hud_imp_tracking"
-			else if(istype(I,/obj/item/weapon/implant/mindshield))
-				holder = hud_list[IMPLOYAL_HUD]
-				var/icon/IC = icon(icon, icon_state, dir)
-				holder.pixel_y = IC.Height() - world.icon_size
-				holder.icon_state = "hud_imp_loyal"
-			else if(istype(I,/obj/item/weapon/implant/chem))
-				holder = hud_list[IMPCHEM_HUD]
-				var/icon/IC = icon(icon, icon_state, dir)
-				holder.pixel_y = IC.Height() - world.icon_size
-				holder.icon_state = "hud_imp_chem"
+	for(var/obj/item/weapon/implant/I in implants)
+		if(istype(I,/obj/item/weapon/implant/tracking))
+			holder = hud_list[IMPTRACK_HUD]
+			var/icon/IC = icon(icon, icon_state, dir)
+			holder.pixel_y = IC.Height() - world.icon_size
+			holder.icon_state = "hud_imp_tracking"
+		else if(istype(I,/obj/item/weapon/implant/mindshield))
+			holder = hud_list[IMPLOYAL_HUD]
+			var/icon/IC = icon(icon, icon_state, dir)
+			holder.pixel_y = IC.Height() - world.icon_size
+			holder.icon_state = "hud_imp_loyal"
+		else if(istype(I,/obj/item/weapon/implant/chem))
+			holder = hud_list[IMPCHEM_HUD]
+			var/icon/IC = icon(icon, icon_state, dir)
+			holder.pixel_y = IC.Height() - world.icon_size
+			holder.icon_state = "hud_imp_chem"
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
@@ -293,7 +301,7 @@
 	var/image/holder = hud_list[DIAG_MECH_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	holder.icon_state = "huddiag[RoundDiagBar(health/initial(health))]"
+	holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
 
 
 /obj/mecha/proc/diag_hud_set_mechcell()

@@ -18,6 +18,7 @@
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
+	var/hub = 0
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -184,6 +185,7 @@
 	var/grey_assistants = 0
 
 	var/lavaland_budget = 60
+	var/space_budget = 16
 
 	var/aggressive_changelog = 0
 
@@ -263,6 +265,8 @@
 
 		if(type == "config")
 			switch(name)
+				if("hub")
+					config.hub = 1
 				if("admin_legacy_system")
 					config.admin_legacy_system = 1
 				if("ban_legacy_system")
@@ -620,6 +624,8 @@
 					config.grey_assistants			= 1
 				if("lavaland_budget")
 					config.lavaland_budget			= text2num(value)
+				if("space_budget")
+					config.space_budget			= text2num(value)
 				if("no_summon_guns")
 					config.no_summon_guns			= 1
 				if("no_summon_magic")

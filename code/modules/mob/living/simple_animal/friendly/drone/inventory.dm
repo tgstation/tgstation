@@ -49,10 +49,9 @@
 	if(!istype(I))
 		return
 
-	if(I == l_hand)
-		l_hand = null
-	else if(I == r_hand)
-		r_hand = null
+	var/index = get_held_index_of_item(I)
+	if(index)
+		held_items[index] = null
 	update_inv_hands()
 
 	if(I.pulledby)
@@ -61,6 +60,7 @@
 	I.screen_loc = null // will get moved if inventory is visible
 	I.loc = src
 	I.layer = ABOVE_HUD_LAYER
+	I.plane = ABOVE_HUD_PLANE
 
 	switch(slot)
 		if(slot_head)

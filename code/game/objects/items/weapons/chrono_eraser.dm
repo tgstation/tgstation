@@ -126,7 +126,7 @@
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
 
 /obj/item/projectile/energy/chrono_beam/fire()
-	gun = firer.get_active_hand()
+	gun = firer.get_active_held_item()
 	if(istype(gun))
 		return ..()
 	else
@@ -152,7 +152,6 @@
 	icon_state = "chronofield"
 	density = 0
 	anchored = 1
-	unacidable = 1
 	blend_mode = BLEND_MULTIPLY
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
@@ -255,7 +254,7 @@
 /obj/effect/chrono_field/ex_act()
 	return
 
-/obj/effect/chrono_field/blob_act(obj/effect/blob/B)
+/obj/effect/chrono_field/blob_act(obj/structure/blob/B)
 	return
 
 

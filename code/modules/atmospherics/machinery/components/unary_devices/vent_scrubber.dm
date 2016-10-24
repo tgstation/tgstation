@@ -184,9 +184,10 @@
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
-			var/list/removed_gases = removed.gases
-			if (isnull(removed)) //in space
+			//Nothing left to remove from the tile
+			if (isnull(removed))
 				return
+			var/list/removed_gases = removed.gases
 
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new
@@ -352,6 +353,7 @@
 					welded = 0
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+				pipe_vision_img.plane = ABOVE_HUD_PLANE
 			return 0
 	else
 		return ..()
@@ -373,6 +375,7 @@
 	welded = 0
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+	pipe_vision_img.plane = ABOVE_HUD_PLANE
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
 
 

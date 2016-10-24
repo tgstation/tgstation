@@ -91,14 +91,14 @@
 			beacon = findbeacon()
 		if("handle_id")
 			if(id)
-				if(!usr.get_active_hand())
+				if(!usr.get_active_held_item())
 					usr.put_in_hands(id)
 					id = null
 				else
 					id.forceMove(get_turf(src))
 					id = null
 			else
-				var/obj/item/I = usr.get_active_hand()
+				var/obj/item/I = usr.get_active_held_item()
 				if(istype(I, /obj/item/weapon/card/id/prisoner))
 					if(!usr.drop_item())
 						return

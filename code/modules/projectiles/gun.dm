@@ -14,6 +14,7 @@
 	force = 5
 	origin_tech = "combat=1"
 	needs_permit = 1
+	unique_rename = 0
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -31,11 +32,8 @@
 	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
-
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
-
-	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
 	var/current_skin = null //the skin choice if we had a reskin
 	var/list/options = list()
@@ -79,7 +77,7 @@
 		G.loc = loc
 		qdel(G.pin)
 		G.pin = null
-		visible_message("[G] can now fit a new pin, but old one was destroyed in the process.")
+		visible_message("[G] can now fit a new pin, but old one was destroyed in the process.", null, null, 3)
 		qdel(src)
 
 /obj/item/weapon/gun/examine(mob/user)
@@ -90,8 +88,6 @@
 		user << "It doesn't have a firing pin installed, and won't fire."
 	if(unique_reskin && !current_skin)
 		user << "<span class='notice'>Alt-click it to reskin it.</span>"
-	if(unique_rename)
-		user << "<span class='notice'>Use a pen on it to rename it.</span>"
 
 
 /obj/item/weapon/gun/proc/process_chamber()
@@ -117,15 +113,14 @@
 		playsound(user, fire_sound, 10, 1)
 	else
 		playsound(user, fire_sound, 50, 1)
-		if(!message)
-			return
-		if(pointblank)
-			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "<span class='italics'>You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!</span>")
-		else
-			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+		if(message)
+			if(pointblank)
+				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE, user)
+			else
+				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE, user)
 
 	if(weapon_weight >= WEAPON_MEDIUM)
-		if(user.get_inactive_hand())
+		if(user.get_inactive_held_item())
 			if(prob(15))
 				if(user.drop_item())
 					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
@@ -165,14 +160,14 @@
 	if(clumsy_check)
 		if(istype(user))
 			if (user.disabilities & CLUMSY && prob(40))
-				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
+				user << "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>"
 				var/shot_leg = pick("l_leg", "r_leg")
 				process_fire(user,user,0,params, zone_override = shot_leg)
 				user.drop_item()
 				return
 
-	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_hand())
-		user << "<span class='userdanger'>You need both hands free to fire \the [src]!</span>"
+	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
+		user << "<span class='userdanger'>You need both hands free to fire [src]!</span>"
 		return
 
 	process_fire(target,user,1,params)
@@ -194,7 +189,7 @@
 			pin.auth_fail(user)
 			return 0
 	else
-		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
+		user << "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
 obj/item/weapon/gun/proc/newshot()
@@ -207,7 +202,7 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 	if(weapon_weight)
-		if(user.get_inactive_hand())
+		if(user.get_inactive_held_item())
 			recoil = 4 //one-handed kick
 		else
 			recoil = initial(recoil)
@@ -218,7 +213,7 @@ obj/item/weapon/gun/proc/newshot()
 			if(!user)
 				break
 			if(!issilicon(user))
-				if( i>1 && !(src in get_both_hands(user))) //for burst firing
+				if( i>1 && !(user.is_holding(src))) //for burst firing
 					break
 			if(chambered)
 				var/sprd = 0
@@ -261,10 +256,7 @@ obj/item/weapon/gun/proc/newshot()
 			semicd = 0
 
 	if(user)
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
+		user.update_inv_hands()
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
@@ -305,10 +297,7 @@ obj/item/weapon/gun/proc/newshot()
 			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
 				qdel(TGL)
 
-	if(unique_rename)
-		if(istype(I, /obj/item/weapon/pen))
-			rename_gun(user)
-	..()
+
 
 /obj/item/weapon/gun/proc/toggle_gunlight()
 	set name = "Toggle Gunlight"
@@ -389,13 +378,6 @@ obj/item/weapon/gun/proc/newshot()
 		update_icon()
 
 
-/obj/item/weapon/gun/proc/rename_gun(mob/M)
-	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
-
-	if(src && input && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
-		name = input
-		M << "You name the gun [input]. Say hello to your new friend."
-		return
 
 
 /obj/item/weapon/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params)
@@ -406,7 +388,7 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 	if(user == target)
-		target.visible_message("<span class='warning'>[user] sticks [src] in their mouth, ready to pull the trigger...</span>", \
+		target.visible_message("<span class='warning'>[user] sticks [src] in [user.p_their()] mouth, ready to pull the trigger...</span>", \
 			"<span class='userdanger'>You stick [src] in your mouth, ready to pull the trigger...</span>")
 	else
 		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
@@ -501,8 +483,3 @@ obj/item/weapon/gun/proc/newshot()
 		azoom = new()
 		azoom.gun = src
 
-
-/obj/item/weapon/gun/burn()
-	if(pin)
-		qdel(pin)
-	.=..()

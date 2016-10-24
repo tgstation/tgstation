@@ -42,7 +42,6 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-	centcom_cancast = 0
 
 	mutations = list(LASEREYES, HULK)
 	duration = 300
@@ -104,8 +103,6 @@
 
 	inner_tele_radius = 0
 	outer_tele_radius = 6
-
-	centcom_cancast = 0 //prevent people from getting to centcom
 
 	action_icon_state = "blink"
 	sound1="sound/magic/blink.ogg"
@@ -354,13 +351,13 @@
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		if(distfromcaster == 0)
-			if(istype(AM, /mob/living))
+			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(5)
 				M.adjustBruteLoss(5)
 				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
 		else
-			if(istype(AM, /mob/living))
+			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(stun_amt)
 				M << "<span class='userdanger'>You're thrown back by [user]!</span>"

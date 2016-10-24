@@ -98,7 +98,7 @@
 	if(loc == user)
 		if(suppressed && can_unsuppress)
 			var/obj/item/weapon/suppressor/S = suppressed
-			if(user.l_hand != src && user.r_hand != src)
+			if(!user.is_holding(src))
 				..()
 				return
 			user << "<span class='notice'>You unscrew [suppressed] from [src].</span>"
@@ -143,17 +143,17 @@
 
 /obj/item/weapon/gun/projectile/suicide_act(mob/user)
 	if (src.chambered && src.chambered.BB && !src.chambered.BB.nodamage)
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of the [src.name] in \his mouth.  It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
-		if(user.l_hand == src || user.r_hand == src)
+		if(user.is_holding(src))
 			process_fire(user, user, 0, zone_override = "head")
-			user.visible_message("<span class='suicide'>[user] blows \his brains out with the [src.name]!</span>")
+			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
 			return(BRUTELOSS)
 		else
 			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
 			return(OXYLOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
+		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
 
@@ -178,7 +178,7 @@
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		w_class = 3
-		item_state = "gun"//phil235 is it different with different skin?
+		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		sawn_state = SAWN_OFF

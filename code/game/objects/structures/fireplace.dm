@@ -10,7 +10,7 @@
 	density = FALSE
 	anchored = TRUE
 	pixel_x = -16
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	var/lit = FALSE
 
 	var/fuel_added = 0

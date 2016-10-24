@@ -15,7 +15,7 @@
 	return UI_CLOSE
 
 /mob/living/hands_can_use_topic(src_object)
-	if(src_object in get_both_hands(src))
+	if(is_holding(src_object))
 		return UI_INTERACTIVE
 	return UI_CLOSE
 

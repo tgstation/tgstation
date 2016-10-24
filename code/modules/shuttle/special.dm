@@ -57,7 +57,8 @@
 	name = "wabbajack altar"
 	desc = "Whether you're sleeping or waking, it's going to be \
 		quite chaotic."
-	health = 1000
+	obj_integrity = 1000
+	max_integrity = 1000
 	verb_say = "chants"
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
@@ -95,8 +96,7 @@
 	for(var/i in found - sleepers)
 		var/mob/living/L = i
 		L.color = "#800080"
-		L.visible_message("<span class='revennotice'>A strange purple glow \
-			wraps itself around [L] as they suddenly fall unconcious.</span>",
+		L.visible_message("<span class='revennotice'>A strange purple glow wraps itself around [L] as [L.p_they()] suddenly fall[L.p_s()] unconscious.</span>",
 			"<span class='revendanger'>[desc]</span>")
 		// Don't let them sit suround unconscious forever
 		addtimer(src, "sleeper_dreams", 100, FALSE, L)
@@ -185,9 +185,10 @@
 // with CENTCOM_BARSTAFF)
 
 /obj/structure/table/wood/bar
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags = NODECONSTRUCT
-	health = 1000
+	obj_integrity = 1000
+	max_integrity = 1000
 	var/boot_dir = 1
 
 /obj/structure/table/wood/bar/Crossed(atom/movable/AM)

@@ -293,7 +293,7 @@
 	martyr_compatible = 1
 
 /datum/objective/block/check_completion()
-	if(!istype(owner.current, /mob/living/silicon))
+	if(!issilicon(owner.current))
 		return 0
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 1
@@ -301,7 +301,7 @@
 	var/area/A = SSshuttle.emergency.areaInstance
 
 	for(var/mob/living/player in player_list)
-		if(istype(player, /mob/living/silicon))
+		if(issilicon(player))
 			continue
 		if(player.mind)
 			if(player.stat != DEAD)
@@ -323,7 +323,7 @@
 	var/area/A = SSshuttle.emergency.areaInstance
 
 	for(var/mob/living/player in player_list)
-		if(get_area(player) == A && player.mind && player.stat != DEAD && istype(player, /mob/living/carbon/human))
+		if(get_area(player) == A && player.mind && player.stat != DEAD && ishuman(player))
 			var/mob/living/carbon/human/H = player
 			if(H.dna.species.id != "human")
 				return 0
@@ -337,7 +337,7 @@
 	martyr_compatible = 0
 
 /datum/objective/robot_army/check_completion()
-	if(!istype(owner.current, /mob/living/silicon/ai))
+	if(!isAI(owner.current))
 		return 0
 	var/mob/living/silicon/ai/A = owner.current
 
@@ -528,13 +528,13 @@ var/global/list/possible_items = list()
 
 /datum/objective/steal/give_special_equipment()
 	if(owner && owner.current && targetinfo)
-		if(istype(owner.current, /mob/living/carbon/human))
+		if(ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
 			var/list/slots = list ("backpack" = slot_in_backpack)
 			for(var/eq_path in targetinfo.special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
-				H.update_icons()
+
 
 var/global/list/possible_items_special = list()
 /datum/objective/steal/special //ninjas are so special they get their own subtype good for them

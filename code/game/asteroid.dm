@@ -75,7 +75,7 @@ var/global/max_secret_rooms = 6
 			floortypes = list(/turf/open/floor/plasteel/cult)
 			treasureitems = list(/obj/item/device/soulstone/anybody=1, /obj/item/clothing/suit/space/hardsuit/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
-			fluffitems = list(/obj/effect/gateway=1,/obj/effect/gibspawner=1,/obj/structure/cult/talisman=1,/obj/item/toy/crayon/red=2,
+			fluffitems = list(/obj/effect/gateway=1,/obj/effect/gibspawner=1,/obj/structure/destructible/cult/talisman=1,/obj/item/toy/crayon/red=2,
 							  /obj/item/organ/heart=2, /obj/effect/decal/cleanable/blood=4,/obj/structure/table/wood=2,/obj/item/weapon/ectoplasm=3,
 							/obj/item/clothing/shoes/cult=1)
 
@@ -128,7 +128,7 @@ var/global/max_secret_rooms = 6
 			treasureitems = list(/obj/item/weapon/gun/energy/floragun=1,/obj/item/seeds/sunflower/novaflower=2,/obj/item/seeds/tomato/blue/bluespace=2,/obj/item/seeds/tomato/blue=2,
 			/obj/item/seeds/coffee/robusta=2, /obj/item/seeds/firelemon=2)
 			fluffitems = list(/obj/item/weapon/twohanded/required/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics/constructable=1,
-							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/charcoal=2,
+							  /obj/structure/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/charcoal=2,
 							  /obj/item/weapon/reagent_containers/glass/bottle/diethylamine=3,/obj/item/weapon/reagent_containers/glass/bottle/ammonia=3)
 
 		/*if("poly")
@@ -180,7 +180,7 @@ var/global/max_secret_rooms = 6
 		var/list/emptyturfs = room["floors"]
 		T = pick(emptyturfs)
 		if(T)
-			new /obj/effect/glowshroom/single(T) //Just to make it a little more visible
+			new /obj/structure/glowshroom/single(T) //Just to make it a little more visible
 			var/surprise = null
 			surprise = pickweight(treasureitems)
 			new surprise(T)//here's the prize

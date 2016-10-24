@@ -71,10 +71,10 @@
 	for(var/F in RANGE_TURFS(1, src) - src)
 		var/turf/T = F
 		var/area/new_area = get_area(T)
-		if(!T || (T.density && !istype(T, /turf/closed/mineral)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)))
+		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)))
 			continue
 
-		if(!logged_turf_type && istype(T, /turf/closed/mineral))
+		if(!logged_turf_type && ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			logged_turf_type = M.turf_type
 
@@ -92,7 +92,7 @@
 		var/turf/T = F
 		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
-		else if(istype(T, /turf/closed/mineral))
+		else if(ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			M.ChangeTurf(M.turf_type)
 

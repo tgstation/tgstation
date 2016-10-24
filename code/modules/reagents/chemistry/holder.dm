@@ -311,9 +311,9 @@ var/const/INJECT = 5 //injection
 	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
-	var/reaction_occured = 0
+	var/reaction_occurred = 0
 	do
-		reaction_occured = 0
+		reaction_occurred = 0
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
 			for(var/reaction in cached_reactions[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
@@ -400,10 +400,10 @@ var/const/INJECT = 5 //injection
 									ME2.desc = "This extract has been used up."
 
 					C.on_reaction(src, multiplier)
-					reaction_occured = 1
+					reaction_occurred = 1
 					break
 
-	while(reaction_occured)
+	while(reaction_occurred)
 	update_total()
 	return 0
 
@@ -420,7 +420,7 @@ var/const/INJECT = 5 //injection
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if(R.id == reagent)
-			if(my_atom && istype(my_atom, /mob/living))
+			if(my_atom && isliving(my_atom))
 				var/mob/living/M = my_atom
 				R.on_mob_delete(M)
 			qdel(R)

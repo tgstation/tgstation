@@ -52,7 +52,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/reagent_containers/glass/bucket/bucket = H.l_hand
+	var/obj/item/weapon/reagent_containers/glass/bucket/bucket = H.get_item_for_held_index(1)
 	bucket.reagents.add_reagent("water",70)
 
 /datum/outfit/laser_tag
@@ -133,9 +133,10 @@
 	r_hand = /obj/item/weapon/twohanded/fireaxe
 
 /datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.contents)
-		if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
-			carried_item.add_mob_blood(H)//Oh yes, there will be blood...
+	for(var/obj/item/carried_item in H.get_equipped_items())
+		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
+	for(var/obj/item/I in H.held_items)
+		I.add_mob_blood(H)
 	H.regenerate_icons()
 
 /datum/outfit/assassin
@@ -159,10 +160,10 @@
 		return
 
 	//Could use a type
-	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = H.l_hand
+	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = H.get_item_for_held_index(1)
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
-	for(var/i=3, i>0, i--)
+	for(var/i = 3 to 0 step -1)
 		sec_briefcase.handle_item_insertion(new /obj/item/stack/spacecash/c1000,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/projectile/revolver/mateba,1)
@@ -358,9 +359,7 @@
 	R.freqlock = 1
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 
 	var/obj/item/weapon/card/id/W = H.wear_id

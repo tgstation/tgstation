@@ -11,7 +11,7 @@
 
 /datum/round_event/wizard/cursed_items/start()
 	var/item_set = pick("wizardmimic", "swords", "bigfatdoobie", "boxing", "voicemodulators", "catgirls2015")
-	var/list/wearslots	= list(slot_wear_suit, slot_shoes, slot_head, slot_wear_mask, slot_r_hand, slot_gloves, slot_ears)
+	var/list/wearslots	= list(slot_wear_suit, slot_shoes, slot_head, slot_wear_mask, slot_gloves, slot_ears)
 	var/list/loadout = list()
 	var/ruins_spaceworthiness
 	var/ruins_wizard_loadout
@@ -38,14 +38,14 @@
 			ruins_wizard_loadout = 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/open/space) || isplasmaman(H)))
+		if(ruins_spaceworthiness && (H.z != 1 || isspaceturf(H.loc) || isplasmaman(H)))
 			continue	//#savetheminers
 		if(ruins_wizard_loadout && H.mind && ((H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices)))
 			continue
 		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry
 			H.gender = FEMALE
-		var/list/slots		= list(H.wear_suit, H.shoes, H.head, H.wear_mask, H.r_hand, H.gloves, H.ears) //add new slots as needed to back
-		for(var/i = 1, i <= loadout.len, i++)
+		var/list/slots		= list(H.wear_suit, H.shoes, H.head, H.wear_mask, H.gloves, H.ears) //add new slots as needed to back
+		for(var/i in 1 to loadout.len)
 			if(loadout[i])
 				var/obj/item/J = loadout[i]
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list

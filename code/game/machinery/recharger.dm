@@ -132,8 +132,9 @@
 
 		if(istype(charging, /obj/item/device/modular_computer))
 			var/obj/item/device/modular_computer/C = charging
-			if(C.battery_module)
-				var/obj/item/weapon/computer_hardware/battery/B = C.battery_module
+			var/obj/item/weapon/computer_hardware/battery/battery_module = C.all_components[MC_CELL]
+			if(battery_module)
+				var/obj/item/weapon/computer_hardware/battery/B = battery_module
 				if(B.battery)
 					if(B.battery.charge < B.battery.maxcharge)
 						B.battery.give(B.battery.chargerate * recharge_coeff)
@@ -147,20 +148,17 @@
 	update_icon()
 
 /obj/machinery/recharger/emp_act(severity)
-	if(stat & (NOPOWER|BROKEN) || !anchored)
-		..(severity)
-		return
+	if(!(stat & (NOPOWER|BROKEN)) && anchored)
+		if(istype(charging,  /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/gun/energy/E = charging
+			if(E.power_supply)
+				E.power_supply.emp_act(severity)
 
-	if(istype(charging,  /obj/item/weapon/gun/energy))
-		var/obj/item/weapon/gun/energy/E = charging
-		if(E.power_supply)
-			E.power_supply.emp_act(severity)
-
-	else if(istype(charging, /obj/item/weapon/melee/baton))
-		var/obj/item/weapon/melee/baton/B = charging
-		if(B.bcell)
-			B.bcell.charge = 0
-	..(severity)
+		else if(istype(charging, /obj/item/weapon/melee/baton))
+			var/obj/item/weapon/melee/baton/B = charging
+			if(B.bcell)
+				B.bcell.charge = 0
+	..()
 
 
 /obj/machinery/recharger/update_icon(using_power = 0)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.

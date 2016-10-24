@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile
 	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
+	obj_damage = 40
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 	var/atom/target
 	var/ranged = 0
@@ -27,6 +28,7 @@
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
+	var/ranged_ignores_vision = FALSE //if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
 	var/check_friendly_fire = 0 // Should the ranged mob check for friendlies when shooting
 	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
 	var/minimum_distance = 1 //Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
@@ -52,6 +54,10 @@
 		targets_from = src
 	environment_target_typecache = typecacheof(environment_target_typecache)
 
+
+/mob/living/simple_animal/hostile/Destroy()
+	targets_from = null
+	return ..()
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
@@ -225,12 +231,14 @@
 		else
 			Goto(target,move_to_delay,minimum_distance)
 		if(target)
-			if(isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
+			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				AttackingTarget()
 			return 1
 		return 0
 	if(environment_smash)
 		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range) //We can't see our target, but he's in our vision range still
+			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
+				OpenFire(target)
 			if(environment_smash >= 2) //If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
@@ -256,12 +264,6 @@
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
 
-/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
-	target = A
-	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
-		..()
-	else
-		AttackingTarget()
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	target.attack_animal(src)
@@ -327,10 +329,9 @@
 		return
 	var/turf/startloc = get_turf(targets_from)
 	if(casingtype)
-		var/obj/item/ammo_casing/casing = new casingtype
+		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, 1)
 		casing.fire(targeted_atom, src, zone_override = ran_zone())
-		casing.loc = startloc
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
@@ -351,7 +352,7 @@
 		EscapeConfinement()
 		for(var/dir in cardinal)
 			var/turf/T = get_step(targets_from, dir)
-			if(istype(T, /turf/closed/wall) || istype(T, /turf/closed/mineral))
+			if(iswallturf(T) || ismineralturf(T))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)

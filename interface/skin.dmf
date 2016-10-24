@@ -78,6 +78,9 @@ macro "default"
 		name = "CTRL+G"
 		command = "a-intent right"
 	elem
+		name = "CTRL+H"
+		command = "talk-wheel"
+	elem
 		name = "CTRL+Q"
 		command = ".northwest"
 	elem
@@ -121,10 +124,10 @@ macro "default"
 		command = "Player-Panel"
 	elem
 		name = "F7"
-		command = "Admin-PM"
+		command = "Stealth-Mode"
 	elem
 		name = "F8"
-		command = "Invisimin"
+		command = "Toggle-Build-Mode-Self"
 	elem
 		name = "F12"
 		command = "F12"
@@ -239,6 +242,12 @@ macro "hotkeys"
 		name = "CTRL+G"
 		command = "a-intent right"
 	elem
+		name = "H"
+		command = "talk-wheel"
+	elem
+		name = "CTRL+H"
+		command = "talk-wheel"
+	elem
 		name = "M"
 		command = "me"
 	elem
@@ -312,10 +321,10 @@ macro "hotkeys"
 		command = "Player-Panel"
 	elem
 		name = "F7"
-		command = "Admin-PM"
+		command = "Stealth-Mode"
 	elem
 		name = "F8"
-		command = "Invisimin"
+		command = "Toggle-Build-Mode-Self"
 	elem
 		name = "F12"
 		command = "F12"
@@ -435,10 +444,10 @@ macro "robot-default"
 		command = "Player-Panel"
 	elem
 		name = "F7"
-		command = "Admin-PM"
+		command = "Stealth-Mode"
 	elem
 		name = "F8"
-		command = "Invisimin"
+		command = "Toggle-Build-Mode-Self"
 	elem
 		name = "F12"
 		command = "F12"
@@ -608,10 +617,10 @@ macro "robot-hotkeys"
 		command = "Player-Panel"
 	elem
 		name = "F7"
-		command = "Admin-PM"
+		command = "Stealth-Mode"
 	elem
 		name = "F8"
-		command = "Invisimin"
+		command = "Toggle-Build-Mode-Self"
 	elem
 		name = "F12"
 		command = "F12"

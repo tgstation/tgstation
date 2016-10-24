@@ -7,7 +7,6 @@
  *		for anyone who wants to make their own stuff.
  *
  * Contains:
- *		Areas
  *		Landmarks
  *		Guns
  *		Safe code hints
@@ -15,29 +14,6 @@
  *		Modified Nar-Sie
  */
 
-/*
- * Areas
- */
- //Gateroom gets its own APC specifically for the gate
- /area/awaymission/gateroom
-
- //Library, medbay, storage room
- /area/awaymission/southblock
-
- //Arrivals, security, hydroponics, shuttles (since they dont move, they dont need specific areas)
- /area/awaymission/arrivalblock
-
- //Crew quarters, cafeteria, chapel
- /area/awaymission/midblock
-
- //engineering, bridge (not really north but it doesnt really need its own APC)
- /area/awaymission/northblock
-
- //That massive research room
- /area/awaymission/research
-
-//Syndicate shuttle
-/area/awaymission/syndishuttle
 
 
 /*
@@ -175,7 +151,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 /obj/singularity/narsie/sc_Narsie/consume(atom/A)
 	if(is_type_in_list(A, uneatable))
 		return 0
-	if (istype(A,/mob/living))
+	if(isliving(A))
 		var/mob/living/L = A
 		L.gib()
 	else if(istype(A,/obj/))
