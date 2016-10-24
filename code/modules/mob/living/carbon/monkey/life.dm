@@ -151,6 +151,8 @@
 		var/obj/item/clothing/head_clothes = null
 		if(wear_mask)
 			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
 		if(head)
 			head_clothes = head
 		if(head_clothes)

@@ -50,7 +50,7 @@
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/gun/energy/gun(src)
-	new /obj/item/clothing/tie/petcollar(src)
+	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/weapon/door_remote/civillian(src)
 
 /obj/structure/closet/secure_closet/hos
