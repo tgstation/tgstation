@@ -105,7 +105,7 @@
 				src.code = null
 				src.close(usr)
 			else
-				src.code += text("[]", href_list["type"])
+				src.code += text("[]", sanitize_text(href_list["type"]))
 				if (length(src.code) > 5)
 					src.code = "ERROR"
 		src.add_fingerprint(usr)
