@@ -21431,10 +21431,16 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/sign/poster{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/theatre)
 "aRS" = (
 /obj/machinery/vending/autodrobe,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/theatre)
 "aRT" = (
@@ -21957,11 +21963,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/sign/poster{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
@@ -21970,9 +21976,6 @@
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/sign/poster{
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
 	pixel_y = 0
@@ -21980,6 +21983,10 @@
 /obj/machinery/light_switch{
 	pixel_x = 24;
 	pixel_y = 24
+	},
+/obj/structure/mirror{
+	pixel_x = 28;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
@@ -22393,14 +22400,15 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/sign/poster{
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
 	scrub_N2O = 0;
 	scrub_Toxins = 0
+	},
+/obj/structure/mirror{
+	pixel_x = 28;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
@@ -22693,6 +22701,7 @@
 /area/crew_quarters/kitchen)
 "aUA" = (
 /obj/machinery/door/airlock{
+	cyclelinkeddir = 4;
 	name = "Bar Access";
 	req_access_txt = "25"
 	},
@@ -22702,6 +22711,7 @@
 /area/crew_quarters/bar)
 "aUB" = (
 /obj/machinery/door/airlock{
+	cyclelinkeddir = 8;
 	name = "Bar Access";
 	req_access_txt = "0";
 	req_one_access_txt = "25; 28"
@@ -30181,9 +30191,7 @@
 /area/maintenance/aft)
 "bkv" = (
 /obj/machinery/clonepod,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/blue,
 /area/medical/genetics)
 "bkw" = (
 /turf/open/floor/plasteel/white,
@@ -30993,9 +31001,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/blue,
 /area/medical/genetics)
 "blR" = (
 /obj/machinery/holopad,
@@ -31740,9 +31746,7 @@
 /area/hallway/secondary/entry)
 "bni" = (
 /obj/machinery/dna_scannernew,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/plasteel/blue,
 /area/medical/genetics)
 "bnj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -34811,6 +34815,11 @@
 /area/toxins/xenobiology)
 "btd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/shower{
+	dir = 8;
+	name = "emergency shower";
+	pixel_y = -4
+	},
 /turf/open/floor/plasteel/warnwhite{
 	dir = 6
 	},
@@ -49041,7 +49050,9 @@
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/bar)
 "bXc" = (
-/obj/machinery/newscaster,
+/obj/machinery/newscaster{
+	pixel_y = 1
+	},
 /turf/closed/wall,
 /area/crew_quarters/kitchen)
 "bXb" = (
