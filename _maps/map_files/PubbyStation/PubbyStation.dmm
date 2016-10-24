@@ -34292,7 +34292,7 @@
 /area/medical/sleeper)
 "bsz" = (
 /obj/structure/table/glass,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/device/healthanalyzer,
 /turf/open/floor/plasteel/blue,
 /area/medical/sleeper)
@@ -35998,7 +35998,7 @@
 	dir = 4
 	},
 /obj/item/stack/medical/gauze,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/barber,
 /area/medical/cmo{
 	name = "Chief Medical Office"
@@ -37798,7 +37798,7 @@
 "byZ" = (
 /obj/structure/table/glass,
 /obj/item/device/flashlight/pen,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/lipstick/black,
 /obj/machinery/power/apc{
 	dir = 8;
@@ -38701,7 +38701,7 @@
 /obj/item/weapon/pen{
 	layer = 3.1
 	},
-/obj/item/clothing/tie/stethoscope{
+/obj/item/clothing/neck/stethoscope{
 	layer = 3.2
 	},
 /turf/open/floor/plasteel/freezer,
@@ -40639,7 +40639,7 @@
 "bES" = (
 /obj/machinery/light,
 /obj/item/weapon/soap/nanotrasen,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/structure/table,
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/medbay)
