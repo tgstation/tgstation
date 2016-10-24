@@ -551,6 +551,7 @@ var/total_borer_hosts_needed = 10
 		victim.med_hud_set_status()
 		victim.med_hud_set_health()
 		victim.stat = CONSCIOUS
+		victim.update_sight()
 		log_game("[src]/([src.ckey]) has revived [victim]/([victim.ckey]")
 		chemicals -= 250
 		src << "<span class='notice'>You send a jolt of energy to your host, reviving them!</span>"
