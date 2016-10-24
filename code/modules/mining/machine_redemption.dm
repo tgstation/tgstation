@@ -268,7 +268,6 @@
 			s.use(s.max_amount)
 		s.loc = loc
 		s.layer = initial(s.layer)
-		s.plane = initial(s.plane)
 
 /obj/machinery/mineral/ore_redemption/power_change()
 	..()

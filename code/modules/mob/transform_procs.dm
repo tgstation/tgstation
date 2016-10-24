@@ -178,7 +178,6 @@
 				W.loc = loc
 				W.dropped(src)
 				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
 
 
 

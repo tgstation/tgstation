@@ -179,7 +179,6 @@
 		qdel(J)
 		H.icon = HI
 		H.layer = ABOVE_HUD_LAYER
-		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 #else
 
@@ -298,7 +297,6 @@
 		H.icon = I
 		qdel(I)
 		H.layer = ABOVE_HUD_LAYER
-		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 
 #endif

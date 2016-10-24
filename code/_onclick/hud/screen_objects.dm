@@ -10,7 +10,6 @@
 	name = ""
 	icon = 'icons/mob/screen_gen.dmi'
 	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
@@ -34,7 +33,6 @@
 
 /obj/screen/swap_hand
 	layer = HUD_LAYER
-	plane = HUD_PLANE
 	name = "swap hand"
 
 /obj/screen/swap_hand/Click()
@@ -83,7 +81,6 @@
 	var/icon_empty // Icon when empty. For now used only by humans.
 	var/icon_full  // Icon when contains an item. For now used only by humans.
 	layer = HUD_LAYER
-	plane = HUD_PLANE
 
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -172,7 +169,6 @@
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_drop"
 	layer = HUD_LAYER
-	plane = HUD_PLANE
 
 /obj/screen/drop/Click()
 	usr.drop_item_v()
@@ -310,7 +306,6 @@
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_resist"
 	layer = HUD_LAYER
-	plane = HUD_PLANE
 
 /obj/screen/resist/Click()
 	if(isliving(usr))
@@ -427,7 +422,6 @@
 	blend_mode = BLEND_ADD
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	layer = FLASH_LAYER
-	plane = FULLSCREEN_PLANE
 
 /obj/screen/damageoverlay
 	icon = 'icons/mob/screen_full.dmi'
@@ -437,7 +431,6 @@
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = 0
 	layer = UI_DAMAGE_LAYER
-	plane = FULLSCREEN_PLANE
 
 /obj/screen/healths
 	name = "health"
@@ -507,7 +500,6 @@
 /obj/screen/wheel
 	name = "wheel"
 	layer = HUD_LAYER
-	plane = HUD_PLANE
 	icon_state = ""
 	screen_loc = null //if you make a new wheel, remember to give it a screen_loc
 	var/list/buttons_names = list() //list of the names for each button, its length is the amount of buttons.
@@ -604,7 +596,6 @@
 	name = "default wheel button"
 	screen_loc = "8,8"
 	layer = HUD_LAYER
-	plane = HUD_PLANE
 	mouse_opacity = 2
 	var/obj/screen/wheel/wheel
 
