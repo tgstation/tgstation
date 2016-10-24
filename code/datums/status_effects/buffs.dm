@@ -1,46 +1,29 @@
-//Largely beneficial effects go here, even if they have drawbacks. An example is provided in Shadow Mend.
+//Sentinel's Boon: Heals 1 brute/burn damage per second for a minute.
+/datum/status_effect/sentinels_boon
+	id = "sentinels_boon"
+	duration = 60
+	alert_type = /obj/screen/alert/status_effect/sentinels_boon
 
-/datum/status_effect/shadow_mend
-	id = "shadow_mend"
-	duration = 3
-	alert_type = /obj/screen/alert/status_effect/shadow_mend
+/obj/screen/alert/status_effect/sentinels_boon
+	name = "Sentinel's Boon"
+	desc = "Healing 1 brute and burn damage per second for a minute."
+	icon_state = "inathneqs_endowment"
+	alerttooltipstyle = "clockcult"
 
-/obj/screen/alert/status_effect/shadow_mend
-	name = "Shadow Mend"
-	desc = "Shadowy energies wrap around your wounds, sealing them at a price. After healing, you will slowly lose health every three seconds for thirty seconds."
-	icon_state = "shadow_mend"
+/datum/status_effect/sentinels_boon/on_apply()
+	owner.visible_message("<span class='warning'>Blue light settles around [owner]!</span>", "<span class='notice'>Gentle blue light shrouds you, healing your wounds!</span>")
+	playsound(owner, 'sound/magic/Staff_Healing.ogg', 50, 1)
 
-/datum/status_effect/shadow_mend/on_apply()
-	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
-	playsound(owner, 'sound/magic/Teleport_app.ogg', 50, 1)
+/datum/status_effect/sentinels_boon/tick()
+	owner.adjustBruteLoss(-1)
+	owner.adjustFireLoss(-1)
 
-/datum/status_effect/shadow_mend/tick()
-	owner.adjustBruteLoss(-15)
-	owner.adjustFireLoss(-15)
-
-/datum/status_effect/shadow_mend/on_remove()
-	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
-	playsound(owner, 'sound/magic/Teleport_diss.ogg', 50, 1)
-	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
-
-
-/datum/status_effect/void_price
-	id = "void_price"
-	duration = 30
-	tick_interval = 3
-	alert_type = /obj/screen/alert/status_effect/void_price
-
-/obj/screen/alert/status_effect/void_price
-	name = "Void Price"
-	desc = "Black tendrils cinch tightly against you, digging wicked barbs into your flesh."
-	icon_state = "shadow_mend"
-
-/datum/status_effect/void_price/tick()
-	owner << sound('sound/magic/Summon_Karp.ogg', volume = 25)
-	owner.adjustBruteLoss(3)
+/datum/status_effect/sentinels_boon/on_remove()
+	owner.visible_message("<span class='warning'>The light around [owner] disperses!</span>", "<span class='boldwarning'>The healing light disperses!</span>")
+	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
 
 
-
+//Vanguard: Absorbs stuns for 20 seconds, then dumps 1/4 of the absorbed stuns on the invoker.
 /datum/status_effect/vanguard_shield
 	id = "vanguard"
 	duration = 20
@@ -86,7 +69,7 @@
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
 
 
-
+//Inath-neq's Endowment: Heals fully on application and provides invulnerability for 15 seconds afterwards.
 /datum/status_effect/inathneqs_endowment
 	id = "inathneqs_endowment"
 	duration = 15
@@ -113,7 +96,7 @@
 	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
 
 
-
+//Wraith Spectacles: Causes eye damage or heals it, depending on several factors.
 /datum/status_effect/wraith_spectacles
 	id = "wraith_spectacles"
 	duration = -1 //remains until eye damage done reaches 0 while the glasses are not worn

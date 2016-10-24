@@ -11,8 +11,8 @@
 	icon_state = "frozen"
 
 /datum/status_effect/freon/on_apply()
-	if(!owner.stat)
-		owner << "You become frozen in a cube!"
+	owner.visible_message("<span class='warning'>A chunk of ice forms around [owner]!</span>", "<span class='userdanger'>You're frozen solid!</span>")
+	playsound(owner, 'sound/effects/ice_form.ogg', 50, 1)
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	owner.overlays += cube
 	owner.update_canmove()
@@ -24,8 +24,8 @@
 			cancel_effect()
 
 /datum/status_effect/freon/on_remove()
-	if(!owner.stat)
-		owner << "The cube melts!"
+	owner.visible_message("<span class='warning'>The ice cube shatters!</span>", "<span class='userdanger'>The ice cube around you falls apart!</span>")
+	playsound(owner, 'sound/effects/ice_shatter.ogg', 50, 1)
 	owner.overlays -= cube
 	owner.bodytemperature += 100
 	owner.update_canmove()

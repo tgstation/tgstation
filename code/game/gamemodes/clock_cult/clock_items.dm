@@ -5,7 +5,6 @@
 	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
-	w_class = 2
 
 /obj/item/clockwork/New()
 	..()
@@ -24,7 +23,7 @@
 /obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between the Celestial Derelict and the mortal plane. Contains limitless knowledge, fabricates components, and outputs a stream of information that only a trained eye can detect."
+	clockwork_desc = "The Swiss army knife of Ratvar's servants. Contains knowledge, scripture, and an integrated personality."
 	icon_state = "dread_ipad"
 	slot_flags = SLOT_BELT
 	w_class = 2
@@ -169,8 +168,8 @@
 
 /obj/item/clockwork/slab/attack_self(mob/living/user)
 	if(iscultist(user))
-		user << "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>"
-		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>")
+		user << "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at me.\"</span>"
+		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly boils your skin!</span>")
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
 		user.drop_item()
 		user.emote("scream")
@@ -178,7 +177,8 @@
 		user.apply_damage(5, BURN, "r_arm")
 		return 0
 	if(!is_servant_of_ratvar(user))
-		user << "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>"
+		user << "<span class='heavy_brass'>\"[text2ratvar("Sorry, buddy, but unless you rock the Engine roll, this ain't happening.")]\"</span>"
+		user << "<span class='warning'>You realize you've been staring at [src]'s clock in a hypnosis. You quickly loook away.</span>"
 		user.confused += 5
 		user.dizziness += 5
 		return 0
@@ -186,23 +186,23 @@
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
 		return 0
 	if(!nonhuman_usable && !ishuman(user))
-		user << "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>"
+		user << "<span class='warning'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>"
 		return 0
 	access_display(user)
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/action = alert(user, "Among the swathes of information, you see...", "[src]", "Recital", "Recollection", "Cancel")
+	var/action = alert(user, "[text2ratvar(pick("We endure!", "Hello, servant!", "Good tidings!"))] How can I help today?", "[src]", "Scripture", "Tutorial/Scrpt. List", "Cancel")
 	if(!action || !user.canUseTopic(src))
 		return 0
 	switch(action)
-		if("Recital")
+		if("Scripture")
 			if(user.get_active_held_item() != src)
 				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 				return
 			recite_scripture(user)
-		if("Recollection")
+		if("Tutorial/Scrpt. List")
 			show_guide(user)
 		if("Cancel")
 			return
@@ -253,40 +253,51 @@
 	if(ratvar_awakens)
 		text = "<font color=#BE8700 size=3><b>"
 		for(var/i in 1 to 100)
-			text += "HONOR RATVAR "
+			text += text2ratvar("HONOR ENGINE. ")
 		text += "</b></font>"
 	else
 		text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br><br>\
+		(This is a long read. If you're confident that you can learn the basics yourself, feel free to skip to the scripture list at the bottom.)<br><br>\
 		\
-		First and foremost, you serve Ratvar, the Clockwork Justiciar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
-		scale of things than your life. Through foul and unholy magics was the Celestial Derelict formed, and fouler still those which trapped your master within it for all eternity. The Justiciar \
-		wishes retribution upon those who performed this terrible act upon him - the Nar-Sian cultists - and you are to help him obtain it.<br><br>\
+		Welcome, good slave, to the archives of Ratvar! If you're able to read this without losing your mind, then congratulations; you've either been converted or chosen by Ratvar to serve his \
+		cause. Ratvar - you and I's master - wishes is, so it will be done. The Clockwork Justiciar wants Nar-Sie to rot for a thousand years like he did, so we're going to be furthering that \
+		goal together. I'm to help you in any way I can. You can call me Ze-Fyno, but that's not important.<br><br>\
 		\
-		This is not a trivial task. Due to the nature of his prison, Ratvar is incapable of directly influencing the mortal plane. There is, however, a workaround - links between the perceptible \
-		universe and Reebe (the Celestial Derelict) can be created and utilized. This is typically done via the creation of a slab akin to the one you are holding right now. The slabs tap into the \
-		tidal flow of energy and information keeping Reebe sealed and presents it as meaningless images to preserve sanity. This slab can utilize the power in many different ways.<br><br>\
+		I can already hear you thinking out loud with that meaty processor in your head. \"But, disembodied slab conscience,\" you think to yourself, \"how am I supposed to summon Ratvar with \
+		these fleshy human hands that are inferior to your glorious brass gears?\" Fear not, my student! Judging by the fact that you're currently reading what I have to say, you've already \
+		discovered your most important tool: the <b>clockwork slab</b>. That's me! Through me, you can access <b>scripture</b>, which we'll cover later. If you examine me, I can tell you some \
+		useful stuff, but there's an easier way, too.<br><br>\
 		\
-		This is done through <b><font color=#BE8700>Components</font></b> - pieces of the Justiciar's body that have since fallen off in the countless years since his imprisonment. Ratvar's unfortunate condition results \
-		in the fragmentation of his body. These components still house great power on their own, and can slowly be drawn from Reebe by links capable of doing so.<br>\
-		The most basic of these links lies in the clockwork slab, which will slowly generate components over time - one component of a random type is produced every 1 minute and 30 seconds, plus 30 seconds per each servant above 5, \
-		which is obviously inefficient. There are other, more efficient, ways to create these components through scripture and certain structures.<br><br>\
+		Take a look at your interface. We'll start with the top right. Here is where I'll tell you anything important that you need to know. If you focus on the image of the tower-looking thingy, \
+		I can tell you how many components you have, how many servants there are total, and which generals we can invoke. That probably all sounds like gibberish to you, but don't worry about it \
+		for now. I'll also let you know if there's anything severe, like no tinkerer's caches.<br><br>\
 		\
-		In addition to their ability to generate components, slabs also possess other functionalities...<br><br>\
+		If you look at the top left, you can see a few quick functionalities I offer. This is what they do, from left to right...<br>\
+		<b><font color=#DAAA18>Hierophant Network</font></b> lets you talk from any distance to every other servant. You still have to talk into the slab, so be careful you aren't observed!<br>\
+		<b><font color=#AF0AAF>Guvax</font></b> lets you recite the Guvax scripture, which is our best way to convert people.<br>\
+		<b><font color=#1E8CE1>Vanguard</font></b> lets you recite the Vanguard scripture, which makes you immune to stuns for a while but has some drawbacks.<br><br>\
 		\
-		The first functionality of the slab is <b><font color=#BE8700>Recital</font></b>. This allows you to consume components either from your slab or from the global cache (more on that in the scripture list) to perform \
-		effects usually considered magical in nature.<br>\
-		Effects vary considerably, including mass conversion, construction of various structures, or causing a massive global hallucination. Nevertheless, scripture is extremely important to a successful takeover.<br><br>\
+		Well, I think I've kept you in the dark for long enough. Let's talk about <b>scripture</b>. You know how Nar-Sie has runes? We don't use those; instead we use scripture, which serves the \
+		same function of letting you do stuff you otherwise couldn't. Unlike runes, all the scripture you need is contained right here in me, so you don't have to draw runes where they can be \
+		found. Great, right? Anyways, they ain't cheap. To use scripture, you need <b>components</b>. These are bits of Ratvar's body that have rusted away and fallen off during his banishment. \
+		Kinda gross, right? Well, each component is about as powerful as a collapsing star, so don't underestimate them! There are five types: belligerent eyes, vanguard cogwheels, guvax \
+		capacitors, replicant alloy, and hierophant ansibles. Scripture needs different types of components to function, and usually consumes at least a few of those. In general, eyes are \
+		offensive, cogs are defensive, capacitors are for intelligence or mind control, alloys are for making stuff, and ansibles are for transmitting stuff. Simple enough, but important!<br><br>\
 		\
-		The second functionality of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide.<br><br>\
+		Oh, another thing to note: scripture is divided into five <b>tiers</b>. Y'see, as Ratvar's presence grows on this deathtrap you call a station, all of his servants grow more resistant to \
+		the power of the scriptures. Although technically I could let you make the Ark right now, your head would probably explode from the mental strain, and I think you like having one. For \
+		your sake, we keep them tiered up, with scripture becoming steadily more powerful depending on tier. You only have the Driver tier unlocked by default, and it has stuff that's basic but \
+		important. As we grow more powerful, you unlock further tiers. I'll detail the requirements down below.<br><br>\
 		\
-		The third to fifth functionalities are several buttons in the top left while holding the slab, from left to right, they are:<br>\
-		<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other servants.<br>\
-		<b><font color=#AF0AAF>Guvax</font></b>, which simply allows you to quickly invoke the Guvax scripture.<br>\
-		<b><font color=#1E8CE1>Vanguard</font></b>, which, like Guvax, simply allows you to quickly invoke the Vanguard scripture.<br><br>\
+		Anyway, that's about all you need to kn- actually, wait. Something you should know. Unlike Nar-Sie's cult, which focuses on sabotage and doesn't really stay anywhere for long, we're much \
+		more static. That means that, instead of staying on the move, we make fortified strongholds and set up our operations there. Nezbere, Ratvar's engineer, has designed a lot of structures, \
+		so we need somewhere to put them. The most important of these is the <b>tinkerer's cache</b>, which lets you store components for later use. You can offload my (the slab) components into \
+		one by hitting it with me. Caches are so good because <i>everyone</i> can draw from the components inside, all caches are linked, and the components can be used to power scripture! It's \
+		a wonderful thing, teamwork. Anyway, the cache and other structures have something called <b>CV</b> - that stands for Construction Value. When you see CV mentioned in a tier unlock, we \
+		need that much <i>combined</i> CV to unlock it.<br><br>\
 		\
-		Examine the slab for component amount information.<br><br>\
-		\
-		A complete list of scripture, its effects, and its requirements can be found below.<br>\
+		Ol gur Nex, listen to me ramble. You probably just want to know the scripture, so let me tell you. I can't teach you any more, but feel free to ask your fellow servants for help. Anyway, \
+		here's your scripture...<br>\
 		Key:<br><font color=#6E001A>BE</font> = Belligerent Eyes<br>\
 		<font color=#1E8CE1>VC</font> = Vanguard Cogwheels<br>\
 		<font color=#AF0AAF>GC</font> = Guvax Capacitors<br>\
@@ -366,7 +377,7 @@
 
 /obj/item/clothing/glasses/wraith_spectacles //Wraith spectacles: Grants night and x-ray vision at the slow cost of the wearer's sight. Nar-Sian cultists are instantly blinded.
 	name = "antique spectacles"
-	desc = "Unnerving glasses with opaque yellow lenses."
+	desc = "A pair of eyeglasses with yellow lenses. They look very old."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "wraith_specs"
 	item_state = "glasses"
@@ -401,7 +412,7 @@
 
 /obj/item/clothing/glasses/judicial_visor //Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
 	name = "judicial visor"
-	desc = "A strange purple-lensed visor. Looking at it inspires an odd sense of guilt."
+	desc = "A strange purple visor. It makes you feel guilty for some reason."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "judicial_visor_0"
 	item_state = "sunglasses"
@@ -540,6 +551,50 @@
 		return 1
 
 
+/obj/item/weapon/ratvars_light //Stuns and blinds the target when struck.
+	name = "Ratvar's light"
+	desc = "A dazzling ball of concentrated light. When clenched in your fist, it's completely invisible."
+	icon = 'icons/effects/clockwork_effects.dmi'
+	icon_state = "ratvars_light"
+	item_state = null
+	w_class = 5
+	flags = NODROP
+	force = 5 //Also serves as a weak melee weapon!
+	damtype = BURN
+	hitsound = 'sound/weapons/sear.ogg'
+	attack_verb = list("scorched", "seared", "burnt")
+
+/obj/item/weapon/ratvars_light/examine(mob/user)
+	..()
+	user << "<span class='brass'>Attack a human to stun and blind them.</span>"
+
+/obj/item/weapon/ratvars_light/afterattack(atom/target, mob/living/user, flag, params)
+	if(!is_servant_of_ratvar(user))
+		user << "<span class='heavy_brass'>\"[text2ratvar("You seem keen on using that light.")]\"</span>"
+		target = user
+	else
+		if(!ishuman(target))
+			return
+	var/mob/living/carbon/human/victim = target
+	user.visible_message("<span class='warning'>[user]'s hand bursts with blinding light!</span>", "<span class='danger'>You release the power of [src]!</span>")
+	victim.Stun(10)
+	victim.Weaken(10)
+	victim.flash_act(1,1)
+	if(!iscultist(victim))
+		victim << "<span class='userdanger'>Blinding light and a soothing voice fill your mind...</span>"
+		victim << "<span class='inathneq'>\"[text2ratvar("Let Engine's light fill your body. Be purged of impure thoughts.")]\"</span>"
+		victim.silent += 5
+		victim.confused += 15
+	else
+		victim << "<span class='userdanger'>Searing light and a malevolent voice fill your mind...</span>"
+		victim << "<span class='inathneq'>\"[text2ratvar("Blood-spilling heretic! I hope this one rips out your black heart!")]\"</span>"
+		victim.silent += 10
+		victim.confused += 30
+		victim.cultslurring += 15
+		victim.adjustFireLoss(15)
+	qdel(src)
+
+
 /obj/item/clothing/head/helmet/clockwork //Clockwork armor: High melee protection but weak to lasers
 	name = "clockwork helmet"
 	desc = "A heavy helmet made of brass."
@@ -547,14 +602,14 @@
 	icon_state = "clockwork_helmet"
 	w_class = 3
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 50, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/head/helmet/clockwork/equipped(mob/living/user, slot)
 	..()
 	if(slot == slot_head && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
-			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, causing intense nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
@@ -619,7 +674,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 50, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/gloves/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
@@ -755,7 +810,6 @@
 		if(target)
 			PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(get_turf(target), get_dir(user, target)))
 			target.Stun(2)
-			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
@@ -1035,7 +1089,7 @@
 	clockwork_desc = "The antennae from a mania motor. May be usable as a substitute for a guvax capacitor."
 	icon_state = "mania_motor_antennae"
 	cultist_message = "Your head is filled with a burst of static."
-	servant_of_ratvar_messages = list("\"Who broke this.\"" = TRUE, "\"Did you break these off YOURSELF?\"" = TRUE, "\"Why did we give this to such simpletons, anyway?\"" = TRUE, \
+	servant_of_ratvar_messages = list("\"Who broke this?\"" = TRUE, "\"Did you break these off YOURSELF?\"" = TRUE, "\"Why did we give this to such simpletons, anyway?\"" = TRUE, \
 	"\"At least we can use these for something - unlike you.\"" = TRUE)
 
 /obj/item/clockwork/component/replicant_alloy
@@ -1067,7 +1121,7 @@
 	clockwork_desc = "The sad remains of an anima fragment. Might still be serviceable as a substitute for replicant alloy."
 	icon_state = "smashed_anime_fragment"
 	cultist_message = "The shards vibrate in your hands for a moment."
-	servant_of_ratvar_messages = list("\"...still fight...\"" = FALSE, "\"...where am I...?\"" = FALSE, "\"...put me... slab...\"" = FALSE)
+	servant_of_ratvar_messages = list("\"...still... ...fight...\"" = FALSE, "\"...where am I...?\"" = FALSE, "\"...put me... slab...\"" = FALSE)
 	message_span = "heavy_brass"
 	w_class = 3
 
@@ -1087,8 +1141,8 @@
 	icon_state = "hierophant_ansible"
 	component_id = "hierophant_ansible"
 	cultist_message = "\"Gur obff fnlf vg'f abg ntnvafg gur ehyrf gb-xvyy lbh.\""
-	servant_of_ratvar_messages = list("\"Exile is such a bore. There's nothing I can hunt in here.\"" = TRUE, "\"What's keeping you? I want to go kill something.\"" = TRUE, \
-	"\"HEHEHEHEHEHEH!\"" = FALSE, "\"If I killed you fast enough, do you think the boss would notice?\"" = TRUE)
+	servant_of_ratvar_messages = list("\"Exile is such a bore. There's nothing I can hurt in here.\"" = TRUE, "\"What's keeping you? I want to go kill something.\"" = TRUE, \
+	"\"HEHEHEHEHEHEH...\"" = FALSE, "\"If I killed you fast enough, do you think the boss would notice?\"" = TRUE)
 	message_span = "nzcrentr"
 
 /obj/item/clockwork/component/hierophant_ansible/obelisk
