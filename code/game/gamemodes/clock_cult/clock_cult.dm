@@ -17,14 +17,17 @@ Game-wise, clockwork slabs will generate components over time, with more powerfu
 
 This file's folder contains:
 	clock_cult.dm: Core gamemode files.
-	clock_items.dm: Items (excluding the proselytizer).
-	clock_machines.dm: Machinery like the mending motor.
-	clock_mobs.dm: Hostile and benign clockwork creatures.
-	clock_proselytizer: The clockwork proselytizer and all of its special interactions.
-	clock_ratvar.dm: The Ark of the Clockwork Justiciar and Ratvar himself. Important enough to have his own file.
-	clock_scripture.dm: Scripture and rites.
-	clock_structures.dm: Structures and effects
-	clock_unsorted.dm: Anything else with no place to be
+	clock_effect.dm: The base clockwork effect code.
+	- Effect files are in game/gamemodes/clock_cult/clock_effects/
+	clock_item.dm: The base clockwork item code.
+	- Item files are in game/gamemodes/clock_cult/clock_items/
+	clock_mobs.dm: Hostile clockwork creatures.
+	clock_scripture.dm: The base Scripture code.
+	- Scripture files are in game/gamemodes/clock_cult/clock_scripture/
+	clock_structure.dm: The base clockwork structure code, including clockwork machines.
+	- Structure files, and Ratvar, are in game/gamemodes/clock_cult/clock_structures/
+
+	game/gamemodes/clock_cult/clock_helpers/ contains several helper procs, including the Ratvarian language.
 
 	clockcult defines are in __DEFINES/clockcult.dm
 
@@ -47,19 +50,19 @@ Credit where due:
 
 /proc/is_eligible_servant(mob/living/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(M.mind)
 		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
-			return 0
+			return FALSE
 		if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
-			return 0
+			return FALSE
 	else
-		return 0
+		return FALSE
 	if(iscultist(M) || isconstruct(M) || M.isloyal())
-		return 0
+		return FALSE
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
 	var/update_type = /datum/antagonist/clockcultist
