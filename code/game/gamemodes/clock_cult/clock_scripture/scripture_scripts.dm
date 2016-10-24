@@ -161,6 +161,41 @@
 	F.Grant(invoker)
 	return TRUE
 
+//Function Call action: Calls forth a Ratvarian spear once every 3 minutes.
+/datum/action/innate/function_call
+	name = "Function Call"
+	desc = "Allows you to summon a Ratvarian spear to fight enemies."
+	button_icon_state = "ratvarian_spear"
+	background_icon_state = "bg_clock"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	buttontooltipstyle = "clockcult"
+	var/cooldown = 0
+	var/base_cooldown = 1800
+
+/datum/action/innate/function_call/IsAvailable()
+	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
+		return FALSE
+	return ..()
+
+/datum/action/innate/function_call/Activate()
+	if(!owner.get_empty_held_indexes())
+		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
+		return FALSE
+	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
+	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
+	owner.put_in_hands(R)
+	if(!ratvar_awakens)
+		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
+		addtimer(R, "break_spear", base_cooldown, FALSE)
+	cooldown = base_cooldown + world.time
+	owner.update_action_buttons_icon()
+	addtimer(src, "update_actions", base_cooldown, FALSE)
+	return TRUE
+
+/datum/action/innate/function_call/proc/update_actions()
+	if(owner)
+		owner.update_action_buttons_icon()
+
 
 //Spatial Gateway: Allows the invoker to teleport themselves and any nearby allies to a conscious servant or clockwork obelisk.
 /datum/clockwork_scripture/spatial_gateway

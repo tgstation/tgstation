@@ -51,6 +51,26 @@
 			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
 
 
+//for the ark and Ratvar
+/obj/structure/destructible/clockwork/massive
+	name = "massive construct"
+	desc = "A very large construction."
+	layer = MASSIVE_OBJ_LAYER
+	density = FALSE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/structure/destructible/clockwork/massive/New()
+	..()
+	poi_list += src
+
+/obj/structure/destructible/clockwork/massive/Destroy()
+	poi_list -= src
+	return ..()
+
+/obj/structure/destructible/clockwork/massive/singularity_pull(S, current_size)
+	return
+
+
 //the base clockwork machinery, which is not actually machines, but happens to use power
 /obj/structure/destructible/clockwork/powered
 	var/obj/machinery/power/apc/target_apc
