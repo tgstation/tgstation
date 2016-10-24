@@ -89,6 +89,7 @@ var/global/list/lawlorify = list (
 	var/ascendable
 
 /datum/antagonist/devil/New(isascendable = false)
+	..()
 	truename = randomDevilName()
 	bane = randomdevilbane()
 	obligation = randomdevilobligation()
@@ -416,9 +417,36 @@ var/global/list/lawlorify = list (
 		if(C.hud_used && C.hud_used.devilsouldisplay)
 			C.hud_used.devilsouldisplay.update_counter(SOULVALUE)
 
+/datum/antagonist/devil/apply_innate_effects()
+	..()
+	owner.mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
+	give_base_spells(1)
+	spawn(10)
+		update_hud()
+		if(current.mind.assigned_role == "Clown" && ishuman(current))
+			var/mob/living/carbon/human/H = current
+			H << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
+			H.dna.remove_mutation(CLOWNMUT)
+	if(issilicon(current))
+		add_law_sixsixsix(current)
+
+
 /datum/fakedevil_antag/  //A super light weight container to store information about devils that don't actually exist, for purposes of the codex gigas.
 	var/obligation
 	var/ban
 	var/bane
 	var/banish
 	var/truename
+
+/datum/mind/proc/announceDevilLaws()
+	if(!devilinfo)
+		return
+	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
+	current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
+	current << "You may not use violence to coerce someone into selling their soul."
+	current << "You may not directly and knowingly physically harm a devil, other than yourself."
+	current << lawlorify[LAW][src.devilinfo.bane]
+	current << lawlorify[LAW][src.devilinfo.ban]
+	current << lawlorify[LAW][src.devilinfo.obligation]
+	current << lawlorify[LAW][src.devilinfo.banish]
+	current << "<br/><br/><span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>"
