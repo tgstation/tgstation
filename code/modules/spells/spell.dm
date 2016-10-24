@@ -5,6 +5,7 @@
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
 	var/active = FALSE //Used by toggle based abilities.
+	var/ranged_mousepointer
 
 var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
@@ -25,16 +26,26 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		user.ranged_ability.remove_ranged_ability(user)
 	user.ranged_ability = src
 	user.client.click_intercept = user.ranged_ability
+	add_mousepointer(user.client)
 	active = TRUE
 	if(msg)
 		user << msg
 	update_icon()
+
+/obj/effect/proc_holder/proc/add_mousepointer(client/C)
+	if(C && ranged_mousepointer && C.mouse_pointer_icon == initial(C.mouse_pointer_icon))
+		C.mouse_pointer_icon = ranged_mousepointer
+
+/obj/effect/proc_holder/proc/remove_mousepointer(client/C)
+	if(C && ranged_mousepointer && C.mouse_pointer_icon == ranged_mousepointer)
+		C.mouse_pointer_icon = initial(C.mouse_pointer_icon)
 
 /obj/effect/proc_holder/proc/remove_ranged_ability(mob/living/user, var/msg)
 	if(!user || !user.client || (user.ranged_ability && user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
 	user.ranged_ability = null
 	user.client.click_intercept = null
+	remove_mousepointer(user.client)
 	active = FALSE
 	if(msg)
 		user << msg
