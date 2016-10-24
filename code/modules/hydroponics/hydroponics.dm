@@ -891,8 +891,10 @@
 		user << "<span class='notice'>You harvest from the [myseed.plantname].</span>"
 	else if(myseed,/obj/item/seeds/spiderling
 		user << "<span class='notice'>The spiderling plant suddenly mutates, changing it's stats based on the others!
-			myseed.yield = round (100 / myseed.potency, 1)
-			myseed.production = round(100 / myseed.potency, 1)
+			myseed.yield = round (myseed.potency / 10, 1) //Best value is 10
+			myseed.production = round(100 / myseed.potency, 1) //Best value is 1
+				if myseed.production > 10 //stops it from taking forever to grow
+					myseed.production = 10
 	else if(myseed.getYield() <= 0)
 		user << "<span class='warning'>You fail to harvest anything useful!</span>"
 	else
