@@ -523,6 +523,7 @@ datum/design/diagnostic_hud_night
 	build_path = /obj/item/weapon/crowbar/power
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
+	category = list("Equipment")
 
 /datum/design/diskplantgene
 	name = "Plant data disk"
