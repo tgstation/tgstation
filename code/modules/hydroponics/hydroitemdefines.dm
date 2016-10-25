@@ -75,7 +75,7 @@
 
 /obj/item/weapon/hatchet
 	name = "hatchet"
-	desc = "A very sharp axe blade upon a short handle. Commonly used for conducting Navajo-style takedowns, or chopping wood. Alt-Click it to set a warcry."
+	desc = "A very sharp axe blade upon a short handle. The Botanist's right hand, an heirloom of Botany's Navajo roots. Alt-Click it to set a warcry."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = CONDUCT
