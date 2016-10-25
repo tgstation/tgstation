@@ -112,7 +112,7 @@
 			return 0
 
 	L.Stun(2)
-	L.Weaken(7)
+	L.Weaken(3)
 	if(user)
 		user.lastattacked = L
 		L.lastattacker = user
