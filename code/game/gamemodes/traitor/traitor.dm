@@ -194,7 +194,7 @@
 
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
+	traitor.current << "<B><font size=3 color=red>You are a [traitor_name]!</font></B>"
 	traitor.announce_objectives()
 	return
 

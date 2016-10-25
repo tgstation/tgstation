@@ -635,29 +635,29 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 						if(1) //revolver
 							halitem.icon = 'icons/obj/guns/projectile.dmi'
 							halitem.icon_state = "revolver"
-							halitem.name = "Revolver"
+							halitem.name = "revolver"
 						if(2) //c4
 							halitem.icon = 'icons/obj/grenade.dmi'
 							halitem.icon_state = "plastic-explosive0"
-							halitem.name = "Mysterious Package"
+							halitem.name = "C-4"
 							if(prob(25))
 								halitem.icon_state = "c4small_1"
 						if(3) //sword
 							halitem.icon = 'icons/obj/weapons.dmi'
 							halitem.icon_state = "sword1"
-							halitem.name = "Sword"
+							halitem.name = "sword"
 						if(4) //stun baton
 							halitem.icon = 'icons/obj/weapons.dmi'
 							halitem.icon_state = "stunbaton"
-							halitem.name = "Stun Baton"
+							halitem.name = "stun baton"
 						if(5) //emag
 							halitem.icon = 'icons/obj/card.dmi'
 							halitem.icon_state = "emag"
-							halitem.name = "Cryptographic Sequencer"
+							halitem.name = "cryptographic sequencer"
 						if(6) //flashbang
 							halitem.icon = 'icons/obj/grenade.dmi'
 							halitem.icon_state = "flashbang1"
-							halitem.name = "Flashbang"
+							halitem.name = "flashbang"
 					if(client) client.screen += halitem
 					QDEL_IN(halitem, rand(100, 250))
 		if("dangerflash")

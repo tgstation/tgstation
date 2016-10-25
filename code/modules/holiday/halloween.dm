@@ -102,14 +102,10 @@
 
 	else if(trapped == SPOOKY_SKELETON)
 		visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>")
-		playsound(loc, pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg','sound/spookoween/girlscream.ogg'), 300, 1)
+		playsound(loc, 'sound/spookoween/girlscream.ogg', 300, 1)
 		trapped = 0
 		spawn(90)
-			if(trapped_mob && trapped_mob.loc)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new()
-				smoke.set_up(1, 0, trapped_mob.loc, 0)
-				smoke.start()
-				qdel(trapped_mob)
+			qdel(trapped_mob)
 
 	else if(trapped == HOWLING_GHOST)
 		visible_message("<span class='userdanger'><font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
@@ -130,21 +126,15 @@
 		visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN!!!</font></span>")
 		playsound(loc, 'sound/hallucinations/wail.ogg', 300, 1)
 		var/mob/living/simple_animal/hostile/faithless/F = new(loc)
-		F.stance = HOSTILE_STANCE_ATTACK
-		F.GiveTarget(usr)
 		trapped = 0
 		spawn(120)
-			if(F && F.loc)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
-				smoke.set_up(1,0, F.loc, 0)
-				smoke.start()
+			if(F)
 				qdel(F)
 
 	else if(trapped == INSANE_CLOWN)
 		visible_message("<span class='userdanger'><font size='5'>...</font></span>")
 		playsound(loc, 'sound/spookoween/scary_clown_appear.ogg', 300, 1)
-		var/mob/living/simple_animal/hostile/retaliate/clown/insane/IC = new (loc)
-		IC.GiveTarget(usr)
+		new/mob/living/simple_animal/hostile/retaliate/clown/insane(loc)
 		trapped = 0
 
 //don't spawn in crates
@@ -267,9 +257,9 @@
 			loc = M.loc
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/MoveToTarget()
-	return
+	stalk(target)
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/AttackTarget()
+/mob/living/simple_animal/hostile/retaliate/clown/insane/AttackingTarget()
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/adjustHealth()
@@ -290,3 +280,21 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/handle_temperature_damage()
 	return
+
+////////////////////////////
+// Halloween Uplink Items //
+////////////////////////////
+
+/datum/uplink_item/dangerous/crossbow/candy
+	name = "Candy Corn Crossbow"
+	desc = "A standard miniature energy crossbow that uses a hard-light projector to transform bolts into candy corn. Happy Halloween!"
+	category = "Holiday"
+	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/halloween
+	surplus = 0
+
+/datum/uplink_item/device_tools/emag/hack_o_lantern
+	name = "Hack-o'-Lantern"
+	desc = "An emag fitted to support the Halloween season. Candle not included."
+	category = "Holiday"
+	item = /obj/item/weapon/card/emag/halloween
+	surplus = 0
