@@ -40,19 +40,19 @@
 	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 20 seconds).</span>"
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
-	spawn(rand(150,220) + B.victim.brainloss)
+	var/delay = rand(150,220) + B.victim.brainloss
+	addtimer(src, "return_control", delay, FALSE, src.loc)
 
-		if(!B || !B.controlling)
-			return
+/mob/living/captive_brain/proc/return_control(mob/living/simple_animal/borer/B)
+    if(!B || !B.controlling)
+        return
 
-		B.victim.adjustBrainLoss(rand(5,10))
-		src << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
-		B.victim << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
-
-		B.detatch()
-
-		verbs -= /mob/living/carbon/proc/release_control
-		verbs -= /mob/living/carbon/proc/spawn_larvae
+    B.victim.adjustBrainLoss(rand(5,10))
+    src << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
+    B.victim << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
+    B.detatch()
+    verbs -= /mob/living/carbon/proc/release_control
+    verbs -= /mob/living/carbon/proc/spawn_larvae
 
 var/list/mob/living/simple_animal/borer/borers = list()
 var/total_borer_hosts_needed = 10
@@ -477,9 +477,6 @@ var/total_borer_hosts_needed = 10
 	if(stat != CONSCIOUS)
 		src << "<span class='userdanger'>You cannot leave your host in your current state.</span>"
 
-	if(!victim || !src)
-		return
-
 	if(leaving)
 		leaving = 0
 		src << "<span class='userdanger'>You decide against leaving your host.</span>"
@@ -492,26 +489,28 @@ var/total_borer_hosts_needed = 10
 
 	leaving = 1
 
-	spawn(100)
+	addtimer(src, "release_host", 100, FALSE)
 
-		if(!victim || !src)
-			return
-		if(!leaving)
-			return
-		if(controlling)
-			return
+/mob/living/simple_animal/borer/proc/release_host()
+	if(!victim || !src)
+		return
+	if(!leaving)
+		return
+	if(controlling)
+		return
 
-		if(src.stat != CONSCIOUS)
-			src << "<span class='userdanger'>You cannot release your host in your current state.</span>"
-			return
+	if(src.stat != CONSCIOUS)
+		src << "<span class='userdanger'>You cannot release your host in your current state.</span>"
+		return
 
-		src << "<span class='userdanger'>You wiggle out of [victim]'s ear and plop to the ground.</span>"
-		if(victim.mind)
-			host << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
-			host << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
+	src << "<span class='userdanger'>You wiggle out of [victim]'s ear and plop to the ground.</span>"
+	if(victim.mind)
+		host << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
+		host << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
 
-		leave_victim()
+	leaving = 0
 
+	leave_victim()
 
 /mob/living/simple_animal/borer/verb/jumpstart()
 	set category = "Borer"
@@ -581,65 +580,70 @@ var/total_borer_hosts_needed = 10
 
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 
-	spawn(200+(victim.brainloss*5))
+	if(qdeleted(src))
+		return
 
-		if(!victim || !src || controlling || victim.stat == DEAD)
-			return
-		if(docile)
-			src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
-			return
-		else
+	var/delay = 200+(victim.brainloss*5)
+	addtimer(src, "assume_control", delay, FALSE)
+
+/mob/living/simple_animal/borer/proc/assume_control()
+	if(!victim || !src || controlling || victim.stat == DEAD)
+		return
+	if(docile)
+		src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
+		return
+	else
 
 
-			log_game("[src]/([src.ckey]) assumed control of [victim]/([victim.ckey] with borer powers.")
-			src << "<span class='warning'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>"
-			victim << "<span class='userdanger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>"
+		log_game("[src]/([src.ckey]) assumed control of [victim]/([victim.ckey] with borer powers.")
+		src << "<span class='warning'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>"
+		victim << "<span class='userdanger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>"
 
-			// host -> brain
-			var/h2b_id = victim.computer_id
-			var/h2b_ip= victim.lastKnownIP
-			victim.computer_id = null
-			victim.lastKnownIP = null
+		// host -> brain
+		var/h2b_id = victim.computer_id
+		var/h2b_ip= victim.lastKnownIP
+		victim.computer_id = null
+		victim.lastKnownIP = null
 
-			qdel(host_brain)
-			host_brain = new(src)
+		qdel(host_brain)
+		host_brain = new(src)
 
-			host_brain.ckey = victim.ckey
+		host_brain.ckey = victim.ckey
 
-			host_brain.name = victim.name
+		host_brain.name = victim.name
 
-			if(victim.mind)
-				host_brain.mind = victim.mind
+		if(victim.mind)
+			host_brain.mind = victim.mind
 
-			if(!host_brain.computer_id)
-				host_brain.computer_id = h2b_id
+		if(!host_brain.computer_id)
+			host_brain.computer_id = h2b_id
 
-			if(!host_brain.lastKnownIP)
-				host_brain.lastKnownIP = h2b_ip
+		if(!host_brain.lastKnownIP)
+			host_brain.lastKnownIP = h2b_ip
 
-			// self -> host
-			var/s2h_id = src.computer_id
-			var/s2h_ip= src.lastKnownIP
-			src.computer_id = null
-			src.lastKnownIP = null
+		// self -> host
+		var/s2h_id = src.computer_id
+		var/s2h_ip= src.lastKnownIP
+		src.computer_id = null
+		src.lastKnownIP = null
 
-			victim.ckey = src.ckey
-			victim.mind = src.mind
+		victim.ckey = src.ckey
+		victim.mind = src.mind
 
-			if(!victim.computer_id)
-				victim.computer_id = s2h_id
+		if(!victim.computer_id)
+			victim.computer_id = s2h_id
 
-			if(!victim.lastKnownIP)
-				victim.lastKnownIP = s2h_ip
+		if(!victim.lastKnownIP)
+			victim.lastKnownIP = s2h_ip
 
-			controlling = 1
+		controlling = 1
 
-			victim.verbs += /mob/living/carbon/proc/release_control
-			victim.verbs += /mob/living/carbon/proc/spawn_larvae
-			victim.verbs -= /mob/living/proc/borer_comm
-			victim.verbs += /mob/living/proc/trapped_mind_comm
+		victim.verbs += /mob/living/carbon/proc/release_control
+		victim.verbs += /mob/living/carbon/proc/spawn_larvae
+		victim.verbs -= /mob/living/proc/borer_comm
+		victim.verbs += /mob/living/proc/trapped_mind_comm
 
-			victim.med_hud_set_status()
+		victim.med_hud_set_status()
 
 /mob/living/simple_animal/borer/verb/punish()
 	set category = "Borer"
@@ -753,6 +757,7 @@ mob/living/carbon/proc/release_control()
 	your host and your eventual spawn safe and warm."
 	src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your borer tab to see your powers as a borer."
 	src << "You <b>MUST</b> escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle."
+
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling)
 		return

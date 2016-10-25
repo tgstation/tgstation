@@ -10,6 +10,12 @@
 /obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
 	user << "<span class='notice'>We begin cleansing impurities from our form.</span>"
 
+	var/mob/living/simple_animal/borer/borer = user.has_brain_worms()
+	if(borer)
+		borer.leave_victim()
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.vomit(0)
 	var/obj/item/organ/body_egg/egg = user.getorgan(/obj/item/organ/body_egg)
 	if(egg)
 		egg.Remove(user)
