@@ -155,7 +155,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tPGUP = swap-hand
 \tPGDN = activate held object
 \tEND = throw
-\tCtrl+Num-pad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
+\tCtrl+Numpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
+\tShift+Movement = Alter current move intent (walk/run)
 </font>"}
 
 	src << hotkey_mode
