@@ -94,7 +94,8 @@
 	var/war_cry = "WHOOP WHOOP WHOOP!!"
 
 /obj/item/weapon/hatchet/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is scalping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is scalping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to their ancestors!</span>")
+	user.say("[war_cry]")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 	
