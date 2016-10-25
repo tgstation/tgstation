@@ -541,12 +541,11 @@
 		var/obj/C = loc
 		C.container_resist(src)
 
-	else if(has_status_effect(/datum/status_effect/freon))
-		src << "You start breaking out of the ice cube!"
-		if(do_mob(src, src, 40))
-			if(has_status_effect(/datum/status_effect/freon))
-				src << "You break out of the ice cube!"
-				remove_status_effect(/datum/status_effect/freon)
+	else if(has_status_effect(STATUS_EFFECT_FROZEN_SOLID))
+		visible_message("<span class='warning'>[src] struggles to break out of the ice cube!</span>", "<span class='userdanger'>You start breaking free of the ice...</span>")
+		if(do_after(src, 40, target = src))
+			if(has_status_effect(STATUS_EFFECT_FROZEN_SOLID))
+				remove_status_effect(STATUS_EFFECT_FROZEN_SOLID)
 				update_canmove()
 
 	else if(canmove)

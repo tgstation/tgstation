@@ -221,22 +221,73 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 
 
-/datum/clockwork_scripture/create_object/judicial_visor //Judicial Visor: Creates a judicial visor.
-	descname = "Delayed Area Stun Glasses"
-	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging the nonfaithful. \
-	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
-	invocations = list("Grant me the flames of Engine!")
-	channel_time = 10
+/datum/clockwork_scripture/stunning_flare //Stunning Flare: Stuns and blinds the target for 10 seconds, and disorients them for 15.
+	descname = "Melee Stun/Blind"
+	name = "Stunning Flare"
+	desc = "Fills your hand with holy light. You can strike a target with it to stun, blind, and disorient them."
+	invocations = list("Bask in his glory!")
+	whispered = TRUE
+	channel_time = 0
 	required_components = list("belligerent_eye" = 2)
 	consumed_components = list("belligerent_eye" = 1)
-	whispered = TRUE
-	object_path = /obj/item/clothing/glasses/judicial_visor
-	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
-	usage_tip = "The visor has a thirty-second cooldown once used, and the marker it creates has a delay of 3 seconds before exploding."
+	usage_tip = "The flare breaches eye protection but <i>does not affect silicons</i>."
 	tier = SCRIPTURE_DRIVER
-	space_allowed = TRUE
 	sort_priority = 2
+
+/datum/clockwork_scripture/stunning_flare/check_special_requirements()
+	if(!invoker.get_empty_held_index_for_side("l") && !invoker.get_empty_held_index_for_side("r"))
+		invoker << "<span class='warning'>You need a free hand to hold the flare!</span>"
+		return 0
+	return 1
+
+/datum/clockwork_scripture/stunning_flare/scripture_effects()
+	invoker << "<span class='brass'>A bright light flickers to life in your hand.</span>"
+	var/obj/item/weapon/ratvars_light/L = new(get_turf(invoker))
+	invoker.put_in_hands(L)
+	return 1
+
+/obj/item/weapon/ratvars_light //Stuns and blinds the target when struck.
+	name = "Ratvar's light"
+	desc = "A dazzling ball of concentrated light. When clenched in your fist, it's completely invisible."
+	icon = 'icons/effects/clockwork_effects.dmi'
+	icon_state = "ratvars_light"
+	item_state = null
+	w_class = 5
+	flags = NODROP
+	force = 5 //Also serves as a weak melee weapon!
+	damtype = BURN
+	hitsound = 'sound/weapons/sear.ogg'
+	attack_verb = list("scorched", "seared", "burnt")
+
+/obj/item/weapon/ratvars_light/examine(mob/user)
+	..()
+	user << "<span class='brass'>Attack a human to stun and blind them.</span>"
+
+/obj/item/weapon/ratvars_light/afterattack(atom/target, mob/living/user, flag, params)
+	if(!is_servant_of_ratvar(user))
+		user << "<span class='heavy_brass'>\"[text2ratvar("You seem keen on using that light.")]\"</span>"
+		target = user
+	else
+		if(!ishuman(target))
+			return
+	var/mob/living/carbon/human/victim = target
+	user.visible_message("<span class='warning'>[user]'s hand bursts with blinding light!</span>", "<span class='danger'>You release the power of [src]!</span>")
+	victim.Stun(10)
+	victim.Weaken(10)
+	victim.flash_act(1,1)
+	if(!iscultist(victim))
+		victim << "<span class='userdanger'>Blinding light and a soothing voice fill your mind...</span>"
+		victim << "<span class='inathneq'>\"[text2ratvar("Let Engine's light fill your body. Be purged of impure thoughts.")]\"</span>"
+		victim.silent += 5
+		victim.confused += 15
+	else
+		victim << "<span class='userdanger'>Searing light and a malevolent voice fill your mind...</span>"
+		victim << "<span class='inathneq'>\"[text2ratvar("Blood-spilling heretic! I hope this one rips out your black heart!")]\"</span>"
+		victim.silent += 10
+		victim.confused += 30
+		victim.cultslurring += 15
+		victim.adjustFireLoss(15)
+	qdel(src)
 
 
 
@@ -264,19 +315,19 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 
 
-/datum/clockwork_scripture/sentinels_compromise //Sentinel's Compromise: Allows the invoker to select a nearby servant convert their brute and burn damage into half as much toxin damage.
-	descname = "Convert Brute/Burn to Half Toxin"
-	name = "Sentinel's Compromise"
-	desc = "Heals all brute and burn damage on a nearby living, friendly servant, but deals 50% of the damage they had as toxin damage."
+/datum/clockwork_scripture/sentinels_boon //Sentinel's Boon: Places a long heal-over-time on the target.
+	descname = "Slow Heal-Over-Time"
+	name = "Sentinel's Boon"
+	desc = "Heals 60 brute and burn damage over a minute."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
 	required_components = list("vanguard_cogwheel" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1)
-	usage_tip = "The Compromise is very fast to invoke."
+	usage_tip = "Pre-healing before an engagement can keep you alive during combat."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 4
 
-/datum/clockwork_scripture/sentinels_compromise/scripture_effects()
+/datum/clockwork_scripture/sentinels_boon/scripture_effects()
 	var/list/nearby_cultists = list()
 	for(var/mob/living/C in range(7, invoker))
 		if(C.stat != DEAD && is_servant_of_ratvar(C) && (C.getBruteLoss() || C.getFireLoss()))
@@ -287,23 +338,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/mob/living/L = input(invoker, "Choose a fellow servant to heal.", name) as null|anything in nearby_cultists
 	if(!L || !invoker || !invoker.canUseTopic(slab))
 		return 0
-	var/brutedamage = L.getBruteLoss()
-	var/burndamage = L.getFireLoss()
-	var/totaldamage = brutedamage + burndamage
-	if(!totaldamage)
-		invoker << "<span class='warning'>[L] is not burned or bruised!</span>"
-		return 0
-	L.adjustToxLoss(totaldamage * 0.5)
-	L.adjustBruteLoss(-brutedamage)
-	L.adjustFireLoss(-burndamage)
-	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
-	var/targetturf = get_turf(L)
-	for(var/i in 1 to healseverity)
-		PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
 	invoker << "<span class='brass'>You bathe [L] in Inath-neq's power!</span>"
-	L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
-	"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
-	playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
+	L.apply_status_effect(STATUS_EFFECT_SENTINELS_BOON)
 	return 1
 
 
@@ -684,6 +720,25 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	sort_priority = 16
+
+
+
+/datum/clockwork_scripture/create_object/judicial_visor //Judicial Visor: Creates a judicial visor.
+	descname = "Delayed Area Stun Glasses"
+	name = "Judicial Visor"
+	desc = "Forms a visor that, when worn, will grant the ability to form a flame in your hand that can be activated at an area to smite it, stunning, muting, and damaging the nonfaithful. \
+	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
+	invocations = list("Grant me the flames of Engine!")
+	channel_time = 10
+	required_components = list("vanguard_cogwheel" = 2, "belligerent_eye" = 1)
+	consumed_components = list("vanguard_cogwheel" = 1, "belligerent_eye" = 1)
+	whispered = TRUE
+	object_path = /obj/item/clothing/glasses/judicial_visor
+	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
+	usage_tip = "The visor has a thirty-second cooldown once used, and the marker it creates has a delay of 3 seconds before exploding."
+	tier = SCRIPTURE_SCRIPT
+	space_allowed = TRUE
+	sort_priority = 21
 
 
 

@@ -685,7 +685,7 @@ var/next_mob_id = 0
 	update_action_buttons_icon()
 	if(isliving(src))
 		var/mob/living/L = src
-		if(L.has_status_effect(/datum/status_effect/freon))
+		if(L.has_status_effect(STATUS_EFFECT_FROZEN_SOLID))
 			canmove = 0
 	lying_prev = lying
 	return canmove

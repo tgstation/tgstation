@@ -86,7 +86,7 @@
 	if(!obj_integrity)
 		. = "DETONATING"
 	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
-		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)][s_on_time ? "S":""]"
+		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)][s_on_time ? "s":""]"
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!progress_in_seconds || prob(7))
@@ -164,9 +164,9 @@
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
 				user << "<span class='heavy_brass'>It's still opening.</span>"
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-				user << "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>"
+				user << "<span class='heavy_brass'>It's reached the Celestial Derelict and is breaching the dimensional barrier.</span>"
 			if(GATEWAY_RATVAR_COMING to INFINITY)
-				user << "<span class='heavy_brass'>[ratvar_portal ? "Ratvar is coming through the gateway":"The gateway is glowing with massed power"]!</span>"
+				user << "<span class='heavy_brass'>[ratvar_portal ? "Ratvar is coming through the gateway":"It thrums with intense, gathered energy!"]!</span>"
 	else
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
@@ -174,7 +174,7 @@
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 				user << "<span class='warning'>It seems to be leading somewhere.</span>"
 			if(GATEWAY_RATVAR_COMING to INFINITY)
-				user << "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's glowing brightly"]!</span>"
+				user << "<span class='boldwarning'>[ratvar_portal ? "Something is coming through":"It's flaring with intense energy"]!</span>"
 
 /obj/effect/clockwork/overlay/gateway_glow //the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
 	icon = 'icons/effects/96x96.dmi'
@@ -187,7 +187,7 @@
 /obj/structure/destructible/clockwork/massive/ratvar
 	name = "Ratvar, the Clockwork Justiciar"
 	desc = "<span class='userdanger'>What is what is what are what real what is all a lie all a lie it's all a lie why how can what is</span>"
-	clockwork_desc = "<span class='large_brass'><b><i>Ratvar, the Clockwork Justiciar, your master eternal.</i></b></span>"
+	clockwork_desc = "It's Ratvar. You kind of expected more fanfare."
 	icon = 'icons/effects/512x512.dmi'
 	icon_state = "ratvar"
 	pixel_x = -235
@@ -226,7 +226,7 @@
 	if(alertresult == "No" || !O)
 		return 0
 	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
-	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
+	R.visible_message("<span class='heavy_brass'>[R] falls from the Justiciar's form, its bright red eye blinking open!</span>")
 	R.key = O.key
 
 
@@ -294,8 +294,8 @@
 	while(TRUE)
 		world << 'sound/magic/clockwork/ratvar_attack.ogg'
 		sleep(5.2)
-		for(var/mob/M in mob_list)
-			flash_color(M, flash_color="#966400", flash_time=1)
+		for(var/mob/M in player_list)
+			flash_color(M, flash_color="#966400", flash_time=3)
 			shake_camera(M, 4, 3)
 		var/ratvar_chance = min(ticker.mode.servants_of_ratvar.len, 50)
 		var/narsie_chance = ticker.mode.cult.len
@@ -310,7 +310,7 @@
 		world << 'sound/magic/clockwork/narsie_attack.ogg'
 		sleep(7.4)
 		for(var/mob/M in mob_list)
-			flash_color(M, flash_color="#C80000", flash_time=1)
+			flash_color(M, flash_color="#C80000", flash_time=3)
 			shake_camera(M, 4, 3)
 		if(narsie_chance > ratvar_chance)
 			winner = "Nar-Sie"
@@ -319,14 +319,14 @@
 	switch(winner)
 		if("Ratvar")
 			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>" //nar-sie get out
-			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
+			world << "<span class='cult'><font size=5>\"<b>[pick("No! N-", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
 			world << 'sound/magic/demon_dies.ogg'
 			clashing = FALSE
 			qdel(narsie)
 			return 1
 		if("Nar-Sie")
-			world << "<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>" //Broken English
+			world << "<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You are fool. To come here.")]</b>\"</font></span>" //Broken English
 			world << 'sound/magic/demon_attack1.ogg'
 			world << 'sound/magic/clockwork/anima_fragment_death.ogg'
 			narsie.clashing = FALSE

@@ -89,7 +89,7 @@
 		if(L.bodytemperature >= 10)
 			L.bodytemperature -= 10
 		if(L.bodytemperature <= 50)
-			L.apply_status_effect(/datum/status_effect/freon)
+			L.apply_status_effect(STATUS_EFFECT_FROZEN_SOLID)
 	MakeSlippery(TURF_WET_PERMAFROST, 5)
 	return 1
 
