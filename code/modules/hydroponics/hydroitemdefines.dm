@@ -81,7 +81,7 @@
 	flags = CONDUCT
 	force = 12
 	w_class = 1
-	throwforce = 20 //TAKEDOWN!!
+	throwforce = 25 //TAKEDOWN!!
 	embed_chance = 75 //for extra dank takedowns
 	embedded_impact_pain_multiplier = 10
 	throw_speed = 3
