@@ -188,6 +188,21 @@
 		else
 			return null
 
+/proc/get_component_color(id) //returns a component color from a component id
+	switch(id)
+		if("belligerent_eye")
+			return "#6E001A"
+		if("vanguard_cogwheel")
+			return "#1E8CE1"
+		if("guvax_capacitor")
+			return "#AF0AAF"
+		if("replicant_alloy")
+			return "#42474D"
+		if("hierophant_ansible")
+			return "#DAAA18"
+		else
+			return "#BE8700"
+
 /proc/get_component_id(name) //returns a component id from a component name
 	switch(name)
 		if("Belligerent Eye")
@@ -200,6 +215,21 @@
 			return "replicant_alloy"
 		if("Hierophant Ansible")
 			return "hierophant_ansible"
+		else
+			return null
+
+/proc/get_component_animation_type(id)
+	switch(id)
+		if("belligerent_eye")
+			return /obj/effect/overlay/temp/ratvar/component
+		if("vanguard_cogwheel")
+			return /obj/effect/overlay/temp/ratvar/component/cogwheel
+		if("guvax_capacitor")
+			return /obj/effect/overlay/temp/ratvar/component/capacitor
+		if("replicant_alloy")
+			return /obj/effect/overlay/temp/ratvar/component/alloy
+		if("hierophant_ansible")
+			return /obj/effect/overlay/temp/ratvar/component/ansible
 		else
 			return null
 

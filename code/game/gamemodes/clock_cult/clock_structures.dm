@@ -101,7 +101,9 @@
 			break
 		if(linkedwall && wall_generation_cooldown <= world.time)
 			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
-			generate_cache_component()
+			var/component_to_generate = get_weighted_component_id()
+			PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
+			clockwork_component_cache[component_to_generate]++
 			playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
 			visible_message("<span class='warning'>Something clunks around inside of [src]...</span>")
 			break
@@ -122,24 +124,6 @@
 			clockwork_component_cache[i] += S.stored_components[i]
 			S.stored_components[i] = 0
 		user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
-		return 1
-	else if(istype(I, /obj/item/clockwork/daemon_shell))
-		var/component_type
-		switch(alert(user, "Will this daemon produce a specific type of component or produce randomly?", , "Specific Type", "Random Component"))
-			if("Specific Type")
-				component_type = get_component_id(input(user, "Choose a component type.", name) as null|anything in list("Belligerent Eye", "Vanguard Cogwheel", "Guvax Capacitor", "Replicant Alloy", "Hierophant Ansible"))
-				if(!component_type)
-					user << "<span class='heavy_brass'>\"Indecisive, are you?\"</span>\n<span class='warning'>You decide not to place this daemon within the cache just yet.</span>"
-					return 0
-		if(!user || !user.canUseTopic(src) || !user.canUseTopic(I))
-			return 0
-		var/obj/item/clockwork/tinkerers_daemon/D = new(src)
-		D.cache = src
-		D.specific_component = component_type
-		user.visible_message("<span class='notice'>[user] spins the cogwheel on [I] and puts it into [src].</span>", \
-		"<span class='notice'>You activate the daemon and put it into [src]. It will now produce a component every twenty seconds.</span>")
-		user.drop_item()
-		qdel(I)
 		return 1
 	else
 		return ..()
@@ -163,7 +147,7 @@
 			user << "<span class='brass'>It is linked and will generate components!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
-			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[clockwork_component_cache[i]]</b></span>"
+			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != "replicant_alloy" ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"
 
 
 /obj/structure/destructible/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
@@ -390,60 +374,6 @@
 	..()
 	desc = initial(desc)
 
-/obj/effect/clockwork/judicial_marker //Judicial marker: Created by the judicial visor. After three seconds, stuns any non-servants nearby and damages Nar-Sian cultists.
-	name = "judicial marker"
-	desc = "You get the feeling that you shouldn't be standing here."
-	clockwork_desc = "A sigil that will soon erupt and smite any unenlightened nearby."
-	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -32
-	pixel_y = -32
-	layer = BELOW_MOB_LAYER
-	var/mob/user
-
-/obj/effect/clockwork/judicial_marker/New(loc, caster)
-	..()
-	user = caster
-	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
-	flick("judicial_marker", src)
-	addtimer(src, "burstanim", 16, FALSE)
-
-/obj/effect/clockwork/judicial_marker/proc/burstanim()
-	layer = ABOVE_ALL_MOB_LAYER
-	flick("judicial_explosion", src)
-	addtimer(src, "judicialblast", 13, FALSE)
-
-/obj/effect/clockwork/judicial_marker/proc/judicialblast()
-	var/targetsjudged = 0
-	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
-	for(var/mob/living/L in range(1, src))
-		if(is_servant_of_ratvar(L))
-			continue
-		if(L.null_rod_check())
-			var/obj/item/I = L.null_rod_check()
-			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
-			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
-			continue
-		if(!iscultist(L))
-			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
-			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Weaken(8)
-		else
-			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
-			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Weaken(4) //half the stun, but sets cultists on fire
-			L.adjust_fire_stacks(2)
-			L.IgniteMob()
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			C.silent += 6
-		targetsjudged++
-		L.adjustBruteLoss(10)
-		add_logs(user, L, "struck with a judicial blast")
-	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
-	QDEL_IN(src, 3) //so the animation completes properly
-
-/obj/effect/clockwork/judicial_marker/ex_act(severity)
-	return
 
 /obj/effect/clockwork/spatial_gateway //Spatial gateway: A usually one-way rift to another location.
 	name = "spatial gateway"
@@ -919,7 +849,8 @@
 				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
 				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
 				for(var/obj/item/W in L)
-					L.unEquip(W)
+					if(!L.unEquip(W))
+						qdel(W)
 				L.dust()
 			else
 				vitality_drained = L.adjustToxLoss(1.5)
