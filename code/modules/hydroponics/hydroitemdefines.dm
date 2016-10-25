@@ -100,7 +100,7 @@
 /obj/item/weapon/hatchet/throw_impact(atom/hit_atom)
 	..()
 	
-	if(status && isliving(hit_atom))
+	if(isliving(hit_atom))
 		hatchet_stun(hit_atom) //only stun someone when thrown
 		
 
