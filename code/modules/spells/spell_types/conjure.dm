@@ -65,16 +65,19 @@
 	cooldown_min = 10
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
-	if (item)
+	if (item && !qdeleted(item))
 		qdel(item)
 		item = null
 	else
 		for(var/mob/living/carbon/C in targets)
 			if(C.drop_item())
-				item = new item_type
+				item = make_item()
 				C.put_in_hands(item)
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/Destroy()
 	if(item)
 		qdel(item)
 	return ..()
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
+	return new item_type
