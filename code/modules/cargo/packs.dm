@@ -39,7 +39,7 @@ datum/supply_pack
 	
 /datum/supply_pack/emergency/vehicle
 	name = "All-Terrain Vehicle"
-	cost = 2000
+	cost = 3000
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key)
