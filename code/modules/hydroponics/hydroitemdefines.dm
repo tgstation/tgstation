@@ -81,13 +81,13 @@
 	flags = CONDUCT
 	force = 12
 	w_class = 1
-	throwforce = 25 //TAKEDOWN!!
+	throwforce = 20 //TAKEDOWN!!
 	embed_chance = 75 //for extra dank takedowns
 	embedded_impact_pain_multiplier = 10
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL = 15000)
-	origin_tech = "materials=2;combat=3"
+	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "scalped", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -121,8 +121,8 @@
 			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
 
-	L.Stun(3)
-	L.Weaken(3)
+	L.Stun(2)
+	L.Weaken(2)
 	if(user)
 		user.lastattacked = L
 		L.lastattacker = user
