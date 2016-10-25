@@ -59,10 +59,9 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
+		greet_traitor(traitor)
 		forge_traitor_objectives(traitor)
-		spawn(rand(10,100))
-			finalize_traitor(traitor)
-			greet_traitor(traitor)
+		finalize_traitor(traitor)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
