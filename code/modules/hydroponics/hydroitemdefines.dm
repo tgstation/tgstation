@@ -75,17 +75,19 @@
 
 /obj/item/weapon/hatchet
 	name = "hatchet"
-	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
+	desc = "A very sharp axe blade upon a short fibremetal handle. Commonly used for conducting Navajo-style takedowns, or chopping wood."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = CONDUCT
 	force = 12
 	w_class = 1
-	throwforce = 15
+	throwforce = 20
+	embed_chance = 70
+	embedded_impact_pain_multiplier = 10
 	throw_speed = 3
-	throw_range = 4
+	throw_range = 5
 	materials = list(MAT_METAL = 15000)
-	origin_tech = "materials=2;combat=2"
+	origin_tech = "materials=2;combat=3"
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -94,6 +96,12 @@
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+	
+/obj/item/weapon/hatchet/throw_impact(atom/hit_atom)
+	..()
+	
+	if(status && isliving(hit_atom))
+		hatchet_stun(hit_atom)
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
