@@ -88,9 +88,10 @@
 	throw_range = 5
 	materials = list(MAT_METAL = 15000)
 	origin_tech = "materials=2;combat=3"
-	attack_verb = list("chopped", "torn", "cut")
+	attack_verb = list("chopped", "scalped", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	var/war_cry = "WHOOP WHOOP WHOOP!!"
 
 /obj/item/weapon/hatchet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scalping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
