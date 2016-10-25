@@ -79,11 +79,11 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = CONDUCT
-	force = 12
+	force = 10
 	w_class = 1
-	throwforce = 18 //TAKEDOWN!!
-	embed_chance = 75 //for extra dank takedowns
-	embedded_impact_pain_multiplier = 2
+	throwforce = 20 //TAKEDOWN!!
+	embed_chance = 50 //for extra dank takedowns
+	embedded_impact_pain_multiplier = 4
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL = 15000)
