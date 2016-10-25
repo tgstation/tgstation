@@ -75,7 +75,7 @@
 
 /obj/item/weapon/hatchet
 	name = "hatchet"
-	desc = "A very sharp axe blade upon a short fibremetal handle. Commonly used for conducting Navajo-style takedowns, or chopping wood."
+	desc = "A very sharp axe blade upon a short handle. Commonly used for conducting Navajo-style takedowns, or chopping wood. Alt-Click it to set a warcry."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = CONDUCT
@@ -97,9 +97,17 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 	
+/obj/item/weapon/hatchet/AltClick()
+	..()
+	if(ismob(loc))
+		var/mob/M = loc
+		var/input = stripped_input(M,"What do you want your war cry to be? You will shout it when you perform a takedown.", ,"", 50)
+		if(input)
+			src.war_cry = input
+	
 /obj/item/weapon/hatchet/throw_impact(atom/hit_atom)
 	..()
-	
+	user.say("[war_cry]")
 	if(isliving(hit_atom))
 		hatchet_stun(hit_atom) //only stun someone when thrown
 		
@@ -126,6 +134,7 @@
 
 
 	return 1
+
 
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
