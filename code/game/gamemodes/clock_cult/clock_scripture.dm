@@ -4,9 +4,9 @@ Tiers and Requirements
 Pieces of scripture require certain follower counts, contruction value, and active caches in order to recite.
 Drivers: Unlocked by default
 Scripts: 5 servants and a cache
-Applications: 8 servants, 3 caches, and 50 CV
-Revenant: 10 servants and 100 CV
-Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
+Applications: 8 servants, 3 caches, and 100 CV
+Revenant: 10 servants, 4 caches, and 200 CV
+Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or destroyed
 */
 
 /datum/clockwork_scripture
@@ -221,30 +221,22 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/stunning_flare //Stunning Flare: Stuns and blinds the target for 10 seconds, and disorients them for 15.
-	descname = "Melee Stun/Blind"
-	name = "Stunning Flare"
-	desc = "Fills your hand with holy light. You can strike a target with it to stun, blind, and disorient them."
-	invocations = list("Bask in his glory!")
-	whispered = TRUE
-	channel_time = 0
+/datum/clockwork_scripture/create_object/judicial_visor //Judicial Visor: Creates a judicial visor.
+	descname = "Delayed Area Stun Glasses"
+	name = "Judicial Visor"
+	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging the nonfaithful. \
+	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
+	invocations = list("Grant me the flames of Engine!")
+	channel_time = 10
 	required_components = list("belligerent_eye" = 2)
 	consumed_components = list("belligerent_eye" = 1)
-	usage_tip = "The flare breaches eye protection but <i>does not affect silicons</i>."
+	whispered = TRUE
+	object_path = /obj/item/clothing/glasses/judicial_visor
+	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
+	usage_tip = "The visor has a thirty-second cooldown once used, and the marker it creates has a delay of 3 seconds before exploding."
 	tier = SCRIPTURE_DRIVER
+	space_allowed = TRUE
 	sort_priority = 2
-
-/datum/clockwork_scripture/stunning_flare/check_special_requirements()
-	if(!invoker.get_empty_held_index_for_side("l") && !invoker.get_empty_held_index_for_side("r"))
-		invoker << "<span class='warning'>You need a free hand to hold the flare!</span>"
-		return 0
-	return 1
-
-/datum/clockwork_scripture/stunning_flare/scripture_effects()
-	invoker <<  "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>" //No visible message, for stealth purposes
-	var/obj/item/weapon/ratvars_light/L = new(get_turf(invoker))
-	invoker.put_in_hands(L)
-	return 1
 
 
 
@@ -272,19 +264,19 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/sentinels_boon //Sentinel's Boon: Places a long heal-over-time on the target.
-	descname = "Slow Heal-Over-Time"
-	name = "Sentinel's Boon"
-	desc = "Heals 60 brute and burn damage over a minute."
+/datum/clockwork_scripture/sentinels_compromise //Sentinel's Compromise: Allows the invoker to select a nearby servant convert their brute and burn damage into half as much toxin damage.
+	descname = "Convert Brute/Burn to Half Toxin"
+	name = "Sentinel's Compromise"
+	desc = "Heals all brute and burn damage on a nearby living, friendly servant, but deals 50% of the damage they had as toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
 	required_components = list("vanguard_cogwheel" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1)
-	usage_tip = "Pre-healing before an engagement can keep you alive during combat."
+	usage_tip = "The Compromise is very fast to invoke."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 4
 
-/datum/clockwork_scripture/sentinels_boon/scripture_effects()
+/datum/clockwork_scripture/sentinels_compromise/scripture_effects()
 	var/list/nearby_cultists = list()
 	for(var/mob/living/C in range(7, invoker))
 		if(C.stat != DEAD && is_servant_of_ratvar(C) && (C.getBruteLoss() || C.getFireLoss()))
@@ -295,8 +287,23 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/mob/living/L = input(invoker, "Choose a fellow servant to heal.", name) as null|anything in nearby_cultists
 	if(!L || !invoker || !invoker.canUseTopic(slab))
 		return 0
+	var/brutedamage = L.getBruteLoss()
+	var/burndamage = L.getFireLoss()
+	var/totaldamage = brutedamage + burndamage
+	if(!totaldamage)
+		invoker << "<span class='warning'>[L] is not burned or bruised!</span>"
+		return 0
+	L.adjustToxLoss(totaldamage * 0.5)
+	L.adjustBruteLoss(-brutedamage)
+	L.adjustFireLoss(-burndamage)
+	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
+	var/targetturf = get_turf(L)
+	for(var/i in 1 to healseverity)
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
 	invoker << "<span class='brass'>You bathe [L] in Inath-neq's power!</span>"
-	L.apply_status_effect(STATUS_EFFECT_SENTINELS_BOON)
+	L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
+	"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
+	playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
 	return 1
 
 
@@ -680,25 +687,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/judicial_visor //Judicial Visor: Creates a judicial visor.
-	descname = "Delayed Area Stun Glasses"
-	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to form a flame in your hand that can be activated at an area to smite it, stunning, muting, and damaging the nonfaithful. \
-	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
-	invocations = list("Grant me the flames of Engine!")
-	channel_time = 10
-	required_components = list("vanguard_cogwheel" = 2, "belligerent_eye" = 1)
-	consumed_components = list("vanguard_cogwheel" = 1, "belligerent_eye" = 1)
-	whispered = TRUE
-	object_path = /obj/item/clothing/glasses/judicial_visor
-	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
-	usage_tip = "The visor has a thirty-second cooldown once used, and the marker it creates has a delay of 3 seconds before exploding."
-	tier = SCRIPTURE_SCRIPT
-	space_allowed = TRUE
-	sort_priority = 2
-
-
-
 /datum/clockwork_scripture/create_object/cogscarab //Cogscarab: Creates an empty cogscarab shell
 	descname = "Constructor Soul Vessel Shell"
 	name = "Cogscarab"
@@ -751,7 +739,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	tier = SCRIPTURE_APPLICATION
-	sort_priority = 25
+	sort_priority = 24
 
 
 
@@ -771,7 +759,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "It will remain after converting a target, unless that target has a mindshield implant, which it will break to convert them, but consume itself in the process."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	sort_priority = 22
+	sort_priority = 21
 
 
 
@@ -789,7 +777,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "Can be recharged by using Volt Void while standing on it."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	sort_priority = 26
+	sort_priority = 25
 
 
 
@@ -808,7 +796,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "To revive a servant, the sigil must have 20 vitality plus the target servant's non-oxygen damage. It will still heal dead servants if it lacks the vitality to outright revive them."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	sort_priority = 23
+	sort_priority = 22
 
 
 /datum/clockwork_scripture/memory_allocation //Memory Allocation: Finds a willing ghost and makes them into a clockwork marauders for the invoker.
@@ -824,7 +812,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
 	tier = SCRIPTURE_APPLICATION
-	sort_priority = 24
+	sort_priority = 23
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
 	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in living_mob_list)
@@ -895,7 +883,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission and fails to disable even one thing, it will disable itself for two minutes."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
-	sort_priority = 29
+	sort_priority = 26
 
 
 
@@ -919,26 +907,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/clockwork_obelisk //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk.
-	descname = "Structure, Teleportation Hub"
-	name = "Clockwork Obelisk"
-	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living servant or clockwork obelisk."
-	invocations = list("May this obelisk...", "...take us to all places!")
-	channel_time = 80
-	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 4)
-	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 3)
-	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
-	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
-	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks recieve double duration and uses."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-	sort_priority = 30
-
-
-
 /datum/clockwork_scripture/create_object/mania_motor //Mania Motor: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk.
 	descname = "Structure, Area Denial"
 	name = "Mania Motor"
@@ -959,20 +927,22 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/tinkerers_daemon //Tinkerer's Daemon: Creates a shell that can be attached to a tinkerer's cache to grant it passive component creation.
-	descname = "Component Generator"
+/datum/clockwork_scripture/create_object/tinkerers_daemon //Tinkerer's Daemon: Creates an efficient machine that produces components at a power cost
+	descname = "Structure, Component Generator"
 	name = "Tinkerer's Daemon"
-	desc = "Forms a daemon shell that can be attached to a tinkerer's cache to add new components at a healthy rate. It will only function if it is outnumbered by servants by a ratio of 5:1."
-	invocations = list("Collect Engine parts...", "...that yet hold greatness!")
+	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by servants by a ratio of 5:1, and there is at least one existing cache."
+	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
-	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
-	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
-	object_path = /obj/item/clockwork/daemon_shell
-	creator_message = "<span class='brass'>You form a daemon shell. Attach it to a tinkerer's cache to increase its rate of production.</span>"
+	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 4)
+	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 3)
+	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
+	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
 	usage_tip = "Vital to your success!"
 	tier = SCRIPTURE_APPLICATION
-	space_allowed = TRUE
-	sort_priority = 21
+	one_per_tile = TRUE
+	sort_priority = 29
 
 /datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0
@@ -987,10 +957,30 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		return 0
 	return ..()
 
+
+/datum/clockwork_scripture/create_object/clockwork_obelisk //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk.
+	descname = "Structure, Teleportation Hub"
+	name = "Clockwork Obelisk"
+	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living servant or clockwork obelisk."
+	invocations = list("May this obelisk...", "...take us to all places!")
+	channel_time = 80
+	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 4)
+	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 3)
+	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
+	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
+	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
+	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks recieve double duration and uses."
+	tier = SCRIPTURE_APPLICATION
+	one_per_tile = TRUE
+	sort_priority = 30
+
+
+
 //////////////
 // REVENANT //
 //////////////
-//Revenant scriptures are different than any others. They are all very powerful, but also very costly and have drawbacks. This might be a very long invocation time or a very high component cost.
 
 /datum/clockwork_scripture/invoke_nezbere //Invoke Nezbere, the Brass Eidolon: Invokes Nezbere, bolstering the strength of many clockwork items for one minute.
 	descname = "Structure Buff"
@@ -1002,7 +992,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
 	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
-	and interdiction lenses, mending motors, mania motors, and clockwork obelisks will all require no power."
+	and interdiction lenses, mending motors, mania motors, tinkerer's daemons, and clockwork obelisks will all require no power."
 	tier = SCRIPTURE_REVENANT
 	sort_priority = 33
 	invokers_required = 3
@@ -1029,20 +1019,22 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		W.sight_range *= 2
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
 		P.uses_alloy = FALSE
-	for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects) //Daemons produce components twice as quickly
-		D.production_time *= 0.5
 	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
+		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
+			var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
+			D.production_time *= 0.5
 	spawn(600)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in all_clockwork_objects)
 			W.damage_per_tick = initial(W.damage_per_tick)
 			W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
 			P.uses_alloy = initial(P.uses_alloy)
-		for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects)
-			D.production_time = initial(D.production_time)
 		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
 			M.needs_power = initial(M.needs_power)
+			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))
+				var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = M
+				D.production_time = initial(D.production_time)
 	return 1
 
 
