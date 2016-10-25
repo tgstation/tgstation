@@ -120,7 +120,7 @@
 			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
 
-	L.Stun(2)
+	L.Stun(3)
 	L.Weaken(3)
 	if(user)
 		user.lastattacked = L
