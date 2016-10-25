@@ -81,8 +81,8 @@
 	flags = CONDUCT
 	force = 12
 	w_class = 1
-	throwforce = 20
-	embed_chance = 70
+	throwforce = 20 //TAKEDOWN!!
+	embed_chance = 70 
 	embedded_impact_pain_multiplier = 10
 	throw_speed = 3
 	throw_range = 5
@@ -93,7 +93,7 @@
 	sharpness = IS_SHARP
 
 /obj/item/weapon/hatchet/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is scalping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 	
@@ -101,7 +101,7 @@
 	..()
 	
 	if(status && isliving(hit_atom))
-		hatchet_stun(hit_atom)
+		hatchet_stun(hit_atom) //only stun someone when thrown
 		
 
 /obj/item/weapon/hatchet/proc/hatchet_stun(mob/living/L, mob/user)
@@ -111,8 +111,8 @@
 			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
 
-	L.Stun(stunforce)
-	L.Weaken(stunforce)
+	L.Stun(7)
+	L.Weaken(7)
 	if(user)
 		user.lastattacked = L
 		L.lastattacker = user
