@@ -130,6 +130,104 @@
 	return 1
 
 
+/obj/structure/destructible/clockwork/powered/interdiction_lens //Interdiction lens: A powerful artifact that constantly disrupts electronics but, if it fails to find something to disrupt, turns off.
+	name = "interdiction lens"
+	desc = "An ominous, double-pronged brass totem. There's a strange gemstone clasped between the pincers."
+	clockwork_desc = "A powerful totem that constantly drains nearby electronics and funnels the power drained into nearby Sigils of Transmission."
+	icon_state = "interdiction_lens"
+	construction_value = 25
+	active_icon = "interdiction_lens_active"
+	inactive_icon = "interdiction_lens"
+	break_message = "<span class='warning'>The lens flares a blinding violet before shattering!</span>"
+	break_sound = 'sound/effects/Glassbr3.ogg'
+	var/recharging = 0 //world.time when the lens was last used
+	var/recharge_time = 1200 //if it drains no power and affects no objects, it turns off for two minutes
+	var/disabled = FALSE //if it's actually usable
+	var/interdiction_range = 14 //how large an area it drains and disables in
+
+/obj/structure/destructible/clockwork/powered/interdiction_lens/examine(mob/user)
+	..()
+	user << "<span class='[recharging > world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
+	: "vibrates in place and thrums with power"].</span>"
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='nezbere_small'>If it fails to drain any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
+
+/obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
+	..()
+	if(active)
+		SetLuminosity(4,2)
+	else
+		SetLuminosity(0)
+
+/obj/structure/destructible/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
+	if(user.canUseTopic(src, BE_CLOSE))
+		if(disabled)
+			user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
+			return 0
+		toggle(0, user)
+
+/obj/structure/destructible/clockwork/powered/interdiction_lens/process()
+	if(recharging > world.time)
+		return
+	if(disabled)
+		visible_message("<span class='warning'>The writhing tendrils return to the gemstone, which begins to glow with power!</span>")
+		flick("interdiction_lens_recharged", src)
+		disabled = FALSE
+		toggle(0)
+	else
+		var/successfulprocess = FALSE
+		var/power_drained = 0
+		var/list/atoms_to_test = list()
+		for(var/A in spiral_range_turfs(interdiction_range, src))
+			var/turf/T = A
+			for(var/M in T)
+				atoms_to_test |= M
+
+			CHECK_TICK
+
+		for(var/M in atoms_to_test)
+			var/atom/movable/A = M
+			if(!A || qdeleted(A))
+				continue
+			power_drained += A.power_drain(TRUE)
+
+			if(istype(A, /obj/machinery/camera))
+				var/obj/machinery/camera/C = A
+				if(C.isEmpProof() || !C.status)
+					continue
+				successfulprocess = TRUE
+				if(C.emped)
+					continue
+				C.emp_act(1)
+			else if(istype(A, /obj/item/device/radio))
+				var/obj/item/device/radio/O = A
+				successfulprocess = TRUE
+				if(O.emped || !O.on)
+					continue
+				O.emp_act(1)
+			else if((isliving(A) && !is_servant_of_ratvar(A)) || istype(A, /obj/structure/closet) || istype(A, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
+				for(var/obj/item/device/radio/O in A.GetAllContents())
+					successfulprocess = TRUE
+					if(O.emped || !O.on)
+						continue
+					O.emp_act(1)
+
+			CHECK_TICK
+
+		if(power_drained && power_drained >= MIN_CLOCKCULT_POWER && return_power(power_drained))
+			successfulprocess = TRUE
+			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
+
+		if(!successfulprocess)
+			visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")
+			recharging = world.time + recharge_time
+			flick("interdiction_lens_discharged", src)
+			icon_state = "interdiction_lens_inactive"
+			SetLuminosity(2,1)
+			disabled = TRUE
+
+
+
 /obj/structure/destructible/clockwork/powered/mending_motor //Mending motor: A prism that consumes replicant alloy to repair nearby mechanical servants at a quick rate.
 	name = "mending motor"
 	desc = "A dark onyx prism, held in midair by spiraling tendrils of stone."
@@ -273,11 +371,6 @@
 		user << "<span class='sevtug_small'>It requires <b>[mania_cost]W</b> to run, and <b>[convert_attempt_cost + convert_cost]W</b> to convert humans adjecent to it.</span>"
 
 /obj/structure/destructible/clockwork/powered/mania_motor/process()
-	if(!..())
-		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(src, 'sound/effects/screech.ogg', 40, 1)
-		toggle(0)
-		return
 	if(try_use_power(mania_cost))
 		var/turf/T = get_turf(src)
 		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
@@ -379,102 +472,6 @@
 
 
 
-/obj/structure/destructible/clockwork/powered/interdiction_lens //Interdiction lens: A powerful artifact that constantly disrupts electronics but, if it fails to find something to disrupt, turns off.
-	name = "interdiction lens"
-	desc = "An ominous, double-pronged brass totem. There's a strange gemstone clasped between the pincers."
-	clockwork_desc = "A powerful totem that constantly drains nearby electronics and funnels the power drained into nearby Sigils of Transmission."
-	icon_state = "interdiction_lens"
-	construction_value = 25
-	active_icon = "interdiction_lens_active"
-	inactive_icon = "interdiction_lens"
-	break_message = "<span class='warning'>The lens flares a blinding violet before shattering!</span>"
-	break_sound = 'sound/effects/Glassbr3.ogg'
-	var/recharging = 0 //world.time when the lens was last used
-	var/recharge_time = 1200 //if it drains no power and affects no objects, it turns off for two minutes
-	var/disabled = FALSE //if it's actually usable
-	var/interdiction_range = 14 //how large an area it drains and disables in
-
-/obj/structure/destructible/clockwork/powered/interdiction_lens/examine(mob/user)
-	..()
-	user << "<span class='[recharging > world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
-	: "vibrates in place and thrums with power"].</span>"
-	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='nezbere_small'>If it fails to drain any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>"
-
-/obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
-	..()
-	if(active)
-		SetLuminosity(4,2)
-	else
-		SetLuminosity(0)
-
-/obj/structure/destructible/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, BE_CLOSE))
-		if(disabled)
-			user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
-			return 0
-		toggle(0, user)
-
-/obj/structure/destructible/clockwork/powered/interdiction_lens/process()
-	if(recharging > world.time)
-		return
-	if(disabled)
-		visible_message("<span class='warning'>The writhing tendrils return to the gemstone, which begins to glow with power!</span>")
-		flick("interdiction_lens_recharged", src)
-		disabled = FALSE
-		toggle(0)
-	else
-		var/successfulprocess = FALSE
-		var/power_drained = 0
-		var/list/atoms_to_test = list()
-		for(var/A in spiral_range_turfs(interdiction_range, src))
-			var/turf/T = A
-			for(var/M in T)
-				atoms_to_test |= M
-
-			CHECK_TICK
-
-		for(var/M in atoms_to_test)
-			var/atom/movable/A = M
-			power_drained += A.power_drain(TRUE)
-
-			if(istype(A, /obj/machinery/camera))
-				var/obj/machinery/camera/C = A
-				if(C.isEmpProof() || !C.status)
-					continue
-				successfulprocess = TRUE
-				if(C.emped)
-					continue
-				C.emp_act(1)
-			else if(istype(A, /obj/item/device/radio))
-				var/obj/item/device/radio/O = A
-				successfulprocess = TRUE
-				if(O.emped || !O.on)
-					continue
-				O.emp_act(1)
-			else if((isliving(A) && !is_servant_of_ratvar(A)) || istype(A, /obj/structure/closet) || istype(A, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
-				for(var/obj/item/device/radio/O in A.GetAllContents())
-					successfulprocess = TRUE
-					if(O.emped || !O.on)
-						continue
-					O.emp_act(1)
-
-			CHECK_TICK
-
-		if(power_drained && power_drained >= MIN_CLOCKCULT_POWER && return_power(power_drained))
-			successfulprocess = TRUE
-			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
-
-		if(!successfulprocess)
-			visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")
-			recharging = world.time + recharge_time
-			flick("interdiction_lens_discharged", src)
-			icon_state = "interdiction_lens_inactive"
-			SetLuminosity(2,1)
-			disabled = TRUE
-
-
-
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk
 	name = "clockwork obelisk"
 	desc = "A large brass obelisk hanging in midair."
@@ -545,3 +542,135 @@
 				return_power(gateway_cost)
 		if("Cancel")
 			return
+
+
+
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon
+	name = "tinkerer's daemon"
+	desc = "A strange machine with three small brass obelisks attached to it."
+	clockwork_desc = "An efficient machine that can rapidly produce components at a small power cost. It will only function if outnumbered by servants at a rate to 5:1."
+	icon_state = "tinkerers_daemon"
+	active_icon = "tinkerers_daemon"
+	inactive_icon = "tinkerers_daemon"
+	max_integrity = 100
+	obj_integrity = 100
+	break_message = "<span class='warning'>The daemon shatters into millions of pieces!</span>"
+	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
+	/obj/item/clockwork/alloy_shards/medium = 4, \
+	/obj/item/clockwork/alloy_shards/small = 6)
+	var/image/daemon_glow
+	var/image/component_glow
+	var/component_id_to_produce
+	var/production_time = 0 //last time we produced a component
+	var/production_cooldown = 120
+
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/New()
+	..()
+	clockwork_daemons++
+
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/Destroy()
+	clockwork_daemons--
+	return ..()
+
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		if(active)
+			if(component_id_to_produce)
+				user << "<span class='[get_component_span(component_id_to_produce)]_small'>It is currently producing [get_component_name(component_id_to_produce)][component_id_to_produce != "replicant_alloy" ? "s":""].</span>"
+			else
+				user << "<span class='brass'>It is currently producing random components.</span>"
+		user << "<span class='nezbere_small'>It will produce a component every <b>[production_cooldown*0.1]</b> seconds and requires at least the following power for each component type:</span>"
+		for(var/i in clockwork_component_cache)
+			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]:</i> <b>[get_component_cost(i)]W</b> <i>([clockwork_component_cache[i]] exist[clockwork_component_cache[i] == 1 ? "s" : ""])</i></span>"
+
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/attack_hand(mob/living/user)
+	if(!is_servant_of_ratvar(user))
+		user << "<span class='warning'>You place your hand on the daemon, but nothing happens.</span>"
+		return
+	if(active)
+		toggle(0, user)
+	else
+		if(!clockwork_caches)
+			user << "<span class='warning'>There are no clockwork caches! Activating this daemon would be a waste of power.</span>"
+			return
+		var/choice = alert(user,"Activate Daemon...",,"Specific Component","Random Component","Cancel")
+		switch(choice)
+			if("Specific Component")
+				var/list/components = list()
+				for(var/i in clockwork_component_cache)
+					components["[get_component_name(i)] ([get_component_cost(i)]W)"] = i
+				var/input_component = input(user, "Choose a component type.", name) as null|anything in components
+				component_id_to_produce = components[input_component]
+				if(!user.canUseTopic(src, BE_CLOSE) || active)
+					return
+				if(!component_id_to_produce)
+					user << "<span class='warning'>You decide not to select a component and activate the daemon.</span>"
+					return
+				if(total_accessable_power() < get_component_cost(component_id_to_produce))
+					user << "<span class='warning'>There is too little power to produce this type of component!</span>"
+					return
+				toggle(0, user)
+			if("Random Component")
+				component_id_to_produce = null
+				toggle(0, user)
+
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/toggle(fast_process, mob/living/user)
+	. = ..()
+	if(active)
+		var/component_color = get_component_color(component_id_to_produce)
+		if(!daemon_glow)
+			daemon_glow = new('icons/obj/clockwork_objects.dmi', "tinkerglow")
+		daemon_glow.color = component_color
+		add_overlay(daemon_glow)
+		if(!component_glow)
+			component_glow = new('icons/obj/clockwork_objects.dmi', "t_[component_id_to_produce ? component_id_to_produce :"random_component"]")
+		else
+			component_glow.icon_state = "t_[component_id_to_produce ? component_id_to_produce :"random_component"]"
+		component_glow.color = component_color
+		add_overlay(component_glow)
+		production_time = world.time + production_cooldown //don't immediately produce when turned on afteer being off
+	else
+		cut_overlays()
+
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/proc/get_component_cost(id)
+	return max(MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER * (1 + round(clockwork_component_cache[id] * 0.2)))
+
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/process()
+	var/servants = 0
+	for(var/mob/living/L in living_mob_list)
+		if(is_servant_of_ratvar(L))
+			servants++
+	. = ..()
+	var/min_power_usable = 0
+	if(!component_id_to_produce)
+		for(var/i in clockwork_component_cache)
+			if(!min_power_usable)
+				min_power_usable = get_component_cost(i)
+			else
+				min_power_usable = min(min_power_usable, get_component_cost(i))
+	else
+		min_power_usable = get_component_cost(component_id_to_produce)
+	if(!clockwork_caches || servants * 0.2 < clockwork_daemons || . < min_power_usable) //if we don't have enough to produce the lowest or what we chose to produce, cancel out
+		visible_message("<span class='warning'>[src] shuts down!</span>")
+		toggle()
+		return
+	if(production_time <= world.time)
+		var/component_to_generate = component_id_to_produce
+		if(!component_to_generate)
+			component_to_generate = get_weighted_component_id() //more likely to generate components that we have less of
+		if(!try_use_power(get_component_cost(component_to_generate)))
+			component_to_generate = null
+			if(!component_id_to_produce)
+				for(var/i in clockwork_component_cache)
+					if(try_use_power(get_component_cost(i))) //if we fail but are producing random, try and get a different component to produce
+						component_to_generate = i
+						break
+		if(component_to_generate)
+			PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
+			clockwork_component_cache[component_to_generate]++
+			production_time = world.time + production_cooldown //go on cooldown
+			visible_message("<span class='warning'>[src] hums as it produces a [get_component_name(component_to_generate)].</span>")
+		else
+			visible_message("<span class='warning'>[src] shuts down!</span>") //we shouldn't actually ever get here, as we should cancel out way before this
+			toggle()

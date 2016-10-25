@@ -27,6 +27,8 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
+	if(ranged_ability)
+		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
@@ -39,6 +41,12 @@
 	remove_from_all_data_huds()
 
 	return ..()
+
+/mob/living/ghostize(can_reenter_corpse = 1)
+	var/prev_client = client
+	if(..())
+		if(ranged_ability && prev_client)
+			ranged_ability.remove_mousepointer(prev_client)
 
 
 /mob/living/proc/OpenCraftingMenu()
