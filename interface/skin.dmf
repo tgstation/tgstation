@@ -152,9 +152,6 @@ macro "default"
 	elem
 		name = "F12"
 		command = "F12"
-	elem 
-		name = "CTRL+B"
-		command = "toggle-walk-run"
 
 macro "hotkeys"
 	elem
@@ -373,10 +370,6 @@ macro "hotkeys"
 	elem
 		name = "F12"
 		command = "F12"
-	elem 
-		name = "B"
-		command = "toggle-walk-run"
-
 
 macro "robot-default"
 	elem
