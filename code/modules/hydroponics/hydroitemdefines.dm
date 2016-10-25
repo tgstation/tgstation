@@ -106,7 +106,7 @@
 		if(input)
 			src.war_cry = input
 	
-/obj/item/weapon/hatchet/throw_impact(atom/hit_atom)
+/obj/item/weapon/hatchet/throw_impact(atom/hit_atom, mob/user)
 	..()
 	user.say("[war_cry]")
 	if(isliving(hit_atom))
