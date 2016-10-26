@@ -120,7 +120,15 @@
 	if(!isliving(M))
 		return
 
-	var/mob/living/L = M
+	var/mob/living/carbon/human/L = M
+
+	if(L.martial_art && L.martial_art.block_chance)
+		if(prob(L.martial_art.block_chance) && L.in_throw_mode && !L.get_active_held_item())
+			if(!L.stat && !L.weakened && !L.stunned)
+				L.visible_message("<span class='danger'>[L.name] blocks the [src] and twists [user]'s arm behind their back!</span>",
+								"<span class='userdanger'>You block the attack!</span>")
+				user.Stun(2)
+				return 0
 
 	if(user.a_intent != "harm")
 		if(status)
