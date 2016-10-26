@@ -944,9 +944,11 @@
 	else
 		target.grabbedby(user)
 		return 1
-	if(prob(target.martial_art.block_chance) && target.in_throw_mode && !target.get_active_held_item())
-		if(!target.stat && !target.weakened && !target.stunned)
-			target.visible_message("<span class='danger'>[target.name] blocks [user] with their arm!</span>", "<span class='userdanger'>You block the grab attempt!</span>", null, COMBAT_MESSAGE_RANGE, user)
+
+	if(target.martial_art && target.martial_art.block_chance)
+		if(prob(target.martial_art.block_chance) && target.in_throw_mode && !target.get_active_held_item())
+			if(!target.stat && !target.weakened && !target.stunned)
+				target.visible_message("<span class='danger'>[target.name] blocks [user] with their arm!</span>", "<span class='userdanger'>You block the grab attempt!</span>", null, COMBAT_MESSAGE_RANGE, user)
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(attacker_style && attacker_style.harm_act(user,target))
