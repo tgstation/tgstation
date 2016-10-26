@@ -29,7 +29,7 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 
 #define CLOCKWORK_GENERAL_COOLDOWN 3000 //how long clockwork generals go on cooldown after use, defaults to 5 minutes
 
-//porselytizer defines
+//proselytizer defines
 #define REPLICANT_ALLOY_UNIT 100 //how much each piece of replicant alloy gives in a clockwork proselytizer
 
 #define REPLICANT_STANDARD REPLICANT_ALLOY_UNIT*0.2 //how much alloy is in anything else; doesn't matter as much as the following
@@ -43,6 +43,15 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 #define REPLICANT_WALL_TOTAL REPLICANT_WALL_MINUS_FLOOR+REPLICANT_FLOOR //how much alloy is in a clockwork wall and the floor under it
 
 #define RATVAR_ALLOY_CHECK "ratvar?" //when passed into can_use_alloy(), converts it into a check for if ratvar has woken/the proselytizer is debug
+
+//clockcult power defines
+#define MIN_CLOCKCULT_POWER 50 //the minimum amount of power clockcult machines will handle gracefully
+
+#define CLOCKCULT_POWER_TO_ALLOY_MULTIPLIER 0.04 //conversion rate for power -> alloy
+
+#define CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER 25 //conversion rate for alloy -> power
+
+#define REPLICANT_ALLOY_POWER REPLICANT_ALLOY_UNIT*CLOCKCULT_ALLOY_TO_POWER_MULTIPLIER //the amount of power you get from a single piece of replicant alloy
 
 //Ark defines
 #define GATEWAY_SUMMON_RATE 2 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 2 per tick

@@ -19,6 +19,7 @@
 	throw_range = 1
 	force = 200
 	armour_penetration = 1000
+	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
 	flags = HANDSLOW
 	var/team = WHITE_TEAM
@@ -123,6 +124,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	anchored = 1
+	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	//Capture the Flag scoring
 	var/points = 0
@@ -467,6 +469,7 @@
 	name = "Spawn protection"
 	desc = "Stay outta the enemy spawn!"
 	icon_state = "trap"
+	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	alpha = 255
@@ -499,6 +502,7 @@
 	anchored = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 100
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/effect/ctf/ammo
 	name = "ammo pickup"
@@ -563,6 +567,7 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	anchored = 1
+	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
 	var/point_rate = 1

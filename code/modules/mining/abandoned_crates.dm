@@ -9,6 +9,7 @@
 	var/lastattempt = null
 	var/attempts = 10
 	var/codelen = 4
+	tamperproof = 90
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
@@ -224,11 +225,3 @@
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
 	boom()
-
-/obj/structure/closet/crate/secure/loot/proc/boom(mob/user)
-	if(user)
-		user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
-	for(var/atom/movable/AM in src)
-		qdel(AM)
-	explosion(get_turf(src), 0, 1, 5, 5)
-	qdel(src)

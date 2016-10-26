@@ -518,7 +518,6 @@
 	name = "Shuttle Import"
 
 /obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
-	var/list/hurt_mobs = list()
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		var/turf/T1 = L1[i]
@@ -530,8 +529,7 @@
 
 		for(var/atom/movable/AM in T1)
 			if(ismob(AM))
-				if(isliving(AM) && !(AM in hurt_mobs))
-					hurt_mobs |= AM
+				if(isliving(AM))
 					var/mob/living/M = AM
 					if(M.buckled)
 						M.buckled.unbuckle_mob(M, 1)
@@ -539,15 +537,10 @@
 						M.pulledby.stop_pulling()
 					M.stop_pulling()
 					M.visible_message("<span class='warning'>[M] is hit by \
-							a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+							a hyperspace ripple!</span>",
 							"<span class='userdanger'>You feel an immense \
 							crushing pressure as the space around you ripples.</span>")
-					if(M.anchored)
-						M.gib()
-					else
-						step(M, dir)
-						M.Paralyse(10)
-						M.ex_act(2)
+					M.gib()
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
 				if(istype(AM, /obj/singularity) && !istype(AM, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.

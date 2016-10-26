@@ -199,6 +199,7 @@
 	icon_state = "baconcooked"
 	list_reagents = list("nutriment" = 2)
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	filling_color = "#854817"
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
