@@ -104,8 +104,7 @@
 		visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>")
 		playsound(loc, 'sound/spookoween/girlscream.ogg', 300, 1)
 		trapped = 0
-		spawn(90)
-			qdel(trapped_mob)
+		QDEL_IN(trapped_mob, 90)
 
 	else if(trapped == HOWLING_GHOST)
 		visible_message("<span class='userdanger'><font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
@@ -127,14 +126,12 @@
 		playsound(loc, 'sound/hallucinations/wail.ogg', 300, 1)
 		var/mob/living/simple_animal/hostile/faithless/F = new(loc)
 		trapped = 0
-		spawn(120)
-			if(F)
-				qdel(F)
+		QDEL_IN(F, 120)
 
 	else if(trapped == INSANE_CLOWN)
 		visible_message("<span class='userdanger'><font size='5'>...</font></span>")
 		playsound(loc, 'sound/spookoween/scary_clown_appear.ogg', 300, 1)
-		new/mob/living/simple_animal/hostile/retaliate/clown/insane(loc)
+		spawn_atom_to_turf(/mob/living/simple_animal/hostile/retaliate/clown/insane, loc, 1, FALSE)
 		trapped = 0
 
 //don't spawn in crates
