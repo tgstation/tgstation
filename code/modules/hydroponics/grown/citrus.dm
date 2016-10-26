@@ -111,7 +111,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
-	prime()
+	addtimer(src, "prime", rand(10, 60))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/burn()
 	prime()
