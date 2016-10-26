@@ -6,7 +6,6 @@
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
-	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
 	var/help_verb = null
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -397,8 +396,7 @@
 /datum/martial_art/CQC
 	name = "CQC"
 	help_verb = /mob/living/carbon/human/proc/CQC_help
-	var/restraining = 0 //used in CQC's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
-	block_chance = 65
+	var/restrained = 0 //used in CQC's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 
 /datum/martial_art/CQC/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,SLAM_COMBO))
@@ -460,14 +458,14 @@
 	return 1
 
 /datum/martial_art/CQC/proc/Restrain(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(restraining)
+	if(restrained)
 		return
 	if(!D.stat)
 		D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
 							"<span class='userdanger'>[A] locks you into a restraining position!</span>")
 		D.adjustStaminaLoss(20)
 		D.Stun(5)
-		restraining = 1
+		restrained = 1
 	return 1
 
 /datum/martial_art/CQC/proc/Consecutive(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -509,7 +507,7 @@
 			add_logs(A, D, "grabbed", addition="aggressively")
 			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 			if(!A.pulling)
-				restraining = 0
+				restrained = 0
 
 	return 1
 
@@ -558,15 +556,11 @@
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	add_logs(A, D, "disarmed with CQC")
-	if(restraining)
-		if(D = current_target)
-			D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \
-								"<span class='userdanger'>[A] puts you into a chokehold!</span>")
-			D.SetSleeping(20)
-			restraining = 0
-		else
-			restraining = 0
-			return 0
+	if(restrained)
+		D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \
+							"<span class='userdanger'>[A] puts you into a chokehold!</span>")
+		D.SetSleeping(20)
+		restrained = 0
 	return 1
 
 /mob/living/carbon/human/proc/CQC_help()
@@ -752,4 +746,3 @@
 	if(wielded)
 		return ..()
 	return 0
-
