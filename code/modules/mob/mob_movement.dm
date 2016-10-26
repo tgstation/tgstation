@@ -323,3 +323,98 @@
 
 /mob/proc/update_gravity()
 	return
+
+//bodypart selection - Cyberboss
+//8 toggles through head - eyes - mouth
+//4: r-arm 5: chest 6: l-arm
+//1: r-leg 2: groin 3: l-leg
+
+/client/proc/check_has_body_select()
+	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /obj/screen/zone_sel)
+
+/client/verb/body_toggle_head()
+	set name = "body-toggle-head"
+	set hidden = 1
+
+	if(!check_has_body_select())
+		return
+
+	var/next_in_line
+	switch(mob.zone_selected)
+		if("head")
+			next_in_line = "eyes"
+		if("eyes")
+			next_in_line = "mouth"
+		else
+			next_in_line = "head"
+
+	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(next_in_line, mob)
+
+/client/verb/body_r_arm()
+	set name = "body-r-arm"
+	set hidden = 1
+
+	if(!check_has_body_select())
+		return
+
+	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone("r_arm", mob)
+
+/client/verb/body_chest()
+	set name = "body-chest"
+	set hidden = 1
+
+	if(!check_has_body_select())
+		return
+
+	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone("chest", mob)
+
+/client/verb/body_l_arm()
+	set name = "body-l-arm"
+	set hidden = 1
+
+	if(!check_has_body_select())
+		return
+
+	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone("l_arm", mob)
+
+/client/verb/body_r_leg()
+	set name = "body-r-leg"
+	set hidden = 1
+
+	if(!check_has_body_select())
+		return
+
+	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone("r_leg", mob)
+
+/client/verb/body_groin()
+	set name = "body-groin"
+	set hidden = 1
+
+	if(!check_has_body_select())
+		return
+
+	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone("groin", mob)
+
+/client/verb/body_l_leg()
+	set name = "body-l-leg"
+	set hidden = 1
+
+	if(!check_has_body_select())
+		return
+
+	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone("l_leg", mob)
+
+/client/verb/toggle_walk_run()
+	set name = "toggle-walk-run"
+	set hidden = 1
+
+	if(mob && mob.hud_used && mob.hud_used.static_inventory)
+		for(var/obj/screen/mov_intent/selector in mob.hud_used.static_inventory)
+			selector.toggle(mob);
