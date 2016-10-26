@@ -288,6 +288,31 @@
 	pixel_y = -16
 	pixel_x = -16
 
+/obj/effect/overlay/temp/ratvar/component
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "belligerent_eye"
+	layer = ABOVE_MOB_LAYER
+	duration = 10
+
+/obj/effect/overlay/temp/ratvar/component/New()
+	..()
+	transform = matrix()*0.75
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, -2)
+	animate(src, pixel_y = pixel_y + 10, alpha = 50, time = 10, easing = EASE_OUT)
+
+/obj/effect/overlay/temp/ratvar/component/cogwheel
+	icon_state = "vanguard_cogwheel"
+
+/obj/effect/overlay/temp/ratvar/component/capacitor
+	icon_state = "guvax_capacitor"
+
+/obj/effect/overlay/temp/ratvar/component/alloy
+	icon_state = "replicant_alloy"
+
+/obj/effect/overlay/temp/ratvar/component/ansible
+	icon_state = "hierophant_ansible"
+
 /obj/effect/overlay/temp/ratvar/sigil
 	name = "glowing circle"
 	icon = 'icons/effects/clockwork_effects.dmi'

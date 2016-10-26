@@ -97,6 +97,9 @@
 				if(passed && isobj(H.wear_mask))
 					Cl = H.wear_mask
 					passed = prob((Cl.permeability_coefficient*100) - 1)
+				if(passed && isobj(H.wear_neck))
+					Cl = H.wear_neck
+					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(2)
 				if(isobj(H.wear_suit))
 					Cl = H.wear_suit

@@ -177,6 +177,7 @@
 
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
+		user << "<span class='warning'>As you are trying to read, you suddenly feel very stupid!</span>"
 		return
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
@@ -192,6 +193,7 @@
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		if(is_blind(user))
+			user << "<span class='warning'> As you are trying to write on the book, you suddenly feel very stupid!</span>"
 			return
 		if(unique)
 			user << "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>"

@@ -18,6 +18,8 @@
 			return back
 		if(slot_wear_mask)
 			return wear_mask
+		if(slot_neck)
+			return wear_neck
 		if(slot_handcuffed)
 			return handcuffed
 		if(slot_legcuffed)

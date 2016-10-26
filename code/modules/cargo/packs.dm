@@ -1014,7 +1014,7 @@ datum/supply_pack
 	name = "Corgi Crate"
 	cost = 5000
 	contains = list(/mob/living/simple_animal/pet/dog/corgi,
-					/obj/item/clothing/tie/petcollar)
+					/obj/item/clothing/neck/petcollar)
 	crate_name = "corgi crate"
 
 /datum/supply_pack/organic/critter/corgi/generate()
@@ -1028,7 +1028,7 @@ datum/supply_pack
 	name = "Cat Crate"
 	cost = 5000 //Cats are worth as much as corgis.
 	contains = list(/mob/living/simple_animal/pet/cat,
-					/obj/item/clothing/tie/petcollar,
+					/obj/item/clothing/neck/petcollar,
                     /obj/item/toy/cattoy)
 	crate_name = "cat crate"
 
@@ -1043,14 +1043,14 @@ datum/supply_pack
 	name = "Pug Crate"
 	cost = 5000
 	contains = list(/mob/living/simple_animal/pet/dog/pug,
-					/obj/item/clothing/tie/petcollar)
+					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
 
 /datum/supply_pack/organic/critter/fox
 	name = "Fox Crate"
 	cost = 5000
 	contains = list(/mob/living/simple_animal/pet/fox,
-					/obj/item/clothing/tie/petcollar)
+					/obj/item/clothing/neck/petcollar)
 	crate_name = "fox crate"
 
 /datum/supply_pack/organic/critter/butterfly
@@ -1535,7 +1535,7 @@ datum/supply_pack
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
 					/obj/item/seeds/ambrosia/deus,
-					/obj/item/clothing/tie/dope_necklace)
+					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
 
 /datum/supply_pack/misc/randomised/toys
@@ -1578,9 +1578,9 @@ datum/supply_pack
 					/obj/item/clothing/under/lawyer/blacksuit,
 					/obj/item/clothing/suit/toggle/lawyer/black,
 					/obj/item/clothing/tie/waistcoat,
-					/obj/item/clothing/tie/blue,
-					/obj/item/clothing/tie/red,
-					/obj/item/clothing/tie/black,
+					/obj/item/clothing/neck/tie/blue,
+					/obj/item/clothing/neck/tie/red,
+					/obj/item/clothing/neck/tie/black,
 					/obj/item/clothing/head/bowler,
 					/obj/item/clothing/head/fedora,
 					/obj/item/clothing/head/flatcap,
