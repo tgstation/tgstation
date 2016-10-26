@@ -6400,7 +6400,7 @@
 /area/medical/medbay)
 "nR" = (
 /obj/structure/table,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "nS" = (
@@ -10764,7 +10764,7 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/reagent_containers/hypospray,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)

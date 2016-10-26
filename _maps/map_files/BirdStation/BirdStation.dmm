@@ -10634,7 +10634,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "aAw" = (
-/obj/item/clothing/tie/petcollar,
+/obj/item/clothing/neck/petcollar,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
@@ -10919,7 +10919,7 @@
 /obj/item/weapon/wirerod,
 /obj/item/weapon/reagent_containers/syringe,
 /obj/item/weapon/restraints/handcuffs,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
 /area/space)
 "aBj" = (
@@ -16548,8 +16548,8 @@
 /area/medical/medbay)
 "aPb" = (
 /obj/structure/closet/wardrobe/white/medical,
-/obj/item/clothing/tie/stethoscope,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/under/skirt/blue,
 /obj/item/clothing/under/plaid_skirt/blue,
 /turf/open/floor/plasteel/white,
@@ -18090,7 +18090,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/camera/autoname{
 	icon_state = "camera";
 	dir = 4
@@ -20117,7 +20117,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/maintenance/asmaint2)
 "aXy" = (
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "aXz" = (

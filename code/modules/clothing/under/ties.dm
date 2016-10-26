@@ -1,4 +1,4 @@
-/obj/item/clothing/tie
+/obj/item/clothing/tie //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
 	name = "tie"
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/ties.dmi'
@@ -55,7 +55,7 @@
 
 /obj/item/clothing/tie/proc/on_uniform_dropped(obj/item/clothing/under/U)
 	return
-
+/*
 /obj/item/clothing/tie/blue
 	name = "blue tie"
 	icon_state = "bluetie"
@@ -76,7 +76,7 @@
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
 	item_color = "horribletie"
-
+*/
 /obj/item/clothing/tie/waistcoat
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
@@ -84,7 +84,7 @@
 	item_state = "waistcoat"
 	item_color = "waistcoat"
 	minimize_when_attached = FALSE
-
+/*
 /obj/item/clothing/tie/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
@@ -125,7 +125,7 @@
 				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].")
 				return
 	return ..(M,user)
-
+*/
 //////////
 //Medals//
 //////////
@@ -259,7 +259,7 @@
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
 	icon_state = "medblueband"
 	item_color = "medblueband"
-
+/*
 ///////////
 //SCARVES//
 ///////////
@@ -374,7 +374,7 @@
 	icon_state = "talisman"
 	item_color = "talisman"
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
-
+*/
 //////////////
 //OBJECTION!//
 //////////////

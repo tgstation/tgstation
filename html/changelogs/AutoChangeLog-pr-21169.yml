@@ -1,0 +1,5 @@
+author: "Chowder McArthor"
+delete-after: True
+changes: 
+  - rscadd: "Added a neck slot."
+  - tweak: "Modified some of the attachment items (ties, scarves, etc) to be neck slot items instead."

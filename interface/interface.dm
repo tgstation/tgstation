@@ -127,6 +127,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t2 = disarm-intent
 \t3 = grab-intent
 \t4 = harm-intent
+\tNumpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
 </font>"}
 
 	var/other = {"<font color='purple'>
@@ -139,7 +140,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+e = equip
 \tCtrl+r = throw
 \tCtrl+b = resist
-\tCtrl+O = OOC
+\tCtrl+o = OOC
 \tCtrl+x = swap-hand
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
@@ -154,6 +155,8 @@ Any-Mode: (hotkey doesn't need to be on)
 \tPGUP = swap-hand
 \tPGDN = activate held object
 \tEND = throw
+\tCtrl+Numpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
+\tShift+Movement = Alter current move intent (walk/run)
 </font>"}
 
 	src << hotkey_mode

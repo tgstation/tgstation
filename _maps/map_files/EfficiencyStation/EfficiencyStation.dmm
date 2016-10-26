@@ -16357,7 +16357,7 @@
 	pixel_y = 28
 	},
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay{
@@ -16365,7 +16365,7 @@
 	})
 "aEZ" = (
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/vending/wallmed{
 	pixel_y = 28
 	},
@@ -17768,7 +17768,7 @@
 "aHF" = (
 /obj/item/weapon/crowbar,
 /obj/structure/table,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 9
@@ -21993,7 +21993,7 @@
 /area/medical/cmo)
 "aQm" = (
 /obj/structure/table/glass,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/cartridge/medical{
 	pixel_x = -2;
 	pixel_y = 6
@@ -23516,7 +23516,7 @@
 /obj/item/weapon/storage/belt/medical{
 	pixel_y = 2
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay{

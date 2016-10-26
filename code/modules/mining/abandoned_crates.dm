@@ -56,7 +56,7 @@
 		if(46 to 50)
 			new /obj/item/clothing/under/chameleon(src)
 			for(var/i in 1 to 7)
-				new /obj/item/clothing/tie/horrible(src)
+				new /obj/item/clothing/neck/tie/horrible(src)
 		if(51 to 52) // 2% chance
 			new /obj/item/weapon/melee/classic_baton(src)
 		if(53 to 54)
@@ -73,7 +73,7 @@
 		if(61 to 62)
 			for(var/i in 1 to 5)
 				new /obj/item/clothing/head/kitty(src)
-				new /obj/item/clothing/tie/petcollar(src)
+				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
 			for(var/i in 1 to rand(4, 7))
 				var/newcoin = pick(/obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/diamond, /obj/item/weapon/coin/plasma, /obj/item/weapon/coin/uranium)

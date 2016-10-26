@@ -5858,12 +5858,12 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/clothing/tie/red{
+/obj/item/clothing/neck/tie/red{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/clothing/tie/horrible,
-/obj/item/clothing/tie/blue{
+/obj/item/clothing/neck/tie/horrible,
+/obj/item/clothing/neck/tie/blue{
 	pixel_x = 5;
 	pixel_y = -2
 	},
@@ -9050,7 +9050,7 @@
 /obj/structure/rack,
 /obj/item/clothing/under/color/blue,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/tie/blue,
+/obj/item/clothing/neck/tie/blue,
 /obj/item/clothing/head/soft/blue,
 /obj/structure/sign/poster{
 	pixel_y = -32
@@ -9163,7 +9163,7 @@
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/tie/red,
+/obj/item/clothing/neck/tie/red,
 /obj/item/clothing/head/soft/red,
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/fitness{
@@ -15204,7 +15204,7 @@
 /obj/item/clothing/tie/waistcoat,
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/under/suit_jacket/red,
-/obj/item/clothing/tie/black,
+/obj/item/clothing/neck/tie/black,
 /obj/item/clothing/under/lawyer/blacksuit,
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/sleep)
@@ -16449,7 +16449,7 @@
 /obj/item/weapon/gun/energy/gun/advtaser,
 /obj/item/weapon/gun/projectile/revolver/russian,
 /obj/item/ammo_box/a357,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/book{
 	desc = "An undeniably handy book.";
 	icon_state = "bookknock";
@@ -60246,7 +60246,7 @@
 	})
 "bZU" = (
 /obj/structure/closet,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/hemostat,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -62598,7 +62598,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -63611,8 +63611,8 @@
 	pixel_x = 0;
 	pixel_y = 2
 	},
-/obj/item/clothing/tie/stethoscope,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/gun/syringe,
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/whiteblue/side{
@@ -65035,7 +65035,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/vault,
 /area/medical/sleeper{
 	name = "Sleepers"
@@ -71906,7 +71906,7 @@
 /obj/item/weapon/screwdriver{
 	pixel_y = 6
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/wrench/medical,
 /turf/open/floor/plasteel/warnwhite{
 	dir = 4
@@ -73299,7 +73299,7 @@
 "cvL" = (
 /obj/structure/table/glass,
 /obj/item/weapon/pen,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 6;
 	pixel_y = -30
@@ -73683,7 +73683,7 @@
 "cww" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -74915,7 +74915,7 @@
 "cyA" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
 	},

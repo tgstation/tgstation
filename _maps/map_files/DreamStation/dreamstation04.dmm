@@ -13076,7 +13076,7 @@
 "aBE" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/firealarm{
 	dir = 2;
 	pixel_y = 24
@@ -13113,7 +13113,7 @@
 "aBH" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/firealarm{
 	dir = 2;
 	pixel_y = 24
@@ -15702,7 +15702,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/cmo,
 /area/medical/cmo)
 "aHf" = (
@@ -16324,7 +16324,7 @@
 	pixel_x = 0;
 	pixel_y = 2
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/requests_console{
 	announcementConsole = 0;
 	department = "Medbay";
@@ -17160,7 +17160,7 @@
 "aKg" = (
 /obj/structure/table,
 /obj/item/weapon/crowbar,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
@@ -63143,7 +63143,7 @@
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "cvA" = (
-/obj/item/clothing/tie/petcollar,
+/obj/item/clothing/neck/petcollar,
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating,
 /area/maintenance/apmaint)

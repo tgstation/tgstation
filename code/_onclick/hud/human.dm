@@ -171,6 +171,15 @@
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
+	inv_box.name = "neck"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "neck"
+//	inv_box.icon_full = "template"
+	inv_box.screen_loc = ui_neck
+	inv_box.slot_id = slot_neck
+	toggleable_inventory += inv_box
+
+	inv_box = new /obj/screen/inventory()
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
@@ -344,6 +353,9 @@
 		if(H.wear_mask)
 			H.wear_mask.screen_loc = ui_mask
 			screenmob.client.screen += H.wear_mask
+		if(H.wear_neck)
+			H.wear_neck.screen_loc = ui_neck
+			screenmob.client.screen += H.wear_neck
 		if(H.head)
 			H.head.screen_loc = ui_head
 			screenmob.client.screen += H.head
@@ -355,6 +367,7 @@
 		if(H.w_uniform)	screenmob.client.screen -= H.w_uniform
 		if(H.wear_suit)	screenmob.client.screen -= H.wear_suit
 		if(H.wear_mask)	screenmob.client.screen -= H.wear_mask
+		if(H.wear_neck)	screenmob.client.screen -= H.wear_neck
 		if(H.head)		screenmob.client.screen -= H.head
 
 

@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Clockwork marauders now have a HUD, showing block chance, counter chance, health, fatigue, and host health(if applicable), as well as including a button to try to emerge/recall."
-  - experiment: "Clockwork marauders can now block bullets and thrown items, even if Ratvar has not risen."

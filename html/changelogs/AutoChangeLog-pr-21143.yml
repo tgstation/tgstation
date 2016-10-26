@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - bugfix: "Spectral sword now tracks orbiting ghosts correctly."

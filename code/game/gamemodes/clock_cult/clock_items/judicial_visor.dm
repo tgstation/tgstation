@@ -20,10 +20,8 @@
 
 /obj/item/clothing/glasses/judicial_visor/Destroy()
 	all_clockwork_objects -= src
-	if(isliving(loc))
-		var/mob/living/L = loc
-		if(src == L.get_item_by_slot(slot_glasses) && blaster.active)
-			blaster.remove_ranged_ability(L)
+	if(blaster.ranged_ability_user)
+		blaster.remove_ranged_ability()
 	blaster.visor = null
 	qdel(blaster)
 	return ..()
@@ -37,8 +35,8 @@
 	..()
 	if(slot != slot_glasses)
 		update_status(FALSE)
-		if(blaster.active)
-			blaster.remove_ranged_ability(user)
+		if(blaster.ranged_ability_user)
+			blaster.remove_ranged_ability()
 		return 0
 	if(is_servant_of_ratvar(user))
 		update_status(TRUE)
@@ -58,8 +56,8 @@
 /obj/item/clothing/glasses/judicial_visor/proc/check_on_mob(mob/user)
 	if(user && src != user.get_item_by_slot(slot_glasses)) //if we happen to check and we AREN'T in the slot, we need to remove our shit from whoever we got dropped from
 		update_status(FALSE)
-		if(blaster.active)
-			blaster.remove_ranged_ability(user)
+		if(blaster.ranged_ability_user)
+			blaster.remove_ranged_ability()
 
 /obj/item/clothing/glasses/judicial_visor/attack_self(mob/user)
 	if(is_servant_of_ratvar(user) && src == user.get_item_by_slot(slot_glasses))
@@ -108,40 +106,40 @@
 	var/message
 	if(active)
 		message = "<span class='brass'>You dispel the power of [visor].</span>"
-		remove_ranged_ability(user, message)
+		remove_ranged_ability(message)
 	else
 		message = "<span class='brass'><i>You harness [visor]'s power.</i> <b>Left-click to place a judical marker!</b></span>"
 		add_ranged_ability(user, message)
 
-/obj/effect/proc_holder/judicial_visor/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+/obj/effect/proc_holder/judicial_visor/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return
-	if(user.incapacitated() || !visor || visor != user.get_item_by_slot(slot_glasses))
-		remove_ranged_ability(user)
+	if(ranged_ability_user.incapacitated() || !visor || visor != ranged_ability_user.get_item_by_slot(slot_glasses))
+		remove_ranged_ability()
 		return
 
-	var/turf/T = user.loc
+	var/turf/T = ranged_ability_user.loc
 	if(!isturf(T))
 		return FALSE
 
-	if(target in view(7, get_turf(user)))
+	if(target in view(7, get_turf(ranged_ability_user)))
 		visor.recharging = TRUE
 		visor.update_status()
-		for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
+		for(var/obj/item/clothing/glasses/judicial_visor/V in ranged_ability_user.GetAllContents())
 			if(V == visor)
 				continue
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
-			addtimer(V, "recharge_visor", (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, FALSE, user)
-		clockwork_say(user, text2ratvar("Kneel, heathens!"))
-		user.visible_message("<span class='warning'>[user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
+			addtimer(V, "recharge_visor", (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, FALSE, ranged_ability_user)
+		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
+		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/targetturf = get_turf(target)
-		new/obj/effect/clockwork/judicial_marker(targetturf, user)
-		add_logs(user, targetturf, "created a judicial marker")
-		user.update_action_buttons_icon()
-		user.update_inv_glasses()
-		addtimer(visor, "recharge_visor", ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
-		remove_ranged_ability(user)
+		new/obj/effect/clockwork/judicial_marker(targetturf, ranged_ability_user)
+		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
+		ranged_ability_user.update_action_buttons_icon()
+		ranged_ability_user.update_inv_glasses()
+		addtimer(visor, "recharge_visor", ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, FALSE, ranged_ability_user)//Cooldown is reduced by 10x if Ratvar is up
+		remove_ranged_ability()
 
 		return TRUE
 	return FALSE
