@@ -67,7 +67,7 @@
 	name = "Holodeck - Basketball Court"
 
 /area/holodeck/rec_center/thunderdome
-	name = "Holodeck - Thunderdome Court"
+	name = "Holodeck - Thunderdome Arena"
 
 /area/holodeck/rec_center/beach
 	name = "Holodeck - Beach"
@@ -79,15 +79,31 @@
 	name = "Holodeck - Emergency Medical"
 
 /area/holodeck/rec_center/pet_lounge
-	name = "Holodeck - Pet Playground"
+	name = "Holodeck - Pet Park"
 
-/area/holodeck/rec_center/winterwonderland
-	name = "Holodeck - Winter Wonderland"
+/area/holodeck/rec_center/firingrange
+	name = "Holodeck - Firing Range"
+
+/area/holodeck/rec_center/rollercoaster
+	name = "Holodeck - Roller Coaster"
+
+/area/holodeck/rec_center/chapelcourt
+	name = "Holodeck - Chapel Courtroom"
+
+/area/holodeck/rec_center/spacechess
+	name = "Holodeck - Space Chess"
+
+/area/holodeck/rec_center/kobayashi
+	name = "Holodeck - Kobayashi Maru"
 
 // Bad programs
 
 /area/holodeck/rec_center/burn
 	name = "Holodeck - Atmospheric Burn Test"
+	restricted = 1
+
+/area/holodeck/rec_center/winterwonderland
+	name = "Holodeck - Winter Wonderland"
 	restricted = 1
 
 /area/holodeck/rec_center/wildlife
@@ -101,3 +117,12 @@
 /area/holodeck/rec_center/anthophila
 	name = "Holodeck - Anthophila"
 	restricted = 1
+
+/area/holodeck/rec_center/refuel
+	name = "Holodeck - Refueling Station"
+	restricted = 1
+
+/area/holodeck/rec_center/thunderdome1218
+	name = "Holodeck - 1218 AD"
+	restricted = 1
+
