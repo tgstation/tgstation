@@ -216,6 +216,32 @@
 	else
 		icon_state = "water_cup_e"
 
+/obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton
+	name = "small carton"
+	desc = "A small carton, intended for holding drinks."
+	icon_state = "juicebox"
+	volume = 25
+
+/obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change()
+	if (reagents.reagent_list.len > 0)
+		switch(reagents.get_master_reagent_id())
+			if("orangejuice")
+				icon_state = "juicebox"
+				name = "orange juice box	"
+				desc = "A great source of vitamins. Stay healthy!"
+			if("milk")
+				icon_state = "milkbox"
+				name = "carton of milk"
+				desc = "An excellent source of calcium for growing space explorers."
+			if("applejuice")
+				icon_state = "juicebox"
+				name = "apple juice box"
+				desc = "Sweet apple juice. Don't be late for school!"
+	else
+		icon_state = "juicebox"
+		name = "small carton"
+		desc = "A small carton, intended for holding drinks."
+
 
 
 //////////////////////////drinkingglass and shaker//

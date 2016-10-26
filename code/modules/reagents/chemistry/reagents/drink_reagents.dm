@@ -64,6 +64,12 @@
 	description = "A delicious blend of several different kinds of berries."
 	color = "#863333" // rgb: 134, 51, 51
 
+/datum/reagent/consumable/applejuice
+	name = "Apple Juice"
+	id = "applejuice"
+	description = "The sweet juice of an apple, fit for all ages."
+	color = "#ECFF56" // rgb: 236, 255, 86
+
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
 	id = "poisonberryjuice"
