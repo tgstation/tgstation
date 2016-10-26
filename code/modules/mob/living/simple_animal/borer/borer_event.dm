@@ -3,17 +3,20 @@
 	typepath = /datum/round_event/borer
 	weight = 20
 	max_occurrences = 1
-
+	min_players = 15
 	earliest_start = 12000
 
 /datum/round_event/borer
 	announceWhen = 3000 //Borers get 5 minutes till the crew tries to murder them.
-	var/spawned = 0
+	var/successSpawn = 0
 
-	var/spawncount
+	var/spawncount = 2
+
+/datum/round_event/borer/setup()
+	spawncount = rand(2, 4)
 
 /datum/round_event/borer/announce()
-	if(spawned)
+	if(successSpawn)
 		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/AI/aliens.ogg') //Borers seem like normal xenomorphs.
 
 
@@ -29,6 +32,7 @@
 				vents += temp_vent
 
 	if(!vents.len)
+		message_admins("An event attempted to spawn a borer but no suitable vents were found. Shutting down.")
 		return kill()
 
 	var/total_humans = 0
@@ -36,28 +40,10 @@
 		if(H.stat != DEAD)
 			total_humans++
 
-
-	var/list/candidates = get_candidates("borer", null, ROLE_BORER)
-
-
 	total_borer_hosts_needed = round(6 + total_humans/7)
-	spawncount += total_borer_hosts_needed
 
-	while(spawncount >= 1)
+	while(spawncount >= 1  && vents.len)
 		var/obj/vent = pick_n_take(vents)
-		for(var/client/C in candidates)
-			if(jobban_isbanned(C.mob, "borer") || !(C.prefs.toggles & MIDROUND_ANTAG))
-				candidates -= C
-		if(!candidates.len)
-			return kill()
-		var/client/C = pick(candidates)
-		if(!C)
-			return kill()
-
-		candidates -= C
-		var/mob/living/simple_animal/borer/borer = new(vent.loc)
-		borer.transfer_personality(C)
-		spawned = 1
+		new /mob/living/simple_animal/borer(vent.loc)
+		successSpawn = TRUE
 		spawncount--
-		log_game("[borer]/([borer.ckey]) was spawned as a cortical borer.")
-		message_admins("[borer]/[borer.ckey] was spawned as a cortical borer.")

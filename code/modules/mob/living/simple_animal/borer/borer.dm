@@ -117,6 +117,8 @@ var/total_borer_hosts_needed = 10
 	borers += src
 
 /mob/living/simple_animal/borer/attack_ghost(mob/user)
+	if(jobban_isbanned(user, ROLE_BORER) && jobban_isbanned(user, "Syndicate"))
+		return
 	if(ckey)
 		return
 	if(stat != CONSCIOUS)
@@ -124,7 +126,10 @@ var/total_borer_hosts_needed = 10
 	var/be_swarmer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_swarmer == "No")
 		return
-	transfer_personality(user.client)
+	if(qdeleted(src))
+		return
+	if (src && !qdeleted(src))
+		transfer_personality(user.client)
 
 /mob/living/simple_animal/borer/Stat()
 	..()
@@ -151,18 +156,18 @@ var/total_borer_hosts_needed = 10
 	if(!input)
 		return
 
-
-	var/say_string = (docile) ? "slurs" :"states"
-	if(victim)
-		victim << "<span class='changeling'><i>[src.truename] [say_string]:</i> [input]</span>"
-		log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
-		for(var/M in dead_mob_list)
-			if(istype(M, /mob/dead/observer))
-				var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src.truename]</b> : [input]</i>"
-				var/link = FOLLOW_LINK(M, src)
-				M << "[link] [rendered]"
-	src << "<span class='changeling'><i>[src.truename] [say_string]:</i> [input]</span>"
-	victim.verbs += /mob/living/proc/borer_comm
+	if(src && !qdeleted(src))
+		var/say_string = (docile) ? "slurs" :"states"
+		if(victim)
+			victim << "<span class='changeling'><i>[src.truename] [say_string]:</i> [input]</span>"
+			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
+			for(var/M in dead_mob_list)
+				if(istype(M, /mob/dead/observer))
+					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src.truename]</b> : [input]</i>"
+					var/link = FOLLOW_LINK(M, src)
+					M << "[link] [rendered]"
+		src << "<span class='changeling'><i>[src.truename] [say_string]:</i> [input]</span>"
+		victim.verbs += /mob/living/proc/borer_comm
 
 /mob/living/proc/borer_comm()
 	set name = "Converse with Borer"
@@ -530,8 +535,6 @@ var/total_borer_hosts_needed = 10
 		return
 
 	if(victim.stat == DEAD)
-		dead_mob_list -= victim
-		living_mob_list += victim
 		victim.tod = null
 		victim.setToxLoss(0)
 		victim.setOxyLoss(0)
@@ -546,11 +549,7 @@ var/total_borer_hosts_needed = 10
 			var/mob/living/carbon/human/H = victim
 			H.restore_blood()
 			H.remove_all_embedded_objects()
-		victim.update_canmove()
-		victim.med_hud_set_status()
-		victim.med_hud_set_health()
-		victim.stat = CONSCIOUS
-		victim.update_sight()
+		victim.revive()
 		log_game("[src]/([src.ckey]) has revived [victim]/([victim.ckey]")
 		chemicals -= 250
 		src << "<span class='notice'>You send a jolt of energy to your host, reviving them!</span>"
@@ -743,20 +742,21 @@ mob/living/carbon/proc/release_control()
 	if(!candidate || !candidate.mob)
 		return
 
-	var/datum/mind/M = create_borer_mind(candidate.ckey)
-	M.transfer_to(src)
+	if(!qdeleted(candidate) || !qdeleted(candidate.mob))
+		var/datum/mind/M = create_borer_mind(candidate.ckey)
+		M.transfer_to(src)
 
-	candidate.mob = src
-	ckey = candidate.ckey
+		candidate.mob = src
+		ckey = candidate.ckey
 
-	if(mind)
-		mind.store_memory("You <b>MUST</b> escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle.")
+		if(mind)
+			mind.store_memory("You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle.")
 
-	src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
-	into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
-	your host and your eventual spawn safe and warm."
-	src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your borer tab to see your powers as a borer."
-	src << "You <b>MUST</b> escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle."
+		src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
+		into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
+		your host and your eventual spawn safe and warm."
+		src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your borer tab to see your powers as a borer."
+		src << "You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle."
 
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling)

@@ -33,9 +33,7 @@
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0)
 	if(!special)
 		var/mob/living/simple_animal/borer/borer = owner.has_brain_worms()
-
 		if(borer)
-			borer.detatch()
 			borer.leave_victim() //Should remove borer if the brain is removed - RR
 		if(owner.mind)
 			src.transfer_identity(C)
