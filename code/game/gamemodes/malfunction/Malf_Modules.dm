@@ -67,6 +67,10 @@
 		countdown = null
 	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
+	for(var/A in ai_list)
+		var/mob/living/silicon/ai/Mlf = A
+		if(Mlf.doomsday_device == src)
+			Mlf.doomsday_device = null
 	. = ..()
 
 /obj/machinery/doomsday_device/proc/start()
