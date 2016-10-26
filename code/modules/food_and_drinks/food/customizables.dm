@@ -13,7 +13,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	bitesize = 4
-	w_class = 3
+	w_class = 2
 	volume = 80
 
 	var/ingMax = 12
