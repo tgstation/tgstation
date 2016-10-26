@@ -82,7 +82,7 @@
 	force = 10
 	w_class = 1
 	throwforce = 20 //TAKEDOWN!!
-	embed_chance = 50 //for extra dank takedowns
+	embed_chance = 70 //for extra dank takedowns
 	embedded_impact_pain_multiplier = 4
 	throw_speed = 3
 	throw_range = 5
@@ -121,7 +121,7 @@
 			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
 			return 0
 
-	L.Weaken(2)
+	L.Stun(1)
 	if(user)
 		user.lastattacked = L
 		L.lastattacker = user
