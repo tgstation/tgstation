@@ -67,6 +67,7 @@
 	clockwork_desc = "A binding ring around a target, preventing action while they're being converted."
 	max_integrity = 30
 	obj_integrity = 30
+	density = 0
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "guvaxbinding"
 	break_message = "<span class='warning'>The glowing ring shatters!</span>"
@@ -99,14 +100,6 @@
 			M.unEquip(G, TRUE)
 		qdel(src)
 
-/obj/item/guvax_binding
-	name = "glowing ring"
-	desc = "A flickering ring preventing you from holding items."
-	force = 0
-	icon = 'icons/effects/clockwork_effects.dmi'
-	icon_state = "guvaxbinding_full"
-	flags = NODROP|ABSTRACT|DROPDEL|NOBLUDGEON
-
 /obj/structure/destructible/clockwork/guvax_binding/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob == user)
 		user.visible_message("<span class='warning'>[user] starts struggling against [src]...</span>", "<span class='userdanger'>You start breaking out of the binding...</span>")
@@ -116,6 +109,18 @@
 			return user
 	else
 		return ..()
+
+/obj/item/guvax_binding
+	name = "glowing ring"
+	desc = "A flickering ring preventing you from holding items."
+	force = 0
+	icon = 'icons/effects/clockwork_effects.dmi'
+	icon_state = "guvaxbinding_full"
+	flags = NODROP|ABSTRACT|DROPDEL|NOBLUDGEON
+
+/obj/item/guvax_binding/afterattack(atom/target, mob/living/user, proximity_flag, params)
+	user.resist()
+
 
 //For sentinel's compromise
 /obj/effect/proc_holder/slab/compromise
