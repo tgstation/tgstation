@@ -1638,7 +1638,7 @@
 	dir = 1;
 	 dwidth = 1;
 	 height = 4;
-	 id = "pod1_away";
+	 id = "pod4_away";
 	 name = "recovery ship";
 	 width = 3
 	},
@@ -1649,7 +1649,7 @@
 	dir = 1;
 	 dwidth = 1;
 	 height = 4;
-	 id = "pod2_away";
+	 id = "pod3_away";
 	 name = "recovery ship";
 	 width = 3
 	},
@@ -1977,7 +1977,7 @@
 	dir = 4;
 	 dwidth = 1;
 	 height = 4;
-	 id = "pod3_away";
+	 id = "pod2_away";
 	 name = "recovery ship";
 	 width = 3
 	},
@@ -1999,11 +1999,11 @@
 "gi" = (
 /obj/docking_port/stationary{
 	dir = 4;
-	 dwidth = 1;
-	 height = 4;
-	 id = "pod4_away";
+	 dwidth = 2;
+	 height = 7;
+	 id = "pod1_away";
 	 name = "recovery ship";
-	 width = 3
+	 width = 5
 	},
 /turf/open/space,
 /area/space)
