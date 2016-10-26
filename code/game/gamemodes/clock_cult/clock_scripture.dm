@@ -186,3 +186,27 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		invoker << creator_message
 	new object_path (get_turf(invoker))
 	return TRUE
+
+//Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.
+/datum/clockwork_scripture/ranged_ability
+	var/slab_icon = "dread_ipad"
+	var/ranged_type = /obj/effect/proc_holder/slab
+	var/ranged_message = "This is a huge goddamn bug, how'd you cast this?"
+
+/datum/clockwork_scripture/ranged_ability/scripture_effects()
+	slab.icon_state = slab_icon
+	slab.slab_ability = new ranged_type(slab)
+	slab.slab_ability.slab = slab
+	slab.slab_ability.add_ranged_ability(invoker, ranged_message)
+	invoker.update_inv_hands()
+	var/successful = FALSE
+	while(slab && slab.slab_ability && !slab.slab_ability.finished)
+		successful = slab.slab_ability.successful
+		sleep(1)
+	if(slab)
+		if(slab.slab_ability && !slab.slab_ability.finished)
+			slab.slab_ability.remove_ranged_ability()
+		slab.icon_state = "dread_ipad"
+		if(invoker)
+			invoker.update_inv_hands()
+	return successful //slab doesn't look like a word now.

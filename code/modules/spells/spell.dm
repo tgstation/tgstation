@@ -10,6 +10,11 @@
 
 var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
+/obj/effect/proc_holder/Destroy()
+	if(ranged_ability_user)
+		remove_ranged_ability()
+	return ..()
+
 /obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
 		caller << "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled."
@@ -19,12 +24,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	ranged_ability_user.face_atom(A)
 	return FALSE
 
-/obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, var/msg)
+/obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, msg, forced)
 	if(!user || !user.client)
 		return
 	if(user.ranged_ability && user.ranged_ability != src)
-		user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."
-		user.ranged_ability.remove_ranged_ability()
+		if(forced)
+			user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."
+			user.ranged_ability.remove_ranged_ability()
+		else
+			return
 	user.ranged_ability = src
 	user.client.click_intercept = user.ranged_ability
 	add_mousepointer(user.client)
@@ -42,7 +50,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(C && ranged_mousepointer && C.mouse_pointer_icon == ranged_mousepointer)
 		C.mouse_pointer_icon = initial(C.mouse_pointer_icon)
 
-/obj/effect/proc_holder/proc/remove_ranged_ability(var/msg)
+/obj/effect/proc_holder/proc/remove_ranged_ability(msg)
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
 	ranged_ability_user.ranged_ability = null
