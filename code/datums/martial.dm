@@ -559,7 +559,7 @@
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	add_logs(A, D, "disarmed with CQC")
 	if(restraining)
-		if(D = current_target)
+		if(D == current_target)
 			D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \
 								"<span class='userdanger'>[A] puts you into a chokehold!</span>")
 			D.SetSleeping(20)
