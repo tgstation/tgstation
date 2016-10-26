@@ -85,10 +85,7 @@
 				new /mob/living/simple_animal/hostile/retaliate/clown(H.loc)
 
 /datum/round_event/creepy_clowns/announce()
-	priority_announce("Honk... Honk... HONK... HONK!", "HONK!", 'sound/spookoween/scary_horn.ogg')
-
-/datum/round_event/spooky/start()
-	..()
+	priority_announce("Honk... Honk... honk... HONK! HONK! HONKHONKHONKHONKHONK", "HONK!", 'sound/spookoween/scary_horn.ogg')
 
 //spooky foods (you can't actually make these when it's not halloween)
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
