@@ -274,12 +274,12 @@
 
 	if(!can_cast(user))
 		msg = "<span class='warning'>You can no longer cast Fireball.</span>"
-		remove_ranged_ability(user, msg)
+		remove_ranged_ability(msg)
 		return
 
 	if(active)
 		msg = "<span class='notice'>You extinguish your fireball...for now.</span>"
-		remove_ranged_ability(user, msg)
+		remove_ranged_ability(msg)
 	else
 		msg = "<span class='notice'>Your prepare to cast your fireball spell! <B>Left-click to cast at a target!</B></span>"
 		add_ranged_ability(user, msg)
@@ -290,16 +290,16 @@
 	action.button_icon_state = "fireball[active]"
 	action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/user, params, atom/target)
+/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return FALSE
 
-	if(!cast_check(0, user))
-		remove_ranged_ability(user)
+	if(!cast_check(0, ranged_ability_user))
+		remove_ranged_ability()
 		return FALSE
 
 	var/list/targets = list(target)
-	perform(targets,user = user)
+	perform(targets,user = ranged_ability_user)
 
 	return TRUE
 
