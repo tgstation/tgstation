@@ -65,7 +65,8 @@
 
 #define ui_monkey_head "CENTER-4:13,SOUTH:5"	//monkey
 #define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
-#define ui_monkey_back "CENTER-2:15,SOUTH:5"	//monkey
+#define ui_monkey_neck "CENTER-2:15,SOUTH:5"	//monkey
+#define ui_monkey_back "CENTER-1:16,SOUTH:5"	//monkey
 
 #define ui_alien_storage_l "CENTER-2:14,SOUTH:5"//alien
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"//alien
@@ -134,10 +135,10 @@
 #define ui_oclothing "WEST+1:8,SOUTH+1:7"
 #define ui_gloves "WEST+2:10,SOUTH+1:7"
 
-#define ui_glasses "WEST:6,SOUTH+2:9"
+#define ui_glasses "WEST:6,SOUTH+3:11"
 #define ui_mask "WEST+1:8,SOUTH+2:9"
 #define ui_ears "WEST+2:10,SOUTH+2:9"
-
+#define ui_neck "WEST:6,SOUTH+2:9"
 #define ui_head "WEST+1:8,SOUTH+3:11"
 
 //Ghosts

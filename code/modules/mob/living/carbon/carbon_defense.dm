@@ -56,6 +56,9 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
 						update_inv_wear_mask()
+					if(wear_neck)
+						wear_neck.add_mob_blood(src)
+						update_inv_neck()
 					if(head)
 						head.add_mob_blood(src)
 						update_inv_head()
@@ -300,6 +303,8 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 		var/obj/item/clothing/hit_clothes
 		if(wear_mask)
 			hit_clothes = wear_mask
+		if(wear_neck)
+			hit_clothes = wear_neck
 		if(head)
 			hit_clothes = head
 		if(hit_clothes)
