@@ -61,7 +61,7 @@
 /datum/chemical_reaction/goldsolidification
 	name = "Solid Gold"
 	id = "solidgold"
-	required_reagents = list("frostoil" = 5, "gold" = 20)
+	required_reagents = list("frostoil" = 5, "gold" = 20, "iron" = 1)
 	mob_react = 1
 
 /datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
