@@ -76,11 +76,11 @@
 	return TRUE
 
 
-//Sentinel's Compromise: Allows the invoker to select a nearby servant convert their brute and burn damage into half as much toxin damage.
+//Sentinel's Compromise: Allows the invoker to select a nearby servant and convert their brute and burn damage into half as much toxin damage.
 /datum/clockwork_scripture/ranged_ability/sentinels_compromise
 	descname = "Convert Brute/Burn to Half Toxin"
 	name = "Sentinel's Compromise"
-	desc = "Heals all brute and burn damage on a nearby living, friendly servant, but deals 50% of the damage they had as toxin damage."
+	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute and burn damage to half as much toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
 	required_components = list("vanguard_cogwheel" = 2)
@@ -109,7 +109,7 @@
 	sort_priority = 5
 	slab_icon = "guvax"
 	ranged_type = /obj/effect/proc_holder/slab/guvax
-	ranged_message = "<span class='sevtug_small'><i>You charge clockwork slab with power.</i>\n\
+	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
 	<b>Left-click a target within melee range to convert!\n\
 	Click your slab to cancel.</b></span>"
 	timeout_time = 100
