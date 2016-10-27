@@ -355,14 +355,11 @@
 /obj/machinery/door/airlock/cult/allowed(mob/M)
 	if(!density)
 		return 1
-	if(friendly || \
-			iscultist(M) || \
-			istype(M, /mob/living/simple_animal/shade) || \
-			istype(M, /mob/living/simple_animal/hostile/construct))
-		PoolOrNew(openingoverlaytype, src.loc)
+	if(friendly || iscultist(M) || istype(M, /mob/living/simple_animal/shade) || isconstruct(M))
+		PoolOrNew(openingoverlaytype, loc)
 		return 1
 	else
-		PoolOrNew(/obj/effect/overlay/temp/cult/sac, src.loc)
+		PoolOrNew(/obj/effect/overlay/temp/cult/sac, loc)
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
@@ -417,6 +414,9 @@
 	aiControlDisabled = TRUE
 	use_power = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	damage_deflection = 30
+	obj_integrity = 400
+	max_integrity = 400
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
 /obj/machinery/door/airlock/clockwork/New()
@@ -424,11 +424,23 @@
 	var/turf/T = get_turf(src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/door, T)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/door, T)
-	change_construction_value(3)
+	change_construction_value(5)
 
 /obj/machinery/door/airlock/clockwork/Destroy()
-	change_construction_value(-3)
+	change_construction_value(-5)
 	return ..()
+
+/obj/machinery/door/airlock/clockwork/examine(mob/user)
+	..()
+	var/gear_text = "Its gear is glitching the fuck out, report this to a coder."
+	switch(construction_state)
+		if(GEAR_SECURE)
+			gear_text = "Its gear is firmly secured."
+		if(GEAR_UNFASTENED)
+			gear_text = "Its gear is slightly loose."
+		if(GEAR_LOOSE)
+			gear_text = "Its gear is barely attached to the door!"
+	user << "<span class='brass'>[gear_text]</span>"
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
 	return (is_servant_of_ratvar(user) && !isAllPowerCut())
@@ -454,6 +466,20 @@
 
 /obj/machinery/door/airlock/clockwork/hasPower()
 	return TRUE //yes we do have power
+
+/obj/machinery/door/airlock/clockwork/obj_break(damage_flag)
+	return
+
+/obj/machinery/door/airlock/clockwork/deconstruct(disassembled = TRUE)
+	playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+	if(!(flags & NODECONSTRUCT))
+		var/turf/T = get_turf(src)
+		if(disassembled)
+			new/obj/item/stack/sheet/brass(T, 2)
+		else
+			new/obj/item/clockwork/alloy_shards(T)
+		new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(T)
+	qdel(src)
 
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))
@@ -510,10 +536,7 @@
 				return 1
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s gear, causing it to fall apart!</span>", "<span class='notice'>You lift off [src]'s gear, causing it to fall \
 			apart!</span>")
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-			new/obj/item/clockwork/alloy_shards(get_turf(src))
-			new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(get_turf(src))
-			qdel(src)
+			deconstruct(TRUE)
 		return 1
 	return 0
 
