@@ -44,6 +44,7 @@
 			successful = TRUE
 		else
 			in_progress = TRUE
+			clockwork_say(ranged_ability_user, text2ratvar("Be bound, heretic!"))
 			remove_mousepointer(ranged_ability_user.client)
 			ranged_ability_user.notransform = TRUE
 			addtimer(src, "reset_user_notransform", 5, FALSE, ranged_ability_user) //stop us moving for a little bit so we don't break the scripture following this
@@ -146,16 +147,20 @@
 		var/brutedamage = L.getBruteLoss()
 		var/burndamage = L.getFireLoss()
 		var/totaldamage = brutedamage + burndamage
-		if(!totaldamage && !L.reagents || !L.reagents.has_reagent("holywater"))
+		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
 			ranged_ability_user << "<span class='warning'>[L] is not burned or bruised!</span>"
 			return TRUE
-		L.adjustBruteLoss(-brutedamage)
-		L.adjustFireLoss(-burndamage)
-		L.adjustToxLoss(totaldamage * 0.5)
-		var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
-		var/targetturf = get_turf(L)
-		for(var/i in 1 to healseverity)
-			PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
+		if(totaldamage)
+			L.adjustBruteLoss(-brutedamage)
+			L.adjustFireLoss(-burndamage)
+			L.adjustToxLoss(totaldamage * 0.5)
+			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
+			var/targetturf = get_turf(L)
+			for(var/i in 1 to healseverity)
+				PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
+			clockwork_say(ranged_ability_user, text2ratvar("Mend wounded flesh!"))
+		else
+			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
 		ranged_ability_user << "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>"
 		L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
 		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
