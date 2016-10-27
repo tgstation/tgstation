@@ -220,10 +220,10 @@
 	name = "small carton"
 	desc = "A small carton, intended for holding drinks."
 	icon_state = "juicebox"
-	volume = 25
+	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change()
-	if (reagents.reagent_list.len > 0)
+	if (reagents.reagent_list.len)
 		switch(reagents.get_master_reagent_id())
 			if("orangejuice")
 				icon_state = "juicebox"

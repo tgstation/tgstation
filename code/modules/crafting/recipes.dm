@@ -425,5 +425,5 @@
 	name = "Small Carton"
 	result = /obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton
 	time = 10
-	reqs = list(/obj/item/stack/sheet/cardboard = 2)
+	reqs = list(/obj/item/stack/sheet/cardboard = 1)
 	category = CAT_MISC
