@@ -10,7 +10,7 @@
 
 /obj/machinery/computer/stockexchange/New()
 	..()
-	logged_in = "[world.name] Cargo Department"
+	logged_in = "[station_name()] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)

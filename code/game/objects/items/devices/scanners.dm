@@ -202,13 +202,13 @@ MASS SPECTROMETER
 			else
 				user << "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>"
 
-		var/implant_detect
+		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
 			if(CI.status == ORGAN_ROBOTIC)
-				implant_detect += "[C.name] is modified with a [CI.name].<br>"
-		if(implant_detect)
+				cyberimp_detect += "[C.name] is modified with a [CI.name].<br>"
+		if(cyberimp_detect)
 			user << "<span class='notice'>Detected cybernetic modifications:</span>"
-			user << "<span class='notice'>[implant_detect]</span>"
+			user << "<span class='notice'>[cyberimp_detect]</span>"
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))

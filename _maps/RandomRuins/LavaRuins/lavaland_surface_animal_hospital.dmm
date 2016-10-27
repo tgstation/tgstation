@@ -702,7 +702,7 @@
 /area/ruin/powered)
 "bQ" = (
 /obj/structure/table/glass,
-/obj/item/clothing/tie/petcollar,
+/obj/item/clothing/neck/petcollar,
 /obj/item/weapon/pen/blue,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface

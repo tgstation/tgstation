@@ -167,8 +167,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	message_admins("MC crashed or runtimed, restarting")
 	var/rtn2 = Recreate_MC()
 	if (rtn2 <= 0)
-		log_game("Failed to recreate MC (Error code: [rtn2]), its up to the failsafe now")
-		message_admins("Failed to recreate MC (Error code: [rtn2]), its up to the failsafe now")
+		log_game("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
+		message_admins("Failed to recreate MC (Error code: [rtn2]), it's up to the failsafe now")
 		Failsafe.defcon = 2
 
 // Main loop.

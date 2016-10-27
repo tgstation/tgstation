@@ -14,24 +14,24 @@
 
 /obj/mecha/combat/moved_inside(mob/living/carbon/human/H)
 	if(..())
-		if(H.client)
-			H.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")
+		if(H.client && H.client.mouse_pointer_icon == initial(H.client.mouse_pointer_icon))
+			H.client.mouse_pointer_icon = 'icons/mecha/mecha_mouse.dmi'
 		return 1
 	else
 		return 0
 
 /obj/mecha/combat/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
 	if(..())
-		if(occupant.client)
-			occupant.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")
+		if(occupant.client && occupant.client.mouse_pointer_icon == initial(occupant.client.mouse_pointer_icon))
+			occupant.client.mouse_pointer_icon = 'icons/mecha/mecha_mouse.dmi'
 		return 1
 	else
 		return 0
 
 
 /obj/mecha/combat/go_out()
-	if(src.occupant && src.occupant.client)
-		src.occupant.client.mouse_pointer_icon = initial(src.occupant.client.mouse_pointer_icon)
+	if(occupant && occupant.client && occupant.client.mouse_pointer_icon == 'icons/mecha/mecha_mouse.dmi')
+		occupant.client.mouse_pointer_icon = initial(occupant.client.mouse_pointer_icon)
 	..()
 
 

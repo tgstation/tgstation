@@ -71,7 +71,6 @@
 			if(!L.incapacitated() && I == L.get_active_held_item())
 				if(can_be_inserted(I, 0))
 					handle_item_insertion(I, 0 , L)
-					. = TRUE
 
 
 //Check if this storage can dump the items
@@ -167,6 +166,7 @@
 	for(var/obj/O in contents)
 		O.screen_loc = "[cx],[cy]"
 		O.layer = ABOVE_HUD_LAYER
+		O.plane = ABOVE_HUD_PLANE
 		cx++
 		if(cx > mx)
 			cx = tx
@@ -186,6 +186,7 @@
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = ABOVE_HUD_LAYER
+			ND.sample_object.plane = ABOVE_HUD_PLANE
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -196,6 +197,7 @@
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
+			O.plane = ABOVE_HUD_PLANE
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -359,6 +361,7 @@
 		var/mob/M = loc
 		W.dropped(M)
 	W.layer = initial(W.layer)
+	W.plane = initial(W.plane)
 	W.loc = new_location
 
 	if(usr)
@@ -372,10 +375,12 @@
 	W.mouse_opacity = initial(W.mouse_opacity)
 	return 1
 
-
 /obj/item/weapon/storage/deconstruct(disassembled = TRUE)
-	for(var/obj/item/Item in contents)
-		remove_from_storage(Item, src.loc)
+	var/drop_loc = loc
+	if(ismob(loc))
+		drop_loc = get_turf(src)
+	for(var/obj/item/I in contents)
+		remove_from_storage(I, drop_loc)
 	qdel(src)
 
 //This proc is called when you want to place an item into the storage item.
@@ -482,10 +487,12 @@
 	boxes.icon_state = "block"
 	boxes.screen_loc = "7,7 to 10,8"
 	boxes.layer = HUD_LAYER
+	boxes.plane = HUD_PLANE
 	closer = new /obj/screen/close()
 	closer.master = src
 	closer.icon_state = "backpack_close"
 	closer.layer = ABOVE_HUD_LAYER
+	closer.plane = ABOVE_HUD_PLANE
 	orient2hud()
 
 
@@ -516,3 +523,8 @@
 	if(A in contents)
 		usr = null
 		remove_from_storage(A, loc)
+
+/obj/item/weapon/storage/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK

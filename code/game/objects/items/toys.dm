@@ -609,8 +609,7 @@
 		"Remember, a dog is for life, not just for christmas.")
 
 /obj/item/toy/talking/skeleton/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to commit \
-		suicide with \the [src].</span>")
+	user.visible_message("<span class='suicide'>[user] is trying to commit suicide with [src].</span>")
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

@@ -9,10 +9,18 @@
 	w_class = 2
 
 /obj/item/bodybag/attack_self(mob/user)
-	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
+	deploy_bodybag(user, user.loc)
+
+/obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
+	if(proximity)
+		if(isopenturf(target))
+			deploy_bodybag(user, target)
+
+/obj/item/bodybag/proc/deploy_bodybag(mob/user, atom/location)
+	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
+	R.open(user)
 	R.add_fingerprint(user)
 	qdel(src)
-
 
 /obj/item/weapon/storage/box/bodybags
 	name = "body bags"
@@ -36,7 +44,8 @@
 	mob_storage_capacity = 2
 	open_sound = 'sound/items/zip.ogg'
 	close_sound = 'sound/items/zip.ogg'
-
+	integrity_failure = 0
+	material_drop = /obj/item/stack/sheet/cloth
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))

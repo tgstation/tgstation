@@ -1838,7 +1838,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aeI" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
@@ -4454,7 +4454,7 @@
 /area/maintenance/fsmaint)
 "alf" = (
 /obj/structure/table/wood,
-/obj/item/clothing/under/blueskirt/redskirt,
+/obj/item/clothing/under/skirt/red,
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "alg" = (
@@ -8385,7 +8385,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /mob/living/simple_animal/bot/ed209{
 	name = "Officer Pingsky II";
 	radio_channel = "AI Private"
@@ -10634,7 +10634,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "aAw" = (
-/obj/item/clothing/tie/petcollar,
+/obj/item/clothing/neck/petcollar,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
@@ -10919,7 +10919,7 @@
 /obj/item/weapon/wirerod,
 /obj/item/weapon/reagent_containers/syringe,
 /obj/item/weapon/restraints/handcuffs,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
 /area/space)
 "aBj" = (
@@ -12329,7 +12329,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore{
 	name = "\improper Command Hallway"
@@ -13986,7 +13986,7 @@
 /area/maintenance/asmaint2)
 "aIK" = (
 /obj/structure/closet/chefcloset,
-/obj/item/clothing/under/blueskirt,
+/obj/item/clothing/under/skirt/blue,
 /obj/item/clothing/under/janimaid,
 /obj/item/clothing/under/sundress,
 /obj/item/clothing/glasses/sunglasses/reagent,
@@ -14045,7 +14045,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aIR" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIS" = (
@@ -14676,7 +14676,7 @@
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "aKw" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/teleporter{
 	name = "\improper Teleporter Room"
@@ -15285,13 +15285,13 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aLS" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
 	})
 "aLT" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/storage/primary{
 	name = "Tool Storage"
@@ -15300,7 +15300,7 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "aLV" = (
@@ -15317,7 +15317,7 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "aLX" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /mob/living/simple_animal/pet/dog/corgi/Ian,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads)
@@ -16548,9 +16548,9 @@
 /area/medical/medbay)
 "aPb" = (
 /obj/structure/closet/wardrobe/white/medical,
-/obj/item/clothing/tie/stethoscope,
-/obj/item/clothing/tie/stethoscope,
-/obj/item/clothing/under/blueskirt,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/under/skirt/blue,
 /obj/item/clothing/under/plaid_skirt/blue,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -18090,7 +18090,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/camera/autoname{
 	icon_state = "camera";
 	dir = 4
@@ -18550,7 +18550,7 @@
 	name = "\improper South Hallway"
 	})
 "aTG" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aTH" = (
@@ -18573,7 +18573,7 @@
 	name = "\improper South Hallway"
 	})
 "aTL" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "aTM" = (
@@ -18736,7 +18736,7 @@
 "aUd" = (
 /obj/structure/closet/wardrobe/red,
 /obj/machinery/light,
-/obj/item/clothing/under/blueskirt/redskirt,
+/obj/item/clothing/under/skirt/red,
 /obj/item/clothing/under/plaid_skirt,
 /turf/open/floor/plasteel/black,
 /area/security/warden)
@@ -20117,7 +20117,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/maintenance/asmaint2)
 "aXy" = (
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "aXz" = (
@@ -21087,7 +21087,7 @@
 	},
 /area/shuttle/arrival)
 "aZP" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aZQ" = (
@@ -21227,7 +21227,7 @@
 	id = "kitchen shutter";
 	name = "kitchen shutter"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -21320,7 +21320,7 @@
 /turf/closed/wall,
 /area/medical/morgue)
 "bav" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	icon_state = "intact";
 	dir = 4
@@ -21389,7 +21389,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "baA" = (
@@ -21672,7 +21672,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bbc" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "bbd" = (
@@ -22723,7 +22723,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics_cloning)
 "bdL" = (
@@ -22792,11 +22792,11 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "bdS" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/medical/robotics)
 "bdT" = (
@@ -22929,7 +22929,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "bed" = (
@@ -22995,11 +22995,11 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
 "bem" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "ben" = (

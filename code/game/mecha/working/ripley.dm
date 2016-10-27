@@ -30,7 +30,7 @@
 	for(var/i=1, i <= hides, i++)
 		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	for(var/atom/movable/A in cargo)
-		A.loc = loc
+		A.forceMove(loc)
 		step_rand(A)
 	cargo.Cut()
 	return ..()
@@ -112,7 +112,7 @@
 	//Attach hydraulic clamp
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
 	HC.attach(src)
-	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
+	for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)//Deletes the beacon so it can't be found easily
 		qdel(B)
 
 	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new /obj/item/mecha_parts/mecha_equipment/mining_scanner
@@ -129,12 +129,19 @@
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
 			src.occupant_message("<span class='notice'>You unload [O].</span>")
-			O.loc = loc
+			O.forceMove(loc)
 			src.cargo -= O
 			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 
 
+/obj/mecha/working/ripley/contents_explosion(severity, target)
+	for(var/X in cargo)
+		var/obj/O = X
+		if(prob(30/severity))
+			cargo -= O
+			O.forceMove(loc)
+	. = ..()
 
 /obj/mecha/working/ripley/get_stats_part()
 	var/output = ..()

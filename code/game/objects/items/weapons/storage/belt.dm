@@ -6,6 +6,8 @@
 	item_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/item/weapon/storage/belt/update_icon()
 	cut_overlays()
@@ -33,6 +35,23 @@
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves/
 		)
+
+/obj/item/weapon/storage/belt/utility/chief
+	name = "Chief Engineer's toolbelt"
+	desc = "Holds tools, looks snazzy"
+	icon_state = "utilitybelt_ce"
+	item_state = "utility_ce"
+
+/obj/item/weapon/storage/belt/utility/chief/full/New()
+	..()
+	new /obj/item/weapon/screwdriver/power(src)
+	new /obj/item/weapon/crowbar/power(src)
+	new /obj/item/weapon/weldingtool/experimental(src)//This can be changed if this is too much
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/weapon/extinguisher/mini(src)
+	//much roomier now that we've managed to remove two tools
+
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
@@ -94,7 +113,7 @@
 		/obj/item/weapon/cautery,
 		/obj/item/weapon/hemostat,
 		/obj/item/device/geiger_counter,
-		/obj/item/clothing/tie/stethoscope,
+		/obj/item/clothing/neck/stethoscope,
 		/obj/item/weapon/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/weapon/wrench/medical,

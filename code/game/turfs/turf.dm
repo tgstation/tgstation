@@ -368,3 +368,9 @@
 	if(T.dir != dir)
 		T.setDir(dir)
 	return T
+
+/turf/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK
+

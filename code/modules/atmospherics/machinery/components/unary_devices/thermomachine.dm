@@ -40,7 +40,7 @@
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		var/new_setting = "Heater"
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, I.usesound, 50, 1)
 		if(build_path == initial(heater.build_path))
 			newtype = freezer
 			new_setting = "Freezer"

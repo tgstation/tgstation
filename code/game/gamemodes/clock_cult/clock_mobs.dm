@@ -185,6 +185,7 @@
 			else //well then, you're not even in the same zlevel
 				adjust_fatigue(10)
 				src << "<span class='userdanger'>You're too far from your host and rapidly taking fatigue damage!</span>"
+			update_health_hud()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -282,7 +283,9 @@
 				src << "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>"
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break
-	return ..() + fatiguedamage
+	. = ..() + fatiguedamage
+	if(src)
+		update_health_hud()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
 	if(status_flags & GODMODE)
@@ -290,6 +293,24 @@
 	fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold)
 	update_fatigue()
 	return amount
+
+/mob/living/simple_animal/hostile/clockwork/marauder/update_health_hud()
+	if(hud_used && hud_used.healths)
+		if(istype(hud_used, /datum/hud/marauder))
+			var/datum/hud/marauder/M = hud_used
+			var/resulthealth
+			if(host)
+				if(iscarbon(host))
+					resulthealth = "[round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)]%"
+				else
+					resulthealth = "[round((host.health / host.maxHealth) * 100, 0.5)]%"
+			else
+				resulthealth = "NONE"
+			M.hosthealth.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>HOST<br>[resulthealth]</font></div>"
+			M.blockchance.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#2A0006'>[blockchance]%</font></div>"
+			M.counterchance.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#2A0006'>[counterchance]%</font></div>"
+		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>[round((health / maxHealth) * 100, 0.5)]%</font><br>\
+		<font color='#2A0006'>[fatigue]</font></div>"
 
 //ATTACKING, BLOCKING, and COUNTERING
 
@@ -300,12 +321,12 @@
 	..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/Proj)
-	if(ratvar_awakens && blockOrCounter(null, Proj))
+	if(blockOrCounter(null, Proj))
 		return
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
-	if(ratvar_awakens && blockOrCounter(null, AM))
+	if(blockOrCounter(null, AM))
 		return
 	return ..()
 
@@ -346,16 +367,21 @@
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 10, 1, 0, 1) //clang
 		visible_message("<span class='boldannounce'>[src] blocks [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
 		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
-		if(target && prob(counterchance))
-			counterchance = initial(counterchance)
-			var/previousattacktext = attacktext
-			attacktext = "counters"
-			target.attack_animal(src)
-			attacktext = previousattacktext
-		else
-			counterchance = min(counterchance + initial(counterchance), 100)
+		if(target && Adjacent(target))
+			if(prob(counterchance))
+				counterchance = initial(counterchance)
+				var/previousattacktext = attacktext
+				attacktext = "counters"
+				target.attack_animal(src)
+				attacktext = previousattacktext
+			else
+				counterchance = min(counterchance + initial(counterchance), 100)
 	else
 		blockchance = min(blockchance + initial(blockchance), 100)
+	if(ratvar_awakens)
+		blockchance = 80
+		counterchance = 80
+	update_health_hud()
 
 //COMMUNICATION and EMERGENCE
 

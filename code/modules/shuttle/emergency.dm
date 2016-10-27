@@ -136,6 +136,10 @@
 	if(!IS_DOCKED)
 		return
 
+	if(emagged || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
+		user << "<span class='warning'>The shuttle is already about to launch!</span>"
+		return
+
 	var/time = TIME_LEFT
 	message_admins("[key_name_admin(user.client)] \
 	(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
@@ -155,12 +159,7 @@
 
 		authorized += ID
 
-	if(ENGINES_STARTED)
-		// Give them a message anyway
-		user << "<span class='warning'>The shuttle is already \
-			about to launch!</span>"
-	else
-		process()
+	process()
 
 /obj/machinery/computer/emergency_shuttle/Destroy()
 	// Our fake IDs that the emag generated are just there for colour

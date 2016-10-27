@@ -51,7 +51,7 @@
 	data["ready_implants"]  = ready_implants
 	data["ready"] = ready
 	data["replenishing"] = replenishing
-
+	
 	return data
 
 /obj/machinery/implantchair/ui_act(action, params)
@@ -137,7 +137,6 @@
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
-	. = TRUE
 
 /obj/machinery/implantchair/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open)
@@ -190,3 +189,4 @@
 	log_game("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	return 1
 
+	
