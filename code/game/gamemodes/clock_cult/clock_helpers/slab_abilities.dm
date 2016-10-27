@@ -3,6 +3,7 @@
 	var/obj/item/clockwork/slab/slab
 	var/successful = FALSE
 	var/finished = FALSE
+	var/in_progress = FALSE
 
 /obj/effect/proc_holder/slab/remove_ranged_ability(msg)
 	..()
@@ -10,7 +11,7 @@
 	QDEL_IN(src, 2)
 
 /obj/effect/proc_holder/slab/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
+	if(..() || in_progress)
 		return TRUE
 	if(ranged_ability_user.incapacitated() || !slab || !(slab in ranged_ability_user.held_items) || target == slab)
 		remove_ranged_ability()
@@ -18,10 +19,10 @@
 
 /obj/effect/proc_holder/slab/guvax
 	ranged_mousepointer = 'icons/effects/guvax_target.dmi'
-	var/in_progress = FALSE
+
 
 /obj/effect/proc_holder/slab/guvax/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..() || in_progress)
+	if(..())
 		return TRUE
 
 	var/turf/T = ranged_ability_user.loc

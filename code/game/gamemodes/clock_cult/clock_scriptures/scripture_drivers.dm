@@ -100,11 +100,11 @@
 	descname = "Convert Attack"
 	name = "Guvax"
 	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
-	invocations = list("Charge my slab...", "...divinity!")
+	invocations = list("Divinity, grant me strength...", "...to enlighten the heathen!")
 	whispered = TRUE
 	channel_time = 20
 	required_components = list("guvax_capacitor" = 1)
-	usage_tip = "Has a very short two-tile range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
+	usage_tip = "Is melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 5
 	slab_icon = "guvax"
@@ -112,12 +112,22 @@
 	ranged_message = "<span class='sevtug_small'><i>You charge clockwork slab with power.</i>\n\
 	<b>Left-click a target within melee range to convert!\n\
 	Click your slab to cancel.</b></span>"
+	timeout_time = 100
+
+/datum/clockwork_scripture/ranged_ability/guvax_prep/run_scripture()
+	var/servants = 0
+	for(var/mob/living/M in living_mob_list)
+		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+			servants++
+	if(servants > 5)
+		whispered = FALSE
+	return ..()
 
 //The scripture that does the converting.
 /datum/clockwork_scripture/guvax
 	name = "Guvax Conversion"
 	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 50
+	channel_time = 70
 	tier = SCRIPTURE_PERIPHERAL
 	var/mob/living/target
 	var/obj/structure/destructible/clockwork/guvax_binding/binding
@@ -136,7 +146,7 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	channel_time = min(channel_time + servants*2, 100)
+	channel_time = min(channel_time + servants*2, 150)
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))
