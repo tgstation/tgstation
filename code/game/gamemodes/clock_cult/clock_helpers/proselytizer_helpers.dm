@@ -42,7 +42,7 @@
 	if(get_amount() >= 10)
 		var/sheets_to_make = round(get_amount() * 0.1)
 		var/used = sheets_to_make * 10
-		user.visible_message("<span class='warning'>[user]'s [name] rips into [src], converting it to brass!</span>", \
+		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
 		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -54,9 +54,9 @@
 
 /obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(get_amount() >= 5)
-		var/sheets_to_make = round(src.get_amount() * 0.2)
+		var/sheets_to_make = round(get_amount() * 0.2)
 		var/used = sheets_to_make * 5
-		user.visible_message("<span class='warning'>[user]'s [name] rips into [src], converting it to brass!</span>", \
+		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
 		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -70,7 +70,7 @@
 	if(get_amount() >= 2)
 		var/sheets_to_make = round(get_amount() * 0.5)
 		var/used = sheets_to_make * 2
-		user.visible_message("<span class='warning'>[user]'s [name] rips into [src], converting it to brass!</span>", \
+		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
 		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
