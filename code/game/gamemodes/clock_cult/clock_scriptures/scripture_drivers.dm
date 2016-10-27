@@ -146,7 +146,7 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	channel_time = min(channel_time + servants*2, 150)
+	channel_time = min(channel_time + servants*2, 100)
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))
