@@ -227,7 +227,7 @@
 		switch(reagents.get_master_reagent_id())
 			if("orangejuice")
 				icon_state = "juicebox"
-				name = "orange juice box	"
+				name = "orange juice box"
 				desc = "A great source of vitamins. Stay healthy!"
 			if("milk")
 				icon_state = "milkbox"
