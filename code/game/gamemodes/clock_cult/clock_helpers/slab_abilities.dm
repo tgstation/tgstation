@@ -65,8 +65,8 @@
 
 /obj/structure/destructible/clockwork/guvax_binding
 	name = "glowing ring"
-	desc = "A flickering, glowing purple ring."
-	clockwork_desc = "A binding ring around a target, preventing action while they're being converted."
+	desc = "A flickering, glowing purple ring around a target."
+	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
 	max_integrity = 30
 	obj_integrity = 30
 	density = 0
@@ -88,6 +88,8 @@
 
 /obj/structure/destructible/clockwork/guvax_binding/post_buckle_mob(mob/living/M)
 	if(M.buckled == src)
+		desc = "A flickering, glowing purple ring around [M]."
+		clockwork_desc = "A binding ring around [M], preventing [M.p_them()] from taking action while [M.p_theyre()] being converted."
 		layer = M.layer - 0.01
 		var/image/GB = new('icons/effects/clockwork_effects.dmi', src, "guvaxbinding_top", M.layer + 0.01)
 		add_overlay(GB)
@@ -97,7 +99,10 @@
 			var/obj/item/guvax_binding/B = new(M)
 			M.put_in_hands(B, i)
 		M.regenerate_icons()
+		M.visible_message("<span class='warning'>A [name] appears around [target]!</span>", \
+		"<span class='warning'>A [name] appears around you!</span>\n<span class='userdanger'>Resist!</span>")
 	else
+		M.visible_message("<span class='warning'>[src] snaps into glowing pieces and dissipates!</span>")
 		for(var/obj/item/guvax_binding/G in M.held_items)
 			M.unEquip(G, TRUE)
 		qdel(src)

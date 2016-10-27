@@ -152,8 +152,6 @@
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))
-	binding.visible_message("<span class='warning'>A glowing ring appears around [target]!</span>", \
-	"<span class='warning'>A glowing ring appears around you!</span>\n<span class='userdanger'>Resist!</span>")
 	binding.setDir(target.dir)
 	binding.buckle_mob(target, TRUE)
 	return ..()
