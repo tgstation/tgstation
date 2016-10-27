@@ -154,8 +154,6 @@
 	"<span class='warning'>A glowing ring appears around you!</span>\n<span class='userdanger'>Resist!</span>")
 	binding.setDir(target.dir)
 	binding.buckle_mob(target, TRUE)
-	for(var/obj/item/device/radio/O in target.GetAllContents())
-		O.emp_act(1)
 	return ..()
 
 /datum/clockwork_scripture/guvax/check_special_requirements()
