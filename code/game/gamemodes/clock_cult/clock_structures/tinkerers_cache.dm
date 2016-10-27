@@ -31,21 +31,20 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/cache/process()
-	for(var/turf/closed/wall/clockwork/C in view(4, src))
+	for(var/turf/closed/wall/clockwork/C in range(4, src))
 		if(!C.linkedcache && !linkedwall)
 			C.linkedcache = src
 			linkedwall = C
 			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			visible_message("<span class='warning'>[src] starts to whirr in the presence of [C]...</span>")
 			break
-		if(linkedwall && wall_generation_cooldown <= world.time)
-			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
-			var/component_to_generate = get_weighted_component_id()
-			PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
-			clockwork_component_cache[component_to_generate]++
-			playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
-			visible_message("<span class='warning'>Something clunks around inside of [src]...</span>")
-			break
+	if(linkedwall && wall_generation_cooldown <= world.time)
+		wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+		var/component_to_generate = get_weighted_component_id()
+		PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
+		clockwork_component_cache[component_to_generate]++
+		playsound(linkedwall, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
+		visible_message("<span class='warning'>Something cl[pick("ank", "ink", "unk", "ang"]s around inside of [src]...</span>")
 
 /obj/structure/destructible/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
 	if(!is_servant_of_ratvar(user))
