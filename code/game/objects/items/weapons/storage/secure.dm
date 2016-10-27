@@ -61,13 +61,6 @@
 	// -> storage/attackby() what with handle insertion, etc
 	return ..()
 
-/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/card/emag))
-		if(locked)
-			user << "<span class='notice'>You take a second to realize there's no ID slot for you to emag this with.</span>"
-		else
-			user << "<span class='notice'>You take a second to realize the case is already open, making you look really silly. Hopefully no one saw.</span>"
-	
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
@@ -112,7 +105,7 @@
 				src.code = null
 				src.close(usr)
 			else
-				src.code += text("[]", href_list["type"])
+				src.code += text("[]", sanitize_text(href_list["type"]))
 				if (length(src.code) > 5)
 					src.code = "ERROR"
 		src.add_fingerprint(usr)

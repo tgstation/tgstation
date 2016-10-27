@@ -1,5 +1,6 @@
 /atom
 	layer = TURF_LAYER
+	plane = GAME_PLANE
 	var/level = 2
 	var/flags = 0
 	var/list/fingerprints
@@ -66,7 +67,7 @@
 	if(does_attack_animation)
 		user.changeNext_move(CLICK_CD_MELEE)
 		add_logs(user, src, "punched", "hulk powers")
-		user.do_attack_animation(src)
+		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -201,9 +202,7 @@
 	return
 
 /atom/proc/contents_explosion(severity, target)
-	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK
+	return
 
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -415,7 +414,7 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if(istype(src,/turf) )
+	if(isturf(src))
 		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
 		// Make toxins vomit look different
 		if(toxvomit)

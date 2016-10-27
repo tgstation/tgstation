@@ -34,9 +34,12 @@
 	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
 		var/muh_layer = can.layer
+		var/muh_plane = can.plane
 		can.layer = FLOAT_LAYER
+		can.plane = FLOAT_PLANE
 		underlays += can
 		can.layer = muh_layer
+		can.plane = muh_plane
 
 
 /obj/item/weapon/grenade/iedcasing/attack_self(mob/user) //

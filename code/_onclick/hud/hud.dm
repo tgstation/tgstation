@@ -42,6 +42,7 @@
 	var/list/screenoverlays = list() //the screen objects used as whole screen overlays (flash, damageoverlay, etc...)
 	var/list/inv_slots[slots_amt] // /obj/screen/inventory objects, ordered by their slot ID.
 	var/list/hand_slots // /obj/screen/inventory/hand objects, assoc list of "[held_index]" = object
+	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
@@ -55,6 +56,9 @@
 	hide_actions_toggle = new
 	hide_actions_toggle.InitialiseIcon(mymob)
 	hand_slots = list()
+	for(var/mytype in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/plane_master/instance = new mytype()
+		plane_masters["[instance.plane]"] = instance
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -107,6 +111,11 @@
 	deity_power_display = null
 	deity_follower_display = null
 	nightvisionicon = null
+
+	if(plane_masters.len)
+		for(var/thing in plane_masters)
+			qdel(plane_masters[thing])
+		plane_masters.Cut()
 
 	if(screenoverlays.len)
 		for(var/thing in screenoverlays)
@@ -184,6 +193,9 @@
 			if(infodisplay.len)
 				screenmob.client.screen -= infodisplay
 
+	if(plane_masters.len)
+		for(var/thing in plane_masters)
+			screenmob.client.screen += plane_masters[thing]
 	hud_version = display_hud_version
 	persistant_inventory_update(screenmob)
 	mymob.update_action_buttons(1)

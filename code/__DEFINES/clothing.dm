@@ -12,6 +12,7 @@
 #define SLOT_BACK		1024
 #define SLOT_POCKET		2048		//this is to allow items with a w_class of 3 or 4 to fit in pockets.
 #define SLOT_DENYPOCKET	4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
+#define SLOT_NECK		8192
 
 //SLOTS
 #define slot_back			1
@@ -24,18 +25,19 @@
 #define slot_ears			7
 #define slot_glasses		8
 #define slot_gloves			9
-#define slot_head			10
-#define slot_shoes			11
-#define slot_wear_suit		12
-#define slot_w_uniform		13
-#define slot_l_store		14
-#define slot_r_store		15
-#define slot_s_store		16
-#define slot_in_backpack	17
-#define slot_legcuffed		18
-#define slot_generic_dextrous_storage	19
+#define slot_neck			10
+#define slot_head			11
+#define slot_shoes			12
+#define slot_wear_suit		13
+#define slot_w_uniform		14
+#define slot_l_store		15
+#define slot_r_store		16
+#define slot_s_store		17
+#define slot_in_backpack	18
+#define slot_legcuffed		19
+#define slot_generic_dextrous_storage	20
 
-#define slots_amt			19 // Keep this up to date!
+#define slots_amt			20 // Keep this up to date!
 
 //I hate that this has to exist
 /proc/slotdefine2slotbit(slotdefine) //Keep this up to date with the value of SLOT BITMASKS and SLOTS (the two define sections above)
@@ -45,6 +47,8 @@
 			. = SLOT_BACK
 		if(slot_wear_mask)
 			. = SLOT_MASK
+		if(slot_neck)
+			. = SLOT_NECK
 		if(slot_belt)
 			. = SLOT_BELT
 		if(slot_wear_id)
@@ -78,7 +82,7 @@
 #define HIDEFACE		128	// Whether we appear as unknown.
 #define HIDEHAIR		256
 #define HIDEFACIALHAIR	512
-
+#define HIDENECK		1024
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -98,7 +102,8 @@
 #define HAND_LEFT	512
 #define HAND_RIGHT	1024
 #define HANDS		1536
-#define FULL_BODY	2047
+#define NECK		2048
+#define FULL_BODY	4095
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()

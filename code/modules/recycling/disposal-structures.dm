@@ -124,7 +124,8 @@
 /obj/structure/disposalholder/allow_drop()
 	return 1
 
-
+/obj/structure/disposalholder/ex_act(severity, target)
+	return
 
 // Disposal pipes
 
@@ -278,26 +279,16 @@
 
 
 // pipe affected by explosion
-/obj/structure/disposalpipe/ex_act(severity, target)
-
-	//pass on ex_act to our contents before calling it on ourself
+/obj/structure/disposalpipe/contents_explosion(severity, target)
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
 		H.contents_explosion(severity, target)
-	..()
 
 
 /obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 10)
 		return 0
 	. = ..()
-
-/obj/structure/disposalpipe/fire_act(exposed_temperature, exposed_volume)
-	var/turf/T = src.loc
-	if(T && T.intact) //protected from fire when hidden behind a floor.
-		return
-	..()
-
 
 //attack by item
 //weldingtool: unfasten and convert to obj/disposalconstruct
@@ -703,11 +694,11 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(mode==0)
 			mode=1
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			user << "<span class='notice'>You remove the screws around the power connection.</span>"
 		else if(mode==1)
 			mode=0
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src.loc, I.usesound, 50, 1)
 			user << "<span class='notice'>You attach the screws around the power connection.</span>"
 
 	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)

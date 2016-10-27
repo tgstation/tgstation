@@ -459,7 +459,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
-	if(!(istype(tturf, /turf)))
+	if(!isturf(tturf))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
@@ -544,9 +544,9 @@
 			var/obj/mecha/working/ripley/D = target
 			if(D.hides < 3)
 				D.hides++
-				D.armor["melee"] = max(D.armor["melee"] - 0.1, 0.3)
-				D.armor["bullet"] = D.armor["bullet"] - 0.05
-				D.armor["laser"] = D.armor["laser"] - 0.025
+				D.armor["melee"] = min(D.armor["melee"] + 10, 70)
+				D.armor["bullet"] = min(D.armor["bullet"] + 5, 50)
+				D.armor["laser"] = min(D.armor["laser"] + 5, 50)
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				D.update_icon()
 				if(D.hides == 3)
@@ -963,10 +963,10 @@
 		make_babies()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/make_babies()
-	if(..())
+	. = ..()
+	if(.)
 		udder.reagents.clear_reagents()
 		regenerate_icons()
-
 
 //Nests
 /mob/living/simple_animal/hostile/spawner/lavaland

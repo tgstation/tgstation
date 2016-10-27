@@ -95,6 +95,12 @@
 	pixel_y = rand(6,-6)
 	START_PROCESSING(SSobj, src)
 
+/obj/structure/spider/spiderling/hunter
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
+
+/obj/structure/spider/spiderling/nurse
+	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
+
 /obj/structure/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
 		src.loc = user.loc
@@ -103,7 +109,7 @@
 
 /obj/structure/spider/spiderling/process()
 	if(travelling_in_vent)
-		if(istype(src.loc, /turf))
+		if(isturf(loc))
 			travelling_in_vent = 0
 			entry_vent = null
 	else if(entry_vent)

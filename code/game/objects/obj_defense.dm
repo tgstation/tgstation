@@ -62,15 +62,15 @@
 
 /obj/bullet_act(obj/item/projectile/P)
 	. = ..()
-	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>")
 	playsound(src, P.hitsound, 50, 1)
+	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180))
 
 
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
 		..(user, 1)
-		visible_message("<span class='danger'>[user] smashes [src]!</span>")
+		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE, user)
 		if(density)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -81,12 +81,15 @@
 	return 0
 
 /obj/blob_act(obj/structure/blob/B)
+	if(isturf(loc))
+		var/turf/T = loc
+		if(T.intact && level == 1) //the blob doesn't destroy thing below the floor
+			return
 	take_damage(400, BRUTE, "melee", 0, get_dir(src, B))
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
 	take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user))
 
 /obj/attack_alien(mob/living/carbon/alien/humanoid/user)
@@ -115,15 +118,24 @@
 
 /obj/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)
-	switch(damtype)
-		if(BRUTE)
-			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', 50, 1)
-		else
-			return 0
-	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-	return take_damage(M.force*3, M.damtype, "melee", 0, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
+	var/play_soundeffect = 0
+	var/mech_damtype = M.damtype
+	if(M.selected)
+		mech_damtype = M.selected.damtype
+		play_soundeffect = 1
+	else
+		switch(M.damtype)
+			if(BRUTE)
+				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+			if(BURN)
+				playsound(src, 'sound/items/Welder.ogg', 50, 1)
+			if(TOX)
+				playsound(src, 'sound/effects/spray2.ogg', 50, 1)
+				return 0
+			else
+				return 0
+	visible_message("<span class='danger'>[M.name] has hit [src].</span>", null, null, COMBAT_MESSAGE_RANGE, M.occupant)
+	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()
 	ex_act(1)
@@ -165,21 +177,16 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 //called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
-	var/location = loc
 	SSacid.processing -= src
-	var/remaining_acid = acid_level
-	var/list/contained = contents
 	deconstruct(FALSE)
-	if(isturf(location))
-		var/turf/T = location
-		for(var/obj/item/I in contained)
-			if(I.loc == T) //we acid the items that used to be inside src and ended up on the turf
-				I.acid_act(10, 0.1 * remaining_acid/T.contents.len)
-
 
 //// FIRE
 
 /obj/fire_act(exposed_temperature, exposed_volume)
+	if(isturf(loc))
+		var/turf/T = loc
+		if(T.intact && level == 1) //fire can't damage things hidden below the floor.
+			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(Clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
@@ -190,16 +197,9 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 //called when the obj is destroyed by fire
 /obj/proc/burn()
-	var/location = loc
-	var/list/contained = contents
 	if(resistance_flags & ON_FIRE)
 		SSfire_burning.processing -= src
 	deconstruct(FALSE)
-	if(isturf(location))
-		var/turf/T = location
-		for(var/obj/item/I in contained)
-			if(I.loc == T) //we burn the items that used to be inside src and ended up on the turf
-				I.fire_act()
 
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)

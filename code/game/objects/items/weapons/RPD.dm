@@ -169,7 +169,7 @@ var/global/list/RPD_recipes=list(
 	show_menu(user)
 
 /obj/item/weapon/pipe_dispenser/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] points the end of the RPD down \his throat and presses a button! It looks like \he's trying to commit suicide...</span>")
+	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
@@ -564,7 +564,7 @@ var/global/list/RPD_recipes=list(
 			user << "<span class='warning'>The [src]'s error light flickers!  Perhaps you need to only use it on pipes and pipe meters?</span>"
 			return 0
 		if(ATMOS_MODE)
-			if(!(istype(A, /turf)))
+			if(!isturf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
@@ -579,7 +579,7 @@ var/global/list/RPD_recipes=list(
 			return 0
 
 		if(METER_MODE)
-			if(!(istype(A, /turf)))
+			if(!isturf(A))
 				user << "<span class='warning'>The [src]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building meter...</span>"

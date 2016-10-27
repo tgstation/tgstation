@@ -123,6 +123,12 @@
 	log_name = "RP"
 	category = "Defensive"
 
+/datum/spellbook_entry/lightningPacket
+	name = "Lightning bolt!  Lightning bolt!"
+	spell_type = /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
+	log_name = "LP"
+	category = "Defensive"
+
 /datum/spellbook_entry/timestop
 	name = "Time Stop"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
@@ -665,7 +671,7 @@
 		return
 
 	var/datum/spellbook_entry/E = null
-	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
+	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
 		if(href_list["buy"])
 			E = entries[text2num(href_list["buy"])]
@@ -810,10 +816,8 @@
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You suddenly feel very solid!</span>"
-	var/obj/structure/closet/statue/S = new /obj/structure/closet/statue(user.loc, user)
-	S.timer = 30
-	user.drop_item()
-
+	user.Stun(2)
+	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
 	spell = /obj/effect/proc_holder/spell/aoe_turf/knock

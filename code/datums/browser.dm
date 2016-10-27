@@ -39,11 +39,11 @@
 	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
-	stylesheets[name] = file
+	stylesheets["[ckey(name)].css"] = file
 	register_asset("[ckey(name)].css", file)
 
 /datum/browser/proc/add_script(name, file)
-	scripts[name] = file
+	scripts["[ckey(name)].js"] = file
 	register_asset("[ckey(name)].js", file)
 
 /datum/browser/proc/set_content(ncontent)
@@ -53,13 +53,12 @@
 	content += ncontent
 
 /datum/browser/proc/get_header()
-	var/key
-	var/filename
-	for (key in stylesheets)
-		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'>"
+	var/file
+	for (file in stylesheets)
+		head_content += "<link rel='stylesheet' type='text/css' href='[file]'>"
 
-	for (key in scripts)
-		head_content += "<script type='text/javascript' src='[filename]'></script>"
+	for (file in scripts)
+		head_content += "<script type='text/javascript' src='[file]'></script>"
 
 	var/title_attributes = "class='uiTitle'"
 	if (title_image)

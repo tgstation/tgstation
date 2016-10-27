@@ -85,9 +85,16 @@
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_dispenser/blob_act(obj/structure/blob/B)
-	if(prob(50))
-		qdel(src)
+/obj/machinery/chem_dispenser/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/chem_dispenser/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		cut_overlays()
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -154,7 +161,7 @@
 				. = TRUE
 		if("eject")
 			if(beaker)
-				beaker.loc = loc
+				beaker.forceMove(loc)
 				beaker = null
 				cut_overlays()
 				. = TRUE
