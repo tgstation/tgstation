@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - rscadd: "Adds an unlocked miner equipment locker on Boxstation and Metastation's Aux Base Construction area, as well as a telescreen to the camera inside. All mining outpost computers can also see through that camera."
