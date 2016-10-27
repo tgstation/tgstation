@@ -117,7 +117,7 @@ var/total_borer_hosts_needed = 10
 	borers += src
 
 /mob/living/simple_animal/borer/attack_ghost(mob/user)
-	if(jobban_isbanned(user, ROLE_BORER) && jobban_isbanned(user, "Syndicate"))
+	if(jobban_isbanned(user, ROLE_BORER) || jobban_isbanned(user, "Syndicate"))
 		return
 	if(ckey)
 		return
@@ -497,7 +497,7 @@ var/total_borer_hosts_needed = 10
 	addtimer(src, "release_host", 100, FALSE)
 
 /mob/living/simple_animal/borer/proc/release_host()
-	if(!victim || !src)
+	if(!victim || !src || qdeleted(victim) || qdeleted(src))
 		return
 	if(!leaving)
 		return
@@ -579,7 +579,7 @@ var/total_borer_hosts_needed = 10
 
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 
-	if(qdeleted(src))
+	if(qdeleted(src) || qdeleted(victim))
 		return
 
 	var/delay = 200+(victim.brainloss*5)

@@ -1,8 +1,8 @@
 
 /mob/living/simple_animal/borer/Topic(href, href_list, hsrc)
 	if(href_list["borer_use_chem"])
-		var/mob/living/simple_animal/borer/B = locate(href_list["_src_"])
-		if(!istype(B, /mob/living/simple_animal/borer))
+		locate(href_list["src"])
+		if(!istype(src, /mob/living/simple_animal/borer))
 			return
 
 		var/topic_chem = href_list["borer_use_chem"]
@@ -32,6 +32,6 @@
 		chemicals -= C.chemuse
 		log_game("[src]/([src.ckey]) has injected [C.chemname] into their host [victim]/([victim.ckey])")
 
-		B << output(chemicals, "ViewBorer\ref[B]Chems.browser:update_chemicals")
+		src << output(chemicals, "ViewBorer\ref[src]Chems.browser:update_chemicals")
 
 	..()
