@@ -17,9 +17,9 @@
 		remove_ranged_ability()
 		return TRUE
 
+//For the Guvax scripture; binds a target to convert.
 /obj/effect/proc_holder/slab/guvax
 	ranged_mousepointer = 'icons/effects/guvax_target.dmi'
-
 
 /obj/effect/proc_holder/slab/guvax/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
@@ -122,8 +122,7 @@
 /obj/item/guvax_binding/afterattack(atom/target, mob/living/user, proximity_flag, params)
 	user.resist()
 
-
-//For sentinel's compromise
+//For the Sentinel's Compromise scripture; heals a target servant.
 /obj/effect/proc_holder/slab/compromise
 	ranged_mousepointer = 'icons/effects/compromise_target.dmi'
 
@@ -161,6 +160,10 @@
 		L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
 		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
 		playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
+
+		if(L.reagents && L.reagents.has_reagent("holywater"))
+			L.reagents.remove_reagent("holywater", 1000)
+			L << "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>"
 
 		remove_ranged_ability()
 
