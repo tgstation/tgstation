@@ -1,0 +1,5 @@
+author: "Erwgd"
+delete-after: True
+changes: 
+  - rscadd: "You can now use cloth to make black or fingerless gloves."
+  - tweak: "Biogenerators require less biomass to produce botanist's leather gloves."
