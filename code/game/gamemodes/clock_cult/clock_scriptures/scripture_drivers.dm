@@ -127,7 +127,7 @@
 /datum/clockwork_scripture/guvax
 	name = "Guvax Conversion"
 	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 70
+	channel_time = 50
 	tier = SCRIPTURE_PERIPHERAL
 	var/mob/living/target
 	var/obj/structure/destructible/clockwork/guvax_binding/binding
@@ -146,7 +146,9 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	channel_time = min(channel_time + servants*2, 100)
+	if(servants > 5)
+		servants -= 5
+		channel_time = min(channel_time + servants*5, 100)
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))

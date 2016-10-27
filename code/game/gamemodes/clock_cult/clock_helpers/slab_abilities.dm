@@ -146,7 +146,7 @@
 		var/brutedamage = L.getBruteLoss()
 		var/burndamage = L.getFireLoss()
 		var/totaldamage = brutedamage + burndamage
-		if(!totaldamage)
+		if(!totaldamage && !L.reagents || !L.reagents.has_reagent("holywater"))
 			ranged_ability_user << "<span class='warning'>[L] is not burned or bruised!</span>"
 			return TRUE
 		L.adjustBruteLoss(-brutedamage)
