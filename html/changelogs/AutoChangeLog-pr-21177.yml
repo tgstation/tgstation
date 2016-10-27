@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - bugfix: "The Interdiction Lens now properly has a high Belligerent Eye cost instead of a high Replicant Alloy cost."
