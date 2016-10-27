@@ -44,7 +44,7 @@
 		PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
 		clockwork_component_cache[component_to_generate]++
 		playsound(linkedwall, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
-		visible_message("<span class='warning'>Something cl[pick("ank", "ink", "unk", "ang"]s around inside of [src]...</span>")
+		visible_message("<span class='warning'>Something cl[pick("ank", "ink", "unk", "ang")]s around inside of [src]...</span>")
 
 /obj/structure/destructible/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
 	if(!is_servant_of_ratvar(user))
