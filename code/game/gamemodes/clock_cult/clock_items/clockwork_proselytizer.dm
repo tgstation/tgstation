@@ -1,5 +1,5 @@
-
-/obj/item/clockwork/clockwork_proselytizer //Clockwork proselytizer (yes, that's a real word): Converts applicable objects to Ratvarian variants.
+//Clockwork proselytizer (yes, that's a real word): Converts applicable objects to Ratvarian variants.
+/obj/item/clockwork/clockwork_proselytizer
 	name = "clockwork proselytizer"
 	desc = "An odd, L-shaped device that hums with energy."
 	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy to function."
@@ -39,9 +39,9 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, windoors, and grilles to clockwork variants.</span>"
-		user << "<span class='brass'>Can also form some objects into Replicant Alloy, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
+		user << "<span class='brass'>Can also form some objects into Brass sheets, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
 		if(metal_to_alloy)
-			user << "<span class='alloy'>It can convert brass to liquified replicant alloy at a rate of <b>1 sheet to [REPLICANT_FLOOR] alloy</b>.</span>"
+			user << "<span class='alloy'>It can convert Brass sheets to liquified replicant alloy at a rate of <b>1</b> sheet to <b>[REPLICANT_FLOOR]</b> alloy.</span>"
 		if(uses_alloy)
 			user << "<span class='alloy'>It has <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
@@ -131,11 +131,7 @@
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"] && !do_after(user, proselytize_values["operation_time"], target = target))
 		return FALSE
-	if(!can_use_alloy(proselytize_values["alloy_cost"])) //Check again to prevent bypassing via spamclick
-		return FALSE
-	if(!target || target.type != target_type)
-		return FALSE
-	if(repairing)
+	if(repairing || refueling || !can_use_alloy(proselytize_values["alloy_cost"]) || !target || target.type != target_type) //Check again to prevent bypassing via spamclick
 		return FALSE
 	user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
 	"<span class='brass'>You proselytize [target].</span>")
