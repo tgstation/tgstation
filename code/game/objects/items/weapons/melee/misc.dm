@@ -98,6 +98,13 @@
 				var/mob/living/carbon/human/H = target
 				if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
 					return
+				if(H.martial_art && H.martial_art.block_chance)
+					if(prob(H.martial_art.block_chance) && H.in_throw_mode && !H.get_active_held_item())
+						if(!H.stat && !H.weakened && !H.stunned)
+							H.visible_message("<span class='danger'>[H.name] blocks the [src] and twists [user]'s arm behind their back!</span>",
+										"<span class='userdanger'>You block the attack!</span>")
+							user.Stun(2)
+							return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
 			target.Weaken(3)
 			add_logs(user, target, "stunned", src)
