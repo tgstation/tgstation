@@ -56,12 +56,13 @@
 /datum/game_mode/proc/printsoulsowned(datum/mind/devil)
 	if(!owner.current.has_antag_datum(/datum/antag/devil, true))
 		return
-	var/text "And the following souls were owned: "
-	for(var/V in owner.current.has_antag_datum(/datum/antag/devil, true).soulsOwned)
+	var/text += "And the following souls were owned: "
+	var/datum/antag/devil/devil_datum = owner.current.has_antag_datum(/datum/antag/devil, true)
+	for(var/V in devil_datum.soulsOwned)
 		var/datum/mind/M = V
 		text += M.name + ", "
 	world << text
-		
+
 
 /datum/game_mode/proc/update_devil_icons_added(datum/mind/devil_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_DEVIL]
