@@ -133,20 +133,25 @@
 /obj/structure/grille/ratvar/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
+//Girder conversion
+/obj/structure/girder/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return list("operation_time" = 20, "new_obj_type" = /obj/structure/destructible/clockwork/wall_gear, "alloy_cost" = REPLICANT_GEAR, "spawn_dir" = SOUTH)
+
 //Hitting a clockwork structure will try to repair it.
 /obj/structure/destructible/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
 	if(!can_be_repaired)
 		user << "<span class='warning'>[src] cannot be repaired with a proselytizer!</span>"
 		return
-	if(obj_integrity == max_integrity)
+	if(obj_integrity >= max_integrity)
 		user << "<span class='warning'>[src] is at maximum integrity!</span>"
 		return
 	var/amount_to_heal = max_integrity - obj_integrity
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
+	var/proselytizer_cost = 0
 	if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
-	var/proselytizer_cost = healing_for_cycle*2
+		proselytizer_cost = healing_for_cycle*2
 	if(!proselytizer.can_use_alloy(proselytizer_cost))
 		user << "<span class='warning'>You need more liquified alloy to repair [src]!</span>"
 		return
@@ -156,23 +161,29 @@
 	proselytizer.repairing = src
 	while(proselytizer && user && src && obj_integrity != max_integrity)
 		amount_to_heal = max_integrity - obj_integrity
-		if(!amount_to_heal)
+		if(amount_to_heal <= 0)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
-		proselytizer_cost = healing_for_cycle*2
+			proselytizer_cost = healing_for_cycle*2
+			if(!proselytizer.can_use_alloy(proselytizer_cost))
+				break
+		else
+			proselytizer_cost = 0
 		if(!proselytizer.can_use_alloy(proselytizer_cost) || !do_after(user, proselytizer_cost, target = src) || !proselytizer || !proselytizer.can_use_alloy(proselytizer_cost))
 			break
 		amount_to_heal = max_integrity - obj_integrity
-		if(!amount_to_heal)
+		if(amount_to_heal <= 0)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
 			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
-		proselytizer_cost = healing_for_cycle*2
-		if(!proselytizer.can_use_alloy(proselytizer_cost))
-			break
+			proselytizer_cost = healing_for_cycle*2
+			if(!proselytizer.can_use_alloy(proselytizer_cost))
+				break
+		else
+			proselytizer_cost = 0
 		obj_integrity += healing_for_cycle
 		proselytizer.modify_stored_alloy(-proselytizer_cost)
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
