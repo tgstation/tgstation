@@ -285,13 +285,15 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
  */
 var/global/list/datum/stack_recipe/brass_recipes = list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 30, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("brass floor tile", /obj/item/stack/tile/brass, 1, 1, 50), \
+	null,
 	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork/brass, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork, 2, time = 30, one_per_turf = 1, on_floor = 1), \
+	null,
 	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("brass window", /obj/structure/window/reinforced/clockwork/fulltile, 2, time = 30, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("brass floor tile", /obj/item/stack/tile/brass, 1, 1, 50) \
+	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = 1, on_floor = 1) \
 )
 
 /obj/item/stack/sheet/brass
