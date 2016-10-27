@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - bugfix: "Chem implants can now be properly filled and implanted"
