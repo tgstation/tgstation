@@ -97,7 +97,7 @@ var/next_external_rsc = 0
 
 
 /client/New(TopicData)
-	var/tdata = TopidData //save this for later use
+	var/tdata = TopicData //save this for later use
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
