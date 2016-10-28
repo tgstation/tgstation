@@ -882,6 +882,8 @@
 	if(interaction != AI_TRANS_TO_CARD || occupier.stat)
 		return
 	var/turf/T = get_turf(user)
+	if(!T)
+		return
 	transfer_in_progress = TRUE
 	user.visible_message("<span class='notice'>[user] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, 1)
