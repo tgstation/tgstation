@@ -172,7 +172,7 @@
 				amount -= MIN_CLOCKCULT_POWER
 	var/apcpower = accessable_apc_power()
 	while(apcpower >= MIN_CLOCKCULT_POWER && amount >= MIN_CLOCKCULT_POWER)
-		if(target_apc.cell && target_apc.cell.use(MIN_CLOCKCULT_POWER))
+		if(target_apc.cell.use(MIN_CLOCKCULT_POWER))
 			apcpower -= MIN_CLOCKCULT_POWER
 			amount -= MIN_CLOCKCULT_POWER
 			target_apc.charging = 1
