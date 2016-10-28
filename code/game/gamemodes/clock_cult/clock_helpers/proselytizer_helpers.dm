@@ -150,8 +150,8 @@
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
 	var/proselytizer_cost = 0
 	if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
-		proselytizer_cost = healing_for_cycle*2
+		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
+		proselytizer_cost = healing_for_cycle * 2
 	if(!proselytizer.can_use_alloy(proselytizer_cost))
 		user << "<span class='warning'>You need more liquified alloy to repair [src]!</span>"
 		return
@@ -165,8 +165,8 @@
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
-			proselytizer_cost = healing_for_cycle*2
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
+			proselytizer_cost = healing_for_cycle * 2
 			if(!proselytizer.can_use_alloy(proselytizer_cost))
 				break
 		else
@@ -178,13 +178,13 @@
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
-			proselytizer_cost = healing_for_cycle*2
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
+			proselytizer_cost = healing_for_cycle * 2
 			if(!proselytizer.can_use_alloy(proselytizer_cost))
 				break
 		else
 			proselytizer_cost = 0
-		obj_integrity += healing_for_cycle
+		obj_integrity = Clamp(obj_integrity + healing_for_cycle, 0, max_integrity)
 		proselytizer.modify_stored_alloy(-proselytizer_cost)
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
