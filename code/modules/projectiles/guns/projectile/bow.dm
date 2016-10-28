@@ -130,8 +130,8 @@
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
 	range = 30
 	damage = 30
-	damage_type = BURN		//I give the fuck up untill someone makes projectiles able to multi-damage I'm not going to risk experimenting with multi-hit projectiles.
-	flag = "burn"
+	damage_type = BRUTE		//I give the fuck up untill someone makes projectiles able to multi-damage I'm not going to risk experimenting with multi-hit projectiles.
+	flag = "bullet"
 	dropped = 1
 
 /obj/item/ammo_casing/caseless/arrow/hardlight
