@@ -904,7 +904,7 @@
 		occupier << "<span class='warning'>[user] was interrupted! Transfer canceled.</span>"
 		transfer_in_progress = FALSE
 		return
-	if(!occupier)
+	if(!occupier || !card)
 		transfer_in_progress = FALSE
 		return
 	user.visible_message("<span class='notice'>[user] transfers [occupier] to [card]!</span>", "<span class='notice'>Transfer complete! [occupier] is now stored in [card].</span>")
