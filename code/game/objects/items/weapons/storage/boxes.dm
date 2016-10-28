@@ -633,42 +633,7 @@
 /obj/item/weapon/storage/box/actionfigure/New()
 	..()
 	for(var/i in 1 to 4)
-		var/randomFigure = pick(/obj/item/toy/figure/cmo,
-								/obj/item/toy/figure/assistant,
-								/obj/item/toy/figure/atmos,
-								/obj/item/toy/figure/bartender,
-								/obj/item/toy/figure/borg,
-								/obj/item/toy/figure/botanist,
-								/obj/item/toy/figure/captain,
-								/obj/item/toy/figure/cargotech,
-								/obj/item/toy/figure/ce,
-								/obj/item/toy/figure/chaplain,
-								/obj/item/toy/figure/chef,
-								/obj/item/toy/figure/chemist,
-								/obj/item/toy/figure/clown,
-								/obj/item/toy/figure/ian,
-								/obj/item/toy/figure/detective,
-								/obj/item/toy/figure/dsquad,
-								/obj/item/toy/figure/engineer,
-								/obj/item/toy/figure/geneticist,
-								/obj/item/toy/figure/hop,
-								/obj/item/toy/figure/hos,
-								/obj/item/toy/figure/qm,
-								/obj/item/toy/figure/janitor,
-								/obj/item/toy/figure/lawyer,
-								/obj/item/toy/figure/librarian,
-								/obj/item/toy/figure/md,
-								/obj/item/toy/figure/mime,
-								/obj/item/toy/figure/miner,
-								/obj/item/toy/figure/ninja,
-								/obj/item/toy/figure/wizard,
-								/obj/item/toy/figure/rd,
-								/obj/item/toy/figure/roboticist,
-								/obj/item/toy/figure/scientist,
-								/obj/item/toy/figure/syndie,
-								/obj/item/toy/figure/secofficer,
-								/obj/item/toy/figure/virologist,
-								/obj/item/toy/figure/warden)
+		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
 		new randomFigure(src)
 
 #define NODESIGN "None"
