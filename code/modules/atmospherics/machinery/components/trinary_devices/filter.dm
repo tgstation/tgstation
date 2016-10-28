@@ -84,15 +84,13 @@
 		if(!removed)
 			return
 		
-		var/safe	//ugly way of doing it... can remove once the source of the runtime is found and fixed
-		try
-			if(filter_type && removed.gases[filter_type]) //empty check, this will trigger a runtime if the problem exists
-				safe = TRUE
-		catch()
+		var/filtering = filter_type ? TRUE : FALSE
+		
+		if(filtering && !istext(filter_type))
 			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
-			safe = FALSE
-			
-		if(safe)
+			filtering = FALSE
+		
+		if(filtering && removed.gases[filter_type])
 			var/datum/gas_mixture/filtered_out = new
 			
 			filtered_out.temperature = removed.temperature
@@ -103,6 +101,7 @@
 			removed.garbage_collect()
 
 			air2.merge(filtered_out)
+
 		air3.merge(removed)
 
 	update_parents()
