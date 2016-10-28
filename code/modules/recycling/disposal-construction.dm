@@ -11,6 +11,8 @@
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	level = 2
+	obj_integrity = 200
+	max_integrity = 200
 	var/ptype = 0
 
 	var/dpdir = 0	// directions as disposalpipe

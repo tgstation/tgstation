@@ -459,3 +459,51 @@
 	if(prob(20))
 		M.heal_bodypart_damage(3,1)
 	..()
+
+
+////Lavaland Flora Reagents////
+
+
+/datum/reagent/consumable/entpoly
+	name = "Entropic Polypnium"
+	id = "entpoly"
+	description = "An ichor, derived from a certain mushroom, makes for a bad time."
+	color = "#1d043d"
+/datum/reagent/consumable/entpoly/on_mob_life(mob/living/M)
+	if(current_cycle >= 10)
+		M.Paralyse(2, 0)
+		. = 1
+	if(prob(20))
+		M.losebreath += 4
+		M.adjustBrainLoss(2*REM)
+		M.adjustToxLoss(3*REM,0)
+		M.adjustStaminaLoss(10*REM,0)
+		M.blur_eyes(5)
+		. = TRUE
+	..()
+
+/datum/reagent/consumable/tinlux
+	name = "Tinea Luxor"
+	id = "tinlux"
+	description = "A stimulating ichor which causes luminescent fungi to grow on the skin. "
+	color = "#b5a213"
+
+/datum/reagent/consumable/tinlux/reaction_mob(mob/living/M)
+	M.AddLuminosity(2)
+
+/datum/reagent/consumable/tinlux/on_mob_delete(mob/living/M)
+	M.AddLuminosity(-2)
+
+/datum/reagent/consumable/vitfro
+	name = "Vitrium Froth"
+	id = "vitfro"
+	description = "A bubbly paste that heals wounds of the skin."
+	color = "#d3a308"
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/vitfro/on_mob_life(mob/living/M)
+	if(prob(80))
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
+		. = TRUE
+	..()

@@ -43,7 +43,7 @@
 
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
-	user.visible_message("<span class='suicide'>[user] lifts the [src.name] to their mouth and gnaws on it furiously, producing a thick froth! They'll never get that BB gun now!")
+	user.visible_message("<span class='suicide'>[user] lifts [src] to their mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!")
 	PoolOrNew(/obj/effect/particle_effect/foam, loc)
 	return (TOXLOSS)
 
@@ -106,7 +106,7 @@
 	var/cooldowntime = 20
 
 /obj/item/weapon/bikehorn/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] solemnly points the horn at \his temple! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src.loc, honksound, 50, 1)
 	return (BRUTELOSS)
 
@@ -139,7 +139,7 @@
 
 /obj/item/weapon/bikehorn/golden
 	name = "golden bike horn"
-	desc = "Golden? Clearly, its made with bananium! Honk!"
+	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
 

@@ -53,7 +53,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -141,7 +141,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -336,7 +336,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -407,7 +407,7 @@
 	},
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},
@@ -426,7 +426,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	desc = "A large mottled egg.";
-	health = 100;
+	obj_integrity = 100;
 	icon_state = "egg_hatched";
 	name = "egg"
 	},

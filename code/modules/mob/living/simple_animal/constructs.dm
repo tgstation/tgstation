@@ -37,17 +37,21 @@
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
 
+/mob/living/simple_animal/hostile/construct/Login()
+	..()
+	src << playstyle_string
+
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
-	var/t_He = they_pronoun(TRUE)
-	var/plurality = (gender == PLURAL)
+	var/t_He = p_they(TRUE)
+	var/t_s = p_s()
 	var/msg = "<span class='cult'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
 		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
-			msg += "[t_He] look[plurality ? "":"s"] slightly dented.\n"
+		if(health >= maxHealth/2)
+			msg += "[t_He] look[t_s] slightly dented.\n"
 		else
-			msg += "<b>[t_He] look[plurality ? "":"s"] severely dented!</b>\n"
+			msg += "<b>[t_He] look[t_s] severely dented!</b>\n"
 		msg += "</span>"
 	msg += "*---------*</span>"
 
@@ -62,11 +66,11 @@
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
 						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 			else
-				M.visible_message("<span class='danger'>[M] repairs some of [their_pronoun()] own dents.</span>", \
+				M.visible_message("<span class='danger'>[M] repairs some of [p_their()] own dents.</span>", \
 						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
 		else
 			if(src != M)
-				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [they_pronoun()] [get_has()] none!</span>"
+				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>"
 			else
 				M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 	else if(src != M)
@@ -91,6 +95,7 @@
 	health = 250
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
+	obj_damage = 90
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "smashes their armored gauntlet into"
@@ -169,6 +174,7 @@
 	health = 50
 	response_harm = "viciously beats"
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	retreat_distance = 10

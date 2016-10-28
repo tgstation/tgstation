@@ -53,9 +53,9 @@
 			if (query.NextRow())
 				res.cache = TRUE
 				res.cachedate = query.item[1]
-				res.intel = query.item[2]
-				res.cacheminutesago = query.item[3]
-				res.cacherealtime = world.realtime - (query.item[3]*10*60)
+				res.intel = text2num(query.item[2])
+				res.cacheminutesago = text2num(query.item[3])
+				res.cacherealtime = world.realtime - (text2num(query.item[3])*10*60)
 				SSipintel.cache[ip] = res
 				return
 	res.intel = ip_intel_query(ip)

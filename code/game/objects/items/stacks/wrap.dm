@@ -12,7 +12,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/stack/wrapping_paper/Destroy()
 	if(!amount)
@@ -32,7 +32,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
-	resistance_flags = 0
+	resistance_flags = FLAMMABLE
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
 	return 1

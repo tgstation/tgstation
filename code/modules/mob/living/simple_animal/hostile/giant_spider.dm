@@ -35,6 +35,7 @@
 	response_harm   = "hits"
 	maxHealth = 200
 	health = 200
+	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	faction = list("spiders")
@@ -84,9 +85,8 @@
 	health = 40
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	poison_per_bite = 10
+	poison_per_bite = 3
 	var/atom/cocoon_target
-	poison_type = "morphine"
 	var/fed = 0
 
 //hunters have the most poison and move the fastest, so they can find prey
@@ -214,7 +214,7 @@
 		walk(src,0)
 		if(do_after(src, 50, target = src))
 			if(busy == SPINNING_COCOON)
-				if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
+				if(cocoon_target && isturf(cocoon_target.loc) && get_dist(src,cocoon_target) <= 1)
 					var/obj/structure/spider/cocoon/C = new(cocoon_target.loc)
 					var/large_cocoon = 0
 					C.pixel_x = cocoon_target.pixel_x

@@ -105,7 +105,7 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if (usr.restrained() || usr.stat || !usr.is_holding(src))
+	if (usr.restrained() || usr.stat || usr.get_active_held_item() != src)
 		return
 	if (href_list["make"])
 		if (src.get_amount() < 1) qdel(src) //Never should happen
@@ -228,7 +228,7 @@
 	return
 
 /obj/item/stack/AltClick(mob/living/user)
-	if(user.incapacitated())
+	if(!istype(user) || !user.canUseTopic(src))
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))

@@ -21,7 +21,7 @@
 	maxHealth = 150
 	health = 150
 	healable = 0
-	environment_smash = 1
+	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	see_in_dark = 8
@@ -100,6 +100,7 @@
 	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
 					"<span class='notice'>You twist your body and assume the form of [target].</span>")
 	appearance = target.appearance
+	alpha = max(alpha, 150)	//fucking chameleons
 	transform = initial(transform)
 	pixel_y = initial(pixel_y)
 	pixel_x = initial(pixel_x)

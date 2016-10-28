@@ -11,6 +11,10 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	obj_integrity = 150
+	max_integrity = 150
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 40, acid = 0)
+
 
 /obj/machinery/meter/New()
 	..()

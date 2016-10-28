@@ -225,7 +225,7 @@
 
 	if(target)
 		if(path.len == 0)
-			if(!istype(target, /turf/))
+			if(!isturf(target))
 				var/turf/TL = get_turf(target)
 				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
 			else
@@ -248,7 +248,7 @@
 					target = null
 					path = list()
 					return
-			if(istype(target, /turf/) && emagged < 2)
+			if(isturf(target) && emagged < 2)
 				repair(target)
 			else if(emagged == 2 && isfloorturf(target))
 				var/turf/open/floor/F = target

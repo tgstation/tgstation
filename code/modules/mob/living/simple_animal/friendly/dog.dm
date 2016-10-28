@@ -282,22 +282,26 @@
 	var/saved_head //path
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/New()
+	..()
+	//parent call must happen first to ensure IAN
+	//is not in nullspace when child puppies spawn
 	Read_Memory()
 	if(age == 0)
-		var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(loc)
-		P.name = "Ian"
-		P.real_name = "Ian"
-		P.gender = MALE
-		P.desc = "It's the HoP's beloved corgi puppy."
-		Write_Memory(0)
-		qdel(src)
+		var/turf/target = get_turf(loc)
+		if(target)
+			var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(target)
+			P.name = "Ian"
+			P.real_name = "Ian"
+			P.gender = MALE
+			P.desc = "It's the HoP's beloved corgi puppy."
+			Write_Memory(0)
+			qdel(src)
 	else if(age == record_age)
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
-	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
