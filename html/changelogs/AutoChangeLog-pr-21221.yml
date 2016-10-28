@@ -1,0 +1,9 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - bugfix: "Converting metal, rods, or plasteel to brass with a clockwork proselytizer while holding it will no longer leave a remainder inside of you."
+  - tweak: "Plasteel to brass is now a 2:1 ratio, from a 2.5:1 ratio. Accordingly, you now only need 2 sheets of plasteel to convert it to brass instead of 10 sheets."
+  - tweak: "Wall gears are now converted to brass sheets instead of directly to alloy."
+  - rscdel: "You can no longer do other proselytizer actions while refueling from a cache."
+  - bugfix: "Fixed a bug where certain stacks wouldn't merge with other stacks, even when they should have been."
+  - bugfix: "Clockwork structures constructed from brass sheets now all have appropriate construction value to replicant alloy ratios."
