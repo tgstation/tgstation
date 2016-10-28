@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Syndicate and malfunctioning AIs may now be transferred onto an intelliCard if their parent core has been destroyed. This may only be done with the AI's consent, and the AI may not be re-transferred onto another APC or the APC it came from."
