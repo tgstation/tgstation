@@ -259,7 +259,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 
 /obj/item/weapon/wirecutters/power
 	name = "Jaws of Life"
-	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head"
+	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head."
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
@@ -268,7 +268,7 @@ obj/item/weapon/wrench/power/suicide_act(mob/user)
 	toolspeed = 4
 
 /obj/item/weapon/wirecutters/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!</span>")
+	user.visible_message("<span class='suicide'>[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!</span>")
 	playsound(loc, 'sound/items/jaws_cut.ogg', 50, 1, -1)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
