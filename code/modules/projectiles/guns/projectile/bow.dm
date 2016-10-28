@@ -129,8 +129,8 @@
 	icon_state = "arrow_hardlight"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
 	range = 30
-	damage = 12
-	damage_type = BRUTE
+	damage = 30
+	damage_type = BRUTE		//I give the fuck up untill someone makes projectiles able to multi-damage I'm not going to risk experimenting with multi-hit projectiles.
 	flag = "bullet"
 	dropped = 1
 
@@ -140,14 +140,6 @@
 	icon_state = "arrow_hardlight"
 	force = 7
 	projectile_type = /obj/item/projectile/bullet/reusable/arrow/hardlight
-
-/obj/item/projectile/bullet/reusable/arrow/hardlight2
-	name = "hardlight arrow"
-	range = 30
-	damage = 18
-	damage_type = BURN
-	flag = "laser"
-	dropped = 1
 
 /obj/item/weapon/storage/backpack/quiver/hardlight
 	name = "hardlight quiver"
@@ -192,8 +184,7 @@
 
 /obj/item/projectile/bullet/reusable/arrow/hardlight/on_hit(atom/target, blocked = 0)
 	..()
-	var/obj/item/projectile/bullet/reusable/arrow/hardlight2/A = new /obj/item/projectile/bullet/reusable/arrow/hardlight2(src.loc)
-	A.Bump(target, 1)
+	qdel(src)	//NO INFINITE-HITTING!
 
 /obj/item/ammo_casing/caseless/arrow/hardlight/dropped()
 	QDEL_IN(src,200)
