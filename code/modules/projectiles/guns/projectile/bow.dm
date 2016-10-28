@@ -118,6 +118,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/bow/hardlight
 	draw_sound = 'sound/weapons/draw_bow2.ogg'
 	slowdown_when_ready = 1
+	origin_tech = "combat=4;materials=6;bluespace=2;powerstorage=3;magnets=4"
 
 /obj/item/ammo_box/magazine/internal/bow/hardlight
 	name = "bow hardlight magazine"
