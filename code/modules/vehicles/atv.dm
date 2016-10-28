@@ -2,7 +2,7 @@
 /obj/vehicle/atv
 	name = "all-terrain vehicle"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-earth technologies that are still relevant on most planet-bound outposts."
-	icon_state = "atv"
+	icon_state = "flashlight"
 	keytype = /obj/item/key
 	generic_pixel_x = 0
 	generic_pixel_y = 4
