@@ -349,8 +349,10 @@ var/next_external_rsc = 0
 			if (!cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] appears to have attempted to spoof a cid randomizer check.</span>")
 				cidcheck_spoofckeys[ckey] = 1
-			tokens[ckey] = cid_check_reconnect()
 			cidcheck[ckey] = computer_id
+			tokens[ckey] = cid_check_reconnect()
+			
+			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
 			qdel(src)
 			return TRUE
 				
@@ -367,7 +369,7 @@ var/next_external_rsc = 0
 				note_randomizer_user()
 
 			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
-
+			
 			qdel(src)
 			return TRUE
 		else
@@ -389,8 +391,10 @@ var/next_external_rsc = 0
 			lastcid = query_cidcheck.item[1]
 
 		if (computer_id != lastcid)
-			tokens[ckey] = cid_check_reconnect()
 			cidcheck[ckey] = computer_id
+			tokens[ckey] = cid_check_reconnect()
+			
+			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
 			qdel(src)
 			return TRUE
 			
@@ -400,10 +404,8 @@ var/next_external_rsc = 0
 	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
 	var/url = winget(src, null, "url")
 	//special javascript to make them reconnect under a new window.
-
-	src << browse("<a id='link' href='byond://[url]?[token]'>byond://[url]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
-	sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-	src << "<a href='byond://[url]?[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>"
+	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
+	src << "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>"
 
 /client/proc/note_randomizer_user()
 	var/const/adminckey = "CID-Error"
