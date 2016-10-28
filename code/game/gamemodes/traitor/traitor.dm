@@ -59,9 +59,10 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		greet_traitor(traitor)
 		forge_traitor_objectives(traitor)
-		finalize_traitor(traitor)
+		spawn(rand(10,100))
+			finalize_traitor(traitor)
+			greet_traitor(traitor)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
@@ -193,7 +194,7 @@
 
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are a [traitor_name]!</font></B>"
+	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
 	traitor.announce_objectives()
 	return
 
