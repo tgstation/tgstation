@@ -1,4 +1,0 @@
-author: "Tacolizard"
-delete-after: True
-changes: 
-  - rscadd: "Added a new contraband crate to cargo, the ATV crate."
