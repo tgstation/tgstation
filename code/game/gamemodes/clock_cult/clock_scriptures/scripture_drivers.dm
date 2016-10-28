@@ -10,6 +10,7 @@
 	chant_invocations = list("Punish their blindness!", "Take time, make slow!")
 	chant_amount = 15
 	chant_interval = 20
+	channel_time = 20
 	required_components = list("belligerent_eye" = 1)
 	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
 	tier = SCRIPTURE_DRIVER

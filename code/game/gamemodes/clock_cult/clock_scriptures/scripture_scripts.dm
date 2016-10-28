@@ -109,7 +109,7 @@
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
 	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
-	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell."
+	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell or cyborg body."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	sort_priority = 6
