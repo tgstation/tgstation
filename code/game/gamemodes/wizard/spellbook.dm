@@ -123,6 +123,12 @@
 	log_name = "RP"
 	category = "Defensive"
 
+/datum/spellbook_entry/lightningPacket
+	name = "Lightning bolt!  Lightning bolt!"
+	spell_type = /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
+	log_name = "LP"
+	category = "Defensive"
+
 /datum/spellbook_entry/timestop
 	name = "Time Stop"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop

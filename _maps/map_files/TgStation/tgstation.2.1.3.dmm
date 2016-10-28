@@ -4776,12 +4776,18 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "ajZ" = (
-/obj/machinery/atmospherics/pipe/manifold/green/visible{
-	dir = 4
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 0;
+	pixel_y = 32
 	},
-/obj/machinery/meter,
-/turf/open/floor/plasteel,
-/area/atmos)
+/turf/open/floor/plating,
+/area/mining_construction)
 "aka" = (
 /obj/structure/chair{
 	dir = 1
@@ -7844,6 +7850,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "aqN" = (
+/obj/structure/closet/secure_closet/miner{
+	locked = 0
+	},
 /turf/open/floor/plating/warnplate{
 	dir = 5
 	},
@@ -8841,7 +8850,8 @@
 "atk" = (
 /obj/machinery/camera{
 	c_tag = "Auxillary Mining Base";
-	dir = 8
+	dir = 8;
+	network = list("SS13","AuxBase")
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
@@ -10547,6 +10557,13 @@
 /obj/item/wallframe/camera,
 /obj/item/wallframe/camera,
 /obj/item/device/assault_pod/mining,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for the Auxillary Mining Base.";
+	dir = 8;
+	name = "Auxillary Base Monitor";
+	network = list("AuxBase");
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -20415,7 +20432,9 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aUd" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 6
 	},
@@ -30624,7 +30643,7 @@
 "bqR" = (
 /obj/structure/table,
 /obj/item/weapon/crowbar,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/structure/sign/nosmoking_2{
 	pixel_x = 0;
@@ -34585,7 +34604,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = 27
 	},
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -35578,7 +35599,9 @@
 /turf/open/floor/engine,
 /area/toxins/explab)
 "bAS" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /obj/machinery/camera{
 	c_tag = "Quartermaster's Office";
 	dir = 4
@@ -36551,7 +36574,7 @@
 	pixel_x = 0;
 	pixel_y = 2
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -37166,7 +37189,7 @@
 "bEj" = (
 /obj/structure/table/glass,
 /obj/item/weapon/pen,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/barber,
 /area/medical/cmo)
@@ -37416,7 +37439,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "bEK" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /obj/machinery/camera{
 	c_tag = "Mining Dock";
 	dir = 4;
@@ -38449,7 +38474,7 @@
 "bGT" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/vending/wallmed{
 	pixel_y = 28
 	},
@@ -40976,7 +41001,7 @@
 "bLU" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -72094,7 +72119,7 @@ apJ
 apJ
 apJ
 apJ
-asF
+ajZ
 atp
 asF
 asF

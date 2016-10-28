@@ -57,7 +57,7 @@
 		/obj/item/device/instrument/violin,
 		/obj/item/device/instrument/guitar,
 		/obj/item/weapon/storage/belt/utility/full,
-		/obj/item/clothing/tie/horrible,
+		/obj/item/clothing/neck/tie/horrible,
 		/obj/item/clothing/suit/jacket/leather,
 		/obj/item/clothing/suit/jacket/leather/overcoat,
 		/obj/item/clothing/suit/poncho,

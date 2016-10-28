@@ -184,7 +184,7 @@ Doesn't work on other aliens/AI.*/
 	var/message
 	if(active)
 		message = "<span class='notice'>You empty your neurotoxin gland.</span>"
-		remove_ranged_ability(user, message)
+		remove_ranged_ability(message)
 	else
 		message = "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
 		add_ranged_ability(user, message)
@@ -193,17 +193,19 @@ Doesn't work on other aliens/AI.*/
 	action.button_icon_state = "alien_neurotoxin_[active]"
 	action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return
 	var/p_cost = 50
-	if(!iscarbon(user) || user.lying || user.stat)
-		remove_ranged_ability(user)
+	if(!iscarbon(ranged_ability_user) || ranged_ability_user.lying || ranged_ability_user.stat)
+		remove_ranged_ability(ranged_ability_user)
 		return
+
+	var/mob/living/carbon/user = ranged_ability_user
 
 	if(user.getPlasma() < p_cost)
 		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
-		remove_ranged_ability(user)
+		remove_ranged_ability()
 		return
 
 	var/turf/T = user.loc

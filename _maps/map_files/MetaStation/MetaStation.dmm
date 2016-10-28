@@ -5858,12 +5858,12 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/clothing/tie/red{
+/obj/item/clothing/neck/tie/red{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/clothing/tie/horrible,
-/obj/item/clothing/tie/blue{
+/obj/item/clothing/neck/tie/horrible,
+/obj/item/clothing/neck/tie/blue{
 	pixel_x = 5;
 	pixel_y = -2
 	},
@@ -9050,7 +9050,7 @@
 /obj/structure/rack,
 /obj/item/clothing/under/color/blue,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/tie/blue,
+/obj/item/clothing/neck/tie/blue,
 /obj/item/clothing/head/soft/blue,
 /obj/structure/sign/poster{
 	pixel_y = -32
@@ -9163,7 +9163,7 @@
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/tie/red,
+/obj/item/clothing/neck/tie/red,
 /obj/item/clothing/head/soft/red,
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/fitness{
@@ -15204,7 +15204,7 @@
 /obj/item/clothing/tie/waistcoat,
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/under/suit_jacket/red,
-/obj/item/clothing/tie/black,
+/obj/item/clothing/neck/tie/black,
 /obj/item/clothing/under/lawyer/blacksuit,
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/sleep)
@@ -16449,7 +16449,7 @@
 /obj/item/weapon/gun/energy/gun/advtaser,
 /obj/item/weapon/gun/projectile/revolver/russian,
 /obj/item/ammo_box/a357,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/book{
 	desc = "An undeniably handy book.";
 	icon_state = "bookknock";
@@ -17865,7 +17865,9 @@
 	},
 /area/shuttle/mining)
 "aET" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
@@ -19601,6 +19603,11 @@
 /obj/machinery/camera{
 	c_tag = "Auxillary Mining Base";
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Auxillary Mining Base";
+	dir = 1;
+	network = list("SS13","AuxBase")
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
@@ -24088,6 +24095,9 @@
 /turf/open/floor/plating,
 /area/construction)
 "aQe" = (
+/obj/structure/closet/secure_closet/miner{
+	locked = 0
+	},
 /turf/open/floor/plating/warnplate{
 	dir = 6
 	},
@@ -24877,7 +24887,9 @@
 /turf/closed/wall,
 /area/quartermaster/qm)
 "aRy" = (
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /obj/machinery/light_switch{
 	pixel_x = -23;
 	pixel_y = 0
@@ -27952,6 +27964,12 @@
 	dir = 4;
 	on = 1
 	},
+/obj/machinery/status_display{
+	density = 0;
+	layer = 4;
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/warning{
 	dir = 1
 	},
@@ -27996,12 +28014,6 @@
 	name = "Arrivals"
 	})
 "aWW" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4;
-	pixel_x = 0;
-	pixel_y = 32
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -28223,7 +28235,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = 27
 	},
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -37241,7 +37255,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/computer/security/mining,
+/obj/machinery/computer/security/mining{
+	network = list("MINE","AuxBase")
+	},
 /obj/machinery/keycard_auth{
 	pixel_x = 0;
 	pixel_y = 24
@@ -45013,17 +45029,16 @@
 	name = "Arrivals"
 	})
 "bzx" = (
-/obj/item/device/radio/intercom{
-	freerange = 0;
-	frequency = 1459;
-	name = "Station Intercom (General)";
-	pixel_x = 0;
-	pixel_y = -25
-	},
 /obj/machinery/camera{
 	c_tag = "Arrivals - Middle Arm - Far";
 	dir = 1;
 	network = list("SS13")
+	},
+/obj/machinery/status_display{
+	density = 0;
+	layer = 4;
+	pixel_x = 0;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/warning,
 /area/hallway/secondary/entry{
@@ -60246,7 +60261,7 @@
 	})
 "bZU" = (
 /obj/structure/closet,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/hemostat,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -62598,7 +62613,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -63611,8 +63626,8 @@
 	pixel_x = 0;
 	pixel_y = 2
 	},
-/obj/item/clothing/tie/stethoscope,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/gun/syringe,
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/whiteblue/side{
@@ -65035,7 +65050,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/vault,
 /area/medical/sleeper{
 	name = "Sleepers"
@@ -71906,7 +71921,7 @@
 /obj/item/weapon/screwdriver{
 	pixel_y = 6
 	},
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/wrench/medical,
 /turf/open/floor/plasteel/warnwhite{
 	dir = 4
@@ -73299,7 +73314,7 @@
 "cvL" = (
 /obj/structure/table/glass,
 /obj/item/weapon/pen,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 6;
 	pixel_y = -30
@@ -73683,7 +73698,7 @@
 "cww" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -74915,7 +74930,7 @@
 "cyA" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -92396,6 +92411,14 @@
 /obj/structure/mining_shuttle_beacon{
 	dir = 2
 	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for the Auxillary Mining Base.";
+	dir = 1;
+	name = "Auxillary Base Monitor";
+	network = list("AuxBase");
+	pixel_x = 0;
+	pixel_y = -28
+	},
 /turf/open/floor/plasteel/yellow/side,
 /area/mining_construction)
 "dcF" = (
@@ -103732,7 +103755,7 @@ aaf
 aaf
 aaf
 aaf
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -106329,7 +106352,7 @@ bab
 bum
 bab
 bxK
-bzC
+bOI
 aSJ
 aYo
 aYo

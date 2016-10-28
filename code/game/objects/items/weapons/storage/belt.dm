@@ -113,7 +113,7 @@
 		/obj/item/weapon/cautery,
 		/obj/item/weapon/hemostat,
 		/obj/item/device/geiger_counter,
-		/obj/item/clothing/tie/stethoscope,
+		/obj/item/clothing/neck/stethoscope,
 		/obj/item/weapon/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/weapon/wrench/medical,
