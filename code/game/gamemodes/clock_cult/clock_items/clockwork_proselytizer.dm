@@ -1,5 +1,5 @@
-
-/obj/item/clockwork/clockwork_proselytizer //Clockwork proselytizer (yes, that's a real word): Converts applicable objects to Ratvarian variants.
+//Clockwork proselytizer (yes, that's a real word): Converts applicable objects to Ratvarian variants.
+/obj/item/clockwork/clockwork_proselytizer
 	name = "clockwork proselytizer"
 	desc = "An odd, L-shaped device that hums with energy."
 	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy to function."
@@ -12,6 +12,7 @@
 	var/uses_alloy = TRUE
 	var/metal_to_alloy = FALSE
 	var/repairing = null //what we're currently repairing, if anything
+	var/refueling = FALSE //if we're currently refueling from a cache
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
 	stored_alloy = REPLICANT_WALL_MINUS_FLOOR+REPLICANT_WALL_TOTAL
@@ -38,9 +39,9 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, windoors, and grilles to clockwork variants.</span>"
-		user << "<span class='brass'>Can also form some objects into Replicant Alloy, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
+		user << "<span class='brass'>Can also form some objects into Brass sheets, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
 		if(metal_to_alloy)
-			user << "<span class='alloy'>It can convert rods, metal, and plasteel to liquified replicant alloy at a low rate.</span>"
+			user << "<span class='alloy'>It can convert Brass sheets to liquified replicant alloy at a rate of <b>1</b> sheet to <b>[REPLICANT_FLOOR]</b> alloy.</span>"
 		if(uses_alloy)
 			user << "<span class='alloy'>It has <b>[stored_alloy]/[max_alloy]</b> units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
@@ -80,10 +81,8 @@
 	proselytize(target, user)
 
 /obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_alloy(amount)
-	if(can_use_alloy(RATVAR_ALLOY_CHECK)) //Ratvar makes it free
-		amount = 0
 	stored_alloy = Clamp(stored_alloy + amount, 0, max_alloy)
-	return 1
+	return TRUE
 
 /obj/item/clockwork/clockwork_proselytizer/proc/can_use_alloy(amount)
 	if(amount == RATVAR_ALLOY_CHECK)
@@ -99,17 +98,23 @@
 
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user)
 	if(!target || !user)
-		return 0
+		return FALSE
+	if(repairing)
+		user << "<span class='warning'>You are currently repairing [repairing] with [src]!</span>"
+		return FALSE
+	if(refueling)
+		user << "<span class='warning'>You are currently refueling [src]!</span>"
+		return FALSE
 	var/target_type = target.type
 	var/list/proselytize_values = target.proselytize_vals(user, src) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
 		if(proselytize_values != TRUE) //if we get true, fail, but don't send a message for whatever reason
 			user << "<span class='warning'>[target] cannot be proselytized!</span>"
-		return 0
-	if(repairing)
-		user << "<span class='warning'>You are currently repairing [repairing] with [src]!</span>"
-		return 0
-	if(!uses_alloy)
+		return FALSE
+	if(can_use_alloy(RATVAR_ALLOY_CHECK))
+		if(proselytize_values["alloy_cost"] < 0) //if it's less than 0, it's trying to refuel from whatever this is, and we don't need to refuel right now!
+			user << "<span class='warning'>[target] cannot be proselytized!</span>"
+			return FALSE
 		proselytize_values["alloy_cost"] = 0
 
 	if(!can_use_alloy(proselytize_values["alloy_cost"]))
@@ -117,7 +122,7 @@
 			user << "<span class='warning'>You need <b>[proselytize_values["alloy_cost"]]</b> liquified alloy to proselytize [target]!</span>"
 		else if(stored_alloy - proselytize_values["alloy_cost"] > max_alloy)
 			user << "<span class='warning'>You have too much liquified alloy stored to proselytize [target]!</span>"
-		return 0
+		return FALSE
 
 	if(can_use_alloy(RATVAR_ALLOY_CHECK)) //Ratvar makes it faster
 		proselytize_values["operation_time"] *= 0.5
@@ -125,13 +130,9 @@
 	user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"] && !do_after(user, proselytize_values["operation_time"], target = target))
-		return 0
-	if(!can_use_alloy(proselytize_values["alloy_cost"])) //Check again to prevent bypassing via spamclick
-		return 0
-	if(!target || target.type != target_type)
-		return 0
-	if(repairing)
-		return 0
+		return FALSE
+	if(repairing || refueling || !can_use_alloy(proselytize_values["alloy_cost"]) || !target || target.type != target_type) //Check again to prevent bypassing via spamclick
+		return FALSE
 	user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
 	"<span class='brass'>You proselytize [target].</span>")
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -147,4 +148,4 @@
 			A.setDir(proselytize_values["spawn_dir"])
 		qdel(target)
 	modify_stored_alloy(-proselytize_values["alloy_cost"])
-	return 1
+	return TRUE

@@ -62,6 +62,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=1"
 	resistance_flags = FIRE_PROOF
+	merge_type = /obj/item/stack/sheet/metal
 
 /obj/item/stack/sheet/metal/ratvar_act()
 	new /obj/item/stack/sheet/brass(loc, amount)
@@ -107,6 +108,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	origin_tech = "materials=2"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 80)
 	resistance_flags = FIRE_PROOF
+	merge_type = /obj/item/stack/sheet/plasteel
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 	recipes = plasteel_recipes
@@ -152,6 +154,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	sheettype = "wood"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
@@ -194,6 +197,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
+	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/New(var/loc, var/amount=null)
 	recipes = cloth_recipes
@@ -225,6 +229,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	icon_state = "sheet-card"
 	origin_tech = "materials=1"
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/cardboard
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
@@ -253,6 +258,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	icon_state = "sheet-runed"
 	icon = 'icons/obj/items.dmi'
 	sheettype = "runed"
+	merge_type = /obj/item/stack/sheet/runed_metal
 
 /obj/item/stack/sheet/runed_metal/ratvar_act()
 	new /obj/item/stack/sheet/brass(loc, amount)
@@ -282,13 +288,15 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
  */
 var/global/list/datum/stack_recipe/brass_recipes = list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 30, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("brass floor tile", /obj/item/stack/tile/brass, 1, 1, 50), \
+	null,
 	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork/brass, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork, 2, time = 30, one_per_turf = 1, on_floor = 1), \
+	null,
 	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("brass window", /obj/structure/window/reinforced/clockwork/fulltile, 2, time = 30, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("brass floor tile", /obj/item/stack/tile/brass, 1, 1, 50) \
+	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = 1, on_floor = 1) \
 )
 
 /obj/item/stack/sheet/brass
