@@ -7,6 +7,7 @@
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
+	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb = null
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -22,6 +23,7 @@
 	if(D != current_target)
 		current_target = D
 		streak = ""
+		restraining = 0
 	streak = streak+element
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak,2)
@@ -389,16 +391,15 @@
 
 //cqc
 #define SLAM_COMBO "GH"
-#define KICK_COMBO "HDH"
+#define KICK_COMBO "HH"
 #define RESTRAIN_COMBO "GG"
 #define PRESSURE_COMBO "DG"
 #define CONSECUTIVE_COMBO "HHD"
-#define STRIKE_COMBO "HG"
+#define STRIKE_COMBO "DD"
 /datum/martial_art/cqc
-	name = "cqc"
+	name = "CQC"
 	help_verb = /mob/living/carbon/human/proc/CQC_help
-	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
-	block_chance = 65
+	block_chance = 70
 
 /datum/martial_art/cqc/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,SLAM_COMBO))
@@ -517,10 +518,10 @@
 	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return 1
-	add_logs(A, D, "cqc'd")
+	add_logs(A, D, "CQC'd")
 	A.do_attack_animation(D)
-	var/picked_hit_type = pick("cqc'd", "Big Bossed")
-	var/bonus_damage = 10
+	var/picked_hit_type = pick("CQC'd", "Big Bossed")
+	var/bonus_damage = 13
 	if(D.weakened || D.resting || D.lying)
 		bonus_damage += 5
 		picked_hit_type = "stomps on"
@@ -559,14 +560,13 @@
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	add_logs(A, D, "disarmed with CQC")
 	if(restraining)
-		if(D == current_target)
-			D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \
-								"<span class='userdanger'>[A] puts you into a chokehold!</span>")
-			D.SetSleeping(20)
-			restraining = 0
-		else
-			restraining = 0
-			return 0
+		D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \
+							"<span class='userdanger'>[A] puts you into a chokehold!</span>")
+		D.SetSleeping(20)
+		restraining = 0
+	else
+		restraining = 0
+		return 0
 	return 1
 
 /mob/living/carbon/human/proc/CQC_help()
@@ -577,7 +577,7 @@
 	usr << "<b><i>You try to remember some of the basics of cqc.</i></b>"
 
 	usr << "<span class='notice'>Slam</span>: Grab Harm. Slam opponent into the ground, weakens and knocks down."
-	usr << "<span class='notice'>cqc Kick</span>: Harm Disarm Harm. Knocks opponent away. Knocks out stunned or weakened opponents."
+	usr << "<span class='notice'>CQC Kick</span>: Harm Disarm Harm. Knocks opponent away. Knocks out stunned or weakened opponents."
 	usr << "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold."
 	usr << "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage."
 	usr << "<span class='notice'>Consecutive cqc</span>: Harm Harm Disarm. Mainly offensive move, huge damage and decent stamina damage."
