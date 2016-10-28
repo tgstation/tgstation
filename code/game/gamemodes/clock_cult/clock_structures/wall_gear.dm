@@ -5,6 +5,7 @@
 	climbable = TRUE
 	max_integrity = 50
 	obj_integrity = 50
+	layer = BELOW_OBJ_LAYER
 	construction_value = 3
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into brass sheets."
