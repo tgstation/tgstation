@@ -84,14 +84,15 @@
 		if(!removed)
 			return
 		
-		var/safe = TRUE	//ugly way of doing it... can remove once the source of the runtime is found and fixed
+		var/safe	//ugly way of doing it... can remove once the source of the runtime is found and fixed
 		try
-			if(removed.gases[filter_type]) {} //empty check, this will trigger a runtime if the problem exists
+			if(filter_type && removed.gases[filter_type]) //empty check, this will trigger a runtime if the problem exists
+				safe = TRUE
 		catch()
 			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
 			safe = FALSE
 			
-		if(safe && filter_type && removed.gases[filter_type])
+		if(safe)
 			var/datum/gas_mixture/filtered_out = new
 			
 			filtered_out.temperature = removed.temperature
