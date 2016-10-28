@@ -226,7 +226,7 @@
 	if (reagents.reagent_list.len)
 		switch(reagents.get_master_reagent_id())
 			if("orangejuice")
-				icon_state = "juicebox"
+				icon_state = "orangebox"
 				name = "orange juice box"
 				desc = "A great source of vitamins. Stay healthy!"
 			if("milk")
@@ -237,6 +237,14 @@
 				icon_state = "juicebox"
 				name = "apple juice box"
 				desc = "Sweet apple juice. Don't be late for school!"
+			if("grapejuice")
+				icon_state = "grapebox"
+				name = "grape juice box"
+				desc = "Tastey grape juice in a fun little container. Non-alcoholic!"
+			if("chocolate_milk")
+				icon_state = "chocolatebox"
+				name = "carton of chocolate milk"
+				desc = "Milk for cool kids!"
 	else
 		icon_state = "juicebox"
 		name = "small carton"

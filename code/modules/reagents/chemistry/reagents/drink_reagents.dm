@@ -521,3 +521,9 @@
 	id = "grapesoda"
 	description = "Beloved of children and teetotalers."
 	color = "#E6CDFF"
+
+/datum/reagent/consumable/milk/chocolate_milk
+	name = "Chocolate Milk"
+	id = "chocolate_milk"
+	description = "Milk for cool kids."
+	color = "#7D4E29"
