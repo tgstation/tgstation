@@ -522,7 +522,7 @@ var/list/admin_verbs_hideable = list(
 				return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].</span>")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -535,7 +535,7 @@ var/list/admin_verbs_hideable = list(
 	var/turf/epicenter = mob.loc
 	if(ex_power && epicenter)
 		dyn_explosion(epicenter, ex_power)
-		message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].</span>")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
 		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 		feedback_add_details("admin_verb","DDXB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
