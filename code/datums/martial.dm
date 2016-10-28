@@ -645,13 +645,13 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
-/obj/item/weapon/CQC_manual
+/obj/item/weapon/cqc_manual
 	name = "old manual"
 	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
 	icon = 'icons/obj/library.dmi'
 	icon_state ="cqcmanual"
 
-/obj/item/weapon/CQC_manual/attack_self(mob/living/carbon/human/user)
+/obj/item/weapon/cqc_manual/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
 	user <<"<span class='boldannounce'>You remember the basics of CQC.</span>"
