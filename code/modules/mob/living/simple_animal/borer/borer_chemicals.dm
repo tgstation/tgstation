@@ -11,7 +11,7 @@
 /datum/borer_chem/leporazine
 	chemname = "leporazine"
 	chem_desc = "This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA."
-	chemuse = 100
+	chemuse = 75
 
 /datum/borer_chem/mannitol
 	chemname = "mannitol"

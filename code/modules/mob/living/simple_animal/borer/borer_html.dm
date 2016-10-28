@@ -1,6 +1,6 @@
 
 /mob/living/simple_animal/borer/proc/get_html_template(content)
-	var/html = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+	var/html = {"<!DOCTYPE html">
 		<html>
 		<head>
 			<title>Borer Chemicals</title>
