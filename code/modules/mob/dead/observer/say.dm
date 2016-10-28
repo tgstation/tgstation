@@ -18,5 +18,6 @@
 		else
 			speaker = V.source
 	var/link = FOLLOW_LINK(src, speaker)
+	message = parse_for_code_words(message)
 	src << "[link] [message]"
 

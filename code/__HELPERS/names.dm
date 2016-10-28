@@ -216,15 +216,38 @@ var/list/syndicate_code_response = list()//Code response for traitors.
 					if(3)
 						code_phrase += pick(verbs)
 
-	world << "DEBUG: GENERATED CODE PHRASE."
-	world << "[english_list(code_phrase, final_comma_text = ", ", and_text = "")]"
 	return code_phrase
 
-/proc/parse_for_code_word(text)
+//Phrases are green, responses are blue.
+/proc/parse_for_code_words(text)
+	world << "DEBUG: PARSING..."
+	var/parse = text
 	for(var/word in syndicate_code_phrase)
-
+		var/indexl = 0
+		var/indexu = 0
+		var/parse1
+		var/parse2
+		var/insertword = "<span class='codephrase'>[word]</span>"
+		if(!findtext(parse, word))
+			continue
+		world << "DEBUG: CODEPHRASE PARSED."
+		indexl = findtext(parse, word)
+		indexu = (indexl + lentext(word))
+		parse1 = copytext(parse, 1, indexl)
+		parse2 = copytext(parse, indexu)
+		parse = "[parse1][insertword][parse2]"
 	for(var/word in syndicate_code_response)
-
-
-
-if mind.special_role == "traitor"
+		var/indexl = 0
+		var/indexu = 0
+		var/parse1
+		var/parse2
+		var/insertword = "<span class='coderesponse'>[word]</span>"
+		if(!findtext(parse, word))
+			continue
+		world << "DEBUG: CODERESPONSE PARSED."
+		indexl = findtext(parse, word)
+		indexu = (indexl + lentext(word))
+		parse1 = copytext(parse, 1, indexl)
+		parse2 = copytext(parse, indexu)
+		parse = "[parse1][insertword][parse2]"
+	return parse

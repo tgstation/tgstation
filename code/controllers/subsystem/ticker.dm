@@ -63,9 +63,9 @@ var/datum/subsystem/ticker/ticker
 		login_music = 'sound/ambience/clown.ogg'
 
 /datum/subsystem/ticker/Initialize(timeofday)
-	if(!syndicate_code_phrase)
+	if(!syndicate_code_phrase.len)
 		syndicate_code_phrase	= generate_code_phrase()
-	if(!syndicate_code_response)
+	if(!syndicate_code_response.len)
 		syndicate_code_response	= generate_code_phrase()
 	..()
 
