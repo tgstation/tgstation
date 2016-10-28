@@ -234,7 +234,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/callShuttle = 1
 
 	for(var/thing in shuttle_caller_list)
-		if(istype(thing, /mob/living/silicon/ai))
+		if(isAI(thing))
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.stat || !AI.client)
 				continue

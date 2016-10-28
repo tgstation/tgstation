@@ -78,6 +78,7 @@
 /obj/item/weapon/paper/contract/infernal/revive
 	name = "paper- contract of resurrection"
 	contractType = CONTRACT_REVIVE
+	var/cooldown = FALSE
 
 /obj/item/weapon/paper/contract/infernal/knowledge
 	name = "paper- contract for knowledge"
@@ -99,7 +100,7 @@
 	if(signed && (user == target.current) && istype(user,/mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
 		H.forcesay("OH GREAT INFERNO!  I DEMAND YOU COLLECT YOUR BOUNTY IMMEDIATELY!")
-		H.visible_message("<span class='suicide'>[H] holds up a contract claiming his soul, then immediately catches fire.  It looks like \he's trying to commit suicide!</span>")
+		H.visible_message("<span class='suicide'>[H] holds up a contract claiming [user.p_their()] soul, then immediately catches fire.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		H.adjust_fire_stacks(20)
 		H.IgniteMob()
 		return(FIRELOSS)
@@ -172,7 +173,7 @@
 /obj/item/weapon/paper/contract/infernal/attack(mob/M, mob/living/user)
 	add_fingerprint(user)
 	if(M == user && target == M.mind && M.mind.soulOwner != owner && attempt_signature(user, 1))
-		user.visible_message("<span class='danger'>[user] slices [user.their_pronoun()] wrist with [src], and scrawls [user.their_pronoun()] name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>")
+		user.visible_message("<span class='danger'>[user] slices [user.p_their()] wrist with [src], and scrawls [user.p_their()] name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>")
 		user.blood_volume = max(user.blood_volume - 100, 0)
 	else
 		return ..()
@@ -203,6 +204,10 @@
 
 /obj/item/weapon/paper/contract/infernal/revive/attack(mob/M, mob/living/user)
 	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)
+		if (cooldown)
+			user << "<span class='notice'>Give [M] a chance to think through the contract, don't rush him.</span>"
+			return 0
+		cooldown = TRUE
 		var/mob/living/carbon/human/H = M
 		var/mob/dead/observer/ghost = H.get_ghost()
 		var/response = "No"
@@ -220,8 +225,12 @@
 			H.fakefire()
 			FulfillContract(H, 1)//Revival contracts are always signed in blood
 			addtimer(H, "fakefireextinguish",5,TRUE)
+		addtimer(src,"resetcooldown",300,TRUE)
 	else
 		..()
+
+/obj/item/weapon/paper/contract/infernal/revive/proc/resetcooldown()
+	cooldown = FALSE
 
 
 /obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user = target.current, blood = 0)

@@ -10,7 +10,7 @@
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
-	resistance_flags = FIRE_PROOF
+	resistance_flags = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()
@@ -105,6 +105,7 @@
 	volume = 5
 	flags = CONDUCT | OPENCONTAINER
 	spillable = 1
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/trophy/gold_cup
 	name = "gold cup"
@@ -256,6 +257,17 @@
 	volume = 30
 	spillable = 1
 
+///Lavaland bowls and bottles///
+
+/obj/item/weapon/reagent_containers/food/drinks/mushroom_bowl
+	name = "mushroom bowl"
+	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
+	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon_state = "mushroom_bowl"
+	w_class = 2
+	resistance_flags = 0
+
+
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm
 
@@ -328,3 +340,5 @@
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
 	list_reagents = list("dr_gibb" = 30)
+
+

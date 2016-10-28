@@ -71,6 +71,9 @@
 #define THROWN_PROJECTILE_ATTACK 4
 #define LEAP_ATTACK 5
 
+//the define for visible message range in combat
+#define COMBAT_MESSAGE_RANGE 3
+
 
 //Gun Stuff
  #define SAWN_INTACT  0

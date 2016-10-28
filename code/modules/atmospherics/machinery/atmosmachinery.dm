@@ -16,6 +16,10 @@ Pipelines + Other Objects -> Pipe network
 	power_channel = ENVIRON
 	on_blueprints = TRUE
 	layer = GAS_PIPE_LAYER //under wires
+	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
+	obj_integrity = 200
+	max_integrity = 200
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0
@@ -152,10 +156,9 @@ Pipelines + Other Objects -> Pipe network
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 				if(unsafe_wrenching)
 					unsafe_pressure_release(user, internal_pressure)
-				Deconstruct()
+				deconstruct(TRUE)
 	else
 		return ..()
-
 
 /obj/machinery/atmospherics/proc/can_unwrench(mob/user)
 	return can_unwrench
@@ -179,13 +182,16 @@ Pipelines + Other Objects -> Pipe network
 	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
 	user.throw_at(target, range, speed)
 
-/obj/machinery/atmospherics/Deconstruct()
-	if(can_unwrench)
-		stored.loc = src.loc
-		transfer_fingerprints_to(stored)
-		stored = null
-
-	qdel(src)
+/obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(can_unwrench)
+			if(stored)
+				stored.forceMove(loc)
+				if(!disassembled)
+					stored.obj_integrity = stored.max_integrity * 0.5
+				transfer_fingerprints_to(stored)
+				stored = null
+	..()
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 
@@ -226,7 +232,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct(FALSE)
 
 
 //Find a connecting /obj/machinery/atmospherics in specified direction
@@ -288,3 +294,4 @@ Pipelines + Other Objects -> Pipe network
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
 	return 1
+

@@ -330,3 +330,5 @@
 	armour_penetration = 75
 	attack_verb = list("slapped", "slathered")
 	w_class = 4
+
+

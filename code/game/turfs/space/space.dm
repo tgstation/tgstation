@@ -174,3 +174,7 @@
 /turf/open/space/is_transition_turf()
 	if(destination_x || destination_y || destination_z)
 		return 1
+
+
+/turf/open/space/acid_act(acidpwr, acid_volume)
+	return 0

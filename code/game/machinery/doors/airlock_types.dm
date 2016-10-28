@@ -4,10 +4,14 @@
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
+	obj_integrity = 450
+	max_integrity = 450
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
+	obj_integrity = 450
+	max_integrity = 450
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -21,6 +25,8 @@
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
+	obj_integrity = 250
+	max_integrity = 250
 
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
@@ -59,6 +65,8 @@
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_com/glass
 	glass = 1
+	obj_integrity = 400
+	max_integrity = 400
 
 /obj/machinery/door/airlock/glass_engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -71,6 +79,8 @@
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec/glass
 	glass = 1
+	obj_integrity = 400
+	max_integrity = 400
 
 /obj/machinery/door/airlock/glass_medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
@@ -136,6 +146,8 @@
 	icon = 'icons/obj/doors/airlocks/station/diamond.dmi'
 	var/mineral = "diamond"
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
+	obj_integrity = 1000
+	max_integrity = 1000
 
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
@@ -241,6 +253,8 @@
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
+	obj_integrity = 1000
+	max_integrity = 1000
 
 //////////////////////////////////
 /*
@@ -254,6 +268,8 @@
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
+	obj_integrity = 600
+	max_integrity = 600
 
 //////////////////////////////////
 /*
@@ -285,6 +301,9 @@
 	overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
 	explosion_block = 2
+	obj_integrity = 500
+	max_integrity = 500
+	damage_deflection = 30
 
 //////////////////////////////////
 /*
@@ -303,10 +322,13 @@
 	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_abductor
+	damage_deflection = 30
 	opacity = 1
 	explosion_block = 3
 	hackProof = 1
 	aiControlDisabled = 1
+	obj_integrity = 700
+	max_integrity = 700
 
 //////////////////////////////////
 /*
@@ -394,6 +416,7 @@
 	hackProof = TRUE
 	aiControlDisabled = TRUE
 	use_power = FALSE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
 /obj/machinery/door/airlock/clockwork/New()
@@ -438,7 +461,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(construction_state == GEAR_SECURE)
 			user.visible_message("<span class='notice'>[user] begins unfastening [src]'s gear...</span>", "<span class='notice'>You begin unfastening [src]'s gear...</span>")
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 75 / I.toolspeed, target = src))
 				return 1 //Returns 1 so as not to have extra interactions with the tools used (i.e. prying open)
 			user.visible_message("<span class='notice'>[user] unfastens [src]'s gear!</span>", "<span class='notice'>[src]'s gear shifts slightly with a pop.</span>")
@@ -446,7 +469,7 @@
 			construction_state = GEAR_UNFASTENED
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins fastening [src]'s gear...</span>", "<span class='notice'>You begin fastening [src]'s gear...</span>")
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 75 / I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] fastens [src]'s gear!</span>", "<span class='notice'>[src]'s gear shifts back into place.</span>")
@@ -461,7 +484,7 @@
 			return 0
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s gear...</span>", "<span class='notice'>You begin loosening [src]'s gear...</span>")
-			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 80 / I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s gear!</span>", "<span class='notice'>[src]'s gear pops off and dangles loosely.</span>")
@@ -469,7 +492,7 @@
 			construction_state = GEAR_LOOSE
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s gear...</span>", "<span class='notice'>You begin tightening [src]'s gear into place...</span>")
-			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 80 / I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s gear!</span>", "<span class='notice'>You firmly tighten [src]'s gear into place.</span>")
@@ -482,7 +505,7 @@
 			return 1
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s gear...</span>", "<span class='notice'>You slowly begin lifting off [src]'s gear...</span>")
-			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+			playsound(src, I.usesound, 50, 1)
 			if(!do_after(user, 85 / I.toolspeed, target = src))
 				return 1
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s gear, causing it to fall apart!</span>", "<span class='notice'>You lift off [src]'s gear, causing it to fall \

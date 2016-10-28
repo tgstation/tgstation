@@ -27,7 +27,7 @@
 				// Calculate new position (searches through beacons in world)
 			var/obj/item/device/radio/beacon/chosen
 			var/list/possible = list()
-			for(var/obj/item/device/radio/beacon/W in world)
+			for(var/obj/item/device/radio/beacon/W in teleportbeacons)
 				possible += W
 
 			if(possible.len > 0)
@@ -66,6 +66,7 @@
 								blueeffect.icon = 'icons/effects/effects.dmi'
 								blueeffect.icon_state = "shieldsparkles"
 								blueeffect.layer = FLASH_LAYER
+								blueeffect.plane = FULLSCREEN_PLANE
 								blueeffect.mouse_opacity = 0
 								M.client.screen += blueeffect
 								sleep(20)

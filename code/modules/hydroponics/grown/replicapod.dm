@@ -58,7 +58,7 @@
 	if(config.revival_pod_plants)
 		if(ckey)
 			for(var/mob/M in player_list)
-				if(istype(M, /mob/dead/observer))
+				if(isobserver(M))
 					var/mob/dead/observer/O = M
 					if(O.ckey == ckey && O.can_reenter_corpse)
 						make_podman = 1

@@ -171,7 +171,7 @@
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
-	if(!istype(proj_turf, /turf))
+	if(!isturf(proj_turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	if(environment)

@@ -56,7 +56,7 @@
 			else
 				user << "<span class='warning'>You fail to collect anything!</span>"
 	else
-		..()
+		return ..()
 
 //Boxes of ammo
 /obj/item/ammo_box

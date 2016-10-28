@@ -12,6 +12,7 @@
 	w_class = 3
 	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=2;engineering=2"
+	resistance_flags = FIRE_PROOF
 	var/status = 0
 	var/throw_amount = 100
 	var/lit = 0	//on or off

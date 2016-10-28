@@ -357,7 +357,7 @@
 	name = "Changeling Sting"
 	id = "changelingsting"
 	results = list("changelingsting" = 5)
-	required_reagents = list("screwdrivercocktail" = 1, "limejuice" = 1, "lemonjuice" = 1)
+	required_reagents = list("screwdrivercocktail" = 1, "lemon_lime" = 2)
 
 /datum/chemical_reaction/aloe
 	name = "Aloe"

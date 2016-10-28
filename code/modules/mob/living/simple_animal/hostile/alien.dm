@@ -16,6 +16,7 @@
 	maxHealth = 125
 	health = 125
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
@@ -156,6 +157,7 @@
 	melee_damage_upper = 0
 	a_intent = "help"
 	friendly = "caresses"
+	obj_damage = 0
 	environment_smash = 0
 	gold_core_spawnable = 1
 	icon_state = "maid"

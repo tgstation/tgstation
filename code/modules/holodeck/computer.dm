@@ -150,7 +150,7 @@
 /obj/machinery/computer/holodeck/Topic(href, list/href_list)
 	if(..())
 		return
-	if(!Adjacent(usr) && !istype(usr, /mob/living/silicon))
+	if(!Adjacent(usr) && !issilicon(usr))
 		return
 	usr.set_machine(src)
 	add_fingerprint(usr)

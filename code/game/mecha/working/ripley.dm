@@ -6,11 +6,11 @@
 	var/hi_pres_step_in = 4 //step_in while in high pressure.
 	var/lo_pres_step_in = 2 //step_in while in low/zero pressure.
 	max_temperature = 20000
-	health = 200
+	obj_integrity = 200
+	max_integrity = 200
 	lights_power = 7
 	deflect_chance = 15
-	damage_absorption = list("brute"=0.6,"fire"=1,"bullet"=0.8,"laser"=0.9,"energy"=1,"bomb"=0.6)
-	armor = list(melee = 40, bullet = 20, laser = 10, energy = 0, bomb = 40, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 40, bullet = 20, laser = 10, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -29,9 +29,8 @@
 /obj/mecha/working/ripley/Destroy()
 	for(var/i=1, i <= hides, i++)
 		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
-	damage_absorption["brute"] =  initial(damage_absorption["brute"])
 	for(var/atom/movable/A in cargo)
-		A.loc = loc
+		A.forceMove(loc)
 		step_rand(A)
 	cargo.Cut()
 	return ..()
@@ -63,11 +62,11 @@
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
-	health = 250
-	resistance_flags = LAVA_PROOF |FIRE_PROOF | ACID_PROOF
+	obj_integrity = 250
+	max_integrity = 250
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
-	damage_absorption = list("brute"=0.6,"fire"=0.5,"bullet"=0.7,"laser"=0.7,"energy"=1,"bomb"=0.4)
-	armor = list(melee = 40, bullet = 30, laser = 30, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 
@@ -113,7 +112,7 @@
 	//Attach hydraulic clamp
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
 	HC.attach(src)
-	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
+	for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)//Deletes the beacon so it can't be found easily
 		qdel(B)
 
 	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new /obj/item/mecha_parts/mecha_equipment/mining_scanner
@@ -130,12 +129,19 @@
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
 			src.occupant_message("<span class='notice'>You unload [O].</span>")
-			O.loc = loc
+			O.forceMove(loc)
 			src.cargo -= O
 			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 
 
+/obj/mecha/working/ripley/contents_explosion(severity, target)
+	for(var/X in cargo)
+		var/obj/O = X
+		if(prob(30/severity))
+			cargo -= O
+			O.forceMove(loc)
+	. = ..()
 
 /obj/mecha/working/ripley/get_stats_part()
 	var/output = ..()
