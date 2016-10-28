@@ -38,7 +38,7 @@
 
 /obj/machinery/power/apc/can_terminal_dismantle()
 	. = 0
-	if(opened && has_electronics != 2)
+	if(opened)
 		. = 1
 
 /obj/machinery/power/smes/can_terminal_dismantle()
