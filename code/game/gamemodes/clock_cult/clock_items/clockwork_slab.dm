@@ -291,25 +291,24 @@
 			<b><font color=#BE8700>Components</font></b>, fragments of the Justicar, from Reebe, and those Components can be used to draw power and material from Reebe through arcane chants \
 			known as <b><font color=#BE8700>Scripture</font></b>.<br><br>\
 			\
-			One <font color=#BE8700>component</font> of a random type is produced in this slab every [production_text].<br>\
+			One component of a random type is produced in this slab every [production_text].<br>\
 			<font color=#BE8700>Components</font> are stored either within slabs, where they can only be accessed by that slab, or in the Global Cache accessed by Tinkerer's Caches, which all slabs \
-			can draw from to recite <font color=#BE8700>scripture</font>.<br>\
+			can draw from to recite scripture.<br>\
 			There are five types of component, and in general, <font color=#6E001A>Belligerent Eyes</font> are aggressive and judgemental, <font color=#1E8CE1>Vanguard Cogwheels</font> are defensive and \
 			repairing, <font color=#AF0AAF>Guvax Capacitors</font> are for conversion and control, <font color=#5A6068>Replicant Alloy</font> is for construction and fuel, and \
 			<font color=#DAAA18>Hierophant Ansibles</font> are for transmission and power, though in combination their effects become more nuanced.<br><br>\
 			\
-			There are also five tiers of <font color=#BE8700>scripture</font>; [SCRIPTURE_DRIVER], [SCRIPTURE_SCRIPT], [SCRIPTURE_APPLICATION], [SCRIPTURE_REVENANT], and [SCRIPTURE_JUDGEMENT].<br>\
+			There are also five tiers of <font color=#BE8700>Scripture</font>; <font color=#BE8700>[SCRIPTURE_DRIVER]</font>, <font color=#BE8700>[SCRIPTURE_SCRIPT]</font>, <font color=#BE8700>[SCRIPTURE_APPLICATION]</font>, <font color=#BE8700>[SCRIPTURE_REVENANT]</font>, and <font color=#BE8700>[SCRIPTURE_JUDGEMENT]</font>.<br>\
 			Each tier has additional requirements, including Servants, Tinkerer's Caches, and <b>Construction Value</b>(<b>CV</b>). Construction Value is gained by creating structures or converting the \
 			station, and everything too large to hold will grant some amount of it.<br><br>\
 			\
 			This would be a massive amount of information to try and keep track of, but all Servants have the <b><font color=#BE8700>Global Records</font></b> alert, which appears in the top right.<br>\
-			Mousing over that alert will display Servants, Caches, CV, and other information, such as the tiers of <font color=#BE8700>scripture</font> that are unlocked.<br><br>\
+			Mousing over that alert will display Servants, Caches, CV, and other information, such as the tiers of scripture that are unlocked.<br><br>\
 			\
 			On that note, <font color=#BE8700>Scripture</font> is recited through <b><font color=#BE8700>Recital</font></b>, the first and most important function of the slab.<br>\
-			All <font color=#BE8700>scripture</font> requires some amount of <font color=#BE8700>components</font> to recite, but only the weakest <font color=#BE8700>scripture</font> does not consume \
-			<font color=#BE8700>components</font>.<br>\
-			However, weak is relative when it comes to <font color=#BE8700>scripture</font>; even the 'weakest' could be enough to dominate a station in the hands of cunning enough Servants, and higher \
-			tiers of scripture are even stronger in the right hands.<br><br>\
+			All scripture requires some amount of <font color=#BE8700>Components</font> to recite, and only the weakest scripture does not consume any components when recited.<br>\
+			However, weak is relative when it comes to scripture; even the 'weakest' could be enough to dominate a station in the hands of cunning enough Servants, and higher tiers of scripture are \
+			even stronger in the right hands.<br><br>\
 			\
 			Some effects of scripture include granting the invoker a temporary complete immunity to stuns, summoning a turret that can attack anything that sets eyes on it, binding a powerful guardian \
 			to the invoker, or even, at one of the highest tiers, granting all nearby Servants temporary invulnerability.<br>\
