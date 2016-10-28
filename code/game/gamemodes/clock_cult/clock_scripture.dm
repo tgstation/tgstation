@@ -202,7 +202,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	invoker.update_inv_hands()
 	var/end_time = world.time + timeout_time
 	var/successful = FALSE
-	while(slab && slab.slab_ability && !slab.slab_ability.finished && (slab.slab_ability.in_progress || !timeout_time || world.time > end_time))
+	while(slab && slab.slab_ability && !slab.slab_ability.finished && (slab.slab_ability.in_progress || !timeout_time || world.time <= end_time))
 		successful = slab.slab_ability.successful
 		sleep(1)
 	if(slab)
