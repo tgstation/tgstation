@@ -44,6 +44,7 @@ datum/supply_pack
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key)
 	crate_name = "ATV crate"
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Equipment"
