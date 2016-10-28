@@ -216,9 +216,11 @@
 	traitor_mob << "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>"
 	traitor_mob << "<B>Code Phrase</B>: <span class='danger'>[english_list(syndicate_code_phrase, final_comma_text = "", and_text = " and ")]</span>"
 	traitor_mob << "<B>Code Response</B>: <span class='danger'>[english_list(syndicate_code_response, final_comma_text = "", and_text = " and ")]</span>"
+	traitor_mob << "<U><B>You have been mentally conditioned to be able to recognize Syndicate codewords quickly during normal conversations. They will... stand out to your perception.</B></U>"
 
 	traitor_mob.mind.store_memory("<b>Code Phrase</b>: [english_list(syndicate_code_phrase, final_comma_text = "", and_text = " and ")]")
 	traitor_mob.mind.store_memory("<b>Code Response</b>: [english_list(syndicate_code_response, final_comma_text = "", and_text = " and ")]")
+	traitor_mob.mind.store_memory("<U><B>You have been mentally conditioned to be able to recognize Syndicate codewords quickly during normal conversations. They will... stand out to your perception.</B></U>")
 
 	traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 

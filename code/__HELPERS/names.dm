@@ -168,10 +168,10 @@ var/list/syndicate_code_response = list()//Code response for traitors.
 		25; 5
 	)
 
-	var/safety[] = list(1,2,3)//Tells the proc which options to remove later on.
-	var/nouns[] = list("love","hate","anger","peace","pride","sympathy","bravery","loyalty","honesty","integrity","compassion","charity","success","courage","deceit","skill","beauty","brilliance","pain","misery","beliefs","dreams","justice","truth","faith","liberty","knowledge","thought","information","culture","trust","dedication","progress","education","hospitality","leisure","trouble","friendships", "relaxation")
-	var/drinks[] = list("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepsky Smash","tequila sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
-	var/locations[] = teleportlocs.len ? teleportlocs : drinks//if null, defaults to drinks instead.
+	var/list/safety = list(1,2,3)//Tells the proc which options to remove later on.
+	var/list/nouns = list("love","hate","anger","peace","pride","sympathy","bravery","loyalty","honesty","integrity","compassion","charity","success","courage","deceit","skill","beauty","brilliance","pain","misery","beliefs","dreams","justice","truth","faith","liberty","knowledge","thought","information","culture","trust","dedication","progress","education","hospitality","leisure","trouble","friendships", "relaxation")
+	var/list/drinks = list("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepsky Smash","tequila sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
+	var/list/locations = teleportlocs.len ? teleportlocs : drinks//if null, defaults to drinks instead.
 
 	var/names[] = list()
 	for(var/datum/data/record/t in data_core.general)//Picks from crew manifest.
@@ -222,29 +222,7 @@ var/list/syndicate_code_response = list()//Code response for traitors.
 /proc/parse_for_code_words(text)
 	var/parse = text
 	for(var/word in syndicate_code_phrase)
-		var/indexl = 0
-		var/indexu = 0
-		var/parse1
-		var/parse2
-		var/insertword = "<span class='codephrase'>[word]</span>"
-		if(!findtext(parse, word))
-			continue
-		indexl = findtext(parse, word)
-		indexu = (indexl + lentext(word))
-		parse1 = copytext(parse, 1, indexl)
-		parse2 = copytext(parse, indexu)
-		parse = "[parse1][insertword][parse2]"
+		parse = replacetext(parse, word, "<span class='codephrase'>[word]</span>")
 	for(var/word in syndicate_code_response)
-		var/indexl = 0
-		var/indexu = 0
-		var/parse1
-		var/parse2
-		var/insertword = "<span class='coderesponse'>[word]</span>"
-		if(!findtext(parse, word))
-			continue
-		indexl = findtext(parse, word)
-		indexu = (indexl + lentext(word))
-		parse1 = copytext(parse, 1, indexl)
-		parse2 = copytext(parse, indexu)
-		parse = "[parse1][insertword][parse2]"
+		parse = replacetext(parse, word, "<span class='coderesponse'>[word]</span>")
 	return parse
