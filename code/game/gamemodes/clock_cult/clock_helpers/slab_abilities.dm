@@ -33,7 +33,7 @@
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L))
 			if(L != ranged_ability_user)
-				ranged_ability_user << "<span class='sevtug'>\"[L.p_they(TRUE)] already serve[L.p_s()] Ratvar. [text2ratvar("Maybe [ranged_ability_user.p_theyre()] trying to bind [L.p_them()]?")]\"</span>"
+				ranged_ability_user << "<span class='sevtug'>\"[L.p_they(TRUE)] already serve[L.p_s()] Ratvar. [text2ratvar("Perhaps [ranged_ability_user.p_theyre()] into bondage?")]\"</span>"
 			return TRUE
 		if(L.stat == DEAD)
 			ranged_ability_user << "<span class='sevtug'>\"[L.p_theyre(TRUE)] dead, idiot.\"</span>"
@@ -44,7 +44,7 @@
 			successful = TRUE
 		else
 			in_progress = TRUE
-			clockwork_say(ranged_ability_user, text2ratvar("Be bound, heretic!"))
+			clockwork_say(ranged_ability_user, text2ratvar("Be bound, heathen!"))
 			remove_mousepointer(ranged_ability_user.client)
 			ranged_ability_user.notransform = TRUE
 			addtimer(src, "reset_user_notransform", 5, FALSE, ranged_ability_user) //stop us moving for a little bit so we don't break the scripture following this
@@ -109,9 +109,9 @@
 
 /obj/structure/destructible/clockwork/guvax_binding/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob == user)
-		user.visible_message("<span class='warning'>[user] starts struggling against [src]...</span>", "<span class='userdanger'>You start breaking out of the binding...</span>")
+		user.visible_message("<span class='warning'>[user] starts struggling against [src]...</span>", "<span class='userdanger'>You start breaking out of [src]...</span>")
 		if(do_after(user, 40, target = src))
-			user.visible_message("<span class='warning'>[user] breaks [src]!</span>", "<span class='userdanger'>You break the binding!</span>")
+			user.visible_message("<span class='warning'>[user] breaks [src]!</span>", "<span class='userdanger'>You break [src]!</span>")
 			unbuckle_mob(user, TRUE)
 			return user
 	else
@@ -153,7 +153,7 @@
 		var/burndamage = L.getFireLoss()
 		var/totaldamage = brutedamage + burndamage
 		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
-			ranged_ability_user << "<span class='warning'>[L] is not burned or bruised!</span>"
+			ranged_ability_user << "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>"
 			return TRUE
 		var/targetturf = get_turf(L)
 		if(totaldamage)
