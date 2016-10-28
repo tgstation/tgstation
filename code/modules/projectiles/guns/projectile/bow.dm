@@ -192,8 +192,9 @@
 	icon_state = "hlquiver[icon_amount]"
 
 /obj/item/projectile/bullet/reusable/arrow/hardlight/on_hit(atom/target, blocked = 0)
-	if(ismob(target))
-		if(target.mob_size >= MOB_SIZE_LARGE)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.mob_size >= MOB_SIZE_LARGE)
 			damage = 29	//ALMOST as effective as a KA.
 	..()
 	var/obj/item/projectile/bullet/reusable/arrow/hardlight2/A = new /obj/item/projectile/bullet/reusable/arrow/hardlight2(src.loc)
