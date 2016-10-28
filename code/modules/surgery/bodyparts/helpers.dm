@@ -89,7 +89,7 @@
 	return 1
 
 /mob/living/carbon/human/get_leg_ignore()
-	if(FLYING in dna.species.specflags)
+	if(FLYING in movement_type)
 		return 1
 
 /mob/living/proc/get_missing_limbs()

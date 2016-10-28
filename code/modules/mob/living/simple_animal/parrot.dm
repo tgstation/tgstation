@@ -57,7 +57,7 @@
 	attacktext = "chomps"
 	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
-	flying = 1
+	movement_type = FLYING
 	gold_core_spawnable = 2
 
 	var/parrot_damage_upper = 10

@@ -23,14 +23,14 @@ var/const/SLIDE_ICE = 8
 
 
 /mob/living/carbon/Process_Spacemove(movement_dir = 0)
-	var/obj/item/device/flightpack/F = get_flightpack()
-	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
-		return 1
-
 	if(..())
 		return 1
 	if(!isturf(loc))
 		return 0
+
+	var/obj/item/device/flightpack/F = get_flightpack()
+	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
+		return 1
 
 	// Do we have a jetpack implant (and is it on)?
 	var/obj/item/organ/cyberimp/chest/thrusters/T = getorganslot("thrusters")

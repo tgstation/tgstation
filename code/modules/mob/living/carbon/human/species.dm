@@ -1331,7 +1331,7 @@
 /datum/species/proc/space_move(mob/living/carbon/human/H)
 	return 0
 
-/datum/species/proc/negates_gravity()
+/datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	return 0
 
 

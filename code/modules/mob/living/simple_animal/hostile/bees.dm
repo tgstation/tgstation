@@ -35,7 +35,7 @@
 	mouse_opacity = 2
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	flying = 1
+	movement_type = FLYING
 	gold_core_spawnable = 1
 	search_objects = 1 //have to find those plant trays!
 

@@ -905,6 +905,5 @@
 /mob/living/carbon/human/Bump(atom/A)
 	..()
 	var/obj/item/device/flightpack/FP = get_flightpack()
-	if(FP && FP.flight && FP.momentum_speed > 1)
+	if(FP)
 		FP.flight_impact(A)
-		world << "DEBUG: IMPACT TRIGGERED BY BUMP"

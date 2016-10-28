@@ -87,6 +87,7 @@
 	var/crash_disable_threshold = 5
 	var/crash_heal_amount = 0.2
 	var/crash_disabled = 0
+	var/crash_dampening = 0
 
 	var/datum/effect_system/trail_follow/ion/flight/ion_trail
 
@@ -107,11 +108,11 @@
 
 /obj/item/device/flightpack/full/New()
 	..()
-	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico
-	part_scan = new /obj/item/weapon/stock_parts/scanning_module/phasic
-	part_cap = new /obj/item/weapon/stock_parts/capacitor/super
-	part_laser = new /obj/item/weapon/stock_parts/micro_laser/ultra
-	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super
+	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
+	part_scan = new /obj/item/weapon/stock_parts/scanning_module/phasic(src)
+	part_cap = new /obj/item/weapon/stock_parts/capacitor/super(src)
+	part_laser = new /obj/item/weapon/stock_parts/micro_laser/ultra(src)
+	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
 	assembled = 1
 
 /obj/item/device/flightpack/proc/update_parts()
@@ -142,6 +143,7 @@
 	crash_disable_threshold = bin*2
 	stabilizer_decay_amount = scan*5.75
 	airbrake_decay_amount = manip*15
+	crash_dampening = bin
 
 /obj/item/device/flightpack/Destroy()
 	if(suit)
@@ -152,6 +154,11 @@
 	qdel(part_laser)
 	qdel(part_bin)
 	STOP_PROCESSING(SSfastprocess, src)
+	part_manip = null
+	part_scan = null
+	part_cap = null
+	part_laser = null
+	part_bin = null
 	..()
 
 /obj/item/device/flightpack/emp_act(severity)
@@ -171,6 +178,7 @@
 		wearer = owner
 	if(!suit)
 		usermessage("The flightpack will not work without being attached to a suit first!")
+		return 0
 	if(action == /datum/action/item_action/flightpack/toggle_flight)
 		if(!flight)
 			enable_flight()
@@ -252,18 +260,15 @@
 		return 0
 	if(suit)
 		if(suit.user)
-			if(suit.user.canmove)
-				var/i = 0
-				while(i < momentum_speed)
-					i++
-					if(drift_x)
-						step(suit.user, drift_dir_x)
-					if(drift_y)
-						step(suit.user, drift_dir_y)
-					spawn(1)
-			else
+			if(!suit.user.canmove)
 				losecontrol()
 			momentum_decay()
+			for(var/i in 1 to momentum_speed)
+				if(drift_x)
+					step(suit.user, drift_dir_x)
+				if(drift_y)
+					step(suit.user, drift_dir_y)
+				sleep(1)
 	momentum_drift_tick = 0
 
 //Make the wearer lose some momentum.
@@ -418,80 +423,58 @@
 	else
 		crashmessagesrc += "but luckily [suit.user]'s impact was absorbed by their suit's stabilizers!</span>"
 	usermessage("WARNING: Stabilizers taking damage!", 1)
+	suit.user.visible_message(crashmessagesrc)
 	crash_damage = Clamp(crash_damage + crash_damage_low, 0, crash_disable_threshold*1.5)
 
-
-//WIP
-	var/bounceangle = dir2angle(suit.user.dir)
-	var/bounceaim = rand(1, 85)
-	bounceangle += 180
-	var/bounceangle2 = bounceangle
-	switch(pick(1, 2))
-		if(1)
-			bounceangle += bounceaim
-		if(2)
-			bounceangle -= bounceaim
-	if(bounceangle > 360)
-		bounceangle -= 360
-	if(bounceangle2 > 360)
-		bounceangle2 -= 360
-	var/turf/bounceback = get_edge_target_turf(suit.user, angle2dir(bounceangle2))
-	bounceback = get_edge_target_turf(bounceback, angle2dir(bounceangle))
-	suit.user.throw_at_fast(bounceback, (12/(stabilizer+1))+(density*2), suit.user)
-
-
-
+/obj/item/device/flightpack/proc/userknockback(density, anchored, speed)
+	var/dampening = 0
+	dampening += crash_dampening
+	dampening += (stabilizer*3)
+	dampening += (brake*1000)	//Why are you even crashing with the brakes on?!
+	dampening -= (speed*2)
+	dampening -= (density*2)
+	dampening -= (anchored*2)
+	if(dampening)
+		suit.user.visible_message("[suit.user]'s suit resists the force of the impact!")
+		return 0
+	var/turf/target = get_turf(suit.user)
+	for(var/i in 1 to (speed+anchored+density))
+		target = get_step(target, pick(diagonals))
+	suit.user.throw_at_fast(target, (speed+density+anchored), suit.user)
+	suit.user.visible_message("[suit.user] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim)	//Yes, victim.
+	if(flight && momentum_speed > 1)
+		world << "DEBUG: IMPACT TRIGGERED BY BUMP"
+	else
+		return 0
 	var/density = 0
 	var/anchored = 1
-	var/victim
+	//var/victim
 	if(isclosedturf(unmovablevictim))
 		density = 1
 		anchored = 1
 	crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
+	userknockback(density, anchored, momentum_speed)
+/*	victimknockback(density, anchored, momentum_speed, unmovablevictim.name)
 	else if(ismovableatom(unmovablevictim))
 		victim = unmovablevictim		//Now we know it can be moved!
 		density = victim.density
 		anchored = victim.anchored
 	if(!anchored)
-		var/turf/target = get_edge_target_turf(victim, suit.user.dir)
-		target = get_edge_target_turf(target, suit.user.dir)	//Woop
-		var/aim = rand(1, 5)
-		switch(aim)
-			if(1)
-				target = get_step(target, NORTH)
-				target = get_step(target, NORTH)
-				target = get_step(target, EAST)
-				target = get_step(target, EAST)
-			if(2)
-				target = get_step(target, NORTH)
-				target = get_step(target, NORTH)
-				target = get_step(target, WEST)
-				target = get_step(target, WEST)
-			if(3)
-				target = get_step(target, SOUTH)
-				target = get_step(target, SOUTH)
-				target = get_step(target, EAST)
-				target = get_step(target, EAST)
-			if(4)
-				target = get_step(target, SOUTH)
-				target = get_step(target, SOUTH)
-				target = get_step(target, WEST)
-				target = get_step(target, WEST)
-		victim.throw_at_fast(target,20,suit.user)
+			//THIS NEEDS A COMPLETE REWRITE.
 		victim.visible_message("<span class='userdanger'>[victim.name] is thrown backwards violently by the impact of [suit.user.name]!</span>")
-	losecontrol()
+	losecontrol()*/
 
 /obj/item/device/flightpack/proc/losecontrol()
-	wearer.visible_message("<span class='warning'>[wearer]'s flight suit careens wildly as they lose control of it!</span>")
+	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
 		while(momentum_x != 0 || momentum_y != 0)
 			spawn(2)
 			step(wearer, pick(cardinal))
 			momentum_decay()
 			adjust_momentum(0, 0, 10)
-		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground and shuts off!</span>")
+		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")
 	momentum_x = 0
 	momentum_y = 0
 	if(flight)
@@ -500,7 +483,7 @@
 /obj/item/device/flightpack/proc/enable_flight(forced = 0)
 	if(!suit)
 		wearer << "<span class='warning'>Your flight pack must be linked to a flight suit to work properly!</span>"
-	wearer.dna.species.specflags |= FLYING
+	wearer.movement_type |= FLYING
 	wearer.pass_flags |= flight_passflags
 	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
 	//I DONT HAVE SOUND EFFECTS YET playsound(
@@ -520,7 +503,7 @@
 		suit.user.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
 		//NO SOUND YET	playsound(
 		ion_trail.stop()
-		wearer.dna.species.specflags |= FLYING
+		wearer.movement_type &= ~FLYING
 		wearer.pass_flags &= ~flight_passflags
 		flight = 0
 		if(suit.shoes)
