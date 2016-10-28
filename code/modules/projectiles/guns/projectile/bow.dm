@@ -144,8 +144,8 @@
 /obj/item/projectile/bullet/reusable/arrow/hardlight2
 	name = "hardlight arrow"
 	range = 30
-	damage = 30
-	damage_type = BRUTE
+	damage = 18
+	damage_type = BURN
 	flag = "laser"
 	dropped = 1
 
@@ -192,7 +192,10 @@
 
 /obj/item/projectile/bullet/reusable/arrow/hardlight/on_hit(atom/target, blocked = 0)
 	..()
-	qdel(src)
+	var/obj/item/projectile/bullet/reusable/arrow/hardlight2/A = new /obj/item/projectile/bullet/reusable/arrow/hardlight2(src.loc)
+	A.Bump(target, 1)
+	qdel(A)
+	qdel(src)	//NO INFINITE-HITTING!
 
 /obj/item/ammo_casing/caseless/arrow/hardlight/dropped()
 	QDEL_IN(src,200)
