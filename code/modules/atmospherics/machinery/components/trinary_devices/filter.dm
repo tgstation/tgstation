@@ -86,7 +86,7 @@
 		
 		var/safe = TRUE	//ugly way of doing it... can remove once the source of the runtime is found and fixed
 		try
-			if(removed.gases[filter_type])
+			if(removed.gases[filter_type]) {} //empty check, this will trigger a runtime if the problem exists
 		catch()
 			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
 			safe = FALSE
