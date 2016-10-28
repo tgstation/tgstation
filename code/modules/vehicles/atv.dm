@@ -2,40 +2,13 @@
 /obj/vehicle/atv
 	name = "all-terrain vehicle"
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-earth technologies that are still relevant on most planet-bound outposts."
-	icon_state = "flashlight"
+	icon_state = "atv"
 	keytype = /obj/item/key
 	generic_pixel_x = 0
 	generic_pixel_y = 4
 	vehicle_move_delay = 1
 	var/static/image/atvcover = null
-	//headlight code copypasta'd from the flashlight
-	actions_types = list(/datum/action/item_action/toggle_light)
-	var/on = 0
-	var/brightness_on = 6 //luminosity when on
 	
-/obj/vehicle/atv/initialize() //this code might be totally broken because i can't test it
-	..()
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		SetLuminosity(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		SetLuminosity(0)
-
-/obj/vehicle/atv/proc/update_brightness(mob/user = null)
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		if(loc == user)
-			user.AddLuminosity(brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		if(loc == user)
-			user.AddLuminosity(-brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(0)
-
 
 /obj/vehicle/atv/New()
 	..()
