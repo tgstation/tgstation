@@ -214,11 +214,11 @@
 
 /proc/give_codewords(mob/living/traitor_mob)
 	traitor_mob << "<U><B>The Syndicate provided you with the following information on how to identify their agents:</B></U>"
-	traitor_mob << "<B>Code Phrase</B>: <span class='danger'>[syndicate_code_phrase]</span>"
-	traitor_mob << "<B>Code Response</B>: <span class='danger'>[syndicate_code_response]</span>"
+	traitor_mob << "<B>Code Phrase</B>: <span class='danger'>[english_list(syndicate_code_phrase), final_comma_text = ", ", and_text = "")]</span>"
+	traitor_mob << "<B>Code Response</B>: <span class='danger'>[english_list(syndicate_code_response), final_comma_text = ", ", and_text = "")]</span>"
 
-	traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
-	traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
+	traitor_mob.mind.store_memory("<b>Code Phrase</b>: [english_list(syndicate_code_phrase), final_comma_text = ", ", and_text = "")]")
+	traitor_mob.mind.store_memory("<b>Code Response</b>: [english_list(syndicate_code_response), final_comma_text = ", ", and_text = "")]")
 
 	traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 
