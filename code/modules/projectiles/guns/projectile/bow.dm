@@ -129,9 +129,9 @@
 	icon_state = "arrow_hardlight"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
 	range = 30
-	damage = 12
-	damage_type = BRUTE
-	flag = "bullet"
+	damage = 30
+	damage_type = BURN		//I give the fuck up untill someone makes projectiles able to multi-damage I'm not going to risk experimenting with multi-hit projectiles.
+	flag = "burn"
 	dropped = 1
 
 /obj/item/ammo_casing/caseless/arrow/hardlight
@@ -140,15 +140,6 @@
 	icon_state = "arrow_hardlight"
 	force = 7
 	projectile_type = /obj/item/projectile/bullet/reusable/arrow/hardlight
-
-/obj/item/projectile/bullet/reusable/arrow/hardlight2
-	name = "hardlight arrow"
-	range = 30
-	damage = 18
-	damage_type = BURN
-	flag = "laser"
-	dropped = 1
-	suppressed = 1
 
 /obj/item/weapon/storage/backpack/quiver/hardlight
 	name = "hardlight quiver"
@@ -192,14 +183,7 @@
 	icon_state = "hlquiver[icon_amount]"
 
 /obj/item/projectile/bullet/reusable/arrow/hardlight/on_hit(atom/target, blocked = 0)
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.mob_size >= MOB_SIZE_LARGE)
-			damage = 29	//ALMOST as effective as a KA.
 	..()
-	var/obj/item/projectile/bullet/reusable/arrow/hardlight2/A = new /obj/item/projectile/bullet/reusable/arrow/hardlight2(src.loc)
-	A.Bump(target, 1)
-	qdel(A)
 	qdel(src)	//NO INFINITE-HITTING!
 
 /obj/item/ammo_casing/caseless/arrow/hardlight/dropped()
