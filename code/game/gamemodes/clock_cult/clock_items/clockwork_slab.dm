@@ -262,7 +262,9 @@
 		text += "</b></font>"
 	else
 
-		text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br><br>"
+		text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br><br>\
+		\
+		<center><font size=1><A href='?src=\ref[src];hidetext=1'>[text_hidden ? "Show":"Hide"] Information</A></font></center><br>"
 		if(!text_hidden)
 			var/servants = 0
 			var/production_time = SLAB_PRODUCTION_TIME
@@ -307,8 +309,8 @@
 			\
 			On that note, <font color=#BE8700>Scripture</font> is recited through <b><font color=#BE8700>Recital</font></b>, the first and most important function of the slab.<br>\
 			All scripture requires some amount of <font color=#BE8700>Components</font> to recite, and only the weakest scripture does not consume any components when recited.<br>\
-			However, weak is relative when it comes to scripture; even the 'weakest' could be enough to dominate a station in the hands of cunning enough Servants, and higher tiers of scripture are \
-			even stronger in the right hands.<br><br>\
+			However, weak is relative when it comes to scripture; even the 'weakest' could be enough to dominate a station in the hands of cunning Servants, and higher tiers of scripture are even \
+			stronger in the right hands.<br><br>\
 			\
 			Some effects of scripture include granting the invoker a temporary complete immunity to stuns, summoning a turret that can attack anything that sets eyes on it, binding a powerful guardian \
 			to the invoker, or even, at one of the highest tiers, granting all nearby Servants temporary invulnerability.<br>\
@@ -321,11 +323,11 @@
 			<b><font color=#AF0AAF>Guvax</font></b>, which simply allows you to quickly invoke the Guvax scripture.<br>\
 			<b><font color=#1E8CE1>Vanguard</font></b>, which, like the Guvax button, simply allows you to quickly invoke the Vanguard scripture.<br><br>\
 			\
-			Examine the slab to check the number of components it has available.<br><br>"
+			Examine the slab to check the number of components it has available.<br><br>\
+			\
+			<center><font size=1><A href='?src=\ref[src];hidetext=1'>Hide Above Information</A></font></center><br>"
 
-		text += "<center><A href='?src=\ref[src];hidetext=1'>[text_hidden ? "Show":"Hide"] Above Information</A></center><br>\
-		\
-		A complete list of scripture, its effects, and its requirements can be found below.<br>\
+		text += "A complete list of scripture, its effects, and its requirements can be found below.<br>\
 		Key:<br><font color=#6E001A>BE</font> = Belligerent Eyes<br>\
 		<font color=#1E8CE1>VC</font> = Vanguard Cogwheels<br>\
 		<font color=#AF0AAF>GC</font> = Guvax Capacitors<br>\
