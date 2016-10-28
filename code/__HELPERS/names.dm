@@ -220,7 +220,6 @@ var/list/syndicate_code_response = list()//Code response for traitors.
 
 //Phrases are green, responses are blue.
 /proc/parse_for_code_words(text)
-	world << "DEBUG: PARSING..."
 	var/parse = text
 	for(var/word in syndicate_code_phrase)
 		var/indexl = 0
@@ -230,7 +229,6 @@ var/list/syndicate_code_response = list()//Code response for traitors.
 		var/insertword = "<span class='codephrase'>[word]</span>"
 		if(!findtext(parse, word))
 			continue
-		world << "DEBUG: CODEPHRASE PARSED."
 		indexl = findtext(parse, word)
 		indexu = (indexl + lentext(word))
 		parse1 = copytext(parse, 1, indexl)
@@ -244,7 +242,6 @@ var/list/syndicate_code_response = list()//Code response for traitors.
 		var/insertword = "<span class='coderesponse'>[word]</span>"
 		if(!findtext(parse, word))
 			continue
-		world << "DEBUG: CODERESPONSE PARSED."
 		indexl = findtext(parse, word)
 		indexu = (indexl + lentext(word))
 		parse1 = copytext(parse, 1, indexl)
