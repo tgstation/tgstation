@@ -423,7 +423,7 @@
 				update_icon()
 				return
 		else if (!(stat & BROKEN)) // b) on closed and not broken APC
-			if((coverlocked || malfhack) && !(stat & MAINT)) // locked...
+			if(coverlocked && !(stat & MAINT)) // locked...
 				user << "<span class='warning'>The cover is locked and cannot be opened!</span>"
 				return
 			else if (panel_open) // wires are exposed
@@ -458,7 +458,7 @@
 				user << "<span class='warning'>Close the APC first!</span>" //Less hints more mystery!
 				return
 			else
-				if (has_electronics==1 && terminal)
+				if (has_electronics==1)
 					has_electronics = 2
 					stat &= ~MAINT
 					playsound(src.loc, W.usesound, 50, 1)
@@ -489,7 +489,7 @@
 		else if(stat & (BROKEN|MAINT))
 			user << "<span class='warning'>Nothing happens!</span>"
 		else
-			if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
+			if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
 				locked = !locked
 				user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>"
 				update_icon()
@@ -528,9 +528,7 @@
 				terminal.connect_to_network()
 
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened)
-		user.visible_message("[user.name] removes cables from the APC frame.", \
-							"<span class='notice'>You removed cables from the APC frame.</span>")
-		terminal.dismantle(user)
+		terminal.dismantle(user, W)
 
 	else if (istype(W, /obj/item/weapon/electronics/apc) && opened)
 		if (has_electronics!=0) // there are already electronicks inside
@@ -577,6 +575,15 @@
 	else if (istype(W, /obj/item/wallframe/apc) && opened)
 		if (!(stat & BROKEN || opened==2 || obj_integrity < max_integrity)) // There is nothing to repair
 			user << "<span class='warning'>You found no reason for repairing this APC</span>"
+		if (!(stat & BROKEN) && opened==2) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
+			user.visible_message("[user.name] replaces missing APC's cover.",\
+							"<span class='notice'>You begin to replace APC's cover...</span>")
+			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
+				user << "<span class='notice'>You replace missing APC's cover.</span>"
+				qdel(W)
+				opened = 1
+				update_icon()
+			return
 		if (has_electronics)
 			user << "<span class='warning'>You cannot repair this APC until you remove the electronics still inside!</span>"
 			return
