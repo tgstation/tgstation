@@ -99,7 +99,7 @@
 			var/obj/item/guvax_binding/B = new(M)
 			M.put_in_hands(B, i)
 		M.regenerate_icons()
-		M.visible_message("<span class='warning'>A [name] appears around [target]!</span>", \
+		M.visible_message("<span class='warning'>A [name] appears around [M]!</span>", \
 		"<span class='warning'>A [name] appears around you!</span>\n<span class='userdanger'>Resist!</span>")
 	else
 		M.visible_message("<span class='warning'>[src] snaps into glowing pieces and dissipates!</span>")
