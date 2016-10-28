@@ -261,28 +261,29 @@
 			text += "HONOR RATVAR "
 		text += "</b></font>"
 	else
-		var/servants = 0
-		var/production_time = SLAB_PRODUCTION_TIME
-		for(var/mob/living/M in living_mob_list)
-			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-				servants++
-		if(servants > 5)
-			servants -= 5
-			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-		var/production_text_addon = ""
-		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-			production_text_addon = ", which increases for each human or silicon servant above <b>5</b>"
-		production_time = production_time/600
-		var/production_text = "<b>[round(production_time)] minute\s"
-		if(production_time != round(production_time))
-			production_time -= round(production_time)
-			production_time *= 60
-			production_text += " and [round(production_time, 1)] seconds"
-		production_text += "</b>"
-		production_text += production_text_addon
 
 		text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br><br>"
 		if(!text_hidden)
+			var/servants = 0
+			var/production_time = SLAB_PRODUCTION_TIME
+			for(var/mob/living/M in living_mob_list)
+				if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+					servants++
+			if(servants > 5)
+				servants -= 5
+				production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
+			var/production_text_addon = ""
+			if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
+				production_text_addon = ", which increases for each human or silicon servant above <b>5</b>"
+			production_time = production_time/600
+			var/production_text = "<b>[round(production_time)] minute\s"
+			if(production_time != round(production_time))
+				production_time -= round(production_time)
+				production_time *= 60
+				production_text += " and [round(production_time, 1)] seconds"
+			production_text += "</b>"
+			production_text += production_text_addon
+
 			text += "First and foremost, you serve Ratvar, the Clockwork Justicar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
 			scale of things than your life. Ratvar wishes retribution upon those that trapped him in Reebe - the Nar-Sian cultists - and you are to help him obtain it.<br><br>\
 			\
