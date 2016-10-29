@@ -1,0 +1,4 @@
+author: "Chowder McArthor"
+delete-after: True
+changes: 
+  - bugfix: "Added in icons for the neck slot for the other huds."
