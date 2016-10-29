@@ -1,0 +1,10 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "Guvax is now targeted; invoking it charges your slab to bind and start converting the next target attacked in melee within 10 seconds. This makes your slab visible in-hand."
+  - tweak: "Above 5 Servants, the invocation to charge your slab is not whispered, and the conversion time is increased for each Servant above 5."
+  - wip: "Using Guvax on an already bound target will stun them. The bound target can resist out, which will prevent conversion."
+  - experiment: "Sentinel's Compromise is now targeted, like Guvax, but can select any target in vision range."
+  - rscadd: "Sentinel's Compromise now also removes holy water from the target Servant."
+  - wip: "Clicking your slab will cancel these scriptures."
+  - imageadd: "Both of these will change your cursor, to make it obvious they're active and you can't do anything else."
