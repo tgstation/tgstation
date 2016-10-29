@@ -5,7 +5,7 @@
 	icon_state = "dread_ipad"
 	slot_flags = SLOT_BELT
 	w_class = 2
-	var/list/stored_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+	var/list/stored_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
@@ -15,7 +15,7 @@
 	actions_types = list(/datum/action/item_action/clock/hierophant, /datum/action/item_action/clock/guvax, /datum/action/item_action/clock/vanguard)
 
 /obj/item/clockwork/slab/starter
-	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
+	stored_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 
 /obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
 	name = "scripture motor"
@@ -94,12 +94,12 @@
 		if(clockwork_caches)
 			user << "<b>Stored components (with global cache):</b>"
 			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != "replicant_alloy" ? "s":""]:</i> <b>[stored_components[i]]</b> \
+				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b> \
 				(<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>"
 		else
 			user << "<b>Stored components:</b>"
 			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != "replicant_alloy" ? "s":""]:</i> <b>[stored_components[i]]</b></span>"
+				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[stored_components[i]]</b></span>"
 
 //Component Transferal
 /obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
@@ -320,19 +320,19 @@
 				qdel(S2)
 				var/scripture_text = "<br><b><font color=#BE8700>[initial(S.name)]</font>:</b><br>[initial(S.desc)]<br><b>Invocation Time:</b> <b>[initial(S.channel_time) / 10]</b> seconds<br>\
 				<b>Component Requirement: </b>\
-				[req_comps["belligerent_eye"] ?  "<font color=#6E001A><b>[req_comps["belligerent_eye"]]</b> BE</font>" : ""] \
-				[req_comps["vanguard_cogwheel"] ? "<font color=#1E8CE1><b>[req_comps["vanguard_cogwheel"]]</b> VC</font>" : ""] \
-				[req_comps["guvax_capacitor"] ? "<font color=#AF0AAF><b>[req_comps["guvax_capacitor"]]</b> GC</font>" : ""] \
-				[req_comps["replicant_alloy"] ? "<font color=#5A6068><b>[req_comps["replicant_alloy"]]</b> RA</font>" : ""] \
-				[req_comps["hierophant_ansible"] ? "<font color=#DAAA18><b>[req_comps["hierophant_ansible"]]</b> HA</font>" : ""]<br>"
+				[req_comps[BELLIGERENT_EYE] ?  "<font color=#6E001A><b>[req_comps[BELLIGERENT_EYE]]</b> BE</font>" : ""] \
+				[req_comps[VANGUARD_COGWHEEL] ? "<font color=#1E8CE1><b>[req_comps[VANGUARD_COGWHEEL]]</b> VC</font>" : ""] \
+				[req_comps[GUVAX_CAPACITOR] ? "<font color=#AF0AAF><b>[req_comps[GUVAX_CAPACITOR]]</b> GC</font>" : ""] \
+				[req_comps[REPLICANT_ALLOY] ? "<font color=#5A6068><b>[req_comps[REPLICANT_ALLOY]]</b> RA</font>" : ""] \
+				[req_comps[HIEROPHANT_ANSIBLE] ? "<font color=#DAAA18><b>[req_comps[HIEROPHANT_ANSIBLE]]</b> HA</font>" : ""]<br>"
 				for(var/i in cons_comps)
 					if(cons_comps[i])
 						scripture_text += "<b>Component Cost: </b>\
-						[cons_comps["belligerent_eye"] ?  "<font color=#6E001A><b>[cons_comps["belligerent_eye"]]</b> BE</font>" : ""] \
-						[cons_comps["vanguard_cogwheel"] ? "<font color=#1E8CE1><b>[cons_comps["vanguard_cogwheel"]]</b> VC</font>" : ""] \
-						[cons_comps["guvax_capacitor"] ? "<font color=#AF0AAF><b>[cons_comps["guvax_capacitor"]]</b> GC</font>" : ""] \
-						[cons_comps["replicant_alloy"] ? "<font color=#5A6068><b>[cons_comps["replicant_alloy"]]</b> RA</font>" : ""] \
-						[cons_comps["hierophant_ansible"] ? "<font color=#DAAA18><b>[cons_comps["hierophant_ansible"]]</b> HA</font>" : ""]<br>"
+						[cons_comps[BELLIGERENT_EYE] ?  "<font color=#6E001A><b>[cons_comps[BELLIGERENT_EYE]]</b> BE</font>" : ""] \
+						[cons_comps[VANGUARD_COGWHEEL] ? "<font color=#1E8CE1><b>[cons_comps[VANGUARD_COGWHEEL]]</b> VC</font>" : ""] \
+						[cons_comps[GUVAX_CAPACITOR] ? "<font color=#AF0AAF><b>[cons_comps[GUVAX_CAPACITOR]]</b> GC</font>" : ""] \
+						[cons_comps[REPLICANT_ALLOY] ? "<font color=#5A6068><b>[cons_comps[REPLICANT_ALLOY]]</b> RA</font>" : ""] \
+						[cons_comps[HIEROPHANT_ANSIBLE] ? "<font color=#DAAA18><b>[cons_comps[HIEROPHANT_ANSIBLE]]</b> HA</font>" : ""]<br>"
 						break //we want this to only show up if the scripture has a cost of some sort
 				scripture_text += "<b>Tip:</b> [initial(S.usage_tip)]<br>"
 				switch(initial(S.tier))
