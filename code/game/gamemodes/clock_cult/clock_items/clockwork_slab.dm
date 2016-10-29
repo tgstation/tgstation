@@ -300,11 +300,9 @@
 		Examine the slab for component amount information.<br><br>\
 		\
 		A complete list of scripture, its effects, and its requirements can be found below.<br>\
-		Key:<br><font color=#6E001A>BE</font> = Belligerent Eyes<br>\
-		<font color=#1E8CE1>VC</font> = Vanguard Cogwheels<br>\
-		<font color=#AF0AAF>GC</font> = Guvax Capacitors<br>\
-		<font color=#5A6068>RA</font> = Replicant Alloy<br>\
-		<font color=#DAAA18>HA</font> = Hierophant Ansibles<br>"
+		Key:<br>"
+		for(var/i in clockwork_component_cache)
+			text += "<font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)]</font> = [get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]<br>"
 		var/text_to_add = ""
 		var/drivers = "<br><font color=#BE8700 size=3><b>[SCRIPTURE_DRIVER]</b></font><br><i>These scriptures are always unlocked.</i><br>"
 		var/scripts = "<br><font color=#BE8700 size=3><b>[SCRIPTURE_SCRIPT]</b></font><br><i>These scriptures require at least five servants and a tinkerer's cache.</i><br>"
@@ -319,22 +317,18 @@
 				var/list/cons_comps = S2.consumed_components
 				qdel(S2)
 				var/scripture_text = "<br><b><font color=#BE8700>[initial(S.name)]</font>:</b><br>[initial(S.desc)]<br><b>Invocation Time:</b> <b>[initial(S.channel_time) / 10]</b> seconds<br>\
-				<b>Component Requirement: </b>\
-				[req_comps[BELLIGERENT_EYE] ?  "<font color=#6E001A><b>[req_comps[BELLIGERENT_EYE]]</b> BE</font>" : ""] \
-				[req_comps[VANGUARD_COGWHEEL] ? "<font color=#1E8CE1><b>[req_comps[VANGUARD_COGWHEEL]]</b> VC</font>" : ""] \
-				[req_comps[GUVAX_CAPACITOR] ? "<font color=#AF0AAF><b>[req_comps[GUVAX_CAPACITOR]]</b> GC</font>" : ""] \
-				[req_comps[REPLICANT_ALLOY] ? "<font color=#5A6068><b>[req_comps[REPLICANT_ALLOY]]</b> RA</font>" : ""] \
-				[req_comps[HIEROPHANT_ANSIBLE] ? "<font color=#DAAA18><b>[req_comps[HIEROPHANT_ANSIBLE]]</b> HA</font>" : ""]<br>"
-				for(var/i in cons_comps)
-					if(cons_comps[i])
-						scripture_text += "<b>Component Cost: </b>\
-						[cons_comps[BELLIGERENT_EYE] ?  "<font color=#6E001A><b>[cons_comps[BELLIGERENT_EYE]]</b> BE</font>" : ""] \
-						[cons_comps[VANGUARD_COGWHEEL] ? "<font color=#1E8CE1><b>[cons_comps[VANGUARD_COGWHEEL]]</b> VC</font>" : ""] \
-						[cons_comps[GUVAX_CAPACITOR] ? "<font color=#AF0AAF><b>[cons_comps[GUVAX_CAPACITOR]]</b> GC</font>" : ""] \
-						[cons_comps[REPLICANT_ALLOY] ? "<font color=#5A6068><b>[cons_comps[REPLICANT_ALLOY]]</b> RA</font>" : ""] \
-						[cons_comps[HIEROPHANT_ANSIBLE] ? "<font color=#DAAA18><b>[cons_comps[HIEROPHANT_ANSIBLE]]</b> HA</font>" : ""]<br>"
+				<b>Component Requirement: </b>"
+				for(var/i in req_comps)
+					if(req_comps[i])
+						scripture_text += "<font color=[get_component_color_brightalloy(i)]><b>[req_comps[i]]</b> [get_component_acronym(i)]</font> "
+				for(var/a in cons_comps)
+					if(cons_comps[a])
+						scripture_text += "<br><b>Component Cost:</b> "
+						for(var/i in cons_comps)
+							if(cons_comps[i])
+								scripture_text += "<font color=[get_component_color_brightalloy(i)]><b>[cons_comps[i]]</b> [get_component_acronym(i)]</font> "
 						break //we want this to only show up if the scripture has a cost of some sort
-				scripture_text += "<b>Tip:</b> [initial(S.usage_tip)]<br>"
+				scripture_text += "<br><b>Tip:</b> [initial(S.usage_tip)]<br>"
 				switch(initial(S.tier))
 					if(SCRIPTURE_DRIVER)
 						drivers += scripture_text

@@ -37,6 +37,22 @@
 		else
 			return null
 
+//returns a component acronym from a component id
+/proc/get_component_acronym(id)
+	switch(id)
+		if(BELLIGERENT_EYE)
+			return "BE"
+		if(VANGUARD_COGWHEEL)
+			return "VC"
+		if(GUVAX_CAPACITOR)
+			return "GC"
+		if(REPLICANT_ALLOY)
+			return "RA"
+		if(HIEROPHANT_ANSIBLE)
+			return "HA"
+		else
+			return null
+
 //returns a component id from a component name
 /proc/get_component_id(name)
 	switch(name)
@@ -68,6 +84,13 @@
 			return "nzcrentr"
 		else
 			return null
+
+//returns a component color from a component id, but with a brighter replicant alloy color
+/proc/get_component_color_brightalloy(id)
+	if(id == REPLICANT_ALLOY)
+		return "#5A6068"
+	else
+		return get_component_color(id)
 
 //returns a component color from a component id
 /proc/get_component_color(id)
