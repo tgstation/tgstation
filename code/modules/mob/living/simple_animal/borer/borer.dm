@@ -68,6 +68,7 @@ var/total_borer_hosts_needed = 10
 	maxHealth = 20
 	melee_damage_lower = 5
 	melee_damage_upper = 5
+	stop_automated_movement = TRUE
 	attacktext = "chomps"
 	attack_sound = 'sound/weapons/bite.ogg'
 	pass_flags = PASSTABLE | PASSMOB
@@ -620,6 +621,8 @@ var/total_borer_hosts_needed = 10
 		if(!host_brain.lastKnownIP)
 			host_brain.lastKnownIP = h2b_ip
 
+		host_brain << "You are trapped in your own mind. You feel that there must be a way to resist!"
+
 		// self -> host
 		var/s2h_id = src.computer_id
 		var/s2h_ip= src.lastKnownIP
@@ -755,8 +758,9 @@ mob/living/carbon/proc/release_control()
 		src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
 		into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
 		your host and your eventual spawn safe and warm."
-		src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your borer tab to see your powers as a borer."
-		src << "You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle."
+		src << "You strongly dislike sugar, avoid it at all costs!"
+		src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your Borer tab to see your abilities."
+		src << "You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle. To reproduce you must have 100 chemicals and be controlling a host."
 
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling)
