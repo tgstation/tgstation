@@ -1,0 +1,4 @@
+author: "TehZombehz"
+delete-after: True
+changes: 
+  - tweak: "Custom food items can now fit inside of smaller containers, such as paper sacks."
