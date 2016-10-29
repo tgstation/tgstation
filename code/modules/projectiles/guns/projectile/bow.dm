@@ -140,6 +140,7 @@
 	icon_state = "arrow_hardlight"
 	force = 7
 	projectile_type = /obj/item/projectile/bullet/reusable/arrow/hardlight
+	delay = 10
 
 /obj/item/weapon/storage/backpack/quiver/hardlight
 	name = "hardlight quiver"
@@ -182,9 +183,5 @@
 			icon_amount = 3
 	icon_state = "hlquiver[icon_amount]"
 
-/obj/item/projectile/bullet/reusable/arrow/hardlight/on_hit(atom/target, blocked = 0)
-	..()
-	qdel(src)	//NO INFINITE-HITTING!
-
 /obj/item/ammo_casing/caseless/arrow/hardlight/dropped()
-	QDEL_IN(src,200)
+	qdel(src)
