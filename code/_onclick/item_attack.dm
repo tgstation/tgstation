@@ -24,7 +24,7 @@
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
-	if(flags & NOBLUDGEON || user.a_intent == "help")
+	if(flags & NOBLUDGEON)
 		return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
@@ -43,7 +43,7 @@
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
-	if(flags & NOBLUDGEON || user.a_intent == "help")
+	if(flags & NOBLUDGEON)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
