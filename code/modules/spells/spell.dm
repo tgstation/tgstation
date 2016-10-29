@@ -154,7 +154,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 		var/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/suit/space/hardsuit/wizard,
-		/obj/item/clothing/shoes/sandal,
 		/obj/item/clothing/head/wizard,
 		/obj/item/clothing/head/helmet/space/hardsuit/wizard,
 		/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
@@ -163,9 +162,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(clothes_req) //clothes check
 			if(!is_type_in_typecache(H.wear_suit, casting_clothes))
 				H << "<span class='notice'>I don't feel strong enough without my robe.</span>"
-				return 0
-			if(!is_type_in_typecache(H.shoes, casting_clothes))
-				H << "<span class='notice'>I don't feel strong enough without my sandals.</span>"
 				return 0
 			if(!is_type_in_typecache(H.head, casting_clothes))
 				H << "<span class='notice'>I don't feel strong enough without my hat.</span>"
