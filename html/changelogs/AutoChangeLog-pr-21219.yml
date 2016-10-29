@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - bugfix: "Clockwork structures that return power can now return power to the APC of the area they're in if there happens to be one."
-  - bugfix: "Clockwork structures that use power from an APC will cause that APC to start charging and update the tgUI of anyone looking at the APC."

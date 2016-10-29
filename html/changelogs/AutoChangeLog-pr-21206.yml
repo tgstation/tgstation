@@ -1,7 +1,0 @@
-author: "TehZombehz"
-delete-after: True
-changes: 
-  - rscadd: "Small cartons can be crafted using 1 piece of cardboard. Don't be late for school."
-  - rscadd: "Apples can now be juiced for apple juice. Chocolate milk can now be crafted using milk and cocoa."
-  - tweak: "Chocolate bar recipe has been modified to compensate for chocolate milk. The soy milk version of the chocolate bar recipe remains unchanged."
-  - bugfix: "Grapes can now be properly juiced for grape juice using a grinder."

@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - bugfix: "Tinkerer's Caches no longer need to see a clockwork wall to link to it and generate components."
