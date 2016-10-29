@@ -503,6 +503,9 @@
 		else if (terminal) // it already have terminal
 			user << "<span class='warning'>This APC is already wired!</span>"
 			return
+		else if (has_electronics == 0)
+			user << "<span class='warning'>There is nothing to wire!</span>"
+			return
 
 		var/obj/item/stack/cable_coil/C = W
 		if(C.get_amount() < 10)
@@ -514,7 +517,7 @@
 		if(do_after(user, 20, target = src))
 			if (C.get_amount() < 10 || !C)
 				return
-			if (C.get_amount() >= 10 && !terminal && opened && has_electronics != 2)
+			if (C.get_amount() >= 10 && !terminal && opened && has_electronics > 0)
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/N = T.get_cable_node()
 				if (prob(50) && electrocute_mob(usr, N, N))
