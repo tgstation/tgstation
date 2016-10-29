@@ -575,6 +575,7 @@
 	else if (istype(W, /obj/item/wallframe/apc) && opened)
 		if (!(stat & BROKEN || opened==2 || obj_integrity < max_integrity)) // There is nothing to repair
 			user << "<span class='warning'>You found no reason for repairing this APC</span>"
+			return
 		if (!(stat & BROKEN) && opened==2) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 			user.visible_message("[user.name] replaces missing APC's cover.",\
 							"<span class='notice'>You begin to replace APC's cover...</span>")
