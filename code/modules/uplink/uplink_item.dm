@@ -177,7 +177,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
 			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 18
+	cost = 35
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
