@@ -38,8 +38,8 @@ datum/supply_pack
 	group = "Emergency"
 	
 /datum/supply_pack/emergency/vehicle
-	name = "All-Terrain Vehicle Crate"
-	cost = 2000
+	name = "Biker Gang Kit"
+	cost = 2500
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
