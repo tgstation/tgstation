@@ -330,6 +330,15 @@
 	buildstackamount = 1
 	canSmoothWith = list(/obj/structure/table/reinforced/brass)
 
+/obj/structure/table/reinforced/brass/New()
+	change_construction_value(2)
+	..()
+
+/obj/structure/table/reinforced/brass/Destroy()
+	change_construction_value(-2)
+	return ..()
+
+
 /obj/structure/table/reinforced/brass/narsie_act()
 	take_damage(rand(15, 45), BRUTE)
 	if(src) //do we still exist?

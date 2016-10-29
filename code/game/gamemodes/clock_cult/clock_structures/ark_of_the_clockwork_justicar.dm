@@ -130,12 +130,14 @@
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				var/turf/startpoint = get_turf(src)
-				sleep(3)
 				QDEL_IN(src, 3)
 				clockwork_gateway_activated = TRUE
 				if(ratvar_portal)
+					sleep(3)
 					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				else
+					addtimer(SSshuttle.emergency, "request", 0, FALSE, null, 0) //call the shuttle immediately
+					sleep(3)
 					world << "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
 					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>"

@@ -13,6 +13,7 @@
 	var/produces_components = TRUE //if it produces components at all
 	var/list/shown_scripture = list(SCRIPTURE_DRIVER = FALSE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 	var/text_hidden = FALSE
+	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
 	actions_types = list(/datum/action/item_action/clock/hierophant, /datum/action/item_action/clock/guvax, /datum/action/item_action/clock/vanguard)
 
 /obj/item/clockwork/slab/starter
@@ -42,7 +43,17 @@
 
 /obj/item/clockwork/slab/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	if(slab_ability && slab_ability.ranged_ability_user)
+		slab_ability.remove_ranged_ability()
 	return ..()
+
+/obj/item/clockwork/slab/dropped(mob/user)
+	. = ..()
+	addtimer(src, "check_on_mob", 1, FALSE, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+
+/obj/item/clockwork/slab/proc/check_on_mob(mob/user)
+	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
+		slab_ability.remove_ranged_ability()
 
 //Component Generation
 /obj/item/clockwork/slab/process()
@@ -148,7 +159,7 @@
 			if(!nonhuman_usable && !ishuman(user))
 				return
 			if(src == user.get_active_held_item())
-				var/datum/clockwork_scripture/guvax/convert = new
+				var/datum/clockwork_scripture/ranged_ability/guvax_prep/convert = new
 				convert.slab = src
 				convert.invoker = user
 				convert.run_scripture()
@@ -262,7 +273,7 @@
 		text += "</b></font>"
 	else
 
-		text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br><br>\
+		text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br>\
 		\
 		<center><font size=1><A href='?src=\ref[src];hidetext=1'>[text_hidden ? "Show":"Hide"] Information</A></font></center><br>"
 		if(!text_hidden)
@@ -282,7 +293,7 @@
 			if(production_time != round(production_time))
 				production_time -= round(production_time)
 				production_time *= 60
-				production_text += " and [round(production_time, 1)] seconds"
+				production_text += " and [round(production_time, 1)] second\s"
 			production_text += "</b>"
 			production_text += production_text_addon
 
@@ -314,14 +325,14 @@
 			\
 			Some effects of scripture include granting the invoker a temporary complete immunity to stuns, summoning a turret that can attack anything that sets eyes on it, binding a powerful guardian \
 			to the invoker, or even, at one of the highest tiers, granting all nearby Servants temporary invulnerability.<br>\
-			However, the most important scripture is <font color=#AF0AAF>Guvax</font>, which allows you to show heathens Ratvar's light and bind them into his service.<br><br>\
+			However, the most important scripture is <font color=#AF0AAF>Guvax</font>, which allows you to convert heathens with relative ease.<br><br>\
 			\
 			The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide.<br><br>\
 			\
 			The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
-			<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other servants.<br>\
-			<b><font color=#AF0AAF>Guvax</font></b>, which simply allows you to quickly invoke the Guvax scripture.<br>\
-			<b><font color=#1E8CE1>Vanguard</font></b>, which, like the Guvax button, simply allows you to quickly invoke the Vanguard scripture.<br><br>\
+			<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>\
+			<b><font color=#AF0AAF>Guvax</font></b>, which simply allows you to quickly invoke the Guvax Driver.<br>\
+			<b><font color=#1E8CE1>Vanguard</font></b>, which, like the Guvax button, simply allows you to quickly invoke the Vanguard Driver.<br><br>\
 			\
 			Examine the slab to check the number of components it has available.<br><br>\
 			\
@@ -335,14 +346,14 @@
 		<font color=#DAAA18>HA</font> = Hierophant Ansibles<br>"
 		var/text_to_add = ""
 		var/drivers = "<br><font size=3><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b></font><br><i>These scriptures are always unlocked.</i><br>"
-		var/scripts = "<br><font size=3><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b></font><br><i>These scriptures require at least <b>5</b> servants and \
+		var/scripts = "<br><font size=3><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b></font><br><i>These scriptures require at least <b>5</b> Servants and \
 		<b>1</b> Tinkerer's Cache.</i><br>"
-		var/applications = "<br><font size=3><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b></font><br><i>These scriptures require at least <b>8</b> servants, \
+		var/applications = "<br><font size=3><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b></font><br><i>These scriptures require at least <b>8</b> Servants, \
 		<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i><br>"
-		var/revenant = "<br><font size=3><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b></font><br><i>These scriptures require at least <b>10</b> servants, \
+		var/revenant = "<br><font size=3><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b></font><br><i>These scriptures require at least <b>10</b> Servants, \
 		<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i><br>"
-		var/judgement = "<br><font size=3><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b></font><br><i>This scripture requires at least <b>12</b> servants, \
-		<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-servant AIs.</i><br>"
+		var/judgement = "<br><font size=3><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b></font><br><i>This scripture requires at least <b>12</b> Servants, \
+		<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i><br>"
 		for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
 			var/datum/clockwork_scripture/S = V
 			var/initial_tier = initial(S.tier)
@@ -352,6 +363,7 @@
 				var/list/cons_comps = S2.consumed_components
 				qdel(S2)
 				var/scripture_text = "<br><b><font color=#BE8700>[initial(S.name)]</font>:</b><br>[initial(S.desc)]<br><b>Invocation Time:</b> <b>[initial(S.channel_time) / 10]</b> second\s<br>\
+				[initial(S.invokers_required) > 1 ? "<b>Invokers Required:</b> <b>[initial(S.invokers_required)]</b><br>":""]\
 				<b>Component Requirement: </b>\
 				[req_comps["belligerent_eye"] ?  "<font color=#6E001A><b>[req_comps["belligerent_eye"]]</b> BE</font>" : ""] \
 				[req_comps["vanguard_cogwheel"] ? "<font color=#1E8CE1><b>[req_comps["vanguard_cogwheel"]]</b> VC</font>" : ""] \

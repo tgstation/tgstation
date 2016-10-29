@@ -41,42 +41,51 @@
 /obj/item/stack/rods/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(get_amount() >= 10)
 		var/sheets_to_make = round(get_amount() * 0.1)
-		var/remainder = get_amount() - (sheets_to_make * 10)
-		if(remainder)
-			new type(loc, remainder)
-		return list("operation_time" = 0, "new_obj_type" = /obj/item/stack/sheet/brass, "alloy_cost" = 0, "spawn_dir" = sheets_to_make, "dir_in_new" = TRUE)
+		var/used = sheets_to_make * 10
+		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
+		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
+		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		new /obj/item/stack/sheet/brass(get_turf(src), sheets_to_make)
+		use(used)
 	else
 		user << "<span class='warning'>You need at least 10 rods to convert into brass.</span>"
-		return TRUE
+	return TRUE
 
 /obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	if(src.get_amount() >= 5)
-		var/sheets_to_make = round(src.get_amount() * 0.2)
-		var/remainder = src.get_amount() - (sheets_to_make * 5)
-		if(remainder)
-			new type(loc, remainder)
-		return list("operation_time" = 0, "new_obj_type" = /obj/item/stack/sheet/brass, "alloy_cost" = 0, "spawn_dir" = sheets_to_make, "dir_in_new" = TRUE)
+	if(get_amount() >= 5)
+		var/sheets_to_make = round(get_amount() * 0.2)
+		var/used = sheets_to_make * 5
+		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
+		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
+		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		new /obj/item/stack/sheet/brass(get_turf(src), sheets_to_make)
+		use(used)
 	else
 		user << "<span class='warning'>You need at least 5 sheets of metal to convert into brass.</span>"
-		return TRUE
+	return TRUE
 
 /obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	if(get_amount() >= 10)
-		var/sheets_to_make = round(get_amount() * 0.4)
-		var/remainder = get_amount() - (sheets_to_make * 2.5)
-		if(remainder)
-			new type(loc, remainder)
-		return list("operation_time" = 0, "new_obj_type" = /obj/item/stack/sheet/brass, "alloy_cost" = 0, "spawn_dir" = sheets_to_make, "dir_in_new" = TRUE)
+	if(get_amount() >= 2)
+		var/sheets_to_make = round(get_amount() * 0.5)
+		var/used = sheets_to_make * 2
+		user.visible_message("<span class='warning'>[user]'s [proselytizer.name] rips into [src], converting it to brass!</span>", \
+		"<span class='brass'>You convert [get_amount() - used > 0 ? "part of ":""][src] into brass...</span>")
+		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		new /obj/item/stack/sheet/brass(get_turf(src), sheets_to_make)
+		use(used)
 	else
-		user << "<span class='warning'>You need at least 10 sheets of plasteel to convert into brass.</span>"
-		return TRUE
+		user << "<span class='warning'>You need at least 2 sheets of plasteel to convert into brass.</span>"
+	return TRUE
 
 //Brass directly to alloy; scarab only
 /obj/item/stack/sheet/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(!proselytizer.metal_to_alloy)
 		return FALSE
-	var/prosel_cost = -amount*10
-	var/prosel_time = -amount*1
+	var/prosel_cost = -amount*REPLICANT_FLOOR
+	var/prosel_time = -amount
 	return list("operation_time" = -prosel_time, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
 
 //Airlock conversion
@@ -124,23 +133,25 @@
 /obj/structure/grille/ratvar/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
+//Girder conversion
+/obj/structure/girder/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return list("operation_time" = 20, "new_obj_type" = /obj/structure/destructible/clockwork/wall_gear, "alloy_cost" = REPLICANT_GEAR, "spawn_dir" = SOUTH)
+
 //Hitting a clockwork structure will try to repair it.
 /obj/structure/destructible/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
-	if(proselytizer.repairing) //no spamclicking for fast repairs, bucko
-		user << "<span class='warning'>You are already repairing [proselytizer.repairing] with [proselytizer]!</span>"
-		return
 	if(!can_be_repaired)
 		user << "<span class='warning'>[src] cannot be repaired with a proselytizer!</span>"
 		return
-	if(obj_integrity == max_integrity)
+	if(obj_integrity >= max_integrity)
 		user << "<span class='warning'>[src] is at maximum integrity!</span>"
 		return
 	var/amount_to_heal = max_integrity - obj_integrity
 	var/healing_for_cycle = min(amount_to_heal, repair_amount)
+	var/proselytizer_cost = 0
 	if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
-	var/proselytizer_cost = healing_for_cycle*2
+		healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
+		proselytizer_cost = healing_for_cycle * 2
 	if(!proselytizer.can_use_alloy(proselytizer_cost))
 		user << "<span class='warning'>You need more liquified alloy to repair [src]!</span>"
 		return
@@ -150,24 +161,30 @@
 	proselytizer.repairing = src
 	while(proselytizer && user && src && obj_integrity != max_integrity)
 		amount_to_heal = max_integrity - obj_integrity
-		if(!amount_to_heal)
+		if(amount_to_heal <= 0)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
-		proselytizer_cost = healing_for_cycle*2
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
+			proselytizer_cost = healing_for_cycle * 2
+			if(!proselytizer.can_use_alloy(proselytizer_cost))
+				break
+		else
+			proselytizer_cost = 0
 		if(!proselytizer.can_use_alloy(proselytizer_cost) || !do_after(user, proselytizer_cost, target = src) || !proselytizer || !proselytizer.can_use_alloy(proselytizer_cost))
 			break
 		amount_to_heal = max_integrity - obj_integrity
-		if(!amount_to_heal)
+		if(amount_to_heal <= 0)
 			break
 		healing_for_cycle = min(amount_to_heal, repair_amount)
 		if(!proselytizer.can_use_alloy(RATVAR_ALLOY_CHECK))
-			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy)
-		proselytizer_cost = healing_for_cycle*2
-		if(!proselytizer.can_use_alloy(proselytizer_cost))
-			break
-		obj_integrity += healing_for_cycle
+			healing_for_cycle = min(healing_for_cycle, proselytizer.stored_alloy * 0.5)
+			proselytizer_cost = healing_for_cycle * 2
+			if(!proselytizer.can_use_alloy(proselytizer_cost))
+				break
+		else
+			proselytizer_cost = 0
+		obj_integrity = Clamp(obj_integrity + healing_for_cycle, 0, max_integrity)
 		proselytizer.modify_stored_alloy(-proselytizer_cost)
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
@@ -187,6 +204,7 @@
 	if(!clockwork_component_cache["replicant_alloy"])
 		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
 		return
+	proselytizer.refueling = TRUE
 	user.visible_message("<span class='notice'>[user] places the end of [proselytizer] in the hole in [src]...</span>", \
 	"<span class='notice'>You start filling [proselytizer] with liquified alloy...</span>")
 	//hugeass check because we need to re-check after the do_after
@@ -196,15 +214,18 @@
 		proselytizer.modify_stored_alloy(REPLICANT_ALLOY_UNIT)
 		clockwork_component_cache["replicant_alloy"]--
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-	if(proselytizer && user)
-		user.visible_message("<span class='notice'>[user] removes [proselytizer] from the hole in [src], apparently satisfied.</span>", \
+	if(proselytizer)
+		proselytizer.refueling = FALSE
+		if(user)
+			user.visible_message("<span class='notice'>[user] removes [proselytizer] from the hole in [src], apparently satisfied.</span>", \
 		"<span class='brass'>You finish filling [proselytizer] with liquified alloy. It now contains <b>[proselytizer.stored_alloy]/[proselytizer.max_alloy]</b> units of liquified alloy.</span>")
 	return
 
-//Convert shards, wall gears, and replicant alloy directly to liquid alloy
+//convert wall gears back to brass sheets
 /obj/structure/destructible/clockwork/wall_gear/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 10, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -REPLICANT_GEAR, "spawn_dir" = SOUTH)
+	return list("operation_time" = 10, "new_obj_type" = /obj/item/stack/sheet/brass, "alloy_cost" = 0, "spawn_dir" = 3, "dir_in_new" = TRUE)
 
+//Convert shards and replicant alloy directly to liquid alloy
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 5, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -REPLICANT_STANDARD, "spawn_dir" = SOUTH)
 

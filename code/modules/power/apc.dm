@@ -84,6 +84,7 @@
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
+	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
 	var/longtermpower = 10
 	var/auto_name = 0
 	var/failure_timer = 0
@@ -560,7 +561,6 @@
 			if (opened==2)
 				opened = 1
 			update_icon()
-
 	else if(panel_open && !opened && is_wire_tool(W))
 		wires.interact(user)
 	else
@@ -826,42 +826,96 @@
 		return
 	if(src.z != 1)
 		return
-	src.occupier = new /mob/living/silicon/ai(src,malf.laws,null,1)
-	src.occupier.adjustOxyLoss(malf.getOxyLoss())
-	if(!findtext(src.occupier.name,"APC Copy"))
-		src.occupier.name = "[malf.name] APC Copy"
+	occupier = new /mob/living/silicon/ai(src,malf.laws,null,1) //DEAR GOD WHY?
+	occupier.adjustOxyLoss(malf.getOxyLoss())
+	if(!findtext(occupier.name,"APC Copy"))
+		occupier.name = "[malf.name] APC Copy"
 	if(malf.parent)
-		src.occupier.parent = malf.parent
+		occupier.parent = malf.parent
 	else
-		src.occupier.parent = malf
+		occupier.parent = malf
 	malf.shunted = 1
-	malf.mind.transfer_to(src.occupier)
-	src.occupier.eyeobj.name = "[src.occupier.name] (AI Eye)"
+	malf.mind.transfer_to(occupier)
+	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
 	if(malf.parent)
 		qdel(malf)
-	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
-	src.occupier.cancel_camera()
+	occupier.verbs += /mob/living/silicon/ai/proc/corereturn
+	occupier.cancel_camera()
 
 
 /obj/machinery/power/apc/proc/malfvacate(forced)
-	if(!src.occupier)
+	if(!occupier)
 		return
-	if(src.occupier.parent && src.occupier.parent.stat != 2)
-		src.occupier.mind.transfer_to(src.occupier.parent)
-		src.occupier.parent.shunted = 0
-		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
-		src.occupier.parent.cancel_camera()
-		qdel(src.occupier)
+	if(occupier.parent && occupier.parent.stat != 2)
+		occupier.mind.transfer_to(occupier.parent)
+		occupier.parent.shunted = 0
+		occupier.parent.adjustOxyLoss(occupier.getOxyLoss())
+		occupier.parent.cancel_camera()
+		qdel(occupier)
 
 	else
-		src.occupier << "<span class='danger'>Primary core damaged, unable to return core processes.</span>"
+		occupier << "<span class='danger'>Primary core damaged, unable to return core processes.</span>"
 		if(forced)
-			src.occupier.loc = src.loc
-			src.occupier.death()
-			src.occupier.gib()
+			occupier.loc = src.loc
+			occupier.death()
+			occupier.gib()
 			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
 				P.nuke_warning = FALSE
+
+/obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+	if(card.AI)
+		user << "<span class='warning'>[card] is already occupied!</span>"
+		return
+	if(!occupier)
+		user << "<span class='warning'>There's nothing in [src] to transfer!</span>"
+		return
+	if(!occupier.mind || !occupier.client)
+		user << "<span class='warning'>[occupier] is either inactive, destroyed, or braindead!</span>"
+		return
+	if(!occupier.parent.stat)
+		user << "<span class='warning'>[occupier] is refusing all attempts at transfer!</span>" //We can return to our core, no need to shunt right now
+		return
+	if(transfer_in_progress)
+		user << "<span class='warning'>There's already a transfer in progress!</span>"
+		return
+	if(interaction != AI_TRANS_TO_CARD || occupier.stat)
+		return
+	var/turf/T = get_turf(user)
+	if(!T)
+		return
+	transfer_in_progress = TRUE
+	user.visible_message("<span class='notice'>[user] slots [card] into [src]...</span>", "<span class='notice'>Transfer process initiated. Sending request for AI approval...</span>")
+	playsound(src, 'sound/machines/click.ogg', 50, 1)
+	occupier << sound('sound/misc/notice2.ogg') //To alert the AI that someone's trying to card them if they're tabbed out
+	if(alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", "Yes - Transfer Me", "No - Keep Me Here") == "No - Keep Me Here")
+		user << "<span class='danger'>AI denied transfer request. Process terminated.</span>"
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
+		transfer_in_progress = FALSE
+		return
+	if(user.loc != T)
+		user << "<span class='danger'>Location changed. Process terminated.</span>"
+		occupier << "<span class='warning'>[user] moved away! Transfer canceled.</span>"
+		transfer_in_progress = FALSE
+		return
+	user << "<span class='notice'>AI accepted request. Transferring stored intelligence to [card]...</span>"
+	occupier << "<span class='notice'>Transfer starting. You will be moved to [card] shortly.</span>"
+	if(!do_after(user, 50, target = src))
+		occupier << "<span class='warning'>[user] was interrupted! Transfer canceled.</span>"
+		transfer_in_progress = FALSE
+		return
+	if(!occupier || !card)
+		transfer_in_progress = FALSE
+		return
+	user.visible_message("<span class='notice'>[user] transfers [occupier] to [card]!</span>", "<span class='notice'>Transfer complete! [occupier] is now stored in [card].</span>")
+	occupier << "<span class='notice'>Transfer complete! You've been stored in [user]'s [card.name].</span>"
+	occupier.forceMove(card)
+	card.AI = occupier
+	occupier.parent.shunted = FALSE
+	occupier.cancel_camera()
+	occupier = null
+	transfer_in_progress = FALSE
+	return
 
 /obj/machinery/power/apc/surplus()
 	if(terminal)

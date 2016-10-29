@@ -133,6 +133,14 @@
 	framestack = /obj/item/stack/sheet/brass
 	framestackamount = 1
 
+/obj/structure/table_frame/brass/New()
+	change_construction_value(1)
+	..()
+
+/obj/structure/table_frame/brass/Destroy()
+	change_construction_value(-1)
+	return ..()
+
 /obj/structure/table_frame/brass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/sheet/brass))
 		var/obj/item/stack/sheet/brass/W = I

@@ -149,7 +149,7 @@
 /datum/clockwork_scripture/create_object/interdiction_lens
 	descname = "Structure, Disables Machinery"
 	name = "Interdiction Lens"
-	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission."
+	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission or the area's APC."
 	invocations = list("May this totem...", "...shroud the false suns!")
 	channel_time = 80
 	required_components = list("belligerent_eye" = 4, "replicant_alloy" = 1, "hierophant_ansible" = 1)
@@ -159,7 +159,7 @@
 	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission and fails to disable even one thing, it will disable itself for two minutes."
+	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmissionn or the area's APC and fails to disable even one thing, it will disable itself for two minutes."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	sort_priority = 6

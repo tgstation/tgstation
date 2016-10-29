@@ -100,7 +100,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			return FALSE
 	return TRUE
 
-/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked three times during invocation
+/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
 	return TRUE
 
 /datum/clockwork_scripture/proc/recital() //The process of speaking the words
@@ -117,7 +117,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(!channel_time)
 		return TRUE
 	for(var/invocation in invocations)
-		if(!do_after(invoker, channel_time / invocations.len, target = invoker))
+		if(!check_special_requirements() || !do_after(invoker, channel_time / invocations.len, target = invoker) || !check_special_requirements())
 			slab.busy = null
 			return FALSE
 		if(multiple_invokers_used)
@@ -186,3 +186,29 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		invoker << creator_message
 	new object_path (get_turf(invoker))
 	return TRUE
+
+//Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.
+/datum/clockwork_scripture/ranged_ability
+	var/slab_icon = "dread_ipad"
+	var/ranged_type = /obj/effect/proc_holder/slab
+	var/ranged_message = "This is a huge goddamn bug, how'd you cast this?"
+	var/timeout_time = 0
+
+/datum/clockwork_scripture/ranged_ability/scripture_effects()
+	slab.icon_state = slab_icon
+	slab.slab_ability = new ranged_type(slab)
+	slab.slab_ability.slab = slab
+	slab.slab_ability.add_ranged_ability(invoker, ranged_message)
+	invoker.update_inv_hands()
+	var/end_time = world.time + timeout_time
+	var/successful = FALSE
+	while(slab && slab.slab_ability && !slab.slab_ability.finished && (slab.slab_ability.in_progress || !timeout_time || world.time <= end_time))
+		successful = slab.slab_ability.successful
+		sleep(1)
+	if(slab)
+		if(slab.slab_ability && !slab.slab_ability.finished)
+			slab.slab_ability.remove_ranged_ability()
+		slab.icon_state = "dread_ipad"
+		if(invoker)
+			invoker.update_inv_hands()
+	return successful //slab doesn't look like a word now.

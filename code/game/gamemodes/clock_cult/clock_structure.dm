@@ -175,8 +175,11 @@
 		if(target_apc.cell.use(MIN_CLOCKCULT_POWER))
 			apcpower -= MIN_CLOCKCULT_POWER
 			amount -= MIN_CLOCKCULT_POWER
+			target_apc.charging = 1
+			target_apc.chargemode = TRUE
 			target_apc.update()
 			target_apc.update_icon()
+			target_apc.updateUsrDialog()
 		else
 			apcpower = 0
 	if(amount)
@@ -184,17 +187,24 @@
 	else
 		return TRUE
 
-/obj/structure/destructible/clockwork/powered/proc/return_power(amount) //returns a given amount of power to all nearby sigils
+/obj/structure/destructible/clockwork/powered/proc/return_power(amount) //returns a given amount of power to all nearby sigils or if there are no sigils, to the APC
 	if(amount <= 0)
 		return FALSE
 	var/list/sigils_in_range = list()
 	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
 		sigils_in_range |= T
-	if(!sigils_in_range.len)
+	if(!sigils_in_range.len && (!target_apc || !target_apc.cell))
 		return FALSE
-	while(amount >= MIN_CLOCKCULT_POWER)
-		for(var/S in sigils_in_range)
-			var/obj/effect/clockwork/sigil/transmission/T = S
-			if(amount >= MIN_CLOCKCULT_POWER && T.modify_charge(-MIN_CLOCKCULT_POWER))
-				amount -= MIN_CLOCKCULT_POWER
+	if(sigils_in_range.len)
+		while(amount >= MIN_CLOCKCULT_POWER)
+			for(var/S in sigils_in_range)
+				var/obj/effect/clockwork/sigil/transmission/T = S
+				if(amount >= MIN_CLOCKCULT_POWER && T.modify_charge(-MIN_CLOCKCULT_POWER))
+					amount -= MIN_CLOCKCULT_POWER
+	if(target_apc && target_apc.cell && target_apc.cell.give(amount))
+		target_apc.charging = 1
+		target_apc.chargemode = TRUE
+		target_apc.update()
+		target_apc.update_icon()
+		target_apc.updateUsrDialog()
 	return TRUE
