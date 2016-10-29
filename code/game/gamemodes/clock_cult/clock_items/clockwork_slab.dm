@@ -11,6 +11,7 @@
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
+	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
 	actions_types = list(/datum/action/item_action/clock/hierophant, /datum/action/item_action/clock/guvax, /datum/action/item_action/clock/vanguard)
 
 /obj/item/clockwork/slab/starter
@@ -40,7 +41,17 @@
 
 /obj/item/clockwork/slab/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	if(slab_ability && slab_ability.ranged_ability_user)
+		slab_ability.remove_ranged_ability()
 	return ..()
+
+/obj/item/clockwork/slab/dropped(mob/user)
+	. = ..()
+	addtimer(src, "check_on_mob", 1, FALSE, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+
+/obj/item/clockwork/slab/proc/check_on_mob(mob/user)
+	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
+		slab_ability.remove_ranged_ability()
 
 //Component Generation
 /obj/item/clockwork/slab/process()
@@ -146,7 +157,7 @@
 			if(!nonhuman_usable && !ishuman(user))
 				return
 			if(src == user.get_active_held_item())
-				var/datum/clockwork_scripture/guvax/convert = new
+				var/datum/clockwork_scripture/ranged_ability/guvax_prep/convert = new
 				convert.slab = src
 				convert.invoker = user
 				convert.run_scripture()

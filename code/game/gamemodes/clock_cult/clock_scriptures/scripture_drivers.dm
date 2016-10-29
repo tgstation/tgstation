@@ -76,61 +76,70 @@
 	return TRUE
 
 
-//Sentinel's Compromise: Allows the invoker to select a nearby servant convert their brute and burn damage into half as much toxin damage.
-/datum/clockwork_scripture/sentinels_compromise
+//Sentinel's Compromise: Allows the invoker to select a nearby servant and convert their brute and burn damage into half as much toxin damage.
+/datum/clockwork_scripture/ranged_ability/sentinels_compromise
 	descname = "Convert Brute/Burn to Half Toxin"
 	name = "Sentinel's Compromise"
-	desc = "Heals all brute and burn damage on a nearby living, friendly servant, but deals 50% of the damage they had as toxin damage."
+	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute and burn damage to half as much toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
 	required_components = list("vanguard_cogwheel" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1)
-	usage_tip = "The Compromise is very fast to invoke."
+	usage_tip = "The Compromise is very fast to invoke, and will remove holy water from the target Servant."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 4
-
-/datum/clockwork_scripture/sentinels_compromise/scripture_effects()
-	var/list/nearby_cultists = list()
-	for(var/mob/living/C in range(7, invoker))
-		if(C.stat != DEAD && is_servant_of_ratvar(C) && (C.getBruteLoss() || C.getFireLoss()))
-			nearby_cultists += C
-	if(!nearby_cultists.len)
-		invoker << "<span class='warning'>There are no eligible servants nearby!</span>"
-		return FALSE
-	var/mob/living/L = input(invoker, "Choose a fellow servant to heal.", name) as null|anything in nearby_cultists
-	if(!L || !invoker || !slab || qdeleted(slab) || !invoker.canUseTopic(slab) || !invoker.get_active_held_item() != slab || L.stat == DEAD)
-		return FALSE
-	var/brutedamage = L.getBruteLoss()
-	var/burndamage = L.getFireLoss()
-	var/totaldamage = brutedamage + burndamage
-	if(!totaldamage)
-		invoker << "<span class='warning'>[L] is not burned or bruised!</span>"
-		return FALSE
-	L.adjustToxLoss(totaldamage * 0.5)
-	L.adjustBruteLoss(-brutedamage)
-	L.adjustFireLoss(-burndamage)
-	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
-	var/targetturf = get_turf(L)
-	for(var/i in 1 to healseverity)
-		PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
-	invoker << "<span class='brass'>You bathe [L] in Inath-neq's power!</span>"
-	L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
-	"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
-	playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
-	return TRUE
+	slab_icon = "compromise"
+	ranged_type = /obj/effect/proc_holder/slab/compromise
+	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with healing power.</i>\n\
+	<b>Left-click a fellow Servant or yourself to heal!\n\
+	Click your slab to cancel.</b></span>"
 
 
-//Guvax: Converts anyone adjacent to the invoker after completion, but gets gradually slower as the cult gets more dominant.
-/datum/clockwork_scripture/guvax
-	descname = "Melee Area Convert"
+//Guvax: Grants a short-range binding that will immediately start chanting on binding a valid target.
+/datum/clockwork_scripture/ranged_ability/guvax_prep
+	descname = "Convert Attack"
 	name = "Guvax"
-	desc = "Enlists all nearby living unshielded creatures into servitude to Ratvar. Also purges holy water from nearby Servants."
-	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
-	channel_time = 50
+	desc = "Charges your slab with divine energy, allowing you to bind a nearby heretic for conversion. This is very obvious and will make your slab visible in-hand."
+	invocations = list("Divinity, grant me strength...", "...to enlighten the heathen!")
+	whispered = TRUE
+	channel_time = 20
 	required_components = list("guvax_capacitor" = 1)
-	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
+	usage_tip = "Is melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 5
+	slab_icon = "guvax"
+	ranged_type = /obj/effect/proc_holder/slab/guvax
+	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
+	<b>Left-click a target within melee range to convert!\n\
+	Click your slab to cancel.</b></span>"
+	timeout_time = 100
+
+/datum/clockwork_scripture/ranged_ability/guvax_prep/run_scripture()
+	var/servants = 0
+	for(var/mob/living/M in living_mob_list)
+		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+			servants++
+	if(servants > 5)
+		whispered = FALSE
+	return ..()
+
+//The scripture that does the converting.
+/datum/clockwork_scripture/guvax
+	name = "Guvax Conversion"
+	invocations = list("Enlighten this heathen!", "All are insects before Engine!", "Purge all untruths and honor Engine.")
+	channel_time = 50
+	tier = SCRIPTURE_PERIPHERAL
+	var/mob/living/target
+	var/obj/structure/destructible/clockwork/guvax_binding/binding
+
+/datum/clockwork_scripture/guvax/Destroy()
+	qdel(binding)
+	return ..()
+
+/datum/clockwork_scripture/guvax/can_recite()
+	if(!target)
+		return FALSE
+	return ..()
 
 /datum/clockwork_scripture/guvax/run_scripture()
 	var/servants = 0
@@ -139,19 +148,19 @@
 			servants++
 	if(servants > 5)
 		servants -= 5
-		channel_time = min(channel_time + servants*10, 200) //if above 5 servants, is much slower
+		channel_time = min(channel_time + servants*5, 100)
+	if(target.buckled)
+		target.buckled.unbuckle_mob(target, TRUE)
+	binding = new(get_turf(target))
+	binding.setDir(target.dir)
+	binding.buckle_mob(target, TRUE)
 	return ..()
 
+/datum/clockwork_scripture/guvax/check_special_requirements()
+	return target && binding && target.buckled == binding && !is_servant_of_ratvar(target) && target.stat != DEAD
+
 /datum/clockwork_scripture/guvax/scripture_effects()
-	for(var/mob/living/L in hearers(1, get_turf(invoker))) //Affects silicons
-		if(!is_servant_of_ratvar(L))
-			if(L.stat != DEAD)
-				add_servant_of_ratvar(L)
-		else
-			if(L.reagents && L.reagents.has_reagent("holywater"))
-				L.reagents.remove_reagent("holywater", 1000)
-				L << "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>"
-	return TRUE
+	return add_servant_of_ratvar(target)
 
 
 //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each chant.

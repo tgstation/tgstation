@@ -282,7 +282,7 @@
 		remove_ranged_ability(msg)
 	else
 		msg = "<span class='notice'>Your prepare to cast your fireball spell! <B>Left-click to cast at a target!</B></span>"
-		add_ranged_ability(user, msg)
+		add_ranged_ability(user, msg, TRUE)
 
 /obj/effect/proc_holder/spell/fireball/update_icon()
 	if(!action)
