@@ -12,7 +12,7 @@
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use
-	if(!user.restrained() && !istype(user.loc, /obj/structure/closet))
+	if(!user.restrained() && istype(user.loc, /turf/open))
 		user << "<span class='warning'>We are already free!</span>"
 		return 0
 
@@ -51,6 +51,15 @@
 		addtimer(src, "open_closet", 70, FALSE, user, C)
 		used = TRUE
 
+	if(istype(user.loc, /obj/structure/spider/cocoon) && !used)
+		var/obj/structure/spider/cocoon/C = user.loc
+		if(!istype(C))
+			return 0
+		C.visible_message("<span class='warning'>[src] shifts and starts to fall apart!</span>")
+		user << "<span class='warning'>We secrete acidic enzymes from our skin and begin melting our cocoon...</span>"
+		addtimer(src, "dissolve_cocoon", 25, FALSE, user, C) //Very short because it's just webs
+		used = TRUE
+
 	if(used)
 		feedback_add_details("changeling_powers","BD")
 	return 1
@@ -80,3 +89,8 @@
 		C.open()
 		user << "<span class='warning'>We open the container restraining \
 			us!</span>"
+
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/structure/spider/cocoon/C)
+	if(C && user.loc == C)
+		qdel(C) //The cocoon's destroy will move the changeling outside of it without interference
+		user << "<span class='warning'>We dissolve the cocoon!</span>"
