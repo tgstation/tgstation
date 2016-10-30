@@ -11,10 +11,11 @@
 	for(var/mob/living/carbon/human/H in mob_list)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/storage/spooky(b)
-		if(prob(50))
-			H.set_species(/datum/species/skeleton)
-		else
-			H.set_species(/datum/species/zombie)
+		if(ishuman(H) || islizard(H))
+			if(prob(50))
+				H.set_species(/datum/species/skeleton)
+			else
+				H.set_species(/datum/species/zombie)
 
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
