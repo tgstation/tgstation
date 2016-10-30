@@ -1,20 +1,29 @@
+//component id defines
+#define BELLIGERENT_EYE "belligerent_eye"
+#define VANGUARD_COGWHEEL "vanguard_cogwheel"
+#define GUVAX_CAPACITOR "guvax_capacitor"
+#define REPLICANT_ALLOY "replicant_alloy"
+#define HIEROPHANT_ANSIBLE "hierophant_ansible"
+
 var/global/clockwork_construction_value = 0 //The total value of all structures built by the clockwork cult
 var/global/clockwork_caches = 0 //How many clockwork caches exist in the world (not each individual)
 var/global/clockwork_daemons = 0 //How many daemons exist in the world
 var/global/list/clockwork_generals_invoked = list("nezbere" = FALSE, "sevtug" = FALSE, "nzcrentr" = FALSE, "inath-neq" = FALSE) //How many generals have been recently invoked
 var/global/list/all_clockwork_objects = list() //All clockwork items, structures, and effects in existence
 var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatures) in existence
-var/global/list/clockwork_component_cache = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //The pool of components that caches draw from
+var/global/list/clockwork_component_cache = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //The pool of components that caches draw from
 var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial derelict has ever been successfully activated
 
-#define SCRIPTURE_PERIPHERAL "Peripheral" //Scripture tiers; peripherals should never be used
+//Scripture tiers; peripherals should never be used
+#define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
 #define SCRIPTURE_APPLICATION "Application"
 #define SCRIPTURE_REVENANT "Revenant"
 #define SCRIPTURE_JUDGEMENT "Judgement"
 
+//general component/cooldown things
 #define SLAB_PRODUCTION_TIME 900 //how long(deciseconds) slabs require to produce a single component; defaults to 1 minute 30 seconds
 
 #define SLAB_SERVANT_SLOWDOWN 300 //how much each servant above 5 slows down slab-based generation; defaults to 30 seconds per sevant
