@@ -127,12 +127,10 @@
 /obj/item/projectile/bullet/hardlight_arrow
 	name = "hardlight arrow"
 	icon_state = "arrow_hardlight"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
 	range = 30
 	damage = 30
 	damage_type = BRUTE		//I give the fuck up untill someone makes projectiles able to multi-damage I'm not going to risk experimenting with multi-hit projectiles.
 	flag = "bullet"
-	dropped = 1
 
 /obj/item/ammo_casing/caseless/arrow/hardlight
 	name = "hardlight arrow"
