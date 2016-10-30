@@ -83,7 +83,7 @@
 				var/turf/T = get_turf(H)
 				if(T)
 					new /obj/effect/hallucination/simple/clown(T, H, 25)
-			else if (prof(25)
+			else if (prob(25))
 				var/turf/T = get_turf(H)
 				if(T)
 					new /obj/effect/hallucination/simple/clown/scary(T, H, 25)
