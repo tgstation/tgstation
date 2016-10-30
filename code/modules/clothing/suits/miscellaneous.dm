@@ -268,6 +268,24 @@
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEEARS
 
+/obj/item/clothing/suit/hooded/bee_costume // It's Hip!
+	name = "bee costume"
+	desc = "Bee the true Queen!"
+	icon_state = "bee"
+	item_state = "labcoat"
+	body_parts_covered = CHEST|GROIN|ARMS
+	flags = THICKMATERIAL
+	hooded = 1
+	hoodtype = /obj/item/clothing/head/bee_hood
+
+/obj/item/clothing/head/bee_hood
+	name = "bee hood"
+	desc = "A hood attached to a bee costume."
+	icon_state = "bee"
+	body_parts_covered = HEAD
+	flags = NODROP|THICKMATERIAL
+	flags_inv = HIDEHAIR|HIDEEARS
+
 /obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
 	desc = "A horribly bloated suit made from human skins."
@@ -278,6 +296,7 @@
 	hooded = 1
 	actions_types = list(/datum/action/item_action/toggle_human_head)
 	hoodtype = /obj/item/clothing/head/human_head
+
 
 /obj/item/clothing/head/human_head
 	name = "bloated human head"

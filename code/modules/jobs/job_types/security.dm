@@ -60,9 +60,7 @@ Head of Security
 		return
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 	announce_head(H, list("Security")) //tell underlings (security radio) they have a head
 /*
@@ -119,9 +117,7 @@ Warden
 		return
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 /*
 Detective
@@ -170,9 +166,7 @@ Detective
 		return
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 /*
 Security Officer
@@ -271,9 +265,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		return
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.access |= dep_access

@@ -464,7 +464,7 @@
 
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
-	if(disabled)
+	if(disabled || !anchored)
 		return
 	if(raising || raised)
 		return

@@ -139,6 +139,9 @@
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
 
+/obj/structure/falsewall/examine_status() //So you can't detect falsewalls by examine.
+	return null
+
 /*
  * False R-Walls
  */
@@ -315,6 +318,7 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
 	icon_state = "clockwork_wall"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	mineral_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear/displaced
 	walltype = /turf/closed/wall/clockwork

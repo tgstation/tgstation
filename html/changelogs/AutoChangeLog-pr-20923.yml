@@ -1,9 +1,0 @@
-author: "Cuboos"
-delete-after: True
-changes: 
-  - rscadd: "Added a new unique tool belt to the CE"
-  - rscadd: "Added new power tools, a hand drill that can be used as a screw driver or wrench and jaws of life which can be used as either a crowbar or wire cutters"
-  - rscadd: "Power tools can also be made from the protolathe with engineering and electromagnet 6"
-  - tweak: "slightly revamped how construction/deconstruction handle sound"
-  - soundadd: "added new sounds for the power tools"
-  - soundadd: "added a new sound for activating and deactivating welding tools, just because."

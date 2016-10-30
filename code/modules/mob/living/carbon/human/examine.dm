@@ -278,6 +278,10 @@
 				var/mob/living/carbon/human/interactive/auto = src
 				if(auto.showexaminetext)
 					msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
+				if(auto.debugexamine)
+					var/dodebug = auto.doing2string(auto.doing)
+					var/interestdebug = auto.interest2string(auto.interest)
+					msg += "<span class='deadsay'>[t_He] [t_is] appears to be [interestdebug] and [dodebug].</span>\n"
 			else if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
@@ -298,13 +302,13 @@
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
 					msg += "<a href='?src=\ref[src];hud=1;photo_side=1'>\[Side photo\]</a><br>"
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/medical))
-					var/implant_detect
+					var/cyberimp_detect
 					for(var/obj/item/organ/cyberimp/CI in internal_organs)
 						if(CI.status == ORGAN_ROBOTIC)
-							implant_detect += "[name] is modified with a [CI.name].<br>"
-					if(implant_detect)
+							cyberimp_detect += "[name] is modified with a [CI.name].<br>"
+					if(cyberimp_detect)
 						msg += "Detected cybernetic modifications:<br>"
-						msg += implant_detect
+						msg += cyberimp_detect
 					if(R)
 						var/health_r = R.fields["p_stat"]
 						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health_r]\]</a>"

@@ -57,4 +57,4 @@
 			else
 				user << "<span class='warning'>You fail to collect anything!</span>"
 	else
-		..()
+		return ..()

@@ -1,12 +1,11 @@
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork
+/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork
 	name = "Summon Pitchfork"
 	desc = "A devil's weapon of choice.  Use this to summon/unsummon your pitchfork."
 	invocation_type = "none"
 	include_user = 1
 	range = -1
 	clothes_req = 0
-	var/obj/item/weapon/twohanded/pitchfork/demonic/pitchfork
-	var/pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/
+	item_type = /obj/item/weapon/twohanded/pitchfork/demonic
 
 	school = "conjuration"
 	charge_max = 150
@@ -14,27 +13,20 @@
 	action_icon_state = "pitchfork"
 	action_background_icon_state = "bg_demon"
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/cast(list/targets, mob/user = usr)
-	if (pitchfork)
-		qdel(pitchfork)
-	else
-		for(var/mob/living/carbon/C in targets)
-			if(C.drop_item())
-				pitchfork = new pitchfork_type
-				C.put_in_hands(pitchfork)
+/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater
+	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/Destroy()
-	if(pitchfork)
-		qdel(pitchfork)
-		pitchfork = null
-	return ..()
+/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended
+	item_type = /obj/item/weapon/twohanded/pitchfork/demonic/ascended
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater
-	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
-
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/ascended
-	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/ascended
-
+/obj/effect/proc_holder/spell/targeted/conjure_item/violin
+	item_type = /obj/item/device/instrument/violin/golden
+	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
+	invocation_type = "whisper"
+	invocation = "I aint have this much fun since Georgia."
+	action_icon_state = "golden_violin"
+	name = "Summon golden violin"
+	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/summon_contract
 	name = "Summon infernal contract"

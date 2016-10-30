@@ -20,7 +20,7 @@
 	var/deity_name = "Christ"
 
 /obj/item/weapon/storage/book/bible/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is offering \himself to [src.deity_name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/storage/book/bible/booze
@@ -153,7 +153,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		return
 
 	if (user.disabilities & CLUMSY && prob(50))
-		user << "<span class='danger'>The [src] slips out of your hand and hits your head.</span>"
+		user << "<span class='danger'>[src] slips out of your hand and hits your head.</span>"
 		user.take_bodypart_damage(10)
 		user.Paralyse(20)
 		return

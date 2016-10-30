@@ -124,7 +124,7 @@
 	qdel(src)
 
 /obj/effect/landmark/costume/maid/New()
-	new /obj/item/clothing/under/blackskirt(src.loc)
+	new /obj/item/clothing/under/skirt/black(src.loc)
 	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
 	new CHOICE(src.loc)
 	new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)

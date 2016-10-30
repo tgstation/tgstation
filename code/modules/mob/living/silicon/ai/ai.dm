@@ -376,7 +376,7 @@ var/list/ai_list = list()
 			src << browse(last_paper_seen, "window=show_paper")
 	//Carn: holopad requests
 	if(href_list["jumptoholopad"])
-		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
+		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"])
 		if(stat == CONSCIOUS)
 			if(H)
 				H.attack_ai(src) //may as well recycle
@@ -858,6 +858,7 @@ var/list/ai_list = list()
 		apc.malfai = parent || src
 		apc.malfhack = TRUE
 		apc.locked = TRUE
+		apc.coverlocked = TRUE
 
 		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 		src << "Hack complete. \The [apc] is now under your \

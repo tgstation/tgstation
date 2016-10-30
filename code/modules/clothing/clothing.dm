@@ -1,8 +1,8 @@
 /obj/item/clothing
 	name = "clothing"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 150
-	max_integrity = 150
+	obj_integrity = 200
+	max_integrity = 200
 	integrity_failure = 80
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
 	var/flash_protect = 0		//Malk: What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
@@ -252,6 +252,25 @@ BLIND     // can't see anything
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_head()
+
+
+//Neck
+/obj/item/clothing/neck
+	name = "necklace"
+	icon = 'icons/obj/clothing/neck.dmi'
+	body_parts_covered = NECK
+	slot_flags = SLOT_NECK
+	strip_delay = 40
+	put_on_delay = 40
+
+/obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
+	. = list()
+	if(!isinhands)
+		if(body_parts_covered & HEAD)
+			if(damaged_clothes)
+				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
+			if(blood_DNA)
+				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 
 
 //Mask

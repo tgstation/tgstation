@@ -25,18 +25,26 @@
 	return !density
 
 // When destroyed by explosions, properly handle contents.
-obj/structure/transit_tube/ex_act(severity, target)
-	if(3 - severity >= 0)
-		var/oldloc = loc
-		..(severity + 1)
+/obj/structure/transit_tube/ex_act(severity, target)
+	..()
+	if(!qdeleted(src))
 		for(var/atom/movable/AM in contents)
-			AM.loc = oldloc
+			AM.forceMove(loc)
+
+/obj/structure/transit_tube/contents_explosion(severity, target)
+	for(var/atom/movable/AM in contents)
+		AM.ex_act(severity, target)
 
 /obj/structure/transit_tube/New(loc)
 	..(loc)
 
 	if(tube_dirs == null)
 		init_dirs()
+
+/obj/structure/transit_tube/Destroy()
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(loc)
+	return ..()
 
 /obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))

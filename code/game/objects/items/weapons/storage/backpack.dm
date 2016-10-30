@@ -19,9 +19,9 @@
 	max_w_class = 3
 	max_combined_w_class = 21
 	storage_slots = 21
-	resistance_flags = FLAMMABLE
-	obj_integrity = 100
-	max_integrity = 100
+	resistance_flags = 0
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
@@ -38,14 +38,14 @@
 	icon_state = "holdingpack"
 	max_w_class = 6
 	max_combined_w_class = 35
-	resistance_flags = 0
+	resistance_flags = FIRE_PROOF
 	var/pshoom = 'sound/items/PSHOOM.ogg'
 	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
 
 
 /obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
 	user.drop_item()
 	user.Stun(5)
 	sleep(20)
@@ -100,7 +100,7 @@
 	max_combined_w_class = 60
 
 /obj/item/weapon/storage/backpack/santabag/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] places the [src.name] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
+	user.visible_message("<span class='suicide'>[user] places [src] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/storage/backpack/cultpack
@@ -151,7 +151,7 @@
 	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
 	item_state = "engiepack"
-	resistance_flags = 0
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/storage/backpack/botany
 	name = "botany backpack"

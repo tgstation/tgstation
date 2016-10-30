@@ -886,7 +886,7 @@
 /area/awaymission/centcomAway/cafe)
 "cT" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},

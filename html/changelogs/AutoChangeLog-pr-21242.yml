@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "The Recollection option in the Clockwork Slab has been significantly improved, with a better information to fluff ratio, and the ability to toggle which tiers of scripture that are visible in Recollection."

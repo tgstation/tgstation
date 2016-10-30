@@ -124,7 +124,8 @@
 /obj/structure/disposalholder/allow_drop()
 	return 1
 
-
+/obj/structure/disposalholder/ex_act(severity, target)
+	return
 
 // Disposal pipes
 
@@ -278,13 +279,10 @@
 
 
 // pipe affected by explosion
-/obj/structure/disposalpipe/ex_act(severity, target)
-
-	//pass on ex_act to our contents before calling it on ourself
+/obj/structure/disposalpipe/contents_explosion(severity, target)
 	var/obj/structure/disposalholder/H = locate() in src
 	if(H)
 		H.contents_explosion(severity, target)
-	..()
 
 
 /obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)

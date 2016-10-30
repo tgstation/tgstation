@@ -70,6 +70,7 @@ var/list/airlock_overlays = list()
 	var/image/old_panel_overlay
 	var/image/old_weld_overlay
 	var/image/old_sparks_overlay
+	var/image/old_dam_overlay
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
@@ -169,6 +170,12 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
 	wires = null
+	if(charge)
+		qdel(charge)
+		charge = null
+	if(electronics)
+		qdel(electronics)
+		electronics = null
 	if (cyclelinkedairlock)
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null
@@ -304,6 +311,7 @@ var/list/airlock_overlays = list()
 	var/image/lights_overlay
 	var/image/panel_overlay
 	var/image/weld_overlay
+	var/image/damag_overlay
 	var/image/sparks_overlay
 
 	switch(state)
@@ -317,6 +325,10 @@ var/list/airlock_overlays = list()
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(obj_integrity <integrity_failure)
+				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
+			else if(obj_integrity < (0.75 * max_integrity))
+				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
 			if(lights && hasPower())
 				if(locked)
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
@@ -333,6 +345,10 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("fill_closed", icon)
 			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(obj_integrity <integrity_failure)
+				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
+			else if(obj_integrity < (0.75 * max_integrity))
+				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
@@ -346,6 +362,10 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("fill_closed", icon)
 			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(obj_integrity <integrity_failure)
+				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
+			else if(obj_integrity < (0.75 * max_integrity))
+				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 
@@ -368,6 +388,8 @@ var/list/airlock_overlays = list()
 				filling_overlay = get_airlock_overlay("fill_open", icon)
 			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_open", overlays_file)
+			if(obj_integrity < (0.75 * max_integrity))
+				damag_overlay = get_airlock_overlay("sparks_open", overlays_file)
 
 		if(AIRLOCK_OPENING)
 			frame_overlay = get_airlock_overlay("opening", icon)
@@ -405,6 +427,10 @@ var/list/airlock_overlays = list()
 		overlays -= old_sparks_overlay
 		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
+	if(damag_overlay != old_dam_overlay)
+		overlays -= old_dam_overlay
+		add_overlay(damag_overlay)
+		old_dam_overlay = damag_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/iconkey = "[icon_state][icon_file]"
@@ -882,7 +908,7 @@ var/list/airlock_overlays = list()
 		user.drop_item()
 		panel_open = 0
 		update_icon()
-		C.loc = src
+		C.forceMove(src)
 		charge = C
 	else
 		return ..()
@@ -921,7 +947,7 @@ var/list/airlock_overlays = list()
 			return
 		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
 							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
-		charge.loc = get_turf(user)
+		charge.forceMove(get_turf(user))
 		charge = null
 		return
 	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
@@ -1230,6 +1256,13 @@ var/list/airlock_overlays = list()
 			panel_open = 1
 		wires.cut_all()
 		update_icon()
+
+
+/obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(obj_integrity < (0.75 * max_integrity))
+		update_icon()
+
 
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
 	if(!(flags & NODECONSTRUCT))

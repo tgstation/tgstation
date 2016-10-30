@@ -475,10 +475,11 @@
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
-	M.adjustBrainLoss(2*REM)
-	M.adjustToxLoss(3*REM,0)
-	M.adjustStaminaLoss(10*REM,0)
-	M.blur_eyes(5)
+		M.adjustBrainLoss(2*REM)
+		M.adjustToxLoss(3*REM,0)
+		M.adjustStaminaLoss(10*REM,0)
+		M.blur_eyes(5)
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/tinlux
@@ -500,7 +501,9 @@
 	color = "#d3a308"
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 
-datum/reagent/consumable/vitfro/on_mob_life(mob/living/M)
+/datum/reagent/consumable/vitfro/on_mob_life(mob/living/M)
 	if(prob(80))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
+		. = TRUE
+	..()

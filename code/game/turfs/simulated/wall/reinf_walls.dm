@@ -25,8 +25,8 @@
 	if(M.environment_smash == 3)
 		dismantle_wall(1)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		M << "<span class='notice'>You smash through the wall.</span>"
 	else
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 
 /turf/closed/wall/r_wall/try_destroy(obj/item/weapon/W, mob/user, turf/T)

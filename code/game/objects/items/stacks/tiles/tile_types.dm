@@ -110,6 +110,7 @@
 	icon_state = "tile_space"
 	turf_type = /turf/open/floor/fakespace
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakespace
 
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
@@ -122,6 +123,7 @@
 	icon_state = "tile_noslip"
 	turf_type = /turf/open/floor/noslip
 	origin_tech = "materials=3"
+	merge_type = /obj/item/stack/tile/noslip
 
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
@@ -153,6 +155,7 @@
 	singular_name = "brass floor tile"
 	desc = "A brass floor tile. It vibrates slightly."
 	icon_state = "tile_brass"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	turf_type = /turf/open/floor/clockwork
 
 //Plasteel (normal)

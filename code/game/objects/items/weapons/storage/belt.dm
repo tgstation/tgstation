@@ -6,6 +6,8 @@
 	item_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
+	obj_integrity = 300
+	max_integrity = 300
 
 /obj/item/weapon/storage/belt/update_icon()
 	cut_overlays()
@@ -111,7 +113,7 @@
 		/obj/item/weapon/cautery,
 		/obj/item/weapon/hemostat,
 		/obj/item/device/geiger_counter,
-		/obj/item/clothing/tie/stethoscope,
+		/obj/item/clothing/neck/stethoscope,
 		/obj/item/weapon/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/weapon/wrench/medical,

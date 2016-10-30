@@ -99,6 +99,13 @@
 	unique_frequency = TRUE
 	can_flashlight = 0
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/halloween
+	name = "candy corn crossbow"
+	desc = "A weapon favored by Syndicate trick-or-treaters."
+	icon_state = "crossbow_halloween"
+	item_state = "crossbow"
+	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
@@ -109,13 +116,6 @@
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
-	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
-	shoot_live_shot()
-	return (OXYLOSS)
 
 /obj/item/weapon/gun/energy/plasmacutter
 	name = "plasma cutter"
