@@ -53,29 +53,29 @@
 
 #define MUTCOLORS		1
 #define HAIR			2
-#define FACEHAIR		4
-#define EYECOLOR		8
-#define LIPS			16
-#define RESISTTEMP		32
-#define RADIMMUNE		64
-#define NOBREATH		128
-#define NOGUNS			256
-#define NOBLOOD			512
-#define NOFIRE			1024
-#define VIRUSIMMUNE		8192
-#define PIERCEIMMUNE	16384
-#define NOTRANSSTING	32768
-#define MUTCOLORS_PARTSONLY	65536	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
-#define NODISMEMBER		131072
-#define NOHUNGER		262144
-#define NOCRITDAMAGE	524288
-#define NOZOMBIE		1048576
-#define EASYDISMEMBER	2097152
-#define EASYLIMBATTACHMENT 4194304
-#define TOXINLOVER		8388608
-#define DIGITIGRADE		16777216	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define FACEHAIR		3
+#define EYECOLOR		4
+#define LIPS			5
+#define RESISTTEMP		6
+#define RADIMMUNE		7
+#define NOBREATH		8
+#define NOGUNS			9
+#define NOBLOOD			10
+#define NOFIRE			11
+#define VIRUSIMMUNE		12
+#define PIERCEIMMUNE	13
+#define NOTRANSSTING	14
+#define MUTCOLORS_PARTSONLY	15	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define NODISMEMBER		16
+#define NOHUNGER		17
+#define NOCRITDAMAGE	18
+#define NOZOMBIE		19
+#define EASYDISMEMBER	20
+#define EASYLIMBATTACHMENT 21
+#define TOXINLOVER		22
+#define DIGITIGRADE		23	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 
-#define FLYING	33554432
+#define FLYING	65536
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
