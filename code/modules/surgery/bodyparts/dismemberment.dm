@@ -245,7 +245,7 @@
 	owner = C
 	C.bodyparts += src
 	if(held_index)
-		C.hand_bodyparts += src
+		C.hand_bodyparts[held_index] = src
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
