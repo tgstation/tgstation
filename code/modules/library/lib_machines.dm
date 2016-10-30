@@ -416,7 +416,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			var/orderid = input("Enter your order:") as num|null
 			if(orderid)
 				if(isnum(orderid) && IsInteger(orderid))
-					href_list["targetid"] = num2text(orderid) // This allows orderid to be sanitized.
+					href_list["targetid"] = num2text(orderid)
 
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
@@ -446,7 +446,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				break
 
 	add_fingerprint(usr)
-	updateUsrDialog()
+	//updateUsrDialog()
 
 /*
  * Library Scanner
