@@ -72,18 +72,18 @@
 		H << 'sound/spookoween/scary_clown_appear.ogg'
 		var/turf/T = get_turf(H)
 		if(T)
-			new /obj/effect/hallucination/delusion(H.loc,H,force_kind="clown",duration=300,skip_nearby=0)
+			new /obj/effect/hallucination/simple/clown/scary(T, H, 50)
 
 /datum/round_event/creepy_clowns/tick()
-	if(IsMultiple(activeFor, 3))
+	if(IsMultiple(activeFor, 5))
 		for(var/mob/living/carbon/human/H in living_mob_list)
-			if (prob(66))
+			if (prob(50))
 				playsound(H.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 100, 1)
 			if (prob(33))
 				var/turf/T = get_turf(H)
 				if(T)
-					new /obj/effect/hallucination/delusion(T,H,force_kind="clown",duration=50,skip_nearby=0) //
-			else if (prob(33))
+					new /obj/effect/hallucination/simple/clown/scary(T, H, 25)
+			else if (prob(5))
 				var/turf/T = get_turf(H)
 				if(T)
 					spawn_atom_to_turf(/obj/effect/mob_spawn/human/corpse/clown, H, 1)
