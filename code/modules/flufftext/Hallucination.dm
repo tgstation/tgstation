@@ -211,13 +211,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_state = "clown"
 
 /obj/effect/hallucination/simple/clown/New(loc,var/mob/living/carbon/T,duration)
-	..()
-	name = "[pick(clown_names)]"
-	sleep(duration)
-	qdel(src)
+	..(loc, T)
+	name = pick(clown_names)
+	QDEL_IN(src,duration)
 
 /obj/effect/hallucination/simple/clown/scary
-	image_state = "scaryclown"
+	image_state = "scary_clown"
 
 /obj/effect/hallucination/singularity_scare
 	//Singularity moving towards you.
