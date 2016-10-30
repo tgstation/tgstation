@@ -6,6 +6,7 @@
 	icon_state = "ocular_warden"
 	obj_integrity = 25
 	max_integrity = 25
+	hulk_damage = 25
 	construction_value = 15
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"

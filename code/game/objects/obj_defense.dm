@@ -76,7 +76,7 @@
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		take_damage(150, BRUTE, "melee", 0, get_dir(src, user))
+		take_damage(hulk_damage, BRUTE, "melee", 0, get_dir(src, user))
 		return 1
 	return 0
 
