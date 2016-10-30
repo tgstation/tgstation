@@ -446,7 +446,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				break
 
 	add_fingerprint(usr)
-	//updateUsrDialog()
+	updateUsrDialog()
 
 /*
  * Library Scanner
