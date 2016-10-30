@@ -17,7 +17,7 @@
 			hitverb = "slammed"
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has [hitverb] [src]!</span>", \
-		"<span class='userdanger'>[user] has [hitverb] [src]!</span>", null, COMBAT_MESSAGE_RANGE, user)
+		"<span class='userdanger'>[user] has [hitverb] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		return 1
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
@@ -28,7 +28,7 @@
 				if (prob(90))
 					playsound(loc, "punch", 25, 1, -1)
 					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
-							"<span class='userdanger'>[M] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE, M)
+							"<span class='userdanger'>[M] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of weakening an alien.
 						Paralyse(2)
 						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
@@ -39,7 +39,7 @@
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 					visible_message("<span class='userdanger'>[M] has attempted to punch [src]!</span>", \
-						"<span class='userdanger'>[M] has attempted to punch [src]!</span>", null, COMBAT_MESSAGE_RANGE, M)
+						"<span class='userdanger'>[M] has attempted to punch [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 			if ("disarm")
 				if (!lying)
@@ -54,11 +54,11 @@
 							drop_item()
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
-							"<span class='userdanger'>[M] has disarmed [src]!</span>", null, COMBAT_MESSAGE_RANGE, M)
+							"<span class='userdanger'>[M] has disarmed [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 						else
 							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 							visible_message("<span class='userdanger'>[M] has attempted to disarm [src]!</span>",\
-								"<span class='userdanger'>[M] has attempted to disarm [src]!</span>", null, COMBAT_MESSAGE_RANGE, M)
+								"<span class='userdanger'>[M] has attempted to disarm [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 
 

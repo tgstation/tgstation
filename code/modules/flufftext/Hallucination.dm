@@ -206,6 +206,18 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
 	qdel(src)
 
+/obj/effect/hallucination/simple/clown
+	image_icon = 'icons/mob/animal.dmi'
+	image_state = "clown"
+
+/obj/effect/hallucination/simple/clown/New(loc,var/mob/living/carbon/T,duration)
+	..(loc, T)
+	name = pick(clown_names)
+	QDEL_IN(src,duration)
+
+/obj/effect/hallucination/simple/clown/scary
+	image_state = "scary_clown"
+
 /obj/effect/hallucination/singularity_scare
 	//Singularity moving towards you.
 	//todo Hide where it moved with fake space images
@@ -303,11 +315,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(target.client)
 			delusions |= A
 			target.client.images |= A
-	sleep(duration)
+	QDEL_IN(src, duration)
+
+/obj/effect/hallucination/delusion/Destroy()
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)
-	qdel(src)
 
 /obj/effect/hallucination/fakeattacker/New(loc,var/mob/living/carbon/T)
 	target = T
