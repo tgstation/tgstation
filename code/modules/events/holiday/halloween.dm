@@ -70,19 +70,25 @@
 			return
 		H << "<span class='danger'>Honk...</span>"
 		H << 'sound/spookoween/scary_clown_appear.ogg'
-		new /obj/effect/hallucination/delusion(H.loc,H,force_kind="clown",duration=300,skip_nearby=0)
+		var/turf/T = get_turf(H)
+		if(T)
+			new /obj/effect/hallucination/delusion(H.loc,H,force_kind="clown",duration=300,skip_nearby=0)
 
 /datum/round_event/creepy_clowns/tick()
 	if(IsMultiple(activeFor, 3))
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			if (prob(66))
-				playsound(H.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 300, 1)
+				playsound(H.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 100, 1)
 			if (prob(33))
-				new /obj/effect/hallucination/delusion(H.loc,H,force_kind="clown",duration=50,skip_nearby=0) //
+				var/turf/T = get_turf(H)
+				if(T)
+					new /obj/effect/hallucination/delusion(T,H,force_kind="clown",duration=50,skip_nearby=0) //
 			else if (prob(33))
-				new /obj/effect/mob_spawn/human/corpse/clown(H.loc)
+				var/turf/T = get_turf(H)
+				if(T)
+					spawn_atom_to_turf(/obj/effect/mob_spawn/human/corpse/clown, H, 1)
 			else if (prob(1))
-				new /mob/living/simple_animal/hostile/retaliate/clown(H.loc)
+				spawn_atom_to_turf(/mob/living/simple_animal/hostile/retaliate/clown, H, 1)
 
 /datum/round_event/creepy_clowns/announce()
 	priority_announce("Honk... Honk... honk... HONK! HONK! HONKHONKHONKHONKHONK", "HONK!", 'sound/spookoween/scary_horn.ogg')

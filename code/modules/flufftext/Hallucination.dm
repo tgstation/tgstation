@@ -303,7 +303,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(target.client)
 			delusions |= A
 			target.client.images |= A
-	sleep(duration)
+		QDEL_IN(src, duration)
+
+/obj/effect/hallucination/delusion/Destroy()
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)
