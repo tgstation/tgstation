@@ -498,7 +498,11 @@
 				user << "<span class='warning'>Access denied.</span>"
 
 	else if (istype(W, /obj/item/stack/cable_coil) && opened)
-		if (src.loc:intact)
+		var/turf/host_turf = get_turf(src)
+		if(!host_turf)
+			throw EXCEPTION("attackby on APC when it's not on a turf")
+			return
+		if (host_turf.intact)
 			user << "<span class='warning'>You must remove the floor plating in front of the APC first!</span>"
 			return
 		else if (terminal) // it already have terminal
