@@ -14,7 +14,7 @@
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will focus its searing gaze upon nearby unenlightened.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
-	usage_tip = "Although powerful, the warden is very weak and should optimally be placed behind barricades."
+	usage_tip = "Although powerful, the warden is very fragile and should optimally be placed behind barricades."
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
 	space_allowed = TRUE
@@ -51,7 +51,7 @@
 	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers. \
 	It grows faster to invoke with more nearby servants."
 	invocations = list("Shield me...", "...with the...", "... fragments of Engine!")
-	channel_time = 110 //effectively 100 because it counts the invoker
+	channel_time = 100
 	required_components = list("vanguard_cogwheel" = 2, "replicant_alloy" = 1)
 	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
 	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
@@ -61,7 +61,7 @@
 	sort_priority = 4
 
 /datum/clockwork_scripture/fellowship_armory/run_scripture()
-	for(var/mob/living/L in range(1, invoker))
+	for(var/mob/living/L in orange(1, invoker))
 		if(is_servant_of_ratvar(L) && L.can_speak_vocal())
 			channel_time = max(channel_time - 10, 0)
 	return ..()
@@ -109,7 +109,7 @@
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
 	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
-	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell."
+	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell or cyborg body."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	sort_priority = 6
@@ -127,7 +127,7 @@
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
 	creator_message = "<span class='brass'>You form a clockwork proselytizer, which is already pre-loaded with a small amount of replicant alloy.</span>"
-	usage_tip = "Clockwork walls cause adjacent tinkerer's caches to generate components passively, making them a vital tool. Clockwork floors heal servants standing on them."
+	usage_tip = "Clockwork Walls cause adjacent tinkerer's caches to generate components passively, making them a vital tool. Clockwork Floors heal toxin damage in servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	sort_priority = 7

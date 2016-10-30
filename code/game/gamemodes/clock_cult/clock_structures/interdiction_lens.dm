@@ -36,6 +36,7 @@
 		toggle(0, user)
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/process()
+	. = ..()
 	if(recharging > world.time)
 		return
 	if(disabled)
