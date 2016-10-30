@@ -45,21 +45,27 @@
 	for(var/direction in cardinal)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
-			atmos_adjacent_turfs -= enemy_tile
+			if (atmos_adjacent_turfs)
+				atmos_adjacent_turfs -= enemy_tile
 			continue
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
 
 		//only check this turf, if it didn't check us when it was initalized
 		if(enemy_tile.current_cycle < times_fired)
 			if(CanAtmosPass(enemy_tile))
-				atmos_adjacent_turfs |= enemy_tile
-				enemy_tile.atmos_adjacent_turfs |= src
+				LAZYINITLIST(atmos_adjacent_turfs)
+				LAZYINITLIST(enemy_tile.atmos_adjacent_turfs)
+				atmos_adjacent_turfs[enemy_tile] = TRUE
+				enemy_tile.atmos_adjacent_turfs[src] = TRUE
 			else
-				atmos_adjacent_turfs -= enemy_tile
-				enemy_tile.atmos_adjacent_turfs -= src
+				if (atmos_adjacent_turfs)
+					atmos_adjacent_turfs -= enemy_tile
+				if (enemy_tile.atmos_adjacent_turfs)
+					enemy_tile.atmos_adjacent_turfs -= src
+				UNSETEMPTY(enemy_tile.atmos_adjacent_turfs)
 				continue
 		else
-			if (!(enemy_tile in atmos_adjacent_turfs))
+			if (!atmos_adjacent_turfs || !atmos_adjacent_turfs[enemy_tile])
 				continue
 
 
@@ -70,6 +76,9 @@
 			if(!excited) //make sure we aren't already excited
 				excited = 1
 				SSair.active_turfs |= src
+	UNSETEMPTY(atmos_adjacent_turfs)
+	if (atmos_adjacent_turfs)
+		src.atmos_adjacent_turfs = atmos_adjacent_turfs
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()

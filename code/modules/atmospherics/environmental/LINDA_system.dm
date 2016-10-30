@@ -53,24 +53,39 @@
 	return 0
 
 /turf/proc/CalculateAdjacentTurfs()
+	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 	for(var/direction in cardinal)
 		var/turf/open/T = get_step(src, direction)
 		if(!istype(T))
 			continue
 		if(CanAtmosPass(T))
-			atmos_adjacent_turfs |= T
-			T.atmos_adjacent_turfs |= src
+			LAZYINITLIST(atmos_adjacent_turfs)
+			LAZYINITLIST(T.atmos_adjacent_turfs)
+			atmos_adjacent_turfs[T] = TRUE
+			T.atmos_adjacent_turfs[src] = TRUE
 		else
-			atmos_adjacent_turfs -= T
-			T.atmos_adjacent_turfs -= src
+			if (atmos_adjacent_turfs)
+				atmos_adjacent_turfs -= T
+			if (T.atmos_adjacent_turfs)
+				T.atmos_adjacent_turfs -= src
+			UNSETEMPTY(T.atmos_adjacent_turfs)
+	UNSETEMPTY(atmos_adjacent_turfs)
+	if (atmos_adjacent_turfs)
+		src.atmos_adjacent_turfs = atmos_adjacent_turfs
 
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
 //	air with both of the related adjacent cardinal tiles
 /turf/proc/GetAtmosAdjacentTurfs(alldir = 0)
-	var/adjacent_turfs = atmos_adjacent_turfs.Copy()
+	var/adjacent_turfs
+	if (atmos_adjacent_turfs)
+		adjacent_turfs = atmos_adjacent_turfs.Copy()
+	else
+		adjacent_turfs = list()
+
 	if (!alldir)
 		return adjacent_turfs
+
 	var/turf/curloc = src
 
 	for (var/direction in diagonals)
