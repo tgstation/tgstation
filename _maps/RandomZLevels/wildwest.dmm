@@ -366,7 +366,7 @@
 /area/awaymission/wwmines)
 "bC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile,
+/obj/item/weapon/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "bD" = (
@@ -620,7 +620,7 @@
 /area/awaymission/wwmines)
 "ch" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile,
+/obj/item/weapon/gun/ballistic,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -1387,7 +1387,7 @@
 "eE" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
-/obj/item/weapon/gun/projectile,
+/obj/item/weapon/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "eF" = (
@@ -1956,7 +1956,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gm" = (
-/obj/item/weapon/gun/projectile,
+/obj/item/weapon/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gn" = (
