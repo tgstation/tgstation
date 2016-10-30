@@ -186,4 +186,4 @@
 	qdel(src)
 
 /obj/item/ammo_casing/caseless/arrow/hardlight/dropped()
-	qdel(src)
+	QDEL_IN(200,src)
