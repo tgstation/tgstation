@@ -37,10 +37,10 @@
 
 	var/mob/living/simple_animal/borer/B = src.loc
 
-	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 50 seconds).</span>"
+	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 40 seconds).</span>"
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
-	var/delay = rand(250,350) + B.victim.brainloss
+	var/delay = rand(150,250) + B.victim.brainloss
 	addtimer(src, "return_control", delay, FALSE, src.loc)
 
 /mob/living/captive_brain/proc/return_control(mob/living/simple_animal/borer/B)
@@ -500,7 +500,7 @@ var/total_borer_hosts_needed = 10
 	src << "<span class='userdanger'>You begin disconnecting from [victim]'s synapses and prodding at their internal ear canal.</span>"
 
 	if(victim.stat != DEAD)
-		host << "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>"
+		victim << "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>"
 
 	leaving = 1
 
@@ -520,8 +520,8 @@ var/total_borer_hosts_needed = 10
 
 	src << "<span class='userdanger'>You wiggle out of [victim]'s ear and plop to the ground.</span>"
 	if(victim.mind)
-		host << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
-		host << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
+		victim << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
+		victim << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
 
 	leaving = 0
 
@@ -616,7 +616,7 @@ var/total_borer_hosts_needed = 10
 	if(qdeleted(src) || qdeleted(victim))
 		return
 
-	var/delay = 300+(victim.brainloss*5)
+	var/delay = 200+(victim.brainloss*5)
 	addtimer(src, "assume_control", delay, FALSE)
 
 /mob/living/simple_animal/borer/proc/assume_control()
