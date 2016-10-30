@@ -108,6 +108,10 @@
 		balloon. Cloning pods in 'medbay' area are showcases and \
 		nonfunctional."
 
+/datum/map_template/shuttle/emergency/pubby
+	suffix = "pubby"
+	name = "Pubby emergency shuttle"
+
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
 	name = "Hyperfractal Gigashuttle"
@@ -193,6 +197,10 @@
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
 	name = "NT Recovery White-ship"
+
+/datum/map_template/shuttle/whiteship/pubby
+	suffix = "pubby"
+	name = "NT White UFO"
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
