@@ -3471,12 +3471,12 @@
 /area/ai_monitored/security/armory)
 "agh" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/gun/advtaser,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser,
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -16446,7 +16446,7 @@
 	registered_name = "Thirteen"
 	},
 /obj/item/weapon/lazarus_injector,
-/obj/item/weapon/gun/energy/gun/advtaser,
+/obj/item/weapon/gun/energy/e_gun/advtaser,
 /obj/item/weapon/gun/ballistic/revolver/russian,
 /obj/item/ammo_box/a357,
 /obj/item/clothing/neck/stethoscope,

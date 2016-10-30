@@ -1307,7 +1307,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "eq" = (
-/obj/item/weapon/gun/projectile/shotgun,
+/obj/item/weapon/gun/ballistic/shotgun,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "er" = (
@@ -1839,7 +1839,7 @@
 /area/awaymission/wwmines)
 "fS" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile/shotgun,
+/obj/item/weapon/gun/ballistic/shotgun,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "fT" = (
@@ -1928,7 +1928,7 @@
 /area/awaymission/wwmines)
 "gg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile/revolver/russian,
+/obj/item/weapon/gun/ballistic/revolver/russian,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gh" = (
@@ -2007,11 +2007,11 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gw" = (
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gx" = (
-/obj/item/weapon/gun/projectile/shotgun,
+/obj/item/weapon/gun/ballistic/shotgun,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
