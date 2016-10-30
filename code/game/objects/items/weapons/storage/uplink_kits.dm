@@ -337,5 +337,5 @@
 
 /obj/item/weapon/storage/box/syndie_kit/bow/New()
 	..()
-	new/obj/item/weapon/gun/projectile/bow/hardlight(src)
+	new/obj/item/weapon/gun/ballistic/bow/hardlight(src)
 	new/obj/item/weapon/storage/backpack/quiver/hardlight(src)

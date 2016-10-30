@@ -50,7 +50,8 @@
 	newdart.modified = modified
 	newdart.damage = damage
 	newdart.nodamage = nodamage
-	newdart.damage_type = damage_type	if(pen)
+	newdart.damage_type = damage_type
+	if(pen)
 		newdart.pen = pen
 		pen.forceMove(newdart)
 		pen = null

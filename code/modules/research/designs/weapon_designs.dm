@@ -277,5 +277,5 @@
 	req_tech = list("combat" = 5, "materials" = 6, "bluespace" = 2, "powerstorage" = 3, "magnets" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 3500, MAT_GOLD = 5750, MAT_URANIUM = 1250, MAT_GLASS = 3000, MAT_METAL =  3000, MAT_DIAMOND = 625, MAT_TITANIUM = 3500)	//HARDLIGHT CAN'T MELT TITANIUM BOWS.
-	build_path = /obj/item/weapon/gun/projectile/bow/hardlight
+	build_path = /obj/item/weapon/gun/ballistic/bow/hardlight
 	category = list("Weapons")
