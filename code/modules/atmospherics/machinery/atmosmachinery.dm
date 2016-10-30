@@ -289,7 +289,7 @@ Pipelines + Other Objects -> Pipe network
 	return list()
 
 /obj/machinery/atmospherics/update_remote_sight(mob/user)
-	if(istype(user, /mob/living/simple_animal/borer))
+	if(isborer(user))
 		user.sight |= (SEE_PIXELS)
 	else
 		user.sight |= (SEE_TURFS|BLIND)

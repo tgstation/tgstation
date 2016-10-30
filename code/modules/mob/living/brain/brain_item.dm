@@ -38,7 +38,7 @@
 		if(owner.mind)
 			src.transfer_identity(C)
 
-	if(istype(owner,/mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.update_hair()
 	. = ..()

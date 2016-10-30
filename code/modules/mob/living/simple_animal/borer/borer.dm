@@ -4,17 +4,17 @@
 
 /mob/living/captive_brain/say(var/message)
 
-	if (src.client)
+	if(src.client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if(src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if(istype(src.loc,/mob/living/simple_animal/borer))
+	if(isborer(src.loc))
 
 		message = sanitize(message)
-		if (!message)
+		if(!message)
 			return
 		log_say("[key_name(src)] : [message]")
 		if (stat == 2)
@@ -25,7 +25,7 @@
 		B.victim << "The captive mind of [src] whispers, \"[message]\""
 
 		for (var/mob/M in player_list)
-			if (istype(M, /mob/new_player))
+			if(isnewplayer(M))
 				continue
 			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
 				M << "<i>Thought-speech, <b>[src]</b> -> <b>[B.truename]:</b> [message]</i>"
@@ -37,10 +37,10 @@
 
 	var/mob/living/simple_animal/borer/B = src.loc
 
-	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 20 seconds).</span>"
+	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 50 seconds).</span>"
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
-	var/delay = rand(150,220) + B.victim.brainloss
+	var/delay = rand(250,350) + B.victim.brainloss
 	addtimer(src, "return_control", delay, FALSE, src.loc)
 
 /mob/living/captive_brain/proc/return_control(mob/living/simple_animal/borer/B)
@@ -51,8 +51,6 @@
     src << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
     B.victim << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
     B.detatch()
-    verbs -= /mob/living/carbon/proc/release_control
-    verbs -= /mob/living/carbon/proc/spawn_larvae
 
 var/list/mob/living/simple_animal/borer/borers = list()
 var/total_borer_hosts_needed = 10
@@ -95,6 +93,16 @@ var/total_borer_hosts_needed = 10
 	var/borer_chems = list()
 	var/dominate_cooldown = 150
 	var/leaving = 0
+	var/hiding = FALSE
+
+	var/datum/action/innate/borer/talk_to_host/talk_to_host_action
+	var/datum/action/innate/borer/infest_host/infest_host_action
+	var/datum/action/innate/borer/toggle_hide/toggle_hide_action
+	var/datum/action/innate/borer/talk_to_borer/talk_to_borer_action
+	var/datum/action/innate/borer/talk_to_brain/talk_to_brain_action
+	var/datum/action/innate/borer/take_control/take_control_action
+	var/datum/action/innate/borer/give_back_control/give_back_control_action
+	var/datum/action/innate/borer/leave_body/leave_body_action
 
 /mob/living/simple_animal/borer/New(atom/newloc, var/gen=1)
 	..(newloc)
@@ -116,6 +124,12 @@ var/total_borer_hosts_needed = 10
 	borer_chems += /datum/borer_chem/rezadone
 
 	borers += src
+
+	talk_to_host_action = new()
+	infest_host_action = new()
+	infest_host_action.Grant(src)
+	toggle_hide_action = new()
+	toggle_hide_action.Grant(src)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/user)
 	if(jobban_isbanned(user, ROLE_BORER) || jobban_isbanned(user, "Syndicate"))
@@ -163,12 +177,14 @@ var/total_borer_hosts_needed = 10
 			victim << "<span class='changeling'><i>[src.truename] [say_string]:</i> [input]</span>"
 			log_say("Borer Communication: [key_name(src)] -> [key_name(victim)] : [input]")
 			for(var/M in dead_mob_list)
-				if(istype(M, /mob/dead/observer))
+				if(isobserver(M))
 					var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src.truename]</b> : [input]</i>"
 					var/link = FOLLOW_LINK(M, src)
 					M << "[link] [rendered]"
 		src << "<span class='changeling'><i>[src.truename] [say_string]:</i> [input]</span>"
 		victim.verbs += /mob/living/proc/borer_comm
+		talk_to_borer_action = new()
+		talk_to_borer_action.Grant(victim)
 
 /mob/living/proc/borer_comm()
 	set name = "Converse with Borer"
@@ -188,7 +204,7 @@ var/total_borer_hosts_needed = 10
 	log_say("Borer Communication: [key_name(src)] -> [key_name(B)] : [input]")
 
 	for(var/M in dead_mob_list)
-		if(istype(M, /mob/dead/observer))
+		if(isobserver(M))
 			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[src]</b> : [input]</i>"
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [rendered]"
@@ -212,7 +228,7 @@ var/total_borer_hosts_needed = 10
 	log_say("Borer Communication: [key_name(B)] -> [key_name(CB)] : [input]")
 
 	for(var/M in dead_mob_list)
-		if(istype(M, /mob/dead/observer))
+		if(isobserver(M))
 			var/rendered = "<span class='changeling'><i>Borer Communication from <b>[B]</b> : [input]</i>"
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [rendered]"
@@ -285,6 +301,52 @@ var/total_borer_hosts_needed = 10
 
 	..()
 
+/mob/living/simple_animal/borer/verb/infect_victim()
+	set name = "Infest"
+	set category = "Borer"
+	set desc = "Infest a suitable humanoid host."
+
+	if(victim)
+		src << "<span class='warning'>You are already within a host.</span>"
+
+	if(stat == DEAD)
+		return
+
+	var/list/choices = list()
+	for(var/mob/living/carbon/H in view(1,src))
+		if(H!=src && Adjacent(H))
+			choices += H
+
+	var/mob/living/carbon/H = input(src,"Who do you wish to infest?") in null|choices
+	if(!H)
+		return
+
+	if(H.has_brain_worms())
+		src << "<span class='warning'>[victim] is already infested!</span>"
+		return
+
+	if(CanInfect(H))
+		src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
+		src.layer = MOB_LAYER
+		if(!do_mob(src, H, 30))
+			src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
+			return
+
+		if(!H || !src)
+			return
+
+		Infect(H)
+
+/mob/living/simple_animal/borer/proc/CanInfect(var/mob/living/carbon/H)
+	if(!Adjacent(H))
+		return FALSE
+
+	if(stat != CONSCIOUS)
+		src << "<span class='warning'>You cannot do that in your current state.</span>"
+		return FALSE
+
+	return TRUE
+
 /mob/living/simple_animal/borer/proc/Infect(mob/living/carbon/victim)
 	if(!victim)
 		return
@@ -305,70 +367,15 @@ var/total_borer_hosts_needed = 10
 	victim.borer = src
 	forceMove(victim)
 
+	infest_host_action.Remove(src)
+	toggle_hide_action.Remove(src)
+	talk_to_host_action.Grant(src)
+	leave_body_action = new()
+	leave_body_action.Grant(src)
+	take_control_action = new()
+	take_control_action.Grant(src)
+
 	log_game("[src]/([src.ckey]) has infested [victim]/([victim.ckey]")
-
-/mob/living/simple_animal/borer/proc/leave_victim()
-	if(!victim)
-		return
-
-	if(controlling)
-		detatch()
-
-	forceMove(get_turf(victim))
-
-	victim.borer = null
-	reset_perspective(null)
-
-	var/mob/living/V = victim
-	V.verbs -= /mob/living/proc/borer_comm
-	victim = null
-	return
-
-/mob/living/simple_animal/borer/verb/infect_victim()
-	set name = "Infest"
-	set category = "Borer"
-	set desc = "Infest a suitable humanoid host."
-
-	if(victim)
-		src << "<span class='warning'>You are already within a host.</span>"
-
-	if(stat == DEAD)
-		return
-
-	var/list/choices = list()
-	for(var/mob/living/carbon/H in view(1,src))
-		if(H!=src && Adjacent(H))
-			choices += H
-
-	var/mob/living/carbon/human/H = input(src,"Who do you wish to infest?") in null|choices
-	if(!H)
-		return
-
-	if(H.has_brain_worms())
-		src << "<span class='warning'>[victim] is already infested!</span>"
-		return
-
-	if(CanInfect(H))
-		src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
-		src.layer = MOB_LAYER
-		if(!do_mob(src, H, 30))
-			src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
-			return
-
-		if(!H || !src)
-			return
-
-		Infect(H)
-
-/mob/living/simple_animal/borer/proc/CanInfect(var/mob/living/carbon/human/H)
-	if(!Adjacent(H))
-		return FALSE
-
-	if(stat != CONSCIOUS)
-		src << "<span class='warning'>You cannot do that in your current state.</span>"
-		return FALSE
-
-	return TRUE
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
 	set category = "Borer"
@@ -411,19 +418,21 @@ var/total_borer_hosts_needed = 10
 	set desc = "Become invisible to the common eye."
 
 	if(victim)
-		src << "<span class='warning'>You cannot do this whilst you are infesting a host</span>"
+		src << "<span class='warning'>You cannot do this inside a host</span>"
 
 	if(src.stat != CONSCIOUS)
 		return
 
-	if (src.layer != TURF_LAYER+0.2)
-		src.layer = TURF_LAYER+0.2
+	if (!src.hiding)
+		src.layer = LATTICE_LAYER
 		src.visible_message("<span class='name'>[src] scurries to the ground!</span>", \
 						"<span class='noticealien'>You are now hiding.</span>")
+		src.hiding = TRUE
 	else
 		src.layer = MOB_LAYER
 		src.visible_message("[src] slowly peaks up from the ground...", \
 					"<span class='noticealien'>You stop hiding.</span>")
+		src.hiding = FALSE
 
 /mob/living/simple_animal/borer/verb/dominate_victim()
 	set category = "Borer"
@@ -518,6 +527,30 @@ var/total_borer_hosts_needed = 10
 
 	leave_victim()
 
+/mob/living/simple_animal/borer/proc/leave_victim()
+	if(!victim)
+		return
+
+	if(controlling)
+		detatch()
+
+	infest_host_action.Grant(src)
+	toggle_hide_action.Grant(src)
+	talk_to_host_action.Remove(src)
+	take_control_action.Remove(src)
+	leave_body_action.Remove(src)
+
+	forceMove(get_turf(victim))
+
+	victim.borer = null
+	reset_perspective(null)
+
+	var/mob/living/V = victim
+	V.verbs -= /mob/living/proc/borer_comm
+	talk_to_borer_action.Remove(victim)
+	victim = null
+	return
+
 /mob/living/simple_animal/borer/verb/jumpstart()
 	set category = "Borer"
 	set name = "Jumpstart Host"
@@ -546,7 +579,7 @@ var/total_borer_hosts_needed = 10
 		victim.radiation = 0
 		victim.heal_overall_damage(victim.getBruteLoss(), victim.getFireLoss())
 		victim.reagents.clear_reagents()
-		if(istype(victim,/mob/living/carbon/human))
+		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			H.restore_blood()
 			H.remove_all_embedded_objects()
@@ -583,7 +616,7 @@ var/total_borer_hosts_needed = 10
 	if(qdeleted(src) || qdeleted(victim))
 		return
 
-	var/delay = 200+(victim.brainloss*5)
+	var/delay = 300+(victim.brainloss*5)
 	addtimer(src, "assume_control", delay, FALSE)
 
 /mob/living/simple_animal/borer/proc/assume_control()
@@ -644,6 +677,11 @@ var/total_borer_hosts_needed = 10
 		victim.verbs += /mob/living/carbon/proc/spawn_larvae
 		victim.verbs -= /mob/living/proc/borer_comm
 		victim.verbs += /mob/living/proc/trapped_mind_comm
+		talk_to_brain_action = new()
+		talk_to_brain_action.Grant(victim)
+		talk_to_borer_action.Remove(victim)
+		give_back_control_action = new()
+		give_back_control_action.Grant(victim)
 
 		victim.med_hud_set_status()
 
@@ -701,16 +739,11 @@ mob/living/carbon/proc/release_control()
 
 		borer.detatch()
 
-		verbs -= /mob/living/carbon/proc/release_control
-		verbs -= /mob/living/carbon/proc/spawn_larvae
-		verbs += /mob/living/proc/borer_comm
-		verbs -= /mob/living/proc/trapped_mind_comm
-
 //Check for brain worms in head.
 /mob/proc/has_brain_worms()
 
 	for(var/I in contents)
-		if(istype(I,/mob/living/simple_animal/borer))
+		if(isborer(I))
 			return I
 
 	return FALSE
@@ -722,7 +755,7 @@ mob/living/carbon/proc/release_control()
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 
-	if(istype(src, /mob/living/brain))
+	if(isbrain(src))
 		src << "<span class='usernotice'>You need a mouth to be able to do this.</span>"
 		return
 	if(!B)
@@ -772,6 +805,9 @@ mob/living/carbon/proc/release_control()
 	victim.verbs -= /mob/living/carbon/proc/spawn_larvae
 	victim.verbs += /mob/living/proc/borer_comm
 	victim.verbs -= /mob/living/proc/trapped_mind_comm
+	talk_to_brain_action.Remove(victim)
+	talk_to_borer_action.Grant(victim)
+	give_back_control_action.Remove(victim)
 
 	victim.med_hud_set_status()
 
@@ -821,3 +857,89 @@ mob/living/carbon/proc/release_control()
 	M.assigned_role = "Cortical Borer"
 	M.special_role = "Cortical Borer"
 	return M
+
+/datum/action/innate/borer/talk_to_host
+	name = "Converse with Host"
+	desc = "Send a silent message to your host."
+	button_icon_state = "alien_whisper"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/borer/talk_to_host/Activate()
+	var/mob/living/simple_animal/borer/B = owner
+	B.Communicate()
+
+/datum/action/innate/borer/infest_host
+	name = "Infest"
+	desc = "Infest a suitable humanoid host."
+	button_icon_state = "infest"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/borer/infest_host/Activate()
+	var/mob/living/simple_animal/borer/B = owner
+	B.infect_victim()
+
+/datum/action/innate/borer/toggle_hide
+	name = "Toggle Hide"
+	desc = "Become invisible to the common eye. Toggled on or off."
+	button_icon_state = "borer_hiding_false"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/borer/toggle_hide/Activate()
+	var/mob/living/simple_animal/borer/B = owner
+	B.hide()
+	button_icon_state = "borer_hiding_[B.hiding ? "true" : "false"]"
+	UpdateButtonIcon()
+
+/datum/action/innate/borer/talk_to_borer
+	name = "Converse with Borer"
+	desc = "Communicate mentally with your borer."
+	button_icon_state = "alien_whisper"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/borer/talk_to_borer/Activate()
+	var/mob/living/simple_animal/borer/B = owner.has_brain_worms()
+	B.victim = owner
+	B.victim.borer_comm()
+
+
+/datum/action/innate/borer/talk_to_brain
+	name = "Converse with Trapped Mind"
+	desc = "Communicate mentally with the trapped mind of your host."
+	button_icon_state = "alien_whisper"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/borer/talk_to_brain/Activate()
+	var/mob/living/simple_animal/borer/B = owner.has_brain_worms()
+	B.victim = owner
+	B.victim.trapped_mind_comm()
+
+/datum/action/innate/borer/take_control
+	name = "Assume Control"
+	desc = "Fully connect to the brain of your host."
+	button_icon_state = "borer_brain"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/borer/take_control/Activate()
+	var/mob/living/simple_animal/borer/B = owner
+	B.bond_brain()
+
+/datum/action/innate/borer/give_back_control
+	name = "Release Control"
+	desc = "Release control of your host's body."
+	button_icon_state = "borer_leave"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/borer/give_back_control/Activate()
+	var/mob/living/simple_animal/borer/B = owner.has_brain_worms()
+	B.victim = owner
+	B.victim.release_control()
+
+/datum/action/innate/borer/leave_body
+	name = "Release Host"
+	desc = "Slither out of your host."
+	button_icon_state = "borer_leave"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/borer/leave_body/Activate()
+	var/mob/living/simple_animal/borer/B = owner
+	B.release_victim()
