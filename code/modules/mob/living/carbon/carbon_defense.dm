@@ -89,7 +89,6 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
-			return 1 // So we don't wake operated person
 	return 0
 
 

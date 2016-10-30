@@ -89,7 +89,6 @@
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
-			return // So on help intent we will not attack operated patient
 	return ..()
 
 /mob/living/carbon/throw_impact(atom/hit_atom)

@@ -296,7 +296,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(M))
 						return 1
-				return // So on help intent we will not attack operated patient
 		if(..()) //successful attack
 			attacked += 10
 
@@ -312,7 +311,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
-			return // So on help intent we will not attack operated patient
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]
