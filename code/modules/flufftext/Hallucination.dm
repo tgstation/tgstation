@@ -309,7 +309,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)
-	qdel(src)
 
 /obj/effect/hallucination/fakeattacker/New(loc,var/mob/living/carbon/T)
 	target = T
