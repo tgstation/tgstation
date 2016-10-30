@@ -78,7 +78,7 @@
 	if (istype(user,/mob/living/carbon/human/))
 		var/mob/living/carbon/human/H = user
 		H.forcesay("WHAT THE FUCK IS CARBON DIOXIDE?")
-		H.visible_message("<span class='suicide'>[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_theyre()] they didn't read what that jetpack says!</span>")
+		H.visible_message("<span class='suicide'>[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!</span>")
 		return (OXYLOSS)
 	else
 		..()
