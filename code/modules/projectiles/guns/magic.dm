@@ -78,3 +78,9 @@
 	user.visible_message("<span class='suicide'>[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, fire_sound, 50, 1, -1)
 	return (FIRELOSS)
+
+/obj/item/weapon/gun/magic/on_varedit(varname)
+	. = ..()
+	switch (varname)
+		if ("charges")
+			recharge_newshot()
