@@ -103,10 +103,10 @@
 			overlays -= overlay
 
 	if (new_overlay_types.len)
-		var/overlays_to_add = new_overlay_types
 		if (atmos_overlay_types)
-			overlays_to_add -= atmos_overlay_types //doesn't add overlays that already exist
-		add_overlay(overlays_to_add) //add_overlay works with lists because it uses +=
+			add_overlay(new_overlay_types - atmos_overlay_types) //don't add overlays that already exist
+		else
+			add_overlay(new_overlay_types)
 
 	UNSETEMPTY(new_overlay_types)
 	atmos_overlay_types = new_overlay_types
