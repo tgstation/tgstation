@@ -124,7 +124,7 @@
 	name = "bow hardlight magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
 
-/obj/item/projectile/bullet/reusable/arrow/hardlight
+/obj/item/projectile/bullet/hardlight_arrow
 	name = "hardlight arrow"
 	icon_state = "arrow_hardlight"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
@@ -139,7 +139,7 @@
 	desc = "An arrow made out of hardlight."
 	icon_state = "arrow_hardlight"
 	force = 7
-	projectile_type = /obj/item/projectile/bullet/reusable/arrow/hardlight
+	projectile_type = /obj/item/projectile/bullet/hardlight_arrow
 	delay = 10
 
 /obj/item/weapon/storage/backpack/quiver/hardlight
@@ -182,6 +182,10 @@
 		else
 			icon_amount = 3
 	icon_state = "hlquiver[icon_amount]"
+
+/obj/item/projectile/bullet/hardlight_arrow/on_hit()
+	..()
+	qdel(src)
 
 /obj/item/ammo_casing/caseless/arrow/hardlight/dropped()
 	qdel(src)
