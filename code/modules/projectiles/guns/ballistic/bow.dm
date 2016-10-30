@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/projectile/bow
+/obj/item/weapon/gun/ballistic/bow
 	name = "bow"
 	desc = "A sturdy bow made out of wood and reinforced with iron."
 	icon_state = "bow_unloaded"
@@ -7,11 +7,12 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
 	flags = HANDSLOW
 	weapon_weight = WEAPON_HEAVY
+	casing_ejector = 0
 	var/draw_sound = 'sound/weapons/draw_bow.ogg'
 	var/ready_to_fire = 0
 	var/slowdown_when_ready = 2
 
-/obj/item/weapon/gun/projectile/bow/update_icon()
+/obj/item/weapon/gun/ballistic/bow/update_icon()
 	if(magazine.ammo_count() && !ready_to_fire)
 		icon_state = "bow_loaded"
 	else if(ready_to_fire)
@@ -21,13 +22,13 @@
 		icon_state = initial(icon_state)
 		slowdown = initial(slowdown)
 
-/obj/item/weapon/gun/projectile/bow/dropped(mob/user)
+/obj/item/weapon/gun/ballistic/bow/dropped(mob/user)
 	if(magazine && magazine.ammo_count())
 		magazine.empty_magazine()
 		ready_to_fire = FALSE
 		update_icon()
 
-/obj/item/weapon/gun/projectile/bow/attack_self(mob/living/user)
+/obj/item/weapon/gun/ballistic/bow/attack_self(mob/living/user)
 	if(!ready_to_fire && magazine.ammo_count())
 		ready_to_fire = TRUE
 		playsound(user, draw_sound, 100, 1)
@@ -36,50 +37,26 @@
 		ready_to_fire = FALSE
 		update_icon()
 
-/obj/item/weapon/gun/projectile/bow/attackby(obj/item/A, mob/user, params)
+/obj/item/weapon/gun/ballistic/bow/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You ready \the [A] into \the [src].</span>"
 		update_icon()
 		chamber_round()
 
-/obj/item/weapon/gun/projectile/bow/can_shoot()
+/obj/item/weapon/gun/ballistic/bow/can_shoot()
 	. = ..()
 	if(!ready_to_fire)
 		return FALSE
 
-/obj/item/weapon/gun/projectile/bow/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/weapon/gun/ballistic/bow/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	return
 
-/obj/item/weapon/gun/projectile/bow/process_chamber(eject_casing = 0, empty_chamber = 1)
+/obj/item/weapon/gun/ballistic/bow/process_chamber(empty_chamber = 1)
 	. = ..()
 	ready_to_fire = FALSE
 	update_icon()
 
-// ammo
-/obj/item/ammo_box/magazine/internal/bow
-	name = "bow internal magazine"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow
-	caliber = "arrow"
-	max_ammo = 1
-
-
-/obj/item/projectile/bullet/reusable/arrow
-	name = "arrow"
-	icon_state = "arrow"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow
-	range = 10
-	damage = 25
-	damage_type = BRUTE
-
-/obj/item/ammo_casing/caseless/arrow
-	name = "arrow"
-	desc = "Stab, stab, stab."
-	icon_state = "arrow"
-	force = 10
-	sharpness = IS_SHARP
-	projectile_type = /obj/item/projectile/bullet/reusable/arrow
-	caliber = "arrow"
 
 //quiver
 /obj/item/weapon/storage/backpack/quiver

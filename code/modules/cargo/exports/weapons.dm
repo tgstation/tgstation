@@ -40,12 +40,12 @@
 /datum/export/weapon/wt550
 	cost = 1400
 	unit_name = "WT-550 automatic rifle"
-	export_types = list(/obj/item/weapon/gun/projectile/automatic/wt550)
+	export_types = list(/obj/item/weapon/gun/ballistic/automatic/wt550)
 
 /datum/export/weapon/shotgun
 	cost = 350
 	unit_name = "combat shotgun"
-	export_types = list(/obj/item/weapon/gun/projectile/shotgun/automatic/combat)
+	export_types = list(/obj/item/weapon/gun/ballistic/shotgun/automatic/combat)
 
 
 /datum/export/weapon/flashbang

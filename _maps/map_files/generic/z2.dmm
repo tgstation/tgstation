@@ -2753,7 +2753,7 @@
 /area/centcom/evac)
 "iF" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
+/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
 /obj/item/toy/foamblade,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
@@ -3346,7 +3346,7 @@
 /area/centcom/evac)
 "kC" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
+/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
 /obj/item/toy/katana,
 /turf/open/floor/plasteel/green/side,
 /area/centcom/evac)
@@ -5021,7 +5021,7 @@
 "pI" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/crayons,
-/obj/item/weapon/gun/projectile/automatic/toy/pistol,
+/obj/item/weapon/gun/ballistic/automatic/toy/pistol,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "pJ" = (
@@ -5037,7 +5037,7 @@
 "pL" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/crayons,
-/obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
+/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "pM" = (
@@ -5060,7 +5060,7 @@
 /area/centcom/holding)
 "pP" = (
 /obj/structure/table,
-/obj/item/weapon/gun/projectile/automatic/toy/pistol,
+/obj/item/weapon/gun/ballistic/automatic/toy/pistol,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "pQ" = (

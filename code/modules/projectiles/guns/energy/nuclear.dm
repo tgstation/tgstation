@@ -23,12 +23,12 @@
 	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
 
 /obj/item/weapon/gun/energy/e_gun/mini/New()
-	F = new /obj/item/device/flashlight/seclite(src)
+	gun_light = new /obj/item/device/flashlight/seclite(src)
 	..()
 
 /obj/item/weapon/gun/energy/e_gun/mini/update_icon()
 	..()
-	if(F && F.on)
+	if(gun_light && gun_light.on)
 		add_overlay("mini-light")
 
 /obj/item/weapon/gun/energy/e_gun/hos

@@ -182,7 +182,7 @@
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/weapon/storage/belt/holster(src)
-	new /obj/item/weapon/gun/projectile/revolver/detective(src)
+	new /obj/item/weapon/gun/ballistic/revolver/detective(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
@@ -244,7 +244,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/storage/box/rubbershot(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+		new /obj/item/weapon/gun/ballistic/shotgun/riot(src)
 
 /obj/structure/closet/secure_closet/armory3
 	name = "armory energy gun locker"
@@ -267,7 +267,7 @@
 
 /obj/structure/closet/secure_closet/tac/New()
 	..()
-	new /obj/item/weapon/gun/projectile/automatic/wt550(src)
+	new /obj/item/weapon/gun/ballistic/automatic/wt550(src)
 	new /obj/item/clothing/head/helmet/alt(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/clothing/suit/armor/bulletproof(src)

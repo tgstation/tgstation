@@ -98,9 +98,10 @@
 			var/obj/item/weapon/melee/baton/B = I
 			if(B.bcell)
 				B.bcell.charge = B.bcell.maxcharge
-		else if(istype(I, /obj/item/weapon/gun/energy))//phil235
+		else if(istype(I, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/EG = I
-			EG.on_recharge()
+			if(!EG.chambered)
+				EG.recharge_newshot() //try to reload a new shot.
 
 	R.toner = R.tonermax
 
@@ -337,7 +338,7 @@
 	..()
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/printer(src)
-	modules += new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg(src)
+	modules += new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/weapon/pinpointer/syndicate/cyborg(src)
