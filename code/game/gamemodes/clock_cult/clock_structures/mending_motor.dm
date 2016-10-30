@@ -1,10 +1,3 @@
-var/list/mending_motor_typecache = typecacheof(list(
-	/obj/structure/destructible/clockwork,
-	/obj/machinery/door/airlock/clockwork,
-	/obj/machinery/door/window/clockwork,
-	/obj/structure/window/reinforced/clockwork,
-	/obj/structure/table/reinforced/brass))
-
 //Mending Motor: A prism that consumes replicant alloy or power to repair nearby mechanical servants at a quick rate.
 /obj/structure/destructible/clockwork/powered/mending_motor
 	name = "mending motor"
@@ -24,6 +17,12 @@ var/list/mending_motor_typecache = typecacheof(list(
 	var/stored_alloy = 0
 	var/max_alloy = REPLICANT_ALLOY_POWER * 10
 	var/heal_attempts = 4
+	var/static/list/mending_motor_typecache = typecacheof(list(
+	/obj/structure/destructible/clockwork,
+	/obj/machinery/door/airlock/clockwork,
+	/obj/machinery/door/window/clockwork,
+	/obj/structure/window/reinforced/clockwork,
+	/obj/structure/table/reinforced/brass))
 
 /obj/structure/destructible/clockwork/powered/mending_motor/prefilled
 	stored_alloy = REPLICANT_ALLOY_POWER //starts with 1 replicant alloy's worth of power
@@ -64,7 +63,7 @@ var/list/mending_motor_typecache = typecacheof(list(
 			if(E.health == E.maxHealth || E.stat == DEAD || (is_marauder && !E.fatigue))
 				continue
 			for(var/i in 1 to heal_attempts)
-				if(E.health <= E.maxhealth || (is_marauder && E.fatigue))
+				if(E.health < E.maxHealth || (is_marauder && E.fatigue))
 					if(try_use_power(MIN_CLOCKCULT_POWER))
 						E.adjustHealth(-8)
 					else
@@ -74,7 +73,7 @@ var/list/mending_motor_typecache = typecacheof(list(
 			if(C.obj_integrity == C.max_integrity)
 				continue
 			for(var/i in 1 to heal_attempts)
-				if(C.obj_integrity <= C.max_integrity)
+				if(C.obj_integrity < C.max_integrity)
 					if(try_use_power(MIN_CLOCKCULT_POWER))
 						C.obj_integrity = min(C.obj_integrity + 8, C.max_integrity)
 					else
@@ -84,13 +83,12 @@ var/list/mending_motor_typecache = typecacheof(list(
 			if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
 				continue
 			for(var/i in 1 to heal_attempts)
-				if(S.health <= S.maxHealth)
+				if(S.health < S.maxHealth)
 					if(try_use_power(MIN_CLOCKCULT_POWER))
 						S.adjustBruteLoss(-5)
 						S.adjustFireLoss(-3)
 					else
 						break
-
 
 /obj/structure/destructible/clockwork/powered/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE))
