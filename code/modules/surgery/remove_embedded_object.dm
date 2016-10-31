@@ -29,15 +29,6 @@
 				I.loc = get_turf(H)
 				L.embedded_objects -= I
 
-			//Handle possessive brain borers.
-			if(H.has_brain_worms() && target_zone == "head")//remove worms outside the loop
-				var/mob/living/simple_animal/borer/worm = H.has_brain_worms()
-				if(worm.controlling)
-					target.release_control()
-				worm.detatch()
-				worm.leave_victim()
-				user.visible_message("A slug-like creature wriggles out of [H]'s [target_zone]!")
-
 			if(objects > 0)
 				user.visible_message("[user] sucessfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>")
 			else
