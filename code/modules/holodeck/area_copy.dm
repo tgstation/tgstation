@@ -93,7 +93,7 @@
 		X.icon_state = old_icon_state1
 
 		for(var/obj/O in T)
-			var/obj/O2 = DuplicateObject(O , perfect_copy=TRUE, newloc = X, nerf=nerf_weapons, holoitem=TRUE)
+			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = X, nerf=nerf_weapons, holoitem=TRUE)
 			if(!O2) continue
 			copiedobjs += O2.GetAllContents()
 
