@@ -142,7 +142,7 @@ Credit where due:
 /datum/game_mode/clockwork_cult/proc/forge_clock_objectives() //Determine what objective that Ratvar's servants will fulfill
 	var/list/possible_objectives = list(CLOCKCULT_ESCAPE, CLOCKCULT_GATEWAY)
 	var/silicons_possible = FALSE
-	for(var/mob/living/silicon/S in living_mob_list)
+	for(var/mob/living/silicon/ai/S in living_mob_list)
 		silicons_possible = TRUE
 	if(silicons_possible)
 		possible_objectives += CLOCKCULT_SILICONS
