@@ -6,7 +6,6 @@
 	icon_state = "ocular_warden"
 	obj_integrity = 25
 	max_integrity = 25
-	hulk_damage = 25
 	construction_value = 15
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
@@ -28,6 +27,9 @@
 /obj/structure/destructible/clockwork/ocular_warden/examine(mob/user)
 	..()
 	user << "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>"
+
+/obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
+	return 25
 
 /obj/structure/destructible/clockwork/ocular_warden/process()
 	var/list/validtargets = acquire_nearby_targets()

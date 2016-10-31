@@ -8,7 +8,6 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	hulk_damage = 20
 	var/repair_amount = 5 //how much a proselytizer can repair each cycle
 	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
 	break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
@@ -50,6 +49,9 @@
 			heavily_damaged = TRUE
 		if(can_see_clockwork)
 			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
+
+/obj/structure/destructible/clockwork/hulk_damage()
+	return 20
 
 
 //for the ark and Ratvar

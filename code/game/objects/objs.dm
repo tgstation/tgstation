@@ -10,7 +10,6 @@
 	var/force = 0
 
 	var/list/armor
-	var/hulk_damage = 150 //the damage hulks do on punches to this object, is affected by melee armor
 	var/obj_integrity = 500
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior
