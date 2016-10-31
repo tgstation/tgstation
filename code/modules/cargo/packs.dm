@@ -39,7 +39,7 @@ datum/supply_pack
 	
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit"
-	cost = 2500
+	cost = 2000 //NO MORE COMPROMISES
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
