@@ -34,6 +34,9 @@
 /obj/structure/grille/attack_paw(mob/user)
 	attack_hand(user)
 
+/obj/structure/grille/hulk_damage()
+	return 60
+
 /obj/structure/grille/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
 		if(!shock(user, 70))
