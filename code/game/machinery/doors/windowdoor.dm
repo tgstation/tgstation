@@ -312,7 +312,7 @@
 /obj/machinery/door/window/clockwork/New(loc, set_dir)
 	..()
 	for(var/i in 1 to 2)
-		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
+		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit/large(src)
 	change_construction_value(2)
 
 /obj/machinery/door/window/clockwork/setDir(direct)

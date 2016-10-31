@@ -182,6 +182,12 @@
 	desc = "A broken chunk of a gear. You want it."
 	clockwork_desc = "A broken chunk of a gear. Could be proselytized for liquified replicant alloy."
 
+/obj/item/clockwork/alloy_shards/medium/gear_bit/large //gives more alloy
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit/large/replace_name_desc()
+	..()
+	name = "complex gear bit"
+
 /obj/item/clockwork/alloy_shards/small
 	randomsinglesprite = TRUE
 	randomspritemax = 3
