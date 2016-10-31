@@ -131,7 +131,7 @@
 			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/weapon/card/emag(src) // 6 tc
 			return
-		
+
 		if("ninja") // 33 tc worth
 			new /obj/item/weapon/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/weapon/implanter/adrenalin(src) // 8 tc
@@ -269,6 +269,15 @@
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	return
 
+/obj/item/weapon/storage/box/syndie_kit/atmosgasgrenades
+	name = "Atmos Grenades"
+
+/obj/item/weapon/storage/box/syndie_kit/atmosgasgrenades/New()
+	..()
+	new /obj/item/weapon/grenade/clusterbuster/plasma(src)
+	new /obj/item/weapon/grenade/clusterbuster/n2o(src)
+	new /obj/item/weapon/grenade/clusterbuster/freon(src)
+
 /obj/item/weapon/storage/box/syndie_kit/nuke
 	name = "box"
 
@@ -325,3 +334,8 @@
 	for(var/i in 1 to 3)
 		new/obj/item/cardboard_cutout/adaptive(src)
 	new/obj/item/toy/crayon/rainbow(src)
+
+/obj/item/weapon/storage/box/syndie_kit/bow/New()
+	..()
+	new/obj/item/weapon/gun/projectile/bow/hardlight(src)
+	new/obj/item/weapon/storage/backpack/quiver/hardlight(src)

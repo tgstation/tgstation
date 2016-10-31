@@ -185,7 +185,7 @@
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
-		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, 2, user)
+		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 		take_damage(2)
 
@@ -243,11 +243,11 @@
 /obj/structure/displaycase/captain
 	alert = 1
 	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
-	req_access = list(access_cent_specops) 
-	
+	req_access = list(access_cent_specops)
+
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(access_rd)
-	
+

@@ -91,9 +91,38 @@
 /mob/living/carbon/human/breathe()
 	if(!dna.species.breathe(src))
 		..()
-
+#define HUMAN_MAX_OXYLOSS 3
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	dna.species.check_breath(breath, src)
+
+	var/L = getorganslot("lungs")
+
+	if(!L)
+		if(health >= HEALTH_THRESHOLD_CRIT)
+			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
+		else if(!(NOCRITDAMAGE in dna.species.specflags))
+			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
+
+		failed_last_breath = 1
+
+		if(dna && dna.species)
+			var/datum/species/S = dna.species
+
+			if(S.breathid == "o2")
+				throw_alert("oxy", /obj/screen/alert/oxy)
+			else if(S.breathid == "tox")
+				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+			else if(S.breathid == "co2")
+				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+
+		return 0
+	else
+		if(istype(L,/obj/item/organ/lungs))
+			var/obj/item/organ/lungs/lun = L
+			lun.check_breath(breath,src)
+
+#undef HUMAN_MAX_OXYLOSS
+#undef HUMAN_CRIT_MAX_OXYLOSS
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	dna.species.handle_environment(environment, src)
@@ -112,6 +141,8 @@
 			head_clothes = glasses
 		if(wear_mask)
 			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
 		if(head)
 			head_clothes = head
 		if(head_clothes)
@@ -125,15 +156,7 @@
 			chest_clothes = w_uniform
 		if(wear_suit)
 			chest_clothes = wear_suit
-		else
-			if(wear_id)
-				burning_items += wear_id
-			if(r_store)
-				burning_items += r_store
-			if(l_store)
-				burning_items += l_store
-			if(s_store)
-				burning_items += s_store
+
 		if(chest_clothes)
 			burning_items += chest_clothes
 
@@ -158,11 +181,6 @@
 			leg_clothes = wear_suit
 		if(leg_clothes)
 			burning_items += leg_clothes
-
-		if(back)
-			burning_items += back
-		if(belt)
-			burning_items += belt
 
 		for(var/X in burning_items)
 			var/obj/item/I = X

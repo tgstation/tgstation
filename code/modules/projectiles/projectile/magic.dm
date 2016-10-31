@@ -151,6 +151,7 @@
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
 	wabbajack(change)
+	qdel(src)
 
 /proc/wabbajack(mob/living/M)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))

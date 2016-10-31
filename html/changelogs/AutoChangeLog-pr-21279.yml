@@ -1,0 +1,4 @@
+author: "Lzimann"
+delete-after: True
+changes: 
+  - rscdel: "Changelings no longer have the Swap Forms ability."

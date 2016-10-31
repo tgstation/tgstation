@@ -4,6 +4,8 @@
 			return back
 		if(slot_wear_mask)
 			return wear_mask
+		if(slot_neck)
+			return wear_neck
 		if(slot_head)
 			return head
 		if(slot_handcuffed)
@@ -50,6 +52,9 @@
 		if(slot_head)
 			head = I
 			head_update(I)
+		if(slot_neck)
+			wear_neck = I
+			update_inv_neck(I)
 		if(slot_handcuffed)
 			handcuffed = I
 			update_handcuffed()
@@ -88,6 +93,9 @@
 	else if(I == wear_mask)
 		wear_mask = null
 		wear_mask_update(I, toggle_off = 1)
+	if(I == wear_neck)
+		wear_neck = null
+		update_inv_neck(I)
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)

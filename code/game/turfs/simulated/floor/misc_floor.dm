@@ -100,8 +100,23 @@
 
 /turf/open/floor/clockwork/proc/healservants()
 	for(var/mob/living/L in src)
-		if(L.stat == DEAD || !is_servant_of_ratvar(L))
+		if(L.stat == DEAD)
 			continue
+		. = 1
+		if(!is_servant_of_ratvar(L) || !L.toxloss)
+			continue
+
+		var/image/I = new('icons/effects/effects.dmi', src, "heal", ABOVE_MOB_LAYER) //fake a healing glow for servants
+		I.appearance_flags = RESET_COLOR
+		I.color = "#5A6068"
+		I.pixel_x = rand(-12, 12)
+		I.pixel_y = rand(-9, 0)
+		var/list/viewing = list()
+		for(var/mob/M in viewers(src))
+			if(M.client && (is_servant_of_ratvar(M) || isobserver(M) || M.stat == DEAD))
+				viewing += M.client
+		flick_overlay(I, viewing, 8)
+
 		var/swapdamage = FALSE
 		if(L.has_dna()) //if has_dna() is true they're at least carbon
 			var/mob/living/carbon/C = L
@@ -115,7 +130,6 @@
 			L.adjustToxLoss(3)
 		else
 			L.adjustToxLoss(-3)
-		. = 1
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))

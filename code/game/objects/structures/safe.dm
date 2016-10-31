@@ -12,6 +12,7 @@ FLOOR SAFES
 	icon_state = "safe"
 	anchored = 1
 	density = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/open = 0		//is the safe open?
 	var/tumbler_1_pos	//the tumbler position- from 0 to 72
 	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
@@ -91,7 +92,7 @@ FLOOR SAFES
 	var/mob/living/carbon/human/user = usr
 
 	var/canhear = 0
-	if(user.is_holding_item_of_type(/obj/item/clothing/tie/stethoscope))
+	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
 		canhear = 1
 
 	if(href_list["open"])
@@ -158,7 +159,7 @@ FLOOR SAFES
 		else
 			user << "<span class='notice'>[I] won't fit in [src].</span>"
 			return
-	else if(istype(I, /obj/item/clothing/tie/stethoscope))
+	else if(istype(I, /obj/item/clothing/neck/stethoscope))
 		user << "<span class='warning'>Hold [I] in one of your hands while you manipulate the dial!</span>"
 	else
 		return ..()

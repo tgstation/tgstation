@@ -220,17 +220,18 @@
 
 		if("createPill")
 			var/many = params["many"]
-			if(reagents.total_volume == 0) return
+			if(reagents.total_volume == 0)
+				return
 			if(!condi)
 				var/amount = 1
 				var/vol_each = min(reagents.total_volume, 50)
 				if(text2num(many))
-					amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0), 10)
+					amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
 					if(!amount)
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume)
+				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 				var/obj/item/weapon/reagent_containers/pill/P
 
@@ -245,7 +246,7 @@
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume)
+				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
 				var/obj/item/weapon/reagent_containers/food/condiment/pack/P = new/obj/item/weapon/reagent_containers/food/condiment/pack(src.loc)
 
@@ -257,16 +258,17 @@
 
 		if("createPatch")
 			var/many = params["many"]
-			if(reagents.total_volume == 0) return
+			if(reagents.total_volume == 0)
+				return
 			var/amount = 1
 			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(many))
-				amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0), 10)
+				amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
 				if(!amount)
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume)
+			if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
 				return
 			var/obj/item/weapon/reagent_containers/pill/P
 
@@ -279,21 +281,40 @@
 			. = TRUE
 
 		if("createBottle")
-			var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-			if(!name)
+			var/many = params["many"]
+			if(reagents.total_volume == 0)
 				return
-			var/obj/item/weapon/reagent_containers/P
-			if(condi)
-				var/obj/item/weapon/reagent_containers/food/condiment/C = new(src.loc)
-				C.originalname = name
-				P = C
-			else
-				P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
-			P.name = trim("[name] bottle")
-			reagents.trans_to(P, P.volume)
+			if(condi)
+				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+					return
+				var/obj/item/weapon/reagent_containers/food/condiment/P = new(src.loc)
+				P.originalname = name
+				P.name = trim("[name] bottle")
+				reagents.trans_to(P, P.volume)
+			else
+				var/amount_full = 0
+				var/vol_part = min(reagents.total_volume, 30)
+				if(text2num(many))
+					amount_full = round(reagents.total_volume / 30)
+					vol_part = reagents.total_volume % 30
+				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+				if(!name || !reagents.total_volume || !src || qdeleted(src) || !usr.canUseTopic(src, be_close=TRUE))
+					return
+				
+				var/obj/item/weapon/reagent_containers/glass/bottle/P
+				for(var/i = 0; i < amount_full; i++)
+					P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+					P.pixel_x = rand(-7, 7) //random position
+					P.pixel_y = rand(-7, 7)
+					P.name = trim("[name] bottle")
+					reagents.trans_to(P, 30)
+					
+				if(vol_part)
+					P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+					P.name = trim("[name] bottle")
+					reagents.trans_to(P, vol_part)
 			. = TRUE
 
 		if("analyze")

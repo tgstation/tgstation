@@ -27,7 +27,7 @@
 				/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 				/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 				/obj/item/weapon/grown/nettle/basic = list("sacid" = 0),
-				/obj/item/weapon/grown/nettle/death = list("facid" = 0),
+				/obj/item/weapon/grown/nettle/death = list("facid" = 0, "sacid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
 
 				//Blender Stuff
@@ -70,6 +70,9 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = list("pumpkinjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = list("blumpkinjuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/apple = list("applejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = list("grapejuice" = 0),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green = list("grapejuice" = 0),
 		)
 
 		var/list/dried_items = list(

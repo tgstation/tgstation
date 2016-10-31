@@ -279,7 +279,7 @@
 			affecting = get_bodypart("chest")
 		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
-		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
+		damage_clothes(damage, M.melee_damage_type, "melee", affecting.body_zone)
 
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
@@ -332,7 +332,7 @@
 			updatehealth()
 
 		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-								"<span class='userdanger'>[M.name] has hit [src]!</span>", null, 2, M.occupant)
+								"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
 
 	else
@@ -406,7 +406,7 @@
 
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0)
 	if(tesla_shock)
 		var/total_coeff = 1
 		if(gloves)
@@ -424,12 +424,12 @@
 			var/obj/item/clothing/gloves/G = gloves
 			gloves_siemens_coeff = G.siemens_coefficient
 		siemens_coeff = gloves_siemens_coeff
-	if(heart_attack)
+	if(heart_attack && !illusion)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			heart_attack = 0
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)
+	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion)
 	if(.)
 		electrocution_animation(40)
 
@@ -461,6 +461,8 @@
 			head_clothes = glasses
 		if(wear_mask)
 			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
 		if(head)
 			head_clothes = head
 		if(head_clothes)
@@ -468,6 +470,7 @@
 				head_clothes.acid_act(acidpwr, acid_volume)
 				update_inv_glasses()
 				update_inv_wear_mask()
+				update_inv_neck()
 				update_inv_head()
 			else
 				src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
@@ -660,3 +663,63 @@
 				w_uniform.add_fingerprint(M)
 
 			..()
+
+
+/mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+	if(damage_type != BRUTE && damage_type != BURN)
+		return
+	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
+	var/list/torn_items = list()
+
+	//HEAD//
+	if(!def_zone || def_zone == "head")
+		var/obj/item/clothing/head_clothes = null
+		if(glasses)
+			head_clothes = glasses
+		if(wear_mask)
+			head_clothes = wear_mask
+		if(wear_neck)
+			head_clothes = wear_neck
+		if(head)
+			head_clothes = head
+		if(head_clothes)
+			torn_items += head_clothes
+		else if(ears)
+			torn_items += ears
+
+	//CHEST//
+	if(!def_zone || def_zone == "chest")
+		var/obj/item/clothing/chest_clothes = null
+		if(w_uniform)
+			chest_clothes = w_uniform
+		if(wear_suit)
+			chest_clothes = wear_suit
+		if(chest_clothes)
+			torn_items += chest_clothes
+
+	//ARMS & HANDS//
+	if(!def_zone || def_zone == "l_arm" || def_zone == "r_arm")
+		var/obj/item/clothing/arm_clothes = null
+		if(gloves)
+			arm_clothes = gloves
+		if(w_uniform && ((w_uniform.body_parts_covered & HANDS) || (w_uniform.body_parts_covered & ARMS)))
+			arm_clothes = w_uniform
+		if(wear_suit && ((wear_suit.body_parts_covered & HANDS) || (wear_suit.body_parts_covered & ARMS)))
+			arm_clothes = wear_suit
+		if(arm_clothes)
+			torn_items += arm_clothes
+
+	//LEGS & FEET//
+	if(!def_zone || def_zone == "l_leg" || def_zone == "r_leg")
+		var/obj/item/clothing/leg_clothes = null
+		if(shoes)
+			leg_clothes = shoes
+		if(w_uniform && ((w_uniform.body_parts_covered & FEET) || (w_uniform.body_parts_covered & LEGS)))
+			leg_clothes = w_uniform
+		if(wear_suit && ((wear_suit.body_parts_covered & FEET) || (wear_suit.body_parts_covered & LEGS)))
+			leg_clothes = wear_suit
+		if(leg_clothes)
+			torn_items += leg_clothes
+
+	for(var/obj/item/I in torn_items)
+		I.take_damage(damage_amount, damage_type, damage_flag, 0)

@@ -14,8 +14,8 @@
 	var/reinf = 0
 	var/wtype = "glass"
 	var/fulltile = 0
-//	var/silicate = 0 // number of units of silicate
-//	var/icon/silicateIcon = null // the silicated icon
+	var/glass_type = /obj/item/stack/sheet/glass
+	var/glass_amount = 1
 	var/image/crack_overlay
 	var/list/debris = list()
 	can_be_unanchored = 1
@@ -42,6 +42,7 @@
 	var/shards = 1
 	if(fulltile)
 		shards++
+		setDir()
 	var/rods = 0
 	if(reinf)
 		rods++
@@ -73,11 +74,13 @@
 /obj/structure/window/setDir(direct)
 	if(!fulltile)
 		..()
+	else
+		..(FULLTILE_WINDOW_DIR)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+	if(dir == FULLTILE_WINDOW_DIR)
 		return 0	//full tile window, you can't move into it!
 	if(get_dir(loc, target) == dir)
 		return !density
@@ -182,19 +185,8 @@
 				if(qdeleted(src))
 					return
 
-				if(reinf)
-					var/obj/item/stack/sheet/rglass/RG = new (user.loc)
-					RG.add_fingerprint(user)
-					if(fulltile) //fulltiles drop two panes
-						RG = new (user.loc)
-						RG.add_fingerprint(user)
-
-				else
-					var/obj/item/stack/sheet/glass/G = new (user.loc)
-					G.add_fingerprint(user)
-					if(fulltile)
-						G = new (user.loc)
-						G.add_fingerprint(user)
+				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
+				G.add_fingerprint(user)
 
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				user << "<span class='notice'>You successfully disassemble [src].</span>"
@@ -261,7 +253,6 @@
 		return 0
 
 	setDir(turn(dir, 90))
-//	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(usr)
@@ -281,7 +272,6 @@
 		return 0
 
 	setDir(turn(dir, 270))
-//	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(usr)
@@ -296,21 +286,6 @@
 		return
 	else
 		revrotate()
-
-/*
-/obj/structure/window/proc/updateSilicate() what do you call a syndicate silicon?
-	if(silicateIcon && silicate)
-		icon = initial(icon)
-
-		var/icon/I = icon(icon,icon_state,dir)
-
-		var/r = (silicate / 100) + 1
-		var/g = (silicate / 70) + 1
-		var/b = (silicate / 50) + 1
-		I.SetIntensity(r,g,b)
-		icon = I
-		silicateIcon = I
-*/
 
 /obj/structure/window/Destroy()
 	density = 0
@@ -328,7 +303,7 @@
 /obj/structure/window/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
-	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+	if(dir == FULLTILE_WINDOW_DIR)
 		return !density
 	return 1
 
@@ -367,7 +342,7 @@
 /obj/structure/window/CanAStarPass(ID, to_dir)
 	if(!density)
 		return 1
-	if((dir == SOUTHWEST) || (dir == to_dir))
+	if((dir == FULLTILE_WINDOW_DIR) || (dir == to_dir))
 		return 0
 
 	return 1
@@ -379,6 +354,7 @@
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	max_integrity = 50
 	explosion_block = 1
+	glass_type = /obj/item/stack/sheet/rglass
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -395,30 +371,33 @@
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window"
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
+	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
+	glass_amount = 2
 
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	icon_state = "tinted_window"
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
 	level = 3
+	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
@@ -426,13 +405,14 @@
 	max_integrity = 150
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/reinforced/fulltile/ice)
 	level = 3
+	glass_amount = 2
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	wtype = "shuttle"
 	fulltile = 1
@@ -442,6 +422,8 @@
 	canSmoothWith = null
 	explosion_block = 1
 	level = 3
+	glass_type = /obj/item/stack/sheet/rglass
+	glass_amount = 2
 
 /obj/structure/window/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
@@ -454,8 +436,12 @@
 	desc = "A paper-thin pane of translucent yet reinforced brass."
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 100
+	armor = list(melee = 60, bullet = 25, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
+	glass_type = /obj/item/stack/sheet/brass
+	glass_amount = 1
 	var/made_glow = FALSE
 
 /obj/structure/window/reinforced/clockwork/New(loc, direct)
@@ -474,7 +460,7 @@
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
 		made_glow = TRUE
 		debris += new/obj/item/stack/sheet/brass(src, 2)
-	change_construction_value(fulltile ? 3 : 2)
+	change_construction_value(fulltile ? 2 : 1)
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
 	if(!made_glow)
@@ -484,7 +470,7 @@
 	..()
 
 /obj/structure/window/reinforced/clockwork/Destroy()
-	change_construction_value(fulltile ? -3 : -2)
+	change_construction_value(fulltile ? -2 : -1)
 	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()
@@ -505,5 +491,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 150
+	glass_amount = 2
+	made_glow = TRUE

@@ -274,15 +274,15 @@
 
 	if(!can_cast(user))
 		msg = "<span class='warning'>You can no longer cast Fireball.</span>"
-		remove_ranged_ability(user, msg)
+		remove_ranged_ability(msg)
 		return
 
 	if(active)
 		msg = "<span class='notice'>You extinguish your fireball...for now.</span>"
-		remove_ranged_ability(user, msg)
+		remove_ranged_ability(msg)
 	else
 		msg = "<span class='notice'>Your prepare to cast your fireball spell! <B>Left-click to cast at a target!</B></span>"
-		add_ranged_ability(user, msg)
+		add_ranged_ability(user, msg, TRUE)
 
 /obj/effect/proc_holder/spell/fireball/update_icon()
 	if(!action)
@@ -290,16 +290,16 @@
 	action.button_icon_state = "fireball[active]"
 	action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/user, params, atom/target)
+/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return FALSE
 
-	if(!cast_check(0, user))
-		remove_ranged_ability(user)
+	if(!cast_check(0, ranged_ability_user))
+		remove_ranged_ability()
 		return FALSE
 
 	var/list/targets = list(target)
-	perform(targets,user = user)
+	perform(targets,user = ranged_ability_user)
 
 	return TRUE
 
@@ -403,3 +403,35 @@
 	if(isliving(user))
 		var/mob/living/U = user
 		U.IgniteMob()
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
+	name = "Thrown Lightning"
+	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
+	clothes_req = 1
+	item_type = /obj/item/spellpacket/lightningbolt
+	charge_max = 10
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
+	..()
+	for(var/mob/living/carbon/C in targets)
+		C.throw_mode_on()
+
+/obj/item/spellpacket/lightningbolt
+	name = "\improper Lightning bolt Spell Packet"
+	desc = "Some birdseed wrapped in cloth that somehow crackles with electricity."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "snappop"
+	w_class = 1
+
+/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom)
+	if(!..())
+		if(isliving(hit_atom))
+			var/mob/living/M = hit_atom
+			M.electrocute_act(80, src, illusion = 1)
+		qdel(src)
+
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+	. = ..()
+	if(ishuman(thrower))
+		var/mob/living/carbon/human/H = thrower
+		H.say("LIGHTNINGBOLT!!")

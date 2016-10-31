@@ -203,7 +203,7 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
+	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
@@ -664,14 +664,14 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
-	speedmod = 2
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
 	no_equip = list(slot_wear_mask, slot_head)
 	armor = 20 // 120 damage to KO a zombie, which kills it
+	speedmod = 2
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
@@ -731,13 +731,12 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
 	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
-	safe_oxygen_min = 0 //We don't breath this
-	safe_toxins_min = 16 //We breath THIS!
-	safe_toxins_max = 0
+	mutantlungs = /obj/item/organ/lungs/plasmaman
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
 	burnmod = 2
 	heatmod = 2
+	breathid = "tox"
 	speedmod = 1
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 
@@ -782,12 +781,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
-	safe_oxygen_min = 0
-	safe_toxins_min = 0
-	safe_toxins_max = 0
-	safe_co2_max = 0
-	SA_para_min = 0
-	SA_sleep_min = 0
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
@@ -906,12 +899,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	id = "android"
 	say_mod = "states"
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
-	safe_oxygen_min = 0
-	safe_toxins_min = 0
-	safe_toxins_max = 0
-	safe_co2_max = 0
-	SA_para_min = 0
-	SA_sleep_min = 0
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"

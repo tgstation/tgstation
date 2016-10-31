@@ -306,6 +306,7 @@
 	base_state = "clockwork"
 	shards = 0
 	rods = 0
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/made_glow = FALSE
 
 /obj/machinery/door/window/clockwork/New(loc, set_dir)
