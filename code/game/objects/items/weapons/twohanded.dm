@@ -187,12 +187,13 @@
 	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
-	if(!proximity) return
+/obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)
+		return
 	if(wielded) //destroys windows and grilles in one hit
 		if(istype(A,/obj/structure/window))
 			var/obj/structure/window/W = A
-			W.take_damage(400, BRUTE, "melee", 0)
+			W.take_damage(200, BRUTE, "melee", 0)
 		else if(istype(A,/obj/structure/grille))
 			var/obj/structure/grille/G = A
 			G.take_damage(40, BRUTE, "melee", 0)
