@@ -35,7 +35,7 @@ Chief Medical Officer
 	l_hand = /obj/item/weapon/storage/firstaid/regular
 	suit_store = /obj/item/device/flashlight/pen
 	
-	if(living_player_count() => 41)
+	if(living_player_count() >= 41)
 		backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 	else
 		backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/weapon/gun/energy/gun/mini=1)
