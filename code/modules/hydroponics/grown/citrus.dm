@@ -168,7 +168,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/triple
 	seed = /obj/item/seeds/triple
 	name = "Triple citrus"
-	desc = "As sour as a lime, as thick skined as a lemon, and as anoying as an orange."
+	desc = "As sour as a lime, as thick skined as a lemon, and as annoying as an orange."
 	icon_state = "triple"
 	filling_color = "#FFCC00"
 
