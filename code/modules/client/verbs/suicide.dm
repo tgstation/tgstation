@@ -173,4 +173,5 @@
 		return
 	if(has_brain_worms())
 		src << "You can't commit suicide while you're controlling your host!"
+		return
 	return TRUE
