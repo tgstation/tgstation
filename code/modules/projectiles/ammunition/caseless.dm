@@ -5,7 +5,7 @@
 	desc = "A caseless bullet casing."
 	firing_effect_type = null
 
-/obj/item/ammo_casing/caseless/fire_casing(atom/target, mob/living/user, params, distro, quiet)
+/obj/item/ammo_casing/caseless/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
 	if (..()) //successfully firing
 		loc = null
 		return 1
