@@ -445,6 +445,9 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Evil narsie colour
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
+//let's just pretend fulltile windows being children of border windows is fine
+#define FULLTILE_WINDOW_DIR NORTHEAST
+
 // Defib stats
 #define DEFIB_TIME_LIMIT 120
 #define DEFIB_TIME_LOSS 60

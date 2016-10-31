@@ -38,12 +38,15 @@ datum/supply_pack
 	group = "Emergency"
 	
 /datum/supply_pack/emergency/vehicle
-	name = "All-Terrain Vehicle"
-	cost = 3000
+	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
+	cost = 2000 
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
-					/obj/item/key)
+					/obj/item/key,
+					/obj/item/clothing/suit/jacket/leather/overcoat,
+					/obj/item/clothing/mask/bandana/skull)//so you can properly #cargoniabikergang
 	crate_name = "ATV crate"
+	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Equipment"
