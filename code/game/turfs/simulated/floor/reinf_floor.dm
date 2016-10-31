@@ -33,6 +33,9 @@
 			ChangeTurf(/turf/open/floor/plating)
 			return
 
+/turf/open/floor/engine/acid_act(acidpwr, acid_volume)
+	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
+	. = ..()
 
 /turf/open/floor/engine/ex_act(severity, target)
 	contents_explosion(severity, target)
