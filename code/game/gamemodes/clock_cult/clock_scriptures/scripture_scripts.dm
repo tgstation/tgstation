@@ -9,12 +9,12 @@
 	desc = "Forms an automatic short-range turret that deals low sustained damage to the unenlightened in its range."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
 	channel_time = 120
-	required_components = list("belligerent_eye" = 2, "replicant_alloy" = 1)
-	consumed_components = list("belligerent_eye" = 1, "replicant_alloy" = 1)
+	required_components = list(BELLIGERENT_EYE = 2, REPLICANT_ALLOY = 1)
+	consumed_components = list(BELLIGERENT_EYE = 1, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will focus its searing gaze upon nearby unenlightened.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
-	usage_tip = "Although powerful, the warden is very weak and should optimally be placed behind barricades."
+	usage_tip = "Although powerful, the warden is very fragile and should optimally be placed behind barricades."
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
 	space_allowed = TRUE
@@ -34,8 +34,8 @@
 	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
 	invocations = list("Call forth...", "...the workers of Armorer.")
 	channel_time = 60
-	required_components = list("belligerent_eye" = 2, "hierophant_ansible" = 1)
-	consumed_components = list("belligerent_eye" = 1, "hierophant_ansible" = 1)
+	required_components = list(BELLIGERENT_EYE = 2, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(BELLIGERENT_EYE = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
 	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptable.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
@@ -51,9 +51,9 @@
 	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers. \
 	It grows faster to invoke with more nearby servants."
 	invocations = list("Shield me...", "...with the...", "... fragments of Engine!")
-	channel_time = 110 //effectively 100 because it counts the invoker
-	required_components = list("vanguard_cogwheel" = 2, "replicant_alloy" = 1)
-	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
+	channel_time = 100
+	required_components = list(VANGUARD_COGWHEEL = 2, REPLICANT_ALLOY = 1)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 1)
 	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
 	tier = SCRIPTURE_SCRIPT
 	multiple_invokers_used = TRUE
@@ -61,7 +61,7 @@
 	sort_priority = 4
 
 /datum/clockwork_scripture/fellowship_armory/run_scripture()
-	for(var/mob/living/L in range(1, invoker))
+	for(var/mob/living/L in orange(1, invoker))
 		if(is_servant_of_ratvar(L) && L.can_speak_vocal())
 			channel_time = max(channel_time - 10, 0)
 	return ..()
@@ -86,8 +86,8 @@
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
 	channel_time = 60
-	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 2)
-	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
+	required_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 2)
+	consumed_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
 	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
@@ -104,12 +104,12 @@
 	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
 	invocations = list("Herd the souls of...", "...the blasphemous damned!")
 	channel_time = 30
-	required_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
-	consumed_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1)
+	required_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 2)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1)
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
 	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
-	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell."
+	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell or cyborg body."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	sort_priority = 6
@@ -119,15 +119,15 @@
 /datum/clockwork_scripture/create_object/clockwork_proselytizer
 	descname = "Necessary, Converts Objects"
 	name = "Clockwork Proselytizer"
-	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires replicant alloys to function."
+	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires replicant alloy to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
-	required_components = list("guvax_capacitor" = 1, "replicant_alloy" = 2)
-	consumed_components = list("guvax_capacitor" = 1, "replicant_alloy" = 1)
+	required_components = list(GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 2)
+	consumed_components = list(GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
 	creator_message = "<span class='brass'>You form a clockwork proselytizer, which is already pre-loaded with a small amount of replicant alloy.</span>"
-	usage_tip = "Clockwork walls cause adjacent tinkerer's caches to generate components passively, making them a vital tool. Clockwork floors heal servants standing on them."
+	usage_tip = "Clockwork Walls cause nearby tinkerer's caches to generate components passively, making them a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	sort_priority = 7
@@ -141,8 +141,8 @@
 	vanish three minutes after being summoned."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
-	required_components = list("replicant_alloy" = 2, "hierophant_ansible" = 1)
-	consumed_components = list("replicant_alloy" = 1, "hierophant_ansible" = 1)
+	required_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
 	tier = SCRIPTURE_SCRIPT
@@ -205,8 +205,8 @@
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
-	required_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 2)
-	consumed_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
+	required_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 2)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, HIEROPHANT_ANSIBLE = 1)
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
@@ -249,8 +249,8 @@
 	chant_invocations = list("Draw charge to this shell!")
 	chant_amount = 30
 	chant_interval = 10
-	required_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 2)
-	consumed_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
+	required_components = list(GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
+	consumed_components = list(GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
 	usage_tip = "If standing on a Sigil of Transmission, will transfer power to it. Augumented limbs will also be healed unless above a very high threshhold."
 	tier = SCRIPTURE_SCRIPT
 	sort_priority = 10

@@ -666,12 +666,12 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
-	speedmod = 2
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
 	no_equip = list(slot_wear_mask, slot_head)
 	armor = 20 // 120 damage to KO a zombie, which kills it
+	speedmod = 2
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()

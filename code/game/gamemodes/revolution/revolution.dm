@@ -79,9 +79,14 @@
 				var/datum/mind/lenin = M
 				antag_candidates -= lenin
 				newcandidates -= lenin
-				if(istype(lenin.current,/mob/new_player))
+				if(istype(lenin.current,/mob/new_player)) //We don't want to make the same mistake again
 					continue
 				else
+					var/mob/Nm = lenin.current
+					if(Nm.job in restricted_jobs)	//Don't make the HOS a replacement revhead
+						antag_candidates += lenin	//Let's let them keep antag chance for other antags
+						continue
+
 					head_revolutionaries += lenin
 					break
 

@@ -255,7 +255,7 @@
 
 /datum/action/item_action/clock/guvax
 	name = "Guvax"
-	desc = "Allows you to convert adjacent nonservants while holding the slab."
+	desc = "Allows you to convert an adjacent target nonservant. Click your slab to disable."
 	button_icon_state = "guvax_capacitor"
 
 /datum/action/item_action/clock/vanguard

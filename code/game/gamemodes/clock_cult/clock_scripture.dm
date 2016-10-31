@@ -15,8 +15,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
-	var/list/required_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //Components required
-	var/list/consumed_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //Components consumed
+	var/list/required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //Components required
+	var/list/consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //Components consumed
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
 	var/mob/living/invoker //The slab's holder
 	var/whispered = FALSE //If the invocation is whispered rather than spoken aloud
@@ -28,9 +28,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/sort_priority = 1 //what position the scripture should have in a list of scripture. Should be based off of component costs/reqs, but you can't initial() lists.
 
 //components the scripture used from a slab
-	var/list/used_slab_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+	var/list/used_slab_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 //components the scripture used from the global cache
-	var/list/used_cache_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+	var/list/used_cache_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && has_requirements() && check_special_requirements())
@@ -84,7 +84,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			var/total_components = slab.stored_components[i] + cache_components
 			if(required_components[i] && total_components < required_components[i])
 				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[required_components[i]]</b> \
-				[get_component_name(i)][i != "replicant_alloy" ? "s":""].</span>"
+				[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""].</span>"
 				failed = TRUE
 		if(failed)
 			component_printout += "</span>"
@@ -100,7 +100,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			return FALSE
 	return TRUE
 
-/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked three times during invocation
+/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
 	return TRUE
 
 /datum/clockwork_scripture/proc/recital() //The process of speaking the words
@@ -117,7 +117,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(!channel_time)
 		return TRUE
 	for(var/invocation in invocations)
-		if(!do_after(invoker, channel_time / invocations.len, target = invoker))
+		if(!check_special_requirements() || !do_after(invoker, channel_time / invocations.len, target = invoker) || !check_special_requirements())
 			slab.busy = null
 			return FALSE
 		if(multiple_invokers_used)
@@ -186,3 +186,29 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		invoker << creator_message
 	new object_path (get_turf(invoker))
 	return TRUE
+
+//Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.
+/datum/clockwork_scripture/ranged_ability
+	var/slab_icon = "dread_ipad"
+	var/ranged_type = /obj/effect/proc_holder/slab
+	var/ranged_message = "This is a huge goddamn bug, how'd you cast this?"
+	var/timeout_time = 0
+
+/datum/clockwork_scripture/ranged_ability/scripture_effects()
+	slab.icon_state = slab_icon
+	slab.slab_ability = new ranged_type(slab)
+	slab.slab_ability.slab = slab
+	slab.slab_ability.add_ranged_ability(invoker, ranged_message)
+	invoker.update_inv_hands()
+	var/end_time = world.time + timeout_time
+	var/successful = FALSE
+	while(slab && slab.slab_ability && !slab.slab_ability.finished && (slab.slab_ability.in_progress || !timeout_time || world.time <= end_time))
+		successful = slab.slab_ability.successful
+		sleep(1)
+	if(slab)
+		if(slab.slab_ability && !slab.slab_ability.finished)
+			slab.slab_ability.remove_ranged_ability()
+		slab.icon_state = "dread_ipad"
+		if(invoker)
+			invoker.update_inv_hands()
+	return successful //slab doesn't look like a word now.

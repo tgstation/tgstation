@@ -38,7 +38,7 @@
 
 /obj/machinery/power/apc/can_terminal_dismantle()
 	. = 0
-	if(opened && has_electronics != 2)
+	if(opened)
 		. = 1
 
 /obj/machinery/power/smes/can_terminal_dismantle()
@@ -47,7 +47,7 @@
 		. = 1
 
 
-/obj/machinery/power/terminal/proc/dismantle(mob/living/user)
+/obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/W)
 	if(isturf(loc))
 		var/turf/T = loc
 		if(T.intact)
@@ -59,7 +59,7 @@
 								"<span class='notice'>You begin to cut the cables...</span>")
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			if(do_after(user, 50, target = src))
+			if(do_after(user, 50/W.toolspeed, target = src))
 				if(master && master.can_terminal_dismantle())
 					if(prob(50) && electrocute_mob(user, powernet, src))
 						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
@@ -73,6 +73,6 @@
 
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
-		dismantle(user)
+		dismantle(user, W)
 	else
 		return ..()

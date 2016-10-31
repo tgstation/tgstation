@@ -139,6 +139,9 @@
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
 
+/obj/structure/falsewall/examine_status() //So you can't detect falsewalls by examine.
+	return null
+
 /*
  * False R-Walls
  */
