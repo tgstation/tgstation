@@ -447,17 +447,19 @@
 	for(var/obj/item/I in debris)
 		debris -= I
 		qdel(I)
+	var/amount_of_gears = 2
 	if(!fulltile)
 		if(direct)
 			var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
 			setDir(direct)
 			E.setDir(direct)
 			made_glow = TRUE
-		debris += new/obj/item/stack/sheet/brass(src, 1)
 	else
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
 		made_glow = TRUE
-		debris += new/obj/item/stack/sheet/brass(src, 2)
+		amount_of_gears = 4
+	for(var/i in 1 to amount_of_gears)
+		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
 	change_construction_value(fulltile ? 2 : 1)
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)

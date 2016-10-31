@@ -300,7 +300,7 @@
 	explosion_block = 1
 
 /obj/machinery/door/window/clockwork
-	name = "clockwork door"
+	name = "brass windoor"
 	desc = "A thin door with translucent brass paneling."
 	icon_state = "clockwork"
 	base_state = "clockwork"
@@ -311,7 +311,8 @@
 
 /obj/machinery/door/window/clockwork/New(loc, set_dir)
 	..()
-	debris += new/obj/item/stack/sheet/brass(src, 2)
+	for(var/i in 1 to 2)
+		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
 	change_construction_value(2)
 
 /obj/machinery/door/window/clockwork/setDir(direct)
