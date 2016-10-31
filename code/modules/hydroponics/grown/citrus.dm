@@ -155,7 +155,7 @@
 	name = "pack of triple citrus seeds"
 	desc = "Eat your heart out Frankinstein."
 	icon_state = "seed-triple"
-	species = "triple citrus"
+	species = "triple"
 	plantname = "Triple citrus Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/triple
 	lifespan = 55
