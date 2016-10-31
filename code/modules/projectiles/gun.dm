@@ -119,11 +119,6 @@
 			else
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
-	if(weapon_weight >= WEAPON_MEDIUM)
-		if(user.get_inactive_held_item())
-			if(prob(15))
-				if(user.drop_item())
-					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
