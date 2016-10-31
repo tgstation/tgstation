@@ -33,8 +33,7 @@
 		STOP_PROCESSING(SSfastprocess, src)
 		detonation_timer = null
 		next_beep = null
-		if(countdown)
-			countdown.stop()
+		countdown.stop()
 		return
 
 	if(!isnull(next_beep) && (next_beep <= world.time))
