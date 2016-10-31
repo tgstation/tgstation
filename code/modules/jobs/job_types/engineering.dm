@@ -37,7 +37,7 @@ Chief Engineer
 	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black/ce
 	//give a mini egun if we're on lowpop
-	if(living_player_count() => 41)
+	if(living_player_count() >= 41)
 		backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/device/modular_computer/tablet/preset/advanced=1)
 	else
 		backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/device/modular_computer/tablet/preset/advanced=1,/obj/item/weapon/gun/energy/gun/mini=1)
