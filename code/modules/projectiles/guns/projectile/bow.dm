@@ -124,22 +124,20 @@
 	name = "bow hardlight magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
 
-/obj/item/projectile/bullet/reusable/arrow/hardlight
+/obj/item/projectile/bullet/hardlight_arrow
 	name = "hardlight arrow"
 	icon_state = "arrow_hardlight"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow/hardlight
 	range = 30
 	damage = 30
 	damage_type = BRUTE		//I give the fuck up untill someone makes projectiles able to multi-damage I'm not going to risk experimenting with multi-hit projectiles.
 	flag = "bullet"
-	dropped = 1
 
 /obj/item/ammo_casing/caseless/arrow/hardlight
 	name = "hardlight arrow"
 	desc = "An arrow made out of hardlight."
 	icon_state = "arrow_hardlight"
 	force = 7
-	projectile_type = /obj/item/projectile/bullet/reusable/arrow/hardlight
+	projectile_type = /obj/item/projectile/bullet/hardlight_arrow
 	delay = 10
 
 /obj/item/weapon/storage/backpack/quiver/hardlight
@@ -183,5 +181,9 @@
 			icon_amount = 3
 	icon_state = "hlquiver[icon_amount]"
 
-/obj/item/ammo_casing/caseless/arrow/hardlight/dropped()
+/obj/item/projectile/bullet/hardlight_arrow/on_hit()
+	..()
 	qdel(src)
+
+/obj/item/ammo_casing/caseless/arrow/hardlight/dropped()
+	QDEL_IN(200,src)
