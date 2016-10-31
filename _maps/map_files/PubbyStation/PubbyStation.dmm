@@ -1064,7 +1064,7 @@
 "aux" = (/obj/machinery/light,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/turf/open/floor/plasteel/black,/area/ai_monitored/nuke_storage)
 "auy" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 10},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/open/floor/plasteel/black,/area/ai_monitored/nuke_storage)
 "auz" = (/obj/machinery/camera/motion{c_tag = "Vault"; dir = 1; network = list("SS13")},/obj/machinery/light,/obj/structure/cable{icon_state = "1-8"},/turf/open/floor/plasteel/black,/area/ai_monitored/nuke_storage)
-"auA" = (/obj/structure/safe,/obj/item/weapon/bikehorn/golden,/obj/item/ammo_box/a357,/obj/item/weapon/tank/internals/plasma/full,/obj/item/weapon/disk/fakenucleardisk,/obj/item/weapon/gun/energy/disabler,/turf/open/floor/plasteel/vault{dir = 4},/area/ai_monitored/nuke_storage)
+"auA" = (/obj/structure/safe,/obj/item/weapon/bikehorn/golden,/obj/item/ammo_box/a357,/obj/item/weapon/tank/internals/plasma/full,/obj/item/weapon/disk/fakenucleardisk,/obj/item/weapon/gun/energy/disabler,/obj/item/weapon/gun/projectile/automatic/pistol/m1911{desc = "A classic .45 handgun with a small magazine capacity. An engraving on the side reads: Tacolizard Forever"},/turf/open/floor/plasteel/vault{dir = 4},/area/ai_monitored/nuke_storage)
 "auB" = (/obj/structure/table/wood,/obj/item/weapon/storage/book/bible,/turf/open/floor/wood,/area/crew_quarters/sleep)
 "auC" = (/obj/structure/chair/wood/normal{icon_state = "wooden_chair"; dir = 8},/turf/open/floor/wood,/area/crew_quarters/sleep)
 "auD" = (/obj/machinery/atmospherics/components/unary/vent_scrubber{dir = 4; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/open/floor/wood{icon_state = "wood-broken7"},/area/crew_quarters/sleep)
