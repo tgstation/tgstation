@@ -68,9 +68,10 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/limbgrower/deconstruction()
+/obj/machinery/limbgrower/on_deconstruction()
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
+	..()
 
 /obj/machinery/limbgrower/attackby(obj/item/O, mob/user, params)
 	if (busy)

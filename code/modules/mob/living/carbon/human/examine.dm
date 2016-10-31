@@ -1,35 +1,16 @@
 /mob/living/carbon/human/examine(mob/user)
+//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
+	var/t_He = p_they(TRUE)
+	var/t_His = p_their(TRUE)
+	var/t_his = p_their()
+	var/t_him = p_them()
+	var/t_has = p_have()
+	var/t_is = p_are()
+
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-
-	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
-	var/t_He = "It" //capitalised for use at the start of each line.
-	var/t_his = "its"
-	var/t_him = "it"
-	var/t_has = "has"
-	var/t_is = "is"
-
-	var/msg = "<span class='info'>*---------*\nThis is "
-
-	if( (slot_w_uniform in obscured) && skipface ) //big suits/masks/helmets make it hard to tell their gender
-		t_He = "They"
-		t_his = "their"
-		t_him = "them"
-		t_has = "have"
-		t_is = "are"
-	else
-		switch(gender)
-			if(MALE)
-				t_He = "He"
-				t_his = "his"
-				t_him = "him"
-			if(FEMALE)
-				t_He = "She"
-				t_his = "her"
-				t_him = "her"
-
-	msg += "<EM>[src.name]</EM>!\n"
 
 	//uniform
 	if(w_uniform && !(slot_w_uniform in obscured))
@@ -161,9 +142,9 @@
 		appears_dead = 1
 		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
 			if(suiciding)
-				msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
+				msg += "<span class='warning'>[t_He] appear[p_s()] to have commited suicide... there is no hope of recovery.</span>\n"
 			if(hellbound)
-				msg += "<span class='warning'>[t_his] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
+				msg += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 			if(!key)
 				var/foundghost = 0
@@ -196,7 +177,7 @@
 	var/r_limbs_missing = 0
 	for(var/t in missing)
 		if(t=="head")
-			msg += "<span class='deadsay'><B>[capitalize(t_his)] [parse_zone(t)] is missing!</B><span class='warning'>\n"
+			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B><span class='warning'>\n"
 			continue
 		if(t == "l_arm" || t == "l_leg")
 			l_limbs_missing++
@@ -267,9 +248,9 @@
 	if(islist(stun_absorption))
 		for(var/i in stun_absorption)
 			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
-				msg += "[t_He][stun_absorption[i]["examine_message"]]\n"
+				msg += "[t_He] [t_is][stun_absorption[i]["examine_message"]]\n"
 
-	if(drunkenness && !skipface && stat != DEAD) //Drunkenness
+	if(drunkenness && !skipface && !appears_dead) //Drunkenness
 		switch(drunkenness)
 			if(11 to 21)
 				msg += "[t_He] [t_is] slightly flushed.\n"
@@ -282,7 +263,7 @@
 			if(61.01 to 91)
 				msg += "[t_He] looks like a drunken mess.\n"
 			if(91.01 to INFINITY)
-				msg += "[t_He] is a shitfaced, slobbering wreck.\n"
+				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
 	msg += "</span>"
 
@@ -297,6 +278,10 @@
 				var/mob/living/carbon/human/interactive/auto = src
 				if(auto.showexaminetext)
 					msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
+				if(auto.debugexamine)
+					var/dodebug = auto.doing2string(auto.doing)
+					var/interestdebug = auto.interest2string(auto.interest)
+					msg += "<span class='deadsay'>[t_He] [t_is] appears to be [interestdebug] and [dodebug].</span>\n"
 			else if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
@@ -305,7 +290,7 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
-	if(istype(user, /mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/cyberimp/eyes/hud/CIH = H.getorgan(/obj/item/organ/cyberimp/eyes/hud)
 		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || CIH)
@@ -317,18 +302,18 @@
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
 					msg += "<a href='?src=\ref[src];hud=1;photo_side=1'>\[Side photo\]</a><br>"
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/medical))
-					var/implant_detect
+					var/cyberimp_detect
 					for(var/obj/item/organ/cyberimp/CI in internal_organs)
 						if(CI.status == ORGAN_ROBOTIC)
-							implant_detect += "[name] is modified with a [CI.name].<br>"
-					if(implant_detect)
+							cyberimp_detect += "[name] is modified with a [CI.name].<br>"
+					if(cyberimp_detect)
 						msg += "Detected cybernetic modifications:<br>"
-						msg += implant_detect
+						msg += cyberimp_detect
 					if(R)
-						var/health = R.fields["p_stat"]
-						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health]\]</a>"
-						health = R.fields["m_stat"]
-						msg += "<a href='?src=\ref[src];hud=m;m_stat=1'>\[[health]\]</a><br>"
+						var/health_r = R.fields["p_stat"]
+						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health_r]\]</a>"
+						health_r = R.fields["m_stat"]
+						msg += "<a href='?src=\ref[src];hud=m;m_stat=1'>\[[health_r]\]</a><br>"
 					R = find_record("name", perpname, data_core.medical)
 					if(R)
 						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"

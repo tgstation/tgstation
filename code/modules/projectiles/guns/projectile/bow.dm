@@ -3,6 +3,10 @@
 	desc = "A sturdy bow made out of wood and reinforced with iron."
 	icon_state = "bow_unloaded"
 	item_state = "bow"
+	var/icon_state_loaded = "bow_loaded"
+	var/icon_state_firing = "bow_firing"
+	var/item_state_loaded = "bow"
+	var/item_state_firing = "bow"
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
 	flags = HANDSLOW
@@ -12,13 +16,17 @@
 	var/slowdown_when_ready = 2
 
 /obj/item/weapon/gun/projectile/bow/update_icon()
-	if(magazine.ammo_count() && !ready_to_fire)
-		icon_state = "bow_loaded"
-	else if(ready_to_fire)
-		icon_state = "bow_firing"
+	if(ready_to_fire)
+		icon_state = icon_state_firing
+		item_state = item_state_firing
 		slowdown = slowdown_when_ready
+	else if(magazine.ammo_count() && !ready_to_fire)
+		icon_state = icon_state_loaded
+		item_state = item_state_loaded
+		slowdown = initial(slowdown)
 	else
 		icon_state = initial(icon_state)
+		item_state = initial(item_state)
 		slowdown = initial(slowdown)
 
 /obj/item/weapon/gun/projectile/bow/dropped(mob/user)

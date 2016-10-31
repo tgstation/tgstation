@@ -54,7 +54,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return
 
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 
 	if(method in list(TOUCH, VAPOR, PATCH))
@@ -680,7 +680,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 60
 
 /datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/M)
-	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
+	if((ishuman(M) && M.job in list("Clown") ) || ismonkey(M))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	return ..() || .
@@ -694,7 +694,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 59 //Proof that clowns are better than mimes right here
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
+	if(ishuman(M) && M.job in list("Mime"))
 		M.heal_bodypart_damage(1,1)
 		. = 1
 	return ..() || .

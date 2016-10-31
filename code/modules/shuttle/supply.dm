@@ -1,8 +1,8 @@
 var/list/blacklisted_cargo_types = typecacheof(list(
 		/mob/living,
-		/obj/effect/blob,
+		/obj/structure/blob,
 		/obj/effect/rune,
-		/obj/effect/spider/spiderling,
+		/obj/structure/spider/spiderling,
 		/obj/item/weapon/disk/nuclear,
 		/obj/machinery/nuclearbomb,
 		/obj/item/device/radio/beacon,

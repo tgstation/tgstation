@@ -83,9 +83,11 @@
 	if(!holds_charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
-		sleep(1)
-		if(!ismob(loc))
-			empty()
+		addtimer(src, "empty_if_not_held", 2)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty_if_not_held()
+	if(!ismob(loc))
+		empty()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
 	power_supply.use(500)
@@ -147,7 +149,7 @@
 		KA.modify_projectile(BB)
 
 		var/turf/proj_turf = get_turf(BB)
-		if(!istype(proj_turf, /turf))
+		if(!isturf(proj_turf))
 			return
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()
@@ -182,7 +184,7 @@
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		target_turf = get_turf(src)
-	if(istype(target_turf, /turf/closed/mineral))
+	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
 	var/obj/effect/overlay/temp/kinetic_blast/K = PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, target_turf)
@@ -191,7 +193,7 @@
 		PoolOrNew(type, target_turf)
 	if(turf_aoe)
 		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
-			if(istype(T, /turf/closed/mineral))
+			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
 				M.gets_drilled(firer)
 	if(mob_aoe)

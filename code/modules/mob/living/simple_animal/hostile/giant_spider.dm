@@ -35,6 +35,7 @@
 	response_harm   = "hits"
 	maxHealth = 200
 	health = 200
+	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	faction = list("spiders")
@@ -84,9 +85,8 @@
 	health = 40
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	poison_per_bite = 10
+	poison_per_bite = 3
 	var/atom/cocoon_target
-	poison_type = "morphine"
 	var/fed = 0
 
 //hunters have the most poison and move the fastest, so they can find prey
@@ -138,7 +138,7 @@
 					return
 
 			//second, spin a sticky spiderweb on this tile
-			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
+			var/obj/structure/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
 				Web()
 			else
@@ -183,7 +183,7 @@
 		stop_automated_movement = 1
 		if(do_after(src, 40, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
-				new /obj/effect/spider/stickyweb(T)
+				new /obj/structure/spider/stickyweb(T)
 		busy = 0
 		stop_automated_movement = 0
 
@@ -214,8 +214,8 @@
 		walk(src,0)
 		if(do_after(src, 50, target = src))
 			if(busy == SPINNING_COCOON)
-				if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
-					var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
+				if(cocoon_target && isturf(cocoon_target.loc) && get_dist(src,cocoon_target) <= 1)
+					var/obj/structure/spider/cocoon/C = new(cocoon_target.loc)
 					var/large_cocoon = 0
 					C.pixel_x = cocoon_target.pixel_x
 					C.pixel_y = cocoon_target.pixel_y
@@ -251,7 +251,7 @@
 	set category = "Spider"
 	set desc = "Lay a clutch of eggs, but you must wrap a creature for feeding first."
 
-	var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
+	var/obj/structure/spider/eggcluster/E = locate() in get_turf(src)
 	if(stat == DEAD)
 		return
 	if(E)
@@ -266,7 +266,7 @@
 			if(busy == LAYING_EGGS)
 				E = locate() in get_turf(src)
 				if(!E)
-					var/obj/effect/spider/eggcluster/C = new /obj/effect/spider/eggcluster(src.loc)
+					var/obj/structure/spider/eggcluster/C = new /obj/structure/spider/eggcluster(src.loc)
 					if(ckey)
 						C.player_spiders = 1
 					C.poison_type = poison_type

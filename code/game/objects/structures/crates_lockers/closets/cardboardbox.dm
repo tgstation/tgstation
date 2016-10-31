@@ -2,10 +2,11 @@
 	name = "large cardboard box"
 	desc = "Just a box..."
 	icon_state = "cardboard"
-	health = 10
 	mob_storage_capacity = 1
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
+	integrity_failure = 0
 	can_weld_shut = 0
 	cutting_tool = /obj/item/weapon/wirecutters
 	open_sound = 'sound/effects/rustle2.ogg'
@@ -59,9 +60,9 @@
 	name = "large metal box"
 	desc = "THE COWARDS! THE FOOLS!"
 	icon_state = "metalbox"
-	health = 500
+	obj_integrity = 500
 	mob_storage_capacity = 5
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weapon/weldingtool
 	open_sound = 'sound/machines/click.ogg'

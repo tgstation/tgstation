@@ -64,6 +64,12 @@
 	description = "A delicious blend of several different kinds of berries."
 	color = "#863333" // rgb: 134, 51, 51
 
+/datum/reagent/consumable/applejuice
+	name = "Apple Juice"
+	id = "applejuice"
+	description = "The sweet juice of an apple, fit for all ages."
+	color = "#ECFF56" // rgb: 236, 255, 86
+
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
 	id = "poisonberryjuice"
@@ -94,7 +100,7 @@
 	color = "#863333" // rgb: 175, 175, 0
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/M)
-	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
+	if((ishuman(M) && M.job in list("Clown") ) || ismonkey(M))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
@@ -105,7 +111,7 @@
 	description = "Absolutely nothing."
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
+	if(ishuman(M) && M.job in list("Mime"))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
@@ -515,3 +521,9 @@
 	id = "grapesoda"
 	description = "Beloved of children and teetotalers."
 	color = "#E6CDFF"
+
+/datum/reagent/consumable/milk/chocolate_milk
+	name = "Chocolate Milk"
+	id = "chocolate_milk"
+	description = "Milk for cool kids."
+	color = "#7D4E29"

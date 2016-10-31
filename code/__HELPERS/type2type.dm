@@ -396,8 +396,6 @@ for(var/t in test_times)
 	return
 
 
-
-
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
 //(I challenge you to find a use for this)
 /proc/body_parts_covered2organ_names(bpc)

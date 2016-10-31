@@ -10,7 +10,7 @@
 
 /obj/machinery/computer/stockexchange/New()
 	..()
-	logged_in = "[world.name] Cargo Department"
+	logged_in = "[station_name()] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
@@ -248,7 +248,7 @@ a.updated {
 		usr.machine = src
 
 	if (href_list["viewhistory"])
-		var/datum/stock/S = locate(href_list["viewhistory"])
+		var/datum/stock/S = locate(href_list["viewhistory"]) in stockExchange.stocks
 		if (S)
 			S.displayValues(usr)
 
@@ -256,19 +256,14 @@ a.updated {
 		logged_in = null
 
 	if (href_list["buyshares"])
-		var/datum/stock/S = locate(href_list["buyshares"])
+		var/datum/stock/S = locate(href_list["buyshares"]) in stockExchange.stocks
 		if (S)
 			buy_some_shares(S, usr)
 
 	if (href_list["sellshares"])
-		var/datum/stock/S = locate(href_list["sellshares"])
+		var/datum/stock/S = locate(href_list["sellshares"]) in stockExchange.stocks
 		if (S)
 			sell_some_shares(S, usr)
-
-	if (href_list["take"])
-		var/datum/borrow/B = locate(href_list["take"])
-		if (B && !B.lease_expires)
-			do_borrowing_deal(B, usr)
 
 	if (href_list["show_logs"])
 		var/dat = "<html><head><title>Stock Transaction Logs</title></head><body><h2>Stock Transaction Logs</h2><div><a href='?src=\ref[src];show_logs=1'>Refresh</a></div><br>"

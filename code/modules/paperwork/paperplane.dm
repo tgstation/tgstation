@@ -7,8 +7,9 @@
 	throw_speed = 1
 	throwforce = 0
 	w_class = 1
-	burn_state = FLAMMABLE
-	burntime = 4
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 
 	var/obj/item/weapon/paper/internalPaper
 	var/list/stamped = list()
@@ -28,7 +29,7 @@
 
 /obj/item/weapon/paperplane/suicide_act(mob/user)
 	user.Stun(10)
-	user.visible_message("<span class='suicide'>[user] jams the [src] in their brains. It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.adjust_blurriness(6)
 	user.adjust_eye_damage(rand(6,8))
 	sleep(10)
@@ -79,7 +80,6 @@
 
 		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
 			return
-		internalPaper.burntime = 1 //its already pretty burnt out
 		user.unEquip(src)
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
@@ -87,9 +87,8 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0) //prevent the paper plane from spinning
-	if(!..())
-		return
+/obj/item/weapon/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE)
+	. = ..(target, range, speed, thrower, FALSE, diagonals_first)
 
 /obj/item/weapon/paperplane/throw_impact(atom/hit_atom)
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman

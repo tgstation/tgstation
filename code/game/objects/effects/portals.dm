@@ -1,14 +1,10 @@
 
-/obj/effect
-	icon = 'icons/effects/effects.dmi'
-
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
-	unacidable = 1//Can't destroy energy portals.
 	var/obj/item/target = null
 	var/creator = null
 	anchored = 1

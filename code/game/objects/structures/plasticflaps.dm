@@ -8,8 +8,8 @@
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
-	if(istype(caller, /mob/living))
-		if(istype(caller,/mob/living/simple_animal/bot))
+	if(isliving(caller))
+		if(isbot(caller))
 			return 1
 
 		var/mob/living/M = caller
@@ -35,27 +35,15 @@
 		return 0
 
 
-	else if(istype(A, /mob/living)) // You Shall Not Pass!
+	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(istype(A,/mob/living/simple_animal/bot)) //Bots understand the secrets
+		if(isbot(A)) //Bots understand the secrets
 			return 1
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return 1
 		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
 	return ..()
-
-/obj/structure/plasticflaps/ex_act(severity)
-	..()
-	switch(severity)
-		if (1)
-			qdel(src)
-		if (2)
-			if (prob(50))
-				qdel(src)
-		if (3)
-			if (prob(5))
-				qdel(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
 	name = "airtight plastic flaps"
@@ -64,7 +52,7 @@
 /obj/structure/plasticflaps/mining/New()
 	air_update_turf(1)
 	. = ..()
-	
+
 /obj/structure/plasticflaps/mining/CanAtmosPass()
 	return FALSE
 

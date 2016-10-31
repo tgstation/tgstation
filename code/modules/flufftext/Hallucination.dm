@@ -206,6 +206,18 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
 	qdel(src)
 
+/obj/effect/hallucination/simple/clown
+	image_icon = 'icons/mob/animal.dmi'
+	image_state = "clown"
+
+/obj/effect/hallucination/simple/clown/New(loc,var/mob/living/carbon/T,duration)
+	..(loc, T)
+	name = pick(clown_names)
+	QDEL_IN(src,duration)
+
+/obj/effect/hallucination/simple/clown/scary
+	image_state = "scary_clown"
+
 /obj/effect/hallucination/singularity_scare
 	//Singularity moving towards you.
 	//todo Hide where it moved with fake space images
@@ -303,11 +315,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(target.client)
 			delusions |= A
 			target.client.images |= A
-	sleep(duration)
+	QDEL_IN(src, duration)
+
+/obj/effect/hallucination/delusion/Destroy()
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)
-	qdel(src)
 
 /obj/effect/hallucination/fakeattacker/New(loc,var/mob/living/carbon/T)
 	target = T
@@ -363,7 +376,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/collapse
 	var/image/down
 
-	var/health = 100
+	obj_integrity = 100
 
 /obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/living/user, params)
 	step_away(src,my_target,2)
@@ -373,7 +386,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
 							"<span class='danger'>[my_target] has attacked [src]!</span>")
 
-	src.health -= P.force
+	obj_integrity -= P.force
 
 /obj/effect/fake_attacker/Crossed(mob/M, somenumber)
 	if(M == my_target)
@@ -410,7 +423,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/fake_attacker/proc/attack_loop()
 	while(1)
 		sleep(rand(5,10))
-		if(src.health < 0)
+		if(obj_integrity < 0)
 			collapse()
 			continue
 		if(get_dist(src,my_target) > 1)
@@ -419,7 +432,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			updateimage()
 		else
 			if(prob(15))
-				src.do_attack_animation(my_target)
+				do_attack_animation(my_target, ATTACK_EFFECT_PUNCH)
 				if(weapon_name)
 					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
 					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
@@ -622,7 +635,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 				var/list/slots_free = list(l,r)
 				if(l_hand) slots_free -= l
 				if(r_hand) slots_free -= r
-				if(istype(src,/mob/living/carbon/human))
+				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					if(!H.belt) slots_free += ui_belt
 					if(!H.l_store) slots_free += ui_storage1
@@ -630,6 +643,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 				if(slots_free.len)
 					halitem.screen_loc = pick(slots_free)
 					halitem.layer = ABOVE_HUD_LAYER
+					halitem.plane = ABOVE_HUD_PLANE
 					switch(rand(1,6))
 						if(1) //revolver
 							halitem.icon = 'icons/obj/guns/projectile.dmi'

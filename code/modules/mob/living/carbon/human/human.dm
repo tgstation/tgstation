@@ -41,7 +41,10 @@
 	if(!(NOHUNGER in dna.species.specflags))
 		internal_organs += new /obj/item/organ/appendix
 	if(!(NOBREATH in dna.species.specflags))
-		internal_organs += new /obj/item/organ/lungs
+		if(dna.species.mutantlungs)
+			internal_organs += new dna.species.mutantlungs()
+		else
+			internal_organs += new /obj/item/organ/lungs()
 	if(!(NOBLOOD in dna.species.specflags))
 		internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
@@ -133,6 +136,11 @@
 	else
 		dat += "<tr><td><B>Mask:</B></td><td><A href='?src=\ref[src];item=[slot_wear_mask]'>[(wear_mask && !(wear_mask.flags&ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
 
+	if(slot_neck in obscured)
+		dat += "<tr><td><font color=grey><B>Neck:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	else
+		dat += "<tr><td><B>Neck:</B></td><td><A href='?src=\ref[src];item=[slot_neck]'>[(wear_neck && !(wear_neck.flags&ABSTRACT)) ? wear_neck : "<font color=grey>Empty</font>"]</A></td></tr>"
+
 	if(slot_glasses in obscured)
 		dat += "<tr><td><font color=grey><B>Eyes:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
 	else
@@ -219,8 +227,8 @@
 				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 					return
 				L.embedded_objects -= I
-				L.take_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-				I.loc = get_turf(src)
+				L.receive_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
+				I.forceMove(get_turf(src))
 				usr.put_in_hands(I)
 				usr.emote("scream")
 				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
@@ -272,7 +280,7 @@
 
 ///////HUDs///////
 	if(href_list["hud"])
-		if(istype(usr, /mob/living/carbon/human))
+		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			var/perpname = get_face_name(get_id_name(""))
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud))
@@ -294,24 +302,24 @@
 				if(href_list["hud"] == "m")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 						if(href_list["p_stat"])
-							var/health = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
+							var/health_status = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
 							if(R)
 								if(!H.canUseHUD())
 									return
 								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 									return
-								if(health && health != "Cancel")
-									R.fields["p_stat"] = health
+								if(health_status && health_status != "Cancel")
+									R.fields["p_stat"] = health_status
 							return
 						if(href_list["m_stat"])
-							var/health = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
+							var/health_status = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
 							if(R)
 								if(!H.canUseHUD())
 									return
 								else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 									return
-								if(health && health != "Cancel")
-									R.fields["m_stat"] = health
+								if(health_status && health_status != "Cancel")
+									R.fields["m_stat"] = health_status
 							return
 						if(href_list["evaluation"])
 							if(!getBruteLoss() && !getFireLoss() && !getOxyLoss() && getToxLoss() < 20)
@@ -496,7 +504,7 @@
 			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.
-		user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on their head" : "on their body"].</span>"
+		user << "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>"
 
 /mob/living/carbon/human/proc/check_obscured_slots()
 	var/list/obscured = list()
@@ -521,7 +529,7 @@
 		if(wear_mask.flags_inv & HIDEEYES)
 			obscured |= slot_glasses
 
-	if(obscured.len > 0)
+	if(obscured.len)
 		return obscured
 	else
 		return null
@@ -588,7 +596,7 @@
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
-	if(isloyal(src))
+	if(isloyal())
 		threatcount -= 1
 
 	//Agent cards lower threatlevel.
@@ -630,7 +638,7 @@
 		src << "<span class='warning'>Remove your mask first!</span>"
 		return 0
 	if(C.is_mouth_covered())
-		src << "<span class='warning'>Remove their mask first!</span>"
+		src << "<span class='warning'>Remove [p_their()] mask first!</span>"
 		return 0
 
 	if(C.cpr_time < world.time + 30)
@@ -884,12 +892,11 @@
 	override = dna.species.override_float
 	..()
 
-
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
 	if(blood && (NOBLOOD in dna.species.specflags))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
-							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			Weaken(10)
 		return 1

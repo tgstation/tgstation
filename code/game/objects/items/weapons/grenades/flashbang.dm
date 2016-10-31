@@ -12,10 +12,10 @@
 	for(var/mob/living/M in get_hearers_in_view(7, flashbang_turf))
 		bang(get_turf(M), M)
 
-	for(var/obj/effect/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
+	for(var/obj/structure/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
 		var/distance = get_dist(B, get_turf(src))
 		var/damage = round(100/(distance*distance)+1)
-		B.take_damage(damage, BURN)
+		B.take_damage(damage, BURN, "energy")
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)

@@ -138,7 +138,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	updateUsrDialog()
 
 
-/obj/machinery/computer/rdconsole/deconstruction()
+/obj/machinery/computer/rdconsole/on_deconstruction()
 	if(linked_destroy)
 		linked_destroy.linked_console = null
 		linked_destroy = null
@@ -277,7 +277,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				usr << "<span class='danger'>The destructive analyzer is busy at the moment.</span>"
 
 			else if(linked_destroy.loaded_item)
-				linked_destroy.loaded_item.loc = linked_destroy.loc
+				linked_destroy.loaded_item.forceMove(linked_destroy.loc)
 				linked_destroy.loaded_item = null
 				linked_destroy.icon_state = "d_analyzer"
 				screen = 1.0

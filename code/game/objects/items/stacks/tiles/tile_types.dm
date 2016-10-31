@@ -79,7 +79,7 @@
 	icon_state = "tile_grass"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/grass
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 
 //Wood
@@ -90,7 +90,7 @@
 	icon_state = "tile-wood"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/wood
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 
 //Carpets
@@ -100,7 +100,7 @@
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	turf_type = /turf/open/floor/carpet
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 
 /obj/item/stack/tile/fakespace
@@ -109,7 +109,8 @@
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	turf_type = /turf/open/floor/fakespace
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakespace
 
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
@@ -122,6 +123,7 @@
 	icon_state = "tile_noslip"
 	turf_type = /turf/open/floor/noslip
 	origin_tech = "materials=3"
+	merge_type = /obj/item/stack/tile/noslip
 
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
@@ -153,6 +155,7 @@
 	singular_name = "brass floor tile"
 	desc = "A brass floor tile. It vibrates slightly."
 	icon_state = "tile_brass"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	turf_type = /turf/open/floor/clockwork
 
 //Plasteel (normal)
@@ -167,6 +170,8 @@
 	flags = CONDUCT
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR

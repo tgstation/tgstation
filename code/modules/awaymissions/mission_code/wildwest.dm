@@ -4,36 +4,6 @@
  *		Meat Grinder
  */
 
-//Wild West Areas
-
-/area/awaymission/wwmines
-	name = "Wild West Mines"
-	icon_state = "away1"
-	luminosity = 1
-	requires_power = 0
-
-/area/awaymission/wwgov
-	name = "Wild West Mansion"
-	icon_state = "away2"
-	luminosity = 1
-	requires_power = 0
-
-/area/awaymission/wwrefine
-	name = "Wild West Refinery"
-	icon_state = "away3"
-	luminosity = 1
-	requires_power = 0
-
-/area/awaymission/wwvault
-	name = "Wild West Vault"
-	icon_state = "away3"
-	luminosity = 0
-
-/area/awaymission/wwvaultdoors
-	name = "Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
-	icon_state = "away2"
-	requires_power = 0
-	luminosity = 0
 
 /*
  * Wish Granter
@@ -58,7 +28,7 @@
 		user << "The Wish Granter lies silent."
 		return
 
-	else if(!istype(user, /mob/living/carbon/human))
+	else if(!ishuman(user))
 		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
 		return
 
@@ -121,15 +91,15 @@
 	icon_state = "blobpod"
 	var/triggered = 0
 
-/obj/effect/meatgrinder/Crossed(AM as mob|obj)
+/obj/effect/meatgrinder/Crossed(AM)
 	Bumped(AM)
 
-/obj/effect/meatgrinder/Bumped(mob/M as mob|obj)
+/obj/effect/meatgrinder/Bumped(mob/M)
 
 	if(triggered)
 		return
 
-	if(istype(M, /mob/living/carbon/human) && M.stat != DEAD && M.ckey)
+	if(ishuman(M) && M.stat != DEAD && M.ckey)
 		for(var/mob/O in viewers(world.view, src.loc))
 		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
 		triggered = 1

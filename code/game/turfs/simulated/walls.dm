@@ -44,8 +44,7 @@
 		if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
-		else
-			O.loc = src
+
 	ChangeTurf(/turf/open/floor/plating)
 
 /turf/closed/wall/proc/break_wall()
@@ -75,24 +74,28 @@
 		if(3)
 			if (prob(hardness))
 				dismantle_wall(0,1)
-			else
 	if(!density)
 		..()
-	return
 
-/turf/closed/wall/blob_act(obj/effect/blob/B)
+
+/turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		dismantle_wall()
 
 /turf/closed/wall/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)
-	if(M.damtype == "brute")
-		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>")
-		if(prob(hardness + M.force) && M.force > 20)
-			dismantle_wall(1)
-			visible_message("<span class='warning'>[M.name] smashes through the wall!</span>")
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+	switch(M.damtype)
+		if(BRUTE)
+			playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
+			visible_message("<span class='danger'>[M.name] has hit [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+			if(prob(hardness + M.force) && M.force > 20)
+				dismantle_wall(1)
+				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+		if(BURN)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		if(TOX)
+			playsound(src, 'sound/effects/spray2.ogg', 100, 1)
+			return 0
 
 /turf/closed/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -104,18 +107,15 @@
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		M << "<span class='notice'>You smash through the wall.</span>"
 		dismantle_wall(1)
 		return
 
-/turf/closed/wall/attack_hulk(mob/user)
+/turf/closed/wall/attack_hulk(mob/user, does_attack_animation = 0)
 	..(user, 1)
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-		user << text("<span class='notice'>You smash through the wall.</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		dismantle_wall(1)
-
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		user << text("<span class='notice'>You punch the wall.</span>")
@@ -137,7 +137,7 @@
 		return
 
 	//get the user's location
-	if( !istype(user.loc, /turf) )
+	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
 
 	add_fingerprint(user)
@@ -177,9 +177,9 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
 			user << "<span class='notice'>You begin slicing through the outer plating...</span>"
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, W.usesound, 100, 1)
 			if(do_after(user, slicing_duration/W.toolspeed, target = src))
-				if( !istype(src, /turf/closed/wall) || !user || !WT || !WT.isOn() || !T )
+				if(!iswallturf(src) || !user || !WT || !WT.isOn() || !T)
 					return 1
 				if( user.loc == T && user.get_active_held_item() == WT )
 					user << "<span class='notice'>You remove the outer plating.</span>"
@@ -189,7 +189,7 @@
 		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		if(do_after(user, slicing_duration*0.6, target = src))  // plasma cutter is faster than welding tool
-			if( !istype(src, /turf/closed/wall) || !user || !W || !T )
+			if(!iswallturf(src) || !user || !W || !T)
 				return 1
 			if( user.loc == T && user.get_active_held_item() == W )
 				user << "<span class='notice'>You remove the outer plating.</span>"
@@ -202,7 +202,7 @@
 /turf/closed/wall/proc/try_destroy(obj/item/weapon/W, mob/user, turf/T)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
-		if( !istype(src, /turf/closed/wall) || !user || !W || !T )
+		if(!iswallturf(src) || !user || !W || !T)
 			return 1
 		if( user.loc == T && user.get_active_held_item() == W )
 			D.playDigSound()
@@ -266,3 +266,6 @@
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/turf/closed/wall/acid_melt()
+	dismantle_wall(1)

@@ -68,6 +68,28 @@
 	var/list/sec = get_living_sec()
 	var/weighted_score = min(max(round(heads.len - ((8 - sec.len) / 3)),1),max_headrevs)
 
+
+	for(var/datum/mind/rev_mind in head_revolutionaries)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
+		if(istype(rev_mind.current,/mob/new_player))
+			head_revolutionaries -= rev_mind
+			var/list/newcandidates = shuffle(antag_candidates)
+			if(newcandidates.len == 0)
+				continue
+			for(var/M in newcandidates)
+				var/datum/mind/lenin = M
+				antag_candidates -= lenin
+				newcandidates -= lenin
+				if(istype(lenin.current,/mob/new_player)) //We don't want to make the same mistake again
+					continue
+				else
+					var/mob/Nm = lenin.current
+					if(Nm.job in restricted_jobs)	//Don't make the HOS a replacement revhead
+						antag_candidates += lenin	//Let's let them keep antag chance for other antags
+						continue
+
+					head_revolutionaries += lenin
+					break
+
 	while(weighted_score < head_revolutionaries.len) //das vi danya
 		var/datum/mind/trotsky = pick(head_revolutionaries)
 		antag_candidates += trotsky
@@ -238,7 +260,7 @@
 	if(rev_mind.assigned_role in command_positions)
 		return 0
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
-	if(isloyal(H))
+	if(H.isloyal())
 		return 0
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
@@ -253,7 +275,7 @@
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
-		replace_jobbaned_player(rev_mind.current, ROLE_REV, ROLE_REV)
+		addtimer(src, "replace_jobbaned_player", 0, FALSE, rev_mind.current, ROLE_REV, ROLE_REV)
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.

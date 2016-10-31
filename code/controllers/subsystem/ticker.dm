@@ -58,7 +58,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 31, 'sound/ambience/title1.ogg' = 31, 'sound/ambience/title3.ogg' =31, 'sound/ambience/clown.ogg' = 7)) // choose title music!
+	login_music = pickweight(list('sound/ambience/title2.ogg' = 23, 'sound/ambience/title1.ogg' =23, 'sound/ambience/title3.ogg' =23, 'sound/ambience/title4.ogg' =23, 'sound/ambience/clown.ogg' = 8)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
@@ -349,7 +349,7 @@ var/datum/subsystem/ticker/ticker
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
 	if(captainless)
 		for(var/mob/M in player_list)
-			if(!istype(M,/mob/new_player))
+			if(!isnewplayer(M))
 				M << "Captainship not forced on anyone."
 
 

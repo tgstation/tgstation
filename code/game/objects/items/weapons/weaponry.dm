@@ -34,9 +34,13 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("banned")
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>")
+		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life.</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
@@ -57,8 +61,9 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/sord/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to impale \himself with \the [name]! It might be a suicide attempt if it weren't so shitty.</span>", "<span class='suicide'>You try to impale yourself with \the [name], but it's USELESS...</span>")
-	return(SHAME)
+	user.visible_message("<span class='suicide'>[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so shitty.</span>", \
+	"<span class='suicide'>You try to impale yourself with [src], but it's USELESS...</span>")
+	return SHAME
 
 /obj/item/weapon/claymore
 	name = "claymore"
@@ -74,9 +79,13 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
 var/highlander_claymores = 0
@@ -88,7 +97,6 @@ var/highlander_claymores = 0
 	attack_verb = list("brutalized", "eviscerated", "disemboweled", "hacked", "carved", "cleaved") //ONLY THE MOST VISCERAL ATTACK VERBS
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/announced = FALSE //IF WE ARE THE ONLY ONE LEFT STANDING
-	var/bloodthirst_level = 0 //HOW THIRSTY WE ARE FOR BLOOD
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
 /obj/item/weapon/claymore/highlander/New()
@@ -109,8 +117,6 @@ var/highlander_claymores = 0
 	if(isliving(loc))
 		var/mob/living/L = loc
 		if(L.stat != DEAD)
-			if(!announced)
-				handle_bloodthirst(L)
 			if(announced || admin_spawned || highlander_claymores > 1)
 				return
 			announced = TRUE
@@ -123,11 +129,10 @@ var/highlander_claymores = 0
 
 /obj/item/weapon/claymore/highlander/pickup(mob/living/user)
 	user << "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>"
-	user.add_stun_absorption("highlander", INFINITY, 1, "is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
+	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
 
 /obj/item/weapon/claymore/highlander/dropped(mob/living/user)
-	user << "<span class='danger'>The power of Scotland fades away! You are no longer shielded from stuns.</span>"
-	user.add_stun_absorption("highlander", 0.1, 1, "is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
+	qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/weapon/claymore/highlander/examine(mob/user)
 	..()
@@ -136,14 +141,9 @@ var/highlander_claymores = 0
 		user << "<span class='boldwarning'>It's holding the nuke disk!</span>"
 
 /obj/item/weapon/claymore/highlander/attack(mob/living/target, mob/living/user)
-	var/old_target_stat = target.stat
 	. = ..()
-	bloodthirst_level = max(bloodthirst_level - (target.mind && target.mind.special_role == "highlander" ? 15 : 5), 0)
-	if(target && target.stat == DEAD && old_target_stat != DEAD && target.mind && target.mind.special_role == "highlander")
+	if(target && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
-		if(bloodthirst_level >= 30)
-			user << "<span class='notice'>[src] shakes greedily as it devours [target]'s soul. Its bloodthirst is quenched for the moment...</span>"
-		bloodthirst_level = 0
 		add_notch(user)
 		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
 		target.dust()
@@ -215,22 +215,6 @@ var/highlander_claymores = 0
 	name = new_name
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
 
-/obj/item/weapon/claymore/highlander/proc/handle_bloodthirst(mob/living/S) //THE BLADE THIRSTS FOR BLOOD AND WILL PUNISH THE WEAK OR PACIFISTIC
-	bloodthirst_level += (1 + min(notches, 10))
-	if(bloodthirst_level == 30)
-		S << "<span class='warning'>[src] shudders in your hand. It hungers for battle...</span>"
-	if(bloodthirst_level == 60)
-		S << "<span class='boldwarning'>[src] trembles violently. Kill someone already!</span>"
-	if(bloodthirst_level == 90)
-		S << "<span class='userdanger'>[src] starts shaking viciously! Shed blood or it'll give you away!</span>"
-	if(bloodthirst_level >= 120)
-		var/turf/T = get_turf(S)
-		for(var/mob/M in player_list - S)
-			if(M.z == T.z)
-				M << "<span class='userdanger'>THERE IS A COWARD WHO DOES NOT FIGHT TO THE [uppertext(dir2text(get_dir(M, T)))]. THEIR NAME IS [uppertext(S.real_name)] - SLAUGHTER THEM.</span>"
-		S << "<span class='notice'>you fucked up</span>"
-		bloodthirst_level = 100
-
 /obj/item/weapon/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20"
@@ -245,12 +229,16 @@ var/highlander_claymores = 0
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/katana/cursed
 	slot_flags = null
 
 /obj/item/weapon/katana/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/wirerod
@@ -307,6 +295,7 @@ var/highlander_claymores = 0
 	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	resistance_flags = FIRE_PROOF
 
 
 /obj/item/weapon/switchblade
@@ -323,6 +312,7 @@ var/highlander_claymores = 0
 	origin_tech = "engineering=3;combat=2"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
+	resistance_flags = FIRE_PROOF
 	var/extended = 0
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
@@ -346,7 +336,7 @@ var/highlander_claymores = 0
 		sharpness = IS_BLUNT
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/phone
@@ -364,9 +354,9 @@ var/highlander_claymores = 0
 
 /obj/item/weapon/phone/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in user.loc)
-		user.visible_message("<span class='suicide'>[user] begins to tie a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] begins to tie a noose with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	else
-		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]'s cord! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
 /obj/item/weapon/cane
@@ -393,14 +383,14 @@ var/highlander_claymores = 0
 	w_class = 2
 	armour_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/staff/broom
 	name = "broom"
 	desc = "Used for sweeping, and flying into the night while cackling. Black cat not included."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "broom"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/staff/stick
 	name = "stick"
@@ -422,7 +412,7 @@ var/highlander_claymores = 0
 	icon_state = "ectoplasm"
 
 /obj/item/weapon/ectoplasm/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is inhaling the [src.name]! It looks like \he's trying to visit the astral plane.</span>")
+	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane.</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/mounted_chainsaw

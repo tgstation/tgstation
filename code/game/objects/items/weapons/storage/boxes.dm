@@ -15,6 +15,7 @@
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
+ *		Action Figure Boxes
  *		Various paper bags.
  *
  *		For syndicate call-ins see uplink_kits.dm
@@ -25,7 +26,7 @@
 	desc = "It's just an ordinary box."
 	icon_state = "box"
 	item_state = "syringe_kit"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 
 
@@ -566,7 +567,7 @@
 	foldable = null
 
 /obj/item/weapon/storage/box/hug/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] clamps the box of hugs on \his jugular! Guess it wasn't such a hugbox after all..</span>")
+	user.visible_message("<span class='suicide'>[user] clamps the box of hugs on [user.p_their()] jugular! Guess it wasn't such a hugbox after all..</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/storage/box/hug/attack_self(mob/user)
@@ -623,6 +624,18 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 
+
+/obj/item/weapon/storage/box/actionfigure
+	name = "box of action figures"
+	desc = "The latest set of collectable action figures."
+	icon_state = "box"
+
+/obj/item/weapon/storage/box/actionfigure/New()
+	..()
+	for(var/i in 1 to 4)
+		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
+		new randomFigure(src)
+
 #define NODESIGN "None"
 #define NANOTRASEN "NanotrasenStandard"
 #define SYNDI "SyndiSnacks"
@@ -634,7 +647,7 @@
 	desc = "A sack neatly crafted out of paper."
 	icon_state = "paperbag_None"
 	item_state = "paperbag_None"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	foldable = null
 	var/design = NODESIGN
 

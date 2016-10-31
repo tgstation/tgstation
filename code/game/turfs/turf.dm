@@ -15,7 +15,7 @@
 
 	flags = CAN_BE_DIRTY
 
-	var/list/proximity_checkers = list()
+	var/list/proximity_checkers
 
 	var/image/obscured	//camerachunks
 
@@ -155,7 +155,7 @@
 
 	if(!can_have_cabling())
 		for(var/obj/structure/cable/C in contents)
-			C.Deconstruct()
+			C.deconstruct()
 
 	queue_smooth_neighbors(src)
 
@@ -172,7 +172,7 @@
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
 	var/list/total_gases = total.gases
-	var/turf_count = atmos_adjacent_turfs.len
+	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
 
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
@@ -212,7 +212,7 @@
 		M.adjustBruteLoss(damage)
 		M.Paralyse(damage/5)
 	for(var/obj/mecha/M in src)
-		M.take_damage(damage*2, "brute")
+		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
 	flags |= NOJAUNT
@@ -328,3 +328,49 @@
 
 /turf/proc/is_transition_turf()
 	return
+
+
+/turf/acid_act(acidpwr, acid_volume)
+	. = 1
+	var/has_acid_effect = 0
+	for(var/obj/O in src)
+		if(intact && O.level == 1) //hidden under the floor
+			continue
+		if(istype(O, /obj/effect/acid))
+			var/obj/effect/acid/A = O
+			A.acid_level = min(A.level + acid_volume * acidpwr, 12000)//capping acid level to limit power of the acid
+			has_acid_effect = 1
+			continue
+		O.acid_act(acidpwr, acid_volume)
+	if(!has_acid_effect)
+		new /obj/effect/acid(src, acidpwr, acid_volume)
+
+
+/turf/proc/acid_melt()
+	return
+
+
+/turf/proc/copyTurf(turf/T)
+	if(T.type != type)
+		var/obj/O
+		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
+			O = new()
+			O.underlays.Add(T)
+		T.ChangeTurf(type)
+		if(underlays.len)
+			T.underlays = O.underlays
+	if(T.icon_state != icon_state)
+		T.icon_state = icon_state
+	if(T.icon != icon)
+		T.icon = icon
+	if(T.color != color)
+		T.color = color
+	if(T.dir != dir)
+		T.setDir(dir)
+	return T
+
+/turf/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK
+

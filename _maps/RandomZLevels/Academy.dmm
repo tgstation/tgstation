@@ -573,7 +573,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/academy/headmaster)
 "bQ" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2797,7 +2797,7 @@
 /area/awaymission/academy/academyaft)
 "hU" = (
 /obj/structure/closet,
-/obj/item/clothing/under/blackskirt,
+/obj/item/clothing/under/skirt/black,
 /obj/item/clothing/glasses/regular,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
@@ -2920,7 +2920,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "in" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
 	},
@@ -3113,7 +3113,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
 "iP" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/engine,
 /area/awaymission/academy/academyaft)
 "iQ" = (
@@ -3940,7 +3940,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "kZ" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult,
@@ -3961,11 +3961,11 @@
 /turf/open/floor/mineral/uranium,
 /area/awaymission/academy/academycellar)
 "le" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lf" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lg" = (

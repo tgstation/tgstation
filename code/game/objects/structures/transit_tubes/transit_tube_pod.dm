@@ -21,9 +21,7 @@
 		follow_tube()
 
 /obj/structure/transit_tube_pod/Destroy()
-	for(var/atom/movable/AM in contents)
-		AM.loc = loc
-
+	empty()
 	return ..()
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
@@ -31,9 +29,9 @@
 		if(!moving)
 			for(var/obj/structure/transit_tube/station/T in loc)
 				return
-			if(src.contents.len)
+			if(contents.len)
 				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
-				src.empty()
+				empty()
 				return
 			else
 				user << "<span class='notice'>You free \the [src].</span>"
@@ -43,6 +41,16 @@
 				qdel(src)
 	else
 		return ..()
+
+/obj/structure/transit_tube_pod/ex_act(severity, target)
+	..()
+	if(!qdeleted(src))
+		for(var/atom/movable/AM in contents)
+			AM.forceMove(loc)
+
+/obj/structure/transit_tube_pod/contents_explosion(severity, target)
+	for(var/atom/movable/AM in contents)
+		AM.ex_act(severity, target)
 
 /obj/structure/transit_tube_pod/container_resist()
 	var/mob/living/user = usr
@@ -56,7 +64,7 @@
 
 /obj/structure/transit_tube_pod/proc/empty()
 	for(var/atom/movable/M in src.contents)
-		M.loc = src.loc
+		M.forceMove(loc)
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
@@ -182,7 +190,7 @@
 			mob.client.Move(get_step(loc, direction), direction)
 			mob.reset_perspective(null)
 
-			//if(moving && istype(loc, /turf/open/space))
+			//if(moving && isspaceturf(loc))
 				// Todo: If you get out of a moving pod in space, you should move as well.
 				//  Same direction as pod? Direcion you moved? Halfway between?
 

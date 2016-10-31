@@ -158,7 +158,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
 	if(!G || (gangster_mind in get_all_gangsters()) || (gangster_mind.enslaved_to && !is_gangster(gangster_mind.enslaved_to)))
 		return 0
-	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
+	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
 		return 1
 	G.gangsters += gangster_mind
 	gangster_mind.gang_datum = G
@@ -177,7 +177,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	gangster_mind.store_memory("You are a member of the [G.name] Gang!")
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
-		replace_jobbaned_player(gangster_mind.current, ROLE_GANG, ROLE_GANG)
+		addtimer(src, "replace_jobbaned_player", 0, FALSE, gangster_mind.current, ROLE_GANG, ROLE_GANG)
 	return 2
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//

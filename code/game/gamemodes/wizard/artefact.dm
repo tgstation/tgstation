@@ -34,7 +34,6 @@
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
 	density = 1
-	unacidable = 1
 	anchored = 1
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
@@ -173,7 +172,7 @@
 		return
 
 	for(var/X in spooky_scaries)
-		if(!istype(X, /mob/living/carbon/human))
+		if(!ishuman(X))
 			spooky_scaries.Remove(X)
 			continue
 		var/mob/living/carbon/human/H = X
@@ -417,10 +416,10 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/scalpel(M), slot_r_store)
 			M.put_in_hands_or_del(sword)
-			for(var/obj/item/carried_item in M.contents)
-				if(!istype(carried_item, /obj/item/weapon/implant))
-					carried_item.add_mob_blood(M)
-
+			for(var/obj/item/carried_item in M.get_equipped_items())
+				carried_item.add_mob_blood(M)
+			for(var/obj/item/I in M.held_items)
+				I.add_mob_blood(M)
 		if("pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(M), slot_shoes)
@@ -482,8 +481,9 @@ var/global/list/multiverse = list()
 	var/obj/item/link = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
-	burntime = 0
-	burn_state = FLAMMABLE
+	obj_integrity = 10
+	max_integrity = 10
+	resistance_flags = FLAMMABLE
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
@@ -580,7 +580,7 @@ var/global/list/multiverse = list()
 		var/area/A = get_area(src)
 		victim << "<span class='notice'>You feel a dark presence from [A.name]</span>"
 
-/obj/item/voodoo/fire_act()
+/obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
 	if(target)
 		target.adjust_fire_stacks(20)
 		target.IgniteMob()

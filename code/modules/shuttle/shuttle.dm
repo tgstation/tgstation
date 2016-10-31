@@ -8,7 +8,7 @@
 	//icon = 'icons/dirsquare.dmi'
 	icon_state = "pinonfar"
 
-	unacidable = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = 1
 
 	var/id
@@ -29,12 +29,16 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+/obj/docking_port/take_damage()
+	return
+
 /obj/docking_port/singularity_pull()
 	return
 /obj/docking_port/singularity_act()
 	return 0
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
+
 //returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
 	if(_dir == null)
@@ -472,7 +476,7 @@
 			areaInstance.contents += T1
 
 			//copy over air
-			if(istype(T1, /turf/open))
+			if(isopenturf(T1))
 				var/turf/open/Ts1 = T1
 				Ts1.copy_air_with_tile(T0)
 
@@ -514,7 +518,6 @@
 	name = "Shuttle Import"
 
 /obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
-	var/list/hurt_mobs = list()
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		var/turf/T1 = L1[i]
@@ -526,8 +529,7 @@
 
 		for(var/atom/movable/AM in T1)
 			if(ismob(AM))
-				if(isliving(AM) && !(AM in hurt_mobs))
-					hurt_mobs |= AM
+				if(isliving(AM))
 					var/mob/living/M = AM
 					if(M.buckled)
 						M.buckled.unbuckle_mob(M, 1)
@@ -535,15 +537,10 @@
 						M.pulledby.stop_pulling()
 					M.stop_pulling()
 					M.visible_message("<span class='warning'>[M] is hit by \
-							a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+							a hyperspace ripple!</span>",
 							"<span class='userdanger'>You feel an immense \
 							crushing pressure as the space around you ripples.</span>")
-					if(M.anchored)
-						M.gib()
-					else
-						step(M, dir)
-						M.Paralyse(10)
-						M.ex_act(2)
+					M.gib()
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
 				if(istype(AM, /obj/singularity) && !istype(AM, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
@@ -665,22 +662,3 @@
 		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(600)] minutes)"
 #undef DOCKING_PORT_HIGHLIGHT
 
-
-/turf/proc/copyTurf(turf/T)
-	if(T.type != type)
-		var/obj/O
-		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
-			O = new()
-			O.underlays.Add(T)
-		T.ChangeTurf(type)
-		if(underlays.len)
-			T.underlays = O.underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(T.color != color)
-		T.color = color
-	if(T.dir != dir)
-		T.setDir(dir)
-	return T

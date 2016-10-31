@@ -1,5 +1,6 @@
 /atom
 	layer = TURF_LAYER
+	plane = GAME_PLANE
 	var/level = 2
 	var/flags = 0
 	var/list/fingerprints
@@ -62,11 +63,11 @@
 
 	return 0
 
-/atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
-	if(do_attack_animation)
-		hulk.changeNext_move(CLICK_CD_MELEE)
-		add_logs(hulk, src, "punched", "hulk powers")
-		hulk.do_attack_animation(src)
+/atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(does_attack_animation)
+		user.changeNext_move(CLICK_CD_MELEE)
+		add_logs(user, src, "punched", "hulk powers")
+		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -77,7 +78,7 @@
 			reagents.conditional_update()
 		else if(istype(A, /atom/movable))
 			var/atom/movable/M = A
-			if(istype(M.loc, /mob/living))
+			if(isliving(M.loc))
 				var/mob/living/L = M.loc
 				L.unEquip(M)
 			M.loc = src
@@ -201,17 +202,15 @@
 	return
 
 /atom/proc/contents_explosion(severity, target)
-	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK
+	return
 
 /atom/proc/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/atom/proc/blob_act(obj/effect/blob/B)
+/atom/proc/blob_act(obj/structure/blob/B)
 	return
 
-/atom/proc/fire_act()
+/atom/proc/fire_act(exposed_temperature, exposed_volume)
 	return
 
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
@@ -326,7 +325,7 @@ var/list/blood_splatter_icons = list()
 		G.add_blood(blood_dna)
 	else
 		transfer_blood_dna(blood_dna)
-	bloody_hands = rand(2, 4)
+		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return 1
 
@@ -355,7 +354,7 @@ var/list/blood_splatter_icons = list()
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/open/space))
+	if(isspaceturf(get_turf(src)))
 		return 1
 	else
 		return 0
@@ -371,7 +370,7 @@ var/list/blood_splatter_icons = list()
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/acid_act(acidpwr, toxpwr, acid_volume)
+/atom/proc/acid_act(acidpwr, acid_volume)
 	return
 
 /atom/proc/emag_act()
@@ -415,7 +414,7 @@ var/list/blood_splatter_icons = list()
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if(istype(src,/turf) )
+	if(isturf(src))
 		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
 		// Make toxins vomit look different
 		if(toxvomit)
@@ -439,3 +438,6 @@ var/list/blood_splatter_icons = list()
 /atom/on_varedit(modified_var)
 	if(!Debug2)
 		admin_spawned = TRUE
+
+/atom/proc/mech_melee_attack(obj/mecha/M)
+	return

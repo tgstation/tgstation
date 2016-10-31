@@ -1,5 +1,5 @@
 
-/mob/living/silicon/pai/blob_act(obj/effect/blob/B)
+/mob/living/silicon/pai/blob_act(obj/structure/blob/B)
 	return 0
 
 /mob/living/silicon/pai/emp_act(severity)
@@ -33,7 +33,6 @@
 			src << "<span class='notice'>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</span>"
 
 /mob/living/silicon/pai/ex_act(severity, target)
-	..()
 
 	switch(severity)
 		if(1)

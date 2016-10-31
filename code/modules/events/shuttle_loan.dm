@@ -64,7 +64,7 @@
 		if(ANTIDOTE_NEEDED)
 			SSshuttle.centcom_message += "Virus samples incoming."
 		if(PIZZA_DELIVERY)
-			SSshuttle.centcom_message += "Pizza delivery for [world.name]"
+			SSshuttle.centcom_message += "Pizza delivery for [station_name()]"
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -129,7 +129,7 @@
 
 				for(var/i in 1 to 5)
 					T = pick_n_take(empty_shuttle_turfs)
-					new /obj/effect/spider/stickyweb(T)
+					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
 				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)

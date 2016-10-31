@@ -13,8 +13,8 @@
 		handle_blood()
 
 	if(stat != DEAD)
-		for(var/X in internal_organs)
-			var/obj/item/organ/O = X
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
 			O.on_life()
 
 	//Updates the number of stored chemicals for powers

@@ -149,7 +149,7 @@
 	},
 /area/ruin/powered)
 "az" = (
-/obj/item/clothing/tie/dope_necklace,
+/obj/item/clothing/neck/necklace/dope,
 /obj/item/weapon/reagent_containers/spray/spraytan,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)

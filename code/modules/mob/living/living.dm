@@ -27,8 +27,8 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
-	..()
-
+	if(ranged_ability)
+		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
@@ -39,7 +39,14 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-	return QDEL_HINT_HARDDEL
+
+	return ..()
+
+/mob/living/ghostize(can_reenter_corpse = 1)
+	var/prev_client = client
+	if(..())
+		if(ranged_ability && prev_client)
+			ranged_ability.remove_mousepointer(prev_client)
 
 
 /mob/living/proc/OpenCraftingMenu()
@@ -244,8 +251,6 @@
 		temperature -= change
 		if(actual < desired)
 			temperature = desired
-//	if(istype(src, /mob/living/carbon/human))
-//		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
 
@@ -434,7 +439,7 @@
 
 /mob/living/movement_delay()
 	. = ..()
-	if(istype(loc, /turf/open))
+	if(isopenturf(loc))
 		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
@@ -657,71 +662,6 @@
 	else
 		step_towards(src,S)
 
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
-	var/pixel_x_diff = 0
-	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
-
-	var/direction = get_dir(src, A)
-	if(direction & NORTH)
-		pixel_y_diff = 8
-	else if(direction & SOUTH)
-		pixel_y_diff = -8
-
-	if(direction & EAST)
-		pixel_x_diff = 8
-	else if(direction & WEST)
-		pixel_x_diff = -8
-
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
-
-
-/mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying)
-	..(A, final_pixel_y)
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
-
-	// What icon do we use for the attack?
-	var/image/I
-	var/obj/item/held_item = get_active_held_item()
-	if(held_item)
-		I = image(held_item.icon, A, held_item.icon_state, A.layer + 0.1)
-	else
-		return
-
-	// Who can see the attack?
-	var/list/viewing = list()
-	for(var/mob/M in viewers(A))
-		if(M.client)
-			viewing |= M.client
-	flick_overlay(I, viewing, 5) // 5 ticks/half a second
-
-	// Scale the icon.
-	I.transform *= 0.75
-	// The icon should not rotate.
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-
-	// Set the direction of the icon animation.
-	var/direction = get_dir(src, A)
-	if(direction & NORTH)
-		I.pixel_y = -16
-	else if(direction & SOUTH)
-		I.pixel_y = 16
-
-	if(direction & EAST)
-		I.pixel_x = -16
-	else if(direction & WEST)
-		I.pixel_x = 16
-
-	if(!direction) // Attacked self?!
-		I.pixel_z = 16
-
-	// And animate the attack!
-	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
-
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
@@ -741,7 +681,7 @@
 	else if(istype(loc, /obj/structure/transit_tube_pod))
 		loc_temp = environment.temperature
 
-	else if(istype(get_turf(src), /turf/open/space))
+	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 

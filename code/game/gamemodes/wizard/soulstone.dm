@@ -53,7 +53,7 @@
 		user << "<span class='warning'>There is no power left in the shard.\
 			</span>"
 		return
-	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
+	if(!ishuman(M))//If target is not a human.
 		return ..()
 	if(iscultist(M))
 		user << "<span class='cultlarge'>\"Come now, do not capture your fellow's soul.\"</span>"
@@ -200,19 +200,14 @@
 
 /proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
-	newstruct.faction |= "\ref[stoner]"
+	if(stoner)
+		newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
-	if(newstruct.mind)
-		if(stoner && iscultist(stoner) || cultoverride)
-			if(ticker.mode.name == "cult")
-				ticker.mode:add_cultist(newstruct.mind, 0)
-			else
-				ticker.mode.cult += newstruct.mind
-			ticker.mode.update_cult_icons_added(newstruct.mind)
-	newstruct << newstruct.playstyle_string
-	if(iscultist(stoner))
-		newstruct << "<b>You are still bound to serve the cult and [stoner], follow their orders and help them complete their goals at all costs.</b>"
-	else
+	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && ticker && ticker.mode)
+		ticker.mode.add_cultist(newstruct.mind, 0)
+	if(iscultist(stoner) || cultoverride)
+		newstruct << "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>"
+	else if(stoner)
 		newstruct << "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>"
 	newstruct.cancel_camera()
 

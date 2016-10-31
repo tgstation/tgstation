@@ -48,7 +48,8 @@
 		crit_fail = 1
 		update_icon()
 		var/turf/T = get_turf(src)
-		T.visible_message("The [src.name] burns out!")
+		if(T)
+			T.visible_message("[src] burns out!")
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
@@ -135,10 +136,10 @@
 
 
 /obj/item/device/assembly/flash/emp_act(severity)
-	if(!try_use_flash() || !loc)
+	if(!try_use_flash())
 		return 0
-	for(var/mob/living/carbon/M in viewers(3, loc))
-		flash_carbon(M, null, 10, 0)
+	if(iscarbon(loc))
+		flash_carbon(loc, null, 10, 0)
 	burn_out()
 	..()
 
@@ -150,7 +151,7 @@
 				if(M.stat == CONSCIOUS)
 					M.mind_initialize() //give them a mind datum if they don't have one.
 					var/resisted
-					if(!isloyal(M))
+					if(!M.isloyal())
 						if(user.mind in ticker.mode.head_revolutionaries)
 							if(ticker.mode.add_revolutionary(M.mind))
 								M.Stun(3)

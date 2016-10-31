@@ -441,7 +441,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
 /proc/get_atom_on_turf(atom/movable/M)
 	var/atom/loc = M
-	while(loc && loc.loc && !istype(loc.loc, /turf/))
+	while(loc && loc.loc && !isturf(loc.loc))
 		loc = loc.loc
 	return loc
 
@@ -823,11 +823,11 @@ var/list/WALLITEMS = list(
 	)
 
 var/list/WALLITEMS_EXTERNAL = list(
-	/obj/machinery/camera, /obj/machinery/camera_assembly,
-	/obj/machinery/light_construct, /obj/machinery/light)
+	/obj/machinery/camera, /obj/structure/camera_assembly,
+	/obj/structure/light_construct, /obj/machinery/light)
 
 var/list/WALLITEMS_INVERSE = list(
-	/obj/machinery/light_construct, /obj/machinery/light)
+	/obj/structure/light_construct, /obj/machinery/light)
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)
@@ -926,25 +926,29 @@ var/list/WALLITEMS_INVERSE = list(
 			return "white"
 
 /proc/params2turf(scr_loc, turf/origin)
+	if(!scr_loc)
+		return null
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
-	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	tX = Clamp(origin.x + text2num(tX) - world.view + 1, 1, world.maxx)
+	tY = Clamp(origin.y + text2num(tY) - world.view + 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
+	if(!text)
+		return null
 	var/tZ = splittext(text, ",")
 	var/tX = splittext(tZ[1], "-")
 	var/tY = text2num(tX[2])
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = max(1, min(origin.x + 7 - tX, world.maxx))
-	tY = max(1, min(origin.y + 7 - tY, world.maxy))
+	tX = Clamp(origin.x + 7 - tX, 1, world.maxx)
+	tY = Clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/IsValidSrc(datum/D)
@@ -971,7 +975,7 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/is_A_facing_B(atom/A,atom/B)
 	if(!istype(A) || !istype(B))
 		return 0
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		var/mob/living/LA = A
 		if(LA.lying)
 			return 0
@@ -1185,7 +1189,8 @@ B --><-- A
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
-		C.proximity_checkers |= A
+		LAZYINITLIST(C.proximity_checkers)
+		C.proximity_checkers[A] = TRUE
 	return L
 
 /proc/remove_from_proximity_list(atom/A, range)
@@ -1193,7 +1198,11 @@ B --><-- A
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
+		if (!C.proximity_checkers)
+			continue
 		C.proximity_checkers.Remove(A)
+		UNSETEMPTY(C.proximity_checkers)
+
 
 /proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
@@ -1206,10 +1215,14 @@ B --><-- A
 	var/list/O = M - L
 	for(var/C in N)
 		var/turf/D = C
+		if (!D.proximity_checkers)
+			continue
 		D.proximity_checkers.Remove(checker)
+		UNSETEMPTY(D.proximity_checkers)
 	for(var/E in O)
 		var/turf/F = E
-		F.proximity_checkers |= checker
+		LAZYINITLIST(F.proximity_checkers)
+		F.proximity_checkers[checker] = TRUE
 	return 1
 
 /proc/flick_overlay_static(image/I, atom/A, duration)

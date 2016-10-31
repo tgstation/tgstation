@@ -1,11 +1,13 @@
 
 // see _DEFINES/is_helpers.dm for mob type checks
 
-/proc/isloyal(A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(L && L.implanted)
-			return 1
+/mob/proc/isloyal() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
 	return 0
+
+/mob/living/carbon/isloyal()
+	for(var/obj/item/weapon/implant/mindshield/L in implants)
+		return 1
+
 
 /proc/check_zone(zone)
 	if(!zone)
@@ -318,7 +320,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src))
+	else if(iscyborg(src) || ismonkey(src) || islarva(src))
 		switch(input)
 			if("help")
 				a_intent = "help"
@@ -342,7 +344,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!istype(M))
 		return 0
 	if(issilicon(M))
-		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
+		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M
 			if(R.mind && R.mind.special_role)
 				if(R.laws && R.laws.zeroth && R.syndicate)
@@ -404,11 +406,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					A.target = source
 					if(!alert_overlay)
 						var/old_layer = source.layer
+						var/old_plane = source.plane
 						source.layer = FLOAT_LAYER
+						source.plane = FLOAT_PLANE
 						A.add_overlay(source)
 						source.layer = old_layer
+						source.plane = old_plane
 					else
 						alert_overlay.layer = FLOAT_LAYER
+						alert_overlay.plane = FLOAT_PLANE
 						A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)

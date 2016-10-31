@@ -38,6 +38,7 @@
 			var/obj/temp = new/obj()
 			temp.appearance = target.appearance
 			temp.layer = initial(target.layer) // scanning things in your inventory
+			temp.plane = initial(target.plane)
 			saved_appearance = temp.appearance
 
 /obj/item/device/chameleon/proc/toggle()
@@ -115,7 +116,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)
-	if(istype(loc, /turf/open/space) || !direction)
+	if(isspaceturf(loc) || !direction)
 		return //No magical space movement!
 
 	if(can_move)

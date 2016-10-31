@@ -176,12 +176,6 @@
 	list_reagents = list("nutriment" = 3, "toxin" = 5)
 	icon_state = "goliathmeat"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
-	visible_message("\The [src] finishes cooking!")
-	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
-	SSobj.burning -= src
-	qdel(src)
-
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
@@ -205,6 +199,7 @@
 	icon_state = "baconcooked"
 	list_reagents = list("nutriment" = 2)
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	filling_color = "#854817"
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
@@ -237,7 +232,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath
 	name = "goliath steak"
 	desc = "A delicious, lava cooked steak."
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	icon_state = "goliathsteak"
 	trash = null
 

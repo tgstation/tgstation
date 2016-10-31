@@ -10,8 +10,17 @@
 	anchored = 1
 	layer = HIGH_OBJ_LAYER
 	density = 0
+	obj_integrity = 80
+	max_integrity = 80
 	var/obj/machinery/porta_turret/parent_turret = null
 
+
+/obj/machinery/porta_turret_cover/Destroy()
+	if(parent_turret)
+		parent_turret.cover = null
+		parent_turret.invisibility = 0
+		parent_turret = null
+	return ..()
 
 //The below code is pretty much just recoded from the initial turret object. It's necessary but uncommented because it's exactly the same!
 //>necessary
@@ -66,6 +75,15 @@
 
 /obj/machinery/porta_turret_cover/attacked_by(obj/item/I, mob/user)
 	parent_turret.attacked_by(I, user)
+
+/obj/machinery/porta_turret_cover/attack_alien(mob/living/carbon/alien/humanoid/user)
+	parent_turret.attack_alien(user)
+
+/obj/machinery/porta_turret_cover/attack_animal(mob/living/simple_animal/user)
+	parent_turret.attack_animal(user)
+
+/obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	return parent_turret.attack_hulk(user)
 
 /obj/machinery/porta_turret_cover/can_be_overridden()
 	. = 0

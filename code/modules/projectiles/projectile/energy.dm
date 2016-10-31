@@ -68,7 +68,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dragnetfield"
 	anchored = 1
-	unacidable = 1
 
 /obj/effect/nettingportal/New()
 	..()
@@ -161,6 +160,10 @@
 	nodamage = 0
 	weaken = 5
 	stutter = 5
+
+/obj/item/projectile/energy/bolt/halloween
+	name = "candy corn"
+	icon_state = "candy_corn"
 
 /obj/item/projectile/energy/bolt/large
 	damage = 20

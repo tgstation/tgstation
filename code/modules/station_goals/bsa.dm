@@ -99,7 +99,7 @@
 			x_max = x - 6
 
 	for(var/turf/T in block(locate(x_min,y-1,z),locate(x_max,y+1,z)))
-		if(T.density || istype(T, /turf/open/space))
+		if(T.density || isspaceturf(T))
 			return FALSE
 	return TRUE
 
@@ -119,6 +119,7 @@
 	var/static/image/top_layer = null
 	var/ex_power = 3
 	var/power_used_per_shot = 2000000 //enough to kil standard apc - todo : make this use wires instead and scale explosion power with it
+	var/ready
 	pixel_y = -32
 	pixel_x = -192
 	bound_width = 352
@@ -164,13 +165,26 @@
 			top_layer.layer = ABOVE_MOB_LAYER
 			icon_state = "cannon_east"
 	add_overlay(top_layer)
+	reload()
 
-/obj/machinery/bsa/full/proc/fire()
+/obj/machinery/bsa/full/proc/fire(mob/user, turf/bullseye)
 	var/turf/point = get_front_turf()
 	for(var/turf/T in getline(get_step(point,dir),get_target_turf()))
 		T.ex_act(1)
 	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
 
+	message_admins("[key_name_admin(user)] has launched an artillery strike.")
+	explosion(bullseye,ex_power,ex_power*2,ex_power*4)
+
+	reload()
+
+/obj/machinery/bsa/full/proc/reload()
+	ready = FALSE
+	use_power(power_used_per_shot)
+	addtimer(src,"ready_cannon",600)
+
+/obj/machinery/bsa/full/proc/ready_cannon()
+	ready = TRUE
 
 /obj/structure/filler
 	name = "big machinery part"
@@ -214,7 +228,6 @@
 /obj/machinery/computer/bsa_control
 	name = "Bluespace Artillery Control"
 	var/obj/machinery/bsa/full/cannon
-	var/ready = FALSE
 	var/notice
 	var/target
 	use_power = 0
@@ -232,7 +245,7 @@
 
 /obj/machinery/computer/bsa_control/ui_data()
 	var/list/data = list()
-	data["ready"] = ready
+	data["ready"] = cannon.ready
 	data["connected"] = cannon
 	data["notice"] = notice
 	if(target)
@@ -285,21 +298,11 @@
 		notice = "Cannon unpowered!"
 		return
 	notice = null
-	cannon.use_power(cannon.power_used_per_shot)
-	cannon.fire()
-	ready = FALSE
-	var/turf/bullseye = get_impact_turf()
-	message_admins("[key_name_admin(usr)] has launched an artillery strike.")
-	explosion(bullseye,cannon.ex_power,cannon.ex_power*2,cannon.ex_power*4)
-	addtimer(src,"ready_cannon",600)
-
-/obj/machinery/computer/bsa_control/proc/ready_cannon()
-	ready = TRUE
+	cannon.fire(user, get_impact_turf())
 
 /obj/machinery/computer/bsa_control/proc/deploy(force=FALSE)
 	var/obj/machinery/bsa/full/prebuilt = locate() in range(7) //In case of adminspawn
 	if(prebuilt)
-		ready = TRUE
 		return prebuilt
 
 	var/obj/machinery/bsa/middle/centerpiece = locate() in range(7)
@@ -317,5 +320,4 @@
 	qdel(centerpiece.front)
 	qdel(centerpiece.back)
 	qdel(centerpiece)
-	ready = TRUE
 	return cannon

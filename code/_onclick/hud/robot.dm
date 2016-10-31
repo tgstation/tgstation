@@ -179,7 +179,7 @@
 
 
 /datum/hud/proc/toggle_show_robot_modules()
-	if(!isrobot(mymob)) return
+	if(!iscyborg(mymob)) return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -187,7 +187,7 @@
 	update_robot_modules_display()
 
 /datum/hud/proc/update_robot_modules_display(mob/viewer)
-	if(!isrobot(mymob)) return
+	if(!iscyborg(mymob)) return
 
 	var/mob/living/silicon/robot/R = mymob
 
@@ -222,6 +222,7 @@
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
 			A.layer = ABOVE_HUD_LAYER
+			A.plane = ABOVE_HUD_PLANE
 
 			x++
 			if(x == 4)

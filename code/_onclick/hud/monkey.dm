@@ -50,6 +50,15 @@
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
+	inv_box.name = "neck"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "neck"
+//	inv_box.icon_full = "template"
+	inv_box.screen_loc = ui_monkey_neck
+	inv_box.slot_id = slot_neck
+	static_inventory += inv_box
+
+	inv_box = new /obj/screen/inventory()
 	inv_box.name = "head"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "head"
@@ -121,6 +130,9 @@
 		if(M.wear_mask)
 			M.wear_mask.screen_loc = ui_monkey_mask
 			M.client.screen += M.wear_mask
+		if(M.wear_neck)
+			M.wear_neck.screen_loc = ui_monkey_neck
+			M.client.screen += M.wear_neck
 		if(M.head)
 			M.head.screen_loc = ui_monkey_head
 			M.client.screen += M.head

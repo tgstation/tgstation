@@ -47,7 +47,7 @@
 	var/cracked = 0
 
 /obj/item/weapon/toy/xmas_cracker/attack(mob/target, mob/user)
-	if( !cracked && istype(target,/mob/living/carbon/human) && (target.stat == CONSCIOUS) && !target.get_active_held_item() )
+	if( !cracked && ishuman(target) && (target.stat == CONSCIOUS) && !target.get_active_held_item() )
 		target.visible_message("[user] and [target] pop \an [src]! *pop*", "<span class='notice'>You pull \an [src] with [target]! *pop*</span>", "<span class='italics'>You hear a pop.</span>")
 		var/obj/item/weapon/paper/Joke = new /obj/item/weapon/paper(user.loc)
 		Joke.name = "[pick("awful","terrible","unfunny")] joke"
@@ -78,7 +78,7 @@
 	icon_state = "xmashat"
 	desc = "A crappy paper hat that you are REQUIRED to wear."
 	flags_inv = 0
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 
 /datum/round_event_control/santa
 	name = "Santa is coming to town! (Christmas)"

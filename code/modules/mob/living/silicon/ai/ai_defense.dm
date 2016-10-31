@@ -14,7 +14,7 @@
 /mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
 	return //immune to slimes
 
-/mob/living/silicon/ai/blob_act(obj/effect/blob/B)
+/mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
@@ -31,8 +31,6 @@
 	..()
 
 /mob/living/silicon/ai/ex_act(severity, target)
-	..()
-
 	switch(severity)
 		if(1)
 			gib()

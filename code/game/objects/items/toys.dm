@@ -277,7 +277,7 @@
 	item_state = "arm_blade"
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = 2
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 
 /*
@@ -337,7 +337,7 @@
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	qdel(src)
 
-/obj/item/toy/snappop/fire_act()
+/obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
 	pop_burst()
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)
@@ -609,8 +609,7 @@
 		"Remember, a dog is for life, not just for christmas.")
 
 /obj/item/toy/talking/skeleton/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to commit \
-		suicide with \the [src].</span>")
+	user.visible_message("<span class='suicide'>[user] is trying to commit suicide with [src].</span>")
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -638,8 +637,9 @@
 
 
 /obj/item/toy/cards
-	burn_state = FLAMMABLE
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 50
+	max_integrity = 50
 	var/parentdeck = null
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
@@ -873,8 +873,7 @@
 	newobj.card_throw_speed = sourceobj.card_throw_speed
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
-	if(sourceobj.burn_state == FIRE_PROOF)
-		newobj.burn_state = FIRE_PROOF
+	newobj.resistance_flags = sourceobj.resistance_flags
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -991,7 +990,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
 
 /*
  * Fake nuke
@@ -1035,7 +1034,7 @@
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
 		for(var/mob/M in urange(10, src))
-			if(!M.stat && !istype(M, /mob/living/silicon/ai))\
+			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
 		qdel(src)
 
@@ -1051,7 +1050,7 @@
 	item_state = "carp_plushie"
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 //Attack mob
@@ -1082,7 +1081,7 @@
 		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
 		for(var/mob/M in urange(10, src)) // Checks range
-			if(!M.stat && !istype(M, /mob/living/silicon/ai)) // Checks to make sure whoever's getting shaken is alive/not the AI
+			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				sleep(8) // Short delay to match up with the explosion sound
 				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.
 
@@ -1161,7 +1160,7 @@
 	icon_state = "toy_mouse"
 	w_class = 2.0
 	var/cooldown = 0
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 
 /*
@@ -1215,7 +1214,7 @@
 /obj/item/toy/figure/botanist
 	name = "Botanist action figure"
 	icon_state = "botanist"
-	toysay = "Dude, I see colors..."
+	toysay = "Blaze it!"
 
 /obj/item/toy/figure/captain
 	name = "Captain action figure"
@@ -1240,7 +1239,7 @@
 /obj/item/toy/figure/chef
 	name = "Chef action figure"
 	icon_state = "chef"
-	toysay = "Pun-Pun is a tasty burger."
+	toysay = " I'll make you into a burger!"
 
 /obj/item/toy/figure/chemist
 	name = "Chemist action figure"
@@ -1266,7 +1265,7 @@
 /obj/item/toy/figure/dsquad
 	name = "Death Squad Officer action figure"
 	icon_state = "dsquad"
-	toysay = "Eliminate all threats!"
+	toysay = "Kill em all!"
 
 /obj/item/toy/figure/engineer
 	name = "Engineer action figure"
@@ -1286,7 +1285,7 @@
 /obj/item/toy/figure/hos
 	name = "Head of Security action figure"
 	icon_state = "hos"
-	toysay = "Get the justice chamber ready, I think we got a joker here."
+	toysay = "Go ahead, make my day."
 
 /obj/item/toy/figure/qm
 	name = "Quartermaster action figure"
@@ -1322,7 +1321,7 @@
 /obj/item/toy/figure/miner
 	name = "Shaft Miner action figure"
 	icon_state = "miner"
-	toysay = "Oh god it's eating my intestines!"
+	toysay = "COLOSSUS RIGHT OUTSIDE THE BASE!"
 
 /obj/item/toy/figure/ninja
 	name = "Ninja action figure"
@@ -1349,7 +1348,7 @@
 /obj/item/toy/figure/scientist
 	name = "Scientist action figure"
 	icon_state = "scientist"
-	toysay = "For science!"
+	toysay = "I call toxins."
 	toysound = 'sound/effects/explosionfar.ogg'
 
 /obj/item/toy/figure/syndie

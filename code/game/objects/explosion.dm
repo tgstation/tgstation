@@ -99,7 +99,7 @@
 				if(W.reinf && W.fulltile)
 					cached_exp_block[T] += W.explosion_block
 
-			for(var/obj/effect/blob/B in T)
+			for(var/obj/structure/blob/B in T)
 				cached_exp_block[T] += B.explosion_block
 			CHECK_TICK
 
@@ -133,7 +133,7 @@
 		//------- TURF FIRES -------
 
 		if(T)
-			if(flame_dist && prob(40) && !istype(T, /turf/open/space) && !T.density)
+			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 				PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 			if(dist > 0)
 				T.ex_act(dist)
@@ -226,7 +226,7 @@
 					if(W.explosion_block && W.fulltile)
 						dist += W.explosion_block
 
-				for(var/obj/effect/blob/B in T)
+				for(var/obj/structure/blob/B in T)
 					dist += B.explosion_block
 
 		if(dist < dev)

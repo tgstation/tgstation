@@ -1,6 +1,7 @@
 /obj/structure/flora
-	burn_state = FLAMMABLE
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 150
+	max_integrity = 150
 	anchored = 1
 
 //trees
@@ -290,7 +291,7 @@
 	icon_state = "basalt"
 	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 	density = 1
 
 /obj/structure/flora/rock/New()

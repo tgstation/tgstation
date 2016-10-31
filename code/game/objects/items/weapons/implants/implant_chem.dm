@@ -24,11 +24,11 @@
 /obj/item/weapon/implant/chem/New()
 	..()
 	create_reagents(50)
-	tracked_implants += src
+	tracked_chem_implants += src
 
 /obj/item/weapon/implant/chem/Destroy()
 	..()
-	tracked_implants -= src
+	tracked_chem_implants -= src
 
 
 
@@ -62,7 +62,8 @@
 	..()
 	
 /obj/item/weapon/implantcase/chem/attackby(obj/item/weapon/W, mob/user, params)
-	if(imp)
-		imp.attackby(W, user, params)
-	else 
+	if(istype(W,/obj/item/weapon/reagent_containers/syringe) && imp)
+		W.afterattack(imp, user, params)
+		return TRUE
+	else
 		return ..()

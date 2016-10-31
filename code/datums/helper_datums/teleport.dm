@@ -167,7 +167,7 @@
 	var/list/bagholding = teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)
 	if(bagholding.len)
 		precision = max(rand(1,100)*bagholding.len,100)
-		if(istype(teleatom, /mob/living))
+		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
 			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
 	return 1
@@ -185,7 +185,7 @@
 		var/z = pick(zlevels)
 		var/random_location = locate(x,y,z)
 
-		if(!(istype(random_location, /turf/open/floor)))
+		if(!isfloorturf(random_location))
 			continue
 		var/turf/open/floor/F = random_location
 		if(!F.air)

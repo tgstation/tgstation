@@ -18,7 +18,7 @@
 
 /obj/item/organ/cyberimp/eyes/Insert(var/mob/living/carbon/M, var/special = 0)
 	..()
-	if(istype(owner, /mob/living/carbon/human) && eye_color)
+	if(ishuman(owner) && eye_color)
 		var/mob/living/carbon/human/HMN = owner
 		old_eye_color = HMN.eye_color
 		HMN.eye_color = eye_color
@@ -30,7 +30,7 @@
 
 /obj/item/organ/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
 	M.sight ^= sight_flags
-	if(istype(M,/mob/living/carbon/human) && eye_color)
+	if(ishuman(M) && eye_color)
 		var/mob/living/carbon/human/HMN = owner
 		HMN.eye_color = old_eye_color
 		HMN.regenerate_icons()

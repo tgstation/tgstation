@@ -159,6 +159,7 @@
 		I.loc = src
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
+		I.plane = ABOVE_HUD_PLANE
 		I.equipped(src, slot_hands)
 		if(I.pulledby)
 			I.pulledby.stop_pulling()
@@ -197,12 +198,14 @@
 	return put_in_hand(I, get_inactive_hand_index())
 
 
-//Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns TRUE on success.
+//Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
 //If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE)
 	if(!I)
 		return FALSE
+	if(put_in_active_hand(I))
+		return TRUE
 	var/hand = get_empty_held_index_for_side("l")
 	if(!hand)
 		hand =  get_empty_held_index_for_side("r")
@@ -214,6 +217,7 @@
 		return FALSE
 	I.forceMove(get_turf(src))
 	I.layer = initial(I.layer)
+	I.plane = initial(I.plane)
 	I.dropped(src)
 	return FALSE
 
@@ -266,6 +270,7 @@
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
+		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		I.forceMove(loc)
 		I.dropped(src)
@@ -281,43 +286,41 @@
 
 //Outdated but still in use apparently. This should at least be a human proc.
 //Daily reminder to murder this - Remie.
-/mob/proc/get_equipped_items()
-	var/list/items = list()
+/mob/living/proc/get_equipped_items()
+	return
 
-	if(hasvar(src,"back"))
-		if(src:back)
-			items += src:back
-	if(hasvar(src,"belt"))
-		if(src:belt)
-			items += src:belt
-	if(hasvar(src,"ears"))
-		if(src:ears)
-			items += src:ears
-	if(hasvar(src,"glasses"))
-		if(src:glasses)
-			items += src:glasses
-	if(hasvar(src,"gloves"))
-		if(src:gloves)
-			items += src:gloves
-	if(hasvar(src,"head"))
-		if(src:head)
-			items += src:head
-	if(hasvar(src,"shoes"))
-		if(src:shoes)
-			items += src:shoes
-	if(hasvar(src,"wear_id"))
-		if(src:wear_id)
-			items += src:wear_id
-	if(hasvar(src,"wear_mask"))
-		if(src:wear_mask)
-			items += src:wear_mask
-	if(hasvar(src,"wear_suit"))
-		if(src:wear_suit)
-			items += src:wear_suit
-	if(hasvar(src,"w_uniform"))
-		if(src:w_uniform)
-			items += src:w_uniform
+/mob/living/carbon/get_equipped_items()
+	var/list/items = list()
+	if(back)
+		items += back
+	if(head)
+		items += head
+	if(wear_mask)
+		items += wear_mask
+	if(wear_neck)
+		items += wear_neck
 	return items
+
+/mob/living/carbon/human/get_equipped_items()
+	var/list/items = ..()
+	if(belt)
+		items += belt
+	if(ears)
+		items += ears
+	if(glasses)
+		items += glasses
+	if(gloves)
+		items += gloves
+	if(shoes)
+		items += shoes
+	if(wear_id)
+		items += wear_id
+	if(wear_suit)
+		items += wear_suit
+	if(w_uniform)
+		items += w_uniform
+	return items
+
 
 
 /obj/item/proc/equip_to_best_slot(var/mob/M)

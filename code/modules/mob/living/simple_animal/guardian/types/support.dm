@@ -76,7 +76,7 @@
 		return
 
 	var/turf/beacon_loc = get_turf(src.loc)
-	if(!istype(beacon_loc, /turf/open/floor))
+	if(!isfloorturf(beacon_loc))
 		return
 
 	if(beacon)
@@ -139,7 +139,7 @@
 	A.visible_message("<span class='danger'>[A] starts to glow faintly!\
 		</span>", "<span class='userdanger'>You start to faintly glow, and \
 		you feel strangely weightless!</span>")
-	do_attack_animation(A)
+	do_attack_animation(A, null, 1)
 
 	if(!do_mob(src, A, 60)) //now start the channel
 		src << "<span class='danger'><B>You need to hold still!</span></B>"

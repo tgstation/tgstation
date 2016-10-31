@@ -77,7 +77,7 @@
 		G.loc = loc
 		qdel(G.pin)
 		G.pin = null
-		visible_message("[G] can now fit a new pin, but old one was destroyed in the process.")
+		visible_message("[G] can now fit a new pin, but old one was destroyed in the process.", null, null, 3)
 		qdel(src)
 
 /obj/item/weapon/gun/examine(mob/user)
@@ -113,12 +113,11 @@
 		playsound(user, fire_sound, 10, 1)
 	else
 		playsound(user, fire_sound, 50, 1)
-		if(!message)
-			return
-		if(pointblank)
-			user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", "<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", "<span class='italics'>You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!</span>")
-		else
-			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear a [istype(src, /obj/item/weapon/gun/energy) ? "laser blast" : "gunshot"]!")
+		if(message)
+			if(pointblank)
+				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+			else
+				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
 	if(weapon_weight >= WEAPON_MEDIUM)
 		if(user.get_inactive_held_item())
@@ -161,14 +160,14 @@
 	if(clumsy_check)
 		if(istype(user))
 			if (user.disabilities & CLUMSY && prob(40))
-				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
+				user << "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>"
 				var/shot_leg = pick("l_leg", "r_leg")
 				process_fire(user,user,0,params, zone_override = shot_leg)
 				user.drop_item()
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		user << "<span class='userdanger'>You need both hands free to fire \the [src]!</span>"
+		user << "<span class='userdanger'>You need both hands free to fire [src]!</span>"
 		return
 
 	process_fire(target,user,1,params)
@@ -190,7 +189,7 @@
 			pin.auth_fail(user)
 			return 0
 	else
-		user << "<span class='warning'>\The [src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
+		user << "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
 obj/item/weapon/gun/proc/newshot()
@@ -389,7 +388,7 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 	if(user == target)
-		target.visible_message("<span class='warning'>[user] sticks [src] in their mouth, ready to pull the trigger...</span>", \
+		target.visible_message("<span class='warning'>[user] sticks [src] in [user.p_their()] mouth, ready to pull the trigger...</span>", \
 			"<span class='userdanger'>You stick [src] in your mouth, ready to pull the trigger...</span>")
 	else
 		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
@@ -484,8 +483,3 @@ obj/item/weapon/gun/proc/newshot()
 		azoom = new()
 		azoom.gun = src
 
-
-/obj/item/weapon/gun/burn()
-	if(pin)
-		qdel(pin)
-	.=..()

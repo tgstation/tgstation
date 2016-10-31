@@ -13,7 +13,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "giftdeliverypackage3"
 	item_state = "gift1"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/a_gift/New()
 	..()
@@ -22,7 +22,7 @@
 	icon_state = "giftdeliverypackage[rand(1,5)]"
 
 /obj/item/weapon/a_gift/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] peeks inside the [src.name] and cries \himself to death! It looks like they were on the naughty list...</span>")
+	user.visible_message("<span class='suicide'>[user] peeks inside [src] and cries [user.p_them()]self to death! It looks like [user.p_they()] [user.p_were()] on the naughty list...</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/a_gift/attack_self(mob/M)
@@ -57,7 +57,7 @@
 		/obj/item/device/instrument/violin,
 		/obj/item/device/instrument/guitar,
 		/obj/item/weapon/storage/belt/utility/full,
-		/obj/item/clothing/tie/horrible,
+		/obj/item/clothing/neck/tie/horrible,
 		/obj/item/clothing/suit/jacket/leather,
 		/obj/item/clothing/suit/jacket/leather/overcoat,
 		/obj/item/clothing/suit/poncho,

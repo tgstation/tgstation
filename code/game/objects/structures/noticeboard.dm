@@ -5,6 +5,8 @@
 	icon_state = "nboard00"
 	density = 0
 	anchored = 1
+	obj_integrity = 150
+	max_integrity = 150
 	var/notices = 0
 
 /obj/structure/noticeboard/initialize()
@@ -70,10 +72,14 @@
 	if(href_list["read"])
 		var/obj/item/weapon/paper/P = locate(href_list["read"])
 		if((P && P.loc == src))
-			if(!( istype(usr, /mob/living/carbon/human) ))
+			if(!ishuman(usr))
 				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[stars(P.info)]</TT></BODY></HTML>", "window=[P.name]")
 				onclose(usr, "[P.name]")
 			else
 				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[P.info]</TT></BODY></HTML>", "window=[P.name]")
 				onclose(usr, "[P.name]")
-	return
+
+/obj/structure/noticeboard/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal (loc, 1)
+	qdel(src)

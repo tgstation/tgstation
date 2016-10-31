@@ -43,6 +43,7 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
 		apply_damage(I.force, I.damtype, affecting)
+		damage_clothes(I.force, I.damtype, "melee", affecting.body_zone)
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -55,6 +56,9 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
 						update_inv_wear_mask()
+					if(wear_neck)
+						wear_neck.add_mob_blood(src)
+						update_inv_neck()
 					if(head)
 						head.add_mob_blood(src)
 						update_inv_head()
@@ -155,7 +159,7 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 	return dam_zone
 
 
-/mob/living/carbon/blob_act(obj/effect/blob/B)
+/mob/living/carbon/blob_act(obj/structure/blob/B)
 	if (stat == DEAD)
 		return
 	else
@@ -168,7 +172,7 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 		O.emp_act(severity)
 	..()
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0)
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
@@ -176,7 +180,10 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 		return 0
 	if(reagents.has_reagent("teslium"))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
-	take_overall_damage(0,shock_damage)
+	if(illusion)
+		adjustStaminaLoss(shock_damage)
+	else
+		take_overall_damage(0,shock_damage)
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
@@ -286,3 +293,20 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 					src << "<span class='warning'>Your ears start to ring!</span>"
 				src << sound('sound/weapons/flash_ring.ogg',0,1,0,250)
 		return effect_amount //how soundbanged we are
+
+
+/mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
+	if(damage_type != BRUTE && damage_type != BURN)
+		return
+	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
+	if(!def_zone || def_zone == "head")
+		var/obj/item/clothing/hit_clothes
+		if(wear_mask)
+			hit_clothes = wear_mask
+		if(wear_neck)
+			hit_clothes = wear_neck
+		if(head)
+			hit_clothes = head
+		if(hit_clothes)
+			hit_clothes.take_damage(damage_amount, damage_type, damage_flag, 0)
+

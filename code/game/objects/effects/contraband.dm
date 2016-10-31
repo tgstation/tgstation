@@ -103,7 +103,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
 	force = 0
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/serial_number = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
 	var/official = 0
@@ -272,7 +272,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		if(!D)
 			return
 
-		if(istype(src,/turf/closed/wall) && user && user.loc == temp_loc)	//Let's check if everything is still there
+		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
 			user << "<span class='notice'>You place the poster!</span>"
 		else
 			D.roll_and_drop(temp_loc,D.official)

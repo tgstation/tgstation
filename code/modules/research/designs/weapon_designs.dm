@@ -83,16 +83,6 @@
 	build_path = /obj/item/weapon/gun/syringe/rapidsyringe
 	category = list("Weapons")
 
-/datum/design/largecrossbow
-	name = "Energy Crossbow"
-	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
-	id = "largecrossbow"
-	req_tech = list("combat" = 5, "engineering" = 3, "magnets" = 5, "syndicate" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
-	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
-	category = list("Weapons")
-
 /datum/design/temp_gun
 	name = "Temperature Gun"
 	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
@@ -268,4 +258,14 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 8000, MAT_GOLD = 8000, MAT_URANIUM = 8000, MAT_GLASS = 12000, MAT_METAL = 12000, MAT_DIAMOND = 3000)
 	build_path = /obj/item/weapon/gun/energy/gravity_gun
+	category = list("Weapons")
+
+/datum/design/largecrossbow
+	name = "Energy Crossbow"
+	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
+	id = "largecrossbow"
+	req_tech = list("combat" = 5, "engineering" = 3, "magnets" = 5, "syndicate" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")

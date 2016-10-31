@@ -11,6 +11,7 @@
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL = 500, MAT_GLASS = 250)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/active = FALSE
 	var/atom/movable/target = null //The thing we're searching for
 	var/atom/movable/constant_target = null //The thing we're always focused on, if we're in the right mode

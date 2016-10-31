@@ -9,12 +9,22 @@
 	desc = "Ashes to ashes, dust to dust, and into space."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
+	mergeable_decal = 0
 
 /obj/effect/decal/cleanable/ash/New()
 	..()
 	reagents.add_reagent("ash", 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+
+/obj/effect/decal/cleanable/ash/large
+	name = "large pile of ashes"
+	icon_state = "big_ash"
+
+/obj/effect/decal/cleanable/ash/large/New()
+	..()
+	reagents.add_reagent("ash", 30) //double the amount of ash.
+
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -42,26 +52,22 @@
 	gender = NEUTER
 	layer = WALL_OBJ_LAYER
 	icon_state = "cobweb1"
+	resistance_flags = FLAMMABLE
 
-/obj/effect/decal/cleanable/cobweb/fire_act()
-	qdel(src)
-
-/obj/effect/decal/cleanable/cobweb2
-	name = "cobweb"
-	desc = "Somebody should remove that."
-	gender = NEUTER
-	layer = WALL_OBJ_LAYER
+/obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
 
-/obj/effect/decal/cleanable/cobweb2/fire_act()
-	qdel(src)
-
-/obj/effect/decal/cleanable/molten_item
+/obj/effect/decal/cleanable/molten_object
 	name = "gooey grey mass"
 	desc = "It looks like a melted... something."
 	gender = NEUTER
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
+	mergeable_decal = 0
+
+/obj/effect/decal/cleanable/molten_object/large
+	name = "big gooey grey mass"
+	icon_state = "big_molten"
 
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
@@ -73,9 +79,9 @@
 	var/list/viruses = list()
 
 /obj/effect/decal/cleanable/vomit/attack_hand(var/mob/user)
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "fly")
+		if(isflyperson(H))
 			playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
 			H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
 			if(reagents)
@@ -133,10 +139,15 @@
 	desc = "The shredded remains of what appears to be clothing."
 	icon_state = "shreds"
 	gender = PLURAL
+	mergeable_decal = 0
+
+/obj/effect/decal/cleanable/shreds/ex_act(severity, target)
+	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
+		qdel(src)
 
 /obj/effect/decal/cleanable/shreds/New()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 	..()
 
 /obj/effect/decal/cleanable/salt

@@ -34,7 +34,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		open_flame(heat)
 
-/obj/item/weapon/match/fire_act()
+/obj/item/weapon/match/fire_act(exposed_temperature, exposed_volume)
 	matchignite()
 
 /obj/item/weapon/match/proc/matchignite()
@@ -114,7 +114,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is huffing the [src.name] as quickly as they can! It looks like \he's trying to give \himself cancer.</span>")
+	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/clothing/mask/cigarette/New()
@@ -248,7 +248,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		return ..()
 
-/obj/item/clothing/mask/cigarette/fire_act()
+/obj/item/clothing/mask/cigarette/fire_act(exposed_temperature, exposed_volume)
 	light()
 
 /obj/item/clothing/mask/cigarette/is_hot()
@@ -448,6 +448,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	slot_flags = SLOT_BELT
 	var/lit = 0
 	heat = 1500
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/lighter/greyscale
 	name = "cheap lighter"
@@ -482,7 +483,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
 				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 			else
-				if(prob(75))
+				var/prot = FALSE
+				var/mob/living/carbon/human/H = user
+
+				if(istype(H) && H.gloves)
+					var/obj/item/clothing/gloves/G = H.gloves
+					if(G.max_heat_protection_temperature)
+						prot = (G.max_heat_protection_temperature > 360)
+				else
+					prot = TRUE
+
+				if(prot || prob(75))
 					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
 				else
 					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? "r_hand" : "l_hand"
@@ -579,7 +590,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 ///////////////
 /obj/item/clothing/mask/vape
 	name = "E-Cigarette"
-	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: do not fill with flamable materials\""//<<< i'd vape to that.
+	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = null
 	item_state = null
@@ -590,7 +601,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/emagged = 0 //LET THE GRIEF BEGIN
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, they trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
+	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
 
@@ -606,7 +617,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+	if(istype(O, /obj/item/weapon/reagent_containers) && (O.flags & OPENCONTAINER))
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
 				O.reagents.trans_to(src,25)
@@ -641,7 +652,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				super = 0
 				user << "<span class='notice'>You decrease the voltage in the [src]</span>"
 				add_overlay(image(icon, "vapeopen_low"))
-		
+
 		if(screw && emagged)
 			user << "<span class='notice'>The [name] can't be modified!</span>"
 
@@ -671,7 +682,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == slot_wear_mask)
 		if(!screw)
-			user << "<span class='notice'>You start puffing on that dank vape</span>"
+			user << "<span class='notice'>You start puffing on the vape.</span>"
 			reagents.set_reacting(TRUE)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.
@@ -725,13 +736,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(super && vapetime > 3)//Time to start puffing those fat vapes, yo.
 		var/datum/effect_system/smoke_spread/chem/s = new
-		s.set_up(reagents, 1, loc)
+		s.set_up(reagents, 1, loc, silent=TRUE)
 		s.start()
 		vapetime = 0
 
 	if(emagged && vapetime > 3)
 		var/datum/effect_system/smoke_spread/chem/s = new
-		s.set_up(reagents, 4, loc)
+		s.set_up(reagents, 4, loc, silent=TRUE)
 		s.start()
 		vapetime = 0
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
