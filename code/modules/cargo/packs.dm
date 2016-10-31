@@ -38,8 +38,8 @@ datum/supply_pack
 	group = "Emergency"
 	
 /datum/supply_pack/emergency/vehicle
-	name = "Biker Gang Kit"
-	cost = 2000 //NO MORE COMPROMISES
+	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
+	cost = 2000 
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
