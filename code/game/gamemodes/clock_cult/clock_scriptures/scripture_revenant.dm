@@ -195,6 +195,7 @@
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	playsound(invoker, 'sound/magic/lightning_chargeup.ogg', 100, 0)
+	var/oldcolor = invoker.color
 	animate(invoker, color = list(rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(0,0,0)), time = 88) //Gradual advancement to extreme brightness
 	sleep(88)
 	if(invoker)
@@ -203,7 +204,8 @@
 		<span class='userdanger'>TOO... MUCH! CAN'T... TAKE IT!</span>")
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
 		if(invoker.stat == CONSCIOUS)
-			animate(invoker, color = initial(invoker.color), time = 10)
+			animate(invoker, color = oldcolor, time = 10)
+			addtimer(invoker, "update_atom_colour", 10)
 			for(var/mob/living/L in view(7, invoker))
 				if(is_servant_of_ratvar(L))
 					continue

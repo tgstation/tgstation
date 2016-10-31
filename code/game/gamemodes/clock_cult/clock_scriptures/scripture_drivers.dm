@@ -188,8 +188,10 @@
 			L.dizziness = min(L.dizziness + 20, 100)
 			L.Weaken(1)
 	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+	var/invoker_old_color = invoker.color
 	invoker.color = "#AF0AAF"
-	animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
+	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
+	addtimer(invoker, "update_atom_colour", flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
 		var/starttime = world.time
