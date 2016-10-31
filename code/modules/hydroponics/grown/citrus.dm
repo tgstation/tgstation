@@ -162,6 +162,8 @@
 	endurance = 50
 	yield = 4
 	potency = 15
+	icon_grow = "lime-grow"
+	icon_dead = "lime-dead"
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
