@@ -41,7 +41,7 @@
 	if(attack_cooldown > world.time)
 		user << "<span class='warning'>You can't attack right now, wait [max(round((attack_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
 		return
-	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
+	if(user.pulling && is_servant_of_ratvar(user) && ishuman(user.pulling) && user.pulling == target)
 		if(impale_cooldown > world.time)
 			user << "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
 		else
@@ -109,16 +109,23 @@
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
 	var/turf/T = get_turf(target)
-	if(is_servant_of_ratvar(target) || ..() || !isliving(target))
-		return
-	var/mob/living/L = target
-	if(issilicon(L) || iscultist(L))
-		L.Stun(6)
-		L.Weaken(6)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(is_servant_of_ratvar(L))
+			if(L.put_in_active_hand(src))
+				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
+			else
+				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
+		else if(!..())
+			if(issilicon(L) || iscultist(L))
+				L.Stun(6)
+				L.Weaken(6)
+			else
+				L.Stun(2)
+				L.Weaken(2)
+			break_spear(T)
 	else
-		L.Stun(2)
-		L.Weaken(2)
-	break_spear(T)
+		..()
 
 /obj/item/clockwork/ratvarian_spear/proc/break_spear(turf/T)
 	if(src)
