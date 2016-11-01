@@ -87,7 +87,8 @@
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
 		if(M in color_altered_mobs)
 			message += " and you're finally able to forgive yourself"
-			M.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+			if(M.color == "#FF0000" || M.color == "#00FF00")
+				M.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 		message += "...</span>"
 		// can't skip the mob check as it also does the decolouring
 		if(!quiet)
