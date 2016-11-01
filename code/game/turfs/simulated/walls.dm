@@ -267,5 +267,10 @@
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
 
+/turf/closed/wall/acid_act(acidpwr, acid_volume)
+	if(explosion_block >= 2)
+		acidpwr = min(acidpwr, 50) //we reduce the power so strong walls never get melted.
+	. = ..()
+
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
