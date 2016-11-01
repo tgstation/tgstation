@@ -185,6 +185,7 @@
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
 	owner.put_in_hands(R)
 	if(!ratvar_awakens)
+		R.clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
 		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
 		addtimer(R, "break_spear", base_cooldown, FALSE)
 	cooldown = base_cooldown + world.time
