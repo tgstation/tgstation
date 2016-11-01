@@ -86,11 +86,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/M)
 	if(M.color != color)
-		M.color = color
+		M.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_delete(mob/living/M)
-	M.color = initial(M.color)
+	M.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"

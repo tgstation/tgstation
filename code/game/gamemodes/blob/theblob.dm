@@ -83,9 +83,9 @@
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
-		color = overmind.blob_reagent_datum.color
+		add_atom_colour(overmind.blob_reagent_datum.color, FIXED_COLOUR_PRIORITY)
 	else
-		color = null
+		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
 /obj/structure/blob/process()
 	Life()

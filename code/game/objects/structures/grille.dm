@@ -239,6 +239,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/structure/grille/ratvar/ratvar_act()
 	return

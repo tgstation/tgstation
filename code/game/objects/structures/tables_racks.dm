@@ -345,6 +345,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/structure/table/reinforced/brass/ratvar_act()
 	obj_integrity = max_integrity

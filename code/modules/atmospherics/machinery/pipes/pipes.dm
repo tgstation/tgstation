@@ -14,7 +14,7 @@
 	buckle_lying = -1
 
 /obj/machinery/atmospherics/pipe/New()
-	color = pipe_color
+	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
 	volume = 35 * device_type
 	..()
 

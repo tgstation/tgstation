@@ -89,7 +89,7 @@
 		user.SetStunned(0)
 		user.next_move = 1
 		user.alpha = 255
-		user.color = "#ffffff"
+		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
 		user.anchored = 0

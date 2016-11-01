@@ -179,7 +179,7 @@
 	qdel(src)
 
 /obj/machinery/door/window/narsie_act()
-	color = "#7D1919"
+	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/ratvar_act()
 	new/obj/machinery/door/window/clockwork(src.loc, dir)
@@ -337,6 +337,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))
