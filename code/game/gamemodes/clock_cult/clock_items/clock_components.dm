@@ -146,7 +146,7 @@
 /obj/item/clockwork/alloy_shards
 	name = "replicant alloy shards"
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
-	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
+	clockwork_desc = "Broken shards of replicant alloy. Could be proselytized for liquified replicant alloy."
 	icon_state = "alloy_shards"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/randomsinglesprite = FALSE
@@ -155,12 +155,15 @@
 /obj/item/clockwork/alloy_shards/New()
 	..()
 	if(randomsinglesprite)
-		name = "replicant alloy shard"
-		desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
-		clockwork_desc = "A broken shard of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
+		replace_name_desc()
 		icon_state = "[icon_state][rand(1, randomspritemax)]"
 		pixel_x = rand(-9, 9)
 		pixel_y = rand(-9, 9)
+
+/obj/item/clockwork/alloy_shards/proc/replace_name_desc()
+	name = "replicant alloy shard"
+	desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
+	clockwork_desc = "A broken shard of replicant alloy. Could be proselytized for liquified replicant alloy."
 
 /obj/item/clockwork/alloy_shards/large
 	randomsinglesprite = TRUE
@@ -169,6 +172,21 @@
 /obj/item/clockwork/alloy_shards/medium
 	randomsinglesprite = TRUE
 	icon_state = "shard_medium"
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit
+	randomspritemax = 4
+	icon_state = "gear_bit"
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit/replace_name_desc()
+	name = "gear bit"
+	desc = "A broken chunk of a gear. You want it."
+	clockwork_desc = "A broken chunk of a gear. Could be proselytized for liquified replicant alloy."
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit/large //gives more alloy
+
+/obj/item/clockwork/alloy_shards/medium/gear_bit/large/replace_name_desc()
+	..()
+	name = "complex gear bit"
 
 /obj/item/clockwork/alloy_shards/small
 	randomsinglesprite = TRUE
