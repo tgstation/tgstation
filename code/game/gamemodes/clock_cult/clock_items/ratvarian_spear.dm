@@ -41,7 +41,7 @@
 	if(attack_cooldown > world.time)
 		user << "<span class='warning'>You can't attack right now, wait [max(round((attack_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
 		return
-	if(user.pulling && is_servant_of_ratvar(user) && ishuman(user.pulling) && user.pulling == target)
+	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
 		if(impale_cooldown > world.time)
 			user << "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
 		else
@@ -57,7 +57,7 @@
 	target.lastattacker = user
 	if(!target.attacked_by(src, user)) //TODO MAKE ATTACK() USE PROPER RETURN VALUES
 		impaling = FALSE //if we got blocked, stop impaling
-	else if(!is_servant_of_ratvar(target))
+	else
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
 			if(S.stat != DEAD)
