@@ -61,7 +61,7 @@
 	sort_priority = 4
 
 /datum/clockwork_scripture/fellowship_armory/run_scripture()
-	for(var/mob/living/L in orange(1, invoker))
+	for(var/mob/living/L in orange(1, get_turf(invoker)))
 		if(is_servant_of_ratvar(L) && L.can_speak_vocal())
 			channel_time = max(channel_time - 10, 0)
 	return ..()
@@ -264,11 +264,11 @@
 	for(var/atom/movable/A in view(7, invoker))
 		power_drained += A.power_drain(TRUE)
 	var/obj/effect/clockwork/sigil/transmission/ST = locate(/obj/effect/clockwork/sigil/transmission) in get_turf(invoker)
-	if(ST && power_drained >= 50)
+	if(ST && power_drained >= MIN_CLOCKCULT_POWER)
 		var/sigil_drain = 0
-		while(power_drained >= 50)
-			ST.modify_charge(-50)
-			power_drained -= 50
+		while(power_drained >= MIN_CLOCKCULT_POWER)
+			ST.modify_charge(-MIN_CLOCKCULT_POWER)
+			power_drained -= MIN_CLOCKCULT_POWER
 			sigil_drain += 10
 		power_drained += sigil_drain //readd part of the power given to the sigil to the power drained this cycle
 		ST.visible_message("<span class='warning'>[ST] flares a brilliant orange!</span>")
