@@ -172,6 +172,6 @@
 		src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
 		return
 	if(has_brain_worms())
-		src << "You can't commit suicide while you're controlling your host!"
+		src << "You can't bring yourself to commit suicide!"
 		return
 	return TRUE

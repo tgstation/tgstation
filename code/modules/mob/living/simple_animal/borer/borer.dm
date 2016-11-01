@@ -4,11 +4,11 @@
 
 /mob/living/captive_brain/say(var/message)
 
-	if(src.client)
+	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
 			return
-		if(src.client.handle_spam_prevention(message,MUTE_IC))
+		if(client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if(isborer(src.loc))
@@ -87,6 +87,7 @@ var/total_borer_hosts_needed = 10
 	var/mob/living/captive_brain/host_brain = null
 	var/truename
 	var/docile = 0
+	var/bonding = FALSE
 	var/controlling = 0
 	var/chemicals = 10
 	var/used_dominate
@@ -410,19 +411,19 @@ var/total_borer_hosts_needed = 10
 	if(victim)
 		src << "<span class='warning'>You cannot do this while you're inside a host.</span>"
 
-	if(src.stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		return
 
-	if (!src.hiding)
-		src.layer = LATTICE_LAYER
-		src.visible_message("<span class='name'>[src] scurries to the ground!</span>", \
+	if (!hiding)
+		layer = LATTICE_LAYER
+		visible_message("<span class='name'>[src] scurries to the ground!</span>", \
 						"<span class='noticealien'>You are now hiding.</span>")
-		src.hiding = TRUE
+		hiding = TRUE
 	else
-		src.layer = MOB_LAYER
-		src.visible_message("[src] slowly peaks up from the ground...", \
+		layer = MOB_LAYER
+		visible_message("[src] slowly peaks up from the ground...", \
 					"<span class='noticealien'>You stop hiding.</span>")
-		src.hiding = FALSE
+		hiding = FALSE
 
 /mob/living/simple_animal/borer/verb/dominate_victim()
 	set category = "Borer"
@@ -504,7 +505,7 @@ var/total_borer_hosts_needed = 10
 	if(controlling)
 		return
 
-	if(src.stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		src << "<span class='userdanger'>You cannot release your host in your current state.</span>"
 		return
 
@@ -593,7 +594,7 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>You are not inside a host body.</span>"
 		return
 
-	if(src.stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		src << "You cannot do that in your current state."
 		return
 
@@ -605,10 +606,15 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>This host lacks enough brain function to control.</span>"
 		return
 
+	if(bonding)
+		return
+
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 
 	if(qdeleted(src) || qdeleted(victim))
 		return
+
+	bonding = TRUE
 
 	var/delay = 200+(victim.brainloss*5)
 	addtimer(src, "assume_control", delay, FALSE)
@@ -667,6 +673,8 @@ var/total_borer_hosts_needed = 10
 
 		controlling = 1
 
+		bonding = FALSE
+
 		victim.verbs += /mob/living/carbon/proc/release_control
 		victim.verbs += /mob/living/carbon/proc/spawn_larvae
 		victim.verbs -= /mob/living/proc/borer_comm
@@ -685,7 +693,7 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>You are not inside a host body.</span>"
 		return
 
-	if(src.stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		src << "You cannot do that in your current state."
 		return
 
@@ -783,7 +791,7 @@ mob/living/carbon/proc/release_control()
 		src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
 		into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
 		your host and your eventual spawn safe and warm."
-		src << "You strongly dislike sugar, avoid it at all costs!"
+		src << "Sugar nullifies your abilities, avoid it at all costs!"
 		src << "You can speak to your fellow borers by prefixing your messages with ';'. Check out your Borer tab to see your abilities."
 		src << "You must escape with at least [total_borer_hosts_needed] borers with hosts on the shuttle. To reproduce you must have 100 chemicals and be controlling a host."
 

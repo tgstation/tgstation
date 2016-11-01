@@ -111,10 +111,6 @@
 					$('#chemicals').text(chemicals);
 				}
 
-				function update_influence(influence) {
-					$('#influence').text(influence);
-				}
-
 				$(function() {
 				});
 			</script>
