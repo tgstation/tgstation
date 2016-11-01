@@ -117,6 +117,13 @@
 			return 1
 	return 0
 
+/mob/living/carbon/human/proc/check_block()
+	if(martial_art && martial_art.block_chance)
+		if(prob(martial_art.block_chance) && in_throw_mode)
+			if(!stat && !weakened && !stunned)
+				return TRUE
+
+	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
 	var/obj/item/I

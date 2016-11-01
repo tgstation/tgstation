@@ -571,16 +571,16 @@
 
 /mob/living/carbon/human/proc/CQC_help()
 	set name = "Recall Teachings"
-	set desc = "You try to remember some of the basics of cqc."
-	set category = "cqc"
+	set desc = "You try to remember some of the basics of CQC."
+	set category = "CQC"
 
-	usr << "<b><i>You try to remember some of the basics of cqc.</i></b>"
+	usr << "<b><i>You try to remember some of the basics of CQC.</i></b>"
 
 	usr << "<span class='notice'>Slam</span>: Grab Harm. Slam opponent into the ground, weakens and knocks down."
 	usr << "<span class='notice'>CQC Kick</span>: Harm Disarm Harm. Knocks opponent away. Knocks out stunned or weakened opponents."
 	usr << "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold."
 	usr << "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage."
-	usr << "<span class='notice'>Consecutive cqc</span>: Harm Harm Disarm. Mainly offensive move, huge damage and decent stamina damage."
+	usr << "<span class='notice'>Consecutive CQC</span>: Harm Harm Disarm. Mainly offensive move, huge damage and decent stamina damage."
 	usr << "<span class='notice'>Disorient and Disarm</span>: Harm Grab. Deal a hit to opponent's jaw to disorient them, and then steal what they are holding."
 
 

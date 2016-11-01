@@ -939,18 +939,23 @@
 			user << "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>"
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s grab attempt!</span>")
+		return 0
 	if(attacker_style && attacker_style.grab_act(user,target))
 		return 1
 	else
 		target.grabbedby(user)
 		return 1
 
-	if(target.martial_art && target.martial_art.block_chance)
-		if(prob(target.martial_art.block_chance) && target.in_throw_mode && !target.get_active_held_item())
-			if(!target.stat && !target.weakened && !target.stunned)
-				target.visible_message("<span class='danger'>[target.name] blocks [user] with their arm!</span>", "<span class='userdanger'>You block the grab attempt!</span>", null, COMBAT_MESSAGE_RANGE, user)
+
+
+
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
+		return 0
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return 1
 	else
@@ -998,13 +1003,13 @@
 			target.forcesay(hit_appends)
 		else if(target.lying)
 			target.forcesay(hit_appends)
-	if(target.martial_art && target.martial_art.block_chance)
-		if(prob(target.martial_art.block_chance) && target.in_throw_mode && !target.get_active_held_item())
-			if(!target.stat && !target.weakened && !target.stunned)
-				target.visible_message("<span class='danger'>[target.name] blocks [user] with their arm!</span>", \
-								"<span class='userdanger'>You block the attack attempt!</span>", null, COMBAT_MESSAGE_RANGE, user)
+
+
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
+		return 0
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
 	else
@@ -1044,11 +1049,8 @@
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
 						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE, user)
-	if(target.martial_art && target.martial_art.block_chance)
-		if(prob(target.martial_art.block_chance) && target.in_throw_mode && !target.get_active_held_item())
-			if(!target.stat && !target.weakened && !target.stunned)
-				target.visible_message("<span class='danger'>[target.name] blocks [user] with their arm!</span>", "<span class='userdanger'>You block the disarm attempt!</span>", null, COMBAT_MESSAGE_RANGE, user)
-				return 0
+
+
 
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
 	if(!istype(M))
@@ -1080,6 +1082,9 @@
 	if(user != H)
 		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
 			return 0
+	if(H.check_block())
+		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
+		return 0
 
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
