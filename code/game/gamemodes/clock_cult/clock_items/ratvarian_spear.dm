@@ -6,7 +6,7 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "ratvarian_spear"
 	item_state = "ratvarian_spear"
-	force = 20 //Extra damage is dealt to silicons in attack()
+	force = 15 //Extra damage is dealt to targets in attack()
 	throwforce = 40
 	sharpness = IS_SHARP_ACCURATE
 	attack_verb = list("stabbed", "poked", "slashed")
@@ -22,9 +22,9 @@
 
 /obj/item/clockwork/ratvarian_spear/proc/update_force()
 	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
-		force = 35
+		force = 25
 		throwforce = 50
-		armour_penetration = 25
+		armour_penetration = 10
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
@@ -47,32 +47,32 @@
 		else
 			impaling = TRUE
 			attack_verb = list("impaled")
-			force += 25 //45 damage if ratvar isn't alive, 60 if he is
-			armour_penetration += 25 //if you're impaling someone, armor sure isn't that useful
+			force += 22 //40 damage if ratvar isn't alive, 50 if he is
+			armour_penetration += 10 //if you're impaling someone, armor sure isn't that useful
 			user.stop_pulling()
 
-	if(impaling)
-		if(hitsound)
-			playsound(loc, hitsound, get_clamped_volume(), 1, -1)
-		user.lastattacked = target
-		target.lastattacker = user
-		if(!target.attacked_by(src, user))
-			impaling = FALSE //if we got blocked, stop impaling
-		add_logs(user, target, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-		add_fingerprint(user)
-	else //todo yell at someone to make attack() use proper return values
-		..()
+	if(hitsound)
+		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+	user.lastattacked = target
+	target.lastattacker = user
+	if(!target.attacked_by(src, user)) //TODO MAKE ATTACK() USE PROPER RETURN VALUES
+		impaling = FALSE //if we got blocked, stop impaling
+	else if(!is_servant_of_ratvar(target))
+		if(issilicon(target))
+			var/mob/living/silicon/S = target
+			if(S.stat != DEAD)
+				S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
+				S.adjustFireLoss(22)
+		else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
+			var/mob/living/M = target
+			if(M.stat != DEAD)
+				M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
+				M.adjustFireLoss(15)
+		else
+			target.adjustFireLoss(3)
+	add_logs(user, target, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+	add_fingerprint(user)
 
-	if(issilicon(target))
-		var/mob/living/silicon/S = target
-		if(S.stat != DEAD)
-			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
-			S.adjustFireLoss(20)
-	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
-		var/mob/living/M = target
-		if(M.stat != DEAD)
-			M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
-			M.adjustFireLoss(10)
 	attack_verb = list("stabbed", "poked", "slashed")
 	update_force()
 	if(impaling)
