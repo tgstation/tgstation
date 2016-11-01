@@ -12,8 +12,8 @@
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
 	channel_time = 150
-	required_components = list("belligerent_eye" = 10, "vanguard_cogwheel" = 10, "guvax_capacitor" = 10, "replicant_alloy" = 10, "hierophant_ansible" = 10)
-	consumed_components = list("belligerent_eye" = 10, "vanguard_cogwheel" = 10, "guvax_capacitor" = 10, "replicant_alloy" = 10, "hierophant_ansible" = 10)
+	required_components = list(BELLIGERENT_EYE = 10, VANGUARD_COGWHEEL = 10, GUVAX_CAPACITOR = 10, REPLICANT_ALLOY = 10, HIEROPHANT_ANSIBLE = 10)
+	consumed_components = list(BELLIGERENT_EYE = 10, VANGUARD_COGWHEEL = 10, GUVAX_CAPACITOR = 10, REPLICANT_ALLOY = 10, HIEROPHANT_ANSIBLE = 10)
 	invokers_required = 5
 	multiple_invokers_used = TRUE
 	usage_tip = "The gateway is completely vulnerable to attack during its five-minute duration. It will periodically give indication of its general position to everyone on the station \

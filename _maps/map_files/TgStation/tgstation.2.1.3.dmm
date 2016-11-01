@@ -8604,9 +8604,7 @@
 /area/space/nearstation)
 "asD" = (
 /turf/open/floor/plating/warnplate{
-	dir = 4;
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
+	dir = 4
 	},
 /area/shuttle/auxillary_base)
 "asE" = (
@@ -42268,9 +42266,6 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bON" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -54464,9 +54459,6 @@
 /obj/item/weapon/gun/energy/laser{
 	pixel_x = 3;
 	pixel_y = -3
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
 	},
 /turf/open/floor/plasteel/bot{
 	dir = 2
@@ -86260,7 +86252,7 @@ asj
 asU
 ats
 atY
-awg
+auo
 axy
 ayN
 azP
@@ -86517,7 +86509,7 @@ arS
 apU
 atu
 cCi
-auo
+awg
 axy
 ayM
 azs

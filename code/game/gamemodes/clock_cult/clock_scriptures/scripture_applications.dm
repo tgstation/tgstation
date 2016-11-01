@@ -10,8 +10,8 @@
 	It will penetrate mindshield implants once before disappearing."
 	invocations = list("Divinity, enslave...", "...all who trespass here!")
 	channel_time = 70
-	required_components = list("belligerent_eye" = 3, "guvax_capacitor" = 1, "hierophant_ansible" = 1)
-	consumed_components = list("belligerent_eye" = 2, "guvax_capacitor" = 1, "hierophant_ansible" = 1)
+	required_components = list(BELLIGERENT_EYE = 3, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(BELLIGERENT_EYE = 2, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission/accession
 	prevent_path = /obj/effect/clockwork/sigil/submission
@@ -30,8 +30,8 @@
 	Dead servants can be revived by this sigil if it has enough stored vitality."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 70
-	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 3, "hierophant_ansible" = 1)
-	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 2, "hierophant_ansible" = 1)
+	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 3, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 2, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
 	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-servants and heal servants that cross it.</span>"
@@ -51,8 +51,8 @@
 	and will gain Fatigue at an increasing rate as they grow farther away. At maximum Fatigue, the marauder is forced to return to you and will be unable to manifest until its Fatigue is at zero."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
-	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 3)
-	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
+	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 3)
+	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 2)
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
 	tier = SCRIPTURE_APPLICATION
 	sort_priority = 3
@@ -117,8 +117,8 @@
 	and exceptional speed, though taking damage will temporarily slow it down."
 	invocations = list("Call forth...", "...the soldiers of Armorer.")
 	channel_time = 80
-	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "replicant_alloy" = 3)
-	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "replicant_alloy" = 2)
+	required_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 3)
+	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 2)
 	object_path = /obj/structure/destructible/clockwork/shell/fragment
 	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptable.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
@@ -134,8 +134,8 @@
 	desc = "Scribes a sigil beneath the invoker which stores power to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
-	required_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "hierophant_ansible" = 3)
-	consumed_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "hierophant_ansible" = 2)
+	required_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 3)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, GUVAX_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
 	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures adjecent to it.</span>"
@@ -152,8 +152,8 @@
 	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission or the area's APC."
 	invocations = list("May this totem...", "...shroud the false suns!")
 	channel_time = 80
-	required_components = list("belligerent_eye" = 4, "replicant_alloy" = 1, "hierophant_ansible" = 1)
-	consumed_components = list("belligerent_eye" = 3, "replicant_alloy" = 1, "hierophant_ansible" = 1)
+	required_components = list(BELLIGERENT_EYE = 4, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(BELLIGERENT_EYE = 3, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/powered/interdiction_lens
 	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
 	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
@@ -172,8 +172,8 @@
 	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures, converted cyborgs, and clockwork structures. Requires replicant alloy or power to function."
 	invocations = list("May this prism...", "...mend our dents and scratches!")
 	channel_time = 80
-	required_components = list("vanguard_cogwheel" = 4, "guvax_capacitor" = 1, "replicant_alloy" = 1)
-	consumed_components = list("vanguard_cogwheel" = 3, "guvax_capacitor" = 1, "replicant_alloy" = 1)
+	required_components = list(VANGUARD_COGWHEEL = 4, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1)
+	consumed_components = list(VANGUARD_COGWHEEL = 3, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	object_path = /obj/structure/destructible/clockwork/powered/mending_motor/prefilled
 	creator_message = "<span class='brass'>You form a mending motor, which will consume power or replicant alloy to mend the wounds of mechanized servants.</span>"
 	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
@@ -192,8 +192,8 @@
 	desc = "Creates a mania motor which will cause brain damage and hallucinations in nearby non-servant humans. It will also try to convert humans directly adjecent to the motor."
 	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
 	channel_time = 80
-	required_components = list("guvax_capacitor" = 4, "replicant_alloy" = 1, "hierophant_ansible" = 1)
-	consumed_components = list("guvax_capacitor" = 3, "replicant_alloy" = 1, "hierophant_ansible" = 1)
+	required_components = list(GUVAX_CAPACITOR = 4, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
+	consumed_components = list(GUVAX_CAPACITOR = 3, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 1)
 	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
 	creator_message = "<span class='brass'>You form a mania motor which will cause brain damage and hallucinations in nearby humans while active.</span>"
 	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
@@ -212,8 +212,8 @@
 	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by servants by a ratio of 5:1, and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
-	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 4)
-	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 3)
+	required_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 4)
+	consumed_components = list(BELLIGERENT_EYE = 1, GUVAX_CAPACITOR = 1, REPLICANT_ALLOY = 3)
 	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
 	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
 	invokers_required = 2
@@ -244,8 +244,8 @@
 	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living servant or clockwork obelisk."
 	invocations = list("May this obelisk...", "...take us to all places!")
 	channel_time = 80
-	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 4)
-	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 3)
+	required_components = list(VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 4)
+	consumed_components = list(VANGUARD_COGWHEEL = 1, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 3)
 	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
 	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
 	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"

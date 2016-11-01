@@ -69,10 +69,10 @@
 /obj/structure/destructible/clockwork/cache/attack_hand(mob/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	if(!clockwork_component_cache["replicant_alloy"])
+	if(!clockwork_component_cache[REPLICANT_ALLOY])
 		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
 		return 0
-	clockwork_component_cache["replicant_alloy"]--
+	clockwork_component_cache[REPLICANT_ALLOY]--
 	var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
 	user.visible_message("<span class='notice'>[user] withdraws [A] from [src].</span>", "<span class='notice'>You withdraw [A] from [src].</span>")
 	user.put_in_hands(A)
@@ -85,4 +85,4 @@
 			user << "<span class='brass'>It is linked and will generate components!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
-			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != "replicant_alloy" ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"
+			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"
