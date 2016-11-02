@@ -203,8 +203,7 @@ Nah
 <b>Station Equipment:</b><BR>
 <A href='?src=\ref[src];tube=5'>Through Tube Station</A><BR>
 <A href='?src=\ref[src];tube=6'>Terminus Tube Station</A><BR>
-<A href='?src=\ref[src];tube=7'>Tube Blocker</A><BR>
-<A href='?src=\ref[src];tube=8'>Transit Tube Pod</A><BR>
+<A href='?src=\ref[src];tube=7'>Transit Tube Pod</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -219,34 +218,26 @@ Nah
 	if(!wait)
 		if(href_list["tube"])
 			var/tube_type = text2num(href_list["tube"])
-			if(tube_type <= 4)
-				var/obj/structure/c_transit_tube/C = new/obj/structure/c_transit_tube(src.loc)
-				switch(tube_type)
-					if(0)
-						C.icon_state = "E-W"
-					if(1)
-						C.icon_state = "E-W-Pass"
-					if(2)
-						C.icon_state = "S-NE"
-					if(3)
-						C.icon_state = "NE-SW"
-					if(4)
-						C.icon_state = "W-NE-SE"
+			var/obj/structure/C
+			switch(tube_type)
+				if(0)
+					C = new /obj/structure/c_transit_tube(loc)
+				if(1)
+					C = new /obj/structure/c_transit_tube/crossing(loc)
+				if(2)
+					C = new /obj/structure/c_transit_tube/curved(loc)
+				if(3)
+					C = new /obj/structure/c_transit_tube/diagonal(loc)
+				if(4)
+					C = new /obj/structure/c_transit_tube/junction(loc)
+				if(5)
+					C = new /obj/structure/c_transit_tube/station(loc)
+				if(6)
+					C = new /obj/structure/c_transit_tube/station/reverse(loc)
+				if(7)
+					C = new /obj/structure/c_transit_tube_pod(loc)
+			if(C)
 				C.add_fingerprint(usr)
-			else
-				switch(tube_type)
-					if(5)
-						var/obj/structure/c_transit_tube/station/C = new/obj/structure/c_transit_tube/station(src.loc)
-						C.add_fingerprint(usr)
-					if(6)
-						var/obj/structure/c_transit_tube/station/reverse/C = new/obj/structure/c_transit_tube/station/reverse(src.loc)
-						C.add_fingerprint(usr)
-					if(7)
-						var/obj/structure/c_transit_tube/station/block/C = new/obj/structure/c_transit_tube/station/block(src.loc)
-						C.add_fingerprint(usr)
-					if(8)
-						var/obj/structure/c_transit_tube_pod/C = new/obj/structure/c_transit_tube_pod(src.loc)
-						C.add_fingerprint(usr)
 			wait = 1
 			spawn(15)
 				wait = 0

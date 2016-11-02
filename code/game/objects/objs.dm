@@ -126,7 +126,7 @@
 		return
 	..()
 
-/obj/proc/container_resist()
+/obj/proc/container_resist(mob/living/user)
 	return
 
 /obj/proc/update_icon()
