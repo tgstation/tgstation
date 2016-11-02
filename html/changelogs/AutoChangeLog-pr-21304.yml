@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - rscadd: "Added a new lobby menu sound."
