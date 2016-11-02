@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - tweak: "Ninjas are now slightly visible when stealthing."
