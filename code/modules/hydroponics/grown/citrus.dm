@@ -19,7 +19,7 @@
 	yield = 4
 	potency = 15
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	mutatelist = list(/obj/item/seeds/orange)
+	mutatelist = list(/obj/item/seeds/orange, /obj/item/seeds/triple)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime
@@ -44,7 +44,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
-	mutatelist = list(/obj/item/seeds/lime)
+	mutatelist = list(/obj/item/seeds/lime, /obj/item/seeds/triple)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
@@ -149,3 +149,28 @@
 			update_mob()
 			explosion(src.loc,-1,-1,2, flame_range = 5)
 			qdel(src)
+
+// Triple citrus
+/obj/item/seeds/triple
+	name = "pack of triple citrus seeds"
+	desc = "Eat your heart out Frankinstein."
+	icon_state = "seed-triple"
+	species = "triple"
+	plantname = "Triple citrus Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/triple
+	lifespan = 55
+	endurance = 50
+	yield = 4
+	potency = 15
+	icon_grow = "lime-grow"
+	icon_dead = "lime-dead"
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/triple
+	seed = /obj/item/seeds/triple
+	name = "Triple citrus"
+	desc = "As sour as a lime, as thick skined as a lemon, and as annoying as an orange."
+	icon_state = "triple"
+	filling_color = "#FFCC00"
+

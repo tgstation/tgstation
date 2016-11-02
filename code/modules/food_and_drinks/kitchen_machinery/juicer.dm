@@ -22,6 +22,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = "lemonjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = "orangejuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime = "limejuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/triple = "triple_citrus",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = "watermelonjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = "watermelonjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = "poisonberryjuice",
