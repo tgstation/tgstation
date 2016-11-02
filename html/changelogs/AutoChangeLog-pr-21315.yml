@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "Clockcult's \"Convert All Silicons\" objective now also requires that Application scripture is unlocked."
+  - wip: "The \"Convert All Silicons\" objective will also only be given if there is an AI, instead of only if there is a silicon."
