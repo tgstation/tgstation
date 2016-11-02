@@ -51,6 +51,9 @@
 		if(can_see_clockwork)
 			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
 
+/obj/structure/destructible/clockwork/hulk_damage()
+	return 20
+
 
 //for the ark and Ratvar
 /obj/structure/destructible/clockwork/massive

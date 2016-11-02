@@ -206,7 +206,7 @@
 	item_state = "facehugger_impregnated";
 	stat = 2
 	},
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaycontent/a5{
 	always_unpowered = 1;

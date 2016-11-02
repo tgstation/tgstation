@@ -49,7 +49,7 @@
 
 /obj/item/weapon/storage/briefcase/sniperbundle/New()
 	..()
-	new /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate(src)
+	new /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/syndicate(src)
 	new /obj/item/clothing/neck/tie/red(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)

@@ -51,8 +51,8 @@
 				return 1
 
 			if (istype(G, /obj/item/weapon/gun/energy))
-				var/obj/item/weapon/gun/energy/gun = G
-				if(!gun.can_charge)
+				var/obj/item/weapon/gun/energy/E = G
+				if(!E.can_charge)
 					user << "<span class='notice'>Your gun has no external power connector.</span>"
 					return 1
 
@@ -112,6 +112,7 @@
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
 				E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+				E.recharge_newshot()
 				use_power(250 * recharge_coeff)
 				using_power = 1
 

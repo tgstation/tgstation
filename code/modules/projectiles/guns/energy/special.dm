@@ -122,7 +122,6 @@
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
-	modifystate = -1
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
 	flags = CONDUCT | OPENCONTAINER
@@ -142,10 +141,12 @@
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
 		power_supply.give(1000)
+		recharge_newshot(1)
 		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
 	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
 		power_supply.give(500)
+		recharge_newshot(1)
 		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
 	else
 		..()
@@ -214,16 +215,13 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = 0
+	use_cyborg_cell = 1
 
 /obj/item/weapon/gun/energy/printer/update_icon()
 	return
 
 /obj/item/weapon/gun/energy/printer/emp_act()
 	return
-
-/obj/item/weapon/gun/energy/printer/newshot()
-	..()
-	robocharge()
 
 /obj/item/weapon/gun/energy/temperature
 	name = "temperature gun"

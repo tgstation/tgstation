@@ -4224,12 +4224,12 @@
 /area/security/brig)
 "ajk" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun{
+/obj/item/weapon/gun/energy/e_gun{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/gun,
-/obj/item/weapon/gun/energy/gun{
+/obj/item/weapon/gun/energy/e_gun,
+/obj/item/weapon/gun/energy/e_gun{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -4677,12 +4677,12 @@
 /area/security/brig)
 "ajY" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/gun/advtaser,
-/obj/item/weapon/gun/energy/gun/advtaser{
+/obj/item/weapon/gun/energy/e_gun/advtaser,
+/obj/item/weapon/gun/energy/e_gun/advtaser{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -4716,12 +4716,12 @@
 /area/security/armory)
 "akc" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/riot{
+/obj/item/weapon/gun/ballistic/shotgun/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/shotgun/riot,
-/obj/item/weapon/gun/projectile/shotgun/riot{
+/obj/item/weapon/gun/ballistic/shotgun/riot,
+/obj/item/weapon/gun/ballistic/shotgun/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -19900,7 +19900,7 @@
 /area/maintenance/fsmaint2)
 "aOK" = (
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel,
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel,
 /obj/structure/table/wood,
 /obj/item/weapon/coin/silver,
 /obj/item/stack/spacecash/c10,
@@ -43942,7 +43942,7 @@
 /obj/item/weapon/kitchen/knife,
 /obj/item/candle,
 /obj/item/pipe,
-/obj/item/weapon/gun/projectile/revolver/russian,
+/obj/item/weapon/gun/ballistic/revolver/russian,
 /obj/item/stack/cable_coil/white,
 /obj/item/weapon/wrench,
 /obj/effect/decal/cleanable/cobweb{

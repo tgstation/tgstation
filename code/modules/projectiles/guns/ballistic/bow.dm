@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/projectile/bow
+/obj/item/weapon/gun/ballistic/bow
 	name = "bow"
 	desc = "A sturdy bow made out of wood and reinforced with iron."
 	icon_state = "bow_unloaded"
@@ -15,7 +15,7 @@
 	var/ready_to_fire = 0
 	var/slowdown_when_ready = 2
 
-/obj/item/weapon/gun/projectile/bow/update_icon()
+/obj/item/weapon/gun/ballistic/bow/update_icon()
 	if(ready_to_fire)
 		icon_state = icon_state_firing
 		item_state = item_state_firing
@@ -29,13 +29,13 @@
 		item_state = initial(item_state)
 		slowdown = initial(slowdown)
 
-/obj/item/weapon/gun/projectile/bow/dropped(mob/user)
+/obj/item/weapon/gun/ballistic/bow/dropped(mob/user)
 	if(magazine && magazine.ammo_count())
 		magazine.empty_magazine()
 		ready_to_fire = FALSE
 		update_icon()
 
-/obj/item/weapon/gun/projectile/bow/attack_self(mob/living/user)
+/obj/item/weapon/gun/ballistic/bow/attack_self(mob/living/user)
 	if(!ready_to_fire && magazine.ammo_count())
 		ready_to_fire = TRUE
 		playsound(user, draw_sound, 100, 1)
@@ -44,22 +44,22 @@
 		ready_to_fire = FALSE
 		update_icon()
 
-/obj/item/weapon/gun/projectile/bow/attackby(obj/item/A, mob/user, params)
+/obj/item/weapon/gun/ballistic/bow/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You ready \the [A] into \the [src].</span>"
 		update_icon()
 		chamber_round()
 
-/obj/item/weapon/gun/projectile/bow/can_shoot()
+/obj/item/weapon/gun/ballistic/bow/can_shoot()
 	. = ..()
 	if(!ready_to_fire)
 		return FALSE
 
-/obj/item/weapon/gun/projectile/bow/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/weapon/gun/ballistic/bow/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	return
 
-/obj/item/weapon/gun/projectile/bow/process_chamber(eject_casing = 0, empty_chamber = 1)
+/obj/item/weapon/gun/ballistic/bow/process_chamber(eject_casing = 0, empty_chamber = 1)
 	. = ..()
 	ready_to_fire = FALSE
 	update_icon()

@@ -142,7 +142,7 @@
 			new /obj/item/weapon/hand_tele(src)
 		if(97)
 			new /obj/item/clothing/mask/balaclava
-			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+			new /obj/item/weapon/gun/ballistic/automatic/pistol(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
 		if(98)
 			new /obj/item/weapon/katana/cursed(src)

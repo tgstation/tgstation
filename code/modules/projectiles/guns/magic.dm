@@ -23,7 +23,6 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 /obj/item/weapon/gun/magic/afterattack(atom/target, mob/living/user, flag)
-	newshot()
 	if(no_den_usage)
 		var/area/A = get_area(user)
 		if(istype(A, /area/wizard_station))
@@ -36,15 +35,14 @@
 /obj/item/weapon/gun/magic/can_shoot()
 	return charges
 
-/obj/item/weapon/gun/magic/newshot()
-	if (charges && chambered)
+/obj/item/weapon/gun/magic/recharge_newshot()
+	if (charges && chambered && !chambered.BB)
 		chambered.newshot()
-	return
 
 /obj/item/weapon/gun/magic/process_chamber()
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		charges--//... drain a charge
-	return
+		recharge_newshot()
 
 /obj/item/weapon/gun/magic/New()
 	..()
@@ -66,6 +64,8 @@
 		return 0
 	charge_tick = 0
 	charges++
+	if(charges == 1)
+		recharge_newshot()
 	return 1
 
 /obj/item/weapon/gun/magic/update_icon()
@@ -73,9 +73,14 @@
 
 /obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	user << "<span class='warning'>The [name] whizzles quietly.<span>"
-	return
 
 /obj/item/weapon/gun/magic/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, fire_sound, 50, 1, -1)
 	return (FIRELOSS)
+
+/obj/item/weapon/gun/magic/on_varedit(varname)
+	. = ..()
+	switch (varname)
+		if ("charges")
+			recharge_newshot()

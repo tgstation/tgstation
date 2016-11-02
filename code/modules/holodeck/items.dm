@@ -216,9 +216,4 @@
 	name = "paper - Starfleet Academy Diploma"
 	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
 
-/obj/item/weapon/gun/energy/gun/mini/practice_phaser
-	name = "practice phaser"
-	desc = "A modified version of the basic phaser gun, this one fires less concentrated energy bolts designed for target practice."
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/practice)
-	icon_state = "decloner"
 

@@ -258,7 +258,7 @@ Contains:
 	item_state = "space_suit_syndicate"
 	slowdown = 0	//Space carp magic, never stop believing
 	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75, fire = 60, acid = 75) //As whimpy whimpy whoo
-	allowed = list(/obj/item/weapon/tank/internals, /obj/item/weapon/gun/projectile/automatic/speargun)	//I'm giving you a hint here
+	allowed = list(/obj/item/weapon/tank/internals, /obj/item/weapon/gun/ballistic/automatic/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
 
 

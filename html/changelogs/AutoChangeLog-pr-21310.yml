@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "Brass windows and windoors no longer drop full sheets of brass when destroyed."
-  - rscadd: "Instead, they'll drop gear bits, which can be proselytized for a small amount of liquified alloy; 80% of the materials used to construct the window."

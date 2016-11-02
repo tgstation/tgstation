@@ -93,13 +93,13 @@
 		X.icon_state = old_icon_state1
 
 		for(var/obj/O in T)
-			var/obj/O2 = DuplicateObject(O , perfect_copy=TRUE, newloc = X, nerf=nerf_weapons, holoitem=TRUE)
+			var/obj/O2 = DuplicateObject(O , perfectcopy=TRUE, newloc = X, nerf=nerf_weapons, holoitem=TRUE)
 			if(!O2) continue
 			copiedobjs += O2.GetAllContents()
 
 		for(var/mob/M in T)
 			if(istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
-			var/mob/SM = DuplicateObject(M , perfect_copy=TRUE, newloc = X, holoitem=TRUE)
+			var/mob/SM = DuplicateObject(M , perfectcopy=TRUE, newloc = X, holoitem=TRUE)
 			copiedobjs += SM.GetAllContents()
 
 		var/global/list/forbidden_vars = list("type","stat","loc","locs","vars", "parent", "parent_type","verbs","ckey","key","x","y","z","contents", "luminosity")
