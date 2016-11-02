@@ -95,7 +95,8 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!progress_in_seconds || prob(7))
 		for(var/M in mob_list)
-			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
+			if(!isnewplayer(M))
+				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!obj_integrity)
 		return 0
 	progress_in_seconds += GATEWAY_SUMMON_RATE

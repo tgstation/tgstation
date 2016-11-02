@@ -286,9 +286,12 @@
 		if(A.level >= affecting_level)
 			A.ex_act(severity, target)
 
-/turf/ratvar_act()
-	for(var/mob/M in src)
-		M.ratvar_act()
+/turf/ratvar_act(force)
+	var/converted = (prob(40) || force)
+	for(var/I in src)
+		var/atom/A = I
+		if(ismob(A) || converted)
+			A.ratvar_act()
 
 /turf/proc/add_blueprints(atom/movable/AM)
 	var/image/I = new
