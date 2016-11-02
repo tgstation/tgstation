@@ -149,7 +149,7 @@
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = 5.0
-	force = 25
+	force = 20
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
