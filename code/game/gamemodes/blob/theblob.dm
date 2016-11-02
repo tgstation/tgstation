@@ -225,6 +225,9 @@
 	if(overmind)
 		overmind.blob_reagent_datum.extinguish_reaction(src)
 
+/obj/structure/blob/hulk_damage()
+	return 15
+
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
 		user.changeNext_move(CLICK_CD_MELEE)

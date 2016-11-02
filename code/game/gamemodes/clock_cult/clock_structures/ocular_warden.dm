@@ -28,6 +28,9 @@
 	..()
 	user << "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>"
 
+/obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
+	return 25
+
 /obj/structure/destructible/clockwork/ocular_warden/process()
 	var/list/validtargets = acquire_nearby_targets()
 	if(ratvar_awakens && (damage_per_tick == initial(damage_per_tick) || sight_range == initial(sight_range))) //Massive buff if Ratvar has returned
