@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "Hulks no longer one-shot most clockwork structures and will no longer four-shot the Gateway to the Celestial Derelict."
-  - bugfix: "Hulks are no longer a blob counter."

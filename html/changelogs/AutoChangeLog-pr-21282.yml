@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Ocular Wardens will no longer attack targets that are handcuffed, buckled to something AND lying, or in the process of being converted by Guvax."
-  - tweak: "Also, they do very slightly more damage."
