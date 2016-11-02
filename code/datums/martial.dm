@@ -460,7 +460,7 @@
 	return 1
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(restraining && A.pulling == D)
+	if(restraining)
 		if(A.grab_state < GRAB_NECK)
 			A.grab_state = GRAB_NECK
 		return
