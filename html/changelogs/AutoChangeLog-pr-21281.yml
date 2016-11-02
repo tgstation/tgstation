@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Mending Motors have an increased range and heal for more."
+  - experiment: "Mending Motors will no longer waste massive amounts of power on slightly damaged objects; instead, they will heal a small amount, use a small amount of power, and stop if the object is fully healed."
+  - wip: "Mending Motors can now heal all clockwork objects, including pinion airlocks, brass windows, and anything else you can think of."
