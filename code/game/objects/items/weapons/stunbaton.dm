@@ -122,10 +122,7 @@
 
 	var/mob/living/carbon/human/L = M
 
-	if(L.check_block())
-		L.visible_message("<span class='danger'>[L.name] blocks [src] and twists [user]'s arm behind their back!</span>",
-						"<span class='userdanger'>You block the attack!</span>")
-		user.Stun(2)
+	if(check_martial_counter(L, user))
 		return 0
 
 	if(user.a_intent != "harm")

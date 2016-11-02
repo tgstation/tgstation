@@ -389,17 +389,20 @@
 	usr << "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand."
 	usr << "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition."
 
-//cqc
+//CQC _bman_
 #define SLAM_COMBO "GH"
 #define KICK_COMBO "HH"
 #define RESTRAIN_COMBO "GG"
 #define PRESSURE_COMBO "DG"
 #define CONSECUTIVE_COMBO "HHD"
-#define STRIKE_COMBO "DD"
 /datum/martial_art/cqc
 	name = "CQC"
 	help_verb = /mob/living/carbon/human/proc/CQC_help
-	block_chance = 70
+	block_chance = 75
+
+/datum/martial_art/cqc/proc/drop_restraining()
+	restraining = 0
+	return 1
 
 /datum/martial_art/cqc/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,SLAM_COMBO))
@@ -421,10 +424,6 @@
 	if(findtext(streak,CONSECUTIVE_COMBO))
 		streak = ""
 		Consecutive(A,D)
-	if(findtext(streak,STRIKE_COMBO))
-		streak = ""
-		Strike(A,D)
-		return 1
 	return 0
 
 /datum/martial_art/cqc/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -446,7 +445,7 @@
 		D.throw_at(throw_target, 1, 14, A)
 		D.apply_damage(10, BRUTE)
 		add_logs(A, D, "cqc kicked")
-	if(D.weakened)
+	if(D.weakened && D.stat != DEAD)
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking them out!</span>", \
 					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
@@ -461,7 +460,9 @@
 	return 1
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(restraining)
+	if(restraining && A.pulling == D)
+		if(A.grab_state < GRAB_NECK)
+			A.grab_state = GRAB_NECK
 		return
 	if(!D.stat)
 		D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
@@ -469,6 +470,7 @@
 		D.adjustStaminaLoss(20)
 		D.Stun(5)
 		restraining = 1
+		addtimer(src, "drop_restraining", 50, TRUE)
 	return 1
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -481,20 +483,7 @@
 			D.drop_item()
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
-		D.apply_damage(20, BRUTE)
-	return 1
-
-/datum/martial_art/cqc/proc/Strike(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat || !D.weakened)
-		var/obj/item/I = D.get_active_held_item()
-		D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand and then disarms them!</span>", \
-							"<span class='userdanger'>[A] strikes your jaw, disorienting you, and then disarms you!</span>")
-		playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
-		if(I)
-			D.drop_item()
-			A.put_in_hands(I)
-		D.Jitter(2)
-		D.apply_damage(5, BRUTE)
+		D.apply_damage(25, BRUTE)
 	return 1
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -547,19 +536,22 @@
 	if(check_streak(A,D))
 		return 1
 	if(prob(65))
-		var/obj/item/I = D.get_active_held_item()
-		if(I)
-			if(D.drop_item())
+		if(!D.stat || !D.weakened || !restraining)
+			var/obj/item/I = D.get_active_held_item()
+			D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand!</span>", \
+								"<span class='userdanger'>[A] strikes your jaw, disorienting you!</span>")
+			playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
+			if(I)
+				D.drop_item()
 				A.put_in_hands(I)
-		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
-							"<span class='userdanger'>[A] has disarmed [D]!</span>")
-		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			D.Jitter(2)
+			D.apply_damage(5, BRUTE)
 	else
 		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	add_logs(A, D, "disarmed with CQC")
-	if(restraining)
+	if(restraining && A.pulling == D)
 		D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \
 							"<span class='userdanger'>[A] puts you into a chokehold!</span>")
 		D.SetSleeping(20)
@@ -581,8 +573,8 @@
 	usr << "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold."
 	usr << "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage."
 	usr << "<span class='notice'>Consecutive CQC</span>: Harm Harm Disarm. Mainly offensive move, huge damage and decent stamina damage."
-	usr << "<span class='notice'>Disorient and Disarm</span>: Harm Grab. Deal a hit to opponent's jaw to disorient them, and then steal what they are holding."
 
+	usr << "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>"
 
 //ITEMS
 
