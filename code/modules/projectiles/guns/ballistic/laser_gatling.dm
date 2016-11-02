@@ -9,7 +9,7 @@
 	item_state = "backpack"
 	slot_flags = SLOT_BACK
 	w_class = 5
-	var/obj/item/weapon/gun/projectile/minigun/gun = null
+	var/obj/item/weapon/gun/ballistic/minigun/gun = null
 	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
 	var/overheat = 0
 	var/overheat_max = 40
@@ -91,7 +91,7 @@
 	user.update_inv_back()
 
 
-/obj/item/weapon/gun/projectile/minigun
+/obj/item/weapon/gun/ballistic/minigun
 	name = "laser gatling gun"
 	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
 	icon = 'icons/obj/guns/minigun.dmi'
@@ -109,18 +109,19 @@
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/Laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
+	casing_ejector = 0
 	var/obj/item/weapon/minigunpack/ammo_pack
 
-/obj/item/weapon/gun/projectile/minigun/attack_self(mob/living/user)
+/obj/item/weapon/gun/ballistic/minigun/attack_self(mob/living/user)
 	return
 
-/obj/item/weapon/gun/projectile/minigun/dropped(mob/user)
+/obj/item/weapon/gun/ballistic/minigun/dropped(mob/user)
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
 		qdel(src)
 
-/obj/item/weapon/gun/projectile/minigun/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
+/obj/item/weapon/gun/ballistic/minigun/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	if(ammo_pack)
 		if(ammo_pack.overheat < ammo_pack.overheat_max)
 			ammo_pack.overheat += burst_size
@@ -128,12 +129,12 @@
 		else
 			user << "The gun's heat sensor locked the trigger to prevent lens damage."
 
-/obj/item/weapon/gun/projectile/minigun/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/gun/ballistic/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
 		user << "You need the backpack power source to fire the gun!"
 	..()
 
-/obj/item/weapon/gun/projectile/minigun/New()
+/obj/item/weapon/gun/ballistic/minigun/New()
 	if(!ammo_pack)
 		if(istype(loc,/obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
 			ammo_pack = loc
@@ -141,9 +142,7 @@
 		else
 			qdel(src)//No pack, no gun
 
-/obj/item/weapon/gun/projectile/minigun/dropped(mob/living/user)
+/obj/item/weapon/gun/ballistic/minigun/dropped(mob/living/user)
 	ammo_pack.attach_gun(user)
 
-/obj/item/weapon/gun/projectile/minigun/process_chamber(eject_casing = 0, empty_chamber = 1)
-	..()
 
