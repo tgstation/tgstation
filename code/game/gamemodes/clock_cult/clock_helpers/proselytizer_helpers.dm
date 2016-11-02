@@ -97,8 +97,7 @@
 	if(!proselytizer.metal_to_alloy)
 		return FALSE
 	var/prosel_cost = -amount*REPLICANT_FLOOR
-	var/prosel_time = -amount
-	return list("operation_time" = -prosel_time, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
+	return list("operation_time" = amount, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
 
 //Airlock conversion
 /obj/machinery/door/airlock/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -152,7 +151,7 @@
 //Girder conversion
 /obj/structure/girder/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	var/prosel_cost = REPLICANT_GEAR - (REPLICANT_METAL * 2)
-	if(state == GIRDER_REINF)
+	if(state == 2 || state == 1) //the defines are in girders.dm so we can't use them here, augh!
 		prosel_cost -= REPLICANT_PLASTEEL
 	return list("operation_time" = 20, "new_obj_type" = /obj/structure/destructible/clockwork/wall_gear, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
 
