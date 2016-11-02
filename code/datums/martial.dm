@@ -394,7 +394,7 @@
 #define KICK_COMBO "HH"
 #define RESTRAIN_COMBO "GG"
 #define PRESSURE_COMBO "DG"
-#define CONSECUTIVE_COMBO "HHD"
+#define CONSECUTIVE_COMBO "DDH"
 /datum/martial_art/cqc
 	name = "CQC"
 	help_verb = /mob/living/carbon/human/proc/CQC_help
