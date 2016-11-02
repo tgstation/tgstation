@@ -174,10 +174,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/converted = (prob(40) || force)
 	if(converted)
 		ChangeTurf(/turf/open/floor/clockwork)
-	for(var/I in src)
-		var/atom/A = I
-		if(ismob(A) || converted)
-			A.ratvar_act()
+	..(converted)
 
 /turf/open/floor/initialize()
 	..()
