@@ -46,7 +46,7 @@
 	for(var/obj/O in src)
 		if(O.density && !O.CanPass(user, src, 5))
 			user << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
-			return FALSE
+			return TRUE
 	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
 //Metal conversion
@@ -124,6 +124,8 @@
 			prosel_cost -= REPLICANT_ROD
 	if(reinf)
 		prosel_cost -= REPLICANT_ROD
+	for(var/obj/structure/grille/G in get_turf(src))
+		addtimer(proselytizer, "proselytize", 0, FALSE, G, user)
 	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "alloy_cost" = prosel_cost, "spawn_dir" = dir, "dir_in_new" = new_dir)
 
 /obj/structure/window/reinforced/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
