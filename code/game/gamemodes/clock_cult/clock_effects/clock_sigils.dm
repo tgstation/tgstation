@@ -236,9 +236,9 @@
 	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
 	animate(src, alpha = 255, time = 10)
 	sleep(10)
-	sigil_active = TRUE
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
+		sigil_active = TRUE
 		if(animation_number >= 4)
 			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 			animation_number = 0
