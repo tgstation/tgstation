@@ -73,6 +73,10 @@
 					components["[get_component_name(i)] ([get_component_cost(i)]W)"] = i
 				var/input_component = input(user, "Choose a component type.", name) as null|anything in components
 				component_id_to_produce = components[input_component]
+				servants = 0
+				for(var/mob/living/L in living_mob_list)
+					if(is_servant_of_ratvar(L))
+						servants++
 				if(!user.canUseTopic(src, BE_CLOSE) || active || !clockwork_caches || servants * 0.2 < clockwork_daemons)
 					return
 				if(!component_id_to_produce)
