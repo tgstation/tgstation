@@ -4,6 +4,7 @@
 	icon_state = "taser"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
+	cell_type = /obj/item/weapon/stock_parts/cell{charge = 800; maxcharge = 800}
 	origin_tech = "combat=3"
 	ammo_x_offset = 3
 
