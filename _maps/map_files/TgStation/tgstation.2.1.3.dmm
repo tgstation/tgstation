@@ -55526,9 +55526,6 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "crh" = (
-/obj/structure/transit_tube{
-	icon_state = "Block"
-	},
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -55671,12 +55668,10 @@
 /turf/open/floor/plasteel/warning,
 /area/hallway/secondary/entry)
 "crA" = (
-/obj/structure/transit_tube/station{
-	dir = 8;
-	icon_state = "closed";
-	reverse_launch = 1
-	},
 /obj/structure/transit_tube_pod,
+/obj/structure/transit_tube/station/reverse/flipped{
+	dir = 4
+	},
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -55835,9 +55830,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "crR" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -55884,10 +55877,8 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crY" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crZ" = (
@@ -55973,8 +55964,8 @@
 /turf/open/space,
 /area/space)
 "csi" = (
-/obj/structure/transit_tube{
-	icon_state = "N-SE"
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
 	},
 /turf/open/space,
 /area/space)
@@ -55987,8 +55978,8 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "csl" = (
-/obj/structure/transit_tube{
-	icon_state = "E-NW"
+/obj/structure/transit_tube/curved{
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -55999,12 +55990,12 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "csn" = (
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/space,
 /area/space)
 "cso" = (
-/obj/structure/transit_tube,
 /obj/structure/lattice,
+/obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space,
 /area/space)
 "csp" = (
@@ -56200,18 +56191,18 @@
 /turf/open/space,
 /area/space)
 "csM" = (
-/obj/structure/transit_tube,
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/transit_tube/crossing/horizontal,
 /turf/open/space,
 /area/space)
 "csN" = (
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "csO" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/transit_tube,
+/obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "csP" = (
@@ -56240,9 +56231,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "csU" = (
-/obj/structure/transit_tube/station{
-	reverse_launch = 1
-	},
+/obj/structure/transit_tube/station/reverse,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "csV" = (
@@ -94052,7 +94041,7 @@ crA
 crR
 crY
 csi
-csL
+aaa
 aaa
 aaf
 aag
@@ -94308,7 +94297,7 @@ cqY
 cqY
 cqY
 cig
-csh
+aaa
 csl
 aaa
 aaf
@@ -95080,7 +95069,7 @@ aaa
 aaa
 aaf
 aaa
-csp
+csn
 aaa
 aaf
 aag
@@ -96108,7 +96097,7 @@ aaa
 aaa
 aaf
 aaa
-csp
+csn
 aaa
 aaf
 aag
@@ -97136,7 +97125,7 @@ aaa
 aaa
 aaf
 aaa
-csp
+csn
 aaa
 aaf
 aag
@@ -99449,7 +99438,7 @@ aaa
 aaa
 aaf
 csD
-csT
+ctb
 csV
 ctb
 ctj
