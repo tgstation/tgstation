@@ -10,7 +10,8 @@
 	chant_invocations = list("Punish their blindness!", "Take time, make slow!")
 	chant_amount = 15
 	chant_interval = 20
-	required_components = list("belligerent_eye" = 1)
+	channel_time = 20
+	required_components = list(BELLIGERENT_EYE = 1)
 	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 1
@@ -41,8 +42,8 @@
 	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
-	required_components = list("belligerent_eye" = 2)
-	consumed_components = list("belligerent_eye" = 1)
+	required_components = list(BELLIGERENT_EYE = 2)
+	consumed_components = list(BELLIGERENT_EYE = 1)
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/judicial_visor
 	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
@@ -60,7 +61,7 @@
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
-	required_components = list("vanguard_cogwheel" = 1)
+	required_components = list(VANGUARD_COGWHEEL = 1)
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 3
@@ -83,8 +84,8 @@
 	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute and burn damage to half as much toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
-	required_components = list("vanguard_cogwheel" = 2)
-	consumed_components = list("vanguard_cogwheel" = 1)
+	required_components = list(VANGUARD_COGWHEEL = 2)
+	consumed_components = list(VANGUARD_COGWHEEL = 1)
 	usage_tip = "The Compromise is very fast to invoke, and will remove holy water from the target Servant."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 4
@@ -103,7 +104,7 @@
 	invocations = list("Divinity, grant me strength...", "...to enlighten the heathen!")
 	whispered = TRUE
 	channel_time = 20
-	required_components = list("guvax_capacitor" = 1)
+	required_components = list(GUVAX_CAPACITOR = 1)
 	usage_tip = "Is melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 5
@@ -171,8 +172,8 @@
 	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
 	chant_amount = 5
 	chant_interval = 10
-	required_components = list("guvax_capacitor" = 2)
-	consumed_components = list("guvax_capacitor" = 1)
+	required_components = list(GUVAX_CAPACITOR = 2)
+	consumed_components = list(GUVAX_CAPACITOR = 1)
 	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
 	tier = SCRIPTURE_DRIVER
 	sort_priority = 6
@@ -187,8 +188,10 @@
 			L.dizziness = min(L.dizziness + 20, 100)
 			L.Weaken(1)
 	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+	var/invoker_old_color = invoker.color
 	invoker.color = "#AF0AAF"
-	animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
+	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
+	addtimer(invoker, "update_atom_colour", flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		var/endtime = world.time + flee_time
 		var/starttime = world.time
@@ -212,7 +215,7 @@
 	desc = "Creates a new clockwork slab."
 	invocations = list("Metal, become greater!")
 	channel_time = 10
-	required_components = list("replicant_alloy" = 1)
+	required_components = list(REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	usage_tip = "This is inefficient as a way to produce components, as the slab produced must be held by someone with no other slabs to produce components."
 	tier = SCRIPTURE_DRIVER
@@ -232,8 +235,8 @@
 	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
 	invocations = list("Constructing...", "...a cache!")
 	channel_time = 50
-	required_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 2, "hierophant_ansible" = 0)
-	consumed_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 1, "hierophant_ansible" = 0)
+	required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 0)
+	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GUVAX_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
 	object_path = /obj/structure/destructible/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
@@ -245,10 +248,10 @@
 /datum/clockwork_scripture/create_object/tinkerers_cache/New()
 	var/cache_cost_increase = min(round(clockwork_caches*0.2), 5)
 	for(var/i in required_components)
-		if(i != "replicant_alloy")
+		if(i != REPLICANT_ALLOY)
 			required_components[i] += cache_cost_increase
 	for(var/i in consumed_components)
-		if(i != "replicant_alloy")
+		if(i != REPLICANT_ALLOY)
 			consumed_components[i] += cache_cost_increase
 	return ..()
 
@@ -260,7 +263,7 @@
 	desc = "Fabricates a pair of glasses that provides true sight but quickly damage vision, eventually causing blindness if worn for too long."
 	invocations = list("Show the truth of this world to me!")
 	channel_time = 10
-	required_components = list("hierophant_ansible" = 1)
+	required_components = list(HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/wraith_spectacles
 	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which will grant true sight when worn.</span>"
@@ -277,8 +280,8 @@
 	desc = "Wards a tile with a sigil. The next person to cross the sigil will be smitten and unable to move. Nar-Sian cultists are stunned altogether."
 	invocations = list("Divinity, dazzle...", "...those who tresspass here!")
 	channel_time = 50
-	required_components = list("hierophant_ansible" = 2)
-	consumed_components = list("hierophant_ansible" = 1)
+	required_components = list(HIEROPHANT_ANSIBLE = 2)
+	consumed_components = list(HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transgression
 	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-servant to cross it will be immobilized.</span>"

@@ -142,7 +142,7 @@ Credit where due:
 /datum/game_mode/clockwork_cult/proc/forge_clock_objectives() //Determine what objective that Ratvar's servants will fulfill
 	var/list/possible_objectives = list(CLOCKCULT_ESCAPE, CLOCKCULT_GATEWAY)
 	var/silicons_possible = FALSE
-	for(var/mob/living/silicon/S in living_mob_list)
+	for(var/mob/living/silicon/ai/S in living_mob_list)
 		silicons_possible = TRUE
 	if(silicons_possible)
 		possible_objectives += CLOCKCULT_SILICONS
@@ -154,7 +154,7 @@ Credit where due:
 		if(CLOCKCULT_GATEWAY)
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
 		if(CLOCKCULT_SILICONS)
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift."
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked."
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
@@ -206,19 +206,18 @@ Credit where due:
 		if(CLOCKCULT_SILICONS)
 			var/total_silicons = 0
 			var/valid_silicons = 0
-			var/successful = TRUE
-			for(var/mob/living/silicon/robot/S in mob_list) //Only check robots and AIs
-				total_silicons++
-				if(is_servant_of_ratvar(S) || S.stat == DEAD)
-					valid_silicons++
-			for(var/mob/living/silicon/ai/A in mob_list)
-				total_silicons++
-				if(is_servant_of_ratvar(A) || A.stat == DEAD)
-					valid_silicons++
-			if(valid_silicons < total_silicons)
-				successful = FALSE
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift.<br>\
-			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!</i>"
+			var/successful = FALSE
+			for(var/mob/living/silicon/S in mob_list) //Only check robots and AIs
+				if(isAI(S) || iscyborg(S))
+					total_silicons++
+					if(is_servant_of_ratvar(S) || S.stat == DEAD)
+						valid_silicons++
+			var/list/scripture_states = scripture_unlock_check()
+			if(valid_silicons >= total_silicons && scripture_states[SCRIPTURE_APPLICATION])
+				successful = TRUE
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar and Application scripture is unlocked.<br>\
+			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!<br>\
+			Application scripture was <b>[scripture_states[SCRIPTURE_APPLICATION] ? "UNLOCKED":"LOCKED"]</b></i>"
 			return successful
 		if(CLOCKCULT_GATEWAY)
 			return ratvar_awakens

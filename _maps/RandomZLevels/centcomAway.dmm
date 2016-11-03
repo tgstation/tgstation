@@ -4160,7 +4160,7 @@
 /obj/structure/safe/floor,
 /obj/item/clothing/under/rank/centcom_officer,
 /obj/item/clothing/suit/det_suit,
-/obj/item/weapon/gun/projectile/revolver/mateba,
+/obj/item/weapon/gun/ballistic/revolver/mateba,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "mR" = (

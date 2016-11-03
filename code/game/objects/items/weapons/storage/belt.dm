@@ -375,8 +375,8 @@
 	storage_slots = 3
 	max_w_class = 3
 	can_hold = list(
-		/obj/item/weapon/gun/projectile/automatic/pistol,
-		/obj/item/weapon/gun/projectile/revolver,
+		/obj/item/weapon/gun/ballistic/automatic/pistol,
+		/obj/item/weapon/gun/ballistic/revolver,
 		/obj/item/ammo_box,
 		)
 	alternate_worn_layer = UNDER_SUIT_LAYER

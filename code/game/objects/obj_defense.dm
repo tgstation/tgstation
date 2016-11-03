@@ -66,6 +66,8 @@
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180))
 
+/obj/proc/hulk_damage()
+	return 150 //the damage hulks do on punches to this object, is affected by melee armor
 
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
@@ -76,7 +78,7 @@
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		take_damage(150, BRUTE, "melee", 0, get_dir(src, user))
+		take_damage(hulk_damage(), BRUTE, "melee", 0, get_dir(src, user))
 		return 1
 	return 0
 

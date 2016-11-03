@@ -16,7 +16,6 @@
 		return 0
 
 	user.drop_item()
-	target.internal_organs += tool
 	tool.loc = target
 
 	var/datum/action/item_action/hands_free/activate_pill/P = new

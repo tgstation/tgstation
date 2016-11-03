@@ -28,7 +28,7 @@
 			return
 
 		if("bond") // 29 tc
-			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+			new /obj/item/weapon/gun/ballistic/automatic/pistol(src)
 			new /obj/item/weapon/suppressor(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
@@ -48,7 +48,7 @@
 			return
 
 		if("guns") // 28 tc now
-			new /obj/item/weapon/gun/projectile/revolver(src)
+			new /obj/item/weapon/gun/ballistic/revolver(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/weapon/card/emag(src)
@@ -113,7 +113,7 @@
 			return
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
-			new /obj/item/weapon/gun/projectile/automatic/sniper_rifle(src) // 12 tc
+			new /obj/item/weapon/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
 			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
@@ -123,7 +123,7 @@
 
 		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
-			new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
+			new /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/weapon/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
@@ -334,8 +334,3 @@
 	for(var/i in 1 to 3)
 		new/obj/item/cardboard_cutout/adaptive(src)
 	new/obj/item/toy/crayon/rainbow(src)
-
-/obj/item/weapon/storage/box/syndie_kit/bow/New()
-	..()
-	new/obj/item/weapon/gun/projectile/bow/hardlight(src)
-	new/obj/item/weapon/storage/backpack/quiver/hardlight(src)

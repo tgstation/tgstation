@@ -101,7 +101,7 @@
 				/obj/item/bodypart/r_leg/robot = 1,
 				/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/cable_coil = 5,
-				/obj/item/weapon/gun/energy/gun/advtaser = 1,
+				/obj/item/weapon/gun/energy/e_gun/advtaser = 1,
 				/obj/item/weapon/stock_parts/cell = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
@@ -245,7 +245,7 @@
 
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
-	result = /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
+	result = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised
 	reqs = list(/obj/item/weaponcrafting/reciever = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,

@@ -42,6 +42,7 @@
 	var/shards = 1
 	if(fulltile)
 		shards++
+		setDir()
 	var/rods = 0
 	if(reinf)
 		rods++
@@ -55,9 +56,9 @@
 
 
 /obj/structure/window/narsie_act()
-	color = NARSIE_WINDOW_COLOUR
+	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 	for(var/obj/item/weapon/shard/shard in debris)
-		shard.color = NARSIE_WINDOW_COLOUR
+		shard.add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/window/ratvar_act()
 	if(!fulltile)
@@ -73,11 +74,13 @@
 /obj/structure/window/setDir(direct)
 	if(!fulltile)
 		..()
+	else
+		..(FULLTILE_WINDOW_DIR)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+	if(dir == FULLTILE_WINDOW_DIR)
 		return 0	//full tile window, you can't move into it!
 	if(get_dir(loc, target) == dir)
 		return !density
@@ -250,7 +253,6 @@
 		return 0
 
 	setDir(turn(dir, 90))
-//	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(usr)
@@ -270,7 +272,6 @@
 		return 0
 
 	setDir(turn(dir, 270))
-//	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(usr)
@@ -302,7 +303,7 @@
 /obj/structure/window/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
-	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+	if(dir == FULLTILE_WINDOW_DIR)
 		return !density
 	return 1
 
@@ -341,7 +342,7 @@
 /obj/structure/window/CanAStarPass(ID, to_dir)
 	if(!density)
 		return 1
-	if((dir == SOUTHWEST) || (dir == to_dir))
+	if((dir == FULLTILE_WINDOW_DIR) || (dir == to_dir))
 		return 0
 
 	return 1
@@ -370,7 +371,7 @@
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window"
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -380,7 +381,7 @@
 /obj/structure/window/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -391,7 +392,7 @@
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	icon_state = "tinted_window"
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
@@ -411,7 +412,7 @@
 	desc = "A reinforced, air-locked pod window."
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	wtype = "shuttle"
 	fulltile = 1
@@ -425,7 +426,7 @@
 	glass_amount = 2
 
 /obj/structure/window/shuttle/narsie_act()
-	color = "#3C3434"
+	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE
@@ -437,6 +438,7 @@
 	icon_state = "clockwork_window_single"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 100
+	armor = list(melee = 60, bullet = 25, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
 	glass_type = /obj/item/stack/sheet/brass
 	glass_amount = 1
@@ -447,17 +449,19 @@
 	for(var/obj/item/I in debris)
 		debris -= I
 		qdel(I)
+	var/amount_of_gears = 2
 	if(!fulltile)
 		if(direct)
 			var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
 			setDir(direct)
 			E.setDir(direct)
 			made_glow = TRUE
-		debris += new/obj/item/stack/sheet/brass(src, 1)
 	else
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
 		made_glow = TRUE
-		debris += new/obj/item/stack/sheet/brass(src, 2)
+		amount_of_gears = 4
+	for(var/i in 1 to amount_of_gears)
+		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
 	change_construction_value(fulltile ? 2 : 1)
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
@@ -482,12 +486,14 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/structure/window/reinforced/clockwork/fulltile
 	icon_state = "clockwork_window"
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
-	dir = NORTHEAST
+	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 150
 	glass_amount = 2
+	made_glow = TRUE

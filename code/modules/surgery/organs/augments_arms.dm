@@ -167,7 +167,7 @@
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_taser"
 	origin_tech = "materials=5;combat=5;biotech=4;powerstorage=4"
-	holder = /obj/item/weapon/gun/energy/gun/advtaser/mounted
+	holder = /obj/item/weapon/gun/energy/e_gun/advtaser/mounted
 
 /obj/item/organ/cyberimp/arm/gun/taser/l
 	zone = "l_arm"

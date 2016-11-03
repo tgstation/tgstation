@@ -88,16 +88,14 @@
 		return 1
 
 
+/obj/mecha/hulk_damage()
+	return 15
 
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
-	if(user.a_intent == "harm")
+	. = ..()
+	if(.)
 		log_message("Attack by hulk. Attacker - [user].",1)
-		user.changeNext_move(CLICK_CD_MELEE)
 		add_logs(user, src, "punched", "hulk powers")
-		user.visible_message("<span class='danger'>[user] hits [name]. The metal creaks and bends.</span>", null, null, COMBAT_MESSAGE_RANGE)
-		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
-		take_damage(15, BRUTE, "melee", 0, get_dir(src, user))
-		return 1
 
 /obj/mecha/blob_act(obj/structure/blob/B)
 	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))

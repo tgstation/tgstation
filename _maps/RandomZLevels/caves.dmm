@@ -805,7 +805,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bG" = (
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold,
+/obj/item/weapon/gun/ballistic/automatic/pistol/deagle/gold,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},

@@ -8,6 +8,7 @@
 	inactive_icon = "tinkerers_daemon"
 	max_integrity = 100
 	obj_integrity = 100
+	construction_value = 25
 	break_message = "<span class='warning'>The daemon shatters into millions of pieces!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
 	/obj/item/clockwork/alloy_shards/medium = 4, \
@@ -31,7 +32,7 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(active)
 			if(component_id_to_produce)
-				user << "<span class='[get_component_span(component_id_to_produce)]_small'>It is currently producing [get_component_name(component_id_to_produce)][component_id_to_produce != "replicant_alloy" ? "s":""].</span>"
+				user << "<span class='[get_component_span(component_id_to_produce)]_small'>It is currently producing [get_component_name(component_id_to_produce)][component_id_to_produce != REPLICANT_ALLOY ? "s":""].</span>"
 			else
 				user << "<span class='brass'>It is currently producing random components.</span>"
 		user << "<span class='nezbere_small'>It will produce a component every <b>[production_cooldown*0.1]</b> seconds and requires at least the following power for each component type:</span>"

@@ -109,6 +109,8 @@
 	var/list/proselytize_values = target.proselytize_vals(user, src) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
 		if(proselytize_values != TRUE) //if we get true, fail, but don't send a message for whatever reason
+			if(!isturf(target)) //otherwise, if we didn't get TRUE and the original target wasn't a turf, try to proselytize the turf
+				return proselytize(get_turf(target), user)
 			user << "<span class='warning'>[target] cannot be proselytized!</span>"
 		return FALSE
 	if(can_use_alloy(RATVAR_ALLOY_CHECK))

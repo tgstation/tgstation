@@ -32,6 +32,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/structure/destructible/clockwork/examine(mob/user)
 	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
@@ -49,6 +50,9 @@
 			heavily_damaged = TRUE
 		if(can_see_clockwork)
 			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
+
+/obj/structure/destructible/clockwork/hulk_damage()
+	return 20
 
 
 //for the ark and Ratvar

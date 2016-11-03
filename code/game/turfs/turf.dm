@@ -15,7 +15,7 @@
 
 	flags = CAN_BE_DIRTY
 
-	var/list/proximity_checkers = list()
+	var/list/proximity_checkers
 
 	var/image/obscured	//camerachunks
 
@@ -172,7 +172,7 @@
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
 	var/list/total_gases = total.gases
-	var/turf_count = atmos_adjacent_turfs.len
+	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
 
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
@@ -332,18 +332,21 @@
 
 /turf/acid_act(acidpwr, acid_volume)
 	. = 1
+	var/acid_type = /obj/effect/acid
+	if(acidpwr >= 200) //alien acid power
+		acid_type = /obj/effect/acid/alien
 	var/has_acid_effect = 0
 	for(var/obj/O in src)
 		if(intact && O.level == 1) //hidden under the floor
 			continue
-		if(istype(O, /obj/effect/acid))
+		if(istype(O, acid_type))
 			var/obj/effect/acid/A = O
 			A.acid_level = min(A.level + acid_volume * acidpwr, 12000)//capping acid level to limit power of the acid
 			has_acid_effect = 1
 			continue
 		O.acid_act(acidpwr, acid_volume)
 	if(!has_acid_effect)
-		new /obj/effect/acid(src, acidpwr, acid_volume)
+		new acid_type(src, acidpwr, acid_volume)
 
 
 /turf/proc/acid_melt()
@@ -363,8 +366,9 @@
 		T.icon_state = icon_state
 	if(T.icon != icon)
 		T.icon = icon
-	if(T.color != color)
-		T.color = color
+	if(color)
+		T.atom_colours = atom_colours.Copy()
+		T.update_atom_colour()
 	if(T.dir != dir)
 		T.setDir(dir)
 	return T

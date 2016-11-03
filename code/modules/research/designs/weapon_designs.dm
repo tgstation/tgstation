@@ -39,7 +39,7 @@
 	req_tech = list("combat" = 5, "magnets" = 5, "powerstorage" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 3000, MAT_TITANIUM = 1000)
-	build_path = /obj/item/weapon/gun/energy/gun/nuclear
+	build_path = /obj/item/weapon/gun/energy/e_gun/nuclear
 	category = list("Weapons")
 
 /datum/design/tele_shield
@@ -260,22 +260,12 @@
 	build_path = /obj/item/weapon/gun/energy/gravity_gun
 	category = list("Weapons")
 
-/datum/design/hardquiver
-	name = "Hardlight Quiver"
-	desc = "An energy-infused quiver that recharges bolts for use in a hardlight bow."
-	id = "hardquiver"
-	req_tech = list("combat" = 5, "materials" = 6, "bluespace" = 2, "powerstorage" = 3, "magnets" = 5)
+/datum/design/largecrossbow
+	name = "Energy Crossbow"
+	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
+	id = "largecrossbow"
+	req_tech = list("combat" = 5, "engineering" = 3, "magnets" = 5, "syndicate" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 6000, MAT_GOLD = 7500, MAT_URANIUM = 3250, MAT_GLASS = 7000, MAT_METAL = 2500, MAT_DIAMOND = 1250, MAT_TITANIUM = 1000)
-	build_path = /obj/item/weapon/storage/backpack/quiver/hardlight
-	category = list("Weapons")
-
-/datum/design/hardbow
-	name = "Hardlight Bow"
-	desc = "A REAL energy bow. Who needs those rusty Syndicate energy bows that aren't even real?"
-	id = "hardbow"
-	req_tech = list("combat" = 5, "materials" = 6, "bluespace" = 2, "powerstorage" = 3, "magnets" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 3500, MAT_GOLD = 5750, MAT_URANIUM = 1250, MAT_GLASS = 3000, MAT_METAL =  3000, MAT_DIAMOND = 625, MAT_TITANIUM = 3500)	//HARDLIGHT CAN'T MELT TITANIUM BOWS.
-	build_path = /obj/item/weapon/gun/projectile/bow/hardlight
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	category = list("Weapons")

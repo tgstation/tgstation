@@ -174,35 +174,35 @@ var/highlander_claymores = 0
 		if(2)
 			user << "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the blade.</span>"
 			new_name = "double-notched claymore"
-			color = rgb(255, 235, 235)
+			add_atom_colour(rgb(255, 235, 235), ADMIN_COLOUR_PRIORITY)
 		if(3)
 			user << "<span class='notice'>You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b></span>"
 			new_name = "triple-notched claymore"
-			color = rgb(255, 215, 215)
+			add_atom_colour(rgb(255, 215, 215), ADMIN_COLOUR_PRIORITY)
 		if(4)
 			user << "<span class='notice'>You've lost count of</span> <span class='boldannounce'>how many you've killed.</span>"
 			new_name = "many-notched claymore"
-			color = rgb(255, 195, 195)
+			add_atom_colour(rgb(255, 195, 195), ADMIN_COLOUR_PRIORITY)
 		if(5)
 			user << "<span class='boldannounce'>Five voices now echo in your mind, cheering the slaughter.</span>"
 			new_name = "battle-tested claymore"
-			color = rgb(255, 175, 175)
+			add_atom_colour(rgb(255, 175, 175), ADMIN_COLOUR_PRIORITY)
 		if(6)
 			user << "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>"
 			new_name = "battle-scarred claymore"
-			color = rgb(255, 155, 155)
+			add_atom_colour(rgb(255, 155, 155), ADMIN_COLOUR_PRIORITY)
 		if(7)
 			user << "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>"
 			new_name = "vicious claymore"
-			color = rgb(255, 135, 135)
+			add_atom_colour(rgb(255, 135, 135), ADMIN_COLOUR_PRIORITY)
 		if(8)
 			user << "<span class='userdanger'>IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i></span>"
 			new_name = "bloodthirsty claymore"
-			color = rgb(255, 115, 115)
+			add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
 		if(9)
 			user << "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>"
 			new_name = "gore-stained claymore"
-			color = rgb(255, 95, 95)
+			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
 		if(10)
 			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
@@ -210,7 +210,7 @@ var/highlander_claymores = 0
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_valhalla"
 			item_state = "cultblade"
-			color = initial(color)
+			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 	name = new_name
 	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)

@@ -11,7 +11,7 @@
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/damage_per_tick = 2.5
+	var/damage_per_tick = 2.7
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
@@ -27,6 +27,9 @@
 /obj/structure/destructible/clockwork/ocular_warden/examine(mob/user)
 	..()
 	user << "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>"
+
+/obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
+	return 25
 
 /obj/structure/destructible/clockwork/ocular_warden/process()
 	var/list/validtargets = acquire_nearby_targets()
@@ -69,14 +72,15 @@
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
 		var/obj/item/weapon/storage/book/bible/B = L.bible_check()
-		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check() && !B)
-			. += L
-		else if(B)
+		if(B)
 			if(!(B.resistance_flags & ON_FIRE))
 				L << "<span class='warning'>Your [B.name] bursts into flames!</span>"
 			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
+		else if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !L.restrained() && !(L.buckled && (L.lying || istype(L.buckled, /obj/structure/destructible/clockwork/guvax_binding))) && \
+		!(L.disabilities & BLIND) && !L.null_rod_check())
+			. += L
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
 		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))

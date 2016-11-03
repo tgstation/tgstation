@@ -86,7 +86,8 @@
 		return
 	if(!istype(target) || isspaceturf(target))
 		return
-	target.color = "#" + item_color
+	var/newcolor = "#" + item_color
+	target.add_atom_colour(newcolor, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/weapon/paint/paint_remover
 	gender =  PLURAL
@@ -97,4 +98,4 @@
 	if(!proximity)
 		return
 	if(istype(target) && target.color != initial(target.color))
-		target.color = initial(target.color)
+		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
