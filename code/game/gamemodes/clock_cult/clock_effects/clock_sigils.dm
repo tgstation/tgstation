@@ -326,7 +326,8 @@
 				vitality -= vitality_used
 		sleep(2)
 
-	animation_number = initial(animation_number)
-	sigil_active = FALSE
-	animate(src, alpha = initial(alpha), time = 20)
-	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
+	if(sigil_active)
+		animation_number = initial(animation_number)
+		sigil_active = FALSE
+		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
+		animate(src, alpha = initial(alpha), time = 20)
