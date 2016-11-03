@@ -17,7 +17,7 @@
 "aq" = (/obj/machinery/computer/monitor,/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/open/floor/plating,/area/engine/engineering)
 "ar" = (/obj/structure/closet/secure_closet/engineering_welding,/turf/open/floor/plating,/area/engine/engineering)
 "as" = (/obj/machinery/power/smes{charge = 5e+006},/obj/machinery/airalarm{frequency = 1439; locked = 0; pixel_y = 23},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/open/floor/plasteel/warning{dir = 9},/area/engine/gravity_generator)
-"at" = (/obj/machinery/power/apc{dir = 1; name = "Gravity Generator APC"; pixel_x = 0; pixel_y = 25},/obj/structure/cable{icon_state = "0-8"; step_x = 0; step_y = 0; d2 = 8},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/open/floor/plasteel/warning{dir = 5},/area/engine/gravity_generator)
+"at" = (/obj/machinery/power/apc{dir = 1; name = "Gravity Generator APC"; pixel_x = 0; pixel_y = 25},/obj/structure/cable{icon_state = "0-8"; d2 = 8},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/open/floor/plasteel/warning{dir = 5},/area/engine/gravity_generator)
 "au" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/obj/structure/sign/securearea{desc = "A warning sign which reads 'RADIOACTIVE AREA'"; icon_state = "radiation"; name = "RADIOACTIVE AREA"; pixel_x = 0; pixel_y = 32},/turf/open/floor/plating,/area/engine/gravity_generator)
 "av" = (/turf/open/floor/plasteel/black,/area/engine/gravity_generator)
 "aw" = (/turf/open/floor/plating,/area/atmos)
