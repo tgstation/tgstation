@@ -858,6 +858,7 @@ var/list/ai_list = list()
 		apc.malfai = parent || src
 		apc.malfhack = TRUE
 		apc.locked = TRUE
+		apc.coverlocked = TRUE
 
 		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 		src << "Hack complete. \The [apc] is now under your \

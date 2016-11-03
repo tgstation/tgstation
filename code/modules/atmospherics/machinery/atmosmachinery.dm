@@ -216,11 +216,11 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
 	if(can_unwrench)
-		color = obj_color
+		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
 		stored.setDir(src.dir		  )//need to define them here, because the obj directions...
 		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
-		stored.color = obj_color
+		stored.add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
 	atmosinit()

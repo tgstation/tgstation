@@ -44,18 +44,18 @@ obj/item/weapon/gun/energy/laser/retro/sc_retro
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate sub-machine guns.
-/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
+/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r
 
-/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
+/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
 			magazine.stored_ammo -= ammo
 
 //Barman's shotgun
-/obj/item/weapon/gun/projectile/shotgun/sc_pump
+/obj/item/weapon/gun/ballistic/shotgun/sc_pump
 
-/obj/item/weapon/gun/projectile/shotgun/sc_pump/New()
+/obj/item/weapon/gun/ballistic/shotgun/sc_pump/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance

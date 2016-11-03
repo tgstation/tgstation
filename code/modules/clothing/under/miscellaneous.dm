@@ -540,6 +540,13 @@
 	item_color = "jester"
 	can_adjust = 0
 
+/obj/item/clothing/under/geisha
+	name = "geisha suit"
+	desc = "Cute space ninja senpai not included."
+	icon_state = "geisha"
+	item_color = "geisha"
+	can_adjust = 0
+
 /obj/item/clothing/under/plasmaman
 	name = "Plasma-man Jumpsuit"
 	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."

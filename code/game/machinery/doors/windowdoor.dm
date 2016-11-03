@@ -179,7 +179,7 @@
 	qdel(src)
 
 /obj/machinery/door/window/narsie_act()
-	color = "#7D1919"
+	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/ratvar_act()
 	new/obj/machinery/door/window/clockwork(src.loc, dir)
@@ -300,7 +300,7 @@
 	explosion_block = 1
 
 /obj/machinery/door/window/clockwork
-	name = "clockwork door"
+	name = "brass windoor"
 	desc = "A thin door with translucent brass paneling."
 	icon_state = "clockwork"
 	base_state = "clockwork"
@@ -311,7 +311,8 @@
 
 /obj/machinery/door/window/clockwork/New(loc, set_dir)
 	..()
-	debris += new/obj/item/stack/sheet/brass(src, 2)
+	for(var/i in 1 to 2)
+		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit/large(src)
 	change_construction_value(2)
 
 /obj/machinery/door/window/clockwork/setDir(direct)
@@ -337,6 +338,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))

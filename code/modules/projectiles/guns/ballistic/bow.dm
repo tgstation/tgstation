@@ -1,8 +1,12 @@
-/obj/item/weapon/gun/projectile/bow
+/obj/item/weapon/gun/ballistic/bow
 	name = "bow"
 	desc = "A sturdy bow made out of wood and reinforced with iron."
 	icon_state = "bow_unloaded"
 	item_state = "bow"
+	var/icon_state_loaded = "bow_loaded"
+	var/icon_state_firing = "bow_firing"
+	var/item_state_loaded = "bow"
+	var/item_state_firing = "bow"
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
 	flags = HANDSLOW
@@ -11,23 +15,27 @@
 	var/ready_to_fire = 0
 	var/slowdown_when_ready = 2
 
-/obj/item/weapon/gun/projectile/bow/update_icon()
-	if(magazine.ammo_count() && !ready_to_fire)
-		icon_state = "bow_loaded"
-	else if(ready_to_fire)
-		icon_state = "bow_firing"
+/obj/item/weapon/gun/ballistic/bow/update_icon()
+	if(ready_to_fire)
+		icon_state = icon_state_firing
+		item_state = item_state_firing
 		slowdown = slowdown_when_ready
+	else if(magazine.ammo_count() && !ready_to_fire)
+		icon_state = icon_state_loaded
+		item_state = item_state_loaded
+		slowdown = initial(slowdown)
 	else
 		icon_state = initial(icon_state)
+		item_state = initial(item_state)
 		slowdown = initial(slowdown)
 
-/obj/item/weapon/gun/projectile/bow/dropped(mob/user)
+/obj/item/weapon/gun/ballistic/bow/dropped(mob/user)
 	if(magazine && magazine.ammo_count())
 		magazine.empty_magazine()
 		ready_to_fire = FALSE
 		update_icon()
 
-/obj/item/weapon/gun/projectile/bow/attack_self(mob/living/user)
+/obj/item/weapon/gun/ballistic/bow/attack_self(mob/living/user)
 	if(!ready_to_fire && magazine.ammo_count())
 		ready_to_fire = TRUE
 		playsound(user, draw_sound, 100, 1)
@@ -36,22 +44,22 @@
 		ready_to_fire = FALSE
 		update_icon()
 
-/obj/item/weapon/gun/projectile/bow/attackby(obj/item/A, mob/user, params)
+/obj/item/weapon/gun/ballistic/bow/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You ready \the [A] into \the [src].</span>"
 		update_icon()
 		chamber_round()
 
-/obj/item/weapon/gun/projectile/bow/can_shoot()
+/obj/item/weapon/gun/ballistic/bow/can_shoot()
 	. = ..()
 	if(!ready_to_fire)
 		return FALSE
 
-/obj/item/weapon/gun/projectile/bow/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/weapon/gun/ballistic/bow/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	return
 
-/obj/item/weapon/gun/projectile/bow/process_chamber(eject_casing = 0, empty_chamber = 1)
+/obj/item/weapon/gun/ballistic/bow/process_chamber(eject_casing = 0, empty_chamber = 1)
 	. = ..()
 	ready_to_fire = FALSE
 	update_icon()

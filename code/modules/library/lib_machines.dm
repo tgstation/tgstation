@@ -410,10 +410,14 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
 	if(href_list["orderbyid"])
-		var/orderid = input("Enter your order:") as num|null
-		if(orderid)
-			if(isnum(orderid) && IsInteger(orderid))
-				href_list["targetid"] = orderid
+		if(bibledelay)
+			say("Printer unavailable. Please allow a short time before attempting to print.")
+		else
+			var/orderid = input("Enter your order:") as num|null
+			if(orderid)
+				if(isnum(orderid) && IsInteger(orderid))
+					href_list["targetid"] = num2text(orderid)
+
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
 		establish_db_connection()
@@ -432,17 +436,17 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				var/author = query.item[2]
 				var/title = query.item[3]
 				var/content = query.item[4]
-				var/obj/item/weapon/book/B = new(src.loc)
+				var/obj/item/weapon/book/B = new(get_turf(src))
 				B.name = "Book: [title]"
 				B.title = title
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,8)]"
-				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
+
+	add_fingerprint(usr)
+	updateUsrDialog()
 
 /*
  * Library Scanner

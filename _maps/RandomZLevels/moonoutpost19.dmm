@@ -254,7 +254,7 @@
 	item_state = "facehugger_impregnated";
 	stat = 2
 	},
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -8748,7 +8748,7 @@
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains. The skeleton is sitting upright with its legs tucked in and hands still holding onto its arms."
 	},
-/obj/item/weapon/gun/projectile/shotgun/sc_pump,
+/obj/item/weapon/gun/ballistic/shotgun/sc_pump,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
 	temperature = 273.15

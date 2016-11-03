@@ -43,7 +43,7 @@
 
 /turf/open/space/AfterChange()
 	..()
-	atmos_overlay_types.Cut()
+	atmos_overlay_types = null
 
 /turf/open/space/Assimilate_Air()
 	return

@@ -1091,7 +1091,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/mine/laborcamp)
 "dp" = (
-/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/chair{
 	dir = 8
 	},

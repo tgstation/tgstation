@@ -9,7 +9,7 @@
 	var/damtype = "brute"
 	var/force = 0
 
-	var/list/armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	var/list/armor
 	var/obj_integrity = 500
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior
@@ -29,7 +29,8 @@
 
 /obj/New()
 	..()
-
+	if (!armor)
+		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	if(on_blueprints && isturf(loc))
 		var/turf/T = loc
 		if(force_blueprints)

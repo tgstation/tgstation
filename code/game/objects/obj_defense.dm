@@ -66,17 +66,19 @@
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180))
 
+/obj/proc/hulk_damage()
+	return 150 //the damage hulks do on punches to this object, is affected by melee armor
 
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
 		..(user, 1)
-		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE, user)
+		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		if(density)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		take_damage(150, BRUTE, "melee", 0, get_dir(src, user))
+		take_damage(hulk_damage(), BRUTE, "melee", 0, get_dir(src, user))
 		return 1
 	return 0
 
@@ -134,7 +136,7 @@
 				return 0
 			else
 				return 0
-	visible_message("<span class='danger'>[M.name] has hit [src].</span>", null, null, COMBAT_MESSAGE_RANGE, M.occupant)
+	visible_message("<span class='danger'>[M.name] has hit [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()

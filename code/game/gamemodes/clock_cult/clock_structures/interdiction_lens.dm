@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/powered/interdiction_lens
 	name = "interdiction lens"
 	desc = "An ominous, double-pronged brass totem. There's a strange gemstone clasped between the pincers."
-	clockwork_desc = "A powerful totem that constantly drains nearby electronics and funnels the power drained into nearby Sigils of Transmission."
+	clockwork_desc = "A powerful totem that constantly drains nearby electronics and funnels the power drained into nearby Sigils of Transmission or the area's APC."
 	icon_state = "interdiction_lens"
 	construction_value = 25
 	active_icon = "interdiction_lens_active"
@@ -36,6 +36,7 @@
 		toggle(0, user)
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/process()
+	. = ..()
 	if(recharging > world.time)
 		return
 	if(disabled)
@@ -56,7 +57,7 @@
 
 		for(var/M in atoms_to_test)
 			var/atom/movable/A = M
-			if(!A || qdeleted(A))
+			if(!A || qdeleted(A) || A == target_apc)
 				continue
 			power_drained += A.power_drain(TRUE)
 

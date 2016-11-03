@@ -43,7 +43,7 @@
 
 	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns
 
-	var/obj/item/device/flashlight/F = null
+	var/obj/item/device/flashlight/gun_light = null
 	var/can_flashlight = 0
 
 	var/list/upgrades = list()
@@ -64,7 +64,7 @@
 	..()
 	if(pin)
 		pin = new pin(src)
-	if(F)
+	if(gun_light)
 		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
 		new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
@@ -89,7 +89,7 @@
 	if(unique_reskin && !current_skin)
 		user << "<span class='notice'>Alt-click it to reskin it.</span>"
 
-
+//called after the gun has successfully fired its chambered ammo.
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
 
@@ -115,9 +115,9 @@
 		playsound(user, fire_sound, 50, 1)
 		if(message)
 			if(pointblank)
-				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE, user)
+				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 			else
-				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE, user)
+				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
 	if(weapon_weight >= WEAPON_MEDIUM)
 		if(user.get_inactive_held_item())
@@ -146,7 +146,7 @@
 		if(!can_trigger_gun(L))
 			return
 
-	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can't shoot.
+	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
 		return
 
@@ -192,7 +192,7 @@
 		user << "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>"
 	return 0
 
-obj/item/weapon/gun/proc/newshot()
+obj/item/weapon/gun/proc/recharge_newshot()
 	return
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
@@ -215,13 +215,14 @@ obj/item/weapon/gun/proc/newshot()
 			if(!issilicon(user))
 				if( i>1 && !(user.is_holding(src))) //for burst firing
 					break
-			if(chambered)
+			if(chambered && chambered.BB)
 				var/sprd = 0
 				if(randomspread)
 					sprd = round((rand() - 0.5) * spread)
 				else //Smart spread
 					sprd = round((i / burst_size - 0.5) * spread)
-				if(!chambered.fire(target, user, params, ,suppressed, zone_override, sprd))
+
+				if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
 					break
 				else
@@ -238,7 +239,7 @@ obj/item/weapon/gun/proc/newshot()
 		firing_burst = 0
 	else
 		if(chambered)
-			if(!chambered.fire(target, user, params, , suppressed, zone_override, spread))
+			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, spread))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -266,16 +267,16 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 /obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/flashlight/seclite))
-		var/obj/item/device/flashlight/seclite/S = I
-		if(can_flashlight)
-			if(!F)
+	if(can_flashlight)
+		if(istype(I, /obj/item/device/flashlight/seclite))
+			var/obj/item/device/flashlight/seclite/S = I
+			if(!gun_light)
 				if(!user.unEquip(I))
 					return
 				user << "<span class='notice'>You click [S] into place on [src].</span>"
 				if(S.on)
 					SetLuminosity(0)
-				F = S
+				gun_light = S
 				I.loc = src
 				update_icon()
 				update_gunlight(user)
@@ -284,18 +285,18 @@ obj/item/weapon/gun/proc/newshot()
 				if(loc == user)
 					A.Grant(user)
 
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(F && can_flashlight)
-			for(var/obj/item/device/flashlight/seclite/S in src)
-				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
-				F = null
-				S.loc = get_turf(user)
-				update_gunlight(user)
-				S.update_brightness(user)
-				update_icon()
-				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
-			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
-				qdel(TGL)
+		if(istype(I, /obj/item/weapon/screwdriver))
+			if(gun_light)
+				for(var/obj/item/device/flashlight/seclite/S in src)
+					user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+					gun_light = null
+					S.forceMove(get_turf(user))
+					update_gunlight(user)
+					S.update_brightness(user)
+					update_icon()
+					verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
+				for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
+					qdel(TGL)
 
 
 
@@ -304,27 +305,27 @@ obj/item/weapon/gun/proc/newshot()
 	set category = "Object"
 	set desc = "Click to toggle your weapon's attached flashlight."
 
-	if(!F)
+	if(!gun_light)
 		return
 
 	var/mob/living/carbon/human/user = usr
-	F.on = !F.on
-	user << "<span class='notice'>You toggle the gunlight [F.on ? "on":"off"].</span>"
+	gun_light.on = !gun_light.on
+	user << "<span class='notice'>You toggle the gunlight [gun_light.on ? "on":"off"].</span>"
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_gunlight(user)
 	return
 
 /obj/item/weapon/gun/proc/update_gunlight(mob/user = null)
-	if(F)
-		if(F.on)
+	if(gun_light)
+		if(gun_light.on)
 			if(loc == user)
-				user.AddLuminosity(F.brightness_on)
+				user.AddLuminosity(gun_light.brightness_on)
 			else if(isturf(loc))
-				SetLuminosity(F.brightness_on)
+				SetLuminosity(gun_light.brightness_on)
 		else
 			if(loc == user)
-				user.AddLuminosity(-F.brightness_on)
+				user.AddLuminosity(-gun_light.brightness_on)
 			else if(isturf(loc))
 				SetLuminosity(0)
 		update_icon()
@@ -340,19 +341,19 @@ obj/item/weapon/gun/proc/newshot()
 
 /obj/item/weapon/gun/pickup(mob/user)
 	..()
-	if(F)
-		if(F.on)
-			user.AddLuminosity(F.brightness_on)
+	if(gun_light)
+		if(gun_light.on)
+			user.AddLuminosity(gun_light.brightness_on)
 			SetLuminosity(0)
 	if(azoom)
 		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
 	..()
-	if(F)
-		if(F.on)
-			user.AddLuminosity(-F.brightness_on)
-			SetLuminosity(F.brightness_on)
+	if(gun_light)
+		if(gun_light.on)
+			user.AddLuminosity(-gun_light.brightness_on)
+			SetLuminosity(gun_light.brightness_on)
 	zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)

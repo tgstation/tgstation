@@ -182,12 +182,12 @@
 		if(PTURRET_GUN_EQUIPPED)
 			build_step = PTURRET_INTERNAL_ARMOUR_ON
 
-			var/obj/item/weapon/gun/energy/Gun = new installation(loc)
-			Gun.power_supply.charge = gun_charge
-			Gun.update_icon()
+			var/obj/item/weapon/gun/energy/EG = new installation(loc)
+			EG.power_supply.charge = gun_charge
+			EG.update_icon()
 			installation = null
 			gun_charge = 0
-			user << "<span class='notice'>You remove [Gun] from the turret frame.</span>"
+			user << "<span class='notice'>You remove [EG] from the turret frame.</span>"
 
 		if(PTURRET_SENSORS_ON)
 			user << "<span class='notice'>You remove the prox sensor from the turret frame.</span>"

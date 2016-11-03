@@ -31,21 +31,20 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/cache/process()
-	for(var/turf/closed/wall/clockwork/C in view(4, src))
+	for(var/turf/closed/wall/clockwork/C in range(4, src))
 		if(!C.linkedcache && !linkedwall)
 			C.linkedcache = src
 			linkedwall = C
 			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			visible_message("<span class='warning'>[src] starts to whirr in the presence of [C]...</span>")
 			break
-		if(linkedwall && wall_generation_cooldown <= world.time)
-			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
-			var/component_to_generate = get_weighted_component_id()
-			PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
-			clockwork_component_cache[component_to_generate]++
-			playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
-			visible_message("<span class='warning'>Something clunks around inside of [src]...</span>")
-			break
+	if(linkedwall && wall_generation_cooldown <= world.time)
+		wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+		var/component_to_generate = get_weighted_component_id()
+		PoolOrNew(get_component_animation_type(component_to_generate), get_turf(src))
+		clockwork_component_cache[component_to_generate]++
+		playsound(linkedwall, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
+		visible_message("<span class='warning'>Something cl[pick("ank", "ink", "unk", "ang")]s around inside of [src]...</span>")
 
 /obj/structure/destructible/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
 	if(!is_servant_of_ratvar(user))
@@ -70,10 +69,10 @@
 /obj/structure/destructible/clockwork/cache/attack_hand(mob/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	if(!clockwork_component_cache["replicant_alloy"])
+	if(!clockwork_component_cache[REPLICANT_ALLOY])
 		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
 		return 0
-	clockwork_component_cache["replicant_alloy"]--
+	clockwork_component_cache[REPLICANT_ALLOY]--
 	var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
 	user.visible_message("<span class='notice'>[user] withdraws [A] from [src].</span>", "<span class='notice'>You withdraw [A] from [src].</span>")
 	user.put_in_hands(A)
@@ -86,4 +85,4 @@
 			user << "<span class='brass'>It is linked and will generate components!</span>"
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
-			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != "replicant_alloy" ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"
+			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>"

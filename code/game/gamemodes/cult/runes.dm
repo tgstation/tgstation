@@ -151,8 +151,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>The markings pulse with a \
 		small flash of red light, then fall dark.</span>")
 	spawn(0) //animate is a delay, we want to avoid being delayed
-		animate(src, color = rgb(255, 0, 0), time = 0)
-		animate(src, color = initial(color), time = 5)
+		var/oldcolor = color
+		color = rgb(255, 0, 0)
+		animate(src, color = oldcolor, time = 5)
+		addtimer(src, "update_atom_colour", 5)
 
 //Malformed Rune: This forms if a rune is not drawn correctly. Invoking it does nothing but hurt the user.
 /obj/effect/rune/malformed
@@ -354,6 +356,7 @@ var/list/teleport_runes = list()
 		return
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
+	var/oldcolor = color
 	color = "#7D1717"
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
@@ -372,7 +375,8 @@ var/list/teleport_runes = list()
 		invocation = "Barhah hra zar'garis!"
 		..()
 		do_sacrifice(L, invokers)
-	animate(src, color = initial(color), time = 5)
+	animate(src, color = oldcolor, time = 5)
+	addtimer(src, "update_atom_colour", 5)
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
@@ -774,8 +778,10 @@ var/list/wall_runes = list()
 		recharging = TRUE
 		density = FALSE
 		update_state()
+		var/oldcolor = color
 		color = "#696969"
-		animate(src, color = initial(color), time = 50, easing = EASE_IN)
+		animate(src, oldcolor, time = 50, easing = EASE_IN)
+		addtimer(src, "update_atom_colour", 50)
 		addtimer(src, "recharge", 50)
 
 /obj/effect/rune/wall/proc/recharge()

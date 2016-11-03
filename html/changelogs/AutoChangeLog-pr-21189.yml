@@ -1,4 +1,0 @@
-author: "Gun Hog"
-delete-after: True
-changes: 
-  - bugfix: "Fixed AIs uploaded to mechs having their camera view stuck to their card."
