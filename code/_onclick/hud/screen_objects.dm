@@ -277,19 +277,16 @@
 	icon_state = "running"
 
 /obj/screen/mov_intent/Click()
-	toggle(usr)
-
-/obj/screen/mov_intent/proc/toggle(mob/user)
-	if(isobserver(user))
+	if(isobserver(usr))
 		return
-	switch(user.m_intent)
+	switch(usr.m_intent)
 		if("run")
-			user.m_intent = "walk"
+			usr.m_intent = "walk"
 			icon_state = "walking"
 		if("walk")
-			user.m_intent = "run"
+			usr.m_intent = "run"
 			icon_state = "running"
-	user.update_icons()
+	usr.update_icons()
 
 /obj/screen/pull
 	name = "stop pulling"
@@ -355,63 +352,55 @@
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
 		return
-
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
-	var/choice
+	var/old_selecting = selecting //We're only going to update_icon() if there's been a change
 
 	switch(icon_y)
 		if(1 to 9) //Legs
 			switch(icon_x)
 				if(10 to 15)
-					choice = "r_leg"
+					selecting = "r_leg"
 				if(17 to 22)
-					choice = "l_leg"
+					selecting = "l_leg"
 				else
 					return 1
 		if(10 to 13) //Hands and groin
 			switch(icon_x)
 				if(8 to 11)
-					choice = "r_arm"
+					selecting = "r_arm"
 				if(12 to 20)
-					choice = "groin"
+					selecting = "groin"
 				if(21 to 24)
-					choice = "l_arm"
+					selecting = "l_arm"
 				else
 					return 1
 		if(14 to 22) //Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
-					choice = "r_arm"
+					selecting = "r_arm"
 				if(12 to 20)
-					choice = "chest"
+					selecting = "chest"
 				if(21 to 24)
-					choice = "l_arm"
+					selecting = "l_arm"
 				else
 					return 1
 		if(23 to 30) //Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
-				choice = "head"
+				selecting = "head"
 				switch(icon_y)
 					if(23 to 24)
 						if(icon_x in 15 to 17)
-							choice = "mouth"
+							selecting = "mouth"
 					if(26) //Eyeline, eyes are on 15 and 17
 						if(icon_x in 14 to 18)
-							choice = "eyes"
+							selecting = "eyes"
 					if(25 to 27)
 						if(icon_x in 15 to 17)
-							choice = "eyes"
+							selecting = "eyes"
 
-	return set_selected_zone(choice, usr)
-
-/obj/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
-	if(isobserver(user))
-		return
-
-	if(choice != selecting)
-		selecting = choice
+	if(old_selecting != selecting)
 		update_icon(usr)
 	return 1
 
