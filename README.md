@@ -110,7 +110,7 @@ Anytime you want to make changes to a map it's imperative you use the [Map Mergi
 
 Map files for away missions are located in the _maps/RandomZLevels directory. Each away mission includes it's own code definitions located in /code/modules/awaymissions/mission_code. These files must be included and compiled with the server beforehand otherwise the server will crash upon trying to load away missions that lack their code.
 
-To enable an away mission open fileList.txt in the _maps/RandomZLevels directory and uncomment one of the .dmm lines by removing the #. If more than one away mission is uncommented then the away mission loader will randomly select one the enabled ones to load.
+To enable an away mission open `config/awaymissionconfig.txt` and uncomment one of the .dmm lines by removing the #. If more than one away mission is uncommented then the away mission loader will randomly select one the enabled ones to load.
 
 ##SQL SETUP
 
