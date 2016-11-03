@@ -86,7 +86,8 @@
 	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
 				  	"<span class='userdanger'>[A] slams your chest! You can't breathe!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.losebreath = Clamp(D.losebreath + 5, 0, 10)
+	if(D.losebreath <= 10)
+		D.losebreath = Clamp(D.losebreath + 5, 0, 10)
 	D.adjustOxyLoss(10)
 	add_logs(A, D, "quickchoked")
 	return 1
@@ -96,7 +97,8 @@
 				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
-	D.silent = Clamp(D.silent + 10, 0, 10)
+	if(D.silent <= 10)
+		D.silent = Clamp(D.silent + 10, 0, 10)
 	add_logs(A, D, "neck chopped")
 	return 1
 
