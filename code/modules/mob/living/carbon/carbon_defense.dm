@@ -228,6 +228,7 @@ mob/living/carbon/bullet_act(obj/item/projectile/P, def_zone)
 		if(resting)
 			resting = 0
 			update_canmove()
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
