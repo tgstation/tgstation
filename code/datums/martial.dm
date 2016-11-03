@@ -461,8 +461,6 @@
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(restraining)
-		if(A.grab_state < GRAB_NECK)
-			A.grab_state = GRAB_NECK
 		return
 	if(!D.stat)
 		D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
@@ -498,8 +496,6 @@
 			D.stop_pulling()
 			add_logs(A, D, "grabbed", addition="aggressively")
 			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
-			if(!A.pulling)
-				restraining = 0
 
 	return 1
 
@@ -556,6 +552,8 @@
 							"<span class='userdanger'>[A] puts you into a chokehold!</span>")
 		D.SetSleeping(20)
 		restraining = 0
+		if(A.grab_state < GRAB_NECK)
+			A.grab_state = GRAB_NECK
 	else
 		restraining = 0
 		return 0
