@@ -52,57 +52,7 @@
 
 /datum/clockwork_scripture/ark_of_the_clockwork_justiciar/scripture_effects()
 	var/turf/T = get_turf(invoker)
-	new/obj/effect/clockwork/general_marker/inathneq(T)
-	if(ticker && ticker.mode && ticker.mode.clockwork_objective == CLOCKCULT_GATEWAY)
-		T.visible_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and show your servants your mercy!")]\"</span>")
-	else
-		T.visible_message("<span class='inathneq'>\"[text2ratvar("We will show all the mercy of Engine!")]\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
-	sleep(10)
-	if(!check_special_requirements())
-		return FALSE
-	new/obj/effect/clockwork/general_marker/sevtug(T)
-	if(ticker && ticker.mode && ticker.mode.clockwork_objective == CLOCKCULT_GATEWAY)
-		T.visible_message("<span class='sevtug'>\"[text2ratvar("Engine, come forth and show this station your decorating skills!")]\"</span>")
-	else
-		T.visible_message("<span class='sevtug'>\"[text2ratvar("We will show all Engine's decorating skills.")]\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 45, 0)
-	sleep(10)
-	if(!check_special_requirements())
-		return FALSE
-	new/obj/effect/clockwork/general_marker/nezbere(T)
-	if(ticker && ticker.mode && ticker.mode.clockwork_objective == CLOCKCULT_GATEWAY)
-		T.visible_message("<span class='nezbere'>\"[text2ratvar("Engine, come forth and shine your light across this realm!!")]\"</span>")
-	else
-		T.visible_message("<span class='nezbere'>\"[text2ratvar("We will show all Engine's light!!")]\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 60, 0)
-	sleep(10)
-	if(!check_special_requirements())
-		return FALSE
-	new/obj/effect/clockwork/general_marker/nzcrentr(T)
-	if(ticker && ticker.mode && ticker.mode.clockwork_objective == CLOCKCULT_GATEWAY)
-		T.visible_message("<span class='nzcrentr'>\"[text2ratvar("Engine, come forth.")]\"</span>")
-	else
-		T.visible_message("<span class='nezbere'>\"[text2ratvar("We will show all Engine's power!")]\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
-	sleep(10)
-	if(check_special_requirements())
-		var/obj/structure/destructible/clockwork/massive/celestial_gateway/CG = new/obj/structure/destructible/clockwork/massive/celestial_gateway(T)
-		if(ticker && ticker.mode && ticker.mode.clockwork_objective != CLOCKCULT_GATEWAY)
-			CG.ratvar_portal = FALSE
-			hierophant_message("<span class='big_brass'>This newly constructed gateway will not free Ratvar, \
-			and will instead simply proselytize and convert everything and everyone on the station.</span>", TRUE)
-		playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
-		var/list/open_turfs = list()
-		for(var/turf/open/OT in orange(1, T))
-			var/list/dense_objects = list()
-			for(var/obj/O in OT)
-				if(O.density && !O.CanPass(invoker, OT, 5))
-					dense_objects |= O
-			if(!dense_objects.len)
-				open_turfs |= OT
-		if(open_turfs.len)
-			for(var/mob/living/L in T)
-				L.forceMove(pick(open_turfs)) //shove living mobs off of the gate's new location
+	if(T)
+		new/obj/structure/destructible/clockwork/massive/celestial_gateway(T)
 		return TRUE
 	return FALSE
