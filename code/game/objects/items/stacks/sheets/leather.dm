@@ -60,7 +60,7 @@ var/global/list/datum/stack_recipe/monkey_recipes = list ( \
 
 /obj/item/stack/sheet/animalhide/lizard
 	name = "lizard skin"
-	desc = "Extremely valuable lizard hide. People kill for this stuff. Especially valued if colored blue, or has a footlike-odor."
+	desc = "Extremely valuable lizard hide. Smells like stinky feet. Legend has it the blue skin is the most valuable."
 	singular_name = "lizard skin piece"
 	icon_state = "sheet-lizard"
 	
