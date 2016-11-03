@@ -77,6 +77,15 @@
 	return ..()
 
 
+/datum/export/organ/lizard
+	contraband = TRUE
+	include_subtypes = FALSE
+	
+/datum/export/organ/lizard/skin
+	cost = 1000 //lizard hide costs a pretty penny
+	unit_name = "lizard hide"
+	export_types = list(/obj/item/stack/sheet/animalhide/lizard)
+
 // Human organs.
 
 // Do not put human brains here, they are not sellable for a purpose.
