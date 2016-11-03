@@ -55,11 +55,6 @@
 		user << "<span class='inathneq_small'>It requires at least <b>[MIN_CLOCKCULT_POWER]W</b> to attempt to repair clockwork mobs, structures, or converted silicons.</span>"
 
 /obj/structure/destructible/clockwork/powered/mending_motor/process()
-	. = ..()
-	if(. < MIN_CLOCKCULT_POWER)
-		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
-		toggle()
-		return
 	for(var/atom/movable/M in range(7, src))
 		var/turf/T
 		if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
@@ -111,6 +106,11 @@
 				else
 					S << "<span class='inathneq'>\"[text2ratvar(pick(heal_finish_messages))]\"</span>"
 					break
+	. = ..()
+	if(. < MIN_CLOCKCULT_POWER)
+		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
+		toggle()
+		return
 
 /obj/structure/destructible/clockwork/powered/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE))
