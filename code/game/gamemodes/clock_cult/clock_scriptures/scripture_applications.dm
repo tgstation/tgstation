@@ -46,7 +46,7 @@
 	descname = "Guardian"
 	name = "Memory Allocation"
 	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilent fighter that lives within you, able to be \
-	called forth by Speaking its True Name or if you become exceptionally low on health.<br> \
+	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
 	It gains Fatigue as it is attacked, weakening it. Marauders cannot move too far from their hosts, \
 	and will gain Fatigue at an increasing rate as they grow farther away. At maximum Fatigue, the marauder is forced to return to you and will be unable to manifest until its Fatigue is at zero."
 	invocations = list("Fright's will...", "...call forth...")
@@ -71,7 +71,7 @@
 	invoker.visible_message("<span class='warning'>A yellow tendril appears from [invoker]'s [slab.name] and impales itself in [invoker.p_their()] forehead!</span>", \
 	"<span class='heavy_brass'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
 	invoker.notransform = TRUE //Vulnerable during the process
-	slab.busy = "Thought modification in process"
+	slab.busy = "Thought Modification in progress"
 	if(!do_after(invoker, 50, target = invoker))
 		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
 		"<span class='heavy_brass'>Total agony overcomes you as the tendril is forced out early!</span>")
@@ -83,7 +83,7 @@
 		return FALSE
 	clockwork_say(invoker, text2ratvar("...the mind made..."))
 	invoker.notransform = FALSE
-	slab.busy = null
+	slab.busy = "Marauder Selection in progress"
 	if(!check_special_requirements())
 		return FALSE
 	invoker << "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>"

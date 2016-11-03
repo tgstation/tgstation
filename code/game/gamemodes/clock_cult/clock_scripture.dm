@@ -92,7 +92,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			return FALSE
 	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
-		for(var/mob/living/L in range(1, invoker))
+		for(var/mob/living/L in range(1, get_turf(invoker)))
 			if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 				nearby_servants++
 		if(nearby_servants < invokers_required)
@@ -121,7 +121,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			slab.busy = null
 			return FALSE
 		if(multiple_invokers_used)
-			for(var/mob/living/L in range(1, invoker))
+			for(var/mob/living/L in range(1, get_turf(invoker)))
 				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 					clockwork_say(L, text2ratvar(invocation), whispered)
 		else
