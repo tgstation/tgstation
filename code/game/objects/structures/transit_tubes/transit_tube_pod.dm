@@ -214,8 +214,3 @@
 					if(TT.has_exit(direction))
 						setDir(direction)
 						return
-
-#undef STATION_TUBE_OPEN
-#undef STATION_TUBE_OPENING
-#undef STATION_TUBE_CLOSED
-#undef STATION_TUBE_CLOSING

@@ -3,10 +3,6 @@
 // Mappers: use "Generate Instances from Directions" for this
 //  one.
 
-#define STATION_TUBE_OPEN		0
-#define STATION_TUBE_OPENING	1
-#define STATION_TUBE_CLOSED		2
-#define STATION_TUBE_CLOSING	3
 
 /obj/structure/transit_tube/station
 	name = "station tube station"

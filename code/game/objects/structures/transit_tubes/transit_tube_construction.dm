@@ -4,7 +4,7 @@
 /obj/structure/c_transit_tube
 	name = "unattached transit tube"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
-	icon_state = "straight" //icon_state decides which tube will be built
+	icon_state = "straight"
 	density = 0
 	layer = LOW_ITEM_LAYER //same as the built tube
 	anchored = 0
@@ -23,9 +23,7 @@
 /obj/structure/c_transit_tube/proc/tube_flip()
 	if(flipped_build_type)
 		flipped = !flipped
-		var/cur_flip = flipped
-		if(initial(flipped))
-			cur_flip = !cur_flip
+		var/cur_flip = initial(flipped) ? !flipped : flipped
 		if(cur_flip)
 			build_type = flipped_build_type
 		else
@@ -52,8 +50,7 @@
 		return
 	if(!in_range(src, user))
 		return
-	else
-		tube_rotate()
+	tube_rotate()
 
 /obj/structure/c_transit_tube/verb/flip()
 	set name = "Flip"
@@ -118,6 +115,10 @@
 /obj/structure/c_transit_tube/diagonal
 	icon_state = "diagonal"
 	build_type = /obj/structure/transit_tube/diagonal
+
+/obj/structure/c_transit_tube/diagonal/crossing
+	icon_state = "diagonal_crossing"
+	build_type = /obj/structure/transit_tube/diagonal/crossing
 
 
 /obj/structure/c_transit_tube/curved

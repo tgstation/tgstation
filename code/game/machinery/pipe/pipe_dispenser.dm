@@ -195,15 +195,16 @@ Nah
 		return 1
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
-<A href='?src=\ref[src];tube=0'>Straight Tube</A><BR>
-<A href='?src=\ref[src];tube=1'>Straight Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=2'>Curved Tube</A><BR>
-<A href='?src=\ref[src];tube=3'>Diagonal Tube</A><BR>
-<A href='?src=\ref[src];tube=4'>Junction</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
 <b>Station Equipment:</b><BR>
-<A href='?src=\ref[src];tube=5'>Through Tube Station</A><BR>
-<A href='?src=\ref[src];tube=6'>Terminus Tube Station</A><BR>
-<A href='?src=\ref[src];tube=7'>Transit Tube Pod</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
+<A href='?src=\ref[src];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -220,21 +221,23 @@ Nah
 			var/tube_type = text2num(href_list["tube"])
 			var/obj/structure/C
 			switch(tube_type)
-				if(0)
+				if(TRANSIT_TUBE_STRAIGHT)
 					C = new /obj/structure/c_transit_tube(loc)
-				if(1)
+				if(TRANSIT_TUBE_STRAIGHT_CROSSING)
 					C = new /obj/structure/c_transit_tube/crossing(loc)
-				if(2)
+				if(TRANSIT_TUBE_CURVED)
 					C = new /obj/structure/c_transit_tube/curved(loc)
-				if(3)
+				if(TRANSIT_TUBE_DIAGONAL)
 					C = new /obj/structure/c_transit_tube/diagonal(loc)
-				if(4)
+				if(TRANSIT_TUBE_DIAGONAL_CROSSING)
+					C = new /obj/structure/c_transit_tube/diagonal/crossing(loc)
+				if(TRANSIT_TUBE_JUNCTION)
 					C = new /obj/structure/c_transit_tube/junction(loc)
-				if(5)
+				if(TRANSIT_TUBE_STATION)
 					C = new /obj/structure/c_transit_tube/station(loc)
-				if(6)
+				if(TRANSIT_TUBE_TERMINUS)
 					C = new /obj/structure/c_transit_tube/station/reverse(loc)
-				if(7)
+				if(TRANSIT_TUBE_POD)
 					C = new /obj/structure/c_transit_tube_pod(loc)
 			if(C)
 				C.add_fingerprint(usr)

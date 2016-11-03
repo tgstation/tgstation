@@ -22,7 +22,7 @@
 	if(newdirection)
 		setDir(newdirection)
 	init_tube_dirs()
-	generate_decorative_tubes()
+	generate_tube_overlays()
 
 /obj/structure/transit_tube/Destroy()
 	for(var/obj/structure/transit_tube_pod/P in loc)
@@ -115,11 +115,6 @@
 	return enter_delay
 
 
-// Parse the icon_state into a list of directions.
-// This means that mappers can use Dream Maker's built in
-//  "Generate Instances from Icon-states" option to get all
-//  variations. Additionally, as a separate proc, sub-types
-//  can handle it more intelligently.
 /obj/structure/transit_tube/proc/init_tube_dirs()
 	switch(dir)
 		if(NORTH)
@@ -132,29 +127,22 @@
 			tube_dirs = list(EAST, WEST)
 
 
-//phil235 must deconstruct on Move()
-//phil235 remember to update the maps!
-// Look for diagonal directions, generate the decorative corners in each.
-/obj/structure/transit_tube/proc/generate_decorative_tubes()
+/obj/structure/transit_tube/proc/generate_tube_overlays()
 	for(var/direction in tube_dirs)
 		if(direction in diagonals)
 			if(direction & NORTH)
-				create_decorative_tube(direction ^ 3, NORTH)
-
-//			else
-//				create_decorative_tube(direction ^ 3, SOUTH)
+				create_tube_overlay(direction ^ 3, NORTH)
 
 				if(direction & EAST)
-					create_decorative_tube(direction ^ 12, EAST)
+					create_tube_overlay(direction ^ 12, EAST)
 
 				else
-					create_decorative_tube(direction ^ 12, WEST)
+					create_tube_overlay(direction ^ 12, WEST)
 		else
-			create_decorative_tube(direction)
+			create_tube_overlay(direction)
 
 
-// Generate a corner, if one doesn't exist for the direction on the turf.
-/obj/structure/transit_tube/proc/create_decorative_tube(direction, shift_dir)
+/obj/structure/transit_tube/proc/create_tube_overlay(direction, shift_dir)
 	var/image/I
 	if(shift_dir)
 		I = image(loc = src, icon_state = "decorative_diag", dir = direction)
@@ -176,7 +164,7 @@
 
 //Some of these are mostly for mapping use
 /obj/structure/transit_tube/horizontal
-	dir = 8
+	dir = WEST
 
 
 /obj/structure/transit_tube/diagonal
@@ -194,9 +182,18 @@
 		if(WEST)
 			tube_dirs = list(NORTHWEST, SOUTHEAST)
 
-
+//mostly for mapping use
 /obj/structure/transit_tube/diagonal/topleft
-	dir = 8
+	dir = WEST
+
+/obj/structure/transit_tube/diagonal/crossing
+	density = 0
+	icon_state = "diagonal_crossing"
+	tube_construction = /obj/structure/c_transit_tube/diagonal/crossing
+
+//mostly for mapping use
+/obj/structure/transit_tube/diagonal/crossing/topleft
+	dir = WEST
 
 
 /obj/structure/transit_tube/curved
@@ -266,5 +263,6 @@
 	tube_construction = /obj/structure/c_transit_tube/crossing
 	density = 0
 
+//mostly for mapping use
 /obj/structure/transit_tube/crossing/horizontal
-	dir = 8
+	dir = WEST
