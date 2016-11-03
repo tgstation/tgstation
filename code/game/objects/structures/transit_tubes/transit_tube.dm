@@ -35,7 +35,7 @@
 
 /obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
-		if(tube_construction) //decorative diagonals cannot be unwrenched directly
+		if(tube_construction)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				user << "<span class='warning'>Remove the pod first!</span>"
 				return
