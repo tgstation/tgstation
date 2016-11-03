@@ -35,7 +35,7 @@
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/sevtug(T)
 	if(objective_is_gateway)
-		T.visible_message("<span class='sevtug'>\"[text2ratvar("Engine, come forth and show this station your decorating skills")]\!"</span>")
+		T.visible_message("<span class='sevtug'>\"[text2ratvar("Engine, come forth and show this station your decorating skills")]!\"</span>")
 	else
 		T.visible_message("<span class='sevtug'>\"[text2ratvar("We will show all Engine's decorating skills")]!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 45, 0)
