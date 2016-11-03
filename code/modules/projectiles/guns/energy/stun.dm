@@ -38,6 +38,7 @@
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
 	item_state = "combat=3"
+	cell_type = /obj/item/weapon/stock_parts/cell{charge = 350; maxcharge = 350}
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 3
 
