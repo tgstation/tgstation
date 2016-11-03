@@ -8,6 +8,7 @@
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
 	density = FALSE
+	invisibility = INVISIBILITY_MAXIMUM
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	can_be_repaired = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
@@ -64,13 +65,14 @@
 			L.forceMove(pick(open_turfs))
 	resistance_flags &= ~INDESTRUCTIBLE
 	density = TRUE
+	invisibility = 0
 	glow = new(get_turf(src))
 	countdown = new(src)
 	countdown.start()
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>", FALSE, src)
 	if(!objective_is_gateway)
-		CG.ratvar_portal = FALSE
+		ratvar_portal = FALSE
 		hierophant_message("<span class='big_brass'>This newly constructed gateway will not free Ratvar, \
 		and will instead simply proselytize and convert everything and everyone on the station.</span>", TRUE)
 	START_PROCESSING(SSobj, src)
