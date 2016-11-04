@@ -43106,7 +43106,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/airless/darkwarning/corner{
+/turf/open/floor/plasteel/darkwarning/corner{
 	tag = "icon-black_warn_corner (NORTH)";
 	icon_state = "black_warn_corner";
 	dir = 1
@@ -43756,7 +43756,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/darkwarning/corner{
+/turf/open/floor/plasteel/darkwarning/corner{
 	tag = "icon-black_warn_corner (EAST)";
 	icon_state = "black_warn_corner";
 	dir = 4
