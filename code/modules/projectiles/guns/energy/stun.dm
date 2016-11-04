@@ -35,12 +35,12 @@
 	use_cyborg_cell = 1
 
 /obj/item/weapon/gun/energy/disabler
-	name = "disabler"
+	name = "pulse disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
 	item_state = "combat=3"
 	//cell_type = /obj/item/weapon/stock_parts/cell{charge = 350; maxcharge = 350}
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/small_disabler)
 	ammo_x_offset = 3
 
 /obj/item/weapon/gun/energy/disabler/cyborg
