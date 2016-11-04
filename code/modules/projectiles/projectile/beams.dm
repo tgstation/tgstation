@@ -60,7 +60,7 @@
 /obj/item/projectile/beam/pulse_disabler
 	name = "pulse disabler beam"
 	icon_state = "u_laser"
-	damage = 45
+	damage = 42
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
