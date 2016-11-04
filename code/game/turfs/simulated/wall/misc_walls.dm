@@ -94,10 +94,6 @@
 		return 1
 	return ..()
 
-/turf/closed/wall/clockwork/ratvar_act()
-	for(var/mob/M in src)
-		M.ratvar_act()
-
 /turf/closed/wall/clockwork/narsie_act()
 	..()
 	if(istype(src, /turf/closed/wall/clockwork)) //if we haven't changed type

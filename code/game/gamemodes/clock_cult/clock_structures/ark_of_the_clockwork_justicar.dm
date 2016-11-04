@@ -32,7 +32,7 @@
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>")
-		world << sound(null, 0, channel = 8)
+		send_to_playing_players(sound(null, 0, channel = 8))
 	if(glow)
 		qdel(glow)
 		glow = null
@@ -46,7 +46,7 @@
 		if(!disassembled)
 			countdown.stop()
 			visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
-			world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50)
+			send_to_playing_players(sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50))
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE
@@ -94,27 +94,28 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!progress_in_seconds || prob(7))
-		for(var/M in mob_list)
-			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
+		for(var/M in player_list)
+			if(M && !isnewplayer(M))
+				M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!obj_integrity)
 		return 0
 	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!first_sound_played)
-				world << sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 30)
+				send_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 30))
 				first_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!second_sound_played)
-				world << sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35)
+				send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35))
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!third_sound_played)
-				world << sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 40)
+				send_to_playing_players(sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 40))
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
@@ -125,7 +126,7 @@
 				purpose_fulfilled = TRUE
 				make_glow()
 				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				world << sound('sound/effects/ratvar_rises.ogg', 0, channel = 8) //End the sounds
+				send_to_playing_players(sound('sound/effects/ratvar_rises.ogg', 0, channel = 8)) //End the sounds
 				sleep(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
@@ -138,10 +139,10 @@
 				else
 					addtimer(SSshuttle.emergency, "request", 0, FALSE, null, 0) //call the shuttle immediately
 					sleep(3)
-					world << "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
+					send_to_playing_players("<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
-					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>"
-					world << 'sound/magic/clockwork/invoke_general.ogg'
+					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>")
+					send_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
 					var/x0 = startpoint.x
 					var/y0 = startpoint.y
 					for(var/I in spiral_range_turfs(255, startpoint))
@@ -149,7 +150,7 @@
 						if(!T)
 							continue
 						var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
-						if(dist < 60)
+						if(dist < 100)
 							dist = TRUE
 						else
 							dist = FALSE
