@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Proselytizer conversion now accounts for existing materials, and deconstructing a wall, a girder, or a window for its materials is no longer more efficient than just converting it."
