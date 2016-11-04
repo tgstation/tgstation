@@ -17,6 +17,11 @@
 /obj/structure/destructible/clockwork/wall_gear/displaced
 	anchored = FALSE
 
+/obj/structure/destructible/clockwork/wall_gear/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/gear, get_turf(src))
+
+
 /obj/structure/destructible/clockwork/wall_gear/examine(mob/user)
 	..()
 	user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"

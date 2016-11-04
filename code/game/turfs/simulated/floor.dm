@@ -171,10 +171,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		ChangeTurf(/turf/open/floor/engine/cult)
 
 /turf/open/floor/ratvar_act(force)
-	var/converted = (prob(40) || force)
-	if(converted)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/open/floor/clockwork)
-	..(converted)
 
 /turf/open/floor/initialize()
 	..()

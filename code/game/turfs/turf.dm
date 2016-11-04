@@ -287,10 +287,10 @@
 			A.ex_act(severity, target)
 
 /turf/ratvar_act(force)
-	var/converted = (prob(40) || force)
+	. = (prob(40) || force)
 	for(var/I in src)
 		var/atom/A = I
-		if(ismob(A) || converted)
+		if(ismob(A) || .)
 			A.ratvar_act()
 
 /turf/proc/add_blueprints(atom/movable/AM)

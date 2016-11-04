@@ -21,7 +21,7 @@
 	return
 
 /turf/closed/wall/mineral/cult/ratvar_act()
-	..()
+	. = ..()
 	if(istype(src, /turf/closed/wall/mineral/cult)) //if we haven't changed type
 		var/previouscolor = color
 		color = "#FAE48C"
