@@ -4,7 +4,7 @@
 	icon_state = "taser"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
-	cell_type = /obj/item/weapon/stock_parts/cell{charge = 800; maxcharge = 800}
+	//cell_type = /obj/item/weapon/stock_parts/cell{charge = 800; maxcharge = 800}
 	origin_tech = "combat=3"
 	ammo_x_offset = 3
 
@@ -39,7 +39,7 @@
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
 	item_state = "combat=3"
-	cell_type = /obj/item/weapon/stock_parts/cell{charge = 350; maxcharge = 350}
+	//cell_type = /obj/item/weapon/stock_parts/cell{charge = 350; maxcharge = 350}
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 3
 
