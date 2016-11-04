@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - imageadd: "Heal glows now appear when mending motors repair clockwork mobs and objects."
