@@ -511,6 +511,7 @@ var/highlander_claymores = 0
 	..()
 
 /obj/item/weapon/melee/baseball_bat/attack(mob/living/target, mob/living/user)
+	var/oldforce = force
 	if(user.a_intent == "help" && (user.zone_selected in list("head", "eyes", "mouth")))
 		force = 0
 		user.visible_message("<span class='notice'>[user] gives [target] a bat on the head to make them feel better!</span>", \
