@@ -153,7 +153,7 @@
 //Girder conversion
 /obj/structure/girder/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	var/prosel_cost = REPLICANT_GEAR - (REPLICANT_METAL * 2)
-	if(state == 2 || state == 1) //the defines are in girders.dm so we can't use them here, augh!
+	if(state == GIRDER_REINF_STRUTS || state == GIRDER_REINF)
 		prosel_cost -= REPLICANT_PLASTEEL
 	return list("operation_time" = 20, "new_obj_type" = /obj/structure/destructible/clockwork/wall_gear, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
 
