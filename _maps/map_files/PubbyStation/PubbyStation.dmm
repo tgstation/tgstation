@@ -17010,7 +17010,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "evashutter";
-	name = "E.V.A. Storage Shutter"
+	name = "EVA Storage Shutters"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -17396,7 +17396,7 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/button/door{
 	id = "evashutter";
-	name = "EVA Shutter Control";
+	name = "EVA Shutters Control";
 	pixel_x = -24;
 	pixel_y = 0;
 	req_access_txt = "18"
@@ -17497,7 +17497,7 @@
 /obj/structure/closet/crate,
 /obj/machinery/button/door{
 	id = "teleshutter";
-	name = "Teleporter Shutter Control";
+	name = "Teleporter Shutters Control";
 	pixel_x = 25;
 	pixel_y = -5;
 	req_access_txt = "17"
@@ -18231,7 +18231,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "teleshutter";
-	name = "Teleporter Shutter"
+	name = "Teleporter Shutters"
 	},
 /turf/open/floor/plasteel/delivery,
 /area/teleporter)
@@ -18791,7 +18791,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "teleshutter";
-	name = "Teleporter Shutter"
+	name = "Teleporter Shutters"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -19822,7 +19822,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "E.V.A. Storage APC";
+	name = "EVA Storage APC";
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
@@ -40499,7 +40499,7 @@
 	base_state = "left";
 	dir = 8;
 	icon_state = "left";
-	name = "Fitness Ring"
+	name = "Arena"
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -41804,7 +41804,7 @@
 /obj/machinery/door/window/eastright{
 	base_state = "left";
 	icon_state = "left";
-	name = "Fitness Ring"
+	name = "Arena"
 	},
 /obj/structure/window/reinforced,
 /obj/structure/chair/stool,
@@ -53570,7 +53570,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "jangarage";
-	name = "Custodial Closet Shutter"
+	name = "Custodial Closet Shutters"
 	},
 /turf/open/floor/plasteel/delivery,
 /area/janitor)
