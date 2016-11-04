@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
 
 /obj/item/clothing/shoes/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is bashing their own head in with [src]! Ain't that a kick in the head?</span>")
+	user.visible_message("<span class='suicide'>[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?</span>")
 	for(var/i = 0, i < 3, i++)
 		sleep(3)
 		playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
@@ -17,17 +17,17 @@
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
 	item_state = "jackboots"
-	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0)
+	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0, fire = 70, acid = 50)
 	strip_delay = 70
-	burn_state = FIRE_PROOF
-	can_hold_items = 1
+	resistance_flags = 0
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
 	flags = NOSLIP
-	armor = list(melee = 40, bullet = 30, laser = 25, energy = 25, bomb = 50, bio = 30, rad = 30)
+	armor = list(melee = 40, bullet = 30, laser = 25, energy = 25, bomb = 50, bio = 30, rad = 30, fire = 90, acid = 50)
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -35,7 +35,7 @@
 	icon_state = "wizard"
 	strip_delay = 50
 	put_on_delay = 50
-	unacidable = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -51,7 +51,8 @@
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
 	put_on_delay = 50
-	burn_state = FIRE_PROOF
+	resistance_flags = 0
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 75)
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -72,8 +73,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
-	can_hold_items = 1
-	valid_held_items = list(/obj/item/weapon/bikehorn)
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes/clown
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
 	if(footstep > 1)
@@ -90,8 +90,8 @@
 	item_color = "hosred"
 	strip_delay = 50
 	put_on_delay = 50
-	burn_state = FIRE_PROOF
-	can_hold_items = 1
+	resistance_flags = 0
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -105,7 +105,7 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
-	can_hold_items = 1
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
@@ -114,13 +114,13 @@
 	item_state = "jackboots"
 	strip_delay = 40
 	put_on_delay = 40
-	can_hold_items = 1
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
 	icon_state = "explorer"
-	burn_state = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/cult
 	name = "nar-sian invoker boots"
@@ -161,4 +161,37 @@
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
-	can_hold_items = 1
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes
+
+/obj/item/clothing/shoes/bhop
+	name = "jump boots"
+	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
+	icon_state = "jetboots"
+	item_state = "jackboots"
+	item_color = "hosred"
+	resistance_flags = FIRE_PROOF
+	actions_types = list(/datum/action/item_action/bhop)
+	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
+	var/recharging_rate = 60 //default 6 seconds between each dash
+	var/recharging_time = 0 //time until next dash
+	var/jumping = FALSE //are we mid-jump?
+
+/obj/item/clothing/shoes/bhop/ui_action_click(mob/user, actiontype)
+	if(!isliving(usr))
+		return
+
+	if(jumping)
+		return
+
+	if(recharging_time > world.time)
+		usr << "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>"
+		return
+
+	var/atom/target = get_edge_target_turf(usr, usr.dir) //gets the user's direction
+
+	jumping = TRUE
+	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
+	usr.visible_message("<span class='warning'>[usr] dashes foward into the air!</span>")
+	usr.throw_at(target,jumpdistance,1, spin=0, diagonals_first = 1)
+	jumping = FALSE
+	recharging_time = world.time + recharging_rate

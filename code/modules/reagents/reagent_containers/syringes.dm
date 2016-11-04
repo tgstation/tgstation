@@ -12,7 +12,7 @@
 	volume = 15
 	var/mode = SYRINGE_DRAW
 	var/busy = 0		// needed for delayed drawing of blood
-	var/projectile_type = /obj/item/projectile/bullet/dart/syringe
+	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 
 /obj/item/weapon/reagent_containers/syringe/New()
@@ -148,7 +148,7 @@
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
 	var/rounded_vol = Clamp(round((reagents.total_volume / volume * 15),5), 0, 15)
-	overlays.Cut()
+	cut_overlays()
 	if(ismob(loc))
 		var/injoverlay
 		switch(mode)
@@ -156,7 +156,7 @@
 				injoverlay = "draw"
 			if (SYRINGE_INJECT)
 				injoverlay = "inject"
-		overlays += injoverlay
+		add_overlay(injoverlay)
 	icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"
 
@@ -164,7 +164,7 @@
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
 		filling.icon_state = "syringe[rounded_vol]"
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/item/weapon/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
@@ -207,6 +207,9 @@
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
 	list_reagents = list("chloralhydrate" = 50)
 
+/obj/item/weapon/reagent_containers/syringe/lethal/execution
+	list_reagents = list("plasma" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10)
+
 /obj/item/weapon/reagent_containers/syringe/mulligan
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."
@@ -242,5 +245,5 @@
 	name = "piercing syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
-	projectile_type = /obj/item/projectile/bullet/dart/syringe/piercing
+	proj_piercing = 1
 	origin_tech = "combat=3;materials=4;engineering=5"

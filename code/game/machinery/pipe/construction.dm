@@ -52,9 +52,9 @@ Buildable meters
 /obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	..()
 	if(make_from)
-		src.dir = make_from.dir
+		src.setDir(make_from.dir)
 		src.pipename = make_from.name
-		src.color = make_from.color
+		add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
 
 		if(make_from.type in pipe_types)
 			src.pipe_type = make_from.type
@@ -67,10 +67,10 @@ Buildable meters
 		var/obj/machinery/atmospherics/components/trinary/triP = make_from
 		if(istype(triP) && triP.flipped)
 			src.flipped = 1
-			src.dir = turn(src.dir, -45)
+			src.setDir(turn(src.dir, -45))
 	else
 		src.pipe_type = pipe_type
-		src.dir = dir
+		src.setDir(dir)
 
 	if(src.dir in diagonals)
 		is_bent = 1
@@ -144,7 +144,7 @@ var/global/list/pipeID2State = list(
 	if ( usr.stat || usr.restrained() || !usr.canmove )
 		return
 
-	src.dir = turn(src.dir, -90)
+	src.setDir(turn(src.dir, -90))
 
 	fixdir()
 
@@ -159,11 +159,11 @@ var/global/list/pipeID2State = list(
 		return
 
 	if (pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER))
-		src.dir = turn(src.dir, flipped ? 45 : -45)
+		src.setDir(turn(src.dir, flipped )? 45 : -45)
 		flipped = !flipped
 		return
 
-	src.dir = turn(src.dir, -180)
+	src.setDir(turn(src.dir, -180))
 
 	fixdir()
 
@@ -182,7 +182,7 @@ var/global/list/pipeID2State = list(
 /obj/item/pipe/Move()
 	var/old_dir = dir
 	..()
-	dir = old_dir //pipes changing direction when moved is just annoying and buggy
+	setDir(old_dir )//pipes changing direction when moved is just annoying and buggy
 
 /obj/item/pipe/proc/unflip(direction)
 	if(direction in diagonals)
@@ -194,9 +194,9 @@ var/global/list/pipeID2State = list(
 /obj/item/pipe/proc/fixdir()
 	if((pipe_type in list (PIPE_SIMPLE, PIPE_HE, PIPE_MVALVE, PIPE_DVALVE)) && !is_bent)
 		if(dir==SOUTH)
-			dir = NORTH
+			setDir(NORTH)
 		else if(dir==WEST)
-			dir = EAST
+			setDir(EAST)
 
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
@@ -209,10 +209,10 @@ var/global/list/pipeID2State = list(
 
 	fixdir()
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
-		dir = unflip(dir)
+		setDir(unflip(dir))
 
 	var/obj/machinery/atmospherics/A = new pipe_type(src.loc)
-	A.dir = src.dir
+	A.setDir(src.dir)
 	A.SetInitDirections()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
@@ -230,7 +230,7 @@ var/global/list/pipeID2State = list(
 	var/obj/machinery/atmospherics/components/trinary/T = A
 	if(istype(T))
 		T.flipped = flipped
-	A.construction(pipe_type, color)
+	A.on_construction(pipe_type, color)
 
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
@@ -241,8 +241,8 @@ var/global/list/pipeID2State = list(
 	qdel(src)
 
 /obj/item/pipe/suicide_act(mob/user)
-	if (pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
-		user.visible_message("<span class='suicide'>[user] shoved the [src] in \his mouth and turned it on!  It looks like \he's trying to commit suicide.</span>")
+	if(pipe_type in list(PIPE_PUMP, PIPE_PASSIVE_GATE, PIPE_VOLUME_PUMP))
+		user.visible_message("<span class='suicide'>[user] shoves the [src] in [user.p_their()] mouth and turns it on!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		if(istype(user, /mob/living/carbon))
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)

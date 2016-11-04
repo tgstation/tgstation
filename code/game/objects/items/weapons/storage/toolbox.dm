@@ -1,12 +1,11 @@
 /obj/item/weapon/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon = 'icons/obj/storage.dmi'
 	icon_state = "red"
 	item_state = "toolbox_red"
 	flags = CONDUCT
-	force = 10
-	throwforce = 10
+	force = 12
+	throwforce = 12
 	throw_speed = 2
 	throw_range = 7
 	w_class = 4
@@ -15,8 +14,9 @@
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 
-/obj/item/weapon/storage/toolbox/New()
-	..()
+/obj/item/weapon/storage/toolbox/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
@@ -55,17 +55,17 @@
 
 /obj/item/weapon/storage/toolbox/electrical/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
-	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
-		new /obj/item/stack/cable_coil(src,30,color)
+		new /obj/item/stack/cable_coil(src,30,pickedcolor)
 
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
@@ -93,15 +93,44 @@
 
 /obj/item/weapon/storage/toolbox/drone/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 
-/obj/item/weapon/storage/toolbox/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] robusts \himself with the toolbox! It looks like \he's trying to commit suicide..</span>")
-	return (BRUTELOSS)
+/obj/item/weapon/storage/toolbox/brass
+	name = "brass box"
+	desc = "A huge brass box with several indentations in its surface."
+	icon_state = "brassbox"
+	w_class = 5
+	max_w_class = 3
+	max_combined_w_class = 28
+	storage_slots = 28
+	slowdown = 1
+	flags = HANDSLOW
+	attack_verb = list("robusted", "crushed", "smashed")
+	var/proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab
+
+/obj/item/weapon/storage/toolbox/brass/prefilled/New()
+	..()
+	new proselytizer_type(src)
+	new /obj/item/weapon/screwdriver/brass(src)
+	new /obj/item/weapon/wirecutters/brass(src)
+	new /obj/item/weapon/wrench/brass(src)
+	new /obj/item/weapon/crowbar/brass(src)
+	new /obj/item/weapon/weldingtool/experimental/brass(src)
+
+/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
+	var/slab_type = /obj/item/clockwork/slab/scarab
+
+/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/New()
+	..()
+	new slab_type(src)
+
+/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
+	slab_type = /obj/item/clockwork/slab/debug
+	proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab/debug

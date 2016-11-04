@@ -10,10 +10,12 @@
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
-	var/broken = FALSE
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
-	var/health = 100
+	obj_integrity = 200
+	max_integrity = 200
+	integrity_failure = 50
+	armor = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60)
 	var/breakout_time = 2
 	var/lastbang
 	var/can_weld_shut = TRUE
@@ -29,6 +31,7 @@
 	var/close_sound = 'sound/machines/click.ogg'
 	var/cutting_sound = 'sound/items/Welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
+	var/material_drop_amount = 3
 
 /obj/structure/closet/New()
 	..()
@@ -44,28 +47,28 @@
 	return ..()
 
 /obj/structure/closet/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!opened)
 		if(icon_door)
-			overlays += "[icon_door]_door"
+			add_overlay("[icon_door]_door")
 		else
-			overlays += "[icon_state]_door"
+			add_overlay("[icon_state]_door")
 		if(welded)
-			overlays += "welded"
+			add_overlay("welded")
 		if(secure)
 			if(!broken)
 				if(locked)
-					overlays += "locked"
+					add_overlay("locked")
 				else
-					overlays += "unlocked"
+					add_overlay("unlocked")
 			else
-				overlays += "off"
+				add_overlay("off")
 
 	else
 		if(icon_door_override)
-			overlays += "[icon_door]_open"
+			add_overlay("[icon_door]_open")
 		else
-			overlays += "[icon_state]_open"
+			add_overlay("[icon_state]_open")
 
 /obj/structure/closet/examine(mob/user)
 	..()
@@ -73,9 +76,6 @@
 		user << "<span class='notice'>It appears to be broken.</span>"
 	else if(secure && !opened)
 		user << "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
-
-/obj/structure/closet/alter_health()
-	return get_turf(src)
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height == 0 || wall_mounted)
@@ -141,7 +141,7 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return
 		var/mob/living/L = AM
-		if(L.anchored || L.buckled || L.incorporeal_move || L.buckled_mobs.len)
+		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
@@ -160,7 +160,7 @@
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.buckled_mobs.len || (AM.flags & NODROP))
+		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags & NODROP))
 			return
 	else
 		return
@@ -188,29 +188,14 @@
 	else
 		return open(user)
 
-/obj/structure/closet/ex_act(severity, target)
-	contents_explosion(severity, target)
-	if(loc && ispath(material_drop) && !(flags & NODECONSTRUCT))
-		new material_drop(loc)
+/obj/structure/closet/deconstruct(disassembled = TRUE)
+	if(ispath(material_drop) && material_drop_amount && !(flags & NODECONSTRUCT))
+		new material_drop(loc, material_drop_amount)
 	qdel(src)
-	..()
 
-/obj/structure/closet/bullet_act(obj/item/projectile/P)
-	..()
-	if(P.damage_type == BRUTE || P.damage_type == BURN)
-		health -= P.damage
-		if(health <= 0)
-			qdel(src)
-
-/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
-		qdel(src)
-
-/obj/structure/closet/blob_act(obj/effect/blob/B)
-	if(prob(75))
-		qdel(src)
+/obj/structure/closet/obj_break(damage_flag)
+	if(!broken && !(flags & NODECONSTRUCT))
+		bust_open()
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user, params)
 	if(user in src)
@@ -230,9 +215,7 @@
 					visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 									"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 									"<span class='italics'>You hear welding.</span>")
-					var/turf/T = get_turf(src)
-					new material_drop(T)
-					qdel(src)
+					deconstruct(TRUE)
 					return 0
 		else if(user.drop_item())
 			W.forceMove(loc)
@@ -319,10 +302,6 @@
 		togglelock(user)
 		return
 
-/obj/structure/closet/attack_alien(mob/living/user)
-	return attack_hand(user)
-
-
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
 	return attack_hand(user)
@@ -335,7 +314,7 @@
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if(iscarbon(usr) || issilicon(usr))
+	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
 		attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
@@ -371,15 +350,18 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
-		welded = 0 //applies to all lockers lockers
-		locked = 0 //applies to critter crates and secure lockers only
-		broken = 1 //applies to secure lockers only
 		user.visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>",
 							"<span class='notice'>You successfully break out of [src]!</span>")
-		open()
+		bust_open()
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			user << "<span class='warning'>You fail to break out of [src]!</span>"
+
+/obj/structure/closet/proc/bust_open()
+	welded = 0 //applies to all lockers lockers
+	locked = 0 //applies to critter crates and secure lockers only
+	broken = 1 //applies to secure lockers only
+	open()
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
@@ -432,3 +414,9 @@
 				req_access = list()
 				req_access += pick(get_all_accesses())
 	..()
+
+
+/obj/structure/closet/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+		CHECK_TICK

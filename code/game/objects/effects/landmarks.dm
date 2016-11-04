@@ -3,12 +3,11 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
 	anchored = 1
-	unacidable = 1
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/landmark/New()
 	..()
 	tag = text("landmark*[]", name)
-	invisibility = INVISIBILITY_ABSTRACT
 	landmarks_list += src
 
 	switch(name)			//some of these are probably obsolete
@@ -77,7 +76,6 @@
 /obj/effect/landmark/start/New()
 	..()
 	tag = "start*[name]"
-	invisibility = INVISIBILITY_ABSTRACT
 	start_landmarks_list += src
 	return 1
 
@@ -110,7 +108,6 @@
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
 	new /obj/item/clothing/head/flatcap(src.loc)
 	new /obj/item/clothing/suit/toggle/labcoat/mad(src.loc)
-	new /obj/item/clothing/glasses/gglasses(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/costume/elpresidente/New()
@@ -127,7 +124,7 @@
 	qdel(src)
 
 /obj/effect/landmark/costume/maid/New()
-	new /obj/item/clothing/under/blackskirt(src.loc)
+	new /obj/item/clothing/under/skirt/black(src.loc)
 	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
 	new CHOICE(src.loc)
 	new /obj/item/clothing/glasses/sunglasses/blindfold(src.loc)
@@ -273,3 +270,17 @@
 /obj/effect/landmark/event_spawn/Destroy()
 	generic_event_spawns -= src
 	return ..()
+
+/obj/effect/landmark/ruin
+	var/datum/map_template/ruin/ruin_template
+
+/obj/effect/landmark/ruin/New(loc, my_ruin_template)
+	name = "ruin_[ruin_landmarks.len + 1]"
+	..(loc)
+	ruin_template = my_ruin_template
+	ruin_landmarks |= src
+
+/obj/effect/landmark/ruin/Destroy()
+	ruin_landmarks -= src
+	ruin_template = null
+	. = ..()

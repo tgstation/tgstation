@@ -68,9 +68,9 @@
 	air_contents.volume = 1000
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "vent_cap", initialize_directions)
+		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "vent_cap", initialize_directions))
 
 	if(welded)
 		icon_state = "vent_welded"
@@ -260,6 +260,7 @@
 					welded = 0
 				update_icon()
 				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+				pipe_vision_img.plane = ABOVE_HUD_PLANE
 			return 0
 	else
 		return ..()
@@ -290,6 +291,7 @@
 	welded = 0
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+	pipe_vision_img.plane = ABOVE_HUD_PLANE
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
 
 

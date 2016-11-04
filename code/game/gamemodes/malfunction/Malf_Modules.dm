@@ -35,15 +35,13 @@
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
 	set_security_level("delta")
-	SSshuttle.emergencyNoEscape = 1
 	nuking = 1
 	var/obj/machinery/doomsday_device/DOOM = new /obj/machinery/doomsday_device(src)
 	doomsday_device = DOOM
+	doomsday_device.start()
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
-	for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-		for(var/mob/living/silicon/ai/A in ai_list)
-			if((A.stat != DEAD) && A.nuking)
-				point.the_disk = A //The pinpointer now tracks the AI core
+	for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 
 /obj/machinery/doomsday_device
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
@@ -53,29 +51,57 @@
 	anchored = 1
 	density = 1
 	verb_exclaim = "blares"
-	var/timing = 1
-	var/timer = 450
+	var/timing = FALSE
+	var/default_timer = 4500
+	var/obj/effect/countdown/doomsday/countdown
+	var/detonation_timer
+	var/list/milestones = list()
+
+/obj/machinery/doomsday_device/New()
+	..()
+	countdown = new(src)
+
+/obj/machinery/doomsday_device/Destroy()
+	if(countdown)
+		qdel(countdown)
+		countdown = null
+	STOP_PROCESSING(SSfastprocess, src)
+	SSshuttle.clearHostileEnvironment(src)
+	for(var/A in ai_list)
+		var/mob/living/silicon/ai/Mlf = A
+		if(Mlf.doomsday_device == src)
+			Mlf.doomsday_device = null
+	. = ..()
+
+/obj/machinery/doomsday_device/proc/start()
+	detonation_timer = world.time + default_timer
+	timing = TRUE
+	countdown.start()
+	START_PROCESSING(SSfastprocess, src)
+	SSshuttle.registerHostileEnvironment(src)
+
+/obj/machinery/doomsday_device/proc/seconds_remaining()
+	. = max(0, (round(detonation_timer - world.time) / 10))
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
 	if(!T || T.z != ZLEVEL_STATION)
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
-		SSshuttle.emergencyNoEscape = 0
-		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-			SSshuttle.emergency.mode = SHUTTLE_DOCKED
-			SSshuttle.emergency.timer = world.time
-			priority_announce("Hostile environment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
 	if(!timing)
+		STOP_PROCESSING(SSfastprocess, src)
 		return
-	if(timer <= 0)
-		timing = 0
+	var/sec_left = seconds_remaining()
+	if(sec_left <= 0)
+		timing = FALSE
 		detonate(T.z)
 		qdel(src)
 	else
-		timer--
-		if(!(timer%60))
-			var/message = "[timer] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
+		var/key = num2text(sec_left)
+		if(!(sec_left % 60) && !(key in milestones))
+			milestones[key] = TRUE
+			var/message = "[key] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
 			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)
@@ -84,7 +110,7 @@
 	sleep(100)
 	for(var/mob/living/L in mob_list)
 		var/turf/T = get_turf(L)
-		if(T.z != z_level)
+		if(!T || T.z != z_level)
 			continue
 		if(issilicon(L))
 			continue
@@ -92,23 +118,6 @@
 		L.dust()
 	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
 	ticker.force_ending = 1
-
-/datum/AI_Module/large/fireproof_core
-	module_name = "Core Upgrade"
-	mod_pick_name = "coreup"
-	description = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
-	cost = 50
-	one_time = 1
-
-	power_type = /mob/living/silicon/ai/proc/fireproof_core
-
-/mob/living/silicon/ai/proc/fireproof_core()
-	set category = "Malfunction"
-	set name = "Fireproof Core"
-	for(var/mob/living/silicon/ai/ai in player_list)
-		ai.fire_res_on_core = 1
-	src.verbs -= /mob/living/silicon/ai/proc/fireproof_core
-	src << "<span class='notice'>Core fireproofed.</span>"
 
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret Upgrade"
@@ -129,7 +138,7 @@
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
 	//Upgrade AI turrets around the world
 	for(var/obj/machinery/porta_turret/ai/turret in machines)
-		turret.health += 30
+		turret.obj_integrity += 30
 		turret.eprojectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
 		turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"
@@ -150,22 +159,11 @@
 	if(!canUseTopic())
 		return
 
-	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
-		spawn()
-			if(istype(D, /obj/machinery/door/airlock))
-				AL = D
-				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
-					AL.locked = 0 //For airlocks that were bolted open.
-					AL.safe = 0 //DOOR CRUSH
-					AL.close()
-					AL.bolt() //Bolt it!
-					AL.secondsElectrified = -1  //Shock it!
-					AL.shockedby += "\[[time_stamp()]\][src](ckey:[src.ckey])"
-			else if(!D.stat) //So that only powered doors are closed.
-				D.close() //Close ALL the doors!
+		addtimer(D, "hostile_lockdown", 0, FALSE, src)
+		addtimer(D, "disable_lockdown", 900)
 
 	var/obj/machinery/computer/communications/C = locate() in machines
 	if(C)
@@ -174,29 +172,9 @@
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
 	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	spawn(900) //90 Seconds.
-		disablelockdown() //Reset the lockdown after 90 seconds.
-
-/mob/living/silicon/ai/proc/disablelockdown()
-	set category = "Malfunction"
-	set name = "Disable Lockdown"
-
-	var/obj/machinery/door/airlock/AL
-	for(var/obj/machinery/door/D in airlocks)
-		if(D.z != ZLEVEL_STATION)
-			continue
-		spawn()
-			if(istype(D, /obj/machinery/door/airlock))
-				AL = D
-				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
-					AL.unbolt()
-					AL.secondsElectrified = 0
-					AL.open()
-					AL.safe = 1
-			else if(!D.stat) //Opens only powered doors.
-				D.open() //Open everything!
-
-	minor_announce("Automatic system reboot complete. Have a secure day.","Network reset:")
+	addtimer(GLOBAL_PROC, "minor_announce", 900, FALSE,
+		"Automatic system reboot complete. Have a secure day.",
+		"Network reset:")
 
 /datum/AI_Module/large/destroy_rcd
 	module_name = "Destroy RCDs"
@@ -215,13 +193,10 @@
 	if(!canUseTopic() || malf_cooldown)
 		return
 
-	for(var/obj/item/RCD in rcd_list)
-		if(!istype(RCD, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
-			RCD.audible_message("<span class='danger'><b>[RCD] begins to vibrate and buzz loudly!</b></span>","<span class='danger'><b>[RCD] begins vibrating violently!</b></span>")
-			spawn(50) //5 seconds to get rid of it!
-				if(RCD) //Make sure it still exists (In case of chain-reaction)
-					explosion(RCD, 0, 0, 3, 1, flame_range = 1)
-					qdel(RCD)
+	for(var/I in rcd_list)
+		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			var/obj/item/weapon/rcd/RCD = I
+			RCD.detonate_pulse()
 
 	src << "<span class='warning'>RCD detonation pulse emitted.</span>"
 	malf_cooldown = 1
@@ -402,7 +377,7 @@
 		for(var/n=1;n<4,n++)
 			var/fail
 			var/turf/T = turfs[n]
-			if(!istype(T, /turf/open/floor))
+			if(!isfloorturf(T))
 				fail = 1
 			var/datum/camerachunk/C = cameranet.getCameraChunk(T.x, T.y, T.z)
 			if(!C.visibleTurfs[T])
@@ -425,7 +400,6 @@
 	if(success)
 		return 1
 	alert(src, alert_msg)
-	return
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -568,7 +542,6 @@
 	var/datum/browser/popup = new(user, "modpicker", "Malf Module Menu")
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /datum/module_picker/Topic(href, href_list)
 	..()
@@ -612,7 +585,6 @@
 			if(AM.mod_pick_name == href_list["showdesc"])
 				temp = AM.description
 	src.use(usr)
-	return
 
 /datum/AI_Module/large/eavesdrop
 	module_name = "Enhanced Surveillance"

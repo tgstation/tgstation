@@ -38,7 +38,7 @@
 		if(number < 3)
 			var/obj/effect/particle_effect/steam/I = PoolOrNew(/obj/effect/particle_effect/steam, oldposition)
 			number++
-			I.dir = holder.dir
+			I.setDir(holder.dir)
 			oldposition = get_turf(holder)
 			spawn(10)
 				qdel(I)
@@ -66,9 +66,9 @@
 		processing = 0
 		var/turf/T = get_turf(holder)
 		if(T != oldposition)
-			if(!has_gravity(T))
+			if(!T.has_gravity())
 				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
-				I.dir = holder.dir
+				I.setDir(holder.dir)
 				flick("ion_fade", I)
 				I.icon_state = ""
 				spawn(20)
@@ -101,13 +101,11 @@
 	flashing = flash
 	flashing_factor = flash_fact
 
-	return
-
 /datum/effect_system/reagents_explosion/start()
 	if(explosion_message)
 		location.visible_message("<span class='danger'>The solution violently explodes!</span>", \
 								"<span class='italics'>You hear an explosion!</span>")
-	if (amount <= 2)
+	if (amount < 1)
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(2, 1, location)
 		s.start()
@@ -118,22 +116,4 @@
 				M.Weaken(rand(1,5))
 		return
 	else
-		var/devastation = -1
-		var/heavy = -1
-		var/light = -1
-		var/flash = -1
-
-		// Clamp all values to MAX_EXPLOSION_RANGE
-		if (round(amount/12) > 0)
-			devastation = min (MAX_EX_DEVESTATION_RANGE, devastation + round(amount/12))
-
-		if (round(amount/6) > 0)
-			heavy = min (MAX_EX_HEAVY_RANGE, heavy + round(amount/6))
-
-		if (round(amount/3) > 0)
-			light = min (MAX_EX_LIGHT_RANGE, light + round(amount/3))
-
-		if (flashing && flashing_factor)
-			flash += (round(amount/4) * flashing_factor)
-
-		explosion(location, devastation, heavy, light, flash)
+		dyn_explosion(location, amount, flashing_factor)

@@ -11,6 +11,7 @@ var/datum/events/keycard_events = new()
 	active_power_usage = 6
 	power_channel = ENVIRON
 	req_access = list(access_keycard_auth)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/datum/event/ev
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source
@@ -43,10 +44,11 @@ var/datum/events/keycard_events = new()
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
 	if(isanimal(user))
-		user << "<span class='warning'>You are too primitive to use this device!</span>"
-	else
-		return ..()
-	return UI_CLOSE
+		var/mob/living/simple_animal/A = user
+		if(!A.dextrous)
+			user << "<span class='warning'>You are too primitive to use this device!</span>"
+			return UI_CLOSE
+	return ..()
 
 /obj/machinery/keycard_auth/ui_act(action, params)
 	if(..() || waiting || !allowed(usr))

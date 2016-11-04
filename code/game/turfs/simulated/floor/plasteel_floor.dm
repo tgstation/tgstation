@@ -11,6 +11,9 @@
 		icon_state = icon_regular_floor
 
 
+/turf/open/floor/plasteel/airless
+	initial_gas_mix = "TEMP=2.7"
+
 
 /turf/open/floor/plasteel/black
 	icon_state = "dark"
@@ -195,22 +198,6 @@
 	icon_state = "cautioncorner"
 
 
-/turf/open/floor/plasteel/warning
-	icon_state = "warning"
-/turf/open/floor/plasteel/airless/warning
-	icon_state = "warning"
-/turf/open/floor/plasteel/warning/corner
-	icon_state = "warningcorner"
-/turf/open/floor/plasteel/airless/warning/corner
-	icon_state = "warningcorner"
-
-
-/turf/open/floor/plasteel/warnwhite
-	icon_state = "warnwhite"
-/turf/open/floor/plasteel/warnwhite/corner
-	icon_state = "warnwhitecorner"
-
-
 /turf/open/floor/plasteel/whitebot
 	icon_state = "whitebot"
 /turf/open/floor/plasteel/whitebot/delivery
@@ -254,11 +241,6 @@
 /turf/open/floor/plasteel/blueyellow/side
 	icon_state = "blueyellow"
 
-
-/turf/open/floor/plasteel/darkwarning
-	icon_state = "warndark"
-/turf/open/floor/plasteel/darkwarning/corner
-	icon_state = "warndarkcorners"
 
 /turf/open/floor/plasteel/warningline
 	icon_state = "warningline"
@@ -311,9 +293,11 @@
 
 /turf/open/floor/plasteel/shuttle
 	icon_state = "shuttlefloor"
+	floor_tile = /obj/item/stack/tile/mineral/titanium //old shuttle floors so i don't have to change the map paths in this pr
 /turf/open/floor/plasteel/shuttle/red
 	name = "Brig floor"
 	icon_state = "shuttlefloor4"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 /turf/open/floor/plasteel/shuttle/yellow
 	icon_state = "shuttlefloor2"
 /turf/open/floor/plasteel/shuttle/white
@@ -321,16 +305,23 @@
 /turf/open/floor/plasteel/shuttle/purple
 	icon_state = "shuttlefloor5"
 
+/turf/open/floor/plasteel/airless/shuttle
+	icon_state = "shuttlefloor"
+/turf/open/floor/plasteel/airless/shuttle/red
+	name = "Brig floor"
+	icon_state = "shuttlefloor4"
+/turf/open/floor/plasteel/airless/shuttle/yellow
+	icon_state = "shuttlefloor2"
+/turf/open/floor/plasteel/airless/shuttle/white
+	icon_state = "shuttlefloor3"
+/turf/open/floor/plasteel/airless/shuttle/purple
+	icon_state = "shuttlefloor5"
+
 
 /turf/open/floor/plasteel/asteroid
 	icon_state = "asteroidfloor"
 /turf/open/floor/plasteel/airless/asteroid
 	icon_state = "asteroidfloor"
-/turf/open/floor/plasteel/asteroid/warning
-	icon_state = "asteroidwarning"
-/turf/open/floor/plasteel/airless/asteroid/warning
-	icon_state = "asteroidwarning"
-
 
 /turf/open/floor/plasteel/recharge_floor
 	icon_state = "recharge_floor"
@@ -375,10 +366,16 @@
 /turf/open/floor/plasteel/bar
 	icon_state = "bar"
 
+/turf/open/floor/plasteel/airless/bar
+	icon_state = "bar"
+
 /turf/open/floor/plasteel/grimy
 	icon_state = "grimy"
 
 /turf/open/floor/plasteel/cafeteria
+	icon_state = "cafeteria"
+
+/turf/open/floor/plasteel/airless/cafeteria
 	icon_state = "cafeteria"
 
 /turf/open/floor/plasteel/vault
@@ -387,6 +384,9 @@
 /turf/open/floor/plasteel/cult
 	icon_state = "cult"
 	name = "engraved floor"
+
+/turf/open/floor/plasteel/vaporwave
+	icon_state = "pinkblack"
 
 /turf/open/floor/plasteel/goonplaque
 	icon_state = "plaque"
@@ -456,7 +456,9 @@
 
 /turf/open/floor/plasteel/sandeffect
 	icon_state = "sandeffect"
+
 /turf/open/floor/plasteel/sandeffect/warning
 	icon_state = "warningsandeffect"
+
 /turf/open/floor/plasteel/sandeffect/warning/corner
 	icon_state = "warningsandeffectcorners"

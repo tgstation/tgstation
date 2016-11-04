@@ -46,7 +46,7 @@
 	icon_state = "chronogun"
 	item_state = "chronogun"
 	w_class = 3
-	flags = NODROP
+	flags = NODROP | DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0
 	fire_delay = 50
@@ -61,10 +61,6 @@
 	else //admin must have spawned it
 		TED = new(src.loc)
 		qdel(src)
-
-/obj/item/weapon/gun/energy/chrono_gun/dropped()
-	..()
-	qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()
 	return
@@ -125,12 +121,11 @@
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
-	color = null
 	nodamage = 1
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
 
 /obj/item/projectile/energy/chrono_beam/fire()
-	gun = firer.get_active_hand()
+	gun = firer.get_active_held_item()
 	if(istype(gun))
 		return ..()
 	else
@@ -156,7 +151,6 @@
 	icon_state = "chronofield"
 	density = 0
 	anchored = 1
-	unacidable = 1
 	blend_mode = BLEND_MULTIPLY
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
@@ -182,7 +176,7 @@
 		update_icon()
 
 		desc = initial(desc) + "<br><span class='info'>It appears to contain [target.name].</span>"
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/chrono_field/Destroy()
 	if(gun && gun.field_check(src))
@@ -259,7 +253,7 @@
 /obj/effect/chrono_field/ex_act()
 	return
 
-/obj/effect/chrono_field/blob_act(obj/effect/blob/B)
+/obj/effect/chrono_field/blob_act(obj/structure/blob/B)
 	return
 
 

@@ -492,6 +492,11 @@
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
 
+/datum/sprite_accessory/hair/boddicker
+	name = "Boddicker"
+	icon_state = "hair_boddicker"
+
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
@@ -1130,29 +1135,15 @@
 	name = "None"
 	icon_state = "none"
 
-/datum/sprite_accessory/body_markings/dstripe
-	name = "Dark Stripe"
-	icon_state = "dstripe"
-
-/datum/sprite_accessory/body_markings/lstripe
-	name = "Light Stripe"
-	icon_state = "lstripe"
-
 /datum/sprite_accessory/body_markings/dtiger
 	name = "Dark Tiger Body"
 	icon_state = "dtiger"
-
-/datum/sprite_accessory/body_markings/dtigerhead
-	name = "Dark Tiger Body + Head"
-	icon_state = "dtigerhead"
+	gender_specific = 1
 
 /datum/sprite_accessory/body_markings/ltiger
 	name = "Light Tiger Body"
 	icon_state = "ltiger"
-
-/datum/sprite_accessory/body_markings/ltigerhead
-	name = "Light Tiger Body + Head"
-	icon_state = "ltigerhead"
+	gender_specific = 1
 
 /datum/sprite_accessory/body_markings/lbelly
 	name = "Light Belly"
@@ -1173,30 +1164,6 @@
 	name = "Smooth"
 	icon_state = "smooth"
 
-/datum/sprite_accessory/tails/lizard/light
-	name = "Light"
-	icon_state = "light"
-
-/datum/sprite_accessory/tails_animated/lizard/light
-	name = "Light"
-	icon_state = "light"
-
-/datum/sprite_accessory/tails/lizard/dstripe
-	name = "Dark Stripe"
-	icon_state = "dstripe"
-
-/datum/sprite_accessory/tails_animated/lizard/dstripe
-	name = "Dark Stripe"
-	icon_state = "dstripe"
-
-/datum/sprite_accessory/tails/lizard/lstripe
-	name = "Light Stripe"
-	icon_state = "lstripe"
-
-/datum/sprite_accessory/tails_animated/lizard/lstripe
-	name = "Light Stripe"
-	icon_state = "lstripe"
-
 /datum/sprite_accessory/tails/lizard/dtiger
 	name = "Dark Tiger"
 	icon_state = "dtiger"
@@ -1213,21 +1180,13 @@
 	name = "Light Tiger"
 	icon_state = "ltiger"
 
-/datum/sprite_accessory/tails/lizard/club
-	name = "Club"
-	icon_state = "club"
+/datum/sprite_accessory/tails/lizard/spikes
+	name = "Spikes"
+	icon_state = "spikes"
 
-/datum/sprite_accessory/tails_animated/lizard/club
-	name = "Club"
-	icon_state = "club"
-
-/datum/sprite_accessory/tails/lizard/aqua
-	name = "Aquatic"
-	icon_state = "aqua"
-
-/datum/sprite_accessory/tails_animated/lizard/aqua
-	name = "Aquatic"
-	icon_state = "aqua"
+/datum/sprite_accessory/tails_animated/lizard/spikes
+	name = "Spikes"
+	icon_state = "spikes"
 
 /datum/sprite_accessory/tails/human/none
 	name = "None"
@@ -1405,3 +1364,12 @@
 /datum/sprite_accessory/spines_animated/aqautic
 	name = "Aquatic"
 	icon_state = "aqua"
+
+/datum/sprite_accessory/legs 	//legs are a special case, they aren't actually sprite_accessories but are updated with them.
+	icon = null					//These datums exist for selecting legs on preference, and little else
+
+/datum/sprite_accessory/legs/none
+	name = "Normal Legs"
+
+/datum/sprite_accessory/legs/digitigrade_lizard
+	name = "Digitigrade Legs"

@@ -47,7 +47,7 @@
 
 /obj/machinery/gibber/New()
 	..()
-	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+	src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gibber(null)
 	B.apply_default_parts(src)
 
@@ -62,7 +62,7 @@
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
-		meat_produced += 3 * B.rating
+		meat_produced += B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
@@ -70,17 +70,17 @@
 			ignore_clothing = 1
 
 /obj/machinery/gibber/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (dirty)
-		src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	else if (operating)
-		src.overlays += image('icons/obj/kitchen.dmi', "gruse")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
 	else
-		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -102,7 +102,7 @@
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
 			return
 		var/mob/living/carbon/C = L
-		if(C.buckled ||C.buckled_mobs.len)
+		if(C.buckled ||C.has_buckled_mobs())
 			user << "<span class='warning'>[C] is attached to something!</span>"
 			return
 		if(C.abiotic(1) && !ignore_clothing)
@@ -112,7 +112,7 @@
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
 		src.add_fingerprint(user)
 		if(do_after(user, gibtime, target = src))
-			if(C && user.pulling == C && !C.buckled && !C.buckled_mobs.len && !occupant)
+			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
 				occupant = C
@@ -204,10 +204,11 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
 		newmeat.name = "[sourcename] [newmeat.name]"
-		newmeat.subjectname = sourcename
-		if(sourcejob)
-			newmeat.subjectjob = sourcejob
-		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+		if(istype(newmeat))
+			newmeat.subjectname = sourcename
+			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+			if(sourcejob)
+				newmeat.subjectjob = sourcejob
 		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 		allskin = newskin
@@ -219,15 +220,16 @@
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
+		var/turf/T = get_turf(src)
+		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
+		var/obj/item/skin = allskin
+		skin.loc = src.loc
+		skin.throw_at_fast(pick(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
-			var/list/nearby_turfs = orange(3, get_turf(src))
 			var/obj/item/meatslab = allmeat[i]
-			var/obj/item/skin = allskin
 			meatslab.loc = src.loc
-			skin.loc = src.loc
 			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
-			skin.throw_at_fast(pick(nearby_turfs),i,3)
-			for (var/turfs=1 to meat_produced*3)
+			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in view(gibturf))
 					new gibtype(gibturf,i)

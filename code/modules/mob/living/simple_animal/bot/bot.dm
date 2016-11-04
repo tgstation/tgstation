@@ -4,18 +4,22 @@
 /mob/living/simple_animal/bot
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
+	gender = NEUTER
 	luminosity = 3
 	stop_automated_movement = 1
 	wander = 0
 	healable = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	maxbodytemp = INFINITY
 	minbodytemp = 0
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
-
-	speak_emote = list("states")
+	verb_say = "states"
+	verb_ask = "queries"
+	verb_exclaim = "declares"
+	verb_yell = "alarms"
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon")
@@ -72,6 +76,7 @@
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/model = "" //The type of bot it is.
 	var/bot_type = 0 //The type of bot it is, for radio control.
+	var/data_hud_type = DATA_HUD_DIAGNOSTIC //The type of data HUD the bot uses. Diagnostic by default.
 	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
 	"Beginning Patrol", "Patrolling", "Summoned by PDA", \
 	"Cleaning", "Repairing", "Proceeding to work site", "Healing", \
@@ -124,12 +129,17 @@
 
 	bot_core = new bot_core_type(src)
 
+	//Adds bot to the diagnostic HUD system
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
+
+	//Gives a HUD view to player bots that use a HUD.
+	activate_data_hud()
+
 
 /mob/living/simple_animal/bot/update_canmove()
 	. = ..()
@@ -249,29 +259,7 @@
 			else
 				user << "<span class='warning'>Access denied.</span>"
 	else if(istype(W, /obj/item/device/paicard))
-		if(paicard)
-			user << "<span class='warning'>A [paicard] is already inserted!</span>"
-		else if(allow_pai && !key)
-			if(!locked && !open)
-				var/obj/item/device/paicard/card = W
-				if(card.pai && card.pai.mind)
-					if(!user.drop_item())
-						return
-					W.forceMove(src)
-					paicard = card
-					user.visible_message("[user] inserts [W] into [src]!","<span class='notice'>You insert [W] into [src].</span>")
-					paicard.pai.mind.transfer_to(src)
-					src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
-					bot_name = name
-					name = paicard.pai.name
-					faction = user.faction
-					add_logs(user, paicard.pai, "uploaded to [src.bot_name],")
-				else
-					user << "<span class='warning'>[W] is inactive.</span>"
-			else
-				user << "<span class='warning'>The personality slot is locked.</span>"
-		else
-			user << "<span class='warning'>[src] is not compatible with [W]</span>"
+		insertpai(user, W)
 	else if(istype(W, /obj/item/weapon/hemostat) && paicard)
 		if(open)
 			user << "<span class='warning'>Close the access panel before manipulating the personality slot!</span>"
@@ -335,7 +323,7 @@
 	if((!on) || (!message))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
-		Radio.talk_into(src, message, channel)
+		Radio.talk_into(src, message, channel, get_spans())
 	else
 		say(message)
 	return
@@ -483,6 +471,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
 	var/area/end_area = get_area(waypoint)
+
+	if(client) //Player bots instead get a location command from the AI
+		src << "<span class='noticebig'>Priority waypoint set by \icon[caller] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>."
 
 	//For giving the bot temporary all-access.
 	var/obj/item/weapon/card/id/all_access = new /obj/item/weapon/card/id
@@ -746,7 +737,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	dat = get_controls(M)
 	var/datum/browser/popup = new(M,window_id,window_name,350,600)
 	popup.set_content(dat)
-	popup.open()
+	popup.open(use_onclose = 0)
 	onclose(M,window_id,ref=src)
 	return
 
@@ -853,6 +844,31 @@ Pass a positive integer as an argument to override a bot's default speed.
 		eject += "<BR>"
 	return eject
 
+/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/device/paicard/card)
+	if(paicard)
+		user << "<span class='warning'>A [paicard] is already inserted!</span>"
+	else if(allow_pai && !key)
+		if(!locked && !open)
+			if(card.pai && card.pai.mind)
+				if(!user.drop_item())
+					return
+				card.forceMove(src)
+				paicard = card
+				user.visible_message("[user] inserts [card] into [src]!","<span class='notice'>You insert [card] into [src].</span>")
+				paicard.pai.mind.transfer_to(src)
+				src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
+				bot_name = name
+				name = paicard.pai.name
+				faction = user.faction.Copy()
+				add_logs(user, paicard.pai, "uploaded to [bot_name],")
+				return 1
+			else
+				user << "<span class='warning'>[card] is inactive.</span>"
+		else
+			user << "<span class='warning'>The personality slot is locked.</span>"
+	else
+		user << "<span class='warning'>[src] is not compatible with [card]</span>"
+
 /mob/living/simple_animal/bot/proc/ejectpai(mob/user = null, announce = 1)
 	if(paicard)
 		if(mind && paicard.pai)
@@ -882,6 +898,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	access_card.access += player_access
 	diag_hud_set_botmode()
+	activate_data_hud()
 
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
@@ -900,3 +917,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/sentience_act()
 	faction -= "silicon"
+
+/mob/living/simple_animal/bot/proc/activate_data_hud()
+//If a bot has its own HUD (for player bots), provide it.
+	if(!data_hud_type)
+		return
+	var/datum/atom_hud/datahud = huds[data_hud_type]
+	datahud.add_hud_to(src)

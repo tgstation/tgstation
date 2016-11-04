@@ -61,19 +61,19 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 		#include "map_files\generic\z7.dmm"
 		#include "map_files\generic\z8.dmm"
 		#include "map_files\generic\z9.dmm"
+		#include "map_files\generic\z10.dmm"
+		#include "map_files\generic\z11.dmm"
 
 		#define MAP_PATH "map_files/MiniStation"
 		#define MAP_FILE "MiniStation.dmm"
 		#define MAP_NAME "MiniStation"
 
-		#define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
+		#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
 
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES
 				#include "map_files\MiniStation\misc.dm"
 		        #include "map_files\MiniStation\cargopacks.dm"
-		        #include "map_files\MiniStation\telecomms.dm"
-		        #include "map_files\MiniStation\uplink_item.dm"
 		        #include "map_files\MiniStation\job\jobs.dm"
 		        #include "map_files\MiniStation\job\removed.dm"
 		#endif

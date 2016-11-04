@@ -11,6 +11,9 @@
 	anchored = 1
 	density = 1
 	use_power = 0
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 50
 
 	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum
@@ -53,7 +56,7 @@
 	sun_angle = angle
 
 	//set icon dir to show sun illumination
-	dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
+	setDir(turn(NORTH, -angle - 22.5)	)// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
 	if(powernet && (powernet == control.powernet)) //update if we're still in the same powernet
 		control.currentdir = angle
@@ -64,15 +67,30 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>")
 		if(do_after(user, 50/W.toolspeed, target = src))
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.loc = src.loc
-				S.give_glass(stat & BROKEN)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>")
-			qdel(src)
+			deconstruct(TRUE)
 	else
 		return ..()
+
+/obj/machinery/power/tracker/obj_break(damage_flag)
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		stat |= BROKEN
+		unset_control()
+
+/obj/machinery/power/solar/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(disassembled)
+			var/obj/item/solar_assembly/S = locate() in src
+			if(S)
+				S.forceMove(loc)
+				S.give_glass(stat & BROKEN)
+		else
+			playsound(src, "shatter", 70, 1)
+			new /obj/item/weapon/shard(src.loc)
+			new /obj/item/weapon/shard(src.loc)
+	qdel(src)
 
 // Tracker Electronic
 

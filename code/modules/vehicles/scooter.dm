@@ -21,22 +21,35 @@
 
 /obj/vehicle/scooter/handle_vehicle_offsets()
 	..()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			switch(buckled_mob.dir)
 				if(NORTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
 				if(EAST)
 					buckled_mob.pixel_x = -2
-					buckled_mob.pixel_y = 4
 				if(SOUTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
 				if(WEST)
 					buckled_mob.pixel_x = 2
-					buckled_mob.pixel_y = 4
+			if(buckled_mob.get_num_legs() > 0)
+				buckled_mob.pixel_y = 5
+			else
+				buckled_mob.pixel_y = -4
+
+/obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0)
+	if(!istype(M))
+		return 0
+	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
+		M << "<span class='warning'>Your limbless body can't use [src].</span>"
+		return 0
+	. = ..()
+
+/obj/vehicle/scooter/post_buckle_mob(mob/living/M)
+	vehicle_move_delay = initial(vehicle_move_delay)
+	if(M.get_num_legs() < 2)
+		vehicle_move_delay ++
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
@@ -46,14 +59,15 @@
 	density = 0
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		density = 1
 	else
 		density = 0
+	..()
 
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
-	if(A.density && buckled_mobs.len)
+	if(A.density && has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(cardinal))
 		unbuckle_mob(H)
@@ -62,6 +76,18 @@
 		H.adjustStaminaLoss(40)
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+
+/obj/vehicle/scooter/skateboard/MouseDrop(atom/over_object)
+	var/mob/living/carbon/M = usr
+	if(!istype(M) || M.incapacitated() || !Adjacent(M))
+		return
+	if(has_buckled_mobs() && over_object == M)
+		M << "<span class='warning'>You can't lift this up when somebody's on it.</span>"
+		return
+	if(over_object == M)
+		var/obj/item/weapon/melee/skateboard/board = new /obj/item/weapon/melee/skateboard()
+		M.put_in_hands(board)
+		qdel(src)
 
 //CONSTRUCTION
 /obj/item/scooter_frame
@@ -81,11 +107,13 @@
 
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
-		if(M.amount < 5)
+		if(M.get_amount() < 5)
 			user << "<span class='warning'>You need at least five metal sheets to make proper wheels!</span>"
 			return
 		user << "<span class='notice'>You begin to add wheels to [src].</span>"
 		if(do_after(user, 80, target = src))
+			if(!M || M.get_amount() < 5)
+				return
 			M.use(5)
 			user << "<span class='notice'>You finish making wheels for [src].</span>"
 			new /obj/vehicle/scooter/skateboard(user.loc)
@@ -108,6 +136,8 @@
 			return
 		user << "<span class='notice'>You begin making handlebars for [src].</span>"
 		if(do_after(user, 25, target = src))
+			if(!C || C.get_amount() < 2)
+				return
 			user << "<span class='notice'>You add the rods to [src], creating handlebars.</span>"
 			C.use(2)
 			new/obj/vehicle/scooter(get_turf(src))

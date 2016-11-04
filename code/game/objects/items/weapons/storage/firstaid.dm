@@ -142,11 +142,7 @@
 			var/obj/screen/inventory/hand/H = over_object
 			if(!M.unEquip(src))
 				return
-			switch(H.slot_id)
-				if(slot_r_hand)
-					M.put_in_r_hand(src)
-				if(slot_l_hand)
-					M.put_in_l_hand(src)
+			M.put_in_hand(src,H.held_index)
 			src.add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
@@ -209,3 +205,13 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/reagent_containers/pill/stimulant(src)
+
+/obj/item/weapon/storage/pill_bottle/mining
+	name = "box of patches"
+	desc = "Contains patches used to treat brute and burn damage."
+
+/obj/item/weapon/storage/pill_bottle/mining/New()
+	..()
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)

@@ -12,7 +12,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/stack/wrapping_paper/Destroy()
 	if(!amount)
@@ -32,7 +32,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
 	return 1
@@ -58,7 +58,7 @@
 		var/obj/item/I = target
 		if(!I.can_be_package_wrapped())
 			return
-		if(user.r_hand == I || user.l_hand == I)
+		if(user.is_holding(I))
 			if(!user.unEquip(I))
 				return
 		else if(!isturf(I.loc))
@@ -69,7 +69,7 @@
 				P.add_fingerprint(user)
 				I.add_fingerprint(user)
 				user.put_in_hands(P)
-			I.loc = P
+			I.forceMove(P)
 			var/size = round(I.w_class)
 			P.w_class = size
 			size = min(size, 5)

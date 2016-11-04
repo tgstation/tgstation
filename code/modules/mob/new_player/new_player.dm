@@ -201,6 +201,8 @@
 	if(href_list["votepollid"] && href_list["votetype"])
 		var/pollid = text2num(href_list["votepollid"])
 		var/votetype = href_list["votetype"]
+		//lets take data from the user to decide what kind of poll this is, without validating it
+		//what could go wrong
 		switch(votetype)
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
@@ -219,6 +221,7 @@
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
+					                            //(protip, this stops no exploits)
 					usr << "The option ID difference is too big. Please contact administration or the database admin."
 					return
 
@@ -257,6 +260,14 @@
 								usr << "<span class='danger'>Maximum replies reached.</span>"
 								break
 				usr << "<span class='notice'>Vote successful.</span>"
+			if(POLLTYPE_IRV)
+				if (!href_list["IRVdata"])
+					src << "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>"
+				var/list/votelist = splittext(href_list["IRVdata"], ",")
+				if (!vote_on_irv_poll(pollid, votelist))
+					src << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+					return
+				src << "<span class='notice'>Vote successful.</span>"
 
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -291,8 +302,11 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
+	var/equip = SSjob.EquipRank(character, rank, 1)
+	if(iscyborg(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
+		character = equip
+
 
 	var/D = pick(latejoin)
 	if(!D)
@@ -308,33 +322,47 @@
 					continue
 
 	character.loc = D
+	ticker.minds += character.mind
 
-	if(character.mind.assigned_role != "Cyborg")
-		data_core.manifest_inject(character)
-		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
-		AnnounceArrival(character, rank)
-		AddEmploymentContract(character)
-	else
-		character.Robotize()
+	var/mob/living/carbon/human/humanc
+	if(ishuman(character))
+		humanc = character	//Let's retypecast the var to be human,
+
+	if(humanc)	//These procs all expect humans
+		data_core.manifest_inject(humanc)
+		AnnounceArrival(humanc, rank)
+		AddEmploymentContract(humanc)
+		if(highlander)
+			humanc << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
+			humanc.make_scottish()
 
 	joined_player_list += character.ckey
 
-	if(config.allow_latejoin_antagonists)
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_RECALL, SHUTTLE_IDLE)
-				ticker.mode.make_antag_chance(character)
-			if(SHUTTLE_CALL)
-				if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
-					ticker.mode.make_antag_chance(character)
+	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
+		if(SSshuttle.emergency)
+			switch(SSshuttle.emergency.mode)
+				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
+					ticker.mode.make_antag_chance(humanc)
+				if(SHUTTLE_CALL)
+					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
+						ticker.mode.make_antag_chance(humanc)
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if (ticker.current_state == GAME_STATE_PLAYING)
-		if(announcement_systems.len)
-			if(character.mind)
-				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
-					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
-					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
+	var/area/A = get_area(character)
+	var/message = "<span class='game deadsay'><span class='name'>\
+		[character.real_name]</span> ([rank]) has arrived at the station at \
+		<span class='name'>[A.name]</span>.</span>"
+	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if((!announcement_systems.len) || (!character.mind))
+		return
+	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
+		return
+
+	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 /mob/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -353,12 +381,13 @@
 
 	var/dat = "<div class='notice'>Round Duration: [round(hours)]h [round(mins)]m</div>"
 
-	switch(SSshuttle.emergency.mode)
-		if(SHUTTLE_ESCAPE)
-			dat += "<div class='notice red'>The station has been evacuated.</div><br>"
-		if(SHUTTLE_CALL)
-			if(!SSshuttle.canRecall())
-				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
+	if(SSshuttle.emergency)
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_ESCAPE)
+				dat += "<div class='notice red'>The station has been evacuated.</div><br>"
+			if(SHUTTLE_CALL)
+				if(!SSshuttle.canRecall())
+					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
@@ -400,7 +429,7 @@
 
 	var/mob/living/carbon/human/new_character = new(loc)
 
-	if(config.force_random_names || appearance_isbanned(src))
+	if(config.force_random_names || jobban_isbanned(src, "appearance"))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(new_character)

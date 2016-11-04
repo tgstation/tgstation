@@ -7,6 +7,8 @@
 	desc = "The frame of a meat spike."
 	density = 1
 	anchored = 0
+	obj_integrity = 200
+	max_integrity = 200
 
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -20,6 +22,22 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
 			transfer_fingerprints_to(F)
 			qdel(src)
+	else if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(!WT.remove_fuel(0, user))
+			return
+		user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
+		playsound(src.loc, "sound/items/Welder.ogg", 40, 1)
+		if(do_after(user, 40/WT.toolspeed, 1, target = src))
+			if(!WT.isOn())
+				return
+			playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
+			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+							"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
+							"<span class='italics'>You hear welding.</span>")
+			new /obj/item/stack/sheet/metal(src.loc, 4)
+			qdel(src)
+		return
 	else
 		return ..()
 
@@ -32,6 +50,8 @@
 	anchored = 1
 	buckle_lying = 0
 	can_buckle = 1
+	obj_integrity = 250
+	max_integrity = 250
 
 
 /obj/structure/kitchenspike/attack_paw(mob/user)
@@ -40,24 +60,21 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		if(!buckled_mobs.len)
+		if(!has_buckled_mobs())
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20/I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
-				new /obj/item/stack/rods(loc, 4)
-				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
-				transfer_fingerprints_to(F)
-				qdel(src)
+				deconstruct(TRUE)
 		else
 			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
 	else
 		return ..()
 
 /obj/structure/kitchenspike/attack_hand(mob/user)
-	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !buckled_mobs.len)
+	if(isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(do_mob(user, src, 120))
-			if(buckled_mobs.len) //to prevent spam/queing up attacks
+			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
 				return
@@ -67,13 +84,15 @@
 			L.emote("scream")
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
-			L.buckled = src
-			L.dir = 2
+			L.setDir(2)
 			buckle_mob(L, force=1)
 			var/matrix/m180 = matrix(L.transform)
 			m180.Turn(180)
 			animate(L, transform = m180, time = 3)
 			L.pixel_y = L.get_standard_pixel_y_offset(180)
+	else if (has_buckled_mobs())
+		for(var/mob/living/L in buckled_mobs)
+			user_unbuckle_mob(L, user)
 	else
 		..()
 
@@ -118,3 +137,12 @@
 		unbuckle_mob(M,force=1)
 		M.emote("scream")
 		M.AdjustWeakened(10)
+
+/obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
+	if(disassembled)
+		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
+		transfer_fingerprints_to(F)
+	else
+		new /obj/item/stack/sheet/metal(src.loc, 4)
+	new /obj/item/stack/rods(loc, 4)
+	qdel(src)

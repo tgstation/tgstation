@@ -3,6 +3,7 @@
 	icon = 'icons/mob/animal.dmi'
 	health = 100
 	maxHealth = 100
+	gender = NEUTER
 	var/list/spawned_mobs = list()
 	var/max_mobs = 5
 	var/spawn_delay = 0
@@ -41,6 +42,7 @@
 		return 0
 	spawn_delay = world.time + spawn_time
 	var/mob/living/simple_animal/L = new mob_type(src.loc)
+	L.admin_spawned = admin_spawned	//If we were admin spawned, lets have our children count as that as well.
 	spawned_mobs += L
 	L.nest = src
 	L.faction = src.faction

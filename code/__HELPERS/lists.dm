@@ -63,8 +63,17 @@
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 /proc/is_type_in_typecache(atom/A, list/L)
 	if(!L || !L.len || !A)
+
 		return 0
 	return L[A.type]
+
+//returns a new list with only atoms that are in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache)
+	. = list()
+	for (var/thing in atoms)
+		var/atom/A = thing
+		if (typecache[A.type])
+			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path)
@@ -383,5 +392,24 @@
 		if(islist(.[i]))
 			.[i] = .(.[i])
 
+#if DM_VERSION > 512
+#error Remie said that lummox was adding a way to get a lists
+#error contents via list.values, if that is true remove this
+#error otherwise, update the version and bug lummox
+#elseif
+//Flattens a keyed list into a list of it's contents
+/proc/flatten_list(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= key_list[key]
+
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
+
+#define LAZYINITLIST(L) if (!L) L = list()
+
+#define UNSETEMPTY(L) if (L && !L.len) L = null
+
+#define LAZYLEN(L) ( L ? L.len : 0 )

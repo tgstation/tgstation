@@ -3,15 +3,18 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
 	"cerulean", "sepia", "black", "pyrite")
 
+
 /mob/living/simple_animal/slime
-	name = "baby slime"
+	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
 	ventcrawler = 2
+	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
-	languages = SLIME | HUMAN
+	languages_spoken = SLIME | HUMAN
+	languages_understood = SLIME | HUMAN
 	faction = list("slime")
 
 	harm_intent_damage = 5
@@ -68,15 +71,19 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
+	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
 
 	var/colour = "grey"
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-/mob/living/simple_animal/slime/New()
+/mob/living/simple_animal/slime/New(loc, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
+
+	is_adult = new_is_adult
+
 	if(is_adult)
 		var/datum/action/innate/slime/reproduce/R = new
 		R.Grant(src)
@@ -86,32 +93,34 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		var/datum/action/innate/slime/evolve/E = new
 		E.Grant(src)
 	create_reagents(100)
-	spawn(0)
-		set_colour(colour)
+	set_colour(new_colour)
 	..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
-
-	number = rand(1, 1000)
-	name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
-	real_name = name
+	update_name()
 	slime_mutation = mutation_table(colour)
 	var/sanitizedcolour = replacetext(colour, " ", "")
 	coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	regenerate_icons()
 
+/mob/living/simple_animal/slime/proc/update_name()
+	if(slime_name_regex.Find(name))
+		number = rand(1, 1000)
+		name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
+		real_name = name
+
 /mob/living/simple_animal/slime/proc/random_colour()
 	set_colour(pick(slime_colours))
 
 /mob/living/simple_animal/slime/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
 		if(mood && !stat)
-			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
 	else
 		icon_state = icon_dead
 	..()
@@ -181,7 +190,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				stat(null, "You can evolve!")
 
 		if(stat == UNCONSCIOUS)
-			stat(null,"You are knocked out by high levels of CO2!")
+			stat(null,"You are knocked out by high levels of BZ!")
 		else
 			stat(null,"Power Level: [powerlevel]")
 
@@ -250,14 +259,16 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(..()) //successful larva bite.
 		attacked += 10
 
-/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
+/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == "harm")
-		adjustBruteLoss(15)
 		discipline_slime(user)
+		return ..()
+
 
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
 	if(buckled)
+		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
 			if(prob(60))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
@@ -270,7 +281,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				discipline_slime(M)
 
 		else
-			M.do_attack_animation(src)
 			if(prob(30))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [buckled]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -284,7 +294,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		if(stat == DEAD && surgeries.len)
 			if(M.a_intent == "help")
 				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(M, src))
+					if(S.next_step(M))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
@@ -299,7 +309,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(stat == DEAD && surgeries.len)
 		if(user.a_intent == "help")
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, src))
+				if(S.next_step(user))
 					return 1
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
@@ -410,3 +420,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())
 		return 3
+
+/mob/living/simple_animal/slime/random/New(loc, new_colour, new_is_adult)
+	. = ..(loc, pick(slime_colours), prob(50))

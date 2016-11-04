@@ -4,8 +4,8 @@
 	layer = LYING_MOB_LAYER
 
 /mob/living/simple_animal/hostile/guardian/beam
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage_lower = 7
+	melee_damage_upper = 7
 	attacktext = "shocks"
 	melee_damage_type = BURN
 	attack_sound = 'sound/machines/defib_zap.ogg'
@@ -30,7 +30,7 @@
 				var/datum/beam/C = pick(enemychains)
 				qdel(C)
 				enemychains -= C
-			enemychains += Beam(target,"lightning[rand(1,12)]",'icons/effects/effects.dmi',70, 7,/obj/effect/ebeam/chain)
+			enemychains += Beam(target, "lightning[rand(1,12)]", time=70, maxdistance=7, beam_type=/obj/effect/ebeam/chain)
 
 /mob/living/simple_animal/hostile/guardian/beam/Destroy()
 	removechains()
@@ -39,7 +39,7 @@
 /mob/living/simple_animal/hostile/guardian/beam/Manifest()
 	if(..())
 		if(summoner)
-			summonerchain = Beam(summoner,"lightning[rand(1,12)]",'icons/effects/effects.dmi',INFINITY, INFINITY,/obj/effect/ebeam/chain)
+			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
 		while(loc != summoner)
 			if(successfulshocks > 5)
 				successfulshocks = 0
@@ -57,7 +57,7 @@
 		if(summonerchain && !qdeleted(summonerchain))
 			. += chainshock(summonerchain)
 		else
-			summonerchain = Beam(summoner,"lightning[rand(1,12)]",'icons/effects/effects.dmi',INFINITY, INFINITY,/obj/effect/ebeam/chain)
+			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
 	if(enemychains.len)
 		for(var/chain in enemychains)
 			if(!qdeleted(chain))
@@ -108,5 +108,5 @@
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
 						"<span class='italics'>You hear a heavy electrical crack.</span>" \
 					)
-				L.adjustFireLoss(0.9) //adds up very rapidly
+				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1

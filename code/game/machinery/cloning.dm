@@ -48,6 +48,7 @@
 	radio.recalculateChannels()
 
 /obj/machinery/clonepod/Destroy()
+	go_out()
 	qdel(radio)
 	radio = null
 	qdel(countdown)
@@ -73,7 +74,7 @@
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/scanning_module = 2,
 							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/stack/sheet/glass = 1)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -87,7 +88,7 @@
 /obj/item/weapon/disk/data/New()
 	..()
 	icon_state = "datadisk[rand(0,6)]"
-	overlays += "datadisk_gene"
+	add_overlay("datadisk_gene")
 
 /obj/item/weapon/disk/data/attack_self(mob/user)
 	read_only = !read_only
@@ -97,35 +98,15 @@
 	..()
 	user << "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
 
-//Health Tracker Implant
-
-/obj/item/weapon/implant/health
-	name = "health implant"
-	activated = 0
-	var/healthstring = ""
-
-/obj/item/weapon/implant/health/proc/sensehealth()
-	if (!implanted)
-		return "ERROR"
-	else
-		if(isliving(implanted))
-			var/mob/living/L = implanted
-			healthstring = "<small>Oxygen Deprivation Damage => [round(L.getOxyLoss())]<br />Fire Damage => [round(L.getFireLoss())]<br />Toxin Damage => [round(L.getToxLoss())]<br />Brute Force Damage => [round(L.getBruteLoss())]</small>"
-		if (!healthstring)
-			healthstring = "ERROR"
-		return healthstring
 
 //Clonepod
 
 /obj/machinery/clonepod/examine(mob/user)
 	..()
-	if (isnull(occupant) || !is_operational())
-		return
-	if ((!isnull(occupant)) && (occupant.stat != DEAD))
+	if(mess)
+		user << "It's filled with blood and viscera. You swear you can see it moving..."
+	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
 		user << "Current clone cycle is [round(get_completion())]% complete."
-	else if(mess)
-		user << "It's filled with blood and vicerea. You swear you can see \
-			it moving..."
 
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
@@ -152,24 +133,31 @@
 		var/mob/dead/observer/G = clonemind.get_ghost()
 		if(!G)
 			return FALSE
+	if(clonemind.damnation_type) //Can't clone the damned.
+		addtimer(0, "horrifyingsound", src)
+		mess = 1
+		icon_state = "pod_g"
+		update_icon()
+		return FALSE
 
 	attempting = TRUE //One at a time!!
 	locked = TRUE
 	countdown.start()
 
 	eject_wait = TRUE
-	spawn(30)
-		eject_wait = FALSE
+	addtimer(src, "wait_complete", 30)
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
+	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+
 	if(efficiency > 2)
-		for(var/A in bad_se_blocks)
-			setblock(H.dna.struc_enzymes, A, construct_block(0,2))
+		var/list/unclean_mutations = (not_good_mutations|bad_mutations)
+		H.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
-		randmutg(H)
+		H.randmutvg()
 	if(efficiency < 3 && prob(50))
-		var/mob/M = randmutb(H)
+		var/mob/M = H.randmutb()
 		if(ismob(M))
 			H = M
 
@@ -182,8 +170,8 @@
 
 	icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
+	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
@@ -197,7 +185,6 @@
 			beginning to regenerate in a cloning pod. You will \
 			become conscious when it is complete.</span>"
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 	if(H)
 		H.faction |= factions
 
@@ -206,6 +193,9 @@
 		H.suiciding = FALSE
 	attempting = FALSE
 	return TRUE
+
+/obj/machinery/clonepod/proc/wait_complete()
+	eject_wait = FALSE
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
@@ -218,20 +208,20 @@
 
 	else if((occupant) && (occupant.loc == src))
 		if((occupant.stat == DEAD) || (occupant.suiciding) || occupant.hellbound)  //Autoeject corpses and suiciding dudes.
-			locked = FALSE
-			go_out()
 			connected_message("Clone Rejected: Deceased.")
 			SPEAK("The cloning of <b>[occupant.real_name]</b> has been \
 				aborted due to unrecoverable tissue failure.")
+			locked = FALSE
+			go_out()
 
 		else if(occupant.cloneloss > (100 - heal_level))
 			occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
-			occupant.adjustCloneLoss(-((speed_coeff/2)))
+			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
 
 			//Premature clones may have brain damage.
-			occupant.adjustBrainLoss(-((speed_coeff/2)))
+			occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
 
 			//So clones don't die of oxyloss in a running pod.
 			if (occupant.reagents.get_reagent_amount("salbutamol") < 30)
@@ -321,7 +311,7 @@
 
 	if (mess) //Clean that mess and dump those gibs!
 		mess = FALSE
-		gibs(loc)
+		new /obj/effect/gibspawner/generic(loc)
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		icon_state = "pod_0"
 		return
@@ -332,17 +322,15 @@
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		clonemind.transfer_to(occupant)
 		occupant.grab_ghost()
-		occupant << "<span class='notice'><b>The world is suddenly bright \
-			and sudden and loud!</b><br>\
-			<i>You feel your body weight suddenly, as your mind suddenly \
-			comprehends where you are and what is going on.</i></span>"
-		occupant.flash_eyes()
+		occupant << "<span class='notice'><b>There is a bright flash!</b><br>\
+			<i>You feel like a new being.</i></span>"
+		occupant.flash_act()
 
 	var/turf/T = get_turf(src)
 	occupant.forceMove(T)
 	icon_state = "pod_0"
 	eject_wait = FALSE //If it's still set somehow.
-	occupant.domutcheck() //Waiting until they're out before possible monkeyizing.
+	occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
 	occupant = null
 
 /obj/machinery/clonepod/proc/malfunction()
@@ -355,28 +343,48 @@
 		if(occupant.mind != clonemind)
 			clonemind.transfer_to(occupant)
 		occupant.grab_ghost() // We really just want to make you suffer.
-		flash_color(occupant, color="#960000", time=100)
+		flash_color(occupant, flash_color="#960000", flash_time=100)
 		occupant << "<span class='warning'><b>Agony blazes across your \
 			consciousness as your body is torn apart.</b><br>\
 			<i>Is this what dying is like? Yes it is.</i></span>"
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
-		spawn(40)
-			occupant.ghostize()
-			qdel(occupant)
+		QDEL_IN(occupant, 40)
 
 /obj/machinery/clonepod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
-	if(prob(100/(severity*efficiency))) malfunction()
+	if(prob(100/(severity*efficiency)))
+		malfunction()
 	..()
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
 	if(!qdeleted(src))
+		locked = FALSE
 		go_out()
+
+/obj/machinery/clonepod/handle_atom_del(atom/A)
+	if(A == occupant)
+		occupant = null
+		locked = FALSE
+		go_out()
+
+/obj/machinery/clonepod/proc/horrifyingsound()
+	for(var/i in 1 to 5)
+		playsound(loc,pick('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg'), 100, rand(0.95,1.05))
+		sleep(1)
+	sleep(10)
+	playsound(loc,'sound/hallucinations/wail.ogg',100,1)
+
+/obj/machinery/clonepod/deconstruct(disassembled = TRUE)
+	if(occupant)
+		locked = FALSE
+		go_out()
+	..()
+
 
 /*
  *	Diskette Box

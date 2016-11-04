@@ -7,10 +7,13 @@
 	w_class = 2
 	var/w_class_on = 4
 	heat = 3500
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
-						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
@@ -39,7 +42,7 @@
 	attack_verb_on = list()
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] swings the [src.name] towards \his head! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
@@ -63,6 +66,16 @@
 	if(item_color == null)
 		item_color = pick("red", "blue", "green", "purple")
 
+/obj/item/weapon/melee/energy/sword/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/weapon/melee/energy/sword/process()
+	if(active)
+		open_flame()
+	else
+		STOP_PROCESSING(SSobj, src)
+
 /obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
 		return ..()
@@ -71,7 +84,7 @@
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>"
-		user.take_organ_damage(5,5)
+		user.take_bodypart_damage(5,5)
 	active = !active
 	if (active)
 		force = force_on
@@ -87,6 +100,7 @@
 		w_class = w_class_on
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] is now active.</span>"
+		START_PROCESSING(SSobj, src)
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
@@ -98,11 +112,25 @@
 		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
+		STOP_PROCESSING(SSobj, src)
 	add_fingerprint(user)
-	return
 
 /obj/item/weapon/melee/energy/is_hot()
 	return active * heat
+
+/obj/item/weapon/melee/energy/ignition_effect(atom/A, mob/user)
+	if(!active)
+		return ""
+
+	var/in_mouth = ""
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.wear_mask == src)
+			in_mouth = ", barely missing their nose"
+	. = "<span class='warning'>[user] swings their \
+		[src][in_mouth]. They light [A] in the process.</span>"
+	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+	add_fingerprint(user)
 
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 50
@@ -156,21 +184,19 @@
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
-		if(W == src)
-			user << "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>"
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else
-			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
-			if(src.hacked) // That's right, we'll only check the "original" esword.
-				newSaber.hacked = 1
-				newSaber.item_color = "rainbow"
-			user.unEquip(W)
-			user.unEquip(src)
-			qdel(W)
-			qdel(src)
-			user.put_in_hands(newSaber)
+		user << "<span class='notice'>You attach the ends of the two \
+			energy swords, making a single double-bladed weapon! \
+			You're cool.</span>"
+		var/obj/item/weapon/melee/energy/sword/saber/other_esword = W
+		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
+		if(hacked || other_esword.hacked)
+			newSaber.hacked = TRUE
+			newSaber.item_color = "rainbow"
+		user.unEquip(W)
+		user.unEquip(src)
+		qdel(W)
+		qdel(src)
+		user.put_in_hands(newSaber)
 	else if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
@@ -179,12 +205,7 @@
 
 			if(active)
 				icon_state = "swordrainbow"
-				// Updating overlays, copied from welder code.
-				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
-				if(user.r_hand == src)
-					user.update_inv_r_hand(0)
-				else if(user.l_hand == src)
-					user.update_inv_l_hand(0)
+				user.update_inv_hands()
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
 	else
@@ -211,6 +232,7 @@
 	throw_range = 1
 	w_class = 4//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
+	sharpness = IS_SHARP
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/weapon/melee/energy/blade/New()
@@ -220,7 +242,12 @@
 
 /obj/item/weapon/melee/energy/blade/dropped()
 	..()
-	qdel(src)
 
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)
 	return
+
+/obj/item/weapon/melee/energy/blade/hardlight
+	name = "hardlight blade"
+	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
+	icon_state = "lightblade"
+	item_state = "lightblade"

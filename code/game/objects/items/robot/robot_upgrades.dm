@@ -31,26 +31,7 @@
 	if(..())
 		return
 
-	R.notify_ai(2)
-
-	R.uneq_all()
-	R.hands.icon_state = "nomod"
-	R.icon_state = "robot"
-	qdel(R.module)
-	R.module = null
-
-	R.modtype = "robot"
-	R.designation = "Default"
-	R.updatename("Default")
-
-	R.update_icons()
-	R.update_headlamp()
-
-	R.speed = 0 // Remove upgrades.
-	R.ionpulse = FALSE
-	R.magpulse = FALSE
-
-	R.status_flags |= CANPUSH
+	R.ResetModule()
 
 	return 1
 
@@ -212,6 +193,21 @@
 
 	return 1
 
+/obj/item/borg/upgrade/lavaproof
+	name = "mining cyborg lavaproof tracks"
+	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to mining cyborg tracks, enabling them to withstand exposure to molten rock."
+	icon_state = "ash_plating"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "engineering=4;materials=4;plasmatech=4"
+
+/obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+	R.weather_immunities += "lava"
+	return 1
+
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
 	desc = "This module will repair the cyborg over time."
@@ -243,10 +239,10 @@
 	on = !on
 	if(on)
 		cyborg << "<span class='notice'>You activate the self-repair module.</span>"
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		cyborg << "<span class='notice'>You deactivate the self-repair module.</span>"
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 
 /obj/item/borg/upgrade/selfrepair/update_icon()
@@ -259,7 +255,7 @@
 		icon_state = "cyborg_upgrade5"
 
 /obj/item/borg/upgrade/selfrepair/proc/deactivate()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	on = FALSE
 	update_icon()
 
@@ -269,6 +265,11 @@
 		return
 
 	if(cyborg && (cyborg.stat != DEAD) && on)
+		if(!cyborg.cell)
+			cyborg << "<span class='warning'>Self-repair module deactivated. Please, insert the power cell.</span>"
+			deactivate()
+			return
+
 		if(cyborg.cell.charge < powercost * 2)
 			cyborg << "<span class='warning'>Self-repair module deactivated. Please recharge.</span>"
 			deactivate()

@@ -22,6 +22,7 @@
 	bot_core_type = /obj/machinery/bot_core/medbot
 	window_id = "automed"
 	window_name = "Automatic Medical Unit v1.1"
+	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
 
 	var/obj/item/weapon/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
@@ -83,14 +84,11 @@
 
 	spawn(4)
 		if(skin)
-			overlays += image('icons/obj/aibots.dmi', "medskin_[skin]")
+			add_overlay(image('icons/obj/aibots.dmi', "medskin_[skin]"))
 
 		var/datum/job/doctor/J = new/datum/job/doctor
 		access_card.access += J.get_access()
 		prev_access = access_card.access
-
-	var/datum/atom_hud/medsensor = huds[DATA_HUD_MEDICAL_ADVANCED]
-	medsensor.add_hud_to(src)
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -244,8 +242,10 @@
 	if(assess_patient(H))
 		last_found = world.time
 		if((last_newpatient_speak + 300) < world.time) //Don't spam these messages!
-			var/message = pick("Hey, [H.name]! Hold on, I'm coming.","Wait [H.name]! I want to help!","[H.name], you appear to be injured!")
+			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/mcoming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/mhelp.ogg',"[H.name], you appear to be injured!" = 'sound/voice/minjured.ogg')
+			var/message = pick(messagevoice)
 			speak(message)
+			playsound(loc, messagevoice[message], 50, 0)
 			last_newpatient_speak = world.time
 		return H
 	else
@@ -277,8 +277,10 @@
 
 	if(!patient)
 		if(!shut_up && prob(1))
-			var/message = pick("Radar, put a mask on!","There's always a catch, and it's the best there is.","I knew it, I should've been a plastic surgeon.","What kind of medbay is this? Everyone's dropping like dead flies.","Delicious!")
+			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/mradar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/mcatch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/msurgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/mflies.ogg',"Delicious!" = 'sound/voice/mdelicious.ogg')
+			var/message = pick(messagevoice)
 			speak(message)
+			playsound(loc, messagevoice[message], 50, 0)
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
 		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
 		oldpatient = patient
@@ -400,8 +402,10 @@
 		return
 
 	if(C.stat == 2)
-		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
-		speak(death_message)
+		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/mno.ogg',"Live, damnit! LIVE!" = 'sound/voice/mlive.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/mlost.ogg')
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(loc, messagevoice[message], 50, 0)
 		oldpatient = patient
 		soft_reset()
 		return
@@ -449,8 +453,10 @@
 					break
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
-		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
+		var/list/messagevoice = list("All patched up!" = 'sound/voice/mpatchedup.ogg',"An apple a day keeps me away." = 'sound/voice/mapple.ogg',"Feel better soon!" = 'sound/voice/mfeelbetter.ogg')
+		var/message = pick(messagevoice)
 		speak(message)
+		playsound(loc, messagevoice[message], 50, 0)
 		bot_reset()
 		return
 	else
@@ -508,7 +514,10 @@
 		reagent_glass = null
 
 	if(prob(50))
-		new /obj/item/robot_parts/l_arm(Tsec)
+		new /obj/item/bodypart/l_arm/robot(Tsec)
+
+	if(emagged && prob(25))
+		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)
 
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)

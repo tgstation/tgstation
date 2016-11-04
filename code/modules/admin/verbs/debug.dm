@@ -220,7 +220,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	var/turf/T = mob.loc
 
-	if (!( istype(T, /turf) ))
+	if(!isturf(T))
 		return
 
 	var/datum/gas_mixture/env = T.return_air()
@@ -241,7 +241,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
 		var/mob/living/carbon/human/H = M
 		spawn(0)
@@ -257,11 +257,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		log_admin("[key_name(src)] has blobized [M.key].")
 		var/mob/living/carbon/human/H = M
 		spawn(0)
-			var/mob/camera/blob/B = H.become_overmind()
+			var/mob/camera/blob/B = H.become_overmind(FALSE)
 			B.place_blob_core(B.base_point_rate, -1) //place them wherever they are
 
 	else
@@ -280,7 +280,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("That mob doesn't seem to exist, close the panel and try again.")
 		return
 
-	if(istype(M, /mob/new_player))
+	if(isnewplayer(M))
 		alert("The mob must not be a new_player.")
 		return
 
@@ -301,7 +301,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
 	if(!choice)
 		return 0
-	if(!istype(choice, /mob/dead/observer))
+	if(!isobserver(choice))
 		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
 		if(confirm != "Yes")
 			return 0
@@ -427,7 +427,7 @@ var/global/list/g_fancy_list_of_types = null
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
-	if (istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/worn = H.wear_id
 		var/obj/item/weapon/card/id/id = null
@@ -573,7 +573,6 @@ var/global/list/g_fancy_list_of_types = null
 	if(!ishuman(M))
 		alert("Invalid mob")
 		return
-	//log_admin("[key_name(src)] has alienized [M.key].")
 
 
 	var/list/outfits = list("Naked","Custom","As Job...")
@@ -606,9 +605,7 @@ var/global/list/g_fancy_list_of_types = null
 			return
 
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for (var/obj/item/I in M)
-		if (istype(I, /obj/item/weapon/implant))
-			continue
+	for (var/obj/item/I in M.get_equipped_items())
 		qdel(I)
 	switch(dresscode)
 		if ("Naked")
@@ -630,7 +627,6 @@ var/global/list/g_fancy_list_of_types = null
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..</span>")
-	return
 
 /client/proc/startSinglo()
 
@@ -735,3 +731,61 @@ var/global/list/g_fancy_list_of_types = null
 	if(!holder)
 		return
 	debug_variables(huds[i])
+
+/client/proc/jump_to_ruin()
+	set category = "Debug"
+	set name = "Jump to Ruin"
+	set desc = "Displays a list of all placed ruins to teleport to."
+	if(!holder)
+		return
+	var/list/names = list()
+	for(var/i in ruin_landmarks)
+		var/obj/effect/landmark/ruin/ruin_landmark = i
+		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
+
+		var/count = 1
+		var/name = template.name
+		var/original_name = name
+
+		while(name in names)
+			count++
+			name = "[original_name] ([count])"
+
+		names[name] = ruin_landmark
+
+	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in names
+
+
+	var/obj/effect/landmark/ruin/landmark = names[ruinname]
+
+	if(istype(landmark))
+		var/datum/map_template/ruin/template = landmark.ruin_template
+		usr.forceMove(get_turf(landmark))
+		usr << "<span class='name'>[template.name]</span>"
+		usr << "<span class='italics'>[template.description]</span>"
+
+/client/proc/clear_dynamic_transit()
+	set category = "Debug"
+	set name = "Clear Dynamic Transit"
+	set desc = "Deallocates all transit space, restoring it to round start \
+		conditions."
+	if(!holder)
+		return
+	SSshuttle.clear_transit = TRUE
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
+	feedback_add_details("admin_verb","CDT") // If...
+	log_admin("[key_name(src)] cleared dynamic transit space.")
+
+
+/client/proc/toggle_medal_disable()
+	set category = "Debug"
+	set name = "Toggle Medal Disable"
+	set desc = "Toggles the safety lock on trying to contact the medal hub."
+	if(!holder)
+		return
+
+	global.medals_enabled = !global.medals_enabled
+
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
+	feedback_add_details("admin_verb","TMH") // If...
+	log_admin("[key_name(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")

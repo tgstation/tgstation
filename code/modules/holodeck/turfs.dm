@@ -3,16 +3,17 @@
 	thermal_conductivity = 0
 	broken_states = list("engine")
 	burnt_states = list("engine")
+	flags = NONE
 
-/turf/open/floor/holofloor/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
 
 /turf/open/floor/holofloor/plating
-	name = "Holodeck Projector Floor"
+	name = "holodeck projector floor"
 	icon_state = "engine"
 
 /turf/open/floor/holofloor/plating/burnmix
-	name = "Burn-mix Floor"
+	name = "burn-mix floor"
 	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
 
 /turf/open/floor/holofloor/grass
@@ -38,11 +39,19 @@
 	icon_state = "water"
 
 /turf/open/floor/holofloor/asteroid
-	name = "Asteroid"
+	name = "asteroid"
 	icon_state = "asteroid0"
 
 /turf/open/floor/holofloor/asteroid/New()
 	icon_state = "asteroid[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
+	..()
+
+/turf/open/floor/holofloor/basalt
+	name = "basalt"
+	icon_state = "basalt0"
+
+/turf/open/floor/holofloor/basalt/New()
+	icon_state = "basalt[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
 	..()
 
 /turf/open/floor/holofloor/space
@@ -55,12 +64,12 @@
 	..()
 
 /turf/open/floor/holofloor/hyperspace
-	name = "Hyperspace"
+	name = "hyperspace"
 	icon = 'icons/turf/space.dmi'
-	icon_state = "speedspace_ew_1"
+	icon_state = "speedspace_ns_1"
 
 /turf/open/floor/holofloor/hyperspace/New()
-	icon_state = "speedspace_ew_[(x + 5*y + (y%2+1)*7)%15+1]"
+	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
 	..()
 
 /turf/open/floor/holofloor/hyperspace/ns/New()
@@ -68,7 +77,7 @@
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
 
 /turf/open/floor/holofloor/carpet
-	name = "Carpet"
+	name = "carpet"
 	desc = "Electrically inviting."
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
@@ -79,8 +88,7 @@
 
 /turf/open/floor/holofloor/carpet/New()
 	..()
-	spawn(1)
-		update_icon()
+	addtimer(src, "update_icon", 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()
 	if(!..())
@@ -96,7 +104,7 @@
 	slowdown = 2
 
 /turf/open/floor/holofloor/snow/cold
-	temperature = 180
+	initial_gas_mix = "freon=7500;TEMP=0"
 
 /turf/open/floor/holofloor/asteroid
 	name = "asteroid sand"

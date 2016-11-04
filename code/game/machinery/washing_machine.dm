@@ -76,7 +76,7 @@
 	if(WM.color_source)
 		if(istype(WM.color_source,/obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
-			color = CR.paint_color
+			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/machine_wash(obj/machinery/washing_machine/WM)
 	gib()
@@ -177,7 +177,7 @@
 
 
 /obj/machinery/washing_machine/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(busy)
 		icon_state = "wm_running_[bloody_mess]"
 	else if(bloody_mess)
@@ -186,7 +186,7 @@
 		var/full = contents.len ? 1 : 0
 		icon_state = "wm_[state_open]_[full]"
 	if(panel_open)
-		overlays += image(icon, icon_state = "wm_panel")
+		add_overlay(image(icon, icon_state = "wm_panel"))
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, null, null, W))
@@ -226,7 +226,7 @@
 
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/L = user.pulling
-		if(L.buckled || L.buckled_mobs.len)
+		if(L.buckled || L.has_buckled_mobs())
 			return
 		if(state_open)
 			if(iscorgi(L))
@@ -241,6 +241,9 @@
 		state_open = 0 //close the door
 		update_icon()
 
+/obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()

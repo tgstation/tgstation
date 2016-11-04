@@ -27,6 +27,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
 
 
@@ -38,8 +39,18 @@
 		species_list[S.id] = S.type
 
 	//Surgeries
-	for(var/path in (subtypesof(/datum/surgery)))
+	for(var/path in subtypesof(/datum/surgery))
 		surgeries_list += new path()
+
+	//Materials
+	for(var/path in subtypesof(/datum/material))
+		var/datum/material/D = new path()
+		materials_list[D.id] = D
+
+	//Techs
+	for(var/path in subtypesof(/datum/tech))
+		var/datum/tech/D = new path()
+		tech_list[D.id] = D
 
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 

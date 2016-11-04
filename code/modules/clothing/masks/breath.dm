@@ -11,7 +11,8 @@
 	permeability_coefficient = 0.50
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH
-	burn_state = FIRE_PROOF
+	visor_flags_cover = MASKCOVERSMOUTH
+	resistance_flags = 0
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)

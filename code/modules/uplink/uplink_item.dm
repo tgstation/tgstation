@@ -44,7 +44,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/category = "item category"
 	var/desc = "item description"
 	var/item = null // Path to the item to spawn.
+	var/refund_path = null // Alternative path for refunds, in case the item purchased isn't what is actually refunded (ie: holoparasites).
 	var/cost = 0
+	var/refund_amount = 0 // specified refund amount in case there needs to be a TC penalty for refunds.
 	var/refundable = FALSE
 	var/surplus = 100 // Chance of being included in the surplus crate.
 	var/list/include_modes = list() // Game modes to allow this item in.
@@ -138,13 +140,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/ballistic/automatic/pistol
 	cost = 7
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/weapon/gun/projectile/revolver
+	item = /obj/item/weapon/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
 
@@ -152,7 +154,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Bulldog Shotgun"
 	desc = "A fully-loaded semi-automatic drum-fed shotgun. Compatiable with all 12g rounds. Designed for close \
 			quarter anti-personel engagements."
-	item = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	item = /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
 	cost = 8
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
@@ -161,20 +163,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 			20-round magazine and is compatible with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/c20r
+	item = /obj/item/weapon/gun/ballistic/automatic/c20r
 	cost = 10
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/smg/unrestricted
-	item = /obj/item/weapon/gun/projectile/automatic/c20r/unrestricted
+	item = /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
 	include_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
 			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
-	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
+	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -190,7 +192,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
-	item = /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
+	item = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
@@ -198,7 +200,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
-	item = /obj/item/weapon/gun/projectile/shotgun/boltaction
+	item = /obj/item/weapon/gun/ballistic/shotgun/boltaction
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -233,6 +235,21 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/melee/energy/sword/saber
 	cost = 8
 
+/datum/uplink_item/dangerous/powerfist
+	name = "Power Fist"
+	desc = "The power-fist is a metal gauntlet with a built-in piston-ram powered by an external gas supply.\
+		 Upon hitting a target, the piston-ram will extend foward to make contact for some serious damage. \
+		 Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
+		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
+	item = /obj/item/weapon/melee/powerfist
+	cost = 8
+
+/datum/uplink_item/dangerous/atmosgrenades
+	name = "Atmos Grenades"
+	desc = "A box of three grenades that wreak havoc with the atmosphere of the target area. Capable of engulfing a large area in lit plasma, N2O or Freon. Deploy with extreme caution!"
+	item = /obj/item/weapon/storage/box/syndie_kit/atmosgasgrenades
+	cost = 11
+
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \
@@ -250,7 +267,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
-	item = /obj/item/weapon/gun/projectile/automatic/c20r/toy
+	item = /obj/item/weapon/gun/ballistic/automatic/c20r/toy
 	cost = 5
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -259,7 +276,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Toy Machine Gun"
 	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating \
 			riot grade darts, that can briefly incapacitate someone in just one volley."
-	item = /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
+	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -302,15 +319,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 12
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/guardian
-	name = "Holoparasites"
-	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
-			organic host as a home base and source of fuel."
-	item = /obj/item/weapon/storage/box/syndie_kit/guardian
-	cost = 12
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-	player_minimum = 25
 
 // Ammunition
 /datum/uplink_item/ammo
@@ -519,7 +527,16 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/weapon/sleeping_carp_scroll
 	cost = 17
+	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
+/datum/uplink_item/stealthy_weapons/cqc
+	name = "CQC Manual"
+	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
+	item = /obj/item/weapon/CQC_manual
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 10
+	surplus = 0
 
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
@@ -538,7 +555,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Toy Gun with Riot Darts"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
 			darts effective at incapacitating a target."
-	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
+	item = /obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot
 	cost = 3
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/gang)
@@ -633,6 +650,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 4
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/stealthy_tools/chameleon/nuke
+	cost = 6
+	exclude_modes = list()
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
@@ -681,8 +704,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
-			your stolen goods. Comes with a crowbar and a floor tile inside."
-	item = /obj/item/weapon/storage/backpack/satchel_flat
+			your stolen goods. Comes with a crowbar and a floor tile inside. Properly hidden satchels have been \
+			known to survive intact even beyond the current shift. "
+	item = /obj/item/weapon/storage/backpack/satchel/flat
 	cost = 2
 	surplus = 30
 
@@ -710,6 +734,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/device/flashlight/emp
 	cost = 2
 	surplus = 30
+
+/datum/uplink_item/stealthy_tools/cutouts
+	name = "Adaptive Cardboard Cutouts"
+	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. This pack contains three as well as a \
+	crayon for changing their appearances."
+	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
+	cost = 1
+	surplus = 20
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
@@ -783,7 +815,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Military Belt"
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
-	cost = 3
+	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/medkit
@@ -909,7 +941,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			powerful burst of radiation, which, after a short delay, can incapitate all but the most protected \
 			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls how long the radiation delay is."
-	item = /obj/item/device/rad_laser
+	item = /obj/item/device/healthanalyzer/rad_laser
 	cost = 3
 
 /datum/uplink_item/device_tools/assault_pod
@@ -1095,7 +1127,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items()
+	var/list/uplink_items = get_uplink_items(ticker.mode)
 
 	var/crate_value = 50
 	var/obj/structure/closet/crate/C = new(loc)
@@ -1122,7 +1154,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 0
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items()
+	var/list/uplink_items = get_uplink_items(ticker.mode)
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])

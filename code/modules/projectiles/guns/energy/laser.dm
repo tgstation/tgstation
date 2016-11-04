@@ -33,6 +33,7 @@
 	origin_tech = null
 	ammo_x_offset = 3
 	selfcharge = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/weapon/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
@@ -46,10 +47,7 @@
 	can_charge = 0
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 	origin_tech = null
-
-/obj/item/weapon/gun/energy/laser/cyborg/newshot()
-	..()
-	robocharge()
+	use_cyborg_cell = 1
 
 /obj/item/weapon/gun/energy/laser/cyborg/emp_act()
 	return
@@ -58,6 +56,16 @@
 	name = "scatter laser gun"
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
+
+/obj/item/weapon/gun/energy/laser/scatter/shotty
+	name = "energy shotgun"
+	icon = 'icons/obj/guns/projectile.dmi'
+	icon_state = "cshotgun"
+	item_state = "shotgun"
+	desc = "A combat shotgun gutted and refitted with an internal laser system. Can switch between taser and scattered disabler shots."
+	shaded_charge = 0
+	pin = /obj/item/device/firing_pin/implant/mindshield
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
 
 ///Laser Cannon
 

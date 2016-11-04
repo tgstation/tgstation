@@ -10,6 +10,9 @@ var/global/list/rad_collectors = list()
 	density = 1
 	req_access = list(access_engine_equip)
 //	use_power = 0
+	obj_integrity = 350
+	max_integrity = 350
+	integrity_failure = 80
 	var/obj/item/weapon/tank/internals/plasma/loaded_tank = null
 	var/last_power = 0
 	var/active = 0
@@ -105,12 +108,10 @@ var/global/list/rad_collectors = list()
 		return ..()
 
 
-/obj/machinery/power/rad_collector/ex_act(severity, target)
-	switch(severity)
-		if(2, 3)
-			eject()
-	return ..()
-
+/obj/machinery/power/rad_collector/obj_break(damage_flag)
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+		eject()
+		stat |= BROKEN
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
@@ -119,6 +120,7 @@ var/global/list/rad_collectors = list()
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
+	Z.plane = initial(Z.plane)
 	src.loaded_tank = null
 	if(active)
 		toggle_power()
@@ -136,13 +138,13 @@ var/global/list/rad_collectors = list()
 
 
 /obj/machinery/power/rad_collector/proc/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(loaded_tank)
-		overlays += image('icons/obj/singularity.dmi', "ptank")
+		add_overlay(image('icons/obj/singularity.dmi', "ptank"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		overlays += image('icons/obj/singularity.dmi', "on")
+		add_overlay(image('icons/obj/singularity.dmi', "on"))
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()

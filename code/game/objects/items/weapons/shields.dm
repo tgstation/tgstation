@@ -1,6 +1,7 @@
 /obj/item/weapon/shield
 	name = "shield"
 	block_chance = 50
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 80, acid = 70)
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -31,6 +32,8 @@
 /obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
 		final_block_chance += 30
+	if(attack_type == LEAP_ATTACK)
+		final_block_chance = 100
 	return ..()
 
 /obj/item/weapon/shield/riot/roman
@@ -46,7 +49,7 @@
 	item_state = "buckler"
 	materials = list()
 	origin_tech = "materials=1;combat=3;biotech=2"
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	block_chance = 30
 
 /obj/item/weapon/shield/energy
@@ -72,7 +75,7 @@
 /obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
-		user.take_organ_damage(5)
+		user.take_bodypart_damage(5)
 	active = !active
 	icon_state = "eshield[active]"
 

@@ -21,7 +21,6 @@
 	var/l_set = 0
 	var/l_setshort = 0
 	var/l_hacking = 0
-	var/emagged = 0
 	var/open = 0
 	w_class = 3
 	max_w_class = 2
@@ -42,7 +41,7 @@
 			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
 			src.l_hacking = 1
 			if (do_after(usr, 100/W.toolspeed, target = src))
-				if (prob(40))
+				if (prob(33))
 					src.l_setshort = 1
 					src.l_set = 0
 					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
@@ -62,17 +61,6 @@
 	// -> storage/attackby() what with handle insertion, etc
 	return ..()
 
-/obj/item/weapon/storage/secure/emag_act(mob/user)
-	if(locked)
-		if(!emagged)
-			emagged = 1
-			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
-			sleep(6)
-			src.overlays = null
-			overlays += image('icons/obj/storage.dmi', icon_locking)
-			locked = 0
-			user << "<span class='notice'>You short out the lock on [src].</span>"
-
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
@@ -84,10 +72,8 @@
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
-	if ((src.l_set == 0) && (!src.emagged) && (!src.l_setshort))
+	if ((src.l_set == 0) && (!src.l_setshort))
 		dat += text("<p>\n<b>5-DIGIT PASSCODE NOT SET.<br>ENTER NEW PASSCODE.</b>")
-	if (src.emagged)
-		dat += text("<p>\n<font color=red><b>LOCKING SYSTEM ERROR - 1701</b></font>")
 	if (src.l_setshort)
 		dat += text("<p>\n<font color=red><b>ALERT: MEMORY SYSTEM ERROR - 6040 201</b></font>")
 	message = text("[]", src.code)
@@ -105,21 +91,21 @@
 			if ((src.l_set == 0) && (length(src.code) == 5) && (!src.l_setshort) && (src.code != "ERROR"))
 				src.l_code = src.code
 				src.l_set = 1
-			else if ((src.code == src.l_code) && (src.emagged == 0) && (src.l_set == 1))
+			else if ((src.code == src.l_code) && (src.l_set == 1))
 				src.locked = 0
 				src.overlays = null
-				overlays += image('icons/obj/storage.dmi', icon_opened)
+				add_overlay(image('icons/obj/storage.dmi', icon_opened))
 				src.code = null
 			else
 				src.code = "ERROR"
 		else
-			if ((href_list["type"] == "R") && (src.emagged == 0) && (!src.l_setshort))
+			if ((href_list["type"] == "R") && (!src.l_setshort))
 				src.locked = 1
 				src.overlays = null
 				src.code = null
 				src.close(usr)
 			else
-				src.code += text("[]", href_list["type"])
+				src.code += text("[]", sanitize_text(href_list["type"]))
 				if (length(src.code) > 5)
 					src.code = "ERROR"
 		src.add_fingerprint(usr)

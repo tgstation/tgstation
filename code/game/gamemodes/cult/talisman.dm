@@ -56,6 +56,7 @@
 	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
 	dat += "<HR>"
 	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Summons an arcane tome, used to scribe runes and communicate with other cultists.<BR>"
+	dat += "<A href='?src=\ref[src];rune=metal'>Bar'tea eas!</A> - Provides 5 runed metal.<BR>"
 	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a selected teleportation rune.<BR>"
 	dat += "<A href='?src=\ref[src];rune=emp'>Ta'gh fara'qha fel d'amar det!</A> - Allows you to destroy technology in a short range.<BR>"
 	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
@@ -76,6 +77,12 @@
 				if("newtome")
 					var/obj/item/weapon/tome/T = new(usr)
 					usr.put_in_hands(T)
+				if("metal")
+					if(istype(src, /obj/item/weapon/paper/talisman/supply/weak))
+						usr.visible_message("<span class='cultitalic'>Lesser supply talismans lack the strength to materialize runed metal!</span>")
+						return
+					var/obj/item/stack/sheet/runed_metal/R = new(usr,5)
+					usr.put_in_hands(R)
 				if("teleport")
 					var/obj/item/weapon/paper/talisman/teleport/T = new(usr)
 					usr.put_in_hands(T)
@@ -102,6 +109,7 @@
 				qdel(src)
 
 /obj/item/weapon/paper/talisman/supply/weak
+	cultist_name = "Lesser Supply Talisman"
 	uses = 2
 
 //Rite of Translocation: Same as rune
@@ -139,11 +147,15 @@
 
 	var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
-	if(!actual_selected_rune)
+	if(!src || qdeleted(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
+		return ..(user, 0)
+	var/turf/target = get_turf(actual_selected_rune)
+	if(is_blocked_turf(target))
+		user << "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>"
 		return ..(user, 0)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and they disappear in a flash of red light!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
-	user.forceMove(get_turf(actual_selected_rune))
+	user.forceMove(target)
 	return ..()
 
 
@@ -198,7 +210,7 @@
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(6,user))
-		R.desc = "A rune drawn in crayon."
+		R.desc = "A rune vandalizing the station."
 
 
 //Rite of Disruption: Weaker than rune
@@ -245,16 +257,18 @@
 		else
 			target.Weaken(10)
 			target.Stun(10)
-			target.flash_eyes(1,1)
+			target.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = target
 				S.emp_act(1)
-			if(iscarbon(target))
+			else if(iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.silent += 5
 				C.stuttering += 15
 				C.cultslurring += 15
 				C.Jitter(15)
+			if(is_servant_of_ratvar(target))
+				target.adjustBruteLoss(15)
 		user.drop_item()
 		qdel(src)
 		return
@@ -302,15 +316,21 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 25)
+			if(is_servant_of_ratvar(target))
+				target << "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>"
+				target.emote("scream")
+				target.confused = max(0, target.confused + 3)
+				target.flash_act()
 		qdel(src)
 
 
-//Talisman of Fabrication: Creates a construct shell out of 25 metal sheets.
+//Talisman of Fabrication: Creates a construct shell out of 25 metal sheets, or converts plasteel into runed metal up to 25 times
 /obj/item/weapon/paper/talisman/construction
 	cultist_name = "Talisman of Construction"
 	cultist_desc = "Use this talisman on at least twenty-five metal sheets to create an empty construct shell"
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
+	uses = 25
 
 /obj/item/weapon/paper/talisman/construction/attack_self(mob/living/user)
 	if(iscultist(user))
@@ -321,27 +341,34 @@
 
 /obj/item/weapon/paper/talisman/construction/attack(obj/M,mob/living/user)
 	if(iscultist(user))
-		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
+		user << "<span class='cultitalic'>This talisman will only work on a stack of metal or plasteel sheets!</span>"
 		log_game("Construct talisman failed - not a valid target")
+	else
+		..()
 
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/target, mob/user, proximity_flag, click_parameters)
 	..()
 	if(proximity_flag && iscultist(user))
+		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/metal))
-			var/turf/T = get_turf(target)
 			if(target.use(25))
 				new /obj/structure/constructshell(T)
 				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)
+				invoke(user, 1)
 				qdel(src)
-		if(istype(target, /obj/item/stack/sheet/plasteel))
-			var/quantity = target.amount
-			var/turf/T = get_turf(target)
+			else
+				user << "<span class='warning'>You need more metal to produce a construct shell!</span>"
+		else if(istype(target, /obj/item/stack/sheet/plasteel))
+			var/quantity = min(target.amount, uses)
+			uses -= quantity
 			new /obj/item/stack/sheet/runed_metal(T,quantity)
 			target.use(quantity)
 			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
 			user << sound('sound/effects/magic.ogg',0,1,25)
-			qdel(src)
+			invoke(user, 1)
+			if(uses <= 0)
+				qdel(src)
 		else
 			user << "<span class='warning'>The talisman must be used on metal or plasteel!</span>"
 
@@ -401,8 +428,9 @@
 	desc = "Shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
 	origin_tech = "materials=2;magnets=5"
+	flags = DROPDEL
 
 /obj/item/weapon/restraints/handcuffs/energy/cult/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \
 							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>")
-	qdel(src)
+	. = ..()

@@ -82,6 +82,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
+	/client/proc/set_dynex_scale,
+	/client/proc/drop_dynex_bomb,
 	/client/proc/cinematic,
 	/client/proc/one_click_antag,
 	/client/proc/send_space_ninja,
@@ -97,7 +99,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
-	/client/proc/polymorph_all
+	/client/proc/polymorph_all,
+	/client/proc/show_tip
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -119,7 +122,8 @@ var/list/admin_verbs_server = list(
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
 #endif
-	/client/proc/panicbunker
+	/client/proc/panicbunker,
+	/client/proc/toggle_hub
 
 	)
 var/list/admin_verbs_debug = list(
@@ -141,12 +145,19 @@ var/list/admin_verbs_debug = list(
 	/client/proc/check_bomb_impacts,
 	/proc/machine_upgrade,
 	/client/proc/populate_world,
+	/client/proc/get_dynex_power,		//*debug verbs for dynex explosions.
+	/client/proc/get_dynex_range,		//*debug verbs for dynex explosions.
+	/client/proc/set_dynex_scale,
 	/client/proc/cmd_display_del_log,
 	/client/proc/reset_latejoin_spawns,
 	/client/proc/create_outfits,
+	/client/proc/modify_goals,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
-	/client/proc/map_template_upload
+	/client/proc/map_template_upload,
+	/client/proc/jump_to_ruin,
+	/client/proc/clear_dynamic_transit,
+	/client/proc/toggle_medal_disable
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -191,6 +202,10 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
+	/client/proc/drop_dynex_bomb,
+	/client/proc/get_dynex_range,
+	/client/proc/get_dynex_power,
+	/client/proc/set_dynex_scale,
 	/client/proc/cinematic,
 	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
@@ -296,7 +311,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-		/client/proc/fps,
+		/client/proc/set_server_fps,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin
@@ -344,7 +359,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Aghost"
 	if(!holder)
 		return
-	if(istype(mob,/mob/dead/observer))
+	if(isobserver(mob))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
 		if(!ghost.mind || !ghost.mind.current) //won't do anything if there is no body
@@ -355,7 +370,7 @@ var/list/admin_verbs_hideable = list(
 		ghost.can_reenter_corpse = 1 //force re-entering even when otherwise not possible
 		ghost.reenter_corpse()
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	else if(istype(mob,/mob/new_player))
+	else if(isnewplayer(mob))
 		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
 	else
 		//ghostize
@@ -482,6 +497,7 @@ var/list/admin_verbs_hideable = list(
 	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
 	var/choice = input("What size explosion would you like to produce?") in choices
 	var/turf/epicenter = mob.loc
+
 	switch(choice)
 		if(null)
 			return 0
@@ -506,8 +522,52 @@ var/list/admin_verbs_hideable = list(
 				return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
-	message_admins("<span class='adminnotice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
+	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/drop_dynex_bomb()
+	set category = "Special Verbs"
+	set name = "Drop DynEx Bomb"
+	set desc = "Cause an explosion of varying strength at your location."
+
+	var/ex_power = input("Explosive Power:") as null|num
+	var/turf/epicenter = mob.loc
+	if(ex_power && epicenter)
+		dyn_explosion(epicenter, ex_power)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
+		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
+		feedback_add_details("admin_verb","DDXB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/get_dynex_range()
+	set category = "Debug"
+	set name = "Get DynEx Range"
+	set desc = "Get the estimated range of a bomb, using explosive power."
+
+	var/ex_power = input("Explosive Power:") as null|num
+	var/range = round((2 * ex_power)**DYN_EX_SCALE)
+	usr << "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])"
+
+/client/proc/get_dynex_power()
+	set category = "Debug"
+	set name = "Get DynEx Power"
+	set desc = "Get the estimated required power of a bomb, to reach a specific range."
+
+	var/ex_range = input("Light Explosion Range:") as null|num
+	var/power = (0.5 * ex_range)**(1/DYN_EX_SCALE)
+	usr << "Estimated Explosive Power: [power]"
+
+/client/proc/set_dynex_scale()
+	set category = "Debug"
+	set name = "Set DynEx Scale"
+	set desc = "Set the scale multiplier of dynex explosions. The default is 0.5."
+
+	var/ex_scale = input("New DynEx Scale:") as null|num
+	if(!ex_scale)
+		return
+	DYN_EX_SCALE = ex_scale
+	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
+	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
 /client/proc/give_spell(mob/T in mob_list)
 	set category = "Fun"
@@ -521,16 +581,30 @@ var/list/admin_verbs_hideable = list(
 	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_list
 	if(!S)
 		return
-	S = spell_list[S]
+
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
+
+	S = spell_list[S]
 	if(T.mind)
 		T.mind.AddSpell(new S)
 	else
 		T.AddSpell(new S)
 		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
 
+/client/proc/remove_spell(mob/T in mob_list)
+	set category = "Fun"
+	set name = "Remove Spell"
+	set desc = "Remove a spell from the selected mob."
+
+	if(T && T.mind)
+		var/obj/effect/proc_holder/spell/S = input("Choose the spell to remove", "NO ABRAKADABRA") as null|anything in T.mind.spell_list
+		if(S)
+			T.mind.RemoveSpell(S)
+			log_admin("[key_name(usr)] removed the spell [S] from [key_name(T)].")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed the spell [S] from [key_name(T)].</span>")
+			feedback_add_details("admin_verb","RS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_disease(mob/T in mob_list)
 	set category = "Fun"
@@ -550,10 +624,10 @@ var/list/admin_verbs_hideable = list(
 	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
 	if(!message)
 		return
-	var/templanguages = O.languages
-	O.languages |= ALL
+	var/templanguages = O.languages_spoken
+	O.languages_spoken |= ALL
 	O.say(message)
-	O.languages = templanguages
+	O.languages_spoken = templanguages
 	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>")
 	feedback_add_details("admin_verb","OS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -657,10 +731,13 @@ var/list/admin_verbs_hideable = list(
 			while (!area && --j > 0)
 
 /client/proc/toggle_AI_interact()
- 	set name = "Toggle Admin AI Interact"
- 	set category = "Admin"
- 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
+	set name = "Toggle Admin AI Interact"
+	set category = "Admin"
+	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
- 	AI_Interact = !AI_Interact
- 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
- 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+	AI_Interact = !AI_Interact
+	if(mob && IsAdminGhost(mob))
+		mob.has_unlimited_silicon_privilege = AI_Interact
+
+	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
+	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")

@@ -41,8 +41,9 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/grid_models = list()
 	var/key_len = 0
 
-	dmmRegex.next = 1
-	while(dmmRegex.Find(tfile, dmmRegex.next))
+	var/stored_index = 1
+	while(dmmRegex.Find(tfile, stored_index))
+		stored_index = dmmRegex.next
 
 		// "aa" = (/type{vars=blah})
 		if(dmmRegex.group[1]) // Model
@@ -134,10 +135,11 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
 		return null
 	else
-		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-			var/turf/T = t
-			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
-			T.AfterChange(TRUE)
+		if(!measureOnly)
+			for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+				var/turf/T = t
+				//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
+				T.AfterChange(TRUE)
 		return bounds
 
 /**
@@ -359,13 +361,6 @@ var/global/dmm_suite/preloader/_preloader = new
 	while(position != 0)
 
 	return to_return
-
-//atom creation method that preloads variables at creation
-/atom/New()
-	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		_preloader.load(src)
-
-	. = ..()
 
 /dmm_suite/Destroy()
 	..()

@@ -25,8 +25,8 @@
 
 /obj/singularity/narsie/large/New()
 	..()
-	world << "<span class='narsie'>NAR-SIE HAS RISEN</span>"
-	world << pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
+	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
+	send_to_playing_players(pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'))
 
 	var/area/A = get_area(src)
 	if(A)
@@ -36,7 +36,7 @@
 	narsie_spawn_animation()
 
 	sleep(70)
-	SSshuttle.emergency.request(null, 0.3) // Cannot recall
+	SSshuttle.emergency.request(null, 0.1) // Cannot recall
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
@@ -50,7 +50,7 @@
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	if(istype(target, /obj/structure/clockwork/massive/ratvar))
+	if(istype(target, /obj/structure/destructible/clockwork/massive/ratvar))
 		move(get_dir(src, target)) //Oh, it's you again.
 	else
 		move()
@@ -86,7 +86,7 @@
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
-	for(var/obj/structure/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
+	for(var/obj/structure/destructible/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
 		if(enemy.z != z)
 			continue
 		acquire(enemy)
@@ -151,7 +151,7 @@
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/obj/narsie_spawn_anim.dmi'
-	dir = SOUTH
+	setDir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
 	sleep(11)

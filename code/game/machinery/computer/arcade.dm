@@ -12,7 +12,7 @@
 		/obj/item/clothing/under/syndicate/tacticool			= 2,
 		/obj/item/toy/sword										= 2,
 		/obj/item/toy/gun										= 2,
-		/obj/item/weapon/gun/projectile/shotgun/toy/crossbow	= 2,
+		/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow	= 2,
 		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
 		/obj/item/weapon/storage/crayons						= 2,
 		/obj/item/toy/spinningtoy								= 2,
@@ -38,6 +38,7 @@
 		/obj/item/weapon/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/toy/toy_xeno									= 2,
+		/obj/item/weapon/storage/box/actionfigure				= 1,
 		/obj/item/weapon/restraints/handcuffs/fake              = 2)
 
 /obj/machinery/computer/arcade/New()
@@ -50,9 +51,12 @@
 		new CB.build_path(loc, CB)
 		qdel(src)
 
+#define PULSE_MEDAL "Jackpot"
+
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/weapon/gun/energy/pulse/prize(src)
+		UnlockMedal(PULSE_MEDAL,usr.client)
 
 	if(!contents.len)
 		var/prizeselect = pickweight(prizes)
@@ -64,7 +68,7 @@
 		"<span class='notice'>You hear a chime and a clunk.</span>")
 
 	prize.loc = src.loc
-
+#undef PULSE_MEDAL
 /obj/machinery/computer/arcade/emp_act(severity)
 	..(severity)
 
@@ -495,7 +499,7 @@
 							M.hallucination += 30
 						else
 							usr << "<span class='userdanger'>Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there...</span>"
-							M.take_organ_damage(30)
+							M.take_bodypart_damage(30)
 							playsound(loc, 'sound/weapons/genhit2.ogg', 100, 1)
 					if(ORION_TRAIL_ILLNESS)
 						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
@@ -513,7 +517,7 @@
 						if(prob(75))
 							M.Weaken(3)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
-							M.take_organ_damage(25)
+							M.take_bodypart_damage(25)
 							playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
 						else
 							M << "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>"
@@ -1036,7 +1040,7 @@
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
 	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
-				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+				/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
 				/obj/item/weapon/shield/energy)
 
 /obj/effect/mob_spawn/human/corpse/orionsecurity

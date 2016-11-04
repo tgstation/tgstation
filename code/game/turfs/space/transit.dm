@@ -2,12 +2,28 @@
 	icon_state = "black"
 	dir = SOUTH
 	baseturf = /turf/open/space/transit
+	flags = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
+
+/turf/open/space/transit/south
+	dir = SOUTH
+
+/turf/open/space/transit/north
+	dir = NORTH
 
 /turf/open/space/transit/horizontal
 	dir = WEST
 
+/turf/open/space/transit/west
+	dir = WEST
+
+/turf/open/space/transit/east
+	dir = EAST
+
 /turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
-	if(!AM)
+	throw_atom(AM)
+
+/turf/open/space/transit/proc/throw_atom(atom/movable/AM)
+	if(!AM || istype(AM, /obj/docking_port))
 		return
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
@@ -41,15 +57,14 @@
 	AM.loc = T
 	AM.newtonian_move(dir)
 
-
-
-
 //Overwrite because we dont want people building rods in space.
 /turf/open/space/transit/attackby()
 	return
 
 /turf/open/space/transit/New()
 	update_icon()
+	for(var/atom/movable/AM in src)
+		throw_atom(AM)
 	..()
 
 /turf/open/space/transit/update_icon()

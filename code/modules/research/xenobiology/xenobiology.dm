@@ -133,7 +133,7 @@
 	name = "docility potion"
 	desc = "A potent chemical mix that nullifies a slime's hunger, causing it to become docile and tame."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle19"
+	icon_state = "potsilver"
 
 /obj/item/slimepotion/docility/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
@@ -159,7 +159,7 @@
 	name = "sentience potion"
 	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle19"
+	icon_state = "potpink"
 	origin_tech = "biotech=6"
 	var/list/not_interested = list()
 	var/being_used = 0
@@ -184,16 +184,17 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
-		SM.languages |= HUMAN
-		SM.faction = user.faction
+		SM.languages_spoken |= HUMAN
+		SM.languages_understood |= HUMAN
+		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
-		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
+		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>"
 		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
 	else
@@ -205,7 +206,7 @@
 	name = "consciousness transference potion"
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle6"
+	icon_state = "potorange"
 	origin_tech = "biotech=6"
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
@@ -236,8 +237,9 @@
 
 
 	user.mind.transfer_to(SM)
-	SM.languages = user.languages
-	SM.faction = user.faction
+	SM.languages_spoken = user.languages_spoken
+	SM.languages_understood = user.languages_understood
+	SM.faction = user.faction.Copy()
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
 	SM << "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>"
@@ -249,7 +251,7 @@
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
+	icon_state = "potred"
 
 /obj/item/slimepotion/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
@@ -273,13 +275,13 @@
 	name = "extract enhancer"
 	desc = "A potent chemical mix that will give a slime extract an additional use."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "potpurple"
 
 /obj/item/slimepotion/stabilizer
 	name = "slime stabilizer"
 	desc = "A potent chemical mix that will reduce the chance of a slime mutating."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle15"
+	icon_state = "potcyan"
 
 /obj/item/slimepotion/stabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
@@ -300,7 +302,7 @@
 	name = "slime mutator"
 	desc = "A potent chemical mix that will increase the chance of a slime mutating."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon_state = "potgreen"
 
 /obj/item/slimepotion/mutator/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
@@ -325,7 +327,7 @@
 	name = "slime speed potion"
 	desc = "A potent chemical mix that will remove the slowdown from any item."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon_state = "potyellow"
 	origin_tech = "biotech=5"
 
 /obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
@@ -348,7 +350,8 @@
 		V.vehicle_move_delay = 0
 
 	user <<"<span class='notice'>You slather the red gunk over the [C], making it faster.</span>"
-	C.color = "#FF0000"
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
 
@@ -356,7 +359,7 @@
 	name = "slime chill potion"
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "potblue"
 	origin_tech = "biotech=5"
 	var/uses = 3
 
@@ -373,13 +376,38 @@
 		return ..()
 	user <<"<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>"
 	C.name = "fireproofed [C.name]"
-	C.color = "#000080"
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
 	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	C.heat_protection = C.body_parts_covered
-	C.burn_state = FIRE_PROOF
+	C.resistance_flags |= FIRE_PROOF
 	uses --
 	if(!uses)
 		qdel(src)
+
+/obj/item/slimepotion/genderchange
+	name = "gender change potion"
+	desc = "An interesting chemical mix that changes the biological gender of what its applied to. Cannot be used on things that lack gender entirely."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potlightpink"
+
+/obj/item/slimepotion/genderchange/attack(mob/living/L, mob/user)
+	if(!istype(L) || L.stat == DEAD)
+		user << "<span class='warning'>The potion can only be used on living things!</span>"
+		return
+
+	if(L.gender != MALE && L.gender != FEMALE)
+		user << "<span class='warning'>The potion can only be used on gendered things!</span>"
+		return
+
+	if(L.gender == MALE)
+		L.gender = FEMALE
+		L.visible_message("<span class='notice'>[L] suddenly looks more feminine!</span>")
+	else
+		L.gender = MALE
+		L.visible_message("<span class='notice'>[L] suddenly looks more masculine!</span>")
+	L.regenerate_icons()
+	qdel(src)
 
 ////////Adamantine Golem stuff I dunno where else to put it
 
@@ -392,6 +420,7 @@
 	item_state = "golem"
 	item_color = "golem"
 	flags = ABSTRACT | NODROP
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	has_sensor = 0
 
 /obj/item/clothing/suit/golem
@@ -404,6 +433,7 @@
 	permeability_coefficient = 0.50
 	body_parts_covered = FULL_BODY
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 /obj/item/clothing/shoes/golem
@@ -411,6 +441,7 @@
 	desc = "sturdy adamantine feet"
 	icon_state = "golem"
 	item_state = null
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = NOSLIP | ABSTRACT | NODROP
 
 
@@ -420,7 +451,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	siemens_coefficient = 0
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 
@@ -431,6 +462,7 @@
 	item_state = null
 	siemens_coefficient = 0
 	flags = ABSTRACT | NODROP
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 
 /obj/item/clothing/head/space/golem
@@ -439,7 +471,7 @@
 	item_color = "dermal"
 	name = "golem's head"
 	desc = "a golem's head"
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags = ABSTRACT | NODROP
 
 /obj/effect/golemrune
@@ -448,12 +480,12 @@
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "golem"
-	unacidable = 1
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = TURF_LAYER
 
 /obj/effect/golemrune/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
@@ -497,34 +529,8 @@
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
 
-	var/golem_becomes_antag = FALSE
-	if(iscultist(user)) //If the golem's master is a part of a team antagonist, immediately make the golem one, too
-		ticker.mode.add_cultist(G.mind)
-		golem_becomes_antag = TRUE
-	else if(is_gangster(user))
-		ticker.mode.add_gangster(G.mind, user.mind.gang_datum, TRUE)
-		golem_becomes_antag = TRUE
-	else if(is_handofgod_redcultist(user) || is_handofgod_redprophet(user))
-		ticker.mode.add_hog_follower(G.mind, "Red")
-		golem_becomes_antag = TRUE
-	else if(is_handofgod_bluecultist(user) || is_handofgod_blueprophet(user))
-		ticker.mode.add_hog_follower(G.mind, "Blue")
-		golem_becomes_antag = TRUE
-	else if(is_revolutionary_in_general(user))
-		ticker.mode.add_revolutionary(G.mind)
-		golem_becomes_antag = TRUE
-	else if(is_shadow_or_thrall(user))
-		ticker.mode.add_thrall(G.mind)
-		golem_becomes_antag = TRUE
-	else if(is_servant_of_ratvar(user))
-		add_servant_of_ratvar(G)
-		golem_becomes_antag = TRUE
+	G.mind.enslave_mind_to_creator(user)
 
-	G.mind.enslaved_to = user
-	if(golem_becomes_antag)
-		G << "<span class='userdanger'>Despite your servitude to another cause, your true master remains [user.real_name]. This will never change unless your master's body is destroyed.</span>"
-	if(user.mind.special_role)
-		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
 	log_game("[key_name(G)] was made a golem by [key_name(user)].")
 	log_admin("[key_name(G)] was made a golem by [key_name(user)].")
 	qdel(src)
@@ -541,7 +547,6 @@
 	layer = FLY_LAYER
 	pixel_x = -64
 	pixel_y = -64
-	unacidable = 1
 	mouse_opacity = 0
 	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/list/stopped_atoms = list()
@@ -561,13 +566,13 @@
 	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
-			if(istype(A, /mob/living))
+			if(isliving(A))
 				var/mob/living/M = A
 				if(M in immune)
 					continue
 				M.Stun(10, 1, 1)
 				M.anchored = 1
-				if(istype(M, /mob/living/simple_animal/hostile))
+				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
 					H.AIStatus = AI_OFF
 					H.LoseTarget()
@@ -597,7 +602,7 @@
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
 	M.AdjustStunned(-10, 1, 1)
 	M.anchored = 0
-	if(istype(M, /mob/living/simple_animal/hostile))
+	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M
 		H.AIStatus = initial(H.AIStatus)
 
@@ -622,13 +627,6 @@
 	turf_type = /turf/open/floor/bluespace
 
 
-/turf/open/floor/bluespace
-	slowdown = -1
-	icon_state = "bluespace"
-	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
-	floor_tile = /obj/item/stack/tile/bluespace
-
-
 /obj/item/stack/tile/sepia
 	name = "sepia floor tile"
 	singular_name = "floor tile"
@@ -645,13 +643,6 @@
 	turf_type = /turf/open/floor/sepia
 
 
-/turf/open/floor/sepia
-	slowdown = 2
-	icon_state = "sepia"
-	desc = "Time seems to flow very slowly around these tiles"
-	floor_tile = /obj/item/stack/tile/sepia
-
-
 /obj/item/areaeditor/blueprints/slime
 	name = "cerulean prints"
 	desc = "A one use yet of blueprints made of jelly like organic material. Renaming an area to 'Xenobiology Lab' will extend the reach of the management console."
@@ -662,5 +653,6 @@
 	var/area/A = get_area(src)
 	if(success)
 		for(var/turf/T in A)
-			T.color = "#2956B2"
+			T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
 		qdel(src)

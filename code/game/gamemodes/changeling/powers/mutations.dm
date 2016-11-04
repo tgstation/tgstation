@@ -21,32 +21,28 @@
 	var/weapon_name_simple
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
-	if(check_weapon(user, user.r_hand, 1))
-		return
-	if(check_weapon(user, user.l_hand, 0))
-		return
+	for(var/obj/item/I in user.held_items)
+		if(check_weapon(user, I))
+			return
 	..(user, target)
 
-/obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item, right_hand=1)
+/obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
 	if(istype(hand_item, weapon_type))
 		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 		qdel(hand_item)
 		user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms their [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
-		if(right_hand)
-			user.update_inv_r_hand()
-		else
-			user.update_inv_l_hand()
+		user.update_inv_hands()
 		return 1
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
 	if(!user.drop_item())
-		user << "<span class='warning'>The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>"
+		user << "<span class='warning'>The [user.get_active_held_item()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>"
 		return
 	var/limb_regen = 0
-	if(user.hand) //we regen the arm before changing it into the weapon
-		limb_regen = user.regenerate_limb("l_arm", 1)
-	else
+	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
 		limb_regen = user.regenerate_limb("r_arm", 1)
+	else
+		limb_regen = user.regenerate_limb("l_arm", 1)
 	if(limb_regen)
 		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		user.emote("scream")
@@ -56,8 +52,9 @@
 	return W
 
 /obj/effect/proc_holder/changeling/weapon/on_refund(mob/user)
-	check_weapon(user, user.r_hand, 1)
-	check_weapon(user, user.l_hand, 0)
+	for(var/obj/item/I in user.held_items)
+		check_weapon(user, I)
+
 
 //Parent to space suits and armor.
 /obj/effect/proc_holder/changeling/suit
@@ -146,11 +143,11 @@
 
 /obj/item/weapon/melee/arm_blade
 	name = "arm blade"
-	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter"
+	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = 5.0
 	force = 25
 	throwforce = 0 //Just to be on the safe side
@@ -163,15 +160,12 @@
 	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
-/obj/item/weapon/melee/arm_blade/dropped(mob/user)
-	qdel(src)
-
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
 	if(istype(target, /obj/structure/table))
 		var/obj/structure/table/T = target
-		T.table_destroy()
+		T.deconstruct(FALSE)
 
 	else if(istype(target, /obj/machinery/computer))
 		var/obj/machinery/computer/C = target
@@ -182,24 +176,20 @@
 
 		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
-
-		if(A.hasPower())
-			if(A.locked)
-				user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
-				return
-			user << "<span class='warning'>The airlock's motors are resisting, this may take time...</span>"
-			if(do_after(user, 100, target = A))
-				A.open(2)
-			return
-
-		else if(A.locked)
+		if(A.locked)
 			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
 			return
 
-		else
-			//user.say("Heeeeeeeeeerrre's Johnny!")
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='italics'>You hear a metal screeching sound.</span>")
-			A.open(1)
+		if(A.hasPower())
+			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the airlock open.</span>", \
+			"<span class='italics'>You hear a metal screeching sound.</span>")
+			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			if(!do_after(user, 100, target = A))
+				return
+		//user.say("Heeeeeeeeeerrre's Johnny!")
+		user.visible_message("<span class='warning'>[user] forces the airlock to open with their [src]!</span>", "<span class='warning'>We force the airlock to open.</span>", \
+		"<span class='italics'>You hear a metal screeching sound.</span>")
+		A.open(2)
 
 
 /***************************************\
@@ -230,7 +220,7 @@
 /obj/item/weapon/shield/changeling
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
 	block_chance = 50
@@ -241,9 +231,6 @@
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-
-/obj/item/clothing/head/helmet/space/changeling/dropped()
-	qdel(src)
 
 /obj/item/weapon/shield/changeling/hit_reaction()
 	if(remaining_uses < 1)
@@ -282,18 +269,15 @@
 	name = "flesh mass"
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
-	flags = STOPSPRESSUREDMAGE | NODROP //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
+	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/tank/internals/oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0) //No armor at all.
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90) //No armor at all.
 
 /obj/item/clothing/suit/space/changeling/New()
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-	SSobj.processing += src
-
-/obj/item/clothing/suit/space/changeling/dropped()
-	qdel(src)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/changeling/process()
 	if(ishuman(loc))
@@ -304,13 +288,9 @@
 	name = "flesh mass"
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	flags = STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Again, no THICKMATERIAL.
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-
-/obj/item/clothing/head/helmet/space/changeling/dropped()
-	qdel(src)
-
 
 /***************************************\
 |*****************ARMOR*****************|
@@ -335,9 +315,9 @@
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin."
 	icon_state = "lingarmor"
-	flags = NODROP
+	flags = NODROP | DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0, fire = 90, acid = 90)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
@@ -347,16 +327,10 @@
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
-/obj/item/clothing/suit/armor/changeling/dropped()
-	qdel(src)
-
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
-	flags = NODROP
-	armor = list(melee = 30, bullet = 30, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
+	flags = NODROP | DROPDEL
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0, fire = 90, acid = 90)
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE
-
-/obj/item/clothing/head/helmet/changeling/dropped()
-	qdel(src)

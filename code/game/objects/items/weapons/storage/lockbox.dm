@@ -77,14 +77,14 @@
 	return ..()
 
 /obj/item/weapon/storage/lockbox/loyalty
-	name = "lockbox of loyalty implants"
+	name = "lockbox of mindshield implants"
 	req_access = list(access_security)
 
 /obj/item/weapon/storage/lockbox/loyalty/New()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implanter/loyalty(src)
+		new /obj/item/weapon/implantcase/mindshield(src)
+	new /obj/item/weapon/implanter/mindshield(src)
 
 
 /obj/item/weapon/storage/lockbox/clusterbang
@@ -103,7 +103,7 @@
 	item_state = "syringe_kit"
 	w_class = 3
 	max_w_class = 2
-	storage_slots = 6
+	storage_slots = 10
 	req_access = list(access_captain)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
@@ -116,3 +116,6 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/tie/medal/conduct(src)
 	new /obj/item/clothing/tie/medal/gold/captain(src)
+	new /obj/item/clothing/tie/medal/silver/security(src)
+	new /obj/item/clothing/tie/medal/nobel_science(src)
+	new /obj/item/clothing/tie/medal/gold/heroism(src)

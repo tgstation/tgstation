@@ -6,6 +6,7 @@
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
+	gender = NEUTER
 	health = 50
 	maxHealth = 50
 	melee_damage_lower = 5
@@ -15,6 +16,7 @@
 	faction = list("creature")
 	robust_searching = 1
 	stat_attack = 2
+	obj_damage = 0
 	environment_smash = 0
 	speak_emote = list("squeaks")
 	ventcrawler = 2

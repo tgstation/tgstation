@@ -4,6 +4,7 @@
 	name = "necropolis chest"
 	desc = "It's watching you closely."
 	icon_state = "necrocrate"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
@@ -23,7 +24,7 @@
 		if(5)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(6)
-			new /obj/item/weapon/wingpotion(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/potion/flight(src)
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
@@ -47,7 +48,7 @@
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/stack/sheet/runed_metal/fifty(src)
+			new /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
@@ -82,24 +83,21 @@
 		user << "<span class='warning'>The wisp has gone missing!</span>"
 		return
 	if(wisp.loc == src)
-		user << "<span class='notice'>You release the wisp. It begins to \
-			bob around your head.</span>"
+		user << "<span class='notice'>You release the wisp. It begins to bob around your head.</span>"
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
 		feedback_add_details("wisp_lantern","F") // freed
 
 	else
-		user << "<span class='notice'>You return the wisp to the lantern.\
-			</span>"
+		user << "<span class='notice'>You return the wisp to the lantern.</span>"
 
 		if(wisp.orbiting)
-			var/atom/A = wisp.orbiting
-			if(istype(A, /mob/living))
+			var/atom/A = wisp.orbiting.orbiting
+			if(isliving(A))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
-				M << "<span class='notice'>Your vision returns to \
-					normal.</span>"
+				M << "<span class='notice'>Your vision returns to normal.</span>"
 
 		wisp.stop_orbit()
 		wisp.loc = src
@@ -115,8 +113,7 @@
 		if(wisp.loc == src)
 			qdel(wisp)
 		else
-			wisp.visible_message("<span class='notice'>[wisp] has a sad \
-				feeling for a moment, then it passes.</span>")
+			wisp.visible_message("<span class='notice'>[wisp] has a sad feeling for a moment, then it passes.</span>")
 	..()
 
 //Wisp Lantern
@@ -192,19 +189,23 @@
 	weaken = 3
 	var/chain
 
-/obj/item/ammo_casing/magic/hook/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+/obj/item/projectile/hook/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
 	..()
-	var/obj/item/projectile/hook/P = BB
-	spawn(1)
-		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30)
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
-		L.forceMove(get_turf(firer))
-		qdel(chain)
+		if(!L.anchored)
+			L.visible_message("<span class='danger'>[L] is snagged by [firer]'s hook!</span>")
+			L.forceMove(get_turf(firer))
+
+/obj/item/projectile/hook/Destroy()
+	qdel(chain)
+	return ..()
+
 
 //Immortality Talisman
 /obj/item/device/immortality_talisman
@@ -212,7 +213,11 @@
 	desc = "A dread talisman that can render you completely invulnerable."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "talisman"
+	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
+
+/datum/action/item_action/immortality
+	name = "Immortality"
 
 /obj/item/device/immortality_talisman/Destroy(force)
 	if(force)
@@ -224,11 +229,11 @@
 	if(cooldown < world.time)
 		feedback_add_details("immortality_talisman","U") // usage
 		cooldown = world.time + 600
-		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in their place!</span>")
+		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
-		Z.dir = user.dir
+		Z.setDir(user.dir)
 		user.forceMove(Z)
 		user.notransform = 1
 		user.status_flags |= GODMODE
@@ -243,7 +248,6 @@
 /obj/effect/immortality_talisman
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
-	burn_state = LAVA_PROOF
 	var/can_destroy = FALSE
 
 /obj/effect/immortality_talisman/attackby()
@@ -333,11 +337,7 @@
 				var/obj/screen/inventory/hand/H = over_object
 				if(!M.unEquip(src))
 					return
-				switch(H.slot_id)
-					if(slot_r_hand)
-						M.put_in_r_hand(src)
-					if(slot_l_hand)
-						M.put_in_l_hand(src)
+				M.put_in_hand(src, H.held_index)
 
 			add_fingerprint(usr)
 
@@ -350,7 +350,7 @@
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	keytype = /obj/item/weapon/oar
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/vehicle/lavaboat/relaymove(mob/user, direction)
 	var/turf/next = get_step(src, direction)
@@ -370,7 +370,7 @@
 	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
 	w_class = 3
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /datum/crafting_recipe/oar
 	name = "goliath bone oar"
@@ -411,48 +411,68 @@
 	vehicle_move_delay = 1
 
 //Potion of Flight
-
-/obj/item/weapon/wingpotion
-	name = "strange elixir"
-	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says 'erqo'hyy tvi'rf lbh jv'atf'"
+/obj/item/weapon/reagent_containers/glass/bottle/potion
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "potionflask"
-	w_class = 2
-	var/used = FALSE
 
-/obj/item/weapon/wingpotion/attack_self(mob/living/M)
-	if(used)
-		M << "<span class='notice'>The flask is empty, what a shame.</span>"
+/obj/item/weapon/reagent_containers/glass/bottle/potion/flight
+	name = "strange elixir"
+	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
+	list_reagents = list("flightpotion" = 5)
+
+/obj/item/weapon/reagent_containers/glass/bottle/potion/update_icon()
+	if(reagents.total_volume)
+		icon_state = "potionflask"
 	else
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			CHECK_DNA_AND_SPECIES(C)
-			if(C.wear_mask)
-				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
-			else
-				if(ishumanbasic(C)) //implying xenoshumans are holy
-					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
-				else
-					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
-					C.set_species(/datum/species/angel)
-					playsound(loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
-					C.adjustBruteLoss(20)
-					C.emote("scream")
-				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
-				src.used = TRUE
+		icon_state = "potionflask_empty"
 
+/datum/reagent/flightpotion
+	name = "Flight Potion"
+	id = "flightpotion"
+	description = "Strange mutagenic compound of unknown origins."
+	reagent_state = LIQUID
+	color = "#FFEBEB"
+
+/datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(!ishumanbasic(M) || reac_volume < 5) // implying xenohumans are holy
+			if(method == INGEST && show_message)
+				M << "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>"
+			return ..()
+
+		M << "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>"
+		M.set_species(/datum/species/angel)
+		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
+		M.adjustBruteLoss(20)
+		M.emote("scream")
+	..()
+
+
+
+
+///Bosses
+
+
+
+
+//Dragon
 
 /obj/structure/closet/crate/necropolis/dragon
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/New()
 	..()
-	var/loot = rand(1,2)
+	var/loot = rand(1,4)
 	switch(loot)
 		if(1)
 			new /obj/item/weapon/melee/ghost_sword(src)
 		if(2)
 			new /obj/item/weapon/lava_staff(src)
+		if(3)
+			new /obj/item/weapon/spellbook/oneuse/sacredflame(src)
+			new /obj/item/weapon/gun/magic/wand/fireball(src)
+		if(4)
+			new /obj/item/weapon/dragons_blood(src)
 
 /obj/item/weapon/melee/ghost_sword
 	name = "spectral blade"
@@ -472,14 +492,14 @@
 /obj/item/weapon/melee/ghost_sword/New()
 	..()
 	spirits = list()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
 		G.invisibility = initial(G.invisibility)
 	spirits.Cut()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	. = ..()
 
@@ -489,7 +509,7 @@
 		return
 	user << "You call out for aid, attempting to summon spirits to your side."
 
-	notify_ghosts("[user] is raising their [src], calling for your help!",
+	notify_ghosts("[user] is raising [user.p_their()] [src], calling for your help!",
 		enter_link="<a href=?src=\ref[src];orbit=1>(Click to help)</a>",
 		source = user, action=NOTIFY_ORBIT)
 
@@ -509,8 +529,16 @@
 	var/turf/T = get_turf(src)
 	var/list/contents = T.GetAllContents()
 	var/mob/dead/observer/current_spirits = list()
-	for(var/mob/dead/observer/G in dead_mob_list)
-		if(G.orbiting in contents)
+	var/list/orbiters = list()
+	for(var/thing in contents)
+		var/atom/A = thing
+		if (A.orbiters)
+			orbiters += A.orbiters
+
+	for(var/thing in orbiters)
+		var/datum/orbit/O = thing
+		if (isobserver(O.orbiter))
+			var/mob/dead/observer/G = O.orbiter
 			ghost_counter++
 			G.invisibility = 0
 			current_spirits |= G
@@ -549,11 +577,14 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,3)
+	var/random = rand(1,4)
 
 	switch(random)
 		if(1)
-			user << "<span class='danger'>Other than tasting terrible, nothing really happens.</span>"
+			user << "<span class='danger'>Your appearence morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>"
+			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
+			H.eye_color = "fee5a3"
+			H.set_species(/datum/species/lizard)
 		if(2)
 			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
 			H.set_species(/datum/species/skeleton)
@@ -561,6 +592,9 @@
 			user << "<span class='danger'>You don't feel so good...</span>"
 			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
 			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
+		if(4)
+			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
+			H.weather_immunities |= "lava"
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	qdel(src)
@@ -578,7 +612,7 @@
 	stage2	= list("Your skin feels scaley.")
 	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
 	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon.</span>")
+	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
 	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
 
@@ -595,10 +629,15 @@
 	w_class = 4
 	force = 25
 	damtype = BURN
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hitsound = 'sound/weapons/sear.ogg'
 	var/turf_type = /turf/open/floor/plating/lava/smooth
-	var/cooldown = 200
+	var/transform_string = "lava"
+	var/reset_turf_type = /turf/open/floor/plating/asteroid/basalt
+	var/reset_string = "basalt"
+	var/create_cooldown = 100
+	var/create_delay = 30
+	var/reset_cooldown = 50
 	var/timer = 0
 	var/banned_turfs
 
@@ -615,8 +654,291 @@
 		return
 
 	if(target in view(user.client.view, get_turf(user)))
-		var/turf/open/O = target
-		user.visible_message("<span class='danger'>[user] turns \the [O] into lava!</span>")
-		O.ChangeTurf(turf_type)
-		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
-		timer = world.time + cooldown
+
+		var/turf/open/T = get_turf(target)
+		if(!istype(T))
+			return
+		if(!istype(T, turf_type))
+			var/obj/effect/overlay/temp/lavastaff/L = PoolOrNew(/obj/effect/overlay/temp/lavastaff, T)
+			L.alpha = 0
+			animate(L, alpha = 255, time = create_delay)
+			user.visible_message("<span class='danger'>[user] points [src] at [T]!</span>")
+			timer = world.time + create_delay + 1
+			if(do_after(user, create_delay, target = T))
+				user.visible_message("<span class='danger'>[user] turns \the [T] into [transform_string]!</span>")
+				message_admins("[key_name_admin(user)] fired the lava staff at [get_area(target)]. [ADMIN_COORDJMP(T)]")
+				log_game("[key_name(user)] fired the lava staff at [get_area(target)] [COORD(T)].")
+				T.ChangeTurf(turf_type)
+				timer = world.time + create_cooldown
+				qdel(L)
+			else
+				timer = world.time
+				qdel(L)
+				return
+		else
+			user.visible_message("<span class='danger'>[user] turns \the [T] into [reset_string]!</span>")
+			T.ChangeTurf(reset_turf_type)
+			timer = world.time + reset_cooldown
+		playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+
+/obj/effect/overlay/temp/lavastaff
+	icon_state = "lavastaff_warn"
+	duration = 50
+
+///Bubblegum
+
+/obj/item/mayhem
+	name = "mayhem in a bottle"
+	desc = "A magically infused bottle of blood, the scent of which will drive anyone nearby into a murderous frenzy."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+/obj/item/mayhem/attack_self(mob/user)
+	for(var/mob/living/carbon/human/H in range(7,user))
+		spawn()
+			var/obj/effect/mine/pickup/bloodbath/B = new(H)
+			B.mineEffect(H)
+	user << "<span class='notice'>You shatter the bottle!</span>"
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	qdel(src)
+
+/obj/structure/closet/crate/necropolis/bubblegum
+	name = "bubblegum chest"
+
+/obj/structure/closet/crate/necropolis/bubblegum/New()
+	..()
+	var/loot = rand(1,3)
+	switch(loot)
+		if(1)
+			new /obj/item/mayhem(src)
+		if(2)
+			new /obj/item/blood_contract(src)
+		if(3)
+			new /obj/item/weapon/gun/magic/staff/spellblade(src)
+
+/obj/item/blood_contract
+	name = "blood contract"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll2"
+	color = "#FF0000"
+	desc = "Mark your target for death. "
+	var/used = FALSE
+
+/obj/item/blood_contract/attack_self(mob/user)
+	if(used)
+		return
+	used = TRUE
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in player_list
+
+	if(!(isliving(choice)))
+		user << "[choice] is already dead!"
+		used = FALSE
+		return
+	else
+
+		var/mob/living/L = choice
+
+		message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
+
+		var/datum/objective/survive/survive = new
+		survive.owner = L.mind
+		L.mind.objectives += survive
+		L << "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>"
+		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
+		spawn()
+			var/obj/effect/mine/pickup/bloodbath/B = new(L)
+			B.mineEffect(L)
+
+		for(var/mob/living/carbon/human/H in player_list)
+			if(H == L)
+				continue
+			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>"
+			H.put_in_hands_or_del(new /obj/item/weapon/kitchen/knife/butcher(H))
+
+	qdel(src)
+
+//Hierophant
+
+/obj/item/weapon/hierophant_staff
+	name = "Hierophant's staff"
+	desc = "A large club with intense magic power infused into it."
+	icon_state = "hierophant_staff"
+	item_state = "hierophant_staff"
+	icon = 'icons/obj/guns/magic.dmi'
+	slot_flags = SLOT_BACK
+	w_class = 4
+	force = 20
+	hitsound = "swing_hit"
+	//hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	actions_types = list(/datum/action/item_action/vortex_recall, /datum/action/item_action/toggle_unfriendly_fire)
+	var/cooldown_time = 20 //how long the cooldown between non-melee ranged attacks is
+	var/chaser_cooldown = 101 //how long the cooldown between firing chasers at mobs is
+	var/chaser_timer = 0 //what our current chaser cooldown is
+	var/timer = 0 //what our current cooldown is
+	var/blast_range = 3 //how long the cardinal blast's walls are
+	var/obj/effect/hierophant/rune //the associated rune we teleport to
+	var/teleporting = FALSE //if we ARE teleporting
+	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
+
+/obj/item/weapon/hierophant_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	..()
+	var/turf/T = get_turf(target)
+	if(!T || timer > world.time)
+		return
+	timer = world.time + CLICK_CD_MELEE //by default, melee attacks only cause melee blasts, and have an accordingly short cooldown
+	if(proximity_flag)
+		addtimer(src, "aoe_burst", 0, FALSE, T, user)
+		add_logs(user, target, "fired 3x3 blast at", src)
+	else
+		if(ismineralturf(target) && get_dist(user, target) < 6) //target is minerals, we can hit it(even if we can't see it)
+			addtimer(src, "cardinal_blasts", 0, FALSE, T, user)
+			timer = world.time + cooldown_time
+		else if(target in view(5, get_turf(user))) //if the target is in view, hit it
+			timer = world.time + cooldown_time
+			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
+				chaser_timer = world.time + chaser_cooldown
+				PoolOrNew(/obj/effect/overlay/temp/hierophant/chaser, list(get_turf(user), user, target, 1.5, friendly_fire_check))
+				add_logs(user, target, "fired a chaser at", src)
+			else
+				addtimer(src, "cardinal_blasts", 0, FALSE, T, user) //otherwise, just do cardinal blast
+				add_logs(user, target, "fired cardinal blast at", src)
+		else
+			user << "<span class='warning'>That target is out of range!</span>" //too far away
+
+/obj/item/weapon/hierophant_staff/ui_action_click(mob/user, actiontype)
+	if(actiontype == /datum/action/item_action/toggle_unfriendly_fire) //toggle friendly fire...
+		friendly_fire_check = !friendly_fire_check
+		user << "<span class='warning'>You toggle friendly fire [friendly_fire_check ? "off":"on"]!</span>"
+		return
+	if(!user.is_holding(src)) //you need to hold the staff to teleport
+		user << "<span class='warning'>You need to hold the staff in your hands to [rune ? "teleport with it":"create a rune"]!</span>"
+		return
+	if(!rune)
+		if(isturf(user.loc))
+			user.visible_message("<span class='hierophant_warning'>[user] holds [src] carefully in front of [user.p_them()], moving it in a strange pattern...</span>", \
+			"<span class='notice'>You start creating a hierophant rune to teleport to...</span>")
+			timer = world.time + 51
+			if(do_after(user, 50, target = user))
+				var/turf/T = get_turf(user)
+				playsound(T,'sound/magic/Blind.ogg', 200, 1, -4)
+				PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, user))
+				var/obj/effect/hierophant/H = new/obj/effect/hierophant(T)
+				rune = H
+				user.update_action_buttons_icon()
+				user.visible_message("<span class='hierophant_warning'>[user] creates a strange rune beneath [user.p_them()]!</span>", \
+				"<span class='hierophant'>You create a hierophant rune, which you can teleport yourself and any allies to at any time!</span>\n\
+				<span class='notice'>You can remove the rune to place a new one by striking it with the staff.</span>")
+			else
+				timer = world.time
+		else
+			user << "<span class='warning'>You need to be on solid ground to produce a rune!</span>"
+		return
+	if(get_dist(user, rune) <= 2) //rune too close abort
+		user << "<span class='warning'>You are too close to the rune to teleport to it!</span>"
+		return
+	if(is_blocked_turf(get_turf(rune)))
+		user << "<span class='warning'>The rune is blocked by something, preventing teleportation!</span>"
+		return
+	teleporting = TRUE //start channel
+	user.update_action_buttons_icon()
+	user.visible_message("<span class='hierophant_warning'>[user] starts to glow faintly...</span>")
+	timer = world.time + 50
+	if(do_after(user, 40, target = user) && rune)
+		var/turf/T = get_turf(rune)
+		var/turf/source = get_turf(user)
+		if(is_blocked_turf(T))
+			teleporting = FALSE
+			user << "<span class='warning'>The rune is blocked by something, preventing teleportation!</span>"
+			user.update_action_buttons_icon()
+			return
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(source, user))
+		playsound(T,'sound/magic/blink.ogg', 200, 1)
+		//playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
+		playsound(source,'sound/magic/blink.ogg', 200, 1)
+		//playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
+		if(!do_after(user, 3, target = user) || !rune) //no walking away shitlord
+			teleporting = FALSE
+			if(user)
+				user.update_action_buttons_icon()
+			return
+		if(is_blocked_turf(T))
+			teleporting = FALSE
+			user << "<span class='warning'>The rune is blocked by something, preventing teleportation!</span>"
+			user.update_action_buttons_icon()
+			return
+		add_logs(user, rune, "teleported self from ([source.x],[source.y],[source.z]) to")
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(T, user))
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/teleport, list(source, user))
+		for(var/t in RANGE_TURFS(1, T))
+			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //blasts produced will not hurt allies
+			B.damage = 30
+		for(var/t in RANGE_TURFS(1, source))
+			var/obj/effect/overlay/temp/hierophant/blast/B = PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, TRUE)) //but absolutely will hurt enemies
+			B.damage = 30
+		for(var/mob/living/L in range(1, source))
+			addtimer(src, "teleport_mob", 0, FALSE, source, L, T, user) //regardless, take all mobs near us along
+		sleep(6) //at this point the blasts detonate
+	else
+		timer = world.time
+	teleporting = FALSE
+	if(user)
+		user.update_action_buttons_icon()
+
+/obj/item/weapon/hierophant_staff/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
+	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
+	if(!turf_to_teleport_to || is_blocked_turf(turf_to_teleport_to))
+		return
+	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
+	sleep(1)
+	if(!M)
+		return
+	M.visible_message("<span class='hierophant_warning'>[M] fades out!</span>")
+	sleep(2)
+	if(!M)
+		return
+	M.forceMove(turf_to_teleport_to)
+	sleep(1)
+	if(!M)
+		return
+	animate(M, alpha = 255, time = 2, easing = EASE_IN) //fade IN
+	sleep(1)
+	if(!M)
+		return
+	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
+	if(user != M)
+		add_logs(user, M, "teleported", null, "from ([source.x],[source.y],[source.z])")
+
+/obj/item/weapon/hierophant_staff/proc/cardinal_blasts(turf/T, mob/living/user) //fire cardinal cross blasts with a delay
+	if(!T)
+		return
+	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph/cardinal, list(T, user))
+	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
+	sleep(2)
+	PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(T, user, friendly_fire_check))
+	for(var/d in cardinal)
+		addtimer(src, "blast_wall", 0, FALSE, T, d, user)
+
+/obj/item/weapon/hierophant_staff/proc/blast_wall(turf/T, dir, mob/living/user) //make a wall of blasts blast_range tiles long
+	if(!T)
+		return
+	var/range = blast_range
+	var/turf/previousturf = T
+	var/turf/J = get_step(previousturf, dir)
+	for(var/i in 1 to range)
+		if(!J)
+			return
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(J, user, friendly_fire_check))
+		previousturf = J
+		J = get_step(previousturf, dir)
+
+/obj/item/weapon/hierophant_staff/proc/aoe_burst(turf/T, mob/living/user) //make a 3x3 blast around a target
+	if(!T)
+		return
+	PoolOrNew(/obj/effect/overlay/temp/hierophant/telegraph, list(T, user))
+	playsound(T,'sound/magic/blink.ogg', 200, 1)
+	//playsound(T,'sound/effects/bin_close.ogg', 200, 1)
+	sleep(2)
+	for(var/t in RANGE_TURFS(1, T))
+		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, friendly_fire_check))

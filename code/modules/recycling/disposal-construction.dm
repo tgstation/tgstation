@@ -11,6 +11,8 @@
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	level = 2
+	obj_integrity = 200
+	max_integrity = 200
 	var/ptype = 0
 
 	var/dpdir = 0	// directions as disposalpipe
@@ -24,7 +26,7 @@
 	..(loc)
 	if(pipe_type)
 		ptype = pipe_type
-	dir = direction
+	setDir(direction)
 
 // update iconstate and dpdir due to dir and type
 /obj/structure/disposalconstruct/update_icon()
@@ -103,7 +105,7 @@
 		usr << "<span class='warning'>You must unfasten the pipe before rotating it!</span>"
 		return
 
-	dir = turn(dir, -90)
+	setDir(turn(dir, -90))
 	update_icon()
 
 /obj/structure/disposalconstruct/AltClick(mob/user)
@@ -127,7 +129,7 @@
 		usr << "<span class='warning'>You must unfasten the pipe before flipping it!</span>"
 		return
 
-	dir = turn(dir, 180)
+	setDir(turn(dir, 180))
 	switch(ptype)
 		if(DISP_JUNCTION)
 			ptype = DISP_JUNCTION_FLIP
@@ -182,11 +184,11 @@
 			nicetype = "pipe"
 
 	var/turf/T = loc
-	if(T.intact && istype(T, /turf/open/floor))
+	if(T.intact && isfloorturf(T))
 		user << "<span class='warning'>You can only attach the [nicetype] if the floor plating is removed!</span>"
 		return
 
-	if(!ispipe && istype(T, /turf/closed/wall))
+	if(!ispipe && iswallturf(T))
 		user << "<span class='warning'>You can't build [nicetype]s on walls, only disposal pipes!</span>"
 		return
 

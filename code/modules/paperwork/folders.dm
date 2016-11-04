@@ -5,7 +5,7 @@
 	icon_state = "folder"
 	w_class = 2
 	pressure_resistance = 2
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
@@ -25,9 +25,9 @@
 
 
 /obj/item/weapon/folder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += "folder_paper"
+		add_overlay("folder_paper")
 
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user, params)

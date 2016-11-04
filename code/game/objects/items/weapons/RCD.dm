@@ -21,6 +21,8 @@ RCD
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 160
@@ -28,6 +30,8 @@ RCD
 	var/mode = 1
 	var/canRturf = 0
 	var/airlock_type = /obj/machinery/door/airlock
+	var/window_type = /obj/structure/window/fulltile
+
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
 	var/sheetmultiplier	= 4			 //Controls the amount of matter added for each glass/metal sheet, triple for plasteel
 	var/plasteelmultiplier = 3 //Plasteel is worth 3 times more than glass or metal
@@ -40,8 +44,11 @@ RCD
 	var/wallcost = 16
 	var/floorcost = 2
 	var/grillecost = 4
+	var/girderupgradecost = 8
 	var/windowcost = 8
+	var/reinforcedwindowcost = 12
 	var/airlockcost = 16
+	var/decongirdercost = 13
 	var/deconwallcost = 26
 	var/deconfloorcost = 33
 	var/decongrillecost = 4
@@ -55,15 +62,36 @@ RCD
 	var/grilledelay = 40
 	var/windowdelay = 40
 	var/airlockdelay = 50
+	var/decongirderdelay = 20
 	var/deconwalldelay = 40
 	var/deconfloordelay = 50
 	var/decongrilledelay = null //as rapid as wirecutters
 	var/deconwindowdelay = 50
 	var/deconairlockdelay = 50
 
+	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \
+		the RCD blinks yellow.</span>"
+
 /obj/item/weapon/rcd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	return (BRUTELOSS)
+
+/obj/item/weapon/rcd/verb/toggle_window_type()
+	set name = "Toggle Window Type"
+	set category = "Object"
+	set src in usr // What does this do?
+
+	var window_type_name
+
+	if (window_type == /obj/structure/window/fulltile)
+		window_type = /obj/structure/window/reinforced/fulltile
+		window_type_name = "reinforced glass"
+	else
+		window_type = /obj/structure/window/fulltile
+		window_type_name = "glass"
+
+	usr << "<span class='notice'>You change \the [src]'s window mode \
+		to [window_type_name].</span>"
 
 /obj/item/weapon/rcd/verb/change_airlock_access()
 	set name = "Change Airlock Access"
@@ -210,22 +238,22 @@ RCD
 
 /obj/item/weapon/rcd/New()
 	..()
+
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	src.spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	rcd_list += src
-	return
 
 
 /obj/item/weapon/rcd/Destroy()
 	qdel(spark_system)
 	spark_system = null
 	rcd_list -= src
-	return ..()
+	. = ..()
 
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
-	if(isrobot(user))	//Make sure cyborgs can't load their RCDs
+	if(iscyborg(user))	//Make sure cyborgs can't load their RCDs
 		return
 	var/loaded = 0
 	if(istype(W, /obj/item/weapon/rcd_ammo))
@@ -288,7 +316,6 @@ RCD
 
 	if(prob(20))
 		src.spark_system.start()
-	return
 
 /obj/item/weapon/rcd/proc/activate()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -296,14 +323,14 @@ RCD
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return 0
-	if(istype(A,/area/shuttle)||istype(A,/turf/open/space/transit))
+	if(istype(A,/turf/open/space/transit))
 		return 0
-	if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window)))
+	if(!(isturf(A) || istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/window) || istype(A, /obj/structure/girder)))
 		return 0
 
 	switch(mode)
 		if(1)
-			if(istype(A, /turf/open/space))
+			if(isspaceturf(A))
 				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
 					user << "<span class='notice'>You start building floor...</span>"
@@ -312,20 +339,36 @@ RCD
 					return 1
 				return 0
 
-			if(istype(A, /turf/open/floor))
+			if(isfloorturf(A))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
 					user << "<span class='notice'>You start building wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
+						if(!istype(F)) return 0
 						if(!useResource(wallcost, user)) return 0
 						activate()
 						F.ChangeTurf(/turf/closed/wall)
 						return 1
 				return 0
 
+			if(istype(A, /obj/structure/girder))
+				var/turf/open/floor/F = get_turf(A)
+				if(checkResource(girderupgradecost, user))
+					user << "<span class='notice'>You start finishing the \
+						wall...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, walldelay, target = A))
+						if(!istype(A)) return 0
+						if(!useResource(girderupgradecost, user)) return 0
+						activate()
+						qdel(A)
+						F.ChangeTurf(/turf/closed/wall)
+						return 1
+				return 0
+
 		if(2)
-			if(istype(A, /turf/open/floor))
+			if(isfloorturf(A))
 				if(checkResource(airlockcost, user))
 					var/door_check = 1
 					for(var/obj/machinery/door/D in A)
@@ -365,12 +408,12 @@ RCD
 				return 0
 
 		if(3)
-			if(istype(A, /turf/closed/wall))
+			if(iswallturf(A))
 				var/turf/closed/wall/W = A
 				if(istype(W, /turf/closed/wall/r_wall) && !canRturf)
 					return 0
 				if(checkResource(deconwallcost, user))
-					user << "<span class='notice'>You start deconstructing wall...</span>"
+					user << "<span class='notice'>You start deconstructing [W]...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconwalldelay, target = A))
 						if(!useResource(deconwallcost, user)) return 0
@@ -379,7 +422,7 @@ RCD
 						return 1
 				return 0
 
-			if(istype(A, /turf/open/floor))
+			if(isfloorturf(A))
 				var/turf/open/floor/F = A
 				if(istype(F, /turf/open/floor/engine) && !canRturf)
 					return 0
@@ -429,15 +472,28 @@ RCD
 						return 1
 					return 0
 
+			if(istype(A, /obj/structure/girder))
+				if(useResource(decongirdercost, user))
+					user << "<span class='notice'>You start deconstructing \
+						[A]...</span>"
+					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					if(do_after(user, decongirderdelay, target = A))
+						if(!useResource(decongirdercost, user)) return 0
+						activate()
+						qdel(A)
+						return 1
+
 		if (4)
-			if(istype(A, /turf/open/floor))
+			if(isfloorturf(A))
 				if(checkResource(grillecost, user))
-					for(var/obj/structure/grille/GRILLE in A)
+					if(locate(/obj/structure/grille) in A)
 						user << "<span class='warning'>There is already a grille there!</span>"
 						return 0
 					user << "<span class='notice'>You start building a grille...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, grilledelay, target = A))
+						if(locate(/obj/structure/grille) in A)
+							return 0
 						if(!useResource(grillecost, user)) return 0
 						activate()
 						var/obj/structure/grille/G = new/obj/structure/grille(A)
@@ -446,14 +502,24 @@ RCD
 					return 0
 				return 0
 			if(istype(A, /obj/structure/grille))
-				if(checkResource(windowcost, user))
-					user << "<span class='notice'>You start building a window...</span>"
+				var wname = "window?"
+				var cost = 0
+				if (window_type == /obj/structure/window/fulltile)
+					cost = windowcost
+					wname = "window"
+				else if (window_type == /obj/structure/window/reinforced/fulltile)
+					cost = reinforcedwindowcost
+					wname = "reinforced window"
+
+				if(checkResource(cost, user))
+					user << "<span class='notice'>You start building a \
+						[wname]...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, windowdelay, target = A))
 						if(locate(/obj/structure/window) in A.loc) return 0
-						if(!useResource(windowcost, user)) return 0
+						if(!useResource(cost, user)) return 0
 						activate()
-						var/obj/structure/window/WD = new/obj/structure/window/fulltile(A.loc)
+						var /obj/structure/window/WD = new window_type(A.loc)
 						WD.anchored = 1
 						return 1
 					return 0
@@ -465,27 +531,62 @@ RCD
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
+		if(user)
+			user << no_ammo_message
 		return 0
 	matter -= amount
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
-	return matter >= amount
-/obj/item/weapon/rcd/borg/useResource(amount, mob/user)
-	if(!isrobot(user))
-		return 0
-	return user:cell:use(amount * 72) //borgs get 1.3x the use of their RCDs
+	. = matter >= amount
+	if(!. && user)
+		user << no_ammo_message
+	return .
 
-/obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
-	if(!isrobot(user))
-		return 0
-	return user:cell:charge >= (amount * 72)
+/obj/item/weapon/rcd/proc/detonate_pulse()
+	audible_message("<span class='danger'><b>[src] begins to vibrate and \
+		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
+		vibrating violently!</b></span>")
+	// 5 seconds to get rid of it
+	addtimer(src, "detonate_pulse_explode", 50)
+
+/obj/item/weapon/rcd/proc/detonate_pulse_explode()
+	explosion(src, 0, 0, 3, 1, flame_range = 1)
+	qdel(src)
+
 
 /obj/item/weapon/rcd/borg/New()
 	..()
+	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = 1
+
+/obj/item/weapon/rcd/borg/useResource(amount, mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		if(user)
+			user << no_ammo_message
+		return 0
+	. = borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
+	if(!. && user)
+		user << no_ammo_message
+	return .
+
+/obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		if(user)
+			user << no_ammo_message
+		return 0
+	. = borgy.cell.charge >= (amount * 72)
+	if(!. && user)
+		user << no_ammo_message
+	return .
 
 /obj/item/weapon/rcd/loaded
 	matter = 160

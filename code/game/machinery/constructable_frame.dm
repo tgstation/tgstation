@@ -4,6 +4,8 @@
 	icon_state = "box_0"
 	density = 1
 	anchored = 1
+	obj_integrity = 250
+	max_integrity = 250
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/state = 1
 
@@ -11,6 +13,16 @@
 	..()
 	if(circuit)
 		user << "It has \a [circuit] installed."
+
+
+/obj/structure/frame/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 5)
+		if(circuit)
+			circuit.forceMove(loc)
+			circuit = null
+	qdel(src)
+
 
 /obj/structure/frame/machine
 	name = "machine frame"
@@ -66,10 +78,10 @@
 		if(1)
 			if(istype(P, /obj/item/weapon/circuitboard/machine))
 				user << "<span class='warning'>The frame needs wiring first!</span>"
-
+				return
 			else if(istype(P, /obj/item/weapon/circuitboard))
 				user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
-
+				return
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
@@ -83,9 +95,9 @@
 							icon_state = "box_1"
 				else
 					user << "<span class='warning'>You need five length of cable to wire the frame!</span>"
-					return
+				return
 			if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, P.usesound, 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
 				if(do_after(user, 40/P.toolspeed, target = src))
@@ -94,21 +106,24 @@
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
 						M.add_fingerprint(user)
 						qdel(src)
+				return
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40/P.toolspeed, target = src))
 					if(state == 1)
 						user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 						anchored = !anchored
+				return
 
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src.loc, P.usesound, 75, 1)
 				if(do_after(user, 40/P.toolspeed, target = src))
 					user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 					anchored = !anchored
+				return
 
 			if(istype(P, /obj/item/weapon/circuitboard/machine))
 				if(!anchored)
@@ -126,21 +141,24 @@
 				components = list()
 				req_components = B.req_components.Copy()
 				update_namelist()
+				return
 
 			else if(istype(P, /obj/item/weapon/circuitboard))
 				user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
+				return
 
 			if(istype(P, /obj/item/weapon/wirecutters))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src.loc, P.usesound, 50, 1)
 				user << "<span class='notice'>You remove the cables.</span>"
 				state = 1
 				icon_state = "box_0"
 				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
 				A.amount = 5
+				return
 
 		if(3)
 			if(istype(P, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src.loc, P.usesound, 50, 1)
 				state = 2
 				circuit.loc = src.loc
 				components.Remove(circuit)
@@ -155,6 +173,7 @@
 				req_components = null
 				components = null
 				icon_state = "box_1"
+				return
 
 			if(istype(P, /obj/item/weapon/screwdriver))
 				var/component_check = 1
@@ -163,9 +182,9 @@
 						component_check = 0
 						break
 				if(component_check)
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					playsound(src.loc, P.usesound, 50, 1)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
-					new_machine.construction()
+					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
 					new_machine.component_parts = list()
@@ -175,6 +194,7 @@
 					circuit.loc = null
 					new_machine.RefreshParts()
 					qdel(src)
+				return
 
 			if(istype(P, /obj/item/weapon/storage/part_replacer) && P.contents.len && get_req_components_amt())
 				var/obj/item/weapon/storage/part_replacer/replacer = P
@@ -224,12 +244,25 @@
 						if(!user.drop_item())
 							break
 						user << "<span class='notice'>You add [P] to [src].</span>"
-						P.loc = src
+						P.forceMove(src)
 						components += P
 						req_components[I]--
 						return 1
 				user << "<span class='warning'>You cannot add that to the machine!</span>"
 				return 0
+	if(user.a_intent == "harm")
+		return ..()
+
+
+/obj/structure/frame/machine/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(state >= 2)
+			new /obj/item/stack/cable_coil(loc , 5)
+		for(var/X in components)
+			var/obj/item/I = X
+			I.forceMove(loc)
+	..()
+
 
 
 //Machine Frame Circuit Boards
@@ -239,18 +272,26 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 
 /obj/item/weapon/circuitboard/machine
 	var/list/req_components = null
+	// Components required by the machine.
+	// Example: list(/obj/item/weapon/stock_parts/matter_bin = 5)
+	var/list/def_components = null
+	// Default replacements for req_components, to be used in apply_default_parts instead of req_components types
+	// Example: list(/obj/item/weapon/stock_parts/matter_bin = /obj/item/weapon/stock_parts/matter_bin/super)
 
 /obj/item/weapon/circuitboard/machine/proc/apply_default_parts(obj/machinery/M)
 	if(!req_components)
 		return
 
-	M.component_parts = list(src)
+	M.component_parts = list(src) // List of components always contains a board
 	loc = null
 
 	for(var/comp_path in req_components)
 		var/comp_amt = req_components[comp_path]
 		if(!comp_amt)
 			continue
+
+		if(def_components && def_components[comp_path])
+			comp_path = def_components[comp_path]
 
 		if(ispath(comp_path, /obj/item/stack))
 			M.component_parts += new comp_path(null, comp_amt)
@@ -261,49 +302,11 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	M.RefreshParts()
 
 
-/obj/item/weapon/circuitboard/machine/smes
-	name = "circuit board (SMES)"
-	build_path = /obj/machinery/power/smes
-	origin_tech = "programming=3;powerstorage=3;engineering=3"
-	req_components = list(
-							/obj/item/stack/cable_coil = 5,
-							/obj/item/weapon/stock_parts/cell = 5,
-							/obj/item/weapon/stock_parts/capacitor = 1)
+/obj/item/weapon/circuitboard/machine/abductor
+	name = "alien board (Report This)"
+	icon_state = "abductor_mod"
+	origin_tech = "programming=5;abductor=3"
 
-/obj/item/weapon/circuitboard/machine/teleporter_hub
-	name = "circuit board (Teleporter Hub)"
-	build_path = /obj/machinery/teleport/hub
-	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 3,
-							/obj/item/weapon/stock_parts/matter_bin = 1)
-
-/obj/item/weapon/circuitboard/machine/teleporter_station
-	name = "circuit board (Teleporter Station)"
-	build_path = /obj/machinery/teleport/station
-	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 2,
-							/obj/item/weapon/stock_parts/capacitor = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
-
-/obj/item/weapon/circuitboard/machine/chem_dispenser
-	name = "circuit board (Portable Chem Dispenser)"
-	build_path = /obj/machinery/chem_dispenser/constructable
-	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/cell = 1)
-
-/obj/item/weapon/circuitboard/machine/telesci_pad
-	name = "circuit board (Telepad)"
-	build_path = /obj/machinery/telepad
-	origin_tech = "programming=4;engineering=3;plasmatech=4;bluespace=4"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 2,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+/obj/item/weapon/circuitboard/machine/clockwork
+	name = "clockwork board (Report This)"
+	icon_state = "clock_mod"

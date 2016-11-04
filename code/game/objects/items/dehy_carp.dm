@@ -36,11 +36,13 @@
 	flick("carp_swell", src)
 	//Wait for animation to end
 	sleep(6)
+	if(!src || qdeleted(src))//we got toasted while animating
+		return
 	//Make space carp
 	var/mob/living/M = new mobtype(get_turf(src))
 	//Make carp non-hostile to user, and their allies
 	if(owner)
-		var/list/factions = owner.faction
+		var/list/factions = owner.faction.Copy()
 		for(var/F in factions)
 			if(F == "neutral")
 				factions -= F

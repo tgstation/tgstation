@@ -7,11 +7,14 @@
 
 
 /mob/living/carbon/alien/humanoid/drone/New()
+	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
+	..()
+
+
+/mob/living/carbon/alien/humanoid/drone/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/acid
-
-	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	..()
 
 /mob/living/carbon/alien/humanoid/drone/movement_delay()
@@ -36,7 +39,7 @@
 	if(!isturf(user.loc))
 		user << "<span class='notice'>You can't evolve here!</span>"
 		return 0
-	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal))
+	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal))
 		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return 1

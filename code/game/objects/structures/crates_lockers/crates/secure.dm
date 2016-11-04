@@ -4,16 +4,38 @@
 	icon_state = "securecrate"
 	secure = 1
 	locked = 1
-	health = 1000
+	obj_integrity = 500
+	max_integrity = 500
+	armor = list(melee = 30, bullet = 50, laser = 50, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
+	var/tamperproof = 0
+
+/obj/structure/closet/crate/secure/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < 25)
+		return 0
+	. = ..()
 
 /obj/structure/closet/crate/secure/update_icon()
 	..()
 	if(broken)
-		overlays += "securecrateemag"
+		add_overlay("securecrateemag")
 	else if(locked)
-		overlays += "securecrater"
+		add_overlay("securecrater")
 	else
-		overlays += "securecrateg"
+		add_overlay("securecrateg")
+
+/obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	if(prob(tamperproof))
+		boom()
+	..()
+
+
+/obj/structure/closet/crate/secure/proc/boom(mob/user)
+	if(user)
+		user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
+	for(var/atom/movable/AM in src)
+		qdel(AM)
+	explosion(get_turf(src), 0, 1, 5, 5)
+	qdel(src)
 
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."

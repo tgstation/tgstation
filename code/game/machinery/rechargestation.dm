@@ -24,8 +24,10 @@
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/capacitor = 2,
-							/obj/item/weapon/stock_parts/cell/high = 1,
+							/obj/item/weapon/stock_parts/cell = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
+	def_components = list(
+		/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
@@ -51,16 +53,9 @@
 	open_machine()
 
 /obj/machinery/recharge_station/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
-	if(occupant)
-		occupant.emp_act(severity)
-	open_machine()
-	..(severity)
-
-/obj/machinery/recharge_station/ex_act(severity, target)
-	if(occupant)
+	if(!(stat & (BROKEN|NOPOWER)))
+		if(occupant)
+			occupant.emp_act(severity)
 		open_machine()
 	..()
 
@@ -132,7 +127,7 @@
 		var/mob/living/silicon/robot/R = occupant
 		restock_modules()
 		if(repairs)
-			R.heal_organ_damage(repairs, repairs - 1)
+			R.heal_bodypart_damage(repairs, repairs - 1)
 		if(R.cell)
 			R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
 

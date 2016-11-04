@@ -12,6 +12,7 @@
 	w_class = 3
 	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=2;engineering=2"
+	resistance_flags = FIRE_PROOF
 	var/status = 0
 	var/throw_amount = 100
 	var/lit = 0	//on or off
@@ -34,12 +35,12 @@
 
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return null
 	var/turf/location = loc
 	if(istype(location, /mob/))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		if(M.is_holding(src))
 			location = M.loc
 	if(isturf(location)) //start a fire if possible
 		location.hotspot_expose(700, 2)
@@ -47,13 +48,13 @@
 
 
 /obj/item/weapon/flamethrower/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(igniter)
-		overlays += "+igniter[status]"
+		add_overlay("+igniter[status]")
 	if(ptank)
-		overlays += "+ptank"
+		add_overlay("+ptank")
 	if(lit)
-		overlays += "+lit"
+		add_overlay("+lit")
 		item_state = "flamethrower_1"
 	else
 		item_state = "flamethrower_0"
@@ -62,7 +63,7 @@
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, flag)
 	if(flag) return // too close
 	// Make sure our user is still holding us
-	if(user && user.get_active_hand() == src)
+	if(user && user.get_active_held_item() == src)
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
@@ -106,7 +107,7 @@
 
 	else if(istype(W,/obj/item/weapon/tank/internals/plasma))
 		if(ptank)
-			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
+			user << "<span class='notice'>There is already a plasma tank loaded in [src]!</span>"
 			return
 		if(!user.unEquip(W))
 			return
@@ -149,7 +150,7 @@
 			return
 		lit = !lit
 		if(lit)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 			if(!warned_admins)
 				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has lit a flamethrower.")
 				warned_admins = 1

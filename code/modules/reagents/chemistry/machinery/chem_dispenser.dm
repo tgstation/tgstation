@@ -8,6 +8,7 @@
 	use_power = 1
 	idle_power_usage = 40
 	interact_offline = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
@@ -43,6 +44,13 @@
 		"bromine",
 		"stable_plasma"
 	)
+	var/list/emagged_reagents = list(
+		"space_drugs",
+		"morphine",
+		"carpotoxin",
+		"mine_salve",
+		"toxin"
+	)
 
 /obj/machinery/chem_dispenser/New()
 	..()
@@ -65,13 +73,28 @@
 	if(energy != oldenergy)
 		use_power(2500)
 
+/obj/machinery/chem_dispenser/emag_act(mob/user)
+	if(emagged)
+		user << "<span class='warning'>\The [src] has no functional safeties to emag.</span>"
+		return
+	user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
+	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
+	emagged = 1
+
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_dispenser/blob_act(obj/effect/blob/B)
-	if(prob(50))
-		qdel(src)
+/obj/machinery/chem_dispenser/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/chem_dispenser/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		cut_overlays()
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -138,9 +161,9 @@
 				. = TRUE
 		if("eject")
 			if(beaker)
-				beaker.loc = loc
+				beaker.forceMove(loc)
 				beaker = null
-				overlays.Cut()
+				cut_overlays()
 				. = TRUE
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
@@ -164,8 +187,8 @@
 		if(!icon_beaker)
 			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 		icon_beaker.pixel_x = rand(-10,5)
-		overlays += icon_beaker
-	else if(user.a_intent != "harm")
+		add_overlay(icon_beaker)
+	else if(user.a_intent != "harm" && !istype(I, /obj/item/weapon/card/emag))
 		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
 	else
 		return ..()
@@ -224,15 +247,20 @@
 
 /obj/machinery/chem_dispenser/constructable/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/chem_dispenser
+	name = "circuit board (Portable Chem Dispenser)"
+	build_path = /obj/machinery/chem_dispenser/constructable
+	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/cell = 1)
+	def_components = list(/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0
@@ -264,7 +292,7 @@
 		return
 	return ..()
 
-/obj/machinery/chem_dispenser/constructable/deconstruction()
+/obj/machinery/chem_dispenser/constructable/on_deconstruction()
 	if(beaker)
 		beaker.loc = loc
 		beaker = null
@@ -296,6 +324,13 @@
 		"tomatojuice",
 		"lemonjuice"
 	)
+	emagged_reagents = list(
+		"thirteenloko",
+		"whiskeycola",
+		"mindbreaker",
+		"tirizene"
+	)
+
 
 
 /obj/machinery/chem_dispenser/drinks/beer
@@ -316,10 +351,19 @@
 		"vermouth",
 		"cognac",
 		"ale",
-		"absinthe"
+		"absinthe",
+		"hcider"
 	)
+	emagged_reagents = list(
+		"ethanol",
+		"iron",
+		"minttoxin",
+		"atomicbomb"
+	)
+
 
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
+	emagged_reagents = list("plasma")

@@ -6,13 +6,17 @@
 
 /datum/action
 	var/name = "Generic Action"
+	var/desc = null
 	var/obj/target = null
 	var/check_flags = 0
 	var/processing = 0
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
-	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
+	var/buttontooltipstyle = ""
+
+	var/icon_icon = 'icons/mob/actions.dmi'
+	var/button_icon_state = "default"
 	var/mob/owner
 
 /datum/action/New(Target)
@@ -20,6 +24,9 @@
 	button = new
 	button.linked_action = src
 	button.name = name
+	button.actiontooltipstyle = buttontooltipstyle
+	if(desc)
+		button.desc = desc
 
 /datum/action/Destroy()
 	if(owner)
@@ -87,13 +94,13 @@
 			return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.overlays.Cut()
-	if(button_icon && button_icon_state)
+	current_button.cut_overlays()
+	if(icon_icon && button_icon_state)
 		var/image/img
-		img = image(button_icon, current_button, button_icon_state)
+		img = image(icon_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
-		current_button.overlays += img
+		current_button.add_overlay(img)
 
 
 
@@ -123,18 +130,21 @@
 	return 1
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.overlays.Cut()
+	current_button.cut_overlays()
 
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
-		// of the item appereance
+		// of the item appearence
 		..(current_button)
 	else if(target)
 		var/obj/item/I = target
-		var/old = I.layer
+		var/old_layer = I.layer
+		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
-		current_button.overlays += I
-		I.layer = old
+		I.plane = FLOAT_PLANE //^ what that guy said
+		current_button.add_overlay(I)
+		I.layer = old_layer
+		I.plane = old_plane
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -182,10 +192,54 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
-/datum/action/item_action/toggle_flame
-	name = "Summon/Dismiss Ratvar's Flame"
+/datum/action/item_action/toggle_unfriendly_fire
+	name = "Toggle Friendly Fire \[ON\]"
+	desc = "Toggles if the staff causes friendly fire."
+	button_icon_state = "vortex_ff_on"
 
-/datum/action/item_action/toggle_flame/IsAvailable()
+/datum/action/item_action/toggle_unfriendly_fire/Trigger()
+	if(..())
+		UpdateButtonIcon()
+
+/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon()
+	if(istype(target, /obj/item/weapon/hierophant_staff))
+		var/obj/item/weapon/hierophant_staff/H = target
+		if(H.friendly_fire_check)
+			button_icon_state = "vortex_ff_off"
+			name = "Toggle Friendly Fire \[OFF\]"
+			button.name = name
+		else
+			button_icon_state = "vortex_ff_on"
+			name = "Toggle Friendly Fire \[ON\]"
+			button.name = name
+	..()
+
+/datum/action/item_action/vortex_recall
+	name = "Vortex Recall"
+	desc = "Recall yourself, and anyone nearby, to an attuned hierophant rune at any time.<br>If no such rune exists, will produce a rune at your location."
+	button_icon_state = "vortex_recall"
+
+/datum/action/item_action/vortex_recall/IsAvailable()
+	if(istype(target, /obj/item/weapon/hierophant_staff))
+		var/obj/item/weapon/hierophant_staff/H = target
+		if(H.teleporting)
+			return 0
+	return ..()
+
+/datum/action/item_action/clock
+	background_icon_state = "bg_clock"
+	buttontooltipstyle = "clockcult"
+
+/datum/action/item_action/clock/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	return ..()
+
+/datum/action/item_action/clock/toggle_visor
+	name = "Create Judicial Marker"
+	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
+
+/datum/action/item_action/clock/toggle_visor/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
@@ -194,6 +248,20 @@
 			return 0
 	return ..()
 
+/datum/action/item_action/clock/hierophant
+	name = "Hierophant Network"
+	desc = "Allows you to communicate with other Servants."
+	button_icon_state = "hierophant_slab"
+
+/datum/action/item_action/clock/guvax
+	name = "Guvax"
+	desc = "Allows you to convert an adjacent target nonservant. Click your slab to disable."
+	button_icon_state = "guvax_capacitor"
+
+/datum/action/item_action/clock/vanguard
+	name = "Vanguard"
+	desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
+	button_icon_state = "vanguard_cogwheel"
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
@@ -275,9 +343,10 @@
 	..()
 
 /datum/action/item_action/toggle_research_scanner/ApplyIcon(obj/screen/movable/action_button/current_button)
+	current_button.cut_overlays()
 	if(button_icon && button_icon_state)
 		var/image/img = image(button_icon, current_button, "scan_mode")
-		current_button.overlays += img
+		current_button.add_overlay(img)
 
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
@@ -381,3 +450,15 @@
 	if(target && procname)
 		call(target, procname)(usr)
 	return 1
+
+//Stickmemes
+/datum/action/item_action/stickmen
+	name = "Summon Stick Minions"
+	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	button_icon_state = "art_summon"
+
+//surf_ss13
+/datum/action/item_action/bhop
+	name = "Activate Jump Boots"
+	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
+	button_icon_state = "jetboot"

@@ -20,11 +20,11 @@
 		if(chargelevel != newlevel)
 			chargelevel = newlevel
 
-			overlays.Cut()
-			overlays += "ccharger-o[newlevel]"
+			cut_overlays()
+			add_overlay("ccharger-o[newlevel]")
 
 	else
-		overlays.Cut()
+		cut_overlays()
 
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
@@ -91,7 +91,7 @@
 	if(!charging)
 		return
 
-	charging.loc = loc
+	charging.forceMove(loc)
 	user << "<span class='notice'>You telekinetically remove [charging] from [src].</span>"
 
 	removecell()

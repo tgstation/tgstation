@@ -41,8 +41,8 @@
 		else
 			dat += "This device is not authorized to promote.<br>"
 	else
-		if(isnum(gang.dom_timer))
-			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dom_timer] seconds remain</B></font></center>"
+		if(gang.is_dominating)
+			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 
 		var/isboss = (user.mind == gang.bosses[1])
 		var/points = gang.points
@@ -157,7 +157,7 @@
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
 				dat += "<b>Station Dominator</b><br>"
-			dat += "<i>(Estimated Takeover Time: [round(get_domination_time(gang)/60,0.1)] minutes)</i><br>"
+			dat += "<i>(Estimated Takeover Time: [round(determine_domination_time(gang)/60,0.1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -194,11 +194,11 @@
 					pointcost = 10
 			if("necklace")
 				if(gang.points >=1)
-					item_type = /obj/item/clothing/tie/dope_necklace
+					item_type = /obj/item/clothing/neck/necklace/dope
 					pointcost = 1
 			if("pistol")
 				if(gang.points >= 25)
-					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
+					item_type = /obj/item/weapon/gun/ballistic/automatic/pistol
 					pointcost = 25
 			if("10mmammo")
 				if(gang.points >= 10)
@@ -206,7 +206,7 @@
 					pointcost = 10
 			if("uzi")
 				if(gang.points >= 60)
-					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
+					item_type = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
 					pointcost = 60
 			if("9mmammo")
 				if(gang.points >= 40)
@@ -258,7 +258,7 @@
 
 				var/area/usrarea = get_area(usr.loc)
 				var/usrturf = get_turf(usr.loc)
-				if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || usr.z != 1)
+				if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
 					usr << "<span class='warning'>You can only use this on the station!</span>"
 					return
 

@@ -2,9 +2,9 @@ var/datum/subsystem/vote/SSvote
 
 /datum/subsystem/vote
 	name = "Vote"
-	can_fire = 1
 	wait = 10
-	priority = -1
+
+	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING|SS_NO_INIT
 
 	var/initiator = null
 	var/started_time = null
@@ -58,15 +58,20 @@ var/datum/subsystem/vote/SSvote
 			greatest_votes = votes
 	//default-vote for everyone who didn't vote
 	if(!config.vote_no_default && choices.len)
-		var/non_voters = (clients.len - total_votes)
-		if(non_voters > 0)
+		var/list/non_voters = directory.Copy()
+		non_voters -= voted
+		for (var/non_voter_ckey in non_voters)
+			var/client/C = non_voters[non_voter_ckey]
+			if (!C || C.is_afk())
+				non_voters -= non_voter_ckey
+		if(non_voters.len > 0)
 			if(mode == "restart")
-				choices["Continue Playing"] += non_voters
+				choices["Continue Playing"] += non_voters.len
 				if(choices["Continue Playing"] >= greatest_votes)
 					greatest_votes = choices["Continue Playing"]
 			else if(mode == "gamemode")
 				if(master_mode in choices)
-					choices[master_mode] += non_voters
+					choices[master_mode] += non_voters.len
 					if(choices[master_mode] >= greatest_votes)
 						greatest_votes = choices[master_mode]
 	//get all options with that many votes and return them in a list
@@ -153,12 +158,12 @@ var/datum/subsystem/vote/SSvote
 			if(mode)
 				usr << "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>"
 				return 0
-	
+
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
 			if((admin_datums[ckey]) || (ckey in deadmins))
 				admin = TRUE
-			
+
 			if(next_allowed_time > world.time && !admin)
 				usr << "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>"
 				return 0
@@ -192,6 +197,8 @@ var/datum/subsystem/vote/SSvote
 		for(var/c in clients)
 			var/client/C = c
 			var/datum/action/vote/V = new
+			if(question)
+				V.name = "Vote: [question]"
 			V.Grant(C.mob)
 			generated_actions += V
 		return 1

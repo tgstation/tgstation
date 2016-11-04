@@ -14,14 +14,14 @@
 
 
 /obj/item/device/assembly/flash/update_icon(var/flash = 0)
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(crit_fail)
-		overlays += "flashburnt"
+		add_overlay("flashburnt")
 		attached_overlays += "flashburnt"
 
 	if(flash)
-		overlays += "flash-f"
+		add_overlay("flash-f")
 		attached_overlays += "flash-f"
 		spawn(5)
 			update_icon()
@@ -48,7 +48,8 @@
 		crit_fail = 1
 		update_icon()
 		var/turf/T = get_turf(src)
-		T.visible_message("The [src.name] burns out!")
+		if(T)
+			T.visible_message("[src] burns out!")
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
@@ -85,7 +86,7 @@
 	if(user && targeted)
 		if(M.weakeyes)
 			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
-		if(M.flash_eyes(1, 1))
+		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
 			M.Stun(1)
@@ -94,13 +95,13 @@
 			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
 			if(M.weakeyes)
 				M.Stun(2)
-				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shields your eyes!</span>")
+				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shield your eyes!</span>")
 		else
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
 			M << "<span class='danger'>[user] fails to blind you with the flash!</span>"
 	else
-		if(M.flash_eyes())
+		if(M.flash_act())
 			M.confused += power
 
 /obj/item/device/assembly/flash/attack(mob/living/M, mob/user)
@@ -112,10 +113,13 @@
 		return 1
 
 	else if(issilicon(M))
-		add_logs(user, M, "flashed", src)
+		var/mob/living/silicon/robot/R = M
+		add_logs(user, R, "flashed", src)
 		update_icon(1)
-		M.Weaken(rand(5,10))
-		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>", "<span class='danger'>You overload [M]'s sensors with the flash!</span>")
+		M.Weaken(6)
+		R.confused += 5
+		R.flash_act(affect_silicon = 1)
+		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return 1
 
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
@@ -132,10 +136,10 @@
 
 
 /obj/item/device/assembly/flash/emp_act(severity)
-	if(!try_use_flash() || !loc)
+	if(!try_use_flash())
 		return 0
-	for(var/mob/living/carbon/M in viewers(3, loc))
-		flash_carbon(M, null, 10, 0)
+	if(iscarbon(loc))
+		flash_carbon(loc, null, 10, 0)
 	burn_out()
 	..()
 
@@ -147,9 +151,10 @@
 				if(M.stat == CONSCIOUS)
 					M.mind_initialize() //give them a mind datum if they don't have one.
 					var/resisted
-					if(!isloyal(M))
+					if(!M.isloyal())
 						if(user.mind in ticker.mode.head_revolutionaries)
 							if(ticker.mode.add_revolutionary(M.mind))
+								M.Stun(3)
 								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 							else
 								resisted = 1
@@ -169,25 +174,14 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	cyborg_flash_animation(user)
+	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	cyborg_flash_animation(user)
+	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return
-
-/obj/item/device/assembly/flash/cyborg/proc/cyborg_flash_animation(mob/living/user)
-	var/atom/movable/overlay/animation = new(user.loc)
-	animation.layer = user.layer + 1
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = user
-	flick("blspell", animation)
-	sleep(5)
-	qdel(animation)
-
 
 /obj/item/device/assembly/flash/memorizer
 	name = "memorizer"
@@ -197,3 +191,32 @@
 	item_state = "nullrod"
 
 /obj/item/device/assembly/flash/handheld //this is now the regular pocket flashes
+
+/obj/item/device/assembly/flash/armimplant
+	name = "photon projector"
+	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocals fix the flashbulb if it ever burns out."
+	var/flashcd = 20
+	var/overheat = 0
+	var/obj/item/organ/cyberimp/arm/flash/I = null
+
+/obj/item/device/assembly/flash/armimplant/burn_out()
+	if(I && I.owner)
+		I.owner << "<span class='warning'>Your photon projector implant overheats and deactivates!</span>"
+		I.Retract()
+	overheat = FALSE
+	addtimer(src, "cooldown", flashcd * 2)
+
+/obj/item/device/assembly/flash/armimplant/try_use_flash(mob/user = null)
+	if(overheat)
+		if(I && I.owner)
+			I.owner << "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>"
+		return FALSE
+	overheat = TRUE
+	addtimer(src, "cooldown", flashcd)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	update_icon(1)
+	return TRUE
+
+
+/obj/item/device/assembly/flash/armimplant/proc/cooldown()
+	overheat = FALSE

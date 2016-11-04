@@ -22,11 +22,12 @@
 	..()
 	spawn(5)
 		updatemodules()
-		return
-	return
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && pod1 && autoprocess))
+		return
+
+	if(!pod1.is_operational())
 		return
 
 	if(scanner.occupant && (scanner.scan_level > 2))
@@ -71,8 +72,6 @@
 		if (!isnull(podf) && podf.is_operational())
 			return podf
 
-	return null
-
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
@@ -82,7 +81,6 @@
 			src.diskette = W
 			user << "<span class='notice'>You insert [W].</span>"
 			src.updateUsrDialog()
-			return
 	else
 		return ..()
 
@@ -217,7 +215,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/cloning/Topic(href, href_list)
 	if(..())
@@ -273,7 +270,7 @@
 			src.menu = 4
 
 		else if (src.menu == 4)
-			var/obj/item/weapon/card/id/C = usr.get_active_hand()
+			var/obj/item/weapon/card/id/C = usr.get_active_held_item()
 			if (istype(C)||istype(C, /obj/item/device/pda))
 				if(src.check_access(C))
 					src.temp = "[src.active_record.fields["name"]] => Record deleted."
@@ -371,7 +368,10 @@
 
 	var/datum/data/record/R = new()
 	if(subject.dna.species)
-		R.fields["mrace"] = subject.dna.species.type
+		// We store the instance rather than the path, because some
+		// species (abductors, slimepeople) store state in their
+		// species datums
+		R.fields["mrace"] = subject.dna.species
 	else
 		var/datum/species/rando_race = pick(config.roundstart_races)
 		R.fields["mrace"] = rando_race.type
@@ -384,15 +384,16 @@
 	R.fields["blood_type"] = subject.dna.blood_type
 	R.fields["features"] = subject.dna.features
 	R.fields["factions"] = subject.faction
+
 	//Add an implant if needed
-	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
+	var/obj/item/weapon/implant/health/imp
+	for(var/obj/item/weapon/implant/health/HI in subject.implants)
+		imp = HI
+		break
 	if(!imp)
 		imp = new /obj/item/weapon/implant/health(subject)
-		imp.implanted = subject
-		R.fields["imp"] = "\ref[imp]"
-	//Update it if needed
-	else
-		R.fields["imp"] = "\ref[imp]"
+		imp.implant(subject)
+	R.fields["imp"] = "\ref[imp]"
 
 	if (!isnull(subject.mind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.fields["mind"] = "\ref[subject.mind]"

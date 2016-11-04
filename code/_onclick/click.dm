@@ -98,19 +98,16 @@
 		throw_item(A)
 		return
 
-	var/obj/item/W = get_active_hand()
+	var/obj/item/W = get_active_held_item()
 
 
 	if(W == A)
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand(0)
-		else
-			update_inv_r_hand(0)
+		update_inv_hands()
 		return
 
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
-	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
+	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 		// No adjacency needed
 		if(W)
 			var/resolved = A.attackby(W,src)
@@ -222,6 +219,7 @@
 	Ctrl click
 	For most objects, pull
 */
+
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
@@ -230,6 +228,14 @@
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
+
+/mob/living/carbon/human/CtrlClick(mob/user)
+    if(ishuman(user) && Adjacent(user))
+        var/mob/living/carbon/human/H = user
+        H.dna.species.grab(H, src, H.martial_art)
+        H.changeNext_move(CLICK_CD_MELEE)
+        return TRUE
+    return ..()
 
 /*
 	Alt click
@@ -275,6 +281,21 @@
 	return
 
 /*
+	Helper to check can the mob click/access an item.
+	Used by mob inventory and storage items.
+*/
+/atom/proc/ClickAccessible(mob/user, depth=1)
+	if(src == user.loc || (src in user.contents))
+		return TRUE
+
+	if(loc && depth > 1)
+		return loc.ClickAccessible(user, depth-1)
+
+/turf/ClickAccessible(mob/user, depth=1)
+	return
+
+
+/*
 	Misc helpers
 
 	Laser Eyes: as the name implies, handles this since nothing else does currently
@@ -309,40 +330,36 @@
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
 		if(A.pixel_y > 16)
-			dir = NORTH
+			setDir(NORTH)
 		else if(A.pixel_y < -16)
-			dir = SOUTH
+			setDir(SOUTH)
 		else if(A.pixel_x > 16)
-			dir = EAST
+			setDir(EAST)
 		else if(A.pixel_x < -16)
-			dir = WEST
+			setDir(WEST)
 		return
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			dir = NORTH
+			setDir(NORTH)
 		else
-			dir = SOUTH
+			setDir(SOUTH)
 	else
 		if(dx > 0)
-			dir = EAST
+			setDir(EAST)
 		else
-			dir = WEST
+			setDir(WEST)
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
-	screen_loc = "CENTER-7,CENTER-7"
+	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/proc/MakeGreed()
-	. = list()
-	for(var/i = 0, i<15, i++)
-		for(var/j = 0, j<15, j++)
-			var/obj/screen/click_catcher/CC = new()
-			CC.screen_loc = "NORTH-[i],EAST-[j]"
-			. += CC
+/obj/screen/click_catcher/New()
+	..()
+	transform = matrix(200, 0, 0, 0, 200, 0)
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -350,7 +367,7 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
+		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
 		if(T)
 			T.Click(location, control, params)
 	. = 1

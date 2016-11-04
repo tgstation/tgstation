@@ -3,7 +3,7 @@
 	name = "Cyborg Endoskeleton"
 	id = "borg_suit"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/robot_suit
+	build_path = /obj/item/robot_suit
 	materials = list(MAT_METAL=15000)
 	construction_time = 500
 	category = list("Cyborg")
@@ -12,7 +12,7 @@
 	name = "Cyborg Torso"
 	id = "borg_chest"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/chest
+	build_path = /obj/item/bodypart/chest/robot
 	materials = list(MAT_METAL=40000)
 	construction_time = 350
 	category = list("Cyborg")
@@ -21,7 +21,7 @@
 	name = "Cyborg Head"
 	id = "borg_head"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/head
+	build_path = /obj/item/bodypart/head/robot
 	materials = list(MAT_METAL=5000)
 	construction_time = 350
 	category = list("Cyborg")
@@ -30,7 +30,7 @@
 	name = "Cyborg Left Arm"
 	id = "borg_l_arm"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/l_arm
+	build_path = /obj/item/bodypart/l_arm/robot
 	materials = list(MAT_METAL=10000)
 	construction_time = 200
 	category = list("Cyborg")
@@ -39,7 +39,7 @@
 	name = "Cyborg Right Arm"
 	id = "borg_r_arm"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/r_arm
+	build_path = /obj/item/bodypart/r_arm/robot
 	materials = list(MAT_METAL=10000)
 	construction_time = 200
 	category = list("Cyborg")
@@ -48,7 +48,7 @@
 	name = "Cyborg Left Leg"
 	id = "borg_l_leg"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/l_leg
+	build_path = /obj/item/bodypart/l_leg/robot
 	materials = list(MAT_METAL=10000)
 	construction_time = 200
 	category = list("Cyborg")
@@ -57,7 +57,7 @@
 	name = "Cyborg Right Leg"
 	id = "borg_r_leg"
 	build_type = MECHFAB
-	build_path = /obj/item/robot_parts/r_leg
+	build_path = /obj/item/bodypart/r_leg/robot
 	materials = list(MAT_METAL=10000)
 	construction_time = 200
 	category = list("Cyborg")
@@ -270,7 +270,7 @@
 	id = "gygax_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_armor
-	materials = list(MAT_METAL=25000,MAT_DIAMOND=10000)
+	materials = list(MAT_METAL=15000,MAT_DIAMOND=10000,MAT_TITANIUM=10000)
 	construction_time = 600
 	category = list("Gygax")
 
@@ -343,7 +343,7 @@
 	id = "durand_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_armor
-	materials = list(MAT_METAL=50000,MAT_URANIUM=30000)
+	materials = list(MAT_METAL=30000,MAT_URANIUM=25000,MAT_TITANIUM=20000)
 	construction_time = 600
 	category = list("Durand")
 
@@ -481,7 +481,7 @@
 	id = "phazon_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_armor
-	materials = list(MAT_METAL=45000,MAT_PLASMA=30000)
+	materials = list(MAT_METAL=25000,MAT_PLASMA=20000,MAT_TITANIUM=20000)
 	construction_time = 300
 	category = list("Phazon")
 
@@ -505,7 +505,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_mining_scanner
-	name = "Exosuit Engineering Equipement (Mining Scanner)"
+	name = "Exosuit Engineering Equipment (Mining Scanner)"
 	id = "mech_mscanner"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/mining_scanner
@@ -645,6 +645,16 @@
 	build_path = /obj/item/borg/upgrade/soh
 	req_tech = list("engineering" = 4, "materials" = 4, "bluespace" = 4)
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 250, MAT_URANIUM = 500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_lavaproof
+	name = "Cyborg Upgrade (Lavaproof Tracks)"
+	id = "borg_upgrade_lavaproof"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/lavaproof
+	req_tech = list("plasmatech" = 4, "materials" = 4, "engineering" = 4)
+	materials = list(MAT_METAL = 10000, MAT_PLASMA = 4000, MAT_TITANIUM = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 

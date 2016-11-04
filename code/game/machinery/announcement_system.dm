@@ -13,8 +13,6 @@ var/list/announcement_systems = list()
 	verb_ask = "queries"
 	verb_exclaim = "alarms"
 
-	var/broken = 0
-
 	idle_power_usage = 20
 	active_power_usage = 50
 
@@ -52,19 +50,19 @@ var/list/announcement_systems = list()
 		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
 
 
-	overlays.Cut()
+	cut_overlays()
 	if(arrivalToggle)
-		overlays |= greenlight
+		add_overlay(greenlight)
 	else
 		overlays -= greenlight
 
 	if(newheadToggle)
-		overlays |= pinklight
+		add_overlay(pinklight)
 	else
 		overlays -= pinklight
 
-	if(broken)
-		overlays |= errorlight
+	if(stat & BROKEN)
+		add_overlay(errorlight)
 	else
 		overlays -= errorlight
 
@@ -78,15 +76,15 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, P.usesound, 50, 1)
 		panel_open = !panel_open
 		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
 		update_icon()
 	else if(default_deconstruction_crowbar(P))
 		return
-	else if(istype(P, /obj/item/device/multitool) && panel_open && broken)
+	else if(istype(P, /obj/item/device/multitool) && panel_open && (stat & BROKEN))
 		user << "<span class='notice'>You reset [src]'s firmware.</span>"
-		broken = 0
+		stat &= ~BROKEN
 		update_icon()
 	else
 		return ..()
@@ -117,7 +115,7 @@ var/list/announcement_systems = list()
 //config stuff
 
 /obj/machinery/announcement_system/interact(mob/user)
-	if(broken)
+	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
@@ -131,7 +129,7 @@ var/list/announcement_systems = list()
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
-	if(broken)
+	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
@@ -158,18 +156,17 @@ var/list/announcement_systems = list()
 
 	add_fingerprint(usr)
 	interact(usr)
-	return
 
 /obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
-	if(broken)
+	if(stat & BROKEN)
 		user << "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>"
 		return
 	interact(user)
 
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
-	broken = 1
+	stat |= BROKEN
 	update_icon()
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")

@@ -1,5 +1,3 @@
-
-
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Console"
 	desc = "This controls the density of the particles."
@@ -10,7 +8,7 @@
 	use_power = 0
 	idle_power_usage = 500
 	active_power_usage = 10000
-	dir = 1
+	dir = NORTH
 	var/strength_upper_limit = 2
 	var/interface_control = 1
 	var/list/obj/structure/particle_accelerator/connected_parts
@@ -161,12 +159,13 @@
 	var/turf/T = loc
 
 	assembled = 0
+	critical_machine = FALSE
 
 	var/obj/structure/particle_accelerator/fuel_chamber/F = locate() in orange(1,src)
 	if(!F)
 		return 0
 
-	dir = F.dir
+	setDir(F.dir)
 	connected_parts.Cut()
 
 	T = get_step(T,rdir)
@@ -191,6 +190,7 @@
 		return 0
 
 	assembled = 1
+	critical_machine = TRUE	//Only counts if the PA is actually assembled.
 	return 1
 
 /obj/machinery/particle_accelerator/control_box/proc/check_part(turf/T, type)
@@ -226,7 +226,7 @@
 
 /obj/machinery/particle_accelerator/control_box/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon))
+		if(!issilicon(user))
 			user.unset_machine()
 			user << browse(null, "window=pacontrol")
 			return
@@ -320,7 +320,7 @@
 
 	..()
 
-/obj/machinery/particle_accelerator/control_box/blob_act(obj/effect/blob/B)
+/obj/machinery/particle_accelerator/control_box/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		qdel(src)
 

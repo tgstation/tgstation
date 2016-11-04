@@ -8,16 +8,29 @@
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
+	var/charge_cost = 30
 
-/obj/item/borg/stun/attack(mob/living/M, mob/living/silicon/robot/user)
-	if(!user.cell.use(30)) return
+/obj/item/borg/stun/attack(mob/living/M, mob/living/user)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
+			playsound(M, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		if(!R.cell.use(charge_cost))
+			return
 
+	user.do_attack_animation(M)
 	M.Weaken(5)
 	M.apply_effect(STUTTER, 5)
 	M.Stun(5)
 
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
+
+	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+
 	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/cyborghug
@@ -30,7 +43,7 @@
 	var/shockallowed = 0//Can it be a stunarm when emagged. Only PK borgs get this by default.
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/P = user
 		if(P.emagged&&shockallowed == 1)
 			if(mode < 3)
@@ -94,7 +107,7 @@
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
 						M.update_canmove()
 					else
-						if(!isrobot(M))
+						if(!iscyborg(M))
 							M.adjustFireLoss(10)
 							user.visible_message("<span class='userdanger'>[user] shocks [M]!</span>", \
 								"<span class='danger'>You shock [M]!</span>")
@@ -148,7 +161,7 @@
 	update_icon()
 
 /obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
-	if(!proximity_flag || !isrobot(user))
+	if(!proximity_flag || !iscyborg(user))
 		return
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
@@ -269,7 +282,7 @@
 		user << "<font color='red'>The device is still recharging!</font>"
 		return
 
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.cell.charge < 1200)
 			user << "<font color='red'>You don't have enough charge to do this!</font>"
@@ -282,53 +295,34 @@
 		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
 			"<span class='userdanger'>The siren pierces your hearing and confuses you!</span>", \
 			"<span class='danger'>The siren pierces your hearing!</span>")
-		for(var/mob/living/M in get_hearers_in_view(9, user))
-			if(iscarbon(M))
-				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M
-					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-						continue
+		for(var/mob/living/carbon/M in get_hearers_in_view(9, user))
+			if(M.get_ear_protection() == 0)
 				M.confused += 6
-			M << "<font color='red' size='7'>HUMAN HARM</font>"
+		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
-		if(isrobot(user))
+		if(iscyborg(user))
 			var/mob/living/silicon/robot/R = user
 			R.connected_ai << "<br><span class='notice'>NOTICE - Peacekeeping 'HARM ALARM' used by: [user]</span><br>"
 
 		return
 
 	if(safety == 0)
-		for(var/mob/living/M in get_hearers_in_view(9, user))
-			if(iscarbon(M))
-				var/earsafety = 0
-				if(istype(M, /mob/living/carbon/alien))
-					continue
-				if(ishuman(M))
-					var/mob/living/carbon/human/S = M
-					if(istype(S.ears, /obj/item/clothing/ears/earmuffs))
-						continue
-					if(S.check_ear_prot())
-						earsafety = 1
-				if(earsafety)
-					M.confused += 5
-					M.stuttering += 10
-					M.adjustEarDamage(0, 5)
-					M.Jitter(10)
-					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
-						"<span class='userdanger'>You hear a sharp screech, before your thoughts are interrupted and you find yourself extremely disorientated.</span>", \
-						"<span class='danger'>You hear a sonic screech and suddenly can't seem to walk straight!")
-				else
-					M.Weaken(2)
-					M.confused += 10
-					M.stuttering += 15
-					M.adjustEarDamage(0, 20)
-					M.Jitter(25)
-					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
-						"<span class='userdanger'>You hear a sharp screech before your thoughts are interrupted and you collapse, your ears ringing!</span>", \
-						"<span class='danger'>You hear a sonic screech and collapse, your ears riniging!")
-			M << "<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>"
+		for(var/mob/living/carbon/C in get_hearers_in_view(9, user))
+			var/bang_effect = C.soundbang_act(2, 0, 0, 5)
+			switch(bang_effect)
+				if(1)
+					C.confused += 5
+					C.stuttering += 10
+					C.Jitter(10)
+				if(2)
+					C.Weaken(2)
+					C.confused += 10
+					C.stuttering += 15
+					C.Jitter(25)
+
+		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")

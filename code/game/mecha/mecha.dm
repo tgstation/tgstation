@@ -19,7 +19,7 @@
 	density = 1 //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
-	unacidable = 1 //and no deleting hoomans inside
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
@@ -29,10 +29,10 @@
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
 	var/step_energy_drain = 10
-	var/health = 300 //health is health
+	obj_integrity = 300 //obj_integrity is health
+	max_integrity = 300
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
-	//the values in this list show how much damage will pass through, not how much will be absorbed.
-	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
+	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
@@ -58,6 +58,7 @@
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
 	var/obj/item/device/radio/radio = null
+	var/list/trackers = list()
 
 	var/max_temperature = 25000
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
@@ -110,13 +111,6 @@
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
 
-	var/static/list/armour_facings = list(
-	"[NORTH]" = list("[SOUTH]" = FRONT_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[NORTH]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR),
-	"[EAST]" = list("[SOUTH]" = SIDE_ARMOUR, "[WEST]" = FRONT_ARMOUR, "[EAST]" = BACK_ARMOUR, "[NORTH]" = SIDE_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR),
-	"[SOUTH]" = list("[NORTH]" = FRONT_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[SOUTH]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR ),
-	"[WEST]" = list("[NORTH]" = SIDE_ARMOUR, "[EAST]" = FRONT_ARMOUR, "[SOUTH]" = SIDE_ARMOUR, "[WEST]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR)
-	)
-
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
@@ -134,7 +128,7 @@
 	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 	add_cell()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
@@ -145,7 +139,6 @@
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
 
-	return
 
 /obj/mecha/Destroy()
 	go_out()
@@ -183,7 +176,7 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
@@ -247,7 +240,7 @@
 
 /obj/mecha/examine(mob/user)
 	..()
-	var/integrity = health/initial(health)*100
+	var/integrity = obj_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
 			user << "It's fully intact."
@@ -263,8 +256,6 @@
 		user << "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
 			user << "\icon[ME] [ME]"
-	return
-
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -283,7 +274,7 @@
 			if(cabin_air && cabin_air.return_volume()>0)
 				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(10,15))
 				if(cabin_air.return_temperature() > max_temperature/2)
-					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1),"fire")
+					take_damage(4/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			internal_temp_regulation = 0
@@ -349,7 +340,7 @@
 				else
 					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
 
-		var/integrity = health/initial(health)*100
+		var/integrity = obj_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
@@ -390,7 +381,6 @@
 				speech_bubble_recipients.Add(M.client)
 		spawn(0)
 			flick_overlay(image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
-	return
 
 ////////////////////////////
 ///// Action processing ////
@@ -437,7 +427,6 @@
 		melee_can_hit = 0
 		spawn(melee_cooldown)
 			melee_can_hit = 1
-	return
 
 
 /obj/mecha/proc/range_action(atom/target)
@@ -520,7 +509,7 @@
 
 
 /obj/mecha/proc/mechturn(direction)
-	dir = direction
+	setDir(direction)
 	if(turnsound)
 		playsound(src,turnsound,40,1)
 	return 1
@@ -529,7 +518,7 @@
 	var/current_dir = dir
 	var/result = step(src,direction)
 	if(strafe)
-		dir = current_dir
+		setDir(current_dir)
 	if(result && stepsound)
 		playsound(src,stepsound,40,1)
 	return result
@@ -559,7 +548,7 @@
 				obstacle.mech_melee_attack(src)
 				if(!obstacle || (obstacle && !obstacle.density))
 					step(src,dir)
-			if(istype(obstacle, /obj))
+			if(isobj(obstacle))
 				var/obj/O = obstacle
 				if(!O.anchored)
 					step(obstacle, dir)
@@ -577,7 +566,7 @@
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
 	if(prob(20))
-		if(ignore_threshold || health*100/initial(health) < internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -585,7 +574,7 @@
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || health*100/initial(health)<internal_damage_threshold)
+		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/ME = safepick(equipment)
 			if(ME)
 				qdel(ME)
@@ -620,10 +609,10 @@
 	//Allows the Malf to scan a mech's status and loadout, helping it to decide if it is a worthy chariot.
 	if(user.can_dominate_mechs)
 		examine(user) //Get diagnostic information!
-		var/obj/item/mecha_parts/mecha_tracking/B = locate(/obj/item/mecha_parts/mecha_tracking) in src
-		if(B) //Beacons give the AI more detailed mech information.
+		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
 			user << "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:"
 			user << "[B.get_mecha_info()]"
+			break
 		//Nothing like a big, red link to make the player feel powerful!
 		user << "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>"
 
@@ -647,7 +636,7 @@
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
-			AI.loc = card
+			AI.forceMove(card)
 			card.AI = AI
 			occupant = null
 			AI.controlled_mech = null
@@ -684,7 +673,7 @@
 //Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI, interaction)
 	AI.ai_restore_power()
-	AI.loc = src
+	AI.forceMove(src)
 	occupant = AI
 	icon_state = initial(icon_state)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -806,20 +795,20 @@
 		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	if(user.buckled_mobs.len) //mob attached to us
+	if(user.has_buckled_mobs()) //mob attached to us
 		user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		return
 
 	visible_message("[user] starts to climb into [name].")
 
 	if(do_after(user, 40, target = src))
-		if(health <= 0)
+		if(obj_integrity <= 0)
 			user << "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>"
 		else if(occupant)
 			user << "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>"
 		else if(user.buckled)
 			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
-		else if(user.buckled_mobs.len)
+		else if(user.has_buckled_mobs())
 			user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		else
 			moved_inside(user)
@@ -836,7 +825,7 @@
 		forceMove(loc)
 		log_append_to_last("[H] moved in as pilot.")
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -854,7 +843,7 @@
 	else if(occupant)
 		user << "<span class='warning'>Occupant detected!</span>"
 		return 0
-	else if(dna_lock && (!mmi_as_oc.brainmob.dna || dna_lock!=mmi_as_oc.brainmob.dna.unique_enzymes))
+	else if(dna_lock && (!mmi_as_oc.brainmob.stored_dna || dna_lock!=mmi_as_oc.brainmob.stored_dna.unique_enzymes))
 		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
 		return 0
 
@@ -888,7 +877,7 @@
 		mmi_as_oc.loc = src
 		mmi_as_oc.mecha = src
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		log_message("[mmi_as_oc] moved in as pilot.")
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -914,8 +903,8 @@
 	if(ishuman(occupant))
 		mob_container = occupant
 		RemoveActions(occupant, human_occupant=1)
-	else if(istype(occupant, /mob/living/carbon/brain))
-		var/mob/living/carbon/brain/brain = occupant
+	else if(istype(occupant, /mob/living/brain))
+		var/mob/living/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
 	else if(isAI(occupant) && forced) //This should only happen if there are multiple AIs in a round, and at least one is Malf.
@@ -940,7 +929,7 @@
 			mmi.update_icon()
 			L.canmove = 0
 		icon_state = initial(icon_state)+"-open"
-		dir = dir_in
+		setDir(dir_in)
 
 	if(L && L.client)
 		L.client.view = world.view

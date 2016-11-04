@@ -95,16 +95,18 @@
 	var/obj/item/weapon/implant/req_implant = null
 
 /obj/item/device/firing_pin/implant/pin_auth(mob/living/user)
-	for(var/obj/item/weapon/implant/I in user)
-		if(req_implant &&  I.imp_in == user && I.type == req_implant)
-			return 1
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		for(var/obj/item/weapon/implant/I in C.implants)
+			if(req_implant && I.type == req_implant)
+				return 1
 	return 0
 
-/obj/item/device/firing_pin/implant/loyalty
-	name = "loyalty firing pin"
-	desc = "This Security firing pin authorizes the weapon for only loyalty-implanted users."
+/obj/item/device/firing_pin/implant/mindshield
+	name = "mindshield firing pin"
+	desc = "This Security firing pin authorizes the weapon for only mindshield-implanted users."
 	icon_state = "firing_pin_loyalty"
-	req_implant = /obj/item/weapon/implant/loyalty
+	req_implant = /obj/item/weapon/implant/mindshield
 
 /obj/item/device/firing_pin/implant/pindicate
 	name = "syndicate firing pin"
@@ -118,7 +120,7 @@
 /obj/item/device/firing_pin/clown
 	name = "hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
-	color = "yellow"
+	color = "#FFFF00"
 	fail_message = "<span class='warning'>HONK!</span>"
 	force_replace = 1
 

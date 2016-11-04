@@ -2,7 +2,7 @@
 
 /obj/structure/alien/resin/flower_bud_enemy //inheriting basic attack/damage stuff from alien structures
 	name = "flower bud"
-	desc = "a large pulsating plant..."
+	desc = "A large pulsating plant..."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "flower_bud"
 	layer = SPACEVINE_MOB_LAYER
@@ -21,19 +21,20 @@
 	anchors += locate(x+2,y-2,z)
 
 	for(var/turf/T in anchors)
-		var/datum/beam/B = Beam(T,"vine",'icons/effects/spacevines.dmi',INFINITY, 5,/obj/effect/ebeam/vine)
+		var/datum/beam/B = Beam(T, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 		B.sleep_time = 10 //these shouldn't move, so let's slow down updates to 1 second (any slower and the deletion of the vines would be too slow)
+	addtimer(src, "bear_fruit", growth_time)
 
-	spawn(growth_time)
-		visible_message("<span class='danger'>the plant has borne fruit!</span>")
-		new /mob/living/simple_animal/hostile/venus_human_trap (get_turf(src))
-		qdel(src)
+/obj/structure/alien/resin/flower_bud_enemy/proc/bear_fruit()
+	visible_message("<span class='danger'>the plant has borne fruit!</span>")
+	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
+	qdel(src)
 
 
 /obj/effect/ebeam/vine
 	name = "thick vine"
 	mouse_opacity = 1
-	desc = "a thick vine, painful to the touch"
+	desc = "A thick vine, painful to the touch."
 
 
 /obj/effect/ebeam/vine/Crossed(atom/movable/AM)
@@ -47,13 +48,14 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap
 	name = "venus human trap"
-	desc = "now you know how the fly feels"
+	desc = "Now you know how the fly feels."
 	icon_state = "venus_human_trap"
 	layer = SPACEVINE_MOB_LAYER
 	health = 50
 	maxHealth = 50
 	ranged = 1
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	a_intent = "harm"
@@ -82,24 +84,30 @@
 				L.attack_animal(src)
 			else
 				if(prob(grasp_pull_chance))
-					dir = get_dir(src,L) //staaaare
+					setDir(get_dir(src,L) )//staaaare
 					step(L,get_dir(L,src)) //reel them in
 					L.Weaken(3) //you can't get away now~
 
 		if(grasping.len < max_grasps)
-			for(var/mob/living/L in range(grasp_range,src))
-				if(L == src || faction_check(L))
-					continue
-				if(!(L in grasping) && L != target && prob(grasp_chance))
-					L << "<span class='userdanger'>\the [src] has you entangled!</span>"
-					grasping[L] = Beam(L,"vine",'icons/effects/spacevines.dmi',INFINITY, 5,/obj/effect/ebeam/vine)
+			grasping:
+				for(var/mob/living/L in view(grasp_range, src))
+					if(L == src || faction_check(L) || (L in grasping) || L == target)
+						continue
+					for(var/t in getline(src,L))
+						for(var/a in t)
+							var/atom/A = a
+							if(A.density && A != L)
+								continue grasping
+					if(prob(grasp_chance))
+						L << "<span class='userdanger'>\The [src] has you entangled!</span>"
+						grasping[L] = Beam(L, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 
-					break //only take 1 new victim per cycle
+						break //only take 1 new victim per cycle
 
 
 /mob/living/simple_animal/hostile/venus_human_trap/OpenFire(atom/the_target)
 	var/dist = get_dist(src,the_target)
-	Beam(the_target,"vine",'icons/effects/spacevines.dmi',dist*2, dist+2,/obj/effect/ebeam/vine)
+	Beam(the_target, "vine", time=dist*2, maxdistance=dist+2, beam_type=/obj/effect/ebeam/vine)
 	the_target.attack_animal(src)
 
 

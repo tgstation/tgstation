@@ -11,7 +11,7 @@ mob/proc/getorganslot(slot)
 mob/living/carbon/getorgan(typepath)
 	return (locate(typepath) in internal_organs)
 
-mob/living/carbon/getorganszone(zone, var/subzones = 0)
+mob/living/carbon/getorganszone(zone, subzones = 0)
 	var/list/returnorg = list()
 	if(subzones)
 		// Include subzones - groin for chest, eyes and mouth for head
@@ -20,7 +20,8 @@ mob/living/carbon/getorganszone(zone, var/subzones = 0)
 		if(zone == "chest")
 			returnorg = getorganszone("groin")
 
-	for(var/obj/item/organ/O in internal_organs)
+	for(var/X in internal_organs)
+		var/obj/item/organ/O = X
 		if(zone == O.zone)
 			returnorg += O
 	return returnorg

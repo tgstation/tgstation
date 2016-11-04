@@ -45,19 +45,20 @@
 			var/datum/mind/changeling = pick(possible_changelings)
 			antag_candidates -= changeling
 			possible_changelings -= changeling
+			changeling.special_role = "Changeling"
 			changelings += changeling
-			modePlayer += changelings
 			changeling.restricted_roles = restricted_jobs
 		return ..()
 	else
 		return 0
 
 /datum/game_mode/traitor/changeling/post_setup()
+	modePlayer += changelings
 	for(var/datum/mind/changeling in changelings)
-		changeling.current.make_changeling(changeling.current)
-		changeling.special_role = "Changeling"
+		changeling.current.make_changeling()
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
+		ticker.mode.update_changeling_icons_added(changeling)
 	..()
 	return
 
@@ -68,7 +69,7 @@
 		return
 	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character.client, ROLE_CHANGELING) && !jobban_isbanned(character.client, "Syndicate"))
+			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()

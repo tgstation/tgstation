@@ -7,24 +7,13 @@
 	amount_per_transfer_from_this = 10
 	volume = 50
 	materials = list(MAT_GLASS=500)
-	burn_state = FLAMMABLE
-	burntime = 5
+	obj_integrity = 20
+	max_integrity = 20
 	spillable = 1
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/fire_act()
-	if(!reagents.total_volume)
-		return
-	..()
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/burn()
-	reagents.total_volume = 0 //Burns away all the alcohol :(
-	reagents.reagent_list.Cut()
-	on_reagent_change()
-	extinguish()
-	return
+	resistance_flags = ACID_PROOF
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
-	overlays.Cut()
+	cut_overlays()
 	if (reagents.reagent_list.len > 0)
 		switch(reagents.get_master_reagent_id())
 			if("beer")
@@ -511,11 +500,19 @@
 				icon_state = "arnold_palmer"
 				name = "Arnold Palmer"
 				desc = "You feel like taking a few golf swings after a few swigs of this."
+			if("hcider")
+				icon_state = "whiskeyglass"
+				name = "Hard Cider"
+				desc = "Tastes like autumn."
+			if("triple_citrus")
+				icon_state = "triplecitrus" //needs own sprite mine are trash
+				name = "glass of triple citrus"
+				desc = "A mixture of citrus juices. Tangy, yet smooth."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
 				I.color = mix_color_from_reagents(reagents.reagent_list)
-				overlays += I
+				add_overlay(I)
 				name = "glass of ..what?"
 				desc = "You can't really tell what this is."
 	else
@@ -561,6 +558,10 @@
 				icon_state = "shotglassbrown"
 				name = "shot of whiskey"
 				desc = "Just like the old west."
+			if("hcider")
+				icon_state = "shotglassbrown"
+				name = "shot of hard cider"
+				desc = "Not meant to be drinken from a shot glass."
 			if("rum")
 				icon_state = "shotglassbrown"
 				name = "shot of rum"

@@ -6,7 +6,8 @@
 	w_class = 2
 	flags = HEAR
 	slot_flags = SLOT_BELT
-	languages = ALL //this is a translator, after all.
+	languages_spoken = ALL //this is a translator, after all.
+	languages_understood = ALL //this is a translator, after all.
 	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0
@@ -46,14 +47,14 @@
 		mytape = null
 		update_icon()
 
-/obj/item/device/taperecorder/fire_act()
+/obj/item/device/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.ruin() //Fires destroy the tape
-	return()
+	..()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
 		if(mytape)
-			if(user.l_hand != src && user.r_hand != src)
+			if(!user.is_holding(src))
 				..()
 				return
 			eject(user)
@@ -247,8 +248,9 @@
 	var/list/timestamp = list()
 	var/ruined = 0
 
-/obj/item/device/tape/fire_act()
+/obj/item/device/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
+	..()
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
@@ -257,7 +259,10 @@
 
 
 /obj/item/device/tape/proc/ruin()
-	overlays += "ribbonoverlay"
+	//Lets not add infinite amounts of overlays when our fireact is called
+	//repeatedly
+	if(!ruined)
+		add_overlay("ribbonoverlay")
 	ruined = 1
 
 

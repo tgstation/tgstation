@@ -134,8 +134,7 @@
 				on = !on
 
 				if(on)
-					spawn()
-						magnetic_process()
+					addtimer(src, "magnetic_process", 0)
 
 
 
@@ -193,7 +192,8 @@
 					step_towards(M, center)
 
 			for(var/mob/living/silicon/S in orange(magnetic_field, center))
-				if(istype(S, /mob/living/silicon/ai)) continue
+				if(isAI(S))
+					continue
 				step_towards(S, center)
 
 		use_power(electricity_level * 5)

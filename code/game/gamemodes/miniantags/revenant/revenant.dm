@@ -23,7 +23,8 @@
 	sight = SEE_SELF
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	see_in_dark = 8
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	response_help   = "passes through"
 	response_disarm = "swings through"
 	response_harm   = "punches through"
@@ -59,6 +60,7 @@
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/image/ghostimage = null //Visible to ghost with darkness off
+	var/generated_objectives_and_spells = FALSE
 
 /mob/living/simple_animal/revenant/New()
 	..()
@@ -67,35 +69,37 @@
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
-	spawn(5)
-		if(src.mind)
-			src.mind.remove_all_antag()
-			src.mind.wipe_memory()
-			src << 'sound/effects/ghost.ogg'
-			src << "<br>"
-			src << "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>"
-			src << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
-			src << "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
-			src << "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>"
-			src << "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>"
-			src << "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
-			src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
-			var/datum/objective/revenant/objective = new
-			objective.owner = src.mind
-			src.mind.objectives += objective
-			src << "<b>Objective #1</b>: [objective.explanation_text]"
-			var/datum/objective/revenantFluff/objective2 = new
-			objective2.owner = src.mind
-			src.mind.objectives += objective2
-			src << "<b>Objective #2</b>: [objective2.explanation_text]"
-			ticker.mode.traitors |= src.mind //Necessary for announcing
+/mob/living/simple_animal/revenant/Login()
+	..()
+	src << "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>"
+	src << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
+	src << "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
+	src << "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>"
+	src << "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>"
+	src << "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
+	src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
+	if(!generated_objectives_and_spells)
+		generated_objectives_and_spells = TRUE
+		mind.remove_all_antag()
+		mind.wipe_memory()
+		src << 'sound/effects/ghost.ogg'
+		var/datum/objective/revenant/objective = new
+		objective.owner = mind
+		mind.objectives += objective
+		src << "<b>Objective #1</b>: [objective.explanation_text]"
+		var/datum/objective/revenantFluff/objective2 = new
+		objective2.owner = mind
+		mind.objectives += objective2
+		src << "<b>Objective #2</b>: [objective2.explanation_text]"
+		mind.assigned_role = "revenant"
+		mind.special_role = "Revenant"
+		ticker.mode.traitors |= mind //Necessary for announcing
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
-
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/simple_animal/revenant/Life()
@@ -161,7 +165,7 @@
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
 
-/mob/living/simple_animal/revenant/blob_act(obj/effect/blob/B)
+/mob/living/simple_animal/revenant/blob_act(obj/structure/blob/B)
 	return //blah blah blobs aren't in tune with the spirit world, or something.
 
 /mob/living/simple_animal/revenant/singularity_act()
@@ -170,6 +174,8 @@
 /mob/living/simple_animal/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
+/mob/living/simple_animal/revenant/ratvar_act()
+	return //clocks get out reee
 
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
@@ -180,9 +186,12 @@
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
 		update_action_buttons_icon()
-		spawn(30)
-			inhibited = 0
-			update_action_buttons_icon()
+		addtimer(src, "reset_inhibit", 30, FALSE)
+
+/mob/living/simple_animal/revenant/proc/reset_inhibit()
+	if(src)
+		inhibited = 0
+		update_action_buttons_icon()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)
@@ -191,7 +200,7 @@
 	essence = max(0, essence-amount)
 	update_health_hud()
 	if(essence == 0)
-		src << "<span class='revendanger'>You feel your essence fraying!</span>"
+		death()
 
 /mob/living/simple_animal/revenant/dust()
 	death()
@@ -275,17 +284,17 @@
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/closed))
+	if(isclosedturf(T))
 		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
 	for(var/obj/O in T)
 		if(O.density && !O.CanPass(src, T, 5))
 			src << "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>"
 			return 0
-	if(src.inhibited)
+	if(inhibited)
 		src << "<span class='revenwarning'>Your powers have been suppressed by nulling energy!</span>"
 		return 0
-	if(!src.change_essence_amount(essence_cost, 1))
+	if(!change_essence_amount(essence_cost, 1))
 		src << "<span class='revenwarning'>You lack the essence to use that ability.</span>"
 		return 0
 	return 1
@@ -322,14 +331,16 @@
 
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
-	spawn(600) //1 minute
-		if(src && reforming)
+	addtimer(src, "try_reform", 600, FALSE)
+
+/obj/item/weapon/ectoplasm/revenant/proc/try_reform()
+	if(src)
+		if(reforming)
 			reforming = 0
-			return reform()
+			reform()
 		else
 			inert = 1
 			visible_message("<span class='warning'>[src] settles down and seems lifeless.</span>")
-			return
 
 /obj/item/weapon/ectoplasm/revenant/attack_self(mob/user)
 	if(!reforming || inert)
@@ -373,7 +384,7 @@
 			message_admins("No candidates were found for the new revenant. Oh well!")
 			inert = 1
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
-			return 0
+			return
 		var/client/C = pick(candidates)
 		key_of_revenant = C.key
 		if(!key_of_revenant)
@@ -381,7 +392,7 @@
 			message_admins("No ckey was found for the new revenant. Oh well!")
 			inert = 1
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
-			return 0
+			return
 	var/datum/mind/player_mind = new /datum/mind(key_of_revenant)
 	R.essence_regen_cap = essence
 	R.essence = R.essence_regen_cap
@@ -396,7 +407,6 @@
 	qdel(src)
 	if(src) //Should never happen, but just in case
 		inert = 1
-	return 1
 
 
 //objectives

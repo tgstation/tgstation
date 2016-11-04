@@ -55,6 +55,11 @@
 	active_power_usage = 8
 	power_channel = ENVIRON
 	req_access = list(access_atmospherics)
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 80
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	resistance_flags = 0
 
 	var/danger_level = 0
 	var/mode = AALARM_MODE_SCRUBBING
@@ -76,7 +81,9 @@
 		"co2" 			= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
 		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5)
+		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5),
+		"freon"			= new/datum/tlv(-1, -1, 0.2, 0.5),
+		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5)
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -89,6 +96,8 @@
 		"plasma"		= new/datum/tlv(-1, -1, -1, -1),
 		"n2o"			= new/datum/tlv(-1, -1, -1, -1),
 		"bz"			= new/datum/tlv(-1, -1, -1, -1),
+		"freon"			= new/datum/tlv(-1, -1, -1, -1),
+		"water_vapor"	= new/datum/tlv(-1, -1, -1, -1)
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
@@ -101,6 +110,8 @@
 		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"freon"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5)
 	)
 
 //all air alarms in area are connected via magic
@@ -114,7 +125,7 @@
 	..()
 	wires = new /datum/wires/airalarm(src)
 	if(ndir)
-		dir = ndir
+		setDir(ndir)
 
 	if(nbuild)
 		buildstage = 0
@@ -225,15 +236,17 @@
 			if(!info || info["frequency"] != frequency)
 				continue
 			data["scrubbers"] += list(list(
-					"id_tag"		= id_tag,
-					"long_name" 	= sanitize(long_name),
-					"power"			= info["power"],
-					"scrubbing"		= info["scrubbing"],
-					"widenet"		= info["widenet"],
-					"filter_co2"	= info["filter_co2"],
-					"filter_toxins"	= info["filter_toxins"],
-					"filter_n2o"	= info["filter_n2o"],
-					"filter_bz"		= info["filter_bz"]
+					"id_tag"				= id_tag,
+					"long_name" 			= sanitize(long_name),
+					"power"					= info["power"],
+					"scrubbing"				= info["scrubbing"],
+					"widenet"				= info["widenet"],
+					"filter_co2"			= info["filter_co2"],
+					"filter_toxins"			= info["filter_toxins"],
+					"filter_n2o"			= info["filter_n2o"],
+					"filter_bz"				= info["filter_bz"],
+					"filter_freon"			= info["filter_freon"],
+					"filter_water_vapor"	= info["filter_water_vapor"]
 				))
 		data["mode"] = mode
 		data["modes"] = list()
@@ -289,7 +302,7 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "bz_scrub", "widenet", "scrubbing")
+		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "bz_scrub", "freon_scrub","water_vapor_scrub", "widenet", "scrubbing")
 			send_signal(device_id, list("[action]" = text2num(params["val"])))
 			. = TRUE
 		if("excheck")
@@ -407,6 +420,8 @@
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
 					"bz_scrub"	= 0,
+					"freon_scrub"= 0,
+					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -424,6 +439,8 @@
 					"tox_scrub" = 1,
 					"n2o_scrub" = 1,
 					"bz_scrub"	= 1,
+					"freon_scrub"= 1,
+					"water_vapor_scrub"= 1,
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -454,6 +471,8 @@
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
 					"bz_scrub"	= 0,
+					"freon_scrub"= 0,
+					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -612,15 +631,14 @@
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && wires.is_all_cut())
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				user << "<span class='notice'>You cut the final wires.</span>"
-				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil(loc)
-				cable.amount = 5
+				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
 			else if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				panel_open = !panel_open
 				user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
 				update_icon()
@@ -642,7 +660,7 @@
 			if(istype(W, /obj/item/weapon/crowbar))
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				if (do_after(user, 20/W.toolspeed, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
@@ -683,7 +701,7 @@
 
 			if(istype(W, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You detach \the [src] from the wall.</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src.loc, W.usesound, 50, 1)
 				new /obj/item/wallframe/airalarm( user.loc )
 				qdel(src)
 				return
@@ -700,3 +718,16 @@
 	emagged = TRUE
 	visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
 	playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+
+/obj/machinery/airalarm/obj_break(damage_flag)
+	..()
+	update_icon()
+
+/obj/machinery/airalarm/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+		var/obj/item/I = new /obj/item/weapon/electronics/airalarm(loc)
+		if(!disassembled)
+			I.obj_integrity = I.max_integrity * 0.5
+		new /obj/item/stack/cable_coil(loc, 3)
+	qdel(src)

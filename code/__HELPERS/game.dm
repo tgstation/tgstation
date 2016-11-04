@@ -5,11 +5,17 @@
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
 
+#define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+
 /proc/get_area(atom/A)
 	if (!istype(A))
 		return
 	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
 	return A
+
+/proc/get_area_name(atom/X)
+	var/area/Y = get_area(X)
+	return Y.name
 
 /proc/get_area_master(O)
 	var/area/A = get_area(O)
@@ -17,7 +23,7 @@
 		A = A.master
 	return A
 
-/proc/get_area_name(N) //get area by its name
+/proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
 			return A
@@ -342,9 +348,9 @@
 				continue
 			else if(afk_check && M.client.is_afk())
 				continue
-			else if(human_check && !istype(M, /mob/living/carbon/human))
+			else if(human_check && !ishuman(M))
 				continue
-			else if(istype(M, /mob/new_player)) // exclude people in the lobby
+			else if(isnewplayer(M)) // exclude people in the lobby
 				continue
 			else if(isobserver(M)) // Ghosts are fine if they were playing once (didn't start as observers)
 				var/mob/dead/observer/O = M
@@ -391,14 +397,14 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300)
+/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
 
 	for(var/mob/dead/observer/G in player_list)
-		if(!G.key || !G.client)
+		if(!G.key || !G.client || (ignore_category && poll_ignore[ignore_category] && G.ckey in poll_ignore[ignore_category]))
 			continue
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
@@ -411,7 +417,7 @@
 				continue
 		spawn(0)
 			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+			switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 				if(1)
 					G << "<span class='notice'>Choice registered: Yes.</span>"
 					if((world.time-time_passed)>poll_time)
@@ -421,6 +427,12 @@
 						candidates += G
 				if(2)
 					G << "<span class='danger'>Choice registered: No.</span>"
+				if(3)
+					var/list/L = poll_ignore[ignore_category]
+					if(!L)
+						poll_ignore[ignore_category] = list()
+					poll_ignore[ignore_category] += G.ckey
+					G << "<span class='danger'>Choice registered: Never for this round.</span>"
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.
@@ -429,6 +441,23 @@
 			candidates.Remove(G)
 
 	return candidates
+
+/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
+	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
+	if(!M || qdeleted(M) || !M.loc)
+		return list()
+	return L
+
+/proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
+	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
+	var/i=1
+	for(var/v in mobs)
+		var/atom/A = v
+		if(!A || qdeleted(A) || !A.loc)
+			mobs.Cut(i,i+1)
+		else
+			++i
+	return L
 
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)
@@ -442,3 +471,13 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
+	for(var/M in player_list)
+		if(M && !isnewplayer(M))
+			M << thing
+
+/proc/window_flash(var/client_or_usr)
+	if (!client_or_usr)
+		return
+	winset(client_or_usr, "mainwindow", "flash=5")

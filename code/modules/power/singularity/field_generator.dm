@@ -23,13 +23,17 @@ field_generator power level display
 #define FG_ONLINE 2
 
 /obj/machinery/field/generator
-	name = "Field Generator"
+	name = "field generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
 	icon = 'icons/obj/machines/field_generator.dmi'
 	icon_state = "Field_Gen"
 	anchored = 0
 	density = 1
 	use_power = 0
+	obj_integrity = 500
+	max_integrity = 500
+	//100% immune to lasers and energy projectiles since it absorbs their energy.
+	armor = list(melee = 25, bullet = 10, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
@@ -41,13 +45,13 @@ field_generator power level display
 	var/clean_up = 0
 
 /obj/machinery/field/generator/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(warming_up)
-		overlays += "+a[warming_up]"
+		add_overlay("+a[warming_up]")
 	if(fields.len)
-		overlays += "+on"
+		add_overlay("+on")
 	if(power_level)
-		overlays += "+p[power_level]"
+		add_overlay("+p[power_level]")
 
 
 /obj/machinery/field/generator/New()
@@ -133,12 +137,21 @@ field_generator power level display
 	else
 		return ..()
 
+/obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
+	if(M.environment_smash >= 3 && active == FG_OFFLINE && state != FG_UNSECURED)
+		state = FG_UNSECURED
+		anchored = FALSE
+		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
+	else
+		..()
+	if(!anchored)
+		step(src, get_dir(M, src))
 
 /obj/machinery/field/generator/emp_act()
 	return 0
 
 
-/obj/machinery/field/generator/blob_act(obj/effect/blob/B)
+/obj/machinery/field/generator/blob_act(obj/structure/blob/B)
 	if(active)
 		return 0
 	else
@@ -148,7 +161,7 @@ field_generator power level display
 	if(Proj.flag != "bullet")
 		power = min(power + Proj.damage, field_generator_max_power)
 		check_power_level()
-	return 0
+	..()
 
 
 /obj/machinery/field/generator/Destroy()
@@ -182,8 +195,10 @@ field_generator power level display
 				start_fields()
 
 
-/obj/machinery/field/generator/proc/calc_power()
+/obj/machinery/field/generator/proc/calc_power(set_power_draw)
 	var/power_draw = 2 + fields.len
+	if(set_power_draw)
+		power_draw = set_power_draw
 
 	if(draw_power(round(power_draw/2,1)))
 		check_power_level()
@@ -283,7 +298,7 @@ field_generator power level display
 			var/obj/machinery/field/containment/CF = new/obj/machinery/field/containment()
 			CF.set_master(src,G)
 			CF.loc = T
-			CF.dir = field_dir
+			CF.setDir(field_dir)
 			fields += CF
 			G.fields += CF
 			for(var/mob/living/L in T)

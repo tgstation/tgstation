@@ -13,7 +13,7 @@
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected = popleft(candidates)
+	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/list/spawn_locs = list()
 	for(var/obj/effect/landmark/L in landmarks_list)
@@ -39,7 +39,7 @@
 	if(nuke)
 		var/nuke_code
 		if(!nuke.r_code || nuke.r_code == "ADMIN")
-			nuke_code = "[rand(10000, 99999)]"
+			nuke_code = random_nukecode()
 			nuke.r_code = nuke_code
 		else
 			nuke_code = nuke.r_code

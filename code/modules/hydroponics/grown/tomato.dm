@@ -7,6 +7,7 @@
 	plantname = "Tomato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	maturation = 8
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "tomato-grow"
 	icon_dead = "tomato-dead"
 	genes = list(/datum/plant_gene/trait/squash)
@@ -70,11 +71,11 @@
 
 // Bluespace Tomato
 /obj/item/seeds/tomato/blue/bluespace
-	name = "pack of blue-space tomato seeds"
-	desc = "These seeds grow into blue-space tomato plants."
+	name = "pack of bluespace tomato seeds"
+	desc = "These seeds grow into bluespace tomato plants."
 	icon_state = "seed-bluespacetomato"
 	species = "bluespacetomato"
-	plantname = "Blue-Space Tomato Plants"
+	plantname = "Bluespace Tomato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
 	yield = 2
 	mutatelist = list()
@@ -84,7 +85,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
 	seed = /obj/item/seeds/tomato/blue/bluespace
-	name = "blue-space tomato"
+	name = "bluespace tomato"
 	desc = "So lubricated, you might slip through space-time."
 	icon_state = "bluespacetomato"
 	origin_tech = "biotech=4;bluespace=5"
@@ -123,7 +124,7 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
-	if(awakening || istype(user.loc,/turf/open/space))
+	if(awakening || isspaceturf(user.loc))
 		return
 	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
 	awakening = 1

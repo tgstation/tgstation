@@ -53,6 +53,7 @@ h1.alert, h2.alert		{color: #000000;}
 .userdanger				{color: #ff0000;	font-weight: bold; font-size: 3;}
 .danger					{color: #ff0000;}
 .warning				{color: #ff0000;	font-style: italic;}
+.boldwarning			{color: #ff0000;	font-style: italic;	font-weight: bold}
 .announce 				{color: #228b22;	font-weight: bold;}
 .boldannounce			{color: #ff0000;	font-weight: bold;}
 .greenannounce			{color: #00ff00;	font-weight: bold;}
@@ -69,27 +70,12 @@ h1.alert, h2.alert		{color: #000000;}
 .cultitalic				{color: #960000;	font-style: italic;}
 .cultlarge				{color: #960000; font-weight: bold; font-size: 3;}
 .narsie					{color: #960000; font-weight: bold; font-size: 15;}
+.colossus				{color: #7F282A; font-size: 5;}
+.hierophant				{color: #660099; font-weight: bold; font-size: 4;}
+.hierophant_warning		{color: #660099; font-weight: bold; font-style: italic;}
 .purple					{color: #5e2d79;}
 .holoparasite			{color: #35333a;}
 .holoparasitebold		{color: #35333a;	font-weight: bold;}
-
-.brass					{color: #BE8700;}
-.heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
-.large_brass			{color: #BE8700; font-size: 3;}
-.big_brass				{color: #BE8700; font-size: 3; font-weight: bold; font-style: italic;}
-.alloy					{color: #42474D;}
-.heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
-.large_alloy			{color: #42474D; font-size: 3;}
-.nezbere				{color: #42474D; font-weight: bold; font-style: italic;}
-.nezbere_small			{color: #42474D;}
-.sevtug					{color: #AF0AAF; font-weight: bold; font-style: italic;}
-.sevtug_small			{color: #AF0AAF;}
-.inathneq				{color: #1E8CE1; font-weight: bold; font-style: italic;}
-.inathneq_small			{color: #1E8CE1;}
-.nzcrentr				{color: #BE8700; font-weight: bold; font-style: italic;}
-.nzcrentr_small			{color: #BE8700;}
-.neovgre				{color: #13143F; font-weight: bold; font-style: italic;}
-.neovgre_small			{color: #13143F;}
 
 .revennotice			{color: #1d2953;}
 .revenboldnotice		{color: #1d2953;	font-weight: bold;}
@@ -97,6 +83,35 @@ h1.alert, h2.alert		{color: #000000;}
 .revenminor				{color: #823abb}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold; font-size: 3;}
+.umbra					{color: #5000A0;}
+.umbra_bold				{color: #5000A0;	font-weight: bold;}
+.umbra_italics			{color: #5000A0;	font-style: italic;}
+.umbra_emphasis			{color: #5000A0;	font-weight: bold;	font-style: italic;}
+.umbra_large			{color: #5000A0;	font-size: 3;}
+
+.brass					{color: #BE8700;}
+.heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
+.large_brass			{color: #BE8700; font-size: 3;}
+.big_brass				{color: #BE8700; font-size: 3; font-weight: bold; font-style: italic;}
+.ratvar					{color: #BE8700; font-size: 6; font-weight: bold; font-style: italic;}
+.alloy					{color: #42474D;}
+.heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
+.large_alloy			{color: #42474D; font-size: 3;}
+.nezbere_large			{color: #42474D; font-size: 3; font-weight: bold; font-style: italic;}
+.nezbere				{color: #42474D; font-weight: bold; font-style: italic;}
+.nezbere_small			{color: #42474D;}
+.sevtug_large			{color: #AF0AAF; font-size: 3; font-weight: bold; font-style: italic;}
+.sevtug					{color: #AF0AAF; font-weight: bold; font-style: italic;}
+.sevtug_small			{color: #AF0AAF;}
+.inathneq_large			{color: #1E8CE1; font-size: 3; font-weight: bold; font-style: italic;}
+.inathneq				{color: #1E8CE1; font-weight: bold; font-style: italic;}
+.inathneq_small			{color: #1E8CE1;}
+.nzcrentr_large			{color: #DAAA18; font-size: 3; font-weight: bold; font-style: italic;}
+.nzcrentr				{color: #DAAA18; font-weight: bold; font-style: italic;}
+.nzcrentr_small			{color: #DAAA18;}
+.neovgre_large			{color: #6E001A; font-size: 3; font-weight: bold; font-style: italic;}
+.neovgre				{color: #6E001A; font-weight: bold; font-style: italic;}
+.neovgre_small			{color: #6E001A;}
 
 .newscaster				{color: #800000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}

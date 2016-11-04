@@ -60,10 +60,23 @@
 	set desc = "Toggle recieving a message in deadchat when sentient mobs \
 		die."
 	prefs.toggles ^= DISABLE_DEATHRATTLE
+	prefs.save_preferences()
 	usr << "You will \
 		[(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get \
 		messages when a sentient mob dies."
 	feedback_add_details("admin_verb", "TDR") // If you are copy-pasting this, maybe you should spend some time reading the comments.
+
+/client/verb/toggle_arrivalrattle()
+	set name = "Toggle Arrivalrattle"
+	set category = "Preferences"
+	set desc = "Toggle recieving a message in deadchat when someone joins \
+		the station."
+	prefs.toggles ^= DISABLE_ARRIVALRATTLE
+	usr << "You will \
+		[(prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get \
+		messages when someone joins the station."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "TAR") // If you are copy-pasting this, maybe you should rethink where your life went so wrong.
 
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
@@ -134,11 +147,11 @@
 	prefs.save_preferences()
 	if(prefs.toggles & SOUND_LOBBY)
 		src << "You will now hear music in the game lobby."
-		if(istype(mob, /mob/new_player))
+		if(isnewplayer(mob))
 			playtitlemusic()
 	else
 		src << "You will no longer hear music in the game lobby."
-		if(istype(mob, /mob/new_player))
+		if(isnewplayer(mob))
 			mob.stopLobbySound()
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -222,7 +235,7 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
 							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
-							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire")
+							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire", "catghost")
 /client/proc/pick_form()
 	if(!is_content_unlocked())
 		alert("This setting is for accounts with BYOND premium only.")
@@ -231,7 +244,7 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 	if(new_form)
 		prefs.ghost_form = new_form
 		prefs.save_preferences()
-		if(istype(mob,/mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.update_icon(new_form)
 
@@ -245,7 +258,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	if(new_orbit)
 		prefs.ghost_orbit = new_orbit
 		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.ghost_orbit = new_orbit
 
@@ -260,7 +273,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 			if("default sprites")
 				prefs.ghost_accs = GHOST_ACCS_NONE
 		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.update_icon()
 
@@ -293,7 +306,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 			if("White Ghost")
 				prefs.ghost_others = GHOST_OTHERS_SIMPLE
 		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.updateghostsight()
 
@@ -321,7 +334,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.ghost_hud = !prefs.ghost_hud
 	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
 	prefs.save_preferences()
-	if(istype(mob,/mob/dead/observer))
+	if(isobserver(mob))
 		mob.hud_used.show_hud()
 
 /client/verb/toggle_inquisition() // warning: unexpected inquisition

@@ -25,16 +25,20 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	anchored = 1
 	density = 1
 	use_power = 0
-	unacidable = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity == 1) // Very sturdy.
 		set_broken()
 
-/obj/machinery/gravity_generator/blob_act(obj/effect/blob/B)
+/obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
 	if(prob(20))
 		set_broken()
+
+/obj/machinery/gravity_generator/tesla_act(var/power)
+	..()
+	qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 /obj/machinery/gravity_generator/update_icon()
 	..()
@@ -91,12 +95,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 /obj/machinery/gravity_generator/main/station/initialize()
 	setup_parts()
-	middle.overlays += "activated"
+	middle.add_overlay("activated")
 	update_list()
 
 //
 // Generator an admin can spawn
 //
+/obj/machinery/gravity_generator/main/station/admin
+	use_power = 0
 
 /obj/machinery/gravity_generator/main/station/admin/New()
 	..()
@@ -160,7 +166,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	for(var/obj/machinery/gravity_generator/M in parts)
 		if(!(M.stat & BROKEN))
 			M.set_broken()
-	middle.overlays.Cut()
+	middle.cut_overlays()
 	charge_count = 0
 	breaker = 0
 	set_power()
@@ -184,7 +190,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_SCREWDRIVER)
 			if(istype(I, /obj/item/weapon/screwdriver))
 				user << "<span class='notice'>You secure the screws of the framework.</span>"
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(src.loc, I.usesound, 50, 1)
 				broken_state++
 				update_icon()
 				return
@@ -202,7 +208,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I
-				if(PS.amount >= 10)
+				if(PS.get_amount() >= 10)
 					PS.use(10)
 					user << "<span class='notice'>You add the plating to the framework.</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
@@ -214,7 +220,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_WRENCH)
 			if(istype(I, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You secure the plating to the framework.</span>"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(src.loc, I.usesound, 75, 1)
 				set_fix()
 				return
 	return ..()
@@ -351,9 +357,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 			if(overlay_state != current_overlay)
 				if(middle)
-					middle.overlays.Cut()
+					middle.cut_overlays()
 					if(overlay_state)
-						middle.overlays += overlay_state
+						middle.add_overlay(overlay_state)
 					current_overlay = overlay_state
 
 

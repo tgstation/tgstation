@@ -31,6 +31,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_TOGGLE_EMERGENCY = 10
+	var/const/COMMUNICATION_COOLDOWN = 600
+	var/const/COMMUNICATION_COOLDOWN_AI = 600
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -64,7 +66,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			src.state = STATE_DEFAULT
 		if("login")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			var/obj/item/weapon/card/id/I = M.get_active_held_item()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -82,7 +84,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		if("swipeidseclevel")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			var/obj/item/weapon/card/id/I = M.get_active_held_item()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -111,10 +113,22 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "<span class='warning'>You need to swipe your ID!</span>"
 
 		if("announce")
-			if(src.authenticated==2 && !message_cooldown)
+			if(src.authenticated==2)
 				make_announcement(usr)
-			else if (src.authenticated==2 && message_cooldown)
-				usr << "Intercomms recharging. Please stand by."
+
+		if("crossserver")
+			if(authenticated==2)
+				if(CM.lastTimeUsed + 600 > world.time)
+					usr << "Arrays recycling.  Please stand by."
+					return
+				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
+				if(!input || !(usr in view(1,src)))
+					return
+				send2otherserver("[station_name()]", input,"Comms_Console")
+				minor_announce(input, title = "Outgoing message to allied station")
+				log_say("[key_name(usr)] has sent a message to the other server: [input]")
+				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
+				CM.lastTimeUsed = world.time
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -282,8 +296,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("ai-status")
 			src.aistate = STATE_STATUSDISPLAY
 		if("ai-announce")
-			if(!ai_message_cooldown)
-				make_announcement(usr, 1)
+			make_announcement(usr, 1)
 		if("ai-securitylevel")
 			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel) tmp_alertlevel = 0
@@ -351,7 +364,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 
-	if (istype(user, /mob/living/silicon))
+	if(issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
@@ -384,6 +397,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
+					if(cross_allowed)
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -566,19 +581,22 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	return dat
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
+	if((is_silicon && ai_message_cooldown > world.time) || (!is_silicon && message_cooldown > world.time))
+		user << "Intercomms recharging. Please stand by."
+		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src))
 		return
 	if(is_silicon)
+		if(ai_message_cooldown > world.time)
+			return
 		minor_announce(input,"[user.name] Announces:")
-		ai_message_cooldown = 1
-		spawn(600)//One minute cooldown
-			ai_message_cooldown = 0
+		ai_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
 	else
+		if(message_cooldown > world.time)
+			return
 		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
-		message_cooldown = 1
-		spawn(600)//One minute cooldown
-			message_cooldown = 0
+		message_cooldown = world.time + COMMUNICATION_COOLDOWN
 	log_say("[key_name(user)] has made a priority announcement: [input]")
 	message_admins("[key_name_admin(user)] has made a priority announcement.")
 

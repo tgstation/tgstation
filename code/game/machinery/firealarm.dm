@@ -15,18 +15,22 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	anchored = 1
+	obj_integrity = 250
+	max_integrity = 250
+	integrity_failure = 100
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
-	var/health = 50
+
 
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
 	if(dir)
-		src.dir = dir
+		src.setDir(dir)
 	if(building)
 		buildstage = 0
 		panel_open = 1
@@ -39,7 +43,7 @@
 	update_icon()
 
 /obj/machinery/firealarm/update_icon()
-	src.overlays = list()
+	cut_overlays()
 
 	var/area/A = src.loc
 	A = A.loc
@@ -50,25 +54,23 @@
 	else
 		icon_state = "fire0"
 
-		if(stat & NOPOWER)
-			return
 		if(stat & BROKEN)
 			icon_state = "firex"
 			return
 
-		overlays += "overlay_[security_level]"
-		if(detecting)
-			overlays += "overlay_[A.fire ? "fire" : "clear"]"
-		else
-			overlays += "overlay_fire"
+		if(stat & NOPOWER)
+			return
 
-/obj/machinery/firealarm/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(P.damage, P.damage_type, 0)
+		add_overlay("overlay_[security_level]")
+		if(detecting)
+			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
+		else
+			add_overlay("overlay_fire")
 
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50 / severity))
 		alarm()
+	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
 	if(!emagged)
@@ -81,6 +83,7 @@
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(!emagged && detecting && !stat && temperature > T0C + 200)
 		alarm()
+	..()
 
 /obj/machinery/firealarm/proc/alarm()
 	if(!is_operational())
@@ -133,7 +136,7 @@
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		panel_open = !panel_open
 		user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
 		update_icon()
@@ -152,10 +155,8 @@
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
-					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil()
-					coil.amount = 5
-					coil.loc = user.loc
+					playsound(src.loc, W.usesound, 50, 1)
+					new /obj/item/stack/cable_coil(user.loc, 5)
 					user << "<span class='notice'>You cut the wires from \the [src].</span>"
 					update_icon()
 					return
@@ -172,7 +173,7 @@
 					return
 
 				else if(istype(W, /obj/item/weapon/crowbar))
-					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+					playsound(src.loc, W.usesound, 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(do_after(user, 20/W.toolspeed, target = src))
@@ -198,28 +199,94 @@
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.loc = user.loc
-					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+					playsound(src.loc, W.usesound, 50, 1)
 					qdel(src)
 					return
 	return ..()
 
-/obj/machinery/firealarm/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+
+/obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(.) //damage received
+		if(obj_integrity > 0 && !(stat & BROKEN) && buildstage != 0)
+			if(prob(33))
+				alarm()
+
+/obj/machinery/firealarm/obj_break(damage_flag)
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT) && buildstage != 0) //can't break the electronics if there isn't any inside.
+		stat |= BROKEN
+		update_icon()
+
+/obj/machinery/firealarm/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 1)
+		var/obj/item/I = new /obj/item/weapon/electronics/firealarm(loc)
+		if(!disassembled)
+			I.obj_integrity = I.max_integrity * 0.5
+		new /obj/item/stack/cable_coil(loc, 3)
+	qdel(src)
+
+
+/*
+ * Party button
+ */
+
+/obj/machinery/firealarm/partyalarm
+	name = "\improper PARTY BUTTON"
+	desc = "Cuban Pete is in the house!"
+
+/obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
+		return
+
+	if (buildstage != 2)
+		return
+
+	user.set_machine(src)
+	var/area/A = src.loc
+	var/d1
+	var/dat
+	if(ishuman(user) || user.has_unlimited_silicon_privilege)
+		A = A.loc
+
+		if (A.party)
+			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
 		else
-			return
-	if(!(stat & BROKEN) && buildstage != 0) //can't break the electronics if there isn't any inside.
-		health -= damage
-		if(health <= 0)
-			stat |= BROKEN
-			update_icon()
-		else if(prob(33))
-			alarm()
+			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
+		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []</BODY></HTML>", d1)
+
+	else
+		A = A.loc
+		if (A.fire)
+			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
+		else
+			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
+		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []", stars("Party Button"), d1)
+
+	var/datum/browser/popup = new(user, "firealarm", "Party Alarm")
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+	return
+
+/obj/machinery/firealarm/partyalarm/reset()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	for(var/area/RA in A.related)
+		RA.partyreset()
+	return
+
+/obj/machinery/firealarm/partyalarm/alarm()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	for(var/area/RA in A.related)
+		RA.partyalert()
+	return

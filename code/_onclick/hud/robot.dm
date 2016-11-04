@@ -5,7 +5,13 @@
 	name = "cyborg module"
 	icon_state = "nomod"
 
+/obj/screen/robot/Click()
+	if(isobserver(usr))
+		return 1
+
 /obj/screen/robot/module/Click()
+	if(..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	if(R.module)
 		R.hud_used.toggle_show_robot_modules()
@@ -17,6 +23,8 @@
 	icon_state = "inv1"
 
 /obj/screen/robot/module1/Click()
+	if(..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_module(1)
 
@@ -25,6 +33,8 @@
 	icon_state = "inv2"
 
 /obj/screen/robot/module2/Click()
+	if(..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_module(2)
 
@@ -33,6 +43,8 @@
 	icon_state = "inv3"
 
 /obj/screen/robot/module3/Click()
+	if(..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_module(3)
 
@@ -41,6 +53,8 @@
 	icon_state = "radio"
 
 /obj/screen/robot/radio/Click()
+	if(..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.radio.interact(R)
 
@@ -49,6 +63,8 @@
 	icon_state = "store"
 
 /obj/screen/robot/store/Click()
+	if(..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.uneq_active()
 
@@ -57,6 +73,8 @@
 	icon_state = "lamp0"
 
 /obj/screen/robot/lamp/Click()
+	if(..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.control_headlamp()
 
@@ -65,6 +83,8 @@
 	icon_state = "ionpulse0"
 
 /obj/screen/robot/thrusters/Click()
+	if(..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_ionpulse()
 
@@ -72,6 +92,11 @@
 	..()
 	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
+
+	using = new/obj/screen/wheel/talk
+	using.screen_loc = ui_borg_talk_wheel
+	wheels += using
+	static_inventory += using
 
 //Radio
 	using = new /obj/screen/robot/radio()
@@ -133,9 +158,9 @@
 	infodisplay += healths
 
 //Installed Module
-	mymob.hands = new /obj/screen/robot/module()
-	mymob.hands.screen_loc = ui_borg_module
-	static_inventory += mymob.hands
+	mymobR.hands = new /obj/screen/robot/module()
+	mymobR.hands.screen_loc = ui_borg_module
+	static_inventory += mymobR.hands
 
 //Store
 	module_store_icon = new /obj/screen/robot/store()
@@ -154,50 +179,50 @@
 
 
 /datum/hud/proc/toggle_show_robot_modules()
-	if(!isrobot(mymob)) return
+	if(!iscyborg(mymob)) return
 
-	var/mob/living/silicon/robot/r = mymob
+	var/mob/living/silicon/robot/R = mymob
 
-	r.shown_robot_modules = !r.shown_robot_modules
+	R.shown_robot_modules = !R.shown_robot_modules
 	update_robot_modules_display()
 
-/datum/hud/proc/update_robot_modules_display()
-	if(!isrobot(mymob)) return
+/datum/hud/proc/update_robot_modules_display(mob/viewer)
+	if(!iscyborg(mymob)) return
 
-	var/mob/living/silicon/robot/r = mymob
+	var/mob/living/silicon/robot/R = mymob
 
-	if(!r.client)
+	var/mob/screenmob = viewer || R
+
+	if(!R.module)
 		return
 
-	if(!r.module)
-		return
-
-	if(r.shown_robot_modules && hud_shown)
+	if(R.shown_robot_modules && screenmob.hud_used.hud_shown)
 		//Modules display is shown
-		r.client.screen += module_store_icon	//"store" icon
+		screenmob.client.screen += module_store_icon	//"store" icon
 
-		if(!r.module.modules)
+		if(!R.module.modules)
 			usr << "<span class='danger'>Selected module has no modules to select</span>"
 			return
 
-		if(!r.robot_modules_background)
+		if(!R.robot_modules_background)
 			return
 
-		var/display_rows = Ceiling(length(r.module.get_inactive_modules()) / 8)
-		r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
-		r.client.screen += r.robot_modules_background
+		var/display_rows = Ceiling(length(R.module.get_inactive_modules()) / 8)
+		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+		screenmob.client.screen += R.robot_modules_background
 
 		var/x = -4	//Start at CENTER-4,SOUTH+1
 		var/y = 1
 
-		for(var/atom/movable/A in r.module.get_inactive_modules())
+		for(var/atom/movable/A in R.module.get_inactive_modules())
 			//Module is not currently active
-			r.client.screen += A
+			screenmob.client.screen += A
 			if(x < 0)
 				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
 			else
 				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
 			A.layer = ABOVE_HUD_LAYER
+			A.plane = ABOVE_HUD_PLANE
 
 			x++
 			if(x == 4)
@@ -206,37 +231,41 @@
 
 	else
 		//Modules display is hidden
-		r.client.screen -= module_store_icon	//"store" icon
+		screenmob.client.screen -= module_store_icon	//"store" icon
 
-		for(var/atom/A in r.module.get_inactive_modules())
+		for(var/atom/A in R.module.get_inactive_modules())
 			//Module is not currently active
-			r.client.screen -= A
-		r.shown_robot_modules = 0
-		r.client.screen -= r.robot_modules_background
+			screenmob.client.screen -= A
+		R.shown_robot_modules = 0
+		screenmob.client.screen -= R.robot_modules_background
 
 /mob/living/silicon/robot/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/robot(src)
 
 
-/datum/hud/robot/persistant_inventory_update()
+/datum/hud/robot/persistant_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	var/mob/living/silicon/robot/R = mymob
-	if(hud_shown)
-		if(R.module_state_1)
-			R.module_state_1.screen_loc = ui_inv1
-			R.client.screen += R.module_state_1
-		if(R.module_state_2)
-			R.module_state_2.screen_loc = ui_inv2
-			R.client.screen += R.module_state_2
-		if(R.module_state_3)
-			R.module_state_3.screen_loc = ui_inv3
-			R.client.screen += R.module_state_3
-	else
-		if(R.module_state_1)
-			R.module_state_1.screen_loc = null
-		if(R.module_state_2)
-			R.module_state_2.screen_loc = null
-		if(R.module_state_3)
-			R.module_state_3.screen_loc = null
+
+	var/mob/screenmob = viewer || R
+
+	if(screenmob.hud_used)
+		if(screenmob.hud_used.hud_shown)
+			if(R.module_state_1)
+				R.module_state_1.screen_loc = ui_inv1
+				screenmob.client.screen += R.module_state_1
+			if(R.module_state_2)
+				R.module_state_2.screen_loc = ui_inv2
+				screenmob.client.screen += R.module_state_2
+			if(R.module_state_3)
+				R.module_state_3.screen_loc = ui_inv3
+				screenmob.client.screen += R.module_state_3
+		else
+			if(R.module_state_1)
+				screenmob.client.screen -= R.module_state_1
+			if(R.module_state_2)
+				screenmob.client.screen -= R.module_state_2
+			if(R.module_state_3)
+				screenmob.client.screen -= R.module_state_3

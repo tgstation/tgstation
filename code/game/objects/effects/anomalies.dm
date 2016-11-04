@@ -4,7 +4,6 @@
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "bhole3"
-	unacidable = 1
 	density = 0
 	anchored = 1
 	luminosity = 3
@@ -91,7 +90,6 @@
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
 		boing = 0
-		return
 
 /////////////////////
 
@@ -156,7 +154,6 @@
 /obj/effect/anomaly/bluespace/Bumped(atom/A)
 	if(isliving(A))
 		do_teleport(A, locate(A.x, A.y, A.z), 8)
-	return
 
 /////////////////////
 
@@ -172,7 +169,7 @@
 	..()
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
-		T.atmos_spawn_air("o2=15;plasma=15;TEMP=1000")
+		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
 
 /////////////////////
 
@@ -210,7 +207,6 @@
 		affect_coord(x-t, y+r, ex_act_force, pull_chance, turf_removal_chance)
 		affect_coord(x+r, y+t, ex_act_force, pull_chance, turf_removal_chance)
 		affect_coord(x-r, y-t, ex_act_force, pull_chance, turf_removal_chance)
-	return
 
 /obj/effect/anomaly/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
 	//Get turf at coordinate
@@ -231,4 +227,3 @@
 	//Damaging the turf
 	if( T && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
-	return

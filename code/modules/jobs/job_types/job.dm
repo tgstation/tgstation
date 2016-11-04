@@ -72,6 +72,8 @@
 		H.wear_suit.add_fingerprint(H,1)
 	if(H.wear_mask)
 		H.wear_mask.add_fingerprint(H,1)
+	if(H.wear_neck)
+		H.wear_neck.add_fingerprint(H,1)
 	if(H.head)
 		H.head.add_fingerprint(H,1)
 	if(H.shoes)
@@ -141,7 +143,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
 	var/backpack = /obj/item/weapon/storage/backpack
-	var/satchel  = /obj/item/weapon/storage/backpack/satchel_norm
+	var/satchel  = /obj/item/weapon/storage/backpack/satchel
 	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
 	var/box = /obj/item/weapon/storage/box/survival
 
@@ -152,11 +154,11 @@
 		if(GBACKPACK)
 			back = /obj/item/weapon/storage/backpack //Grey backpack
 		if(GSATCHEL)
-			back = /obj/item/weapon/storage/backpack/satchel_norm //Grey satchel
+			back = /obj/item/weapon/storage/backpack/satchel //Grey satchel
 		if(GDUFFLEBAG)
 			back = /obj/item/weapon/storage/backpack/dufflebag //Grey Dufflebag
 		if(LSATCHEL)
-			back = /obj/item/weapon/storage/backpack/satchel //Leather Satchel
+			back = /obj/item/weapon/storage/backpack/satchel/leather //Leather Satchel
 		if(DSATCHEL)
 			back = satchel //Department satchel
 		if(DDUFFLEBAG)
@@ -164,7 +166,9 @@
 		else
 			back = backpack //Department backpack
 
-	backpack_contents[box] = 1
+	if(box)
+		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
+		backpack_contents[box] = 1
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

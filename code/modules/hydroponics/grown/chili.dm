@@ -11,6 +11,7 @@
 	production = 5
 	yield = 4
 	potency = 20
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "chili-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "chili-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
@@ -78,11 +79,11 @@
 	..()
 	if( istype(src.loc, /mob) )
 		held_mob = src.loc
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && src.loc == held_mob)
-		if( (held_mob.l_hand == src) || (held_mob.r_hand == src))
+		if(held_mob.is_holding(src))
 			if(hasvar(held_mob,"gloves") && held_mob:gloves)
 				return
 			held_mob.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT

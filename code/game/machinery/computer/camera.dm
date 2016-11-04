@@ -27,7 +27,7 @@
 		if(!Adjacent(user))
 			user.unset_machine()
 			return
-	else if(isrobot(user))
+	else if(iscyborg(user))
 		var/list/viewing = viewers(src)
 		if(!viewing.Find(user))
 			user.unset_machine()
@@ -88,7 +88,7 @@
 		var/camera_fail = 0
 		if(!C.can_use() || user.machine != src || user.eye_blind || user.incapacitated())
 			camera_fail = 1
-		else if(isrobot(user))
+		else if(iscyborg(user))
 			var/list/viewing = viewers(src)
 			if(!viewing.Find(user))
 				camera_fail = 1
@@ -108,8 +108,7 @@
 			user.reset_perspective(C)
 		watchers[user] = C
 		use_power(50)
-		spawn(5)
-			use_camera_console(user)
+		addtimer(src, "use_camera_console", 5, FALSE, user)
 	else
 		user.unset_machine()
 

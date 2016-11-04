@@ -36,19 +36,18 @@
 	if(grenades.len)
 		fire_grenade(target,user)
 	else
-		usr << "<span class='danger'>The grenade launcher is empty.</span>"
+		user << "<span class='danger'>The grenade launcher is empty.</span>"
 
 /obj/item/weapon/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
 	user.visible_message("<span class='danger'>[user] fired a grenade!</span>", \
 						"<span class='danger'>You fire the grenade launcher!</span>")
-	var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] //Now with less copypasta!
+	var/obj/item/weapon/grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
 	F.loc = user.loc
 	F.throw_at_fast(target, 30, 2,user)
 	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")
 	log_game("[key_name(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")
 	F.active = 1
-	F.icon_state = initial(icon_state) + "_active"
+	F.icon_state = initial(F.icon_state) + "_active"
 	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-	spawn(15)
-		F.prime()
+	addtimer(F, "prime", 15)

@@ -17,6 +17,30 @@
 			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
 	..()
 
+/obj/item/weapon/ore/Crossed(atom/movable/AM)
+	var/obj/item/weapon/storage/bag/ore/OB
+	if(istype(loc, /turf/open/floor/plating/asteroid))
+		var/turf/open/floor/plating/asteroid/F = loc
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			for(var/thing in H.get_storage_slots())
+				if(istype(thing, /obj/item/weapon/storage/bag/ore))
+					OB = thing
+					break
+			for(var/thing in H.held_items)
+				if(istype(thing, /obj/item/weapon/storage/bag/ore))
+					OB = thing
+					break
+		else if(issilicon(AM))
+			var/mob/living/silicon/robot/R = AM
+			for(var/thing in R.module_active)
+				if(istype(thing, /obj/item/weapon/storage/bag/ore))
+					OB = thing
+					break
+		if(OB)
+			F.attackby(OB, AM)
+	return ..()
+
 /obj/item/weapon/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
@@ -133,6 +157,14 @@
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
+/obj/item/weapon/ore/titanium
+	name = "titanium ore"
+	icon_state = "Titanium ore"
+	origin_tech = "materials=4"
+	points = 50
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/titanium
+
 /obj/item/weapon/ore/slag
 	name = "slag"
 	desc = "Completely useless"
@@ -162,7 +194,7 @@
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
-		overlays += "Gibtonite_igniter"
+		add_overlay("Gibtonite_igniter")
 		return
 
 	if(wires && !primed)
@@ -233,6 +265,7 @@
 			qdel(src)
 
 /obj/item/weapon/ore/New()
+	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
@@ -259,6 +292,7 @@
 	var/value = 1
 
 /obj/item/weapon/coin/New()
+	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
@@ -350,7 +384,7 @@
 			return
 
 		if (CC.use(1))
-			overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
+			add_overlay(image('icons/obj/economy.dmi',"coin_string_overlay"))
 			string_attached = 1
 			user << "<span class='notice'>You attach a string to the coin.</span>"
 		else

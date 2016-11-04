@@ -36,9 +36,6 @@
 			SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-		return 0
 	on = !on
 	update_brightness(user)
 	for(var/X in actions)
@@ -59,12 +56,12 @@
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
+		if(ishuman(M) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
 			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(M.flash_eyes(visual = 1))
+			if(M.flash_act(visual = 1))
 				M.visible_message("[M] directs [src] to \his eyes.", \
 									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
@@ -80,7 +77,7 @@
 				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
 					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
 				else //they're okay!
-					if(C.flash_eyes(visual = 1))
+					if(C.flash_act(visual = 1))
 						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
@@ -116,7 +113,7 @@
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			PoolOrNew(/obj/effect/medical_holosign, list(T,user)) //produce a holographic glow
+			PoolOrNew(/obj/effect/overlay/temp/medical_holosign, list(T,user)) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
 	..()
@@ -127,7 +124,7 @@
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/medical_holosign/New(loc, creator)
+/obj/effect/overlay/temp/medical_holosign/New(loc, creator)
 	..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
@@ -199,15 +196,20 @@ obj/item/device/flashlight/lamp/bananalamp
 	..()
 
 /obj/item/device/flashlight/flare/process()
-	var/turf/pos = get_turf(src)
-	if(pos)
-		pos.hotspot_expose(produce_heat, 5)
+	open_flame(heat)
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/flare/ignition_effect(atom/A, mob/user)
+	if(fuel && on)
+		. = "<span class='notice'>[user] lights [A] with [src] like a real \
+			badass.</span>"
+	else
+		. = ""
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -241,7 +243,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
 		damtype = "fire"
-		SSobj.processing += src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/is_hot()
 	return on * heat
@@ -285,10 +287,10 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/New()
 		..()
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/emp/Destroy()
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return ..()
 
 /obj/item/device/flashlight/emp/process()

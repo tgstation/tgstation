@@ -1,20 +1,53 @@
 // Areas.dm
 
-// Added to fix mech fabs 05/2013 ~Sayu
-// This is necessary due to lighting subareas.  If you were to go in assuming that things in
-// the same logical /area have the parent /area object... well, you would be mistaken.  If you
-// want to find machines, mobs, etc, in the same logical area, you will need to check all the
-// related areas.  This returns a master contents list to assist in that.
-/proc/area_contents(var/area/A)
-	if(!istype(A)) return null
-	var/list/contents = list()
-	for(var/area/LSA in A.related)
-		contents += LSA.contents
-	return contents
 
-
-// ===
 /area
+	level = null
+	name = "Space"
+	icon = 'icons/turf/areas.dmi'
+	icon_state = "unknown"
+	layer = AREA_LAYER
+	mouse_opacity = 0
+	invisibility = INVISIBILITY_LIGHTING
+
+	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+
+	var/valid_territory = 1 // If it's a valid territory for gangs to claim
+	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
+
+	var/eject = null
+
+	var/fire = null
+	var/atmos = 1
+	var/atmosalm = 0
+	var/poweralm = 1
+	var/party = null
+	var/lightswitch = 1
+
+	var/requires_power = 1
+	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
+
+	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+
+	var/power_equip = 1
+	var/power_light = 1
+	var/power_environ = 1
+	var/music = null
+	var/used_equip = 0
+	var/used_light = 0
+	var/used_environ = 0
+	var/static_equip
+	var/static_light = 0
+	var/static_environ
+
+	var/has_gravity = 0
+	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
+	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+
+	var/no_air = null
+	var/area/master				// master area used for power calcluations
+	var/list/related			// the other areas of the same type as this
+
 	var/global/global_uid = 0
 	var/uid
 	var/list/ambientsounds = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg',\
@@ -23,6 +56,43 @@
 									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
 									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+	flags = CAN_BE_DIRTY
+
+
+/*Adding a wizard area teleport list because motherfucking lag -- Urist*/
+/*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
+var/list/teleportlocs = list()
+
+/proc/process_teleport_locs()
+	for(var/V in sortedAreas)
+		var/area/AR = V
+		if(istype(AR, /area/shuttle) || AR.noteleport)
+			continue
+		if(teleportlocs[AR.name])
+			continue
+		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (picked && (picked.z == ZLEVEL_STATION))
+			teleportlocs[AR.name] = AR
+
+	sortTim(teleportlocs, /proc/cmp_text_dsc)
+
+// ===
+
+
+// Added to fix mech fabs 05/2013 ~Sayu
+// This is necessary due to lighting subareas.  If you were to go in assuming that things in
+// the same logical /area have the parent /area object... well, you would be mistaken.  If you
+// want to find machines, mobs, etc, in the same logical area, you will need to check all the
+// related areas.  This returns a master contents list to assist in that.
+/proc/area_contents(area/A)
+	if(!istype(A)) return null
+	var/list/contents = list()
+	for(var/area/LSA in A.related)
+		contents += LSA.contents
+	return contents
+
+
+
 
 /area/New()
 	icon_state = ""
@@ -74,7 +144,11 @@
 					D.cancelAlarm("Power", src, source)
 				else
 					D.triggerAlarm("Power", src, cameras, source)
-	return
+			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+				if(state == 1)
+					p.cancelAlarm("Power", src, source)
+				else
+					p.triggerAlarm("Power", src, cameras, source)
 
 /area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
@@ -90,6 +164,8 @@
 				a.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
 				D.triggerAlarm("Atmosphere", src, cameras, source)
+			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+				p.triggerAlarm("Atmosphere", src, cameras, source)
 
 		else if (src.atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
@@ -98,6 +174,8 @@
 				a.cancelAlarm("Atmosphere", src, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
 				D.cancelAlarm("Atmosphere", src, source)
+			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+				p.cancelAlarm("Atmosphere", src, source)
 
 		src.atmosalm = danger_level
 		return 1
@@ -117,8 +195,7 @@
 					if(D.operating)
 						D.nextstate = CLOSED
 					else if(!D.density)
-						spawn(0)
-							D.close()
+						addtimer(D, "close", 0)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
@@ -130,7 +207,8 @@
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.triggerAlarm("Fire", src, cameras, source)
-	return
+	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+		p.triggerAlarm("Fire", src, cameras, source)
 
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
@@ -143,8 +221,7 @@
 					if(D.operating)
 						D.nextstate = OPEN
 					else if(D.density)
-						spawn(0)
-							D.open()
+						addtimer(D, "open", 0)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 
@@ -154,7 +231,8 @@
 		a.cancelAlarm("Fire", src, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.cancelAlarm("Fire", src, source)
-	return
+	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+		p.cancelAlarm("Fire", src, source)
 
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
@@ -177,8 +255,7 @@
 	for (var/mob/living/silicon/SILICON in player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			spawn(600)
-				SILICON.cancelAlarm("Burglar", src, trigger)
+			addtimer(SILICON, "cancelAlarm", 600, FALSE,"Burglar",src,trigger)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1
@@ -191,13 +268,11 @@
 	if(!eject)
 		eject = 1
 		updateicon()
-	return
 
 /area/proc/readyreset()
 	if(eject)
 		eject = 0
 		updateicon()
-	return
 
 /area/proc/partyalert()
 	if(src.name == "Space") //no parties in space!!!
@@ -206,7 +281,6 @@
 		src.party = 1
 		src.updateicon()
 		src.mouse_opacity = 0
-	return
 
 /area/proc/partyreset()
 	if (src.party)
@@ -218,9 +292,7 @@
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					spawn(0)
-					D.open()
-	return
+					addtimer(D, "open", 0)
 
 /area/proc/updateicon()
 	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
@@ -321,7 +393,7 @@
 
 
 /area/Entered(A)
-	if(!istype(A,/mob/living))
+	if(!isliving(A))
 		return
 
 	var/mob/living/L = A
@@ -346,11 +418,11 @@
 				if(L.&& L.client)
 					L.client.played = 0
 
-/proc/has_gravity(atom/AT, turf/T)
-	if(!T)
-		T = get_turf(AT)
+/atom/proc/has_gravity(turf/T)
+	if(!T || !isturf(T))
+		T = get_turf(src)
 	var/area/A = get_area(T)
-	if(istype(T, /turf/open/space)) // Turf never has gravity
+	if(isspaceturf(T)) // Turf never has gravity
 		return 0
 	else if(A && A.has_gravity) // Areas which always has gravity
 		return 1

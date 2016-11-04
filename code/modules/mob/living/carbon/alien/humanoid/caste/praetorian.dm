@@ -11,13 +11,17 @@
 
 	real_name = name
 
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
+	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
+	..()
+
+/mob/living/carbon/alien/humanoid/royal/praetorian/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/acid
 	internal_organs += new /obj/item/organ/alien/neurotoxin
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
-	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
 	..()
+
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/movement_delay()
 	. = ..()
@@ -38,9 +42,12 @@
 	if(node.recent_queen_death)
 		user << "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>"
 		return 0
-	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
+	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
+		if(new_xeno.client.prefs.unlock_content)
+			var/datum/action/innate/maid/M = new()
+			M.Grant(new_xeno)
 		return 1
 	else
 		user << "<span class='notice'>We already have an alive queen.</span>"

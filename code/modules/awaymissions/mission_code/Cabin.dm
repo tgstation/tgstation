@@ -1,74 +1,57 @@
-/*Cabin areas*/
-/area/awaymission/snowforest
-	name = "Snow Forest"
-	icon_state = "away"
-	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 
-/area/awaymission/cabin
-	name = "Cabin"
-	icon_state = "away2"
-	requires_power = 1
-	luminosity = 0
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
-
-/area/awaymission/snowforest/lumbermill
-	name = "Lumbermill"
-	icon_state = "away3"
-
-
-
-
-
-/*Cabin code*/
-/obj/structure/fireplace
-	name = "fireplace"
+/obj/structure/firepit
+	name = "firepit"
 	desc = "warm and toasty"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "fireplace-active"
+	icon = 'icons/obj/fireplace.dmi'
+	icon_state = "firepit-active"
 	density = 0
 	var/active = 1
 
-/obj/structure/fireplace/initialize()
+/obj/structure/firepit/initialize()
 	..()
-	toggleFireplace()
+	toggleFirepit()
 
-/obj/structure/fireplace/attack_hand(mob/living/user)
+/obj/structure/firepit/attack_hand(mob/living/user)
 	if(active)
 		active = 0
-		toggleFireplace()
+		toggleFirepit()
 	else
 		..()
 
 
-/obj/structure/fireplace/attackby(obj/item/W,mob/living/user,params)
+/obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)
-		if(W.is_hot())
-			active = 1
-			toggleFireplace()
+		var/msg = W.ignition_effect(src, user)
+		if(msg)
+			active = TRUE
+			visible_message(msg)
+			toggleFirepit()
 		else
 			return ..()
 	else
 		W.fire_act()
 
-/obj/structure/fireplace/proc/toggleFireplace()
+/obj/structure/firepit/proc/toggleFirepit()
 	if(active)
 		SetLuminosity(8)
-		icon_state = "fireplace-active"
+		icon_state = "firepit-active"
 	else
 		SetLuminosity(0)
-		icon_state = "fireplace"
+		icon_state = "firepit"
 
-/obj/structure/fireplace/extinguish()
+/obj/structure/firepit/extinguish()
 	if(active)
-		active = 0
-		toggleFireplace()
+		active = FALSE
+		toggleFirepit()
 
-/obj/structure/fireplace/fire_act()
+/obj/structure/firepit/fire_act(exposed_temperature, exposed_volume)
 	if(!active)
-		active = 1
-		toggleFireplace()
+		active = TRUE
+		toggleFirepit()
+
+
+
+//other Cabin Stuff//
 
 /obj/machinery/recycler/lumbermill
 	name = "lumbermill saw"

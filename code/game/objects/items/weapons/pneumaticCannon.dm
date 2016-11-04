@@ -9,6 +9,7 @@
 	item_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/weapon/tank/internals/tank = null //The gas tank that is drawn from to fire things
@@ -154,8 +155,8 @@
 	src.update_icons()
 
 /obj/item/weapon/pneumatic_cannon/proc/update_icons()
-	src.overlays.Cut()
+	src.cut_overlays()
 	if(!tank)
 		return
-	src.overlays += image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]")
+	src.add_overlay(image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]"))
 	src.update_icon()

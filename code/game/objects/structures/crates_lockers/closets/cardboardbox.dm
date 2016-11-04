@@ -2,15 +2,17 @@
 	name = "large cardboard box"
 	desc = "Just a box..."
 	icon_state = "cardboard"
-	health = 10
 	mob_storage_capacity = 1
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
+	integrity_failure = 0
 	can_weld_shut = 0
 	cutting_tool = /obj/item/weapon/wirecutters
 	open_sound = 'sound/effects/rustle2.ogg'
 	cutting_sound = 'sound/items/poster_ripped.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
+	var/move_speed_multiplier = 1
 	var/move_delay = 0
 	var/egged = 0
 
@@ -19,7 +21,7 @@
 		return
 	move_delay = 1
 	if(step(src, direction))
-		spawn(config.walk_speed)
+		spawn(config.walk_speed*move_speed_multiplier)
 			move_delay = 0
 	else
 		move_delay = 0
@@ -52,3 +54,17 @@
 	flick_overlay(I,viewing,8)
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
+
+
+/obj/structure/closet/cardboard/metal
+	name = "large metal box"
+	desc = "THE COWARDS! THE FOOLS!"
+	icon_state = "metalbox"
+	obj_integrity = 500
+	mob_storage_capacity = 5
+	resistance_flags = 0
+	move_speed_multiplier = 2
+	cutting_tool = /obj/item/weapon/weldingtool
+	open_sound = 'sound/machines/click.ogg'
+	cutting_sound = 'sound/items/Welder.ogg'
+	material_drop = /obj/item/stack/sheet/plasteel

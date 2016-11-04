@@ -14,6 +14,7 @@
 	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
+	resistance_flags = FIRE_PROOF
 	var/max_water = 50
 	var/last_use = 1
 	var/safety = 1
@@ -97,7 +98,7 @@
 			usr << "<span class='warning'>\The [src] is empty!</span>"
 			return
 
-		if (world.time < src.last_use + 20)
+		if (world.time < src.last_use + 12)
 			return
 
 		src.last_use = world.time
@@ -172,9 +173,8 @@
 		reagents.clear_reagents()
 
 		var/turf/T = get_turf(loc)
-		if(istype(T, /turf/open))
+		if(isopenturf(T))
 			var/turf/open/theturf = T
 			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
-	return

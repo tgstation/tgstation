@@ -5,7 +5,8 @@
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest"
-	var/health = 100
+	obj_integrity = 120
+	max_integrity = 120
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
 	canSmoothWith = null
@@ -18,7 +19,7 @@
 	return ..()
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
 			var/mob/living/M = buck
 
@@ -60,7 +61,7 @@
 	if(!user.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
 
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		unbuckle_all_mobs()
 
 	if(buckle_mob(M))
@@ -74,29 +75,22 @@
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
 		M.layer = BELOW_MOB_LAYER
-		overlays += nest_overlay
+		add_overlay(nest_overlay)
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 		M.layer = initial(M.layer)
 		overlays -= nest_overlay
 
-/obj/structure/bed/nest/attacked_by(obj/item/I, mob/user)
-	..()
-	take_damage(I.force, I.damtype)
-
-/obj/structure/bed/nest/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(sound_effect)
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+			playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	health -= damage
-	if(health <=0)
-		density = 0
-		qdel(src)
+			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
+/obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user)
+	if(user.a_intent != "harm")
+		return attack_hand(user)
+	else
+		return ..()

@@ -6,6 +6,9 @@
 	var/icon_state_open = "cold_off"
 	density = TRUE
 	anchored = TRUE
+	obj_integrity = 300
+	max_integrity = 300
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
 
 	var/on = FALSE
 	var/min_temperature = 0
@@ -37,7 +40,7 @@
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		var/new_setting = "Heater"
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, I.usesound, 50, 1)
 		if(build_path == initial(heater.build_path))
 			newtype = freezer
 			new_setting = "Freezer"
@@ -49,7 +52,7 @@
 	else
 		return ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/construction()
+/obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
 	..(dir,dir)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
@@ -68,9 +71,9 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage(icon, "scrub_cap", initialize_directions)
+		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()

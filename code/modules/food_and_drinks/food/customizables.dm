@@ -13,7 +13,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable
 	bitesize = 4
-	w_class = 3
+	w_class = 2
 	volume = 80
 
 	var/ingMax = 12
@@ -36,12 +36,14 @@
 	user << "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
+	if(!istype(I, /obj/item/weapon/reagent_containers/food/snacks/customizable) && istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
 			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
 			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+		else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom))
+			user << "<span class='warning'>Adding [I.name] to [src] would make a mess.</span>"
 		else
 			if(!user.unEquip(I))
 				return
@@ -67,7 +69,6 @@
 					name = "[customname] sandwich"
 					return
 			name = "[customname] [initial(name)]"
-
 	else . = ..()
 
 
@@ -133,17 +134,17 @@
 			overlays.Cut(ingredients.len)
 			var/image/TOP = new(icon, "[icon_state]_top")
 			TOP.pixel_y = 2 * ingredients.len + 3
-			overlays += I
-			overlays += TOP
+			add_overlay(I)
+			add_overlay(TOP)
 			return
 		if(INGREDIENTS_FILL)
-			overlays.Cut()
+			cut_overlays()
 			I.color = filling_color
 		if(INGREDIENTS_LINE)
 			I.pixel_y = rand(-8,3)
 			I.pixel_x = I.pixel_y
 
-	overlays += I
+	add_overlay(I)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
@@ -262,12 +263,12 @@
 		ingMax = ingredients.len //can't add more ingredients after that
 		var/image/TOP = new(icon, "[BS.icon_state]")
 		TOP.pixel_y = 2 * ingredients.len + 3
-		overlays += TOP
+		add_overlay(TOP)
 		if(istype(BS, /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom))
 			var/image/O = new(icon, "[initial(BS.icon_state)]_filling")
 			O.color = BS.filling_color
 			O.pixel_y = 2 * ingredients.len + 3
-			overlays += O
+			add_overlay(O)
 		qdel(BS)
 		return
 	else
@@ -325,11 +326,11 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bowl/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(reagents && reagents.total_volume)
 		var/image/filling = image('icons/obj/food/soupsalad.dmi', "fullbowl")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 	else
 		icon_state = "bowl"
 

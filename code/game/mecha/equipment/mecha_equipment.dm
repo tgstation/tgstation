@@ -7,6 +7,8 @@
 	icon_state = "mecha_equip"
 	force = 5
 	origin_tech = "materials=2;engineering=2"
+	obj_integrity = 300
+	max_integrity = 300
 	var/equip_cooldown = 0 // cooldown after use
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
@@ -85,8 +87,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
-	spawn(equip_cooldown)
-		set_ready_state(1)
+	addtimer(src, "set_ready_state", equip_cooldown, FALSE, 1)
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target)
 	if(!chassis)

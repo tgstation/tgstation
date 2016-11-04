@@ -34,6 +34,7 @@
 	user.lastattacked = M
 	M.lastattacker = user
 
+	user.do_attack_animation(M)
 	M.attacked_by(src, user)
 
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
@@ -55,21 +56,28 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
+		visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+		//only witnesses close by and the victim see a hit message.
+	take_damage(I.force, I.damtype, "melee", 1)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
-	if(user != src)
-		user.do_attack_animation(src)
-	if(send_item_attack_message(I, user))
-		if(apply_damage(I.force, I.damtype))
-			if(I.damtype == BRUTE)
-				if(prob(33))
-					I.add_mob_blood(src)
-					var/turf/location = get_turf(src)
-					add_splatter_floor(location)
-					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
-						user.add_mob_blood(src)
+	send_item_attack_message(I, user)
+	if(I.force)
+		apply_damage(I.force, I.damtype)
+		if(I.damtype == BRUTE)
+			if(prob(33))
+				I.add_mob_blood(src)
+				var/turf/location = get_turf(src)
+				add_splatter_floor(location)
+				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
+					user.add_mob_blood(src)
+		return TRUE //successful attack
 
+/mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
+	if(I.force < force_threshold || I.damtype == STAMINA)
+		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
+	else
+		return ..()
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -86,27 +94,17 @@
 
 /mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
 	var/message_verb = "attacked"
-	if(I.attack_verb.len)
+	if(I.attack_verb && I.attack_verb.len)
 		message_verb = "[pick(I.attack_verb)]"
 	else if(!I.force)
-		return 0
+		return
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
-
 	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
 	if(user in viewers(src, null))
 		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
-	visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>")
+	visible_message("<span class='danger'>[attack_message]</span>", \
+		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return 1
 
-/mob/living/simple_animal/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
-	if(!I.force)
-		user.visible_message("<span class='warning'>[user] gently taps [src] with [I].</span>",\
-						"<span class='warning'>This weapon is ineffective, it does no damage!</span>")
-	else if(I.force < force_threshold || I.damtype == STAMINA)
-		visible_message("<span class='warning'>[I] bounces harmlessly off of [src].</span>",\
-					"<span class='warning'>[I] bounces harmlessly off of [src]!</span>")
-	else
-		return ..()

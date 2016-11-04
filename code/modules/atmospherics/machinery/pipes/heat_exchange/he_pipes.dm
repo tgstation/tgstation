@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/pipe/heat_exchanging/
+/obj/machinery/atmospherics/pipe/heat_exchanging
 	icon = 'icons/obj/atmospherics/pipes/heat.dmi'
 	level = 2
 	var/initialize_directions_he
@@ -7,11 +7,11 @@
 	color = "#404040"
 	buckle_lying = 1
 	var/icon_temperature = T20C //stop small changes in temperature causing icon refresh
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/New()
 	..()
-	color = "#404040"
+	add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/can_be_node(obj/machinery/atmospherics/pipe/heat_exchanging/target)
 	if(!istype(target))
@@ -46,11 +46,11 @@
 
 
 	//heatup/cooldown any mobs buckled to ourselves based on our temperature
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		var/hc = pipe_air.heat_capacity()
 		var/mob/living/heat_source = buckled_mobs[1]
 		//Best guess-estimate of the total bodytemperature of all the mobs, since they share the same environment it's ~ok~ to guess like this
-		var/avg_temp = (pipe_air.temperature * hc + (heat_source.bodytemperature * buckled_mobs.len) * 3500) / (hc + (buckled_mobs.len * 3500))
+		var/avg_temp = (pipe_air.temperature * hc + (heat_source.bodytemperature * buckled_mobs.len) * 3500) / (hc + (buckled_mobs ? buckled_mobs.len * 3500 : 0))
 		for(var/m in buckled_mobs)
 			var/mob/living/L = m
 			L.bodytemperature = avg_temp
@@ -82,7 +82,7 @@
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
 
 	//burn any mobs buckled based on temperature
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		var/heat_limit = 1000
 		if(pipe_air.temperature > heat_limit + 1)
 			for(var/m in buckled_mobs)

@@ -132,27 +132,27 @@ mob
 		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -32)
 
 		// Testing image overlays
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32)
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32))
 
 		// Testing icon file overlays (defaults to mob's state)
-		overlays += '_flat_demoIcons2.dmi'
+		add_overlay('_flat_demoIcons2.dmi')
 
 		// Testing icon_state overlays (defaults to mob's icon)
-		overlays += "white"
+		add_overlay("white")
 
 		// Testing dynamic icon overlays
 		var/icon/I = icon('old_or_unused.dmi', icon_state="aqua")
 		I.Shift(NORTH,16,1)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing dynamic image overlays
 		I=image(icon=I,pixel_x = -32, pixel_y = 32)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing object types (and layers)
-		overlays+=/obj/effect/overlayTest
+		add_overlay(/obj/effect/overlayTest)
 
 		loc = locate (10,10,1)
 	verb
@@ -182,7 +182,7 @@ mob
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
-			overlays += image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
+			add_overlay(image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
 
 		Stress_Test()
 			set name = "5. Stress Test"
@@ -808,7 +808,7 @@ The _flatIcons list is a cache for generated icon files.
 				I.pixel_y--
 			if(4)
 				I.pixel_y++
-		overlays += I//And finally add the overlay.
+		add_overlay(I)//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
@@ -943,6 +943,26 @@ var/global/list/friendly_animal_types = list()
 		return J
 	return 0
 
+/atom/proc/cut_overlays()
+	overlays.Cut()
+	overlays += priority_overlays
+
+/atom/proc/add_overlay(image, priority = 0)
+	var/list/new_overlays = overlays.Copy()
+	new_overlays -= image
+	if(priority)
+		if(!priority_overlays)
+			priority_overlays = list()
+		priority_overlays += image
+		new_overlays += image
+	else
+		if(priority_overlays)
+			new_overlays -= priority_overlays
+			new_overlays += image
+			new_overlays += priority_overlays
+		else
+			new_overlays += image
+	overlays = new_overlays
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals
@@ -957,19 +977,19 @@ var/global/list/humanoid_icon_cache = list()
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
-		body.dir = NORTH
+		body.setDir(NORTH)
 		var/icon/partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=NORTH)
 
-		body.dir = SOUTH
+		body.setDir(SOUTH)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=SOUTH)
 
-		body.dir = WEST
+		body.setDir(WEST)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=WEST)
 
-		body.dir = EAST
+		body.setDir(EAST)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=EAST)
 
@@ -980,3 +1000,34 @@ var/global/list/humanoid_icon_cache = list()
 	else
 		return humanoid_icon_cache[icon_id]
 
+
+//Hook, override to run code on- wait this is images
+//Images have dir without being an atom, so they get their own definition.
+//Lame.
+/image/proc/setDir(newdir)
+	dir = newdir
+
+// Used to make the frozen item visuals for Freon.
+var/list/freeze_item_icons = list()
+
+/atom/proc/freeze_icon_index()
+	return "\ref[initial(icon)]-[initial(icon_state)]"
+
+/obj/proc/make_frozen_visual(var/obj/F)
+	if(!F.is_frozen && (initial(icon) && initial(icon_state)))
+		var/index = freeze_icon_index()
+		var/icon/IC
+		var/icon/P = freeze_item_icons[index]
+		if(!P)
+			P = new /icon
+			for(var/iconstate in icon_states(F.icon))
+				var/icon/O = new('icons/effects/freeze.dmi', "ice_cube")
+				IC = new(F.icon, iconstate)
+				O.Blend(IC, ICON_ADD)
+				P.Insert(O, iconstate)
+			freeze_item_icons[index] = P
+		F.icon = P
+		F.name = "frozen [F.name]"
+		F.is_frozen = TRUE
+		return
+	return

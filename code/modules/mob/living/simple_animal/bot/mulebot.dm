@@ -128,12 +128,12 @@ var/global/mulebot_count = 0
 		icon_state="mulebot-hatch"
 	else
 		icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
-	overlays.Cut()
+	cut_overlays()
 	if(load && !ismob(load))//buckling handles the mob offsets
 		load.pixel_y = initial(load.pixel_y) + 9
 		if(load.layer < layer)
 			load.layer = layer + 0.01
-		overlays += load
+		add_overlay(load)
 	return
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
@@ -157,10 +157,10 @@ var/global/mulebot_count = 0
 			wires.cut_random()
 
 /mob/living/simple_animal/bot/mulebot/interact(mob/user)
-	if(open && !istype(user, /mob/living/silicon/ai))
+	if(open && !isAI(user))
 		wires.interact(user)
 	else
-		if(wires.is_cut(WIRE_RX) && istype(user, /mob/living/silicon/ai))
+		if(wires.is_cut(WIRE_RX) && isAI(user))
 			return
 		ui_interact(user)
 
@@ -357,7 +357,7 @@ var/global/mulebot_count = 0
 
 	if(isobj(AM))
 		var/obj/O = AM
-		if(O.buckled_mobs.len || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
@@ -400,7 +400,7 @@ var/global/mulebot_count = 0
 
 	mode = BOT_IDLE
 
-	overlays.Cut()
+	cut_overlays()
 
 	unbuckle_all_mobs()
 
@@ -408,6 +408,7 @@ var/global/mulebot_count = 0
 		load.loc = loc
 		load.pixel_y = initial(load.pixel_y)
 		load.layer = initial(load.layer)
+		load.plane = initial(load.plane)
 		if(dirn)
 			var/turf/T = loc
 			var/turf/newT = get_step(T,dirn)
@@ -474,7 +475,7 @@ var/global/mulebot_count = 0
 				if(next == loc)
 					path -= next
 					return
-				if(istype( next, /turf))
+				if(isturf(next))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
 
 					if(bloodiness)
@@ -482,14 +483,14 @@ var/global/mulebot_count = 0
 						B.blood_DNA |= blood_DNA.Copy()
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
-							B.dir = newdir
+							B.setDir(newdir)
 						else
 							newdir = newdir | dir
 							if(newdir == 3)
 								newdir = 1
 							else if(newdir == 12)
 								newdir = 4
-							B.dir = newdir
+							B.setDir(newdir)
 						bloodiness--
 
 
@@ -636,14 +637,15 @@ var/global/mulebot_count = 0
 	if(wires.is_cut(WIRE_AVOIDANCE))	// usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
-			if(istype(M,/mob/living/silicon/robot))
+			if(iscyborg(M))
 				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
 			else
-				add_logs(src, M, "knocked down")
-				visible_message("<span class='danger'>[src] knocks over [M]!</span>")
-				M.stop_pulling()
-				M.Stun(8)
-				M.Weaken(5)
+				if(!paicard)
+					add_logs(src, M, "knocked down")
+					visible_message("<span class='danger'>[src] knocks over [M]!</span>")
+					M.stop_pulling()
+					M.Stun(8)
+					M.Weaken(5)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
@@ -737,6 +739,10 @@ var/global/mulebot_count = 0
 		unload(get_dir(loc, A))
 	else
 		..()
+
+/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/device/paicard/card)
+	if(..())
+		visible_message("[src] safeties are locked on.")
 
 #undef SIGH
 #undef ANNOYED

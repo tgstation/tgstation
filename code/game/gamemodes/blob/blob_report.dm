@@ -16,7 +16,7 @@
 			print_command_report(intercepttext,"Level 5-6 Biohazard Response Procedures")
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 		if(2)
-			var/nukecode = rand(10000, 99999)
+			var/nukecode = random_nukecode()
 			for(var/obj/machinery/nuclearbomb/bomb in machines)
 				if(bomb && bomb.r_code)
 					if(bomb.z == ZLEVEL_STATION)
@@ -57,20 +57,23 @@
 /datum/station_state/proc/count(count_territories)
 	for(var/turf/T in block(locate(1,1,1), locate(world.maxx,world.maxy,1)))
 
-		if(istype(T,/turf/open/floor))
-			if(!(T:burnt))
+		if(isfloorturf(T))
+			var/turf/open/floor/TF = T
+			if(!(TF.burnt))
 				src.floor += 12
 			else
 				src.floor += 1
 
-		if(istype(T, /turf/closed/wall))
-			if(T:intact)
+		if(iswallturf(T))
+			var/turf/closed/wall/TW = T
+			if(TW.intact)
 				src.wall += 2
 			else
 				src.wall += 1
 
 		if(istype(T, /turf/closed/wall/r_wall))
-			if(T:intact)
+			var/turf/closed/wall/r_wall/TRW = T
+			if(TRW.intact)
 				src.r_wall += 2
 			else
 				src.r_wall += 1
@@ -79,8 +82,10 @@
 		for(var/obj/O in T.contents)
 			if(istype(O, /obj/structure/window))
 				src.window += 1
-			else if(istype(O, /obj/structure/grille) && (!O:destroyed))
-				src.grille += 1
+			else if(istype(O, /obj/structure/grille))
+				var/obj/structure/grille/GR = O
+				if(!GR.broken)
+					src.grille += 1
 			else if(istype(O, /obj/machinery/door))
 				src.door += 1
 			else if(istype(O, /obj/machinery))

@@ -30,7 +30,8 @@
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = CONDUCT | HEAR
 	slot_flags = SLOT_BELT
-	languages = HUMAN | ROBOT
+	languages_spoken = HUMAN | ROBOT
+	languages_understood = HUMAN | ROBOT
 	throw_speed = 3
 	throw_range = 7
 	w_class = 2
@@ -109,7 +110,7 @@
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
-	if(b_stat && !istype(user, /mob/living/silicon/ai))
+	if(b_stat && !isAI(user))
 		wires.interact(user)
 	else
 		ui_interact(user)
@@ -196,6 +197,9 @@
 				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
+	addtimer(src,"talk_into_impl",0,FALSE,M,message,channel,spans)
+
+/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -276,7 +280,7 @@
 		jobname = "AI"
 
 	// --- Cyborg ---
-	else if(isrobot(M))
+	else if(iscyborg(M))
 		var/mob/living/silicon/robot/B = M
 		jobname = "[B.designation] Cyborg"
 
@@ -315,7 +319,7 @@
 			"server" = null,
 			"reject" = 0,
 			"level" = 0,
-			"languages" = languages,
+			"languages" = languages_spoken,
 			"spans" = spans,
 			"verb_say" = M.verb_say,
 			"verb_ask" = M.verb_ask,
@@ -360,7 +364,7 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"languages" = M.languages, //The languages M is talking in.
+			"languages" = M.languages_spoken, //The languages M is talking in.
 			"spans" = spans, //the span classes of this message.
 			"verb_say" = M.verb_say, //the verb used when talking normally
 			"verb_ask" = M.verb_ask, //the verb used when asking
@@ -410,7 +414,7 @@
 		"server" = null,
 		"reject" = 0,
 		"level" = position.z,
-		"languages" = languages,
+		"languages" = languages_spoken,
 		"spans" = spans,
 		"verb_say" = M.verb_say,
 		"verb_ask" = M.verb_ask,

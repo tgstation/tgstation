@@ -7,12 +7,13 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "plutonium_core"
 	item_state = "plutoniumcore"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/pulse = 0
 	var/cooldown = 0
 
 /obj/item/nuke_core/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/nuke_core/attackby(obj/item/nuke_core_container/container, mob/user)
 	if(istype(container))
@@ -47,7 +48,7 @@
 
 /obj/item/nuke_core_container/proc/seal()
 	if(istype(core))
-		SSobj.processing -= core
+		STOP_PROCESSING(SSobj, core)
 		icon_state = "core_container_sealed"
 		playsound(loc, 'sound/items/Deconstruct.ogg', 60, 1)
 		if(ismob(loc))

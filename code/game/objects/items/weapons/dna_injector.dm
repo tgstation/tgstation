@@ -143,7 +143,7 @@
 
 /obj/item/weapon/dnainjector/dwarf
 	name = "\improper DNA injector (Dwarfism)"
-	desc = "Its a small world after all."
+	desc = "It's a small world after all."
 	add_mutations_static = list(DWARFISM)
 
 /obj/item/weapon/dnainjector/clumsymut
@@ -152,7 +152,7 @@
 	add_mutations_static = list(CLOWNMUT)
 
 /obj/item/weapon/dnainjector/anticlumsy
-	name = "\improper DNA injector (Anti-Clumy)"
+	name = "\improper DNA injector (Anti-Clumsy)"
 	desc = "Apply this for Security Clown."
 	remove_mutations_static = list(CLOWNMUT)
 
@@ -163,7 +163,7 @@
 
 /obj/item/weapon/dnainjector/tourmut
 	name = "\improper DNA injector (Tour.)"
-	desc = "Gives you a nasty case off tourrets."
+	desc = "Gives you a nasty case off Tourette's."
 	add_mutations_static = list(TOURETTES)
 
 /obj/item/weapon/dnainjector/stuttmut
@@ -193,7 +193,7 @@
 
 /obj/item/weapon/dnainjector/antiblind
 	name = "\improper DNA injector (Anti-Blind)"
-	desc = "ITS A MIRACLE!!!"
+	desc = "IT'S A MIRACLE!!!"
 	remove_mutations_static = list(BLINDMUT)
 
 /obj/item/weapon/dnainjector/antitele

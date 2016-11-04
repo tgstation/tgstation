@@ -25,7 +25,7 @@
 		if(istype(T))
 			if(T.component_parts)
 				T.exchange_parts(user, src)
-				user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+				user.Beam(T,icon_state="rped_upgrade",time=5)
 	return
 
 /obj/item/weapon/storage/part_replacer/bluespace
@@ -45,7 +45,7 @@
 		if(get_dist(user, dest_object) < 8)
 			if(dest_object.storage_contents_dump_act(src, user))
 				play_rped_sound()
-				user.Beam(dest_object,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+				user.Beam(dest_object,icon_state="rped_upgrade",time=5)
 				return 1
 		user << "The [src.name] buzzes."
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
@@ -71,6 +71,7 @@
 	var/rating = 1
 
 /obj/item/weapon/stock_parts/New()
+	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
@@ -182,7 +183,7 @@
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
-	origin_tech = "materials=4;programming=4,engineering=4"
+	origin_tech = "materials=4;programming=4;engineering=4"
 	rating = 3
 	materials = list(MAT_METAL=30)
 
@@ -300,4 +301,4 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "capacitor"
 	desc = "A debug item for research."
-	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8;engineering=8;plasmatech=8"
+	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8;engineering=8;plasmatech=8;abductor=8"

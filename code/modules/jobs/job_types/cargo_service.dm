@@ -77,21 +77,21 @@ Shaft Miner
 	name = "Shaft Miner"
 
 	belt = /obj/item/device/pda/shaftminer
-	ears = /obj/item/device/radio/headset/headset_cargo
+	ears = /obj/item/device/radio/headset/headset_cargo/mining
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/rank/miner/lavaland
-	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
-	backpack_contents = list(/obj/item/weapon/crowbar=1,\
+	l_pocket = /obj/item/weapon/reagent_containers/hypospray/medipen/survival
+	r_pocket = /obj/item/device/flashlight/seclite
+	backpack_contents = list(
 		/obj/item/weapon/storage/bag/ore=1,\
-		/obj/item/device/flashlight/seclite=1,\
 		/obj/item/weapon/kitchen/knife/combat/survival=1,\
 		/obj/item/weapon/mining_voucher=1)
 
 	backpack = /obj/item/weapon/storage/backpack/explorer
-	satchel = /obj/item/weapon/storage/backpack/satchel_explorer
+	satchel = /obj/item/weapon/storage/backpack/satchel/explorer
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
-	box = /obj/item/weapon/storage/box/engineer
+	box = /obj/item/weapon/storage/box/survival_mining
 
 /*
 Bartender
@@ -152,6 +152,7 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
+	backpack_contents = list(/obj/item/weapon/sharpener = 1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -199,7 +200,7 @@ Botanist
 	suit_store = /obj/item/device/plant_analyzer
 
 	backpack = /obj/item/weapon/storage/backpack/botany
-	satchel = /obj/item/weapon/storage/backpack/satchel_hyd
+	satchel = /obj/item/weapon/storage/backpack/satchel/hyd
 
 
 /*
@@ -228,3 +229,4 @@ Janitor
 	belt = /obj/item/device/pda/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
+	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)

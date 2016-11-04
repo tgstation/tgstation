@@ -7,18 +7,19 @@
 	anchored = 1
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
-	var/health = 100
+	obj_integrity = 200
+	max_integrity = 200
 
 
 /obj/machinery/pdapainter/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return
 
 	if(storedpda)
-		overlays += "[initial(icon_state)]-closed"
+		add_overlay("[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)
@@ -40,6 +41,25 @@
 
 		src.colorlist += D
 
+/obj/machinery/pdapainter/Destroy()
+	if(storedpda)
+		qdel(storedpda)
+		storedpda = null
+	return ..()
+
+/obj/machinery/pdapainter/on_deconstruction()
+	if(storedpda)
+		storedpda.forceMove(loc)
+		storedpda = null
+
+/obj/machinery/pdapainter/contents_explosion(severity, target)
+	if(storedpda)
+		storedpda.ex_act(severity, target)
+
+/obj/machinery/pdapainter/handle_atom_del(atom/A)
+	if(A == storedpda)
+		storedpda = null
+		update_icon()
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
 	if(default_unfasten_wrench(user, O))
@@ -51,7 +71,7 @@
 			user << "<span class='warning'>There is already a PDA inside!</span>"
 			return
 		else
-			var/obj/item/device/pda/P = user.get_active_hand()
+			var/obj/item/device/pda/P = user.get_active_held_item()
 			if(istype(P))
 				if(!user.drop_item())
 					return
@@ -74,29 +94,16 @@
 					user << "<span class='notice'>You repair [src].</span>"
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					stat &= ~BROKEN
-					health = initial(health)
+					obj_integrity = max_integrity
 					update_icon()
 		else
 			user << "<span class='notice'>[src] does not need repairs.</span>"
 	else
 		return ..()
 
-/obj/machinery/pdapainter/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	if(!(stat & BROKEN))
-		health -= damage
-		if(health <= 0)
+/obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(!(stat & BROKEN))
 			stat |= BROKEN
 			update_icon()
 

@@ -1,11 +1,7 @@
 ### HEALTH ###
 
-# level of health at which a mob becomes unconscious (crit)
-HEALTH_THRESHOLD_CRIT 0
-
-# level of health at which a mob becomes dead
-HEALTH_THRESHOLD_DEAD -100
-
+#Damage multiplier, effects both weapons and healing on all mobs. For example, 1.25 would result in 25% higher damage.
+DAMAGE_MULTIPLIER 1
 
 ### REVIVAL ###
 
@@ -96,6 +92,8 @@ PROBABILITY RAGINMAGES 2
 PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
+PROBABILITY DEVIL 0
+PROBABILITY DEVIL_AGENTS 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -357,3 +355,6 @@ BOMBCAP 20
 # spawn, while the converse is true. Alter this number to affect the amount
 # of ruins.
 LAVALAND_BUDGET 60
+
+## Space Ruin Budged
+Space_Budget 16

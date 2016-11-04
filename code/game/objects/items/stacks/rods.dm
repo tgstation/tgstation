@@ -49,7 +49,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 						 "<span class='italics'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
-			var/replace = (user.get_inactive_hand()==R)
+			var/replace = (user.get_inactive_held_item()==R)
 			R.use(2)
 			if (!R && replace)
 				user.put_in_hands(new_item)

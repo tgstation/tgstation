@@ -14,6 +14,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	w_class = 1
 	slot_flags = SLOT_ID | SLOT_BELT
 	origin_tech = "programming=2"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
 
 	//Main variables
 	var/owner = null // String name of owner
@@ -50,6 +53,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/image/photo = null //Scanned photo
 
+	var/list/contained_item = list(/obj/item/weapon/pen, /obj/item/toy/crayon, /obj/item/weapon/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 
 /obj/item/device/pda/pickup(mob/user)
 	..()
@@ -74,7 +79,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
-	new /obj/item/weapon/pen(src)
+	inserted_item =	new /obj/item/weapon/pen(src)
 
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -187,6 +192,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=Gas Scan'><img src=pda_reagent.png> [scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
 					if (cartridge.access_remote_door)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
+					if (cartridge.access_dronephone)
+						dat += "<li><a href='byond://?src=\ref[src];choice=Drone Phone'><img src=pda_dronephone.png> Drone Phone</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
@@ -274,7 +281,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
-
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
 
@@ -313,10 +319,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
-					var/turf/T = loc
-					if(ismob(T))
-						T = T.loc
-					cartridge.loc = T
+					U.put_in_hands(cartridge)
+					U << "<span class='notice'>You remove [cartridge] from [src].</span>"
 					scanmode = 0
 					if (cartridge.radio)
 						cartridge.radio.hostpda = null
@@ -381,6 +385,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					scanmode = 0
 				else if((!isnull(cartridge)) && (cartridge.access_atmos))
 					scanmode = 5
+			if("Drone Phone")
+				var/area/A = get_area(U)
+				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
+				if(A && alert_s)
+					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
+					_alert_drones(msg, 1)
+					U << msg
+
 
 //NOTEKEEPER FUNCTIONS===================================
 
@@ -464,6 +476,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 							else
 								M.close()
 
+
 			if("Detonate")//Detonate PDA
 				if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
 					var/obj/item/device/pda/P = locate(href_list["target"])
@@ -520,7 +533,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2||mode == 21)//To clear message overlays.
-		overlays.Cut()
+		cut_overlays()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
@@ -613,8 +626,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(L && L.stat != UNCONSCIOUS)
 		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
 
-	overlays.Cut()
-	overlays += image(icon, icon_alert)
+	cut_overlays()
+	add_overlay(image(icon, icon_alert))
 
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
 	for(var/mob/M in player_list)
@@ -694,31 +707,29 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	if (usr.canUseTopic(src))
-		var/obj/item/weapon/pen/O = locate() in src
-		if(O)
-			if (istype(loc, /mob))
+		if(inserted_item)
+			if(ismob(loc))
 				var/mob/M = loc
-				if(M.get_active_hand() == null)
-					M.put_in_hands(O)
-					usr << "<span class='notice'>You remove \the [O] from \the [src].</span>"
-					return
-			O.loc = get_turf(src)
+				M.put_in_hands(inserted_item)
+			else
+				inserted_item.forceMove(loc)
+			usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
+			inserted_item = null
 		else
 			usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
-
 /obj/item/device/pda/proc/id_check(mob/user, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
 		if (id)
 			remove_id()
 		else
-			var/obj/item/I = user.get_active_hand()
+			var/obj/item/I = user.get_active_held_item()
 			if (istype(I, /obj/item/weapon/card/id))
 				if(!user.unEquip(I))
 					return 0
 				I.loc = src
 				id = I
 	else
-		var/obj/item/weapon/card/I = user.get_active_hand()
+		var/obj/item/weapon/card/I = user.get_active_held_item()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			if(!user.unEquip(I))
 				return 0
@@ -751,7 +762,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			user << "<span class='notice'>Card scanned.</span>"
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-			if(((src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
+			if(((src in user.contents) || (isturf(loc) && in_range(src, user))) && (C in user.contents))
 				if(!id_check(user, 2))
 					return
 				user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
@@ -765,19 +776,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		pai = C
 		user << "<span class='notice'>You slot \the [C] into [src].</span>"
 		updateUsrDialog()
-	else if(istype(C, /obj/item/weapon/pen))
-		var/obj/item/weapon/pen/O = locate() in src
-		if(O)
-			user << "<span class='warning'>There is already a pen in \the [src]!</span>"
+	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
+		if(inserted_item)
+			user << "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>"
 		else
 			if(!user.unEquip(C))
 				return
-			C.loc = src
+			C.forceMove(src)
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+			inserted_item = C
 	else if(istype(C, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
 		user << "<span class='notice'>You scan \the [C].</span>"
+	else if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.attackby(C, user, params)
 	else
 		return ..()
 
@@ -873,6 +886,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
+	if(inserted_item)
+		qdel(inserted_item)
+		inserted_item = null
 	return ..()
 
 //AI verb and proc for sending PDA messages.

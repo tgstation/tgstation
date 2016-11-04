@@ -28,6 +28,7 @@
 	health = 200
 	healable = 0
 	environment_smash = 1
+	obj_damage = 50
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	see_in_dark = 8
@@ -63,6 +64,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	name = "pile of viscera"
 	desc = "A repulsive pile of guts and gore."
+	gender = NEUTER
 	random_icon_states = list("innards")
 
 /mob/living/simple_animal/slaughter/phasein()
@@ -150,22 +152,17 @@
 	sibling!</B>"
 
 /mob/living/simple_animal/slaughter/laughter/Destroy()
-	// You know, if there's ANYONE LEFT.
 	release_friends()
 	. = ..()
 
 /mob/living/simple_animal/slaughter/laughter/ex_act(severity)
-	if(severity == 1)
-		release_friends() // ABANDON SHIP
-	. = ..()
-
-/mob/living/simple_animal/slaughter/laughter/death()
-	release_friends()
-	. = ..()
-
-/mob/living/simple_animal/slaughter/laughter/wabbajack_act()
-	release_friends()
-	. = ..()
+	switch(severity)
+		if(1)
+			death()
+		if(2)
+			adjustBruteLoss(60)
+		if(3)
+			adjustBruteLoss(30)
 
 /mob/living/simple_animal/slaughter/laughter/proc/release_friends()
 	if(!consumed_mobs)

@@ -1,18 +1,23 @@
 /obj/item/weapon/melee/baton/cattleprod/teleprod
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
+	w_class = 3
 	icon_state = "teleprod_nocell"
 	item_state = "teleprod"
 	origin_tech = "combat=2;bluespace=4;materials=3"
+	slot_flags = null
 
 /obj/item/weapon/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
 	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Weaken(stunforce*3)
-		deductcharge(hitcost)
-		do_teleport(user, get_turf(user), 50)//honk honk
+		if(do_teleport(user, get_turf(user), 50))//honk honk
+			user.Weaken(stunforce*3)
+			deductcharge(hitcost)
+		else
+			user.Weaken(stunforce*3)
+			deductcharge(hitcost/4)
 		return
 	else
 		if(status)

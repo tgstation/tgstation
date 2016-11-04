@@ -15,7 +15,7 @@
 
 /obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user as mob, params)
 	..()
-	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
+	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
 		if(!user.unEquip(W))
 			return
 		qdel(W)
@@ -60,7 +60,7 @@
 
 	switch(build_step)
 		if(0,1)
-			if(istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg))
+			if(istype(W, /obj/item/bodypart/l_leg/robot) || istype(W, /obj/item/bodypart/r_leg/robot))
 				if(!user.unEquip(W))
 					return
 				qdel(W)
@@ -158,7 +158,7 @@
 						return
 					newname = "redtag ED-209 assembly"
 				if("")
-					if(!istype(W, /obj/item/weapon/gun/energy/gun/advtaser))
+					if(!istype(W, /obj/item/weapon/gun/energy/e_gun/advtaser))
 						return
 					newname = "taser ED-209 assembly"
 				else
@@ -174,7 +174,7 @@
 
 		if(8)
 			if(istype(W, /obj/item/weapon/screwdriver))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(loc, W.usesound, 100, 1)
 				var/turf/T = get_turf(user)
 				user << "<span class='notice'>You start attaching the gun to the frame...</span>"
 				sleep(40)
@@ -261,7 +261,7 @@
 
 /obj/item/weapon/toolbox_tiles_sensor/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
+	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
 		qdel(W)
 		var/turf/T = get_turf(user.loc)
 		var/mob/living/simple_animal/bot/floorbot/A = new /mob/living/simple_animal/bot/floorbot(T)
@@ -293,13 +293,12 @@
 		..()
 		spawn(5)
 			if(skin)
-				overlays += image('icons/obj/aibots.dmi', "kit_skin_[skin]")
+				add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 
-/obj/item/weapon/storage/firstaid/attackby(obj/item/robot_parts/S, mob/user, params)
+/obj/item/weapon/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
 
-	if((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
-		..()
-		return
+	if((!istype(S, /obj/item/bodypart/l_arm/robot)) && (!istype(S, /obj/item/bodypart/r_arm/robot)))
+		return ..()
 
 	//Making a medibot!
 	if(contents.len >= 1)
@@ -342,7 +341,7 @@
 					build_step++
 					user << "<span class='notice'>You add the health sensor to [src].</span>"
 					name = "First aid/robot arm/health analyzer assembly"
-					overlays += image('icons/obj/aibots.dmi', "na_scanner")
+					add_overlay(image('icons/obj/aibots.dmi', "na_scanner"))
 
 			if(1)
 				if(isprox(W))
@@ -398,7 +397,7 @@
 			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.remove_fuel(0, user))
 				build_step++
-				overlays += "hs_hole"
+				add_overlay("hs_hole")
 				user << "<span class='notice'>You weld a hole in [src]!</span>"
 		else if(build_step == 1)
 			var/obj/item/weapon/weldingtool/WT = I
@@ -412,17 +411,17 @@
 			return
 		build_step++
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
-		overlays += "hs_eye"
+		add_overlay("hs_eye")
 		name = "helmet/signaler/prox sensor assembly"
 		qdel(I)
 
-	else if(((istype(I, /obj/item/robot_parts/l_arm)) || (istype(I, /obj/item/robot_parts/r_arm))) && (build_step == 2))
+	else if(((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot))) && (build_step == 2))
 		if(!user.unEquip(I))
 			return
 		build_step++
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
 		name = "helmet/signaler/prox sensor/robot arm assembly"
-		overlays += "hs_arm"
+		add_overlay("hs_arm")
 		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
@@ -459,6 +458,6 @@
 
 		else if(build_step == 3)
 			overlays -= "hs_arm"
-			new /obj/item/robot_parts/l_arm(get_turf(src))
+			new /obj/item/bodypart/l_arm/robot(get_turf(src))
 			user << "<span class='notice'>You remove the robot arm from [src].</span>"
 			build_step--

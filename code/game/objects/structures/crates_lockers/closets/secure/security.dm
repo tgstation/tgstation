@@ -9,9 +9,10 @@
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/captain(src)
 	else
-		new /obj/item/weapon/storage/backpack/satchel_cap(src)
+		new /obj/item/weapon/storage/backpack/satchel/cap(src)
 	new /obj/item/clothing/suit/cloak/cap(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
+	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/under/captainparade(src)
 	new /obj/item/clothing/head/caphat/parade(src)
@@ -25,7 +26,8 @@
 	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/storage/belt/sabre(src)
+	new /obj/item/weapon/gun/energy/e_gun(src)
 	new /obj/item/weapon/door_remote/captain(src)
 
 /obj/structure/closet/secure_closet/hop
@@ -47,8 +49,8 @@
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/gun/energy/gun(src)
-	new /obj/item/clothing/tie/petcollar(src)
+	new /obj/item/weapon/gun/energy/e_gun(src)
+	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/weapon/door_remote/civillian(src)
 
 /obj/structure/closet/secure_closet/hos
@@ -76,7 +78,7 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/weapon/gun/energy/gun/hos(src)
+	new /obj/item/weapon/gun/energy/e_gun/hos(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/pinpointer(src)
 
@@ -100,7 +102,7 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/gloves/color/black/krav_maga/sec(src)
+	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/weapon/door_remote/head_of_security(src)
 
 /obj/structure/closet/secure_closet/security
@@ -155,8 +157,9 @@
 	name = "\proper detective's cabinet"
 	req_access = list(access_forensics_lockers)
 	icon_state = "cabinet"
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 
 /obj/structure/closet/secure_closet/detective/New()
 	..()
@@ -172,13 +175,14 @@
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
+	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/ammo_box/c38(src)
 	new /obj/item/weapon/storage/belt/holster(src)
-	new /obj/item/weapon/gun/projectile/revolver/detective(src)
+	new /obj/item/weapon/gun/ballistic/revolver/detective(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
@@ -187,7 +191,7 @@
 /obj/structure/closet/secure_closet/injection/New()
 	..()
 	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+		new /obj/item/weapon/reagent_containers/syringe/lethal/execution(src)
 
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
@@ -240,7 +244,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/storage/box/rubbershot(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+		new /obj/item/weapon/gun/ballistic/shotgun/riot(src)
 
 /obj/structure/closet/secure_closet/armory3
 	name = "armory energy gun locker"
@@ -252,7 +256,7 @@
 	new /obj/item/weapon/storage/box/firingpins(src)
 	new /obj/item/weapon/gun/energy/ionrifle(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/weapon/gun/energy/e_gun(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/gun/energy/laser(src)
 
@@ -263,7 +267,7 @@
 
 /obj/structure/closet/secure_closet/tac/New()
 	..()
-	new /obj/item/weapon/gun/projectile/automatic/wt550(src)
+	new /obj/item/weapon/gun/ballistic/automatic/wt550(src)
 	new /obj/item/clothing/head/helmet/alt(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/clothing/suit/armor/bulletproof(src)

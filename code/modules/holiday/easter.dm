@@ -29,7 +29,7 @@
 	for(var/obj/effect/landmark/R in landmarks_list)
 		if(R.name != "blobspawn")
 			if(prob(35))
-				if(istype(R.loc,/turf/open/space))
+				if(isspaceturf(R.loc))
 					new /mob/living/simple_animal/chicken/rabbit/space(R.loc)
 				else
 					new /mob/living/simple_animal/chicken/rabbit(R.loc)
@@ -72,9 +72,9 @@
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg,/obj/item/weapon/reagent_containers/food/snacks/chocolateegg,/obj/item/weapon/reagent_containers/food/snacks/boiledegg)
 
 /obj/item/weapon/storage/bag/easterbasket/proc/countEggs()
-	overlays.Cut()
-	overlays += image("icon" = icon, "icon_state" = "basket-grass", "layer" = -1)
-	overlays += image("icon" = icon, "icon_state" = "basket-egg[contents.len <= 5 ? contents.len : 5]", "layer" = -1)
+	cut_overlays()
+	add_overlay(image("icon" = icon, "icon_state" = "basket-grass", "layer" = -1))
+	add_overlay(image("icon" = icon, "icon_state" = "basket-egg[contents.len <= 5 ? contents.len : 5]", "layer" = -1))
 
 /obj/item/weapon/storage/bag/easterbasket/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
@@ -111,9 +111,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/loaded/New()
 	..()
-	var/color = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
-	icon_state = "egg-[color]"
-	item_color = "[color]"
+	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
+	icon_state = "egg-[eggcolor]"
+	item_color = "[eggcolor]"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
@@ -158,7 +158,7 @@
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/hotcrossbun
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
@@ -182,7 +182,7 @@
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/scotchegg
 	name = "scotch egg"
@@ -202,7 +202,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/scotchegg
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
 	name = "Mammi"
@@ -219,7 +219,7 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
 	name = "chocolate bunny"
@@ -236,4 +236,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
-	category = CAT_FOOD
+	category = CAT_MISCFOOD

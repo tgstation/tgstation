@@ -46,7 +46,7 @@
 /obj/machinery/conveyor/New(loc, newdir)
 	..(loc)
 	if(newdir)
-		dir = newdir
+		setDir(newdir)
 	update_move_direction()
 
 /obj/machinery/conveyor/proc/update_move_direction()
@@ -126,7 +126,7 @@
 	else if(istype(I, /obj/item/weapon/wrench))
 		if(!(stat & BROKEN))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			dir = turn(dir,-45)
+			setDir(turn(dir,-45))
 			update_move_direction()
 			user << "<span class='notice'>You rotate [src].</span>"
 
@@ -297,7 +297,7 @@
 		id = C.id
 
 /obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/open/floor) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
@@ -321,7 +321,7 @@
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !istype(A, /turf/open/floor) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())

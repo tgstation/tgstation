@@ -14,7 +14,7 @@
 	name = "mech bay power port"
 	density = 1
 	anchored = 1
-	dir = 4
+	dir = EAST
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	var/obj/mecha/recharging_mech
@@ -114,7 +114,7 @@
 	if(recharge_port && !qdeleted(recharge_port))
 		data["recharge_port"] = list("mech" = null)
 		if(recharge_port.recharging_mech && !qdeleted(recharge_port.recharging_mech))
-			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.health, "maxhealth" = initial(recharge_port.recharging_mech.health), "cell" = null)
+			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.obj_integrity, "max_integrity" = recharge_port.recharging_mech.max_integrity, "cell" = null)
 			if(recharge_port.recharging_mech.cell && !qdeleted(recharge_port.recharging_mech.cell))
 				data["recharge_port"]["mech"]["cell"] = list(
 				"critfail" = recharge_port.recharging_mech.cell.crit_fail,
@@ -145,7 +145,7 @@
 	..()
 	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || stat & (NOPOWER|BROKEN))
 		return
-	overlays += "recharge_comp_on"
+	add_overlay("recharge_comp_on")
 
 /obj/machinery/computer/mech_bay_power_console/initialize()
 	reconnect()

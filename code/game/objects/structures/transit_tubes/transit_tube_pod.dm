@@ -21,9 +21,7 @@
 		follow_tube()
 
 /obj/structure/transit_tube_pod/Destroy()
-	for(var/atom/movable/AM in contents)
-		AM.loc = loc
-
+	empty()
 	return ..()
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
@@ -31,9 +29,9 @@
 		if(!moving)
 			for(var/obj/structure/transit_tube/station/T in loc)
 				return
-			if(src.contents.len)
+			if(contents.len)
 				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
-				src.empty()
+				empty()
 				return
 			else
 				user << "<span class='notice'>You free \the [src].</span>"
@@ -43,6 +41,16 @@
 				qdel(src)
 	else
 		return ..()
+
+/obj/structure/transit_tube_pod/ex_act(severity, target)
+	..()
+	if(!qdeleted(src))
+		for(var/atom/movable/AM in contents)
+			AM.forceMove(loc)
+
+/obj/structure/transit_tube_pod/contents_explosion(severity, target)
+	for(var/atom/movable/AM in contents)
+		AM.ex_act(severity, target)
 
 /obj/structure/transit_tube_pod/container_resist()
 	var/mob/living/user = usr
@@ -56,7 +64,7 @@
 
 /obj/structure/transit_tube_pod/proc/empty()
 	for(var/atom/movable/M in src.contents)
-		M.loc = src.loc
+		M.forceMove(loc)
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
@@ -78,7 +86,7 @@
 	var/exit_delay
 
 	if(reverse_launch)
-		dir = turn(dir, 180) // Back it up
+		setDir(turn(dir, 180) )// Back it up
 
 	for(var/obj/structure/transit_tube/tube in loc)
 		if(tube.has_exit(dir))
@@ -105,13 +113,13 @@
 				break
 
 		if(current_tube == null)
-			dir = next_dir
+			setDir(next_dir)
 			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
-		dir = next_dir
+		setDir(next_dir)
 		loc = next_loc // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
@@ -182,7 +190,7 @@
 			mob.client.Move(get_step(loc, direction), direction)
 			mob.reset_perspective(null)
 
-			//if(moving && istype(loc, /turf/open/space))
+			//if(moving && isspaceturf(loc))
 				// Todo: If you get out of a moving pod in space, you should move as well.
 				//  Same direction as pod? Direcion you moved? Halfway between?
 
@@ -200,12 +208,12 @@
 								station.open_animation()
 
 						else if(direction in station.directions())
-							dir = direction
+							setDir(direction)
 							station.launch_pod()
 					return
 
 			for(var/obj/structure/transit_tube/tube in loc)
 				if(dir in tube.directions())
 					if(tube.has_exit(direction))
-						dir = direction
+						setDir(direction)
 						return

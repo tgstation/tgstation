@@ -18,15 +18,26 @@
 			return
 
 	var/image/cross = image('icons/obj/storage.dmi',"bible")
+	var/font_color = "purple"
+	var/prayer_type = "PRAYER"
+	var/deity
 	if(usr.job == "Chaplain")
 		cross = image('icons/obj/storage.dmi',"kingyellow")
-		msg = "<span class='adminnotice'>\icon[cross] <b><font color=blue>CHAPLAIN PRAYER: </font>[key_name_admin(src)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) (<A HREF='?_src_=holder;traitor=\ref[src]'>TP</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
+		font_color = "blue"
+		prayer_type = "CHAPLAIN PRAYER"
+		if (ticker && ticker.Bible_deity_name)
+			deity = ticker.Bible_deity_name
 	else if(iscultist(usr))
 		cross = image('icons/obj/storage.dmi',"tome")
-		msg = "<span class='adminnotice'>\icon[cross] <b><font color=red>CULTIST PRAYER: </font>[key_name_admin(src)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) (<A HREF='?_src_=holder;traitor=\ref[src]'>TP</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
-	else
-		cross = image('icons/obj/storage.dmi',"bible")
-		msg = "<span class='adminnotice'>\icon[cross] <b><font color=purple>PRAYER: </font>[key_name_admin(src)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) (<A HREF='?_src_=holder;traitor=\ref[src]'>TP</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
+		font_color = "red"
+		prayer_type = "CULTIST PRAYER"
+		deity = "Nar-Sie"
+
+	msg = "<span class='adminnotice'>\icon[cross] \
+		<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>\
+		[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> \
+		[msg]</span>"
+
 	for(var/client/C in admins)
 		if(C.prefs.chat_toggles & CHAT_PRAYER)
 			C << msg
@@ -40,22 +51,34 @@
 
 /proc/Centcomm_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
-	msg = "<span class='adminnotice'><b><font color=orange>CENTCOM:</font>[key_name_admin(Sender)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[Sender]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Sender]'>FLW</A>) (<A HREF='?_src_=holder;traitor=\ref[Sender]'>TP</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
+	msg = "<span class='adminnotice'>\
+		<b><font color=orange>CENTCOM:</font>\
+		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
+		[ADMIN_CENTCOM_REPLY(Sender)]:</b> \
+		[msg]</span>"
 	admins << msg
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()
 
 /proc/Syndicate_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
-	msg = "<span class='adminnotice'><b><font color=crimson>SYNDICATE:</font>[key_name_admin(Sender)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[Sender]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Sender]'>FLW</A>) (<A HREF='?_src_=holder;traitor=\ref[Sender]'>TP</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
+	msg = "<span class='adminnotice'><b>\
+		<font color=crimson>SYNDICATE:</font>\
+		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
+		[ADMIN_SYNDICATE_REPLY(Sender)]:</b> \
+		[msg]</span>"
 	admins << msg
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()
 
 /proc/Nuke_request(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
-	msg = "<span class='adminnotice'><b><font color=orange>NUKE CODE REQUEST:</font>[key_name_admin(Sender)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[Sender]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Sender]'>FLW</A>) (<A HREF='?_src_=holder;traitor=\ref[Sender]'>TP</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
+	msg = "<span class='adminnotice'>\
+		<b><font color=orange>NUKE CODE REQUEST:</font>\
+		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
+		[ADMIN_CENTCOM_REPLY(Sender)] \
+		[ADMIN_SET_SD_CODE]:</b> \
+		[msg]</span>"
 	admins << msg
-	admins << "<span class='adminnotice'><b>At this current time, the nuke must have the code manually set via varedit.</b></span>"
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()

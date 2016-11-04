@@ -14,11 +14,11 @@
 
 /obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in targets)
-		var/list/hand_items = list(L.get_active_hand(),L.get_inactive_hand())
+		var/list/hand_items = list(L.get_active_held_item(),L.get_inactive_held_item())
 		var/charged_item = null
 		var/burnt_out = 0
 
-		if(L.pulling && (istype(L.pulling, /mob/living)))
+		if(L.pulling && isliving(L.pulling))
 			var/mob/living/M =	L.pulling
 			if(M.mob_spell_list.len != 0 || (M.mind && M.mind.spell_list.len != 0))
 				for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
@@ -62,11 +62,12 @@
 				break
 			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
 				var/obj/item/weapon/stock_parts/cell/C = item
-				if(prob(80))
-					C.maxcharge -= 200
-				if(C.maxcharge <= 1) //Div by 0 protection
-					C.maxcharge = 1
-					burnt_out = 1
+				if(!C.self_recharge)
+					if(prob(80))
+						C.maxcharge -= 200
+					if(C.maxcharge <= 1) //Div by 0 protection
+						C.maxcharge = 1
+						burnt_out = 1
 				C.charge = C.maxcharge
 				charged_item = C
 				break
@@ -75,11 +76,12 @@
 				for(I in item.contents)
 					if(istype(I, /obj/item/weapon/stock_parts/cell/))
 						var/obj/item/weapon/stock_parts/cell/C = I
-						if(prob(80))
-							C.maxcharge -= 200
-						if(C.maxcharge <= 1) //Div by 0 protection
-							C.maxcharge = 1
-							burnt_out = 1
+						if(!C.self_recharge)
+							if(prob(80))
+								C.maxcharge -= 200
+							if(C.maxcharge <= 1) //Div by 0 protection
+								C.maxcharge = 1
+								burnt_out = 1
 						C.charge = C.maxcharge
 						item.update_icon()
 						charged_item = item
