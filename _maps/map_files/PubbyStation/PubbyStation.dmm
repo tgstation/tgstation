@@ -41871,12 +41871,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/structure/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
-	},
 /turf/open/floor/plasteel/whitegreen/side{
 	tag = "icon-whitegreen (SOUTHEAST)";
 	icon_state = "whitegreen";
@@ -83864,7 +83858,7 @@ ayz
 aEL
 aFv
 aGm
-aHg
+bXi
 aIf
 aJb
 aKu
