@@ -406,9 +406,6 @@
 /obj/item/weapon/circuitboard/computer/white_ship
 	name = "circuit board (White Ship)"
 	build_path = /obj/machinery/computer/shuttle/white_ship
-/obj/item/weapon/circuitboard/computer/shuttle/monastery_shuttle
-	name = "circuit board (Monastery Shuttle)"
-	build_path = /obj/machinery/computer/shuttle/monastery_shuttle
 /obj/item/weapon/circuitboard/computer/holodeck// Not going to let people get this, but it's just here for future
 	name = "circuit board (Holodeck Control)"
 	build_path = /obj/machinery/computer/holodeck
