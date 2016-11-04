@@ -9,8 +9,20 @@
 	return FALSE
 
 //Turf conversion
-/turf/closed/wall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = SOUTH)
+/turf/closed/wall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //four sheets of metal
+	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL - (REPLICANT_METAL * 4), "spawn_dir" = SOUTH)
+
+/turf/closed/wall/mineral/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //two sheets of metal
+	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL - (REPLICANT_METAL * 2), "spawn_dir" = SOUTH)
+
+/turf/closed/wall/mineral/iron/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //two sheets of metal, five rods
+	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL - (REPLICANT_METAL * 2) - (REPLICANT_ROD * 5), "spawn_dir" = SOUTH)
+
+/turf/closed/wall/mineral/cult/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //no metal
+	return list("operation_time" = 80, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = SOUTH)
+
+/turf/closed/wall/shuttle/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //two sheets of metal
+	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL - (REPLICANT_METAL * 2), "spawn_dir" = SOUTH)
 
 /turf/closed/wall/r_wall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
@@ -85,8 +97,7 @@
 	if(!proselytizer.metal_to_alloy)
 		return FALSE
 	var/prosel_cost = -amount*REPLICANT_FLOOR
-	var/prosel_time = -amount
-	return list("operation_time" = -prosel_time, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
+	return list("operation_time" = amount, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
 
 //Airlock conversion
 /obj/machinery/door/airlock/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -109,6 +120,10 @@
 		new_dir = FALSE
 		prosel_time = 30
 		prosel_cost = REPLICANT_STANDARD
+		if(reinf)
+			prosel_cost -= REPLICANT_ROD
+	if(reinf)
+		prosel_cost -= REPLICANT_ROD
 	for(var/obj/structure/grille/G in get_turf(src))
 		addtimer(proselytizer, "proselytize", 0, FALSE, G, user)
 	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "alloy_cost" = prosel_cost, "spawn_dir" = dir, "dir_in_new" = new_dir)
@@ -137,7 +152,10 @@
 
 //Girder conversion
 /obj/structure/girder/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 20, "new_obj_type" = /obj/structure/destructible/clockwork/wall_gear, "alloy_cost" = REPLICANT_GEAR, "spawn_dir" = SOUTH)
+	var/prosel_cost = REPLICANT_GEAR - (REPLICANT_METAL * 2)
+	if(state == GIRDER_REINF_STRUTS || state == GIRDER_REINF)
+		prosel_cost -= REPLICANT_PLASTEEL
+	return list("operation_time" = 20, "new_obj_type" = /obj/structure/destructible/clockwork/wall_gear, "alloy_cost" = prosel_cost, "spawn_dir" = SOUTH)
 
 //Hitting a clockwork structure will try to repair it.
 /obj/structure/destructible/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)

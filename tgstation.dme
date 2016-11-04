@@ -27,6 +27,7 @@
 #include "code\__DEFINES\clockcult.dm"
 #include "code\__DEFINES\clothing.dm"
 #include "code\__DEFINES\combat.dm"
+#include "code\__DEFINES\construction.dm"
 #include "code\__DEFINES\contracts.dm"
 #include "code\__DEFINES\events.dm"
 #include "code\__DEFINES\flags.dm"

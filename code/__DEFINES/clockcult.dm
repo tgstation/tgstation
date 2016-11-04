@@ -51,6 +51,12 @@ var/global/clockwork_gateway_activated = FALSE //if a gateway to the celestial d
 
 #define REPLICANT_WALL_TOTAL REPLICANT_WALL_MINUS_FLOOR+REPLICANT_FLOOR //how much alloy is in a clockwork wall and the floor under it
 
+#define REPLICANT_ROD REPLICANT_ALLOY_UNIT*0.01 //amount of replicant alloy in one rod
+
+#define REPLICANT_METAL REPLICANT_ALLOY_UNIT*0.02 //amount of replicant alloy in one sheet of metal
+
+#define REPLICANT_PLASTEEL REPLICANT_ALLOY_UNIT*0.05 //amount of replicant alloy in one sheet of plasteel
+
 #define RATVAR_ALLOY_CHECK "ratvar?" //when passed into can_use_alloy(), converts it into a check for if ratvar has woken/the proselytizer is debug
 
 //clockcult power defines
