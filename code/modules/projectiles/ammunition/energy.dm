@@ -119,7 +119,7 @@
 	fire_sound = "sound/weapons/taser2.ogg"
 	
 /obj/item/ammo_casing/energy/small_disabler
-	projectile_type = /obj/item/projectile/beam/disabler
+	projectile_type = /obj/item/projectile/beam/pulse_disabler
 	select_name = "pulse disabler"
 	e_cost = 142
 	fire_sound = "sound/weapons/taser2.ogg"
