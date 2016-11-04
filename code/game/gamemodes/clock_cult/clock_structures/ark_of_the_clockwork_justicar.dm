@@ -150,7 +150,7 @@
 						if(!T)
 							continue
 						var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
-						if(dist < 60)
+						if(dist < 100)
 							dist = TRUE
 						else
 							dist = FALSE
