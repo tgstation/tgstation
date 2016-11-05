@@ -129,7 +129,7 @@
 	},
 /area/awaymission/snowdin/base)
 "au" = (
-/obj/item/weapon/gun/projectile/shotgun/boltaction,
+/obj/item/weapon/gun/ballistic/shotgun/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
@@ -363,9 +363,9 @@
 /area/awaymission/snowdin)
 "aY" = (
 /obj/structure/guncase/shotgun,
-/obj/item/weapon/gun/projectile/shotgun/automatic,
-/obj/item/weapon/gun/projectile/shotgun/automatic,
-/obj/item/weapon/gun/projectile/shotgun/automatic,
+/obj/item/weapon/gun/ballistic/shotgun/automatic,
+/obj/item/weapon/gun/ballistic/shotgun/automatic,
+/obj/item/weapon/gun/ballistic/shotgun/automatic,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -1647,37 +1647,37 @@
 	},
 /area/awaymission/snowdin/dungeon1)
 "ek" = (
-/obj/effect/spider/stickyweb,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
 /area/awaymission/snowdin/dungeon1)
 "el" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/effect/spawner/lootdrop/snowdin/dungeonheavy,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
 /area/awaymission/snowdin/dungeon1)
 "em" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice,
 /turf/closed/wall/mineral/snow,
 /area/awaymission/snowdin/dungeon1)
 "en" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
 /area/awaymission/snowdin/dungeon1)
 "eo" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating/ice/colder,
 /area/awaymission/snowdin/dungeon1)
 "ep" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
 	},
@@ -1686,11 +1686,11 @@
 /turf/closed/wall/mineral/snow,
 /area/awaymission/snowdin/dungeon1)
 "er" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/closed/wall/mineral/snow,
 /area/awaymission/snowdin/dungeon1)
 "es" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
@@ -1712,7 +1712,7 @@
 	},
 /area/awaymission/snowdin/dungeon1)
 "ew" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice,
 /turf/open/floor/plating/asteroid/snow{
 	temperature = 140
@@ -2423,7 +2423,7 @@
 	name = "Contraband Locker";
 	req_access_txt = "3"
 	},
-/obj/item/weapon/gun/projectile/automatic/speargun,
+/obj/item/weapon/gun/ballistic/automatic/speargun,
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/twohanded/spear,
@@ -2721,7 +2721,7 @@
 	},
 /area/awaymission/snowdin/post)
 "hm" = (
-/obj/item/weapon/gun/projectile/shotgun/boltaction,
+/obj/item/weapon/gun/ballistic/shotgun/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
@@ -3080,7 +3080,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "ir" = (
-/obj/item/weapon/gun/projectile/shotgun/boltaction,
+/obj/item/weapon/gun/ballistic/shotgun/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
@@ -3893,7 +3893,7 @@
 /area/awaymission/snowdin/sekret)
 "ku" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/speargun,
+/obj/item/weapon/gun/ballistic/automatic/speargun,
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/twohanded/spear,
 /turf/open/floor/plasteel/darkwarning{
@@ -3915,7 +3915,7 @@
 /area/awaymission/snowdin/sekret)
 "kx" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/l6_saw/unrestricted,
+/obj/item/weapon/gun/ballistic/automatic/l6_saw/unrestricted,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -3997,7 +3997,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "kH" = (
-/obj/item/weapon/gun/projectile/shotgun/boltaction,
+/obj/item/weapon/gun/ballistic/shotgun/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
@@ -4015,8 +4015,8 @@
 /area/awaymission/snowdin/sekret)
 "kI" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
-/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted,
+/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -4041,7 +4041,7 @@
 /area/awaymission/snowdin/sekret)
 "kL" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/revolver,
+/obj/item/weapon/gun/ballistic/revolver,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -4089,8 +4089,8 @@
 /area/awaymission/snowdin/sekret)
 "kS" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/mini_uzi,
-/obj/item/weapon/gun/projectile/automatic/mini_uzi,
+/obj/item/weapon/gun/ballistic/automatic/mini_uzi,
+/obj/item/weapon/gun/ballistic/automatic/mini_uzi,
 /turf/open/floor/plasteel/darkwarning{
 	tag = "icon-warndark (SOUTHWEST)";
 	dir = 10;
@@ -4099,8 +4099,8 @@
 /area/awaymission/snowdin/sekret)
 "kT" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted,
-/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted,
+/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
+/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
 /turf/open/floor/plasteel/darkwarning{
 	tag = "icon-warndark (SOUTHEAST)";
 	dir = 6;
@@ -4467,7 +4467,7 @@
 	},
 /area/awaymission/snowdin)
 "lN" = (
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	temperature = 180
@@ -4573,7 +4573,7 @@
 /area/awaymission/snowdin/sekret)
 "ma" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile/automatic/c20r/toy,
+/obj/item/weapon/gun/ballistic/automatic/c20r/toy,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
@@ -5198,7 +5198,7 @@
 /area/awaymission/snowdin/sekret)
 "nx" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/projectile/automatic/pistol,
+/obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -5216,7 +5216,7 @@
 /area/awaymission/snowdin/sekret)
 "nz" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
+/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0

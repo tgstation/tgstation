@@ -8,6 +8,7 @@
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 
 	var/serverip = "[world.internet_address]:[world.port]"
@@ -35,10 +36,6 @@
 			bantype_pass = 1
 		if(BANTYPE_JOB_TEMP)
 			bantype_str = "JOB_TEMPBAN"
-			bantype_pass = 1
-		if(BANTYPE_APPEARANCE)
-			bantype_str = "APPEARANCE_PERMABAN"
-			duration = -1
 			bantype_pass = 1
 		if(BANTYPE_ADMIN_PERMA)
 			bantype_str = "ADMIN_PERMABAN"
@@ -136,8 +133,8 @@
 
 	if(kickbannedckey)
 		if(banned_mob && banned_mob.client && banned_mob.client.ckey == banckey)
-			del(banned_mob.client)
-
+			qdel(banned_mob.client)
+	return 1
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
@@ -159,9 +156,6 @@
 				bantype_pass = 1
 			if(BANTYPE_JOB_TEMP)
 				bantype_str = "JOB_TEMPBAN"
-				bantype_pass = 1
-			if(BANTYPE_APPEARANCE)
-				bantype_str = "APPEARANCE_PERMABAN"
 				bantype_pass = 1
 			if(BANTYPE_ADMIN_PERMA)
 				bantype_str = "ADMIN_PERMABAN"
@@ -361,7 +355,6 @@
 	output += "<option value='[BANTYPE_TEMP]'>TEMPBAN</option>"
 	output += "<option value='[BANTYPE_JOB_PERMA]'>JOB PERMABAN</option>"
 	output += "<option value='[BANTYPE_JOB_TEMP]'>JOB TEMPBAN</option>"
-	output += "<option value='[BANTYPE_APPEARANCE]'>IDENTITY BAN</option>"
 	output += "<option value='[BANTYPE_ADMIN_PERMA]'>ADMIN PERMABAN</option>"
 	output += "<option value='[BANTYPE_ADMIN_TEMP]'>ADMIN TEMPBAN</option>"
 	output += "</select></td>"
@@ -453,8 +446,6 @@
 					typedesc = "<b>JOBBAN</b><br><font size='2'>([job])"
 				if("JOB_TEMPBAN")
 					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]"
-				if("APPEARANCE_PERMABAN")
-					typedesc = "<b>IDENTITY PERMABAN</b>"
 				if("ADMIN_PERMABAN")
 					typedesc = "<b>ADMIN PERMABAN</b>"
 				if("ADMIN_TEMPBAN")

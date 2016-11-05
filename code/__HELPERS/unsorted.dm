@@ -337,7 +337,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/carbon/human/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/brain/M in sortmob)
+	for(var/mob/living/brain/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/carbon/alien/M in sortmob)
 		moblist.Add(M)
@@ -441,7 +441,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
 /proc/get_atom_on_turf(atom/movable/M)
 	var/atom/loc = M
-	while(loc && loc.loc && !istype(loc.loc, /turf/))
+	while(loc && loc.loc && !isturf(loc.loc))
 		loc = loc.loc
 	return loc
 
@@ -496,25 +496,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-
-/proc/anim(turf/location,target as mob|obj,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num)
-//This proc throws up either an icon or an animation for a specified amount of time.
-//The variables should be apparent enough.
-	var/atom/movable/overlay/animation = new(location)
-	if(direction)
-		animation.setDir(direction)
-	animation.icon = a_icon
-	animation.layer = target:layer+1
-	if(a_icon_state)
-		animation.icon_state = a_icon_state
-	else
-		animation.icon_state = "blank"
-		animation.master = target
-		flick(flick_anim, animation)
-	sleep(max(sleeptime, 15))
-	qdel(animation)
-
-
 /atom/proc/GetAllContents()
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
@@ -543,7 +524,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				return 0
 			if(current.opacity)
 				return 0
-			for(var/atom/A in current)
+			for(var/thing in current)
+				var/atom/A = thing
 				if(A.opacity)
 					return 0
 			current = get_step_towards(current, target_turf)
@@ -623,57 +605,59 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
-/proc/get_areas(areatype)
-	if(!areatype)
-		return null
+/proc/get_areas(areatype, subtypes=TRUE)
 	if(istext(areatype))
 		areatype = text2path(areatype)
-	if(isarea(areatype))
+	else if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
+	else if(!ispath(areatype))
+		return null
 
-	var/list/areas = new/list()
-	for(var/area/N in world)
-		if(istype(N, areatype))
-			areas += N
+	var/list/areas = list()
+	if(subtypes)
+		var/list/cache = typecacheof(areatype)
+		for(var/V in sortedAreas)
+			var/area/A = V
+			if(cache[A.type])
+				areas += V
+	else
+		for(var/V in sortedAreas)
+			var/area/A = V
+			if(A.type == areatype)
+				areas += V
 	return areas
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype, target_z = 0)
-	if(!areatype)
-		return null
+/proc/get_area_turfs(areatype, target_z = 0, subtypes=FALSE)
 	if(istext(areatype))
 		areatype = text2path(areatype)
-	if(isarea(areatype))
+	else if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
+	else if(!ispath(areatype))
+		return null
 
-	var/list/turfs = new/list()
-	for(var/area/N in world)
-		if(istype(N, areatype))
-			for(var/turf/T in N)
+	var/list/turfs = list()
+	if(subtypes)
+		var/list/cache = typecacheof(areatype)
+		for(var/V in sortedAreas)
+			var/area/A = V
+			if(!cache[A.type])
+				continue
+			for(var/turf/T in A)
+				if(target_z == 0 || target_z == T.z)
+					turfs += T
+	else
+		for(var/V in sortedAreas)
+			var/area/A = V
+			if(A.type != areatype)
+				continue
+			for(var/turf/T in A)
 				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	return turfs
-
-//Takes: Area type as text string or as typepath OR an instance of the area.
-//Returns: A list of all atoms	(objs, turfs, mobs) in areas of that type of that type in the world.
-/proc/get_area_all_atoms(areatype)
-	if(!areatype)
-		return null
-	if(istext(areatype))
-		areatype = text2path(areatype)
-	if(isarea(areatype))
-		var/area/areatemp = areatype
-		areatype = areatemp.type
-
-	var/list/atoms = new/list()
-	for(var/area/N in world)
-		if(istype(N, areatype))
-			for(var/atom/A in N)
-				atoms += A
-	return atoms
 
 /proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
@@ -839,11 +823,11 @@ var/list/WALLITEMS = list(
 	)
 
 var/list/WALLITEMS_EXTERNAL = list(
-	/obj/machinery/camera, /obj/machinery/camera_assembly,
-	/obj/machinery/light_construct, /obj/machinery/light)
+	/obj/machinery/camera, /obj/structure/camera_assembly,
+	/obj/structure/light_construct, /obj/machinery/light)
 
 var/list/WALLITEMS_INVERSE = list(
-	/obj/machinery/light_construct, /obj/machinery/light)
+	/obj/structure/light_construct, /obj/machinery/light)
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)
@@ -942,33 +926,34 @@ var/list/WALLITEMS_INVERSE = list(
 			return "white"
 
 /proc/params2turf(scr_loc, turf/origin)
+	if(!scr_loc)
+		return null
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
-	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	tX = Clamp(origin.x + text2num(tX) - world.view + 1, 1, world.maxx)
+	tY = Clamp(origin.y + text2num(tY) - world.view + 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
+	if(!text)
+		return null
 	var/tZ = splittext(text, ",")
 	var/tX = splittext(tZ[1], "-")
 	var/tY = text2num(tX[2])
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = max(1, min(origin.x + 7 - tX, world.maxx))
-	tY = max(1, min(origin.y + 7 - tY, world.maxy))
+	tX = Clamp(origin.x + 7 - tX, 1, world.maxx)
+	tY = Clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
-/proc/IsValidSrc(A)
-	if(istype(A, /datum))
-		var/datum/B = A
-		return !qdeleted(B)
-	if(istype(A, /client))
-		return 1
+/proc/IsValidSrc(datum/D)
+	if(istype(D))
+		return !qdeleted(D)
 	return 0
 
 
@@ -990,7 +975,7 @@ var/list/WALLITEMS_INVERSE = list(
 /proc/is_A_facing_B(atom/A,atom/B)
 	if(!istype(A) || !istype(B))
 		return 0
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		var/mob/living/LA = A
 		if(LA.lying)
 			return 0
@@ -1023,65 +1008,6 @@ B --><-- A
  B
 
 */
-
-
-//This is just so you can stop an orbit.
-//orbit() can run without it (swap orbiting for A)
-//but then you can never stop it and that's just silly.
-/atom/movable/var/atom/orbiting = null
-
-//A: atom to orbit
-//radius: range to orbit at, radius of the circle formed by orbiting
-//clockwise: whether you orbit clockwise or anti clockwise
-//rotation_speed: how fast to rotate
-//rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
-//pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
-//lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
-
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
-	if(!istype(A))
-		return
-
-	if(orbiting)
-		stop_orbit()
-
-	orbiting = A
-	var/matrix/initial_transform = matrix(transform)
-	var/lastloc = loc
-
-	//Head first!
-	if(pre_rotation)
-		var/matrix/M = matrix(transform)
-		var/pre_rot = 90
-		if(!clockwise)
-			pre_rot = -90
-		M.Turn(pre_rot)
-		transform = M
-
-	var/matrix/shift = matrix(transform)
-	shift.Translate(0,radius)
-	transform = shift
-
-	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
-
-	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
-	transform = initial_transform
-	while(orbiting && orbiting == A && A.loc)
-		var/targetloc = get_turf(A)
-		if(!lockinorbit && loc != lastloc && loc != targetloc)
-			break
-		loc = targetloc
-		lastloc = loc
-		stoplag()
-
-	if (orbiting == A) //make sure we haven't started orbiting something else.
-		orbiting = null
-		SpinAnimation(0,0)
-
-
-
-/atom/movable/proc/stop_orbit()
-	orbiting = null
 
 
 //Center's an image.
@@ -1258,10 +1184,13 @@ B --><-- A
 
 /proc/add_to_proximity_list(atom/A, range)
 	var/turf/T = get_turf(A)
+	if(!T || !A.loc)
+		throw EXCEPTION("Someone adding a prox sensor in nullspace")
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
-		C.proximity_checkers |= A
+		LAZYINITLIST(C.proximity_checkers)
+		C.proximity_checkers[A] = TRUE
 	return L
 
 /proc/remove_from_proximity_list(atom/A, range)
@@ -1269,7 +1198,11 @@ B --><-- A
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
+		if (!C.proximity_checkers)
+			continue
 		C.proximity_checkers.Remove(A)
+		UNSETEMPTY(C.proximity_checkers)
+
 
 /proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
@@ -1282,10 +1215,14 @@ B --><-- A
 	var/list/O = M - L
 	for(var/C in N)
 		var/turf/D = C
+		if (!D.proximity_checkers)
+			continue
 		D.proximity_checkers.Remove(checker)
+		UNSETEMPTY(D.proximity_checkers)
 	for(var/E in O)
 		var/turf/F = E
-		F.proximity_checkers |= checker
+		LAZYINITLIST(F.proximity_checkers)
+		F.proximity_checkers[checker] = TRUE
 	return 1
 
 /proc/flick_overlay_static(image/I, atom/A, duration)
@@ -1298,13 +1235,13 @@ B --><-- A
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
-	var/validarea = 0
+	var/validarea = FALSE
 	for(var/V in sortedAreas)
 		var/area/A = V
-		validarea = 1
+		validarea = TRUE
 		for(var/turf/T in A)
 			if(T.z != zlevel)
-				validarea = 0
+				validarea = FALSE
 				break
 		if(validarea)
 			. += A
@@ -1348,17 +1285,23 @@ proc/pick_closest_path(value)
 	CRASH(msg)
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
+
+//Increases delay as the server gets more overloaded,
+//as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
+#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+
 /proc/stoplag()
-	. = 1
+	. = round(1*DELTA_CALC)
 	sleep(world.tick_lag)
 	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += 2
-		sleep(world.tick_lag*2)
+		. += round(2*DELTA_CALC)
+		sleep(world.tick_lag*2*DELTA_CALC)
 		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += 4
-			sleep(world.tick_lag*4)
+			. += round(4*DELTA_CALC)
+			sleep(world.tick_lag*4*DELTA_CALC)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
+#undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C

@@ -14,7 +14,7 @@
 	var/synthesizing = 0
 	var/poison_amount = 5
 	slot = "stomach"
-	origin_tech = "materials=4;powerstorage=5;biotech=4"
+	origin_tech = "materials=2;powerstorage=2;biotech=2"
 
 /obj/item/organ/cyberimp/chest/nutriment/on_life()
 	if(synthesizing)
@@ -41,14 +41,14 @@
 	implant_color = "#006607"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
-	origin_tech = "materials=4;powerstorage=5;biotech=5"
+	origin_tech = "materials=4;powerstorage=3;biotech=3"
 
 /obj/item/organ/cyberimp/chest/reviver
 	name = "Reviver implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	icon_state = "chest_implant"
 	implant_color = "#AD0000"
-	origin_tech = "materials=5;programming=4;biotech=6"
+	origin_tech = "materials=5;programming=4;biotech=4"
 	slot = "heartdrive"
 	var/revive_cost = 0
 	var/reviving = 0
@@ -96,7 +96,7 @@
 	else
 		cooldown += 200
 
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD && prob(50 / severity))
 			H.heart_attack = TRUE
@@ -197,3 +197,4 @@
 
 	toggle(silent=1)
 	return 0
+

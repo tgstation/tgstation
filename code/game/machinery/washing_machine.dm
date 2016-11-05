@@ -76,7 +76,7 @@
 	if(WM.color_source)
 		if(istype(WM.color_source,/obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
-			color = CR.paint_color
+			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/machine_wash(obj/machinery/washing_machine/WM)
 	gib()
@@ -241,6 +241,9 @@
 		state_open = 0 //close the door
 		update_icon()
 
+/obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()

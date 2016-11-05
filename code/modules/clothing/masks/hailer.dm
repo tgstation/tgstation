@@ -69,7 +69,7 @@
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		return
 	if(!can_use(usr))
 		return

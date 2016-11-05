@@ -9,6 +9,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	opacity = 0
+	layer = FLY_LAYER
 	anchored = 1
 	mouse_opacity = 0
 	animate_movement = 0
@@ -25,6 +26,8 @@
 	var/step = alpha / frames
 	for(var/i = 0, i < frames, i++)
 		alpha -= step
+		if(alpha < 160)
+			opacity = 0 //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
 /obj/effect/particle_effect/smoke/New()
@@ -81,7 +84,7 @@
 		reagents.copy_to(S, reagents.total_volume)
 		S.setDir(pick(cardinal))
 		S.amount = amount-1
-		S.color = color
+		S.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		S.lifetime = lifetime
 		if(S.amount>0)
 			if(opaque)
@@ -154,7 +157,7 @@
 	var/blast = 0
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
-	if(istype(A,/turf/open))
+	if(isopenturf(A))
 		var/turf/open/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
@@ -224,6 +227,8 @@
 		for(var/atom/movable/AM in T)
 			if(AM.type == src.type)
 				continue
+			if(T.intact && AM.level == 1) //hidden under the floor
+				continue
 			reagents.reaction(AM, TOUCH, fraction)
 
 		reagents.reaction(T, TOUCH, fraction)
@@ -261,7 +266,7 @@
 	return ..()
 
 /datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = 0)
-	if(istype(loca, /turf/))
+	if(isturf(loca))
 		location = loca
 	else
 		location = get_turf(loca)
@@ -284,15 +289,15 @@
 			var/more = ""
 			if(M)
 				more = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</a>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) "
-			message_admins("A chemical smoke reaction has taken place in ([whereLink])[contained]. Last associated key is [carry.my_atom.fingerprintslast][more].", 0, 1)
+			message_admins("Smoke: ([whereLink])[contained]. Key: [carry.my_atom.fingerprintslast][more].", 0, 1)
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last associated key is [carry.my_atom.fingerprintslast].")
 		else
-			message_admins("A chemical smoke reaction has taken place in ([whereLink]). No associated key.", 0, 1)
+			message_admins("Smoke: ([whereLink])[contained]. No associated key.", 0, 1)
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
 
 /datum/effect_system/smoke_spread/chem/start()
-	var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
+	var/mixcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 	if(holder)
 		location = get_turf(holder)
 	var/obj/effect/particle_effect/smoke/chem/S = new effect_type(location)
@@ -300,8 +305,8 @@
 	if(chemholder.reagents.total_volume > 1) // can't split 1 very well
 		chemholder.reagents.copy_to(S, chemholder.reagents.total_volume)
 
-	if(color)
-		S.color = color // give the smoke color, if it has any to begin with
+	if(mixcolor)
+		S.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
 	S.amount = amount
 	if(S.amount)
 		S.spread_smoke() //calling process right now so the smoke immediately attacks mobs.

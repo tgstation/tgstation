@@ -14,7 +14,7 @@
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
-#define BANTYPE_APPEARANCE	6
+
 #define BANTYPE_ADMIN_PERMA	7
 #define BANTYPE_ADMIN_TEMP	8
 #define BANTYPE_ANY_JOB		9 //used to remove jobbans
@@ -51,6 +51,6 @@
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
 #define ADMIN_SET_SD_CODE "(<a href='?_src_=holder;set_selfdestruct_code=1'>SETCODE</a>)"
 #define ADMIN_FULLMONTY(user) "[key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)]"
-#define ADMIN_JMP(src) "(<a href='?_src_=holder;adminplayerobservecoordjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)"
+#define ADMIN_JMP(src) "(<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)"
 #define COORD(src) "[src ? "([src.x],[src.y],[src.z])" : "nonexistent location"]"
 #define ADMIN_COORDJMP(src) "[src ? "[COORD(src)] [ADMIN_JMP(src)]" : "nonexistent location"]"

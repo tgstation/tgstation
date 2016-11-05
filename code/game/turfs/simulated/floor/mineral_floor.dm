@@ -218,14 +218,3 @@
 
 /turf/open/floor/mineral/abductor/make_plating()
 	return ChangeTurf(/turf/open/floor/plating/abductor2)
-
-
-/turf/open/floor/plating/abductor2
-	name = "alien plating"
-	icon_state = "alienplating"
-
-/turf/open/floor/plating/abductor2/break_tile()
-	return //unbreakable
-
-/turf/open/floor/plating/abductor2/burn_tile()
-	return //unburnable

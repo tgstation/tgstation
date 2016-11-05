@@ -38,15 +38,18 @@
 			else
 				buckled_mob.pixel_y = -4
 
+/obj/vehicle/scooter/buckle_mob(mob/living/M, force = 0)
+	if(!istype(M))
+		return 0
+	if(M.get_num_legs() < 2 && M.get_num_arms() <= 0)
+		M << "<span class='warning'>Your limbless body can't use [src].</span>"
+		return 0
+	. = ..()
+
 /obj/vehicle/scooter/post_buckle_mob(mob/living/M)
 	vehicle_move_delay = initial(vehicle_move_delay)
-	..()
 	if(M.get_num_legs() < 2)
 		vehicle_move_delay ++
-		if(M.get_num_arms() <= 0)
-			if(has_buckled_mobs())//to prevent the message displaying twice due to unbuckling
-				M << "<span class='warning'>Your limbless body flops off \the [src].</span>"
-			unbuckle_mob(M)
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"

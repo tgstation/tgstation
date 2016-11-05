@@ -92,7 +92,7 @@
 	desc = "It smells like burning."
 	icon_state = "gatfruit"
 	origin_tech = "combat=6"
-	trash = /obj/item/weapon/gun/projectile/revolver
+	trash = /obj/item/weapon/gun/ballistic/revolver
 	bitesize_mod = 2
 
 //Cherry Bombs
@@ -115,6 +115,8 @@
 	seed = /obj/item/seeds/cherry/bomb
 	bitesize_mod = 2
 	volume = 125 //Gives enough room for the black powder at max potency
+	obj_integrity = 40
+	max_integrity = 40
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
 	var/area/A = get_area(user)
@@ -123,12 +125,14 @@
 	log_game("[user] ([user.key ? user.key : "no key"]) primed a cherry bomb for detonation at [A] ([user.x],[user.y],[user.z]).")
 	prime()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/burn()
-	prime()
-	..()
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		prime()
+	if(!qdeleted(src))
+		qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
-	qdel(src) //Ensuring that it's deleted by its own explosion
+	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
 	icon_state = "cherry_bomb_lit"

@@ -6400,7 +6400,7 @@
 /area/medical/medbay)
 "nR" = (
 /obj/structure/table,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "nS" = (
@@ -10679,7 +10679,7 @@
 /area/engine/engineering)
 "xU" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/projectile/revolver/doublebarrel,
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -10764,7 +10764,7 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/tie/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /obj/item/weapon/reagent_containers/hypospray,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -13899,7 +13899,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "FQ" = (
-/obj/machinery/hologram/holopad,
+/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/start{
 	name = "Cyborg"
@@ -14145,8 +14145,8 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/robot_parts/r_arm,
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/r_arm/robot,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "Gv" = (

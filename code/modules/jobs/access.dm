@@ -64,6 +64,7 @@
 /var/const/access_mineral_storeroom = 64
 /var/const/access_minisat = 65
 /var/const/access_weapons = 66 //Weapon authorization for secbots
+/var/const/access_network = 67
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -105,25 +106,25 @@
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return 1
-	if(istype(M, /mob/living/silicon))
-		//AI can do whatever he wants
+	if(issilicon(M))
+		//AI can do whatever it wants
 		return 1
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return 1
-	else if(istype(M, /mob/living/carbon/human))
+	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_hand()) || src.check_access(H.wear_id))
+		if(check_access(H.get_active_held_item()) || src.check_access(H.wear_id))
 			return 1
-	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/alien/humanoid))
+	else if(ismonkey(M) || isalienadult(M))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
-		if(check_access(george.get_active_hand()))
+		if(check_access(george.get_active_held_item()))
 			return 1
 	else if(isanimal(M))
 		var/mob/living/simple_animal/A = M
-		if(check_access(A.get_active_hand()) || check_access(A.access_card))
+		if(check_access(A.get_active_held_item()) || check_access(A.access_card))
 			return 1
 	return 0
 
@@ -237,7 +238,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_network)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -267,7 +268,7 @@
 		if(3) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(4) //research
-			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd)
+			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd, access_network)
 		if(5) //engineering and maintenance
 			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_minisat, access_ce)
 		if(6) //supply
@@ -424,6 +425,8 @@
 			return "AI Satellite"
 		if(access_weapons)
 			return "Weapon Permit"
+		if(access_network)
+			return "Network Access"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

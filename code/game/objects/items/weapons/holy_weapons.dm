@@ -11,7 +11,7 @@
 	var/reskinned = FALSE
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is killing \himself with \the [src.name]! It looks like \he's trying to get closer to god!</span>")
+	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/attack_self(mob/user)
@@ -85,7 +85,7 @@
 	w_class = 5
 	slot_flags = SLOT_BACK|SLOT_BELT
 //	block_chance = 30
-//	sharpness = IS_SHARP
+	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 /*
@@ -127,10 +127,14 @@
 
 /obj/item/weapon/nullrod/claymore/multiverse
 	name = "extradimensional blade"
-	desc = "Once the harbringer of a interdimensional war, now a dormant souvenir. Still sharp though."
+	desc = "Once the harbinger of a interdimensional war, its sharpness fluctuates wildly. "
 	icon_state = "multiverse"
 	item_state = "multiverse"
 	slot_flags = SLOT_BELT
+
+/obj/item/weapon/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
+	force = rand(1, 30)
+	..()
 
 /obj/item/weapon/nullrod/claymore/saber
 	name = "light energy sword"
@@ -171,7 +175,7 @@
 	w_class = 4
 //	armour_penetration = 35
 	slot_flags = SLOT_BACK
-//	sharpness = IS_SHARP
+	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
 /obj/item/weapon/nullrod/scythe/vibro
@@ -186,6 +190,7 @@
 /obj/item/weapon/nullrod/scythe/spellblade
 	icon_state = "spellblade"
 	item_state = "spellblade"
+	icon = 'icons/obj/guns/magic.dmi'
 	name = "dormant spellblade"
 	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
 	hitsound = 'sound/weapons/rapierhit.ogg'
@@ -260,7 +265,7 @@
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
 	hitsound = 'sound/items/bikehorn.ogg'
-//	sharpness = IS_SHARP
+	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/nullrod/whip
@@ -297,7 +302,7 @@
 
 /obj/item/weapon/nullrod/carp
 	name = "carp-sie plushie"
-	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to recieve the blessing of Carp-Sie."
+	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "carpplushie"
 	item_state = "carp_plushie"
@@ -348,7 +353,7 @@
 	desc = "Holding this makes you look absolutely devilish."
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-//	sharpness = IS_SHARP
+	sharpness = IS_SHARP
 /*
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()

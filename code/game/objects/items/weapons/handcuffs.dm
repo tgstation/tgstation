@@ -18,6 +18,7 @@
 	materials = list(MAT_METAL=500)
 	origin_tech = "engineering=3;combat=3"
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
@@ -30,12 +31,12 @@
 		return
 
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2)
+		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
 			playsound(loc, cuffsound, 30, 1, -2)
-			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				apply_cuffs(C,user)
 				user << "<span class='notice'>You handcuff [C].</span>"
 				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
@@ -186,7 +187,7 @@
 		return ..()
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(isrobot(user))
+	if(iscyborg(user))
 		if(!C.handcuffed)
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
@@ -247,7 +248,7 @@
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/weapon/restraints/legcuffs/beartrap/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is sticking \his head in the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -320,7 +321,7 @@
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 0
 
-/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin)
+/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(!..())
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)

@@ -43,7 +43,7 @@
 	attack_verb = list("stung")
 
 /obj/item/weapon/grown/nettle/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is eating some of the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|TOXLOSS)
 
 /obj/item/weapon/grown/nettle/pickup(mob/living/user)
@@ -51,16 +51,13 @@
 	if(!iscarbon(user))
 		return 0
 	var/mob/living/carbon/C = user
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = C
-		if(H.gloves)
-			return 0
-		var/organ = ((H.hand ? "l_":"r_") + "arm")
-		var/obj/item/bodypart/affecting = H.get_bodypart(organ)
-		if(affecting && affecting.take_damage(0, force))
-			H.update_damage_overlays(0)
-	else
-		C.take_organ_damage(0,force)
+	if(C.gloves)
+		return 0
+	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
+	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
+	if(affecting)
+		if(affecting.receive_damage(0, force))
+			C.update_damage_overlays()
 	C << "<span class='userdanger'>The nettle burns your bare hand!</span>"
 	return 1
 
@@ -94,7 +91,6 @@
 	force = round((5 + seed.potency / 2.5), 1)
 
 /obj/item/weapon/grown/nettle/death/pickup(mob/living/carbon/user)
-	..()
 	if(..())
 		if(prob(50))
 			user.Paralyse(5)
@@ -102,7 +98,7 @@
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
-	if(istype(M, /mob/living))
+	if(isliving(M))
 		M << "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>"
 		add_logs(user, M, "attacked", src)
 

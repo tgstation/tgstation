@@ -4,7 +4,8 @@
 	icon_state = "chronohelmet"
 	item_state = "chronohelmet"
 	slowdown = 1
-	armor = list(melee = 60, bullet = 30/*bullet through the visor*/, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
+	armor = list(melee = 60, bullet = 30/*bullet through the visor*/, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/clothing/suit/space/chronos/suit = null
 
 /obj/item/clothing/head/helmet/space/chronos/dropped()
@@ -23,9 +24,10 @@
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle)
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 1000)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/list/chronosafe_items = list(/obj/item/weapon/chrono_eraser, /obj/item/weapon/gun/energy/chrono_gun)
-	var/hands_nodrop_states
+	var/list/hands_nodrop = list()
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
 	var/image/phase_underlay = null
@@ -87,15 +89,14 @@
 		user.SetStunned(0)
 		user.next_move = 1
 		user.alpha = 255
-		user.color = "#ffffff"
+		user.update_atom_colour()
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
 		user.anchored = 0
 		teleporting = 0
-		if(user.l_hand && !(hands_nodrop_states & 1))
-			user.l_hand.flags &= ~NODROP
-		if(user.r_hand && !(hands_nodrop_states & 2))
-			user.r_hand.flags &= ~NODROP
+		for(var/obj/item/I in user.held_items)
+			if(I in hands_nodrop)
+				I.flags &= ~NODROP
 		if(phase_underlay && !qdeleted(phase_underlay))
 			user.underlays -= phase_underlay
 			qdel(phase_underlay)
@@ -119,24 +120,26 @@
 
 		teleport_now.UpdateButtonIcon()
 
-		var/list/nonsafe_slots = list(slot_belt, slot_back, slot_l_hand, slot_r_hand)
+		var/list/nonsafe_slots = list(slot_belt, slot_back)
+		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_by_slot(slot)
-			if(slot_item && !(slot_item.type in chronosafe_items) && user.unEquip(slot_item))
-				user << "<span class='notice'>Your [slot_item.name] got left behind.</span>"
+			exposed += slot_item
+		exposed += user.held_items
+		for(var/exposed_item in exposed)
+			var/obj/item/exposed_I = exposed_item
+			if(exposed_I && !(exposed_I.type in chronosafe_items) && user.unEquip(exposed_I))
+				user << "<span class='notice'>Your [exposed_I.name] got left behind.</span>"
 
 		user.ExtinguishMob()
 
 		phase_underlay = create_phase_underlay(user)
 
-		hands_nodrop_states = 0
-		if(user.l_hand)
-			hands_nodrop_states |= (user.l_hand.flags & NODROP) ? 1 : 0
-			user.l_hand.flags |= NODROP
-		if(user.r_hand)
-			hands_nodrop_states |= (user.r_hand.flags & NODROP) ? 2 : 0
-			user.r_hand.flags |= NODROP
-
+		hands_nodrop = list()
+		for(var/obj/item/I in user.held_items)
+			if(!(I.flags & NODROP))
+				hands_nodrop += I
+				I.flags |= NODROP
 		user.animate_movement = NO_STEPS
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1

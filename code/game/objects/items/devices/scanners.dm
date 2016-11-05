@@ -114,7 +114,7 @@ MASS SPECTROMETER
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/living/user, mob/living/M, mode = 1)
-	if(user.stat || user.eye_blind)
+	if(user.incapacitated() || user.eye_blind)
 		return
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
@@ -156,9 +156,9 @@ MASS SPECTROMETER
 		user << "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>"
 
 	// Organ damage report
-	if(istype(M, /mob/living/carbon/human) && mode == 1)
-		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_bodyparts(1,1)
+	if(iscarbon(M) && mode == 1)
+		var/mob/living/carbon/C = M
+		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
 			user << "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>"
 			for(var/obj/item/bodypart/org in damaged)
@@ -202,13 +202,13 @@ MASS SPECTROMETER
 			else
 				user << "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>"
 
-		var/implant_detect
+		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
 			if(CI.status == ORGAN_ROBOTIC)
-				implant_detect += "[C.name] is modified with a [CI.name].<br>"
-		if(implant_detect)
+				cyberimp_detect += "[C.name] is modified with a [CI.name].<br>"
+		if(cyberimp_detect)
 			user << "<span class='notice'>Detected cybernetic modifications:</span>"
-			user << "<span class='notice'>[implant_detect]</span>"
+			user << "<span class='notice'>[cyberimp_detect]</span>"
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))

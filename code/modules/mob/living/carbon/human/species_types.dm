@@ -16,27 +16,7 @@
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
 		return 1	//Pure humans are always allowed in all roles.
-
-	//Mutants are not allowed in most roles.
-	if(rank in security_positions) //This list does not include lawyers.
-		return 0
-	if(rank in science_positions)
-		return 0
-	if(rank in medical_positions)
-		return 0
-	if(rank in engineering_positions)
-		return 0
-	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
-		return 0
 	return ..()
-
-
-/datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "mutationtoxin")
-		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		H.set_species(/datum/species/jelly/slime)
-		H.reagents.del_reagent(chem.type)
-		return 1
 
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
@@ -54,9 +34,9 @@
 	say_mod = "hisses"
 	default_color = "00FF00"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
-	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
+	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
 	mutant_organs = list(/obj/item/organ/tongue/lizard)
-	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -85,8 +65,9 @@
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "lizard"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
+	id = "ashlizard"
+	limbs_id = "lizard"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
 /*
  PODPEOPLE
 */
@@ -146,9 +127,9 @@
 				H.Weaken(5)
 				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
-					randmutb(H)
+					H.randmutb()
 				else
-					randmutg(H)
+					H.randmutg()
 				H.domutcheck()
 			else
 				H.adjustFireLoss(rand(5,15))
@@ -172,6 +153,34 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
+	var/datum/action/innate/shadow/darkvision/vision_toggle
+
+/datum/action/innate/shadow/darkvision //Darkvision toggle so shadowpeople can actually see where darkness is
+	name = "Toggle Darkvision"
+	check_flags = AB_CHECK_CONSCIOUS
+	background_icon_state = "bg_default"
+	button_icon_state = "blind"
+
+/datum/action/innate/shadow/darkvision/Activate()
+	var/mob/living/carbon/human/H = owner
+	if(H.see_in_dark < 8)
+		H.see_in_dark = 8
+		H.see_invisible = SEE_INVISIBLE_MINIMUM
+		H << "<span class='notice'>You adjust your vision to pierce the darkness.</span>"
+	else
+		H.see_in_dark = 2
+		H.see_invisible = SEE_INVISIBLE_LIVING
+		H << "<span class='notice'>You adjust your vision to recognize the shadows.</span>"
+
+/datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	vision_toggle = new
+	vision_toggle.Grant(C)
+
+/datum/species/shadow/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	if(vision_toggle)
+		vision_toggle.Remove(C)
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -195,7 +204,7 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
+	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
@@ -642,6 +651,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
+	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 
 /*
  ZOMBIES
@@ -655,14 +665,16 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT,TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
-	speedmod = 2
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
+	id = "memezombies"
+	limbs_id = "zombie"
 	no_equip = list(slot_wear_mask, slot_head)
 	armor = 20 // 120 damage to KO a zombie, which kills it
+	speedmod = 2
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
@@ -676,10 +688,9 @@
 	. = ..()
 	// Drop items in hands
 	// If you're a zombie lucky enough to have a NODROP item, then it stays.
-	if(C.unEquip(C.l_hand))
-		C.put_in_l_hand(new /obj/item/zombie_hand(C))
-	if(C.unEquip(C.r_hand))
-		C.put_in_r_hand(new /obj/item/zombie_hand(C))
+	for(var/obj/item/I in C.held_items)
+		C.unEquip(I)
+		C.put_in_hands(new /obj/item/zombie_hand(C))
 
 	// Next, deal with the source of this zombie corruption
 	var/obj/item/organ/body_egg/zombie_infection/infection
@@ -689,18 +700,16 @@
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	var/obj/item/zombie_hand/left = C.l_hand
-	var/obj/item/zombie_hand/right = C.r_hand
-	// Deletion of the hands is handled in the items dropped()
-	if(istype(left))
-		C.unEquip(left, TRUE)
-	if(istype(right))
-		C.unEquip(right, TRUE)
+	for(var/obj/item/I in C.held_items)
+		if(istype(I, /obj/item/zombie_hand))
+			C.unEquip(I, TRUE)
+
 
 // Your skin falls off
 /datum/species/krokodil_addict
 	name = "Human"
-	id = "zombie"
+	id = "goofzombies"
+	limbs_id = "zombie" //They look like zombies
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
@@ -726,14 +735,14 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
 	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
-	safe_oxygen_min = 0 //We don't breath this
-	safe_toxins_min = 16 //We breath THIS!
-	safe_toxins_max = 0
+	mutantlungs = /obj/item/organ/lungs/plasmaman
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
 	burnmod = 2
 	heatmod = 2
+	breathid = "tox"
 	speedmod = 1
+	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -757,7 +766,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
 	H.equipOutfit(O, visualsOnly)
-	H.internal = H.r_hand
+	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
 	return 0
 
@@ -776,16 +785,10 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
-	safe_oxygen_min = 0
-	safe_toxins_min = 0
-	safe_toxins_max = 0
-	safe_co2_max = 0
-	SA_para_min = 0
-	SA_sleep_min = 0
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
-	exotic_damage_overlay = "synth"
+	damage_overlay_type = "synth"
 	limbs_id = "synth"
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
@@ -894,6 +897,27 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	else
 		return ..()
 
+
+/datum/species/android
+	name = "Android"
+	id = "android"
+	say_mod = "states"
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
+	meat = null
+	damage_overlay_type = "synth"
+	limbs_id = "synth"
+
+/datum/species/android/on_species_gain(mob/living/carbon/C)
+	. = ..()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYPART_ROBOTIC)
+
+/datum/species/android/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYPART_ORGANIC)
 
 /*
 SYNDICATE BLACK OPS
@@ -1016,8 +1040,8 @@ SYNDICATE BLACK OPS
 
 	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-	H.accident(H.l_hand)
-	H.accident(H.r_hand)
+	for(var/obj/item/I in H.held_items)
+		H.accident(I)
 
 	var/olddir = H.dir
 

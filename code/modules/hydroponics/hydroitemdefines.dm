@@ -33,7 +33,7 @@
 	reagents.add_reagent("weedkiller", 100)
 
 /obj/item/weapon/reagent_containers/spray/weedspray/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/reagent_containers/spray/pestspray // -- Skie
@@ -55,7 +55,7 @@
 	reagents.add_reagent("pestkiller", 100)
 
 /obj/item/weapon/reagent_containers/spray/pestspray/suicide_act(mob/user)
-	viewers(user) << "<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
+	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/cultivator
@@ -91,7 +91,7 @@
 	sharpness = IS_SHARP
 
 /obj/item/weapon/hatchet/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is chopping at \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -111,9 +111,14 @@
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/scythe/suicide_act(mob/user)  // maybe later i'll actually figure out how to make it behead them
-	user.visible_message("<span class='suicide'>[user] is beheading \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+/obj/item/weapon/scythe/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		var/obj/item/bodypart/BP = C.get_bodypart("head")
+		if(BP)
+			BP.drop_limb()
+			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
 // *************************************
@@ -158,7 +163,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
-	desc = "Contains a fertilizer that doubles the yield of a plant while causing no mutations."
+	desc = "Contains a fertilizer that increases the yield of a plant by 30% while causing no mutations."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 

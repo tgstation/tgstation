@@ -31,26 +31,7 @@
 	if(..())
 		return
 
-	R.notify_ai(2)
-
-	R.uneq_all()
-	R.hands.icon_state = "nomod"
-	R.icon_state = "robot"
-	qdel(R.module)
-	R.module = null
-
-	R.modtype = "robot"
-	R.designation = "Default"
-	R.updatename("Default")
-
-	R.update_icons()
-	R.update_headlamp()
-
-	R.speed = 0 // Remove upgrades.
-	R.ionpulse = FALSE
-	R.magpulse = FALSE
-
-	R.status_flags |= CANPUSH
+	R.ResetModule()
 
 	return 1
 
@@ -194,26 +175,6 @@
 
 	return 1
 
-/obj/item/borg/upgrade/hyperka
-	name = "mining cyborg hyper-kinetic accelerator"
-	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
-	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
-	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
-
-/obj/item/borg/upgrade/hyperka/action(mob/living/silicon/robot/R)
-	if(..())
-		return
-
-	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
-		qdel(H)
-
-	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg(R.module)
-	R.module.rebuild()
-
-	return 1
-
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
@@ -236,7 +197,7 @@
 	name = "mining cyborg lavaproof tracks"
 	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to mining cyborg tracks, enabling them to withstand exposure to molten rock."
 	icon_state = "ash_plating"
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
 	origin_tech = "engineering=4;materials=4;plasmatech=4"

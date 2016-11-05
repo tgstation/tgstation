@@ -194,11 +194,11 @@
 					pointcost = 10
 			if("necklace")
 				if(gang.points >=1)
-					item_type = /obj/item/clothing/tie/dope_necklace
+					item_type = /obj/item/clothing/neck/necklace/dope
 					pointcost = 1
 			if("pistol")
 				if(gang.points >= 25)
-					item_type = /obj/item/weapon/gun/projectile/automatic/pistol
+					item_type = /obj/item/weapon/gun/ballistic/automatic/pistol
 					pointcost = 25
 			if("10mmammo")
 				if(gang.points >= 10)
@@ -206,7 +206,7 @@
 					pointcost = 10
 			if("uzi")
 				if(gang.points >= 60)
-					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
+					item_type = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
 					pointcost = 60
 			if("9mmammo")
 				if(gang.points >= 40)
@@ -258,7 +258,7 @@
 
 				var/area/usrarea = get_area(usr.loc)
 				var/usrturf = get_turf(usr.loc)
-				if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || usr.z != 1)
+				if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
 					usr << "<span class='warning'>You can only use this on the station!</span>"
 					return
 

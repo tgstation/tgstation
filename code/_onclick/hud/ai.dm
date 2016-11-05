@@ -133,7 +133,7 @@
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.aicamera.toggle_camera_mode()
-	else if(isrobot(usr))
+	else if(iscyborg(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.aicamera.toggle_camera_mode()
 
@@ -145,7 +145,7 @@
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.aicamera.viewpictures()
-	else if(isrobot(usr))
+	else if(iscyborg(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.aicamera.viewpictures()
 

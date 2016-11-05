@@ -5,16 +5,14 @@
 	density = 0
 	anchored = 1
 	flags = ABSTRACT
-	unacidable = 1
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
-	var/obj/item/ammo_casing/ammo_casing = null
 	var/suppressed = 0	//Attack message
 	var/yo = null
 	var/xo = null
@@ -50,6 +48,7 @@
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
+	var/impact_effect_type //what type of impact effect to show when hitting something
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -63,14 +62,42 @@
 /obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	qdel(src)
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0, hit_zone)
+//to get the correct limb (if any) for the projectile hit message
+/mob/living/proc/check_limb_hit(hit_zone)
+	if(has_limbs)
+		return hit_zone
+
+/mob/living/carbon/check_limb_hit(hit_zone)
+	if(get_bodypart(hit_zone))
+		return hit_zone
+	else //when a limb is missing the damage is actually passed to the chest
+		return "chest"
+
+/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
+		if(impact_effect_type)
+			PoolOrNew(impact_effect_type, list(target_loca, target, src))
 		return 0
 	var/mob/living/L = target
 	if(blocked != 100) // not completely blocked
+		if(damage && L.blood_volume && damage_type == BRUTE)
+			var/splatter_dir = dir
+			if(starting)
+				splatter_dir = get_dir(starting, target_loca)
+			if(isalien(L))
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter, list(target_loca, splatter_dir))
+			else
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(target_loca, splatter_dir))
+			if(prob(33))
+				L.add_splatter_floor(target_loca)
+		else if(impact_effect_type)
+			PoolOrNew(impact_effect_type, list(target_loca, target, src))
+
 		var/organ_hit_text = ""
-		if(L.has_limbs)
-			organ_hit_text = " in \the [parse_zone(def_zone)]"
+		var/limb_hit = L.check_limb_hit(def_zone)//to get the correct message info.
+		if(limb_hit)
+			organ_hit_text = " in \the [parse_zone(limb_hit)]"
 		if(suppressed)
 			playsound(loc, hitsound, 5, 1, -1)
 			L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
@@ -79,7 +106,7 @@
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, 1, -1)
 			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
-								"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+					"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
 		L.on_hit(type)
 
 	var/reagent_note
@@ -136,7 +163,11 @@
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
 
-/obj/item/projectile/proc/fire(var/setAngle)
+/obj/item/projectile/proc/fire(setAngle, atom/direct_target)
+	if(direct_target)
+		direct_target.bullet_act(src, def_zone)
+		qdel(src)
+		return
 	if(setAngle)
 		Angle = setAngle
 	if(!legacy) //new projectiles
@@ -216,19 +247,53 @@
 			sleep(config.run_speed * 0.9)
 
 
+/obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
+	var/turf/curloc = get_turf(user)
+	src.loc = get_turf(user)
+	src.starting = get_turf(user)
+	src.current = curloc
+	src.yo = targloc.y - curloc.y
+	src.xo = targloc.x - curloc.x
+
+	if(params)
+		var/list/mouse_control = params2list(params)
+		if(mouse_control["icon-x"])
+			src.p_x = text2num(mouse_control["icon-x"])
+		if(mouse_control["icon-y"])
+			src.p_y = text2num(mouse_control["icon-y"])
+		if(mouse_control["screen-loc"])
+			//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
+			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
+
+			//Split X+Pixel_X up into list(X, Pixel_X)
+			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+
+			//Split Y+Pixel_Y up into list(Y, Pixel_Y)
+			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+			// world << "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]"
+			var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
+			var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
+
+			//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
+			var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
+
+			var/ox = round(screenview/2) //"origin" x
+			var/oy = round(screenview/2) //"origin" y
+			// world << "Pixel position: [x] [y]"
+			var/angle = Atan2(y - oy, x - ox)
+			// world << "Angle: [angle]"
+			src.Angle = angle
+	if(spread)
+		src.Angle += spread
+
+
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
 		Bump(AM, 1)
 
 /obj/item/projectile/Destroy()
-	ammo_casing = null
 	return ..()
-
-/obj/item/projectile/proc/dumbfire(var/dir)
-	current = get_ranged_target_turf(src, dir, world.maxx)
-	fire()
-
 
 /obj/item/projectile/experience_pressure_difference()
 	return

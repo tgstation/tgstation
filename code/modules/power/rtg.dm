@@ -133,7 +133,7 @@
 		log_game("[key_name(Proj.firer)] triggered an Abductor Core explosion via projectile.")
 		overload()
 
-/obj/machinery/power/rtg/abductor/blob_act(obj/effect/blob/B)
+/obj/machinery/power/rtg/abductor/blob_act(obj/structure/blob/B)
 	overload()
 
 /obj/machinery/power/rtg/abductor/ex_act()
@@ -142,7 +142,7 @@
 	else
 		overload()
 
-/obj/machinery/power/rtg/abductor/fire_act()
+/obj/machinery/power/rtg/abductor/fire_act(exposed_temperature, exposed_volume)
 	overload()
 
 /obj/machinery/power/rtg/abductor/tesla_act()

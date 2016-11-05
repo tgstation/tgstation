@@ -17,8 +17,10 @@
 	anchored = 0
 	density = 1
 	opacity = 0
-	burn_state = FLAMMABLE
-	burntime = 30
+	resistance_flags = FLAMMABLE
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
 
@@ -46,8 +48,7 @@
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 				if(do_after(user, 20/I.toolspeed, target = src))
 					user << "<span class='notice'>You pry the frame apart.</span>"
-					new /obj/item/stack/sheet/mineral/wood(loc, 4)
-					qdel(src)
+					deconstruct(TRUE)
 
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/mineral/wood))
@@ -102,20 +103,19 @@
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 				return
 			if(ishuman(user))
-				if(!user.get_active_hand())
+				if(!user.get_active_held_item())
 					user.put_in_hands(choice)
 			else
 				choice.loc = get_turf(src)
 			update_icon()
 
 
-/obj/structure/bookcase/ex_act(severity, target)
-	..()
-	if(!qdeleted(src))
-		for(var/obj/item/weapon/book/b in contents)
-			b.loc = (get_turf(src))
-		if(prob(50))
-			qdel(src)
+/obj/structure/bookcase/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/mineral/wood(loc, 4)
+	for(var/obj/item/weapon/book/B in contents)
+		B.forceMove(get_turf(src))
+	qdel(src)
+
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)
@@ -167,7 +167,7 @@
 	throw_range = 5
 	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 	var/dat				//Actual page content
 	var/due_date = 0	//Game time in 1/10th seconds
 	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -177,6 +177,7 @@
 
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
+		user << "<span class='warning'>As you are trying to read, you suddenly feel very stupid!</span>"
 		return
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
@@ -192,6 +193,7 @@
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		if(is_blind(user))
+			user << "<span class='warning'> As you are trying to write on the book, you suddenly feel very stupid!</span>"
 			return
 		if(unique)
 			user << "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>"
@@ -264,7 +266,7 @@
 			B.name = src.name
 			B.title = src.title
 			B.icon_state = src.icon_state
-			if(user.l_hand == src || user.r_hand == src)
+			if(user.is_holding(src))
 				qdel(src)
 				user.put_in_hands(B)
 				return

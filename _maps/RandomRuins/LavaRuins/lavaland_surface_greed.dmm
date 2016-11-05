@@ -15,7 +15,7 @@
 /area/ruin/powered)
 "e" = (
 /obj/structure/table/wood/poker,
-/obj/item/weapon/gun/projectile/revolver/russian/soul,
+/obj/item/weapon/gun/ballistic/revolver/russian/soul,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"

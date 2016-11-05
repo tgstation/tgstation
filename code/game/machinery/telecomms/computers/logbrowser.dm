@@ -72,7 +72,7 @@
 					var/language = "Human" // MMIs, pAIs, Cyborgs and humans all speak Human
 					var/mobtype = C.parameters["mobtype"]
 
-					var/list/humans = typesof(/mob/living/carbon/human, /mob/living/carbon/brain)
+					var/list/humans = typesof(/mob/living/carbon/human, /mob/living/brain)
 					var/list/monkeys = typesof(/mob/living/carbon/monkey)
 					var/list/silicons = typesof(/mob/living/silicon)
 					var/list/slimes = typesof(/mob/living/simple_animal/slime)
@@ -94,7 +94,7 @@
 						race = "Artificial Life"
 						language = "Humanoid" //Ais and borgs speak human, and binary isnt picked up.
 
-					else if(istype(mobtype, /obj))
+					else if(isobj(mobtype))
 						race = "Machinery"
 						language = race
 

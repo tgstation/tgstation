@@ -19,7 +19,7 @@
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
 		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
-		list("oculine"),
+		list("oculine","inacusiate"),
 		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
 	)
@@ -78,24 +78,10 @@
 		if(occupant && occupant.stat != DEAD)
 			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
-/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-		qdel(src)
-
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)
 		open_machine()
 	..(severity)
-
-/obj/machinery/sleeper/blob_act(obj/effect/blob/B)
-	if(prob(75))
-		var/turf/T = get_turf(src)
-		for(var/atom/movable/A in src)
-			A.forceMove(T)
-			A.blob_act(B)
-		qdel(src)
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -143,7 +129,7 @@
 		data["occupant"]["stat"] = occupant.stat
 		data["occupant"]["health"] = occupant.health
 		data["occupant"]["maxHealth"] = occupant.maxHealth
-		data["occupant"]["minHealth"] = config.health_threshold_dead
+		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
 		data["occupant"]["bruteLoss"] = occupant.getBruteLoss()
 		data["occupant"]["oxyLoss"] = occupant.getOxyLoss()
 		data["occupant"]["toxLoss"] = occupant.getToxLoss()
@@ -184,8 +170,8 @@
 	if(!occupant)
 		return
 	var/amount = occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/health = occupant.health > min_health || chem == "epinephrine"
-	return amount && health
+	var/occ_health = occupant.health > min_health || chem == "epinephrine"
+	return amount && occ_health
 
 
 /obj/machinery/sleeper/syndie

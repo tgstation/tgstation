@@ -13,11 +13,11 @@
 	if(prob(50))
 		new /obj/item/ammo_box/magazine/m50(src)
 		new /obj/item/ammo_box/magazine/m50(src)
-		new /obj/item/weapon/gun/projectile/automatic/pistol/deagle(src)
+		new /obj/item/weapon/gun/ballistic/automatic/pistol/deagle(src)
 	else
 		new /obj/item/ammo_box/a357(src)
 		new /obj/item/ammo_box/a357(src)
-		new /obj/item/weapon/gun/projectile/revolver/mateba(src)
+		new /obj/item/weapon/gun/ballistic/revolver/mateba(src)
 
 /obj/structure/closet/secure_closet/ertSec
 	name = "security closet"

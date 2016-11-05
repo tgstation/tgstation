@@ -10,7 +10,7 @@
 
 /obj/machinery/computer/stockexchange/New()
 	..()
-	logged_in = "[world.name] Cargo Department"
+	logged_in = "[station_name()] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
@@ -83,25 +83,6 @@ a.updated {
 			dat += "<b>Prominent products:</b><br>"
 			for (var/prod in S.products)
 				dat += "<i>[prod]</i><br>"
-			dat += "<br><b>Borrow options:</b><br>"
-			if (S.borrow_brokers.len)
-				for (var/datum/borrow/B in S.borrow_brokers)
-					dat += "<b>[B.broker]</b> offers <i>[B.share_amount] shares</i> for borrowing, for a deposit of <i>[B.deposit * 100]%</i> of the shares' value.<br>"
-					dat += "The broker expects the return of the shares after <i>[B.lease_time / 600] minutes</i>, with a grace period of <i>[B.grace_time / 600]</i> minute(s).<br>"
-					dat += "<i>This offer expires in [(B.offer_expires - world.time) / 600] minutes.</i><br>"
-					dat += "<b>Note:</b> If you do not return all shares by the end of the grace period, you will lose your deposit and the value of all unreturned shares at current value from your account!<br>"
-					dat += "<b>Note:</b> You cannot withdraw or transfer money off your account while a borrow is active.<br>"
-					dat += "<a href='?src=\ref[src];take=\ref[B]'>Take offer</a> (Estimated deposit: [B.deposit * S.current_value * B.share_amount] credits)<br><br>"
-			else
-				dat += "<i>No borrow options available</i><br><br>"
-			for (var/datum/borrow/B in S.borrows)
-				if (B.borrower == logged_in)
-					dat += "You are borrowing <i>[B.share_amount] shares</i> from <b>[B.broker]</b>.<br>"
-					dat += "Your deposit riding on the deal is <i>[B.deposit] credits</i>.<br>"
-					if (world.time < B.lease_expires)
-						dat += "You are expected to return the borrowed shares in [(B.lease_expires - world.time) / 600] minutes.<br><br>"
-					else
-						dat += "The brokering agency is collecting. You still owe them <i>[B.share_debt]</i> shares, which you have [(B.grace_expires - world.time) / 600] minutes to present.<br><br>"
 			var/news = 0
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]
@@ -267,7 +248,7 @@ a.updated {
 		usr.machine = src
 
 	if (href_list["viewhistory"])
-		var/datum/stock/S = locate(href_list["viewhistory"])
+		var/datum/stock/S = locate(href_list["viewhistory"]) in stockExchange.stocks
 		if (S)
 			S.displayValues(usr)
 
@@ -275,19 +256,14 @@ a.updated {
 		logged_in = null
 
 	if (href_list["buyshares"])
-		var/datum/stock/S = locate(href_list["buyshares"])
+		var/datum/stock/S = locate(href_list["buyshares"]) in stockExchange.stocks
 		if (S)
 			buy_some_shares(S, usr)
 
 	if (href_list["sellshares"])
-		var/datum/stock/S = locate(href_list["sellshares"])
+		var/datum/stock/S = locate(href_list["sellshares"]) in stockExchange.stocks
 		if (S)
 			sell_some_shares(S, usr)
-
-	if (href_list["take"])
-		var/datum/borrow/B = locate(href_list["take"])
-		if (B && !B.lease_expires)
-			do_borrowing_deal(B, usr)
 
 	if (href_list["show_logs"])
 		var/dat = "<html><head><title>Stock Transaction Logs</title></head><body><h2>Stock Transaction Logs</h2><div><a href='?src=\ref[src];show_logs=1'>Refresh</a></div><br>"
