@@ -389,7 +389,7 @@
 	usr << "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand."
 	usr << "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition."
 
-//CQC _bman_
+//CQC
 #define SLAM_COMBO "GH"
 #define KICK_COMBO "HH"
 #define RESTRAIN_COMBO "GG"
@@ -402,7 +402,6 @@
 
 /datum/martial_art/cqc/proc/drop_restraining()
 	restraining = 0
-	return 1
 
 /datum/martial_art/cqc/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,SLAM_COMBO))
