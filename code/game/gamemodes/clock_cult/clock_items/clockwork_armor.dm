@@ -6,7 +6,7 @@
 	icon_state = "clockwork_helmet"
 	w_class = 3
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/head/helmet/clockwork/New()
 	..()
@@ -46,7 +46,7 @@
 	w_class = 4
 	body_parts_covered = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
 /obj/item/clothing/suit/armor/clockwork/New()
@@ -94,7 +94,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 50, laser = -15, energy = 0, bomb = 35, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/gloves/clockwork/New()
 	..()
