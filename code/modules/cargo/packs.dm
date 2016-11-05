@@ -1265,7 +1265,7 @@ datum/supply_pack
 			/obj/item/device/t_scanner/adv_mining_scanner/lesser,
 			/obj/item/device/radio/headset/headset_cargo/mining,
 			/obj/item/weapon/storage/bag/ore,
-			/obj/item/clothing/suit/space/hardsuit/mining,
+			/obj/item/clothing/suit/hooded/explorer,
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
