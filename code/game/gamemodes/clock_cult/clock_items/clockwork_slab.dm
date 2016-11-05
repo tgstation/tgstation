@@ -434,7 +434,7 @@
 /obj/item/clockwork/slab/proc/quickbind_to_one(datum/clockwork_scripture/scripture) //takes a typepath(typecast for initial()) and binds it to slot 1
 	if(!ispath(scripture) && istext(scripture))
 		scripture = text2path(scripture) //if given as a href, the scripture will be a string and not a path. obviously, we need a path and not a string
-	if(!scripture)
+	if(!scripture || quickbind_slot_two == scripture)
 		return
 	quickbind_slot_one = scripture
 	for(var/datum/action/item_action/clock/quickbind_one/O in actions)
@@ -446,7 +446,7 @@
 /obj/item/clockwork/slab/proc/quickbind_to_two(datum/clockwork_scripture/scripture) //takes a typepath(typecast for initial()) and binds it to slot 2
 	if(!ispath(scripture) && istext(scripture))
 		scripture = text2path(scripture) //if given as a href, the scripture will be a string and not a path. obviously, we need a path and not a string
-	if(!scripture)
+	if(!scripture || quickbind_slot_one == scripture)
 		return
 	quickbind_slot_two = scripture
 	for(var/datum/action/item_action/clock/quickbind_two/O in actions)
