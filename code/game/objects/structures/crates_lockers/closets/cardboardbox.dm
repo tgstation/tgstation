@@ -12,6 +12,7 @@
 	open_sound = 'sound/effects/rustle2.ogg'
 	cutting_sound = 'sound/items/poster_ripped.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
+	delivery_icon = "deliverybox"
 	var/move_speed_multiplier = 1
 	var/move_delay = 0
 	var/egged = 0

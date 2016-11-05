@@ -191,6 +191,7 @@
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	t = replacetext(t, "\[tab\]", "&nbsp;")
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")

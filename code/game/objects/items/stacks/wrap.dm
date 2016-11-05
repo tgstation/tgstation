@@ -79,13 +79,12 @@
 		var/obj/structure/closet/O = target
 		if(O.opened)
 			return
-		if(!O.density) //can't wrap non dense closets (e.g. body bags)
+		if(!O.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
 			user << "<span class='warning'>You can't wrap this!</span>"
 			return
 		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
-			if(O.horizontal)
-				P.icon_state = "deliverycrate"
+			P.icon_state = O.delivery_icon
 			O.loc = P
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
