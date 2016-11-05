@@ -408,6 +408,7 @@
 
 	if(href_list["Recite"])
 		addtimer(src, "recite_scripture", 0, FALSE, href_list["Recite"], usr, FALSE)
+		return
 
 	if(href_list["Quickbindone"])
 		quickbind_to_one(href_list["Quickbindone"])
