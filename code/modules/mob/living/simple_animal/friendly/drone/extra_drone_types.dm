@@ -144,11 +144,10 @@
 	return FALSE
 
 /mob/living/simple_animal/drone/cogscarab/alert_drones(msg, dead_can_hear = 0)
-	switch(msg)
-		if(DRONE_NET_CONNECT)
-			msg = "<span class='brass'><i>Hierophant Network:</i> [name] activated.</span>"
-		if(DRONE_NET_DISCONNECT)
-			msg = "<span class='brass'><i>Hierophant Network:</i></span> <span class='alloy'>[name] disabled.</span>"
+	if(msg == DRONE_NET_CONNECT)
+		msg = "<span class='brass'><i>Hierophant Network:</i> [name] activated.</span>"
+	else if(msg == DRONE_NET_DISCONNECT)
+		msg = "<span class='brass'><i>Hierophant Network:</i></span> <span class='alloy'>[name] disabled.</span>"
 	..()
 
 /mob/living/simple_animal/drone/cogscarab/triggerAlarm(class, area/A, O, obj/alarmsource)
