@@ -44,8 +44,10 @@ datum/supply_pack
 	contains = list(/obj/vehicle/atv,
 					/obj/item/key,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
+					/obj/item/clothing/gloves/color/black,
+					/obj/item/clothing/head/soft,
 					/obj/item/clothing/mask/bandana/skull)//so you can properly #cargoniabikergang
-	crate_name = "ATV crate"
+	crate_name = "Biker Kit"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/emergency/equipment
