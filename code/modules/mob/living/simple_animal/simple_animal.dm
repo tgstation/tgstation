@@ -95,6 +95,7 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 		stack_trace("LOL AZAZAZAZA")
+		stack_trace("ZAZAZAZA")
 	else
 		return
 
