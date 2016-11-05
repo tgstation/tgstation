@@ -111,7 +111,7 @@
 /mob/living/simple_animal/drone/getarmor(def_zone, type)
 	var/armorval = 0
 
-	if(istype(head, /obj/item/clothing) && islist(head.armor))
+	if(head)
 		armorval = head.armor[type]
 	return (armorval * get_armor_effectiveness()) //armor is reduced for tiny fragile drones
 
