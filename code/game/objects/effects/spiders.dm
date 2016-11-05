@@ -190,8 +190,7 @@
 /obj/structure/spider/cocoon/New()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 
-/obj/structure/spider/cocoon/container_resist()
-	var/mob/living/user = usr
+/obj/structure/spider/cocoon/container_resist(mob/living/user)
 	var/breakout_time = 1
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
