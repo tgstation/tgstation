@@ -10354,7 +10354,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 2;
 	frequency = 1441;
-	id = "waste_in";
+	id = "mix_in";
 	pixel_y = 1
 	},
 /turf/open/floor/engine/vacuum,
@@ -10371,7 +10371,7 @@
 	dir = 2;
 	external_pressure_bound = 0;
 	frequency = 1441;
-	id_tag = "waste_out";
+	id_tag = "mix_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
@@ -13605,7 +13605,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/green/side{
