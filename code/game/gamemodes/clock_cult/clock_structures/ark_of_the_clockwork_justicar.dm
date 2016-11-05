@@ -7,7 +7,9 @@
 	mouse_opacity = 2
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
-	density = TRUE
+	density = FALSE
+	invisibility = INVISIBILITY_MAXIMUM
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	can_be_repaired = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
 	var/purpose_fulfilled = FALSE
@@ -20,12 +22,60 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/New()
 	..()
+	addtimer(src, "spawn_animation", 0)
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
+	var/turf/T = get_turf(src)
+	var/objective_is_gateway = (ticker && ticker.mode && ticker.mode.clockwork_objective == CLOCKCULT_GATEWAY)
+	new/obj/effect/clockwork/general_marker/inathneq(T)
+	if(objective_is_gateway)
+		hierophant_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and show your servants your mercy")]!\"</span>")
+	else
+		hierophant_message("<span class='inathneq'>\"[text2ratvar("We will show all the mercy of Engine")]!\"</span>")
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
+	sleep(10)
+	new/obj/effect/clockwork/general_marker/sevtug(T)
+	if(objective_is_gateway)
+		hierophant_message("<span class='sevtug'>\"[text2ratvar("Engine, come forth and show this station your decorating skills")]!\"</span>")
+	else
+		hierophant_message("<span class='sevtug'>\"[text2ratvar("We will show all Engine's decorating skills")]!\"</span>")
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 45, 0)
+	sleep(10)
+	new/obj/effect/clockwork/general_marker/nezbere(T)
+	if(objective_is_gateway)
+		hierophant_message("<span class='nezbere'>\"[text2ratvar("Engine, come forth and shine your light across this realm")]!!\"</span>")
+	else
+		hierophant_message("<span class='nezbere'>\"[text2ratvar("We will show all Engine's light")]!!\"</span>")
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 60, 0)
+	sleep(10)
+	new/obj/effect/clockwork/general_marker/nzcrentr(T)
+	if(objective_is_gateway)
+		hierophant_message("<span class='nzcrentr'>\"[text2ratvar("Engine, come forth")].\"</span>")
+	else
+		hierophant_message("<span class='nezbere'>\"[text2ratvar("We will show all Engine's power")].\"</span>")
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
+	sleep(10)
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
+	var/list/open_turfs = list()
+	for(var/turf/open/OT in orange(1, T))
+		if(!is_blocked_turf(OT))
+			open_turfs |= OT
+	if(open_turfs.len)
+		for(var/mob/living/L in T)
+			L.forceMove(pick(open_turfs))
+	resistance_flags &= ~INDESTRUCTIBLE
+	density = TRUE
+	invisibility = 0
 	glow = new(get_turf(src))
 	countdown = new(src)
 	countdown.start()
-	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>", FALSE, src)
+	if(!objective_is_gateway)
+		ratvar_portal = FALSE
+		hierophant_message("<span class='big_brass'>This newly constructed gateway will not free Ratvar, \
+		and will instead simply proselytize and convert everything and everyone on the station.</span>", TRUE)
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSobj, src)
