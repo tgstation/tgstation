@@ -241,7 +241,7 @@
 		return FALSE
 	var/other_servants = 0
 	for(var/mob/living/L in living_mob_list)
-		if(is_servant_of_ratvar(L) && !L.stat)
+		if(is_servant_of_ratvar(L) && !L.stat && L != invoker)
 			other_servants++
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
 		other_servants++
