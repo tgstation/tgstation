@@ -84,6 +84,9 @@
 	var/datum/personal_crafting/handcrafting
 
 
+/proc/dud()
+	return
+
 /mob/living/simple_animal/New()
 	..()
 	handcrafting = new()
@@ -94,9 +97,15 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
-		stack_trace("LOL AZAZAZAZA")
-		stack_trace("ZAZAZAZA")
 	else
+		dud()
+		dud()
+		dud()
+		dud()
+		dud()
+		dud()
+		dud()
+		dud()
 		return
 
 
