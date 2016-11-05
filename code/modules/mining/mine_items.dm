@@ -53,6 +53,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
 	new /obj/item/device/assault_pod/mining(src)
+	new /obj/item/device/flashlight/seclite(src)
 
 
 /**********************Shuttle Computer**************************/
