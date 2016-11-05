@@ -98,6 +98,8 @@
 	var/obj/item/weapon/stock_parts/micro_laser/part_laser = null
 	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
 
+	var/crashing = 0	//Are we currently getting wrecked?
+
 
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/New()
@@ -422,6 +424,7 @@
 		crashmessagesrc += "that really must of hurt!"
 	else
 		crashmessagesrc += "but luckily [suit.user]'s impact was absorbed by their suit's stabilizers!</span>"
+	suit.user.adjustBruteLoss(userdamage)
 	usermessage("WARNING: Stabilizers taking damage!", 1)
 	suit.user.visible_message(crashmessagesrc)
 	crash_damage = Clamp(crash_damage + crash_damage_low, 0, crash_disable_threshold*1.5)
@@ -448,6 +451,9 @@
 		world << "DEBUG: IMPACT TRIGGERED BY BUMP"
 	else
 		return 0
+	if(crashing)	//We're already in the process of getting knocked around by a crash.
+		return 0
+	crashing = 1
 	var/density = 0
 	var/anchored = 1
 	//var/victim
@@ -463,14 +469,15 @@
 		anchored = victim.anchored
 	if(!anchored)
 			//THIS NEEDS A COMPLETE REWRITE.
-		victim.visible_message("<span class='userdanger'>[victim.name] is thrown backwards violently by the impact of [suit.user.name]!</span>")
-	losecontrol()*/
+		victim.visible_message("<span class='userdanger'>[victim.name] is thrown backwards violently by the impact of [suit.user.name]!</span>") */
+	losecontrol()
+	crashing = 0
 
 /obj/item/device/flightpack/proc/losecontrol()
 	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
 		while(momentum_x != 0 || momentum_y != 0)
-			spawn(2)
+			sleep(2)
 			step(wearer, pick(cardinal))
 			momentum_decay()
 			adjust_momentum(0, 0, 10)
