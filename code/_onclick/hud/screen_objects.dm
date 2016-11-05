@@ -650,3 +650,4 @@
 			talk_cooldown = world.time + 10
 			L.say(pick(word_messages))
 
+

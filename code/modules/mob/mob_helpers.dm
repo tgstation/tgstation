@@ -477,10 +477,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/verb/toggle_talk_wheel()
 	set name = "talk-wheel"
 	set hidden = 1
-
+/*
 	if(isliving(src))
 		var/mob/living/L = src
 		if(L.hud_used)
 			for(var/obj/screen/wheel/talk/TW in L.hud_used.wheels)
-				TW.Click()
+				TW.Click()*/
 

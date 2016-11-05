@@ -95,10 +95,10 @@
 	using.icon = ui_style
 	static_inventory += using
 
-	using = new/obj/screen/wheel/talk
+/*	using = new/obj/screen/wheel/talk
 	using.icon = ui_style
 	wheels += using
-	static_inventory += using
+	static_inventory += using*/
 
 	using = new /obj/screen/inventory/area_creator
 	using.icon = ui_style
