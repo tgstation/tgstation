@@ -278,7 +278,7 @@
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Drains power from nearby objects. If standing on a Sigil of Transmission, power will be transferred to it. Maximum 30 chants."
+	quickbind_desc = "Drains power from nearby objects. If standing on a Sigil of Transmission, gives it that power.<br><b>Maximum 30 chants.</b>"
 	var/total_power_drained = 0
 	var/power_damage_threshhold = 3000
 	var/augument_damage_threshhold = 6000

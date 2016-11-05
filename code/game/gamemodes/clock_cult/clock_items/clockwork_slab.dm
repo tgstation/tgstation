@@ -371,15 +371,15 @@
 				if(!compact_scripture)
 					for(var/a in cons_comps)
 						if(cons_comps[a])
-							scripture_text += "<br><b>Component Cost:</b> "
+							scripture_text += "<br><b>Component Cost:</b>"
 							for(var/i in cons_comps)
 								if(cons_comps[i])
-									scripture_text += "<font color=[get_component_color_brightalloy(i)]><b>[cons_comps[i]]</b> [get_component_acronym(i)]</font> "
+									scripture_text += " <font color=[get_component_color_brightalloy(i)]><b>[cons_comps[i]]</b> [get_component_acronym(i)]</font>"
 							break //we want this to only show up if the scripture has a cost of some sort
 					scripture_text += "<br><b>Tip:</b> [initial(S.usage_tip)]"
 				if(initial(S.quickbind))
 					scripture_text += "<br><b><font color=#BE8700 size=1>[S == quickbind_slot_one || S == quickbind_slot_two ? "Currently Quickbound":\
-					"<A href='?src=\ref[src];Quickbindone=[S]'>Quickbind to slot one</A>|<A href='?src=\ref[src];Quickbindtwo=[S]'>Quickbind to slot two</A>"]</font></b>"
+					"<A href='?src=\ref[src];Quickbindone=[S]'>Quickbind to slot one</A>| <A href='?src=\ref[src];Quickbindtwo=[S]'>Quickbind to slot two</A>"]</font></b>"
 				scripture_text += "<br><b><A href='?src=\ref[src];Recite=[S]'>Recite</A></b><br>"
 				switch(initial_tier)
 					if(SCRIPTURE_DRIVER)

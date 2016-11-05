@@ -22,7 +22,7 @@
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
 	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Accession, which can convert one mindshielded non-Servant that remains on it."
+	quickbind_desc = "Creates a Sigil of Accession, which can convert a mindshielded non-Servant that remains on it."
 
 
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
@@ -44,7 +44,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 2
 	quickbind = TRUE
-	quickbind_desc = "Creates a Vitality Matrix, which drains non-Servants on it to heal or revive Servants that cross it."
+	quickbind_desc = "Creates a Vitality Matrix, which drains non-Servants on it to heal Servants that cross it."
 
 
 //Memory Allocation: Finds a willing ghost and makes them into a clockwork marauders for the invoker.
@@ -178,7 +178,7 @@
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 6
 	quickbind = TRUE
-	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission or the area's APC."
+	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
 //Mending Motor: Creates a prism that will quickly heal mechanical servants/clockwork structures and consume power or replicant alloy.
@@ -201,7 +201,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 7
 	quickbind = TRUE
-	quickbind_desc = "Creates a Mending Motor, which rapidly repairs constructs, Servant cyborgs, and structures at a power cost."
+	quickbind_desc = "Creates a Mending Motor, which rapidly repairs constructs and structures at a power cost."
 
 
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
@@ -224,7 +224,7 @@
 	primary_component = GUVAX_CAPACITOR
 	sort_priority = 8
 	quickbind = TRUE
-	quickbind_desc = "Creates a Mania Motor, which causes hallucinations and converts adjacent non-Servants at a power cost."
+	quickbind_desc = "Creates a Mania Motor, which can convert adjacent non-Servants with power."
 
 
 //Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
@@ -280,4 +280,4 @@
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Creates a Clockwork Obelisk, which can broadcast or open Spatial Gateways at a power cost."
+	quickbind_desc = "Creates a Clockwork Obelisk, which can send messages or open Spatial Gateways with power."

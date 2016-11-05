@@ -17,7 +17,7 @@
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
 	quickbind = TRUE
-	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage. Maximum 15 chants."
+	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage with each chant.<br><b>Maximum 15 chants.</b>"
 	var/noncultist_damage = 2 //damage per chant to noncultists
 	var/cultist_damage = 8 //damage per chant to non-walking cultists
 
@@ -98,7 +98,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 4
 	quickbind = TRUE
-	quickbind_desc = "Allows you to convert a Servant's brute and burn damage to half toxin damage."
+	quickbind_desc = "Allows you to convert a Servant's brute and burn damage to half toxin damage.<br><b>Click your slab to disable.</b>"
 	slab_icon = "compromise"
 	ranged_type = /obj/effect/proc_holder/slab/compromise
 	ranged_message = "<span class='inathneq_small'><i>You charge the clockwork slab with healing power.</i>\n\
@@ -120,7 +120,7 @@
 	primary_component = GUVAX_CAPACITOR
 	sort_priority = 5
 	quickbind = TRUE
-	quickbind_desc = "Allows you to convert an adjacent target nonservant. Click your slab to disable."
+	quickbind_desc = "Allows you to bind and start converting an adjacent target non-Servant.<br><b>Click your slab to disable.</b>"
 	slab_icon = "guvax"
 	ranged_type = /obj/effect/proc_holder/slab/guvax
 	ranged_message = "<span class='sevtug_small'><i>You charge the clockwork slab with divine energy.</i>\n\
@@ -192,7 +192,7 @@
 	primary_component = GUVAX_CAPACITOR
 	sort_priority = 6
 	quickbind = TRUE
-	quickbind_desc = "Weakens, confuses, and dizzies nearby non-servants, then allows movement. Maximum 5 chants."
+	quickbind_desc = "Weakens, confuses, and dizzies nearby non-servants, then allows some movement.<br><b>Maximum 5 chants.</b>"
 	var/flee_time = 47 //allow fleeing for 5 seconds
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar
