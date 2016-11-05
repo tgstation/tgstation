@@ -48,6 +48,24 @@
 		return TRUE
 	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
+//False wall conversion
+/obj/structure/falsewall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	var/cost = REPLICANT_WALL_MINUS_FLOOR
+	if(ispath(mineral, /obj/item/stack/sheet/metal))
+		cost -= (REPLICANT_METAL * (2 + mineral_amount)) //four sheets of metal, plus an assumption that the girder is also two
+	else
+		cost -= (REPLICANT_METAL * 2) //anything that doesn't use metal just has the girder
+	return list("operation_time" = 50, "new_obj_type" = /obj/structure/falsewall/brass, "alloy_cost" = cost, "spawn_dir" = SOUTH)
+
+/obj/structure/falsewall/iron/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer) //two sheets of metal, two rods; special assumption
+	return list("operation_time" = 50, "new_obj_type" = /obj/structure/falsewall/brass, "alloy_cost" = REPLICANT_WALL_MINUS_FLOOR - (REPLICANT_METAL * 2) - (REPLICANT_ROD * 2), "spawn_dir" = SOUTH)
+
+/obj/structure/falsewall/reinforced/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return FALSE
+
+/obj/structure/falsewall/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	return FALSE
+
 //Metal conversion
 /obj/item/stack/rods/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(get_amount() >= 10)

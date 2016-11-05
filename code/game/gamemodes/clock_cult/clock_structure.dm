@@ -27,6 +27,9 @@
 	all_clockwork_objects -= src
 	return ..()
 
+/obj/structure/destructible/clockwork/ratvar_act()
+	obj_integrity = max_integrity
+
 /obj/structure/destructible/clockwork/narsie_act()
 	if(take_damage(rand(25, 50), BRUTE) && src) //if we still exist
 		var/previouscolor = color
