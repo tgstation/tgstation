@@ -116,7 +116,7 @@
 	return (armorval * get_armor_effectiveness()) //armor is reduced for tiny fragile drones
 
 /mob/living/simple_animal/drone/proc/get_armor_effectiveness()
-	return 0.2 //multiplier for whatever head armor you wear as a drone
+	return 0 //multiplier for whatever head armor you wear as a drone
 
 /mob/living/simple_animal/drone/proc/update_drone_hack(hack, clockwork)
 	if(!istype(src) || !mind)
