@@ -50,6 +50,11 @@
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 
+var/global/globalprojspeed = 0.5
+
+/obj/item/projectile/proc/set_speed(newspeed)
+	globalprojspeed = newspeed
+
 /obj/item/projectile/New()
 	permutated = list()
 	return ..()
@@ -216,7 +221,7 @@
 				new_y--
 
 			step_towards(src, locate(new_x, new_y, z))
-			next_run += max(world.tick_lag, speed)
+			next_run += max(world.tick_lag, globalprojspeed)
 			var/delay = next_run - world.time
 			if(delay <= world.tick_lag*2)
 				pixel_x = pixel_x_offset
