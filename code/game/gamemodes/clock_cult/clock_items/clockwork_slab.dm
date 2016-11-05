@@ -165,12 +165,8 @@
 		if(/datum/action/item_action/clock/hierophant)
 			show_hierophant(user)
 		if(/datum/action/item_action/clock/quickbind_one)
-			if(!nonhuman_usable && !ishuman(user))
-				return
 			recite_scripture(quickbind_slot_one, user, FALSE)
 		if(/datum/action/item_action/clock/quickbind_two)
-			if(!nonhuman_usable && !ishuman(user))
-				return
 			recite_scripture(quickbind_slot_two, user, FALSE)
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
@@ -247,7 +243,7 @@
 	return recite_scripture(chosen_scripture, user, TRUE)
 
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user, delayed)
-	if(!scripture || !user || !user.canUseTopic(src))
+	if(!scripture || !user || !user.canUseTopic(src) || (!nonhuman_usable && !ishuman(user)))
 		return FALSE
 	if(user.get_active_held_item() != src)
 		user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
