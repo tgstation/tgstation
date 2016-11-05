@@ -71,9 +71,6 @@
 	else
 		..()
 
-/obj/structure/table/attack_tk() // no telehulk sorry
-	return
-
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
 		return 1
@@ -452,9 +449,6 @@
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(rand(4,8), BRUTE, "melee", 1)
 
-
-/obj/structure/rack/attack_tk() // no telehulk sorry
-	return
 
 /obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

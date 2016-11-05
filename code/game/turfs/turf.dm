@@ -285,6 +285,7 @@
 		var/atom/A = V
 		if(A.level >= affecting_level)
 			A.ex_act(severity, target)
+			CHECK_TICK
 
 /turf/ratvar_act(force)
 	. = (prob(40) || force)
@@ -376,8 +377,4 @@
 		T.setDir(dir)
 	return T
 
-/turf/contents_explosion(severity, target)
-	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK
 
