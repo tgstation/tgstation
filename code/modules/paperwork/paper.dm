@@ -307,7 +307,8 @@
 			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
-		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
+
+		if(!in_range(src, user))
 			return
 
 		stamps += "<img src=large_[P.icon_state].png>"

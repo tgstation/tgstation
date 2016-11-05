@@ -158,8 +158,7 @@ var/agnoston = "agnoston"
 			"backpack" = slot_in_backpack,
 			"left pocket" = slot_l_store,
 			"right pocket" = slot_r_store,
-			"left hand" = slot_l_hand,
-			"right hand" = slot_r_hand,
+			"hand" = slot_generic_dextrous_storage
 		)
 
 		if(cost > money)

@@ -8,7 +8,7 @@
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/weapon/card/id/syndicate(src) // 2 tc
 			new /obj/item/clothing/shoes/chameleon(src) // 2 tc
-			new /obj/item/device/circuitboard/computer/camera_bug(src) // 1 tc
+			new /obj/item/weapon/circuitboard/computer/camera_bug(src) // 1 tc
 			new /obj/item/device/multitool/ai_detect(src) // 1 tc
 			new /obj/item/device/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/weapon/reagent_containers/syringe/mulligan(src) // 4 tc

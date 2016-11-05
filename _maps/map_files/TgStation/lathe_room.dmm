@@ -12,7 +12,7 @@
 "al" = (/obj/structure/closet/toolcloset,/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plasteel,/area/construction)
 "am" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/construction)
 "an" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/disposalpipe/junction,/turf/open/floor/plasteel/caution/corner{dir = 8},/area/hallway/primary/aft)
-"ao" = (/obj/machinery/light_construct{dir = 8},/turf/open/floor/plating,/area/construction)
+"ao" = (/obj/structure/light_construct{dir = 8},/turf/open/floor/plating,/area/construction)
 "ap" = (/obj/machinery/atmospherics/components/unary/vent_scrubber{on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/open/floor/plating,/area/construction)
 "aq" = (/turf/open/floor/plating,/area/construction)
 "ar" = (/obj/machinery/door/airlock/engineering{name = "Construction Area"; req_access_txt = "32"},/turf/open/floor/plating,/area/construction)
