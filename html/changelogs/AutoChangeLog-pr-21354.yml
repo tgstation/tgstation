@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - bugfix: "Dragging people over a Vitality Matrix will actually cause the Matrix to start working on them instead of failing to start draining because it's \"active\" from when the dragging person crossed it."
