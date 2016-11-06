@@ -146,6 +146,7 @@
 	if(head)
 		unEquip(head)
 	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new /mob/living/simple_animal/drone/cogscarab/ratvar(loc)
+	R.setDir(dir)
 	if(mind)
 		mind.transfer_to(R, 1)
 	else
