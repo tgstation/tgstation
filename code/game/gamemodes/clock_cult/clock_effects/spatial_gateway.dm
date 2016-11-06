@@ -10,10 +10,15 @@
 	var/lifetime = 25 //How many deciseconds this portal will last
 	var/uses = 1 //How many objects or mobs can go through the portal
 	var/obj/effect/clockwork/spatial_gateway/linked_gateway //The gateway linked to this one
+	var/timerid
 
 /obj/effect/clockwork/spatial_gateway/New()
 	..()
 	addtimer(src, "check_setup", 1)
+
+/obj/effect/clockwork/spatial_gateway/Destroy()
+	deltimer(timerid)
+	return ..()
 
 /obj/effect/clockwork/spatial_gateway/proc/check_setup()
 	if(!linked_gateway)
@@ -23,7 +28,7 @@
 		clockwork_desc = "A gateway in reality. It can both send and receive objects."
 	else
 		clockwork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
-	QDEL_IN(src, lifetime)
+	timerid = QDEL_IN(src, lifetime)
 
 //set up a gateway with another gateway
 /obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, set_uses, two_way)
@@ -82,7 +87,7 @@
 		return TRUE
 	if(user.drop_item() && uses)
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
-		pass_through_gateway(I)
+		pass_through_gateway(I, TRUE)
 		return TRUE
 	return ..()
 
@@ -91,11 +96,13 @@
 		uses = 0
 		visible_message("<span class='warning'>[src] is disrupted!</span>")
 		animate(src, alpha = 0, transform = matrix()*2, time = 10)
-		QDEL_IN(src, 10)
+		deltimer(timerid)
+		timerid = QDEL_IN(src, 10)
 		linked_gateway.uses = 0
 		linked_gateway.visible_message("<span class='warning'>[linked_gateway] is disrupted!</span>")
 		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 10)
-		QDEL_IN(linked_gateway, 10)
+		deltimer(linked_gateway.timerid)
+		linked_gateway.timerid = QDEL_IN(linked_gateway, 10)
 		return TRUE
 	return FALSE
 
@@ -104,7 +111,7 @@
 	if(isliving(A) || istype(A, /obj/item))
 		pass_through_gateway(A)
 
-/obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A)
+/obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost)
 	if(!linked_gateway)
 		qdel(src)
 		return FALSE
@@ -124,8 +131,9 @@
 	linked_gateway.transform = matrix() * 1.5
 	animate(linked_gateway, transform = matrix() / 1.5, time = 10)
 	A.forceMove(get_turf(linked_gateway))
-	uses = max(0, uses - 1)
-	linked_gateway.uses = max(0, linked_gateway.uses - 1)
+	if(!no_cost)
+		uses = max(0, uses - 1)
+		linked_gateway.uses = max(0, linked_gateway.uses - 1)
 	addtimer(src, "check_uses", 10)
 	return TRUE
 
@@ -171,6 +179,11 @@
 	var/atom/movable/target = possible_targets[input_target_key]
 	if(!src || !target || !invoker || !invoker.canUseTopic(src, BE_CLOSE) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src))
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat != CONSCIOUS)
+			invoker << "<span class='warning'>That target is no longer conscious!</span>"
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way) //try again?
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
 	if(istargetobelisk)
 		gateway_uses *= 2
