@@ -59,9 +59,9 @@
 	temp = getCloneLoss()
 	if(temp)
 		if(getCloneLoss() < 30)
-			msg += "[t_He] [t_has] slightly deformed.\n"
+			msg += "[t_He] [t_is] slightly deformed.\n"
 		else
-			msg += "<b>[t_He] [t_has] severely deformed.</b>\n"
+			msg += "<b>[t_He] [t_is] severely deformed.</b>\n"
 
 	if(getBrainLoss() > 60)
 		msg += "[t_He] seems to be clumsy and unable to think.\n"

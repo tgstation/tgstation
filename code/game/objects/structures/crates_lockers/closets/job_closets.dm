@@ -124,6 +124,8 @@
 	resistance_flags = FLAMMABLE
 	obj_integrity = 70
 	max_integrity = 70
+	horizontal = TRUE
+	delivery_icon = "deliverycrate"
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"

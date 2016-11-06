@@ -60,13 +60,13 @@
 	if(state_open)
 		icon_state += "-open"
 
-/obj/machinery/sleeper/container_resist()
+/obj/machinery/sleeper/container_resist(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
 /obj/machinery/sleeper/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)

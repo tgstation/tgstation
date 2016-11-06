@@ -472,6 +472,11 @@
 
 	return new_character
 
+/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
+	for(var/M in player_list)
+		if(M && !isnewplayer(M))
+			M << thing
+
 /proc/window_flash(var/client_or_usr)
 	if (!client_or_usr)
 		return

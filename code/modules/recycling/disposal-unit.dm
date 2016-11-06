@@ -154,8 +154,8 @@
 	attempt_escape(user)
 
 // resist to escape the bin
-/obj/machinery/disposal/container_resist()
-	attempt_escape(usr)
+/obj/machinery/disposal/container_resist(mob/living/user)
+	attempt_escape(user)
 
 /obj/machinery/disposal/proc/attempt_escape(mob/user)
 	if(src.flushing)

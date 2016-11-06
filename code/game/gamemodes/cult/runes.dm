@@ -500,7 +500,7 @@ var/list/teleport_runes = list()
 	//BEGIN THE SUMMONING
 	used = 1
 	..()
-	world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
+	send_to_playing_players('sound/effects/dimensional_rend.ogg') //There used to be a message for this but every time it was changed it got edgier so I removed it
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)

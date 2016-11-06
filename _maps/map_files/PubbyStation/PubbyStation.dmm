@@ -2356,9 +2356,6 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "afs" = (
-/obj/structure/transit_tube{
-	icon_state = "Block"
-	},
 /turf/open/floor/plating/warnplate{
 	dir = 9
 	},
@@ -2473,10 +2470,8 @@
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
 "afL" = (
-/obj/structure/transit_tube/station{
-	dir = 8;
-	icon_state = "closed";
-	reverse_launch = 1
+/obj/structure/transit_tube/station/reverse/flipped{
+	dir = 4
 	},
 /turf/open/floor/plating/warnplate{
 	dir = 8
@@ -2589,9 +2584,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aga" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -2684,9 +2677,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "agk" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "agl" = (
@@ -2844,9 +2835,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "agz" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating/airless,
 /area/space)
 "agA" = (
@@ -3070,9 +3059,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "agY" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S-Pass"
-	},
+/obj/structure/transit_tube/crossing,
 /turf/open/floor/plating/airless,
 /area/space)
 "agZ" = (
@@ -9920,9 +9907,7 @@
 /area/bridge)
 "aud" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/bridge)
 "aue" = (
@@ -10466,9 +10451,7 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "auZ" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -10881,10 +10864,8 @@
 /area/bridge)
 "avY" = (
 /obj/structure/transit_tube_pod,
-/obj/structure/transit_tube/station{
-	dir = 8;
-	icon_state = "closed";
-	reverse_launch = 1
+/obj/structure/transit_tube/station/reverse{
+	dir = 8
 	},
 /turf/open/floor/plating/warnplate{
 	dir = 8
@@ -11556,11 +11537,6 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "axn" = (
-/obj/structure/transit_tube{
-	tag = "icon-Block (NORTH)";
-	icon_state = "Block";
-	dir = 1
-	},
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -47776,9 +47752,6 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bRV" = (
-/obj/structure/transit_tube{
-	icon_state = "Block"
-	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating/warnplate{
 	dir = 4
@@ -47927,10 +47900,8 @@
 /area/maintenance/aft)
 "bSm" = (
 /obj/structure/transit_tube_pod,
-/obj/structure/transit_tube/station{
-	dir = 4;
-	icon_state = "closed";
-	reverse_launch = 1
+/obj/structure/transit_tube/station/reverse{
+	dir = 4
 	},
 /turf/open/floor/plating/warnplate{
 	dir = 4
@@ -48042,9 +48013,7 @@
 /turf/open/space,
 /area/space)
 "bSx" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating/warnplate{
 	dir = 4
 	},
@@ -48137,9 +48106,7 @@
 /area/engine/engineering)
 "bSJ" = (
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bSK" = (
@@ -48203,9 +48170,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "bSQ" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/space)
 "bSR" = (
@@ -48420,9 +48385,7 @@
 	name = "Bomb Testing Asteroid"
 	})
 "bTo" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S-Pass"
-	},
+/obj/structure/transit_tube/crossing,
 /turf/open/floor/plating,
 /area/space)
 "bTp" = (
@@ -48698,10 +48661,8 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bTZ" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
 /obj/structure/window/reinforced/fulltile,
+/obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bUa" = (
@@ -48736,9 +48697,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bUe" = (
-/obj/structure/transit_tube{
-	icon_state = "N-S"
-	},
+/obj/structure/transit_tube,
 /turf/open/floor/plating/warnplate{
 	dir = 4
 	},
@@ -48783,10 +48742,8 @@
 /turf/open/space,
 /area/space)
 "bUm" = (
-/obj/structure/transit_tube/station{
-	dir = 4;
-	icon_state = "closed";
-	reverse_launch = 1
+/obj/structure/transit_tube/station/reverse/flipped{
+	dir = 8
 	},
 /turf/open/floor/plating/warnplate{
 	dir = 4
@@ -48844,11 +48801,6 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bUt" = (
-/obj/structure/transit_tube{
-	tag = "icon-Block (NORTH)";
-	icon_state = "Block";
-	dir = 1
-	},
 /turf/open/floor/plating/warnplate{
 	dir = 4
 	},
@@ -66894,8 +66846,8 @@ caV
 caV
 caV
 caV
-cci
-cci
+cfd
+cfd
 cfd
 cdL
 aHF

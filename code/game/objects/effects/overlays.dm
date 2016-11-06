@@ -238,6 +238,7 @@
 
 /obj/effect/overlay/temp/ratvar
 	name = "ratvar's light"
+	icon = 'icons/effects/clockwork_effects.dmi'
 	duration = 8
 	randomdir = 0
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -253,27 +254,37 @@
 	icon_state = "ratvarbeamglow"
 
 /obj/effect/overlay/temp/ratvar/beam/door
-	layer = CLOSED_FIREDOOR_LAYER //above closed doors
+	layer = CLOSED_DOOR_LAYER
 
 /obj/effect/overlay/temp/ratvar/beam/grille
-	layer = LOW_ITEM_LAYER //above grilles
+	layer = BELOW_OBJ_LAYER
 
 /obj/effect/overlay/temp/ratvar/beam/itemconsume
 	layer = HIGH_OBJ_LAYER
 
+/obj/effect/overlay/temp/ratvar/beam/falsewall
+	layer = OBJ_LAYER
+
 /obj/effect/overlay/temp/ratvar/wall
 	icon_state = "ratvarwallglow"
+
+/obj/effect/overlay/temp/ratvar/wall/false
+	layer = OBJ_LAYER
 
 /obj/effect/overlay/temp/ratvar/floor
 	icon_state = "ratvarfloorglow"
 
 /obj/effect/overlay/temp/ratvar/window
 	icon_state = "ratvarwindowglow"
-	layer = ABOVE_WINDOW_LAYER //above windows
+	layer = ABOVE_WINDOW_LAYER
+
+/obj/effect/overlay/temp/ratvar/gear
+	icon_state = "ratvargearglow"
+	layer = BELOW_OBJ_LAYER
 
 /obj/effect/overlay/temp/ratvar/grille
 	icon_state = "ratvargrilleglow"
-	layer = LOW_ITEM_LAYER //above grilles
+	layer = BELOW_OBJ_LAYER
 
 /obj/effect/overlay/temp/ratvar/grille/broken
 	icon_state = "ratvarbrokengrilleglow"
@@ -315,7 +326,6 @@
 
 /obj/effect/overlay/temp/ratvar/sigil
 	name = "glowing circle"
-	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "sigildull"
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression
