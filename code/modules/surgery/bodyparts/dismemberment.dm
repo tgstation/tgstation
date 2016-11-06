@@ -4,7 +4,8 @@
 		. = (get_damage() >= (max_damage - I.armour_penetration/2))
 
 //Dismember a limb
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE)
+
+/obj/item/bodypart/proc/dismember_internal()
 	if(!owner)
 		return 0
 	var/mob/living/carbon/C = owner
@@ -15,11 +16,54 @@
 		if(NODISMEMBER in H.dna.species.specflags) // species don't allow dismemberment
 			return 0
 
+	drop_limb()
+
+	return 1
+
+/obj/item/projectile/bodypart
+	name = "limb"
+	desc = "why is it detached..."
+	var/obj/item/bodypart/contained_limb = null
+
+/obj/item/projectile/bodypart/New(location, obj/item/bodypart/limb)
+	..()
+
+	appearance = limb.appearance
+
+	limb.forceMove(src)
+	if(limb.status == BODYPART_ROBOTIC)
+		stun = 5
+		weaken = 5
+
+	contained_limb = limb
+
+
+/obj/item/projectile/bodypart/on_hit(atom/target, blocked = 0)
+	. = ..()
+	contained_limb.forceMove(src.loc)
+	contained_limb = null
+
+/obj/item/bodypart/proc/fire_at(target, params = null, range = 7, speed = 3)
+	var/stored_owner = owner
+	if(!dismember_internal())
+		return 0
+
+	var/obj/item/projectile/bodypart/proj = new(loc, src)
+	if(params)
+		world.log << params
+	proj.original = target
+	proj.preparePixelProjectile(target, get_turf(target), stored_owner, params)
+	proj.fire()
+
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE)
+	if(!dismember_internal())
+		return 0
+	var/mob/living/carbon/C = owner
+
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
 	affecting.receive_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
-	drop_limb()
 
 	if(dam_type == BURN)
 		burn()
@@ -28,6 +72,7 @@
 	var/turf/location = C.loc
 	if(istype(location))
 		C.add_splatter_floor(location)
+
 	var/direction = pick(cardinal)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -36,7 +81,9 @@
 		target_turf = new_turf
 		if(new_turf.density)
 			break
+
 	throw_at_fast(target_turf, throw_range, throw_speed)
+
 	return 1
 
 
