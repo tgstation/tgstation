@@ -25,7 +25,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.check_acedia())
-			user << "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>"
+			user << "<span class='notice'>None of this matters, why are you reading this?  You put [title] down.</span>"
 			return
 		inUse = 1
 		var/devilName = copytext(sanitize(input(user, "What infernal being do you wish to research?", "Codex Gigas", null)  as text),1,MAX_MESSAGE_LEN)
@@ -47,7 +47,7 @@
 			var/usedName = devilName
 			if(!prob(correctness))
 				usedName += "x"
-			var/datum/devilinfo/devil = devilInfo(usedName, 0)
+			var/datum/antagonist/devil/devil = devilInfo(usedName, 0)
 			user << browse("Information on [devilName]<br><br><br>[lawlorify[LORE][devil.ban]]<br>[lawlorify[LORE][devil.bane]]<br>[lawlorify[LORE][devil.obligation]]<br>[lawlorify[LORE][devil.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		inUse = 0
 		sleep(10)

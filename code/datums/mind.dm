@@ -58,7 +58,6 @@
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
-	var/datum/devilinfo/devilinfo //Information about the devil, if any.
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 
@@ -1100,24 +1099,14 @@
 		switch(href_list["devil"])
 			if("clear")
 				if(src in ticker.mode.devils)
+					var/datum/antagonist/devil/D = current.has_antag_datum(/datum/antagonist/devil/, true)
 					if(istype(current,/mob/living/carbon/true_devil/))
-						if(devilinfo)
-							devilinfo.regress_blood_lizard()
+						if(D)
+							D.regress_blood_lizard()
 						else
 							usr << "<span class='warning'>Something went wrong with removing the devil, we were unable to find an attached devilinfo.</span>."
-					ticker.mode.devils -= src
-					special_role = null
-					current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-					RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/conjure_item/violin)
-					message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
-					devilinfo = null
-					if(issilicon(current))
-						var/mob/living/silicon/S = current
-						S.clear_law_sixsixsix(current)
+							return
+					D.on_remove()
 					log_admin("[key_name(usr)] has de-devil'ed [current].")
 				else if(src in ticker.mode.sintouched)
 					ticker.mode.sintouched -= src
@@ -1127,12 +1116,7 @@
 				if(!ishuman(current) && !iscyborg(current))
 					usr << "<span class='warning'>This only works on humans and cyborgs!</span>"
 					return
-				ticker.mode.devils += src
-				special_role = "devil"
-				ticker.mode.finalize_devil(src)
-				ticker.mode.add_devil_objectives(src, 2)
-				announceDevilLaws()
-				announce_objectives()
+				current.gain_antag_datum(/datum/antagonist/devil)
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src

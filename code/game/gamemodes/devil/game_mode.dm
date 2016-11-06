@@ -25,27 +25,10 @@
 			text += printplayer(devil)
 			text += printdevilinfo(devil)
 			text += printobjectives(devil)
+			text += printsoulsowned(devil)
 			text += "<br>"
 		text += "<br>"
 	world << text
-
-
-/datum/game_mode/proc/finalize_devil(datum/mind/devil_mind)
-
-	var/trueName= randomDevilName()
-
-	devil_mind.devilinfo = devilInfo(trueName, 1)
-	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
-	devil_mind.devilinfo.owner = devil_mind
-	devil_mind.devilinfo.give_base_spells(1)
-	spawn(10)
-		devil_mind.devilinfo.update_hud()
-		if(devil_mind.assigned_role == "Clown" && ishuman(devil_mind.current))
-			var/mob/living/carbon/human/S = devil_mind.current
-			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
-			S.dna.remove_mutation(CLOWNMUT)
-	if(issilicon(devil_mind.current))
-		add_law_sixsixsix(devil_mind.current)
 
 /datum/game_mode/proc/add_devil_objectives(datum/mind/devil_mind, quantity)
 	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)
@@ -59,19 +42,6 @@
 		else
 			objective.find_target()
 
-/datum/mind/proc/announceDevilLaws()
-	if(!devilinfo)
-		return
-	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
-	current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
-	current << "You may not use violence to coerce someone into selling their soul."
-	current << "You may not directly and knowingly physically harm a devil, other than yourself."
-	current << lawlorify[LAW][src.devilinfo.bane]
-	current << lawlorify[LAW][src.devilinfo.ban]
-	current << lawlorify[LAW][src.devilinfo.obligation]
-	current << lawlorify[LAW][src.devilinfo.banish]
-	current << "<br/><br/><span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>"
-
 /datum/game_mode/proc/printdevilinfo(datum/mind/ply)
 	if(!ply.devilinfo)
 		return "Target is not a devil."
@@ -82,6 +52,17 @@
 	text += "	[lawlorify[LORE][ply.devilinfo.obligation]]</br>"
 	text += "	[lawlorify[LORE][ply.devilinfo.banish]]</br></br>"
 	return text
+
+/datum/game_mode/proc/printsoulsowned(datum/mind/devil)
+	if(!owner.current.has_antag_datum(/datum/antag/devil, true))
+		return
+	var/text += "And the following souls were owned: "
+	var/datum/antag/devil/devil_datum = owner.current.has_antag_datum(/datum/antag/devil, true)
+	for(var/V in devil_datum.soulsOwned)
+		var/datum/mind/M = V
+		text += M.name + ", "
+	world << text
+
 
 /datum/game_mode/proc/update_devil_icons_added(datum/mind/devil_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_DEVIL]

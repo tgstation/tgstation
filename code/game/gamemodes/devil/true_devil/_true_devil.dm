@@ -57,7 +57,7 @@
 
 /mob/living/carbon/true_devil/death(gibbed)
 	stat = DEAD
-	..(gibbed)
+	. = ..(gibbed)
 	drop_all_held_items()
 	spawn (0)
 		mind.devilinfo.beginResurrectionCheck(src)

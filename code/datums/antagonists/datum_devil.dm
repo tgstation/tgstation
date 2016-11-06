@@ -77,8 +77,7 @@ var/global/list/lawlorify = list (
 		)
 	)
 
-/datum/devilinfo/
-	var/datum/mind/owner = null
+/datum/antagonist/devil
 	var/obligation
 	var/ban
 	var/bane
@@ -87,27 +86,16 @@ var/global/list/lawlorify = list (
 	var/list/datum/mind/soulsOwned = new
 	var/reviveNumber = 0
 	var/form = BASIC_DEVIL
-	var/exists = 0
+	var/ascendable
 
-/proc/randomDevilInfo(name = randomDevilName())
-	var/datum/devilinfo/devil = new
-	devil.truename = name
-	devil.bane = randomdevilbane()
-	devil.obligation = randomdevilobligation()
-	devil.ban = randomdevilban()
-	devil.banish = randomdevilbanish()
-	return devil
-
-/proc/devilInfo(name, saveDetails = 0)
-	if(allDevils[lowertext(name)])
-		return allDevils[lowertext(name)]
-	else
-		var/datum/devilinfo/devil = randomDevilInfo(name)
-		allDevils[lowertext(name)] = devil
-		devil.exists = saveDetails
-		return devil
-
-
+/datum/antagonist/devil/New(isascendable = false)
+	..()
+	truename = randomDevilName()
+	bane = randomdevilbane()
+	obligation = randomdevilobligation()
+	ban = randomdevilban()
+	banish = randomdevilbanish()
+	ascendable = isascendable
 
 /proc/randomDevilName()
 	var/preTitle = ""
@@ -116,8 +104,8 @@ var/global/list/lawlorify = list (
 	var/suffix = ""
 	if(prob(65))
 		if(prob(35))
-			preTitle = pick("Dark ", "Hellish ", "Fiery ", "Sinful ", "Blood ")
-		title = pick("Lord ", "Fallen Prelate ", "Count ", "Viscount ", "Vizier ", "Elder ", "Adept ")
+			preTitle = pick("Dark ", "Hellish ", "Fiery ", "Sinful ", "Blood ", "Fallen ")
+		title = pick("Lord ", "Prelate ", "Count ", "Viscount ", "Vizier ", "Elder ", "Adept ")
 	var/probability = 100
 	mainName = pick("Hal", "Ve", "Odr", "Neit", "Ci", "Quon", "Mya", "Folth", "Wren", "Gyer", "Geyr", "Hil", "Niet", "Twou", "Hu", "Don")
 	while(prob(probability))
@@ -139,31 +127,26 @@ var/global/list/lawlorify = list (
 /proc/randomdevilbanish()
 	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
-/datum/devilinfo/proc/add_soul(datum/mind/soul)
+/datum/antagonist/devil/proc/add_soul(datum/mind/soul)
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
-	owner.current.nutrition = NUTRITION_LEVEL_FULL
-	owner.current << "<span class='warning'>You feel satiated as you received a new soul.</span>"
+	owner.nutrition = NUTRITION_LEVEL_FULL
+	owner << "<span class='warning'>You feel satiated as you received a new soul.</span>"
 	update_hud()
 	switch(SOULVALUE)
 		if(0)
-			owner.current << "<span class='warning'>Your hellish powers have been restored."
+			owner << "<span class='warning'>Your hellish powers have been restored."
 			give_base_spells()
 		if(BLOOD_THRESHOLD)
 			increase_blood_lizard()
 		if(TRUE_THRESHOLD)
 			increase_true_devil()
 		if(ARCH_THRESHOLD)
-			increase_arch_devil()
+			if(ascendable)
+				increase_arch_devil()
 
-/datum/devilinfo/proc/remove_soul(datum/mind/soul)
-	if(soulsOwned.Remove(soul))
-		check_regression()
-		owner.current << "<span class='warning'>You feel as though a soul has slipped from your grasp.</span>"
-		update_hud()
-
-/datum/devilinfo/proc/check_regression()
+/datum/antagonist/devil/proc/check_regression()
 	if(form == ARCH_DEVIL)
 		return //arch devil can't regress
 	//Yes, fallthrough behavior is intended, so I can't use a switch statement.
@@ -173,44 +156,34 @@ var/global/list/lawlorify = list (
 		regress_humanoid()
 	if(SOULVALUE < 0)
 		remove_spells()
-		owner.current << "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked."
+		owner << "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked."
 
-/datum/devilinfo/proc/increase_form()
-	switch(form)
-		if(BASIC_DEVIL)
-			increase_blood_lizard()
-		if(BLOOD_LIZARD)
-			increase_true_devil()
-		if(TRUE_DEVIL)
-			increase_arch_devil()
-
-/datum/devilinfo/proc/regress_humanoid()
-	owner.current << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
-	if(ishuman(owner.current))
-		var/mob/living/carbon/human/H = owner.current
+/datum/antagonist/devil/proc/regress_humanoid()
+	owner << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
 		H.set_species(/datum/species/human, 1)
 		H.regenerate_icons()
 	give_base_spells()
-	if(istype(owner.current.loc, /obj/effect/dummy/slaughter/))
-		owner.current.forceMove(get_turf(owner.current))//Fixes dying while jaunted leaving you permajaunted.
+	if(istype(owner.loc, /obj/effect/dummy/slaughter/))
+		owner.forceMove(get_turf(owner))//Fixes dying while jaunted leaving you permajaunted.
 	form = BASIC_DEVIL
 
-/datum/devilinfo/proc/regress_blood_lizard()
-	var/mob/living/carbon/true_devil/D = owner.current
+/datum/antagonist/devil/proc/regress_blood_lizard()
+	var/mob/living/carbon/true_devil/D = owner
 	D << "<span class='warning'>Your powers weaken, have more contracts be signed to regain power."
 	D.oldform.loc = D.loc
-	owner.transfer_to(D.oldform)
+	owner.mind.transfer_to(D.oldform)
 	give_lizard_spells()
 	qdel(D)
 	form = BLOOD_LIZARD
 	update_hud()
 
-
-/datum/devilinfo/proc/increase_blood_lizard()
-	owner.current << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
+/datum/antagonist/devil/proc/increase_blood_lizard()
+	owner << "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard."
 	sleep(50)
-	if(ishuman(owner.current))
-		var/mob/living/carbon/human/H = owner.current
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
 		H.set_species(/datum/species/lizard, 1)
 		H.underwear = "Nude"
 		H.undershirt = "Nude"
@@ -218,28 +191,30 @@ var/global/list/lawlorify = list (
 		H.dna.features["mcolor"] = "511" //A deep red
 		H.regenerate_icons()
 	else //Did the devil get hit by a staff of transmutation?
-		owner.current.color = "#501010"
+		owner.color = "#501010"
 	give_lizard_spells()
 	form = BLOOD_LIZARD
 
 
 
-/datum/devilinfo/proc/increase_true_devil()
-	owner.current << "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil."
+/datum/antagonist/devil/proc/increase_true_devil()
+	owner << "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil."
 	sleep(50)
-	var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(owner.current.loc)
+	var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(owner.loc)
 	A.faction |= "hell"
-	owner.current.loc = A
-	A.oldform = owner.current
-	owner.transfer_to(A)
+	owner.loc = A
+	A.oldform = owner
+	owner.mind.transfer_to(A)
 	A.set_name()
 	give_true_spells()
 	form = TRUE_DEVIL
 	update_hud()
 
 
-/datum/devilinfo/proc/increase_arch_devil()
-	var/mob/living/carbon/true_devil/D = owner.current
+/datum/antagonist/devil/proc/increase_arch_devil()
+	if(!ascendable || form != TRUE_DEVIL)
+		return //This shouldn't even be called if ascendable is false, this is just a failsafe.
+	var/mob/living/carbon/true_devil/D = owner
 	D << "<span class='warning'>You feel as though your form is about to ascend."
 	sleep(50)
 	if(!D)
@@ -277,73 +252,74 @@ var/global/list/lawlorify = list (
 	D.convert_to_archdevil()
 	if(istype(D.loc, /obj/effect/dummy/slaughter/))
 		D.forceMove(get_turf(D))//Fixes dying while jaunted leaving you permajaunted.
-	var/area/A = get_area(owner.current)
+	var/area/A = get_area(owner)
 	if(A)
-		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, action=NOTIFY_ATTACK)
+		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner, action=NOTIFY_ATTACK)
 	sleep(50)
 	if(!ticker.mode.devil_ascended)
 		SSshuttle.emergency.request(null, 0.3)
 	ticker.mode.devil_ascended++
 	form = ARCH_DEVIL
 
-/datum/devilinfo/proc/remove_spells()
-	for(var/X in owner.spell_list)
+/datum/antagonist/devil/proc/remove_spells()
+	for(var/X in owner.mind.spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		if(!istype(S, /obj/effect/proc_holder/spell/targeted/summon_contract) && !istype(S, /obj/effect/proc_holder/spell/targeted/conjure_item/violin))
-			owner.RemoveSpell(S)
+			owner.mind.RemoveSpell(S)
 
-/datum/devilinfo/proc/give_summon_contract()
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
+/datum/antagonist/devil/proc/give_summon_contract()
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
 
 
-/datum/devilinfo/proc/give_base_spells(give_summon_contract = 0)
+/datum/antagonist/devil/proc/give_base_spells(give_summon_contract = 0)
 	remove_spells()
-	owner.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
 	if(give_summon_contract)
 		give_summon_contract()
 		if (obligation == OBLIGATION_FIDDLE)
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/violin(null))
+			owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/violin(null))
 
-/datum/devilinfo/proc/give_lizard_spells()
+/datum/antagonist/devil/proc/give_lizard_spells()
 	remove_spells()
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
 
-/datum/devilinfo/proc/give_true_spells()
+/datum/antagonist/devil/proc/give_true_spells()
 	remove_spells()
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null))
 
-/datum/devilinfo/proc/give_arch_spells()
+/datum/antagonist/devil/proc/give_arch_spells()
 	remove_spells()
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null))
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
 
-/datum/devilinfo/proc/beginResurrectionCheck(mob/living/body)
+/datum/antagonist/devil/proc/beginResurrectionCheck(mob/living/body)
 	if(SOULVALUE>0)
-		owner.current<< "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>"
+		owner<< "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>"
 		sleep(DEVILRESURRECTTIME)
 		if (!body ||  body.stat == DEAD)
 			if(SOULVALUE>0)
 				if(check_banishment(body))
-					owner.current<< "<span class='userdanger'>Unfortunately, the mortals have finished a ritual that prevents your resurrection.</span>"
+					owner<< "<span class='userdanger'>Unfortunately, the mortals have finished a ritual that prevents your resurrection.</span>"
 					return -1
 				else
-					owner.current<< "<span class='userdanger'>WE LIVE AGAIN!</span>"
+					owner<< "<span class='userdanger'>WE LIVE AGAIN!</span>"
 					return hellish_resurrection(body)
 			else
-				owner.current<< "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>"
+				owner<< "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>"
 				return -1
 		else
-			owner.current << "<span class='danger'> You seem to have resurrected without your hellish powers.</span>"
+			owner << "<span class='danger'> You seem to have resurrected without your hellish powers.</span>"
 	else
-		owner.current << "<span class='userdanger'>Your hellish powers are too weak to resurrect yourself.</span>"
+		owner << "<span class='userdanger'>Your hellish powers are too weak to resurrect yourself.</span>"
 
-/datum/devilinfo/proc/check_banishment(mob/living/body)
+/datum/antagonist/devil/proc/check_banishment(mob/living/body)
 	switch(banish)
 		if(BANISH_WATER)
 			if(istype(body, /mob/living/carbon))
@@ -387,8 +363,8 @@ var/global/list/lawlorify = list (
 						return 1
 				return 0
 
-/datum/devilinfo/proc/hellish_resurrection(mob/living/body)
-	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
+/datum/antagonist/devil/proc/hellish_resurrection(mob/living/body)
+	message_admins("[owner.mind.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
 	if(SOULVALUE <= ARCH_THRESHOLD) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber += LOSS_PER_DEATH
 		update_hud()
@@ -403,17 +379,17 @@ var/global/list/lawlorify = list (
 	else
 		if(blobstart.len > 0)
 			var/turf/targetturf = get_turf(pick(blobstart))
-			var/mob/currentMob = owner.current
+			var/mob/currentMob = owner
 			if(!currentMob)
-				currentMob = owner.get_ghost()
+				currentMob = owner.mind.get_ghost()
 				if(!currentMob)
-					message_admins("[owner.name]'s devil resurrection failed due to client logoff.  Aborting.")
+					message_admins("[owner.mind.name]'s devil resurrection failed due to client logoff.  Aborting.")
 					return -1 //
-			if(currentMob.mind != owner)
-				message_admins("[owner.name]'s devil resurrection failed due to becoming a new mob.  Aborting.")
+			if(currentMob.mind != owner.mind)
+				message_admins("[owner.mind.name]'s devil resurrection failed due to becoming a new mob.  Aborting.")
 				return -1
 			currentMob.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
-			var/mob/living/carbon/human/H  = owner.current
+			var/mob/living/carbon/human/H  = owner
 			give_summon_contract()
 			if(SOULVALUE >= BLOOD_THRESHOLD)
 				H.set_species(/datum/species/lizard, 1)
@@ -428,15 +404,49 @@ var/global/list/lawlorify = list (
 					H.forceMove(A)
 					A.oldform = H
 					A.set_name()
-					owner.transfer_to(A)
+					owner.mind.transfer_to(A)
 					if(SOULVALUE >= ARCH_THRESHOLD)
 						A.convert_to_archdevil()
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
 	check_regression()
 
-/datum/devilinfo/proc/update_hud()
-	if(istype(owner.current, /mob/living/carbon))
-		var/mob/living/C = owner.current
+/datum/antagonist/devil/proc/update_hud()
+	if(istype(owner, /mob/living/))
+		var/mob/living/C = owner
 		if(C.hud_used && C.hud_used.devilsouldisplay)
 			C.hud_used.devilsouldisplay.update_counter(SOULVALUE)
+
+/datum/antagonist/devil/apply_innate_effects()
+	..()
+	owner.mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
+	give_base_spells(1)
+	spawn(10)
+		update_hud()
+		if(current.mind.assigned_role == "Clown" && ishuman(current))
+			var/mob/living/carbon/human/H = current
+			H << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
+			H.dna.remove_mutation(CLOWNMUT)
+	if(issilicon(current))
+		add_law_sixsixsix(current)
+
+
+/datum/fakedevil_antag/  //A super light weight container to store information about devils that don't actually exist, for purposes of the codex gigas.
+	var/obligation
+	var/ban
+	var/bane
+	var/banish
+	var/truename
+
+/datum/mind/proc/announceDevilLaws()
+	if(!devilinfo)
+		return
+	current << "<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>"
+	current << "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>"
+	current << "You may not use violence to coerce someone into selling their soul."
+	current << "You may not directly and knowingly physically harm a devil, other than yourself."
+	current << lawlorify[LAW][src.devilinfo.bane]
+	current << lawlorify[LAW][src.devilinfo.ban]
+	current << lawlorify[LAW][src.devilinfo.obligation]
+	current << lawlorify[LAW][src.devilinfo.banish]
+	current << "<br/><br/><span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>"
