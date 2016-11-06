@@ -326,8 +326,8 @@
 			\
 			The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
 			<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>\
-			<b>Quickbind slot One, currently set to <font color=[get_component_color_brightalloy(initial(quickbind_slot_one.primary_component))]>[initial(quickbind_slot_one.name)]</font></b>.<br>\
-			<b>Quickbind slot Two, currently set to <font color=[get_component_color_brightalloy(initial(quickbind_slot_two.primary_component))]>[initial(quickbind_slot_two.name)]</font></b>.<br><br>\
+			<b>Quickbind slot One</b>, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot_one.primary_component))]>[initial(quickbind_slot_one.name)]</font></b>.<br>\
+			<b>Quickbind slot Two</b>, currently set to <b><font color=[get_component_color_brightalloy(initial(quickbind_slot_two.primary_component))]>[initial(quickbind_slot_two.name)]</font></b>.<br><br>\
 			\
 			Examine the slab to check the number of components it has available.<br><br>\
 			\
@@ -339,15 +339,15 @@
 			text += "<font color=[get_component_color_brightalloy(i)]>[get_component_acronym(i)]</font> = [get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]<br>"
 		text += "<br><center><font size=1><A href='?src=\ref[src];compactscripture=1'>Compact Scripture Text: [compact_scripture ? "ON":"OFF"]</A></font></center><br>"
 		var/text_to_add = ""
-		var/drivers = "<br><font size=3><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b></font><br><i>These scriptures are always unlocked.</i><br>"
-		var/scripts = "<br><font size=3><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b></font><br><i>These scriptures require at least <b>5</b> Servants and \
-		<b>1</b> Tinkerer's Cache.</i><br>"
-		var/applications = "<br><font size=3><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b></font><br><i>These scriptures require at least <b>8</b> Servants, \
-		<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i><br>"
-		var/revenant = "<br><font size=3><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b></font><br><i>These scriptures require at least <b>10</b> Servants, \
-		<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i><br>"
-		var/judgement = "<br><font size=3><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b></font><br><i>This scripture requires at least <b>12</b> Servants, \
-		<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i><br>"
+		var/drivers = "<br><center><font size=3><b><A href='?src=\ref[src];Driver=1'>[SCRIPTURE_DRIVER]</A></b></font><br><i>These scriptures are always unlocked.</i></center><br>"
+		var/scripts = "<br><center><font size=3><b><A href='?src=\ref[src];Script=1'>[SCRIPTURE_SCRIPT]</A></b></font><br><i>These scriptures require at least <b>5</b> Servants and \
+		<b>1</b> Tinkerer's Cache.</i></center><br>"
+		var/applications = "<br><center><font size=3><b><A href='?src=\ref[src];Application=1'>[SCRIPTURE_APPLICATION]</A></b></font><br><i>These scriptures require at least <b>8</b> Servants, \
+		<b>3</b> Tinkerer's Caches, and <b>100CV</b>.</i></center><br>"
+		var/revenant = "<br><center><font size=3><b><A href='?src=\ref[src];Revenant=1'>[SCRIPTURE_REVENANT]</A></b></font><br><i>These scriptures require at least <b>10</b> Servants, \
+		<b>4</b> Tinkerer's Caches, and <b>200CV</b>.</i></center><br>"
+		var/judgement = "<br><center><font size=3><b><A href='?src=\ref[src];Judgement=1'>[SCRIPTURE_JUDGEMENT]</A></b></font><br><i>This scripture requires at least <b>12</b> Servants, \
+		<b>5</b> Tinkerer's Caches, and <b>300CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></center><br>"
 		for(var/V in sortList(subtypesof(/datum/clockwork_scripture), /proc/cmp_clockscripture_priority))
 			var/datum/clockwork_scripture/S = V
 			var/initial_tier = initial(S.tier)
