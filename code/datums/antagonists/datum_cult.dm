@@ -1,6 +1,6 @@
 /datum/antagonist/cultist
-	prevented_antag_datum_type = /datum/antagonist/cultist
-	some_flufftext = null
+	prevented_antag_datum_types = list(/datum/antagonist/clockcultist)
+	greeting_text = null
 	var/datum/action/innate/cultcomm/communion = new()
 
 /datum/antagonist/cultist/Destroy()

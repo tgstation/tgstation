@@ -10,6 +10,10 @@
 /datum/objective/New(var/text)
 	if(text)
 		explanation_text = text
+		initialize()
+
+/datum/objective/proc/initialize()
+	return
 
 /datum/objective/proc/check_completion()
 	return completed
@@ -73,6 +77,9 @@
 	var/target_role_type=0
 	dangerrating = 10
 	martyr_compatible = 1
+
+/datum/objective/assassinate/initialize()
+	find_target()
 
 /datum/objective/assassinate/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
