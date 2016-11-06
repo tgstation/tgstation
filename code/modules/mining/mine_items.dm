@@ -56,7 +56,6 @@
 	new /obj/item/device/assault_pod/mining(src)
 
 
-
 /**********************Shuttle Computer**************************/
 
 /obj/machinery/computer/shuttle/mining
