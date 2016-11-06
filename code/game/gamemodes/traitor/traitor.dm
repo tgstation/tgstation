@@ -9,7 +9,7 @@
 	name = "traitor"
 	config_tag = "traitor"
 	antag_flag = ROLE_TRAITOR
-	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
+	restricted_jobs = list("Cyborg") //Slaved to the AI - if the AI is a traitor, so are they
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 0
 	required_enemies = 1
@@ -59,7 +59,7 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		traitor.current.gain_antag_datum(/datum/antagonist/traitor)
+		traitor.current.gain_antag_datum(/datum/antagonist/traitor/uplink)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors

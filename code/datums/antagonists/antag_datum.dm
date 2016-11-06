@@ -11,7 +11,6 @@
 
 	//Objective-related variables.
 	var/has_objectives = TRUE //Do we use objectives?
-	var/list/objective_types = list() //WEIGHTED types of objectives that we might be assigned. Leave this blank for no objectives!
 	var/number_of_objectives = 1 //How many objectives we have.
 	var/datum/objective/constant_objective //An objective we'll always have. This is usually an objective to survive.
 
@@ -37,28 +36,24 @@
 		. = FALSE
 
 /datum/antagonist/proc/on_gain() //on initial gain of antag datum, do this. should only be called once per datum
-	apply_innate_effects()
 	if(!silent_update && greeting_text)
 		greet()
+	apply_innate_effects()
 
 /datum/antagonist/proc/greet() //Sends some text to our new owner.
 	if(!owner || !greeting_text)
 		return
 	owner << greeting_text
 
-/datum/antagonist/proc/forge_objectives()
-	if(!objective_types.len)
-		return
-	for(var/i = 1, i > number_of_objectives, i++)
-		var/datum/objective/O1 = pickweight(objective_types)
-		var/datum/objective/O2 = new O1
-		O2.initialize()
-		O2.owner = owner
-		owner.mind.objectives += O2
+/datum/antagonist/proc/forge_objectives() //Assigns primary objectives and the constant one.
+	generate_objectives()
 	if(constant_objective)
 		var/datum/objective/O = new constant_objective
 		O.owner = owner
 		owner.mind.objectives += O
+
+/datum/antagonist/proc/generate_objectives() //Assigns primary objectives. Override this for every antag type.
+	return
 
 /datum/antagonist/proc/apply_innate_effects() //applies innate effects to the owner, may be called multiple times due to mind transferral, but should only be called once per mob
 	//antag huds would go here if antag huds were less completely unworkable as-is

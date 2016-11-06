@@ -119,6 +119,7 @@ var/global/list/uplinks = list()
 	return hidden_uplink.attackby(I, user, params)
 
 // A collection of pre-set uplinks, for admin spawns.
+
 /obj/item/device/radio/uplink/New()
 	..()
 	icon_state = "radio"
