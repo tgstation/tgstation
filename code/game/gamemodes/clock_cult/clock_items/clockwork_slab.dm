@@ -96,12 +96,12 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants."
-		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components.<br>"
-		user << "Attacking a slab, a fellow Servant with a slab, or a cache with this slab will transfer this slab's components into that slab's components, their slab's components, or the global cache, respectively."
+		user << "Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components."
+		user << "Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 		if(quickbind_slot_one)
-			user << "Quickbind slot One bound to: <span class='[get_component_span(initial(quickbind_slot_one.primary_component))]'>[initial(quickbind_slot_one.name)]</span>"
+			user << "Quickbind button One: <span class='[get_component_span(initial(quickbind_slot_one.primary_component))]'>[initial(quickbind_slot_one.name)]</span>"
 		if(quickbind_slot_two)
-			user << "Quickbind slot Two bound to: <span class='[get_component_span(initial(quickbind_slot_two.primary_component))]'>[initial(quickbind_slot_two.name)]</span>"
+			user << "Quickbind button Two: <span class='[get_component_span(initial(quickbind_slot_two.primary_component))]'>[initial(quickbind_slot_two.name)]</span>"
 		if(clockwork_caches)
 			user << "<b>Stored components (with global cache):</b>"
 			for(var/i in stored_components)
@@ -299,7 +299,7 @@
 			<b><font color=#BE8700>Components</font></b>, fragments of the Justicar, from Reebe, and those Components can be used to draw power and material from Reebe through arcane chants \
 			known as <b><font color=#BE8700>Scripture</font></b>.<br><br>\
 			\
-			One component of a random type is produced in this slab every [production_text].<br>\
+			One component of a random type is made in this slab every [production_text].<br>\
 			<font color=#BE8700>Components</font> are stored either within slabs, where they can only be accessed by that slab, or in the Global Cache accessed by Tinkerer's Caches, which all slabs \
 			can draw from to recite scripture.<br>\
 			There are five types of component, and in general, <font color=#6E001A>Belligerent Eyes</font> are aggressive and judgemental, <font color=#1E8CE1>Vanguard Cogwheels</font> are defensive and \
@@ -322,7 +322,8 @@
 			to the invoker, or even, at one of the highest tiers, granting all nearby Servants temporary invulnerability.<br>\
 			However, the most important scripture is <font color=#AF0AAF>Guvax</font>, which allows you to convert heathens with relative ease.<br><br>\
 			\
-			The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide and allows for the quickbinding of scripture.<br><br>\
+			The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide and allows for the quickbinding and <font color=#BE8700>recital</font> \
+			of scripture.<br><br>\
 			\
 			The third to fifth functions are three buttons in the top left while holding the slab.<br>From left to right, they are:<br>\
 			<b><font color=#DAAA18>Hierophant Network</font></b>, which allows communication to other Servants.<br>\
@@ -375,7 +376,7 @@
 					scripture_text += "<br><b>Tip:</b> [initial(S.usage_tip)]"
 				if(initial(S.quickbind))
 					scripture_text += "<br><b><font color=#BE8700 size=1>[S == quickbind_slot_one || S == quickbind_slot_two ? "Currently Quickbound":\
-					"<A href='?src=\ref[src];Quickbindone=[S]'>Quickbind to slot one</A>| <A href='?src=\ref[src];Quickbindtwo=[S]'>Quickbind to slot two</A>"]</font></b>"
+					"<A href='?src=\ref[src];Quickbindone=[S]'>Quickbind to button One</A>| <A href='?src=\ref[src];Quickbindtwo=[S]'>Quickbind to button Two</A>"]</font></b>"
 				scripture_text += "<br><b><A href='?src=\ref[src];Recite=[S]'>Recite</A></b><br>"
 				switch(initial_tier)
 					if(SCRIPTURE_DRIVER)
