@@ -46,6 +46,7 @@
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/device/radio/headset/headset_cargo/mining(src)
+	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/storage/bag/plants(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
@@ -53,7 +54,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
 	new /obj/item/device/assault_pod/mining(src)
-	new /obj/item/device/flashlight/seclite(src)
+
 
 
 /**********************Shuttle Computer**************************/
