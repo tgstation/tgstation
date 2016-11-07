@@ -76,7 +76,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	return TRUE
 
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
+	var/checked_penalty = FALSE
 	if(!ratvar_awakens && !slab.no_cost)
+		var/checked_penalty = check_offstation_penalty()
 		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
 		var/failed = FALSE
 		for(var/i in required_components)
@@ -98,7 +100,21 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		if(nearby_servants < invokers_required)
 			invoker << "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>"
 			return FALSE
+	if(checked_penalty)
+		invoker << "<span class='big_brass'>\"Stay on the station, nitwit. This is too inefficent to be practical.\"</span>"
 	return TRUE
+
+/datum/clockwork_scripture/proc/check_offstation_penalty()
+	var/turf/T = get_turf(invoker)
+	if(!T || (T.z != ZLEVEL_STATION && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND))
+		channel_time *= 2
+		for(var/i in consumed_components)
+			if(consumed_components[i])
+				consumed_components[i] *= 2
+				if(req_components[i])
+					req_components[i] = max(consumed_components[i], req_components[i])
+		return TRUE
+	return FALSE
 
 /datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
 	return TRUE
@@ -136,6 +152,11 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/list/chant_invocations = list("AYY LMAO")
 	var/chant_amount = 5 //Times the chant is spoken
 	var/chant_interval = 10 //Amount of deciseconds between times the chant is actually spoken aloud
+
+/datum/clockwork_scripture/channeled/check_offstation_penalty()
+	. = ..()
+	if(.)
+		chant_interval *= 2
 
 /datum/clockwork_scripture/channeled/scripture_effects()
 	for(var/i in 1 to chant_amount)
